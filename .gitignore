@@ -1,0 +1,5 @@
+# Dependencies & cache
+.uix/
+.idea/
+.vscode/
+*.log
