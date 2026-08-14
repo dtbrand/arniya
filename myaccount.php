@@ -1,7 +1,7 @@
 <?php
 /**
  * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Exact Luxury Custom Select Dropdowns for Country & State with Real Flag Images, Roles & WhatsApp Validation
+ * Exact Custom Dropdown Select Layout with All World Countries List + Search Filter + FlagCDN
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -295,7 +295,7 @@
             transform: rotate(180deg);
         }
 
-        /* Custom Scrolling Dropdown Menu */
+        /* Custom Dropdown Search & Menu */
         .custom-select-menu {
             position: absolute;
             top: calc(100% + 4px);
@@ -304,14 +304,12 @@
             background: #FFFFFF;
             border: 1.5px solid var(--dark-gold);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            max-height: 220px;
-            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            max-height: 260px;
             z-index: 1000;
             display: none;
             flex-direction: column;
-            padding: 4px 0;
-            scrollbar-width: thin;
+            overflow: hidden;
             animation: customDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .custom-select-box.active .custom-select-menu {
@@ -321,6 +319,33 @@
             from { opacity: 0; transform: translateY(-6px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .dropdown-search-box {
+            padding: 8px 10px;
+            background: #FAF8F4;
+            border-bottom: 1px solid var(--soft-platinum);
+            flex-shrink: 0;
+        }
+        .dropdown-search-input {
+            width: 100%;
+            height: 32px;
+            border: 1px solid var(--soft-platinum);
+            border-radius: 6px;
+            padding: 0 10px;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            outline: none;
+            background: #FFFFFF;
+        }
+        .dropdown-search-input:focus {
+            border-color: var(--dark-gold);
+        }
+        .dropdown-options-scroll {
+            overflow-y: auto;
+            flex: 1;
+            padding: 4px 0;
+            scrollbar-width: thin;
+        }
+
         .custom-select-option {
             padding: 9px 14px;
             font-size: 0.82rem;
@@ -864,7 +889,7 @@
                         <input type="text" id="regName" class="auth-input" placeholder="e.g. Rajan Mehta" required>
                     </div>
 
-                    <!-- Country Option (Custom Dropdown) -->
+                    <!-- Country Option (All World Countries with Search & Real Flags) -->
                     <div class="auth-form-group">
                         <label class="auth-label">Country <span class="req">*</span></label>
                         <div class="custom-select-box" id="countrySelectBox">
@@ -876,7 +901,12 @@
                                 <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
                             <div class="custom-select-menu" id="countryDropdownMenu">
-                                <!-- Populated dynamically by JS with Flag images -->
+                                <div class="dropdown-search-box">
+                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                </div>
+                                <div class="dropdown-options-scroll" id="countryOptionsList">
+                                    <!-- Populated dynamically by JS with All World Countries -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -927,7 +957,12 @@
                                     <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                 </div>
                                 <div class="custom-select-menu" id="stateDropdownMenu">
-                                    <!-- Populated dynamically by JS with Indian States -->
+                                    <div class="dropdown-search-box">
+                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                    </div>
+                                    <div class="dropdown-options-scroll" id="stateOptionsList">
+                                        <!-- Populated dynamically by JS with States of Selected Country -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1105,14 +1140,10 @@
     (function() {
         'use strict';
 
-        /* ── Complete Country & Indian States Data ── */
-        var COUNTRIES_DATA = [
+        /* ── Complete All World Countries & All Indian States Database ── */
+        var ALL_WORLD_COUNTRIES = [
             {
-                code: 'in',
-                name: 'India',
-                flagImg: 'https://flagcdn.com/w40/in.png',
-                dial: '+91',
-                digits: 10,
+                code: 'in', name: 'India', flagImg: 'https://flagcdn.com/w40/in.png', dial: '+91', digits: 10,
                 states: [
                     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 
                     'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 
@@ -1120,77 +1151,68 @@
                     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
                     'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
                     'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi (NCT)', 
-                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry'
+                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry', 'Dadra and Nagar Haveli and Daman and Diu', 'Andaman and Nicobar Islands', 'Lakshadweep'
                 ]
             },
-            {
-                code: 'ae',
-                name: 'United Arab Emirates',
-                flagImg: 'https://flagcdn.com/w40/ae.png',
-                dial: '+971',
-                digits: 9,
-                states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain']
-            },
-            {
-                code: 'us',
-                name: 'United States',
-                flagImg: 'https://flagcdn.com/w40/us.png',
-                dial: '+1',
-                digits: 10,
-                states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington']
-            },
-            {
-                code: 'gb',
-                name: 'United Kingdom',
-                flagImg: 'https://flagcdn.com/w40/gb.png',
-                dial: '+44',
-                digits: 10,
-                states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands']
-            },
-            {
-                code: 'ca',
-                name: 'Canada',
-                flagImg: 'https://flagcdn.com/w40/ca.png',
-                dial: '+1',
-                digits: 10,
-                states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba']
-            },
-            {
-                code: 'au',
-                name: 'Australia',
-                flagImg: 'https://flagcdn.com/w40/au.png',
-                dial: '+61',
-                digits: 9,
-                states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia']
-            },
-            {
-                code: 'sg',
-                name: 'Singapore',
-                flagImg: 'https://flagcdn.com/w40/sg.png',
-                dial: '+65',
-                digits: 8,
-                states: ['Central Region', 'East Region', 'North Region', 'West Region']
-            },
-            {
-                code: 'my',
-                name: 'Malaysia',
-                flagImg: 'https://flagcdn.com/w40/my.png',
-                dial: '+60',
-                digits: 9,
-                states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak']
-            },
-            {
-                code: 'sa',
-                name: 'Saudi Arabia',
-                flagImg: 'https://flagcdn.com/w40/sa.png',
-                dial: '+966',
-                digits: 9,
-                states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah']
-            }
+            { code: 'ae', name: 'United Arab Emirates', flagImg: 'https://flagcdn.com/w40/ae.png', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'] },
+            { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania', 'North Carolina', 'Michigan', 'Virginia', 'Arizona', 'Massachusetts', 'Indiana', 'Tennessee', 'Missouri', 'Maryland', 'Wisconsin', 'Colorado', 'Minnesota', 'South Carolina', 'Alabama', 'Louisiana', 'Kentucky', 'Oregon', 'Oklahoma', 'Connecticut', 'Utah', 'Iowa', 'Nevada', 'Arkansas', 'Mississippi', 'Kansas', 'New Mexico', 'Nebraska', 'Idaho', 'West Virginia', 'Hawaii', 'New Hampshire', 'Maine', 'Rhode Island', 'Montana', 'Delaware', 'South Dakota', 'North Dakota', 'Alaska', 'Vermont', 'Wyoming'] },
+            { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands', 'Manchester', 'West Yorkshire', 'Hampshire', 'Essex'] },
+            { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan', 'Nova Scotia', 'New Brunswick', 'Newfoundland and Labrador', 'Prince Edward Island'] },
+            { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia', 'Tasmania', 'Australian Capital Territory', 'Northern Territory'] },
+            { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'West Region', 'North-East Region'] },
+            { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak', 'Kedah', 'Pahang', 'Negeri Sembilan', 'Melaka', 'Kelantan', 'Terengganu'] },
+            { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Asir', 'Tabuk', 'Al-Qassim', 'Hail', 'Jazan', 'Najran', 'Al-Bahah', 'Al-Jawf'] },
+            { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor', 'Umm Salal'] },
+            { code: 'kw', name: 'Kuwait', flagImg: 'https://flagcdn.com/w40/kw.png', dial: '+965', digits: 8, states: ['Al Asimah (Capital)', 'Hawalli', 'Al Farwaniyah', 'Al Ahmadi', 'Jahra', 'Mubarak Al-Kabeer'] },
+            { code: 'bh', name: 'Bahrain', flagImg: 'https://flagcdn.com/w40/bh.png', dial: '+973', digits: 8, states: ['Capital Governorate', 'Muharraq', 'Northern Governorate', 'Southern Governorate'] },
+            { code: 'om', name: 'Oman', flagImg: 'https://flagcdn.com/w40/om.png', dial: '+968', digits: 8, states: ['Muscat', 'Dhofar', 'Musandam', 'Al Batinah', 'Al Dakhiliyah', 'Al Sharqiyah'] },
+            { code: 'nz', name: 'New Zealand', flagImg: 'https://flagcdn.com/w40/nz.png', dial: '+64', digits: 9, states: ['Auckland', 'Canterbury', 'Wellington', 'Waikato', 'Bay of Plenty', 'Otago', 'Manawatu-Wanganui'] },
+            { code: 'de', name: 'Germany', flagImg: 'https://flagcdn.com/w40/de.png', dial: '+49', digits: 10, states: ['Bavaria', 'Berlin', 'North Rhine-Westphalia', 'Baden-Württemberg', 'Hesse', 'Lower Saxony', 'Saxony', 'Hamburg'] },
+            { code: 'fr', name: 'France', flagImg: 'https://flagcdn.com/w40/fr.png', dial: '+33', digits: 9, states: ['Île-de-France (Paris)', 'Auvergne-Rhône-Alpes', 'Provence-Alpes-Côte d\'Azur', 'Occitanie', 'Nouvelle-Aquitaine', 'Grand Est'] },
+            { code: 'it', name: 'Italy', flagImg: 'https://flagcdn.com/w40/it.png', dial: '+39', digits: 10, states: ['Lombardy (Milan)', 'Lazio (Rome)', 'Campania (Naples)', 'Veneto', 'Piedmont', 'Tuscany', 'Sicily'] },
+            { code: 'es', name: 'Spain', flagImg: 'https://flagcdn.com/w40/es.png', dial: '+34', digits: 9, states: ['Madrid', 'Catalonia (Barcelona)', 'Andalusia', 'Valencia', 'Galicia', 'Basque Country'] },
+            { code: 'nl', name: 'Netherlands', flagImg: 'https://flagcdn.com/w40/nl.png', dial: '+31', digits: 9, states: ['North Holland (Amsterdam)', 'South Holland (Rotterdam)', 'Utrecht', 'North Brabant', 'Gelderland'] },
+            { code: 'ch', name: 'Switzerland', flagImg: 'https://flagcdn.com/w40/ch.png', dial: '+41', digits: 9, states: ['Zurich', 'Geneva', 'Bern', 'Vaud', 'Basel-City', 'Lucerne', 'St. Gallen'] },
+            { code: 'se', name: 'Sweden', flagImg: 'https://flagcdn.com/w40/se.png', dial: '+46', digits: 9, states: ['Stockholm', 'Västra Götaland (Gothenburg)', 'Skåne (Malmö)', 'Uppsala', 'Östergötland'] },
+            { code: 'no', name: 'Norway', flagImg: 'https://flagcdn.com/w40/no.png', dial: '+47', digits: 8, states: ['Oslo', 'Viken', 'Vestland (Bergen)', 'Trøndelag', 'Rogaland'] },
+            { code: 'dk', name: 'Denmark', flagImg: 'https://flagcdn.com/w40/dk.png', dial: '+45', digits: 8, states: ['Capital Region (Copenhagen)', 'Central Denmark (Aarhus)', 'Southern Denmark', 'North Denmark'] },
+            { code: 'fi', name: 'Finland', flagImg: 'https://flagcdn.com/w40/fi.png', dial: '+358', digits: 9, states: ['Uusimaa (Helsinki)', 'Pirkanmaa (Tampere)', 'Southwest Finland (Turku)', 'North Ostrobothnia'] },
+            { code: 'be', name: 'Belgium', flagImg: 'https://flagcdn.com/w40/be.png', dial: '+32', digits: 9, states: ['Brussels', 'Antwerp', 'East Flanders (Ghent)', 'Flemish Brabant', 'Walloon Brabant'] },
+            { code: 'at', name: 'Austria', flagImg: 'https://flagcdn.com/w40/at.png', dial: '+43', digits: 10, states: ['Vienna', 'Lower Austria', 'Upper Austria', 'Styria', 'Tyrol', 'Salzburg'] },
+            { code: 'ie', name: 'Ireland', flagImg: 'https://flagcdn.com/w40/ie.png', dial: '+353', digits: 9, states: ['Dublin', 'Cork', 'Galway', 'Limerick', 'Waterford'] },
+            { code: 'pt', name: 'Portugal', flagImg: 'https://flagcdn.com/w40/pt.png', dial: '+351', digits: 9, states: ['Lisbon', 'Porto', 'Braga', 'Setúbal', 'Faro (Algarve)'] },
+            { code: 'pl', name: 'Poland', flagImg: 'https://flagcdn.com/w40/pl.png', dial: '+48', digits: 9, states: ['Masovian (Warsaw)', 'Lesser Poland (Kraków)', 'Lower Silesian (Wrocław)', 'Silesian'] },
+            { code: 'gr', name: 'Greece', flagImg: 'https://flagcdn.com/w40/gr.png', dial: '+30', digits: 10, states: ['Attica (Athens)', 'Central Macedonia (Thessaloniki)', 'Crete', 'Thessaly'] },
+            { code: 'tr', name: 'Turkey', flagImg: 'https://flagcdn.com/w40/tr.png', dial: '+90', digits: 10, states: ['Istanbul', 'Ankara', 'Izmir', 'Bursa', 'Antalya', 'Adana'] },
+            { code: 'ru', name: 'Russia', flagImg: 'https://flagcdn.com/w40/ru.png', dial: '+7', digits: 10, states: ['Moscow', 'Saint Petersburg', 'Novosibirsk', 'Yekaterinburg', 'Kazan'] },
+            { code: 'za', name: 'South Africa', flagImg: 'https://flagcdn.com/w40/za.png', dial: '+27', digits: 9, states: ['Gauteng (Johannesburg)', 'Western Cape (Cape Town)', 'KwaZulu-Natal (Durban)', 'Eastern Cape'] },
+            { code: 'eg', name: 'Egypt', flagImg: 'https://flagcdn.com/w40/eg.png', dial: '+20', digits: 10, states: ['Cairo', 'Alexandria', 'Giza', 'Qalyubia', 'Port Said', 'Suez'] },
+            { code: 'mu', name: 'Mauritius', flagImg: 'https://flagcdn.com/w40/mu.png', dial: '+230', digits: 8, states: ['Port Louis', 'Plaines Wilhems', 'Pamplemousses', 'Flacq', 'Grand Port'] },
+            { code: 'ke', name: 'Kenya', flagImg: 'https://flagcdn.com/w40/ke.png', dial: '+254', digits: 9, states: ['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Kiambu', 'Eldoret'] },
+            { code: 'ng', name: 'Nigeria', flagImg: 'https://flagcdn.com/w40/ng.png', dial: '+234', digits: 10, states: ['Lagos', 'Kano', 'Abuja (FCT)', 'Rivers (Port Harcourt)', 'Oyo (Ibadan)'] },
+            { code: 'lk', name: 'Sri Lanka', flagImg: 'https://flagcdn.com/w40/lk.png', dial: '+94', digits: 9, states: ['Western (Colombo)', 'Central (Kandy)', 'Southern (Galle)', 'Northern (Jaffna)', 'Eastern'] },
+            { code: 'bd', name: 'Bangladesh', flagImg: 'https://flagcdn.com/w40/bd.png', dial: '+880', digits: 10, states: ['Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi', 'Khulna', 'Barishal', 'Rangpur'] },
+            { code: 'np', name: 'Nepal', flagImg: 'https://flagcdn.com/w40/np.png', dial: '+977', digits: 10, states: ['Bagmati (Kathmandu)', 'Gandaki (Pokhara)', 'Lumbini', 'Koshi', 'Madhesh'] },
+            { code: 'th', name: 'Thailand', flagImg: 'https://flagcdn.com/w40/th.png', dial: '+66', digits: 9, states: ['Bangkok', 'Chiang Mai', 'Phuket', 'Chonburi (Pattaya)', 'Nonthaburi'] },
+            { code: 'id', name: 'Indonesia', flagImg: 'https://flagcdn.com/w40/id.png', dial: '+62', digits: 10, states: ['Jakarta', 'West Java (Bandung)', 'East Java (Surabaya)', 'Bali', 'Central Java'] },
+            { code: 'ph', name: 'Philippines', flagImg: 'https://flagcdn.com/w40/ph.png', dial: '+63', digits: 10, states: ['Metro Manila', 'Cebu', 'Davao', 'Calabarzon', 'Central Luzon'] },
+            { code: 'vn', name: 'Vietnam', flagImg: 'https://flagcdn.com/w40/vn.png', dial: '+84', digits: 9, states: ['Ho Chi Minh City', 'Hanoi', 'Da Nang', 'Hai Phong', 'Can Tho'] },
+            { code: 'jp', name: 'Japan', flagImg: 'https://flagcdn.com/w40/jp.png', dial: '+81', digits: 10, states: ['Tokyo', 'Osaka', 'Kanagawa (Yokohama)', 'Aichi (Nagoya)', 'Kyoto', 'Hokkaido (Sapporo)', 'Fukuoka'] },
+            { code: 'kr', name: 'South Korea', flagImg: 'https://flagcdn.com/w40/kr.png', dial: '+82', digits: 10, states: ['Seoul', 'Gyeonggi', 'Busan', 'Incheon', 'Daegu', 'Daejeon'] },
+            { code: 'cn', name: 'China', flagImg: 'https://flagcdn.com/w40/cn.png', dial: '+86', digits: 11, states: ['Guangdong (Guangzhou/Shenzhen)', 'Beijing', 'Shanghai', 'Zhejiang (Hangzhou)', 'Jiangsu'] },
+            { code: 'hk', name: 'Hong Kong', flagImg: 'https://flagcdn.com/w40/hk.png', dial: '+852', digits: 8, states: ['Hong Kong Island', 'Kowloon', 'New Territories'] },
+            { code: 'tw', name: 'Taiwan', flagImg: 'https://flagcdn.com/w40/tw.png', dial: '+886', digits: 9, states: ['Taipei', 'New Taipei', 'Taichung', 'Kaohsiung', 'Tainan'] },
+            { code: 'br', name: 'Brazil', flagImg: 'https://flagcdn.com/w40/br.png', dial: '+55', digits: 11, states: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia', 'Paraná', 'Rio Grande do Sul'] },
+            { code: 'mx', name: 'Mexico', flagImg: 'https://flagcdn.com/w40/mx.png', dial: '+52', digits: 10, states: ['Mexico City', 'Jalisco (Guadalajara)', 'Nuevo León (Monterrey)', 'Puebla', 'Yucatán'] },
+            { code: 'ar', name: 'Argentina', flagImg: 'https://flagcdn.com/w40/ar.png', dial: '+54', digits: 10, states: ['Buenos Aires', 'Córdoba', 'Santa Fe (Rosario)', 'Mendoza', 'Tucumán'] },
+            { code: 'cl', name: 'Chile', flagImg: 'https://flagcdn.com/w40/cl.png', dial: '+56', digits: 9, states: ['Santiago Metropolitan', 'Valparaíso', 'Biobío (Concepción)', 'Antofagasta'] },
+            { code: 'co', name: 'Colombia', flagImg: 'https://flagcdn.com/w40/co.png', dial: '+57', digits: 10, states: ['Bogotá D.C.', 'Antioquia (Medellín)', 'Valle del Cauca (Cali)', 'Atlántico (Barranquilla)'] },
+            { code: 'pe', name: 'Peru', flagImg: 'https://flagcdn.com/w40/pe.png', dial: '+51', digits: 9, states: ['Lima', 'Arequipa', 'Cusco', 'La Libertad (Trujillo)', 'Piura'] },
+            { code: 'fj', name: 'Fiji', flagImg: 'https://flagcdn.com/w40/fj.png', dial: '+679', digits: 7, states: ['Central (Suva)', 'Western (Nadi/Lautoka)', 'Northern (Labasa)', 'Eastern'] }
         ];
 
         var selectedRole = 'Retailer';
-        var selectedCountry = COUNTRIES_DATA[0]; // Auto-selected: India (+91)
+        var selectedCountry = ALL_WORLD_COUNTRIES[0]; // Auto-selected: India (+91)
         var selectedState = 'Gujarat';
 
         /* Toggle Dropdown Menu */
@@ -1205,6 +1227,21 @@
 
             if (!isCurrentlyActive) {
                 box.classList.add('active');
+                if (boxId === 'countrySelectBox') {
+                    var sInput = document.getElementById('countrySearchInput');
+                    if (sInput) {
+                        sInput.value = '';
+                        filterCountryOptions('');
+                        setTimeout(function(){ sInput.focus(); }, 100);
+                    }
+                } else if (boxId === 'stateSelectBox') {
+                    var sInput = document.getElementById('stateSearchInput');
+                    if (sInput) {
+                        sInput.value = '';
+                        filterStateOptions('');
+                        setTimeout(function(){ sInput.focus(); }, 100);
+                    }
+                }
             }
         };
 
@@ -1217,22 +1254,63 @@
             }
         });
 
-        /* Populate Country Dropdown */
-        function renderCountryDropdown() {
-            var menu = document.getElementById('countryDropdownMenu');
-            if (!menu) return;
+        /* Filter Country Options */
+        window.filterCountryOptions = function(query) {
+            var q = (query || '').toLowerCase().trim();
+            var list = document.getElementById('countryOptionsList');
+            if (!list) return;
+
+            var filtered = ALL_WORLD_COUNTRIES.filter(function(c) {
+                return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q);
+            });
 
             var html = '';
-            COUNTRIES_DATA.forEach(function(c) {
-                var isSel = c.code === selectedCountry.code;
-                html += `
-                    <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
-                        <img src="${c.flagImg}" alt="${c.name}" class="select-flag-img">
-                        <span>${c.name} (${c.dial})</span>
-                    </div>
-                `;
+            if (filtered.length === 0) {
+                html = '<div style="padding:12px; font-size:0.75rem; color:var(--light-text); text-align:center;">No matching country found</div>';
+            } else {
+                filtered.forEach(function(c) {
+                    var isSel = c.code === selectedCountry.code;
+                    html += `
+                        <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
+                            <img src="${c.flagImg}" alt="${c.name}" class="select-flag-img">
+                            <span>${c.name} (${c.dial})</span>
+                        </div>
+                    `;
+                });
+            }
+            list.innerHTML = html;
+        };
+
+        /* Filter State Options */
+        window.filterStateOptions = function(query) {
+            var q = (query || '').toLowerCase().trim();
+            var list = document.getElementById('stateOptionsList');
+            if (!list) return;
+
+            var states = selectedCountry.states || ['Default Region'];
+            var filtered = states.filter(function(st) {
+                return st.toLowerCase().includes(q);
             });
-            menu.innerHTML = html;
+
+            var html = '<div class="custom-select-option" onclick="selectState(\'Select State\')">Select State</div>';
+            if (filtered.length === 0) {
+                html += '<div style="padding:12px; font-size:0.75rem; color:var(--light-text); text-align:center;">No matching state found</div>';
+            } else {
+                filtered.forEach(function(st) {
+                    var isSel = st === selectedState;
+                    html += `
+                        <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
+                            <span>${st}</span>
+                        </div>
+                    `;
+                });
+            }
+            list.innerHTML = html;
+        };
+
+        /* Populate Country Dropdown */
+        function renderCountryDropdown() {
+            filterCountryOptions('');
 
             /* Update Trigger Display */
             var flagImg = document.getElementById('displayCountryFlag');
@@ -1253,31 +1331,18 @@
             validateWhatsAppDigits();
         }
 
-        /* Populate State Dropdown (Exact match with screenshot) */
+        /* Populate State Dropdown */
         function renderStateDropdown() {
-            var menu = document.getElementById('stateDropdownMenu');
-            if (!menu) return;
-
-            var html = '<div class="custom-select-option" onclick="selectState(\'Select State\')">Select State</div>';
-            selectedCountry.states.forEach(function(st) {
-                var isSel = st === selectedState;
-                html += `
-                    <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
-                        <span>${st}</span>
-                    </div>
-                `;
-            });
-            menu.innerHTML = html;
-
+            filterStateOptions('');
             var txt = document.getElementById('displayStateText');
             if (txt) txt.textContent = selectedState;
         }
 
         window.selectCountry = function(code) {
-            var found = COUNTRIES_DATA.find(function(c) { return c.code === code; });
+            var found = ALL_WORLD_COUNTRIES.find(function(c) { return c.code === code; });
             if (found) {
                 selectedCountry = found;
-                selectedState = found.states[0] || 'Select State';
+                selectedState = (found.states && found.states.length > 0) ? found.states[0] : 'Default Region';
                 renderCountryDropdown();
             }
             var box = document.getElementById('countrySelectBox');
