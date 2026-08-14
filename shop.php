@@ -2628,5 +2628,8 @@ input[type=range].sf-range::-moz-range-thumb {
 <!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
 <?php include 'checkout.php'; ?>
 
+<!-- ════════════ ACCOUNT & AUTH MODAL SYSTEM ════════════ -->
+<?php include 'account.php'; ?>
+
 </body>
 </html>

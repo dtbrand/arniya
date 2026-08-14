@@ -359,6 +359,99 @@
     display: none;
 }
 
+/* ── Header Account Dropdown (Desktop) ── */
+.header-account-wrap {
+    position: relative;
+    display: none;
+}
+@media (min-width: 768px) {
+    .header-account-wrap {
+        display: block;
+    }
+}
+.header-account-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    height: 38px;
+    border-radius: 20px;
+    border: 1.5px solid var(--soft-platinum, #E5E3DE);
+    background: #FFFFFF;
+    color: var(--dark-gold, #8A681F);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.header-account-btn:hover {
+    border-color: var(--dark-gold);
+    background: #FAF8F4;
+    color: var(--deep-gold);
+    box-shadow: 0 2px 8px rgba(138,104,31,0.12);
+}
+.header-account-btn svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+.header-account-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 210px;
+    background: #FFFFFF;
+    border: 1.5px solid var(--dark-gold, #8A681F);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 6px 0;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    animation: acDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.header-account-wrap:hover .header-account-dropdown,
+.header-account-wrap:focus-within .header-account-dropdown {
+    display: flex;
+}
+@keyframes acDropFade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.ac-drop-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    color: var(--dark-text, #24211C);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.ac-drop-item:hover {
+    background: #FAF6ED;
+    color: var(--dark-gold, #8A681F);
+}
+.ac-drop-item svg {
+    width: 15px;
+    height: 15px;
+    stroke: var(--dark-gold, #8A681F);
+    stroke-width: 2;
+    fill: none;
+    flex-shrink: 0;
+}
+.ac-drop-divider {
+    height: 1px;
+    background: var(--soft-platinum, #E5E3DE);
+    margin: 4px 0;
+}
+
 /* ── Mobile Full-Header Search Bar Overlay (Takes 100% Header Width) ── */
 .mobile-full-search-bar {
     display: none;
@@ -642,6 +735,36 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </button>
+
+            <!-- Desktop Account Dropdown Button -->
+            <div class="header-account-wrap" id="headerAccountWrap">
+                <button class="header-account-btn" id="headerAccountBtn" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('login');" aria-label="Account Access">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Account</span>
+                </button>
+                <div class="header-account-dropdown">
+                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('login');">
+                        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        <span>Sign In / Login</span>
+                    </div>
+                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('register');">
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <span>Create Account</span>
+                    </div>
+                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('forgot');">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Forgot Password</span>
+                    </div>
+                    <div class="ac-drop-divider"></div>
+                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('profile');">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
+                    </div>
+                </div>
+            </div>
 
             <!-- Wishlist -->
             <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
