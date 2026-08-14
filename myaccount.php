@@ -1,7 +1,7 @@
 <?php
 /**
  * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Exact Custom Dropdown Select Layout with All World Countries List + Search Filter + FlagCDN
+ * Enhanced Ultra-Clear Typography, High Contrast Form Headings, Labels & Visual Hierarchy
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -15,22 +15,23 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --dark-gold: #8A681F;
-            --deep-gold: #6F5218;
+            --deep-gold: #5F4512;
+            --gold-light: #C5A859;
             --gold-pale: #FAF5E8;
-            --gold-border: rgba(138, 104, 31, 0.25);
-            --dark-text: #24211C;
-            --mid-text: #5A5348;
-            --light-text: #8E877D;
-            --off-white: #FAF8F4;
+            --gold-border: rgba(138, 104, 31, 0.35);
+            --dark-text: #181512;
+            --mid-text: #423C34;
+            --light-text: #6E675D;
+            --off-white: #F9F7F2;
             --pure-white: #FFFFFF;
-            --soft-platinum: #E5E3DE;
+            --soft-platinum: #DCD7CD;
             --font-serif: 'Cinzel', serif;
-            --font-sans: 'Inter', sans-serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -47,12 +48,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ── Top Header Navigation Bar ── */
         .account-nav-header {
             background: #FFFFFF;
-            border-bottom: 1.5px solid var(--dark-gold);
+            border-bottom: 2px solid var(--dark-gold);
             padding: clamp(10px, 2.5vw, 16px) clamp(16px, 4vw, 40px);
             display: flex;
             align-items: center;
@@ -60,7 +62,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         }
         .account-nav-brand {
             display: flex;
@@ -69,8 +71,8 @@
             text-decoration: none;
         }
         .brand-seal {
-            width: clamp(32px, 6vw, 40px);
-            height: clamp(32px, 6vw, 40px);
+            width: clamp(34px, 6vw, 42px);
+            height: clamp(34px, 6vw, 42px);
             border-radius: 50%;
             background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
             display: flex;
@@ -78,27 +80,27 @@
             justify-content: center;
             color: #FFFFFF;
             font-weight: 700;
-            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+            box-shadow: 0 3px 10px rgba(138,104,31,0.35);
         }
         .brand-seal svg {
-            width: clamp(16px, 3.5vw, 20px);
-            height: clamp(16px, 3.5vw, 20px);
+            width: clamp(18px, 3.5vw, 22px);
+            height: clamp(18px, 3.5vw, 22px);
             stroke: currentColor;
-            stroke-width: 2;
+            stroke-width: 2.2;
             fill: none;
         }
         .brand-text h1 {
             font-family: var(--font-serif);
-            font-size: clamp(1rem, 3.5vw, 1.35rem);
-            font-weight: 700;
+            font-size: clamp(1.05rem, 3.5vw, 1.4rem);
+            font-weight: 800;
             color: var(--dark-gold);
             letter-spacing: 0.08em;
             line-height: 1;
         }
         .brand-text span {
-            font-size: clamp(0.55rem, 1.8vw, 0.68rem);
+            font-size: clamp(0.58rem, 1.8vw, 0.7rem);
             color: var(--mid-text);
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
             display: block;
@@ -108,13 +110,13 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px clamp(10px, 2vw, 16px);
+            padding: 8px clamp(12px, 2.2vw, 18px);
             border-radius: 20px;
             border: 1.5px solid var(--dark-gold);
             background: #FAF8F4;
             color: var(--dark-gold);
-            font-size: clamp(0.72rem, 2vw, 0.82rem);
-            font-weight: 700;
+            font-size: clamp(0.74rem, 2vw, 0.84rem);
+            font-weight: 800;
             text-decoration: none;
             letter-spacing: 0.06em;
             text-transform: uppercase;
@@ -124,117 +126,138 @@
             background: var(--dark-gold);
             color: #FFFFFF;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(138,104,31,0.2);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.25);
         }
 
-        /* ── Main Page Layout ── */
+        /* ── Main Page Container ── */
         .page-container {
             flex: 1;
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: clamp(14px, 3vw, 36px) clamp(12px, 3vw, 24px);
+            padding: clamp(16px, 3.5vw, 36px) clamp(12px, 3vw, 24px);
         }
 
         /* ════════════════════════════════════════════════════
-           GUEST / AUTH VIEW (LOGIN / REGISTER / FORGOT)
+           HIGH-VISIBILITY AUTH CARD VIEW
         ════════════════════════════════════════════════════ */
         .auth-card-wrap {
-            max-width: 520px;
+            max-width: 530px;
             margin: clamp(10px, 4vw, 30px) auto;
             background: #FFFFFF;
-            border-radius: 16px;
-            border: 1.5px solid var(--dark-gold);
-            box-shadow: 0 10px 36px rgba(0,0,0,0.08);
+            border-radius: 18px;
+            border: 2px solid var(--dark-gold);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
             overflow: visible;
         }
+        
+        /* Form Card Header */
         .auth-card-header {
-            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
-            padding: 20px 24px 16px;
-            border-bottom: 1.5px solid var(--gold-border);
+            background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 100%);
+            padding: 22px 24px 18px;
+            border-bottom: 2px solid var(--gold-border);
             text-align: center;
-            border-radius: 14px 14px 0 0;
+            border-radius: 16px 16px 0 0;
         }
         .auth-card-header h2 {
             font-family: var(--font-serif);
-            font-size: clamp(1.15rem, 3.5vw, 1.4rem);
-            font-weight: 700;
+            font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+            font-weight: 800;
             color: var(--dark-gold);
             letter-spacing: 0.05em;
             margin-bottom: 4px;
+            line-height: 1.2;
         }
         .auth-card-header p {
-            font-size: 0.76rem;
+            font-size: 0.8rem;
             color: var(--mid-text);
-            font-weight: 500;
+            font-weight: 600;
         }
+
+        /* Navigation Tabs */
         .auth-tabs {
             display: flex;
-            background: #F0EAD8;
-            border-bottom: 1px solid var(--gold-border);
+            background: #EFE7D5;
+            border-bottom: 1.5px solid var(--gold-border);
         }
         .auth-tab {
             flex: 1;
-            padding: 12px;
+            padding: 13px 8px;
             background: transparent;
             border: none;
-            border-bottom: 3px solid transparent;
+            border-bottom: 3.5px solid transparent;
             font-family: var(--font-sans);
-            font-size: 0.78rem;
-            font-weight: 700;
+            font-size: 0.82rem;
+            font-weight: 800;
             color: var(--mid-text);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-align: center;
         }
         .auth-tab.active {
             background: #FFFFFF;
             color: var(--dark-gold);
             border-bottom-color: var(--dark-gold);
         }
+
+        /* Form Body */
         .auth-body {
-            padding: clamp(16px, 3.5vw, 24px);
+            padding: clamp(18px, 4vw, 28px);
         }
         .auth-form-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 16px;
+            gap: 7px;
+            margin-bottom: 18px;
             position: relative;
         }
+        
+        /* Ultra Clear Labels */
         .auth-label {
-            font-size: 0.72rem;
-            font-weight: 700;
+            font-size: 0.76rem;
+            font-weight: 800;
             color: var(--dark-text);
-            letter-spacing: 0.06em;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .auth-label .req { color: #D32F2F; margin-left: 2px; }
+        .auth-label .req {
+            color: #C62828;
+            font-weight: 900;
+            font-size: 0.9rem;
+            margin-left: 2px;
+        }
         
+        /* Inputs */
         .auth-input {
             width: 100%;
-            height: 44px;
-            border: 1.5px solid var(--soft-platinum);
-            border-radius: 8px;
+            height: 46px;
+            border: 1.8px solid var(--soft-platinum);
+            border-radius: 9px;
             padding: 0 14px;
             font-family: var(--font-sans);
-            font-size: 0.88rem;
+            font-size: 0.92rem;
+            font-weight: 600;
             color: var(--dark-text);
-            background: #FAF9F5;
+            background: #FFFFFF;
             outline: none;
             transition: all 0.2s ease;
+        }
+        .auth-input::placeholder {
+            color: var(--light-text);
+            font-weight: 500;
         }
         .auth-input:focus {
             border-color: var(--dark-gold);
             background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
         }
 
-        /* ── Grid for City & State (Side-by-Side) ── */
+        /* Side-by-Side Grid for City & State */
         .auth-grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -253,14 +276,14 @@
         }
         .custom-select-trigger {
             width: 100%;
-            height: 44px;
-            border: 1.5px solid var(--soft-platinum);
-            border-radius: 8px;
-            padding: 0 12px;
-            background: #FAF9F5;
+            height: 46px;
+            border: 1.8px solid var(--soft-platinum);
+            border-radius: 9px;
+            padding: 0 14px;
+            background: #FFFFFF;
             color: var(--dark-text);
-            font-size: 0.86rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -271,8 +294,7 @@
         .custom-select-trigger:hover,
         .custom-select-box.active .custom-select-trigger {
             border-color: var(--dark-gold);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
         }
         .custom-select-val {
             display: flex;
@@ -283,10 +305,10 @@
             text-overflow: ellipsis;
         }
         .custom-select-arrow {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             stroke: var(--dark-gold);
-            stroke-width: 2.2;
+            stroke-width: 2.5;
             fill: none;
             transition: transform 0.2s ease;
             flex-shrink: 0;
@@ -302,10 +324,10 @@
             left: 0;
             right: 0;
             background: #FFFFFF;
-            border: 1.5px solid var(--dark-gold);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-            max-height: 260px;
+            border: 2px solid var(--dark-gold);
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+            max-height: 280px;
             z-index: 1000;
             display: none;
             flex-direction: column;
@@ -320,24 +342,27 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .dropdown-search-box {
-            padding: 8px 10px;
-            background: #FAF8F4;
-            border-bottom: 1px solid var(--soft-platinum);
+            padding: 8px 12px;
+            background: #FAF6EE;
+            border-bottom: 1.5px solid var(--soft-platinum);
             flex-shrink: 0;
         }
         .dropdown-search-input {
             width: 100%;
-            height: 32px;
-            border: 1px solid var(--soft-platinum);
+            height: 36px;
+            border: 1.5px solid var(--soft-platinum);
             border-radius: 6px;
-            padding: 0 10px;
+            padding: 0 12px;
             font-family: var(--font-sans);
-            font-size: 0.78rem;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--dark-text);
             outline: none;
             background: #FFFFFF;
         }
         .dropdown-search-input:focus {
             border-color: var(--dark-gold);
+            box-shadow: 0 0 0 2px rgba(138,104,31,0.2);
         }
         .dropdown-options-scroll {
             overflow-y: auto;
@@ -347,18 +372,18 @@
         }
 
         .custom-select-option {
-            padding: 9px 14px;
-            font-size: 0.82rem;
+            padding: 10px 14px;
+            font-size: 0.86rem;
             color: var(--dark-text);
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: all 0.15s ease;
         }
         .custom-select-option:hover {
-            background: #FAF5E8;
+            background: #FAF3E0;
             color: var(--dark-gold);
             font-weight: 700;
             padding-left: 18px;
@@ -369,12 +394,13 @@
             font-weight: 700;
         }
         .select-flag-img {
-            width: 22px;
-            height: 15px;
+            width: 24px;
+            height: 16px;
             object-fit: cover;
-            border-radius: 2px;
-            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.12);
             flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         /* ── Role Selection Pill Buttons ── */
@@ -385,14 +411,14 @@
         }
         .role-pill-btn {
             flex: 1;
-            padding: 10px 8px;
-            border-radius: 8px;
-            border: 1.5px solid var(--soft-platinum);
+            padding: 11px 8px;
+            border-radius: 9px;
+            border: 1.8px solid var(--soft-platinum);
             background: #FAF9F5;
             color: var(--dark-text);
             font-family: var(--font-sans);
-            font-size: 0.78rem;
-            font-weight: 700;
+            font-size: 0.82rem;
+            font-weight: 800;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -409,96 +435,97 @@
             border-color: var(--dark-gold);
             background: #FAF3E0;
             color: var(--dark-gold);
-            box-shadow: 0 2px 8px rgba(138,104,31,0.18);
+            box-shadow: 0 2px 10px rgba(138,104,31,0.22);
         }
 
         /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
         .wa-phone-group {
             display: flex;
-            border: 1.5px solid var(--soft-platinum);
-            border-radius: 8px;
-            background: #FAF9F5;
+            border: 1.8px solid var(--soft-platinum);
+            border-radius: 9px;
+            background: #FFFFFF;
             overflow: hidden;
             transition: all 0.2s ease;
         }
         .wa-phone-group:focus-within {
             border-color: var(--dark-gold);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+            box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
         }
         .wa-phone-group.is-invalid {
-            border-color: #D32F2F !important;
-            box-shadow: 0 0 0 3px rgba(211,47,47,0.15) !important;
+            border-color: #C62828 !important;
+            box-shadow: 0 0 0 3.5px rgba(198,40,40,0.2) !important;
         }
         .wa-flag-prefix {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 0 12px;
-            background: #F0EAD8;
-            border-right: 1px solid var(--soft-platinum);
-            font-size: 0.82rem;
-            font-weight: 700;
+            background: #EFE8D6;
+            border-right: 1.8px solid var(--soft-platinum);
+            font-size: 0.86rem;
+            font-weight: 800;
             color: var(--dark-gold);
             flex-shrink: 0;
             user-select: none;
         }
         .wa-flag-img-preview {
-            width: 22px;
-            height: 15px;
+            width: 24px;
+            height: 16px;
             object-fit: cover;
-            border-radius: 2px;
-            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.12);
         }
         .wa-input-field {
             flex: 1;
-            height: 44px;
+            height: 46px;
             border: none;
             outline: none;
             background: transparent;
             padding: 0 14px;
             font-family: var(--font-sans);
-            font-size: 0.88rem;
+            font-size: 0.92rem;
+            font-weight: 600;
             color: var(--dark-text);
             width: 100%;
         }
         .validation-error-msg {
-            font-size: 0.68rem;
-            color: #D32F2F;
-            font-weight: 600;
+            font-size: 0.72rem;
+            color: #C62828;
+            font-weight: 700;
             display: none;
-            margin-top: 3px;
+            margin-top: 4px;
         }
 
+        /* Prominent Action Button */
         .auth-btn-submit {
             width: 100%;
-            padding: 14px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 9px;
             border: none;
             background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
             color: #FFFFFF;
             font-family: var(--font-sans);
-            font-size: 0.88rem;
-            font-weight: 700;
+            font-size: 0.92rem;
+            font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(138,104,31,0.25);
+            box-shadow: 0 5px 18px rgba(138,104,31,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .auth-btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138,104,31,0.38);
+            box-shadow: 0 8px 24px rgba(138,104,31,0.42);
         }
         .auth-link {
             color: var(--dark-gold);
-            font-size: 0.74rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             text-decoration: underline;
             background: none;
             border: none;
@@ -519,7 +546,7 @@
 
         /* VIP Profile Hero Banner */
         .profile-hero {
-            background: linear-gradient(135deg, #24211C 0%, #383127 100%);
+            background: linear-gradient(135deg, #201D17 0%, #362F24 100%);
             border: 2px solid var(--dark-gold);
             border-radius: 16px;
             padding: clamp(16px, 4vw, 28px);
@@ -548,8 +575,8 @@
             gap: clamp(12px, 3vw, 20px);
         }
         .profile-avatar-circle {
-            width: clamp(52px, 10vw, 68px);
-            height: clamp(52px, 10vw, 68px);
+            width: clamp(54px, 10vw, 70px);
+            height: clamp(54px, 10vw, 70px);
             border-radius: 50%;
             background: linear-gradient(135deg, var(--dark-gold) 0%, #C5A859 100%);
             color: #FFFFFF;
@@ -558,38 +585,39 @@
             justify-content: center;
             font-family: var(--font-serif);
             font-size: clamp(1.4rem, 4vw, 1.8rem);
-            font-weight: 700;
+            font-weight: 800;
             box-shadow: 0 4px 16px rgba(138,104,31,0.4);
             border: 2px solid #FFFFFF;
             flex-shrink: 0;
         }
         .profile-details h2 {
             font-family: var(--font-serif);
-            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-            font-weight: 700;
+            font-size: clamp(1.15rem, 3.5vw, 1.55rem);
+            font-weight: 800;
             color: #FAF5E8;
             margin-bottom: 3px;
         }
         .profile-phone {
-            font-size: clamp(0.74rem, 2vw, 0.85rem);
-            color: #C5BBAA;
-            font-weight: 500;
+            font-size: clamp(0.76rem, 2vw, 0.88rem);
+            color: #D6CCA8;
+            font-weight: 600;
         }
         .profile-location {
-            font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+            font-size: clamp(0.72rem, 1.8vw, 0.8rem);
             color: #E2C988;
+            font-weight: 600;
             margin-top: 2px;
         }
         .vip-badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 12px;
-            background: rgba(138,104,31,0.3);
+            background: rgba(138,104,31,0.35);
             border: 1px solid var(--dark-gold);
             color: #E2C988;
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -597,13 +625,13 @@
         }
 
         .logout-btn {
-            padding: 8px 18px;
+            padding: 9px 20px;
             border-radius: 20px;
-            border: 1.5px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.08);
+            border: 1.5px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1);
             color: #FFFFFF;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             cursor: pointer;
             transition: all var(--transition);
             text-transform: uppercase;
@@ -611,8 +639,8 @@
             flex-shrink: 0;
         }
         .logout-btn:hover {
-            background: #D32F2F;
-            border-color: #D32F2F;
+            background: #C62828;
+            border-color: #C62828;
             transform: scale(1.04);
         }
 
@@ -633,8 +661,8 @@
             background: #FFFFFF;
             border: 1.5px solid var(--gold-border);
             border-radius: 14px;
-            padding: clamp(14px, 3vw, 22px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            padding: clamp(16px, 3vw, 24px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
         }
         .dash-card-header {
             display: flex;
@@ -642,12 +670,12 @@
             justify-content: space-between;
             padding-bottom: 12px;
             margin-bottom: 16px;
-            border-bottom: 1px dashed var(--gold-border);
+            border-bottom: 1.5px dashed var(--gold-border);
         }
         .dash-card-title {
             font-family: var(--font-serif);
-            font-size: clamp(0.92rem, 2.5vw, 1.1rem);
-            font-weight: 700;
+            font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+            font-weight: 800;
             color: var(--dark-gold);
             letter-spacing: 0.05em;
             display: flex;
@@ -658,7 +686,7 @@
             width: 18px;
             height: 18px;
             stroke: currentColor;
-            stroke-width: 2;
+            stroke-width: 2.2;
             fill: none;
         }
 
@@ -680,7 +708,7 @@
         }
         .order-box:hover {
             border-color: var(--dark-gold);
-            box-shadow: 0 4px 12px rgba(138,104,31,0.08);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.1);
         }
         .order-top {
             display: flex;
@@ -689,15 +717,15 @@
         }
         .order-id {
             font-family: var(--font-serif);
-            font-size: 0.88rem;
-            font-weight: 700;
+            font-size: 0.9rem;
+            font-weight: 800;
             color: var(--dark-text);
         }
         .order-status-badge {
             padding: 3px 8px;
             border-radius: 12px;
-            font-size: 0.62rem;
-            font-weight: 700;
+            font-size: 0.65rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -708,7 +736,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--mid-text);
         }
         .order-thumb {
@@ -726,10 +754,10 @@
             justify-content: space-between;
             padding-top: 8px;
             border-top: 1px solid var(--soft-platinum);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
         }
         .order-total-txt {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--dark-gold);
         }
         .track-wa-btn {
@@ -737,15 +765,15 @@
             align-items: center;
             gap: 4px;
             color: #25D366;
-            font-weight: 700;
+            font-weight: 800;
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
         }
         .track-wa-btn:hover {
             text-decoration: underline;
         }
 
-        /* Quick Stat Cards */
+        /* Quick Stat Tiles */
         .stat-tiles {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -756,7 +784,7 @@
             background: #FFFFFF;
             border: 1.5px solid var(--gold-border);
             border-radius: 10px;
-            padding: 14px 12px;
+            padding: 16px 12px;
             text-align: center;
             text-decoration: none;
             color: inherit;
@@ -765,21 +793,21 @@
         .stat-tile:hover {
             border-color: var(--dark-gold);
             transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(138,104,31,0.12);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.15);
         }
         .stat-tile-num {
-            font-size: 1.4rem;
-            font-weight: 800;
+            font-size: 1.45rem;
+            font-weight: 900;
             color: var(--dark-gold);
             font-family: var(--font-serif);
         }
         .stat-tile-lbl {
-            font-size: 0.68rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 800;
             color: var(--mid-text);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         /* Concierge Box */
@@ -787,20 +815,22 @@
             background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
             border: 1.5px solid var(--gold-border);
             border-radius: 12px;
-            padding: 16px;
+            padding: 18px;
             text-align: center;
         }
         .concierge-card h4 {
             font-family: var(--font-serif);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 800;
             color: var(--dark-gold);
             margin-bottom: 6px;
         }
         .concierge-card p {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--mid-text);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             line-height: 1.4;
+            font-weight: 500;
         }
         .concierge-btn {
             display: inline-flex;
@@ -808,12 +838,12 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             border-radius: 8px;
             background: #25D366;
             color: #FFFFFF;
-            font-weight: 700;
-            font-size: 0.8rem;
+            font-weight: 800;
+            font-size: 0.84rem;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 0.08em;
@@ -839,7 +869,7 @@
         </a>
 
         <a href="shop.php" class="return-shop-btn">
-            <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>Back to Shop</span>
         </a>
     </header>
@@ -873,11 +903,14 @@
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPass">
                             <span>Password <span class="req">*</span></span>
-                            <button type="button" class="auth-link" onclick="switchAuthTab('forgot')">Forgot?</button>
+                            <button type="button" class="auth-link" onclick="switchAuthTab('forgot')">Forgot Password?</button>
                         </label>
                         <input type="password" id="loginPass" class="auth-input" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="auth-btn-submit">Sign In to My Account</button>
+                    <button type="submit" class="auth-btn-submit">
+                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                        <span>Sign In to My Account</span>
+                    </button>
                 </form>
 
                 <!-- 2. REGISTER FORM -->
@@ -902,7 +935,7 @@
                             </div>
                             <div class="custom-select-menu" id="countryDropdownMenu">
                                 <div class="dropdown-search-box">
-                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
+                                    <input type="text" id="countrySearchInput" class="dropdown-search-input" placeholder="🔍 Search world country..." oninput="filterCountryOptions(this.value)" onclick="event.stopPropagation()">
                                 </div>
                                 <div class="dropdown-options-scroll" id="countryOptionsList">
                                     <!-- Populated dynamically by JS with All World Countries -->
@@ -915,7 +948,7 @@
                     <div class="auth-form-group">
                         <label class="auth-label" for="regPhone">
                             <span>Mobile Number <span class="req">*</span></span>
-                            <span id="digitCountHint" style="font-size:0.65rem; color:var(--light-text); text-transform:none;">10-digit number</span>
+                            <span id="digitCountHint" style="font-size:0.68rem; color:var(--light-text); text-transform:none; font-weight:600;">10-digit number</span>
                         </label>
                         <div class="wa-phone-group" id="waPhoneGroup">
                             <div class="wa-flag-prefix">
@@ -958,7 +991,7 @@
                                 </div>
                                 <div class="custom-select-menu" id="stateDropdownMenu">
                                     <div class="dropdown-search-box">
-                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
+                                        <input type="text" id="stateSearchInput" class="dropdown-search-input" placeholder="🔍 Search state..." oninput="filterStateOptions(this.value)" onclick="event.stopPropagation()">
                                     </div>
                                     <div class="dropdown-options-scroll" id="stateOptionsList">
                                         <!-- Populated dynamically by JS with States of Selected Country -->
@@ -995,25 +1028,28 @@
 
                     <!-- Submit Button -->
                     <button type="submit" class="auth-btn-submit" id="regSubmitBtn">
-                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                         <span>Create My Account</span>
                     </button>
 
-                    <div style="text-align:center; font-size:0.75rem; margin-top:10px; color:var(--mid-text);">
+                    <div style="text-align:center; font-size:0.78rem; margin-top:12px; color:var(--mid-text); font-weight:600;">
                         Already registered? <button type="button" class="auth-link" onclick="switchAuthTab('login')">Sign In</button>
                     </div>
                 </form>
 
                 <!-- 3. FORGOT PASSWORD FORM -->
                 <form id="forgotForm" style="display:none;" onsubmit="event.preventDefault(); handleForgotSubmit();">
-                    <p style="font-size:0.78rem; color:var(--mid-text); margin-bottom:14px; line-height:1.4;">
+                    <p style="font-size:0.8rem; color:var(--mid-text); margin-bottom:14px; line-height:1.4; font-weight:500;">
                         Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset link on WhatsApp.
                     </p>
                     <div class="auth-form-group">
                         <label class="auth-label" for="forgotInput">WhatsApp Number / Email</label>
                         <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210" required>
                     </div>
-                    <button type="submit" class="auth-btn-submit">Send Reset Link via WhatsApp</button>
+                    <button type="submit" class="auth-btn-submit">
+                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        <span>Send Reset Link via WhatsApp</span>
+                    </button>
                 </form>
 
             </div>
@@ -1064,8 +1100,8 @@
                             <div class="order-item-detail">
                                 <img src="images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src='images/product1.png';">
                                 <div>
-                                    <div style="font-weight:700; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
-                                    <div style="font-size:0.72rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
+                                    <div style="font-weight:800; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
+                                    <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
                                 </div>
                             </div>
                             <div class="order-actions-bar">
@@ -1085,8 +1121,8 @@
                             <div class="order-item-detail">
                                 <img src="images/product1.png" alt="Saree" class="order-thumb">
                                 <div>
-                                    <div style="font-weight:700; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
-                                    <div style="font-size:0.72rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>
+                                    <div style="font-weight:800; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
+                                    <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>
                                 </div>
                             </div>
                             <div class="order-actions-bar">
@@ -1123,7 +1159,7 @@
                         </a>
                     </div>
 
-                    <a href="shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:block;">
+                    <a href="shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
                         Browse Luxury Catalog
                     </a>
 
@@ -1266,7 +1302,7 @@
 
             var html = '';
             if (filtered.length === 0) {
-                html = '<div style="padding:12px; font-size:0.75rem; color:var(--light-text); text-align:center;">No matching country found</div>';
+                html = '<div style="padding:12px; font-size:0.78rem; color:var(--light-text); text-align:center; font-weight:600;">No matching country found</div>';
             } else {
                 filtered.forEach(function(c) {
                     var isSel = c.code === selectedCountry.code;
@@ -1294,7 +1330,7 @@
 
             var html = '<div class="custom-select-option" onclick="selectState(\'Select State\')">Select State</div>';
             if (filtered.length === 0) {
-                html += '<div style="padding:12px; font-size:0.75rem; color:var(--light-text); text-align:center;">No matching state found</div>';
+                html += '<div style="padding:12px; font-size:0.78rem; color:var(--light-text); text-align:center; font-weight:600;">No matching state found</div>';
             } else {
                 filtered.forEach(function(st) {
                     var isSel = st === selectedState;
