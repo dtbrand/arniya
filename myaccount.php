@@ -403,39 +403,113 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* ── Role Selection Pill Buttons ── */
+        /* ── Role Selection Pill Buttons with Real SVG Icons & Micro-Animations ── */
         .role-pill-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 2px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 4px;
         }
         .role-pill-btn {
-            flex: 1;
-            padding: 11px 8px;
-            border-radius: 9px;
-            border: 1.8px solid var(--soft-platinum);
-            background: #FAF9F5;
+            position: relative;
+            padding: 12px 8px;
+            border-radius: 11px;
+            border: 2px solid var(--soft-platinum);
+            background: #FFFFFF;
             color: var(--dark-text);
             font-family: var(--font-sans);
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             font-weight: 800;
             cursor: pointer;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             user-select: none;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
         .role-pill-btn:hover {
             border-color: var(--dark-gold);
-            background: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(138,104,31,0.18);
         }
         .role-pill-btn.selected {
             border-color: var(--dark-gold);
-            background: #FAF3E0;
-            color: var(--dark-gold);
-            box-shadow: 0 2px 10px rgba(138,104,31,0.22);
+            background: linear-gradient(135deg, #FAF4E5 0%, #F5E8C8 100%);
+            color: var(--deep-gold);
+            box-shadow: 0 4px 18px rgba(138,104,31,0.28);
+            transform: translateY(-2px);
+        }
+        
+        /* Active Checkmark Pill Indicator */
+        .role-pill-btn.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--dark-gold);
+            color: #FFFFFF;
+            font-size: 0.55rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: badgePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes badgePop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* SVG Role Icons */
+        .role-svg-icon {
+            width: 26px;
+            height: 26px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .role-svg-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Specific Animated States */
+        .role-pill-btn:hover .role-svg-retailer {
+            animation: bagSwing 0.6s ease-in-out;
+        }
+        .role-pill-btn:hover .role-svg-wholesaler {
+            animation: boxBounce 0.6s ease-in-out;
+        }
+        .role-pill-btn:hover .role-svg-reseller {
+            animation: caseTilt 0.6s ease-in-out;
+        }
+
+        .role-pill-btn.selected .role-svg-icon {
+            transform: scale(1.15);
+        }
+
+        @keyframes bagSwing {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-12deg) scale(1.1); }
+            75% { transform: rotate(12deg) scale(1.1); }
+        }
+        @keyframes boxBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.12); }
+        }
+        @keyframes caseTilt {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            30% { transform: rotate(-10deg) scale(1.1); }
+            70% { transform: rotate(10deg) scale(1.1); }
         }
 
         /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
@@ -1001,20 +1075,44 @@
                         </div>
                     </div>
 
-                    <!-- Role Option (Pills: Retailer, Wholesaler, Reseller) -->
+                    <!-- Role Option (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
                     <div class="auth-form-group">
                         <label class="auth-label">Your Role <span class="req">*</span></label>
                         <div class="role-pill-group">
+                            <!-- Retailer -->
                             <div class="role-pill-btn selected" data-role="Retailer" onclick="selectRole('Retailer')">
-                                <span>🛍️</span>
+                                <div class="role-svg-icon role-svg-retailer">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" stroke-linejoin="round"/>
+                                        <line x1="3" y1="6" x2="21" y2="6" stroke="#1976D2" stroke-width="2"/>
+                                        <path d="M16 10a4 4 0 0 1-8 0" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
                                 <span>Retailer</span>
                             </div>
+
+                            <!-- Wholesaler -->
                             <div class="role-pill-btn" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
-                                <span>📦</span>
+                                <div class="role-svg-icon role-svg-wholesaler">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FFF3E0" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#E65100" stroke-width="2"/>
+                                        <line x1="12" y1="22.08" x2="12" y2="12" stroke="#E65100" stroke-width="2"/>
+                                    </svg>
+                                </div>
                                 <span>Wholesaler</span>
                             </div>
+
+                            <!-- Reseller -->
                             <div class="role-pill-btn" data-role="Reseller" onclick="selectRole('Reseller')">
-                                <span>💼</span>
+                                <div class="role-svg-icon role-svg-reseller">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <rect x="2" y="7" width="20" height="14" rx="2" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+                                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#2E7D32" stroke-width="2"/>
+                                        <line x1="12" y1="12" x2="12" y2="15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                        <line x1="2" y1="12" x2="22" y2="12" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                    </svg>
+                                </div>
                                 <span>Reseller</span>
                             </div>
                         </div>
