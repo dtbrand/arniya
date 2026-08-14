@@ -1,7 +1,7 @@
 <?php
 /**
  * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Myntra-Style In-Line Horizontal Scrolling Sliders for Country & State with Real Flag Images
+ * Exact Luxury Custom Select Dropdowns for Country & State with Real Flag Images, Roles & WhatsApp Validation
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -140,19 +140,20 @@
            GUEST / AUTH VIEW (LOGIN / REGISTER / FORGOT)
         ════════════════════════════════════════════════════ */
         .auth-card-wrap {
-            max-width: 580px;
+            max-width: 520px;
             margin: clamp(10px, 4vw, 30px) auto;
             background: #FFFFFF;
             border-radius: 16px;
             border: 1.5px solid var(--dark-gold);
             box-shadow: 0 10px 36px rgba(0,0,0,0.08);
-            overflow: hidden;
+            overflow: visible;
         }
         .auth-card-header {
             background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
             padding: 20px 24px 16px;
             border-bottom: 1.5px solid var(--gold-border);
             text-align: center;
+            border-radius: 14px 14px 0 0;
         }
         .auth-card-header h2 {
             font-family: var(--font-serif);
@@ -193,18 +194,21 @@
             border-bottom-color: var(--dark-gold);
         }
         .auth-body {
-            padding: clamp(16px, 3.5vw, 26px);
+            padding: clamp(16px, 3.5vw, 24px);
         }
         .auth-form-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
+            position: relative;
         }
         .auth-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: var(--dark-text);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -213,12 +217,12 @@
         
         .auth-input {
             width: 100%;
-            height: 42px;
+            height: 44px;
             border: 1.5px solid var(--soft-platinum);
             border-radius: 8px;
-            padding: 0 12px;
+            padding: 0 14px;
             font-family: var(--font-sans);
-            font-size: 0.86rem;
+            font-size: 0.88rem;
             color: var(--dark-text);
             background: #FAF9F5;
             outline: none;
@@ -230,182 +234,157 @@
             box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
         }
 
-        /* ── Role Selection Cards (Wholesaler, Retailer, Reseller) ── */
-        .role-selector-grid {
+        /* ── Grid for City & State (Side-by-Side) ── */
+        .auth-grid-2 {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 2px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        .role-card {
-            border: 1.5px solid var(--soft-platinum);
-            border-radius: 10px;
-            padding: 10px 6px;
-            text-align: center;
-            background: #FAF8F4;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            user-select: none;
-        }
-        .role-card:hover {
-            border-color: var(--dark-gold);
-            background: #FFFFFF;
-        }
-        .role-card.selected {
-            border-color: var(--dark-gold);
-            background: #FAF3E0;
-            box-shadow: 0 2px 10px rgba(138,104,31,0.15);
-        }
-        .role-icon {
-            font-size: 1.3rem;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .role-title {
-            font-size: clamp(0.72rem, 2vw, 0.8rem);
-            font-weight: 700;
-            color: var(--dark-text);
-            display: block;
-        }
-        .role-badge {
-            font-size: 0.58rem;
-            color: var(--dark-gold);
-            font-weight: 600;
-            display: block;
-            margin-top: 2px;
+        @media (max-width: 480px) {
+            .auth-grid-2 {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* ════════════════════════════════════════════════════
-           MYNTRA-STYLE INLINE HORIZONTAL SCROLLING SLIDERS
-        ════════════════════════════════════════════════════ */
-        .myntra-slider-wrap {
+        /* ── Custom Luxury Dropdown Select Component ── */
+        .custom-select-box {
             position: relative;
-            display: flex;
-            align-items: center;
-            margin-top: 2px;
-        }
-        .slider-arrow-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 1px solid var(--gold-border);
-            background: #FFFFFF;
-            color: var(--dark-gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: absolute;
-            z-index: 5;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: all 0.2s ease;
-            font-weight: 800;
-            font-size: 0.9rem;
-            user-select: none;
-        }
-        .slider-arrow-btn:hover {
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            transform: scale(1.1);
-        }
-        .slider-arrow-btn.prev { left: -10px; }
-        .slider-arrow-btn.next { right: -10px; }
-
-        .myntra-slider-track {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 8px 6px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
             width: 100%;
         }
-        .myntra-slider-track::-webkit-scrollbar { display: none; }
-
-        /* Country Slider Card */
-        .myntra-country-card {
-            flex: 0 0 115px;
-            background: #FFFFFF;
+        .custom-select-trigger {
+            width: 100%;
+            height: 44px;
             border: 1.5px solid var(--soft-platinum);
-            border-radius: 12px;
-            padding: 10px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            user-select: none;
-            position: relative;
-        }
-        .myntra-country-card:hover {
-            border-color: var(--dark-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(138,104,31,0.12);
-        }
-        .myntra-country-card.selected {
-            border-color: var(--dark-gold);
-            background: #FAF3E0;
-            box-shadow: 0 0 0 2px var(--dark-gold);
-        }
-        .myntra-flag-img {
-            width: 32px;
-            height: 22px;
-            object-fit: cover;
-            border-radius: 4px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-            border: 1px solid rgba(0,0,0,0.08);
-        }
-        .myntra-country-name {
-            font-size: 0.76rem;
-            font-weight: 700;
+            border-radius: 8px;
+            padding: 0 12px;
+            background: #FAF9F5;
             color: var(--dark-text);
+            font-size: 0.86rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .custom-select-trigger:hover,
+        .custom-select-box.active .custom-select-trigger {
+            border-color: var(--dark-gold);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+        }
+        .custom-select-val {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
         }
-        .myntra-dial-code {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--dark-gold);
+        .custom-select-arrow {
+            width: 16px;
+            height: 16px;
+            stroke: var(--dark-gold);
+            stroke-width: 2.2;
+            fill: none;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .custom-select-box.active .custom-select-arrow {
+            transform: rotate(180deg);
         }
 
-        /* State Slider Card */
-        .myntra-state-card {
-            flex: 0 0 auto;
-            min-width: 90px;
+        /* Custom Scrolling Dropdown Menu */
+        .custom-select-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
             background: #FFFFFF;
+            border: 1.5px solid var(--dark-gold);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            padding: 4px 0;
+            scrollbar-width: thin;
+            animation: customDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .custom-select-box.active .custom-select-menu {
+            display: flex;
+        }
+        @keyframes customDropFade {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .custom-select-option {
+            padding: 9px 14px;
+            font-size: 0.82rem;
+            color: var(--dark-text);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s ease;
+        }
+        .custom-select-option:hover {
+            background: #FAF5E8;
+            color: var(--dark-gold);
+            font-weight: 700;
+            padding-left: 18px;
+        }
+        .custom-select-option.selected {
+            background: var(--dark-gold);
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+        .select-flag-img {
+            width: 22px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 2px;
+            border: 1px solid rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        /* ── Role Selection Pill Buttons ── */
+        .role-pill-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .role-pill-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border-radius: 8px;
             border: 1.5px solid var(--soft-platinum);
-            border-radius: 20px;
-            padding: 7px 14px;
-            display: inline-flex;
+            background: #FAF9F5;
+            color: var(--dark-text);
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
-            white-space: nowrap;
-            font-size: 0.76rem;
-            font-weight: 600;
-            color: var(--dark-text);
         }
-        .myntra-state-card:hover {
+        .role-pill-btn:hover {
             border-color: var(--dark-gold);
+            background: #FFFFFF;
+        }
+        .role-pill-btn.selected {
+            border-color: var(--dark-gold);
+            background: #FAF3E0;
             color: var(--dark-gold);
-            background: #FAF8F4;
-        }
-        .myntra-state-card.selected {
-            background: var(--dark-gold);
-            color: #FFFFFF;
-            border-color: var(--dark-gold);
-            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
-            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.18);
         }
 
         /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
@@ -430,7 +409,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 0 10px;
+            padding: 0 12px;
             background: #F0EAD8;
             border-right: 1px solid var(--soft-platinum);
             font-size: 0.82rem;
@@ -448,11 +427,11 @@
         }
         .wa-input-field {
             flex: 1;
-            height: 42px;
+            height: 44px;
             border: none;
             outline: none;
             background: transparent;
-            padding: 0 12px;
+            padding: 0 14px;
             font-family: var(--font-sans);
             font-size: 0.88rem;
             color: var(--dark-text);
@@ -468,20 +447,24 @@
 
         .auth-btn-submit {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             border-radius: 8px;
             border: none;
             background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
             color: #FFFFFF;
             font-family: var(--font-sans);
-            font-size: 0.86rem;
+            font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 4px 14px rgba(138,104,31,0.25);
-            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
         }
         .auth-btn-submit:hover {
             transform: translateY(-2px);
@@ -878,83 +861,42 @@
                     <!-- Full Name -->
                     <div class="auth-form-group">
                         <label class="auth-label" for="regName">Full Name <span class="req">*</span></label>
-                        <input type="text" id="regName" class="auth-input" placeholder="e.g. Radhika Sharma" required>
+                        <input type="text" id="regName" class="auth-input" placeholder="e.g. Rajan Mehta" required>
                     </div>
 
-                    <!-- Role Option (Retailer, Wholesaler, Reseller) -->
+                    <!-- Country Option (Custom Dropdown) -->
                     <div class="auth-form-group">
-                        <label class="auth-label">Account Role / Purpose <span class="req">*</span></label>
-                        <div class="role-selector-grid">
-                            <div class="role-card selected" data-role="Retailer" onclick="selectRole('Retailer')">
-                                <span class="role-icon">🛍️</span>
-                                <span class="role-title">Retailer</span>
-                                <span class="role-badge">Personal Buyer</span>
+                        <label class="auth-label">Country <span class="req">*</span></label>
+                        <div class="custom-select-box" id="countrySelectBox">
+                            <div class="custom-select-trigger" onclick="toggleDropdown('countrySelectBox')">
+                                <div class="custom-select-val" id="selectedCountryDisplay">
+                                    <img src="https://flagcdn.com/w40/in.png" alt="India" class="select-flag-img" id="displayCountryFlag">
+                                    <span id="displayCountryText">India (+91)</span>
+                                </div>
+                                <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
-                            <div class="role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
-                                <span class="role-icon">📦</span>
-                                <span class="role-title">Wholesaler</span>
-                                <span class="role-badge">Bulk Orders</span>
-                            </div>
-                            <div class="role-card" data-role="Reseller" onclick="selectRole('Reseller')">
-                                <span class="role-icon">💼</span>
-                                <span class="role-title">Reseller</span>
-                                <span class="role-badge">Boutique Seller</span>
+                            <div class="custom-select-menu" id="countryDropdownMenu">
+                                <!-- Populated dynamically by JS with Flag images -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Country Option (Myntra Horizontal Card Slider) -->
-                    <div class="auth-form-group">
-                        <label class="auth-label">
-                            <span>Select Country <span class="req">*</span></span>
-                            <span id="selectedCountryDisplayBadge" style="color:var(--dark-gold); font-weight:700; font-size:0.75rem;">Selected: India (+91)</span>
-                        </label>
-                        <div class="myntra-slider-wrap">
-                            <button type="button" class="slider-arrow-btn prev" onclick="scrollSlider('countryTrack', -180)" aria-label="Scroll left">‹</button>
-                            <div class="myntra-slider-track" id="countryTrack">
-                                <!-- Populated dynamically with FlagCDN Images -->
-                            </div>
-                            <button type="button" class="slider-arrow-btn next" onclick="scrollSlider('countryTrack', 180)" aria-label="Scroll right">›</button>
-                        </div>
-                    </div>
-
-                    <!-- States Option (Myntra Horizontal Pill Slider - Auto list for selected Country) -->
-                    <div class="auth-form-group">
-                        <label class="auth-label">
-                            <span>Select State / Region <span class="req">*</span></span>
-                            <span id="selectedStateDisplayBadge" style="color:var(--dark-gold); font-weight:700; font-size:0.75rem;">Maharashtra</span>
-                        </label>
-                        <div class="myntra-slider-wrap">
-                            <button type="button" class="slider-arrow-btn prev" onclick="scrollSlider('stateTrack', -180)" aria-label="Scroll left">‹</button>
-                            <div class="myntra-slider-track" id="stateTrack">
-                                <!-- Populated dynamically based on selected country -->
-                            </div>
-                            <button type="button" class="slider-arrow-btn next" onclick="scrollSlider('stateTrack', 180)" aria-label="Scroll right">›</button>
-                        </div>
-                    </div>
-
-                    <!-- City Input / Suggestion -->
-                    <div class="auth-form-group">
-                        <label class="auth-label" for="regCity">City <span class="req">*</span></label>
-                        <input type="text" id="regCity" class="auth-input" placeholder="e.g. Mumbai, Surat, Ahmedabad..." required value="Mumbai">
-                    </div>
-
-                    <!-- WhatsApp Number with Auto Flag & Country Code + Digit Validation -->
+                    <!-- Mobile Number -->
                     <div class="auth-form-group">
                         <label class="auth-label" for="regPhone">
-                            <span>WhatsApp Number <span class="req">*</span></span>
-                            <span id="digitCountHint" style="font-size:0.65rem; color:var(--light-text);">10 digits required</span>
+                            <span>Mobile Number <span class="req">*</span></span>
+                            <span id="digitCountHint" style="font-size:0.65rem; color:var(--light-text); text-transform:none;">10-digit number</span>
                         </label>
                         <div class="wa-phone-group" id="waPhoneGroup">
                             <div class="wa-flag-prefix">
                                 <img id="waFlagImg" class="wa-flag-img-preview" src="https://flagcdn.com/w40/in.png" alt="India Flag">
-                                <span id="waDialCode">+91</span>
+                                <span id="waDialCode">IN +91</span>
                             </div>
                             <input
                                 type="tel"
                                 id="regPhone"
                                 class="wa-input-field"
-                                placeholder="9876543210"
+                                placeholder="10-digit number"
                                 maxlength="12"
                                 required
                                 autocomplete="tel"
@@ -966,19 +908,65 @@
                         </div>
                     </div>
 
-                    <!-- Email Address -->
+                    <!-- City & State Side-by-Side (Like Screenshot) -->
+                    <div class="auth-grid-2">
+                        <!-- City -->
+                        <div class="auth-form-group">
+                            <label class="auth-label" for="regCity">City <span class="req">*</span></label>
+                            <input type="text" id="regCity" class="auth-input" placeholder="e.g. Surat" required value="Surat">
+                        </div>
+
+                        <!-- State (Custom Scrolling Dropdown) -->
+                        <div class="auth-form-group">
+                            <label class="auth-label">State <span class="req">*</span></label>
+                            <div class="custom-select-box" id="stateSelectBox">
+                                <div class="custom-select-trigger" onclick="toggleDropdown('stateSelectBox')">
+                                    <div class="custom-select-val">
+                                        <span id="displayStateText">Select State</span>
+                                    </div>
+                                    <svg class="custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </div>
+                                <div class="custom-select-menu" id="stateDropdownMenu">
+                                    <!-- Populated dynamically by JS with Indian States -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role Option (Pills: Retailer, Wholesaler, Reseller) -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regEmail">Email Address (Optional for e-Invoice)</label>
-                        <input type="email" id="regEmail" class="auth-input" placeholder="radhika@example.com">
+                        <label class="auth-label">Your Role <span class="req">*</span></label>
+                        <div class="role-pill-group">
+                            <div class="role-pill-btn selected" data-role="Retailer" onclick="selectRole('Retailer')">
+                                <span>🛍️</span>
+                                <span>Retailer</span>
+                            </div>
+                            <div class="role-pill-btn" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
+                                <span>📦</span>
+                                <span>Wholesaler</span>
+                            </div>
+                            <div class="role-pill-btn" data-role="Reseller" onclick="selectRole('Reseller')">
+                                <span>💼</span>
+                                <span>Reseller</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Password -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regPass">Create Password <span class="req">*</span></label>
+                        <label class="auth-label" for="regPass">Password <span class="req">*</span></label>
                         <input type="password" id="regPass" class="auth-input" placeholder="Minimum 6 characters" required>
                     </div>
 
-                    <button type="submit" class="auth-btn-submit" id="regSubmitBtn">Create Luxury Account</button>
+                    <!-- Submit Button -->
+                    <button type="submit" class="auth-btn-submit" id="regSubmitBtn">
+                        <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <span>Create My Account</span>
+                    </button>
+
+                    <div style="text-align:center; font-size:0.75rem; margin-top:10px; color:var(--mid-text);">
+                        Already registered? <button type="button" class="auth-link" onclick="switchAuthTab('login')">Sign In</button>
+                    </div>
                 </form>
 
                 <!-- 3. FORGOT PASSWORD FORM -->
@@ -1006,7 +994,7 @@
                     <div class="profile-details">
                         <h2 id="dashUserName">Radhika Sharma</h2>
                         <div class="profile-phone" id="dashUserPhone">+91 98765 43210</div>
-                        <div class="profile-location" id="dashUserLocation">📍 Mumbai, Maharashtra, India</div>
+                        <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
                         <div class="vip-badge" id="dashUserRoleBadge">👑 Royal Retailer VIP Member</div>
                     </div>
                 </div>
@@ -1117,7 +1105,7 @@
     (function() {
         'use strict';
 
-        /* ── High Quality National Flag Image CDN List ── */
+        /* ── Complete Country & Indian States Data ── */
         var COUNTRIES_DATA = [
             {
                 code: 'in',
@@ -1126,20 +1114,22 @@
                 dial: '+91',
                 digits: 10,
                 states: [
-                    'Maharashtra', 'Gujarat', 'Rajasthan', 'Delhi (NCT)', 'Karnataka', 
-                    'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 
-                    'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 
-                    'Odisha', 'Assam', 'Goa', 'Jammu & Kashmir', 'Uttarakhand', 
-                    'Jharkhand', 'Chhattisgarh', 'Himachal Pradesh', 'Chandigarh'
+                    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 
+                    'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 
+                    'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 
+                    'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
+                    'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
+                    'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Delhi (NCT)', 
+                    'Jammu & Kashmir', 'Ladakh', 'Chandigarh', 'Puducherry'
                 ]
             },
             {
                 code: 'ae',
-                name: 'UAE',
+                name: 'United Arab Emirates',
                 flagImg: 'https://flagcdn.com/w40/ae.png',
                 dial: '+971',
                 digits: 9,
-                states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah']
+                states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain']
             },
             {
                 code: 'us',
@@ -1196,113 +1186,116 @@
                 dial: '+966',
                 digits: 9,
                 states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah']
-            },
-            {
-                code: 'de',
-                name: 'Germany',
-                flagImg: 'https://flagcdn.com/w40/de.png',
-                dial: '+49',
-                digits: 10,
-                states: ['Bavaria', 'Berlin', 'North Rhine-Westphalia', 'Hesse']
-            },
-            {
-                code: 'nz',
-                name: 'New Zealand',
-                flagImg: 'https://flagcdn.com/w40/nz.png',
-                dial: '+64',
-                digits: 9,
-                states: ['Auckland', 'Canterbury', 'Wellington', 'Waikato']
             }
         ];
 
         var selectedRole = 'Retailer';
-        var selectedCountry = COUNTRIES_DATA[0]; // First auto-selected: India (flag, +91)
-        var selectedState = selectedCountry.states[0]; // Maharashtra
+        var selectedCountry = COUNTRIES_DATA[0]; // Auto-selected: India (+91)
+        var selectedState = 'Gujarat';
 
-        /* Scroll Sliders with Arrow Buttons */
-        window.scrollSlider = function(trackId, amount) {
-            var track = document.getElementById(trackId);
-            if (track) {
-                track.scrollBy({ left: amount, behavior: 'smooth' });
+        /* Toggle Dropdown Menu */
+        window.toggleDropdown = function(boxId) {
+            var box = document.getElementById(boxId);
+            var isCurrentlyActive = box.classList.contains('active');
+            
+            /* Close all dropdowns first */
+            document.querySelectorAll('.custom-select-box').forEach(function(b){
+                b.classList.remove('active');
+            });
+
+            if (!isCurrentlyActive) {
+                box.classList.add('active');
             }
         };
 
-        /* Render Myntra-Style Country Slider */
-        function renderCountrySlider() {
-            var track = document.getElementById('countryTrack');
-            if (!track) return;
+        /* Close Dropdown on outside click */
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-select-box')) {
+                document.querySelectorAll('.custom-select-box').forEach(function(b){
+                    b.classList.remove('active');
+                });
+            }
+        });
+
+        /* Populate Country Dropdown */
+        function renderCountryDropdown() {
+            var menu = document.getElementById('countryDropdownMenu');
+            if (!menu) return;
 
             var html = '';
             COUNTRIES_DATA.forEach(function(c) {
                 var isSel = c.code === selectedCountry.code;
                 html += `
-                    <div class="myntra-country-card ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
-                        <img src="${c.flagImg}" alt="${c.name}" class="myntra-flag-img">
-                        <span class="myntra-country-name">${c.name}</span>
-                        <span class="myntra-dial-code">${c.dial}</span>
+                    <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
+                        <img src="${c.flagImg}" alt="${c.name}" class="select-flag-img">
+                        <span>${c.name} (${c.dial})</span>
                     </div>
                 `;
             });
-            track.innerHTML = html;
+            menu.innerHTML = html;
 
-            var badge = document.getElementById('selectedCountryDisplayBadge');
-            if (badge) badge.textContent = `Selected: ${selectedCountry.name} (${selectedCountry.dial})`;
+            /* Update Trigger Display */
+            var flagImg = document.getElementById('displayCountryFlag');
+            var txt = document.getElementById('displayCountryText');
+            if (flagImg) flagImg.src = selectedCountry.flagImg;
+            if (txt) txt.textContent = `${selectedCountry.name} (${selectedCountry.dial})`;
 
-            /* Update WhatsApp Flag and Dial Code Prefix */
+            /* Update WhatsApp Prefix */
             var waFlag = document.getElementById('waFlagImg');
             var waDial = document.getElementById('waDialCode');
             var hint = document.getElementById('digitCountHint');
 
             if (waFlag) waFlag.src = selectedCountry.flagImg;
-            if (waDial) waDial.textContent = selectedCountry.dial;
-            if (hint) hint.textContent = `${selectedCountry.digits} digits required`;
+            if (waDial) waDial.textContent = `${selectedCountry.code.toUpperCase()} ${selectedCountry.dial}`;
+            if (hint) hint.textContent = `${selectedCountry.digits}-digit number`;
 
-            renderStateSlider();
+            renderStateDropdown();
             validateWhatsAppDigits();
         }
 
-        /* Render Myntra-Style State Slider */
-        function renderStateSlider() {
-            var track = document.getElementById('stateTrack');
-            if (!track) return;
+        /* Populate State Dropdown (Exact match with screenshot) */
+        function renderStateDropdown() {
+            var menu = document.getElementById('stateDropdownMenu');
+            if (!menu) return;
 
-            var html = '';
+            var html = '<div class="custom-select-option" onclick="selectState(\'Select State\')">Select State</div>';
             selectedCountry.states.forEach(function(st) {
                 var isSel = st === selectedState;
                 html += `
-                    <div class="myntra-state-card ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
-                        <span>📍</span>
+                    <div class="custom-select-option ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
                         <span>${st}</span>
                     </div>
                 `;
             });
-            track.innerHTML = html;
+            menu.innerHTML = html;
 
-            var badge = document.getElementById('selectedStateDisplayBadge');
-            if (badge) badge.textContent = selectedState;
+            var txt = document.getElementById('displayStateText');
+            if (txt) txt.textContent = selectedState;
         }
 
         window.selectCountry = function(code) {
             var found = COUNTRIES_DATA.find(function(c) { return c.code === code; });
             if (found) {
                 selectedCountry = found;
-                selectedState = found.states[0] || 'Default';
-                renderCountrySlider();
+                selectedState = found.states[0] || 'Select State';
+                renderCountryDropdown();
             }
+            var box = document.getElementById('countrySelectBox');
+            if (box) box.classList.remove('active');
         };
 
         window.selectState = function(stateName) {
             selectedState = stateName;
-            renderStateSlider();
-            var cityInput = document.getElementById('regCity');
-            if (cityInput && !cityInput.value) {
-                cityInput.value = stateName;
-            }
+            var txt = document.getElementById('displayStateText');
+            if (txt) txt.textContent = stateName;
+
+            var box = document.getElementById('stateSelectBox');
+            if (box) box.classList.remove('active');
         };
 
         window.selectRole = function(role) {
             selectedRole = role;
-            document.querySelectorAll('.role-card').forEach(function(c) {
+            document.querySelectorAll('.role-pill-btn').forEach(function(c) {
                 c.classList.toggle('selected', c.dataset.role === role);
             });
         };
@@ -1314,7 +1307,6 @@
             var errorMsg = document.getElementById('phoneErrorMsg');
             if (!input || !group || !errorMsg) return true;
 
-            /* Clean non-numeric characters */
             var clean = input.value.replace(/[^0-9]/g, '');
             input.value = clean;
 
@@ -1342,7 +1334,6 @@
             var dashWrap = document.getElementById('dashboardWrap');
 
             if (userRaw) {
-                /* User is Logged In -> Show Dashboard */
                 var user = JSON.parse(userRaw);
                 authCard.style.display = 'none';
                 dashWrap.classList.add('active');
@@ -1370,7 +1361,6 @@
                     initEl.textContent = initials.toUpperCase();
                 }
 
-                /* Sync Counts */
                 var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
                 var wish = JSON.parse(localStorage.getItem('kalaniketan_wishlist') || '[]');
                 var cEl = document.getElementById('dashCartCount');
@@ -1378,10 +1368,9 @@
                 if (cEl) cEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
                 if (wEl) wEl.textContent = wish.length;
             } else {
-                /* User is Logged Out -> Show Auth Forms */
                 authCard.style.display = 'block';
                 dashWrap.classList.remove('active');
-                renderCountrySlider();
+                renderCountryDropdown();
                 switchAuthTab(initialTab);
             }
         }
@@ -1412,7 +1401,7 @@
             } else if (tab === 'register') {
                 heading.textContent = 'Create Luxury Account';
                 sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
-                renderCountrySlider();
+                renderCountryDropdown();
             } else {
                 heading.textContent = 'Reset Password';
                 sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
@@ -1432,12 +1421,11 @@
                 email: input.includes('@') ? input : 'member@kalaniketan.com',
                 role: 'Retailer',
                 country: 'India',
-                state: 'Maharashtra',
-                city: 'Mumbai'
+                state: 'Gujarat',
+                city: 'Surat'
             };
             localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
 
-            /* Switch directly to My Account Dashboard */
             checkUserAuth();
         };
 
@@ -1445,7 +1433,6 @@
             var name = document.getElementById('regName').value.trim();
             var phone = document.getElementById('regPhone').value.trim();
             var city = document.getElementById('regCity').value.trim();
-            var email = document.getElementById('regEmail').value.trim();
 
             if (!name) {
                 alert('Please enter your Full Name.');
@@ -1463,17 +1450,15 @@
                 name: name,
                 phone: selectedCountry.dial + ' ' + phone,
                 rawPhone: phone,
-                email: email || 'member@kalaniketan.com',
                 role: selectedRole,
                 country: selectedCountry.name,
                 countryCode: selectedCountry.code,
                 dial: selectedCountry.dial,
                 state: selectedState,
-                city: city || selectedState
+                city: city || 'Surat'
             };
             localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
 
-            /* Switch directly to My Account Dashboard */
             checkUserAuth();
         };
 
@@ -1487,7 +1472,6 @@
         };
 
         window.handleLogoutClick = function() {
-            /* Clear user session and redirect back to shop.php */
             localStorage.removeItem('kalaniketan_user');
             window.location.href = 'shop.php';
         };
