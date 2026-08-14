@@ -1034,8 +1034,8 @@
                     <div class="auth-brand-sub">Ethnic Luxury Couture</div>
                 </div>
 
-                <h2 id="authHeading">VIP Member Sign In</h2>
-                <p id="authSubheading">Access your personalized luxury ethnic experience</p>
+                <h2 id="authHeading">Sign In</h2>
+                <p id="authSubheading">Access your account to track orders & explore collections</p>
             </div>
 
             <!-- Tabs (Only Login & Register) -->
@@ -1247,7 +1247,7 @@
                         <h2 id="dashUserName">Radhika Sharma</h2>
                         <div class="profile-phone" id="dashUserPhone">+91 98765 43210</div>
                         <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
-                        <div class="vip-badge" id="dashUserRoleBadge">👑 Royal Retailer VIP Member</div>
+                        <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
                     </div>
                 </div>
 
@@ -1633,12 +1633,12 @@
                 }
                 if (roleEl) {
                     var r = user.role || 'Retailer';
-                    var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '👑');
-                    roleEl.textContent = `${icon} Royal ${r} VIP Member`;
+                    var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '🛍️');
+                    roleEl.textContent = `${icon} ${r} Member`;
                 }
 
                 if (initEl) {
-                    var parts = (user.name || 'Luxury Member').split(' ');
+                    var parts = (user.name || 'Member').split(' ');
                     var initials = parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '');
                     initEl.textContent = initials.toUpperCase();
                 }
@@ -1676,11 +1676,11 @@
             if (forgotForm) forgotForm.style.display = (tab === 'forgot') ? 'block' : 'none';
 
             if (tab === 'login') {
-                heading.textContent = 'VIP Member Sign In';
-                sub.textContent = 'Access your personalized luxury ethnic experience';
+                heading.textContent = 'Sign In';
+                sub.textContent = 'Access your account to track orders & explore collections';
             } else if (tab === 'register') {
-                heading.textContent = 'Create Luxury Account';
-                sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
+                heading.textContent = 'Create Account';
+                sub.textContent = 'Join Kalaniketan & enjoy personalized shopping';
                 renderCountryDropdown();
             } else if (tab === 'forgot') {
                 heading.textContent = 'Reset Password';
