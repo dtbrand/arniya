@@ -1,7 +1,7 @@
 <?php
 /**
  * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Seamless Login, Register, Forgot Password & Full Member Dashboard
+ * Enhanced with Dynamic Country/State Sliders, Flag Auto-Capture, WhatsApp Validation & Roles
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -140,8 +140,8 @@
            GUEST / AUTH VIEW (LOGIN / REGISTER / FORGOT)
         ════════════════════════════════════════════════════ */
         .auth-card-wrap {
-            max-width: 480px;
-            margin: clamp(10px, 4vw, 40px) auto;
+            max-width: 560px;
+            margin: clamp(10px, 4vw, 30px) auto;
             background: #FFFFFF;
             border-radius: 16px;
             border: 1.5px solid var(--dark-gold);
@@ -193,7 +193,7 @@
             border-bottom-color: var(--dark-gold);
         }
         .auth-body {
-            padding: 24px;
+            padding: clamp(16px, 3.5vw, 26px);
         }
         .auth-form-group {
             display: flex;
@@ -209,14 +209,16 @@
             align-items: center;
             justify-content: space-between;
         }
+        .auth-label .req { color: #D32F2F; margin-left: 2px; }
+        
         .auth-input {
             width: 100%;
-            height: 44px;
+            height: 42px;
             border: 1.5px solid var(--soft-platinum);
             border-radius: 8px;
-            padding: 0 14px;
+            padding: 0 12px;
             font-family: var(--font-sans);
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             color: var(--dark-text);
             background: #FAF9F5;
             outline: none;
@@ -227,6 +229,148 @@
             background: #FFFFFF;
             box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
         }
+        .auth-input.is-invalid {
+            border-color: #D32F2F !important;
+            background: #FFF5F5 !important;
+        }
+
+        /* ── Role Selection Cards (Wholesaler, Retailer, Reseller) ── */
+        .role-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .role-card {
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 10px;
+            padding: 10px 6px;
+            text-align: center;
+            background: #FAF8F4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            user-select: none;
+        }
+        .role-card:hover {
+            border-color: var(--dark-gold);
+            background: #FFFFFF;
+        }
+        .role-card.selected {
+            border-color: var(--dark-gold);
+            background: #FAF3E0;
+            box-shadow: 0 2px 10px rgba(138,104,31,0.15);
+        }
+        .role-icon {
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .role-title {
+            font-size: clamp(0.72rem, 2vw, 0.8rem);
+            font-weight: 700;
+            color: var(--dark-text);
+            display: block;
+        }
+        .role-badge {
+            font-size: 0.58rem;
+            color: var(--dark-gold);
+            font-weight: 600;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* ── Horizontal Scrollable Slider for Countries & States ── */
+        .slider-pills-track {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 4px 2px 8px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .slider-pills-track::-webkit-scrollbar { display: none; }
+        .pill-item {
+            flex-shrink: 0;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1.5px solid var(--soft-platinum);
+            background: #FFFFFF;
+            color: var(--dark-text);
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+        .pill-item:hover {
+            border-color: var(--dark-gold);
+            color: var(--dark-gold);
+        }
+        .pill-item.selected {
+            background: var(--dark-gold);
+            color: #FFFFFF;
+            border-color: var(--dark-gold);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+        }
+
+        /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
+        .wa-phone-group {
+            display: flex;
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 8px;
+            background: #FAF9F5;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .wa-phone-group:focus-within {
+            border-color: var(--dark-gold);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+        }
+        .wa-phone-group.is-invalid {
+            border-color: #D32F2F !important;
+            box-shadow: 0 0 0 3px rgba(211,47,47,0.15) !important;
+        }
+        .wa-flag-prefix {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0 10px;
+            background: #F0EAD8;
+            border-right: 1px solid var(--soft-platinum);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--dark-gold);
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .wa-flag-emoji {
+            font-size: 1.1rem;
+        }
+        .wa-input-field {
+            flex: 1;
+            height: 42px;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 0 12px;
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            color: var(--dark-text);
+            width: 100%;
+        }
+        .validation-error-msg {
+            font-size: 0.68rem;
+            color: #D32F2F;
+            font-weight: 600;
+            display: none;
+            margin-top: 3px;
+        }
+
         .auth-btn-submit {
             width: 100%;
             padding: 13px;
@@ -327,6 +471,11 @@
             font-size: clamp(0.74rem, 2vw, 0.85rem);
             color: #C5BBAA;
             font-weight: 500;
+        }
+        .profile-location {
+            font-size: clamp(0.7rem, 1.8vw, 0.78rem);
+            color: #E2C988;
+            margin-top: 2px;
         }
         .vip-badge {
             display: inline-flex;
@@ -615,12 +764,12 @@
                 <!-- 1. LOGIN FORM -->
                 <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit();">
                     <div class="auth-form-group">
-                        <label class="auth-label" for="loginPhone">WhatsApp Number or Email</label>
+                        <label class="auth-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
                         <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
                     </div>
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPass">
-                            <span>Password</span>
+                            <span>Password <span class="req">*</span></span>
                             <button type="button" class="auth-link" onclick="switchAuthTab('forgot')">Forgot?</button>
                         </label>
                         <input type="password" id="loginPass" class="auth-input" placeholder="Enter your password" required>
@@ -630,23 +779,103 @@
 
                 <!-- 2. REGISTER FORM -->
                 <form id="registerForm" style="display:none;" onsubmit="event.preventDefault(); handleRegisterSubmit();">
+                    
+                    <!-- Full Name -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regName">Full Name</label>
+                        <label class="auth-label" for="regName">Full Name <span class="req">*</span></label>
                         <input type="text" id="regName" class="auth-input" placeholder="e.g. Radhika Sharma" required>
                     </div>
+
+                    <!-- Role Option (Retailer, Wholesaler, Reseller) -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regPhone">WhatsApp Phone Number</label>
-                        <input type="tel" id="regPhone" class="auth-input" placeholder="e.g. 9876543210" maxlength="10" required>
+                        <label class="auth-label">Account Role / Purpose <span class="req">*</span></label>
+                        <div class="role-selector-grid">
+                            <div class="role-card selected" data-role="Retailer" onclick="selectRole('Retailer')">
+                                <span class="role-icon">🛍️</span>
+                                <span class="role-title">Retailer</span>
+                                <span class="role-badge">Personal Buyer</span>
+                            </div>
+                            <div class="role-card" data-role="Wholesaler" onclick="selectRole('Wholesaler')">
+                                <span class="role-icon">📦</span>
+                                <span class="role-title">Wholesaler</span>
+                                <span class="role-badge">Bulk Orders</span>
+                            </div>
+                            <div class="role-card" data-role="Reseller" onclick="selectRole('Reseller')">
+                                <span class="role-icon">💼</span>
+                                <span class="role-title">Reseller</span>
+                                <span class="role-badge">Boutique Seller</span>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Country Option (Style Slider - First auto-selected: India with flag) -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regEmail">Email Address (Optional)</label>
+                        <label class="auth-label">
+                            <span>Country <span class="req">*</span></span>
+                            <span id="selectedCountryLabel" style="color:var(--dark-gold); font-weight:700;">🇮🇳 India (+91)</span>
+                        </label>
+                        <div class="slider-pills-track" id="countrySliderTrack">
+                            <!-- Country pills populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- States Option (Style Slider - Auto list for selected Country) -->
+                    <div class="auth-form-group">
+                        <label class="auth-label">
+                            <span>State / Province <span class="req">*</span></span>
+                            <span id="selectedStateLabel" style="color:var(--dark-gold); font-weight:700;">Maharashtra</span>
+                        </label>
+                        <div class="slider-pills-track" id="stateSliderTrack">
+                            <!-- State pills populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- City Input / Suggestion -->
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regCity">City <span class="req">*</span></label>
+                        <input type="text" id="regCity" class="auth-input" placeholder="e.g. Mumbai, Surat, Ahmedabad..." required value="Mumbai">
+                    </div>
+
+                    <!-- WhatsApp Number with Auto Flag & Country Code + Digit Validation -->
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regPhone">
+                            <span>WhatsApp Number <span class="req">*</span></span>
+                            <span id="digitCountHint" style="font-size:0.65rem; color:var(--light-text);">10 digits required</span>
+                        </label>
+                        <div class="wa-phone-group" id="waPhoneGroup">
+                            <div class="wa-flag-prefix">
+                                <span class="wa-flag-emoji" id="waFlagEmoji">🇮🇳</span>
+                                <span id="waDialCode">+91</span>
+                            </div>
+                            <input
+                                type="tel"
+                                id="regPhone"
+                                class="wa-input-field"
+                                placeholder="9876543210"
+                                maxlength="12"
+                                required
+                                autocomplete="tel"
+                                oninput="validateWhatsAppDigits()"
+                            />
+                        </div>
+                        <div class="validation-error-msg" id="phoneErrorMsg">
+                            ⚠️ Please enter a valid 10-digit WhatsApp number.
+                        </div>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regEmail">Email Address (Optional for e-Invoice)</label>
                         <input type="email" id="regEmail" class="auth-input" placeholder="radhika@example.com">
                     </div>
+
+                    <!-- Password -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regPass">Create Password</label>
+                        <label class="auth-label" for="regPass">Create Password <span class="req">*</span></label>
                         <input type="password" id="regPass" class="auth-input" placeholder="Minimum 6 characters" required>
                     </div>
-                    <button type="submit" class="auth-btn-submit">Create Luxury Account</button>
+
+                    <button type="submit" class="auth-btn-submit" id="regSubmitBtn">Create Luxury Account</button>
                 </form>
 
                 <!-- 3. FORGOT PASSWORD FORM -->
@@ -674,7 +903,8 @@
                     <div class="profile-details">
                         <h2 id="dashUserName">Radhika Sharma</h2>
                         <div class="profile-phone" id="dashUserPhone">+91 98765 43210</div>
-                        <div class="vip-badge">👑 Royal Gold VIP Member</div>
+                        <div class="profile-location" id="dashUserLocation">📍 Mumbai, Maharashtra, India</div>
+                        <div class="vip-badge" id="dashUserRoleBadge">👑 Royal Retailer VIP Member</div>
                     </div>
                 </div>
 
@@ -760,8 +990,8 @@
                     <!-- Concierge Card -->
                     <div class="concierge-card">
                         <h4>Royal Concierge Desk</h4>
-                        <p>Need custom blouse stitching, fabric queries, or urgent bridal consultation? Our expert fashion stylists are on call.</p>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20personalized%20styling%20and%20bridal%20consultation" target="_blank" class="concierge-btn">
+                        <p>Need custom blouse stitching, bulk wholesale pricing, or reseller catalog? Our fashion stylists are available.</p>
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
                             <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
                             <span>WhatsApp Stylist</span>
                         </a>
@@ -784,6 +1014,197 @@
     (function() {
         'use strict';
 
+        /* ── Country & State Data ── */
+        var COUNTRIES_DATA = [
+            {
+                code: 'IN',
+                name: 'India',
+                flag: '🇮🇳',
+                dial: '+91',
+                digits: 10,
+                states: [
+                    'Maharashtra', 'Gujarat', 'Rajasthan', 'Delhi (NCT)', 'Karnataka', 
+                    'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 
+                    'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 
+                    'Odisha', 'Assam', 'Goa', 'Jammu & Kashmir', 'Uttarakhand', 
+                    'Jharkhand', 'Chhattisgarh', 'Himachal Pradesh', 'Chandigarh'
+                ]
+            },
+            {
+                code: 'AE',
+                name: 'United Arab Emirates',
+                flag: '🇦🇪',
+                dial: '+971',
+                digits: 9,
+                states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain']
+            },
+            {
+                code: 'US',
+                name: 'United States',
+                flag: '🇺🇸',
+                dial: '+1',
+                digits: 10,
+                states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington']
+            },
+            {
+                code: 'GB',
+                name: 'United Kingdom',
+                flag: '🇬🇧',
+                dial: '+44',
+                digits: 10,
+                states: ['England', 'Scotland', 'Wales', 'Northern Ireland', 'Greater London']
+            },
+            {
+                code: 'CA',
+                name: 'Canada',
+                flag: '🇨🇦',
+                dial: '+1',
+                digits: 10,
+                states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba']
+            },
+            {
+                code: 'AU',
+                name: 'Australia',
+                flag: '🇦🇺',
+                dial: '+61',
+                digits: 9,
+                states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia']
+            },
+            {
+                code: 'SG',
+                name: 'Singapore',
+                flag: '🇸🇬',
+                dial: '+65',
+                digits: 8,
+                states: ['Central Region', 'East Region', 'North Region', 'West Region']
+            },
+            {
+                code: 'MY',
+                name: 'Malaysia',
+                flag: '🇲🇾',
+                dial: '+60',
+                digits: 9,
+                states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah']
+            },
+            {
+                code: 'SA',
+                name: 'Saudi Arabia',
+                flag: '🇸🇦',
+                dial: '+966',
+                digits: 9,
+                states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Asir']
+            }
+        ];
+
+        var selectedRole = 'Retailer';
+        var selectedCountry = COUNTRIES_DATA[0]; // First auto-selected: India (flag, +91)
+        var selectedState = selectedCountry.states[0]; // Maharashtra
+
+        /* Render Country Slider */
+        function renderCountrySlider() {
+            var track = document.getElementById('countrySliderTrack');
+            if (!track) return;
+
+            var html = '';
+            COUNTRIES_DATA.forEach(function(c) {
+                var isSel = c.code === selectedCountry.code;
+                html += `
+                    <div class="pill-item ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
+                        <span>${c.flag}</span>
+                        <span>${c.name}</span>
+                        <span style="opacity:0.75; font-size:0.65rem;">(${c.dial})</span>
+                    </div>
+                `;
+            });
+            track.innerHTML = html;
+
+            var label = document.getElementById('selectedCountryLabel');
+            if (label) label.textContent = `${selectedCountry.flag} ${selectedCountry.name} (${selectedCountry.dial})`;
+
+            /* Update WhatsApp Flag and Dial Code Prefix */
+            var waFlag = document.getElementById('waFlagEmoji');
+            var waDial = document.getElementById('waDialCode');
+            var hint = document.getElementById('digitCountHint');
+
+            if (waFlag) waFlag.textContent = selectedCountry.flag;
+            if (waDial) waDial.textContent = selectedCountry.dial;
+            if (hint) hint.textContent = `${selectedCountry.digits} digits required`;
+
+            renderStateSlider();
+            validateWhatsAppDigits();
+        }
+
+        /* Render State Slider */
+        function renderStateSlider() {
+            var track = document.getElementById('stateSliderTrack');
+            if (!track) return;
+
+            var html = '';
+            selectedCountry.states.forEach(function(st) {
+                var isSel = st === selectedState;
+                html += `
+                    <div class="pill-item ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
+                        <span>📍</span>
+                        <span>${st}</span>
+                    </div>
+                `;
+            });
+            track.innerHTML = html;
+
+            var label = document.getElementById('selectedStateLabel');
+            if (label) label.textContent = selectedState;
+        }
+
+        window.selectCountry = function(code) {
+            var found = COUNTRIES_DATA.find(function(c) { return c.code === code; });
+            if (found) {
+                selectedCountry = found;
+                selectedState = found.states[0] || 'Default';
+                renderCountrySlider();
+            }
+        };
+
+        window.selectState = function(stateName) {
+            selectedState = stateName;
+            renderStateSlider();
+            var cityInput = document.getElementById('regCity');
+            if (cityInput && !cityInput.value) {
+                cityInput.value = stateName;
+            }
+        };
+
+        window.selectRole = function(role) {
+            selectedRole = role;
+            document.querySelectorAll('.role-card').forEach(function(c) {
+                c.classList.toggle('selected', c.dataset.role === role);
+            });
+        };
+
+        /* Validate WhatsApp Digits in real-time */
+        window.validateWhatsAppDigits = function() {
+            var input = document.getElementById('regPhone');
+            var group = document.getElementById('waPhoneGroup');
+            var errorMsg = document.getElementById('phoneErrorMsg');
+            if (!input || !group || !errorMsg) return true;
+
+            /* Clean non-numeric characters */
+            var clean = input.value.replace(/[^0-9]/g, '');
+            input.value = clean;
+
+            var expected = selectedCountry.digits || 10;
+
+            if (clean.length > 0 && clean.length !== expected) {
+                group.classList.add('is-invalid');
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = `⚠️ ${selectedCountry.name} WhatsApp number must be exactly ${expected} digits (currently ${clean.length}).`;
+                return false;
+            } else {
+                group.classList.remove('is-invalid');
+                errorMsg.style.display = 'none';
+                return clean.length === expected;
+            }
+        };
+
         /* Check URL Parameter for Initial Tab (e.g. ?tab=register or ?tab=login) */
         var urlParams = new URLSearchParams(window.location.search);
         var initialTab = urlParams.get('tab') || 'login';
@@ -802,9 +1223,20 @@
                 var nameEl = document.getElementById('dashUserName');
                 var phoneEl = document.getElementById('dashUserPhone');
                 var initEl = document.getElementById('dashUserInitials');
+                var locEl = document.getElementById('dashUserLocation');
+                var roleEl = document.getElementById('dashUserRoleBadge');
 
                 if (nameEl) nameEl.textContent = user.name || 'Luxury Member';
                 if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
+                if (locEl && user.city && user.state) {
+                    locEl.textContent = `📍 ${user.city}, ${user.state}, ${user.country || 'India'}`;
+                }
+                if (roleEl) {
+                    var r = user.role || 'Retailer';
+                    var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '👑');
+                    roleEl.textContent = `${icon} Royal ${r} VIP Member`;
+                }
+
                 if (initEl) {
                     var parts = (user.name || 'Luxury Member').split(' ');
                     var initials = parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '');
@@ -822,6 +1254,7 @@
                 /* User is Logged Out -> Show Auth Forms */
                 authCard.style.display = 'block';
                 dashWrap.classList.remove('active');
+                renderCountrySlider();
                 switchAuthTab(initialTab);
             }
         }
@@ -852,6 +1285,7 @@
             } else if (tab === 'register') {
                 heading.textContent = 'Create Luxury Account';
                 sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
+                renderCountrySlider();
             } else {
                 heading.textContent = 'Reset Password';
                 sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
@@ -868,7 +1302,11 @@
             var userData = {
                 name: name,
                 phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-                email: input.includes('@') ? input : 'member@kalaniketan.com'
+                email: input.includes('@') ? input : 'member@kalaniketan.com',
+                role: 'Retailer',
+                country: 'India',
+                state: 'Maharashtra',
+                city: 'Mumbai'
             };
             localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
 
@@ -879,14 +1317,33 @@
         window.handleRegisterSubmit = function() {
             var name = document.getElementById('regName').value.trim();
             var phone = document.getElementById('regPhone').value.trim();
+            var city = document.getElementById('regCity').value.trim();
             var email = document.getElementById('regEmail').value.trim();
 
-            if (!name || !phone) return;
+            if (!name) {
+                alert('Please enter your Full Name.');
+                return;
+            }
+
+            var expected = selectedCountry.digits || 10;
+            if (!phone || phone.length !== expected) {
+                alert(`⚠️ Please enter a valid ${expected}-digit WhatsApp number for ${selectedCountry.name}.`);
+                document.getElementById('regPhone').focus();
+                return;
+            }
 
             var userData = {
                 name: name,
-                phone: '+91 ' + phone,
-                email: email || 'member@kalaniketan.com'
+                phone: selectedCountry.dial + ' ' + phone,
+                rawPhone: phone,
+                email: email || 'member@kalaniketan.com',
+                role: selectedRole,
+                country: selectedCountry.name,
+                countryCode: selectedCountry.code,
+                flag: selectedCountry.flag,
+                dial: selectedCountry.dial,
+                state: selectedState,
+                city: city || selectedState
             };
             localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
 
