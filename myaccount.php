@@ -1,0 +1,917 @@
+<?php
+/**
+ * myaccount.php — Dedicated Luxury Customer Account & Auth Page
+ * Seamless Login, Register, Forgot Password & Full Member Dashboard
+ * 100% Fluid Responsive for Desktop & Mobile
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Account — Kalaniketan | Ethnic Luxury</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-gold: #8A681F;
+            --deep-gold: #6F5218;
+            --gold-pale: #FBF7EE;
+            --gold-border: rgba(138, 104, 31, 0.25);
+            --dark-text: #24211C;
+            --mid-text: #5A5348;
+            --light-text: #8E877D;
+            --off-white: #FAF8F4;
+            --pure-white: #FFFFFF;
+            --soft-platinum: #E5E3DE;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--off-white);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Top Header Navigation Bar ── */
+        .account-nav-header {
+            background: #FFFFFF;
+            border-bottom: 1.5px solid var(--dark-gold);
+            padding: clamp(10px, 2.5vw, 16px) clamp(16px, 4vw, 40px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .account-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .brand-seal {
+            width: clamp(32px, 6vw, 40px);
+            height: clamp(32px, 6vw, 40px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+        }
+        .brand-seal svg {
+            width: clamp(16px, 3.5vw, 20px);
+            height: clamp(16px, 3.5vw, 20px);
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+        .brand-text h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(1rem, 3.5vw, 1.35rem);
+            font-weight: 700;
+            color: var(--dark-gold);
+            letter-spacing: 0.08em;
+            line-height: 1;
+        }
+        .brand-text span {
+            font-size: clamp(0.55rem, 1.8vw, 0.68rem);
+            color: var(--mid-text);
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 2px;
+        }
+        .return-shop-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px clamp(10px, 2vw, 16px);
+            border-radius: 20px;
+            border: 1.5px solid var(--dark-gold);
+            background: #FAF8F4;
+            color: var(--dark-gold);
+            font-size: clamp(0.72rem, 2vw, 0.82rem);
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all var(--transition);
+        }
+        .return-shop-btn:hover {
+            background: var(--dark-gold);
+            color: #FFFFFF;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.2);
+        }
+
+        /* ── Main Page Layout ── */
+        .page-container {
+            flex: 1;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: clamp(14px, 3vw, 36px) clamp(12px, 3vw, 24px);
+        }
+
+        /* ════════════════════════════════════════════════════
+           GUEST / AUTH VIEW (LOGIN / REGISTER / FORGOT)
+        ════════════════════════════════════════════════════ */
+        .auth-card-wrap {
+            max-width: 480px;
+            margin: clamp(10px, 4vw, 40px) auto;
+            background: #FFFFFF;
+            border-radius: 16px;
+            border: 1.5px solid var(--dark-gold);
+            box-shadow: 0 10px 36px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .auth-card-header {
+            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
+            padding: 20px 24px 16px;
+            border-bottom: 1.5px solid var(--gold-border);
+            text-align: center;
+        }
+        .auth-card-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+            font-weight: 700;
+            color: var(--dark-gold);
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        .auth-card-header p {
+            font-size: 0.76rem;
+            color: var(--mid-text);
+            font-weight: 500;
+        }
+        .auth-tabs {
+            display: flex;
+            background: #F0EAD8;
+            border-bottom: 1px solid var(--gold-border);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--mid-text);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .auth-tab.active {
+            background: #FFFFFF;
+            color: var(--dark-gold);
+            border-bottom-color: var(--dark-gold);
+        }
+        .auth-body {
+            padding: 24px;
+        }
+        .auth-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .auth-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .auth-input {
+            width: 100%;
+            height: 44px;
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 8px;
+            padding: 0 14px;
+            font-family: var(--font-sans);
+            font-size: 0.88rem;
+            color: var(--dark-text);
+            background: #FAF9F5;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .auth-input:focus {
+            border-color: var(--dark-gold);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+        }
+        .auth-btn-submit {
+            width: 100%;
+            padding: 13px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+            color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-size: 0.86rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(138,104,31,0.25);
+            margin-top: 8px;
+        }
+        .auth-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138,104,31,0.38);
+        }
+        .auth-link {
+            color: var(--dark-gold);
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ════════════════════════════════════════════════════
+           LOGGED IN MEMBER DASHBOARD VIEW
+        ════════════════════════════════════════════════════ */
+        .dashboard-wrap {
+            display: none;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .dashboard-wrap.active {
+            display: flex;
+        }
+
+        /* VIP Profile Hero Banner */
+        .profile-hero {
+            background: linear-gradient(135deg, #24211C 0%, #383127 100%);
+            border: 2px solid var(--dark-gold);
+            border-radius: 16px;
+            padding: clamp(16px, 4vw, 28px);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-hero::after {
+            content: '👑';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: clamp(3rem, 10vw, 6rem);
+            opacity: 0.08;
+            pointer-events: none;
+        }
+        .profile-main-group {
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 3vw, 20px);
+        }
+        .profile-avatar-circle {
+            width: clamp(52px, 10vw, 68px);
+            height: clamp(52px, 10vw, 68px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dark-gold) 0%, #C5A859 100%);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(138,104,31,0.4);
+            border: 2px solid #FFFFFF;
+            flex-shrink: 0;
+        }
+        .profile-details h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            font-weight: 700;
+            color: #FAF5E8;
+            margin-bottom: 3px;
+        }
+        .profile-phone {
+            font-size: clamp(0.74rem, 2vw, 0.85rem);
+            color: #C5BBAA;
+            font-weight: 500;
+        }
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: rgba(138,104,31,0.3);
+            border: 1px solid var(--dark-gold);
+            color: #E2C988;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 6px;
+        }
+
+        .logout-btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.08);
+            color: #FFFFFF;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            flex-shrink: 0;
+        }
+        .logout-btn:hover {
+            background: #D32F2F;
+            border-color: #D32F2F;
+            transform: scale(1.04);
+        }
+
+        /* ── Dashboard Content Grid ── */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 850px) {
+            .dash-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        /* Section Cards */
+        .dash-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--gold-border);
+            border-radius: 14px;
+            padding: clamp(14px, 3vw, 22px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        .dash-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px dashed var(--gold-border);
+        }
+        .dash-card-title {
+            font-family: var(--font-serif);
+            font-size: clamp(0.92rem, 2.5vw, 1.1rem);
+            font-weight: 700;
+            color: var(--dark-gold);
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dash-card-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Order Cards */
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .order-box {
+            background: var(--off-white);
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+        .order-box:hover {
+            border-color: var(--dark-gold);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.08);
+        }
+        .order-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .order-id {
+            font-family: var(--font-serif);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        .order-status-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-processing { background: #FFF3E0; color: #E65100; border: 1px solid #FFE082; }
+        .status-delivered { background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; }
+        
+        .order-item-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--mid-text);
+        }
+        .order-thumb {
+            width: 44px;
+            height: 58px;
+            aspect-ratio: 3 / 4;
+            border-radius: 6px;
+            object-fit: cover;
+            object-position: top center;
+            border: 1px solid var(--soft-platinum);
+        }
+        .order-actions-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px solid var(--soft-platinum);
+            font-size: 0.78rem;
+        }
+        .order-total-txt {
+            font-weight: 700;
+            color: var(--dark-gold);
+        }
+        .track-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #25D366;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+        .track-wa-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Quick Stat Cards */
+        .stat-tiles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stat-tile {
+            background: #FFFFFF;
+            border: 1.5px solid var(--gold-border);
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+        .stat-tile:hover {
+            border-color: var(--dark-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.12);
+        }
+        .stat-tile-num {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark-gold);
+            font-family: var(--font-serif);
+        }
+        .stat-tile-lbl {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--mid-text);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 2px;
+        }
+
+        /* Concierge Box */
+        .concierge-card {
+            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
+            border: 1.5px solid var(--gold-border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .concierge-card h4 {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            color: var(--dark-gold);
+            margin-bottom: 6px;
+        }
+        .concierge-card p {
+            font-size: 0.75rem;
+            color: var(--mid-text);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .concierge-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background: #25D366;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+        }
+        .concierge-btn:hover {
+            background: #128C7E;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ Navigation Header ═══ -->
+    <header class="account-nav-header">
+        <a href="shop.php" class="account-nav-brand">
+            <div class="brand-seal">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="brand-text">
+                <h1>Kalaniketan</h1>
+                <span>Ethnic Luxury</span>
+            </div>
+        </a>
+
+        <a href="shop.php" class="return-shop-btn">
+            <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Back to Shop</span>
+        </a>
+    </header>
+
+    <!-- ═══ Page Content ═══ -->
+    <main class="page-container">
+
+        <!-- ════════ VIEW 1: AUTHENTICATION (FOR GUEST USERS) ════════ -->
+        <div class="auth-card-wrap" id="authCardWrap">
+            <div class="auth-card-header">
+                <h2 id="authHeading">VIP Member Sign In</h2>
+                <p id="authSubheading">Access your personalized luxury ethnic experience</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Register</button>
+                <button class="auth-tab" id="tabBtnForgot" onclick="switchAuthTab('forgot')">Forgot Password</button>
+            </div>
+
+            <!-- Forms -->
+            <div class="auth-body">
+                
+                <!-- 1. LOGIN FORM -->
+                <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit();">
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="loginPhone">WhatsApp Number or Email</label>
+                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="loginPass">
+                            <span>Password</span>
+                            <button type="button" class="auth-link" onclick="switchAuthTab('forgot')">Forgot?</button>
+                        </label>
+                        <input type="password" id="loginPass" class="auth-input" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="auth-btn-submit">Sign In to My Account</button>
+                </form>
+
+                <!-- 2. REGISTER FORM -->
+                <form id="registerForm" style="display:none;" onsubmit="event.preventDefault(); handleRegisterSubmit();">
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regName">Full Name</label>
+                        <input type="text" id="regName" class="auth-input" placeholder="e.g. Radhika Sharma" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regPhone">WhatsApp Phone Number</label>
+                        <input type="tel" id="regPhone" class="auth-input" placeholder="e.g. 9876543210" maxlength="10" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regEmail">Email Address (Optional)</label>
+                        <input type="email" id="regEmail" class="auth-input" placeholder="radhika@example.com">
+                    </div>
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="regPass">Create Password</label>
+                        <input type="password" id="regPass" class="auth-input" placeholder="Minimum 6 characters" required>
+                    </div>
+                    <button type="submit" class="auth-btn-submit">Create Luxury Account</button>
+                </form>
+
+                <!-- 3. FORGOT PASSWORD FORM -->
+                <form id="forgotForm" style="display:none;" onsubmit="event.preventDefault(); handleForgotSubmit();">
+                    <p style="font-size:0.78rem; color:var(--mid-text); margin-bottom:14px; line-height:1.4;">
+                        Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset link on WhatsApp.
+                    </p>
+                    <div class="auth-form-group">
+                        <label class="auth-label" for="forgotInput">WhatsApp Number / Email</label>
+                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210" required>
+                    </div>
+                    <button type="submit" class="auth-btn-submit">Send Reset Link via WhatsApp</button>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- ════════ VIEW 2: LOGGED IN MEMBER DASHBOARD ════════ -->
+        <div class="dashboard-wrap" id="dashboardWrap">
+            
+            <!-- Hero Profile Banner -->
+            <div class="profile-hero">
+                <div class="profile-main-group">
+                    <div class="profile-avatar-circle" id="dashUserInitials">RS</div>
+                    <div class="profile-details">
+                        <h2 id="dashUserName">Radhika Sharma</h2>
+                        <div class="profile-phone" id="dashUserPhone">+91 98765 43210</div>
+                        <div class="vip-badge">👑 Royal Gold VIP Member</div>
+                    </div>
+                </div>
+
+                <button class="logout-btn" onclick="handleLogoutClick()">
+                    Logout
+                </button>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dash-grid">
+                
+                <!-- Left: Orders History & Details -->
+                <div class="dash-card">
+                    <div class="dash-card-header">
+                        <h3 class="dash-card-title">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Recent Orders</span>
+                        </h3>
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
+                            WhatsApp Support
+                        </a>
+                    </div>
+
+                    <div class="order-list">
+                        <!-- Order 1 -->
+                        <div class="order-box">
+                            <div class="order-top">
+                                <span class="order-id">Order #KLN-847291</span>
+                                <span class="order-status-badge status-processing">Processing & Stitching</span>
+                            </div>
+                            <div class="order-item-detail">
+                                <img src="images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src='images/product1.png';">
+                                <div>
+                                    <div style="font-weight:700; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
+                                    <div style="font-size:0.72rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
+                                </div>
+                            </div>
+                            <div class="order-actions-bar">
+                                <div>Total: <span class="order-total-txt">₹24,999</span></div>
+                                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn">
+                                    Track on WhatsApp →
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Order 2 -->
+                        <div class="order-box">
+                            <div class="order-top">
+                                <span class="order-id">Order #KLN-312984</span>
+                                <span class="order-status-badge status-delivered">Delivered</span>
+                            </div>
+                            <div class="order-item-detail">
+                                <img src="images/product1.png" alt="Saree" class="order-thumb">
+                                <div>
+                                    <div style="font-weight:700; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
+                                    <div style="font-size:0.72rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>
+                                </div>
+                            </div>
+                            <div class="order-actions-bar">
+                                <div>Total: <span class="order-total-txt">₹12,499</span></div>
+                                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn">
+                                    Re-Order on WhatsApp →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Quick Stat Tiles & Concierge -->
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    
+                    <div class="stat-tiles">
+                        <a href="shop.php" class="stat-tile">
+                            <div class="stat-tile-num" id="dashCartCount">0</div>
+                            <div class="stat-tile-lbl">Bag Items</div>
+                        </a>
+                        <a href="shop.php" class="stat-tile">
+                            <div class="stat-tile-num" id="dashWishCount">0</div>
+                            <div class="stat-tile-lbl">Saved Items</div>
+                        </a>
+                    </div>
+
+                    <!-- Concierge Card -->
+                    <div class="concierge-card">
+                        <h4>Royal Concierge Desk</h4>
+                        <p>Need custom blouse stitching, fabric queries, or urgent bridal consultation? Our expert fashion stylists are on call.</p>
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20personalized%20styling%20and%20bridal%20consultation" target="_blank" class="concierge-btn">
+                            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                            <span>WhatsApp Stylist</span>
+                        </a>
+                    </div>
+
+                    <a href="shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:block;">
+                        Browse Luxury Catalog
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ════════ JAVASCRIPT CONTROLLER ════════ -->
+    <script>
+    (function() {
+        'use strict';
+
+        /* Check URL Parameter for Initial Tab (e.g. ?tab=register or ?tab=login) */
+        var urlParams = new URLSearchParams(window.location.search);
+        var initialTab = urlParams.get('tab') || 'login';
+
+        function checkUserAuth() {
+            var userRaw = localStorage.getItem('kalaniketan_user');
+            var authCard = document.getElementById('authCardWrap');
+            var dashWrap = document.getElementById('dashboardWrap');
+
+            if (userRaw) {
+                /* User is Logged In -> Show Dashboard */
+                var user = JSON.parse(userRaw);
+                authCard.style.display = 'none';
+                dashWrap.classList.add('active');
+
+                var nameEl = document.getElementById('dashUserName');
+                var phoneEl = document.getElementById('dashUserPhone');
+                var initEl = document.getElementById('dashUserInitials');
+
+                if (nameEl) nameEl.textContent = user.name || 'Luxury Member';
+                if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
+                if (initEl) {
+                    var parts = (user.name || 'Luxury Member').split(' ');
+                    var initials = parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '');
+                    initEl.textContent = initials.toUpperCase();
+                }
+
+                /* Sync Counts */
+                var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+                var wish = JSON.parse(localStorage.getItem('kalaniketan_wishlist') || '[]');
+                var cEl = document.getElementById('dashCartCount');
+                var wEl = document.getElementById('dashWishCount');
+                if (cEl) cEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
+                if (wEl) wEl.textContent = wish.length;
+            } else {
+                /* User is Logged Out -> Show Auth Forms */
+                authCard.style.display = 'block';
+                dashWrap.classList.remove('active');
+                switchAuthTab(initialTab);
+            }
+        }
+
+        window.switchAuthTab = function(tab) {
+            var loginForm = document.getElementById('loginForm');
+            var regForm = document.getElementById('registerForm');
+            var forgotForm = document.getElementById('forgotForm');
+
+            var btnLogin = document.getElementById('tabBtnLogin');
+            var btnReg = document.getElementById('tabBtnRegister');
+            var btnForgot = document.getElementById('tabBtnForgot');
+
+            var heading = document.getElementById('authHeading');
+            var sub = document.getElementById('authSubheading');
+
+            btnLogin.classList.toggle('active', tab === 'login');
+            btnReg.classList.toggle('active', tab === 'register');
+            btnForgot.classList.toggle('active', tab === 'forgot');
+
+            loginForm.style.display = (tab === 'login') ? 'block' : 'none';
+            regForm.style.display = (tab === 'register') ? 'block' : 'none';
+            forgotForm.style.display = (tab === 'forgot') ? 'block' : 'none';
+
+            if (tab === 'login') {
+                heading.textContent = 'VIP Member Sign In';
+                sub.textContent = 'Access your personalized luxury ethnic experience';
+            } else if (tab === 'register') {
+                heading.textContent = 'Create Luxury Account';
+                sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
+            } else {
+                heading.textContent = 'Reset Password';
+                sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
+            }
+        };
+
+        window.handleLoginSubmit = function() {
+            var input = document.getElementById('loginPhone').value.trim();
+            if (!input) return;
+
+            var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+
+            var userData = {
+                name: name,
+                phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
+                email: input.includes('@') ? input : 'member@kalaniketan.com'
+            };
+            localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+
+            /* Switch directly to My Account Dashboard */
+            checkUserAuth();
+        };
+
+        window.handleRegisterSubmit = function() {
+            var name = document.getElementById('regName').value.trim();
+            var phone = document.getElementById('regPhone').value.trim();
+            var email = document.getElementById('regEmail').value.trim();
+
+            if (!name || !phone) return;
+
+            var userData = {
+                name: name,
+                phone: '+91 ' + phone,
+                email: email || 'member@kalaniketan.com'
+            };
+            localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+
+            /* Switch directly to My Account Dashboard */
+            checkUserAuth();
+        };
+
+        window.handleForgotSubmit = function() {
+            var input = document.getElementById('forgotInput').value.trim();
+            if (!input) return;
+
+            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20Kalaniketan%20account%20(${encodeURIComponent(input)})`;
+            window.open(waUrl, '_blank');
+            alert('📩 Password reset request sent to WhatsApp Concierge!');
+        };
+
+        window.handleLogoutClick = function() {
+            /* Clear user session and redirect back to shop.php */
+            localStorage.removeItem('kalaniketan_user');
+            window.location.href = 'shop.php';
+        };
+
+        /* Run on Page Load */
+        document.addEventListener('DOMContentLoaded', checkUserAuth);
+    })();
+    </script>
+</body>
+</html>

@@ -738,31 +738,35 @@
 
             <!-- Desktop Account Dropdown Button -->
             <div class="header-account-wrap" id="headerAccountWrap">
-                <button class="header-account-btn" id="headerAccountBtn" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('login');" aria-label="Account Access">
+                <a href="myaccount.php" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span>Account</span>
-                </button>
-                <div class="header-account-dropdown">
-                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('login');">
-                        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
-                        <span>Sign In / Login</span>
-                    </div>
-                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('register');">
-                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                        <span>Create Account</span>
-                    </div>
-                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('forgot');">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <span>Forgot Password</span>
-                    </div>
-                    <div class="ac-drop-divider"></div>
-                    <div class="ac-drop-item" onclick="if(typeof window.openAccountModal==='function') window.openAccountModal('profile');">
+                    <span id="headerAccountLabel">Account</span>
+                </a>
+                <div class="header-account-dropdown" id="headerAccountDropdown">
+                    <a href="myaccount.php" class="ac-drop-item" id="acDropMyAccount">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
-                    </div>
+                    </a>
+                    <a href="myaccount.php?tab=login" class="ac-drop-item" id="acDropLogin">
+                        <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        <span>Sign In / Login</span>
+                    </a>
+                    <a href="myaccount.php?tab=register" class="ac-drop-item" id="acDropRegister">
+                        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        <span>Create Account</span>
+                    </a>
+                    <a href="myaccount.php?tab=forgot" class="ac-drop-item" id="acDropForgot">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Forgot Password</span>
+                    </a>
+                    <div class="ac-drop-divider" id="acDropDivider" style="display:none;"></div>
+                    <a href="javascript:void(0)" class="ac-drop-item" id="acDropLogout" style="display:none; color:#D32F2F;" onclick="localStorage.removeItem('kalaniketan_user'); window.location.href='shop.php';">
+                        <svg viewBox="0 0 24 24" style="stroke:#D32F2F;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Log Out</span>
+                    </a>
                 </div>
             </div>
 
@@ -1002,5 +1006,36 @@ window.closeWishlistDrawer = function() {
             performSearch('mobile');
         });
     }
+
+    /* Sync Desktop Account Button with Logged In User State */
+    function syncHeaderAccountState() {
+        var userRaw = localStorage.getItem('kalaniketan_user');
+        var label = document.getElementById('headerAccountLabel');
+        var dropLogin = document.getElementById('acDropLogin');
+        var dropRegister = document.getElementById('acDropRegister');
+        var dropForgot = document.getElementById('acDropForgot');
+        var dropDivider = document.getElementById('acDropDivider');
+        var dropLogout = document.getElementById('acDropLogout');
+
+        if (userRaw && label) {
+            var user = JSON.parse(userRaw);
+            var firstName = (user.name || 'Member').split(' ')[0];
+            label.textContent = firstName;
+            if (dropLogin) dropLogin.style.display = 'none';
+            if (dropRegister) dropRegister.style.display = 'none';
+            if (dropForgot) dropForgot.style.display = 'none';
+            if (dropDivider) dropDivider.style.display = 'block';
+            if (dropLogout) dropLogout.style.display = 'flex';
+        } else if (label) {
+            label.textContent = 'Account';
+            if (dropLogin) dropLogin.style.display = 'flex';
+            if (dropRegister) dropRegister.style.display = 'flex';
+            if (dropForgot) dropForgot.style.display = 'flex';
+            if (dropDivider) dropDivider.style.display = 'none';
+            if (dropLogout) dropLogout.style.display = 'none';
+        }
+    }
+    syncHeaderAccountState();
+    window.addEventListener('storage', syncHeaderAccountState);
 })();
 </script>

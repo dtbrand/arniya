@@ -1018,10 +1018,10 @@ input[type=range].mf-range::-moz-range-thumb {
     var shareItem    = document.getElementById('moreShareAction');
     var adviceItem   = document.getElementById('moreAdviceAction');
 
-    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function') window.openAccountModal('profile'); });
-    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function') window.openAccountModal('login'); });
-    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function') window.openAccountModal('register'); });
-    if (forgotItem) forgotItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function') window.openAccountModal('forgot'); });
+    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php'; });
+    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=login'; });
+    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=register'; });
+    if (forgotItem) forgotItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=forgot'; });
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
