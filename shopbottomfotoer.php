@@ -710,26 +710,41 @@ input[type=range].mf-range::-moz-range-thumb {
             <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     </div>
-    <div class="sheet-body">
         <!-- Account Options -->
-        <div style="font-size:0.68rem; font-weight:700; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.1em; padding:10px 0 4px; border-bottom:1.5px solid rgba(138,104,31,0.2);">
+        <div style="font-size:0.68rem; font-weight:800; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.1em; padding:10px 0 4px; border-bottom:1.5px solid rgba(138,104,31,0.2);">
             Customer Account
         </div>
-        <div class="add-action-item" id="moreAccountAction">
+        
+        <!-- 1. Logged In User Option: Only My Account & Log Out -->
+        <div class="add-action-item" id="moreAccountAction" style="display:none;">
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-            <div><div class="add-action-label">My Account & Orders</div><div class="add-action-sub">View profile, addresses & recent orders</div></div>
+            <div>
+                <div class="add-action-label" id="moreAccountLabel">My Account & Orders</div>
+                <div class="add-action-sub" id="moreAccountSub">View profile, addresses & recent orders</div>
+            </div>
         </div>
+        <div class="add-action-item" id="moreLogoutAction" style="display:none;">
+            <div class="add-action-icon" style="background:#FFEBEE; color:#D32F2F;"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></div>
+            <div>
+                <div class="add-action-label" style="color:#D32F2F;">Log Out</div>
+                <div class="add-action-sub">Sign out of your account</div>
+            </div>
+        </div>
+
+        <!-- 2. Logged Out (Guest) Option: Only Login & Register -->
         <div class="add-action-item" id="moreLoginAction">
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg></div>
-            <div><div class="add-action-label">Sign In / Login</div><div class="add-action-sub">Access your saved bag & exclusive offers</div></div>
+            <div>
+                <div class="add-action-label">Sign In / Login</div>
+                <div class="add-action-sub">Access your saved bag & exclusive offers</div>
+            </div>
         </div>
         <div class="add-action-item" id="moreRegisterAction">
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg></div>
-            <div><div class="add-action-label">Create Account / Register</div><div class="add-action-sub">Join Kalaniketan VIP luxury club</div></div>
-        </div>
-        <div class="add-action-item" id="moreForgotAction">
-            <div class="add-action-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
-            <div><div class="add-action-label">Forgot Password</div><div class="add-action-sub">Send password reset OTP on WhatsApp</div></div>
+            <div>
+                <div class="add-action-label">Create Account / Register</div>
+                <div class="add-action-sub">Join Kalaniketan & enjoy personalized shopping</div>
+            </div>
         </div>
 
         <!-- Bag & Shopping Options -->
@@ -1010,23 +1025,64 @@ input[type=range].mf-range::-moz-range-thumb {
     if (moreOverlay) moreOverlay.addEventListener('click', closeMore);
 
     var accountItem  = document.getElementById('moreAccountAction');
+    var logoutItem   = document.getElementById('moreLogoutAction');
     var loginItem    = document.getElementById('moreLoginAction');
     var registerItem = document.getElementById('moreRegisterAction');
-    var forgotItem   = document.getElementById('moreForgotAction');
     var cartItem     = document.getElementById('moreCartAction');
     var wishItem     = document.getElementById('moreWishlistAction');
     var shareItem    = document.getElementById('moreShareAction');
     var adviceItem   = document.getElementById('moreAdviceAction');
 
+    function syncMobileMoreAccountState() {
+        var userRaw = localStorage.getItem('kalaniketan_user');
+        var accountLabel = document.getElementById('moreAccountLabel');
+        var accountSub = document.getElementById('moreAccountSub');
+
+        if (userRaw) {
+            var user = JSON.parse(userRaw);
+            if (accountLabel) accountLabel.textContent = `${user.name || 'My Account'}`;
+            if (accountSub) accountSub.textContent = `Role: ${user.role || 'Retailer'} • View Profile & Orders`;
+
+            if (accountItem) accountItem.style.display = 'flex';
+            if (logoutItem) logoutItem.style.display = 'flex';
+            if (loginItem) loginItem.style.display = 'none';
+            if (registerItem) registerItem.style.display = 'none';
+        } else {
+            if (accountItem) accountItem.style.display = 'none';
+            if (logoutItem) logoutItem.style.display = 'none';
+            if (loginItem) loginItem.style.display = 'flex';
+            if (registerItem) registerItem.style.display = 'flex';
+        }
+    }
+
+    function openMore() { 
+        syncMobileMoreAccountState();
+        addSheet.classList.add('open'); 
+        moreOverlay.classList.add('open'); 
+        moreOverlay.setAttribute('aria-hidden','false'); 
+        addSheet.setAttribute('aria-hidden','false'); 
+        addBtn.setAttribute('aria-expanded','true'); 
+        document.body.style.overflow='hidden'; 
+    }
+
     if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php'; });
+    if (logoutItem) logoutItem.addEventListener('click', function(){ 
+        closeMore(); 
+        localStorage.removeItem('kalaniketan_user');
+        if (typeof window.showToast==='function') window.showToast('You have been logged out.');
+        syncMobileMoreAccountState();
+        if (typeof window.syncHeaderAccountState === 'function') window.syncHeaderAccountState();
+    });
     if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=login'; });
     if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=register'; });
-    if (forgotItem) forgotItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=forgot'; });
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
     if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('🔗 Page link copied to clipboard'); });
     if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
+
+    syncMobileMoreAccountState();
+    window.addEventListener('storage', syncMobileMoreAccountState);
 
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') { closeSort(); closeMore(); closeMobileFilter(); }
