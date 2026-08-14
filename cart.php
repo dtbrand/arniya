@@ -553,12 +553,16 @@
         var checkoutBtn = document.getElementById('cartCheckoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', function() {
-                if (window.cartState.length === 0) {
+                if (!window.cartState || window.cartState.length === 0) {
                     if (typeof window.showToast === 'function') window.showToast('Your bag is currently empty!');
                     return;
                 }
-                var total = document.getElementById('cartTotalVal').textContent;
-                alert('✨ Thank you for choosing Kalaniketan Luxury Ethnic Wear!\n\nYour order total is ' + total + '.\nProceeding to secure checkout...');
+                if (typeof window.openCheckout === 'function') {
+                    window.openCheckout();
+                } else {
+                    var total = document.getElementById('cartTotalVal').textContent;
+                    alert('✨ Thank you for choosing Kalaniketan Luxury Ethnic Wear!\n\nYour order total is ' + total + '.\nProceeding to secure checkout...');
+                }
             });
         }
     });

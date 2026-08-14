@@ -2625,5 +2625,8 @@ input[type=range].sf-range::-moz-range-thumb {
 <!-- ════════════ WISHLIST PARTIAL ════════════ -->
 <?php include 'wishlist.php'; ?>
 
+<!-- ════════════ CHECKOUT MODAL & ORDER SYSTEM ════════════ -->
+<?php include 'checkout.php'; ?>
+
 </body>
 </html>
