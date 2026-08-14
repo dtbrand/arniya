@@ -1,7 +1,7 @@
 <?php
 /**
  * myaccount.php — Dedicated Luxury Customer Account & Auth Page
- * Enhanced with Dynamic Country/State Sliders, Flag Auto-Capture, WhatsApp Validation & Roles
+ * Enhanced with Open Scrolling Slider Drawers for Country & State Selection
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -229,10 +229,6 @@
             background: #FFFFFF;
             box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
         }
-        .auth-input.is-invalid {
-            border-color: #D32F2F !important;
-            background: #FFF5F5 !important;
-        }
 
         /* ── Role Selection Cards (Wholesaler, Retailer, Reseller) ── */
         .role-selector-grid {
@@ -280,41 +276,83 @@
             margin-top: 2px;
         }
 
-        /* ── Horizontal Scrollable Slider for Countries & States ── */
-        .slider-pills-track {
+        /* ── Luxury Slider Open Trigger Input ── */
+        .slider-trigger-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 44px;
+            padding: 0 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--soft-platinum);
+            background: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .slider-trigger-box:hover {
+            border-color: var(--dark-gold);
+            background: #FAF8F4;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.1);
+        }
+        .slider-trigger-val {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        .slider-trigger-action {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--dark-gold);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .slider-trigger-action svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        /* ── Quick Horizontal Scrollable Preview Slider ── */
+        .slider-quick-preview {
             display: flex;
             gap: 6px;
             overflow-x: auto;
-            padding: 4px 2px 8px;
+            padding: 6px 2px 2px;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
-        .slider-pills-track::-webkit-scrollbar { display: none; }
-        .pill-item {
+        .slider-quick-preview::-webkit-scrollbar { display: none; }
+        .quick-pill {
             flex-shrink: 0;
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
-            border: 1.5px solid var(--soft-platinum);
+            border: 1px solid var(--soft-platinum);
             background: #FFFFFF;
             color: var(--dark-text);
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             white-space: nowrap;
         }
-        .pill-item:hover {
-            border-color: var(--dark-gold);
-            color: var(--dark-gold);
-        }
-        .pill-item.selected {
+        .quick-pill:hover { border-color: var(--dark-gold); color: var(--dark-gold); }
+        .quick-pill.selected {
             background: var(--dark-gold);
             color: #FFFFFF;
             border-color: var(--dark-gold);
-            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+            box-shadow: 0 2px 6px rgba(138,104,31,0.25);
         }
 
         /* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
@@ -347,6 +385,7 @@
             color: var(--dark-gold);
             flex-shrink: 0;
             user-select: none;
+            cursor: pointer;
         }
         .wa-flag-emoji {
             font-size: 1.1rem;
@@ -400,6 +439,165 @@
             background: none;
             border: none;
             cursor: pointer;
+        }
+
+        /* ════════════════════════════════════════════════════
+           MODAL / BOTTOM SHEET SCROLLING SLIDER PICKER
+        ════════════════════════════════════════════════════ */
+        .picker-slider-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 16, 12, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1000000;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 768px) {
+            .picker-slider-backdrop {
+                align-items: center;
+                padding: 20px;
+            }
+        }
+        .picker-slider-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .picker-slider-card {
+            background: #FFFFFF;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px 20px 0 0;
+            border: 2px solid var(--dark-gold);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.25);
+            display: flex;
+            flex-direction: column;
+            max-height: 82vh;
+            transform: translateY(100%);
+            transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .picker-slider-card {
+                border-radius: 16px;
+                transform: scale(0.95) translateY(20px);
+                max-height: 580px;
+            }
+        }
+        .picker-slider-backdrop.active .picker-slider-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .picker-slider-header {
+            padding: 14px 18px;
+            border-bottom: 1.5px solid var(--gold-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
+        }
+        .picker-slider-title {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark-gold);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .picker-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-border);
+            background: #FFFFFF;
+            color: var(--dark-gold);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .picker-close-btn:hover {
+            background: var(--dark-gold);
+            color: #FFFFFF;
+        }
+
+        .picker-search-bar {
+            padding: 10px 18px;
+            border-bottom: 1px solid var(--soft-platinum);
+            background: #FAF8F4;
+        }
+        .picker-search-input {
+            width: 100%;
+            height: 38px;
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 20px;
+            padding: 0 14px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            outline: none;
+            background: #FFFFFF;
+        }
+        .picker-search-input:focus {
+            border-color: var(--dark-gold);
+            box-shadow: 0 0 0 2px rgba(138,104,31,0.15);
+        }
+
+        /* Scrolling Grid / Cards */
+        .picker-slider-body {
+            padding: 14px 18px 24px;
+            overflow-y: auto;
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .picker-card-item {
+            border: 1.5px solid var(--soft-platinum);
+            border-radius: 10px;
+            padding: 12px 10px;
+            background: #FAF8F4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .picker-card-item:hover {
+            border-color: var(--dark-gold);
+            background: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.12);
+        }
+        .picker-card-item.selected {
+            border-color: var(--dark-gold);
+            background: #FAF3E0;
+            box-shadow: 0 0 0 2px rgba(138,104,31,0.3);
+        }
+        .picker-card-flag {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .picker-card-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        .picker-card-dial {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--dark-gold);
         }
 
         /* ════════════════════════════════════════════════════
@@ -808,25 +1006,39 @@
                         </div>
                     </div>
 
-                    <!-- Country Option (Style Slider - First auto-selected: India with flag) -->
+                    <!-- Country Option (Tap to Open Scrolling Slider Styles) -->
                     <div class="auth-form-group">
-                        <label class="auth-label">
-                            <span>Country <span class="req">*</span></span>
-                            <span id="selectedCountryLabel" style="color:var(--dark-gold); font-weight:700;">🇮🇳 India (+91)</span>
-                        </label>
-                        <div class="slider-pills-track" id="countrySliderTrack">
-                            <!-- Country pills populated by JS -->
+                        <label class="auth-label">Country <span class="req">*</span></label>
+                        <div class="slider-trigger-box" onclick="openPickerSlider('country')">
+                            <div class="slider-trigger-val" id="triggerCountryDisplay">
+                                <span style="font-size:1.2rem;" id="triggerCountryFlag">🇮🇳</span>
+                                <span id="triggerCountryName">India (+91)</span>
+                            </div>
+                            <div class="slider-trigger-action">
+                                <span>Browse Slider</span>
+                                <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="slider-quick-preview" id="countryQuickPreview">
+                            <!-- Quick selection pills -->
                         </div>
                     </div>
 
-                    <!-- States Option (Style Slider - Auto list for selected Country) -->
+                    <!-- States Option (Tap to Open Scrolling Slider Styles) -->
                     <div class="auth-form-group">
-                        <label class="auth-label">
-                            <span>State / Province <span class="req">*</span></span>
-                            <span id="selectedStateLabel" style="color:var(--dark-gold); font-weight:700;">Maharashtra</span>
-                        </label>
-                        <div class="slider-pills-track" id="stateSliderTrack">
-                            <!-- State pills populated by JS -->
+                        <label class="auth-label">State / Province <span class="req">*</span></label>
+                        <div class="slider-trigger-box" onclick="openPickerSlider('state')">
+                            <div class="slider-trigger-val" id="triggerStateDisplay">
+                                <span>📍</span>
+                                <span id="triggerStateName">Maharashtra</span>
+                            </div>
+                            <div class="slider-trigger-action">
+                                <span>Browse Slider</span>
+                                <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="slider-quick-preview" id="stateQuickPreview">
+                            <!-- Quick selection pills -->
                         </div>
                     </div>
 
@@ -843,7 +1055,7 @@
                             <span id="digitCountHint" style="font-size:0.65rem; color:var(--light-text);">10 digits required</span>
                         </label>
                         <div class="wa-phone-group" id="waPhoneGroup">
-                            <div class="wa-flag-prefix">
+                            <div class="wa-flag-prefix" onclick="openPickerSlider('country')">
                                 <span class="wa-flag-emoji" id="waFlagEmoji">🇮🇳</span>
                                 <span id="waDialCode">+91</span>
                             </div>
@@ -1009,12 +1221,32 @@
 
     </main>
 
+    <!-- ════════ OPEN SCROLLING SLIDER DRAWER (MODAL PICKER) ════════ -->
+    <div class="picker-slider-backdrop" id="pickerSliderBackdrop" onclick="if(event.target===this)closePickerSlider()">
+        <div class="picker-slider-card">
+            
+            <div class="picker-slider-header">
+                <h3 class="picker-slider-title" id="pickerTitle">Select Country</h3>
+                <button class="picker-close-btn" onclick="closePickerSlider()">✕</button>
+            </div>
+
+            <div class="picker-search-bar">
+                <input type="text" id="pickerSearchInput" class="picker-search-input" placeholder="Search country or state..." oninput="filterPickerItems()">
+            </div>
+
+            <div class="picker-slider-body" id="pickerSliderBody">
+                <!-- Cards populated by JS -->
+            </div>
+
+        </div>
+    </div>
+
     <!-- ════════ JAVASCRIPT CONTROLLER ════════ -->
     <script>
     (function() {
         'use strict';
 
-        /* ── Country & State Data ── */
+        /* ── Complete Country & State Data with Flags ── */
         var COUNTRIES_DATA = [
             {
                 code: 'IN',
@@ -1027,7 +1259,7 @@
                     'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 
                     'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 
                     'Odisha', 'Assam', 'Goa', 'Jammu & Kashmir', 'Uttarakhand', 
-                    'Jharkhand', 'Chhattisgarh', 'Himachal Pradesh', 'Chandigarh'
+                    'Jharkhand', 'Chhattisgarh', 'Himachal Pradesh', 'Chandigarh', 'Tripura', 'Puducherry'
                 ]
             },
             {
@@ -1044,7 +1276,7 @@
                 flag: '🇺🇸',
                 dial: '+1',
                 digits: 10,
-                states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington']
+                states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania']
             },
             {
                 code: 'GB',
@@ -1052,7 +1284,7 @@
                 flag: '🇬🇧',
                 dial: '+44',
                 digits: 10,
-                states: ['England', 'Scotland', 'Wales', 'Northern Ireland', 'Greater London']
+                states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands', 'Manchester']
             },
             {
                 code: 'CA',
@@ -1060,7 +1292,7 @@
                 flag: '🇨🇦',
                 dial: '+1',
                 digits: 10,
-                states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba']
+                states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan']
             },
             {
                 code: 'AU',
@@ -1076,7 +1308,7 @@
                 flag: '🇸🇬',
                 dial: '+65',
                 digits: 8,
-                states: ['Central Region', 'East Region', 'North Region', 'West Region']
+                states: ['Central Region', 'East Region', 'North Region', 'West Region', 'North-East Region']
             },
             {
                 code: 'MY',
@@ -1084,7 +1316,7 @@
                 flag: '🇲🇾',
                 dial: '+60',
                 digits: 9,
-                states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah']
+                states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah', 'Sarawak']
             },
             {
                 code: 'SA',
@@ -1092,36 +1324,44 @@
                 flag: '🇸🇦',
                 dial: '+966',
                 digits: 9,
-                states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Asir']
+                states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Asir', 'Tabuk']
+            },
+            {
+                code: 'DE',
+                name: 'Germany',
+                flag: '🇩🇪',
+                dial: '+49',
+                digits: 10,
+                states: ['Bavaria', 'Berlin', 'North Rhine-Westphalia', 'Baden-Württemberg', 'Hesse']
+            },
+            {
+                code: 'NZ',
+                name: 'New Zealand',
+                flag: '🇳🇿',
+                dial: '+64',
+                digits: 9,
+                states: ['Auckland', 'Canterbury', 'Wellington', 'Waikato', 'Bay of Plenty']
             }
         ];
 
         var selectedRole = 'Retailer';
         var selectedCountry = COUNTRIES_DATA[0]; // First auto-selected: India (flag, +91)
         var selectedState = selectedCountry.states[0]; // Maharashtra
+        var activePickerType = 'country';
 
-        /* Render Country Slider */
-        function renderCountrySlider() {
-            var track = document.getElementById('countrySliderTrack');
-            if (!track) return;
+        /* Update Form Display */
+        function syncRegistrationSelection() {
+            /* Country Display */
+            var cFlag = document.getElementById('triggerCountryFlag');
+            var cName = document.getElementById('triggerCountryName');
+            if (cFlag) cFlag.textContent = selectedCountry.flag;
+            if (cName) cName.textContent = `${selectedCountry.name} (${selectedCountry.dial})`;
 
-            var html = '';
-            COUNTRIES_DATA.forEach(function(c) {
-                var isSel = c.code === selectedCountry.code;
-                html += `
-                    <div class="pill-item ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')">
-                        <span>${c.flag}</span>
-                        <span>${c.name}</span>
-                        <span style="opacity:0.75; font-size:0.65rem;">(${c.dial})</span>
-                    </div>
-                `;
-            });
-            track.innerHTML = html;
+            /* State Display */
+            var sName = document.getElementById('triggerStateName');
+            if (sName) sName.textContent = selectedState;
 
-            var label = document.getElementById('selectedCountryLabel');
-            if (label) label.textContent = `${selectedCountry.flag} ${selectedCountry.name} (${selectedCountry.dial})`;
-
-            /* Update WhatsApp Flag and Dial Code Prefix */
+            /* WhatsApp Flag & Dial Prefix */
             var waFlag = document.getElementById('waFlagEmoji');
             var waDial = document.getElementById('waDialCode');
             var hint = document.getElementById('digitCountHint');
@@ -1130,47 +1370,126 @@
             if (waDial) waDial.textContent = selectedCountry.dial;
             if (hint) hint.textContent = `${selectedCountry.digits} digits required`;
 
-            renderStateSlider();
+            renderQuickPreviews();
             validateWhatsAppDigits();
         }
 
-        /* Render State Slider */
-        function renderStateSlider() {
-            var track = document.getElementById('stateSliderTrack');
-            if (!track) return;
+        /* Quick Pills Preview */
+        function renderQuickPreviews() {
+            var cTrack = document.getElementById('countryQuickPreview');
+            if (cTrack) {
+                var cHtml = '';
+                COUNTRIES_DATA.forEach(function(c) {
+                    var isSel = c.code === selectedCountry.code;
+                    cHtml += `<div class="quick-pill ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}')"><span>${c.flag}</span><span>${c.name}</span></div>`;
+                });
+                cTrack.innerHTML = cHtml;
+            }
+
+            var sTrack = document.getElementById('stateQuickPreview');
+            if (sTrack) {
+                var sHtml = '';
+                selectedCountry.states.slice(0, 10).forEach(function(st) {
+                    var isSel = st === selectedState;
+                    sHtml += `<div class="quick-pill ${isSel ? 'selected' : ''}" onclick="selectState('${st}')"><span>📍</span><span>${st}</span></div>`;
+                });
+                sTrack.innerHTML = sHtml;
+            }
+        }
+
+        /* Open Scrolling Slider Modal Picker */
+        window.openPickerSlider = function(type) {
+            activePickerType = type;
+            var backdrop = document.getElementById('pickerSliderBackdrop');
+            var title = document.getElementById('pickerTitle');
+            var search = document.getElementById('pickerSearchInput');
+            if (!backdrop) return;
+
+            if (search) search.value = '';
+
+            if (type === 'country') {
+                if (title) title.innerHTML = '🌍 Select Country / Region';
+                renderPickerItems(COUNTRIES_DATA);
+            } else {
+                if (title) title.innerHTML = `📍 Select State (${selectedCountry.name})`;
+                renderPickerItems(selectedCountry.states);
+            }
+
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (search) setTimeout(function(){ search.focus(); }, 150);
+        };
+
+        window.closePickerSlider = function() {
+            var backdrop = document.getElementById('pickerSliderBackdrop');
+            if (backdrop) backdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        function renderPickerItems(items) {
+            var body = document.getElementById('pickerSliderBody');
+            if (!body) return;
 
             var html = '';
-            selectedCountry.states.forEach(function(st) {
-                var isSel = st === selectedState;
-                html += `
-                    <div class="pill-item ${isSel ? 'selected' : ''}" onclick="selectState('${st}')">
-                        <span>📍</span>
-                        <span>${st}</span>
-                    </div>
-                `;
-            });
-            track.innerHTML = html;
-
-            var label = document.getElementById('selectedStateLabel');
-            if (label) label.textContent = selectedState;
+            if (activePickerType === 'country') {
+                items.forEach(function(c) {
+                    var isSel = c.code === selectedCountry.code;
+                    html += `
+                        <div class="picker-card-item ${isSel ? 'selected' : ''}" onclick="selectCountry('${c.code}'); closePickerSlider();">
+                            <span class="picker-card-flag">${c.flag}</span>
+                            <span class="picker-card-name">${c.name}</span>
+                            <span class="picker-card-dial">${c.dial} (${c.digits} digits)</span>
+                        </div>
+                    `;
+                });
+            } else {
+                items.forEach(function(st) {
+                    var isSel = st === selectedState;
+                    html += `
+                        <div class="picker-card-item ${isSel ? 'selected' : ''}" onclick="selectState('${st}'); closePickerSlider();">
+                            <span class="picker-card-flag" style="font-size:1.4rem;">📍</span>
+                            <span class="picker-card-name">${st}</span>
+                            <span class="picker-card-dial" style="color:var(--mid-text);">${selectedCountry.name}</span>
+                        </div>
+                    `;
+                });
+            }
+            body.innerHTML = html;
         }
+
+        window.filterPickerItems = function() {
+            var input = document.getElementById('pickerSearchInput');
+            var q = input ? input.value.trim().toLowerCase() : '';
+
+            if (activePickerType === 'country') {
+                var filtered = COUNTRIES_DATA.filter(function(c) {
+                    return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q);
+                });
+                renderPickerItems(filtered);
+            } else {
+                var filtered = selectedCountry.states.filter(function(st) {
+                    return st.toLowerCase().includes(q);
+                });
+                renderPickerItems(filtered);
+            }
+        };
 
         window.selectCountry = function(code) {
             var found = COUNTRIES_DATA.find(function(c) { return c.code === code; });
             if (found) {
                 selectedCountry = found;
                 selectedState = found.states[0] || 'Default';
-                renderCountrySlider();
+                syncRegistrationSelection();
             }
         };
 
         window.selectState = function(stateName) {
             selectedState = stateName;
-            renderStateSlider();
             var cityInput = document.getElementById('regCity');
             if (cityInput && !cityInput.value) {
                 cityInput.value = stateName;
             }
+            syncRegistrationSelection();
         };
 
         window.selectRole = function(role) {
@@ -1254,7 +1573,7 @@
                 /* User is Logged Out -> Show Auth Forms */
                 authCard.style.display = 'block';
                 dashWrap.classList.remove('active');
-                renderCountrySlider();
+                syncRegistrationSelection();
                 switchAuthTab(initialTab);
             }
         }
@@ -1285,7 +1604,7 @@
             } else if (tab === 'register') {
                 heading.textContent = 'Create Luxury Account';
                 sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
-                renderCountrySlider();
+                syncRegistrationSelection();
             } else {
                 heading.textContent = 'Reset Password';
                 sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
@@ -1367,7 +1686,9 @@
         };
 
         /* Run on Page Load */
-        document.addEventListener('DOMContentLoaded', checkUserAuth);
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserAuth();
+        });
     })();
     </script>
 </body>
