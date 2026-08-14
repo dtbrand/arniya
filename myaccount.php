@@ -958,11 +958,10 @@
                 <p id="authSubheading">Access your personalized luxury ethnic experience</p>
             </div>
 
-            <!-- Tabs -->
+            <!-- Tabs (Only Login & Register) -->
             <div class="auth-tabs">
                 <button class="auth-tab active" id="tabBtnLogin" onclick="switchAuthTab('login')">Login</button>
                 <button class="auth-tab" id="tabBtnRegister" onclick="switchAuthTab('register')">Register</button>
-                <button class="auth-tab" id="tabBtnForgot" onclick="switchAuthTab('forgot')">Forgot Password</button>
             </div>
 
             <!-- Forms -->
@@ -1141,13 +1140,17 @@
                         Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset link on WhatsApp.
                     </p>
                     <div class="auth-form-group">
-                        <label class="auth-label" for="forgotInput">WhatsApp Number / Email</label>
-                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210" required>
+                        <label class="auth-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
+                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
                     </div>
                     <button type="submit" class="auth-btn-submit">
                         <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                         <span>Send Reset Link via WhatsApp</span>
                     </button>
+
+                    <div style="text-align:center; font-size:0.78rem; margin-top:14px; color:var(--mid-text); font-weight:600;">
+                        Remembered your password? <button type="button" class="auth-link" onclick="switchAuthTab('login')">← Back to Login</button>
+                    </div>
                 </form>
 
             </div>
@@ -1581,18 +1584,16 @@
 
             var btnLogin = document.getElementById('tabBtnLogin');
             var btnReg = document.getElementById('tabBtnRegister');
-            var btnForgot = document.getElementById('tabBtnForgot');
 
             var heading = document.getElementById('authHeading');
             var sub = document.getElementById('authSubheading');
 
-            btnLogin.classList.toggle('active', tab === 'login');
-            btnReg.classList.toggle('active', tab === 'register');
-            btnForgot.classList.toggle('active', tab === 'forgot');
+            if (btnLogin) btnLogin.classList.toggle('active', tab === 'login');
+            if (btnReg) btnReg.classList.toggle('active', tab === 'register');
 
-            loginForm.style.display = (tab === 'login') ? 'block' : 'none';
-            regForm.style.display = (tab === 'register') ? 'block' : 'none';
-            forgotForm.style.display = (tab === 'forgot') ? 'block' : 'none';
+            if (loginForm) loginForm.style.display = (tab === 'login') ? 'block' : 'none';
+            if (regForm) regForm.style.display = (tab === 'register') ? 'block' : 'none';
+            if (forgotForm) forgotForm.style.display = (tab === 'forgot') ? 'block' : 'none';
 
             if (tab === 'login') {
                 heading.textContent = 'VIP Member Sign In';
@@ -1601,7 +1602,7 @@
                 heading.textContent = 'Create Luxury Account';
                 sub.textContent = 'Join Kalaniketan VIP Royal Member Club';
                 renderCountryDropdown();
-            } else {
+            } else if (tab === 'forgot') {
                 heading.textContent = 'Reset Password';
                 sub.textContent = 'Instant OTP & Password Recovery via WhatsApp';
             }
