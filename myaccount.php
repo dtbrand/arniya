@@ -151,21 +151,92 @@
             overflow: visible;
         }
         
-        /* Form Card Header */
+        /* ── Luxury Form Card Header with Brand Logo & Royal Seal ── */
         .auth-card-header {
-            background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 100%);
-            padding: 22px 24px 18px;
+            background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
+            padding: 24px 24px 20px;
             border-bottom: 2px solid var(--gold-border);
             text-align: center;
             border-radius: 16px 16px 0 0;
+            position: relative;
+            overflow: hidden;
         }
-        .auth-card-header h2 {
+        .auth-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, var(--dark-gold) 50%, transparent 100%);
+        }
+        
+        /* Royal Logo Seal */
+        .auth-brand-seal-wrap {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 12px;
+            text-decoration: none;
+        }
+        .auth-logo-badge {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            box-shadow: 0 4px 16px rgba(138,104,31,0.4);
+            border: 2px solid #FFFFFF;
+            position: relative;
+            margin-bottom: 8px;
+            animation: goldGlowPulse 3s ease-in-out infinite;
+        }
+        @keyframes goldGlowPulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(138,104,31,0.35); transform: scale(1); }
+            50% { box-shadow: 0 6px 24px rgba(197,168,89,0.55); transform: scale(1.03); }
+        }
+        .auth-logo-badge svg {
+            width: 26px;
+            height: 26px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+        .auth-brand-title {
             font-family: var(--font-serif);
-            font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--dark-gold);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .auth-brand-sub {
+            font-size: 0.62rem;
+            color: var(--mid-text);
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .auth-brand-sub::before, .auth-brand-sub::after {
+            content: '❖';
+            font-size: 0.5rem;
+            color: var(--dark-gold);
+            opacity: 0.7;
+        }
+
+        .auth-card-header h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.2rem, 3.8vw, 1.45rem);
+            font-weight: 800;
+            color: var(--dark-text);
             letter-spacing: 0.05em;
-            margin-bottom: 4px;
+            margin: 6px 0 3px;
             line-height: 1.2;
         }
         .auth-card-header p {
@@ -954,6 +1025,15 @@
         <!-- ════════ VIEW 1: AUTHENTICATION (FOR GUEST USERS) ════════ -->
         <div class="auth-card-wrap" id="authCardWrap">
             <div class="auth-card-header">
+                <!-- Royal Brand Logo & Seal -->
+                <div class="auth-brand-seal-wrap">
+                    <div class="auth-logo-badge">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <div class="auth-brand-title">Kalaniketan</div>
+                    <div class="auth-brand-sub">Ethnic Luxury Couture</div>
+                </div>
+
                 <h2 id="authHeading">VIP Member Sign In</h2>
                 <p id="authSubheading">Access your personalized luxury ethnic experience</p>
             </div>
