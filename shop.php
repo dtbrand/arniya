@@ -881,11 +881,11 @@ input[type=range].sf-range::-moz-range-thumb {
 .products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
 }
-@media (min-width: 600px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
-@media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-@media (min-width: 1280px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 22px; } }
+@media (min-width: 600px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+@media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+@media (min-width: 1280px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
 
 /* No products found state */
 .no-products-found {
@@ -924,15 +924,18 @@ input[type=range].sf-range::-moz-range-thumb {
 
 .card-image-wrap {
     position: relative; overflow: hidden;
-    background: var(--off-white-2);
-    aspect-ratio: 3 / 4;
+    background: #FAF8F4;
+    aspect-ratio: 4 / 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .card-img {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: top center;
-    transition: transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+    object-fit: contain; object-position: center;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.product-card:hover .card-img { transform: scale(1.06); }
+.product-card:hover .card-img { transform: scale(1.05); }
 
 .card-badge {
     position: absolute; bottom: 8px; left: 8px; top: auto;
@@ -1058,18 +1061,18 @@ input[type=range].sf-range::-moz-range-thumb {
 .quick-view-btn:hover { background: var(--dark-gold); color: #fff; border-color: var(--dark-gold); }
 
 .card-body {
-    padding: clamp(6px, 1.8vw, 12px);
+    padding: clamp(7px, 1.8vw, 10px);
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     flex: 1;
 }
 
 .card-fabric-tag {
-    font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+    font-size: clamp(0.5rem, 1.5vw, 0.58rem);
     font-weight: 600;
     color: var(--dark-gold);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
@@ -1078,18 +1081,20 @@ input[type=range].sf-range::-moz-range-thumb {
 
 .card-name {
     font-family: var(--font-serif);
-    font-size: clamp(0.74rem, 2.2vw, 0.86rem);
+    font-size: clamp(0.72rem, 2.1vw, 0.82rem);
     font-weight: 600;
     color: var(--dark-text);
     line-height: 1.25;
     letter-spacing: 0.01em;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    white-space: normal;
-    min-height: 2.5em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-height: auto;
+    margin-bottom: 2px;
     transition: color var(--transition);
 }
 .product-card:hover .card-name { color: var(--dark-gold); }
@@ -1099,13 +1104,13 @@ input[type=range].sf-range::-moz-range-thumb {
     bottom: 6px;
     right: 6px;
     font-family: var(--font-sans);
-    font-size: clamp(0.48rem, 1.4vw, 0.58rem);
+    font-size: clamp(0.46rem, 1.3vw, 0.54rem);
     font-weight: 700;
     color: var(--dark-gold);
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.94);
     border: 1px solid rgba(138, 104, 31, 0.38);
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 2px 5px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.1;
@@ -1119,12 +1124,12 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: clamp(0.56rem, 1.7vw, 0.68rem);
+    font-size: clamp(0.54rem, 1.6vw, 0.64rem);
     color: var(--mid-text);
     font-weight: 600;
-    margin: 2px 0 4px;
+    margin: 1px 0 3px;
     gap: 4px;
-    flex-wrap: wrap;
+    white-space: nowrap;
 }
 .card-colors-text {
     color: var(--dark-gold);
@@ -1140,28 +1145,29 @@ input[type=range].sf-range::-moz-range-thumb {
 
 .card-price-row {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: clamp(3px, 1.2vw, 6px);
     margin-top: auto;
+    padding-top: 2px;
     flex-wrap: wrap;
 }
 .card-price {
     font-family: var(--font-sans);
-    font-size: clamp(0.8rem, 2.4vw, 0.96rem);
+    font-size: clamp(0.78rem, 2.3vw, 0.90rem);
     font-weight: 700;
     color: var(--dark-gold);
 }
 .card-old-price {
-    font-size: clamp(0.62rem, 1.8vw, 0.72rem);
+    font-size: clamp(0.60rem, 1.7vw, 0.68rem);
     color: var(--light-text);
     text-decoration: line-through;
 }
 .card-price-discount {
-    font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+    font-size: clamp(0.48rem, 1.4vw, 0.56rem);
     font-weight: 700;
     color: #2E7D32;
     background: #E8F5E9;
-    padding: 1.5px 5px;
+    padding: 1.5px 4.5px;
     border-radius: 3px;
     margin-left: auto;
     letter-spacing: 0.02em;
