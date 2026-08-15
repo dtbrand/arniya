@@ -573,52 +573,63 @@
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
-/* ── Mobile Layout Adjustments (<768px) ── */
+/* ── Mobile Layout & Auto-Compact Scroll Adjustments (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
         height: auto;
         padding: 0;
         gap: 0;
+        transition: box-shadow 0.25s ease;
     }
+    .header-normal-view,
+    .mobile-full-search-bar,
+    .header-attached-subnav,
+    .mobile-search-input-wrap,
+    .header-plus-btn,
+    .header-icon-btn,
+    .header-brand-name {
+        transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
     .header-normal-view {
-        height: clamp(44px, 12vw, 52px);
-        padding: 0 clamp(6px, 2vw, 14px);
-        gap: clamp(4px, 1.5vw, 10px);
+        height: 44px;
+        padding: 0 10px;
+        gap: 8px;
     }
     .header-left-group {
-        gap: clamp(4px, 1.8vw, 10px);
+        gap: 8px;
     }
     .header-plus-btn {
-        width: clamp(26px, 7.5vw, 34px);
-        height: clamp(26px, 7.5vw, 34px);
+        width: 30px;
+        height: 30px;
     }
     .header-plus-btn svg {
-        width: clamp(12px, 3.5vw, 16px);
-        height: clamp(12px, 3.5vw, 16px);
+        width: 14px;
+        height: 14px;
     }
     .header-brand-name {
-        font-size: clamp(0.85rem, 3.8vw, 1.12rem);
+        font-size: 0.95rem;
     }
     .header-brand-tagline {
-        font-size: clamp(0.42rem, 1.6vw, 0.54rem);
-        letter-spacing: 0.16em;
+        font-size: 0.44rem;
+        letter-spacing: 0.14em;
         margin-top: 1px;
     }
     .header-actions {
-        gap: clamp(4px, 1.6vw, 8px);
+        gap: 6px;
     }
     .header-icon-btn {
-        width: clamp(28px, 8vw, 36px);
-        height: clamp(28px, 8vw, 36px);
+        width: 32px;
+        height: 32px;
     }
     .header-icon-btn svg {
-        width: clamp(14px, 4vw, 18px);
-        height: clamp(14px, 4vw, 18px);
+        width: 16px;
+        height: 16px;
     }
     .header-badge {
-        min-width: clamp(13px, 3.5vw, 16px);
-        height: clamp(13px, 3.5vw, 16px);
-        font-size: clamp(0.45rem, 1.4vw, 0.55rem);
+        min-width: 15px;
+        height: 15px;
+        font-size: 0.52rem;
         top: -3px;
         right: -3px;
     }
@@ -632,42 +643,88 @@
         display: none !important;
     }
 
-    /* Mobile Search Bar in fluid height */
+    /* Open Mobile Search Bar (Compact Height) */
     .mobile-full-search-bar {
+        height: 42px;
+        padding: 0 8px;
         gap: 6px;
     }
     .mobile-search-input-wrap {
-        height: clamp(32px, 9vw, 38px);
-        padding: 0 clamp(8px, 2vw, 14px);
+        height: 32px;
+        padding: 0 10px;
     }
     .mobile-search-input-field {
-        font-size: clamp(0.72rem, 2.8vw, 0.85rem);
+        font-size: 0.78rem;
     }
     .mobile-search-submit-icon-btn svg {
-        width: clamp(13px, 3.5vw, 16px);
-        height: clamp(13px, 3.5vw, 16px);
+        width: 14px;
+        height: 14px;
     }
     .mobile-search-close-btn {
-        width: clamp(28px, 8vw, 34px);
-        height: clamp(28px, 8vw, 34px);
+        width: 30px;
+        height: 30px;
     }
     .mobile-search-close-btn svg {
-        width: clamp(12px, 3.2vw, 15px);
-        height: clamp(12px, 3.2vw, 15px);
+        width: 13px;
+        height: 13px;
     }
 
     .header-attached-subnav {
-        height: clamp(26px, 7vw, 30px);
-        padding: 0 clamp(4px, 1.5vw, 8px);
+        height: 26px;
+        padding: 0 8px;
     }
     .subnav-item {
-        font-size: clamp(0.58rem, 2vw, 0.68rem);
-        padding: 2px clamp(5px, 1.5vw, 9px);
-        height: clamp(19px, 5.5vw, 22px);
+        font-size: 0.62rem;
+        padding: 1px 7px;
+        height: 19px;
     }
     .subnav-icon {
-        width: clamp(9px, 2.6vw, 12px);
-        height: clamp(9px, 2.6vw, 12px);
+        width: 10px;
+        height: 10px;
+    }
+
+    /* ── SCROLLED AUTO COMPACT STATE (Height Kum) ── */
+    .shop-header.scrolled .header-normal-view {
+        height: 38px;
+        padding: 0 8px;
+    }
+    .shop-header.scrolled .mobile-full-search-bar {
+        height: 36px;
+        padding: 0 6px;
+    }
+    .shop-header.scrolled .mobile-search-input-wrap {
+        height: 29px;
+        padding: 0 8px;
+    }
+    .shop-header.scrolled .mobile-search-input-field {
+        font-size: 0.74rem;
+    }
+    .shop-header.scrolled .mobile-search-close-btn {
+        width: 27px;
+        height: 27px;
+    }
+    .shop-header.scrolled .header-attached-subnav {
+        height: 22px;
+        padding: 0 6px;
+    }
+    .shop-header.scrolled .subnav-item {
+        height: 16px;
+        font-size: 0.58rem;
+        padding: 1px 5px;
+    }
+    .shop-header.scrolled .header-plus-btn {
+        width: 26px;
+        height: 26px;
+    }
+    .shop-header.scrolled .header-icon-btn {
+        width: 28px;
+        height: 28px;
+    }
+    .shop-header.scrolled .header-brand-name {
+        font-size: 0.82rem;
+    }
+    .shop-header.scrolled .header-brand-tagline {
+        display: none;
     }
 }
 </style>
@@ -1035,6 +1092,20 @@ window.closeWishlistDrawer = function() {
             if (dropLogout) dropLogout.style.display = 'none';
         }
     }
+    /* Scroll Header Height Auto-Compress Engine */
+    var isShopHeaderScrolled = false;
+    window.addEventListener('scroll', function() {
+        var sy = window.scrollY || window.pageYOffset || 0;
+        if (!header) return;
+        if (sy > 35 && !isShopHeaderScrolled) {
+            isShopHeaderScrolled = true;
+            header.classList.add('scrolled');
+        } else if (sy < 12 && isShopHeaderScrolled) {
+            isShopHeaderScrolled = false;
+            header.classList.remove('scrolled');
+        }
+    }, { passive: true });
+
     syncHeaderAccountState();
     window.addEventListener('storage', syncHeaderAccountState);
 })();
