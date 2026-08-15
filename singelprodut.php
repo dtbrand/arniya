@@ -668,33 +668,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #0D47A1;
 }
 
-.pdp-perk-icon {
-    font-size: 0.75rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+.pdp-perk-svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
 }
-.pdp-perk-icon.pulse {
+.pdp-perk-svg.pulse {
     animation: pdpIconPulse 2s infinite ease-in-out;
 }
 @keyframes pdpIconPulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.22); }
+    50% { transform: scale(1.25); }
 }
-.pdp-perk-icon.flash {
+.pdp-perk-svg.flash {
     animation: pdpIconFlash 1.6s infinite ease-in-out;
 }
 @keyframes pdpIconFlash {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.18); }
+    50% { opacity: 0.65; transform: scale(1.2); }
 }
-.pdp-perk-icon.spin {
-    animation: pdpIconWiggle 3s infinite ease-in-out;
+.pdp-perk-svg.spin {
+    animation: pdpIconWiggle 3.5s infinite ease-in-out;
 }
 @keyframes pdpIconWiggle {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-12deg); }
-    75% { transform: rotate(12deg); }
+    20% { transform: rotate(-22deg); }
+    60% { transform: rotate(22deg); }
+    80% { transform: rotate(0deg); }
 }
 .pdp-perk-text {
     white-space: nowrap;
@@ -1724,19 +1726,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <!-- Animated Luxury Perks Strip -->
                 <div class="pdp-animated-perks-strip">
                     <div class="pdp-perk-badge pdp-perk-quality">
-                        <span class="pdp-perk-icon pulse">👑</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg pulse" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
                         <span class="pdp-perk-text">Premium Quality</span>
                     </div>
                     <div class="pdp-perk-badge pdp-perk-tax">
-                        <span class="pdp-perk-icon">🏷️</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
                         <span class="pdp-perk-text">Exclusive of all taxes</span>
                     </div>
                     <div class="pdp-perk-badge pdp-perk-delivery">
-                        <span class="pdp-perk-icon flash">⚡</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                         <span class="pdp-perk-text">Fast Express Delivery</span>
                     </div>
                     <div class="pdp-perk-badge pdp-perk-exchange">
-                        <span class="pdp-perk-icon spin">💎</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg spin" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
                         <span class="pdp-perk-text">7-Day Fast Exchange</span>
                     </div>
                 </div>
