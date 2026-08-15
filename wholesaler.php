@@ -1,21 +1,14 @@
 <?php
 /**
- * wholesaler.php — Next-Generation Luxury TailAdmin B2B Wholesaler Dashboard
- * Kalaniketan Ethnic Luxury Couture
+ * wholesaler.php — Luxury Kalaniketan B2B Wholesaler Dashboard
+ * Clean Modern TailAdmin Sizing & Layout + 100% Signature Heritage Gold Brand Colors
  * 
- * Features:
- * - Pixel-perfect modern SaaS dashboard layout (matching TailAdmin architecture)
- * - Strict Wholesaler Role Security Gate (Frontend + Backend validation)
- * - Clean white cards, refined border-radii (14px), modern slate typography & soft shadows
- * - Top command search bar with ⌘K shortcut, dark-mode toggle, notification bell & profile pill
- * - Left sleek sidebar with MENU categorization and pill-style navigation with badges
- * - Top 4 metric cards with big bold numbers and pill trend tags (+11.01% ↑ / -9.05% ↓)
- * - Interactive Monthly Sales Bar Chart (12 Months Jan-Dec) with hover tooltips
- * - Semi-circular Target Gauge (75.55%) with revenue milestone narrative & bottom 3-stat row
- * - Segmented tab controls ([ Overview ] [ Orders ] [ Reports ] [ Catalog ]) & Date filter pill
- * - "My Details", "GST / Non-GST Profile", "Address Book", "Order Book", "Live Tracking", "Support Desk"
- * - High-Definition GST Tax Invoice Bill Modal & Print Sheet
- * - Mobile bottom floating app dock ([ Overview ] [ Orders ] [ Shop ] [ Reports ] [ Profile ])
+ * Brand Color System:
+ * - Primary Gold: #8A681F
+ * - Radiant Accent Gold: #C5A859 / #D4AF37
+ * - Deep Bronze Gold: #5A4210 / #705114
+ * - Pale Gold Background: #FAF5E8 / #FDFBF7
+ * - Obsidian Dark: #14110E / #0F172A
  */
 
 $catalogProducts = [
@@ -130,42 +123,39 @@ $catalogProducts = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wholesaler B2B Dashboard — Kalaniketan Couture</title>
     
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* ── Modern Clean Dashboard Palette (TailAdmin Style) ── */
-            --ws-bg-page: #F8FAFC;
-            --ws-bg-card: #FFFFFF;
-            --ws-bg-sidebar: #FFFFFF;
-            --ws-border: #E2E8F0;
-            --ws-border-light: #F1F5F9;
-
-            --ws-text-main: #0F172A;
-            --ws-text-sub: #334155;
-            --ws-text-muted: #64748B;
-            --ws-text-light: #94A3B8;
-
-            --ws-primary: #3B82F6;
-            --ws-primary-light: #EFF6FF;
-            --ws-primary-dark: #1D4ED8;
-
+            /* ── Kalaniketan Signature Heritage Gold Brand System ── */
             --ws-gold-primary: #8A681F;
             --ws-gold-accent: #C5A859;
+            --ws-gold-deep: #5A4210;
             --ws-gold-light: #FAF5E8;
+            --ws-gold-pale: #FDFBF7;
             --ws-gold-border: rgba(138, 104, 31, 0.22);
+            --ws-gold-glow: rgba(197, 168, 89, 0.28);
 
-            --ws-success: #10B981;
-            --ws-success-bg: #ECFDF5;
-            --ws-warning: #F59E0B;
-            --ws-warning-bg: #FFFBEB;
-            --ws-danger: #EF4444;
-            --ws-danger-bg: #FEF2F2;
-            --ws-purple: #8B5CF6;
-            --ws-purple-bg: #F5F3FF;
+            --ws-bg-page: #FDFBF7;
+            --ws-bg-card: #FFFFFF;
+            --ws-bg-sidebar: #FFFFFF;
+            --ws-border: #E8E2D5;
+            --ws-border-light: #F4EFE6;
+
+            --ws-text-main: #14110E;
+            --ws-text-sub: #3B352E;
+            --ws-text-muted: #6B6358;
+            --ws-text-light: #948A7B;
+
+            --ws-success: #15803D;
+            --ws-success-bg: #DCFCE7;
+            --ws-warning: #B45309;
+            --ws-warning-bg: #FEF3C7;
+            --ws-danger: #B91C1C;
+            --ws-danger-bg: #FEE2E2;
 
             --ws-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --ws-font-serif: 'Cinzel', serif;
@@ -175,8 +165,8 @@ $catalogProducts = [
             --ws-radius-lg: 14px;
             --ws-radius-xl: 18px;
 
-            --ws-shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
-            --ws-shadow-hover: 0 8px 24px rgba(0,0,0,0.06);
+            --ws-shadow-card: 0 1px 4px rgba(138,104,31,0.06), 0 4px 14px rgba(0,0,0,0.03);
+            --ws-shadow-hover: 0 8px 24px rgba(138,104,31,0.12);
             --ws-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -206,7 +196,7 @@ $catalogProducts = [
         /* ── Top Header Navigation Bar ── */
         .ws-header {
             background: #FFFFFF;
-            border-bottom: 1px solid var(--ws-border);
+            border-bottom: 2px solid var(--ws-gold-primary);
             padding: 0 clamp(14px, 2.5vw, 28px);
             height: 64px;
             display: flex;
@@ -215,7 +205,7 @@ $catalogProducts = [
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 10px rgba(138,104,31,0.06);
         }
         .ws-header-left {
             display: flex;
@@ -226,9 +216,9 @@ $catalogProducts = [
             width: 38px;
             height: 38px;
             border-radius: var(--ws-radius-sm);
-            border: 1px solid var(--ws-border);
-            background: #FFFFFF;
-            color: var(--ws-text-sub);
+            border: 1.2px solid var(--ws-gold-border);
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -236,8 +226,8 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-menu-toggle-btn:hover {
-            background: #F1F5F9;
-            color: var(--ws-text-main);
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
         }
         .ws-menu-toggle-btn svg {
             width: 20px;
@@ -257,8 +247,8 @@ $catalogProducts = [
             height: 38px;
             padding: 0 54px 0 38px;
             border-radius: 20px;
-            border: 1px solid var(--ws-border);
-            background: #F8FAFC;
+            border: 1.2px solid var(--ws-border);
+            background: #FAF8F4;
             font-size: 0.82rem;
             color: var(--ws-text-main);
             outline: none;
@@ -266,8 +256,8 @@ $catalogProducts = [
         }
         .ws-cmd-search-input:focus {
             background: #FFFFFF;
-            border-color: var(--ws-primary);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 0 0 3px var(--ws-gold-glow);
         }
         .ws-cmd-search-icon {
             position: absolute;
@@ -288,11 +278,11 @@ $catalogProducts = [
             transform: translateY(-50%);
             padding: 2px 6px;
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
+            border: 1px solid var(--ws-gold-border);
             border-radius: 6px;
             font-size: 0.65rem;
             font-weight: 700;
-            color: var(--ws-text-muted);
+            color: var(--ws-gold-primary);
         }
 
         .ws-header-right {
@@ -304,9 +294,9 @@ $catalogProducts = [
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid var(--ws-border);
-            background: #FFFFFF;
-            color: var(--ws-text-sub);
+            border: 1.2px solid var(--ws-gold-border);
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -315,8 +305,8 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-hdr-icon-btn:hover {
-            background: #F8FAFC;
-            color: var(--ws-text-main);
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
         }
         .ws-hdr-icon-btn svg {
             width: 17px;
@@ -332,7 +322,7 @@ $catalogProducts = [
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: #F97316;
+            background: #D97706;
             border: 1.5px solid #FFFFFF;
         }
 
@@ -340,23 +330,23 @@ $catalogProducts = [
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 4px 10px 4px 4px;
+            padding: 4px 12px 4px 4px;
             border-radius: 28px;
-            border: 1px solid transparent;
-            background: transparent;
+            border: 1.5px solid var(--ws-gold-border);
+            background: var(--ws-gold-light);
             cursor: pointer;
             transition: var(--ws-transition);
         }
         .ws-user-profile-btn:hover {
-            background: #F1F5F9;
-            border-color: var(--ws-border);
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.2);
         }
         .ws-user-avatar-img {
             width: 34px;
             height: 34px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid var(--ws-gold-primary);
+            border: 1.5px solid #FFFFFF;
         }
         .ws-user-name-text {
             font-size: 0.84rem;
@@ -369,7 +359,7 @@ $catalogProducts = [
         .ws-user-name-text svg {
             width: 14px;
             height: 14px;
-            stroke: var(--ws-text-muted);
+            stroke: var(--ws-gold-primary);
             stroke-width: 2.2;
             fill: none;
         }
@@ -381,11 +371,11 @@ $catalogProducts = [
             min-height: calc(100vh - 64px);
         }
 
-        /* ── Left Sidebar Navigation (TailAdmin Style) ── */
+        /* ── Left Sidebar Navigation (TailAdmin Style with Gold Theme) ── */
         .ws-sidebar {
             width: 250px;
             background: var(--ws-bg-sidebar);
-            border-right: 1px solid var(--ws-border);
+            border-right: 1.5px solid var(--ws-border);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
@@ -399,24 +389,25 @@ $catalogProducts = [
             gap: 10px;
         }
         .ws-side-logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 8px;
-            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+            background: linear-gradient(135deg, var(--ws-gold-accent) 0%, var(--ws-gold-primary) 50%, var(--ws-gold-deep) 100%);
             color: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+            border: 1.2px solid #FFFFFF;
         }
         .ws-side-brand-title {
             font-family: var(--ws-font-serif);
             font-size: 1.05rem;
             font-weight: 800;
-            color: var(--ws-text-main);
-            letter-spacing: 0.04em;
+            color: var(--ws-gold-primary);
+            letter-spacing: 0.06em;
         }
 
         .ws-nav-category {
@@ -424,7 +415,7 @@ $catalogProducts = [
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--ws-text-light);
+            color: var(--ws-text-muted);
             padding: 14px 20px 6px;
         }
         .ws-nav-list {
@@ -451,13 +442,15 @@ $catalogProducts = [
             user-select: none;
         }
         .ws-nav-item:hover {
-            background: #F1F5F9;
-            color: var(--ws-text-main);
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
         }
         .ws-nav-item.active {
-            background: #EFF6FF;
-            color: #2563EB;
-            font-weight: 700;
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            border-color: var(--ws-gold-border);
+            font-weight: 800;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.08);
         }
         .ws-nav-item svg {
             width: 18px;
@@ -476,9 +469,10 @@ $catalogProducts = [
             padding: 2px 7px;
             border-radius: 12px;
         }
-        .ws-nav-badge.blue {
-            background: #DBEAFE;
-            color: #1D4ED8;
+        .ws-nav-badge.gold {
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            border: 1px solid var(--ws-gold-border);
         }
 
         .ws-sidebar-footer {
@@ -540,7 +534,7 @@ $catalogProducts = [
         }
         .ws-stat-box {
             background: var(--ws-bg-card);
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-lg);
             padding: clamp(16px, 2vw, 22px);
             box-shadow: var(--ws-shadow-card);
@@ -551,13 +545,16 @@ $catalogProducts = [
         }
         .ws-stat-box:hover {
             box-shadow: var(--ws-shadow-hover);
+            border-color: var(--ws-gold-primary);
             transform: translateY(-2px);
         }
         .ws-stat-label {
             font-size: 0.82rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--ws-text-muted);
             margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
         .ws-stat-val-row {
             display: flex;
@@ -602,7 +599,7 @@ $catalogProducts = [
 
         .ws-analytics-card {
             background: var(--ws-bg-card);
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-lg);
             padding: clamp(18px, 2vw, 24px);
             box-shadow: var(--ws-shadow-card);
@@ -617,8 +614,9 @@ $catalogProducts = [
         }
         .ws-card-top-bar h3 {
             font-size: 1rem;
-            font-weight: 700;
-            color: var(--ws-text-main);
+            font-weight: 800;
+            color: var(--ws-gold-primary);
+            font-family: var(--ws-font-serif);
         }
         .ws-dots-btn {
             background: none;
@@ -631,10 +629,11 @@ $catalogProducts = [
             border-radius: 4px;
         }
         .ws-dots-btn:hover {
-            background: #F1F5F9;
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
         }
 
-        /* ── Bar Chart Canvas & Grid ── */
+        /* ── Bar Chart Canvas & Grid (Gold Bars) ── */
         .ws-bar-chart-container {
             position: relative;
             height: 200px;
@@ -654,7 +653,7 @@ $catalogProducts = [
             justify-content: space-between;
             font-size: 0.68rem;
             font-weight: 600;
-            color: var(--ws-text-light);
+            color: var(--ws-text-muted);
         }
         .ws-bar-col {
             display: flex;
@@ -667,28 +666,29 @@ $catalogProducts = [
         }
         .ws-bar-pill {
             width: 14px;
-            background: #3B82F6;
+            background: linear-gradient(180deg, var(--ws-gold-accent) 0%, var(--ws-gold-primary) 100%);
             border-radius: 6px 6px 0 0;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
         }
         .ws-bar-col:hover .ws-bar-pill {
-            background: #1D4ED8;
+            background: linear-gradient(180deg, #EBDCB2 0%, var(--ws-gold-primary) 100%);
             transform: scaleY(1.05);
-            box-shadow: 0 4px 12px rgba(59,130,246,0.35);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.35);
         }
         .ws-bar-col.active .ws-bar-pill {
-            background: #2563EB;
+            background: linear-gradient(180deg, #D4AF37 0%, var(--ws-gold-deep) 100%);
+            box-shadow: 0 0 10px rgba(212,175,55,0.45);
         }
         .ws-bar-month {
             position: absolute;
             bottom: -20px;
             font-size: 0.68rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--ws-text-muted);
         }
 
-        /* ── Semi-Circular Target Gauge Arc ── */
+        /* ── Semi-Circular Target Gauge Arc (Heritage Gold) ── */
         .ws-gauge-wrap {
             display: flex;
             flex-direction: column;
@@ -703,13 +703,13 @@ $catalogProducts = [
         }
         .ws-gauge-bg-arc {
             fill: none;
-            stroke: #E2E8F0;
+            stroke: #EAE5DB;
             stroke-width: 14;
             stroke-linecap: round;
         }
         .ws-gauge-fill-arc {
             fill: none;
-            stroke: #3B82F6;
+            stroke: url(#goldGaugeGrad);
             stroke-width: 14;
             stroke-linecap: round;
             stroke-dasharray: 236;
@@ -719,8 +719,9 @@ $catalogProducts = [
         .ws-gauge-center-text {
             font-size: 1.55rem;
             font-weight: 800;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
             margin-top: -30px;
+            font-family: var(--ws-font-serif);
         }
         .ws-gauge-badge {
             display: inline-flex;
@@ -776,7 +777,8 @@ $catalogProducts = [
         .ws-sec-title-box h3 {
             font-size: 1.1rem;
             font-weight: 800;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
+            font-family: var(--ws-font-serif);
         }
         .ws-sec-title-box p {
             font-size: 0.78rem;
@@ -792,7 +794,7 @@ $catalogProducts = [
         .ws-segmented-control {
             display: flex;
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: 24px;
             padding: 3px;
             box-shadow: var(--ws-shadow-card);
@@ -809,9 +811,9 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-seg-btn.active {
-            background: #0F172A;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 6px rgba(138,104,31,0.25);
         }
         .ws-date-range-pill {
             display: inline-flex;
@@ -819,7 +821,7 @@ $catalogProducts = [
             gap: 6px;
             padding: 7px 14px;
             border-radius: 20px;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             background: #FFFFFF;
             font-size: 0.78rem;
             font-weight: 700;
@@ -831,7 +833,7 @@ $catalogProducts = [
         /* ── Standard Section Cards ── */
         .ws-card {
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-lg);
             padding: clamp(16px, 2vw, 24px);
             margin-bottom: clamp(14px, 2vw, 20px);
@@ -854,8 +856,9 @@ $catalogProducts = [
         }
         .ws-card-title-group h3 {
             font-size: 1rem;
-            font-weight: 700;
-            color: var(--ws-text-main);
+            font-weight: 800;
+            color: var(--ws-gold-primary);
+            font-family: var(--ws-font-serif);
         }
 
         /* ── Form Inputs & Layout ── */
@@ -885,13 +888,13 @@ $catalogProducts = [
         .ws-input, .ws-select, .ws-textarea {
             width: 100%;
             height: 42px;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-sm);
             padding: 0 12px;
             font-family: var(--ws-font-sans);
             font-size: 0.85rem;
             color: var(--ws-text-main);
-            background: #F8FAFC;
+            background: #FAF8F4;
             outline: none;
             transition: var(--ws-transition);
         }
@@ -901,12 +904,12 @@ $catalogProducts = [
             resize: vertical;
         }
         .ws-input:focus, .ws-select:focus, .ws-textarea:focus {
-            border-color: var(--ws-primary);
+            border-color: var(--ws-gold-primary);
             background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+            box-shadow: 0 0 0 3px var(--ws-gold-glow);
         }
         .ws-input:disabled {
-            background: #F1F5F9;
+            background: #EFEBE4;
             color: var(--ws-text-muted);
             cursor: not-allowed;
         }
@@ -914,17 +917,17 @@ $catalogProducts = [
         .ws-phone-wrap {
             display: flex;
             align-items: center;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-sm);
-            background: #F8FAFC;
+            background: #FAF8F4;
             overflow: hidden;
         }
         .ws-phone-prefix {
             padding: 0 12px;
             font-size: 0.82rem;
             font-weight: 700;
-            color: var(--ws-text-main);
-            background: #F1F5F9;
+            color: var(--ws-gold-primary);
+            background: var(--ws-gold-light);
             height: 42px;
             display: flex;
             align-items: center;
@@ -955,19 +958,21 @@ $catalogProducts = [
             font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
-            border: 1px solid transparent;
+            border: 1.5px solid transparent;
             transition: var(--ws-transition);
             text-decoration: none;
             white-space: nowrap;
         }
         .ws-btn-primary {
-            background: #0F172A;
+            background: linear-gradient(135deg, var(--ws-gold-primary) 0%, var(--ws-gold-deep) 100%);
             color: #FFFFFF;
-            border-color: #0F172A;
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.25);
         }
         .ws-btn-primary:hover {
-            background: #334155;
+            background: linear-gradient(135deg, #785A1A 0%, #4D370E 100%);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(138,104,31,0.35);
         }
         .ws-btn-secondary {
             background: #FFFFFF;
@@ -975,16 +980,9 @@ $catalogProducts = [
             border-color: var(--ws-border);
         }
         .ws-btn-secondary:hover {
-            background: #F8FAFC;
-            border-color: #CBD5E1;
-        }
-        .ws-btn-blue {
-            background: #3B82F6;
-            color: #FFFFFF;
-            border-color: #3B82F6;
-        }
-        .ws-btn-blue:hover {
-            background: #2563EB;
+            background: var(--ws-gold-light);
+            border-color: var(--ws-gold-primary);
+            color: var(--ws-gold-primary);
         }
         .ws-btn-wa {
             background: #25D366;
@@ -1007,10 +1005,10 @@ $catalogProducts = [
             margin-bottom: 16px;
         }
         .ws-gst-option-card {
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px 16px;
-            background: #F8FAFC;
+            background: #FAF8F4;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1019,13 +1017,13 @@ $catalogProducts = [
             user-select: none;
         }
         .ws-gst-option-card:hover {
-            border-color: var(--ws-primary);
+            border-color: var(--ws-gold-primary);
             background: #FFFFFF;
         }
         .ws-gst-option-card.selected {
-            border-color: var(--ws-primary);
-            background: #EFF6FF;
-            box-shadow: 0 2px 8px rgba(59,130,246,0.12);
+            border-color: var(--ws-gold-primary);
+            background: var(--ws-gold-light);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.15);
         }
         .ws-radio-dot {
             width: 18px;
@@ -1039,14 +1037,14 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-gst-option-card.selected .ws-radio-dot {
-            border-color: var(--ws-primary);
+            border-color: var(--ws-gold-primary);
         }
         .ws-gst-option-card.selected .ws-radio-dot::after {
             content: '';
             width: 9px;
             height: 9px;
             border-radius: 50%;
-            background: var(--ws-primary);
+            background: var(--ws-gold-primary);
         }
 
         /* ── Responsive Order Table ── */
@@ -1054,7 +1052,7 @@ $catalogProducts = [
             width: 100%;
             overflow-x: auto;
             border-radius: var(--ws-radius-md);
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
         }
         .ws-table {
             width: 100%;
@@ -1064,28 +1062,29 @@ $catalogProducts = [
             background: #FFFFFF;
         }
         .ws-table th {
-            background: #F8FAFC;
-            color: var(--ws-text-muted);
-            font-weight: 700;
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            font-weight: 800;
             font-size: 0.74rem;
             padding: 12px 14px;
-            border-bottom: 1px solid var(--ws-border);
+            border-bottom: 1.5px solid var(--ws-gold-border);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             white-space: nowrap;
+            font-family: var(--ws-font-serif);
         }
         .ws-table td {
             padding: 12px 14px;
-            border-bottom: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F1ECE3;
             color: var(--ws-text-main);
             vertical-align: middle;
         }
         .ws-table tr:hover td {
-            background: #F8FAFC;
+            background: #FDFBF7;
         }
         .ws-order-id-cell {
             font-weight: 800;
-            color: #2563EB;
+            color: var(--ws-gold-primary);
         }
         .ws-prod-mini-cell {
             display: flex;
@@ -1129,7 +1128,7 @@ $catalogProducts = [
         }
         .ws-mob-order-card {
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px;
             box-shadow: var(--ws-shadow-card);
@@ -1181,14 +1180,14 @@ $catalogProducts = [
         .ws-mob-order-price {
             font-size: 0.98rem;
             font-weight: 800;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
         }
         .ws-mob-order-actions {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
             padding-top: 10px;
-            border-top: 1px solid #F1F5F9;
+            border-top: 1px solid var(--ws-border-light);
         }
 
         /* ── Trending Products Slider ── */
@@ -1204,8 +1203,8 @@ $catalogProducts = [
             height: 36px;
             border-radius: 50%;
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
-            color: var(--ws-text-main);
+            border: 1.5px solid var(--ws-gold-border);
+            color: var(--ws-gold-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1215,9 +1214,9 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-slider-nav-btn:hover {
-            background: #0F172A;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
-            border-color: #0F172A;
+            border-color: var(--ws-gold-primary);
         }
         .ws-slider-nav-btn.prev { left: -14px; }
         .ws-slider-nav-btn.next { right: -14px; }
@@ -1238,7 +1237,7 @@ $catalogProducts = [
             flex: 0 0 calc((100% - 48px) / 5); /* 5 visible on desktop */
             min-width: 170px;
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             overflow: hidden;
             display: flex;
@@ -1248,7 +1247,7 @@ $catalogProducts = [
             scroll-snap-align: start;
         }
         .ws-product-card:hover {
-            border-color: var(--ws-primary);
+            border-color: var(--ws-gold-primary);
             transform: translateY(-3px);
             box-shadow: var(--ws-shadow-hover);
         }
@@ -1256,7 +1255,7 @@ $catalogProducts = [
             position: relative;
             width: 100%;
             height: 180px;
-            background: #F8FAFC;
+            background: #FAF8F4;
             overflow: hidden;
         }
         .ws-prod-img {
@@ -1271,7 +1270,7 @@ $catalogProducts = [
             position: absolute;
             top: 8px;
             left: 8px;
-            background: #0F172A;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
             font-size: 0.65rem;
             font-weight: 700;
@@ -1283,8 +1282,8 @@ $catalogProducts = [
             position: absolute;
             bottom: 6px;
             right: 6px;
-            background: rgba(15, 23, 42, 0.85);
-            color: #38BDF8;
+            background: rgba(20, 17, 14, 0.88);
+            color: #FBBF24;
             font-size: 0.65rem;
             font-weight: 700;
             padding: 2px 6px;
@@ -1321,7 +1320,7 @@ $catalogProducts = [
         .ws-prod-ws-price {
             font-size: 0.95rem;
             font-weight: 800;
-            color: #2563EB;
+            color: var(--ws-gold-primary);
         }
         .ws-prod-ret-price {
             font-size: 0.74rem;
@@ -1333,9 +1332,9 @@ $catalogProducts = [
             width: 100%;
             padding: 8px;
             border-radius: var(--ws-radius-sm);
-            background: #EFF6FF;
-            border: 1px solid #DBEAFE;
-            color: #2563EB;
+            background: var(--ws-gold-light);
+            border: 1px solid var(--ws-gold-border);
+            color: var(--ws-gold-primary);
             font-size: 0.76rem;
             font-weight: 700;
             cursor: pointer;
@@ -1343,7 +1342,7 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-prod-order-btn:hover {
-            background: #2563EB;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
         }
 
@@ -1351,7 +1350,7 @@ $catalogProducts = [
         .ws-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(20, 17, 14, 0.7);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 2000000;
@@ -1373,8 +1372,8 @@ $catalogProducts = [
             max-width: 620px;
             max-height: 90vh;
             border-radius: var(--ws-radius-lg);
-            border: 1px solid var(--ws-border);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+            border: 1.5px solid var(--ws-gold-border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -1386,7 +1385,7 @@ $catalogProducts = [
         }
         .ws-modal-header {
             background: #FFFFFF;
-            border-bottom: 1px solid var(--ws-border);
+            border-bottom: 1.5px solid var(--ws-gold-border);
             padding: 14px 18px;
             display: flex;
             align-items: center;
@@ -1396,18 +1395,19 @@ $catalogProducts = [
         .ws-modal-title {
             font-size: 1rem;
             font-weight: 800;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
             display: flex;
             align-items: center;
             gap: 8px;
+            font-family: var(--ws-font-serif);
         }
         .ws-modal-close-btn {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            border: 1px solid var(--ws-border);
-            background: #F8FAFC;
-            color: var(--ws-text-muted);
+            border: 1px solid var(--ws-gold-border);
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
             font-size: 1.2rem;
             display: flex;
             align-items: center;
@@ -1416,7 +1416,7 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-modal-close-btn:hover {
-            background: #0F172A;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
         }
         .ws-modal-body {
@@ -1428,7 +1428,7 @@ $catalogProducts = [
         .ws-modal-footer {
             padding: 14px 20px;
             background: #FFFFFF;
-            border-top: 1px solid var(--ws-border);
+            border-top: 1.5px solid var(--ws-border);
             display: flex;
             gap: 10px;
             align-items: center;
@@ -1448,7 +1448,7 @@ $catalogProducts = [
             top: 8px;
             bottom: 8px;
             width: 2px;
-            background: #E2E8F0;
+            background: var(--ws-border);
         }
         .ws-timeline-step {
             position: relative;
@@ -1461,16 +1461,16 @@ $catalogProducts = [
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #E2E8F0;
+            background: var(--ws-border);
             border: 3px solid #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .ws-timeline-step.completed .ws-timeline-dot { background: #10B981; }
+        .ws-timeline-step.completed .ws-timeline-dot { background: #15803D; }
         .ws-timeline-step.active .ws-timeline-dot {
-            background: #3B82F6;
-            box-shadow: 0 0 0 4px rgba(59,130,246,0.25);
+            background: var(--ws-gold-primary);
+            box-shadow: 0 0 0 4px var(--ws-gold-glow);
         }
         .ws-timeline-dot svg {
             width: 10px;
@@ -1492,7 +1492,7 @@ $catalogProducts = [
 
         /* ── Support Ticket Card ── */
         .ws-ticket-card {
-            border: 1px solid var(--ws-border);
+            border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px;
             background: #FFFFFF;
@@ -1508,22 +1508,23 @@ $catalogProducts = [
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
             background: #FFFFFF;
-            border: 1px solid #E2E8F0;
+            border: 1px solid var(--ws-border);
             border-radius: 10px;
             padding: 24px;
-            color: #0F172A;
+            color: var(--ws-text-main);
         }
         .ws-inv-header {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            border-bottom: 2px solid #0F172A;
+            border-bottom: 2px solid var(--ws-gold-primary);
             padding-bottom: 16px;
             margin-bottom: 18px;
         }
         .ws-inv-brand h2 {
             font-size: 1.35rem;
-            color: #0F172A;
+            color: var(--ws-gold-primary);
+            font-family: var(--ws-font-serif);
             font-weight: 800;
         }
         .ws-inv-brand p {
@@ -1540,7 +1541,7 @@ $catalogProducts = [
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            background: #F8FAFC;
+            background: var(--ws-gold-light);
             padding: 14px;
             border-radius: 8px;
             margin-bottom: 18px;
@@ -1553,7 +1554,7 @@ $catalogProducts = [
             margin-bottom: 18px;
         }
         .ws-inv-table th {
-            background: #0F172A;
+            background: var(--ws-gold-primary);
             color: #FFFFFF;
             padding: 10px 12px;
             text-align: left;
@@ -1561,7 +1562,7 @@ $catalogProducts = [
         }
         .ws-inv-table td {
             padding: 10px 12px;
-            border-bottom: 1px solid #E2E8F0;
+            border-bottom: 1px solid var(--ws-border);
         }
         .ws-inv-totals {
             display: flex;
@@ -1569,13 +1570,13 @@ $catalogProducts = [
             align-items: flex-end;
             gap: 6px;
             font-size: 0.82rem;
-            border-top: 2px solid #0F172A;
+            border-top: 2px solid var(--ws-gold-primary);
             padding-top: 12px;
         }
         .ws-inv-grand-total {
             font-size: 1.18rem;
             font-weight: 900;
-            color: #0F172A;
+            color: var(--ws-gold-primary);
         }
 
         /* ── Role Access Gate Modal ── */
@@ -1587,12 +1588,14 @@ $catalogProducts = [
             width: 64px;
             height: 64px;
             border-radius: 50%;
-            background: #EFF6FF;
-            color: #2563EB;
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            border: 2px solid var(--ws-gold-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 16px;
+            box-shadow: 0 4px 14px rgba(138,104,31,0.25);
         }
         .ws-gate-icon svg {
             width: 32px;
@@ -1604,7 +1607,8 @@ $catalogProducts = [
         .ws-gate-box h3 {
             font-size: 1.2rem;
             font-weight: 800;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
+            font-family: var(--ws-font-serif);
             margin-bottom: 8px;
         }
         .ws-gate-box p {
@@ -1622,10 +1626,10 @@ $catalogProducts = [
             left: 0;
             right: 0;
             background: #FFFFFF;
-            border-top: 1px solid var(--ws-border);
+            border-top: 1.5px solid var(--ws-gold-border);
             padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
             z-index: 1500;
-            box-shadow: 0 -2px 14px rgba(0,0,0,0.06);
+            box-shadow: 0 -2px 14px rgba(138,104,31,0.08);
             justify-content: space-around;
             align-items: center;
         }
@@ -1653,10 +1657,10 @@ $catalogProducts = [
             fill: none;
         }
         .ws-dock-btn.active {
-            color: #2563EB;
+            color: var(--ws-gold-primary);
             transform: translateY(-2px);
         }
-        .ws-dock-btn.active svg { stroke: #2563EB; }
+        .ws-dock-btn.active svg { stroke: var(--ws-gold-primary); }
 
         /* ── Toast Container ── */
         .ws-toast-container {
@@ -1673,13 +1677,14 @@ $catalogProducts = [
             max-width: 380px;
         }
         .ws-toast {
-            background: #0F172A;
-            color: #FFFFFF;
+            background: #14110E;
+            color: #FAF5E8;
             padding: 10px 18px;
             border-radius: 30px;
             font-size: 0.80rem;
             font-weight: 700;
             box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            border: 1px solid var(--ws-gold-accent);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -1712,7 +1717,7 @@ $catalogProducts = [
             .ws-sidebar-backdrop {
                 position: fixed;
                 top: 64px; left: 0; width: 100%; height: calc(100vh - 64px);
-                background: rgba(15,23,42,0.5);
+                background: rgba(20,17,14,0.6);
                 backdrop-filter: blur(4px);
                 z-index: 850;
                 display: none;
@@ -1793,7 +1798,7 @@ $catalogProducts = [
     <!-- ═══ Mobile Sidebar Backdrop ═══ -->
     <div class="ws-sidebar-backdrop" id="wsSidebarBackdrop" onclick="toggleSidebar(false)"></div>
 
-    <!-- ═══ Modern Clean Top Header (TailAdmin Style) ═══ -->
+    <!-- ═══ Modern Clean Top Header (TailAdmin Style with Gold Brand Theme) ═══ -->
     <header class="ws-header">
         <div class="ws-header-left">
             <button class="ws-menu-toggle-btn" id="wsMenuToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Menu">
@@ -1834,7 +1839,7 @@ $catalogProducts = [
     <!-- ═══ Main App Layout Grid ═══ -->
     <div class="ws-app-layout">
         
-        <!-- ── Left Sidebar Navigation (TailAdmin Style) ── -->
+        <!-- ── Left Sidebar Navigation (TailAdmin Style with Gold Theme) ── -->
         <aside class="ws-sidebar" id="wsSidebar">
             <div class="ws-sidebar-brand-box">
                 <div class="ws-side-logo-icon">K</div>
@@ -1860,7 +1865,7 @@ $catalogProducts = [
                     <a class="ws-nav-item" onclick="switchWsTab('reports')">
                         <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         <span>Reports</span>
-                        <span class="ws-nav-badge blue">NEW</span>
+                        <span class="ws-nav-badge gold">NEW</span>
                     </a>
                 </li>
                 <li>
@@ -1871,7 +1876,7 @@ $catalogProducts = [
                 </li>
                 <li>
                     <a class="ws-nav-item" onclick="switchWsTab('tracking')">
-                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Live Tracking</span>
                     </a>
                 </li>
@@ -1917,18 +1922,18 @@ $catalogProducts = [
         <main class="ws-main-content">
 
             <!-- ═══════════════════════════════════════
-                 TAB 1: OVERVIEW DASHBOARD (TAILADMIN STYLE)
+                 TAB 1: OVERVIEW DASHBOARD (TAILADMIN SIZES WITH HERITAGE GOLD)
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane active" id="tabPaneOverview">
                 
-                <!-- Top 4 Primary Metric Stat Cards (Matching TailAdmin Screenshot) -->
+                <!-- Top 4 Primary Metric Stat Cards (Matching TailAdmin Sizing with Gold Palette) -->
                 <div class="ws-metric-cards-grid">
                     
-                    <!-- Metric Card 1: Customers / Accounts -->
+                    <!-- Metric Card 1: Account Tier -->
                     <div class="ws-stat-box">
                         <div class="ws-stat-label">B2B Account Tier</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num">VIP Tier 1</div>
+                            <div class="ws-stat-val-num" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">VIP Tier 1</div>
                             <span class="ws-trend-pill up">↑ 11.01%</span>
                         </div>
                     </div>
@@ -1955,7 +1960,7 @@ $catalogProducts = [
                     <div class="ws-stat-box">
                         <div class="ws-stat-label">Total B2B Turnover</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statTotalAmount">₹2,05,062</div>
+                            <div class="ws-stat-val-num" id="statTotalAmount" style="color:var(--ws-gold-primary);">₹2,05,062</div>
                             <span class="ws-trend-pill up">↑ 18.40%</span>
                         </div>
                     </div>
@@ -1965,7 +1970,7 @@ $catalogProducts = [
                 <!-- Middle Analytics Grid (Monthly Sales Bar Chart + Target Gauge) -->
                 <div class="ws-analytics-grid">
                     
-                    <!-- Left: Monthly Sales Bar Chart (Matching TailAdmin) -->
+                    <!-- Left: Monthly Sales Bar Chart (Heritage Gold Gradient Bars) -->
                     <div class="ws-analytics-card">
                         <div class="ws-card-top-bar">
                             <h3>Monthly Sales</h3>
@@ -1981,7 +1986,7 @@ $catalogProducts = [
                                 <span>0</span>
                             </div>
 
-                            <!-- 12-Month Bars (Jan - Dec) -->
+                            <!-- 12-Month Bars (Jan - Dec) with Heritage Gold Gradients -->
                             <div class="ws-bar-col" title="Jan: ₹160K"><div class="ws-bar-pill" style="height: 40%;"></div><span class="ws-bar-month">Jan</span></div>
                             <div class="ws-bar-col" title="Feb: ₹380K"><div class="ws-bar-pill" style="height: 95%;"></div><span class="ws-bar-month">Feb</span></div>
                             <div class="ws-bar-col" title="Mar: ₹190K"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Mar</span></div>
@@ -1997,10 +2002,16 @@ $catalogProducts = [
                         </div>
                     </div>
 
-                    <!-- Right: Semi-Circular Target Gauge (Matching TailAdmin) -->
+                    <!-- Right: Semi-Circular Target Gauge (Royal Gold Arc) -->
                     <div class="ws-analytics-card">
                         <div class="ws-gauge-wrap">
                             <svg class="ws-gauge-svg" viewBox="0 0 200 110">
+                                <defs>
+                                    <linearGradient id="goldGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#8A681F"/>
+                                        <stop offset="100%" stop-color="#C5A859"/>
+                                    </linearGradient>
+                                </defs>
                                 <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
                                 <path class="ws-gauge-fill-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
                             </svg>
@@ -2020,18 +2031,18 @@ $catalogProducts = [
                             </div>
                             <div>
                                 <div class="ws-g-stat-label">Today</div>
-                                <div class="ws-g-stat-val" style="color:var(--ws-primary);">₹18.2K ↑</div>
+                                <div class="ws-g-stat-val" style="color:var(--ws-gold-primary);">₹18.2K ↑</div>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Statistics & Segmented Controls Bar (Matching TailAdmin) -->
+                <!-- Statistics & Segmented Controls Bar -->
                 <div class="ws-section-header">
                     <div class="ws-sec-title-box">
-                        <h3>Statistics & Recent Orders</h3>
-                        <p>Target you've set for each month and active dispatches</p>
+                        <h3>Statistics</h3>
+                        <p>Target you've set for each month</p>
                     </div>
 
                     <div class="ws-sec-actions-row">
@@ -2051,7 +2062,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg style="width:18px;height:18px;stroke:#2563EB;fill:none;stroke-width:2;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg style="width:18px;height:18px;stroke:var(--ws-gold-primary);fill:none;stroke-width:2;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             <h3>Trending Wholesale Catalog (MOQ Ready)</h3>
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('trending')">
@@ -2091,7 +2102,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <svg style="width:18px;height:18px;stroke:var(--ws-gold-primary);fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <h3>Recent Wholesale Dispatches</h3>
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('orders')">
@@ -2147,7 +2158,7 @@ $catalogProducts = [
                         </div>
 
                         <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--ws-border);">
-                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:10px;">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:10px;">
                                 🔒 Change Password (Leave blank to keep current)
                             </h4>
                             <div class="ws-form-grid">
@@ -2213,7 +2224,7 @@ $catalogProducts = [
                             <div class="ws-form-group full" id="gstNumberFieldWrap">
                                 <label class="ws-label" for="wsGstNumber">
                                     <span>15-Character GSTIN Number <span class="req">*</span></span>
-                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:#2563EB; font-weight:700;">Format: 24AABCU9603R1ZM</span>
+                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700;">Format: 24AABCU9603R1ZM</span>
                                 </label>
                                 <input type="text" id="wsGstNumber" class="ws-input" placeholder="e.g. 24AABCU9603R1ZM" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
                             </div>
@@ -2397,10 +2408,10 @@ $catalogProducts = [
                         <span class="ws-status-badge shipped">⚡ BlueDart Air Express</span>
                     </div>
 
-                    <div style="background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:16px; margin-bottom:16px;">
+                    <div style="background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:10px; padding:16px; margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
                             <div>
-                                <h4 style="font-size:1rem; font-weight:800; color:var(--ws-text-main);">
+                                <h4 style="font-size:1rem; font-weight:800; color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">
                                     Order #KLN-WS-8021
                                 </h4>
                                 <div style="font-size:0.80rem; color:var(--ws-text-muted); margin-top:2px;">
@@ -2464,8 +2475,8 @@ $catalogProducts = [
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(260px, 45vw, 320px), 1fr)); gap:16px;">
                         
                         <!-- Open New Ticket Form -->
-                        <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid var(--ws-border);">
-                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:12px;">
+                        <div style="background:#FAF8F4; padding:16px; border-radius:12px; border:1.5px solid var(--ws-border);">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:12px; font-family:var(--ws-font-serif);">
                                 ✍️ Create New Support Ticket
                             </h4>
 
@@ -2501,7 +2512,7 @@ $catalogProducts = [
 
                         <!-- Ticket History List -->
                         <div>
-                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:12px;">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:12px; font-family:var(--ws-font-serif);">
                                 📋 My Open & Resolved Tickets
                             </h4>
 
@@ -2639,7 +2650,7 @@ $catalogProducts = [
                     <!-- Parties (Billed To & Shipped To) -->
                     <div class="ws-inv-parties">
                         <div>
-                            <strong style="color:#2563EB;">BILLED TO (BUYER):</strong>
+                            <strong style="color:var(--ws-gold-primary);">BILLED TO (BUYER):</strong>
                             <div id="invBilledTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Shree Krishna Silks Pvt Ltd</strong><br>
                                 GSTIN: 24AABCU9603R1ZM<br>
@@ -2648,7 +2659,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div>
-                            <strong style="color:#2563EB;">DISPATCHED / SHIPPED TO:</strong>
+                            <strong style="color:var(--ws-gold-primary);">DISPATCHED / SHIPPED TO:</strong>
                             <div id="invShippedTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Warehouse Central Store</strong><br>
                                 Fast Cargo Express<br>
@@ -2690,7 +2701,7 @@ $catalogProducts = [
                             <p>This is a computer-generated luxury tax invoice.</p>
                         </div>
                         <div style="text-align:center;">
-                            <div style="width:110px; border-bottom:1.5px solid #0F172A; margin-bottom:4px;"></div>
+                            <div style="width:110px; border-bottom:1.5px solid var(--ws-gold-primary); margin-bottom:4px;"></div>
                             <strong>Authorized Signatory</strong><br>
                             Kalaniketan Couture
                         </div>
@@ -3170,8 +3181,8 @@ $catalogProducts = [
             mobContainer.innerHTML = '';
 
             if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#64748B;">No matching wholesale orders found.</td></tr>';
-                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#64748B; font-weight:600;">No matching orders found.</div>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#6B6358;">No matching wholesale orders found.</td></tr>';
+                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#6B6358; font-weight:600;">No matching orders found.</div>';
                 return;
             }
 
@@ -3182,7 +3193,7 @@ $catalogProducts = [
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="color:#64748B; font-weight:500; font-size:0.78rem;">${o.date}</td>
+                    <td style="color:#6B6358; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
                             <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='images/product1.png';">
@@ -3192,8 +3203,8 @@ $catalogProducts = [
                             </div>
                         </div>
                     </td>
-                    <td><strong>${o.qty} Pcs</strong></td>
-                    <td><strong style="color:var(--ws-text-main); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td><strong style="font-size:0.84rem;">${o.qty} Pcs</strong></td>
+                    <td><strong style="color:var(--ws-gold-primary); font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
                     <td><span class="ws-status-badge ${statusClass}">${o.status}</span></td>
                     <td>
                         <div style="display:flex; gap:6px;">
@@ -3328,13 +3339,13 @@ $catalogProducts = [
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="font-size:0.78rem; color:#64748B;">${o.date}</td>
-                    <td><span style="font-family:monospace; background:#F1F5F9; padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
+                    <td style="font-size:0.78rem; color:#6B6358;">${o.date}</td>
+                    <td><span style="font-family:monospace; background:var(--ws-gold-light); color:var(--ws-gold-primary); padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td><strong>${o.productName}</strong></td>
                     <td><strong>${o.qty}</strong></td>
                     <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
                     <td style="color:#10B981; font-weight:700;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                    <td><strong style="color:var(--ws-text-main); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td><strong style="color:var(--ws-gold-primary); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
                     <td style="font-size:0.76rem; color:var(--ws-text-muted);">${o.payment}</td>
                 `;
                 tbody.appendChild(tr);
@@ -3383,7 +3394,7 @@ $catalogProducts = [
                 card.className = 'ws-ticket-card';
                 card.innerHTML = `
                     <div class="ws-ticket-head">
-                        <span style="font-size:0.80rem; font-weight:800; color:#2563EB;">Ticket #${t.id}</span>
+                        <span style="font-size:0.80rem; font-weight:800; color:var(--ws-gold-primary);">Ticket #${t.id}</span>
                         <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:#F8FAFC; padding:2px 8px; border-radius:12px; border:1px solid ${statusColor};">${t.status}</span>
                     </div>
                     <div style="font-size:0.80rem; font-weight:700; color:var(--ws-text-main);">Order Ref: ${t.orderId} • ${t.category}</div>
@@ -3444,19 +3455,19 @@ $catalogProducts = [
                     </div>
                 </div>
 
-                <div style="display:flex; gap:14px; margin-bottom:14px; background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:12px;">
+                <div style="display:flex; gap:14px; margin-bottom:14px; background:#FAF8F4; border:1px solid var(--ws-border); border-radius:10px; padding:12px;">
                     <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0;">
                     <div style="flex:1;">
                         <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.25;">${o.productName}</h4>
                         <div style="font-size:0.78rem; color:var(--ws-text-muted);">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
                         <div style="font-size:0.78rem; color:var(--ws-text-muted);">Color: ${o.color} • Size: ${o.size}</div>
-                        <div style="font-size:0.86rem; font-weight:800; color:#2563EB; margin-top:6px;">
+                        <div style="font-size:0.86rem; font-weight:800; color:var(--ws-gold-primary); margin-top:6px;">
                             ${o.qty} Pcs @ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc
                         </div>
                     </div>
                 </div>
 
-                <div style="background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
+                <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
                         <span style="color:var(--ws-text-muted);">Taxable Item Total</span>
                         <strong style="color:var(--ws-text-main);">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
@@ -3469,7 +3480,7 @@ $catalogProducts = [
                         <span style="color:var(--ws-text-muted);">Wholesale Volume Discount</span>
                         <strong style="color:#10B981;">-₹${Number(o.discount).toLocaleString('en-IN')}</strong>
                     </div>
-                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1px solid var(--ws-border); font-size:1.05rem; font-weight:900; color:#0F172A;">
+                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1px solid var(--ws-border); font-size:1.05rem; font-weight:900; color:var(--ws-gold-primary);">
                         <span>Total Paid / Payable</span>
                         <span>₹${Number(o.total).toLocaleString('en-IN')}</span>
                     </div>
