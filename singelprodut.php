@@ -250,8 +250,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     flex-direction: column;
     gap: 14px;
-    position: sticky;
-    top: 80px;
+    position: relative; /* Normal scrolling on mobile */
+}
+@media (min-width: 900px) {
+    .pdp-gallery-column {
+        position: sticky;
+        top: 80px;
+    }
 }
 
 /* Main Image Slider Viewport */
@@ -274,6 +279,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y pinch-zoom;
 }
 .pdp-slider-track::-webkit-scrollbar { display: none; }
 
@@ -290,7 +297,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     height: 100%;
     object-fit: cover;
     object-position: top;
-    transition: transform 0.3s ease;
+    user-select: none;
+    -webkit-user-drag: none;
     cursor: zoom-in;
 }
 
