@@ -19,9 +19,11 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    transition: box-shadow 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+    will-change: transform;
 }
 .pdp-header.scrolled {
+    transform: translateY(-30px);
     box-shadow: 0 4px 20px rgba(138,104,31,0.14);
 }
 
@@ -33,8 +35,6 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     height: 30px;
-    max-height: 30px;
-    opacity: 1;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -42,16 +42,6 @@
     justify-content: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     user-select: none;
-    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, border-color 0.25s ease;
-}
-
-/* Auto-hide Announcement Ticker on Page Scroll */
-.pdp-header.scrolled .pdp-top-ticker {
-    max-height: 0 !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    border-bottom-color: transparent !important;
-    pointer-events: none;
 }
 .pdp-ticker-track {
     position: relative;
@@ -344,6 +334,10 @@
     .pdp-breadcrumbs { display: none; }
 }
 @media (max-width: 767px) {
+    .pdp-header.scrolled {
+        transform: translateY(-26px);
+    }
+
     /* Reduced Mobile Header Height */
     .pdp-header-main {
         height: 48px;
@@ -352,7 +346,6 @@
     }
     .pdp-top-ticker {
         height: 26px;
-        max-height: 26px;
         font-size: 0.56rem;
         padding: 0 8px;
         gap: 6px;
@@ -534,11 +527,19 @@
         restartPdpTickerTimer();
     }
 
-    // Header scroll shadow toggle
+    // Zero-vibration header scroll hide/show engine with hysteresis
+    var isPdpHeaderScrolled = false;
     window.addEventListener('scroll', function() {
+        var sy = window.scrollY || window.pageYOffset || 0;
         var header = document.getElementById('pdpHeader');
-        if (header) {
-            header.classList.toggle('scrolled', window.scrollY > 20);
+        if (!header) return;
+
+        if (sy > 45 && !isPdpHeaderScrolled) {
+            isPdpHeaderScrolled = true;
+            header.classList.add('scrolled');
+        } else if (sy < 10 && isPdpHeaderScrolled) {
+            isPdpHeaderScrolled = false;
+            header.classList.remove('scrolled');
         }
     }, { passive: true });
 
