@@ -566,25 +566,43 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-gallery-column {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    position: relative; /* Normal scrolling on mobile */
+    gap: 12px;
+    position: relative;
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
 }
 @media (min-width: 900px) {
     .pdp-gallery-column {
         position: sticky;
         top: 80px;
+        margin: 0 0 0 auto;
     }
 }
 
-/* Main Image Slider Viewport */
+/* Main Image Slider Viewport (Normal Small Contained Size) */
 .pdp-gallery-slider {
     position: relative;
     border-radius: 14px;
     overflow: hidden;
     background: var(--off-white-2);
-    aspect-ratio: 3/4;
+    aspect-ratio: 4 / 5;
+    max-height: 460px;
+    width: 100%;
+    margin: 0 auto;
     border: 1.5px solid var(--gold-border);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 767px) {
+    .pdp-gallery-column {
+        max-width: 320px;
+    }
+    .pdp-gallery-slider {
+        max-height: 350px;
+        aspect-ratio: 4 / 5;
+        border-radius: 12px;
+    }
 }
 
 /* Swipeable Track */
@@ -613,7 +631,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center top;
     user-select: none;
     -webkit-user-drag: none;
     cursor: zoom-in;
@@ -705,15 +723,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Thumbnails Strip */
 .pdp-thumbnails-strip {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
     overflow-x: auto;
-    padding: 2px;
+    padding: 4px 2px;
     scrollbar-width: none;
 }
 .pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
 .pdp-thumb-item {
-    width: 72px;
-    height: 94px;
+    width: 58px;
+    height: 72px;
     border-radius: 8px;
     overflow: hidden;
     border: 2px solid var(--soft-platinum);
@@ -730,14 +749,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-thumb-item.active {
     opacity: 1;
     border-color: var(--dark-gold);
-    box-shadow: 0 4px 14px rgba(138,104,31,0.28);
+    box-shadow: 0 4px 12px rgba(138,104,31,0.25);
     transform: translateY(-2px);
 }
 .pdp-thumb-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center top;
+}
+@media (max-width: 767px) {
+    .pdp-thumb-item {
+        width: 48px;
+        height: 60px;
+    }
 }
 
 /* ════════════════════════════════════════════════════
