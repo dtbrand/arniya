@@ -2654,16 +2654,23 @@ $catalogProducts = [
                                     <?php if (!empty($prod['badge'])): ?>
                                     <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
                                     <?php endif; ?>
-                                    <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
+                                    <!-- Wishlist Button -->
+                                    <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
                                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                     </button>
-                                    <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
+
+                                    <!-- Mobile Quick View Button -->
+                                    <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
                                         <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                     </button>
+
+                                    <!-- Desktop Quick View Overlay -->
                                     <div class="card-quick-view" aria-hidden="true">
-                                        <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">Quick View</button>
+                                        <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
                                     </div>
-                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);">
+
+                                    <!-- Share Button on Photo (Directly Above Category Tag) -->
+                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
                                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                     </button>
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
@@ -3153,22 +3160,22 @@ $catalogProducts = [
                                 <?php endif; ?>
 
                                 <!-- Wishlist Button -->
-                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
+                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
                                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                                 </button>
 
                                 <!-- Mobile Quick View Button -->
-                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
+                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </button>
 
                                 <!-- Desktop Quick View Overlay -->
                                 <div class="card-quick-view" aria-hidden="true">
-                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">Quick View</button>
+                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
                                 </div>
 
                                 <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);">
+                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
                                     <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                 </button>
 
@@ -4865,25 +4872,44 @@ $catalogProducts = [
             window.open(waUrl, '_blank');
         };
 
-        /* ── Wholesale Wishlist Controller ── */
+        /* ── Wholesaler Wishlist Controller ── */
         window.toggleWholesaleWishlist = function(productId, btn) {
+            var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
+            if (p && typeof window.toggleWishlistProduct === 'function') {
+                var added = window.toggleWishlistProduct(p);
+                if (btn) {
+                    btn.classList.toggle('active', added);
+                    btn.setAttribute('aria-pressed', added ? 'true' : 'false');
+                }
+                if (typeof showToast === 'function') {
+                    showToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                } else if (typeof window.showWsToast === 'function') {
+                    window.showWsToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                }
+                return;
+            }
+
             var raw = localStorage.getItem('kalaniketan_wishlist');
             var wish = raw ? JSON.parse(raw) : [];
             var idx = wish.findIndex(function(i){ return Number(i.id) === Number(productId); });
             if (idx > -1) {
                 wish.splice(idx, 1);
                 if (btn) btn.classList.remove('active');
-                window.showWsToast('Item removed from Procurement Wishlist');
+                if (typeof window.showWsToast === 'function') window.showWsToast('Item removed from Procurement Wishlist');
             } else {
                 wish.push({ id: productId });
                 if (btn) btn.classList.add('active');
-                window.showWsToast('Saved to B2B Procurement Wishlist');
+                if (typeof window.showWsToast === 'function') window.showWsToast('Saved to B2B Procurement Wishlist');
             }
             localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
         };
 
-        /* ── Share Wholesale Lot on WhatsApp ── */
+        /* ── Share Wholesale Lot (Triggers Smart Share or WhatsApp) ── */
         window.shareWholesaleProduct = function(prod) {
+            if (typeof window.shareProductCard === 'function' && prod && prod.id) {
+                window.shareProductCard(prod.id);
+                return;
+            }
             var text = `*KALANIKETAN B2B WHOLESALE LOT*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
                        `*Wholesale Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
@@ -4893,6 +4919,30 @@ $catalogProducts = [
                        `Explore live wholesale portal: ${window.location.origin}/wholesaler.php`;
             var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
+        };
+
+        /* ── Global Product Card Share Function (Matches shop.php Smart Share) ── */
+        window.shareProductCard = function(productId) {
+            var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
+            if (p && typeof window.openSmartShareModal === 'function') {
+                var itemData = {
+                    id: p.id,
+                    name: p.name,
+                    category: p.category,
+                    price: p.price,
+                    old_price: p.old_price,
+                    discount: p.discount,
+                    image: p.image,
+                    fabric: p.fabric || 'Pure Silk',
+                    colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
+                    sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
+                    url: 'singelprodut.php?id=' + p.id
+                };
+                window.openSmartShareModal(itemData);
+            } else if (p) {
+                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at Kalaniketan: ' + window.location.origin + '/singelprodut.php?id=' + p.id);
+                window.open(waUrl, '_blank');
+            }
         };
 
         /* ── Wholesaler Logout ── */
@@ -4906,6 +4956,28 @@ $catalogProducts = [
         /* ── Initialize Application ── */
         function initWholesalerApp() {
             if (!checkWholesalerSecurity()) return;
+
+            var products = <?= json_encode(array_map(function($p) {
+                return [
+                    'id' => $p['id'],
+                    'name' => $p['name'],
+                    'category' => $p['category'],
+                    'price' => $p['wholesale_price'],
+                    'old_price' => $p['retail_price'],
+                    'discount' => round((($p['retail_price'] - $p['wholesale_price']) / $p['retail_price']) * 100),
+                    'image' => $p['image'],
+                    'badge' => $p['badge'] ?? null,
+                    'rating' => 4.9,
+                    'color' => $p['color'] ?? 'Standard',
+                    'colors' => [$p['color'] ?? 'Standard'],
+                    'size' => ['MOQ: ' . $p['moq'] . ' Pcs Lot', '2x Lot (' . ($p['moq']*2) . ' Pcs)', '5x Lot (' . ($p['moq']*5) . ' Pcs)'],
+                    'fabric' => $p['fabric'] ?? 'Pure Silk',
+                    'in_stock' => true,
+                    'sku' => $p['sku'] ?? 'SKU-'.$p['id'],
+                    'hsn' => $p['hsn'] ?? '5007'
+                ];
+            }, $catalogProducts)) ?>;
+            window.allProducts = products;
 
             activeOrdersList = SAMPLE_ORDERS.slice();
             activeTicketsList = SAMPLE_TICKETS.slice();
@@ -4925,5 +4997,14 @@ $catalogProducts = [
 
     })();
     </script>
+
+    <!-- ════════════ QUICK VIEW PARTIAL ════════════ -->
+    <?php include 'quickview.php'; ?>
+
+    <!-- ════════════ SMART WHATSAPP SHARE MODAL ════════════ -->
+    <?php include 'smartshare.php'; ?>
+
+    <!-- ════════════ WISHLIST PARTIAL ════════════ -->
+    <?php include 'wishlist.php'; ?>
 </body>
 </html>
