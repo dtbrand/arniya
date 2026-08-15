@@ -2339,46 +2339,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #FFFFFF;
 }
 
-/* ── Direct New Customer / Recipient Toggle Card ── */
-.pdp-wa-cust-toggle-card {
+/* ── Collapsible Delivery Address Section ── */
+.pdp-wa-addr-collapse-wrap {
     background: #FAF8F4;
-    border: 1.5px dashed rgba(138, 104, 31, 0.35);
-    border-radius: 8px;
-    padding: 7px 10px;
+    border: 1.5px solid rgba(138, 104, 31, 0.25);
+    border-radius: 10px;
+    padding: 9px 12px;
     transition: all 0.2s ease;
 }
-.pdp-wa-cust-toggle-card:hover {
-    background: #FAF5E8;
+.pdp-wa-addr-collapse-wrap.open {
+    background: #FFFFFF;
     border-color: var(--gold-primary, #8A681F);
+    box-shadow: 0 4px 14px rgba(138,104,31,0.08);
 }
-.pdp-wa-toggle-label {
+.pdp-wa-addr-toggle-btn {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
+    text-align: left;
     user-select: none;
-    margin: 0;
 }
-.pdp-wa-toggle-label input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--gold-primary, #8A681F);
-    cursor: pointer;
-    margin: 0;
-}
-.pdp-wa-toggle-text {
-    display: flex;
-    flex-direction: column;
-}
-.pdp-wa-toggle-text strong {
-    font-size: 0.72rem;
-    color: var(--dark-text, #24211C);
-    font-weight: 800;
-    line-height: 1.2;
-}
-.pdp-wa-toggle-text small {
-    font-size: 0.65rem;
-    color: var(--mid-text, #5A5348);
+.pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
+    transform: rotate(180deg);
 }
 
 .pdp-wa-form-group {
@@ -3083,28 +3070,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <!-- Quick Checkout Form -->
             <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
                 
-                <!-- Option to Deliver to a Different Customer / New Address -->
-                <div class="pdp-wa-cust-toggle-card" id="pdpWaCustToggleWrap">
-                    <label class="pdp-wa-toggle-label" for="pdpWaDifferentCustToggle">
-                        <input type="checkbox" id="pdpWaDifferentCustToggle" onchange="handleDifferentCustomerToggle(this)" />
-                        <span class="pdp-wa-toggle-text">
-                            <strong>➕ Deliver to Different Customer / New Address</strong>
-                            <small>Send as gift or deliver to another recipient (Click to enter new name & address)</small>
-                        </span>
-                    </label>
-                </div>
-
-                <!-- Section 1: Customer Contact Details -->
+                <!-- Section 1: Customer Contact Details (ALWAYS VISIBLE & OPEN) -->
                 <div class="pdp-wa-section-heading">
                     <div class="pdp-wa-sec-title-wrap">
                         <span class="pdp-wa-sec-icon">👤</span>
-                        <span class="pdp-wa-sec-title">Customer / Billing Details</span>
+                        <span class="pdp-wa-sec-title">Customer Contact Details</span>
                     </div>
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="Enter Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
+                    <label class="pdp-wa-label" for="pdpWaName">👤 Customer Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
                 </div>
 
                 <div class="pdp-wa-form-group">
@@ -3115,31 +3091,39 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     </div>
                 </div>
 
-                <!-- Delivery Address Section -->
-                <div class="pdp-wa-section-heading">
-                    <span class="pdp-wa-sec-icon">📍</span>
-                    <span class="pdp-wa-sec-title">Delivery Address Details</span>
-                </div>
+                <!-- Section 2: Delivery & Billing Address (COLLAPSIBLE / HIDDEN BY DEFAULT) -->
+                <div class="pdp-wa-addr-collapse-wrap" id="pdpWaAddrCollapseWrap">
+                    <button type="button" class="pdp-wa-addr-toggle-btn" onclick="togglePdpWaAddressSection()" aria-expanded="false">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.9rem;">📍</span>
+                            <span style="font-weight:800; font-size:0.74rem; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.04em;">Delivery & Billing Address</span>
+                            <span style="font-size:0.62rem; background:#FAF5E8; color:var(--dark-gold, #8A681F); padding:1px 5px; border-radius:3px; font-weight:700;">Optional</span>
+                        </div>
+                        <span class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="font-size:0.75rem; color:var(--dark-gold, #8A681F); transition:transform 0.2s;">▼</span>
+                    </button>
 
-                <!-- Full Address (House / Flat / Street / Landmark) -->
-                <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaAddress">🏠 Full Address (House / Flat / Street / Landmark) *</label>
-                    <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
-                </div>
+                    <div class="pdp-wa-addr-collapsible-body" id="pdpWaAddrBody" style="display:none; flex-direction:column; gap:8px; margin-top:8px;">
+                        <!-- Full Address -->
+                        <div class="pdp-wa-form-group">
+                            <label class="pdp-wa-label" for="pdpWaAddress">🏠 Full Address (House / Flat / Street / Landmark)</label>
+                            <input type="text" id="pdpWaAddress" placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
+                        </div>
 
-                <!-- City, State & Pincode Grid -->
-                <div class="pdp-wa-loc-grid">
-                    <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaCity">🏙️ City *</label>
-                        <input type="text" id="pdpWaCity" required placeholder="e.g. Mumbai" class="pdp-wa-input" />
-                    </div>
-                    <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaState">🗺️ State *</label>
-                        <input type="text" id="pdpWaState" required placeholder="e.g. Maharashtra" class="pdp-wa-input" />
-                    </div>
-                    <div class="pdp-wa-form-group pdp-wa-col-pin">
-                        <label class="pdp-wa-label" for="pdpWaPincode">📮 Pincode *</label>
-                        <input type="text" id="pdpWaPincode" required placeholder="e.g. 400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
+                        <!-- City, State & Pincode Grid -->
+                        <div class="pdp-wa-loc-grid">
+                            <div class="pdp-wa-form-group">
+                                <label class="pdp-wa-label" for="pdpWaCity">🏙️ City</label>
+                                <input type="text" id="pdpWaCity" placeholder="e.g. Mumbai" class="pdp-wa-input" />
+                            </div>
+                            <div class="pdp-wa-form-group">
+                                <label class="pdp-wa-label" for="pdpWaState">🗺️ State</label>
+                                <input type="text" id="pdpWaState" placeholder="e.g. Maharashtra" class="pdp-wa-input" />
+                            </div>
+                            <div class="pdp-wa-form-group pdp-wa-col-pin">
+                                <label class="pdp-wa-label" for="pdpWaPincode">📮 Pincode</label>
+                                <input type="text" id="pdpWaPincode" placeholder="e.g. 400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -3434,6 +3418,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 
     // WhatsApp Quick Order Checkout Modal Engine
+    window.togglePdpWaAddressSection = function() {
+        var body = document.getElementById('pdpWaAddrBody');
+        var wrap = document.getElementById('pdpWaAddrCollapseWrap');
+        if (!body || !wrap) return;
+
+        if (body.style.display === 'none' || body.style.display === '') {
+            body.style.display = 'flex';
+            wrap.classList.add('open');
+            var addrInput = document.getElementById('pdpWaAddress');
+            if (addrInput) addrInput.focus();
+        } else {
+            body.style.display = 'none';
+            wrap.classList.remove('open');
+        }
+    };
+
     window.openPdpWhatsAppOrderModal = function() {
         var modal = document.getElementById('pdpWhatsAppOrderModal');
         if (!modal) return;
@@ -3454,38 +3454,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var prEl = document.getElementById('pdpWaModalPrice');
         if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
 
-        // Reset different customer toggle to unchecked
-        var diffToggle = document.getElementById('pdpWaDifferentCustToggle');
-        if (diffToggle) diffToggle.checked = false;
+        // Hide collapsible address section by default to keep form compact and clean
+        var addrBody = document.getElementById('pdpWaAddrBody');
+        var addrWrap = document.getElementById('pdpWaAddrCollapseWrap');
+        if (addrBody) addrBody.style.display = 'none';
+        if (addrWrap) addrWrap.classList.remove('open');
 
         // Auto-load and prefill saved user billing & delivery info
         restoreUserSavedAddress();
 
         modal.classList.add('open');
-    };
-
-    window.handleDifferentCustomerToggle = function(checkbox) {
-        var nameField = document.getElementById('pdpWaName');
-        var phoneField = document.getElementById('pdpWaPhone');
-        var addrField = document.getElementById('pdpWaAddress');
-        var cityField = document.getElementById('pdpWaCity');
-        var stateField = document.getElementById('pdpWaState');
-        var pinField = document.getElementById('pdpWaPincode');
-
-        if (checkbox && checkbox.checked) {
-            // Clear for new customer / gift recipient entry
-            if (nameField) { nameField.value = ''; nameField.focus(); }
-            if (phoneField) phoneField.value = '';
-            if (addrField) addrField.value = '';
-            if (cityField) cityField.value = '';
-            if (stateField) stateField.value = '';
-            if (pinField) pinField.value = '';
-            window.showToast('➕ Enter new customer & delivery details');
-        } else {
-            // Restore user's saved info
-            restoreUserSavedAddress();
-            window.showToast('👤 Restored your saved details');
-        }
     };
 
     window.closePdpWhatsAppOrderModal = function() {
@@ -3516,7 +3494,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
 
         if (!name) {
-            window.showToast('⚠️ Please enter your Full Name.');
+            window.showToast('⚠️ Please enter Customer Full Name.');
             if (nameInput) nameInput.focus();
             return;
         }
@@ -3531,38 +3509,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }
 
         if (cleanPhone.length < 10) {
-            window.showToast('⚠️ Please enter a valid 10-digit mobile number.');
+            window.showToast('⚠️ Please enter a valid 10-digit WhatsApp mobile number.');
             if (phoneInput) phoneInput.focus();
             return;
         }
 
-        if (!address) {
-            window.showToast('⚠️ Please enter your Full Address.');
-            if (addressInput) addressInput.focus();
-            return;
-        }
-
-        if (!city) {
-            window.showToast('⚠️ Please enter your City.');
-            if (cityInput) cityInput.focus();
-            return;
-        }
-
-        if (!state) {
-            window.showToast('⚠️ Please enter your State.');
-            if (stateInput) stateInput.focus();
-            return;
-        }
-
-        if (!pincode) {
-            window.showToast('⚠️ Please enter your 6-digit Pincode.');
-            if (pinInput) pinInput.focus();
-            return;
-        }
-
-        // Save address locally if not delivering to a different customer
-        var isDiffCust = document.getElementById('pdpWaDifferentCustToggle') && document.getElementById('pdpWaDifferentCustToggle').checked;
-        if (!isDiffCust) {
+        // Save address locally if entered
+        if (address || city) {
             try {
                 localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
                     name: name,
@@ -3583,7 +3536,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         var totalPrice = Number(currentProduct.price * currentQty).toLocaleString('en-IN');
         var productUrl = window.location.href;
-        var fullLoc = city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "");
+        var fullLoc = city ? (city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "")) : '';
 
         // Build WhatsApp Message
         var waMessage = "🛍️ *NEW INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n" +
@@ -3596,10 +3549,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery 3–5 Days)\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "👤 *Customer:* " + name + "\n" +
-            "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n" +
-            "🏠 *Full Address:* " + address + "\n" +
-            "🏙️ *Location:* " + fullLoc + "\n" +
-            "💳 *Payment Preference:* " + paymentMethod + "\n" +
+            "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n";
+
+        if (address) {
+            waMessage += "🏠 *Full Address:* " + address + "\n";
+        }
+        if (fullLoc) {
+            waMessage += "🏙️ *Location:* " + fullLoc + "\n";
+        }
+        if (!address && !fullLoc) {
+            waMessage += "📍 *Delivery Address:* Will share directly on WhatsApp chat\n";
+        }
+
+        waMessage += "💳 *Payment Preference:* " + paymentMethod + "\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "🔗 *Item Link:* " + productUrl + "\n\n" +
             "Please confirm my order and share estimated dispatch details. Thank you! 🙏✨";
