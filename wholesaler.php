@@ -126,7 +126,7 @@ $catalogProducts = [
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -1424,117 +1424,397 @@ $catalogProducts = [
         }
         .ws-slider-track::-webkit-scrollbar { display: none; }
 
-        .ws-product-card {
-            flex: 0 0 calc((100% - 48px) / 5); /* 5 visible on desktop */
-            min-width: 170px;
+        /* ════════════════════════════════════════════════════
+           LUXURY PRODUCT CARD DESIGN (SHOP PAGE AESTHETICS)
+        ════════════════════════════════════════════════════ */
+        .ws-product-card, .product-card {
+            position: relative;
             background: #FFFFFF;
-            border: 1.5px solid var(--ws-border);
-            border-radius: var(--ws-radius-md);
+            border-radius: var(--ws-radius-md, 12px);
+            border: 1px solid var(--ws-border);
             overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
-            transition: var(--ws-transition);
-            box-shadow: var(--ws-shadow-card);
             scroll-snap-align: start;
         }
-        .ws-product-card:hover {
-            border-color: var(--ws-gold-primary);
-            transform: translateY(-3px);
-            box-shadow: var(--ws-shadow-hover);
+        .ws-slider-track .ws-product-card {
+            flex: 0 0 calc((100% - 48px) / 5); /* 5 visible on desktop */
+            min-width: 175px;
         }
-        .ws-prod-img-wrap {
+        .ws-product-card:hover, .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 26px rgba(138,104,31,0.16);
+            border-color: rgba(138,104,31,0.38);
+        }
+
+        .card-image-wrap, .ws-prod-img-wrap {
             position: relative;
-            width: 100%;
-            height: 180px;
-            background: #FAF8F4;
             overflow: hidden;
+            background: #FAF8F4;
+            aspect-ratio: 3 / 3.75;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
-        .ws-prod-img {
+        .card-img, .ws-prod-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center top;
-            transition: transform 0.3s ease;
+            transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .ws-product-card:hover .ws-prod-img { transform: scale(1.05); }
-        .ws-prod-badge {
+        .ws-product-card:hover .card-img,
+        .ws-product-card:hover .ws-prod-img,
+        .product-card:hover .card-img {
+            transform: scale(1.06);
+        }
+
+        /* Floating Badge */
+        .card-badge, .ws-prod-badge {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: var(--ws-gold-primary);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.54rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 2;
+            background: rgba(138, 104, 31, 0.90);
             color: #FFFFFF;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+        .card-badge.badge-new, .ws-prod-badge.badge-new { background: rgba(248, 246, 240, 0.94); color: var(--ws-gold-primary); border-color: rgba(138,104,31,0.4); }
+        .card-badge.badge-bridal, .ws-prod-badge.badge-bridal { background: rgba(122, 40, 77, 0.90); color: #ffffff; border-color: rgba(255,255,255,0.35); }
+        .card-badge.badge-heritage, .ws-prod-badge.badge-heritage { background: rgba(94, 67, 20, 0.90); color: #ffffff; border-color: rgba(255,255,255,0.35); }
+        .card-badge.badge-bestseller, .ws-prod-badge.badge-bestseller { background: rgba(36, 33, 28, 0.90); color: #ffffff; border-color: rgba(255,255,255,0.3); }
+        .card-badge.badge-fast-selling, .card-badge.badge-trending, .ws-prod-badge.badge-trending { background: rgba(184, 107, 40, 0.90); color: #ffffff; border-color: rgba(255,255,255,0.35); }
+        .card-badge.badge-royal-vip { background: linear-gradient(135deg, #8A681F, #C5A859); color: #ffffff; border-color: rgba(255,255,255,0.4); }
+
+        /* Floating MOQ Tag (Top Left / beside badge) */
+        .ws-prod-moq {
+            position: absolute;
+            top: 32px;
+            left: 8px;
+            background: rgba(20, 17, 14, 0.88);
+            color: #FBBF24;
+            font-size: 0.52rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            z-index: 2;
+        }
+
+        /* Wishlist Button */
+        .card-wishlist-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(248,246,240,0.88);
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: all var(--ws-transition);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
+        .card-wishlist-btn:hover { background: var(--ws-gold-light); border-color: var(--ws-gold-primary); transform: scale(1.08); }
+        .card-wishlist-btn.active { background: #FDE8E8; border-color: #E57373; }
+        .card-wishlist-btn svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--ws-gold-primary);
+            stroke-width: 2;
+            fill: none;
+            transition: all var(--ws-transition);
+        }
+        .card-wishlist-btn.active svg { stroke: #E53935; fill: #E53935; }
+
+        /* Mobile Quick View Button */
+        .card-mobile-qv-btn {
+            position: absolute;
+            top: 40px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(248,246,240,0.88);
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: all var(--ws-transition);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
+        .card-mobile-qv-btn:hover { background: var(--ws-gold-light); border-color: var(--ws-gold-primary); transform: scale(1.08); }
+        .card-mobile-qv-btn svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--ws-gold-primary);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* Desktop Slide-up Quick View Overlay */
+        .card-quick-view {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 12px;
+            background: linear-gradient(to top, rgba(20,17,14,0.78) 0%, transparent 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all var(--ws-transition);
+            z-index: 2;
+        }
+        .ws-product-card:hover .card-quick-view,
+        .product-card:hover .card-quick-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .quick-view-btn {
+            font-family: var(--ws-font-sans);
             font-size: 0.65rem;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 4px;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ws-text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(138,104,31,0.3);
+            background: rgba(248,246,240,0.95);
+            backdrop-filter: blur(8px);
+            transition: all var(--ws-transition);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
-        .ws-prod-moq {
+        .quick-view-btn:hover {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            border-color: var(--ws-gold-primary);
+        }
+
+        /* Share Button on Photo (Above Category Tag) */
+        .card-share-btn {
+            position: absolute;
+            bottom: 28px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(138, 104, 31, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ws-gold-primary);
+            cursor: pointer;
+            z-index: 3;
+            transition: all var(--ws-transition);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+        .card-share-btn:hover {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            border-color: var(--ws-gold-primary);
+            transform: scale(1.1);
+        }
+        .card-share-btn svg {
+            width: 11px;
+            height: 11px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        /* Category Tag on Photo Bottom-Right Corner */
+        .card-cat-photo-tag {
             position: absolute;
             bottom: 6px;
             right: 6px;
-            background: rgba(20, 17, 14, 0.88);
-            color: #FBBF24;
-            font-size: 0.65rem;
+            font-family: var(--ws-font-sans);
+            font-size: 0.50rem;
             font-weight: 700;
-            padding: 2px 6px;
+            color: var(--ws-gold-primary);
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid rgba(138, 104, 31, 0.38);
             border-radius: 4px;
+            padding: 2px 5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 2;
+            pointer-events: none;
         }
-        .ws-prod-body {
-            padding: 12px;
+
+        /* Card Body */
+        .card-body, .ws-prod-body {
+            padding: 10px 10px 12px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
+            background: #FFFFFF;
         }
-        .ws-prod-cat {
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: var(--ws-text-muted);
-            text-transform: uppercase;
-        }
-        .ws-prod-name {
-            font-size: 0.85rem;
+
+        .card-fabric-tag {
+            font-size: 0.54rem;
             font-weight: 700;
-            color: var(--ws-text-main);
+            color: var(--ws-gold-primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .ws-prod-price-row {
-            margin-top: auto;
-            padding-top: 6px;
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.80rem;
+            font-weight: 600;
+            color: var(--ws-text-main);
+            line-height: 1.25;
+            letter-spacing: 0.01em;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+            transition: color var(--ws-transition);
+        }
+        .ws-product-card:hover .card-name,
+        .product-card:hover .card-name {
+            color: var(--ws-gold-primary);
+        }
+
+        .card-info-text-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.58rem;
+            color: var(--ws-text-muted);
+            font-weight: 600;
+            margin: 1px 0 3px;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .card-colors-text {
+            color: var(--ws-gold-primary);
+            font-weight: 700;
+            font-size: inherit;
+            white-space: nowrap;
+        }
+        .card-sizes-text {
+            color: var(--ws-text-light);
+            font-size: inherit;
+            white-space: nowrap;
+        }
+
+        .card-price-row {
             display: flex;
             align-items: baseline;
-            justify-content: space-between;
+            gap: 4px;
+            margin-top: auto;
+            padding-top: 3px;
+            flex-wrap: wrap;
         }
-        .ws-prod-ws-price {
-            font-size: 0.95rem;
+        .card-price, .ws-prod-ws-price {
+            font-family: var(--ws-font-sans);
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--ws-gold-primary);
         }
-        .ws-prod-ret-price {
-            font-size: 0.74rem;
+        .card-old-price, .ws-prod-ret-price {
+            font-size: 0.65rem;
             color: var(--ws-text-light);
             text-decoration: line-through;
         }
+        .card-price-discount {
+            font-size: 0.50rem;
+            font-weight: 700;
+            color: #2E7D32;
+            background: #E8F5E9;
+            padding: 1.5px 4.5px;
+            border-radius: 3px;
+            margin-left: auto;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .ws-tier-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--ws-gold-pale);
+            border: 1px solid var(--ws-gold-border);
+            border-radius: 4px;
+            padding: 3px 6px;
+            margin-top: 4px;
+            font-size: 0.54rem;
+            font-weight: 600;
+            color: var(--ws-gold-deep);
+        }
+
         .ws-prod-order-btn {
-            margin-top: 8px;
+            margin-top: 6px;
             width: 100%;
-            padding: 8px;
+            padding: 7px 8px;
             border-radius: var(--ws-radius-sm);
             background: var(--ws-gold-light);
             border: 1px solid var(--ws-gold-border);
             color: var(--ws-gold-primary);
-            font-size: 0.76rem;
+            font-size: 0.72rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
             transition: var(--ws-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .ws-prod-order-btn:hover {
             background: var(--ws-gold-primary);
             color: #FFFFFF;
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.25);
+        }
+
+        @media (min-width: 1024px) {
+            .card-mobile-qv-btn { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+            .card-quick-view { display: none !important; }
         }
 
         /* ── Modals Backdrop & Box ── */
@@ -2387,25 +2667,86 @@ $catalogProducts = [
                     <div class="ws-slider-wrap">
                         <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
-                            <?php foreach ($catalogProducts as $prod): ?>
-                            <div class="ws-product-card">
-                                <div class="ws-prod-img-wrap">
-                                    <span class="ws-prod-badge"><?= $prod['badge_icon'] ?? '🔥' ?> <?= htmlspecialchars($prod['badge']) ?></span>
+                            <?php foreach ($catalogProducts as $prod): 
+                                $badge_raw = $prod['badge'] ?? 'Bestseller';
+                                $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                                $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                                $lot_total = $prod['wholesale_price'] * $prod['moq'];
+                            ?>
+                            <article class="ws-product-card product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
+                                <div class="card-image-wrap ws-prod-img-wrap">
+                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
+                                    </a>
+
+                                    <!-- Luxury Floating Badge -->
+                                    <?php if (!empty($prod['badge'])): ?>
+                                    <span class="card-badge ws-prod-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
+                                    <?php endif; ?>
+
+                                    <!-- Floating MOQ Tag -->
                                     <span class="ws-prod-moq">MOQ: <?= $prod['moq'] ?> Pcs</span>
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
-                                </div>
-                                <div class="ws-prod-body">
-                                    <span class="ws-prod-cat"><?= htmlspecialchars($prod['category']) ?> • HSN: <?= $prod['hsn'] ?></span>
-                                    <h4 class="ws-prod-name"><?= htmlspecialchars($prod['name']) ?></h4>
-                                    <div class="ws-prod-price-row">
-                                        <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">/ Pc</span></span>
-                                        <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
+
+                                    <!-- Wishlist Button -->
+                                    <button type="button" class="card-wishlist-btn" onclick="toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Save to Wishlist">
+                                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    </button>
+
+                                    <!-- Mobile Quick View Button -->
+                                    <button type="button" class="card-mobile-qv-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)" aria-label="Quick Order">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+
+                                    <!-- Desktop Quick View Slide-up Overlay -->
+                                    <div class="card-quick-view" aria-hidden="true">
+                                        <button type="button" class="quick-view-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">Quick Order / View</button>
                                     </div>
-                                    <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                        <svg class="ws-ico gold-fill" style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> WhatsApp Lot Order
+
+                                    <!-- Share Button (Above Category Tag) -->
+                                    <button type="button" class="card-share-btn" onclick="shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>)" title="Share Lot on WhatsApp">
+                                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                    </button>
+
+                                    <!-- Category Box on Photo Bottom-Right Corner -->
+                                    <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                                </div>
+
+                                <div class="card-body ws-prod-body">
+                                    <!-- Fabric & HSN -->
+                                    <span class="card-fabric-tag"><?= htmlspecialchars($prod['fabric'] ?? 'Pure Silk') ?> • HSN <?= $prod['hsn'] ?></span>
+
+                                    <!-- Product Name (Cinzel Serif) -->
+                                    <h4 class="card-name">
+                                        <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                            <?= htmlspecialchars($prod['name']) ?>
+                                        </a>
+                                    </h4>
+
+                                    <!-- Info Text Row: Color & Lot MOQ -->
+                                    <div class="card-info-text-row">
+                                        <span class="card-colors-text"><?= htmlspecialchars($prod['color'] ?? 'Multi-Colour') ?></span>
+                                        <span class="card-sizes-text">Pack: <?= $prod['moq'] ?> Pcs Lot</span>
+                                    </div>
+
+                                    <!-- Price Row: Wholesale Price, Retail MRP, Margin % -->
+                                    <div class="card-price-row">
+                                        <span class="card-price ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.62rem; font-weight:600; color:var(--ws-text-muted);">/ Pc</span></span>
+                                        <span class="card-old-price ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                        <span class="card-price-discount"><?= $margin_pct ?>% Margin</span>
+                                    </div>
+
+                                    <!-- Tier Pricing Badge / Snippet -->
+                                    <div class="ws-tier-badge">
+                                        <span>Tier 1 MOQ: <?= $prod['moq'] ?> Pcs</span>
+                                        <span style="color:var(--ws-gold-primary); font-weight:700;">₹<?= number_format($lot_total) ?> / Lot</span>
+                                    </div>
+
+                                    <!-- WhatsApp Instant Lot Order Button -->
+                                    <button type="button" class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
+                                        <svg class="ws-ico gold-fill" style="width:13px;height:13px;margin-right:4px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> WhatsApp Lot Order
                                     </button>
                                 </div>
-                            </div>
+                            </article>
                             <?php endforeach; ?>
                         </div>
                         <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
@@ -2854,26 +3195,87 @@ $catalogProducts = [
                         </a>
                     </div>
 
-                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(clamp(145px, 28vw, 200px), 1fr)); gap:12px;">
-                        <?php foreach ($catalogProducts as $prod): ?>
-                        <div class="ws-product-card" style="flex:auto; min-width:auto;">
-                            <div class="ws-prod-img-wrap">
-                                <span class="ws-prod-badge"><?= $prod['badge_icon'] ?? '🔥' ?> <?= htmlspecialchars($prod['badge']) ?></span>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(clamp(155px, 20vw, 220px), 1fr)); gap:14px;">
+                        <?php foreach ($catalogProducts as $prod): 
+                            $badge_raw = $prod['badge'] ?? 'Bestseller';
+                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                            $lot_total = $prod['wholesale_price'] * $prod['moq'];
+                        ?>
+                        <article class="ws-product-card product-card" data-product-id="<?= $prod['id'] ?>" role="listitem" style="flex:auto; min-width:auto;">
+                            <div class="card-image-wrap ws-prod-img-wrap">
+                                <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
+                                </a>
+
+                                <!-- Luxury Floating Badge -->
+                                <?php if (!empty($prod['badge'])): ?>
+                                <span class="card-badge ws-prod-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
+                                <?php endif; ?>
+
+                                <!-- Floating MOQ Tag -->
                                 <span class="ws-prod-moq">MOQ: <?= $prod['moq'] ?> Pcs</span>
-                                <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
-                            </div>
-                            <div class="ws-prod-body">
-                                <span class="ws-prod-cat"><?= htmlspecialchars($prod['category']) ?> • HSN: <?= $prod['hsn'] ?></span>
-                                <h4 class="ws-prod-name"><?= htmlspecialchars($prod['name']) ?></h4>
-                                <div class="ws-prod-price-row">
-                                    <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> / Pc</span>
-                                    <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
+
+                                <!-- Wishlist Button -->
+                                <button type="button" class="card-wishlist-btn" onclick="toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Save to Wishlist">
+                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                </button>
+
+                                <!-- Mobile Quick View Button -->
+                                <button type="button" class="card-mobile-qv-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)" aria-label="Quick Order">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+
+                                <!-- Desktop Quick View Slide-up Overlay -->
+                                <div class="card-quick-view" aria-hidden="true">
+                                    <button type="button" class="quick-view-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">Quick Order / View</button>
                                 </div>
-                                <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                    ⚡ Instant WhatsApp Lot Order
+
+                                <!-- Share Button (Above Category Tag) -->
+                                <button type="button" class="card-share-btn" onclick="shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>)" title="Share Lot on WhatsApp">
+                                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                </button>
+
+                                <!-- Category Box on Photo Bottom-Right Corner -->
+                                <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                            </div>
+
+                            <div class="card-body ws-prod-body">
+                                <!-- Fabric & HSN -->
+                                <span class="card-fabric-tag"><?= htmlspecialchars($prod['fabric'] ?? 'Pure Silk') ?> • HSN <?= $prod['hsn'] ?></span>
+
+                                <!-- Product Name (Cinzel Serif) -->
+                                <h4 class="card-name">
+                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                        <?= htmlspecialchars($prod['name']) ?>
+                                    </a>
+                                </h4>
+
+                                <!-- Info Text Row: Color & Lot MOQ -->
+                                <div class="card-info-text-row">
+                                    <span class="card-colors-text"><?= htmlspecialchars($prod['color'] ?? 'Multi-Colour') ?></span>
+                                    <span class="card-sizes-text">Pack: <?= $prod['moq'] ?> Pcs Lot</span>
+                                </div>
+
+                                <!-- Price Row: Wholesale Price, Retail MRP, Margin % -->
+                                <div class="card-price-row">
+                                    <span class="card-price ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.62rem; font-weight:600; color:var(--ws-text-muted);">/ Pc</span></span>
+                                    <span class="card-old-price ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                    <span class="card-price-discount"><?= $margin_pct ?>% Margin</span>
+                                </div>
+
+                                <!-- Tier Pricing Badge / Snippet -->
+                                <div class="ws-tier-badge">
+                                    <span>Tier 1 MOQ: <?= $prod['moq'] ?> Pcs</span>
+                                    <span style="color:var(--ws-gold-primary); font-weight:700;">₹<?= number_format($lot_total) ?> / Lot</span>
+                                </div>
+
+                                <!-- WhatsApp Instant Lot Order Button -->
+                                <button type="button" class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
+                                    <svg class="ws-ico gold-fill" style="width:13px;height:13px;margin-right:4px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> WhatsApp Lot Order
                                 </button>
                             </div>
-                        </div>
+                        </article>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -4537,6 +4939,36 @@ $catalogProducts = [
                        `Please confirm lot availability, dispatch turnaround and proforma payment details.`;
 
             var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=${encodeURIComponent(text)}`;
+            window.open(waUrl, '_blank');
+        };
+
+        /* ── Wholesale Wishlist Controller ── */
+        window.toggleWholesaleWishlist = function(productId, btn) {
+            var raw = localStorage.getItem('kalaniketan_wishlist');
+            var wish = raw ? JSON.parse(raw) : [];
+            var idx = wish.findIndex(function(i){ return Number(i.id) === Number(productId); });
+            if (idx > -1) {
+                wish.splice(idx, 1);
+                if (btn) btn.classList.remove('active');
+                window.showWsToast('Item removed from Procurement Wishlist');
+            } else {
+                wish.push({ id: productId });
+                if (btn) btn.classList.add('active');
+                window.showWsToast('Saved to B2B Procurement Wishlist');
+            }
+            localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
+        };
+
+        /* ── Share Wholesale Lot on WhatsApp ── */
+        window.shareWholesaleProduct = function(prod) {
+            var text = `*KALANIKETAN B2B WHOLESALE LOT*\n\n` +
+                       `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
+                       `*Wholesale Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
+                       `*MOQ:* ${prod.moq} Pcs Pack\n` +
+                       `*Fabric:* ${prod.fabric || 'Pure Silk'} • HSN: ${prod.hsn}\n` +
+                       `*Tier Rates:* ${prod.tier_prices || 'Volume Discounts Available'}\n\n` +
+                       `Explore live wholesale portal: ${window.location.origin}/wholesaler.php`;
+            var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
         };
 
