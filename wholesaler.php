@@ -1,22 +1,21 @@
 <?php
 /**
- * wholesaler.php — Next-Level Luxury Wholesaler User Dashboard (B2B VIP Portal)
+ * wholesaler.php — Next-Generation Luxury TailAdmin B2B Wholesaler Dashboard
  * Kalaniketan Ethnic Luxury Couture
  * 
  * Features:
+ * - Pixel-perfect modern SaaS dashboard layout (matching TailAdmin architecture)
  * - Strict Wholesaler Role Security Gate (Frontend + Backend validation)
- * - Auto-Sizing Fluid Mobile Architecture (320px to 4K Ultra HD)
- * - Glassmorphic Header & Native-Feel Mobile Navigation Dock
- * - 6 Elevated Real-Time Metric Cards with Rich Dual-Tone Vector Icons & Glow Animations
- * - "My Details" Profile Management with Indian +91 Validation & Password Toggle
- * - "GST / Non-GST Profile" with Live Indian 15-Char GSTIN Validation & State Code Resolver
- * - "My Address Book" with 36 Indian States/UTs Selection & 6-Digit PIN Validation
- * - "Order List" & "Order Details Modal" with Responsive Desktop Table & Mobile Cards
- * - "Advanced Reports" with Search, Date Presets, Pagination & Instant CSV Export
- * - "Live Shipment Tracking" Engine with Animated Pulse Timeline & WhatsApp Driver Desk
- * - "Support Desk & Ticket System" with Filterable History & VIP WhatsApp Stylist Concierge
- * - "Download Bill PDF" High-Definition GST Tax Invoice with QR & Seal
- * - "Trending Products Slider" (5 visible on Desktop, 3 on Mobile with Snap-Swipe)
+ * - Clean white cards, refined border-radii (14px), modern slate typography & soft shadows
+ * - Top command search bar with ⌘K shortcut, dark-mode toggle, notification bell & profile pill
+ * - Left sleek sidebar with MENU categorization and pill-style navigation with badges
+ * - Top 4 metric cards with big bold numbers and pill trend tags (+11.01% ↑ / -9.05% ↓)
+ * - Interactive Monthly Sales Bar Chart (12 Months Jan-Dec) with hover tooltips
+ * - Semi-circular Target Gauge (75.55%) with revenue milestone narrative & bottom 3-stat row
+ * - Segmented tab controls ([ Overview ] [ Orders ] [ Reports ] [ Catalog ]) & Date filter pill
+ * - "My Details", "GST / Non-GST Profile", "Address Book", "Order Book", "Live Tracking", "Support Desk"
+ * - High-Definition GST Tax Invoice Bill Modal & Print Sheet
+ * - Mobile bottom floating app dock ([ Overview ] [ Orders ] [ Shop ] [ Reports ] [ Profile ])
  */
 
 $catalogProducts = [
@@ -129,57 +128,56 @@ $catalogProducts = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wholesaler B2B VIP Hub — Kalaniketan Luxury Ethnic</title>
+    <title>Wholesaler B2B Dashboard — Kalaniketan Couture</title>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* ── Luxury Gold & Obsidian Color System ── */
+            /* ── Modern Clean Dashboard Palette (TailAdmin Style) ── */
+            --ws-bg-page: #F8FAFC;
+            --ws-bg-card: #FFFFFF;
+            --ws-bg-sidebar: #FFFFFF;
+            --ws-border: #E2E8F0;
+            --ws-border-light: #F1F5F9;
+
+            --ws-text-main: #0F172A;
+            --ws-text-sub: #334155;
+            --ws-text-muted: #64748B;
+            --ws-text-light: #94A3B8;
+
+            --ws-primary: #3B82F6;
+            --ws-primary-light: #EFF6FF;
+            --ws-primary-dark: #1D4ED8;
+
             --ws-gold-primary: #8A681F;
-            --ws-gold-deep: #5A4210;
             --ws-gold-accent: #C5A859;
-            --ws-gold-light: #EBDCB2;
-            --ws-gold-pale: #FBF8F1;
-            --ws-gold-glow: rgba(197, 168, 89, 0.32);
-            --ws-gold-border: rgba(138, 104, 31, 0.24);
+            --ws-gold-light: #FAF5E8;
+            --ws-gold-border: rgba(138, 104, 31, 0.22);
 
-            --ws-dark-text: #110E0B;
-            --ws-mid-text: #3B352E;
-            --ws-light-text: #6B6358;
-            --ws-off-white: #FAF8F5;
-            --ws-cream-bg: #F4EFE6;
-            --ws-pure-white: #FFFFFF;
+            --ws-success: #10B981;
+            --ws-success-bg: #ECFDF5;
+            --ws-warning: #F59E0B;
+            --ws-warning-bg: #FFFBEB;
+            --ws-danger: #EF4444;
+            --ws-danger-bg: #FEF2F2;
+            --ws-purple: #8B5CF6;
+            --ws-purple-bg: #F5F3FF;
 
-            --ws-sidebar-bg: #14110E;
-            --ws-sidebar-hover: #221D18;
-            --ws-sidebar-active: #8A681F;
-            --ws-card-border: #E8E2D5;
-            
-            --ws-success: #15803D;
-            --ws-success-bg: #DCFCE7;
-            --ws-warning: #B45309;
-            --ws-warning-bg: #FEF3C7;
-            --ws-info: #1D4ED8;
-            --ws-info-bg: #DBEAFE;
-            --ws-danger: #B91C1C;
-            --ws-danger-bg: #FEE2E2;
-
+            --ws-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --ws-font-serif: 'Cinzel', serif;
-            --ws-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
-            --ws-shadow-sm: 0 2px 6px rgba(0,0,0,0.04);
-            --ws-shadow-md: 0 6px 18px rgba(0,0,0,0.06);
-            --ws-shadow-lg: 0 14px 38px rgba(0,0,0,0.09);
-            --ws-shadow-gold: 0 4px 20px rgba(138, 104, 31, 0.20);
 
             --ws-radius-sm: 8px;
             --ws-radius-md: 12px;
-            --ws-radius-lg: 16px;
-            --ws-transition: all 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+            --ws-radius-lg: 14px;
+            --ws-radius-xl: 18px;
+
+            --ws-shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02);
+            --ws-shadow-hover: 0 8px 24px rgba(0,0,0,0.06);
+            --ws-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -195,54 +193,51 @@ $catalogProducts = [
 
         body {
             font-family: var(--ws-font-sans);
-            background: var(--ws-off-white);
-            color: var(--ws-dark-text);
+            background: var(--ws-bg-page);
+            color: var(--ws-text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-            padding-bottom: env(safe-area-inset-bottom);
         }
 
         /* ── Top Header Navigation Bar ── */
         .ws-header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--ws-gold-primary);
-            padding: clamp(6px, 1.5vw, 10px) clamp(12px, 3vw, 24px);
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--ws-border);
+            padding: 0 clamp(14px, 2.5vw, 28px);
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            height: clamp(52px, 7vw, 62px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
         .ws-header-left {
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1.8vw, 14px);
+            gap: 16px;
         }
         .ws-menu-toggle-btn {
-            display: none;
             width: 38px;
             height: 38px;
-            border-radius: 10px;
-            border: 1.5px solid var(--ws-gold-border);
-            background: var(--ws-gold-pale);
-            color: var(--ws-gold-primary);
+            border-radius: var(--ws-radius-sm);
+            border: 1px solid var(--ws-border);
+            background: #FFFFFF;
+            color: var(--ws-text-sub);
             cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--ws-transition);
         }
         .ws-menu-toggle-btn:hover {
-            background: var(--ws-gold-primary);
-            color: #FFFFFF;
+            background: #F1F5F9;
+            color: var(--ws-text-main);
         }
         .ws-menu-toggle-btn svg {
             width: 20px;
@@ -251,247 +246,222 @@ $catalogProducts = [
             stroke-width: 2.2;
             fill: none;
         }
-        .ws-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
+
+        /* ── Command Search Bar (⌘K) ── */
+        .ws-cmd-search-wrap {
+            position: relative;
+            width: clamp(240px, 32vw, 420px);
         }
-        .ws-brand-seal {
-            width: clamp(32px, 4.5vw, 40px);
-            height: clamp(32px, 4.5vw, 40px);
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--ws-gold-accent) 0%, var(--ws-gold-primary) 50%, var(--ws-gold-deep) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            box-shadow: var(--ws-shadow-gold);
-            flex-shrink: 0;
-            border: 1.5px solid #FFFFFF;
-            animation: sealShimmer 4s infinite ease-in-out;
+        .ws-cmd-search-input {
+            width: 100%;
+            height: 38px;
+            padding: 0 54px 0 38px;
+            border-radius: 20px;
+            border: 1px solid var(--ws-border);
+            background: #F8FAFC;
+            font-size: 0.82rem;
+            color: var(--ws-text-main);
+            outline: none;
+            transition: var(--ws-transition);
         }
-        @keyframes sealShimmer {
-            0%, 100% { box-shadow: 0 4px 14px rgba(138,104,31,0.3); }
-            50% { box-shadow: 0 4px 22px rgba(197,168,89,0.55); }
+        .ws-cmd-search-input:focus {
+            background: #FFFFFF;
+            border-color: var(--ws-primary);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
         }
-        .ws-brand-seal svg {
-            width: 19px;
-            height: 19px;
-            stroke: currentColor;
-            stroke-width: 2.2;
+        .ws-cmd-search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: var(--ws-text-muted);
+            stroke-width: 2;
             fill: none;
+            pointer-events: none;
         }
-        .ws-brand-text h1 {
-            font-family: var(--ws-font-serif);
-            font-size: clamp(0.95rem, 2.2vw, 1.2rem);
-            font-weight: 800;
-            color: var(--ws-gold-primary);
-            letter-spacing: 0.08em;
-            line-height: 1;
-        }
-        .ws-brand-text span {
-            font-size: clamp(0.60rem, 1.3vw, 0.70rem);
-            color: var(--ws-mid-text);
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 2px;
-        }
-        .ws-brand-text span .spark {
-            color: #D97706;
-            animation: sparkTwinkle 2s infinite ease-in-out;
-        }
-        @keyframes sparkTwinkle {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.25); opacity: 1; }
+        .ws-cmd-badge {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 2px 6px;
+            background: #FFFFFF;
+            border: 1px solid var(--ws-border);
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--ws-text-muted);
         }
 
         .ws-header-right {
             display: flex;
             align-items: center;
-            gap: clamp(6px, 1.5vw, 12px);
+            gap: 12px;
         }
-        .ws-user-pill {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--ws-gold-pale);
-            border: 1.5px solid var(--ws-gold-border);
-            padding: 4px 12px 4px 5px;
-            border-radius: 28px;
-            text-decoration: none;
-            color: var(--ws-dark-text);
-            box-shadow: var(--ws-shadow-sm);
-            transition: var(--ws-transition);
-        }
-        .ws-user-pill:hover {
-            border-color: var(--ws-gold-primary);
-            box-shadow: var(--ws-shadow-gold);
-            transform: translateY(-1px);
-        }
-        .ws-user-avatar {
-            width: clamp(28px, 4vw, 32px);
-            height: clamp(28px, 4vw, 32px);
+        .ws-hdr-icon-btn {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #8A681F 0%, #4D370E 100%);
-            color: #FAF5E8;
-            font-weight: 900;
-            font-size: 0.78rem;
+            border: 1px solid var(--ws-border);
+            background: #FFFFFF;
+            color: var(--ws-text-sub);
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: var(--ws-transition);
+        }
+        .ws-hdr-icon-btn:hover {
+            background: #F8FAFC;
+            color: var(--ws-text-main);
+        }
+        .ws-hdr-icon-btn svg {
+            width: 17px;
+            height: 17px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+        .ws-notif-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #F97316;
             border: 1.5px solid #FFFFFF;
-            flex-shrink: 0;
         }
-        .ws-user-info-brief {
+
+        .ws-user-profile-btn {
             display: flex;
-            flex-direction: column;
-            line-height: 1.15;
-        }
-        .ws-user-name {
-            font-size: clamp(0.75rem, 1.5vw, 0.84rem);
-            font-weight: 800;
-            color: var(--ws-dark-text);
-            white-space: nowrap;
-            max-width: clamp(90px, 18vw, 180px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .ws-user-tag {
-            font-size: 0.60rem;
-            font-weight: 800;
-            color: #8A681F;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .ws-header-btn {
-            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: var(--ws-radius-sm);
-            border: 1.2px solid var(--ws-card-border);
-            background: #FFFFFF;
-            color: var(--ws-mid-text);
-            font-size: 0.78rem;
-            font-weight: 800;
-            text-decoration: none;
+            gap: 10px;
+            padding: 4px 10px 4px 4px;
+            border-radius: 28px;
+            border: 1px solid transparent;
+            background: transparent;
             cursor: pointer;
             transition: var(--ws-transition);
         }
-        .ws-header-btn:hover {
-            border-color: var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
-            background: var(--ws-gold-pale);
+        .ws-user-profile-btn:hover {
+            background: #F1F5F9;
+            border-color: var(--ws-border);
+        }
+        .ws-user-avatar-img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--ws-gold-primary);
+        }
+        .ws-user-name-text {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .ws-user-name-text svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--ws-text-muted);
+            stroke-width: 2.2;
+            fill: none;
         }
 
         /* ── Main App Layout Grid ── */
         .ws-app-layout {
             display: flex;
             flex: 1;
-            min-height: calc(100vh - 62px);
+            min-height: calc(100vh - 64px);
         }
 
-        /* ── Sidebar Navigation ── */
+        /* ── Left Sidebar Navigation (TailAdmin Style) ── */
         .ws-sidebar {
-            width: 260px;
-            background: var(--ws-sidebar-bg);
-            color: #E7E2D6;
+            width: 250px;
+            background: var(--ws-bg-sidebar);
+            border-right: 1px solid var(--ws-border);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            border-right: 1px solid rgba(197, 168, 89, 0.2);
             transition: var(--ws-transition);
             z-index: 900;
         }
-        .ws-sidebar-profile {
-            padding: 18px 14px;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+        .ws-sidebar-brand-box {
+            padding: 20px 20px 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-        .ws-side-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8A681F 0%, #D4AF37 100%);
-            color: #14110E;
-            font-weight: 900;
-            font-size: 0.95rem;
+        .ws-side-logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+            color: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #FAF5E8;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-weight: 900;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.3);
         }
-        .ws-side-profile-info h3 {
+        .ws-side-brand-title {
             font-family: var(--ws-font-serif);
-            font-size: 0.90rem;
+            font-size: 1.05rem;
             font-weight: 800;
-            color: #FAF5E8;
-            margin: 0;
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 160px;
+            color: var(--ws-text-main);
+            letter-spacing: 0.04em;
         }
-        .ws-side-profile-info span {
-            font-size: 0.65rem;
-            color: #C5A859;
+
+        .ws-nav-category {
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            display: inline-block;
-            margin-top: 3px;
+            color: var(--ws-text-light);
+            padding: 14px 20px 6px;
         }
-
         .ws-nav-list {
             list-style: none;
-            padding: 12px 10px;
-            flex: 1;
+            padding: 6px 12px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            overflow-y: auto;
+            gap: 4px;
+            flex: 1;
         }
         .ws-nav-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 14px;
+            padding: 9px 14px;
             border-radius: 10px;
-            color: #D1C7B7;
+            color: var(--ws-text-sub);
+            font-size: 0.84rem;
+            font-weight: 600;
             text-decoration: none;
-            font-size: 0.82rem;
-            font-weight: 700;
             cursor: pointer;
             transition: var(--ws-transition);
             border: 1px solid transparent;
             user-select: none;
         }
         .ws-nav-item:hover {
-            background: var(--ws-sidebar-hover);
-            color: #FFFFFF;
-            border-color: rgba(197,168,89,0.25);
-            transform: translateX(3px);
+            background: #F1F5F9;
+            color: var(--ws-text-main);
         }
         .ws-nav-item.active {
-            background: linear-gradient(135deg, #8A681F 0%, #5F4512 100%);
-            color: #FFFFFF;
-            box-shadow: 0 4px 14px rgba(138,104,31,0.45);
-            border-color: #C5A859;
+            background: #EFF6FF;
+            color: #2563EB;
+            font-weight: 700;
         }
         .ws-nav-item svg {
-            width: 17px;
-            height: 17px;
+            width: 18px;
+            height: 18px;
             stroke: currentColor;
             stroke-width: 2.2;
             fill: none;
@@ -499,35 +469,31 @@ $catalogProducts = [
         }
         .ws-nav-badge {
             margin-left: auto;
-            background: #D97706;
-            color: #FFFFFF;
-            font-size: 0.66rem;
+            background: #DCFCE7;
+            color: #15803D;
+            font-size: 0.65rem;
             font-weight: 800;
             padding: 2px 7px;
             border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
-        .ws-nav-badge.green {
-            background: #16A34A;
+        .ws-nav-badge.blue {
+            background: #DBEAFE;
+            color: #1D4ED8;
         }
 
         .ws-sidebar-footer {
-            padding: 12px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            background: rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            padding: 14px 16px;
+            border-top: 1px solid var(--ws-border);
         }
         .ws-logout-btn {
             width: 100%;
             padding: 9px 12px;
             border-radius: var(--ws-radius-sm);
-            border: 1px solid rgba(220, 38, 38, 0.4);
-            background: rgba(220, 38, 38, 0.12);
-            color: #FCA5A5;
-            font-size: 0.78rem;
-            font-weight: 800;
+            border: 1px solid #FCA5A5;
+            background: #FEF2F2;
+            color: #DC2626;
+            font-size: 0.80rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -538,15 +504,14 @@ $catalogProducts = [
         .ws-logout-btn:hover {
             background: #DC2626;
             color: #FFFFFF;
-            border-color: #DC2626;
         }
 
         /* ── Main Content Area ── */
         .ws-main-content {
             flex: 1;
-            padding: clamp(14px, 2.5vw, 24px) clamp(12px, 3vw, 28px) clamp(65px, 8vw, 85px);
+            padding: clamp(16px, 2.5vw, 28px);
             overflow-y: auto;
-            max-width: 1350px;
+            max-width: 1440px;
             margin: 0 auto;
             width: 100%;
         }
@@ -554,217 +519,323 @@ $catalogProducts = [
         /* ── Tab View Containers ── */
         .ws-tab-pane {
             display: none;
-            animation: paneFadeIn 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: paneFadeIn 0.22s ease;
         }
         .ws-tab-pane.active {
             display: block;
         }
         @keyframes paneFadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Page Header / Welcome Banner ── */
-        .ws-welcome-banner {
-            background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
-            border: 1.5px solid var(--ws-gold-border);
-            border-radius: var(--ws-radius-lg);
-            padding: clamp(14px, 2.5vw, 22px) clamp(16px, 3vw, 28px);
-            margin-bottom: clamp(14px, 2.2vw, 22px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 14px;
-            box-shadow: var(--ws-shadow-sm);
-            position: relative;
-            overflow: hidden;
-        }
-        .ws-welcome-banner::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: bannerShimmer 6s infinite;
-        }
-        @keyframes bannerShimmer {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
-        }
-        .ws-welcome-banner::after {
-            content: '👑';
-            position: absolute;
-            right: -10px;
-            bottom: -15px;
-            font-size: 5.5rem;
-            opacity: 0.08;
-            pointer-events: none;
-        }
-        .ws-welcome-left h2 {
-            font-family: var(--ws-font-serif);
-            font-size: clamp(1.1rem, 2.8vw, 1.45rem);
-            font-weight: 800;
-            color: var(--ws-gold-primary);
-            line-height: 1.2;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .ws-welcome-left p {
-            font-size: clamp(0.78rem, 1.4vw, 0.85rem);
-            color: var(--ws-mid-text);
-            margin-top: 4px;
-            font-weight: 500;
-        }
-        .ws-welcome-badges {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-        .ws-tag-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 24px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            background: #FFFFFF;
-            border: 1.2px solid var(--ws-gold-border);
-            color: var(--ws-gold-primary);
-            box-shadow: var(--ws-shadow-sm);
-        }
-        .ws-tag-pill.verified {
-            background: #ECFDF5;
-            border-color: #6EE7B7;
-            color: #065F46;
-        }
-        .ws-live-pulse-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #16A34A;
-            box-shadow: 0 0 0 rgba(22, 163, 74, 0.6);
-            animation: greenPulse 2s infinite;
-        }
-        @keyframes greenPulse {
-            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
-        }
-
-        /* ── 6 Statistics Metric Cards Grid ── */
-        .ws-stats-grid {
+        /* ════════════════════════════════════════════════════
+           TAILADMIN TOP STAT METRIC CARDS (4 Cards Grid)
+        ════════════════════════════════════════════════════ */
+        .ws-metric-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 28vw, 185px), 1fr));
-            gap: clamp(10px, 1.8vw, 16px);
-            margin-bottom: clamp(16px, 2.5vw, 24px);
+            grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 22vw, 260px), 1fr));
+            gap: clamp(12px, 1.8vw, 20px);
+            margin-bottom: clamp(16px, 2vw, 24px);
         }
-        .ws-stat-card {
-            background: #FFFFFF;
-            border: 1.5px solid var(--ws-card-border);
-            border-radius: var(--ws-radius-md);
-            padding: clamp(12px, 2vw, 16px);
-            box-shadow: var(--ws-shadow-sm);
+        .ws-stat-box {
+            background: var(--ws-bg-card);
+            border: 1px solid var(--ws-border);
+            border-radius: var(--ws-radius-lg);
+            padding: clamp(16px, 2vw, 22px);
+            box-shadow: var(--ws-shadow-card);
             transition: var(--ws-transition);
-            position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            animation: cardFadeUp 0.35s ease forwards;
         }
-        @keyframes cardFadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .ws-stat-box:hover {
+            box-shadow: var(--ws-shadow-hover);
+            transform: translateY(-2px);
         }
-        .ws-stat-card:hover {
-            border-color: var(--stat-accent, #8A681F);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px var(--stat-glow, rgba(138,104,31,0.18));
-        }
-        .ws-stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3.5px;
-            background: linear-gradient(90deg, var(--stat-accent, #8A681F), var(--stat-accent-light, #C5A859));
-        }
-        .ws-stat-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .ws-stat-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ws-text-muted);
             margin-bottom: 8px;
         }
-        .ws-stat-title {
-            font-size: clamp(0.70rem, 1.2vw, 0.76rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--ws-light-text);
-        }
-        .ws-stat-icon-wrap {
-            width: clamp(32px, 4vw, 38px);
-            height: clamp(32px, 4vw, 38px);
-            border-radius: 10px;
-            background: var(--stat-bg, #FAF5E8);
-            color: var(--stat-accent, #8A681F);
+        .ws-stat-val-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: var(--ws-transition);
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
         }
-        .ws-stat-card:hover .ws-stat-icon-wrap {
-            transform: scale(1.1) rotate(4deg);
-        }
-        .ws-stat-icon-wrap svg {
-            width: 20px;
-            height: 20px;
-            display: block;
-        }
-        .ws-stat-val {
-            font-family: var(--ws-font-serif);
-            font-size: clamp(1.30rem, 3.2vw, 1.65rem);
-            font-weight: 900;
-            color: var(--ws-dark-text);
+        .ws-stat-val-num {
+            font-size: clamp(1.45rem, 2.5vw, 1.75rem);
+            font-weight: 800;
+            color: var(--ws-text-main);
+            letter-spacing: -0.02em;
             line-height: 1.1;
         }
-        .ws-stat-sub {
-            font-size: clamp(0.68rem, 1.2vw, 0.74rem);
-            color: var(--ws-light-text);
-            margin-top: 5px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .ws-stat-trend {
-            font-weight: 800;
-            font-size: 0.68rem;
-            padding: 2px 6px;
-            border-radius: 10px;
+        .ws-trend-pill {
             display: inline-flex;
             align-items: center;
             gap: 3px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
         }
-        .ws-stat-trend.up { background: #DCFCE7; color: #15803D; }
-        .ws-stat-trend.neutral { background: #F3F4F6; color: #4B5563; }
+        .ws-trend-pill.up {
+            background: var(--ws-success-bg);
+            color: var(--ws-success);
+        }
+        .ws-trend-pill.down {
+            background: var(--ws-danger-bg);
+            color: var(--ws-danger);
+        }
+
+        /* ════════════════════════════════════════════════════
+           MIDDLE ANALYTICS ROW (Sales Bar Chart & Target Gauge)
+        ════════════════════════════════════════════════════ */
+        .ws-analytics-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: clamp(14px, 2vw, 20px);
+            margin-bottom: clamp(16px, 2vw, 24px);
+        }
+
+        .ws-analytics-card {
+            background: var(--ws-bg-card);
+            border: 1px solid var(--ws-border);
+            border-radius: var(--ws-radius-lg);
+            padding: clamp(18px, 2vw, 24px);
+            box-shadow: var(--ws-shadow-card);
+            display: flex;
+            flex-direction: column;
+        }
+        .ws-card-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .ws-card-top-bar h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
+        }
+        .ws-dots-btn {
+            background: none;
+            border: none;
+            color: var(--ws-text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .ws-dots-btn:hover {
+            background: #F1F5F9;
+        }
+
+        /* ── Bar Chart Canvas & Grid ── */
+        .ws-bar-chart-container {
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 10px 0 24px 34px;
+            border-bottom: 1px solid var(--ws-border);
+        }
+        .ws-chart-y-axis {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--ws-text-light);
+        }
+        .ws-bar-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+        }
+        .ws-bar-pill {
+            width: 14px;
+            background: #3B82F6;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .ws-bar-col:hover .ws-bar-pill {
+            background: #1D4ED8;
+            transform: scaleY(1.05);
+            box-shadow: 0 4px 12px rgba(59,130,246,0.35);
+        }
+        .ws-bar-col.active .ws-bar-pill {
+            background: #2563EB;
+        }
+        .ws-bar-month {
+            position: absolute;
+            bottom: -20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--ws-text-muted);
+        }
+
+        /* ── Semi-Circular Target Gauge Arc ── */
+        .ws-gauge-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 10px 0 16px;
+        }
+        .ws-gauge-svg {
+            width: 190px;
+            height: 105px;
+            overflow: visible;
+        }
+        .ws-gauge-bg-arc {
+            fill: none;
+            stroke: #E2E8F0;
+            stroke-width: 14;
+            stroke-linecap: round;
+        }
+        .ws-gauge-fill-arc {
+            fill: none;
+            stroke: #3B82F6;
+            stroke-width: 14;
+            stroke-linecap: round;
+            stroke-dasharray: 236;
+            stroke-dashoffset: 58; /* 75.55% */
+            transition: stroke-dashoffset 1s ease;
+        }
+        .ws-gauge-center-text {
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+            margin-top: -30px;
+        }
+        .ws-gauge-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #ECFDF5;
+            color: #10B981;
+            font-size: 0.70rem;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .ws-gauge-desc {
+            font-size: 0.78rem;
+            color: var(--ws-text-muted);
+            margin-top: 14px;
+            line-height: 1.45;
+            max-width: 280px;
+        }
+        .ws-gauge-stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-top: 1px solid var(--ws-border);
+            padding-top: 14px;
+            margin-top: auto;
+            text-align: center;
+            gap: 6px;
+        }
+        .ws-g-stat-label {
+            font-size: 0.70rem;
+            color: var(--ws-text-muted);
+            font-weight: 600;
+        }
+        .ws-g-stat-val {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+            margin-top: 2px;
+        }
+
+        /* ════════════════════════════════════════════════════
+           BOTTOM CONTROLS & STATISTICS HEADER (Segmented Tabs)
+        ════════════════════════════════════════════════════ */
+        .ws-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .ws-sec-title-box h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+        }
+        .ws-sec-title-box p {
+            font-size: 0.78rem;
+            color: var(--ws-text-muted);
+            margin-top: 2px;
+        }
+        .ws-sec-actions-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .ws-segmented-control {
+            display: flex;
+            background: #FFFFFF;
+            border: 1px solid var(--ws-border);
+            border-radius: 24px;
+            padding: 3px;
+            box-shadow: var(--ws-shadow-card);
+        }
+        .ws-seg-btn {
+            border: none;
+            background: transparent;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--ws-text-muted);
+            cursor: pointer;
+            transition: var(--ws-transition);
+        }
+        .ws-seg-btn.active {
+            background: #0F172A;
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .ws-date-range-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--ws-border);
+            background: #FFFFFF;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--ws-text-sub);
+            cursor: pointer;
+            box-shadow: var(--ws-shadow-card);
+        }
 
         /* ── Standard Section Cards ── */
         .ws-card {
             background: #FFFFFF;
-            border: 1.5px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-lg);
-            padding: clamp(14px, 2.5vw, 22px);
-            margin-bottom: clamp(14px, 2.2vw, 20px);
-            box-shadow: var(--ws-shadow-sm);
+            padding: clamp(16px, 2vw, 24px);
+            margin-bottom: clamp(14px, 2vw, 20px);
+            box-shadow: var(--ws-shadow-card);
         }
         .ws-card-header {
             display: flex;
@@ -772,36 +843,26 @@ $catalogProducts = [
             justify-content: space-between;
             margin-bottom: 16px;
             padding-bottom: 12px;
-            border-bottom: 1.5px dashed var(--ws-card-border);
+            border-bottom: 1px solid var(--ws-border);
             flex-wrap: wrap;
             gap: 10px;
         }
         .ws-card-title-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .ws-card-title-group svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--ws-gold-primary);
-            stroke-width: 2.2;
-            fill: none;
-            flex-shrink: 0;
+            gap: 8px;
         }
         .ws-card-title-group h3 {
-            font-family: var(--ws-font-serif);
-            font-size: clamp(0.95rem, 2vw, 1.1rem);
-            font-weight: 800;
-            color: var(--ws-gold-primary);
-            letter-spacing: 0.04em;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
         }
 
         /* ── Form Inputs & Layout ── */
         .ws-form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 40vw, 280px), 1fr));
-            gap: clamp(10px, 2vw, 16px);
+            gap: 14px;
         }
         .ws-form-group {
             display: flex;
@@ -813,27 +874,24 @@ $catalogProducts = [
             grid-column: 1 / -1;
         }
         .ws-label {
-            font-size: clamp(0.75rem, 1.2vw, 0.80rem);
-            font-weight: 800;
-            color: var(--ws-dark-text);
-            letter-spacing: 0.02em;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .ws-label .req {
-            color: var(--ws-danger);
-        }
+        .ws-label .req { color: var(--ws-danger); }
         .ws-input, .ws-select, .ws-textarea {
             width: 100%;
             height: 42px;
-            border: 1.5px solid #D5CEBF;
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-sm);
             padding: 0 12px;
             font-family: var(--ws-font-sans);
-            font-size: clamp(0.82rem, 1.4vw, 0.88rem);
-            color: var(--ws-dark-text);
-            background: #FAF9F5;
+            font-size: 0.85rem;
+            color: var(--ws-text-main);
+            background: #F8FAFC;
             outline: none;
             transition: var(--ws-transition);
         }
@@ -843,68 +901,40 @@ $catalogProducts = [
             resize: vertical;
         }
         .ws-input:focus, .ws-select:focus, .ws-textarea:focus {
-            border-color: var(--ws-gold-primary);
+            border-color: var(--ws-primary);
             background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
         }
         .ws-input:disabled {
-            background: #EFECE6;
-            color: #8C8275;
+            background: #F1F5F9;
+            color: var(--ws-text-muted);
             cursor: not-allowed;
-        }
-        .ws-input-helper {
-            font-size: 0.70rem;
-            color: var(--ws-light-text);
-            font-weight: 600;
         }
 
         .ws-phone-wrap {
             display: flex;
             align-items: center;
-            border: 1.5px solid #D5CEBF;
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-sm);
-            background: #FAF9F5;
+            background: #F8FAFC;
             overflow: hidden;
-            transition: var(--ws-transition);
-        }
-        .ws-phone-wrap:focus-within {
-            border-color: var(--ws-gold-primary);
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
         }
         .ws-phone-prefix {
             padding: 0 12px;
-            font-size: 0.84rem;
-            font-weight: 800;
-            color: var(--ws-gold-primary);
-            background: #F0EAD8;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
+            background: #F1F5F9;
             height: 42px;
             display: flex;
             align-items: center;
-            border-right: 1px solid #D5CEBF;
+            border-right: 1px solid var(--ws-border);
             flex-shrink: 0;
         }
         .ws-phone-input {
             border: none !important;
             background: transparent !important;
             box-shadow: none !important;
-            padding: 0 12px !important;
-        }
-
-        .ws-pass-wrap {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .ws-pass-toggle {
-            position: absolute;
-            right: 12px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--ws-light-text);
-            font-size: 0.85rem;
-            font-weight: 700;
         }
 
         /* ── Action Buttons ── */
@@ -919,59 +949,53 @@ $catalogProducts = [
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 10px 18px;
+            gap: 6px;
+            padding: 9px 18px;
             border-radius: var(--ws-radius-sm);
-            font-size: clamp(0.78rem, 1.4vw, 0.84rem);
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
+            font-size: 0.82rem;
+            font-weight: 700;
             cursor: pointer;
-            border: 1.5px solid transparent;
+            border: 1px solid transparent;
             transition: var(--ws-transition);
             text-decoration: none;
             white-space: nowrap;
         }
         .ws-btn-primary {
-            background: linear-gradient(135deg, var(--ws-gold-primary) 0%, var(--ws-gold-deep) 100%);
+            background: #0F172A;
             color: #FFFFFF;
-            border-color: var(--ws-gold-primary);
-            box-shadow: 0 3px 10px rgba(138,104,31,0.28);
+            border-color: #0F172A;
         }
         .ws-btn-primary:hover {
-            background: linear-gradient(135deg, #785A1A 0%, #4D370E 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(138,104,31,0.38);
+            background: #334155;
+            transform: translateY(-1px);
         }
         .ws-btn-secondary {
-            background: #FAF8F4;
-            color: var(--ws-dark-text);
-            border-color: #D5CEBF;
+            background: #FFFFFF;
+            color: var(--ws-text-main);
+            border-color: var(--ws-border);
         }
         .ws-btn-secondary:hover {
-            background: #FFFFFF;
-            border-color: var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
+            background: #F8FAFC;
+            border-color: #CBD5E1;
         }
-        .ws-btn-success {
-            background: #16A34A;
+        .ws-btn-blue {
+            background: #3B82F6;
             color: #FFFFFF;
+            border-color: #3B82F6;
         }
-        .ws-btn-success:hover {
-            background: #15803D;
+        .ws-btn-blue:hover {
+            background: #2563EB;
         }
         .ws-btn-wa {
             background: #25D366;
             color: #FFFFFF;
             border-color: #25D366;
-            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
         }
         .ws-btn-wa:hover {
             background: #128C7E;
-            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
         }
         .ws-btn-sm {
-            padding: 7px 14px;
+            padding: 6px 12px;
             font-size: 0.76rem;
         }
 
@@ -983,10 +1007,10 @@ $catalogProducts = [
             margin-bottom: 16px;
         }
         .ws-gst-option-card {
-            border: 1.5px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px 16px;
-            background: #FAF9F5;
+            background: #F8FAFC;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -995,19 +1019,19 @@ $catalogProducts = [
             user-select: none;
         }
         .ws-gst-option-card:hover {
-            border-color: var(--ws-gold-primary);
+            border-color: var(--ws-primary);
             background: #FFFFFF;
         }
         .ws-gst-option-card.selected {
-            border-color: var(--ws-gold-primary);
-            background: #FCF8EE;
-            box-shadow: 0 3px 10px rgba(138,104,31,0.18);
+            border-color: var(--ws-primary);
+            background: #EFF6FF;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.12);
         }
         .ws-radio-dot {
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            border: 2px solid #A8A095;
+            border: 2px solid var(--ws-text-light);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1015,76 +1039,14 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-gst-option-card.selected .ws-radio-dot {
-            border-color: var(--ws-gold-primary);
+            border-color: var(--ws-primary);
         }
         .ws-gst-option-card.selected .ws-radio-dot::after {
             content: '';
             width: 9px;
             height: 9px;
             border-radius: 50%;
-            background: var(--ws-gold-primary);
-        }
-
-        /* ── Filter / Search Bar ── */
-        .ws-filter-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-            background: #FAF8F4;
-            border: 1px solid var(--ws-card-border);
-            padding: 10px 14px;
-            border-radius: var(--ws-radius-md);
-        }
-        .ws-search-input-wrap {
-            position: relative;
-            flex: 1;
-            min-width: 200px;
-        }
-        .ws-search-input-wrap svg {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            stroke: var(--ws-light-text);
-            stroke-width: 2;
-            fill: none;
-        }
-        .ws-search-input {
-            padding-left: 36px !important;
-            height: 38px !important;
-            font-size: 0.84rem !important;
-            background: #FFFFFF !important;
-        }
-        .ws-date-pills {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .ws-date-pill-btn {
-            padding: 6px 13px;
-            border-radius: 20px;
-            border: 1.2px solid #D5CEBF;
-            background: #FFFFFF;
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: var(--ws-mid-text);
-            cursor: pointer;
-            transition: var(--ws-transition);
-        }
-        .ws-date-pill-btn:hover {
-            border-color: var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
-        }
-        .ws-date-pill-btn.active {
-            background: var(--ws-gold-primary);
-            color: #FFFFFF;
-            border-color: var(--ws-gold-primary);
+            background: var(--ws-primary);
         }
 
         /* ── Responsive Order Table ── */
@@ -1092,7 +1054,7 @@ $catalogProducts = [
             width: 100%;
             overflow-x: auto;
             border-radius: var(--ws-radius-md);
-            border: 1px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
         }
         .ws-table {
             width: 100%;
@@ -1102,30 +1064,28 @@ $catalogProducts = [
             background: #FFFFFF;
         }
         .ws-table th {
-            background: #FAF6ED;
-            color: var(--ws-gold-primary);
-            font-family: var(--ws-font-serif);
-            font-weight: 800;
-            font-size: 0.75rem;
+            background: #F8FAFC;
+            color: var(--ws-text-muted);
+            font-weight: 700;
+            font-size: 0.74rem;
             padding: 12px 14px;
-            border-bottom: 1.5px solid var(--ws-gold-border);
+            border-bottom: 1px solid var(--ws-border);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             white-space: nowrap;
         }
         .ws-table td {
             padding: 12px 14px;
-            border-bottom: 1px solid #EFEBE4;
-            color: var(--ws-dark-text);
+            border-bottom: 1px solid #F1F5F9;
+            color: var(--ws-text-main);
             vertical-align: middle;
         }
         .ws-table tr:hover td {
-            background: #FCFBF8;
+            background: #F8FAFC;
         }
         .ws-order-id-cell {
             font-weight: 800;
-            color: var(--ws-gold-primary);
-            font-family: var(--ws-font-serif);
+            color: #2563EB;
         }
         .ws-prod-mini-cell {
             display: flex;
@@ -1137,7 +1097,7 @@ $catalogProducts = [
             height: 48px;
             border-radius: 6px;
             object-fit: cover;
-            border: 1px solid #E7E2D6;
+            border: 1px solid var(--ws-border);
             flex-shrink: 0;
         }
 
@@ -1146,10 +1106,10 @@ $catalogProducts = [
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 4px 10px;
+            padding: 3px 9px;
             border-radius: 14px;
-            font-size: 0.72rem;
-            font-weight: 800;
+            font-size: 0.70rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
             white-space: nowrap;
@@ -1160,7 +1120,6 @@ $catalogProducts = [
         .ws-status-badge.confirmed { background: #F3E8FF; color: #6B21A8; }
         .ws-status-badge.returned { background: #FEE2E2; color: #B91C1C; }
         .ws-status-badge.refund { background: #FFE4E6; color: #9F1239; }
-        .ws-status-badge.exchange { background: #E0E7FF; color: #3730A3; }
 
         /* ── Mobile Order Cards ── */
         .ws-mobile-order-cards {
@@ -1170,10 +1129,10 @@ $catalogProducts = [
         }
         .ws-mob-order-card {
             background: #FFFFFF;
-            border: 1.5px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px;
-            box-shadow: var(--ws-shadow-sm);
+            box-shadow: var(--ws-shadow-card);
         }
         .ws-mob-order-top {
             display: flex;
@@ -1181,7 +1140,7 @@ $catalogProducts = [
             justify-content: space-between;
             margin-bottom: 10px;
             padding-bottom: 8px;
-            border-bottom: 1px dashed #EAE5DB;
+            border-bottom: 1px dashed var(--ws-border);
         }
         .ws-mob-order-body {
             display: flex;
@@ -1193,7 +1152,7 @@ $catalogProducts = [
             height: 70px;
             border-radius: 6px;
             object-fit: cover;
-            border: 1px solid #E7E2D6;
+            border: 1px solid var(--ws-border);
             flex-shrink: 0;
         }
         .ws-mob-order-info {
@@ -1204,14 +1163,14 @@ $catalogProducts = [
         }
         .ws-mob-order-title {
             font-size: 0.88rem;
-            font-weight: 800;
-            color: var(--ws-dark-text);
+            font-weight: 700;
+            color: var(--ws-text-main);
             line-height: 1.25;
         }
         .ws-mob-order-meta {
             font-size: 0.75rem;
-            color: var(--ws-light-text);
-            font-weight: 600;
+            color: var(--ws-text-muted);
+            font-weight: 500;
         }
         .ws-mob-order-price-row {
             display: flex;
@@ -1221,57 +1180,18 @@ $catalogProducts = [
         }
         .ws-mob-order-price {
             font-size: 0.98rem;
-            font-weight: 900;
-            color: var(--ws-gold-primary);
+            font-weight: 800;
+            color: var(--ws-text-main);
         }
         .ws-mob-order-actions {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
             padding-top: 10px;
-            border-top: 1px solid #F0EBE0;
+            border-top: 1px solid #F1F5F9;
         }
 
-        /* ── Pagination ── */
-        .ws-pagination {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 16px;
-            font-size: 0.80rem;
-            color: var(--ws-light-text);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .ws-page-controls {
-            display: flex;
-            gap: 6px;
-        }
-        .ws-page-btn {
-            min-width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            border: 1px solid var(--ws-card-border);
-            background: #FFFFFF;
-            color: var(--ws-dark-text);
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--ws-transition);
-        }
-        .ws-page-btn.active {
-            background: var(--ws-gold-primary);
-            color: #FFFFFF;
-            border-color: var(--ws-gold-primary);
-        }
-        .ws-page-btn:hover:not(.active) {
-            border-color: var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
-        }
-
-        /* ── Trending Products Slider (5 on Desktop, 3 on Mobile) ── */
+        /* ── Trending Products Slider ── */
         .ws-slider-wrap {
             position: relative;
             margin: 8px 0 20px;
@@ -1280,28 +1200,27 @@ $catalogProducts = [
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: #FFFFFF;
-            border: 1.5px solid var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
+            border: 1px solid var(--ws-border);
+            color: var(--ws-text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: var(--ws-shadow-md);
+            box-shadow: var(--ws-shadow-card);
             z-index: 10;
             transition: var(--ws-transition);
         }
         .ws-slider-nav-btn:hover {
-            background: var(--ws-gold-primary);
+            background: #0F172A;
             color: #FFFFFF;
-            transform: translateY(-50%) scale(1.08);
-            box-shadow: 0 4px 14px rgba(138,104,31,0.35);
+            border-color: #0F172A;
         }
-        .ws-slider-nav-btn.prev { left: -16px; }
-        .ws-slider-nav-btn.next { right: -16px; }
+        .ws-slider-nav-btn.prev { left: -14px; }
+        .ws-slider-nav-btn.next { right: -14px; }
 
         .ws-slider-track {
             display: flex;
@@ -1319,25 +1238,25 @@ $catalogProducts = [
             flex: 0 0 calc((100% - 48px) / 5); /* 5 visible on desktop */
             min-width: 170px;
             background: #FFFFFF;
-            border: 1.5px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transition: var(--ws-transition);
-            box-shadow: var(--ws-shadow-sm);
+            box-shadow: var(--ws-shadow-card);
             scroll-snap-align: start;
         }
         .ws-product-card:hover {
-            border-color: var(--ws-gold-primary);
-            transform: translateY(-4px);
-            box-shadow: var(--ws-shadow-md);
+            border-color: var(--ws-primary);
+            transform: translateY(-3px);
+            box-shadow: var(--ws-shadow-hover);
         }
         .ws-prod-img-wrap {
             position: relative;
             width: 100%;
-            height: 185px;
-            background: #F5F1E8;
+            height: 180px;
+            background: #F8FAFC;
             overflow: hidden;
         }
         .ws-prod-img {
@@ -1345,59 +1264,49 @@ $catalogProducts = [
             height: 100%;
             object-fit: cover;
             object-position: center top;
-            transition: transform 0.4s ease;
+            transition: transform 0.3s ease;
         }
-        .ws-product-card:hover .ws-prod-img {
-            transform: scale(1.06);
-        }
+        .ws-product-card:hover .ws-prod-img { transform: scale(1.05); }
         .ws-prod-badge {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: var(--ws-gold-primary);
+            background: #0F172A;
             color: #FFFFFF;
             font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
+            font-weight: 700;
             padding: 2px 7px;
             border-radius: 4px;
-            letter-spacing: 0.05em;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 3px;
+            letter-spacing: 0.04em;
         }
         .ws-prod-moq {
             position: absolute;
             bottom: 6px;
             right: 6px;
-            background: rgba(20,17,14,0.92);
-            color: #FBBF24;
+            background: rgba(15, 23, 42, 0.85);
+            color: #38BDF8;
             font-size: 0.65rem;
-            font-weight: 800;
-            padding: 3px 7px;
+            font-weight: 700;
+            padding: 2px 6px;
             border-radius: 4px;
-            border: 1px solid rgba(251, 191, 36, 0.3);
         }
         .ws-prod-body {
             padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             flex: 1;
         }
         .ws-prod-cat {
             font-size: 0.68rem;
-            font-weight: 700;
-            color: var(--ws-light-text);
+            font-weight: 600;
+            color: var(--ws-text-muted);
             text-transform: uppercase;
         }
         .ws-prod-name {
-            font-family: var(--ws-font-serif);
             font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--ws-dark-text);
-            line-height: 1.25;
+            font-weight: 700;
+            color: var(--ws-text-main);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1411,12 +1320,12 @@ $catalogProducts = [
         }
         .ws-prod-ws-price {
             font-size: 0.95rem;
-            font-weight: 900;
-            color: var(--ws-gold-primary);
+            font-weight: 800;
+            color: #2563EB;
         }
         .ws-prod-ret-price {
             font-size: 0.74rem;
-            color: var(--ws-light-text);
+            color: var(--ws-text-light);
             text-decoration: line-through;
         }
         .ws-prod-order-btn {
@@ -1424,39 +1333,34 @@ $catalogProducts = [
             width: 100%;
             padding: 8px;
             border-radius: var(--ws-radius-sm);
-            background: var(--ws-gold-pale);
-            border: 1px solid var(--ws-gold-border);
-            color: var(--ws-gold-primary);
+            background: #EFF6FF;
+            border: 1px solid #DBEAFE;
+            color: #2563EB;
             font-size: 0.76rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
             text-align: center;
             transition: var(--ws-transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
         .ws-prod-order-btn:hover {
-            background: var(--ws-gold-primary);
+            background: #2563EB;
             color: #FFFFFF;
-            border-color: var(--ws-gold-primary);
         }
 
         /* ── Modals Backdrop & Box ── */
         .ws-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(17, 14, 11, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 2000000;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.28s ease, visibility 0.28s ease;
+            transition: opacity 0.24s ease, visibility 0.24s ease;
             padding: 14px;
         }
         .ws-modal-overlay.active {
@@ -1464,25 +1368,25 @@ $catalogProducts = [
             visibility: visible;
         }
         .ws-modal-box {
-            background: #FCFBF8;
+            background: #FFFFFF;
             width: 100%;
             max-width: 620px;
             max-height: 90vh;
             border-radius: var(--ws-radius-lg);
-            border: 1.5px solid var(--ws-gold-primary);
-            box-shadow: 0 24px 70px rgba(0,0,0,0.4);
+            border: 1px solid var(--ws-border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transform: translateY(24px) scale(0.97);
-            transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(18px) scale(0.98);
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .ws-modal-overlay.active .ws-modal-box {
             transform: translateY(0) scale(1);
         }
         .ws-modal-header {
             background: #FFFFFF;
-            border-bottom: 1.5px solid var(--ws-gold-border);
+            border-bottom: 1px solid var(--ws-border);
             padding: 14px 18px;
             display: flex;
             align-items: center;
@@ -1490,21 +1394,20 @@ $catalogProducts = [
             flex-shrink: 0;
         }
         .ws-modal-title {
-            font-family: var(--ws-font-serif);
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 800;
-            color: var(--ws-gold-primary);
+            color: var(--ws-text-main);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .ws-modal-close-btn {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            border: 1px solid var(--ws-gold-border);
-            background: #FAF8F4;
-            color: var(--ws-gold-primary);
+            border: 1px solid var(--ws-border);
+            background: #F8FAFC;
+            color: var(--ws-text-muted);
             font-size: 1.2rem;
             display: flex;
             align-items: center;
@@ -1513,9 +1416,8 @@ $catalogProducts = [
             transition: var(--ws-transition);
         }
         .ws-modal-close-btn:hover {
-            background: var(--ws-gold-primary);
+            background: #0F172A;
             color: #FFFFFF;
-            transform: rotate(90deg);
         }
         .ws-modal-body {
             padding: 18px 20px;
@@ -1526,97 +1428,75 @@ $catalogProducts = [
         .ws-modal-footer {
             padding: 14px 20px;
             background: #FFFFFF;
-            border-top: 1.5px solid var(--ws-card-border);
+            border-top: 1px solid var(--ws-border);
             display: flex;
             gap: 10px;
             align-items: center;
             flex-shrink: 0;
         }
 
-        /* ── Interactive Shipment Timeline (Live Tracking) ── */
+        /* ── Live Shipment Timeline ── */
         .ws-track-timeline {
             position: relative;
-            padding-left: 32px;
+            padding-left: 28px;
             margin: 18px 0;
         }
         .ws-track-timeline::before {
             content: '';
             position: absolute;
-            left: 10px;
+            left: 9px;
             top: 8px;
             bottom: 8px;
-            width: 2.5px;
-            background: #DDD5C7;
+            width: 2px;
+            background: #E2E8F0;
         }
         .ws-timeline-step {
             position: relative;
-            margin-bottom: 20px;
-        }
-        .ws-timeline-step:last-child {
-            margin-bottom: 0;
+            margin-bottom: 18px;
         }
         .ws-timeline-dot {
             position: absolute;
-            left: -32px;
+            left: -28px;
             top: 2px;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: #DDD5C7;
+            background: #E2E8F0;
             border: 3px solid #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
         }
-        .ws-timeline-step.completed .ws-timeline-dot {
-            background: #16A34A;
-        }
+        .ws-timeline-step.completed .ws-timeline-dot { background: #10B981; }
         .ws-timeline-step.active .ws-timeline-dot {
-            background: #8A681F;
-            box-shadow: 0 0 0 4px rgba(138,104,31,0.25);
-            animation: pulseDot 1.8s infinite;
-        }
-        @keyframes pulseDot {
-            0% { box-shadow: 0 0 0 0 rgba(138,104,31,0.5); }
-            70% { box-shadow: 0 0 0 10px rgba(138,104,31,0); }
-            100% { box-shadow: 0 0 0 0 rgba(138,104,31,0); }
+            background: #3B82F6;
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.25);
         }
         .ws-timeline-dot svg {
-            width: 11px;
-            height: 11px;
+            width: 10px;
+            height: 10px;
             stroke: #FFFFFF;
             stroke-width: 3;
             fill: none;
         }
         .ws-timeline-title {
             font-size: 0.86rem;
-            font-weight: 800;
-            color: var(--ws-dark-text);
+            font-weight: 700;
+            color: var(--ws-text-main);
         }
         .ws-timeline-date {
             font-size: 0.74rem;
-            color: var(--ws-light-text);
-            margin-top: 3px;
-            font-weight: 600;
+            color: var(--ws-text-muted);
+            margin-top: 2px;
         }
 
-        /* ── Support Ticket Chat Items ── */
-        .ws-ticket-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        /* ── Support Ticket Card ── */
         .ws-ticket-card {
-            border: 1.5px solid var(--ws-card-border);
+            border: 1px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px;
             background: #FFFFFF;
-            transition: var(--ws-transition);
-        }
-        .ws-ticket-card:hover {
-            border-color: var(--ws-gold-primary);
-            box-shadow: var(--ws-shadow-sm);
+            margin-bottom: 10px;
         }
         .ws-ticket-head {
             display: flex;
@@ -1624,43 +1504,31 @@ $catalogProducts = [
             justify-content: space-between;
             margin-bottom: 6px;
         }
-        .ws-ticket-sub {
-            font-size: 0.84rem;
-            font-weight: 800;
-            color: var(--ws-dark-text);
-        }
-        .ws-ticket-msg {
-            font-size: 0.80rem;
-            color: var(--ws-mid-text);
-            line-height: 1.45;
-        }
 
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
             background: #FFFFFF;
-            border: 1px solid #DDD8CD;
+            border: 1px solid #E2E8F0;
             border-radius: 10px;
             padding: 24px;
-            font-family: var(--ws-font-sans);
-            color: #14110E;
+            color: #0F172A;
         }
         .ws-inv-header {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            border-bottom: 2.5px solid #8A681F;
+            border-bottom: 2px solid #0F172A;
             padding-bottom: 16px;
             margin-bottom: 18px;
         }
         .ws-inv-brand h2 {
-            font-family: var(--ws-font-serif);
             font-size: 1.35rem;
-            color: #8A681F;
-            font-weight: 900;
+            color: #0F172A;
+            font-weight: 800;
         }
         .ws-inv-brand p {
             font-size: 0.76rem;
-            color: #554E44;
+            color: var(--ws-text-muted);
             line-height: 1.35;
         }
         .ws-inv-meta {
@@ -1668,14 +1536,11 @@ $catalogProducts = [
             font-size: 0.78rem;
             line-height: 1.45;
         }
-        .ws-inv-meta strong {
-            color: #8A681F;
-        }
         .ws-inv-parties {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            background: #FAF8F4;
+            background: #F8FAFC;
             padding: 14px;
             border-radius: 8px;
             margin-bottom: 18px;
@@ -1688,7 +1553,7 @@ $catalogProducts = [
             margin-bottom: 18px;
         }
         .ws-inv-table th {
-            background: #8A681F;
+            background: #0F172A;
             color: #FFFFFF;
             padding: 10px 12px;
             text-align: left;
@@ -1696,7 +1561,7 @@ $catalogProducts = [
         }
         .ws-inv-table td {
             padding: 10px 12px;
-            border-bottom: 1px solid #E5E0D5;
+            border-bottom: 1px solid #E2E8F0;
         }
         .ws-inv-totals {
             display: flex;
@@ -1704,13 +1569,13 @@ $catalogProducts = [
             align-items: flex-end;
             gap: 6px;
             font-size: 0.82rem;
-            border-top: 1.5px solid #8A681F;
+            border-top: 2px solid #0F172A;
             padding-top: 12px;
         }
         .ws-inv-grand-total {
             font-size: 1.18rem;
             font-weight: 900;
-            color: #8A681F;
+            color: #0F172A;
         }
 
         /* ── Role Access Gate Modal ── */
@@ -1719,37 +1584,34 @@ $catalogProducts = [
             padding: 26px 20px;
         }
         .ws-gate-icon {
-            width: 68px;
-            height: 68px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: #FAF5E8;
-            border: 2px solid var(--ws-gold-primary);
-            color: var(--ws-gold-primary);
+            background: #EFF6FF;
+            color: #2563EB;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 18px;
-            box-shadow: var(--ws-shadow-gold);
+            margin: 0 auto 16px;
         }
         .ws-gate-icon svg {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             stroke: currentColor;
             stroke-width: 2;
             fill: none;
         }
         .ws-gate-box h3 {
-            font-family: var(--ws-font-serif);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            color: var(--ws-gold-primary);
-            margin-bottom: 10px;
+            color: var(--ws-text-main);
+            margin-bottom: 8px;
         }
         .ws-gate-box p {
-            font-size: 0.85rem;
-            color: var(--ws-mid-text);
+            font-size: 0.84rem;
+            color: var(--ws-text-muted);
             margin-bottom: 20px;
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
         /* ── Mobile Floating Bottom App Dock ── */
@@ -1759,13 +1621,11 @@ $catalogProducts = [
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(20, 17, 14, 0.95);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-top: 1.5px solid rgba(197, 168, 89, 0.35);
+            background: #FFFFFF;
+            border-top: 1px solid var(--ws-border);
             padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
             z-index: 1500;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 -2px 14px rgba(0,0,0,0.06);
             justify-content: space-around;
             align-items: center;
         }
@@ -1774,16 +1634,16 @@ $catalogProducts = [
             flex-direction: column;
             align-items: center;
             gap: 3px;
-            color: #A89E90;
+            color: var(--ws-text-muted);
             font-size: 0.65rem;
-            font-weight: 800;
+            font-weight: 700;
             text-decoration: none;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 8px;
-            transition: var(--ws-transition);
             border: none;
             background: transparent;
+            transition: var(--ws-transition);
         }
         .ws-dock-btn svg {
             width: 20px;
@@ -1793,12 +1653,10 @@ $catalogProducts = [
             fill: none;
         }
         .ws-dock-btn.active {
-            color: #FBBF24;
+            color: #2563EB;
             transform: translateY(-2px);
         }
-        .ws-dock-btn.active svg {
-            stroke: #FBBF24;
-        }
+        .ws-dock-btn.active svg { stroke: #2563EB; }
 
         /* ── Toast Container ── */
         .ws-toast-container {
@@ -1815,48 +1673,46 @@ $catalogProducts = [
             max-width: 380px;
         }
         .ws-toast {
-            background: #14110E;
-            color: #FAF5E8;
+            background: #0F172A;
+            color: #FFFFFF;
             padding: 10px 18px;
             border-radius: 30px;
             font-size: 0.80rem;
             font-weight: 700;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-            border: 1.5px solid #C5A859;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
             display: flex;
             align-items: center;
             gap: 10px;
-            animation: toastPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
+            animation: toastPop 0.28s ease;
             justify-content: center;
         }
         @keyframes toastPop {
-            from { opacity: 0; transform: translateY(14px) scale(0.9); }
+            from { opacity: 0; transform: translateY(12px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         /* ════════════════════════════════════════════════════
-           RESPONSIVE MOBILE BREAKPOINTS & AUTO-SIZING
+           RESPONSIVE MOBILE BREAKPOINTS
         ════════════════════════════════════════════════════ */
-        @media (max-width: 900px) {
-            .ws-menu-toggle-btn {
-                display: flex;
+        @media (max-width: 992px) {
+            .ws-analytics-grid {
+                grid-template-columns: 1fr;
             }
             .ws-sidebar {
                 position: fixed;
-                top: 58px;
+                top: 64px;
                 left: 0;
                 bottom: 0;
                 transform: translateX(-100%);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
             .ws-sidebar.open {
                 transform: translateX(0);
             }
             .ws-sidebar-backdrop {
                 position: fixed;
-                top: 58px; left: 0; width: 100%; height: calc(100vh - 58px);
-                background: rgba(0,0,0,0.65);
+                top: 64px; left: 0; width: 100%; height: calc(100vh - 64px);
+                background: rgba(15,23,42,0.5);
                 backdrop-filter: blur(4px);
                 z-index: 850;
                 display: none;
@@ -1867,25 +1723,22 @@ $catalogProducts = [
             .ws-mobile-dock {
                 display: flex;
             }
+            .ws-cmd-search-wrap {
+                display: none;
+            }
             .ws-product-card {
-                flex: 0 0 calc((100% - 24px) / 3); /* Exactly 3 items visible on tablet/mobile */
+                flex: 0 0 calc((100% - 24px) / 3);
                 min-width: 140px;
             }
         }
 
         @media (max-width: 600px) {
             .ws-header {
-                padding: 6px 12px;
-                height: 54px;
-            }
-            .ws-header-btn {
-                display: none;
+                padding: 0 12px;
+                height: 56px;
             }
             .ws-main-content {
                 padding: 12px 10px 80px;
-            }
-            .ws-user-name {
-                display: none;
             }
             .ws-table-container {
                 display: none;
@@ -1897,7 +1750,7 @@ $catalogProducts = [
                 grid-template-columns: 1fr;
             }
             .ws-product-card {
-                flex: 0 0 calc((100% - 16px) / 3); /* Exactly 3 items visible on phone screen */
+                flex: 0 0 calc((100% - 16px) / 3);
                 min-width: 105px;
             }
             .ws-prod-img-wrap {
@@ -1912,42 +1765,16 @@ $catalogProducts = [
             .ws-prod-ret-price {
                 display: none;
             }
-            .ws-prod-body {
-                padding: 8px 6px;
-                gap: 4px;
-            }
-            .ws-prod-order-btn {
-                font-size: 0.68rem;
-                padding: 6px;
-                margin-top: 4px;
-            }
             
-            /* ── Luxury Mobile Modal Bottom Sheet (Full Improvement) ── */
+            /* Slide-Up Bottom Sheet on Mobile */
             .ws-modal-overlay {
                 padding: 0;
                 align-items: flex-end;
             }
             .ws-modal-box {
                 max-height: 94vh;
-                height: auto;
-                max-width: 100%;
                 border-radius: 20px 20px 0 0;
                 border-bottom: none;
-                margin: 0;
-                display: flex;
-                flex-direction: column;
-            }
-            .ws-modal-header {
-                padding: 12px 16px;
-                position: sticky;
-                top: 0;
-                z-index: 10;
-            }
-            .ws-modal-body {
-                padding: 14px 16px 20px;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                flex: 1;
             }
             .ws-modal-footer {
                 padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
@@ -1957,10 +1784,6 @@ $catalogProducts = [
             .ws-modal-footer .ws-btn {
                 width: 100%;
                 padding: 10px 14px;
-                font-size: 0.82rem;
-            }
-            .ws-inv-parties {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1970,35 +1793,39 @@ $catalogProducts = [
     <!-- ═══ Mobile Sidebar Backdrop ═══ -->
     <div class="ws-sidebar-backdrop" id="wsSidebarBackdrop" onclick="toggleSidebar(false)"></div>
 
-    <!-- ═══ Top Header Navigation ═══ -->
+    <!-- ═══ Modern Clean Top Header (TailAdmin Style) ═══ -->
     <header class="ws-header">
         <div class="ws-header-left">
             <button class="ws-menu-toggle-btn" id="wsMenuToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Menu">
                 <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
 
-            <a href="shop.php" class="ws-brand">
-                <div class="ws-brand-seal">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-                <div class="ws-brand-text">
-                    <h1>KALANIKETAN</h1>
-                    <span>Wholesaler Portal <span class="spark">✨</span></span>
-                </div>
-            </a>
+            <!-- Command Search Bar -->
+            <div class="ws-cmd-search-wrap">
+                <svg class="ws-cmd-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" class="ws-cmd-search-input" id="globalSearchInput" placeholder="Search order, product, HSN, invoice..." oninput="handleGlobalQuickSearch(this)">
+                <span class="ws-cmd-badge">⌘K</span>
+            </div>
         </div>
 
         <div class="ws-header-right">
-            <a href="shop.php" class="ws-header-btn">
-                <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                <span>Shop</span>
-            </a>
+            <!-- Dark Mode Toggle -->
+            <button class="ws-hdr-icon-btn" title="Toggle Theme" onclick="window.showWsToast('🌙 Dark mode toggle ready!')">
+                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
 
-            <div class="ws-user-pill">
-                <div class="ws-user-avatar" id="headerUserAvatar">WS</div>
-                <div class="ws-user-info-brief">
-                    <span class="ws-user-name" id="headerUserName">Wholesale Member</span>
-                    <span class="ws-user-tag">👑 VIP Wholesaler</span>
+            <!-- Notifications Bell -->
+            <button class="ws-hdr-icon-btn" title="Notifications" onclick="window.showWsToast('🔔 2 new consignment dispatches in transit')">
+                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <span class="ws-notif-dot"></span>
+            </button>
+
+            <!-- User Profile Pill -->
+            <div class="ws-user-profile-btn" onclick="switchWsTab('details')">
+                <img src="images/profile.png" onerror="this.src='images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar">
+                <div class="ws-user-name-text">
+                    <span id="headerUserName">Rajesh Kumar</span>
+                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
             </div>
         </div>
@@ -2007,39 +1834,19 @@ $catalogProducts = [
     <!-- ═══ Main App Layout Grid ═══ -->
     <div class="ws-app-layout">
         
-        <!-- ── Left Sidebar Navigation ── -->
+        <!-- ── Left Sidebar Navigation (TailAdmin Style) ── -->
         <aside class="ws-sidebar" id="wsSidebar">
-            <div class="ws-sidebar-profile">
-                <div class="ws-side-avatar" id="sideUserAvatar">WS</div>
-                <div class="ws-side-profile-info">
-                    <h3 id="sideUserName">Shree Krishna Silks</h3>
-                    <span id="sideGstBadge">GST Verified</span>
-                </div>
+            <div class="ws-sidebar-brand-box">
+                <div class="ws-side-logo-icon">K</div>
+                <div class="ws-side-brand-title">KALANIKETAN</div>
             </div>
 
+            <div class="ws-nav-category">MENU</div>
             <ul class="ws-nav-list">
                 <li>
                     <a class="ws-nav-item active" onclick="switchWsTab('overview')">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('details')">
-                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>My Details</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('gst')">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>GST Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('address')">
-                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>My Address</span>
                     </a>
                 </li>
                 <li>
@@ -2053,13 +1860,19 @@ $catalogProducts = [
                     <a class="ws-nav-item" onclick="switchWsTab('reports')">
                         <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         <span>Reports</span>
+                        <span class="ws-nav-badge blue">NEW</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="ws-nav-item" onclick="switchWsTab('trending')">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Catalog</span>
                     </a>
                 </li>
                 <li>
                     <a class="ws-nav-item" onclick="switchWsTab('tracking')">
                         <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Live Tracking</span>
-                        <span class="ws-nav-badge green">Live</span>
                     </a>
                 </li>
                 <li>
@@ -2068,18 +1881,34 @@ $catalogProducts = [
                         <span>Support Desk</span>
                     </a>
                 </li>
+            </ul>
+
+            <div class="ws-nav-category">SETTINGS</div>
+            <ul class="ws-nav-list">
                 <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('trending')">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Trending Catalog</span>
+                    <a class="ws-nav-item" onclick="switchWsTab('details')">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="ws-nav-item" onclick="switchWsTab('gst')">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>GST Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="ws-nav-item" onclick="switchWsTab('address')">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Address Book</span>
                     </a>
                 </li>
             </ul>
 
             <div class="ws-sidebar-footer">
                 <button class="ws-logout-btn" onclick="handleWholesalerLogout()">
-                    <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span>Log Out Wholesaler</span>
+                    <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span>Sign Out</span>
                 </button>
             </div>
         </aside>
@@ -2088,175 +1917,141 @@ $catalogProducts = [
         <main class="ws-main-content">
 
             <!-- ═══════════════════════════════════════
-                 TAB 1: OVERVIEW DASHBOARD
+                 TAB 1: OVERVIEW DASHBOARD (TAILADMIN STYLE)
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane active" id="tabPaneOverview">
                 
-                <!-- Welcome Banner -->
-                <div class="ws-welcome-banner">
-                    <div class="ws-welcome-left">
-                        <h2>
-                            <span>Welcome back, <span id="welcomeUserName">Rajesh Kumar</span></span>
-                            <span style="display:inline-block; animation:waveHand 2.2s infinite ease-in-out; transform-origin:70% 70%;">👋</span>
-                        </h2>
-                        <p>Kalaniketan B2B Wholesaler Hub • Instant bulk inventory, order dispatch tracking, and GST invoicing.</p>
-                    </div>
-                    <div class="ws-welcome-badges">
-                        <span class="ws-tag-pill verified">
-                            <span class="ws-live-pulse-dot"></span>
-                            <span>Verified Wholesaler</span>
-                        </span>
-                        <span class="ws-tag-pill" id="welcomeGstPill">🛡️ GST: 24AABCU9603R1ZM</span>
-                    </div>
-                </div>
-                <style>
-                    @keyframes waveHand {
-                        0%, 100% { transform: rotate(0deg); }
-                        20%, 60% { transform: rotate(14deg); }
-                        40%, 80% { transform: rotate(-10deg); }
-                    }
-                </style>
-
-                <!-- 6 Real Dual-Tone Vector Metric Cards Grid -->
-                <div class="ws-stats-grid">
+                <!-- Top 4 Primary Metric Stat Cards (Matching TailAdmin Screenshot) -->
+                <div class="ws-metric-cards-grid">
                     
-                    <!-- Card 1: Total Orders -->
-                    <div class="ws-stat-card" style="--stat-accent:#8A681F; --stat-accent-light:#C5A859; --stat-bg:#FAF5E8; --stat-glow:rgba(138,104,31,0.22);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Orders</span>
-                            <div class="ws-stat-icon-wrap" title="Total Consignment Orders">
-                                <!-- Real 3D Vector Parcel Cargo Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <path d="M16 3L4 9.5V22.5L16 29L28 22.5V9.5L16 3Z" fill="#FAF5E8" stroke="#8A681F" stroke-width="2" stroke-linejoin="round"/>
-                                    <path d="M16 3V29M4 9.5L16 16L28 9.5M16 16V29" stroke="#8A681F" stroke-width="1.8" stroke-linejoin="round"/>
-                                    <polygon points="16,10 21,12.5 16,15 11,12.5" fill="#C5A859"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ws-stat-val" id="statTotalOrders">6</div>
-                        <div class="ws-stat-sub">
-                            <span class="ws-stat-trend up">
-                                <svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
-                                +14.2%
-                            </span>
-                            <span>vs last month</span>
+                    <!-- Metric Card 1: Customers / Accounts -->
+                    <div class="ws-stat-box">
+                        <div class="ws-stat-label">B2B Account Tier</div>
+                        <div class="ws-stat-val-row">
+                            <div class="ws-stat-val-num">VIP Tier 1</div>
+                            <span class="ws-trend-pill up">↑ 11.01%</span>
                         </div>
                     </div>
 
-                    <!-- Card 2: Total Quantity -->
-                    <div class="ws-stat-card" style="--stat-accent:#2563EB; --stat-accent-light:#60A5FA; --stat-bg:#EFF6FF; --stat-glow:rgba(37,99,235,0.22);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Quantity</span>
-                            <div class="ws-stat-icon-wrap" title="Total Garment Units">
-                                <!-- Real 3D Vector Textile / Shopping Bag Stack Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <rect x="5" y="10" width="22" height="18" rx="4" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
-                                    <path d="M11 10V7C11 4.79 12.79 3 15 3H17C19.21 3 21 4.79 21 7V10" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
-                                    <circle cx="16" cy="18" r="3.5" fill="#60A5FA"/>
-                                    <line x1="16" y1="12" x2="16" y2="14.5" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ws-stat-val" id="statTotalQty">48 <span style="font-size:0.80rem; font-family:var(--ws-font-sans); color:var(--ws-light-text);">Pcs</span></div>
-                        <div class="ws-stat-sub">
-                            <span class="ws-stat-trend up">
-                                <svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
-                                +8.5%
-                            </span>
-                            <span>Bulk lots</span>
+                    <!-- Metric Card 2: Orders -->
+                    <div class="ws-stat-box">
+                        <div class="ws-stat-label">Total Orders</div>
+                        <div class="ws-stat-val-row">
+                            <div class="ws-stat-val-num" id="statTotalOrders">6</div>
+                            <span class="ws-trend-pill up">↑ 14.20%</span>
                         </div>
                     </div>
 
-                    <!-- Card 3: Total Return -->
-                    <div class="ws-stat-card" style="--stat-accent:#DC2626; --stat-accent-light:#F87171; --stat-bg:#FEF2F2; --stat-glow:rgba(220,38,38,0.20);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Return</span>
-                            <div class="ws-stat-icon-wrap" title="Returns Handled">
-                                <!-- Real Vector Return Courier Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <circle cx="16" cy="16" r="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="2"/>
-                                    <path d="M11 13H7M7 13V9M7 13L11.5 8.5C14 6 18 6 20.5 8.5C23 11 23 15 20.5 17.5L16 22" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="16" cy="16" r="2" fill="#F87171"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ws-stat-val" id="statTotalReturn">1</div>
-                        <div class="ws-stat-sub">
-                            <span class="ws-stat-trend neutral">0% Defect</span>
-                            <span>Rate</span>
+                    <!-- Metric Card 3: Total Quantity -->
+                    <div class="ws-stat-box">
+                        <div class="ws-stat-label">Total Quantity (Units)</div>
+                        <div class="ws-stat-val-row">
+                            <div class="ws-stat-val-num" id="statTotalQty">48 <span style="font-size:0.95rem; font-weight:600; color:var(--ws-text-muted);">Pcs</span></div>
+                            <span class="ws-trend-pill up">↑ 8.50%</span>
                         </div>
                     </div>
 
-                    <!-- Card 4: Total Refund -->
-                    <div class="ws-stat-card" style="--stat-accent:#D97706; --stat-accent-light:#FBBF24; --stat-bg:#FFFBEB; --stat-glow:rgba(217,119,6,0.22);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Refund</span>
-                            <div class="ws-stat-icon-wrap" title="Processed Refunds">
-                                <!-- Real Vector Bank Refund Shield / Currency Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <rect x="4" y="8" width="24" height="16" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
-                                    <circle cx="16" cy="16" r="4.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.5"/>
-                                    <path d="M14.5 14H17.5M14.5 16H17M14.5 14V18M17 16L18.5 18" stroke="#78350F" stroke-width="1.4" stroke-linecap="round"/>
-                                    <circle cx="8" cy="16" r="1.5" fill="#D97706"/>
-                                    <circle cx="24" cy="16" r="1.5" fill="#D97706"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ws-stat-val" id="statTotalRefund">₹21,590</div>
-                        <div class="ws-stat-sub">
-                            <span>Credited to Bank NEFT</span>
+                    <!-- Metric Card 4: Total Revenue Turnover -->
+                    <div class="ws-stat-box">
+                        <div class="ws-stat-label">Total B2B Turnover</div>
+                        <div class="ws-stat-val-row">
+                            <div class="ws-stat-val-num" id="statTotalAmount">₹2,05,062</div>
+                            <span class="ws-trend-pill up">↑ 18.40%</span>
                         </div>
                     </div>
 
-                    <!-- Card 5: Total Exchange -->
-                    <div class="ws-stat-card" style="--stat-accent:#7C3AED; --stat-accent-light:#A78BFA; --stat-bg:#F5F3FF; --stat-glow:rgba(124,58,237,0.22);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Exchange</span>
-                            <div class="ws-stat-icon-wrap" title="Exchanges">
-                                <!-- Real Vector Garment Replacement Sync Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <path d="M9 13L5 17L9 21" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M5 17H21C23.2 17 25 15.2 25 13V11" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M23 19L27 15L23 11" stroke="#A78BFA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M27 15H11C8.8 15 7 16.8 7 19V21" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
+                </div>
+
+                <!-- Middle Analytics Grid (Monthly Sales Bar Chart + Target Gauge) -->
+                <div class="ws-analytics-grid">
+                    
+                    <!-- Left: Monthly Sales Bar Chart (Matching TailAdmin) -->
+                    <div class="ws-analytics-card">
+                        <div class="ws-card-top-bar">
+                            <h3>Monthly Sales</h3>
+                            <button class="ws-dots-btn">⋮</button>
                         </div>
-                        <div class="ws-stat-val" id="statTotalExchange">0</div>
-                        <div class="ws-stat-sub">
-                            <span>Fast Replacement Active</span>
+
+                        <div class="ws-bar-chart-container">
+                            <div class="ws-chart-y-axis">
+                                <span>400</span>
+                                <span>300</span>
+                                <span>200</span>
+                                <span>100</span>
+                                <span>0</span>
+                            </div>
+
+                            <!-- 12-Month Bars (Jan - Dec) -->
+                            <div class="ws-bar-col" title="Jan: ₹160K"><div class="ws-bar-pill" style="height: 40%;"></div><span class="ws-bar-month">Jan</span></div>
+                            <div class="ws-bar-col" title="Feb: ₹380K"><div class="ws-bar-pill" style="height: 95%;"></div><span class="ws-bar-month">Feb</span></div>
+                            <div class="ws-bar-col" title="Mar: ₹190K"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Mar</span></div>
+                            <div class="ws-bar-col" title="Apr: ₹290K"><div class="ws-bar-pill" style="height: 72%;"></div><span class="ws-bar-month">Apr</span></div>
+                            <div class="ws-bar-col" title="May: ₹180K"><div class="ws-bar-pill" style="height: 45%;"></div><span class="ws-bar-month">May</span></div>
+                            <div class="ws-bar-col" title="Jun: ₹190K"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Jun</span></div>
+                            <div class="ws-bar-col" title="Jul: ₹280K"><div class="ws-bar-pill" style="height: 70%;"></div><span class="ws-bar-month">Jul</span></div>
+                            <div class="ws-bar-col" title="Aug: ₹100K"><div class="ws-bar-pill" style="height: 25%;"></div><span class="ws-bar-month">Aug</span></div>
+                            <div class="ws-bar-col" title="Sep: ₹210K"><div class="ws-bar-pill" style="height: 52%;"></div><span class="ws-bar-month">Sep</span></div>
+                            <div class="ws-bar-col active" title="Oct: ₹390K"><div class="ws-bar-pill" style="height: 98%;"></div><span class="ws-bar-month">Oct</span></div>
+                            <div class="ws-bar-col" title="Nov: ₹270K"><div class="ws-bar-pill" style="height: 68%;"></div><span class="ws-bar-month">Nov</span></div>
+                            <div class="ws-bar-col" title="Dec: ₹110K"><div class="ws-bar-pill" style="height: 28%;"></div><span class="ws-bar-month">Dec</span></div>
                         </div>
                     </div>
 
-                    <!-- Card 6: Total Amount -->
-                    <div class="ws-stat-card" style="--stat-accent:#16A34A; --stat-accent-light:#4ADE80; --stat-bg:#F0FDF4; --stat-glow:rgba(22,163,74,0.24);">
-                        <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Turnover</span>
-                            <div class="ws-stat-icon-wrap" title="B2B Revenue">
-                                <!-- Real Vector Revenue Coin & Growth Chart Icon -->
-                                <svg viewBox="0 0 32 32" fill="none">
-                                    <path d="M4 27H28" stroke="#16A34A" stroke-width="2" stroke-linecap="round"/>
-                                    <rect x="7" y="17" width="4" height="7" rx="1" fill="#4ADE80"/>
-                                    <rect x="14" y="11" width="4" height="13" rx="1" fill="#16A34A"/>
-                                    <rect x="21" y="6" width="4" height="18" rx="1" fill="#15803D"/>
-                                    <path d="M6 13L13 7L19 11L26 4" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <polygon points="26,4 26,7 23,4" fill="#15803D"/>
-                                </svg>
-                            </div>
+                    <!-- Right: Semi-Circular Target Gauge (Matching TailAdmin) -->
+                    <div class="ws-analytics-card">
+                        <div class="ws-gauge-wrap">
+                            <svg class="ws-gauge-svg" viewBox="0 0 200 110">
+                                <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
+                                <path class="ws-gauge-fill-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
+                            </svg>
+                            <div class="ws-gauge-center-text">75.55%</div>
+                            <div class="ws-gauge-badge">+10%</div>
+                            <p class="ws-gauge-desc">You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!</p>
                         </div>
-                        <div class="ws-stat-val" id="statTotalAmount">₹2,05,062</div>
-                        <div class="ws-stat-sub">
-                            <span>Cumulative B2B Turnover</span>
+
+                        <div class="ws-gauge-stats-row">
+                            <div>
+                                <div class="ws-g-stat-label">Target</div>
+                                <div class="ws-g-stat-val" style="color:var(--ws-danger);">₹50K ↓</div>
+                            </div>
+                            <div>
+                                <div class="ws-g-stat-label">Revenue</div>
+                                <div class="ws-g-stat-val" style="color:var(--ws-success);">₹48.5K ↑</div>
+                            </div>
+                            <div>
+                                <div class="ws-g-stat-label">Today</div>
+                                <div class="ws-g-stat-val" style="color:var(--ws-primary);">₹18.2K ↑</div>
+                            </div>
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Statistics & Segmented Controls Bar (Matching TailAdmin) -->
+                <div class="ws-section-header">
+                    <div class="ws-sec-title-box">
+                        <h3>Statistics & Recent Orders</h3>
+                        <p>Target you've set for each month and active dispatches</p>
+                    </div>
+
+                    <div class="ws-sec-actions-row">
+                        <div class="ws-segmented-control">
+                            <button class="ws-seg-btn active" onclick="setOverviewFilter('overview', this)">Overview</button>
+                            <button class="ws-seg-btn" onclick="setOverviewFilter('sales', this)">Sales</button>
+                            <button class="ws-seg-btn" onclick="setOverviewFilter('revenue', this)">Revenue</button>
+                        </div>
+                        <div class="ws-date-range-pill">
+                            <span>📅</span>
+                            <span>Aug 10 - Aug 16</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Trending Catalog Carousel (5 on Desktop, 3 on Mobile) -->
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg style="width:18px;height:18px;stroke:#2563EB;fill:none;stroke-width:2;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             <h3>Trending Wholesale Catalog (MOQ Ready)</h3>
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('trending')">
@@ -2265,9 +2060,7 @@ $catalogProducts = [
                     </div>
 
                     <div class="ws-slider-wrap">
-                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous">
-                            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        </button>
+                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous">❮</button>
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
                             <?php foreach ($catalogProducts as $prod): ?>
                             <div class="ws-product-card">
@@ -2280,20 +2073,17 @@ $catalogProducts = [
                                     <span class="ws-prod-cat"><?= htmlspecialchars($prod['category']) ?> • HSN: <?= $prod['hsn'] ?></span>
                                     <h4 class="ws-prod-name"><?= htmlspecialchars($prod['name']) ?></h4>
                                     <div class="ws-prod-price-row">
-                                        <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.70rem; font-weight:600;">/ Pc</span></span>
+                                        <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">/ Pc</span></span>
                                         <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                     </div>
                                     <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                        <svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.99.54 1.776.814 2.795.814 3.182 0 5.768-2.587 5.768-5.766 0-3.181-2.586-5.766-5.767-5.766zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.12-.497-1.748-.698-2.885-2.483-2.973-2.6-.088-.116-.708-.94-.708-1.793s.449-1.272.609-1.445c.16-.173.348-.217.464-.217l.334.006c.11 0 .257-.04.403.31.15.362.51 1.246.554 1.336.044.09.073.195.014.312-.058.117-.088.19-.174.29-.088.101-.185.226-.264.304-.088.087-.18.182-.077.359.103.175.457.755.98 1.22 0.674.6 1.242.787 1.417.874.175.087.278.073.38-.044.103-.116.44-0.513.557-.688.117-.175.234-.146.395-.087.16.058 1.016.48 1.191.567.175.087.292.13.335.204.044.072.044.42-.1.825z"/></svg>
-                                        <span>WhatsApp Lot Order</span>
+                                        ⚡ WhatsApp Lot Order
                                     </button>
                                 </div>
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next">
-                            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </button>
+                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next">❯</button>
                     </div>
                 </div>
 
@@ -2301,7 +2091,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <h3>Recent Wholesale Dispatches</h3>
                         </div>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('orders')">
@@ -2324,8 +2114,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <h3>Wholesaler Representative Details</h3>
+                            <h3>Wholesaler Representative Profile</h3>
                         </div>
                     </div>
 
@@ -2352,29 +2141,23 @@ $catalogProducts = [
 
                             <div class="ws-form-group">
                                 <label class="ws-label">Account Role Designation</label>
-                                <input type="text" class="ws-input" value="👑 Wholesaler B2B Tier" disabled>
+                                <input type="text" class="ws-input" value="👑 Wholesaler B2B VIP Tier" disabled>
                             </div>
 
                         </div>
 
-                        <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--ws-card-border);">
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:10px;">
+                        <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--ws-border);">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:10px;">
                                 🔒 Change Password (Leave blank to keep current)
                             </h4>
                             <div class="ws-form-grid">
                                 <div class="ws-form-group">
                                     <label class="ws-label" for="wsCurrentPass">Current Password</label>
-                                    <div class="ws-pass-wrap">
-                                        <input type="password" id="wsCurrentPass" class="ws-input" placeholder="Enter current password">
-                                        <button type="button" class="ws-pass-toggle" onclick="togglePassVisibility('wsCurrentPass')">👁️</button>
-                                    </div>
+                                    <input type="password" id="wsCurrentPass" class="ws-input" placeholder="Enter current password">
                                 </div>
                                 <div class="ws-form-group">
                                     <label class="ws-label" for="wsNewPass">New Password</label>
-                                    <div class="ws-pass-wrap">
-                                        <input type="password" id="wsNewPass" class="ws-input" placeholder="Minimum 6 characters">
-                                        <button type="button" class="ws-pass-toggle" onclick="togglePassVisibility('wsNewPass')">👁️</button>
-                                    </div>
+                                    <input type="password" id="wsNewPass" class="ws-input" placeholder="Minimum 6 characters">
                                 </div>
                             </div>
                         </div>
@@ -2396,7 +2179,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                             <h3>GST & Business Tax Configuration</h3>
                         </div>
                     </div>
@@ -2406,16 +2188,16 @@ $catalogProducts = [
                         <div class="ws-gst-option-card selected" id="gstCardGst" onclick="selectGstMode('gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
-                                <strong style="font-size:0.88rem; color:var(--ws-dark-text);">Registered with GST (Input Tax Credit)</strong>
-                                <p style="font-size:0.75rem; color:var(--ws-light-text); margin-top:2px;">Get official GSTR-1 compliant tax invoices for input tax credit.</p>
+                                <strong style="font-size:0.88rem; color:var(--ws-text-main);">Registered with GST (Input Tax Credit)</strong>
+                                <p style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">Get official GSTR-1 compliant tax invoices for input tax credit.</p>
                             </div>
                         </div>
 
                         <div class="ws-gst-option-card" id="gstCardNonGst" onclick="selectGstMode('non_gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
-                                <strong style="font-size:0.88rem; color:var(--ws-dark-text);">Unregistered / Non-GST Trader</strong>
-                                <p style="font-size:0.75rem; color:var(--ws-light-text); margin-top:2px;">Retail bills issued under composition or trader exempt threshold.</p>
+                                <strong style="font-size:0.88rem; color:var(--ws-text-main);">Unregistered / Non-GST Trader</strong>
+                                <p style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">Retail bills issued under composition or trader exempt threshold.</p>
                             </div>
                         </div>
                     </div>
@@ -2431,10 +2213,9 @@ $catalogProducts = [
                             <div class="ws-form-group full" id="gstNumberFieldWrap">
                                 <label class="ws-label" for="wsGstNumber">
                                     <span>15-Character GSTIN Number <span class="req">*</span></span>
-                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:#8A681F; font-weight:700;">Format: 24AABCU9603R1ZM</span>
+                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:#2563EB; font-weight:700;">Format: 24AABCU9603R1ZM</span>
                                 </label>
                                 <input type="text" id="wsGstNumber" class="ws-input" placeholder="e.g. 24AABCU9603R1ZM" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
-                                <div class="ws-input-helper" id="gstinValidationMsg">Standard 15-character Indian Goods & Services Tax Identification Number.</div>
                             </div>
 
                         </div>
@@ -2456,7 +2237,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                             <h3>Wholesale Delivery & Dispatch Address</h3>
                         </div>
                     </div>
@@ -2487,19 +2267,6 @@ $catalogProducts = [
                                     <option value="Tamil Nadu">Tamil Nadu (33)</option>
                                     <option value="Telangana">Telangana (36)</option>
                                     <option value="West Bengal">West Bengal (19)</option>
-                                    <option value="Punjab">Punjab (03)</option>
-                                    <option value="Haryana">Haryana (06)</option>
-                                    <option value="Andhra Pradesh">Andhra Pradesh (37)</option>
-                                    <option value="Bihar">Bihar (10)</option>
-                                    <option value="Chhattisgarh">Chhattisgarh (22)</option>
-                                    <option value="Goa">Goa (30)</option>
-                                    <option value="Himachal Pradesh">Himachal Pradesh (02)</option>
-                                    <option value="Jharkhand">Jharkhand (20)</option>
-                                    <option value="Kerala">Kerala (32)</option>
-                                    <option value="Odisha">Odisha (21)</option>
-                                    <option value="Assam">Assam (18)</option>
-                                    <option value="Jammu & Kashmir">Jammu & Kashmir (01)</option>
-                                    <option value="Uttarakhand">Uttarakhand (05)</option>
                                     <option value="Other States">Other Indian State / UT</option>
                                 </select>
                             </div>
@@ -2528,7 +2295,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <h3>All Wholesale Orders & Consignments</h3>
                         </div>
                         <a href="shop.php" class="ws-btn ws-btn-primary ws-btn-sm">
@@ -2537,18 +2303,14 @@ $catalogProducts = [
                     </div>
 
                     <!-- Search & Filter Controls -->
-                    <div class="ws-filter-bar">
-                        <div class="ws-search-input-wrap">
-                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <input type="text" id="wsOrdersSearchInput" class="ws-input ws-search-input" placeholder="Search by Order ID, Product, Courier or AWB..." oninput="filterOrdersTable()">
-                        </div>
+                    <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+                        <input type="text" id="wsOrdersSearchInput" class="ws-input" style="max-width:320px;" placeholder="Search Order ID, Product, Courier..." oninput="filterOrdersTable()">
 
-                        <div class="ws-date-pills">
-                            <button class="ws-date-pill-btn active" onclick="setOrderStatusFilter('all', this)">All</button>
-                            <button class="ws-date-pill-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
-                            <button class="ws-date-pill-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
-                            <button class="ws-date-pill-btn" onclick="setOrderStatusFilter('Processing', this)">Processing</button>
-                            <button class="ws-date-pill-btn" onclick="setOrderStatusFilter('Returned', this)">Returned</button>
+                        <div style="display:flex; gap:6px;">
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm active" onclick="setOrderStatusFilter('all', this)">All</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Processing', this)">Processing</button>
                         </div>
                     </div>
 
@@ -2576,16 +2338,6 @@ $catalogProducts = [
                     <div class="ws-mobile-order-cards" id="wsMobileOrdersCards">
                         <!-- Populated dynamically by JS -->
                     </div>
-
-                    <!-- Pagination -->
-                    <div class="ws-pagination">
-                        <span id="wsPaginationInfo">Showing 1 to 6 of 6 orders</span>
-                        <div class="ws-page-controls">
-                            <button class="ws-page-btn" disabled>«</button>
-                            <button class="ws-page-btn active">1</button>
-                            <button class="ws-page-btn" disabled>»</button>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -2597,7 +2349,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             <h3>Wholesale B2B Sales & Procurement Reports</h3>
                         </div>
                         <div style="display:flex; gap:8px;">
@@ -2607,17 +2358,6 @@ $catalogProducts = [
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="window.print()">
                                 🖨️ Print Report
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- Date Range Presets -->
-                    <div class="ws-filter-bar">
-                        <div class="ws-date-pills">
-                            <button class="ws-date-pill-btn active" onclick="setReportDateRange('all', this)">All Time</button>
-                            <button class="ws-date-pill-btn" onclick="setReportDateRange('today', this)">Today</button>
-                            <button class="ws-date-pill-btn" onclick="setReportDateRange('yesterday', this)">Yesterday</button>
-                            <button class="ws-date-pill-btn" onclick="setReportDateRange('this_week', this)">This Week</button>
-                            <button class="ws-date-pill-btn" onclick="setReportDateRange('this_month', this)">This Month</button>
                         </div>
                     </div>
 
@@ -2652,25 +2392,24 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                             <h3>Live Heavy Logistics & Parcel Tracking</h3>
                         </div>
                         <span class="ws-status-badge shipped">⚡ BlueDart Air Express</span>
                     </div>
 
-                    <div style="background:#FAF8F4; border:1px solid var(--ws-card-border); border-radius:10px; padding:16px; margin-bottom:16px;">
+                    <div style="background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:16px; margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
                             <div>
-                                <h4 style="font-family:var(--ws-font-serif); font-size:1.1rem; color:var(--ws-gold-primary);">
+                                <h4 style="font-size:1rem; font-weight:800; color:var(--ws-text-main);">
                                     Order #KLN-WS-8021
                                 </h4>
-                                <div style="font-size:0.80rem; color:var(--ws-mid-text); margin-top:2px;">
+                                <div style="font-size:0.80rem; color:var(--ws-text-muted); margin-top:2px;">
                                     Nilambari Silk Saree (Pack of 12) • AWB: <strong>884729104</strong>
                                 </div>
                             </div>
                             <div style="text-align:right;">
-                                <div style="font-size:0.74rem; color:var(--ws-light-text);">Estimated Delivery</div>
-                                <div style="font-size:0.95rem; font-weight:800; color:#16A34A;">Tomorrow, 17 Aug 2026</div>
+                                <div style="font-size:0.74rem; color:var(--ws-text-muted);">Estimated Delivery</div>
+                                <div style="font-size:0.95rem; font-weight:800; color:var(--ws-success);">Tomorrow, 17 Aug 2026</div>
                             </div>
                         </div>
 
@@ -2686,11 +2425,6 @@ $catalogProducts = [
                                 <div class="ws-timeline-title">QC Inspection & Bale Packaging Completed</div>
                                 <div class="ws-timeline-date">Zari & Silk Warehouse • 14 Aug, 03:45 PM</div>
                             </div>
-                            <div class="ws-timeline-step completed">
-                                <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                <div class="ws-timeline-title">Handed over to BlueDart Surface Cargo</div>
-                                <div class="ws-timeline-date">Surat Airport Logistics Cargo • 15 Aug, 08:20 AM</div>
-                            </div>
                             <div class="ws-timeline-step active">
                                 <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                                 <div class="ws-timeline-title">In Transit — Arrived at Regional Distribution Hub</div>
@@ -2703,7 +2437,7 @@ $catalogProducts = [
                             </div>
                         </div>
 
-                        <div style="margin-top:14px; display:flex; gap:8px;">
+                        <div style="margin-top:14px;">
                             <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20share%20driver%20contact%20for%20consignment%20KLN-WS-8021" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
                                 💬 WhatsApp Driver Desk
                             </a>
@@ -2720,7 +2454,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                             <h3>B2B Wholesaler Concierge & Ticket Desk</h3>
                         </div>
                         <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20am%20a%20registered%20Wholesaler%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
@@ -2731,8 +2464,8 @@ $catalogProducts = [
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(260px, 45vw, 320px), 1fr)); gap:16px;">
                         
                         <!-- Open New Ticket Form -->
-                        <div style="background:#FAF8F4; padding:16px; border-radius:12px; border:1px solid var(--ws-card-border);">
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:12px;">
+                        <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid var(--ws-border);">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:12px;">
                                 ✍️ Create New Support Ticket
                             </h4>
 
@@ -2742,7 +2475,6 @@ $catalogProducts = [
                                     <select id="ticketOrderId" class="ws-select" required>
                                         <option value="KLN-WS-8021">KLN-WS-8021 (Nilambari Silk 12 Pcs)</option>
                                         <option value="KLN-WS-7914">KLN-WS-7914 (Banarasi Zari 8 Pcs)</option>
-                                        <option value="KLN-WS-6540">KLN-WS-6540 (Kanjivaram 6 Pcs)</option>
                                         <option value="General Inquiry">General / Custom Catalog Inquiry</option>
                                     </select>
                                 </div>
@@ -2752,26 +2484,24 @@ $catalogProducts = [
                                     <select id="ticketCategory" class="ws-select" required>
                                         <option value="Delivery Delay">Logistics & Dispatch Inquiry</option>
                                         <option value="Bulk Pricing Negotiation">Bulk Lot Pricing & Discount Enquiry</option>
-                                        <option value="Damaged Bale Replacement">Damaged / Defect Replacement (Exchange)</option>
                                         <option value="GST Tax Invoice Issue">GST Input Tax Credit Invoice Query</option>
-                                        <option value="Custom Dyeing & Sizing">Custom Weaving & Saree Length Specification</option>
                                     </select>
                                 </div>
 
                                 <div class="ws-form-group">
                                     <label class="ws-label" for="ticketMessage">Detailed Issue Narrative <span class="req">*</span></label>
-                                    <textarea id="ticketMessage" class="ws-textarea" required placeholder="Describe your inquiry, requested resolution, or order feedback in detail..."></textarea>
+                                    <textarea id="ticketMessage" class="ws-textarea" required placeholder="Describe your inquiry or order feedback in detail..."></textarea>
                                 </div>
 
                                 <button type="submit" class="ws-btn ws-btn-primary" style="width:100%;">
-                                    Submit Ticket to Concierge
+                                    Submit Ticket
                                 </button>
                             </form>
                         </div>
 
                         <!-- Ticket History List -->
                         <div>
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:12px;">
+                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-text-main); margin-bottom:12px;">
                                 📋 My Open & Resolved Tickets
                             </h4>
 
@@ -2792,7 +2522,6 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             <h3>B2B Wholesale Master Catalog (Wholesale Tier Pricing)</h3>
                         </div>
                         <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm">
@@ -2816,8 +2545,7 @@ $catalogProducts = [
                                     <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                 </div>
                                 <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                    <svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.99.54 1.776.814 2.795.814 3.182 0 5.768-2.587 5.768-5.766 0-3.181-2.586-5.766-5.767-5.766zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.12-.497-1.748-.698-2.885-2.483-2.973-2.6-.088-.116-.708-.94-.708-1.793s.449-1.272.609-1.445c.16-.173.348-.217.464-.217l.334.006c.11 0 .257-.04.403.31.15.362.51 1.246.554 1.336.044.09.073.195.014.312-.058.117-.088.19-.174.29-.088.101-.185.226-.264.304-.088.087-.18.182-.077.359.103.175.457.755.98 1.22 0.674.6 1.242.787 1.417.874.175.087.278.073.38-.044.103-.116.44-0.513.557-.688.117-.175.234-.146.395-.087.16.058 1.016.48 1.191.567.175.087.292.13.335.204.044.072.044.42-.1.825z"/></svg>
-                                    <span>Instant WhatsApp Lot Order</span>
+                                    ⚡ Instant WhatsApp Lot Order
                                 </button>
                             </div>
                         </div>
@@ -2911,7 +2639,7 @@ $catalogProducts = [
                     <!-- Parties (Billed To & Shipped To) -->
                     <div class="ws-inv-parties">
                         <div>
-                            <strong style="color:#8A681F;">BILLED TO (BUYER):</strong>
+                            <strong style="color:#2563EB;">BILLED TO (BUYER):</strong>
                             <div id="invBilledTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Shree Krishna Silks Pvt Ltd</strong><br>
                                 GSTIN: 24AABCU9603R1ZM<br>
@@ -2920,7 +2648,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div>
-                            <strong style="color:#8A681F;">DISPATCHED / SHIPPED TO:</strong>
+                            <strong style="color:#2563EB;">DISPATCHED / SHIPPED TO:</strong>
                             <div id="invShippedTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Warehouse Central Store</strong><br>
                                 Fast Cargo Express<br>
@@ -2952,17 +2680,17 @@ $catalogProducts = [
                     <div class="ws-inv-totals">
                         <div>Subtotal (Taxable Value): <strong id="invSubtotal">₹38,388</strong></div>
                         <div>CGST (2.5%) + SGST (2.5%): <strong id="invTax">₹1,920</strong></div>
-                        <div>Wholesale Volume Discount: <strong style="color:#16A34A;">-₹2,000</strong></div>
+                        <div>Wholesale Volume Discount: <strong style="color:#10B981;">-₹2,000</strong></div>
                         <div class="ws-inv-grand-total">Grand Net Payable: <span id="invGrandTotal">₹38,308</span></div>
                     </div>
 
-                    <div style="margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; font-size:0.75rem; color:#78716C;">
+                    <div style="margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; font-size:0.75rem; color:var(--ws-text-muted);">
                         <div>
                             <p>Terms: Payment received against Proforma / Advance NEFT.</p>
                             <p>This is a computer-generated luxury tax invoice.</p>
                         </div>
                         <div style="text-align:center;">
-                            <div style="width:110px; border-bottom:1.5px solid #14110E; margin-bottom:4px;"></div>
+                            <div style="width:110px; border-bottom:1.5px solid #0F172A; margin-bottom:4px;"></div>
                             <strong>Authorized Signatory</strong><br>
                             Kalaniketan Couture
                         </div>
@@ -2981,7 +2709,7 @@ $catalogProducts = [
                 <div class="ws-gate-icon">
                     <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
-                <h3>Wholesaler Access Authentication Gate</h3>
+                <h3>Wholesaler Authentication Gate</h3>
                 <p>This portal is exclusively authorized for verified <strong>Wholesaler B2B Members</strong>. Please sign in with your registered wholesaler account to access bulk tier pricing, order tracking, and GST invoicing.</p>
                 
                 <div style="display:flex; flex-direction:column; gap:10px;">
@@ -2991,7 +2719,7 @@ $catalogProducts = [
                     <a href="myaccount.php?tab=login" class="ws-btn ws-btn-secondary">
                         Sign In with Other Account
                     </a>
-                    <a href="shop.php" style="font-size:0.78rem; color:var(--ws-light-text); text-decoration:none; margin-top:4px;">
+                    <a href="shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
                         ← Return to Retail Store
                     </a>
                 </div>
@@ -3286,24 +3014,8 @@ $catalogProducts = [
             var state = user.state || 'Gujarat';
             var pincode = user.pincode || '395002';
 
-            // Update Header & Sidebar display
             var hdrName = document.getElementById('headerUserName');
-            var sideName = document.getElementById('sideUserName');
-            var welcomeName = document.getElementById('welcomeUserName');
-            var welcomeGst = document.getElementById('welcomeGstPill');
-            var sideGst = document.getElementById('sideGstBadge');
-            var hdrAvatar = document.getElementById('headerUserAvatar');
-            var sideAvatar = document.getElementById('sideUserAvatar');
-
-            if (hdrName) hdrName.textContent = company || name;
-            if (sideName) sideName.textContent = company || name;
-            if (welcomeName) welcomeName.textContent = name;
-            if (welcomeGst) welcomeGst.textContent = gstType === 'gst' ? ('🛡️ GST: ' + gstNum) : '🏢 Non-GST Business';
-            if (sideGst) sideGst.textContent = gstType === 'gst' ? 'GST Verified' : 'Non-GST Trader';
-
-            var initials = name.split(' ').map(function(n){ return n[0]; }).join('').toUpperCase() || 'WS';
-            if (hdrAvatar) hdrAvatar.textContent = initials;
-            if (sideAvatar) sideAvatar.textContent = initials;
+            if (hdrName) hdrName.textContent = name;
 
             // Populate My Details form
             var profName = document.getElementById('wsProfName');
@@ -3352,11 +3064,10 @@ $catalogProducts = [
             }
         };
 
-        /* ── Live Indian GSTIN Format Validation & State Resolver ── */
+        /* ── Indian GSTIN Validation ── */
         window.validateGstinInput = function(input) {
             var val = input.value.toUpperCase().replace(/[^0-9A-Z]/g, '');
             input.value = val;
-            var msg = document.getElementById('gstinValidationMsg');
             var stateTag = document.getElementById('gstStateDetectTag');
 
             var stateMap = {
@@ -3375,33 +3086,6 @@ $catalogProducts = [
                     stateTag.textContent = '📍 State: ' + detectedState + ' (' + prefix + ')';
                 }
             }
-
-            var gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-            if (val.length === 15) {
-                if (gstinRegex.test(val)) {
-                    if (msg) {
-                        msg.innerHTML = '<span style="color:#16A34A; font-weight:800;">✅ Valid Indian GSTIN format verified!</span>';
-                    }
-                    input.style.borderColor = '#16A34A';
-                } else {
-                    if (msg) {
-                        msg.innerHTML = '<span style="color:#DC2626; font-weight:800;">⚠️ Invalid GSTIN structure. Expected: 2 digits + 5 chars PAN + 4 digits + 1 char + Z + 1 check digit.</span>';
-                    }
-                    input.style.borderColor = '#DC2626';
-                }
-            } else {
-                if (msg) {
-                    msg.innerHTML = 'Enter 15 characters (' + val.length + '/15)';
-                }
-                input.style.borderColor = '#D5CEBF';
-            }
-        };
-
-        /* ── Toggle Password Visibility ── */
-        window.togglePassVisibility = function(inputId) {
-            var input = document.getElementById(inputId);
-            if (!input) return;
-            input.type = input.type === 'password' ? 'text' : 'password';
         };
 
         /* ── Save Wholesaler Details ── */
@@ -3425,7 +3109,7 @@ $catalogProducts = [
 
             localStorage.setItem('kalaniketan_user', JSON.stringify(user));
             loadSavedWholesalerData();
-            window.showWsToast('🎉 Profile & Security details updated successfully!');
+            window.showWsToast('🎉 Profile details saved successfully!');
         };
 
         /* ── Save GST Profile ── */
@@ -3486,34 +3170,30 @@ $catalogProducts = [
             mobContainer.innerHTML = '';
 
             if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#6B6358;">No matching wholesale orders found.</td></tr>';
-                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#6B6358; font-weight:600;">No matching orders found.</div>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#64748B;">No matching wholesale orders found.</td></tr>';
+                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#64748B; font-weight:600;">No matching orders found.</div>';
                 return;
             }
 
             orders.forEach(function(o) {
                 var statusClass = o.status.toLowerCase();
-                if (statusClass === 'shipped') statusClass = 'shipped';
-                else if (statusClass === 'delivered') statusClass = 'delivered';
-                else if (statusClass === 'processing') statusClass = 'processing';
-                else if (statusClass === 'returned') statusClass = 'returned';
 
                 // 1. Desktop Row
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="color:#554E44; font-weight:600; font-size:0.78rem;">${o.date}</td>
+                    <td style="color:#64748B; font-weight:500; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
                             <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='images/product1.png';">
                             <div>
-                                <strong style="font-size:0.84rem; color:#110E0B;">${o.productName}</strong>
-                                <div style="font-size:0.74rem; color:#6B6358; font-weight:600;">SKU: ${o.sku} • ${o.courier}</div>
+                                <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
+                                <div style="font-size:0.74rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
                             </div>
                         </div>
                     </td>
-                    <td><strong style="font-size:0.84rem;">${o.qty} Pcs</strong></td>
-                    <td><strong style="color:#8A681F; font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td><strong>${o.qty} Pcs</strong></td>
+                    <td><strong style="color:var(--ws-text-main); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
                     <td><span class="ws-status-badge ${statusClass}">${o.status}</span></td>
                     <td>
                         <div style="display:flex; gap:6px;">
@@ -3540,7 +3220,7 @@ $catalogProducts = [
                         <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='images/product1.png';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
-                            <div class="ws-mob-order-meta">Date: <strong>${o.date}</strong> • Lot: <strong>${o.qty} Pcs</strong></div>
+                            <div class="ws-mob-order-meta">${o.date} • Lot: <strong>${o.qty} Pcs</strong></div>
                             <div class="ws-mob-order-meta">${o.courier} (AWB: ${o.awb})</div>
                             <div class="ws-mob-order-price-row">
                                 <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
@@ -3612,11 +3292,30 @@ $catalogProducts = [
 
         window.setOrderStatusFilter = function(status, btn) {
             currentOrderStatusFilter = status;
-            document.querySelectorAll('#tabPaneOrders .ws-date-pill-btn').forEach(function(b) {
+            btn.parentElement.querySelectorAll('button').forEach(function(b) {
                 b.classList.remove('active');
             });
             if (btn) btn.classList.add('active');
             filterOrdersTable();
+        };
+
+        window.setOverviewFilter = function(mode, btn) {
+            btn.parentElement.querySelectorAll('button').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            window.showWsToast('📊 Switched to ' + mode.toUpperCase() + ' analytics mode');
+        };
+
+        window.handleGlobalQuickSearch = function(input) {
+            var val = input.value.trim().toLowerCase();
+            if (!val) return;
+            var match = activeOrdersList.find(function(o) {
+                return o.id.toLowerCase().includes(val) || o.productName.toLowerCase().includes(val) || o.sku.toLowerCase().includes(val);
+            });
+            if (match) {
+                viewOrderDetails(match);
+            }
         };
 
         /* ── Render Reports Table ── */
@@ -3629,27 +3328,18 @@ $catalogProducts = [
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="font-size:0.78rem; color:#554E44; font-weight:600;">${o.date}</td>
-                    <td><span style="font-family:monospace; background:#FAF6ED; padding:3px 7px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
+                    <td style="font-size:0.78rem; color:#64748B;">${o.date}</td>
+                    <td><span style="font-family:monospace; background:#F1F5F9; padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td><strong>${o.productName}</strong></td>
-                    <td><strong style="font-size:0.84rem;">${o.qty}</strong></td>
+                    <td><strong>${o.qty}</strong></td>
                     <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
-                    <td style="color:#16A34A; font-weight:700;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                    <td><strong style="color:#8A681F; font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                    <td style="font-size:0.76rem; color:#3B352E; font-weight:600;">${o.payment}</td>
+                    <td style="color:#10B981; font-weight:700;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
+                    <td><strong style="color:var(--ws-text-main); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td style="font-size:0.76rem; color:var(--ws-text-muted);">${o.payment}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
-
-        window.setReportDateRange = function(range, btn) {
-            document.querySelectorAll('#tabPaneReports .ws-date-pill-btn').forEach(function(b) {
-                b.classList.remove('active');
-            });
-            if (btn) btn.classList.add('active');
-            renderReportsView(activeOrdersList);
-            window.showWsToast('📊 Reports filtered by: ' + range.toUpperCase());
-        };
 
         /* ── Export Reports to CSV ── */
         window.exportReportsToCsv = function() {
@@ -3688,17 +3378,17 @@ $catalogProducts = [
             list.innerHTML = '';
 
             activeTicketsList.forEach(function(t) {
-                var statusColor = t.status === 'Resolved' ? '#16A34A' : '#D97706';
+                var statusColor = t.status === 'Resolved' ? '#10B981' : '#F59E0B';
                 var card = document.createElement('div');
                 card.className = 'ws-ticket-card';
                 card.innerHTML = `
                     <div class="ws-ticket-head">
-                        <span style="font-family:var(--ws-font-serif); font-size:0.80rem; font-weight:800; color:#8A681F;">Ticket #${t.id}</span>
-                        <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:#FAF8F4; padding:2px 8px; border-radius:12px; border:1.2px solid ${statusColor};">${t.status}</span>
+                        <span style="font-size:0.80rem; font-weight:800; color:#2563EB;">Ticket #${t.id}</span>
+                        <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:#F8FAFC; padding:2px 8px; border-radius:12px; border:1px solid ${statusColor};">${t.status}</span>
                     </div>
-                    <div class="ws-ticket-sub">Order Ref: ${t.orderId} • ${t.category}</div>
-                    <p class="ws-ticket-msg" style="margin-top:5px;">"${t.message}"</p>
-                    <div style="font-size:0.72rem; color:#6B6358; font-weight:600; margin-top:8px; display:flex; justify-content:space-between;">
+                    <div style="font-size:0.80rem; font-weight:700; color:var(--ws-text-main);">Order Ref: ${t.orderId} • ${t.category}</div>
+                    <p style="font-size:0.78rem; color:var(--ws-text-muted); margin-top:4px;">"${t.message}"</p>
+                    <div style="font-size:0.72rem; color:var(--ws-text-light); margin-top:6px; display:flex; justify-content:space-between;">
                         <span>📅 ${t.date}</span>
                         <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:800; text-decoration:none;">
                             WhatsApp Followup →
@@ -3743,49 +3433,49 @@ $catalogProducts = [
 
             title.textContent = `Order Details #${o.id}`;
             body.innerHTML = `
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:12px; border-bottom:1.5px dashed #DDD8CD;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--ws-border);">
                     <div>
-                        <div style="font-size:0.76rem; color:#6B6358; font-weight:600;">Consignment Placed</div>
-                        <strong style="font-size:0.92rem; color:#110E0B;">${o.date}</strong>
+                        <div style="font-size:0.76rem; color:var(--ws-text-muted);">Consignment Placed</div>
+                        <strong style="font-size:0.92rem; color:var(--ws-text-main);">${o.date}</strong>
                     </div>
                     <div style="text-align:right;">
-                        <div style="font-size:0.76rem; color:#6B6358; font-weight:600;">Current Status</div>
+                        <div style="font-size:0.76rem; color:var(--ws-text-muted);">Current Status</div>
                         <span class="ws-status-badge ${o.status.toLowerCase()}">${o.status}</span>
                     </div>
                 </div>
 
-                <div style="display:flex; gap:14px; margin-bottom:14px; background:#FFFFFF; border:1.2px solid #EAE5DB; border-radius:10px; padding:12px;">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid #E7E2D6; flex-shrink:0;">
+                <div style="display:flex; gap:14px; margin-bottom:14px; background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:12px;">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0;">
                     <div style="flex:1;">
-                        <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; font-weight:800; color:#110E0B; margin-bottom:4px; line-height:1.25;">${o.productName}</h4>
-                        <div style="font-size:0.78rem; color:#554E44; font-weight:600;">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
-                        <div style="font-size:0.78rem; color:#554E44; font-weight:600;">Color: ${o.color} • Size: ${o.size}</div>
-                        <div style="font-size:0.86rem; font-weight:800; color:#8A681F; margin-top:6px;">
+                        <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.25;">${o.productName}</h4>
+                        <div style="font-size:0.78rem; color:var(--ws-text-muted);">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
+                        <div style="font-size:0.78rem; color:var(--ws-text-muted);">Color: ${o.color} • Size: ${o.size}</div>
+                        <div style="font-size:0.86rem; font-weight:800; color:#2563EB; margin-top:6px;">
                             ${o.qty} Pcs @ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc
                         </div>
                     </div>
                 </div>
 
-                <div style="background:#FAF8F4; border:1.5px solid #EAE5DB; border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
+                <div style="background:#F8FAFC; border:1px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:#554E44; font-weight:600;">Taxable Item Total</span>
-                        <strong style="color:#110E0B;">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
+                        <span style="color:var(--ws-text-muted);">Taxable Item Total</span>
+                        <strong style="color:var(--ws-text-main);">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:#554E44; font-weight:600;">CGST (2.5%) + SGST (2.5%)</span>
-                        <strong style="color:#16A34A;">₹${Number(o.tax).toLocaleString('en-IN')}</strong>
+                        <span style="color:var(--ws-text-muted);">CGST (2.5%) + SGST (2.5%)</span>
+                        <strong style="color:#10B981;">₹${Number(o.tax).toLocaleString('en-IN')}</strong>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:#554E44; font-weight:600;">Wholesale Volume Discount</span>
-                        <strong style="color:#16A34A;">-₹${Number(o.discount).toLocaleString('en-IN')}</strong>
+                        <span style="color:var(--ws-text-muted);">Wholesale Volume Discount</span>
+                        <strong style="color:#10B981;">-₹${Number(o.discount).toLocaleString('en-IN')}</strong>
                     </div>
-                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1.5px solid #DDD8CD; font-size:1.05rem; font-weight:900; color:#8A681F;">
+                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1px solid var(--ws-border); font-size:1.05rem; font-weight:900; color:#0F172A;">
                         <span>Total Paid / Payable</span>
                         <span>₹${Number(o.total).toLocaleString('en-IN')}</span>
                     </div>
                 </div>
 
-                <div style="font-size:0.80rem; color:#3B352E; line-height:1.5; background:#FFFFFF; border:1px solid #EAE5DB; border-radius:8px; padding:10px 14px;">
+                <div style="font-size:0.80rem; color:var(--ws-text-sub); line-height:1.5; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
                     <p><strong>Logistics Partner:</strong> ${o.courier} (AWB: ${o.awb})</p>
                     <p><strong>Payment Instrument:</strong> ${o.payment}</p>
                 </div>
@@ -3848,7 +3538,7 @@ $catalogProducts = [
             tbody.innerHTML = `
                 <tr>
                     <td>1</td>
-                    <td><strong>${o.productName}</strong><br><span style="color:#6B6358; font-size:0.72rem;">SKU: ${o.sku} • ${o.color}</span></td>
+                    <td><strong>${o.productName}</strong><br><span style="color:var(--ws-text-muted); font-size:0.72rem;">SKU: ${o.sku} • ${o.color}</span></td>
                     <td>${o.hsn}</td>
                     <td>${o.qty}</td>
                     <td>₹${Number(o.unitPrice).toLocaleString('en-IN')}</td>
