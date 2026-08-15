@@ -677,6 +677,7 @@ $catalogProducts = [
         }
 
         /* ── SVG Zigzag & Spline Line Chart (Metrica / TailAdmin Style) ── */
+        /* ── SVG Zigzag & Spline Line Chart (Metrica / TailAdmin Style) ── */
         .ws-chart-wrapper {
             position: relative;
             width: 100%;
@@ -689,11 +690,13 @@ $catalogProducts = [
             width: 100%;
             height: 180px;
             display: flex;
+            overflow: hidden;
+            border-radius: 8px;
         }
         .ws-chart-y-axis {
             position: absolute;
             left: 0;
-            top: 4px;
+            top: 2px;
             bottom: 6px;
             width: 32px;
             display: flex;
@@ -719,31 +722,38 @@ $catalogProducts = [
         .ws-chart-zigzag-area {
             fill: url(#wsGoldAreaGrad);
             opacity: 0.85;
-            transition: all 0.35s ease;
+            transition: d 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .ws-chart-zigzag-line {
             fill: none;
             stroke: url(#wsGoldLineGrad);
-            stroke-width: 3.5;
+            stroke-width: 3.2;
             stroke-linecap: round;
             stroke-linejoin: round;
             filter: drop-shadow(0 4px 10px rgba(138, 104, 31, 0.35));
-            transition: all 0.35s ease;
+            transition: d 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 0;
+            animation: wsLineDrawIn 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes wsLineDrawIn {
+            from { stroke-dashoffset: 1200; }
+            to { stroke-dashoffset: 0; }
         }
         .ws-chart-node {
             fill: #FFFFFF;
             stroke: var(--ws-gold-primary);
-            stroke-width: 2.5;
-            r: 4.5;
+            stroke-width: 2.2;
+            r: 4;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .ws-chart-node:hover, .ws-chart-node.active {
             r: 6.5;
             fill: var(--ws-gold-primary);
             stroke: #FFFFFF;
             stroke-width: 2.5;
-            filter: drop-shadow(0 0 8px rgba(138, 104, 31, 0.65));
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.9));
         }
         .ws-chart-x-axis {
             display: flex;
@@ -2702,34 +2712,34 @@ $catalogProducts = [
                                         </linearGradient>
                                     </defs>
 
-                                    <!-- Horizontal Dashed Grid Lines -->
-                                    <line class="ws-chart-gridline" x1="0" y1="10" x2="600" y2="10" />
-                                    <line class="ws-chart-gridline" x1="0" y1="48" x2="600" y2="48" />
-                                    <line class="ws-chart-gridline" x1="0" y1="86" x2="600" y2="86" />
-                                    <line class="ws-chart-gridline" x1="0" y1="124" x2="600" y2="124" />
-                                    <line class="ws-chart-gridline" x1="0" y1="162" x2="600" y2="162" />
+                                    <!-- Horizontal Dashed Grid Lines (Clean 400k to 0k Range) -->
+                                    <line class="ws-chart-gridline" x1="0" y1="20" x2="600" y2="20" />
+                                    <line class="ws-chart-gridline" x1="0" y1="55" x2="600" y2="55" />
+                                    <line class="ws-chart-gridline" x1="0" y1="90" x2="600" y2="90" />
+                                    <line class="ws-chart-gridline" x1="0" y1="125" x2="600" y2="125" />
+                                    <line class="ws-chart-gridline" x1="0" y1="158" x2="600" y2="158" />
 
                                     <!-- Zigzag Area Gradient Fill -->
                                     <path class="ws-chart-zigzag-area" id="svgAreaPath" 
-                                          d="M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130 L 575,162 L 25,162 Z" />
+                                          d="M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94 L 546,158 L 40,158 Z" />
 
                                     <!-- Zigzag Line Stroke -->
                                     <path class="ws-chart-zigzag-line" id="svgLinePath" 
-                                          d="M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130" />
+                                          d="M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94" />
 
-                                    <!-- 12 Month Interactive Nodes -->
-                                    <circle class="ws-chart-node" cx="25" cy="120" onmouseover="showChartNodeTooltip(0)" onclick="showChartNodeTooltip(0)" />
-                                    <circle class="ws-chart-node" cx="75" cy="40" onmouseover="showChartNodeTooltip(1)" onclick="showChartNodeTooltip(1)" />
-                                    <circle class="ws-chart-node" cx="125" cy="110" onmouseover="showChartNodeTooltip(2)" onclick="showChartNodeTooltip(2)" />
-                                    <circle class="ws-chart-node" cx="175" cy="60" onmouseover="showChartNodeTooltip(3)" onclick="showChartNodeTooltip(3)" />
-                                    <circle class="ws-chart-node" cx="225" cy="115" onmouseover="showChartNodeTooltip(4)" onclick="showChartNodeTooltip(4)" />
-                                    <circle class="ws-chart-node" cx="275" cy="100" onmouseover="showChartNodeTooltip(5)" onclick="showChartNodeTooltip(5)" />
-                                    <circle class="ws-chart-node" cx="325" cy="65" onmouseover="showChartNodeTooltip(6)" onclick="showChartNodeTooltip(6)" />
-                                    <circle class="ws-chart-node active" cx="375" cy="50" onmouseover="showChartNodeTooltip(7)" onclick="showChartNodeTooltip(7)" />
-                                    <circle class="ws-chart-node" cx="425" cy="95" onmouseover="showChartNodeTooltip(8)" onclick="showChartNodeTooltip(8)" />
-                                    <circle class="ws-chart-node" cx="475" cy="30" onmouseover="showChartNodeTooltip(9)" onclick="showChartNodeTooltip(9)" />
-                                    <circle class="ws-chart-node" cx="525" cy="75" onmouseover="showChartNodeTooltip(10)" onclick="showChartNodeTooltip(10)" />
-                                    <circle class="ws-chart-node" cx="575" cy="130" onmouseover="showChartNodeTooltip(11)" onclick="showChartNodeTooltip(11)" />
+                                    <!-- 12 Month Interactive Nodes (Proportional Coordinates) -->
+                                    <circle class="ws-chart-node" cx="40" cy="115" onmouseover="showChartNodeTooltip(0)" onclick="showChartNodeTooltip(0)" />
+                                    <circle class="ws-chart-node" cx="86" cy="96" onmouseover="showChartNodeTooltip(1)" onclick="showChartNodeTooltip(1)" />
+                                    <circle class="ws-chart-node" cx="132" cy="102" onmouseover="showChartNodeTooltip(2)" onclick="showChartNodeTooltip(2)" />
+                                    <circle class="ws-chart-node" cx="178" cy="85" onmouseover="showChartNodeTooltip(3)" onclick="showChartNodeTooltip(3)" />
+                                    <circle class="ws-chart-node" cx="224" cy="76" onmouseover="showChartNodeTooltip(4)" onclick="showChartNodeTooltip(4)" />
+                                    <circle class="ws-chart-node" cx="270" cy="82" onmouseover="showChartNodeTooltip(5)" onclick="showChartNodeTooltip(5)" />
+                                    <circle class="ws-chart-node" cx="316" cy="62" onmouseover="showChartNodeTooltip(6)" onclick="showChartNodeTooltip(6)" />
+                                    <circle class="ws-chart-node active" cx="362" cy="88" onmouseover="showChartNodeTooltip(7)" onclick="showChartNodeTooltip(7)" />
+                                    <circle class="ws-chart-node" cx="408" cy="68" onmouseover="showChartNodeTooltip(8)" onclick="showChartNodeTooltip(8)" />
+                                    <circle class="ws-chart-node" cx="454" cy="38" onmouseover="showChartNodeTooltip(9)" onclick="showChartNodeTooltip(9)" />
+                                    <circle class="ws-chart-node" cx="500" cy="52" onmouseover="showChartNodeTooltip(10)" onclick="showChartNodeTooltip(10)" />
+                                    <circle class="ws-chart-node" cx="546" cy="94" onmouseover="showChartNodeTooltip(11)" onclick="showChartNodeTooltip(11)" />
                                 </svg>
                             </div>
 
@@ -5271,13 +5281,17 @@ $catalogProducts = [
             if (!line || !area) return;
 
             if (type === 'smooth') {
-                // Smooth curved spline wave
-                line.setAttribute('d', 'M 25,120 Q 50,40 75,40 T 125,110 T 175,60 T 225,115 T 275,100 T 325,65 T 375,50 T 425,95 T 475,30 T 525,75 T 575,130');
-                area.setAttribute('d', 'M 25,120 Q 50,40 75,40 T 125,110 T 175,60 T 225,115 T 275,100 T 325,65 T 375,50 T 425,95 T 475,30 T 525,75 T 575,130 L 575,162 L 25,162 Z');
+                // Smooth curved spline wave (Metrica / ApexCharts Cubic Curve)
+                var smoothLine = 'M 40,115 C 63,115 63,96 86,96 C 109,96 109,102 132,102 C 155,102 155,85 178,85 C 201,85 201,76 224,76 C 247,76 247,82 270,82 C 293,82 293,62 316,62 C 339,62 339,88 362,88 C 385,88 385,68 408,68 C 431,68 431,38 454,38 C 477,38 477,52 500,52 C 523,52 523,94 546,94';
+                var smoothArea = smoothLine + ' L 546,158 L 40,158 Z';
+                line.setAttribute('d', smoothLine);
+                area.setAttribute('d', smoothArea);
             } else {
                 // Crisp Zigzag Lines (Metrica Style)
-                line.setAttribute('d', 'M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130');
-                area.setAttribute('d', 'M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130 L 575,162 L 25,162 Z');
+                var zigzagLine = 'M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94';
+                var zigzagArea = zigzagLine + ' L 546,158 L 40,158 Z';
+                line.setAttribute('d', zigzagLine);
+                area.setAttribute('d', zigzagArea);
             }
         };
 
