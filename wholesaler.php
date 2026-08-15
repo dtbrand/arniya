@@ -143,7 +143,7 @@ $catalogProducts = [
 
             --ws-dark-text: #110E0B;
             --ws-mid-text: #3B352E;
-            --ws-light-text: #71695F;
+            --ws-light-text: #6B6358;
             --ws-off-white: #FAF8F5;
             --ws-cream-bg: #F4EFE6;
             --ws-pure-white: #FFFFFF;
@@ -280,10 +280,10 @@ $catalogProducts = [
             line-height: 1;
         }
         .ws-brand-text span {
-            font-size: clamp(0.55rem, 1.2vw, 0.65rem);
+            font-size: clamp(0.60rem, 1.3vw, 0.70rem);
             color: var(--ws-mid-text);
             font-weight: 800;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             display: flex;
             align-items: center;
@@ -336,7 +336,7 @@ $catalogProducts = [
             line-height: 1.15;
         }
         .ws-user-name {
-            font-size: clamp(0.72rem, 1.5vw, 0.80rem);
+            font-size: clamp(0.75rem, 1.5vw, 0.84rem);
             font-weight: 800;
             color: var(--ws-dark-text);
             white-space: nowrap;
@@ -345,7 +345,7 @@ $catalogProducts = [
             text-overflow: ellipsis;
         }
         .ws-user-tag {
-            font-size: 0.58rem;
+            font-size: 0.60rem;
             font-weight: 800;
             color: #8A681F;
             text-transform: uppercase;
@@ -360,7 +360,7 @@ $catalogProducts = [
             border: 1.2px solid var(--ws-card-border);
             background: #FFFFFF;
             color: var(--ws-mid-text);
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             font-weight: 800;
             text-decoration: none;
             cursor: pointer;
@@ -416,7 +416,7 @@ $catalogProducts = [
         }
         .ws-side-profile-info h3 {
             font-family: var(--ws-font-serif);
-            font-size: 0.88rem;
+            font-size: 0.90rem;
             font-weight: 800;
             color: #FAF5E8;
             margin: 0;
@@ -427,7 +427,7 @@ $catalogProducts = [
             max-width: 160px;
         }
         .ws-side-profile-info span {
-            font-size: 0.62rem;
+            font-size: 0.65rem;
             color: #C5A859;
             font-weight: 800;
             text-transform: uppercase;
@@ -453,7 +453,7 @@ $catalogProducts = [
             border-radius: 10px;
             color: #D1C7B7;
             text-decoration: none;
-            font-size: 0.80rem;
+            font-size: 0.82rem;
             font-weight: 700;
             cursor: pointer;
             transition: var(--ws-transition);
@@ -484,7 +484,7 @@ $catalogProducts = [
             margin-left: auto;
             background: #D97706;
             color: #FFFFFF;
-            font-size: 0.64rem;
+            font-size: 0.66rem;
             font-weight: 800;
             padding: 2px 7px;
             border-radius: 12px;
@@ -509,7 +509,7 @@ $catalogProducts = [
             border: 1px solid rgba(220, 38, 38, 0.4);
             background: rgba(220, 38, 38, 0.12);
             color: #FCA5A5;
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -527,7 +527,7 @@ $catalogProducts = [
         /* ── Main Content Area ── */
         .ws-main-content {
             flex: 1;
-            padding: clamp(12px, 2.5vw, 24px) clamp(12px, 3vw, 28px) clamp(60px, 8vw, 80px);
+            padding: clamp(14px, 2.5vw, 24px) clamp(12px, 3vw, 28px) clamp(65px, 8vw, 85px);
             overflow-y: auto;
             max-width: 1350px;
             margin: 0 auto;
@@ -580,7 +580,7 @@ $catalogProducts = [
             line-height: 1.2;
         }
         .ws-welcome-left p {
-            font-size: clamp(0.74rem, 1.4vw, 0.82rem);
+            font-size: clamp(0.78rem, 1.4vw, 0.85rem);
             color: var(--ws-mid-text);
             margin-top: 4px;
             font-weight: 500;
@@ -595,9 +595,9 @@ $catalogProducts = [
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 24px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 800;
             background: #FFFFFF;
             border: 1.2px solid var(--ws-gold-border);
@@ -613,7 +613,7 @@ $catalogProducts = [
         /* ── 6 Statistics Metric Cards Grid ── */
         .ws-stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(135px, 28vw, 185px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 28vw, 185px), 1fr));
             gap: clamp(10px, 1.8vw, 16px);
             margin-bottom: clamp(16px, 2.5vw, 24px);
         }
@@ -649,15 +649,15 @@ $catalogProducts = [
             margin-bottom: 8px;
         }
         .ws-stat-title {
-            font-size: clamp(0.64rem, 1.2vw, 0.70rem);
+            font-size: clamp(0.70rem, 1.2vw, 0.76rem);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             color: var(--ws-light-text);
         }
         .ws-stat-icon-wrap {
-            width: clamp(26px, 4vw, 32px);
-            height: clamp(26px, 4vw, 32px);
+            width: clamp(28px, 4vw, 34px);
+            height: clamp(28px, 4vw, 34px);
             border-radius: 8px;
             background: var(--stat-bg, #FAF5E8);
             color: var(--stat-accent, #8A681F);
@@ -667,23 +667,23 @@ $catalogProducts = [
             flex-shrink: 0;
         }
         .ws-stat-icon-wrap svg {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             stroke: currentColor;
             stroke-width: 2.2;
             fill: none;
         }
         .ws-stat-val {
             font-family: var(--ws-font-serif);
-            font-size: clamp(1.25rem, 3.2vw, 1.60rem);
+            font-size: clamp(1.30rem, 3.2vw, 1.65rem);
             font-weight: 900;
             color: var(--ws-dark-text);
             line-height: 1.1;
         }
         .ws-stat-sub {
-            font-size: clamp(0.60rem, 1.1vw, 0.68rem);
+            font-size: clamp(0.68rem, 1.2vw, 0.74rem);
             color: var(--ws-light-text);
-            margin-top: 4px;
+            margin-top: 5px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -691,8 +691,8 @@ $catalogProducts = [
         }
         .ws-stat-trend {
             font-weight: 800;
-            font-size: 0.65rem;
-            padding: 1px 5px;
+            font-size: 0.68rem;
+            padding: 1px 6px;
             border-radius: 10px;
         }
         .ws-stat-trend.up { background: #DCFCE7; color: #15803D; }
@@ -732,7 +732,7 @@ $catalogProducts = [
         }
         .ws-card-title-group h3 {
             font-family: var(--ws-font-serif);
-            font-size: clamp(0.92rem, 2vw, 1.05rem);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
             font-weight: 800;
             color: var(--ws-gold-primary);
             letter-spacing: 0.04em;
@@ -754,7 +754,7 @@ $catalogProducts = [
             grid-column: 1 / -1;
         }
         .ws-label {
-            font-size: clamp(0.70rem, 1.2vw, 0.75rem);
+            font-size: clamp(0.75rem, 1.2vw, 0.80rem);
             font-weight: 800;
             color: var(--ws-dark-text);
             letter-spacing: 0.02em;
@@ -767,19 +767,19 @@ $catalogProducts = [
         }
         .ws-input, .ws-select, .ws-textarea {
             width: 100%;
-            height: 40px;
+            height: 42px;
             border: 1.5px solid #D5CEBF;
             border-radius: var(--ws-radius-sm);
             padding: 0 12px;
             font-family: var(--ws-font-sans);
-            font-size: clamp(0.78rem, 1.4vw, 0.84rem);
+            font-size: clamp(0.82rem, 1.4vw, 0.88rem);
             color: var(--ws-dark-text);
             background: #FAF9F5;
             outline: none;
             transition: var(--ws-transition);
         }
         .ws-textarea {
-            height: 85px;
+            height: 90px;
             padding: 10px 12px;
             resize: vertical;
         }
@@ -794,9 +794,9 @@ $catalogProducts = [
             cursor: not-allowed;
         }
         .ws-input-helper {
-            font-size: 0.65rem;
+            font-size: 0.70rem;
             color: var(--ws-light-text);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .ws-phone-wrap {
@@ -815,11 +815,11 @@ $catalogProducts = [
         }
         .ws-phone-prefix {
             padding: 0 12px;
-            font-size: 0.80rem;
+            font-size: 0.84rem;
             font-weight: 800;
             color: var(--ws-gold-primary);
             background: #F0EAD8;
-            height: 40px;
+            height: 42px;
             display: flex;
             align-items: center;
             border-right: 1px solid #D5CEBF;
@@ -844,7 +844,7 @@ $catalogProducts = [
             border: none;
             cursor: pointer;
             color: var(--ws-light-text);
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
         }
 
@@ -861,9 +861,9 @@ $catalogProducts = [
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 9px 18px;
+            padding: 10px 18px;
             border-radius: var(--ws-radius-sm);
-            font-size: clamp(0.74rem, 1.4vw, 0.80rem);
+            font-size: clamp(0.78rem, 1.4vw, 0.84rem);
             font-weight: 800;
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -912,8 +912,8 @@ $catalogProducts = [
             box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
         }
         .ws-btn-sm {
-            padding: 6px 12px;
-            font-size: 0.72rem;
+            padding: 7px 14px;
+            font-size: 0.76rem;
         }
 
         /* ── GST Radio Cards ── */
@@ -997,8 +997,8 @@ $catalogProducts = [
         }
         .ws-search-input {
             padding-left: 36px !important;
-            height: 36px !important;
-            font-size: 0.80rem !important;
+            height: 38px !important;
+            font-size: 0.84rem !important;
             background: #FFFFFF !important;
         }
         .ws-date-pills {
@@ -1008,11 +1008,11 @@ $catalogProducts = [
             flex-wrap: wrap;
         }
         .ws-date-pill-btn {
-            padding: 5px 12px;
+            padding: 6px 13px;
             border-radius: 20px;
             border: 1.2px solid #D5CEBF;
             background: #FFFFFF;
-            font-size: 0.70rem;
+            font-size: 0.74rem;
             font-weight: 700;
             color: var(--ws-mid-text);
             cursor: pointer;
@@ -1039,7 +1039,7 @@ $catalogProducts = [
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.80rem;
+            font-size: 0.84rem;
             background: #FFFFFF;
         }
         .ws-table th {
@@ -1047,7 +1047,7 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
             font-family: var(--ws-font-serif);
             font-weight: 800;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             padding: 12px 14px;
             border-bottom: 1.5px solid var(--ws-gold-border);
             text-transform: uppercase;
@@ -1074,9 +1074,9 @@ $catalogProducts = [
             gap: 10px;
         }
         .ws-prod-mini-img {
-            width: 36px;
-            height: 46px;
-            border-radius: 4px;
+            width: 38px;
+            height: 48px;
+            border-radius: 6px;
             object-fit: cover;
             border: 1px solid #E7E2D6;
             flex-shrink: 0;
@@ -1087,9 +1087,9 @@ $catalogProducts = [
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 3px 9px;
+            padding: 4px 10px;
             border-radius: 14px;
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -1130,8 +1130,8 @@ $catalogProducts = [
             margin-bottom: 12px;
         }
         .ws-mob-order-img {
-            width: 52px;
-            height: 66px;
+            width: 56px;
+            height: 70px;
             border-radius: 6px;
             object-fit: cover;
             border: 1px solid #E7E2D6;
@@ -1141,17 +1141,18 @@ $catalogProducts = [
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
         .ws-mob-order-title {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--ws-dark-text);
             line-height: 1.25;
         }
         .ws-mob-order-meta {
-            font-size: 0.70rem;
+            font-size: 0.75rem;
             color: var(--ws-light-text);
+            font-weight: 600;
         }
         .ws-mob-order-price-row {
             display: flex;
@@ -1160,7 +1161,7 @@ $catalogProducts = [
             margin-top: 4px;
         }
         .ws-mob-order-price {
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             font-weight: 900;
             color: var(--ws-gold-primary);
         }
@@ -1178,7 +1179,7 @@ $catalogProducts = [
             align-items: center;
             justify-content: space-between;
             margin-top: 16px;
-            font-size: 0.78rem;
+            font-size: 0.80rem;
             color: var(--ws-light-text);
             flex-wrap: wrap;
             gap: 10px;
@@ -1188,8 +1189,8 @@ $catalogProducts = [
             gap: 6px;
         }
         .ws-page-btn {
-            min-width: 30px;
-            height: 30px;
+            min-width: 32px;
+            height: 32px;
             border-radius: 6px;
             border: 1px solid var(--ws-card-border);
             background: #FFFFFF;
@@ -1294,7 +1295,7 @@ $catalogProducts = [
             left: 8px;
             background: var(--ws-gold-primary);
             color: #FFFFFF;
-            font-size: 0.60rem;
+            font-size: 0.65rem;
             font-weight: 800;
             text-transform: uppercase;
             padding: 2px 7px;
@@ -1306,9 +1307,9 @@ $catalogProducts = [
             position: absolute;
             bottom: 6px;
             right: 6px;
-            background: rgba(20,17,14,0.90);
+            background: rgba(20,17,14,0.92);
             color: #FBBF24;
-            font-size: 0.60rem;
+            font-size: 0.65rem;
             font-weight: 800;
             padding: 3px 7px;
             border-radius: 4px;
@@ -1322,14 +1323,14 @@ $catalogProducts = [
             flex: 1;
         }
         .ws-prod-cat {
-            font-size: 0.64rem;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--ws-light-text);
             text-transform: uppercase;
         }
         .ws-prod-name {
             font-family: var(--ws-font-serif);
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             font-weight: 800;
             color: var(--ws-dark-text);
             line-height: 1.25;
@@ -1345,24 +1346,24 @@ $catalogProducts = [
             justify-content: space-between;
         }
         .ws-prod-ws-price {
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             font-weight: 900;
             color: var(--ws-gold-primary);
         }
         .ws-prod-ret-price {
-            font-size: 0.70rem;
+            font-size: 0.74rem;
             color: var(--ws-light-text);
             text-decoration: line-through;
         }
         .ws-prod-order-btn {
             margin-top: 8px;
             width: 100%;
-            padding: 7px;
+            padding: 8px;
             border-radius: var(--ws-radius-sm);
             background: var(--ws-gold-pale);
             border: 1px solid var(--ws-gold-border);
             color: var(--ws-gold-primary);
-            font-size: 0.72rem;
+            font-size: 0.76rem;
             font-weight: 800;
             cursor: pointer;
             text-align: center;
@@ -1398,7 +1399,7 @@ $catalogProducts = [
             background: #FCFBF8;
             width: 100%;
             max-width: 620px;
-            max-height: 92vh;
+            max-height: 90vh;
             border-radius: var(--ws-radius-lg);
             border: 1.5px solid var(--ws-gold-primary);
             box-shadow: 0 24px 70px rgba(0,0,0,0.4);
@@ -1414,7 +1415,7 @@ $catalogProducts = [
         .ws-modal-header {
             background: #FFFFFF;
             border-bottom: 1.5px solid var(--ws-gold-border);
-            padding: 12px 18px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -1422,7 +1423,7 @@ $catalogProducts = [
         }
         .ws-modal-title {
             font-family: var(--ws-font-serif);
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--ws-gold-primary);
             display: flex;
@@ -1430,13 +1431,13 @@ $catalogProducts = [
             gap: 10px;
         }
         .ws-modal-close-btn {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             border: 1px solid var(--ws-gold-border);
             background: #FAF8F4;
             color: var(--ws-gold-primary);
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1449,10 +1450,19 @@ $catalogProducts = [
             transform: rotate(90deg);
         }
         .ws-modal-body {
-            padding: 18px;
+            padding: 18px 20px;
             overflow-y: auto;
             flex: 1;
             -webkit-overflow-scrolling: touch;
+        }
+        .ws-modal-footer {
+            padding: 14px 20px;
+            background: #FFFFFF;
+            border-top: 1.5px solid var(--ws-card-border);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         /* ── Interactive Shipment Timeline (Live Tracking) ── */
@@ -1512,14 +1522,15 @@ $catalogProducts = [
             fill: none;
         }
         .ws-timeline-title {
-            font-size: 0.84rem;
+            font-size: 0.86rem;
             font-weight: 800;
             color: var(--ws-dark-text);
         }
         .ws-timeline-date {
-            font-size: 0.68rem;
+            font-size: 0.74rem;
             color: var(--ws-light-text);
             margin-top: 3px;
+            font-weight: 600;
         }
 
         /* ── Support Ticket Chat Items ── */
@@ -1546,12 +1557,12 @@ $catalogProducts = [
             margin-bottom: 6px;
         }
         .ws-ticket-sub {
-            font-size: 0.82rem;
+            font-size: 0.84rem;
             font-weight: 800;
             color: var(--ws-dark-text);
         }
         .ws-ticket-msg {
-            font-size: 0.76rem;
+            font-size: 0.80rem;
             color: var(--ws-mid-text);
             line-height: 1.45;
         }
@@ -1580,13 +1591,13 @@ $catalogProducts = [
             font-weight: 900;
         }
         .ws-inv-brand p {
-            font-size: 0.72rem;
+            font-size: 0.76rem;
             color: #554E44;
             line-height: 1.35;
         }
         .ws-inv-meta {
             text-align: right;
-            font-size: 0.74rem;
+            font-size: 0.78rem;
             line-height: 1.45;
         }
         .ws-inv-meta strong {
@@ -1600,35 +1611,36 @@ $catalogProducts = [
             padding: 14px;
             border-radius: 8px;
             margin-bottom: 18px;
-            font-size: 0.76rem;
+            font-size: 0.80rem;
         }
         .ws-inv-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.76rem;
+            font-size: 0.80rem;
             margin-bottom: 18px;
         }
         .ws-inv-table th {
             background: #8A681F;
             color: #FFFFFF;
-            padding: 9px 12px;
+            padding: 10px 12px;
             text-align: left;
+            font-size: 0.76rem;
         }
         .ws-inv-table td {
-            padding: 9px 12px;
+            padding: 10px 12px;
             border-bottom: 1px solid #E5E0D5;
         }
         .ws-inv-totals {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 5px;
-            font-size: 0.78rem;
+            gap: 6px;
+            font-size: 0.82rem;
             border-top: 1.5px solid #8A681F;
             padding-top: 12px;
         }
         .ws-inv-grand-total {
-            font-size: 1.15rem;
+            font-size: 1.18rem;
             font-weight: 900;
             color: #8A681F;
         }
@@ -1666,7 +1678,7 @@ $catalogProducts = [
             margin-bottom: 10px;
         }
         .ws-gate-box p {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--ws-mid-text);
             margin-bottom: 20px;
             line-height: 1.55;
@@ -1695,7 +1707,7 @@ $catalogProducts = [
             align-items: center;
             gap: 3px;
             color: #A89E90;
-            font-size: 0.62rem;
+            font-size: 0.65rem;
             font-weight: 800;
             text-decoration: none;
             cursor: pointer;
@@ -1706,8 +1718,8 @@ $catalogProducts = [
             background: transparent;
         }
         .ws-dock-btn svg {
-            width: 19px;
-            height: 19px;
+            width: 20px;
+            height: 20px;
             stroke: currentColor;
             stroke-width: 2.2;
             fill: none;
@@ -1723,7 +1735,7 @@ $catalogProducts = [
         /* ── Toast Container ── */
         .ws-toast-container {
             position: fixed;
-            bottom: 68px;
+            bottom: 72px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 3000000;
@@ -1739,7 +1751,7 @@ $catalogProducts = [
             color: #FAF5E8;
             padding: 10px 18px;
             border-radius: 30px;
-            font-size: 0.78rem;
+            font-size: 0.80rem;
             font-weight: 700;
             box-shadow: 0 8px 24px rgba(0,0,0,0.35);
             border: 1.5px solid #C5A859;
@@ -1795,11 +1807,11 @@ $catalogProducts = [
 
         @media (max-width: 600px) {
             .ws-header {
-                padding: 6px 10px;
-                height: 52px;
+                padding: 6px 12px;
+                height: 54px;
             }
             .ws-main-content {
-                padding: 10px 8px 75px;
+                padding: 12px 10px 80px;
             }
             .ws-user-name {
                 display: none;
@@ -1818,32 +1830,63 @@ $catalogProducts = [
                 min-width: 105px;
             }
             .ws-prod-img-wrap {
-                height: 120px;
+                height: 125px;
             }
             .ws-prod-name {
-                font-size: 0.68rem;
+                font-size: 0.74rem;
             }
             .ws-prod-ws-price {
-                font-size: 0.76rem;
+                font-size: 0.82rem;
             }
             .ws-prod-ret-price {
                 display: none;
             }
             .ws-prod-body {
                 padding: 8px 6px;
-                gap: 3px;
+                gap: 4px;
             }
             .ws-prod-order-btn {
-                font-size: 0.64rem;
-                padding: 5px;
+                font-size: 0.68rem;
+                padding: 6px;
                 margin-top: 4px;
             }
+            
+            /* ── Luxury Mobile Modal Bottom Sheet (Full Improvement) ── */
+            .ws-modal-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
             .ws-modal-box {
-                max-height: 98vh;
-                border-radius: 14px;
+                max-height: 94vh;
+                height: auto;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                border-bottom: none;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .ws-modal-header {
+                padding: 12px 16px;
+                position: sticky;
+                top: 0;
+                z-index: 10;
             }
             .ws-modal-body {
-                padding: 14px;
+                padding: 14px 16px 20px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                flex: 1;
+            }
+            .ws-modal-footer {
+                padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+                flex-direction: column;
+                gap: 8px;
+            }
+            .ws-modal-footer .ws-btn {
+                width: 100%;
+                padding: 10px 14px;
+                font-size: 0.82rem;
             }
             .ws-inv-parties {
                 grid-template-columns: 1fr;
@@ -2015,7 +2058,7 @@ $catalogProducts = [
                                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                             </div>
                         </div>
-                        <div class="ws-stat-val" id="statTotalQty">48 <span style="font-size:0.75rem; font-family:var(--ws-font-sans); color:var(--ws-light-text);">Pcs</span></div>
+                        <div class="ws-stat-val" id="statTotalQty">48 <span style="font-size:0.80rem; font-family:var(--ws-font-sans); color:var(--ws-light-text);">Pcs</span></div>
                         <div class="ws-stat-sub">
                             <span class="ws-stat-trend up">+8.5% ↑</span> Bulk lots
                         </div>
@@ -2099,7 +2142,7 @@ $catalogProducts = [
                                     <span class="ws-prod-cat"><?= htmlspecialchars($prod['category']) ?> • HSN: <?= $prod['hsn'] ?></span>
                                     <h4 class="ws-prod-name"><?= htmlspecialchars($prod['name']) ?></h4>
                                     <div class="ws-prod-price-row">
-                                        <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.65rem; font-weight:600;">/ Pc</span></span>
+                                        <span class="ws-prod-ws-price">₹<?= number_format($prod['wholesale_price']) ?> <span style="font-size:0.70rem; font-weight:600;">/ Pc</span></span>
                                         <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                     </div>
                                     <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
@@ -2174,7 +2217,7 @@ $catalogProducts = [
                         </div>
 
                         <div style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--ws-card-border);">
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.90rem; color:var(--ws-gold-primary); margin-bottom:10px;">
+                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:10px;">
                                 🔒 Change Password (Leave blank to keep current)
                             </h4>
                             <div class="ws-form-grid">
@@ -2222,16 +2265,16 @@ $catalogProducts = [
                         <div class="ws-gst-option-card selected" id="gstCardGst" onclick="selectGstMode('gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
-                                <strong style="font-size:0.85rem; color:var(--ws-dark-text);">Registered with GST (Input Tax Credit)</strong>
-                                <p style="font-size:0.70rem; color:var(--ws-light-text); margin-top:2px;">Get official GSTR-1 compliant tax invoices for input tax credit.</p>
+                                <strong style="font-size:0.88rem; color:var(--ws-dark-text);">Registered with GST (Input Tax Credit)</strong>
+                                <p style="font-size:0.75rem; color:var(--ws-light-text); margin-top:2px;">Get official GSTR-1 compliant tax invoices for input tax credit.</p>
                             </div>
                         </div>
 
                         <div class="ws-gst-option-card" id="gstCardNonGst" onclick="selectGstMode('non_gst')">
                             <div class="ws-radio-dot"></div>
                             <div>
-                                <strong style="font-size:0.85rem; color:var(--ws-dark-text);">Unregistered / Non-GST Trader</strong>
-                                <p style="font-size:0.70rem; color:var(--ws-light-text); margin-top:2px;">Retail bills issued under composition or trader exempt threshold.</p>
+                                <strong style="font-size:0.88rem; color:var(--ws-dark-text);">Unregistered / Non-GST Trader</strong>
+                                <p style="font-size:0.75rem; color:var(--ws-light-text); margin-top:2px;">Retail bills issued under composition or trader exempt threshold.</p>
                             </div>
                         </div>
                     </div>
@@ -2247,7 +2290,7 @@ $catalogProducts = [
                             <div class="ws-form-group full" id="gstNumberFieldWrap">
                                 <label class="ws-label" for="wsGstNumber">
                                     <span>15-Character GSTIN Number <span class="req">*</span></span>
-                                    <span id="gstStateDetectTag" style="font-size:0.68rem; color:#8A681F; font-weight:700;">Format: 24AABCU9603R1ZM</span>
+                                    <span id="gstStateDetectTag" style="font-size:0.72rem; color:#8A681F; font-weight:700;">Format: 24AABCU9603R1ZM</span>
                                 </label>
                                 <input type="text" id="wsGstNumber" class="ws-input" placeholder="e.g. 24AABCU9603R1ZM" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
                                 <div class="ws-input-helper" id="gstinValidationMsg">Standard 15-character Indian Goods & Services Tax Identification Number.</div>
@@ -2477,16 +2520,16 @@ $catalogProducts = [
                     <div style="background:#FAF8F4; border:1px solid var(--ws-card-border); border-radius:10px; padding:16px; margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
                             <div>
-                                <h4 style="font-family:var(--ws-font-serif); font-size:1.05rem; color:var(--ws-gold-primary);">
+                                <h4 style="font-family:var(--ws-font-serif); font-size:1.1rem; color:var(--ws-gold-primary);">
                                     Order #KLN-WS-8021
                                 </h4>
-                                <div style="font-size:0.75rem; color:var(--ws-mid-text); margin-top:2px;">
+                                <div style="font-size:0.80rem; color:var(--ws-mid-text); margin-top:2px;">
                                     Nilambari Silk Saree (Pack of 12) • AWB: <strong>884729104</strong>
                                 </div>
                             </div>
                             <div style="text-align:right;">
-                                <div style="font-size:0.70rem; color:var(--ws-light-text);">Estimated Delivery</div>
-                                <div style="font-size:0.92rem; font-weight:800; color:#16A34A;">Tomorrow, 17 Aug 2026</div>
+                                <div style="font-size:0.74rem; color:var(--ws-light-text);">Estimated Delivery</div>
+                                <div style="font-size:0.95rem; font-weight:800; color:#16A34A;">Tomorrow, 17 Aug 2026</div>
                             </div>
                         </div>
 
@@ -2548,7 +2591,7 @@ $catalogProducts = [
                         
                         <!-- Open New Ticket Form -->
                         <div style="background:#FAF8F4; padding:16px; border-radius:12px; border:1px solid var(--ws-card-border);">
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.90rem; color:var(--ws-gold-primary); margin-bottom:12px;">
+                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:12px;">
                                 ✍️ Create New Support Ticket
                             </h4>
 
@@ -2587,7 +2630,7 @@ $catalogProducts = [
 
                         <!-- Ticket History List -->
                         <div>
-                            <h4 style="font-family:var(--ws-font-serif); font-size:0.90rem; color:var(--ws-gold-primary); margin-bottom:12px;">
+                            <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; color:var(--ws-gold-primary); margin-bottom:12px;">
                                 📋 My Open & Resolved Tickets
                             </h4>
 
@@ -2675,13 +2718,16 @@ $catalogProducts = [
         <div class="ws-modal-box" style="max-width: 620px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
-                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     <span id="modalOrderTitle">Order Details #KLN-WS-8021</span>
                 </h3>
-                <button class="ws-modal-close-btn" onclick="closeOrderDetailsModal()">&times;</button>
+                <button class="ws-modal-close-btn" onclick="closeOrderDetailsModal()" aria-label="Close Modal">&times;</button>
             </div>
             <div class="ws-modal-body" id="modalOrderBody">
                 <!-- Injected dynamically by JS -->
+            </div>
+            <div class="ws-modal-footer" id="modalOrderFooter">
+                <!-- Action buttons placed cleanly here so they are NEVER cut off -->
             </div>
         </div>
     </div>
@@ -2695,11 +2741,11 @@ $catalogProducts = [
                 <h3 class="ws-modal-title">
                     <span>📄 Official GST Tax Invoice Bill</span>
                 </h3>
-                <div style="display:flex; gap:6px;">
+                <div style="display:flex; gap:8px; align-items:center;">
                     <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printInvoiceSheet()">
                         🖨️ Print / Download PDF
                     </button>
-                    <button class="ws-modal-close-btn" onclick="closeBillInvoiceModal()">&times;</button>
+                    <button class="ws-modal-close-btn" onclick="closeBillInvoiceModal()" aria-label="Close Modal">&times;</button>
                 </div>
             </div>
             <div class="ws-modal-body">
@@ -2724,7 +2770,7 @@ $catalogProducts = [
                     <div class="ws-inv-parties">
                         <div>
                             <strong style="color:#8A681F;">BILLED TO (BUYER):</strong>
-                            <div id="invBilledTo" style="margin-top:3px; line-height:1.35;">
+                            <div id="invBilledTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Shree Krishna Silks Pvt Ltd</strong><br>
                                 GSTIN: 24AABCU9603R1ZM<br>
                                 Rajesh Kumar (+91 98765 43210)<br>
@@ -2733,7 +2779,7 @@ $catalogProducts = [
                         </div>
                         <div>
                             <strong style="color:#8A681F;">DISPATCHED / SHIPPED TO:</strong>
-                            <div id="invShippedTo" style="margin-top:3px; line-height:1.35;">
+                            <div id="invShippedTo" style="margin-top:4px; line-height:1.4;">
                                 <strong>Warehouse Central Store</strong><br>
                                 Fast Cargo Express<br>
                                 Surat, Gujarat - 395002
@@ -2764,17 +2810,17 @@ $catalogProducts = [
                     <div class="ws-inv-totals">
                         <div>Subtotal (Taxable Value): <strong id="invSubtotal">₹38,388</strong></div>
                         <div>CGST (2.5%) + SGST (2.5%): <strong id="invTax">₹1,920</strong></div>
-                        <div>Wholesale Discount / Rebate: <strong style="color:#16A34A;">-₹2,000</strong></div>
+                        <div>Wholesale Volume Discount: <strong style="color:#16A34A;">-₹2,000</strong></div>
                         <div class="ws-inv-grand-total">Grand Net Payable: <span id="invGrandTotal">₹38,308</span></div>
                     </div>
 
-                    <div style="margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; font-size:0.68rem; color:#78716C;">
+                    <div style="margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; font-size:0.75rem; color:#78716C;">
                         <div>
                             <p>Terms: Payment received against Proforma / Advance NEFT.</p>
                             <p>This is a computer-generated luxury tax invoice.</p>
                         </div>
                         <div style="text-align:center;">
-                            <div style="width:100px; border-bottom:1px solid #14110E; margin-bottom:4px;"></div>
+                            <div style="width:110px; border-bottom:1.5px solid #14110E; margin-bottom:4px;"></div>
                             <strong>Authorized Signatory</strong><br>
                             Kalaniketan Couture
                         </div>
@@ -2796,14 +2842,14 @@ $catalogProducts = [
                 <h3>Wholesaler Access Authentication Gate</h3>
                 <p>This portal is exclusively authorized for verified <strong>Wholesaler B2B Members</strong>. Please sign in with your registered wholesaler account to access bulk tier pricing, order tracking, and GST invoicing.</p>
                 
-                <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; flex-direction:column; gap:10px;">
                     <button class="ws-btn ws-btn-primary" onclick="loginAsDemoWholesaler()">
                         👑 Continue as Verified Wholesaler
                     </button>
                     <a href="myaccount.php?tab=login" class="ws-btn ws-btn-secondary">
                         Sign In with Other Account
                     </a>
-                    <a href="shop.php" style="font-size:0.72rem; color:var(--ws-light-text); text-decoration:none; margin-top:4px;">
+                    <a href="shop.php" style="font-size:0.78rem; color:var(--ws-light-text); text-decoration:none; margin-top:4px;">
                         ← Return to Retail Store
                     </a>
                 </div>
@@ -3298,8 +3344,8 @@ $catalogProducts = [
             mobContainer.innerHTML = '';
 
             if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#78716C;">No matching wholesale orders found.</td></tr>';
-                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#78716C;">No matching orders found.</div>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:30px; color:#6B6358;">No matching wholesale orders found.</td></tr>';
+                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#6B6358; font-weight:600;">No matching orders found.</div>';
                 return;
             }
 
@@ -3314,18 +3360,18 @@ $catalogProducts = [
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="color:#78716C; font-size:0.75rem;">${o.date}</td>
+                    <td style="color:#554E44; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
                             <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='images/product1.png';">
                             <div>
-                                <strong style="font-size:0.78rem; color:#1C1917;">${o.productName}</strong>
-                                <div style="font-size:0.68rem; color:#78716C;">SKU: ${o.sku} • ${o.courier}</div>
+                                <strong style="font-size:0.84rem; color:#110E0B;">${o.productName}</strong>
+                                <div style="font-size:0.74rem; color:#6B6358; font-weight:600;">SKU: ${o.sku} • ${o.courier}</div>
                             </div>
                         </div>
                     </td>
-                    <td><strong>${o.qty} Pcs</strong></td>
-                    <td><strong style="color:#8A681F; font-size:0.85rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td><strong style="font-size:0.84rem;">${o.qty} Pcs</strong></td>
+                    <td><strong style="color:#8A681F; font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
                     <td><span class="ws-status-badge ${statusClass}">${o.status}</span></td>
                     <td>
                         <div style="display:flex; gap:6px;">
@@ -3345,15 +3391,15 @@ $catalogProducts = [
                 card.className = 'ws-mob-order-card';
                 card.innerHTML = `
                     <div class="ws-mob-order-top">
-                        <span class="ws-order-id-cell" style="font-size:0.82rem;">${o.id}</span>
+                        <span class="ws-order-id-cell" style="font-size:0.88rem;">${o.id}</span>
                         <span class="ws-status-badge ${statusClass}">${o.status}</span>
                     </div>
                     <div class="ws-mob-order-body">
                         <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='images/product1.png';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
-                            <div class="ws-mob-order-meta">Date: ${o.date} • Lot: <strong>${o.qty} Pcs</strong></div>
-                            <div class="ws-mob-order-meta">Logistics: ${o.courier} (AWB: ${o.awb})</div>
+                            <div class="ws-mob-order-meta">Date: <strong>${o.date}</strong> • Lot: <strong>${o.qty} Pcs</strong></div>
+                            <div class="ws-mob-order-meta">${o.courier} (AWB: ${o.awb})</div>
                             <div class="ws-mob-order-price-row">
                                 <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
                             </div>
@@ -3384,14 +3430,14 @@ $catalogProducts = [
                     card.className = 'ws-mob-order-card';
                     card.innerHTML = `
                         <div class="ws-mob-order-top">
-                            <span class="ws-order-id-cell">${o.id}</span>
+                            <span class="ws-order-id-cell" style="font-size:0.88rem;">${o.id}</span>
                             <span class="ws-status-badge ${statusClass}">${o.status}</span>
                         </div>
                         <div class="ws-mob-order-body">
                             <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='images/product1.png';">
                             <div class="ws-mob-order-info">
                                 <h4 class="ws-mob-order-title">${o.productName}</h4>
-                                <div class="ws-mob-order-meta">${o.date} • Lot Qty: ${o.qty} Pcs</div>
+                                <div class="ws-mob-order-meta">${o.date} • Lot: <strong>${o.qty} Pcs</strong></div>
                                 <div class="ws-mob-order-price-row">
                                     <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
                                     <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
@@ -3415,7 +3461,7 @@ $catalogProducts = [
                 var matchSearch = !search || 
                     o.id.toLowerCase().includes(search) || 
                     o.productName.toLowerCase().includes(search) || 
-                    o.courier.toLowerCase().includes(search) ||
+                    o.courier.toLowerCase().includes(search) || 
                     o.awb.toLowerCase().includes(search);
                 return matchStatus && matchSearch;
             });
@@ -3441,14 +3487,14 @@ $catalogProducts = [
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="font-size:0.75rem; color:#78716C;">${o.date}</td>
-                    <td><span style="font-family:monospace; background:#FAF6ED; padding:2px 6px; border-radius:4px;">${o.hsn}</span></td>
+                    <td style="font-size:0.78rem; color:#554E44; font-weight:600;">${o.date}</td>
+                    <td><span style="font-family:monospace; background:#FAF6ED; padding:3px 7px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td><strong>${o.productName}</strong></td>
-                    <td>${o.qty}</td>
+                    <td><strong style="font-size:0.84rem;">${o.qty}</strong></td>
                     <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
-                    <td style="color:#16A34A;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                    <td><strong style="color:#8A681F;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                    <td style="font-size:0.72rem; color:#44403C;">${o.payment}</td>
+                    <td style="color:#16A34A; font-weight:700;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
+                    <td><strong style="color:#8A681F; font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                    <td style="font-size:0.76rem; color:#3B352E; font-weight:600;">${o.payment}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -3459,7 +3505,6 @@ $catalogProducts = [
                 b.classList.remove('active');
             });
             if (btn) btn.classList.add('active');
-            // Mock Date Filtering
             renderReportsView(activeOrdersList);
             window.showWsToast('📊 Reports filtered by: ' + range.toUpperCase());
         };
@@ -3506,12 +3551,12 @@ $catalogProducts = [
                 card.className = 'ws-ticket-card';
                 card.innerHTML = `
                     <div class="ws-ticket-head">
-                        <span style="font-family:var(--ws-font-serif); font-size:0.75rem; font-weight:800; color:#8A681F;">Ticket #${t.id}</span>
-                        <span style="font-size:0.65rem; font-weight:800; color:${statusColor}; background:#FAF8F4; padding:2px 8px; border-radius:12px; border:1px solid ${statusColor};">${t.status}</span>
+                        <span style="font-family:var(--ws-font-serif); font-size:0.80rem; font-weight:800; color:#8A681F;">Ticket #${t.id}</span>
+                        <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:#FAF8F4; padding:2px 8px; border-radius:12px; border:1.2px solid ${statusColor};">${t.status}</span>
                     </div>
                     <div class="ws-ticket-sub">Order Ref: ${t.orderId} • ${t.category}</div>
-                    <p class="ws-ticket-msg" style="margin-top:4px;">"${t.message}"</p>
-                    <div style="font-size:0.65rem; color:#78716C; margin-top:6px; display:flex; justify-content:space-between;">
+                    <p class="ws-ticket-msg" style="margin-top:5px;">"${t.message}"</p>
+                    <div style="font-size:0.72rem; color:#6B6358; font-weight:600; margin-top:8px; display:flex; justify-content:space-between;">
                         <span>📅 ${t.date}</span>
                         <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:800; text-decoration:none;">
                             WhatsApp Followup →
@@ -3550,67 +3595,71 @@ $catalogProducts = [
             var modal = document.getElementById('wsOrderDetailsModal');
             var title = document.getElementById('modalOrderTitle');
             var body = document.getElementById('modalOrderBody');
+            var footer = document.getElementById('modalOrderFooter');
 
             if (!modal || !body) return;
 
             title.textContent = `Order Details #${o.id}`;
             body.innerHTML = `
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:10px; border-bottom:1px dashed #DDD8CD;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:12px; border-bottom:1.5px dashed #DDD8CD;">
                     <div>
-                        <div style="font-size:0.75rem; color:#78716C;">Consignment Placed</div>
-                        <strong>${o.date}</strong>
+                        <div style="font-size:0.76rem; color:#6B6358; font-weight:600;">Consignment Placed</div>
+                        <strong style="font-size:0.92rem; color:#110E0B;">${o.date}</strong>
                     </div>
-                    <div>
-                        <div style="font-size:0.75rem; color:#78716C;">Current Status</div>
+                    <div style="text-align:right;">
+                        <div style="font-size:0.76rem; color:#6B6358; font-weight:600;">Current Status</div>
                         <span class="ws-status-badge ${o.status.toLowerCase()}">${o.status}</span>
                     </div>
                 </div>
 
-                <div style="display:flex; gap:14px; margin-bottom:14px;">
-                    <img src="${o.image}" alt="${o.productName}" style="width:68px; height:85px; border-radius:6px; object-fit:cover; border:1px solid #E7E2D6;">
+                <div style="display:flex; gap:14px; margin-bottom:14px; background:#FFFFFF; border:1.2px solid #EAE5DB; border-radius:10px; padding:12px;">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid #E7E2D6; flex-shrink:0;">
                     <div style="flex:1;">
-                        <h4 style="font-family:var(--ws-font-serif); font-size:0.92rem; color:#1C1917; margin-bottom:3px;">${o.productName}</h4>
-                        <div style="font-size:0.74rem; color:#78716C;">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
-                        <div style="font-size:0.74rem; color:#78716C;">Color: ${o.color} • Size: ${o.size}</div>
-                        <div style="font-size:0.80rem; font-weight:800; color:#8A681F; margin-top:4px;">
+                        <h4 style="font-family:var(--ws-font-serif); font-size:0.95rem; font-weight:800; color:#110E0B; margin-bottom:4px; line-height:1.25;">${o.productName}</h4>
+                        <div style="font-size:0.78rem; color:#554E44; font-weight:600;">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
+                        <div style="font-size:0.78rem; color:#554E44; font-weight:600;">Color: ${o.color} • Size: ${o.size}</div>
+                        <div style="font-size:0.86rem; font-weight:800; color:#8A681F; margin-top:6px;">
                             ${o.qty} Pcs @ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc
                         </div>
                     </div>
                 </div>
 
-                <div style="background:#FAF8F4; border:1px solid #EAE5DB; border-radius:8px; padding:12px; margin-bottom:14px; font-size:0.76rem;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span style="color:#78716C;">Taxable Item Total</span>
-                        <strong>₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
+                <div style="background:#FAF8F4; border:1.5px solid #EAE5DB; border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                        <span style="color:#554E44; font-weight:600;">Taxable Item Total</span>
+                        <strong style="color:#110E0B;">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span style="color:#78716C;">CGST (2.5%) + SGST (2.5%)</span>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                        <span style="color:#554E44; font-weight:600;">CGST (2.5%) + SGST (2.5%)</span>
                         <strong style="color:#16A34A;">₹${Number(o.tax).toLocaleString('en-IN')}</strong>
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <span style="color:#78716C;">Wholesale Volume Discount</span>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                        <span style="color:#554E44; font-weight:600;">Wholesale Volume Discount</span>
                         <strong style="color:#16A34A;">-₹${Number(o.discount).toLocaleString('en-IN')}</strong>
                     </div>
-                    <div style="display:flex; justify-content:space-between; padding-top:6px; border-top:1px solid #DDD8CD; font-size:0.90rem; font-weight:900; color:#8A681F;">
+                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1.5px solid #DDD8CD; font-size:1.05rem; font-weight:900; color:#8A681F;">
                         <span>Total Paid / Payable</span>
                         <span>₹${Number(o.total).toLocaleString('en-IN')}</span>
                     </div>
                 </div>
 
-                <div style="font-size:0.74rem; color:#44403C; margin-bottom:16px;">
+                <div style="font-size:0.80rem; color:#3B352E; line-height:1.5; background:#FFFFFF; border:1px solid #EAE5DB; border-radius:8px; padding:10px 14px;">
                     <p><strong>Logistics Partner:</strong> ${o.courier} (AWB: ${o.awb})</p>
                     <p><strong>Payment Instrument:</strong> ${o.payment}</p>
                 </div>
+            `;
 
-                <div style="display:flex; gap:8px;">
+            if (footer) {
+                footer.innerHTML = `
                     <button class="ws-btn ws-btn-primary" style="flex:1;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
                         📄 Download GST Bill PDF
                     </button>
                     <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20repeat%20wholesale%20lot%20order%20for%20${encodeURIComponent(o.productName)}%20(${o.qty}%20Pcs)" target="_blank" class="ws-btn ws-btn-wa" style="flex:1;">
                         💬 Repeat Wholesale Lot
                     </a>
-                </div>
-            `;
+                `;
+            }
+
             modal.classList.add('active');
         };
 
@@ -3657,7 +3706,7 @@ $catalogProducts = [
             tbody.innerHTML = `
                 <tr>
                     <td>1</td>
-                    <td><strong>${o.productName}</strong><br><span style="color:#78716C; font-size:0.68rem;">SKU: ${o.sku} • ${o.color}</span></td>
+                    <td><strong>${o.productName}</strong><br><span style="color:#6B6358; font-size:0.72rem;">SKU: ${o.sku} • ${o.color}</span></td>
                     <td>${o.hsn}</td>
                     <td>${o.qty}</td>
                     <td>₹${Number(o.unitPrice).toLocaleString('en-IN')}</td>
