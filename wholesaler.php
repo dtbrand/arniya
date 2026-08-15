@@ -676,59 +676,144 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
         }
 
-        /* ── Bar Chart Canvas & Grid (Gold Bars) ── */
-        .ws-bar-chart-container {
+        /* ── SVG Zigzag & Spline Line Chart (Metrica / TailAdmin Style) ── */
+        .ws-chart-wrapper {
             position: relative;
-            height: 200px;
+            width: 100%;
             display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 10px 0 24px 34px;
-            border-bottom: 1px solid var(--ws-border);
+            flex-direction: column;
+            margin-top: 10px;
+        }
+        .ws-chart-svg-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            display: flex;
         }
         .ws-chart-y-axis {
             position: absolute;
             left: 0;
-            top: 0;
-            bottom: 24px;
+            top: 4px;
+            bottom: 6px;
+            width: 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             font-size: 0.68rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--ws-text-muted);
+            text-align: right;
+            padding-right: 6px;
+            z-index: 2;
         }
-        .ws-bar-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            position: relative;
+        .ws-chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .ws-chart-gridline {
+            stroke: #EFEBE4;
+            stroke-dasharray: 4, 4;
+            stroke-width: 1;
+        }
+        .ws-chart-zigzag-area {
+            fill: url(#wsGoldAreaGrad);
+            opacity: 0.85;
+            transition: all 0.35s ease;
+        }
+        .ws-chart-zigzag-line {
+            fill: none;
+            stroke: url(#wsGoldLineGrad);
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 4px 10px rgba(138, 104, 31, 0.35));
+            transition: all 0.35s ease;
+        }
+        .ws-chart-node {
+            fill: #FFFFFF;
+            stroke: var(--ws-gold-primary);
+            stroke-width: 2.5;
+            r: 4.5;
             cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .ws-bar-pill {
-            width: 14px;
-            background: linear-gradient(180deg, var(--ws-gold-accent) 0%, var(--ws-gold-primary) 100%);
-            border-radius: 6px 6px 0 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+        .ws-chart-node:hover, .ws-chart-node.active {
+            r: 6.5;
+            fill: var(--ws-gold-primary);
+            stroke: #FFFFFF;
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 8px rgba(138, 104, 31, 0.65));
         }
-        .ws-bar-col:hover .ws-bar-pill {
-            background: linear-gradient(180deg, #EBDCB2 0%, var(--ws-gold-primary) 100%);
-            transform: scaleY(1.05);
-            box-shadow: 0 4px 12px rgba(138,104,31,0.35);
-        }
-        .ws-bar-col.active .ws-bar-pill {
-            background: linear-gradient(180deg, #D4AF37 0%, var(--ws-gold-deep) 100%);
-            box-shadow: 0 0 10px rgba(212,175,55,0.45);
-        }
-        .ws-bar-month {
-            position: absolute;
-            bottom: -20px;
+        .ws-chart-x-axis {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 6px 0 34px;
             font-size: 0.68rem;
             font-weight: 700;
             color: var(--ws-text-muted);
+            border-top: 1.5px solid var(--ws-border);
+            margin-top: 4px;
+        }
+        .ws-chart-x-axis span {
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ws-chart-x-axis span:hover, .ws-chart-x-axis span.active {
+            color: var(--ws-gold-primary);
+            font-weight: 800;
+        }
+
+        /* Chart Floating Live Tooltip */
+        .ws-chart-tooltip {
+            background: #14110E;
+            color: #FAF5E8;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: 1px solid var(--ws-gold-accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            width: fit-content;
+            transition: all 0.2s ease;
+        }
+        .ws-chart-tooltip-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22C55E;
+            box-shadow: 0 0 6px #22C55E;
+            flex-shrink: 0;
+        }
+        .ws-chart-type-pill {
+            display: inline-flex;
+            background: var(--ws-gold-light);
+            border: 1px solid var(--ws-gold-border);
+            border-radius: 20px;
+            padding: 2px;
+            gap: 2px;
+        }
+        .ws-chart-type-btn {
+            background: transparent;
+            border: none;
+            padding: 3px 9px;
+            border-radius: 16px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--ws-text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ws-chart-type-btn.active {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            box-shadow: 0 2px 6px rgba(138, 104, 31, 0.3);
         }
 
         /* ── Semi-Circular Target Gauge Arc (Heritage Gold) ── */
@@ -2569,35 +2654,100 @@ $catalogProducts = [
                 <!-- Middle Analytics Grid (Monthly Sales Bar Chart + Target Gauge) -->
                 <div class="ws-analytics-grid">
                     
-                    <!-- Left: Monthly Sales Bar Chart (Heritage Gold Gradient Bars) -->
+                    <!-- Left: Monthly Sales Zigzag Line & Spline Area Chart (Metrica Luxury Style) -->
                     <div class="ws-analytics-card">
-                        <div class="ws-card-top-bar">
-                            <h3 id="chartTitle">Monthly Sales</h3>
-                            <button class="ws-dots-btn">⋮</button>
+                        <div class="ws-card-top-bar" style="margin-bottom: 12px;">
+                            <div>
+                                <h3 id="chartTitle" style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Monthly Sales Trend</h3>
+                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;" id="chartSubtitle">Consignment units & wholesale turnover</p>
+                            </div>
+                            <div class="ws-chart-type-pill">
+                                <button class="ws-chart-type-btn active" id="btnChartZigzag" onclick="switchSalesChartStyle('zigzag', this)">Zigzag</button>
+                                <button class="ws-chart-type-btn" id="btnChartSmooth" onclick="switchSalesChartStyle('smooth', this)">Smooth</button>
+                            </div>
                         </div>
 
-                        <div class="ws-bar-chart-container" id="barChartContainer">
-                            <div class="ws-chart-y-axis">
-                                <span>400</span>
-                                <span>300</span>
-                                <span>200</span>
-                                <span>100</span>
-                                <span>0</span>
+                        <!-- Live Tooltip Display -->
+                        <div class="ws-chart-tooltip" id="chartLiveTooltip">
+                            <span class="ws-chart-tooltip-dot"></span>
+                            <span id="chartTooltipText">Aug (Current): ₹2,05,062 • 48 Pcs (↑18.4%)</span>
+                        </div>
+
+                        <div class="ws-chart-wrapper" id="salesChartMainWrapper">
+                            <div class="ws-chart-svg-container">
+                                <!-- Y Axis Labels -->
+                                <div class="ws-chart-y-axis">
+                                    <span>400k</span>
+                                    <span>300k</span>
+                                    <span>200k</span>
+                                    <span>100k</span>
+                                    <span>0k</span>
+                                </div>
+
+                                <svg class="ws-chart-svg" viewBox="0 0 600 170" preserveAspectRatio="none" style="padding-left: 34px;">
+                                    <defs>
+                                        <!-- Gold Gradient for the Line -->
+                                        <linearGradient id="wsGoldLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" stop-color="#8A681F" />
+                                            <stop offset="35%" stop-color="#C5A859" />
+                                            <stop offset="70%" stop-color="#D4AF37" />
+                                            <stop offset="100%" stop-color="#6F5218" />
+                                        </linearGradient>
+
+                                        <!-- Translucent Gold Area Fill Gradient -->
+                                        <linearGradient id="wsGoldAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#C5A859" stop-opacity="0.45" />
+                                            <stop offset="60%" stop-color="#8A681F" stop-opacity="0.15" />
+                                            <stop offset="100%" stop-color="#8A681F" stop-opacity="0.01" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <!-- Horizontal Dashed Grid Lines -->
+                                    <line class="ws-chart-gridline" x1="0" y1="10" x2="600" y2="10" />
+                                    <line class="ws-chart-gridline" x1="0" y1="48" x2="600" y2="48" />
+                                    <line class="ws-chart-gridline" x1="0" y1="86" x2="600" y2="86" />
+                                    <line class="ws-chart-gridline" x1="0" y1="124" x2="600" y2="124" />
+                                    <line class="ws-chart-gridline" x1="0" y1="162" x2="600" y2="162" />
+
+                                    <!-- Zigzag Area Gradient Fill -->
+                                    <path class="ws-chart-zigzag-area" id="svgAreaPath" 
+                                          d="M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130 L 575,162 L 25,162 Z" />
+
+                                    <!-- Zigzag Line Stroke -->
+                                    <path class="ws-chart-zigzag-line" id="svgLinePath" 
+                                          d="M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130" />
+
+                                    <!-- 12 Month Interactive Nodes -->
+                                    <circle class="ws-chart-node" cx="25" cy="120" onmouseover="showChartNodeTooltip(0)" onclick="showChartNodeTooltip(0)" />
+                                    <circle class="ws-chart-node" cx="75" cy="40" onmouseover="showChartNodeTooltip(1)" onclick="showChartNodeTooltip(1)" />
+                                    <circle class="ws-chart-node" cx="125" cy="110" onmouseover="showChartNodeTooltip(2)" onclick="showChartNodeTooltip(2)" />
+                                    <circle class="ws-chart-node" cx="175" cy="60" onmouseover="showChartNodeTooltip(3)" onclick="showChartNodeTooltip(3)" />
+                                    <circle class="ws-chart-node" cx="225" cy="115" onmouseover="showChartNodeTooltip(4)" onclick="showChartNodeTooltip(4)" />
+                                    <circle class="ws-chart-node" cx="275" cy="100" onmouseover="showChartNodeTooltip(5)" onclick="showChartNodeTooltip(5)" />
+                                    <circle class="ws-chart-node" cx="325" cy="65" onmouseover="showChartNodeTooltip(6)" onclick="showChartNodeTooltip(6)" />
+                                    <circle class="ws-chart-node active" cx="375" cy="50" onmouseover="showChartNodeTooltip(7)" onclick="showChartNodeTooltip(7)" />
+                                    <circle class="ws-chart-node" cx="425" cy="95" onmouseover="showChartNodeTooltip(8)" onclick="showChartNodeTooltip(8)" />
+                                    <circle class="ws-chart-node" cx="475" cy="30" onmouseover="showChartNodeTooltip(9)" onclick="showChartNodeTooltip(9)" />
+                                    <circle class="ws-chart-node" cx="525" cy="75" onmouseover="showChartNodeTooltip(10)" onclick="showChartNodeTooltip(10)" />
+                                    <circle class="ws-chart-node" cx="575" cy="130" onmouseover="showChartNodeTooltip(11)" onclick="showChartNodeTooltip(11)" />
+                                </svg>
                             </div>
 
-                            <!-- 12-Month Bars (Jan - Dec) with Heritage Gold Gradients -->
-                            <div class="ws-bar-col" id="barMonth0" title="Jan"><div class="ws-bar-pill" style="height: 40%;"></div><span class="ws-bar-month">Jan</span></div>
-                            <div class="ws-bar-col" id="barMonth1" title="Feb"><div class="ws-bar-pill" style="height: 95%;"></div><span class="ws-bar-month">Feb</span></div>
-                            <div class="ws-bar-col" id="barMonth2" title="Mar"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Mar</span></div>
-                            <div class="ws-bar-col" id="barMonth3" title="Apr"><div class="ws-bar-pill" style="height: 72%;"></div><span class="ws-bar-month">Apr</span></div>
-                            <div class="ws-bar-col" id="barMonth4" title="May"><div class="ws-bar-pill" style="height: 45%;"></div><span class="ws-bar-month">May</span></div>
-                            <div class="ws-bar-col" id="barMonth5" title="Jun"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Jun</span></div>
-                            <div class="ws-bar-col" id="barMonth6" title="Jul"><div class="ws-bar-pill" style="height: 70%;"></div><span class="ws-bar-month">Jul</span></div>
-                            <div class="ws-bar-col active" id="barMonth7" title="Aug (Current)"><div class="ws-bar-pill" style="height: 65%;"></div><span class="ws-bar-month">Aug</span></div>
-                            <div class="ws-bar-col" id="barMonth8" title="Sep"><div class="ws-bar-pill" style="height: 52%;"></div><span class="ws-bar-month">Sep</span></div>
-                            <div class="ws-bar-col" id="barMonth9" title="Oct"><div class="ws-bar-pill" style="height: 98%;"></div><span class="ws-bar-month">Oct</span></div>
-                            <div class="ws-bar-col" id="barMonth10" title="Nov"><div class="ws-bar-pill" style="height: 68%;"></div><span class="ws-bar-month">Nov</span></div>
-                            <div class="ws-bar-col" id="barMonth11" title="Dec"><div class="ws-bar-pill" style="height: 28%;"></div><span class="ws-bar-month">Dec</span></div>
+                            <!-- X Axis Month Labels -->
+                            <div class="ws-chart-x-axis">
+                                <span onmouseover="showChartNodeTooltip(0)" onclick="showChartNodeTooltip(0)">Jan</span>
+                                <span onmouseover="showChartNodeTooltip(1)" onclick="showChartNodeTooltip(1)">Feb</span>
+                                <span onmouseover="showChartNodeTooltip(2)" onclick="showChartNodeTooltip(2)">Mar</span>
+                                <span onmouseover="showChartNodeTooltip(3)" onclick="showChartNodeTooltip(3)">Apr</span>
+                                <span onmouseover="showChartNodeTooltip(4)" onclick="showChartNodeTooltip(4)">May</span>
+                                <span onmouseover="showChartNodeTooltip(5)" onclick="showChartNodeTooltip(5)">Jun</span>
+                                <span onmouseover="showChartNodeTooltip(6)" onclick="showChartNodeTooltip(6)">Jul</span>
+                                <span class="active" onmouseover="showChartNodeTooltip(7)" onclick="showChartNodeTooltip(7)">Aug</span>
+                                <span onmouseover="showChartNodeTooltip(8)" onclick="showChartNodeTooltip(8)">Sep</span>
+                                <span onmouseover="showChartNodeTooltip(9)" onclick="showChartNodeTooltip(9)">Oct</span>
+                                <span onmouseover="showChartNodeTooltip(10)" onclick="showChartNodeTooltip(10)">Nov</span>
+                                <span onmouseover="showChartNodeTooltip(11)" onclick="showChartNodeTooltip(11)">Dec</span>
+                            </div>
                         </div>
                     </div>
 
@@ -5080,6 +5230,54 @@ $catalogProducts = [
             } else if (p) {
                 var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at Kalaniketan: ' + window.location.origin + '/singelprodut.php?id=' + p.id);
                 window.open(waUrl, '_blank');
+            }
+        };
+
+        /* ── Monthly Sales Chart Data & Interactive Tooltips ── */
+        var MONTH_SALES_DATA = [
+            { m: 'Jan', val: '₹1,24,000', qty: '32 Pcs', growth: '+5.2%' },
+            { m: 'Feb', val: '₹3,42,000', qty: '84 Pcs', growth: '+28.4%' },
+            { m: 'Mar', val: '₹1,48,000', qty: '38 Pcs', growth: '+4.1%' },
+            { m: 'Apr', val: '₹2,88,000', qty: '72 Pcs', growth: '+19.6%' },
+            { m: 'May', val: '₹1,36,000', qty: '35 Pcs', growth: '-2.0%' },
+            { m: 'Jun', val: '₹1,65,000', qty: '42 Pcs', growth: '+8.3%' },
+            { m: 'Jul', val: '₹2,72,000', qty: '68 Pcs', growth: '+15.2%' },
+            { m: 'Aug', val: '₹2,05,062', qty: '48 Pcs', growth: '↑ 18.4%' },
+            { m: 'Sep', val: '₹1,90,000', qty: '46 Pcs', growth: '+7.5%' },
+            { m: 'Oct', val: '₹3,85,000', qty: '96 Pcs', growth: '+32.0%' },
+            { m: 'Nov', val: '₹2,48,000', qty: '62 Pcs', growth: '+12.8%' },
+            { m: 'Dec', val: '₹1,15,000', qty: '28 Pcs', growth: '-5.0%' }
+        ];
+
+        window.showChartNodeTooltip = function(idx) {
+            var item = MONTH_SALES_DATA[idx];
+            if (!item) return;
+            var el = document.getElementById('chartTooltipText');
+            if (el) el.textContent = `${item.m}: ${item.val} • ${item.qty} (${item.growth})`;
+            document.querySelectorAll('.ws-chart-node').forEach(function(node, i) {
+                node.classList.toggle('active', i === idx);
+            });
+            document.querySelectorAll('.ws-chart-x-axis span').forEach(function(span, i) {
+                span.classList.toggle('active', i === idx);
+            });
+        };
+
+        window.switchSalesChartStyle = function(type, btn) {
+            document.querySelectorAll('.ws-chart-type-btn').forEach(function(b) { b.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+
+            var line = document.getElementById('svgLinePath');
+            var area = document.getElementById('svgAreaPath');
+            if (!line || !area) return;
+
+            if (type === 'smooth') {
+                // Smooth curved spline wave
+                line.setAttribute('d', 'M 25,120 Q 50,40 75,40 T 125,110 T 175,60 T 225,115 T 275,100 T 325,65 T 375,50 T 425,95 T 475,30 T 525,75 T 575,130');
+                area.setAttribute('d', 'M 25,120 Q 50,40 75,40 T 125,110 T 175,60 T 225,115 T 275,100 T 325,65 T 375,50 T 425,95 T 475,30 T 525,75 T 575,130 L 575,162 L 25,162 Z');
+            } else {
+                // Crisp Zigzag Lines (Metrica Style)
+                line.setAttribute('d', 'M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130');
+                area.setAttribute('d', 'M 25,120 L 75,40 L 125,110 L 175,60 L 225,115 L 275,100 L 325,65 L 375,50 L 425,95 L 475,30 L 525,75 L 575,130 L 575,162 L 25,162 Z');
             }
         };
 
