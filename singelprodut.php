@@ -593,14 +593,113 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-radius: 6px;
     border: 1px solid var(--gold-border);
 }
-.pdp-tax-note {
-    font-size: 0.72rem;
-    color: #2E7D32;
-    font-weight: 700;
-    margin-top: 4px;
+/* Animated Luxury Perks Badge Strip */
+.pdp-animated-perks-strip {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--gold-border);
+}
+@media (max-width: 600px) {
+    .pdp-animated-perks-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+}
+.pdp-perk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: all 0.25s ease;
+    border: 1px solid var(--gold-border);
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-pale) 100%);
+    color: var(--dark-text);
+    box-shadow: 0 1px 4px rgba(138, 104, 31, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+.pdp-perk-badge::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+    animation: pdpShimmer 3.5s infinite;
+}
+@keyframes pdpShimmer {
+    0% { left: -100%; }
+    25% { left: 150%; }
+    100% { left: 150%; }
+}
+.pdp-perk-badge:hover {
+    transform: translateY(-1px);
+    border-color: var(--dark-gold);
+    box-shadow: 0 3px 8px rgba(138, 104, 31, 0.15);
+}
+
+.pdp-perk-quality {
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D1 100%);
+    border-color: rgba(212, 175, 55, 0.45);
+    color: #7A580A;
+}
+.pdp-perk-tax {
+    background: linear-gradient(135deg, #F8F9FA 0%, #EFF2F5 100%);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #4A5568;
+}
+.pdp-perk-delivery {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border-color: rgba(46, 125, 50, 0.35);
+    color: #1B5E20;
+}
+.pdp-perk-exchange {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-color: rgba(25, 118, 210, 0.35);
+    color: #0D47A1;
+}
+
+.pdp-perk-icon {
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.pdp-perk-icon.pulse {
+    animation: pdpIconPulse 2s infinite ease-in-out;
+}
+@keyframes pdpIconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.22); }
+}
+.pdp-perk-icon.flash {
+    animation: pdpIconFlash 1.6s infinite ease-in-out;
+}
+@keyframes pdpIconFlash {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.18); }
+}
+.pdp-perk-icon.spin {
+    animation: pdpIconWiggle 3s infinite ease-in-out;
+}
+@keyframes pdpIconWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-12deg); }
+    75% { transform: rotate(12deg); }
+}
+.pdp-perk-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Color Options */
@@ -1622,9 +1721,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="pdp-discount-badge"><?= $product['discount'] ?>% OFF</span>
                     <?php endif; ?>
                 </div>
-                <div class="pdp-tax-note">
-                    <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Exclusive of all taxes • ⚡ Fast Express Delivery • 7-Day Fast Exchange</span>
+                <!-- Animated Luxury Perks Strip -->
+                <div class="pdp-animated-perks-strip">
+                    <div class="pdp-perk-badge pdp-perk-quality">
+                        <span class="pdp-perk-icon pulse">👑</span>
+                        <span class="pdp-perk-text">Premium Quality</span>
+                    </div>
+                    <div class="pdp-perk-badge pdp-perk-tax">
+                        <span class="pdp-perk-icon">🏷️</span>
+                        <span class="pdp-perk-text">Exclusive of all taxes</span>
+                    </div>
+                    <div class="pdp-perk-badge pdp-perk-delivery">
+                        <span class="pdp-perk-icon flash">⚡</span>
+                        <span class="pdp-perk-text">Fast Express Delivery</span>
+                    </div>
+                    <div class="pdp-perk-badge pdp-perk-exchange">
+                        <span class="pdp-perk-icon spin">💎</span>
+                        <span class="pdp-perk-text">7-Day Fast Exchange</span>
+                    </div>
                 </div>
             </div>
 
