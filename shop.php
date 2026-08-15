@@ -1853,7 +1853,9 @@ input[type=range].sf-range::-moz-range-thumb {
                 aria-label="<?= htmlspecialchars($p['name']) ?>"
             >
                 <div class="card-image-wrap">
-                    <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" />
+                    <a href="singelprodut.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
+                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" />
+                    </a>
 
                     <?php if (!empty($p['badge'])): ?>
                     <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars($p['badge']) ?></span>
@@ -1877,7 +1879,11 @@ input[type=range].sf-range::-moz-range-thumb {
 
                 <div class="card-body">
                     <!-- Product Title -->
-                    <h2 class="card-name"><?= htmlspecialchars($p['name']) ?></h2>
+                    <h2 class="card-name">
+                        <a href="singelprodut.php?id=<?= $p['id'] ?>" style="color:inherit;text-decoration:none;">
+                            <?= htmlspecialchars($p['name']) ?>
+                        </a>
+                    </h2>
 
                     <!-- Clean Text Info Row: Available Colours & Sizes -->
                     <?php 
