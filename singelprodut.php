@@ -568,7 +568,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     flex-direction: column;
     gap: 12px;
     position: relative;
-    max-width: 440px;
+    max-width: 500px;
     width: 100%;
     margin: 0 auto;
 }
@@ -580,28 +580,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Main Image Slider Viewport (Full Size No Crop Contained) */
+/* Main Image Slider Viewport (Elegant Vertical Fashion Portrait) */
 .pdp-gallery-slider {
     position: relative;
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
-    background: #FAF9F6;
-    aspect-ratio: 1 / 1;
-    max-height: 480px;
+    background: #FAF8F4;
+    aspect-ratio: 3 / 3.85;
+    max-height: 580px;
     width: 100%;
     margin: 0 auto;
-    border: 1.5px solid var(--gold-border, rgba(138,104,31,0.22));
-    box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+    border: 1px solid rgba(138, 104, 31, 0.22);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.06);
 }
 
 @media (max-width: 767px) {
+    .pdp-main-wrapper {
+        padding: 8px 10px 24px;
+    }
     .pdp-gallery-column {
-        max-width: 360px;
+        max-width: 100%;
+        gap: 10px;
     }
     .pdp-gallery-slider {
-        max-height: 380px;
-        aspect-ratio: 1 / 1;
-        border-radius: 12px;
+        aspect-ratio: 3 / 3.75;
+        max-height: 480px;
+        border-radius: 14px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     }
 }
 
@@ -629,34 +634,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #FAF9F6;
+    background: #FAF8F4;
 }
 .pdp-slide img {
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center;
+    object-fit: cover;
+    object-position: center top;
     user-select: none;
     -webkit-user-drag: none;
     cursor: zoom-in;
+    transition: transform 0.4s ease;
 }
 
 /* Slide Counter Badge (Mobile) */
 .pdp-slide-counter {
     position: absolute;
-    bottom: 14px;
-    right: 14px;
-    background: rgba(24, 21, 18, 0.75);
-    backdrop-filter: blur(6px);
+    bottom: 12px;
+    right: 12px;
+    background: rgba(24, 21, 18, 0.78);
+    backdrop-filter: blur(8px);
     color: #FFFFFF;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 4px 10px;
+    padding: 3px 10px;
     border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
     letter-spacing: 0.08em;
     z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
 /* Slider Navigation Arrows */
@@ -666,18 +672,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transform: translateY(-50%);
     width: 38px; height: 38px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
     border: 1px solid var(--gold-border);
     color: var(--dark-gold);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     z-index: 6;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.14);
 }
 .pdp-slider-arrow:hover {
     background: var(--dark-gold);
     color: #FFFFFF;
+    transform: translateY(-50%) scale(1.08);
 }
 .pdp-slider-arrow.prev { left: 12px; }
 .pdp-slider-arrow.next { right: 12px; }
@@ -690,41 +698,43 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Badge Tag */
 .pdp-badge-tag {
     position: absolute;
-    top: 14px; left: 14px;
-    background: var(--dark-gold);
+    top: 12px; left: 12px;
+    background: rgba(138, 104, 31, 0.94);
+    backdrop-filter: blur(8px);
     color: #FFFFFF;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 5px 12px;
-    border-radius: 4px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
     z-index: 5;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
 
 /* Fullscreen Zoom Trigger Icon */
 .pdp-zoom-btn {
     position: absolute;
-    top: 14px; right: 14px;
-    width: 36px; height: 36px;
+    top: 12px; right: 12px;
+    width: 34px; height: 34px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.9);
-    backdrop-filter: blur(4px);
-    border: 1px solid var(--gold-border);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(138,104,31,0.28);
     color: var(--dark-gold);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
     z-index: 5;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
 }
 .pdp-zoom-btn:hover {
     background: var(--dark-gold);
     color: #FFFFFF;
-    transform: scale(1.08);
+    transform: scale(1.1);
 }
-.pdp-zoom-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.pdp-zoom-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
 /* Thumbnails Strip */
 .pdp-thumbnails-strip {
@@ -737,15 +747,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
 .pdp-thumb-item {
-    width: 58px;
+    width: 56px;
     height: 70px;
     border-radius: 8px;
     overflow: hidden;
-    border: 2px solid var(--soft-platinum);
-    background: #FAF9F6;
+    border: 1.5px solid var(--soft-platinum);
+    background: #FAF8F4;
     cursor: pointer;
     flex-shrink: 0;
-    opacity: 0.7;
+    opacity: 0.75;
     transition: all 0.25s ease;
     display: flex;
     align-items: center;
@@ -758,19 +768,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-thumb-item.active {
     opacity: 1;
     border-color: var(--dark-gold);
-    box-shadow: 0 4px 12px rgba(138,104,31,0.25);
+    box-shadow: 0 0 0 2px rgba(138,104,31,0.35);
     transform: translateY(-2px);
 }
 .pdp-thumb-item img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
+    object-fit: cover;
+    object-position: center top;
 }
 @media (max-width: 767px) {
     .pdp-thumb-item {
         width: 48px;
-        height: 58px;
+        height: 60px;
     }
 }
 
