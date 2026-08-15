@@ -1739,15 +1739,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     </div>
                 </div>
 
-                <!-- 3. Fast Delivery & Exchange -->
+                <!-- 3. Fast Delivery & 100% Original Product -->
                 <div class="pdp-acc-item">
                     <button class="pdp-acc-header" onclick="togglePdpAcc(this)">
-                        <span>⚡ Fast Express Delivery, Authenticity & Fast Exchange</span>
+                        <span>⚡ Fast Express Delivery, 100% Original Product & Fast Exchange</span>
                         <span class="pdp-acc-icon">▾</span>
                     </button>
                     <div class="pdp-acc-body">
                         <p>
-                            • <strong>100% Genuine Certified</strong> Handloom Ethnic Couture directly from Kalaniketan master weavers.<br />
+                            • <strong>✨ 100% Original Product Guarantee</strong>: Certified authentic handloom ethnic couture directly from Kalaniketan master weavers.<br />
                             • <strong>⚡ Fast Express Delivery</strong>: Priority dispatch across all pincodes in India within 24-48 hours.<br />
                             • <strong>💎 7-Day Fast Doorstep Exchange</strong>: Fast, hassle-free size and fit exchanges arranged seamlessly via our WhatsApp helpline with zero extra charges.
                         </p>

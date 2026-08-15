@@ -977,7 +977,7 @@
 
                 <div class="co-guarantee-note">
                     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>100% Authentic Handloom • ⚡ 7-Day Fast Exchange</span>
+                    <span>✨ 100% Original Product • ⚡ 7-Day Fast Exchange</span>
                 </div>
 
             </div>

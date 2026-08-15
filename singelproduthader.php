@@ -294,7 +294,7 @@
 <header class="pdp-header" id="pdpHeader">
     <!-- Top Announcement Bar -->
     <div class="pdp-top-ticker">
-        <span>✨ 100% Authentic Handloom Silk</span>
+        <span>✨ 100% Original Product</span>
         <span>•</span>
         <span>⚡ Fast Express Delivery Across India</span>
         <span>•</span>
