@@ -1023,44 +1023,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     box-shadow: 0 4px 14px rgba(138,104,31,0.25);
 }
 
-/* Filter Tags Row */
-.pdp-rev-filters-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 4px;
-}
-.pdp-rev-filters-row::-webkit-scrollbar { display: none; }
-.pdp-rev-filter-pill {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1.2px solid var(--soft-platinum);
-    background: var(--off-white);
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: var(--dark-text);
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.pdp-rev-filter-pill:hover { border-color: var(--dark-gold); }
-.pdp-rev-filter-pill.active {
-    background: var(--dark-gold);
-    color: #FFFFFF;
-    border-color: var(--dark-gold);
-}
-
 /* Auto-Sliding Carousel Wrapper */
 .pdp-reviews-carousel-wrap {
     position: relative;
-    margin-top: 22px;
+    margin-top: 18px;
 }
 .pdp-reviews-track {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -1071,44 +1041,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-reviews-track::-webkit-scrollbar { display: none; }
 
-/* Review Card */
+/* Review Card — Compact Luxury Small Size */
 .pdp-review-card {
-    flex: 0 0 310px;
-    max-width: 340px;
+    flex: 0 0 270px;
+    max-width: 290px;
     scroll-snap-align: start;
     background: var(--off-white);
-    border-radius: 14px;
-    padding: 18px 20px;
-    border: 1.5px solid var(--soft-platinum);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1.2px solid var(--soft-platinum);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     transition: all 0.25s ease;
 }
-@media (min-width: 768px) {
+@media (max-width: 600px) {
     .pdp-review-card {
-        flex: 0 0 360px;
-        max-width: 380px;
+        flex: 0 0 250px;
+        max-width: 265px;
+        padding: 12px 14px;
     }
 }
 .pdp-review-card:hover {
     border-color: var(--dark-gold);
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(138,104,31,0.12);
+    box-shadow: 0 6px 18px rgba(138,104,31,0.12);
 }
 
 .pdp-rc-top {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 .pdp-rc-avatar {
-    width: 38px; height: 38px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
     color: #FFFFFF;
-    font-size: 0.82rem;
+    font-size: 0.75rem;
     font-weight: 800;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
@@ -1116,93 +1087,87 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-rc-meta {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
     flex: 1;
+    min-width: 0;
 }
 .pdp-rc-name {
-    font-size: 0.86rem;
+    font-size: 0.8rem;
     font-weight: 800;
     color: var(--dark-text);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .pdp-verified-badge {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    font-size: 0.62rem;
+    gap: 2px;
+    font-size: 0.58rem;
     color: #2E7D32;
     background: #E8F5E9;
-    padding: 2px 6px;
+    padding: 1.5px 5px;
     border-radius: 4px;
     font-weight: 700;
+    white-space: nowrap;
 }
 .pdp-rc-loc-date {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: var(--light-text);
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .pdp-rc-stars {
     color: #F59E0B;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
 }
 
 .pdp-rc-occasion {
     display: inline-block;
     align-self: flex-start;
-    padding: 2px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
     background: var(--gold-pale);
     color: var(--dark-gold);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
 .pdp-rc-text {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--mid-text);
-    line-height: 1.55;
+    line-height: 1.45;
     flex: 1;
 }
-
-/* Customer Photos attached in review */
-.pdp-rc-photo-box {
-    margin-top: 4px;
-    width: 60px; height: 75px;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid var(--gold-border);
-    cursor: zoom-in;
-}
-.pdp-rc-photo-box img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.2s;
-}
-.pdp-rc-photo-box:hover img { transform: scale(1.1); }
 
 .pdp-rc-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 8px;
+    padding-top: 6px;
     border-top: 1px solid var(--soft-platinum);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     color: var(--light-text);
 }
 .pdp-rc-helpful-btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 8px;
-    border-radius: 6px;
+    gap: 4px;
+    padding: 3px 7px;
+    border-radius: 5px;
     border: 1px solid var(--soft-platinum);
     background: #FFFFFF;
     color: var(--mid-text);
-    font-size: 0.7rem;
+    font-size: 0.66rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
@@ -1218,7 +1183,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     position: absolute;
     top: 45%;
     transform: translateY(-50%);
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     background: rgba(255,255,255,0.95);
     border: 1.5px solid var(--gold-border);
@@ -1234,9 +1199,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #FFFFFF;
     transform: translateY(-50%) scale(1.08);
 }
-.pdp-rev-arrow.prev { left: -16px; }
-.pdp-rev-arrow.next { right: -16px; }
-.pdp-rev-arrow svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.pdp-rev-arrow.prev { left: -14px; }
+.pdp-rev-arrow.next { right: -14px; }
+.pdp-rev-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
 
 @media (max-width: 900px) {
     .pdp-rev-arrow { display: none; }
@@ -1248,18 +1213,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     align-items: center;
     justify-content: center;
     gap: 6px;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 .pdp-rev-dot {
-    width: 7px; height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--soft-platinum);
     cursor: pointer;
     transition: all 0.25s ease;
 }
 .pdp-rev-dot.active {
-    width: 22px;
-    border-radius: 10px;
+    width: 18px;
+    border-radius: 8px;
     background: var(--dark-gold);
 }
 
@@ -1672,13 +1637,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
         </div>
 
-        <!-- Filter Pills Row -->
-        <div class="pdp-rev-filters-row">
-            <button class="pdp-rev-filter-pill active" onclick="filterReviews('all', this)">All Reviews (<?= count($customerReviews) ?>)</button>
-            <button class="pdp-rev-filter-pill" onclick="filterReviews('5', this)">★ 5 Star (<?= count(array_filter($customerReviews, function($r){return $r['rating']===5;})) ?>)</button>
-            <button class="pdp-rev-filter-pill" onclick="filterReviews('photo', this)">📸 With Photos (<?= count(array_filter($customerReviews, function($r){return !empty($r['photo']);})) ?>)</button>
-        </div>
-
         <!-- Auto-Sliding Carousel Wrapper -->
         <div class="pdp-reviews-carousel-wrap" id="pdpRevCarouselWrap">
             <button class="pdp-rev-arrow prev" id="pdpRevPrev" aria-label="Previous review" onclick="slidePdpReviews(-1)">
@@ -1692,15 +1650,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <?php foreach ($customerReviews as $idx => $rev): ?>
                 <?php 
                 $initial = strtoupper(substr($rev['name'], 0, 1));
-                $hasPhoto = !empty($rev['photo']) ? '1' : '0';
                 ?>
-                <article class="pdp-review-card" data-rating="<?= $rev['rating'] ?>" data-hasphoto="<?= $hasPhoto ?>">
+                <article class="pdp-review-card" data-rating="<?= $rev['rating'] ?>">
                     <div class="pdp-rc-top">
                         <div class="pdp-rc-avatar"><?= $initial ?></div>
                         <div class="pdp-rc-meta">
                             <div class="pdp-rc-name">
                                 <span><?= htmlspecialchars($rev['name']) ?></span>
-                                <span class="pdp-verified-badge">✓ Verified Buyer</span>
+                                <span class="pdp-verified-badge">✓ Verified</span>
                             </div>
                             <span class="pdp-rc-loc-date"><?= htmlspecialchars($rev['city']) ?> • <?= htmlspecialchars($rev['date']) ?></span>
                         </div>
@@ -1715,17 +1672,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                         "<?= htmlspecialchars($rev['text']) ?>"
                     </p>
 
-                    <?php if (!empty($rev['photo'])): ?>
-                    <div class="pdp-rc-photo-box" onclick="window.open('<?= htmlspecialchars($rev['photo']) ?>', '_blank')" title="View Customer Photo">
-                        <img src="<?= htmlspecialchars($rev['photo']) ?>" alt="Review photo by <?= htmlspecialchars($rev['name']) ?>" loading="lazy" />
-                    </div>
-                    <?php endif; ?>
-
                     <div class="pdp-rc-bottom">
-                        <span>Was this review helpful?</span>
+                        <span>Helpful?</span>
                         <button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, <?= (int)$rev['helpful'] ?>)">
                             <span>👍</span>
-                            <span>Helpful (<?= (int)$rev['helpful'] ?>)</span>
+                            <span>(<?= (int)$rev['helpful'] ?>)</span>
                         </button>
                     </div>
                 </article>
@@ -2091,7 +2042,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     '<div class="pdp-rc-meta">' +
                         '<div class="pdp-rc-name">' +
                             '<span>' + name + '</span>' +
-                            '<span class="pdp-verified-badge">✓ Verified Buyer</span>' +
+                            '<span class="pdp-verified-badge">✓ Verified</span>' +
                         '</div>' +
                         '<span class="pdp-rc-loc-date">' + city + ' • Just now</span>' +
                     '</div>' +
@@ -2100,8 +2051,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 '<span class="pdp-rc-occasion">✨ ' + occasion + '</span>' +
                 '<p class="pdp-rc-text">"' + text + '"</p>' +
                 '<div class="pdp-rc-bottom">' +
-                    '<span>Was this review helpful?</span>' +
-                    '<button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, 1)"><span>👍</span><span>Helpful (1)</span></button>' +
+                    '<span>Helpful?</span>' +
+                    '<button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, 1)"><span>👍</span><span>(1)</span></button>' +
                 '</div>';
             track.insertBefore(card, track.firstChild);
             track.scrollTo({ left: 0, behavior: 'smooth' });
@@ -2117,7 +2068,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     window.toggleHelpful = function(btn, currentCount) {
         if (btn.classList.contains('voted')) return;
         btn.classList.add('voted');
-        btn.innerHTML = '<span>👍</span><span>Helpful (' + (currentCount + 1) + ')</span>';
+        btn.innerHTML = '<span>👍</span><span>(' + (currentCount + 1) + ')</span>';
         window.showToast('❤️ Thank you for your feedback!');
     };
 
