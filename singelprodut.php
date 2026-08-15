@@ -580,27 +580,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Main Image Slider Viewport (Normal Small Contained Size) */
+/* Main Image Slider Viewport (Full Size No Crop Contained) */
 .pdp-gallery-slider {
     position: relative;
     border-radius: 14px;
     overflow: hidden;
-    background: var(--off-white-2);
-    aspect-ratio: 4 / 5;
-    max-height: 460px;
+    background: #FAF9F6;
+    aspect-ratio: 1 / 1;
+    max-height: 480px;
     width: 100%;
     margin: 0 auto;
-    border: 1.5px solid var(--gold-border);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    border: 1.5px solid var(--gold-border, rgba(138,104,31,0.22));
+    box-shadow: 0 6px 24px rgba(0,0,0,0.05);
 }
 
 @media (max-width: 767px) {
     .pdp-gallery-column {
-        max-width: 320px;
+        max-width: 360px;
     }
     .pdp-gallery-slider {
-        max-height: 350px;
-        aspect-ratio: 4 / 5;
+        max-height: 380px;
+        aspect-ratio: 1 / 1;
         border-radius: 12px;
     }
 }
@@ -626,12 +626,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     scroll-snap-align: start;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FAF9F6;
 }
 .pdp-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
     user-select: none;
     -webkit-user-drag: none;
     cursor: zoom-in;
@@ -732,15 +738,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
 .pdp-thumb-item {
     width: 58px;
-    height: 72px;
+    height: 70px;
     border-radius: 8px;
     overflow: hidden;
     border: 2px solid var(--soft-platinum);
-    background: var(--off-white-2);
+    background: #FAF9F6;
     cursor: pointer;
     flex-shrink: 0;
-    opacity: 0.65;
+    opacity: 0.7;
     transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .pdp-thumb-item:hover {
     opacity: 0.95;
@@ -755,13 +764,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-thumb-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    object-fit: contain;
+    object-position: center;
 }
 @media (max-width: 767px) {
     .pdp-thumb-item {
         width: 48px;
-        height: 60px;
+        height: 58px;
     }
 }
 
