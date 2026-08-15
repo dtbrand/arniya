@@ -257,15 +257,68 @@
     .pdp-breadcrumbs { display: none; }
 }
 @media (max-width: 767px) {
-    /* Remove Wishlist, Cart, and Account icons on Mobile Header only */
-    .pdp-header-actions #pdpWishlistBtn,
-    .pdp-header-actions #pdpCartBtn,
-    .pdp-header-actions #pdpAccountBtn {
+    /* Reduced Mobile Header Height */
+    .pdp-header-main {
+        height: 48px;
+        min-height: 48px;
+        padding: 0 12px;
+    }
+    .pdp-top-ticker {
+        font-size: 0.56rem;
+        padding: 3px 8px;
+        gap: 6px;
+        line-height: 1.2;
+    }
+
+    /* Back to shop on Left, Brand Logo on Right */
+    .pdp-header-left {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+    .pdp-header-actions {
         display: none !important;
     }
+
+    /* Normal Small Back to Shop Button */
+    .pdp-back-btn {
+        padding: 4px 10px;
+        font-size: 0.72rem;
+        gap: 5px;
+        border-radius: 14px;
+    }
+    .pdp-back-btn svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    /* Compact Brand Seal on Right */
+    .pdp-brand-seal {
+        gap: 7px;
+        margin-left: auto;
+    }
+    .pdp-logo-badge {
+        width: 28px;
+        height: 28px;
+    }
+    .pdp-logo-badge svg {
+        width: 14px;
+        height: 14px;
+    }
+    .pdp-brand-text h1 {
+        font-size: 0.88rem;
+    }
+    .pdp-brand-text span {
+        font-size: 0.46rem;
+        letter-spacing: 0.14em;
+    }
 }
-@media (max-width: 600px) {
-    .pdp-top-ticker { font-size: 0.62rem; padding: 4px 10px; }
+@media (max-width: 480px) {
+    .pdp-brand-text span {
+        display: none;
+    }
 }
 </style>
 
