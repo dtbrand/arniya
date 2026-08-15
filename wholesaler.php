@@ -575,6 +575,7 @@ $catalogProducts = [
             gap: clamp(12px, 1.8vw, 20px);
             margin-bottom: clamp(16px, 2vw, 24px);
         }
+        /* KPI Stat Box — stagger-in on load */
         .ws-stat-box {
             background: var(--ws-bg-card);
             border: 1.5px solid var(--ws-border);
@@ -585,14 +586,38 @@ $catalogProducts = [
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(18px);
+            animation: wsCardFadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .ws-stat-box:nth-child(1) { animation-delay: 0.05s; }
+        .ws-stat-box:nth-child(2) { animation-delay: 0.13s; }
+        .ws-stat-box:nth-child(3) { animation-delay: 0.21s; }
+        .ws-stat-box:nth-child(4) { animation-delay: 0.29s; }
+        @keyframes wsCardFadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .ws-stat-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(105deg, transparent 40%, rgba(197,168,89,0.07) 60%, transparent 80%);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+        .ws-stat-box:hover::after {
+            left: 150%;
         }
         .ws-stat-box:hover {
             box-shadow: var(--ws-shadow-hover);
             border-color: var(--ws-gold-primary);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
         .ws-stat-label {
-            font-size: 0.82rem;
+            font-size: 0.80rem;
             font-weight: 700;
             color: var(--ws-text-muted);
             margin-bottom: 8px;
@@ -607,10 +632,11 @@ $catalogProducts = [
         }
         .ws-stat-val-num {
             font-size: clamp(1.45rem, 2.5vw, 1.75rem);
-            font-weight: 800;
+            font-weight: 900;
             color: var(--ws-text-main);
             letter-spacing: -0.02em;
             line-height: 1.1;
+            font-variant-numeric: tabular-nums;
         }
         .ws-trend-pill {
             display: inline-flex;
@@ -620,7 +646,9 @@ $catalogProducts = [
             border-radius: 20px;
             font-size: 0.72rem;
             font-weight: 700;
+            transition: transform 0.2s ease;
         }
+        .ws-trend-pill:hover { transform: scale(1.06); }
         .ws-trend-pill.up {
             background: var(--ws-success-bg);
             color: var(--ws-success);
@@ -648,6 +676,14 @@ $catalogProducts = [
             box-shadow: var(--ws-shadow-card);
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: wsCardFadeUp 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.32s forwards;
+            transition: box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .ws-analytics-card:hover {
+            box-shadow: var(--ws-shadow-hover);
+            border-color: var(--ws-gold-border);
         }
         .ws-card-top-bar {
             display: flex;
@@ -997,9 +1033,13 @@ $catalogProducts = [
         }
         .ws-cat-prog-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--ws-gold-primary) 0%, var(--ws-gold-accent) 100%);
+            background: linear-gradient(90deg, var(--ws-gold-primary) 0%, var(--ws-gold-accent) 60%, #FFE082 100%);
             border-radius: 4px;
-            transition: width 0.8s ease;
+            width: 0 !important;
+            animation: wsProgBarIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+        }
+        @keyframes wsProgBarIn {
+            to { width: var(--prog-w, 75%); }
         }
 
         /* KPI Cards Grid */
@@ -2884,7 +2924,7 @@ $catalogProducts = [
                                         <span class="ws-cat-prog-val">₹1,14,500 (56%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="width: 88%;"></div>
+                                        <div class="ws-cat-prog-fill" style="--prog-w: 88%; animation-delay: 0.6s;"></div>
                                     </div>
                                 </div>
 
@@ -2894,7 +2934,7 @@ $catalogProducts = [
                                         <span class="ws-cat-prog-val">₹49,147 (24%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
-                                        <div class="ws-cat-prog-fill" style="width: 72%;"></div>
+                                        <div class="ws-cat-prog-fill" style="--prog-w: 72%; animation-delay: 0.75s;"></div>
                                     </div>
                                 </div>
 
