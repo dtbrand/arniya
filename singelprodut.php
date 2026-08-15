@@ -172,6 +172,86 @@ $galleryImages = [
     'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
 ];
 
+$customerReviews = [
+    [
+        'id' => 1,
+        'name' => 'Priya Sharma',
+        'city' => 'Mumbai, MH',
+        'rating' => 5,
+        'date' => '2 days ago',
+        'occasion' => 'Wedding Sangeet',
+        'text' => 'The fabric quality and real zari weave is breathtaking! Arrived in luxury royal gift packaging within 3 days to Mumbai. Wore it for my cousin’s sangeet and received endless compliments.',
+        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
+        'helpful' => 38
+    ],
+    [
+        'id' => 2,
+        'name' => 'Ananya Mehta',
+        'city' => 'Surat, Gujarat',
+        'rating' => 5,
+        'date' => '4 days ago',
+        'occasion' => 'Diwali Festive Puja',
+        'text' => 'Exactly as depicted in the photos. The silk drape feels extremely luxurious, pure, and lightweight. The WhatsApp styling concierge was very helpful with size selection.',
+        'photo' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80',
+        'helpful' => 29
+    ],
+    [
+        'id' => 3,
+        'name' => 'Dr. Radhika Iyer',
+        'city' => 'Bengaluru, KA',
+        'rating' => 5,
+        'date' => '1 week ago',
+        'occasion' => 'Temple Inauguration',
+        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend Kalaniketan!',
+        'photo' => null,
+        'helpful' => 21
+    ],
+    [
+        'id' => 4,
+        'name' => 'Sneha Singhania',
+        'city' => 'Delhi NCR',
+        'rating' => 5,
+        'date' => '1 week ago',
+        'occasion' => 'Reception Night',
+        'text' => 'The color is deep, royal, and rich under evening chandelier lighting. Everyone asked where I purchased it from. Fast express delivery with zero hassle.',
+        'photo' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80',
+        'helpful' => 44
+    ],
+    [
+        'id' => 5,
+        'name' => 'Kavita Patel',
+        'city' => 'London, UK',
+        'rating' => 5,
+        'date' => '2 weeks ago',
+        'occasion' => 'International Wedding',
+        'text' => 'Ordered from London with international DHL shipping. Reached in 5 business days in pristine condition! Truly magnificent quality and authentic silk sheen.',
+        'photo' => 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80',
+        'helpful' => 52
+    ],
+    [
+        'id' => 6,
+        'name' => 'Meera Deshmukh',
+        'city' => 'Pune, MH',
+        'rating' => 4,
+        'date' => '3 weeks ago',
+        'occasion' => 'Engagement Ceremony',
+        'text' => 'Beautiful attire! Heavy royal border and very comfortable to wear all night. Delivery was smooth and packaging was top notch.',
+        'photo' => null,
+        'helpful' => 17
+    ],
+    [
+        'id' => 7,
+        'name' => 'Ritu Kothari',
+        'city' => 'Jaipur, RJ',
+        'rating' => 5,
+        'date' => '1 month ago',
+        'occasion' => 'Sister’s Haldi',
+        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about Kalaniketan.',
+        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
+        'helpful' => 31
+    ]
+];
+
 $colorHex = [
     'Navy' => '#1B2A4A', 'Royal Blue' => '#204B8C', 'Midnight Black' => '#1A1A1A',
     'Maroon' => '#6D1A24', 'Deep Wine' => '#4A1521', 'Ruby Red' => '#9E1B32',
@@ -838,23 +918,29 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ════════════════════════════════════════════════════
    CUSTOMER REVIEWS & BREAKDOWN SECTION
 ════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════
+   CUSTOMER REVIEWS & BREAKDOWN SECTION
+════════════════════════════════════════════════════ */
 .pdp-reviews-section {
     margin-top: clamp(36px, 5vw, 60px);
     background: #FFFFFF;
     border: 1.5px solid var(--gold-border);
     border-radius: 16px;
     padding: clamp(20px, 4vw, 36px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.03);
 }
+
 .pdp-rev-header-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
     border-bottom: 1.5px solid var(--soft-platinum);
     padding-bottom: 24px;
+    align-items: center;
 }
 @media (min-width: 768px) {
     .pdp-rev-header-grid {
-        grid-template-columns: 240px 1fr;
+        grid-template-columns: 220px 1fr auto;
     }
 }
 .pdp-overall-score {
@@ -864,7 +950,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     justify-content: center;
     background: var(--gold-pale);
     border-radius: 12px;
-    padding: 20px;
+    padding: 16px;
     text-align: center;
     border: 1px solid var(--gold-border);
 }
@@ -880,7 +966,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin: 6px 0;
 }
 .pdp-score-sub {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--mid-text);
     font-weight: 600;
 }
@@ -888,7 +974,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-bars-wrap {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     justify-content: center;
 }
 .pdp-bar-row {
@@ -912,51 +998,269 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-radius: 4px;
 }
 
-/* Review Cards */
-.pdp-reviews-cards-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+/* Write Review CTA Button */
+.pdp-write-rev-btn {
+    padding: 12px 20px;
+    border-radius: 9px;
+    border: 1.5px solid var(--dark-gold);
+    background: #FFFFFF;
+    color: var(--dark-gold);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pdp-write-rev-btn:hover {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(138,104,31,0.25);
+}
+
+/* Filter Tags Row */
+.pdp-rev-filters-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
+.pdp-rev-filters-row::-webkit-scrollbar { display: none; }
+.pdp-rev-filter-pill {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.2px solid var(--soft-platinum);
+    background: var(--off-white);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pdp-rev-filter-pill:hover { border-color: var(--dark-gold); }
+.pdp-rev-filter-pill.active {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    border-color: var(--dark-gold);
+}
+
+/* Auto-Sliding Carousel Wrapper */
+.pdp-reviews-carousel-wrap {
+    position: relative;
+    margin-top: 22px;
+}
+.pdp-reviews-track {
+    display: flex;
     gap: 16px;
-    margin-top: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 2px 14px;
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
+}
+.pdp-reviews-track::-webkit-scrollbar { display: none; }
+
+/* Review Card */
+.pdp-review-card {
+    flex: 0 0 310px;
+    max-width: 340px;
+    scroll-snap-align: start;
+    background: var(--off-white);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1.5px solid var(--soft-platinum);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.25s ease;
 }
 @media (min-width: 768px) {
-    .pdp-reviews-cards-grid {
-        grid-template-columns: 1fr 1fr;
+    .pdp-review-card {
+        flex: 0 0 360px;
+        max-width: 380px;
     }
 }
-.pdp-review-card {
-    background: var(--off-white);
-    border-radius: 12px;
-    padding: 16px 18px;
-    border: 1px solid var(--soft-platinum);
+.pdp-review-card:hover {
+    border-color: var(--dark-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(138,104,31,0.12);
 }
+
 .pdp-rc-top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+    gap: 10px;
 }
-.pdp-rc-user {
+.pdp-rc-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+    color: #FFFFFF;
+    font-size: 0.82rem;
     font-weight: 800;
-    font-size: 0.84rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.pdp-rc-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+.pdp-rc-name {
+    font-size: 0.86rem;
+    font-weight: 800;
     color: var(--dark-text);
     display: flex;
     align-items: center;
     gap: 6px;
 }
-.pdp-verified-tag {
-    font-size: 0.65rem;
+.pdp-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.62rem;
     color: #2E7D32;
     background: #E8F5E9;
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: 700;
 }
-.pdp-rc-stars { color: #F59E0B; font-size: 0.8rem; }
+.pdp-rc-loc-date {
+    font-size: 0.68rem;
+    color: var(--light-text);
+    font-weight: 600;
+}
+.pdp-rc-stars {
+    color: #F59E0B;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.pdp-rc-occasion {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--gold-pale);
+    color: var(--dark-gold);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .pdp-rc-text {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--mid-text);
-    line-height: 1.5;
+    line-height: 1.55;
+    flex: 1;
+}
+
+/* Customer Photos attached in review */
+.pdp-rc-photo-box {
+    margin-top: 4px;
+    width: 60px; height: 75px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--gold-border);
+    cursor: zoom-in;
+}
+.pdp-rc-photo-box img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.2s;
+}
+.pdp-rc-photo-box:hover img { transform: scale(1.1); }
+
+.pdp-rc-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid var(--soft-platinum);
+    font-size: 0.72rem;
+    color: var(--light-text);
+}
+.pdp-rc-helpful-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--soft-platinum);
+    background: #FFFFFF;
+    color: var(--mid-text);
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.pdp-rc-helpful-btn:hover, .pdp-rc-helpful-btn.voted {
+    border-color: var(--dark-gold);
+    color: var(--dark-gold);
+    background: var(--gold-pale);
+}
+
+/* Carousel Navigation Arrows */
+.pdp-rev-arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    border: 1.5px solid var(--gold-border);
+    color: var(--dark-gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.pdp-rev-arrow:hover {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    transform: translateY(-50%) scale(1.08);
+}
+.pdp-rev-arrow.prev { left: -16px; }
+.pdp-rev-arrow.next { right: -16px; }
+.pdp-rev-arrow svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+@media (max-width: 900px) {
+    .pdp-rev-arrow { display: none; }
+}
+
+/* Dot Indicators */
+.pdp-rev-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+.pdp-rev-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--soft-platinum);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pdp-rev-dot.active {
+    width: 22px;
+    border-radius: 10px;
+    background: var(--dark-gold);
 }
 
 /* ════════════════════════════════════════════════════
@@ -1343,8 +1647,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </div>
 
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
-    <section class="pdp-reviews-section">
-        <h2 class="pdp-section-title-large">Customer Ratings & Reviews</h2>
+    <section class="pdp-reviews-section" id="pdpReviewsSection">
+        <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
         
         <div class="pdp-rev-header-grid">
             <div class="pdp-overall-score">
@@ -1360,34 +1664,76 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="pdp-bar-row"><span>2 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 1%;"></div></div><span>1%</span></div>
                 <div class="pdp-bar-row"><span>1 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 0%;"></div></div><span>0%</span></div>
             </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+                <button class="pdp-write-rev-btn" onclick="openWriteReviewModal()">
+                    <span>✍️ Write a Review</span>
+                </button>
+            </div>
         </div>
 
-        <div class="pdp-reviews-cards-grid">
-            <div class="pdp-review-card">
-                <div class="pdp-rc-top">
-                    <div class="pdp-rc-user">
-                        <span>Priya Sharma</span>
-                        <span class="pdp-verified-tag">✓ Verified Buyer</span>
+        <!-- Filter Pills Row -->
+        <div class="pdp-rev-filters-row">
+            <button class="pdp-rev-filter-pill active" onclick="filterReviews('all', this)">All Reviews (<?= count($customerReviews) ?>)</button>
+            <button class="pdp-rev-filter-pill" onclick="filterReviews('5', this)">★ 5 Star (<?= count(array_filter($customerReviews, function($r){return $r['rating']===5;})) ?>)</button>
+            <button class="pdp-rev-filter-pill" onclick="filterReviews('photo', this)">📸 With Photos (<?= count(array_filter($customerReviews, function($r){return !empty($r['photo']);})) ?>)</button>
+        </div>
+
+        <!-- Auto-Sliding Carousel Wrapper -->
+        <div class="pdp-reviews-carousel-wrap" id="pdpRevCarouselWrap">
+            <button class="pdp-rev-arrow prev" id="pdpRevPrev" aria-label="Previous review" onclick="slidePdpReviews(-1)">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="pdp-rev-arrow next" id="pdpRevNext" aria-label="Next review" onclick="slidePdpReviews(1)">
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <div class="pdp-reviews-track" id="pdpReviewsTrack">
+                <?php foreach ($customerReviews as $idx => $rev): ?>
+                <?php 
+                $initial = strtoupper(substr($rev['name'], 0, 1));
+                $hasPhoto = !empty($rev['photo']) ? '1' : '0';
+                ?>
+                <article class="pdp-review-card" data-rating="<?= $rev['rating'] ?>" data-hasphoto="<?= $hasPhoto ?>">
+                    <div class="pdp-rc-top">
+                        <div class="pdp-rc-avatar"><?= $initial ?></div>
+                        <div class="pdp-rc-meta">
+                            <div class="pdp-rc-name">
+                                <span><?= htmlspecialchars($rev['name']) ?></span>
+                                <span class="pdp-verified-badge">✓ Verified Buyer</span>
+                            </div>
+                            <span class="pdp-rc-loc-date"><?= htmlspecialchars($rev['city']) ?> • <?= htmlspecialchars($rev['date']) ?></span>
+                        </div>
+                        <div class="pdp-rc-stars"><?= str_repeat('★', $rev['rating']) ?></div>
                     </div>
-                    <div class="pdp-rc-stars">★★★★★</div>
-                </div>
-                <p class="pdp-rc-text">
-                    "The fabric quality and real zari weave is breathtaking! Arrived in luxury gift packaging within 3 days to Mumbai. Will definitely purchase again for the wedding season."
-                </p>
+
+                    <?php if (!empty($rev['occasion'])): ?>
+                    <span class="pdp-rc-occasion">✨ <?= htmlspecialchars($rev['occasion']) ?></span>
+                    <?php endif; ?>
+
+                    <p class="pdp-rc-text">
+                        "<?= htmlspecialchars($rev['text']) ?>"
+                    </p>
+
+                    <?php if (!empty($rev['photo'])): ?>
+                    <div class="pdp-rc-photo-box" onclick="window.open('<?= htmlspecialchars($rev['photo']) ?>', '_blank')" title="View Customer Photo">
+                        <img src="<?= htmlspecialchars($rev['photo']) ?>" alt="Review photo by <?= htmlspecialchars($rev['name']) ?>" loading="lazy" />
+                    </div>
+                    <?php endif; ?>
+
+                    <div class="pdp-rc-bottom">
+                        <span>Was this review helpful?</span>
+                        <button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, <?= (int)$rev['helpful'] ?>)">
+                            <span>👍</span>
+                            <span>Helpful (<?= (int)$rev['helpful'] ?>)</span>
+                        </button>
+                    </div>
+                </article>
+                <?php endforeach; ?>
             </div>
 
-            <div class="pdp-review-card">
-                <div class="pdp-rc-top">
-                    <div class="pdp-rc-user">
-                        <span>Ananya Mehta</span>
-                        <span class="pdp-verified-tag">✓ Verified Buyer</span>
-                    </div>
-                    <div class="pdp-rc-stars">★★★★★</div>
-                </div>
-                <p class="pdp-rc-text">
-                    "Exactly as depicted in the photos. The silk drape feels extremely luxurious and lightweight. The WhatsApp concierge was very helpful with size advice."
-                </p>
-            </div>
+            <!-- Dots -->
+            <div class="pdp-rev-dots" id="pdpRevDots"></div>
         </div>
     </section>
 
@@ -1445,6 +1791,53 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <tr><td><strong>Free Size</strong></td><td>34" - 44"</td><td>Adjustable</td><td>Free</td><td>Saree 5.5m + 0.8m Blouse</td></tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- ════ WRITE A REVIEW MODAL ════ -->
+<div class="pdp-modal-overlay" id="pdpWriteReviewModal" role="dialog" aria-modal="true" aria-label="Write a Review">
+    <div class="pdp-modal-box" style="max-width: 520px;">
+        <div class="pdp-modal-header">
+            <h3 class="pdp-modal-title">✍️ Write a Customer Review</h3>
+            <button class="pdp-modal-close-btn" onclick="closeWriteReviewModal()">&times;</button>
+        </div>
+        <div class="pdp-modal-body">
+            <form id="pdpReviewForm" onsubmit="submitCustomerReview(event)" style="display:flex; flex-direction:column; gap:14px;">
+                <div>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:6px;">Your Overall Rating</label>
+                    <div id="pdpStarRatingSelector" style="display:flex; gap:6px; font-size:1.6rem; color:#F59E0B; cursor:pointer;">
+                        <span data-val="1" onclick="setReviewRating(1)">★</span>
+                        <span data-val="2" onclick="setReviewRating(2)">★</span>
+                        <span data-val="3" onclick="setReviewRating(3)">★</span>
+                        <span data-val="4" onclick="setReviewRating(4)">★</span>
+                        <span data-val="5" onclick="setReviewRating(5)">★</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Full Name *</label>
+                    <input type="text" id="revName" required placeholder="e.g. Radhika Sharma" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">City / State</label>
+                        <input type="text" id="revCity" placeholder="e.g. Mumbai, MH" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Occasion Worn</label>
+                        <input type="text" id="revOccasion" placeholder="e.g. Wedding Sangeet" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Your Review Narrative *</label>
+                    <textarea id="revText" required rows="3" placeholder="Describe the silk fabric texture, zari brilliance, fitting, and packaging..." style="width:100%; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:10px 12px; font-family:var(--font-sans); font-size:0.85rem; resize:vertical;"></textarea>
+                </div>
+
+                <button type="submit" class="pdp-buy-btn" style="width:100%; padding:12px; border-radius:8px; font-size:0.82rem;">Submit Verified Review</button>
+            </form>
         </div>
     </div>
 </div>
@@ -1514,7 +1907,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         });
     }
 
-    // Touch Swipe scroll sync listener
+    // Touch Swipe scroll sync listener for Main Gallery
     if (track) {
         track.addEventListener('scroll', function() {
             var width = track.clientWidth;
@@ -1659,7 +2052,185 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (modal) modal.classList.remove('open');
     };
 
+    // Write Review Modal
+    var currentSelectedRating = 5;
+    window.openWriteReviewModal = function() {
+        var modal = document.getElementById('pdpWriteReviewModal');
+        if (modal) modal.classList.add('open');
+    };
+    window.closeWriteReviewModal = function() {
+        var modal = document.getElementById('pdpWriteReviewModal');
+        if (modal) modal.classList.remove('open');
+    };
+    window.setReviewRating = function(val) {
+        currentSelectedRating = val;
+        var stars = document.querySelectorAll('#pdpStarRatingSelector span');
+        stars.forEach(function(s, idx) {
+            s.style.opacity = (idx < val) ? '1' : '0.3';
+        });
+    };
+
+    window.submitCustomerReview = function(e) {
+        e.preventDefault();
+        var name = document.getElementById('revName').value.trim();
+        var city = document.getElementById('revCity').value.trim() || 'India';
+        var occasion = document.getElementById('revOccasion').value.trim() || 'Festive Celebration';
+        var text = document.getElementById('revText').value.trim();
+
+        if (!name || !text) return;
+
+        var track = document.getElementById('pdpReviewsTrack');
+        if (track) {
+            var card = document.createElement('article');
+            card.className = 'pdp-review-card';
+            card.dataset.rating = currentSelectedRating;
+            card.dataset.hasphoto = '0';
+            card.innerHTML = 
+                '<div class="pdp-rc-top">' +
+                    '<div class="pdp-rc-avatar">' + name.charAt(0).toUpperCase() + '</div>' +
+                    '<div class="pdp-rc-meta">' +
+                        '<div class="pdp-rc-name">' +
+                            '<span>' + name + '</span>' +
+                            '<span class="pdp-verified-badge">✓ Verified Buyer</span>' +
+                        '</div>' +
+                        '<span class="pdp-rc-loc-date">' + city + ' • Just now</span>' +
+                    '</div>' +
+                    '<div class="pdp-rc-stars">' + '★'.repeat(currentSelectedRating) + '</div>' +
+                '</div>' +
+                '<span class="pdp-rc-occasion">✨ ' + occasion + '</span>' +
+                '<p class="pdp-rc-text">"' + text + '"</p>' +
+                '<div class="pdp-rc-bottom">' +
+                    '<span>Was this review helpful?</span>' +
+                    '<button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, 1)"><span>👍</span><span>Helpful (1)</span></button>' +
+                '</div>';
+            track.insertBefore(card, track.firstChild);
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+
+        window.closeWriteReviewModal();
+        window.showToast('✨ Thank you! Your review is now live.');
+        document.getElementById('pdpReviewForm').reset();
+        window.rebuildReviewDots();
+    };
+
+    // Helpful upvote button
+    window.toggleHelpful = function(btn, currentCount) {
+        if (btn.classList.contains('voted')) return;
+        btn.classList.add('voted');
+        btn.innerHTML = '<span>👍</span><span>Helpful (' + (currentCount + 1) + ')</span>';
+        window.showToast('❤️ Thank you for your feedback!');
+    };
+
+    // Review Filter Pills
+    window.filterReviews = function(type, btn) {
+        document.querySelectorAll('.pdp-rev-filter-pill').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+
+        var cards = document.querySelectorAll('.pdp-review-card');
+        cards.forEach(function(card) {
+            if (type === 'all') {
+                card.style.display = 'flex';
+            } else if (type === '5') {
+                card.style.display = (card.dataset.rating === '5') ? 'flex' : 'none';
+            } else if (type === 'photo') {
+                card.style.display = (card.dataset.hasphoto === '1') ? 'flex' : 'none';
+            }
+        });
+        window.rebuildReviewDots();
+    };
+
+    // ════ AUTO-SLIDER CONTROLLER FOR CUSTOMER REVIEWS ════
+    var revTrack = document.getElementById('pdpReviewsTrack');
+    var revDotsWrap = document.getElementById('pdpRevDots');
+    var revAutoSlideTimer = null;
+
+    window.rebuildReviewDots = function() {
+        if (!revDotsWrap || !revTrack) return;
+        revDotsWrap.innerHTML = '';
+        var visibleCards = Array.from(revTrack.querySelectorAll('.pdp-review-card')).filter(function(c) {
+            return c.style.display !== 'none';
+        });
+
+        visibleCards.forEach(function(_, idx) {
+            var dot = document.createElement('div');
+            dot.className = 'pdp-rev-dot ' + (idx === 0 ? 'active' : '');
+            dot.onclick = function() {
+                var card = visibleCards[idx];
+                if (card) {
+                    revTrack.scrollTo({ left: card.offsetLeft - revTrack.offsetLeft, behavior: 'smooth' });
+                }
+            };
+            revDotsWrap.appendChild(dot);
+        });
+    };
+
+    window.slidePdpReviews = function(direction) {
+        if (!revTrack) return;
+        var firstCard = revTrack.querySelector('.pdp-review-card');
+        var cardWidth = firstCard ? (firstCard.clientWidth + 16) : 320;
+        
+        var maxScroll = revTrack.scrollWidth - revTrack.clientWidth;
+        var newLeft = revTrack.scrollLeft + (direction * cardWidth);
+
+        if (newLeft > maxScroll + 10) {
+            revTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else if (newLeft < 0) {
+            revTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+            revTrack.scrollTo({ left: newLeft, behavior: 'smooth' });
+        }
+    };
+
+    function startReviewAutoSlide() {
+        if (revAutoSlideTimer) clearInterval(revAutoSlideTimer);
+        revAutoSlideTimer = setInterval(function() {
+            window.slidePdpReviews(1);
+        }, 3800);
+    }
+
+    function pauseReviewAutoSlide() {
+        if (revAutoSlideTimer) {
+            clearInterval(revAutoSlideTimer);
+            revAutoSlideTimer = null;
+        }
+    }
+
+    if (revTrack) {
+        window.rebuildReviewDots();
+        startReviewAutoSlide();
+
+        // Pause on hover or touch
+        var carouselWrap = document.getElementById('pdpRevCarouselWrap');
+        if (carouselWrap) {
+            carouselWrap.addEventListener('mouseenter', pauseReviewAutoSlide);
+            carouselWrap.addEventListener('mouseleave', startReviewAutoSlide);
+            carouselWrap.addEventListener('touchstart', pauseReviewAutoSlide, { passive: true });
+            carouselWrap.addEventListener('touchend', function() {
+                setTimeout(startReviewAutoSlide, 3000);
+            }, { passive: true });
+        }
+
+        // Sync review dots on scroll
+        revTrack.addEventListener('scroll', function() {
+            var firstCard = revTrack.querySelector('.pdp-review-card');
+            if (!firstCard) return;
+            var cardWidth = firstCard.clientWidth + 16;
+            var activeIdx = Math.round(revTrack.scrollLeft / cardWidth);
+            var dots = document.querySelectorAll('.pdp-rev-dot');
+            dots.forEach(function(d, i) {
+                d.classList.toggle('active', i === activeIdx);
+            });
+        }, { passive: true });
+    }
+
     // Modal background click dismiss
+    var writeRevModal = document.getElementById('pdpWriteReviewModal');
+    if (writeRevModal) {
+        writeRevModal.addEventListener('click', function(e) {
+            if (e.target === writeRevModal) window.closeWriteReviewModal();
+        });
+    }
+
     var sizeModal = document.getElementById('pdpSizeChartModal');
     if (sizeModal) {
         sizeModal.addEventListener('click', function(e) {
