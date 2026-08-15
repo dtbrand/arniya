@@ -1979,6 +1979,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- ════ WISHLIST DRAWER PARTIAL ════ -->
 <?php include 'wishlist.php'; ?>
 
+<!-- ════ CHECKOUT MODAL PARTIAL ════ -->
+<?php include 'checkout.php'; ?>
+
 <!-- ════ SCRIPT ENGINE ════ -->
 <script>
 (function() {
@@ -2115,12 +2118,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }
     };
 
-    // Buy Now (Instant Checkout)
+    // Buy Now (Instant Checkout Flow)
     window.handlePdpBuyNow = function() {
-        window.handlePdpAddToCart();
-        setTimeout(function() {
+        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
+        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+
+        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
+        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
+
+        if (typeof window.addToCart === 'function') {
+            for (var i = 0; i < currentQty; i++) {
+                window.addToCart(currentProduct, selSize, selColor);
+            }
+        }
+
+        if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
+
+        // Close cart drawer if open
+        if (typeof window.closeCartDrawer === 'function') {
+            window.closeCartDrawer();
+        }
+
+        // Open checkout modal directly
+        if (typeof window.openCheckout === 'function') {
+            setTimeout(function() {
+                window.openCheckout();
+            }, 80);
+        } else {
             window.location.href = 'checkout.php';
-        }, 300);
+        }
     };
 
     // Wishlist Toggle
