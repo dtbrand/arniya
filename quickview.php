@@ -58,17 +58,196 @@
 .modal-close-btn:hover { background: var(--dark-gold, #8A681F); color: #FFF; border-color: var(--dark-gold, #8A681F); }
 .modal-close-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
-.modal-image-wrap {
-    border-radius: 12px; overflow: hidden;
-    background: var(--off-white-2, #F2EFE8); aspect-ratio: 3/4;
-    position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+/* ── Quick View Image Slider & Thumbnail Gallery Styles ── */
+.modal-image-area-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
 }
-.modal-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+.qv-slider-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--off-white-2, #F2EFE8);
+    aspect-ratio: 3/4;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    user-select: none;
+}
+
+.qv-slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+.qv-slider-track::-webkit-scrollbar {
+    display: none;
+}
+
+.qv-slide-img-wrap {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+}
+.qv-slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+}
+
+/* Navigation Arrows */
+.qv-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(138, 104, 31, 0.25);
+    color: var(--dark-gold, #8A681F);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    opacity: 0;
+    pointer-events: none;
+}
+.qv-slider-container:hover .qv-arrow {
+    opacity: 1;
+    pointer-events: auto;
+}
+.qv-prev-arrow {
+    left: 12px;
+}
+.qv-next-arrow {
+    right: 12px;
+}
+.qv-arrow:hover {
+    background: var(--dark-gold, #8A681F);
+    color: #FFFFFF;
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 16px rgba(138, 104, 31, 0.35);
+}
+.qv-arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+}
+
+/* Mobile Dot Indicators */
+.qv-slider-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.qv-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+.qv-dot.active {
+    background: #FFFFFF;
+    width: 14px;
+    border-radius: 4px;
+}
+
+/* Thumbnail Gallery */
+.qv-thumbnails-wrap {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    padding: 2px 0;
+    scrollbar-width: none;
+}
+.qv-thumbnails-wrap::-webkit-scrollbar {
+    display: none;
+}
+.qv-thumb {
+    width: 52px;
+    height: 68px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #E5E3DE;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--off-white, #F8F6F0);
+    flex-shrink: 0;
+    opacity: 0.65;
+}
+.qv-thumb:hover {
+    opacity: 0.9;
+    border-color: var(--dark-gold, #8A681F);
+}
+.qv-thumb.active {
+    border-color: var(--dark-gold, #8A681F);
+    opacity: 1;
+    box-shadow: 0 4px 10px rgba(138, 104, 31, 0.2);
+    transform: translateY(-2px);
+}
+.qv-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .modal-badge-tag {
     position: absolute; top: 12px; left: 12px;
     background: var(--dark-gold, #8A681F); color: #FFF;
     font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: 0.12em; padding: 4px 10px; border-radius: 4px;
+    z-index: 4;
+}
+
+@media (max-width: 767px) {
+    .qv-arrow {
+        opacity: 0.85;
+        pointer-events: auto;
+        width: 32px;
+        height: 32px;
+    }
+    .qv-arrow svg {
+        width: 14px;
+        height: 14px;
+    }
+    .qv-prev-arrow { left: 8px; }
+    .qv-next-arrow { right: 8px; }
+    .qv-thumbnails-wrap {
+        gap: 6px;
+    }
+    .qv-thumb {
+        width: 44px;
+        height: 58px;
+    }
 }
 
 .modal-details { display: flex; flex-direction: column; gap: 10px; }
@@ -349,6 +528,31 @@
         'Pearl Cream': '#EFEBD9'
     };
 
+    // Helper to generate photo variations for catalog items
+    function getProductImages(p) {
+        var baseImg = p.image || 'images/product1.png';
+        var list = [baseImg];
+        var cat = (p.category || '').toLowerCase();
+        
+        // Push premium catalog variation photoshoot links
+        if (cat === 'sarees') {
+            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
+        } else if (cat === 'lehengas') {
+            list.push('https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
+        } else {
+            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
+            list.push('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80');
+        }
+        return list;
+    }
+
+    window.qvSliderInterval = null;
+
     window.openQV = function(id) {
         var overlay = document.getElementById('quickViewOverlay');
         var content = document.getElementById('quickModalContent');
@@ -380,12 +584,48 @@
             isWish = window.wishlistState.some(function(item) { return item.id == p.id; });
         }
 
+        // Get multiple photos for this product
+        var imagesList = getProductImages(p);
+        var maxSlides = imagesList.length;
+        var currentSlideIndex = 0;
+
+        // Build Slider HTML
+        var slidesHtml = '';
+        var dotsHtml = '';
+        var thumbsHtml = '';
+
+        imagesList.forEach(function(imgUrl, idx) {
+            slidesHtml += 
+                '<div class="qv-slide-img-wrap">' +
+                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80\'" />' +
+                '</div>';
+            dotsHtml += '<div class="qv-dot ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '"></div>';
+            thumbsHtml += 
+                '<div class="qv-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '">' +
+                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=100&q=80\'" />' +
+                '</div>';
+        });
+
         content.innerHTML =
             '<button class="modal-close-btn" id="qvClose" aria-label="Close modal"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
-            '<div class="modal-image-wrap">' +
-                '<img src="' + p.image + '" alt="' + p.name + '" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80\'" />' +
-                (p.badge ? '<span class="modal-badge-tag">' + p.badge + '</span>' : '') +
+            
+            // Left Column: Interactive Slider + Thumbnails
+            '<div class="modal-image-area-wrap">' +
+                '<div class="qv-slider-container" id="qvSliderContainer">' +
+                    (p.badge ? '<span class="modal-badge-tag">' + p.badge + '</span>' : '') +
+                    '<div class="qv-slider-track" id="qvSliderTrack">' +
+                        slidesHtml +
+                    '</div>' +
+                    '<button class="qv-arrow qv-prev-arrow" id="qvPrevArrow" aria-label="Previous image"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
+                    '<button class="qv-arrow qv-next-arrow" id="qvNextArrow" aria-label="Next image"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' +
+                    '<div class="qv-slider-dots" id="qvSliderDots">' + dotsHtml + '</div>' +
+                '</div>' +
+                '<div class="qv-thumbnails-wrap" id="qvThumbnailsWrap">' +
+                    thumbsHtml +
+                '</div>' +
             '</div>' +
+
+            // Right Column: Details & Actions
             '<div class="modal-details">' +
                 '<div class="modal-brand-name">KALANIKETAN ETHNIC LUXURY</div>' +
                 '<h2 class="modal-name">' + p.name + '</h2>' +
@@ -446,6 +686,130 @@
         overlay.classList.add('open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Slider Elements Binding
+        var sliderContainer = document.getElementById('qvSliderContainer');
+        var sliderTrack = document.getElementById('qvSliderTrack');
+        var dotsWrap = document.getElementById('qvSliderDots');
+        var thumbsWrap = document.getElementById('qvThumbnailsWrap');
+        var prevBtn = document.getElementById('qvPrevArrow');
+        var nextBtn = document.getElementById('qvNextArrow');
+
+        function gotoSlide(idx) {
+            if (idx < 0) idx = maxSlides - 1;
+            if (idx >= maxSlides) idx = 0;
+            currentSlideIndex = idx;
+
+            var targetImgWrap = sliderTrack.children[currentSlideIndex];
+            if (targetImgWrap) {
+                sliderTrack.scrollTo({
+                    left: targetImgWrap.offsetLeft,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Sync dots
+            if (dotsWrap) {
+                Array.from(dotsWrap.children).forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === currentSlideIndex);
+                });
+            }
+
+            // Sync thumbs
+            if (thumbsWrap) {
+                Array.from(thumbsWrap.children).forEach(function(thumb, i) {
+                    thumb.classList.toggle('active', i === currentSlideIndex);
+                });
+            }
+        }
+
+        // Swipe Scroll Sync
+        sliderTrack.addEventListener('scroll', function() {
+            var w = sliderTrack.clientWidth;
+            if (w > 0) {
+                var idx = Math.round(sliderTrack.scrollLeft / w);
+                if (idx !== currentSlideIndex && idx >= 0 && idx < maxSlides) {
+                    currentSlideIndex = idx;
+                    // Sync active dot
+                    if (dotsWrap) {
+                        Array.from(dotsWrap.children).forEach(function(dot, i) {
+                            dot.classList.toggle('active', i === currentSlideIndex);
+                        });
+                    }
+                    // Sync active thumb
+                    if (thumbsWrap) {
+                        Array.from(thumbsWrap.children).forEach(function(thumb, i) {
+                            thumb.classList.toggle('active', i === currentSlideIndex);
+                        });
+                    }
+                }
+            }
+        });
+
+        // Arrow navigation clicks
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                gotoSlide(currentSlideIndex - 1);
+                restartAutoSlide();
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                gotoSlide(currentSlideIndex + 1);
+                restartAutoSlide();
+            });
+        }
+
+        // Dot navigation clicks
+        if (dotsWrap) {
+            dotsWrap.querySelectorAll('.qv-dot').forEach(function(dot) {
+                dot.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    gotoSlide(parseInt(dot.dataset.idx));
+                    restartAutoSlide();
+                });
+            });
+        }
+
+        // Thumbnail clicks
+        if (thumbsWrap) {
+            thumbsWrap.querySelectorAll('.qv-thumb').forEach(function(thumb) {
+                thumb.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    gotoSlide(parseInt(thumb.dataset.idx));
+                    restartAutoSlide();
+                });
+            });
+        }
+
+        // Auto sliding timer functions
+        function startAutoSlide() {
+            stopAutoSlide();
+            window.qvSliderInterval = setInterval(function() {
+                gotoSlide(currentSlideIndex + 1);
+            }, 3800);
+        }
+        function stopAutoSlide() {
+            if (window.qvSliderInterval) {
+                clearInterval(window.qvSliderInterval);
+                window.qvSliderInterval = null;
+            }
+        }
+        function restartAutoSlide() {
+            stopAutoSlide();
+            startAutoSlide();
+        }
+
+        // Hover triggers play/pause
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+            sliderContainer.addEventListener('mouseleave', startAutoSlide);
+        }
+
+        // Start auto slide
+        startAutoSlide();
 
         /* Colour Swatches Binding */
         content.querySelectorAll('.m-color-btn').forEach(function(btn) {
@@ -516,6 +880,10 @@
             overlay.classList.remove('open');
             overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+        }
+        if (window.qvSliderInterval) {
+            clearInterval(window.qvSliderInterval);
+            window.qvSliderInterval = null;
         }
     };
 
