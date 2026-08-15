@@ -2183,15 +2183,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
     color: #24211C;
 }
-.pdp-modal-overlay.open .pdp-wa-modal-box {
-    transform: translateY(0) scale(1);
-}
-
-/* ── Modal Header (Exact match to checkout.php .co-header) ── */
+/* ── Modal Header (Slim, Compact, Luxury Header) ── */
 .pdp-wa-co-header {
     background: #FFFFFF;
     border-bottom: 1.5px solid var(--gold-primary, #8A681F);
-    padding: 12px 18px;
+    padding: 7px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2202,46 +2198,46 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-co-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 .pdp-wa-co-icon {
-    width: 34px;
-    height: 34px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: linear-gradient(135deg, #8A681F 0%, #6F5218 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+    box-shadow: 0 2px 6px rgba(138,104,31,0.25);
     flex-shrink: 0;
 }
 .pdp-wa-co-icon svg {
-    width: 17px;
-    height: 17px;
+    width: 13px;
+    height: 13px;
     stroke: currentColor;
     stroke-width: 2;
     fill: none;
 }
 .pdp-wa-co-title-group h3 {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 1.02rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 800;
     color: #8A681F;
     margin: 0;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     line-height: 1.1;
 }
 .pdp-wa-co-title-group span {
-    font-size: 0.62rem;
+    font-size: 0.56rem;
     color: #5A5348;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 .pdp-wa-co-close-btn {
-    width: 32px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     border: 1px solid rgba(138,104,31,0.25);
     background: #FAF8F4;
@@ -2251,7 +2247,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     line-height: 1;
     flex-shrink: 0;
 }
@@ -2264,48 +2260,48 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ── Modal Body & Section Cards ── */
 .pdp-wa-modal-body {
-    padding: 14px 16px 16px;
+    padding: 10px 13px 13px;
     overflow-y: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     -webkit-overflow-scrolling: touch;
 }
 .pdp-wa-sec-card {
     background: #FFFFFF;
-    border: 1.5px solid rgba(138, 104, 31, 0.22);
-    border-radius: 12px;
-    padding: 12px 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1.2px solid rgba(138, 104, 31, 0.22);
+    border-radius: 10px;
+    padding: 9px 11px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.03);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .pdp-wa-sec-card:hover {
     border-color: #8A681F;
-    box-shadow: 0 4px 14px rgba(138,104,31,0.08);
+    box-shadow: 0 3px 10px rgba(138,104,31,0.08);
 }
 .pdp-wa-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px dashed rgba(138,104,31,0.25);
+    margin-bottom: 7px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed rgba(138,104,31,0.22);
 }
 .pdp-wa-card-title {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: 0.72rem;
+    font-weight: 800;
     color: #8A681F;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 .pdp-wa-card-title svg {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     stroke: #8A681F;
     stroke-width: 2;
     fill: none;
@@ -2316,50 +2312,50 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-modal-product {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 .pdp-wa-modal-img {
-    width: 54px;
-    height: 70px;
-    border-radius: 8px;
+    width: 44px;
+    height: 56px;
+    border-radius: 6px;
     object-fit: cover;
     object-position: center top;
     flex-shrink: 0;
-    border: 1.5px solid #F0EAD8;
+    border: 1px solid #F0EAD8;
 }
 .pdp-wa-modal-info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
 }
 .pdp-wa-modal-name {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: #24211C;
-    line-height: 1.2;
+    line-height: 1.15;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .pdp-wa-modal-meta {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: #5A5348;
     display: flex;
-    gap: 5px;
+    gap: 4px;
     flex-wrap: wrap;
 }
 .pdp-wa-modal-meta span {
     background: #FAF8F4;
-    border: 1px solid rgba(138, 104, 31, 0.18);
-    padding: 1px 6px;
-    border-radius: 4px;
+    border: 1px solid rgba(138, 104, 31, 0.15);
+    padding: 0 5px;
+    border-radius: 3px;
     font-weight: 700;
 }
 .pdp-wa-modal-price {
-    font-size: 0.98rem;
+    font-size: 0.90rem;
     font-weight: 900;
     color: #8A681F;
 }
@@ -2368,15 +2364,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-input-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-bottom: 9px;
+    gap: 3px;
+    margin-bottom: 7px;
 }
 .pdp-wa-input-group:last-child {
     margin-bottom: 0;
 }
 .pdp-wa-label {
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.68rem;
+    font-weight: 800;
     color: #24211C;
     letter-spacing: 0.02em;
     display: flex;
@@ -2388,12 +2384,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-wa-input {
     width: 100%;
-    height: 40px;
-    border: 1.5px solid #DDD8CD;
-    border-radius: 8px;
-    padding: 0 12px;
+    height: 35px;
+    border: 1.2px solid #DDD8CD;
+    border-radius: 7px;
+    padding: 0 10px;
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.84rem;
+    font-size: 0.80rem;
     color: #24211C;
     background: #FAF9F5;
     outline: none;
@@ -2403,15 +2399,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-input:focus {
     border-color: #8A681F;
     background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.14);
 }
 
 /* Phone input with country code */
 .pdp-wa-phone-wrap {
     display: flex;
     align-items: center;
-    border: 1.5px solid #DDD8CD;
-    border-radius: 8px;
+    border: 1.2px solid #DDD8CD;
+    border-radius: 7px;
     background: #FAF9F5;
     overflow: hidden;
     transition: all 0.2s ease;
@@ -2419,15 +2415,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-phone-wrap:focus-within {
     border-color: #8A681F;
     background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.14);
 }
 .pdp-wa-phone-prefix {
-    padding: 0 10px;
-    font-size: 0.82rem;
-    font-weight: 700;
+    padding: 0 8px;
+    font-size: 0.78rem;
+    font-weight: 800;
     color: #8A681F;
     background: #F0EAD8;
-    height: 40px;
+    height: 35px;
     display: flex;
     align-items: center;
     border-right: 1px solid #DDD8CD;
@@ -2437,14 +2433,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;
-    padding: 0 10px !important;
+    padding: 0 8px !important;
 }
 
 /* 3-column location grid */
 .pdp-wa-loc-grid {
     display: grid;
     grid-template-columns: 1.1fr 1.1fr 0.9fr;
-    gap: 8px;
+    gap: 6px;
 }
 @media (max-width: 480px) {
     .pdp-wa-loc-grid {
@@ -2479,15 +2475,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-payment-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 7px;
 }
 .pdp-wa-pay-card {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 10px 11px;
-    border-radius: 10px;
-    border: 1.5px solid #DDD8CD;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1.2px solid #DDD8CD;
     background: #FAF9F5;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2500,13 +2496,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-pay-card.selected {
     border-color: #8A681F;
     background: #FCF8EE;
-    box-shadow: 0 2px 10px rgba(138,104,31,0.12);
+    box-shadow: 0 1px 8px rgba(138,104,31,0.12);
 }
 .pdp-wa-pay-radio {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    border: 2px solid #C5BBAA;
+    border: 1.8px solid #C5BBAA;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2518,15 +2514,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-wa-pay-card.selected .pdp-wa-pay-radio::after {
     content: '';
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #8A681F;
 }
 .pdp-wa-pay-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2534,36 +2530,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-wa-pay-icon.cod { background: #FFF3E0; color: #E65100; }
 .pdp-wa-pay-icon.upi { background: #EDE7F6; color: #673AB7; }
-.pdp-wa-pay-icon svg { width: 16px; height: 16px; fill: currentColor; }
+.pdp-wa-pay-icon svg { width: 14px; height: 14px; fill: currentColor; }
 
 /* ── CTA Button ── */
 .pdp-wa-submit-btn {
     width: 100%;
-    height: 48px;
-    border-radius: 10px;
+    height: 42px;
+    border-radius: 8px;
     background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     font-weight: 800;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-top: 4px;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+    transition: all 0.2s ease;
+    margin-top: 2px;
 }
 .pdp-wa-submit-btn:hover {
     background: linear-gradient(135deg, #20BD5A 0%, #0E7063 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(37,211,102,0.45);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(37,211,102,0.45);
 }
-.pdp-wa-submit-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.pdp-wa-submit-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
 /* Toast Container */
 .toast-container {
