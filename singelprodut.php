@@ -2295,10 +2295,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-section-heading {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 6px;
     margin-top: 2px;
     padding-bottom: 4px;
     border-bottom: 1.5px solid rgba(138, 104, 31, 0.2);
+}
+.pdp-wa-sec-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 .pdp-wa-sec-icon {
     font-size: 0.88rem;
@@ -2310,6 +2316,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--dark-gold, #8A681F);
+}
+.pdp-wa-quick-fill-chips {
+    display: flex;
+    gap: 6px;
+}
+.pdp-wa-quick-chip {
+    background: #FFFFFF;
+    border: 1px solid var(--gold-primary, #8A681F);
+    color: var(--gold-primary, #8A681F);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1.2;
+    user-select: none;
+}
+.pdp-wa-quick-chip:hover, .pdp-wa-quick-chip.active {
+    background: var(--gold-primary, #8A681F);
+    color: #FFFFFF;
 }
 
 .pdp-wa-form-group {
@@ -3016,20 +3043,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 
                 <!-- Section 1: Customer Contact Details -->
                 <div class="pdp-wa-section-heading">
-                    <span class="pdp-wa-sec-icon">👤</span>
-                    <span class="pdp-wa-sec-title">Customer Contact Details</span>
+                    <div class="pdp-wa-sec-title-wrap">
+                        <span class="pdp-wa-sec-icon">👤</span>
+                        <span class="pdp-wa-sec-title">Customer Contact Details</span>
+                    </div>
+                    <div class="pdp-wa-quick-fill-chips" id="pdpWaQuickFillWrap" style="display:none;">
+                        <button type="button" class="pdp-wa-quick-chip active" id="pdpWaMyInfoChip" onclick="fillMyAccountDetails()">👤 My Info</button>
+                        <button type="button" class="pdp-wa-quick-chip" id="pdpWaNewCustChip" onclick="clearCustomerDetails()">➕ New Customer</button>
+                    </div>
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
+                    <label class="pdp-wa-label" for="pdpWaName">👤 Customer Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
                 </div>
 
                 <div class="pdp-wa-form-group">
                     <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
                     <div class="pdp-wa-phone-row">
                         <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
-                        <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
+                        <input type="text" id="pdpWaPhone" required placeholder="Enter 10-Digit Mobile Number" class="pdp-wa-input" autocomplete="tel" />
                     </div>
                 </div>
 
@@ -3350,6 +3383,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         // Pre-fill Name & Mobile Number from logged-in user account if available
         var nameField = document.getElementById('pdpWaName');
         var phoneField = document.getElementById('pdpWaPhone');
+        var quickWrap = document.getElementById('pdpWaQuickFillWrap');
+        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
+        var newCustChip = document.getElementById('pdpWaNewCustChip');
 
         var userRaw = localStorage.getItem('kalaniketan_user');
         if (userRaw) {
@@ -3362,13 +3398,53 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     var cleanP = userPhone.replace(/[^0-9]/g, '');
                     phoneField.value = cleanP.slice(-10);
                 }
+                if (quickWrap) quickWrap.style.display = 'flex';
+                if (myInfoChip) myInfoChip.classList.add('active');
+                if (newCustChip) newCustChip.classList.remove('active');
             } catch(e) {}
         } else {
             if (nameField) nameField.value = '';
             if (phoneField) phoneField.value = '';
+            if (quickWrap) quickWrap.style.display = 'none';
         }
 
         modal.classList.add('open');
+    };
+
+    window.fillMyAccountDetails = function() {
+        var nameField = document.getElementById('pdpWaName');
+        var phoneField = document.getElementById('pdpWaPhone');
+        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
+        var newCustChip = document.getElementById('pdpWaNewCustChip');
+
+        var userRaw = localStorage.getItem('kalaniketan_user');
+        if (userRaw) {
+            try {
+                var u = JSON.parse(userRaw);
+                if (nameField && u.name) nameField.value = u.name;
+                if (phoneField && u.phone) {
+                    var cleanP = u.phone.replace(/[^0-9]/g, '');
+                    phoneField.value = cleanP.slice(-10);
+                }
+                if (myInfoChip) myInfoChip.classList.add('active');
+                if (newCustChip) newCustChip.classList.remove('active');
+            } catch(e) {}
+        }
+    };
+
+    window.clearCustomerDetails = function() {
+        var nameField = document.getElementById('pdpWaName');
+        var phoneField = document.getElementById('pdpWaPhone');
+        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
+        var newCustChip = document.getElementById('pdpWaNewCustChip');
+
+        if (nameField) {
+            nameField.value = '';
+            nameField.focus();
+        }
+        if (phoneField) phoneField.value = '';
+        if (myInfoChip) myInfoChip.classList.remove('active');
+        if (newCustChip) newCustChip.classList.add('active');
     };
 
     window.closePdpWhatsAppOrderModal = function() {
