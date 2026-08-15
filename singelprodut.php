@@ -257,6 +257,158 @@ $myntraSpecsMap = [
 ];
 $currentSpecs = $myntraSpecsMap[$pid] ?? $myntraSpecsMap[3];
 
+// Myntra-Style Detailed Product Descriptions (Design Details, Size & Fit, Material & Care)
+$myntraProductDetailsMap = [
+    1 => [
+        'design_lines' => [
+            'Midnight Blue and Royal Gold-Toned Banarasi Silk saree',
+            'Intricate floral jaal woven design with contrast zari border',
+            'Has Zari detail',
+            'The saree comes with an unstitched blouse piece',
+            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
+            'Special Occasion: Wedding & Festive Reception'
+        ],
+        'size_fit' => [
+            'Length: 5.5 metres plus 0.8 metre blouse piece',
+            'Width: 1.06 metres (approx.)'
+        ],
+        'material_care' => [
+            'Saree fabric: Pure Banarasi Katan Silk',
+            'Blouse fabric: Pure Silk Blend',
+            'Wash Care: Dry Clean Only'
+        ]
+    ],
+    2 => [
+        'design_lines' => [
+            'Deep Wine and Ruby Red Banarasi Zari saree',
+            'Centuries-old kadhwa weaving technique with rich gold zari motifs',
+            'Opulent pallu with floral jaal and double zari border',
+            'The saree comes with an unstitched blouse piece',
+            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
+            'Special Occasion: Bridal & Royal Gala'
+        ],
+        'size_fit' => [
+            'Length: 5.5 metres plus 0.8 metre blouse piece',
+            'Width: 1.06 metres (approx.)'
+        ],
+        'material_care' => [
+            'Saree fabric: Pure Katan Silk',
+            'Blouse fabric: Katan Silk',
+            'Wash Care: Dry Clean Only'
+        ]
+    ],
+    3 => [
+        'design_lines' => [
+            'Off White and Gold-Toned Kasavu sarees',
+            'Woven Design saree with Woven Design Border border',
+            'Has Zari detail',
+            'The saree comes with an unstitched blouse piece',
+            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
+            'Special Occasion: Onam'
+        ],
+        'size_fit' => [
+            'Length: 5.5 metres plus 0.8 metre blouse piece',
+            'Width: 1.06 metres (approx.)'
+        ],
+        'material_care' => [
+            'Saree fabric: Silk Blend',
+            'Blouse fabric: Silk Blend',
+            'Wash Care: Machine wash'
+        ]
+    ],
+    4 => [
+        'design_lines' => [
+            'Blush Pink floral embroidered Viscose Georgette saree',
+            'Hand-embroidered resham florals and delicate scalloped borders',
+            'Lightweight, fluid drape with romantic evening sheen',
+            'The saree comes with an unstitched blouse piece',
+            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
+            'Special Occasion: Evening Soiree & Cocktail'
+        ],
+        'size_fit' => [
+            'Length: 5.5 metres plus 0.8 metre blouse piece',
+            'Width: 1.06 metres (approx.)'
+        ],
+        'material_care' => [
+            'Saree fabric: Viscose Georgette',
+            'Blouse fabric: Georgette',
+            'Wash Care: Dry Clean Only'
+        ]
+    ],
+    5 => [
+        'design_lines' => [
+            'Emerald Green Royal Anarkali Floor-Length Kurti Set',
+            '32-kali flared silhouette with intricate gota patti handwork on yoke and bell sleeves',
+            'Comes with matching churidar and sheer organza dupatta',
+            'Special Occasion: Festive Celebrations & Sangeet'
+        ],
+        'size_fit' => [
+            'Kurti Length: 52 inches (Floor Length)',
+            'Sleeve Length: 3/4th Bell Sleeves',
+            'Dupatta: 2.25 metres'
+        ],
+        'material_care' => [
+            'Kurti & Churidar: Chanderi Silk Cotton',
+            'Dupatta: Pure Organza',
+            'Wash Care: Dry Clean Only'
+        ]
+    ],
+    6 => [
+        'design_lines' => [
+            'Crimson Red Bridal Zardosi Couture Lehenga Set',
+            '180 hours of hand-embroidery with dabka, nakshi, and zardozi bullion',
+            'Complete with heavily embellished choli and dual dupattas (Velvet & Net)',
+            'Special Occasion: Royal Wedding & Pheras'
+        ],
+        'size_fit' => [
+            'Lehenga Flare (Gher): 4.5 metres',
+            'Lehenga Length: 43 inches',
+            'Choli Fabric: 1.2 metres (Unstitched)'
+        ],
+        'material_care' => [
+            'Lehenga & Choli: Raw Silk & Velvet',
+            'Dupatta: Soft Net & Velvet Border',
+            'Wash Care: Specialist Dry Clean Only'
+        ]
+    ],
+    7 => [
+        'design_lines' => [
+            'Mustard & Indigo Bagru Hand Block Printed Saree',
+            'Handcrafted using traditional wooden block carving and natural vegetable dyes',
+            'Soft breathable drape with geometric zari border',
+            'The saree comes with an unstitched blouse piece',
+            'Special Occasion: Daytime Cultural & Festive Events'
+        ],
+        'size_fit' => [
+            'Length: 5.5 metres plus 0.8 metre blouse piece',
+            'Width: 1.06 metres (approx.)'
+        ],
+        'material_care' => [
+            'Saree fabric: 100% Mulmul Cotton',
+            'Blouse fabric: Mulmul Cotton',
+            'Wash Care: Gentle Hand Wash in Cold Water'
+        ]
+    ],
+    8 => [
+        'design_lines' => [
+            'Ivory & Pearl Tone-on-Tone Embroidered Evening Gown',
+            'Dramatic sheer cape sleeves embellished with authentic Swarovski crystals',
+            'Modern indo-western structured silhouette',
+            'Special Occasion: Cocktail, Reception & Red Carpet'
+        ],
+        'size_fit' => [
+            'Gown Length: 56 inches',
+            'Cape Length: Floor-Sweeping (58 inches)'
+        ],
+        'material_care' => [
+            'Fabric: Organza & Silk Crepe',
+            'Lining: Butter Crepe',
+            'Wash Care: Dry Clean Only'
+        ]
+    ]
+];
+$currentDetails = $myntraProductDetailsMap[$pid] ?? $myntraProductDetailsMap[3];
+
 $customerReviews = [
     [
         'id' => 1,
@@ -1195,6 +1347,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     stroke-width: 2;
 }
 
+/* ── Myntra-Style Product Details (Accordion 1) ─────────────────────── */
+.pdp-myntra-details-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.pdp-myntra-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.pdp-myntra-heading {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #282C3F;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+.pdp-myntra-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.pdp-myntra-list-item {
+    font-size: 0.83rem;
+    color: #535766;
+    line-height: 1.5;
+}
+.pdp-myntra-disclaimer {
+    font-size: 0.77rem;
+    color: #7E818C;
+    line-height: 1.45;
+    background: #FAF9F6;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid var(--dark-gold, #8A681F);
+    margin-top: 4px;
+}
+
 /* ── Myntra-Style Specifications ────────────────────────────── */
 .pdp-myntra-spec-grid {
     display: grid;
@@ -2118,25 +2309,50 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <!-- Accordion Details & Specifications -->
             <div class="pdp-accordion-wrap">
-                <!-- 1. Description & Craftsmanship -->
+                <!-- 1. Product Details (Myntra Style) -->
                 <div class="pdp-acc-item open">
                     <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="true">
                         <div class="pdp-acc-title-group">
                             <div class="pdp-acc-icon-box">
-                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                             </div>
-                            <span class="pdp-acc-title-text">Product Description & Craftsmanship</span>
+                            <span class="pdp-acc-title-text">Product Details</span>
                         </div>
                         <div class="pdp-acc-chevron-wrap">
                             <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
                         </div>
                     </button>
                     <div class="pdp-acc-body">
-                        <p><?= htmlspecialchars($product['desc']) ?></p>
-                        <div class="pdp-desc-highlights">
-                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> 100% Pure Handloom</span>
-                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Master Artisanal Zari</span>
-                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Royal Drape Finish</span>
+                        <div class="pdp-myntra-details-wrap">
+                            <!-- Design Details -->
+                            <div class="pdp-myntra-section-block">
+                                <h4 class="pdp-myntra-heading">Design Details</h4>
+                                <div class="pdp-myntra-list">
+                                    <?php foreach ($currentDetails['design_lines'] as $line): ?>
+                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($line) ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- Size & Fit -->
+                            <div class="pdp-myntra-section-block">
+                                <h4 class="pdp-myntra-heading">Size & Fit</h4>
+                                <div class="pdp-myntra-list">
+                                    <?php foreach ($currentDetails['size_fit'] as $sf): ?>
+                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($sf) ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- Material & Care -->
+                            <div class="pdp-myntra-section-block">
+                                <h4 class="pdp-myntra-heading">Material & Care</h4>
+                                <div class="pdp-myntra-list">
+                                    <?php foreach ($currentDetails['material_care'] as $mc): ?>
+                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($mc) ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
