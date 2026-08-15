@@ -1237,48 +1237,85 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ════════════════════════════════════════════════════
    RELATED PRODUCTS SECTION
 ════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════
+   RELATED PRODUCTS CAROUSEL ("You May Also Admire")
+════════════════════════════════════════════════════ */
 .pdp-bottom-section {
-    margin-top: clamp(40px, 6vw, 70px);
+    margin-top: clamp(36px, 5vw, 60px);
 }
 .pdp-section-title-large {
     font-family: var(--font-serif);
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-size: clamp(1.15rem, 3vw, 1.5rem);
     font-weight: 800;
     color: var(--dark-text);
     letter-spacing: 0.06em;
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
     position: relative;
 }
 .pdp-section-title-large::after {
     content: '';
     display: block;
-    width: 50px;
+    width: 44px;
     height: 2px;
     background: var(--dark-gold);
-    margin: 8px auto 0;
+    margin: 6px auto 0;
 }
 
-/* Related Products Grid */
-.pdp-related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+.pdp-rel-carousel-wrap {
+    position: relative;
+    margin-top: 14px;
 }
+.pdp-rel-track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 2px 14px;
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
+}
+.pdp-rel-track::-webkit-scrollbar { display: none; }
+
+/* Product Card - Sleek 2-Show on Mobile, 4-Show on Desktop */
 .pdp-rel-card {
+    flex: 0 0 220px;
+    max-width: 240px;
+    scroll-snap-align: start;
     background: #FFFFFF;
     border-radius: 12px;
-    border: 1.5px solid var(--soft-platinum);
+    border: 1.2px solid var(--soft-platinum);
     overflow: hidden;
     transition: all 0.25s ease;
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    position: relative;
+}
+@media (max-width: 767px) {
+    .pdp-rel-card {
+        flex: 0 0 calc(50% - 6px);
+        min-width: 140px;
+        max-width: 175px;
+        border-radius: 10px;
+    }
+}
+@media (max-width: 360px) {
+    .pdp-rel-card {
+        flex: 0 0 135px;
+        min-width: 135px;
+    }
 }
 .pdp-rel-card:hover {
     border-color: var(--dark-gold);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(138,104,31,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(138,104,31,0.14);
 }
+
 .pdp-rel-img-wrap {
     aspect-ratio: 3/4;
     overflow: hidden;
@@ -1287,35 +1324,139 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-rel-img-wrap img {
     width: 100%; height: 100%; object-fit: cover; object-position: top;
-    transition: transform 0.4s ease;
+    transition: transform 0.35s ease;
 }
-.pdp-rel-card:hover .pdp-rel-img-wrap img { transform: scale(1.05); }
+.pdp-rel-card:hover .pdp-rel-img-wrap img { transform: scale(1.06); }
+
+.pdp-rel-badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    font-size: 0.55rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    z-index: 2;
+}
+
 .pdp-rel-body {
-    padding: 12px;
+    padding: 8px 10px 10px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     flex: 1;
 }
+@media (max-width: 600px) {
+    .pdp-rel-body {
+        padding: 6px 8px 8px;
+        gap: 2px;
+    }
+}
 .pdp-rel-cat {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 800;
     color: var(--dark-gold);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
 }
 .pdp-rel-title {
     font-family: var(--font-serif);
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 700;
     color: var(--dark-text);
-    line-height: 1.3;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media (max-width: 600px) {
+    .pdp-rel-title {
+        font-size: 0.74rem;
+    }
+}
+
+.pdp-rel-price-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: auto;
+    padding-top: 4px;
+    flex-wrap: wrap;
 }
 .pdp-rel-price {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 900;
     color: var(--dark-gold);
-    margin-top: auto;
+    line-height: 1;
+}
+@media (max-width: 600px) {
+    .pdp-rel-price {
+        font-size: 0.8rem;
+    }
+}
+.pdp-rel-mrp {
+    font-size: 0.65rem;
+    color: var(--light-text);
+    text-decoration: line-through;
+}
+.pdp-rel-disc {
+    font-size: 0.58rem;
+    font-weight: 800;
+    color: #2E7D32;
+}
+
+/* Related Navigation Arrows */
+.pdp-rel-arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    border: 1.5px solid var(--gold-border);
+    color: var(--dark-gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.pdp-rel-arrow:hover {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    transform: translateY(-50%) scale(1.08);
+}
+.pdp-rel-arrow.prev { left: -14px; }
+.pdp-rel-arrow.next { right: -14px; }
+.pdp-rel-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+
+@media (max-width: 900px) {
+    .pdp-rel-arrow { display: none; }
+}
+
+/* Related Dots */
+.pdp-rel-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+.pdp-rel-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--soft-platinum);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pdp-rel-dot.active {
+    width: 18px;
+    border-radius: 8px;
+    background: var(--dark-gold);
 }
 
 /* ════════════════════════════════════════════════════
@@ -1697,25 +1838,50 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </section>
 
     <!-- ════ RELATED PRODUCTS CAROUSEL ════ -->
-    <section class="pdp-bottom-section">
+    <section class="pdp-bottom-section" id="pdpRelatedSection">
         <h2 class="pdp-section-title-large">You May Also Admire</h2>
-        <div class="pdp-related-grid">
-            <?php 
-            $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
-            $relatedSlice = array_slice($relatedItems, 0, 4);
-            foreach ($relatedSlice as $rel):
-            ?>
-            <a href="singelprodut.php?id=<?= $rel['id'] ?>" class="pdp-rel-card">
-                <div class="pdp-rel-img-wrap">
-                    <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80'" />
-                </div>
-                <div class="pdp-rel-body">
-                    <span class="pdp-rel-cat"><?= htmlspecialchars($rel['category']) ?></span>
-                    <h3 class="pdp-rel-title"><?= htmlspecialchars($rel['name']) ?></h3>
-                    <span class="pdp-rel-price">₹<?= number_format($rel['price']) ?></span>
-                </div>
-            </a>
-            <?php endforeach; ?>
+
+        <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
+            <!-- Navigation Arrows (Desktop) -->
+            <button class="pdp-rel-arrow prev" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="pdp-rel-arrow next" id="pdpRelNext" aria-label="Next related products" onclick="slidePdpRelated(1)">
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <!-- Scrollable Track (2-show on mobile) -->
+            <div class="pdp-rel-track" id="pdpRelTrack">
+                <?php 
+                $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
+                foreach ($relatedItems as $rel):
+                ?>
+                <a href="singelprodut.php?id=<?= $rel['id'] ?>" class="pdp-rel-card">
+                    <div class="pdp-rel-img-wrap">
+                        <?php if (!empty($rel['badge'])): ?>
+                        <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>
+                        <?php endif; ?>
+                        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80'" loading="lazy" />
+                    </div>
+                    <div class="pdp-rel-body">
+                        <span class="pdp-rel-cat"><?= htmlspecialchars($rel['category']) ?></span>
+                        <h3 class="pdp-rel-title"><?= htmlspecialchars($rel['name']) ?></h3>
+                        <div class="pdp-rel-price-row">
+                            <span class="pdp-rel-price">₹<?= number_format($rel['price']) ?></span>
+                            <?php if (!empty($rel['old_price'])): ?>
+                            <span class="pdp-rel-mrp">₹<?= number_format($rel['old_price']) ?></span>
+                            <?php endif; ?>
+                            <?php if (!empty($rel['discount'])): ?>
+                            <span class="pdp-rel-disc"><?= $rel['discount'] ?>% OFF</span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </a>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Dots -->
+            <div class="pdp-rel-dots" id="pdpRelDots"></div>
         </div>
     </section>
 </main>
@@ -2182,6 +2348,95 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 d.classList.toggle('active', i === activeIdx);
             });
         }, { passive: true });
+    }
+
+    // ════ AUTO-SLIDER CONTROLLER FOR RELATED PRODUCTS ════
+    var relTrack = document.getElementById('pdpRelTrack');
+    var relDotsWrap = document.getElementById('pdpRelDots');
+    var relAutoSlideTimer = null;
+
+    window.rebuildRelDots = function() {
+        if (!relDotsWrap || !relTrack) return;
+        relDotsWrap.innerHTML = '';
+        var cards = relTrack.querySelectorAll('.pdp-rel-card');
+        var step = window.innerWidth <= 767 ? 2 : 4;
+        var totalDots = Math.ceil(cards.length / step);
+
+        for (var i = 0; i < totalDots; i++) {
+            (function(idx) {
+                var dot = document.createElement('div');
+                dot.className = 'pdp-rel-dot ' + (idx === 0 ? 'active' : '');
+                dot.onclick = function() {
+                    var targetCard = cards[idx * step] || cards[cards.length - 1];
+                    if (targetCard) {
+                        relTrack.scrollTo({ left: targetCard.offsetLeft - relTrack.offsetLeft, behavior: 'smooth' });
+                    }
+                };
+                relDotsWrap.appendChild(dot);
+            })(i);
+        }
+    };
+
+    window.slidePdpRelated = function(direction) {
+        if (!relTrack) return;
+        var firstCard = relTrack.querySelector('.pdp-rel-card');
+        var cardWidth = firstCard ? (firstCard.clientWidth + 12) : 200;
+        var scrollAmount = cardWidth * (window.innerWidth <= 767 ? 2 : 3);
+        
+        var maxScroll = relTrack.scrollWidth - relTrack.clientWidth;
+        var newLeft = relTrack.scrollLeft + (direction * scrollAmount);
+
+        if (newLeft > maxScroll + 10) {
+            relTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else if (newLeft < 0) {
+            relTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+            relTrack.scrollTo({ left: newLeft, behavior: 'smooth' });
+        }
+    };
+
+    function startRelAutoSlide() {
+        if (relAutoSlideTimer) clearInterval(relAutoSlideTimer);
+        relAutoSlideTimer = setInterval(function() {
+            window.slidePdpRelated(1);
+        }, 4500);
+    }
+
+    function pauseRelAutoSlide() {
+        if (relAutoSlideTimer) {
+            clearInterval(relAutoSlideTimer);
+            relAutoSlideTimer = null;
+        }
+    }
+
+    if (relTrack) {
+        window.rebuildRelDots();
+        startRelAutoSlide();
+
+        var relWrap = document.getElementById('pdpRelCarouselWrap');
+        if (relWrap) {
+            relWrap.addEventListener('mouseenter', pauseRelAutoSlide);
+            relWrap.addEventListener('mouseleave', startRelAutoSlide);
+            relWrap.addEventListener('touchstart', pauseRelAutoSlide, { passive: true });
+            relWrap.addEventListener('touchend', function() {
+                setTimeout(startRelAutoSlide, 3000);
+            }, { passive: true });
+        }
+
+        // Sync related dots on scroll
+        relTrack.addEventListener('scroll', function() {
+            var firstCard = relTrack.querySelector('.pdp-rel-card');
+            if (!firstCard) return;
+            var cardWidth = firstCard.clientWidth + 12;
+            var step = window.innerWidth <= 767 ? 2 : 4;
+            var activeIdx = Math.round(relTrack.scrollLeft / (cardWidth * step));
+            var dots = document.querySelectorAll('.pdp-rel-dot');
+            dots.forEach(function(d, i) {
+                d.classList.toggle('active', i === activeIdx);
+            });
+        }, { passive: true });
+
+        window.addEventListener('resize', window.rebuildRelDots, { passive: true });
     }
 
     // Modal background click dismiss

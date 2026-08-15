@@ -137,52 +137,115 @@
 
 /* ── Full Luxury Footer ─────────────────────────────────────────── */
 .pdp-footer {
-    background: #181512;
+    background: #14120E;
     color: #EAE7DF;
-    padding: clamp(36px, 6vw, 60px) clamp(16px, 4vw, 48px) 30px;
+    padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 48px) 30px;
     border-top: 3px solid var(--dark-gold, #8A681F);
     font-family: var(--font-sans, 'Inter', sans-serif);
+}
+
+/* Luxury Trust Badges Strip */
+.pdp-footer-trust-strip {
+    max-width: 1200px;
+    margin: 0 auto 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(197, 168, 89, 0.2);
+}
+@media (max-width: 600px) {
+    .pdp-footer-trust-strip {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding-bottom: 20px;
+    }
+}
+.pdp-trust-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+.pdp-trust-icon {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(197,168,89,0.12);
+    color: #C5A859;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.pdp-trust-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+.pdp-trust-txt {
+    display: flex;
+    flex-direction: column;
+}
+.pdp-trust-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+}
+.pdp-trust-sub {
+    font-size: 0.64rem;
+    color: #A09A90;
 }
 
 .pdp-footer-grid {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: clamp(24px, 4vw, 48px);
+    grid-template-columns: 1.3fr 1fr 1fr 1.2fr;
+    gap: clamp(20px, 3.5vw, 40px);
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 36px;
+    padding-bottom: 32px;
+}
+@media (max-width: 900px) {
+    .pdp-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+}
+@media (max-width: 540px) {
+    .pdp-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
 }
 
 .pdp-footer-brand h3 {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     color: #C5A859;
     letter-spacing: 0.12em;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 .pdp-footer-brand p {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #A09A90;
     line-height: 1.6;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 
 .pdp-footer-col h4 {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 800;
     color: #C5A859;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 .pdp-footer-links {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 .pdp-footer-links a {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #BFB8AC;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -195,13 +258,13 @@
 .pdp-footer-contact-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.82rem;
+    gap: 8px;
+    font-size: 0.78rem;
     color: #BFB8AC;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 .pdp-footer-contact-item svg {
-    width: 16px; height: 16px;
+    width: 15px; height: 15px;
     stroke: #C5A859;
     fill: none;
     stroke-width: 2;
@@ -210,29 +273,30 @@
 
 .pdp-footer-bottom {
     max-width: 1200px;
-    margin: 24px auto 0;
+    margin: 20px auto 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #8E877D;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
 }
 .pdp-footer-payments {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.72rem;
+    gap: 8px;
+    font-size: 0.7rem;
     color: #A09A90;
+    flex-wrap: wrap;
 }
 .pdp-payment-pill {
-    padding: 3px 8px;
+    padding: 2.5px 7px;
     border-radius: 4px;
     background: rgba(255,255,255,0.08);
     border: 1px solid rgba(255,255,255,0.15);
     color: #FFFFFF;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 700;
 }
 </style>
@@ -266,6 +330,49 @@
 
 <!-- ═══ Luxury Footer ═══ -->
 <footer class="pdp-footer">
+    <!-- Trust Strip -->
+    <div class="pdp-footer-trust-strip">
+        <div class="pdp-trust-box">
+            <div class="pdp-trust-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="pdp-trust-txt">
+                <span class="pdp-trust-title">100% Authentic Silk</span>
+                <span class="pdp-trust-sub">Handloom certified weaving</span>
+            </div>
+        </div>
+
+        <div class="pdp-trust-box">
+            <div class="pdp-trust-icon">
+                <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <div class="pdp-trust-txt">
+                <span class="pdp-trust-title">Free Express Shipping</span>
+                <span class="pdp-trust-sub">Across 19,000+ pin codes</span>
+            </div>
+        </div>
+
+        <div class="pdp-trust-box">
+            <div class="pdp-trust-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="pdp-trust-txt">
+                <span class="pdp-trust-title">Secure Payments</span>
+                <span class="pdp-trust-sub">256-Bit SSL protection</span>
+            </div>
+        </div>
+
+        <div class="pdp-trust-box">
+            <div class="pdp-trust-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="pdp-trust-txt">
+                <span class="pdp-trust-title">WhatsApp Concierge</span>
+                <span class="pdp-trust-sub">Live personal stylist support</span>
+            </div>
+        </div>
+    </div>
+
     <div class="pdp-footer-grid">
         <div class="pdp-footer-brand">
             <h3>KALANIKETAN</h3>
