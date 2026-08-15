@@ -381,12 +381,43 @@ $catalogProducts = [
             flex-shrink: 0;
             transition: var(--ws-transition);
             z-index: 900;
+            height: 100%;
         }
         .ws-sidebar-brand-box {
-            padding: 20px 20px 14px;
+            padding: 16px 18px 14px;
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 1px solid var(--ws-border-light);
+            flex-shrink: 0;
+        }
+        .ws-sidebar-close-btn {
+            display: none;
+            margin-left: auto;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1.2px solid var(--ws-gold-border);
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: var(--ws-transition);
+        }
+        .ws-sidebar-close-btn:hover {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+        }
+        .ws-sidebar-scroll {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: thin;
         }
         .ws-side-logo-icon {
             width: 34px;
@@ -1705,25 +1736,43 @@ $catalogProducts = [
             }
             .ws-sidebar {
                 position: fixed;
-                top: 64px;
+                top: 0;
                 left: 0;
                 bottom: 0;
+                height: 100vh;
+                max-height: 100vh;
+                width: clamp(270px, 80vw, 320px);
+                background: #FFFFFF;
                 transform: translateX(-100%);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                box-shadow: 8px 0 35px rgba(20, 17, 14, 0.35);
+                z-index: 2000;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
             }
             .ws-sidebar.open {
                 transform: translateX(0);
             }
+            .ws-sidebar-close-btn {
+                display: flex;
+            }
             .ws-sidebar-backdrop {
                 position: fixed;
-                top: 64px; left: 0; width: 100%; height: calc(100vh - 64px);
-                background: rgba(20,17,14,0.6);
-                backdrop-filter: blur(4px);
-                z-index: 850;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(20, 17, 14, 0.65);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                z-index: 1999;
                 display: none;
             }
             .ws-sidebar-backdrop.active {
                 display: block;
+            }
+            .ws-sidebar-scroll {
+                padding-bottom: calc(60px + env(safe-area-inset-bottom));
             }
             .ws-mobile-dock {
                 display: flex;
@@ -1844,77 +1893,80 @@ $catalogProducts = [
             <div class="ws-sidebar-brand-box">
                 <div class="ws-side-logo-icon">K</div>
                 <div class="ws-side-brand-title">KALANIKETAN</div>
+                <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
             </div>
 
-            <div class="ws-nav-category">MENU</div>
-            <ul class="ws-nav-list">
-                <li>
-                    <a class="ws-nav-item active" onclick="switchWsTab('overview')">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('orders')">
-                        <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                        <span>Orders</span>
-                        <span class="ws-nav-badge" id="navOrdersCount">6</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('reports')">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        <span>Reports</span>
-                        <span class="ws-nav-badge gold">NEW</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('trending')">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Catalog</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('tracking')">
-                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                        <span>Live Tracking</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('support')">
-                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                        <span>Support Desk</span>
-                    </a>
-                </li>
-            </ul>
+            <div class="ws-sidebar-scroll">
+                <div class="ws-nav-category">MENU</div>
+                <ul class="ws-nav-list">
+                    <li>
+                        <a class="ws-nav-item active" onclick="switchWsTab('overview')">
+                            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('orders')">
+                            <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <span>Orders</span>
+                            <span class="ws-nav-badge" id="navOrdersCount">6</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('reports')">
+                            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            <span>Reports</span>
+                            <span class="ws-nav-badge gold">NEW</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('trending')">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span>Catalog</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('tracking')">
+                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            <span>Live Tracking</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('support')">
+                            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            <span>Support Desk</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="ws-nav-category">SETTINGS</div>
-            <ul class="ws-nav-list">
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('details')">
-                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>My Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('gst')">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span>GST Profile</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="ws-nav-item" onclick="switchWsTab('address')">
-                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <span>Address Book</span>
-                    </a>
-                </li>
-            </ul>
+                <div class="ws-nav-category">SETTINGS</div>
+                <ul class="ws-nav-list">
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('details')">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('gst')">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <span>GST Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ws-nav-item" onclick="switchWsTab('address')">
+                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Address Book</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="ws-sidebar-footer">
-                <button class="ws-logout-btn" onclick="handleWholesalerLogout()">
-                    <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span>Sign Out</span>
-                </button>
+                <div class="ws-sidebar-footer">
+                    <button class="ws-logout-btn" onclick="handleWholesalerLogout()">
+                        <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
             </div>
         </aside>
 
