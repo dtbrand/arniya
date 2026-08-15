@@ -840,113 +840,113 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     letter-spacing: 0.06em;
 }
 
-/* Price Block */
+/* ════ Price Card (Next-Level Luxury Design & Clear Visibility) ════ */
 .pdp-price-card {
     background: #FFFFFF;
-    border: 1.5px solid var(--gold-border);
+    border: 1px solid rgba(138, 104, 31, 0.24);
+    border-left: 4px solid var(--dark-gold, #8A681F);
     border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    padding: 12px 16px;
+    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.pdp-deal-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    align-self: flex-start;
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--dark-gold, #8A681F);
+    background: #FAF4E6;
+    border: 1px solid rgba(138, 104, 31, 0.35);
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 .pdp-price-main-row {
     display: flex;
     align-items: baseline;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 .pdp-price-val {
-    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: clamp(1.7rem, 4.5vw, 2.2rem);
     font-weight: 900;
-    color: var(--dark-gold);
+    color: var(--dark-text, #1E1B18);
+    line-height: 1;
+    letter-spacing: -0.02em;
 }
 .pdp-mrp-val {
-    font-size: 0.95rem;
-    color: var(--light-text);
+    font-size: 0.88rem;
+    color: var(--light-text, #8E8883);
     text-decoration: line-through;
     font-weight: 500;
 }
 .pdp-discount-badge {
-    font-size: 0.82rem;
+    font-size: 0.70rem;
     font-weight: 800;
-    color: #8A681F;
-    background: var(--gold-pale);
-    padding: 4px 10px;
+    color: #15803D;
+    background: #DCFCE7;
+    border: 1px solid #BBF7D0;
+    padding: 2.5px 8px;
     border-radius: 6px;
-    border: 1px solid var(--gold-border);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
+.pdp-tax-line {
+    font-size: 0.65rem;
+    color: var(--mid-text, #5A5348);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: -1px;
+}
+.pdp-tax-line span.green {
+    color: #15803D;
+    font-weight: 700;
+}
+
 /* Animated Luxury Perks Badge Strip */
 .pdp-animated-perks-strip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 6px;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--gold-border);
+    margin-top: 2px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(138, 104, 31, 0.22);
 }
-@media (max-width: 600px) {
+@media (min-width: 900px) {
     .pdp-animated-perks-strip {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        margin-top: 8px;
-        padding-top: 8px;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 .pdp-perk-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 0.68rem;
+    gap: 6px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-size: 0.66rem;
     font-weight: 700;
     line-height: 1.2;
-    transition: all 0.25s ease;
-    border: 1px solid var(--gold-border);
-    background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-pale) 100%);
-    color: var(--dark-text);
-    box-shadow: 0 1px 4px rgba(138, 104, 31, 0.06);
+    transition: all 0.2s ease;
+    border: 1px solid var(--soft-platinum, #E5E3DE);
+    background: #FAF8F4;
+    color: var(--dark-text, #24211C);
     position: relative;
     overflow: hidden;
 }
-.pdp-perk-badge::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
-    animation: pdpShimmer 3.5s infinite;
-}
-@keyframes pdpShimmer {
-    0% { left: -100%; }
-    25% { left: 150%; }
-    100% { left: 150%; }
-}
 .pdp-perk-badge:hover {
-    transform: translateY(-1px);
     border-color: var(--dark-gold);
-    box-shadow: 0 3px 8px rgba(138, 104, 31, 0.15);
-}
-
-.pdp-perk-quality {
-    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D1 100%);
-    border-color: rgba(212, 175, 55, 0.45);
-    color: #7A580A;
-}
-.pdp-perk-tax {
-    background: linear-gradient(135deg, #F8F9FA 0%, #EFF2F5 100%);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #4A5568;
-}
-.pdp-perk-delivery {
-    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-    border-color: rgba(46, 125, 50, 0.35);
-    color: #1B5E20;
-}
-.pdp-perk-exchange {
-    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-    border-color: rgba(25, 118, 210, 0.35);
-    color: #0D47A1;
+    background: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.12);
 }
 
 .pdp-perk-svg {
@@ -954,14 +954,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     height: 14px;
     flex-shrink: 0;
     display: inline-block;
-    vertical-align: middle;
+    color: var(--dark-gold, #8A681F);
 }
 .pdp-perk-svg.pulse {
     animation: pdpIconPulse 2s infinite ease-in-out;
 }
 @keyframes pdpIconPulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
+    50% { transform: scale(1.22); }
 }
 .pdp-perk-svg.flash {
     animation: pdpIconFlash 1.6s infinite ease-in-out;
@@ -975,8 +975,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 @keyframes pdpIconWiggle {
     0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-22deg); }
-    60% { transform: rotate(22deg); }
+    20% { transform: rotate(-20deg); }
+    60% { transform: rotate(20deg); }
     80% { transform: rotate(0deg); }
 }
 .pdp-perk-text {
@@ -2251,8 +2251,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <span class="pdp-sku-badge">SKU: <?= htmlspecialchars($product['sku']) ?></span>
             </div>
 
-            <!-- Price Card -->
+            <!-- Price Card (Next-Level Luxury & Clear Visibility) -->
             <div class="pdp-price-card">
+                <div class="pdp-deal-pill">
+                    <span>✨ Special Festive Price • Limited Handloom</span>
+                </div>
                 <div class="pdp-price-main-row">
                     <span class="pdp-price-val">₹<?= number_format($product['price']) ?></span>
                     <?php if (!empty($product['old_price'])): ?>
@@ -2262,23 +2265,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="pdp-discount-badge"><?= $product['discount'] ?>% OFF</span>
                     <?php endif; ?>
                 </div>
+                <div class="pdp-tax-line">
+                    <span>Inclusive of all taxes</span> • <span class="green">⚡ Free Express Shipping</span>
+                </div>
                 <!-- Animated Luxury Perks Strip -->
                 <div class="pdp-animated-perks-strip">
-                    <div class="pdp-perk-badge pdp-perk-quality">
+                    <div class="pdp-perk-badge">
                         <svg viewBox="0 0 24 24" class="pdp-perk-svg pulse" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
-                        <span class="pdp-perk-text">Premium Quality</span>
+                        <span class="pdp-perk-text">100% Handloom Silk</span>
                     </div>
-                    <div class="pdp-perk-badge pdp-perk-tax">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                        <span class="pdp-perk-text">Exclusive of all taxes</span>
+                    <div class="pdp-perk-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        <span class="pdp-perk-text">Fast 24-48h Dispatch</span>
                     </div>
-                    <div class="pdp-perk-badge pdp-perk-delivery">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span class="pdp-perk-text">Fast Express Delivery</span>
+                    <div class="pdp-perk-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg spin" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        <span class="pdp-perk-text">7-Day Easy Exchange</span>
                     </div>
-                    <div class="pdp-perk-badge pdp-perk-exchange">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg spin" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                        <span class="pdp-perk-text">7-Day Fast Exchange</span>
+                    <div class="pdp-perk-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M19 12H5"/><path d="M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/></svg>
+                        <span class="pdp-perk-text">Royal Gift Packaging</span>
                     </div>
                 </div>
             </div>
