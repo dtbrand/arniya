@@ -7,7 +7,7 @@
  * - Strict Wholesaler Role Security Gate (Frontend + Backend validation)
  * - Auto-Sizing Fluid Mobile Architecture (320px to 4K Ultra HD)
  * - Glassmorphic Header & Native-Feel Mobile Navigation Dock
- * - 6 Elevated Real-Time Metric Cards with Trends & Micro-Gradients
+ * - 6 Elevated Real-Time Metric Cards with Rich Dual-Tone Vector Icons & Glow Animations
  * - "My Details" Profile Management with Indian +91 Validation & Password Toggle
  * - "GST / Non-GST Profile" with Live Indian 15-Char GSTIN Validation & State Code Resolver
  * - "My Address Book" with 36 Indian States/UTs Selection & 6-Digit PIN Validation
@@ -31,6 +31,7 @@ $catalogProducts = [
         'moq'             => 6,
         'image'           => 'images/product1.png',
         'badge'           => 'Bestseller',
+        'badge_icon'      => '🔥',
         'color'           => 'Navy Blue',
         'fabric'          => 'Pure Silk Handloom',
         'in_stock'        => 140,
@@ -47,6 +48,7 @@ $catalogProducts = [
         'moq'             => 4,
         'image'           => 'images/product2.png',
         'badge'           => 'Heritage',
+        'badge_icon'      => '✨',
         'color'           => 'Maroon Wine',
         'fabric'          => 'Pure Katan Silk',
         'in_stock'        => 95,
@@ -63,6 +65,7 @@ $catalogProducts = [
         'moq'             => 3,
         'image'           => 'images/product3.png',
         'badge'           => 'Royal VIP',
+        'badge_icon'      => '👑',
         'color'           => 'Golden Yellow',
         'fabric'          => 'Pure Mulberry Silk',
         'in_stock'        => 60,
@@ -79,6 +82,7 @@ $catalogProducts = [
         'moq'             => 8,
         'image'           => 'images/product4.png',
         'badge'           => 'Fast Selling',
+        'badge_icon'      => '⚡',
         'color'           => 'Blush Peach',
         'fabric'          => 'Pure Georgette',
         'in_stock'        => 210,
@@ -95,6 +99,7 @@ $catalogProducts = [
         'moq'             => 10,
         'image'           => 'images/product5.png',
         'badge'           => 'Party Wear',
+        'badge_icon'      => '💎',
         'color'           => 'Emerald Teal',
         'fabric'          => 'Chanderi Cotton',
         'in_stock'        => 180,
@@ -111,6 +116,7 @@ $catalogProducts = [
         'moq'             => 2,
         'image'           => 'images/product6.png',
         'badge'           => 'Bridal Couture',
+        'badge_icon'      => '💍',
         'color'           => 'Crimson Red',
         'fabric'          => 'Micro Velvet & Zari',
         'in_stock'        => 35,
@@ -138,7 +144,7 @@ $catalogProducts = [
             --ws-gold-accent: #C5A859;
             --ws-gold-light: #EBDCB2;
             --ws-gold-pale: #FBF8F1;
-            --ws-gold-glow: rgba(197, 168, 89, 0.28);
+            --ws-gold-glow: rgba(197, 168, 89, 0.32);
             --ws-gold-border: rgba(138, 104, 31, 0.24);
 
             --ws-dark-text: #110E0B;
@@ -173,7 +179,7 @@ $catalogProducts = [
             --ws-radius-sm: 8px;
             --ws-radius-md: 12px;
             --ws-radius-lg: 16px;
-            --ws-transition: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+            --ws-transition: all 0.26s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -263,6 +269,11 @@ $catalogProducts = [
             box-shadow: var(--ws-shadow-gold);
             flex-shrink: 0;
             border: 1.5px solid #FFFFFF;
+            animation: sealShimmer 4s infinite ease-in-out;
+        }
+        @keyframes sealShimmer {
+            0%, 100% { box-shadow: 0 4px 14px rgba(138,104,31,0.3); }
+            50% { box-shadow: 0 4px 22px rgba(197,168,89,0.55); }
         }
         .ws-brand-seal svg {
             width: 19px;
@@ -292,6 +303,11 @@ $catalogProducts = [
         }
         .ws-brand-text span .spark {
             color: #D97706;
+            animation: sparkTwinkle 2s infinite ease-in-out;
+        }
+        @keyframes sparkTwinkle {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.25); opacity: 1; }
         }
 
         .ws-header-right {
@@ -315,6 +331,7 @@ $catalogProducts = [
         .ws-user-pill:hover {
             border-color: var(--ws-gold-primary);
             box-shadow: var(--ws-shadow-gold);
+            transform: translateY(-1px);
         }
         .ws-user-avatar {
             width: clamp(28px, 4vw, 32px);
@@ -563,6 +580,18 @@ $catalogProducts = [
             position: relative;
             overflow: hidden;
         }
+        .ws-welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: bannerShimmer 6s infinite;
+        }
+        @keyframes bannerShimmer {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
         .ws-welcome-banner::after {
             content: '👑';
             position: absolute;
@@ -578,6 +607,10 @@ $catalogProducts = [
             font-weight: 800;
             color: var(--ws-gold-primary);
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
         }
         .ws-welcome-left p {
             font-size: clamp(0.78rem, 1.4vw, 0.85rem);
@@ -590,6 +623,8 @@ $catalogProducts = [
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
         .ws-tag-pill {
             display: inline-flex;
@@ -608,6 +643,19 @@ $catalogProducts = [
             background: #ECFDF5;
             border-color: #6EE7B7;
             color: #065F46;
+        }
+        .ws-live-pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #16A34A;
+            box-shadow: 0 0 0 rgba(22, 163, 74, 0.6);
+            animation: greenPulse 2s infinite;
+        }
+        @keyframes greenPulse {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
         }
 
         /* ── 6 Statistics Metric Cards Grid ── */
@@ -629,18 +677,23 @@ $catalogProducts = [
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            animation: cardFadeUp 0.35s ease forwards;
+        }
+        @keyframes cardFadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .ws-stat-card:hover {
-            border-color: var(--ws-gold-primary);
-            transform: translateY(-3px);
-            box-shadow: var(--ws-shadow-md);
+            border-color: var(--stat-accent, #8A681F);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px var(--stat-glow, rgba(138,104,31,0.18));
         }
         .ws-stat-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 3.5px;
-            background: var(--stat-accent, #8A681F);
+            background: linear-gradient(90deg, var(--stat-accent, #8A681F), var(--stat-accent-light, #C5A859));
         }
         .ws-stat-head {
             display: flex;
@@ -656,22 +709,25 @@ $catalogProducts = [
             color: var(--ws-light-text);
         }
         .ws-stat-icon-wrap {
-            width: clamp(28px, 4vw, 34px);
-            height: clamp(28px, 4vw, 34px);
-            border-radius: 8px;
+            width: clamp(32px, 4vw, 38px);
+            height: clamp(32px, 4vw, 38px);
+            border-radius: 10px;
             background: var(--stat-bg, #FAF5E8);
             color: var(--stat-accent, #8A681F);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: var(--ws-transition);
+        }
+        .ws-stat-card:hover .ws-stat-icon-wrap {
+            transform: scale(1.1) rotate(4deg);
         }
         .ws-stat-icon-wrap svg {
-            width: 17px;
-            height: 17px;
-            stroke: currentColor;
-            stroke-width: 2.2;
-            fill: none;
+            width: 20px;
+            height: 20px;
+            display: block;
         }
         .ws-stat-val {
             font-family: var(--ws-font-serif);
@@ -692,8 +748,11 @@ $catalogProducts = [
         .ws-stat-trend {
             font-weight: 800;
             font-size: 0.68rem;
-            padding: 1px 6px;
+            padding: 2px 6px;
             border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
         .ws-stat-trend.up { background: #DCFCE7; color: #15803D; }
         .ws-stat-trend.neutral { background: #F3F4F6; color: #4B5563; }
@@ -1221,8 +1280,8 @@ $catalogProducts = [
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             background: #FFFFFF;
             border: 1.5px solid var(--ws-gold-primary);
@@ -1238,6 +1297,8 @@ $catalogProducts = [
         .ws-slider-nav-btn:hover {
             background: var(--ws-gold-primary);
             color: #FFFFFF;
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.35);
         }
         .ws-slider-nav-btn.prev { left: -16px; }
         .ws-slider-nav-btn.next { right: -16px; }
@@ -1302,6 +1363,9 @@ $catalogProducts = [
             border-radius: 4px;
             letter-spacing: 0.05em;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
         .ws-prod-moq {
             position: absolute;
@@ -1368,6 +1432,10 @@ $catalogProducts = [
             cursor: pointer;
             text-align: center;
             transition: var(--ws-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .ws-prod-order-btn:hover {
             background: var(--ws-gold-primary);
@@ -2024,94 +2092,159 @@ $catalogProducts = [
                 <!-- Welcome Banner -->
                 <div class="ws-welcome-banner">
                     <div class="ws-welcome-left">
-                        <h2>Welcome back, <span id="welcomeUserName">Rajesh Kumar</span> 👋</h2>
+                        <h2>
+                            <span>Welcome back, <span id="welcomeUserName">Rajesh Kumar</span></span>
+                            <span style="display:inline-block; animation:waveHand 2.2s infinite ease-in-out; transform-origin:70% 70%;">👋</span>
+                        </h2>
                         <p>Kalaniketan B2B Wholesaler Hub • Instant bulk inventory, order dispatch tracking, and GST invoicing.</p>
                     </div>
                     <div class="ws-welcome-badges">
-                        <span class="ws-tag-pill verified">🛡️ Verified Wholesaler</span>
-                        <span class="ws-tag-pill" id="welcomeGstPill">GST: 24AABCU9603R1ZM</span>
+                        <span class="ws-tag-pill verified">
+                            <span class="ws-live-pulse-dot"></span>
+                            <span>Verified Wholesaler</span>
+                        </span>
+                        <span class="ws-tag-pill" id="welcomeGstPill">🛡️ GST: 24AABCU9603R1ZM</span>
                     </div>
                 </div>
+                <style>
+                    @keyframes waveHand {
+                        0%, 100% { transform: rotate(0deg); }
+                        20%, 60% { transform: rotate(14deg); }
+                        40%, 80% { transform: rotate(-10deg); }
+                    }
+                </style>
 
-                <!-- 6 Metric Cards Grid -->
+                <!-- 6 Real Dual-Tone Vector Metric Cards Grid -->
                 <div class="ws-stats-grid">
                     
                     <!-- Card 1: Total Orders -->
-                    <div class="ws-stat-card" style="--stat-accent:#8A681F; --stat-bg:#FAF5E8;">
+                    <div class="ws-stat-card" style="--stat-accent:#8A681F; --stat-accent-light:#C5A859; --stat-bg:#FAF5E8; --stat-glow:rgba(138,104,31,0.22);">
                         <div class="ws-stat-head">
                             <span class="ws-stat-title">Total Orders</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            <div class="ws-stat-icon-wrap" title="Total Consignment Orders">
+                                <!-- Real 3D Vector Parcel Cargo Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <path d="M16 3L4 9.5V22.5L16 29L28 22.5V9.5L16 3Z" fill="#FAF5E8" stroke="#8A681F" stroke-width="2" stroke-linejoin="round"/>
+                                    <path d="M16 3V29M4 9.5L16 16L28 9.5M16 16V29" stroke="#8A681F" stroke-width="1.8" stroke-linejoin="round"/>
+                                    <polygon points="16,10 21,12.5 16,15 11,12.5" fill="#C5A859"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalOrders">6</div>
                         <div class="ws-stat-sub">
-                            <span class="ws-stat-trend up">+14.2% ↑</span> vs last month
+                            <span class="ws-stat-trend up">
+                                <svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                                +14.2%
+                            </span>
+                            <span>vs last month</span>
                         </div>
                     </div>
 
                     <!-- Card 2: Total Quantity -->
-                    <div class="ws-stat-card" style="--stat-accent:#2563EB; --stat-bg:#EFF6FF;">
+                    <div class="ws-stat-card" style="--stat-accent:#2563EB; --stat-accent-light:#60A5FA; --stat-bg:#EFF6FF; --stat-glow:rgba(37,99,235,0.22);">
                         <div class="ws-stat-head">
                             <span class="ws-stat-title">Total Quantity</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <div class="ws-stat-icon-wrap" title="Total Garment Units">
+                                <!-- Real 3D Vector Textile / Shopping Bag Stack Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <rect x="5" y="10" width="22" height="18" rx="4" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+                                    <path d="M11 10V7C11 4.79 12.79 3 15 3H17C19.21 3 21 4.79 21 7V10" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="16" cy="18" r="3.5" fill="#60A5FA"/>
+                                    <line x1="16" y1="12" x2="16" y2="14.5" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalQty">48 <span style="font-size:0.80rem; font-family:var(--ws-font-sans); color:var(--ws-light-text);">Pcs</span></div>
                         <div class="ws-stat-sub">
-                            <span class="ws-stat-trend up">+8.5% ↑</span> Bulk lots
+                            <span class="ws-stat-trend up">
+                                <svg style="width:11px;height:11px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+                                +8.5%
+                            </span>
+                            <span>Bulk lots</span>
                         </div>
                     </div>
 
                     <!-- Card 3: Total Return -->
-                    <div class="ws-stat-card" style="--stat-accent:#DC2626; --stat-bg:#FEF2F2;">
+                    <div class="ws-stat-card" style="--stat-accent:#DC2626; --stat-accent-light:#F87171; --stat-bg:#FEF2F2; --stat-glow:rgba(220,38,38,0.20);">
                         <div class="ws-stat-head">
                             <span class="ws-stat-title">Total Return</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                            <div class="ws-stat-icon-wrap" title="Returns Handled">
+                                <!-- Real Vector Return Courier Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <circle cx="16" cy="16" r="12" fill="#FEF2F2" stroke="#DC2626" stroke-width="2"/>
+                                    <path d="M11 13H7M7 13V9M7 13L11.5 8.5C14 6 18 6 20.5 8.5C23 11 23 15 20.5 17.5L16 22" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="16" cy="16" r="2" fill="#F87171"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalReturn">1</div>
                         <div class="ws-stat-sub">
-                            <span class="ws-stat-trend neutral">0% Defect</span> Rate
+                            <span class="ws-stat-trend neutral">0% Defect</span>
+                            <span>Rate</span>
                         </div>
                     </div>
 
                     <!-- Card 4: Total Refund -->
-                    <div class="ws-stat-card" style="--stat-accent:#D97706; --stat-bg:#FFFBEB;">
+                    <div class="ws-stat-card" style="--stat-accent:#D97706; --stat-accent-light:#FBBF24; --stat-bg:#FFFBEB; --stat-glow:rgba(217,119,6,0.22);">
                         <div class="ws-stat-head">
                             <span class="ws-stat-title">Total Refund</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                            <div class="ws-stat-icon-wrap" title="Processed Refunds">
+                                <!-- Real Vector Bank Refund Shield / Currency Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <rect x="4" y="8" width="24" height="16" rx="3" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
+                                    <circle cx="16" cy="16" r="4.5" fill="#FBBF24" stroke="#D97706" stroke-width="1.5"/>
+                                    <path d="M14.5 14H17.5M14.5 16H17M14.5 14V18M17 16L18.5 18" stroke="#78350F" stroke-width="1.4" stroke-linecap="round"/>
+                                    <circle cx="8" cy="16" r="1.5" fill="#D97706"/>
+                                    <circle cx="24" cy="16" r="1.5" fill="#D97706"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalRefund">₹21,590</div>
-                        <div class="ws-stat-sub">Credited to Bank NEFT</div>
+                        <div class="ws-stat-sub">
+                            <span>Credited to Bank NEFT</span>
+                        </div>
                     </div>
 
                     <!-- Card 5: Total Exchange -->
-                    <div class="ws-stat-card" style="--stat-accent:#7C3AED; --stat-bg:#F5F3FF;">
+                    <div class="ws-stat-card" style="--stat-accent:#7C3AED; --stat-accent-light:#A78BFA; --stat-bg:#F5F3FF; --stat-glow:rgba(124,58,237,0.22);">
                         <div class="ws-stat-head">
                             <span class="ws-stat-title">Total Exchange</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"/></svg>
+                            <div class="ws-stat-icon-wrap" title="Exchanges">
+                                <!-- Real Vector Garment Replacement Sync Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <path d="M9 13L5 17L9 21" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 17H21C23.2 17 25 15.2 25 13V11" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M23 19L27 15L23 11" stroke="#A78BFA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M27 15H11C8.8 15 7 16.8 7 19V21" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalExchange">0</div>
-                        <div class="ws-stat-sub">Fast Replacement Active</div>
+                        <div class="ws-stat-sub">
+                            <span>Fast Replacement Active</span>
+                        </div>
                     </div>
 
                     <!-- Card 6: Total Amount -->
-                    <div class="ws-stat-card" style="--stat-accent:#16A34A; --stat-bg:#F0FDF4;">
+                    <div class="ws-stat-card" style="--stat-accent:#16A34A; --stat-accent-light:#4ADE80; --stat-bg:#F0FDF4; --stat-glow:rgba(22,163,74,0.24);">
                         <div class="ws-stat-head">
-                            <span class="ws-stat-title">Total Amount</span>
-                            <div class="ws-stat-icon-wrap">
-                                <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <span class="ws-stat-title">Total Turnover</span>
+                            <div class="ws-stat-icon-wrap" title="B2B Revenue">
+                                <!-- Real Vector Revenue Coin & Growth Chart Icon -->
+                                <svg viewBox="0 0 32 32" fill="none">
+                                    <path d="M4 27H28" stroke="#16A34A" stroke-width="2" stroke-linecap="round"/>
+                                    <rect x="7" y="17" width="4" height="7" rx="1" fill="#4ADE80"/>
+                                    <rect x="14" y="11" width="4" height="13" rx="1" fill="#16A34A"/>
+                                    <rect x="21" y="6" width="4" height="18" rx="1" fill="#15803D"/>
+                                    <path d="M6 13L13 7L19 11L26 4" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polygon points="26,4 26,7 23,4" fill="#15803D"/>
+                                </svg>
                             </div>
                         </div>
                         <div class="ws-stat-val" id="statTotalAmount">₹2,05,062</div>
-                        <div class="ws-stat-sub">Cumulative B2B Turnover</div>
+                        <div class="ws-stat-sub">
+                            <span>Cumulative B2B Turnover</span>
+                        </div>
                     </div>
 
                 </div>
@@ -2129,12 +2262,14 @@ $catalogProducts = [
                     </div>
 
                     <div class="ws-slider-wrap">
-                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous">❮</button>
+                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous">
+                            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
                             <?php foreach ($catalogProducts as $prod): ?>
                             <div class="ws-product-card">
                                 <div class="ws-prod-img-wrap">
-                                    <span class="ws-prod-badge"><?= htmlspecialchars($prod['badge']) ?></span>
+                                    <span class="ws-prod-badge"><?= $prod['badge_icon'] ?? '🔥' ?> <?= htmlspecialchars($prod['badge']) ?></span>
                                     <span class="ws-prod-moq">MOQ: <?= $prod['moq'] ?> Pcs</span>
                                     <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
                                 </div>
@@ -2146,13 +2281,16 @@ $catalogProducts = [
                                         <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                     </div>
                                     <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                        ⚡ WhatsApp Lot Order
+                                        <svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.99.54 1.776.814 2.795.814 3.182 0 5.768-2.587 5.768-5.766 0-3.181-2.586-5.766-5.767-5.766zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.12-.497-1.748-.698-2.885-2.483-2.973-2.6-.088-.116-.708-.94-.708-1.793s.449-1.272.609-1.445c.16-.173.348-.217.464-.217l.334.006c.11 0 .257-.04.403.31.15.362.51 1.246.554 1.336.044.09.073.195.014.312-.058.117-.088.19-.174.29-.088.101-.185.226-.264.304-.088.087-.18.182-.077.359.103.175.457.755.98 1.22 0.674.6 1.242.787 1.417.874.175.087.278.073.38-.044.103-.116.44-0.513.557-.688.117-.175.234-.146.395-.087.16.058 1.016.48 1.191.567.175.087.292.13.335.204.044.072.044.42-.1.825z"/></svg>
+                                        <span>WhatsApp Lot Order</span>
                                     </button>
                                 </div>
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next">❯</button>
+                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next">
+                            <svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
                     </div>
                 </div>
 
@@ -2663,7 +2801,7 @@ $catalogProducts = [
                         <?php foreach ($catalogProducts as $prod): ?>
                         <div class="ws-product-card" style="flex:auto; min-width:auto;">
                             <div class="ws-prod-img-wrap">
-                                <span class="ws-prod-badge"><?= htmlspecialchars($prod['badge']) ?></span>
+                                <span class="ws-prod-badge"><?= $prod['badge_icon'] ?? '🔥' ?> <?= htmlspecialchars($prod['badge']) ?></span>
                                 <span class="ws-prod-moq">MOQ: <?= $prod['moq'] ?> Pcs</span>
                                 <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="ws-prod-img" onerror="this.src='images/product1.png';" loading="lazy">
                             </div>
@@ -2675,7 +2813,8 @@ $catalogProducts = [
                                     <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                 </div>
                                 <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                    ⚡ Instant WhatsApp Lot Order
+                                    <svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.99.54 1.776.814 2.795.814 3.182 0 5.768-2.587 5.768-5.766 0-3.181-2.586-5.766-5.767-5.766zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.694.073-2.12-.497-1.748-.698-2.885-2.483-2.973-2.6-.088-.116-.708-.94-.708-1.793s.449-1.272.609-1.445c.16-.173.348-.217.464-.217l.334.006c.11 0 .257-.04.403.31.15.362.51 1.246.554 1.336.044.09.073.195.014.312-.058.117-.088.19-.174.29-.088.101-.185.226-.264.304-.088.087-.18.182-.077.359.103.175.457.755.98 1.22 0.674.6 1.242.787 1.417.874.175.087.278.073.38-.044.103-.116.44-0.513.557-.688.117-.175.234-.146.395-.087.16.058 1.016.48 1.191.567.175.087.292.13.335.204.044.072.044.42-.1.825z"/></svg>
+                                    <span>Instant WhatsApp Lot Order</span>
                                 </button>
                             </div>
                         </div>
