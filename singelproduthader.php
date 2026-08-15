@@ -25,22 +25,97 @@
     box-shadow: 0 4px 20px rgba(138,104,31,0.14);
 }
 
-/* ── Top Announcement Marquee ── */
+/* ── Top Announcement Slider Bar ── */
 .pdp-top-ticker {
-    background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
-    color: #FFF8EB;
+    background: linear-gradient(90deg, #705114 0%, #8E6B1F 50%, #705114 100%);
+    color: #FFF9EE;
     font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 5px 16px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    border-bottom: 1px solid #5C4310;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    user-select: none;
 }
-.pdp-top-ticker span { display: inline-flex; align-items: center; gap: 6px; }
+.pdp-ticker-track {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.pdp-ticker-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 24px;
+}
+.pdp-ticker-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+}
+.pdp-ticker-slide.exit-up {
+    opacity: 0;
+    transform: translateY(-100%);
+    position: absolute;
+}
+.pdp-ticker-icon {
+    font-size: 0.82rem;
+    display: inline-block;
+}
+.pdp-ticker-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.pdp-ticker-text strong {
+    font-weight: 800;
+    color: #FFE699;
+}
+.pdp-ticker-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+}
+.pdp-ticker-arrow:hover {
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.15);
+}
+.pdp-ticker-arrow.prev { left: 4px; }
+.pdp-ticker-arrow.next { right: 4px; }
 
 /* ── Main Nav Container ── */
 .pdp-header-main {
@@ -323,13 +398,28 @@
 </style>
 
 <header class="pdp-header" id="pdpHeader">
-    <!-- Top Announcement Bar -->
-    <div class="pdp-top-ticker">
-        <span>✨ 100% Original Product</span>
-        <span>•</span>
-        <span>⚡ Fast Express Delivery Across India</span>
-        <span>•</span>
-        <span>💎 7-Day Fast & Easy Exchange</span>
+    <!-- Top Announcement Bar (Auto-Sliding Slider) -->
+    <div class="pdp-top-ticker" id="pdpAnnouncementTicker">
+        <button type="button" class="pdp-ticker-arrow prev" onclick="slidePdpTicker(-1)" aria-label="Previous announcement">‹</button>
+        <div class="pdp-ticker-track" id="pdpTickerTrack">
+            <div class="pdp-ticker-slide active">
+                <span class="pdp-ticker-icon">✨</span>
+                <span class="pdp-ticker-text"><strong>100% Original Product</strong> • Certified Handloom Silk</span>
+            </div>
+            <div class="pdp-ticker-slide">
+                <span class="pdp-ticker-icon">⚡</span>
+                <span class="pdp-ticker-text"><strong>Fast Express Delivery</strong> • Dispatched in 24–48 Hours</span>
+            </div>
+            <div class="pdp-ticker-slide">
+                <span class="pdp-ticker-icon">💎</span>
+                <span class="pdp-ticker-text"><strong>7-Day Fast Exchange</strong> • Zero-Hassle Doorstep Pickup</span>
+            </div>
+            <div class="pdp-ticker-slide">
+                <span class="pdp-ticker-icon">🎁</span>
+                <span class="pdp-ticker-text"><strong>Luxury Gift Box</strong> • Complimentary Royal Packaging</span>
+            </div>
+        </div>
+        <button type="button" class="pdp-ticker-arrow next" onclick="slidePdpTicker(1)" aria-label="Next announcement">›</button>
     </div>
 
     <!-- Main Navigation Bar -->
@@ -389,6 +479,46 @@
 /* ── Single Product Header Sync Engine ── */
 (function() {
     'use strict';
+
+    /* ── Top Announcement Slider Engine ── */
+    var pdpTickerIndex = 0;
+    var pdpTickerInterval = null;
+
+    window.slidePdpTicker = function(dir) {
+        var slides = document.querySelectorAll('#pdpTickerTrack .pdp-ticker-slide');
+        if (!slides.length) return;
+        
+        var currentSlide = slides[pdpTickerIndex];
+        pdpTickerIndex = (pdpTickerIndex + dir + slides.length) % slides.length;
+        var nextSlide = slides[pdpTickerIndex];
+
+        slides.forEach(function(s) {
+            s.classList.remove('active', 'exit-up');
+        });
+
+        if (currentSlide && currentSlide !== nextSlide) {
+            currentSlide.classList.add('exit-up');
+        }
+        if (nextSlide) {
+            nextSlide.classList.add('active');
+        }
+
+        restartPdpTickerTimer();
+    };
+
+    function restartPdpTickerTimer() {
+        if (pdpTickerInterval) clearInterval(pdpTickerInterval);
+        pdpTickerInterval = setInterval(function() {
+            window.slidePdpTicker(1);
+        }, 3200);
+    }
+
+    // Auto-start ticker slider
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', restartPdpTickerTimer);
+    } else {
+        restartPdpTickerTimer();
+    }
 
     // Header scroll shadow toggle
     window.addEventListener('scroll', function() {
