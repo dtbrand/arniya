@@ -992,6 +992,35 @@ $catalogProducts = [
             box-shadow: var(--ws-shadow-card);
         }
 
+        /* ── Real Coded Vector Icons Utility ── */
+        .ws-ico {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            display: inline-block;
+            vertical-align: -2px;
+            flex-shrink: 0;
+        }
+        .ws-ico.gold {
+            stroke: var(--ws-gold-primary);
+        }
+        .ws-ico.gold-fill {
+            fill: var(--ws-gold-primary);
+            stroke: none;
+        }
+        .ws-ico-sm {
+            width: 13px;
+            height: 13px;
+        }
+        .ws-ico-lg {
+            width: 18px;
+            height: 18px;
+        }
+
         /* ── Standard Section Cards ── */
         .ws-card {
             background: #FFFFFF;
@@ -2236,7 +2265,7 @@ $catalogProducts = [
                                 <button class="ws-seg-btn" id="statBtnRevenue" onclick="setOverviewFilter('revenue', this)">Revenue</button>
                             </div>
                             <div class="ws-date-range-pill" id="dateRangeBtn" onclick="openDateRangePicker()">
-                                <span>📅</span>
+                                <svg class="ws-ico gold" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 <span id="selectedDateRangeLabel">Aug 10 - Aug 16</span>
                                 <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;margin-left:2px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
@@ -2249,7 +2278,7 @@ $catalogProducts = [
                         <!-- Column 1: Category Volume Mix & Target Fulfillment -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span id="catBreakdownTitle">👗 Category Procurement Breakdown</span>
+                                <span id="catBreakdownTitle"><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg> Category Procurement Breakdown</span>
                             </div>
                             <div class="ws-cat-prog-list" id="catProgList">
                                 <div class="ws-cat-prog-item">
@@ -2297,7 +2326,7 @@ $catalogProducts = [
                         <!-- Column 2: Key Operational Metrics (KPIs) -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span>⚡ Key Wholesale Performance (KPIs)</span>
+                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Key Wholesale Performance (KPIs)</span>
                             </div>
                             <div class="ws-kpi-grid" id="kpiGrid">
                                 <div class="ws-kpi-box">
@@ -2308,17 +2337,17 @@ $catalogProducts = [
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Dispatch Turnaround</div>
                                     <div class="ws-kpi-num">1.8 Days</div>
-                                    <div class="ws-kpi-sub">⚡ Priority VIP BlueDart</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Priority VIP BlueDart</div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">GST Input Tax Credit</div>
                                     <div class="ws-kpi-num">₹10,253</div>
-                                    <div class="ws-kpi-sub">🛡️ 100% GSTR-1 Matched</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> 100% GSTR-1 Matched</div>
                                 </div>
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Lot Reorder Rate</div>
                                     <div class="ws-kpi-num">83.3%</div>
-                                    <div class="ws-kpi-sub">🔁 5 of 6 Lots Repeated</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> 5 of 6 Lots Repeated</div>
                                 </div>
                             </div>
                         </div>
@@ -2326,11 +2355,11 @@ $catalogProducts = [
                         <!-- Column 3: Monthly Target & Milestone -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span>🎯 Monthly Milestone</span>
+                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> Monthly Milestone</span>
                             </div>
                             <div class="ws-tier-status-box">
                                 <div>
-                                    <span class="ws-tier-badge" id="statsMilestoneBadge">👑 Tier 1 VIP Member</span>
+                                    <span class="ws-tier-badge" id="statsMilestoneBadge"><svg class="ws-ico" style="width:13px;height:13px;margin-right:3px;stroke:#FFFFFF;" viewBox="0 0 24 24"><polygon points="2 4 5 18 19 18 22 4 16 11 12 2 8 11 2 4"></polygon></svg> Tier 1 VIP Member</span>
                                     <h4 id="statsMilestoneVal" style="font-size:1.15rem; font-weight:800; color:var(--ws-gold-primary); margin:8px 0 4px; font-family:var(--ws-font-serif);">
                                         ₹2,05,062 <span style="font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);">/ ₹2,50,000</span>
                                     </h4>
@@ -2340,7 +2369,7 @@ $catalogProducts = [
                                 </div>
 
                                 <button class="ws-btn ws-btn-primary ws-btn-sm" style="margin-top:12px; width:100%;" onclick="switchWsTab('trending')">
-                                    + Explore Catalog to Unlock Tier 2
+                                    <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:4px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Explore Catalog to Unlock Tier 2
                                 </button>
                             </div>
                         </div>
@@ -2361,7 +2390,7 @@ $catalogProducts = [
                     </div>
 
                     <div class="ws-slider-wrap">
-                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous">❮</button>
+                        <button class="ws-slider-nav-btn prev" onclick="slideTrendingProducts(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                         <div class="ws-slider-track" id="wsTrendingSliderTrack">
                             <?php foreach ($catalogProducts as $prod): ?>
                             <div class="ws-product-card">
@@ -2378,13 +2407,13 @@ $catalogProducts = [
                                         <span class="ws-prod-ret-price">₹<?= number_format($prod['retail_price']) ?></span>
                                     </div>
                                     <button class="ws-prod-order-btn" onclick="openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>)">
-                                        ⚡ WhatsApp Lot Order
+                                        <svg class="ws-ico gold-fill" style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> WhatsApp Lot Order
                                     </button>
                                 </div>
                             </div>
                             <?php endforeach; ?>
                         </div>
-                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next">❯</button>
+                        <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
 
@@ -3035,7 +3064,8 @@ $catalogProducts = [
         <div class="ws-modal-box" style="max-width: 480px;">
             <div class="ws-modal-header">
                 <div class="ws-modal-title">
-                    <span>📅</span> Filter Analytics Date Range
+                    <svg class="ws-ico gold" style="width:18px;height:18px;margin-right:6px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    Filter Analytics Date Range
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close">✕</button>
             </div>
@@ -3045,23 +3075,23 @@ $catalogProducts = [
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;" id="datePresetButtons">
                     <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('today', 'Today (16 Aug)')">
-                        <span>⚡ <strong>Today</strong></span>
+                        <span><svg class="ws-ico gold ws-ico-sm" style="margin-right:5px;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> <strong>Today</strong></span>
                         <span style="font-size:0.74rem; color:var(--ws-text-muted);">16 Aug 2026</span>
                     </button>
                     <button class="ws-btn ws-btn-primary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('week', 'Aug 10 - Aug 16')">
-                        <span>📅 <strong>This Week</strong></span>
+                        <span><svg class="ws-ico gold ws-ico-sm" style="margin-right:5px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> <strong>This Week</strong></span>
                         <span style="font-size:0.74rem; color:var(--ws-gold-light);">10 Aug – 16 Aug 2026 (Live)</span>
                     </button>
                     <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('month', 'Aug 01 - Aug 31')">
-                        <span>📊 <strong>This Month</strong></span>
+                        <span><svg class="ws-ico gold ws-ico-sm" style="margin-right:5px;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> <strong>This Month</strong></span>
                         <span style="font-size:0.74rem; color:var(--ws-text-muted);">August 2026 (Full Month)</span>
                     </button>
                     <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('last_month', 'Jul 01 - Jul 31')">
-                        <span>📁 <strong>Last Month</strong></span>
+                        <span><svg class="ws-ico gold ws-ico-sm" style="margin-right:5px;" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> <strong>Last Month</strong></span>
                         <span style="font-size:0.74rem; color:var(--ws-text-muted);">July 2026 (Reconciled)</span>
                     </button>
                     <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('year', 'FY 2026-27')">
-                        <span>👑 <strong>Financial Year</strong></span>
+                        <span><svg class="ws-ico gold ws-ico-sm" style="margin-right:5px;" viewBox="0 0 24 24"><polygon points="2 4 5 18 19 18 22 4 16 11 12 2 8 11 2 4"></polygon></svg> <strong>Financial Year</strong></span>
                         <span style="font-size:0.74rem; color:var(--ws-text-muted);">FY 2026-27 (Q1 & Q2)</span>
                     </button>
                 </div>
@@ -3082,7 +3112,7 @@ $catalogProducts = [
                         </div>
                     </div>
                     <button class="ws-btn ws-btn-primary" style="width: 100%; margin-top: 10px; height: 38px; font-size: 0.82rem;" onclick="applyCustomDateRange()">
-                        ✓ Apply Calendar Filter
+                        <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:4px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Apply Calendar Filter
                     </button>
                 </div>
             </div>
@@ -3599,7 +3629,7 @@ $catalogProducts = [
                             View Details
                         </button>
                         <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                            📄 GST Bill
+                            <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:3px;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> GST Bill
                         </button>
                     </div>
                 `;
@@ -3630,7 +3660,7 @@ $catalogProducts = [
                                 <div class="ws-mob-order-price-row">
                                     <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
                                     <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                                        📄 GST Bill
+                                        <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:3px;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> GST Bill
                                     </button>
                                 </div>
                             </div>
@@ -3672,30 +3702,42 @@ $catalogProducts = [
         var analyticsMode = 'overview';
         var currentSelectedDateRange = 'week';
 
+        var WS_ICONS = {
+            calendar: '<svg class="ws-ico gold" style="margin-right:4px;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>',
+            dress: '<svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>',
+            lightning: '<svg class="ws-ico gold ws-ico-sm" style="margin-right:3px;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',
+            target: '<svg class="ws-ico gold ws-ico-sm" style="margin-right:3px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>',
+            crown: '<svg class="ws-ico" style="width:13px;height:13px;margin-right:3px;stroke:#FFFFFF;" viewBox="0 0 24 24"><polygon points="2 4 5 18 19 18 22 4 16 11 12 2 8 11 2 4"></polygon></svg>',
+            shield: '<svg class="ws-ico gold ws-ico-sm" style="margin-right:3px;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
+            repeat: '<svg class="ws-ico gold ws-ico-sm" style="margin-right:3px;" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>',
+            package: '<svg class="ws-ico" style="width:13px;height:13px;margin-right:3px;stroke:#FFFFFF;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>',
+            card: '<svg class="ws-ico" style="width:13px;height:13px;margin-right:3px;stroke:#FFFFFF;" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>'
+        };
+
         var ANALYTICS_DATA = {
             'overview': {
                 'today': {
                     sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
                     cards: [
                         { label: "B2B Account Tier", val: "VIP Tier 1", pill: "Active VIP", isGold: true },
-                        { label: "Today's Orders", val: "1 Lot", pill: "⚡ Dispatched", isGold: false },
+                        { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
                         { label: "Today's Quantity", val: "6 Pcs", pill: "100% Packed", isGold: false },
                         { label: "Today's B2B Turnover", val: "₹18,200", pill: "↑ 100%", isGold: true }
                     ],
                     chartTitle: "Today's Hourly Procurement (Units)",
                     barActive: 7,
-                    gauge: { pct: "36.4%", offset: 150, badge: "⚡ Today", desc: "You generated <strong>₹18,200</strong> in wholesale procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
-                    catTitle: "👗 Today's Category Breakdown",
+                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in wholesale procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
+                    catTitle: WS_ICONS.dress + " Today's Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (100%)", fill: 100 }
                     ],
                     kpis: [
-                        { label: "Today's Order Value", num: "₹18,200", sub: "⚡ 1 Consignment" },
+                        { label: "Today's Order Value", num: "₹18,200", sub: WS_ICONS.lightning + " 1 Consignment" },
                         { label: "Dispatch Status", num: "In Transit", sub: "AWB: 884729104" },
                         { label: "Today's GST Credit", num: "₹910", sub: "5% GST" },
                         { label: "Delivery ETA", num: "Tomorrow", sub: "Priority Air" }
                     ],
-                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
                     milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
                     milestoneDesc: "<strong>36.4%</strong> of today's target achieved."
                 },
@@ -3710,7 +3752,7 @@ $catalogProducts = [
                     chartTitle: "Monthly Sales",
                     barActive: 7,
                     gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
-                    catTitle: "👗 Category Procurement Breakdown",
+                    catTitle: WS_ICONS.dress + " Category Procurement Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (56%)", fill: 88 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹49,147 (24%)", fill: 72 },
@@ -3719,11 +3761,11 @@ $catalogProducts = [
                     ],
                     kpis: [
                         { label: "Avg. Order Value", num: "₹34,177", sub: "↑ 12.4% vs last month" },
-                        { label: "Dispatch Turnaround", num: "1.8 Days", sub: "⚡ Priority VIP BlueDart" },
-                        { label: "GST Input Tax Credit", num: "₹10,253", sub: "🛡️ 100% GSTR-1 Matched" },
-                        { label: "Lot Reorder Rate", num: "83.3%", sub: "🔁 5 of 6 Lots Repeated" }
+                        { label: "Dispatch Turnaround", num: "1.8 Days", sub: WS_ICONS.lightning + " Priority VIP BlueDart" },
+                        { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-1 Matched" },
+                        { label: "Lot Reorder Rate", num: "83.3%", sub: WS_ICONS.repeat + " 5 of 6 Lots Repeated" }
                     ],
-                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
                     milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
                     milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
                 },
@@ -3738,7 +3780,7 @@ $catalogProducts = [
                     chartTitle: "August 2026 Procurement Volume",
                     barActive: 7,
                     gauge: { pct: "97.30%", offset: 7, badge: "+18.2%", desc: "Monthly volume tracking ahead of schedule by <strong>+18.2%</strong>!", target: "₹500K", rev: "₹486.5K ↑", today: "₹32.8K ↑" },
-                    catTitle: "👗 August Category Procurement Breakdown",
+                    catTitle: WS_ICONS.dress + " August Category Procurement Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,72,000 (56%)", fill: 92 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹1,18,500 (24%)", fill: 84 },
@@ -3747,11 +3789,11 @@ $catalogProducts = [
                     ],
                     kpis: [
                         { label: "Avg. Order Value", num: "₹34,750", sub: "↑ 15.1% growth" },
-                        { label: "Avg. Turnaround Time", num: "1.6 Days", sub: "⚡ VIP Express" },
-                        { label: "Monthly GST ITC", num: "₹24,325", sub: "🛡️ 100% Claimed" },
-                        { label: "Repeat Order Index", num: "87.5%", sub: "🔁 12 of 14 Lots Reordered" }
+                        { label: "Avg. Turnaround Time", num: "1.6 Days", sub: WS_ICONS.lightning + " VIP Express" },
+                        { label: "Monthly GST ITC", num: "₹24,325", sub: WS_ICONS.shield + " 100% Claimed" },
+                        { label: "Repeat Order Index", num: "87.5%", sub: WS_ICONS.repeat + " 12 of 14 Lots Reordered" }
                     ],
-                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
                     milestoneVal: "₹4,86,500 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹5,00,000</span>",
                     milestoneDesc: "<strong>97.3%</strong> of your target achieved. Only <strong>₹13,500</strong> left to reach Tier 3 Elite Club!"
                 },
@@ -3766,7 +3808,7 @@ $catalogProducts = [
                     chartTitle: "July 2026 Final Settlement",
                     barActive: 6,
                     gauge: { pct: "100%", offset: 0, badge: "100% Done", desc: "July target fully achieved and 100% GST reconciled!", target: "₹350K", rev: "₹392.4K", today: "Closed" },
-                    catTitle: "👗 July 2026 Category Breakdown",
+                    catTitle: WS_ICONS.dress + " July 2026 Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,19,000 (56%)", fill: 100 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹94,000 (24%)", fill: 100 },
@@ -3777,9 +3819,9 @@ $catalogProducts = [
                         { label: "Avg. Order Value", num: "₹35,672", sub: "Final Settled" },
                         { label: "Total Transit TAT", num: "2.1 Days", sub: "100% Delivered" },
                         { label: "Total GST ITC", num: "₹19,620", sub: "Filed in GSTR-3B" },
-                        { label: "Reorder Loyalty", num: "90.9%", sub: "10 of 11 Lots Repeated" }
+                        { label: "Reorder Loyalty", num: "90.9%", sub: WS_ICONS.repeat + " 10 of 11 Lots Repeated" }
                     ],
-                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
                     milestoneVal: "₹3,92,400 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹3,50,000</span>",
                     milestoneDesc: "<strong>112.1%</strong> target exceeded for July 2026!"
                 },
@@ -3794,7 +3836,7 @@ $catalogProducts = [
                     chartTitle: "FY 2026-27 Monthly Revenue Peak",
                     barActive: 9,
                     gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "Annual procurement pace on track to exceed ₹25 Lakhs milestone!", target: "₹2.5M", rev: "₹1.98M ↑", today: "Live" },
-                    catTitle: "👗 FY 2026-27 Cumulative Category Volume",
+                    catTitle: WS_ICONS.dress + " FY 2026-27 Cumulative Category Volume",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹11,10,000 (56%)", fill: 82 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹4,76,000 (24%)", fill: 76 },
@@ -3804,10 +3846,10 @@ $catalogProducts = [
                     kpis: [
                         { label: "Annual Avg. Order", num: "₹34,212", sub: "58 Consignments" },
                         { label: "Fastest Delivery", num: "24 Hours", sub: "Air Priority" },
-                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: "100% Verified" },
+                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% Verified" },
                         { label: "Wholesale Retention", num: "89.6%", sub: "Top Tier Wholesaler" }
                     ],
-                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
                     milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
                     milestoneDesc: "<strong>79.37%</strong> of Annual VIP Target achieved. Procure ₹5,15,700 more to enter ₹50L Super Wholesaler Tier!"
                 }
@@ -3824,7 +3866,7 @@ $catalogProducts = [
                     chartTitle: "Today's Unit Dispatch (Pcs)",
                     barActive: 7,
                     gauge: { pct: "100%", offset: 0, badge: "100%", desc: "Today's unit dispatch completed with 100% QC stamp.", target: "6 Pcs", rev: "6 Pcs", today: "6 Pcs" },
-                    catTitle: "👗 Unit Distribution by Craft (Pcs)",
+                    catTitle: WS_ICONS.dress + " Unit Distribution by Craft (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "6 Pcs (100%)", fill: 100 }
                     ],
@@ -3834,14 +3876,14 @@ $catalogProducts = [
                         { label: "Lot Packaging", num: "Waterproof Bale", sub: "Tamper Evident" },
                         { label: "Consignment Weight", num: "8.4 Kg", sub: "Air Cargo" }
                     ],
-                    milestoneBadge: "📦 Daily Lot Target",
+                    milestoneBadge: WS_ICONS.package + " Daily Lot Target",
                     milestoneVal: "6 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 10 Pcs</span>",
                     milestoneDesc: "<strong>60%</strong> of daily packaging capacity fulfilled."
                 },
                 'week': {
                     sub: "Sales Volume & Procurement Lot Distribution (Units / Pcs)",
                     cards: [
-                        { label: "Active Catalog SKUs", val: "6 Live Lots", pill: "🔥 Top Trending", isGold: true },
+                        { label: "Active Catalog SKUs", val: "6 Live Lots", pill: "Top Trending", isGold: true },
                         { label: "Dispatched Volume", val: "48 Pcs", pill: "↑ 22.5%", isGold: false },
                         { label: "Units In Transit", val: "10 Pcs", pill: "Surat Atelier", isGold: false },
                         { label: "Delivered to Warehouse", val: "38 Pcs", pill: "↑ 18.0%", isGold: true }
@@ -3849,7 +3891,7 @@ $catalogProducts = [
                     chartTitle: "Weekly Unit Sales (Pcs)",
                     barActive: 7,
                     gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 wholesale units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
-                    catTitle: "👗 Unit Volume Distribution by Category (Pcs)",
+                    catTitle: WS_ICONS.dress + " Unit Volume Distribution by Category (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "26 Pcs (54%)", fill: 86 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "8 Pcs (17%)", fill: 80 },
@@ -3862,7 +3904,7 @@ $catalogProducts = [
                         { label: "Defect Return Rate", num: "0.0%", sub: "Zero Returns" },
                         { label: "Fastest Moving SKU", num: "KLN-SR-003", sub: "Kanjivaram Temple Silk" }
                     ],
-                    milestoneBadge: "📦 Weekly Volume Goal",
+                    milestoneBadge: WS_ICONS.package + " Weekly Volume Goal",
                     milestoneVal: "48 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 60 Pcs</span>",
                     milestoneDesc: "<strong>80.0%</strong> of weekly lot volume fulfilled. 12 pcs remaining for weekly bonus lot!"
                 },
@@ -3877,7 +3919,7 @@ $catalogProducts = [
                     chartTitle: "August Monthly Unit Volume (Pcs)",
                     barActive: 7,
                     gauge: { pct: "93.33%", offset: 16, badge: "+24.5%", desc: "112 total pieces procured in August, setting a new monthly high.", target: "120 Pcs", rev: "112 Pcs", today: "6 Pcs" },
-                    catTitle: "👗 August Category Units Breakdown (Pcs)",
+                    catTitle: WS_ICONS.dress + " August Category Units Breakdown (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "62 Pcs (55%)", fill: 94 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "18 Pcs (16%)", fill: 90 },
@@ -3890,7 +3932,7 @@ $catalogProducts = [
                         { label: "QC Pass Rate", num: "100%", sub: "Surat Atelier" },
                         { label: "Top Fabric", num: "Mulberry Silk", sub: "62 Units" }
                     ],
-                    milestoneBadge: "📦 Monthly Lot Milestone",
+                    milestoneBadge: WS_ICONS.package + " Monthly Lot Milestone",
                     milestoneVal: "112 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 120 Pcs</span>",
                     milestoneDesc: "<strong>93.3%</strong> of monthly unit target completed."
                 },
@@ -3905,7 +3947,7 @@ $catalogProducts = [
                     chartTitle: "July Unit Fulfilment (Pcs)",
                     barActive: 6,
                     gauge: { pct: "100%", offset: 0, badge: "100%", desc: "88 pieces delivered with 100% customer acceptance and zero defects.", target: "80 Pcs", rev: "88 Pcs", today: "Done" },
-                    catTitle: "👗 July Category Units Breakdown (Pcs)",
+                    catTitle: WS_ICONS.dress + " July Category Units Breakdown (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "50 Pcs (57%)", fill: 100 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "14 Pcs (16%)", fill: 100 },
@@ -3915,65 +3957,9 @@ $catalogProducts = [
                     kpis: [
                         { label: "July Total Delivered", num: "88 Pcs", sub: "11 Consignments" },
                         { label: "Return Rate", num: "0.0%", sub: "Zero Defects" },
-                        { label: "Transit Success", num: "100%", sub: "BlueDart Express" },
-                        { label: "Wholesale Margin", num: "42.5%", sub: "Net Realized" }
+                                                { label: "Payment Settlement", num: "₹18,200", sub: "NEFT Verified" }
                     ],
-                    milestoneBadge: "📦 July Volume Target",
-                    milestoneVal: "88 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 80 Pcs</span>",
-                    milestoneDesc: "<strong>110.0%</strong> of July volume target achieved!"
-                },
-                'year': {
-                    sub: "Financial Year 2026-27 Wholesale Unit Volume (Pcs)",
-                    cards: [
-                        { label: "Annual B2B Lots", val: "58 Lots", pill: "FY26-27", isGold: true },
-                        { label: "Annual Units Shipped", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
-                        { label: "Avg Lot Size", val: "8.0 Pcs", pill: "Standard MOQ", isGold: false },
-                        { label: "Delivered Rate", val: "98.5%", pill: "Top Tier", isGold: true }
-                    ],
-                    chartTitle: "FY 2026-27 Monthly Lot Sales (Pcs)",
-                    barActive: 9,
-                    gauge: { pct: "77.33%", offset: 53, badge: "+28.2%", desc: "464 wholesale units shipped across 58 consignments in FY 2026-27.", target: "600 Pcs", rev: "464 Pcs", today: "Live" },
-                    catTitle: "👗 FY 2026-27 Category Volume (Pcs)",
-                    cats: [
-                        { name: "Pure Silk & Zari Sarees", val: "256 Pcs (55%)", fill: 80 },
-                        { name: "Bridal Velvet & Zardosi Lehengas", val: "74 Pcs (16%)", fill: 74 },
-                        { name: "Royal Anarkali Kurti Sets", val: "98 Pcs (21%)", fill: 88 },
-                        { name: "Georgette & Chanderi Fabrics", val: "36 Pcs (8%)", fill: 65 }
-                    ],
-                    kpis: [
-                        { label: "FY Units Shipped", num: "464 Pcs", sub: "58 Consignments" },
-                        { label: "Avg Consignment Size", num: "8.0 Pcs", sub: "Standard B2B Lot" },
-                        { label: "Total Fabric Meters", num: "2,550m", sub: "Silk & Zari" },
-                        { label: "Damage Incident Rate", num: "0.0%", sub: "Safe Delivery" }
-                    ],
-                    milestoneBadge: "📦 Annual Unit Milestone",
-                    milestoneVal: "464 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 600 Pcs</span>",
-                    milestoneDesc: "<strong>77.33%</strong> of Annual Unit Target completed."
-                }
-            },
-            'revenue': {
-                'today': {
-                    sub: "Today's Tax Invoicing & GST Settlement",
-                    cards: [
-                        { label: "GST Rate Tier", val: "5% GST", pill: "HSN 5007", isGold: true },
-                        { label: "Gross Taxable Value", val: "₹17,333", pill: "Net Base", isGold: false },
-                        { label: "Input Tax Credit (ITC)", val: "₹867", pill: "Claimable", isGold: false },
-                        { label: "Net Invoiced Paid", val: "₹18,200", pill: "NEFT Verified", isGold: true }
-                    ],
-                    chartTitle: "Today's Invoiced Revenue (₹)",
-                    barActive: 7,
-                    gauge: { pct: "100%", offset: 0, badge: "Reconciled", desc: "Today's tax invoice generated with GSTR-1 auto-reconciliation.", target: "₹18.2K", rev: "₹18.2K", today: "₹18.2K" },
-                    catTitle: "👗 Today's Tax Invoiced Breakdown (₹)",
-                    cats: [
-                        { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (GST ₹867)", fill: 100 }
-                    ],
-                    kpis: [
-                        { label: "Gross Taxable Amount", num: "₹17,333", sub: "HSN 5007" },
-                        { label: "GST Input Tax Credit", num: "₹867", sub: "5% CGST + SGST" },
-                        { label: "Invoice Number", num: "INV-26-8021", sub: "E-Way Bill Ready" },
-                        { label: "Payment Settlement", num: "₹18,200", sub: "NEFT Verified" }
-                    ],
-                    milestoneBadge: "💳 Daily Revenue Target",
+                    milestoneBadge: WS_ICONS.card + " Daily Revenue Target",
                     milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
                     milestoneDesc: "<strong>36.4%</strong> of daily financial turnover goal achieved."
                 },
@@ -3988,7 +3974,7 @@ $catalogProducts = [
                     chartTitle: "Weekly Invoiced Turnover (₹)",
                     barActive: 7,
                     gauge: { pct: "82.02%", offset: 42, badge: "Verified", desc: "₹10,253 in GST Input Tax Credit reconciled for current tax cycle.", target: "₹250K", rev: "₹205K ↑", today: "₹18.2K ↑" },
-                    catTitle: "👗 Tax Invoiced Turnover by Category (₹)",
+                    catTitle: WS_ICONS.dress + " Tax Invoiced Turnover by Category (₹)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (GST: ₹5,725)", fill: 88 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹49,147 (GST: ₹2,457)", fill: 72 },
@@ -3997,11 +3983,11 @@ $catalogProducts = [
                     ],
                     kpis: [
                         { label: "Gross Taxable Value", num: "₹1,95,297", sub: "5% GST Saree/Fabrics" },
-                        { label: "Total GST ITC Accrued", num: "₹10,253", sub: "🛡️ 100% GSTR-1 Verified" },
-                        { label: "Wholesale Margin Saved", num: "₹13,500", sub: "👑 VIP Tier 1 Discount" },
+                        { label: "Total GST ITC Accrued", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-1 Verified" },
+                        { label: "Wholesale Margin Saved", num: "₹13,500", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
                         { label: "Settlement Status", num: "100% Cleared", sub: "Zero Pending Dues" }
                     ],
-                    milestoneBadge: "👑 Financial Target",
+                    milestoneBadge: WS_ICONS.crown + " Financial Target",
                     milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
                     milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
                 },
@@ -4016,7 +4002,7 @@ $catalogProducts = [
                     chartTitle: "August Gross Invoiced Revenue (₹)",
                     barActive: 7,
                     gauge: { pct: "97.30%", offset: 7, badge: "97.3%", desc: "August gross revenue stands at ₹4,86,500 with ₹24,325 in claimable GST ITC.", target: "₹500K", rev: "₹486.5K", today: "₹32.8K" },
-                    catTitle: "👗 August Tax Invoiced Breakdown (₹)",
+                    catTitle: WS_ICONS.dress + " August Tax Invoiced Breakdown (₹)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,72,000 (GST: ₹13,600)", fill: 92 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹1,18,500 (GST: ₹5,925)", fill: 84 },
@@ -4025,11 +4011,11 @@ $catalogProducts = [
                     ],
                     kpis: [
                         { label: "Monthly Taxable Value", num: "₹4,63,333", sub: "5% GST Base" },
-                        { label: "Monthly GST ITC", num: "₹23,167", sub: "🛡️ Auto E-Way Matched" },
+                        { label: "Monthly GST ITC", num: "₹23,167", sub: WS_ICONS.shield + " Auto E-Way Matched" },
                         { label: "B2B Discount Margin", num: "₹32,400", sub: "VIP Volume Rebate" },
                         { label: "Net Bank Inflow", num: "₹4,86,500", sub: "NEFT & RTGS" }
                     ],
-                    milestoneBadge: "👑 Monthly Target",
+                    milestoneBadge: WS_ICONS.crown + " Monthly Target",
                     milestoneVal: "₹4,86,500 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹5,00,000</span>",
                     milestoneDesc: "<strong>97.3%</strong> of monthly revenue target achieved. Only ₹13,500 needed to close out target!"
                 },
@@ -4044,7 +4030,7 @@ $catalogProducts = [
                     chartTitle: "July Settled Tax Invoices (₹)",
                     barActive: 6,
                     gauge: { pct: "100%", offset: 0, badge: "Audited", desc: "July financial ledger reconciled and filed in GSTR-3B with full ITC clearance.", target: "₹350K", rev: "₹392.4K", today: "Settled" },
-                    catTitle: "👗 July Tax Invoiced Revenue (₹)",
+                    catTitle: WS_ICONS.dress + " July Tax Invoiced Revenue (₹)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,19,000 (GST: ₹10,950)", fill: 100 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹94,000 (GST: ₹4,700)", fill: 100 },
@@ -4057,7 +4043,7 @@ $catalogProducts = [
                         { label: "Wholesale Margin", num: "₹26,800", sub: "Saved on MOQ" },
                         { label: "Ledger Reconciliation", num: "100% Done", sub: "Auditor Certified" }
                     ],
-                    milestoneBadge: "👑 Reconciled Target",
+                    milestoneBadge: WS_ICONS.crown + " Reconciled Target",
                     milestoneVal: "₹3,92,400 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹3,50,000</span>",
                     milestoneDesc: "<strong>112.1%</strong> of financial target accomplished in July 2026."
                 },
@@ -4072,7 +4058,7 @@ $catalogProducts = [
                     chartTitle: "FY 2026-27 Revenue Growth (₹)",
                     barActive: 9,
                     gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "₹99,215 total GST Input Tax Credit accumulated across all consignments in FY26-27.", target: "₹2.5M", rev: "₹1.98M", today: "Live" },
-                    catTitle: "👗 FY 2026-27 Invoiced Category Revenue (₹)",
+                    catTitle: WS_ICONS.dress + " FY 2026-27 Invoiced Category Revenue (₹)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹11,10,000 (GST: ₹55,500)", fill: 82 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹4,76,000 (GST: ₹23,800)", fill: 76 },
@@ -4081,11 +4067,11 @@ $catalogProducts = [
                     ],
                     kpis: [
                         { label: "Total Taxable Sales", num: "₹18,89,810", sub: "58 Tax Invoices" },
-                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: "100% GSTR-2B Verified" },
+                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% GSTR-2B Verified" },
                         { label: "Annual Margin Savings", num: "₹1,45,000", sub: "B2B Volume Rates" },
                         { label: "Payment Discipline", num: "100% On-Time", sub: "Zero Penalty" }
                     ],
-                    milestoneBadge: "👑 Annual VIP Milestone",
+                    milestoneBadge: WS_ICONS.crown + " Annual VIP Milestone",
                     milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
                     milestoneDesc: "<strong>79.37%</strong> of Annual Target achieved. Procure ₹5,15,700 more to unlock ₹50L Super Wholesaler Tier!"
                 }
@@ -4121,7 +4107,7 @@ $catalogProducts = [
 
             // 3. Update Bar Chart Active Column & Title
             var chartTitleEl = document.getElementById('chartTitle');
-            if (chartTitleEl) chartTitleEl.textContent = data.chartTitle;
+            if (chartTitleEl) chartTitleEl.innerHTML = data.chartTitle;
 
             for (var b = 0; b < 12; b++) {
                 var col = document.getElementById('barMonth' + b);
@@ -4150,7 +4136,7 @@ $catalogProducts = [
 
             // 5. Update Category Breakdown List
             var catTitleEl = document.getElementById('catBreakdownTitle');
-            if (catTitleEl) catTitleEl.textContent = data.catTitle;
+            if (catTitleEl) catTitleEl.innerHTML = data.catTitle;
 
             var catList = document.getElementById('catProgList');
             if (catList && data.cats) {
@@ -4191,7 +4177,7 @@ $catalogProducts = [
             var mBadge = document.getElementById('statsMilestoneBadge');
             var mVal = document.getElementById('statsMilestoneVal');
             var mDesc = document.getElementById('statsMilestoneDesc');
-            if (mBadge) mBadge.textContent = data.milestoneBadge;
+            if (mBadge) mBadge.innerHTML = data.milestoneBadge;
             if (mVal) mVal.innerHTML = data.milestoneVal;
             if (mDesc) mDesc.innerHTML = data.milestoneDesc;
         };
