@@ -23,21 +23,29 @@
     border-radius: 16px;
     border: 1.5px solid rgba(138,104,31,0.25);
     width: 100%; max-width: 820px; max-height: 90vh;
-    overflow-y: auto; position: relative;
+    position: relative;
     box-shadow: 0 20px 50px rgba(0,0,0,0.28);
     transform: translateY(20px) scale(0.97);
     transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 .modal-overlay.open .quick-modal { transform: translateY(0) scale(1); }
 
-.modal-handle { display: none; }
+.modal-handle { display: none; flex-shrink: 0; }
 @media (max-width: 767px) {
     .modal-overlay { align-items: flex-end; padding: 0; }
     .quick-modal { border-radius: 20px 20px 0 0; max-height: 88vh; transform: translateY(100%); }
     .modal-handle { display: block; width: 36px; height: 4px; background: var(--soft-platinum, #E5E3DE); border-radius: 2px; margin: 10px auto 0; }
 }
 
-.modal-content { padding: 20px 20px 28px; position: relative; }
+.modal-content { 
+    padding: 20px 20px 28px; 
+    position: relative; 
+    overflow-y: auto; 
+    flex: 1; 
+}
 @media (min-width: 768px) {
     .modal-content {
         padding: 30px 32px;
@@ -49,13 +57,14 @@
 }
 
 .modal-close-btn {
-    position: absolute; top: 14px; right: 14px;
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--off-white, #F8F6F0); border: 1px solid var(--soft-platinum, #E5E3DE);
+    position: absolute; top: 14px; right: 18px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95); border: 1.5px solid var(--soft-platinum, #E5E3DE);
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.2s; z-index: 10;
+    cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-.modal-close-btn:hover { background: var(--dark-gold, #8A681F); color: #FFF; border-color: var(--dark-gold, #8A681F); }
+.modal-close-btn:hover { background: var(--dark-gold, #8A681F); color: #FFF; border-color: var(--dark-gold, #8A681F); transform: scale(1.05); }
 .modal-close-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
 
 /* ── Quick View Image Slider & Thumbnail Gallery Styles ── */
@@ -398,6 +407,9 @@
 <div class="modal-overlay" id="quickViewOverlay" role="dialog" aria-modal="true" aria-label="Quick view" aria-hidden="true">
     <div class="quick-modal" id="quickModal">
         <div class="modal-handle" aria-hidden="true"></div>
+        <button class="modal-close-btn" id="qvClose" aria-label="Close modal">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         <div class="modal-content" id="quickModalContent" style="position:relative;"></div>
     </div>
 </div>
@@ -607,8 +619,6 @@
         });
 
         content.innerHTML =
-            '<button class="modal-close-btn" id="qvClose" aria-label="Close modal"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
-            
             // Left Column: Interactive Slider + Thumbnails
             '<div class="modal-image-area-wrap">' +
                 '<div class="qv-slider-container" id="qvSliderContainer">' +
@@ -962,6 +972,9 @@
                 if (e.target === overlay) window.closeQV();
             });
         }
+
+        var qvClose = document.getElementById('qvClose');
+        if (qvClose) qvClose.addEventListener('click', window.closeQV);
 
         var pdClose = document.getElementById('closeProductDetailsBtn');
         if (pdClose) pdClose.addEventListener('click', window.closeProductDetails);
