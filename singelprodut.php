@@ -2149,45 +2149,82 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-weight: 800;
 }
 
-/* ── WhatsApp Quick Order Checkout Modal Styles ── */
-.pdp-wa-modal-box {
-    background: #FFFFFF;
-    border-radius: 16px;
-    max-width: 520px;
-    width: 100%;
-    max-height: 90vh;
+/* ════════════════════════════════════════════════════
+   LUXURY WHATSAPP QUICK CHECKOUT MODAL (FULLSCREEN ON MOBILE)
+════════════════════════════════════════════════════ */
+#pdpWhatsAppOrderModal.pdp-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(20, 16, 12, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000000;
     display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    overflow: hidden;
-    border: 1.5px solid var(--gold-border);
-    animation: modalPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 0;
+    box-sizing: border-box;
+}
+#pdpWhatsAppOrderModal.pdp-modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
 }
 
-/* ════════════════════════════════════════════════════
-   LUXURY WHATSAPP QUICK CHECKOUT MODAL (MATCHING CHECKOUT.PHP)
-════════════════════════════════════════════════════ */
+/* ── Fullscreen on Mobile by Default ── */
 .pdp-wa-modal-box {
     background: #FCFBF8;
     width: 100%;
-    max-width: 520px;
-    max-height: 94vh;
-    border-radius: 16px;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    max-height: 100dvh;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    overflow: hidden;
-    border: 1.5px solid rgba(138, 104, 31, 0.3);
-    transform: translateY(20px) scale(0.97);
-    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: none;
+    border: none;
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
     font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
     color: #24211C;
+    overflow: hidden;
+    position: fixed;
+    top: 0; left: 0;
 }
+#pdpWhatsAppOrderModal.open .pdp-wa-modal-box {
+    transform: translateY(0);
+}
+
+/* ── Desktop Dialog Mode (>= 601px) ── */
+@media (min-width: 601px) {
+    #pdpWhatsAppOrderModal.pdp-modal-overlay {
+        padding: 16px;
+    }
+    .pdp-wa-modal-box {
+        position: relative;
+        top: auto; left: auto;
+        max-width: 500px;
+        height: auto;
+        max-height: 92vh;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+        border: 1.5px solid rgba(138, 104, 31, 0.3);
+        transform: translateY(20px) scale(0.97);
+        transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    #pdpWhatsAppOrderModal.open .pdp-wa-modal-box {
+        transform: translateY(0) scale(1);
+    }
+}
+
 /* ── Modal Header (Slim, Compact, Luxury Header) ── */
 .pdp-wa-co-header {
     background: #FFFFFF;
     border-bottom: 1.5px solid var(--gold-primary, #8A681F);
-    padding: 7px 14px;
+    padding: 9px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
