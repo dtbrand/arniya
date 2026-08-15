@@ -282,12 +282,19 @@
 @media (max-width: 900px) {
     .pdp-breadcrumbs { display: none; }
 }
+@media (max-width: 767px) {
+    /* Remove Wishlist, Cart, and Account icons on Mobile Header only */
+    .pdp-header-actions #pdpWishlistBtn,
+    .pdp-header-actions #pdpCartBtn,
+    .pdp-header-actions #pdpAccountBtn {
+        display: none !important;
+    }
+    .pdp-wa-help-btn {
+        padding: 6px 10px;
+    }
+}
 @media (max-width: 600px) {
-    .pdp-brand-text { display: none; }
     .pdp-top-ticker { font-size: 0.62rem; padding: 4px 10px; }
-    .pdp-wa-help-btn span { display: none; }
-    .pdp-account-btn span { display: none; }
-    .pdp-account-btn { padding: 6px; }
 }
 </style>
 
