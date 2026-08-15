@@ -990,12 +990,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 800;
     color: var(--dark-text);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 .pdp-selected-txt {
     color: var(--dark-gold);
@@ -1004,45 +1004,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .pdp-color-swatches {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 .pdp-color-btn {
-    width: 34px; height: 34px;
+    width: 28px; height: 28px;
     border-radius: 50%;
-    border: 2.5px solid #FFFFFF;
+    border: 2px solid #FFFFFF;
     outline: 1.5px solid var(--soft-platinum);
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .pdp-color-btn:hover {
     outline-color: var(--dark-gold);
-    transform: scale(1.12);
+    transform: scale(1.1);
 }
 .pdp-color-btn.active {
-    outline: 2.5px solid var(--dark-gold);
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.25), 0 4px 10px rgba(0,0,0,0.2);
-    transform: scale(1.15);
+    outline: 2px solid var(--dark-gold);
+    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.25), 0 3px 8px rgba(0,0,0,0.18);
+    transform: scale(1.1);
 }
 
 /* Size Options */
 .pdp-size-grid {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 .pdp-size-btn {
-    min-width: 48px; height: 42px;
-    border-radius: 9px;
-    border: 1.8px solid var(--soft-platinum);
+    min-width: 44px; height: 35px;
+    border-radius: 8px;
+    border: 1.5px solid var(--soft-platinum);
     background: #FFFFFF;
-    font-size: 0.84rem;
+    font-size: 0.78rem;
     font-weight: 800;
     color: var(--dark-text);
     display: flex; align-items: center; justify-content: center;
-    padding: 0 14px;
+    padding: 0 12px;
     transition: all 0.2s ease;
 }
 .pdp-size-btn:hover {
@@ -1053,11 +1053,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-color: var(--dark-gold);
     background: var(--dark-gold);
     color: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(138,104,31,0.3);
+    box-shadow: 0 3px 10px rgba(138,104,31,0.28);
 }
 
 .pdp-size-guide-link {
-    font-size: 0.74rem;
+    font-size: 0.70rem;
     font-weight: 700;
     color: var(--dark-gold);
     cursor: pointer;
@@ -1072,26 +1072,30 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-actions-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 6px;
+    gap: 10px;
+    margin-top: 4px;
 }
 .pdp-qty-row {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 .pdp-qty-box {
     display: inline-flex;
     align-items: center;
-    border: 1.8px solid var(--soft-platinum);
-    border-radius: 8px;
+    border: 1.5px solid var(--soft-platinum);
+    border-radius: 7px;
     background: #FFFFFF;
     overflow: hidden;
 }
 .pdp-qty-btn {
-    width: 36px; height: 38px;
+    width: 32px; height: 32px;
     background: #FAF8F4;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
     color: var(--dark-gold);
     display: flex; align-items: center; justify-content: center;
@@ -1100,67 +1104,67 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-qty-btn:hover { background: var(--gold-pale); }
 .pdp-qty-num {
-    width: 40px;
+    width: 34px;
     text-align: center;
-    font-size: 0.88rem;
+    font-size: 0.82rem;
     font-weight: 800;
 }
 
 .pdp-btn-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 8px;
 }
 .pdp-atc-btn {
-    padding: 14px 20px;
-    border-radius: 9px;
-    border: 2px solid var(--dark-gold);
-    background: #FAF4E6;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1.8px solid var(--dark-gold);
+    background: #FFFFFF;
     color: var(--dark-gold);
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
     transition: all 0.2s ease;
     cursor: pointer;
 }
-.pdp-atc-btn:hover {
-    background: #F5E8C8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(138,104,31,0.2);
+.pdp-atc-btn:hover, .pdp-atc-btn:active {
+    background: #FAF3E0;
+    transform: scale(0.98);
 }
 .pdp-atc-btn svg {
-    width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2.2;
+    width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2;
     animation: pdpBagSwing 2.4s infinite ease-in-out;
     transform-origin: top center;
     flex-shrink: 0;
 }
 
 .pdp-buy-btn {
-    padding: 14px 20px;
-    border-radius: 9px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 8px;
     border: none;
-    background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
+    background: linear-gradient(135deg, #947124 0%, #684E17 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 4px 16px rgba(138,104,31,0.32);
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    box-shadow: 0 3px 12px rgba(138,104,31,0.35);
     transition: all 0.2s ease;
     cursor: pointer;
 }
-.pdp-buy-btn:hover {
-    background: var(--deep-gold);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(138,104,31,0.45);
+.pdp-buy-btn:hover, .pdp-buy-btn:active {
+    background: #5A4212;
+    transform: scale(0.98);
 }
 .pdp-buy-btn svg {
-    width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 1;
+    width: 15px; height: 15px; fill: currentColor; stroke: currentColor; stroke-width: 1;
     animation: pdpBoltPulse 1.6s infinite ease-in-out;
     flex-shrink: 0;
 }
@@ -1168,54 +1172,55 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Direct WhatsApp Order CTA */
 .pdp-wa-order-btn {
     width: 100%;
-    padding: 13px;
-    border-radius: 9px;
-    background: #25D366;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     color: #FFFFFF;
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(37,211,102,0.3);
+    box-shadow: 0 3px 12px rgba(37,211,102,0.32);
     transition: all 0.2s ease;
 }
-.pdp-wa-order-btn:hover {
-    background: #128C7E;
-    transform: translateY(-2px);
+.pdp-wa-order-btn:hover, .pdp-wa-order-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 5px 16px rgba(37,211,102,0.42);
 }
-.pdp-wa-order-btn svg { width: 19px; height: 19px; fill: currentColor; }
+.pdp-wa-order-btn svg { width: 17px; height: 17px; fill: currentColor; flex-shrink: 0; }
 
 /* Pincode Delivery Estimator */
 .pdp-delivery-box {
     background: #FFFFFF;
     border: 1.5px solid var(--soft-platinum);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 10px;
+    padding: 12px 14px;
 }
 .pdp-del-title {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 800;
     color: var(--dark-text);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    display: flex; align-items: center; gap: 8px;
-    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 8px;
 }
-.pdp-del-title svg { width: 18px; height: 18px; stroke: var(--dark-gold); fill: none; stroke-width: 2; }
+.pdp-del-title svg { width: 16px; height: 16px; stroke: var(--dark-gold); fill: none; stroke-width: 2; flex-shrink: 0; }
 .pdp-pincode-input-row {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 .pdp-pincode-input {
     flex: 1;
-    height: 40px;
+    height: 36px;
     border: 1.5px solid var(--soft-platinum);
-    border-radius: 8px;
-    padding: 0 14px;
+    border-radius: 7px;
+    padding: 0 12px;
     font-family: var(--font-sans);
-    font-size: 0.86rem;
+    font-size: 0.80rem;
     font-weight: 600;
     outline: none;
 }
@@ -1223,12 +1228,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-color: var(--dark-gold);
 }
 .pdp-pincode-btn {
-    padding: 0 18px;
-    height: 40px;
-    border-radius: 8px;
+    padding: 0 16px;
+    height: 36px;
+    border-radius: 7px;
     background: var(--dark-gold);
     color: #FFFFFF;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -1237,9 +1242,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-pincode-btn:hover { background: var(--deep-gold); }
 .pdp-pincode-result {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     font-weight: 600;
-    margin-top: 10px;
+    margin-top: 8px;
     display: none;
     line-height: 1.4;
 }
