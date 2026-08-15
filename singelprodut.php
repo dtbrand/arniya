@@ -1624,7 +1624,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 </div>
                 <div class="pdp-tax-note">
                     <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Inclusive of all taxes • Free express shipping</span>
+                    <span>Inclusive of all taxes • ⚡ Fast Express Delivery • 7-Day Fast Exchange</span>
                 </div>
             </div>
 
@@ -1739,17 +1739,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     </div>
                 </div>
 
-                <!-- 3. Shipping & Authenticity -->
+                <!-- 3. Fast Delivery & Exchange -->
                 <div class="pdp-acc-item">
                     <button class="pdp-acc-header" onclick="togglePdpAcc(this)">
-                        <span>🚚 Free Shipping, Authenticity & Returns</span>
+                        <span>⚡ Fast Express Delivery, Authenticity & Fast Exchange</span>
                         <span class="pdp-acc-icon">▾</span>
                     </button>
                     <div class="pdp-acc-body">
                         <p>
                             • <strong>100% Genuine Certified</strong> Handloom Ethnic Couture directly from Kalaniketan master weavers.<br />
-                            • <strong>Free Express Shipping</strong> across all pincodes in India.<br />
-                            • <strong>7-Day Hassle-Free Exchange</strong>: In case of size or fit discrepancies, exchange requests can be placed via our WhatsApp helpline with zero extra charge.
+                            • <strong>⚡ Fast Express Delivery</strong>: Priority dispatch across all pincodes in India within 24-48 hours.<br />
+                            • <strong>💎 7-Day Fast Doorstep Exchange</strong>: Fast, hassle-free size and fit exchanges arranged seamlessly via our WhatsApp helpline with zero extra charges.
                         </p>
                     </div>
                 </div>
@@ -2182,7 +2182,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         res.style.display = 'block';
         res.style.color = '#2E7D32';
-        res.innerHTML = '✅ <strong>Delivery by ' + dateString + '</strong><br />✨ Free Express Shipping • Cash on Delivery Available for ' + pin;
+        res.innerHTML = '✅ <strong>Fast Delivery by ' + dateString + '</strong><br />⚡ Fast Express Delivery • 💎 7-Day Fast Exchange • Cash on Delivery Available for ' + pin;
     };
 
     // Fullscreen Image Lightbox

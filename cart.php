@@ -187,8 +187,8 @@
                 <span class="cd-total-val" id="cartTotalVal">₹0</span>
             </div>
             <div class="cd-summary-row cd-shipping">
-                <span>Worldwide Express Shipping</span>
-                <span class="cd-free-txt">FREE</span>
+                <span>⚡ Fast Express Delivery & Fast Exchange</span>
+                <span class="cd-free-txt">FAST DISPATCH</span>
             </div>
             <button class="cd-checkout-btn" id="cartCheckoutBtn">
                 PROCEED TO CHECKOUT &rarr;

@@ -956,8 +956,8 @@
                         <span id="coDiscountVal">-₹0</span>
                     </div>
                     <div class="co-price-row">
-                        <span>Express Insured Shipping</span>
-                        <span style="color: var(--co-green); font-weight: 700;">FREE</span>
+                        <span>⚡ Fast Express Delivery</span>
+                        <span style="color: var(--co-green); font-weight: 700;">FAST DISPATCH</span>
                     </div>
                     <div class="co-price-row">
                         <span>GST (Included)</span>
@@ -977,7 +977,7 @@
 
                 <div class="co-guarantee-note">
                     <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>100% Authentic Handloom • 7-Day Easy Exchange</span>
+                    <span>100% Authentic Handloom • ⚡ 7-Day Fast Exchange</span>
                 </div>
 
             </div>
@@ -1255,7 +1255,7 @@
                         `───────────────\n` +
                         `💵 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}\n` +
                         (appliedDiscountAmount > 0 ? `🎁 *Discount (${appliedCouponCode}):* -₹${appliedDiscountAmount.toLocaleString('en-IN')}\n` : '') +
-                        `🚚 *Express Delivery:* FREE\n` +
+                        `🚚 *Fast Delivery:* Express Priority Dispatch\n` +
                         `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
                         `💳 *Payment Method:* ${activePaymentMethod.toUpperCase()}\n` +
                         `───────────────\n` +

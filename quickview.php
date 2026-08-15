@@ -490,8 +490,8 @@
                         <span class="pd-spec-val">Dry Clean Only</span>
                     </div>
                     <div class="pd-spec-item">
-                        <span class="pd-spec-label">Shipping</span>
-                        <span class="pd-spec-val">Express Delivery Across Worldwide</span>
+                        <span class="pd-spec-label">Delivery</span>
+                        <span class="pd-spec-val">⚡ Fast Express Delivery Across India</span>
                     </div>
                 </div>
             </div>
@@ -500,11 +500,11 @@
             <div class="pd-assurance-box">
                 <div class="pd-assure-item">
                     <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <span>100% Original Authentic Product</span>
+                    <span>100% Original Authentic Silk</span>
                 </div>
                 <div class="pd-assure-item">
                     <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                    <span>Insured Fast Express Delivery Across Worldwide</span>
+                    <span>⚡ Fast Express Delivery & 7-Day Fast Exchange</span>
                 </div>
             </div>
         </div>
@@ -688,7 +688,7 @@
                     '</div>' +
                     '<div class="m-perk-item">' +
                         '<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>' +
-                        '<span>Insured Worldwide Express Shipping</span>' +
+                        '<span>⚡ Fast Express Delivery & Fast Exchange</span>' +
                     '</div>' +
                 '</div>' +
             '</div>';

@@ -296,9 +296,9 @@
     <div class="pdp-top-ticker">
         <span>✨ 100% Authentic Handloom Silk</span>
         <span>•</span>
-        <span>🚚 Free Express Delivery Across India</span>
+        <span>⚡ Fast Express Delivery Across India</span>
         <span>•</span>
-        <span>💎 7-Day Hassle-Free Exchange</span>
+        <span>💎 7-Day Fast & Easy Exchange</span>
     </div>
 
     <!-- Main Navigation Bar -->

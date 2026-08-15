@@ -140,7 +140,7 @@
 <div class="pdp-mobile-bottom-bar" id="pdpMobileBar">
     <div class="pdp-mob-price-wrap">
         <span class="pdp-mob-price" id="pdpMobPrice">₹<?= number_format($product['price'] ?? 4899) ?></span>
-        <span class="pdp-mob-tax">FREE SHIPPING</span>
+        <span class="pdp-mob-tax">⚡ FAST DELIVERY</span>
     </div>
 
     <!-- Wishlist Quick Toggle -->
