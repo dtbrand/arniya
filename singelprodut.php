@@ -954,66 +954,294 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     line-height: 1.4;
 }
 
-/* Accordion / Specifications */
+/* ── Luxury Accordion & Specifications Section ─────────────────────── */
 .pdp-accordion-wrap {
-    border-top: 1.5px solid var(--soft-platinum);
-    margin-top: 6px;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
 .pdp-acc-item {
-    border-bottom: 1.5px solid var(--soft-platinum);
+    background: #FFFFFF;
+    border: 1.5px solid var(--gold-border, rgba(138, 104, 31, 0.22));
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease;
 }
+.pdp-acc-item:hover {
+    border-color: var(--dark-gold, #8A681F);
+    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.08);
+}
+.pdp-acc-item.open {
+    border-color: var(--dark-gold, #8A681F);
+    background: #FFFFFF;
+    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.1);
+}
+
 .pdp-acc-header {
     width: 100%;
-    padding: 14px 0;
+    padding: 13px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.84rem;
-    font-weight: 800;
-    color: var(--dark-text);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    background: transparent;
+    border: none;
     cursor: pointer;
+    text-align: left;
+    gap: 12px;
+    transition: background 0.2s ease;
 }
-.pdp-acc-icon {
-    font-size: 1.1rem;
-    color: var(--dark-gold);
-    transition: transform 0.25s ease;
+.pdp-acc-header:hover {
+    background: rgba(138, 104, 31, 0.03);
 }
-.pdp-acc-item.open .pdp-acc-icon { transform: rotate(180deg); }
+
+.pdp-acc-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.pdp-acc-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--gold-pale, #FAF4E6);
+    border: 1px solid var(--gold-border, rgba(138, 104, 31, 0.25));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-gold, #8A681F);
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+.pdp-acc-item.open .pdp-acc-icon-box {
+    background: var(--dark-gold, #8A681F);
+    color: #FFFFFF;
+    border-color: var(--dark-gold, #8A681F);
+}
+.pdp-acc-icon-box svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.pdp-acc-title-text {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark-text, #24211C);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+}
+
+.pdp-acc-chevron-wrap {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #FAF8F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-gold, #8A681F);
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+.pdp-acc-chevron {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pdp-acc-item.open .pdp-acc-chevron {
+    transform: rotate(180deg);
+}
+
 .pdp-acc-body {
     display: none;
-    padding: 0 0 16px;
+    padding: 0 16px 16px;
     font-size: 0.82rem;
-    color: var(--mid-text);
+    color: var(--mid-text, #5A5348);
     line-height: 1.65;
+    border-top: 1px dashed rgba(138, 104, 31, 0.15);
+    margin-top: 2px;
+    padding-top: 14px;
+    animation: pdpFadeSlide 0.25s ease-out;
 }
-.pdp-acc-item.open .pdp-acc-body { display: block; }
+@keyframes pdpFadeSlide {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.pdp-acc-item.open .pdp-acc-body {
+    display: block;
+}
 
+/* Feature tags inside description */
+.pdp-desc-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+}
+.pdp-desc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    background: #FAF8F4;
+    border: 1px solid var(--soft-platinum, #E5E3DE);
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--dark-gold, #8A681F);
+}
+.pdp-desc-pill svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+/* Specifications Grid with Real Icons */
 .pdp-specs-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 8px;
+    gap: 8px;
+}
+@media (max-width: 480px) {
+    .pdp-specs-grid {
+        grid-template-columns: 1fr;
+    }
 }
 .pdp-spec-box {
-    background: #FFFFFF;
-    border: 1px solid var(--soft-platinum);
-    border-radius: 8px;
+    background: #FAF9F6;
+    border: 1px solid rgba(138, 104, 31, 0.15);
+    border-radius: 9px;
     padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+.pdp-spec-box:hover {
+    background: #FFFFFF;
+    border-color: var(--dark-gold, #8A681F);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.08);
+}
+.pdp-spec-icon-sub {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #FFFFFF;
+    border: 1px solid var(--soft-platinum, #E5E3DE);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-gold, #8A681F);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.pdp-spec-icon-sub svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+.pdp-spec-meta {
+    display: flex;
+    flex-direction: column;
 }
 .pdp-spec-lbl {
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     font-weight: 800;
-    color: var(--dark-gold);
+    color: var(--dark-gold, #8A681F);
     text-transform: uppercase;
-    display: block;
+    letter-spacing: 0.06em;
     margin-bottom: 2px;
 }
 .pdp-spec-val {
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--dark-text);
+    color: var(--dark-text, #24211C);
+}
+
+/* Shipping, Authentic & Fast Exchange Cards */
+.pdp-trust-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.pdp-trust-mini-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: #FAF8F4;
+    border: 1px solid rgba(138, 104, 31, 0.15);
+}
+.pdp-trust-mini-card.gold {
+    background: linear-gradient(135deg, #FFFDF7 0%, #FAF4E6 100%);
+    border-color: rgba(212, 175, 55, 0.35);
+}
+.pdp-trust-mini-card.green {
+    background: linear-gradient(135deg, #F8FCF8 0%, #E8F5E9 100%);
+    border-color: rgba(46, 125, 50, 0.25);
+}
+.pdp-trust-mini-card.blue {
+    background: linear-gradient(135deg, #F8FAFD 0%, #E3F2FD 100%);
+    border-color: rgba(25, 118, 210, 0.25);
+}
+
+.pdp-trust-mini-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pdp-trust-mini-card.gold .pdp-trust-mini-icon {
+    background: rgba(138, 104, 31, 0.12);
+    color: #8A681F;
+}
+.pdp-trust-mini-card.green .pdp-trust-mini-icon {
+    background: rgba(46, 125, 50, 0.12);
+    color: #2E7D32;
+}
+.pdp-trust-mini-card.blue .pdp-trust-mini-icon {
+    background: rgba(25, 118, 210, 0.12);
+    color: #1976D2;
+}
+.pdp-trust-mini-icon svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.pdp-trust-mini-text h5 {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--dark-text, #24211C);
+    margin: 0 0 2px 0;
+}
+.pdp-trust-mini-text p {
+    font-size: 0.72rem;
+    color: var(--mid-text, #5A5348);
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* ════════════════════════════════════════════════════
@@ -1826,47 +2054,129 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="pdp-pincode-result" id="pdpPincodeResult"></div>
             </div>
 
-            <!-- Accordion Details -->
+            <!-- Accordion Details & Specifications -->
             <div class="pdp-accordion-wrap">
-                <!-- 1. Description -->
+                <!-- 1. Description & Craftsmanship -->
                 <div class="pdp-acc-item open">
-                    <button class="pdp-acc-header" onclick="togglePdpAcc(this)">
-                        <span>✨ Product Description & Craftsmanship</span>
-                        <span class="pdp-acc-icon">▾</span>
+                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="true">
+                        <div class="pdp-acc-title-group">
+                            <div class="pdp-acc-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </div>
+                            <span class="pdp-acc-title-text">Product Description & Craftsmanship</span>
+                        </div>
+                        <div class="pdp-acc-chevron-wrap">
+                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
                     </button>
                     <div class="pdp-acc-body">
                         <p><?= htmlspecialchars($product['desc']) ?></p>
+                        <div class="pdp-desc-highlights">
+                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> 100% Pure Handloom</span>
+                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Master Artisanal Zari</span>
+                            <span class="pdp-desc-pill"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Royal Drape Finish</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 2. Specifications -->
                 <div class="pdp-acc-item">
-                    <button class="pdp-acc-header" onclick="togglePdpAcc(this)">
-                        <span>🧵 Fabric & Garment Specifications</span>
-                        <span class="pdp-acc-icon">▾</span>
+                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="false">
+                        <div class="pdp-acc-title-group">
+                            <div class="pdp-acc-icon-box">
+                                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                            </div>
+                            <span class="pdp-acc-title-text">Fabric & Garment Specifications</span>
+                        </div>
+                        <div class="pdp-acc-chevron-wrap">
+                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
                     </button>
                     <div class="pdp-acc-body">
                         <div class="pdp-specs-grid">
-                            <div class="pdp-spec-box"><span class="pdp-spec-lbl">Fabric</span><span class="pdp-spec-val"><?= htmlspecialchars($product['fabric']) ?></span></div>
-                            <div class="pdp-spec-box"><span class="pdp-spec-lbl">Category</span><span class="pdp-spec-val"><?= htmlspecialchars($product['category']) ?></span></div>
-                            <div class="pdp-spec-box"><span class="pdp-spec-lbl">Craft / Technique</span><span class="pdp-spec-val">Artisanal Handloom Weaving</span></div>
-                            <div class="pdp-spec-box"><span class="pdp-spec-lbl">Care Instructions</span><span class="pdp-spec-val">Dry Clean Only</span></div>
+                            <div class="pdp-spec-box">
+                                <div class="pdp-spec-icon-sub">
+                                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                                </div>
+                                <div class="pdp-spec-meta">
+                                    <span class="pdp-spec-lbl">Fabric Material</span>
+                                    <span class="pdp-spec-val"><?= htmlspecialchars($product['fabric']) ?></span>
+                                </div>
+                            </div>
+                            <div class="pdp-spec-box">
+                                <div class="pdp-spec-icon-sub">
+                                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                </div>
+                                <div class="pdp-spec-meta">
+                                    <span class="pdp-spec-lbl">Couture Category</span>
+                                    <span class="pdp-spec-val"><?= htmlspecialchars($product['category']) ?></span>
+                                </div>
+                            </div>
+                            <div class="pdp-spec-box">
+                                <div class="pdp-spec-icon-sub">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                </div>
+                                <div class="pdp-spec-meta">
+                                    <span class="pdp-spec-lbl">Weaving Technique</span>
+                                    <span class="pdp-spec-val">Master Handloom Jacquard</span>
+                                </div>
+                            </div>
+                            <div class="pdp-spec-box">
+                                <div class="pdp-spec-icon-sub">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                                </div>
+                                <div class="pdp-spec-meta">
+                                    <span class="pdp-spec-lbl">Care Protocol</span>
+                                    <span class="pdp-spec-val">Dry Clean Only</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. Fast Delivery & 100% Original Product -->
+                <!-- 3. Fast Delivery, 100% Original & Fast Exchange -->
                 <div class="pdp-acc-item">
-                    <button class="pdp-acc-header" onclick="togglePdpAcc(this)">
-                        <span>⚡ Fast Express Delivery, 100% Original Product & Fast Exchange</span>
-                        <span class="pdp-acc-icon">▾</span>
+                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="false">
+                        <div class="pdp-acc-title-group">
+                            <div class="pdp-acc-icon-box">
+                                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                            </div>
+                            <span class="pdp-acc-title-text">Fast Delivery, 100% Original & Fast Exchange</span>
+                        </div>
+                        <div class="pdp-acc-chevron-wrap">
+                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
                     </button>
                     <div class="pdp-acc-body">
-                        <p>
-                            • <strong>✨ 100% Original Product Guarantee</strong>: Certified authentic handloom ethnic couture directly from Kalaniketan master weavers.<br />
-                            • <strong>⚡ Fast Express Delivery</strong>: Priority dispatch across all pincodes in India within 24-48 hours.<br />
-                            • <strong>💎 7-Day Fast Doorstep Exchange</strong>: Fast, hassle-free size and fit exchanges arranged seamlessly via our WhatsApp helpline with zero extra charges.
-                        </p>
+                        <div class="pdp-trust-cards-list">
+                            <div class="pdp-trust-mini-card gold">
+                                <div class="pdp-trust-mini-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+                                </div>
+                                <div class="pdp-trust-mini-text">
+                                    <h5>100% Original Certified Handloom</h5>
+                                    <p>Authentic ethnic couture directly sourced from Kalaniketan master weavers with silk authenticity guarantee.</p>
+                                </div>
+                            </div>
+                            <div class="pdp-trust-mini-card green">
+                                <div class="pdp-trust-mini-icon">
+                                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </div>
+                                <div class="pdp-trust-mini-text">
+                                    <h5>⚡ Fast Express Priority Dispatch</h5>
+                                    <p>Dispatched within 24–48 hours with live SMS/WhatsApp shipment tracking across 19,000+ Indian pincodes.</p>
+                                </div>
+                            </div>
+                            <div class="pdp-trust-mini-card blue">
+                                <div class="pdp-trust-mini-icon">
+                                    <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                                </div>
+                                <div class="pdp-trust-mini-text">
+                                    <h5>💎 7-Day Fast Doorstep Exchange</h5>
+                                    <p>Zero-hassle size or fit exchanges arranged instantly with doorstep pickup via our dedicated WhatsApp concierge.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2194,7 +2504,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     window.togglePdpAcc = function(headerBtn) {
         var parentItem = headerBtn.closest('.pdp-acc-item');
         if (parentItem) {
-            parentItem.classList.toggle('open');
+            var isOpen = parentItem.classList.toggle('open');
+            headerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
     };
 
