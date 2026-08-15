@@ -2339,6 +2339,48 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #FFFFFF;
 }
 
+/* ── Direct New Customer / Recipient Toggle Card ── */
+.pdp-wa-cust-toggle-card {
+    background: #FAF8F4;
+    border: 1.5px dashed rgba(138, 104, 31, 0.35);
+    border-radius: 8px;
+    padding: 7px 10px;
+    transition: all 0.2s ease;
+}
+.pdp-wa-cust-toggle-card:hover {
+    background: #FAF5E8;
+    border-color: var(--gold-primary, #8A681F);
+}
+.pdp-wa-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+}
+.pdp-wa-toggle-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--gold-primary, #8A681F);
+    cursor: pointer;
+    margin: 0;
+}
+.pdp-wa-toggle-text {
+    display: flex;
+    flex-direction: column;
+}
+.pdp-wa-toggle-text strong {
+    font-size: 0.72rem;
+    color: var(--dark-text, #24211C);
+    font-weight: 800;
+    line-height: 1.2;
+}
+.pdp-wa-toggle-text small {
+    font-size: 0.65rem;
+    color: var(--mid-text, #5A5348);
+}
+
 .pdp-wa-form-group {
     display: flex;
     flex-direction: column;
@@ -3041,21 +3083,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <!-- Quick Checkout Form -->
             <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
                 
+                <!-- Option to Deliver to a Different Customer / New Address -->
+                <div class="pdp-wa-cust-toggle-card" id="pdpWaCustToggleWrap">
+                    <label class="pdp-wa-toggle-label" for="pdpWaDifferentCustToggle">
+                        <input type="checkbox" id="pdpWaDifferentCustToggle" onchange="handleDifferentCustomerToggle(this)" />
+                        <span class="pdp-wa-toggle-text">
+                            <strong>➕ Deliver to Different Customer / New Address</strong>
+                            <small>Send as gift or deliver to another recipient (Click to enter new name & address)</small>
+                        </span>
+                    </label>
+                </div>
+
                 <!-- Section 1: Customer Contact Details -->
                 <div class="pdp-wa-section-heading">
                     <div class="pdp-wa-sec-title-wrap">
                         <span class="pdp-wa-sec-icon">👤</span>
-                        <span class="pdp-wa-sec-title">Customer Contact Details</span>
-                    </div>
-                    <div class="pdp-wa-quick-fill-chips" id="pdpWaQuickFillWrap" style="display:none;">
-                        <button type="button" class="pdp-wa-quick-chip active" id="pdpWaMyInfoChip" onclick="fillMyAccountDetails()">👤 My Info</button>
-                        <button type="button" class="pdp-wa-quick-chip" id="pdpWaNewCustChip" onclick="clearCustomerDetails()">➕ New Customer</button>
+                        <span class="pdp-wa-sec-title">Customer / Billing Details</span>
                     </div>
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaName">👤 Customer Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
+                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="Enter Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
                 </div>
 
                 <div class="pdp-wa-form-group">
@@ -3349,6 +3398,41 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }
     };
 
+    function restoreUserSavedAddress() {
+        var nameField = document.getElementById('pdpWaName');
+        var phoneField = document.getElementById('pdpWaPhone');
+        var addrField = document.getElementById('pdpWaAddress');
+        var cityField = document.getElementById('pdpWaCity');
+        var stateField = document.getElementById('pdpWaState');
+        var pinField = document.getElementById('pdpWaPincode');
+
+        var savedAddrRaw = localStorage.getItem('kalaniketan_saved_address');
+        var userRaw = localStorage.getItem('kalaniketan_user');
+
+        var savedAddr = null;
+        var user = null;
+
+        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch(e) {}
+        try { if (userRaw) user = JSON.parse(userRaw); } catch(e) {}
+
+        var nameVal = (savedAddr && savedAddr.name) ? savedAddr.name : (user && user.name ? user.name : '');
+        var phoneVal = (savedAddr && savedAddr.phone) ? savedAddr.phone : (user && user.phone ? user.phone : '');
+        var addrVal = (savedAddr && savedAddr.address) ? savedAddr.address : (user && user.address ? user.address : '');
+        var cityVal = (savedAddr && savedAddr.city) ? savedAddr.city : (user && user.city ? user.city : '');
+        var stateVal = (savedAddr && savedAddr.state) ? savedAddr.state : (user && user.state ? user.state : '');
+        var pinVal = (savedAddr && savedAddr.pincode) ? savedAddr.pincode : (user && user.pincode ? user.pincode : '');
+
+        if (nameField && nameVal) nameField.value = nameVal;
+        if (phoneField && phoneVal) {
+            var cleanP = phoneVal.replace(/[^0-9]/g, '');
+            phoneField.value = cleanP ? cleanP.slice(-10) : '';
+        }
+        if (addrField && addrVal) addrField.value = addrVal;
+        if (cityField && cityVal) cityField.value = cityVal;
+        if (stateField && stateVal) stateField.value = stateVal;
+        if (pinField && pinVal) pinField.value = pinVal;
+    }
+
     // WhatsApp Quick Order Checkout Modal Engine
     window.openPdpWhatsAppOrderModal = function() {
         var modal = document.getElementById('pdpWhatsAppOrderModal');
@@ -3370,81 +3454,38 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var prEl = document.getElementById('pdpWaModalPrice');
         if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
 
-        // Delivery Address fields start fully blank for new entries
-        var addrField = document.getElementById('pdpWaAddress');
-        if (addrField) addrField.value = '';
-        var cityField = document.getElementById('pdpWaCity');
-        if (cityField) cityField.value = '';
-        var stateField = document.getElementById('pdpWaState');
-        if (stateField) stateField.value = '';
-        var pinField = document.getElementById('pdpWaPincode');
-        if (pinField) pinField.value = '';
+        // Reset different customer toggle to unchecked
+        var diffToggle = document.getElementById('pdpWaDifferentCustToggle');
+        if (diffToggle) diffToggle.checked = false;
 
-        // Pre-fill Name & Mobile Number from logged-in user account if available
-        var nameField = document.getElementById('pdpWaName');
-        var phoneField = document.getElementById('pdpWaPhone');
-        var quickWrap = document.getElementById('pdpWaQuickFillWrap');
-        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
-        var newCustChip = document.getElementById('pdpWaNewCustChip');
-
-        var userRaw = localStorage.getItem('kalaniketan_user');
-        if (userRaw) {
-            try {
-                var u = JSON.parse(userRaw);
-                var userName = u.name || '';
-                var userPhone = u.phone || '';
-                if (nameField && userName) nameField.value = userName;
-                if (phoneField && userPhone) {
-                    var cleanP = userPhone.replace(/[^0-9]/g, '');
-                    phoneField.value = cleanP.slice(-10);
-                }
-                if (quickWrap) quickWrap.style.display = 'flex';
-                if (myInfoChip) myInfoChip.classList.add('active');
-                if (newCustChip) newCustChip.classList.remove('active');
-            } catch(e) {}
-        } else {
-            if (nameField) nameField.value = '';
-            if (phoneField) phoneField.value = '';
-            if (quickWrap) quickWrap.style.display = 'none';
-        }
+        // Auto-load and prefill saved user billing & delivery info
+        restoreUserSavedAddress();
 
         modal.classList.add('open');
     };
 
-    window.fillMyAccountDetails = function() {
+    window.handleDifferentCustomerToggle = function(checkbox) {
         var nameField = document.getElementById('pdpWaName');
         var phoneField = document.getElementById('pdpWaPhone');
-        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
-        var newCustChip = document.getElementById('pdpWaNewCustChip');
+        var addrField = document.getElementById('pdpWaAddress');
+        var cityField = document.getElementById('pdpWaCity');
+        var stateField = document.getElementById('pdpWaState');
+        var pinField = document.getElementById('pdpWaPincode');
 
-        var userRaw = localStorage.getItem('kalaniketan_user');
-        if (userRaw) {
-            try {
-                var u = JSON.parse(userRaw);
-                if (nameField && u.name) nameField.value = u.name;
-                if (phoneField && u.phone) {
-                    var cleanP = u.phone.replace(/[^0-9]/g, '');
-                    phoneField.value = cleanP.slice(-10);
-                }
-                if (myInfoChip) myInfoChip.classList.add('active');
-                if (newCustChip) newCustChip.classList.remove('active');
-            } catch(e) {}
+        if (checkbox && checkbox.checked) {
+            // Clear for new customer / gift recipient entry
+            if (nameField) { nameField.value = ''; nameField.focus(); }
+            if (phoneField) phoneField.value = '';
+            if (addrField) addrField.value = '';
+            if (cityField) cityField.value = '';
+            if (stateField) stateField.value = '';
+            if (pinField) pinField.value = '';
+            window.showToast('➕ Enter new customer & delivery details');
+        } else {
+            // Restore user's saved info
+            restoreUserSavedAddress();
+            window.showToast('👤 Restored your saved details');
         }
-    };
-
-    window.clearCustomerDetails = function() {
-        var nameField = document.getElementById('pdpWaName');
-        var phoneField = document.getElementById('pdpWaPhone');
-        var myInfoChip = document.getElementById('pdpWaMyInfoChip');
-        var newCustChip = document.getElementById('pdpWaNewCustChip');
-
-        if (nameField) {
-            nameField.value = '';
-            nameField.focus();
-        }
-        if (phoneField) phoneField.value = '';
-        if (myInfoChip) myInfoChip.classList.remove('active');
-        if (newCustChip) newCustChip.classList.add('active');
     };
 
     window.closePdpWhatsAppOrderModal = function() {
@@ -3519,17 +3560,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             return;
         }
 
-        // Save address locally for next time
-        try {
-            localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
-                name: name,
-                phone: cleanPhone,
-                address: address,
-                city: city,
-                state: state,
-                pincode: pincode
-            }));
-        } catch(err) {}
+        // Save address locally if not delivering to a different customer
+        var isDiffCust = document.getElementById('pdpWaDifferentCustToggle') && document.getElementById('pdpWaDifferentCustToggle').checked;
+        if (!isDiffCust) {
+            try {
+                localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
+                    name: name,
+                    phone: cleanPhone,
+                    address: address,
+                    city: city,
+                    state: state,
+                    pincode: pincode
+                }));
+            } catch(err) {}
+        }
 
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
         var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
