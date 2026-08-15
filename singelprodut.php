@@ -3014,31 +3014,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <!-- Quick Checkout Form -->
             <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
                 
-                <!-- Logged-in Profile Chip (Shows when user is signed in) -->
-                <div class="pdp-wa-user-chip" id="pdpWaUserChip" style="display:none;">
-                    <div class="pdp-wa-chip-left">
-                        <span class="pdp-wa-chip-avatar">👤</span>
-                        <div class="pdp-wa-chip-meta">
-                            <div class="pdp-wa-chip-name" id="pdpWaChipName">Customer</div>
-                            <div class="pdp-wa-chip-phone" id="pdpWaChipPhone">+91</div>
-                        </div>
-                    </div>
-                    <button type="button" class="pdp-wa-chip-edit-btn" id="pdpWaChipEditBtn" onclick="togglePdpWaUserInputs(true)">Change</button>
+                <!-- Section 1: Customer Contact Details -->
+                <div class="pdp-wa-section-heading">
+                    <span class="pdp-wa-sec-icon">👤</span>
+                    <span class="pdp-wa-sec-title">Customer Contact Details</span>
                 </div>
 
-                <!-- Name & Phone Inputs (Shown for guests, or when user clicks 'Change') -->
-                <div id="pdpWaInputsWrap" style="display:flex; flex-direction:column; gap:10px;">
-                    <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
-                        <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
-                    </div>
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
+                </div>
 
-                    <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
-                        <div class="pdp-wa-phone-row">
-                            <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
-                            <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
-                        </div>
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
+                    <div class="pdp-wa-phone-row">
+                        <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
+                        <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
                     </div>
                 </div>
 
@@ -3356,10 +3347,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var pinField = document.getElementById('pdpWaPincode');
         if (pinField) pinField.value = '';
 
-        // Check if customer is logged in
-        var userChip = document.getElementById('pdpWaUserChip');
-        var inputsWrap = document.getElementById('pdpWaInputsWrap');
-        var chipEditBtn = document.getElementById('pdpWaChipEditBtn');
+        // Pre-fill Name & Mobile Number from logged-in user account if available
         var nameField = document.getElementById('pdpWaName');
         var phoneField = document.getElementById('pdpWaPhone');
 
@@ -3367,52 +3355,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (userRaw) {
             try {
                 var u = JSON.parse(userRaw);
-                var userName = u.name || 'Valued Member';
+                var userName = u.name || '';
                 var userPhone = u.phone || '';
-                
-                if (nameField) nameField.value = userName;
-                if (phoneField) phoneField.value = userPhone;
-
-                var chipName = document.getElementById('pdpWaChipName');
-                var chipPhone = document.getElementById('pdpWaChipPhone');
-                if (chipName) chipName.textContent = userName;
-                if (chipPhone) {
+                if (nameField && userName) nameField.value = userName;
+                if (phoneField && userPhone) {
                     var cleanP = userPhone.replace(/[^0-9]/g, '');
-                    chipPhone.textContent = cleanP ? ('+91 ' + cleanP.slice(-10)) : 'Verified Customer';
+                    phoneField.value = cleanP.slice(-10);
                 }
-
-                if (userChip) userChip.style.display = 'flex';
-                if (inputsWrap) inputsWrap.style.display = 'none';
-                if (chipEditBtn) chipEditBtn.textContent = 'Change';
-            } catch(e) {
-                if (userChip) userChip.style.display = 'none';
-                if (inputsWrap) inputsWrap.style.display = 'flex';
-            }
+            } catch(e) {}
         } else {
-            // Guest mode: show blank name & phone inputs
-            if (userChip) userChip.style.display = 'none';
-            if (inputsWrap) inputsWrap.style.display = 'flex';
             if (nameField) nameField.value = '';
             if (phoneField) phoneField.value = '';
         }
 
         modal.classList.add('open');
-    };
-
-    window.togglePdpWaUserInputs = function() {
-        var inputsWrap = document.getElementById('pdpWaInputsWrap');
-        var chipEditBtn = document.getElementById('pdpWaChipEditBtn');
-        if (!inputsWrap) return;
-
-        if (inputsWrap.style.display === 'none') {
-            inputsWrap.style.display = 'flex';
-            if (chipEditBtn) chipEditBtn.textContent = 'Collapse';
-            var nameField = document.getElementById('pdpWaName');
-            if (nameField) nameField.focus();
-        } else {
-            inputsWrap.style.display = 'none';
-            if (chipEditBtn) chipEditBtn.textContent = 'Change';
-        }
     };
 
     window.closePdpWhatsAppOrderModal = function() {
