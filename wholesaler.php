@@ -826,22 +826,23 @@ $catalogProducts = [
             box-shadow: 0 2px 6px rgba(138, 104, 31, 0.3);
         }
 
-        /* ── Semi-Circular Target Gauge Arc (Heritage Gold) ── */
+        /* ── Semi-Circular Target Gauge Arc (Metrica / ApexCharts Luxury Gold) ── */
         .ws-gauge-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin: 10px 0 16px;
+            margin: 6px 0 16px;
+            position: relative;
         }
         .ws-gauge-svg {
-            width: 190px;
-            height: 105px;
+            width: 200px;
+            height: 110px;
             overflow: visible;
         }
         .ws-gauge-bg-arc {
             fill: none;
-            stroke: #EAE5DB;
+            stroke: #EDE7DD;
             stroke-width: 14;
             stroke-linecap: round;
         }
@@ -852,47 +853,76 @@ $catalogProducts = [
             stroke-linecap: round;
             stroke-dasharray: 236;
             stroke-dashoffset: 58; /* 75.55% */
-            transition: stroke-dashoffset 1s ease;
+            filter: drop-shadow(0 4px 10px rgba(138, 104, 31, 0.4));
+            transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: wsGaugeDrawIn 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes wsGaugeDrawIn {
+            from { stroke-dashoffset: 236; }
+            to { stroke-dashoffset: 58; }
         }
         .ws-gauge-center-text {
-            font-size: 1.55rem;
-            font-weight: 800;
+            font-size: 1.65rem;
+            font-weight: 900;
             color: var(--ws-gold-primary);
-            margin-top: -30px;
+            margin-top: -34px;
             font-family: var(--ws-font-serif);
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 8px rgba(138, 104, 31, 0.15);
         }
         .ws-gauge-badge {
             display: inline-flex;
             align-items: center;
-            gap: 3px;
-            padding: 2px 8px;
-            border-radius: 12px;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 14px;
             background: #ECFDF5;
             color: #10B981;
-            font-size: 0.70rem;
-            font-weight: 700;
+            font-size: 0.72rem;
+            font-weight: 800;
             margin-top: 4px;
+            border: 1px solid #A7F3D0;
+            box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+            animation: wsPulseBadge 2s infinite ease-in-out;
+        }
+        @keyframes wsPulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
         }
         .ws-gauge-desc {
             font-size: 0.78rem;
             color: var(--ws-text-muted);
-            margin-top: 14px;
+            margin-top: 12px;
             line-height: 1.45;
-            max-width: 280px;
+            max-width: 290px;
         }
         .ws-gauge-stats-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            border-top: 1px solid var(--ws-border);
+            border-top: 1.5px solid var(--ws-border);
             padding-top: 14px;
             margin-top: auto;
             text-align: center;
-            gap: 6px;
+            gap: 8px;
+        }
+        .ws-gauge-stat-pill {
+            background: #FAF8F4;
+            border: 1px solid var(--ws-border);
+            border-radius: 10px;
+            padding: 8px 4px;
+            transition: all 0.25s ease;
+        }
+        .ws-gauge-stat-pill:hover {
+            border-color: var(--ws-gold-primary);
+            background: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.1);
         }
         .ws-g-stat-label {
-            font-size: 0.70rem;
+            font-size: 0.68rem;
             color: var(--ws-text-muted);
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
         }
         .ws-g-stat-val {
             font-size: 0.95rem;
@@ -2761,36 +2791,56 @@ $catalogProducts = [
                         </div>
                     </div>
 
-                    <!-- Right: Semi-Circular Target Gauge (Royal Gold Arc) -->
+                    <!-- Right: Semi-Circular Target Gauge (Royal Gold Arc & Animated Glow) -->
                     <div class="ws-analytics-card">
+                        <div class="ws-card-top-bar" style="margin-bottom: 8px;">
+                            <div>
+                                <h3 style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Procurement Target</h3>
+                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;">Monthly quota & milestone velocity</p>
+                            </div>
+                            <span class="ws-trend-pill up">75.5% Quota</span>
+                        </div>
+
                         <div class="ws-gauge-wrap">
                             <svg class="ws-gauge-svg" viewBox="0 0 200 110">
                                 <defs>
                                     <linearGradient id="goldGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                         <stop offset="0%" stop-color="#8A681F"/>
-                                        <stop offset="100%" stop-color="#C5A859"/>
+                                        <stop offset="35%" stop-color="#C5A859"/>
+                                        <stop offset="70%" stop-color="#D4AF37"/>
+                                        <stop offset="100%" stop-color="#FFE082"/>
                                     </linearGradient>
+                                    <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="4" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
                                 </defs>
                                 <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
                                 <path class="ws-gauge-fill-arc" id="targetGaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: 58;"></path>
+                                <!-- Glowing Leading Indicator Circle on Arc Tip -->
+                                <circle cx="152" cy="43" r="6" fill="#FFE082" stroke="#8A681F" stroke-width="2.5" filter="url(#gaugeGlow)" />
+                                <circle cx="152" cy="43" r="2.5" fill="#FFFFFF" />
                             </svg>
                             <div class="ws-gauge-center-text" id="targetGaugeVal">75.55%</div>
-                            <div class="ws-gauge-badge" id="targetGaugeBadge">+10%</div>
-                            <p class="ws-gauge-desc" id="targetGaugeDesc">You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!</p>
+                            <div class="ws-gauge-badge" id="targetGaugeBadge">
+                                <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <span>+10.4% vs Target</span>
+                            </div>
+                            <p class="ws-gauge-desc" id="targetGaugeDesc">You achieved <strong>₹1,84,500</strong> this cycle. Just <strong>₹65,500</strong> left to complete Tier 1 VIP quota!</p>
                         </div>
 
                         <div class="ws-gauge-stats-row">
-                            <div>
+                            <div class="ws-gauge-stat-pill">
                                 <div class="ws-g-stat-label">Target</div>
-                                <div class="ws-g-stat-val" id="gStatTarget" style="color:var(--ws-danger);">₹50K ↓</div>
+                                <div class="ws-g-stat-val" id="gStatTarget" style="color:var(--ws-danger);">₹2.50L</div>
                             </div>
-                            <div>
-                                <div class="ws-g-stat-label">Revenue</div>
-                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹48.5K ↑</div>
+                            <div class="ws-gauge-stat-pill">
+                                <div class="ws-g-stat-label">Achieved</div>
+                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹1.85L ↑</div>
                             </div>
-                            <div>
-                                <div class="ws-g-stat-label">Today</div>
-                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹18.2K ↑</div>
+                            <div class="ws-gauge-stat-pill">
+                                <div class="ws-g-stat-label">Velocity</div>
+                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹18.2K/d</div>
                             </div>
                         </div>
                     </div>
@@ -5295,6 +5345,33 @@ $catalogProducts = [
             }
         };
 
+        /* ── Animate Target Gauge Percentage Count-up ── */
+        window.animateTargetGauge = function(targetPercent) {
+            var valEl = document.getElementById('targetGaugeVal');
+            var fillEl = document.getElementById('targetGaugeFill');
+            if (!valEl) return;
+
+            var target = targetPercent || 75.55;
+            var start = performance.now();
+            var duration = 1200;
+
+            var targetOffset = Math.round(236 - (236 * (target / 100)));
+            if (fillEl) fillEl.style.strokeDashoffset = targetOffset;
+
+            function step(time) {
+                var progress = Math.min((time - start) / duration, 1);
+                var ease = 1 - Math.pow(1 - progress, 3);
+                var val = (ease * target).toFixed(2);
+                valEl.textContent = val + '%';
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    valEl.textContent = target.toFixed(2) + '%';
+                }
+            }
+            requestAnimationFrame(step);
+        };
+
         /* ── Wholesaler Logout ── */
         window.handleWholesalerLogout = function() {
             if (confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
@@ -5336,6 +5413,7 @@ $catalogProducts = [
             renderOrdersView(activeOrdersList);
             renderReportsView(activeOrdersList);
             renderTicketsView();
+            window.animateTargetGauge(75.55);
         }
 
         document.addEventListener('DOMContentLoaded', initWholesalerApp);
