@@ -1624,7 +1624,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 </div>
                 <div class="pdp-tax-note">
                     <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>Inclusive of all taxes • ⚡ Fast Express Delivery • 7-Day Fast Exchange</span>
+                    <span>Exclusive of all taxes • ⚡ Fast Express Delivery • 7-Day Fast Exchange</span>
                 </div>
             </div>
 
