@@ -364,6 +364,18 @@ $catalogProducts = [
             fill: none;
         }
 
+        .ws-mobile-header-brand {
+            display: none;
+        }
+        .ws-mob-logo-text {
+            font-family: var(--ws-font-serif);
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--ws-gold-primary);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
         /* ── Main App Layout Grid ── */
         .ws-app-layout {
             display: flex;
@@ -2142,11 +2154,16 @@ $catalogProducts = [
         }
 
         /* ════════════════════════════════════════════════════
-           RESPONSIVE MOBILE BREAKPOINTS
+           RESPONSIVE MOBILE BREAKPOINTS & IMPROVEMENTS
         ════════════════════════════════════════════════════ */
-        @media (max-width: 992px) {
+        @media (max-width: 1024px) {
             .ws-analytics-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .ws-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
             .ws-sidebar {
                 position: fixed;
@@ -2194,53 +2211,155 @@ $catalogProducts = [
             .ws-cmd-search-wrap {
                 display: none;
             }
-            .ws-product-card {
-                flex: 0 0 calc((100% - 24px) / 3);
-                min-width: 140px;
-            }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .ws-header {
                 padding: 0 12px;
-                height: 56px;
+                height: 58px;
+            }
+            .ws-mobile-header-brand {
+                display: flex;
+                align-items: center;
+                margin-left: 8px;
+            }
+            .ws-user-name-text {
+                display: none;
+            }
+            .ws-user-profile-btn {
+                padding: 3px;
+                border-radius: 50%;
             }
             .ws-main-content {
-                padding: 12px 10px 80px;
+                padding: 12px 10px 85px;
+            }
+            .ws-section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .ws-sec-actions-row {
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .ws-segmented-control {
+                width: 100%;
+                display: flex;
+            }
+            .ws-segmented-control .ws-seg-btn {
+                flex: 1;
+                text-align: center;
+                padding: 7px 8px;
+                font-size: 0.74rem;
+            }
+            .ws-date-range-pill {
+                width: 100%;
+                justify-content: center;
+                padding: 7px 12px;
+            }
+            .ws-metric-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .ws-stat-box {
+                padding: 12px 10px;
+                border-radius: 12px;
+            }
+            .ws-stat-label {
+                font-size: 0.68rem;
+                margin-bottom: 4px;
+            }
+            .ws-stat-val-num {
+                font-size: 1.20rem;
+            }
+            .ws-trend-pill {
+                font-size: 0.62rem;
+                padding: 2px 6px;
+            }
+            .ws-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .ws-kpi-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .ws-kpi-box {
+                padding: 10px;
+            }
+            .ws-kpi-label {
+                font-size: 0.65rem;
+            }
+            .ws-kpi-num {
+                font-size: 0.96rem;
+            }
+            .ws-kpi-sub {
+                font-size: 0.62rem;
+            }
+            .ws-cat-prog-header {
+                font-size: 0.74rem;
             }
             .ws-table-container {
                 display: none;
             }
             .ws-mobile-order-cards {
                 display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ws-mob-order-card {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            .ws-mob-order-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .ws-mob-order-actions .ws-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 7px 8px;
+                font-size: 0.72rem;
+            }
+            .ws-slider-nav-btn {
+                display: none;
+            }
+            .ws-slider-track {
+                gap: 10px;
+                padding: 4px 2px 12px;
+            }
+            .ws-slider-track .product-card,
+            .ws-slider-track .ws-product-card {
+                flex: 0 0 calc((100% - 10px) / 2);
+                min-width: 140px;
+                max-width: 175px;
+            }
+            .products-grid, .ws-master-catalog-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
             }
             .ws-gst-selector-grid {
                 grid-template-columns: 1fr;
             }
-            .ws-product-card {
-                flex: 0 0 calc((100% - 16px) / 3);
-                min-width: 105px;
+            .ws-gauge-stats-row {
+                gap: 4px;
             }
-            .ws-prod-img-wrap {
-                height: 125px;
+            .ws-g-stat-label {
+                font-size: 0.64rem;
             }
-            .ws-prod-name {
-                font-size: 0.74rem;
+            .ws-g-stat-val {
+                font-size: 0.85rem;
             }
-            .ws-prod-ws-price {
-                font-size: 0.82rem;
-            }
-            .ws-prod-ret-price {
-                display: none;
-            }
-            
+
             /* Slide-Up Bottom Sheet on Mobile */
             .ws-modal-overlay {
                 padding: 0;
                 align-items: flex-end;
             }
             .ws-modal-box {
-                max-height: 94vh;
+                max-height: 90vh;
                 border-radius: 20px 20px 0 0;
                 border-bottom: none;
             }
@@ -2252,6 +2371,20 @@ $catalogProducts = [
             .ws-modal-footer .ws-btn {
                 width: 100%;
                 padding: 10px 14px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .ws-metric-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .ws-slider-track .product-card,
+            .ws-slider-track .ws-product-card {
+                flex: 0 0 85%;
+                max-width: none;
+            }
+            .products-grid, .ws-master-catalog-grid {
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
@@ -2268,11 +2401,16 @@ $catalogProducts = [
                 <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
 
-            <!-- Command Search Bar -->
+            <!-- Command Search Bar (Desktop) -->
             <div class="ws-cmd-search-wrap">
                 <svg class="ws-cmd-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 <input type="text" class="ws-cmd-search-input" id="globalSearchInput" placeholder="Search order, product, HSN, invoice..." oninput="handleGlobalQuickSearch(this)">
                 <span class="ws-cmd-badge">⌘K</span>
+            </div>
+
+            <!-- Mobile Brand Title (Center/Left) -->
+            <div class="ws-mobile-header-brand">
+                <span class="ws-mob-logo-text">KALANIKETAN B2B</span>
             </div>
         </div>
 
@@ -2284,7 +2422,7 @@ $catalogProducts = [
             </button>
 
             <!-- User Profile Pill -->
-            <div class="ws-user-profile-btn" onclick="switchWsTab('details')">
+            <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Wholesaler Profile">
                 <img src="images/profile.png" onerror="this.src='images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar">
                 <div class="ws-user-name-text">
                     <span id="headerUserName">Rajesh Kumar</span>
