@@ -2291,6 +2291,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #FFFFFF;
 }
 
+/* ── Form Section Heading ── */
+.pdp-wa-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid rgba(138, 104, 31, 0.2);
+}
+.pdp-wa-sec-icon {
+    font-size: 0.88rem;
+    line-height: 1;
+}
+.pdp-wa-sec-title {
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--dark-gold, #8A681F);
+}
+
 .pdp-wa-form-group {
     display: flex;
     flex-direction: column;
@@ -2327,6 +2348,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-wa-input:focus {
     border-color: var(--dark-gold);
     box-shadow: 0 0 0 3px rgba(138, 104, 31, 0.12);
+}
+
+/* 3-column location grid */
+.pdp-wa-loc-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 0.9fr;
+    gap: 8px;
+}
+@media (max-width: 480px) {
+    .pdp-wa-loc-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .pdp-wa-loc-grid .pdp-wa-col-pin {
+        grid-column: span 2;
+    }
 }
 
 /* Phone input with country code */
@@ -3006,25 +3042,41 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     </div>
                 </div>
 
-                <!-- Delivery Address (Always clean and blank for new entries) -->
+                <!-- Delivery Address Section -->
+                <div class="pdp-wa-section-heading">
+                    <span class="pdp-wa-sec-icon">📍</span>
+                    <span class="pdp-wa-sec-title">Delivery Address Details</span>
+                </div>
+
+                <!-- Full Address (House / Flat / Street / Landmark) -->
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaAddress">📍 Delivery Address (House / Flat / Street) *</label>
+                    <label class="pdp-wa-label" for="pdpWaAddress">🏠 Full Address (House / Flat / Street / Landmark) *</label>
                     <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <!-- City, State & Pincode Grid -->
+                <div class="pdp-wa-loc-grid">
                     <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaCity">🏙️ City & State *</label>
-                        <input type="text" id="pdpWaCity" required placeholder="e.g. Mumbai, MH" class="pdp-wa-input" />
+                        <label class="pdp-wa-label" for="pdpWaCity">🏙️ City *</label>
+                        <input type="text" id="pdpWaCity" required placeholder="e.g. Mumbai" class="pdp-wa-input" />
                     </div>
                     <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label" for="pdpWaPincode">📮 6-Digit Pincode *</label>
+                        <label class="pdp-wa-label" for="pdpWaState">🗺️ State *</label>
+                        <input type="text" id="pdpWaState" required placeholder="e.g. Maharashtra" class="pdp-wa-input" />
+                    </div>
+                    <div class="pdp-wa-form-group pdp-wa-col-pin">
+                        <label class="pdp-wa-label" for="pdpWaPincode">📮 Pincode *</label>
                         <input type="text" id="pdpWaPincode" required placeholder="e.g. 400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
                     </div>
                 </div>
 
+                <!-- Payment Preference Section -->
+                <div class="pdp-wa-section-heading">
+                    <span class="pdp-wa-sec-icon">💳</span>
+                    <span class="pdp-wa-sec-title">Payment Method</span>
+                </div>
+
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label">💳 Payment Preference *</label>
                     <div class="pdp-wa-payment-options">
                         <label class="pdp-wa-pay-card active" id="pdpWaPayCodCard">
                             <input type="radio" name="pdpWaPayment" value="Cash on Delivery (COD)" checked onchange="document.getElementById('pdpWaPayCodCard').classList.add('active'); document.getElementById('pdpWaPayUpiCard').classList.remove('active');" />
@@ -3299,6 +3351,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (addrField) addrField.value = '';
         var cityField = document.getElementById('pdpWaCity');
         if (cityField) cityField.value = '';
+        var stateField = document.getElementById('pdpWaState');
+        if (stateField) stateField.value = '';
         var pinField = document.getElementById('pdpWaPincode');
         if (pinField) pinField.value = '';
 
@@ -3376,12 +3430,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var phoneInput = document.getElementById('pdpWaPhone');
         var addressInput = document.getElementById('pdpWaAddress');
         var cityInput = document.getElementById('pdpWaCity');
+        var stateInput = document.getElementById('pdpWaState');
         var pinInput = document.getElementById('pdpWaPincode');
 
         var name = nameInput ? nameInput.value.trim() : '';
         var rawPhone = phoneInput ? phoneInput.value.trim() : '';
         var address = addressInput ? addressInput.value.trim() : '';
         var city = cityInput ? cityInput.value.trim() : '';
+        var state = stateInput ? stateInput.value.trim() : '';
         var pincode = pinInput ? pinInput.value.trim() : '';
         var payMethodEl = document.querySelector('input[name="pdpWaPayment"]:checked');
         var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
@@ -3408,14 +3464,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }
 
         if (!address) {
-            window.showToast('⚠️ Please enter your Delivery Address.');
+            window.showToast('⚠️ Please enter your Full Address.');
             if (addressInput) addressInput.focus();
             return;
         }
 
         if (!city) {
-            window.showToast('⚠️ Please enter your City & State.');
+            window.showToast('⚠️ Please enter your City.');
             if (cityInput) cityInput.focus();
+            return;
+        }
+
+        if (!state) {
+            window.showToast('⚠️ Please enter your State.');
+            if (stateInput) stateInput.focus();
+            return;
+        }
+
+        if (!pincode) {
+            window.showToast('⚠️ Please enter your 6-digit Pincode.');
+            if (pinInput) pinInput.focus();
             return;
         }
 
@@ -3426,6 +3494,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 phone: cleanPhone,
                 address: address,
                 city: city,
+                state: state,
                 pincode: pincode
             }));
         } catch(err) {}
@@ -3438,6 +3507,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         var totalPrice = Number(currentProduct.price * currentQty).toLocaleString('en-IN');
         var productUrl = window.location.href;
+        var fullLoc = city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "");
 
         // Build WhatsApp Message
         var waMessage = "🛍️ *NEW INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n" +
@@ -3451,7 +3521,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "👤 *Customer:* " + name + "\n" +
             "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n" +
-            "📍 *Delivery Address:* " + address + ", " + city + (pincode ? (" - " + pincode) : "") + "\n" +
+            "🏠 *Full Address:* " + address + "\n" +
+            "🏙️ *Location:* " + fullLoc + "\n" +
             "💳 *Payment Preference:* " + paymentMethod + "\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "🔗 *Item Link:* " + productUrl + "\n\n" +
