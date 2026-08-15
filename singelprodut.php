@@ -1131,7 +1131,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(138,104,31,0.2);
 }
-.pdp-atc-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.pdp-atc-btn svg {
+    width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2.2;
+    animation: pdpBagSwing 2.4s infinite ease-in-out;
+    transform-origin: top center;
+    flex-shrink: 0;
+}
 
 .pdp-buy-btn {
     padding: 14px 20px;
@@ -1154,7 +1159,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(138,104,31,0.45);
 }
-.pdp-buy-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.pdp-buy-btn svg {
+    width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 1;
+    animation: pdpBoltPulse 1.6s infinite ease-in-out;
+    flex-shrink: 0;
+}
 
 /* Direct WhatsApp Order CTA */
 .pdp-wa-order-btn {
