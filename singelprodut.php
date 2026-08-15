@@ -2253,9 +2253,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <!-- Price Card (Next-Level Luxury & Clear Visibility) -->
             <div class="pdp-price-card">
+                <?php if (!empty($product['discount'])): ?>
                 <div class="pdp-deal-pill">
-                    <span>✨ Special Festive Price • Limited Handloom</span>
+                    <span>🔥 SALE PRICE</span>
                 </div>
+                <?php endif; ?>
                 <div class="pdp-price-main-row">
                     <span class="pdp-price-val">₹<?= number_format($product['price']) ?></span>
                     <?php if (!empty($product['old_price'])): ?>
