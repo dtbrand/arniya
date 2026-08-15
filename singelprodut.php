@@ -2148,6 +2148,138 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-weight: 800;
 }
 
+/* ── WhatsApp Quick Order Checkout Modal Styles ── */
+.pdp-wa-modal-product {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FAF8F4;
+    border: 1.5px solid var(--gold-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+.pdp-wa-modal-img {
+    width: 56px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+    object-position: center top;
+    flex-shrink: 0;
+    border: 1px solid var(--soft-platinum);
+}
+.pdp-wa-modal-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.pdp-wa-modal-name {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--dark-text);
+    line-height: 1.2;
+}
+.pdp-wa-modal-meta {
+    font-size: 0.72rem;
+    color: var(--mid-text);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.pdp-wa-modal-meta span {
+    background: #FFFFFF;
+    border: 1px solid var(--soft-platinum);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+.pdp-wa-modal-price {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--dark-gold);
+}
+
+.pdp-wa-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.pdp-wa-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--dark-text);
+    letter-spacing: 0.05em;
+}
+.pdp-wa-input {
+    width: 100%;
+    height: 38px;
+    border: 1.5px solid var(--soft-platinum);
+    border-radius: 8px;
+    padding: 0 12px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    color: var(--dark-text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+.pdp-wa-input:focus {
+    border-color: var(--dark-gold);
+}
+
+.pdp-wa-payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+}
+.pdp-wa-pay-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid var(--soft-platinum);
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    transition: all 0.2s;
+    background: #FFFFFF;
+}
+.pdp-wa-pay-card:hover {
+    border-color: var(--dark-gold);
+}
+
+.pdp-wa-submit-btn {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37,211,102,0.35);
+    transition: all 0.2s ease;
+    margin-top: 6px;
+}
+.pdp-wa-submit-btn:hover {
+    background: #0E7063;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37,211,102,0.45);
+}
+.pdp-wa-submit-btn svg { width: 19px; height: 19px; fill: currentColor; }
+
 /* Toast Container */
 .toast-container {
     position: fixed; bottom: 84px; left: 50%;
@@ -2328,16 +2460,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     </button>
                 </div>
 
-                <!-- Direct WhatsApp Order -->
-                <a
-                    href="https://api.whatsapp.com/send?phone=919876543210&text=<?= urlencode('Hello Kalaniketan! I would like to order ' . $product['name'] . ' (₹' . number_format($product['price']) . '). Link: https://kalaniketan.in/singelprodut.php?id=' . $product['id']) ?>"
-                    target="_blank"
+                <!-- Direct WhatsApp Order Checkout Trigger -->
+                <button
+                    type="button"
                     class="pdp-wa-order-btn"
-                    rel="noopener"
+                    onclick="openPdpWhatsAppOrderModal()"
+                    aria-label="Instant Order via WhatsApp"
                 >
                     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     <span>Instant Order via WhatsApp</span>
-                </a>
+                </button>
             </div>
 
             <!-- Pincode Delivery Estimator -->
@@ -2685,6 +2817,80 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </form>
         </div>
     </div>
+<!-- ════ INSTANT WHATSAPP QUICK ORDER CHECKOUT MODAL ════ -->
+<div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Order">
+    <div class="pdp-modal-box" style="max-width: 520px;">
+        <div class="pdp-modal-header">
+            <h3 class="pdp-modal-title">💬 Instant WhatsApp Order Concierge</h3>
+            <button class="pdp-modal-close-btn" onclick="closePdpWhatsAppOrderModal()">&times;</button>
+        </div>
+        <div class="pdp-modal-body">
+            <!-- Product Preview Card -->
+            <div class="pdp-wa-modal-product">
+                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
+                <div class="pdp-wa-modal-info">
+                    <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
+                    <div class="pdp-wa-modal-meta">
+                        <span>Color: <strong id="pdpWaModalColor"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
+                        <span>Size: <strong id="pdpWaModalSize"><?= htmlspecialchars($product['size'][0] ?? 'Free Size') ?></strong></span>
+                        <span>Qty: <strong id="pdpWaModalQty">1</strong></span>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
+                        <span class="pdp-wa-modal-price" id="pdpWaModalPrice">₹<?= number_format($product['price']) ?></span>
+                        <span style="font-size:0.68rem; color:#2E7D32; font-weight:800;">⚡ Free Delivery (3–5 Days)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Checkout Form -->
+            <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label">Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" />
+                </div>
+
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label">WhatsApp Mobile Number *</label>
+                    <input type="tel" id="pdpWaPhone" required placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" class="pdp-wa-input" />
+                </div>
+
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label">Delivery Address (House / Street / Locality) *</label>
+                    <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" />
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div class="pdp-wa-form-group">
+                        <label class="pdp-wa-label">City & State *</label>
+                        <input type="text" id="pdpWaCity" required placeholder="e.g. Mumbai, MH" class="pdp-wa-input" />
+                    </div>
+                    <div class="pdp-wa-form-group">
+                        <label class="pdp-wa-label">6-Digit Pincode *</label>
+                        <input type="text" id="pdpWaPincode" required placeholder="e.g. 400050" pattern="[0-9]{6}" maxlength="6" class="pdp-wa-input" />
+                    </div>
+                </div>
+
+                <div class="pdp-wa-form-group">
+                    <label class="pdp-wa-label">Payment Preference *</label>
+                    <div class="pdp-wa-payment-options">
+                        <label class="pdp-wa-pay-card">
+                            <input type="radio" name="pdpWaPayment" value="Cash on Delivery (COD)" checked />
+                            <span>💵 Cash on Delivery</span>
+                        </label>
+                        <label class="pdp-wa-pay-card">
+                            <input type="radio" name="pdpWaPayment" value="UPI / GooglePay / PhonePe" />
+                            <span>⚡ UPI on WhatsApp</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="pdp-wa-submit-btn">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span>Confirm Order & Send to WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- ════ TOAST CONTAINER ════ -->
@@ -2912,6 +3118,121 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (activeSlide) {
             window.open(activeSlide.src, '_blank');
         }
+    };
+
+    // WhatsApp Quick Order Checkout Modal Engine
+    window.openPdpWhatsAppOrderModal = function() {
+        var modal = document.getElementById('pdpWhatsAppOrderModal');
+        if (!modal) return;
+
+        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
+        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+
+        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
+        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
+
+        // Populate Modal Preview Fields
+        var colEl = document.getElementById('pdpWaModalColor');
+        if (colEl) colEl.textContent = selColor;
+        var sizeEl = document.getElementById('pdpWaModalSize');
+        if (sizeEl) sizeEl.textContent = selSize;
+        var qtyEl = document.getElementById('pdpWaModalQty');
+        if (qtyEl) qtyEl.textContent = currentQty;
+        var prEl = document.getElementById('pdpWaModalPrice');
+        if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
+
+        // Pre-fill user data if available
+        try {
+            var userRaw = localStorage.getItem('kalaniketan_user');
+            if (userRaw) {
+                var u = JSON.parse(userRaw);
+                var nameField = document.getElementById('pdpWaName');
+                if (nameField && !nameField.value && u.name) nameField.value = u.name;
+                var phoneField = document.getElementById('pdpWaPhone');
+                if (phoneField && !phoneField.value && u.phone) phoneField.value = u.phone;
+            }
+            var savedAddr = localStorage.getItem('kalaniketan_saved_address');
+            if (savedAddr) {
+                var a = JSON.parse(savedAddr);
+                var addrField = document.getElementById('pdpWaAddress');
+                if (addrField && !addrField.value && a.address) addrField.value = a.address;
+                var cityField = document.getElementById('pdpWaCity');
+                if (cityField && !cityField.value && a.city) cityField.value = a.city;
+                var pinField = document.getElementById('pdpWaPincode');
+                if (pinField && !pinField.value && a.pincode) pinField.value = a.pincode;
+            }
+        } catch(e) {}
+
+        modal.classList.add('open');
+    };
+
+    window.closePdpWhatsAppOrderModal = function() {
+        var modal = document.getElementById('pdpWhatsAppOrderModal');
+        if (modal) modal.classList.remove('open');
+    };
+
+    window.submitPdpWhatsAppOrder = function(e) {
+        if (e) e.preventDefault();
+
+        var name = (document.getElementById('pdpWaName') ? document.getElementById('pdpWaName').value.trim() : '');
+        var phone = (document.getElementById('pdpWaPhone') ? document.getElementById('pdpWaPhone').value.trim() : '');
+        var address = (document.getElementById('pdpWaAddress') ? document.getElementById('pdpWaAddress').value.trim() : '');
+        var city = (document.getElementById('pdpWaCity') ? document.getElementById('pdpWaCity').value.trim() : '');
+        var pincode = (document.getElementById('pdpWaPincode') ? document.getElementById('pdpWaPincode').value.trim() : '');
+        var payMethodEl = document.querySelector('input[name="pdpWaPayment"]:checked');
+        var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
+
+        if (!name || !phone || !address || !city || !pincode) {
+            window.showToast('⚠️ Please fill in all delivery details.');
+            return;
+        }
+
+        // Save address locally
+        try {
+            localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
+                name: name,
+                phone: phone,
+                address: address,
+                city: city,
+                pincode: pincode
+            }));
+        } catch(err) {}
+
+        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
+        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+
+        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
+        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
+
+        var totalPrice = Number(currentProduct.price * currentQty).toLocaleString('en-IN');
+        var productUrl = window.location.href;
+
+        // Build WhatsApp Message
+        var waMessage = "🛍️ *NEW INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n" +
+            "━━━━━━━━━━━━━━━━━━━━\n" +
+            "👗 *Product:* " + currentProduct.name + "\n" +
+            "🏷️ *SKU:* " + (currentProduct.sku || 'KLN-ETH-01') + "\n" +
+            "🎨 *Color:* " + selColor + "\n" +
+            "📏 *Size:* " + selSize + "\n" +
+            "🔢 *Quantity:* " + currentQty + "\n" +
+            "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery)\n" +
+            "━━━━━━━━━━━━━━━━━━━━\n" +
+            "👤 *Customer:* " + name + "\n" +
+            "📱 *WhatsApp Phone:* " + phone + "\n" +
+            "📍 *Delivery Address:* " + address + ", " + city + " - " + pincode + "\n" +
+            "💳 *Payment Preference:* " + paymentMethod + "\n" +
+            "━━━━━━━━━━━━━━━━━━━━\n" +
+            "🔗 *Item Link:* " + productUrl + "\n\n" +
+            "Please confirm my order and share estimated dispatch details. Thank you! 🙏✨";
+
+        var waUrl = "https://api.whatsapp.com/send?phone=919876543210&text=" + encodeURIComponent(waMessage);
+
+        window.closePdpWhatsAppOrderModal();
+        window.showToast('🚀 Opening WhatsApp to confirm your order...');
+
+        setTimeout(function() {
+            window.open(waUrl, '_blank');
+        }, 300);
     };
 
     // Size Guide Modal
