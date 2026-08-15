@@ -1011,9 +1011,12 @@ window.closeWishlistDrawer = function() {
     }
 
     /* Mobile Search Open / Close Controllers */
+    var userManuallyClosedMobileSearch = false;
+
     if (mobileSearchBtn) {
         mobileSearchBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            userManuallyClosedMobileSearch = false;
             if (header) header.classList.add('mobile-search-active');
             if (mobileSearchInput) {
                 setTimeout(function() {
@@ -1034,6 +1037,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchClose) {
         mobileSearchClose.addEventListener('click', function(e) {
             e.preventDefault();
+            userManuallyClosedMobileSearch = true;
             if (header) header.classList.remove('mobile-search-active');
             if (mobileSearchInput) mobileSearchInput.value = '';
             if (searchInput) searchInput.value = '';
@@ -1048,6 +1052,7 @@ window.closeWishlistDrawer = function() {
                 performSearch('mobile');
                 mobileSearchInput.blur();
             } else if (e.key === 'Escape') {
+                userManuallyClosedMobileSearch = true;
                 if (header) header.classList.remove('mobile-search-active');
             }
         });
@@ -1092,17 +1097,32 @@ window.closeWishlistDrawer = function() {
             if (dropLogout) dropLogout.style.display = 'none';
         }
     }
-    /* Scroll Header Height Auto-Compress Engine */
+
+    /* Scroll Header Height Auto-Compress & Auto-Open Search Bar Engine */
     var isShopHeaderScrolled = false;
     window.addEventListener('scroll', function() {
         var sy = window.scrollY || window.pageYOffset || 0;
         if (!header) return;
-        if (sy > 35 && !isShopHeaderScrolled) {
-            isShopHeaderScrolled = true;
-            header.classList.add('scrolled');
-        } else if (sy < 12 && isShopHeaderScrolled) {
-            isShopHeaderScrolled = false;
-            header.classList.remove('scrolled');
+        var isMobile = window.innerWidth <= 767;
+
+        if (sy > 25) {
+            if (!isShopHeaderScrolled) {
+                isShopHeaderScrolled = true;
+                header.classList.add('scrolled');
+            }
+            // Auto open mobile search bar on scroll
+            if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
+                header.classList.add('mobile-search-active');
+            }
+        } else if (sy < 10) {
+            if (isShopHeaderScrolled) {
+                isShopHeaderScrolled = false;
+                header.classList.remove('scrolled');
+            }
+            userManuallyClosedMobileSearch = false; // Reset manual close flag when back at top
+            if (isMobile && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
+                header.classList.remove('mobile-search-active');
+            }
         }
     }, { passive: true });
 
