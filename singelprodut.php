@@ -852,21 +852,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     flex-direction: column;
     gap: 7px;
 }
-.pdp-deal-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    align-self: flex-start;
-    font-size: 0.62rem;
-    font-weight: 800;
-    color: var(--dark-gold, #8A681F);
-    background: #FAF4E6;
-    border: 1px solid rgba(138, 104, 31, 0.35);
-    padding: 2px 7px;
-    border-radius: 10px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
 .pdp-price-main-row {
     display: flex;
     align-items: baseline;
@@ -2253,11 +2238,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <!-- Price Card (Next-Level Luxury & Clear Visibility) -->
             <div class="pdp-price-card">
-                <?php if (!empty($product['discount'])): ?>
-                <div class="pdp-deal-pill">
-                    <span>🔥 SALE PRICE</span>
-                </div>
-                <?php endif; ?>
                 <div class="pdp-price-main-row">
                     <span class="pdp-price-val">₹<?= number_format($product['price']) ?></span>
                     <?php if (!empty($product['old_price'])): ?>
