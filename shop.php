@@ -925,7 +925,7 @@ input[type=range].sf-range::-moz-range-thumb {
 .card-image-wrap {
     position: relative; overflow: hidden;
     background: #FAF8F4;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 3 / 3.75;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -933,7 +933,7 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 .card-img {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
+    object-fit: cover; object-position: center top;
     transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .product-card:hover .card-img { transform: scale(1.05); }
