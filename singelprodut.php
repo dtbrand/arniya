@@ -2266,7 +2266,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
-                    <span>Inclusive of all taxes</span> • <span class="green">⚡ Free Express Shipping</span>
+                    <span>Inclusive of all taxes</span> • <span class="green">⚡ Fast Delivery in 3–5 Days</span>
                 </div>
                 <!-- Animated Luxury Perks Strip -->
                 <div class="pdp-animated-perks-strip">
