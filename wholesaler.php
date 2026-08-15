@@ -3025,47 +3025,70 @@ $catalogProducts = [
                     </a>
                 </div>
             </div>
+        </div>
     </div>
 
-    <!-- ═══ Date Range Selection Modal ═══ -->
-    <div class="ws-modal-overlay" id="wsDateRangeModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box" style="max-width: 460px;">
+    <!-- ═══════════════════════════════════════════
+         MODAL 4: INTERACTIVE DATE RANGE CALENDAR PICKER
+    ═══════════════════════════════════════════ -->
+    <div class="ws-modal-overlay" id="wsDateRangeModal" role="dialog" aria-modal="true" style="z-index: 2100000;">
+        <div class="ws-modal-box" style="max-width: 480px;">
             <div class="ws-modal-header">
                 <div class="ws-modal-title">
-                    <span>📅</span> Select Analytics Date Range
+                    <span>📅</span> Filter Analytics Date Range
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close">✕</button>
             </div>
             <div class="ws-modal-body" style="padding: 16px 20px;">
-                <div style="font-size:0.80rem; color:var(--ws-text-muted); margin-bottom:12px;">
-                    Select a time window to dynamically filter procurement metrics, graphs, and category breakdowns:
+                <div style="font-size:0.78rem; font-weight:700; color:var(--ws-text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">
+                    Quick Presets:
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;" id="datePresetButtons">
-                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('today', 'Today (16 Aug)')">
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('today', 'Today (16 Aug)')">
                         <span>⚡ <strong>Today</strong></span>
-                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">16 Aug 2026</span>
+                        <span style="font-size:0.74rem; color:var(--ws-text-muted);">16 Aug 2026</span>
                     </button>
-                    <button class="ws-btn ws-btn-primary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('week', 'Aug 10 - Aug 16')">
+                    <button class="ws-btn ws-btn-primary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('week', 'Aug 10 - Aug 16')">
                         <span>📅 <strong>This Week</strong></span>
-                        <span style="font-size:0.75rem; color:var(--ws-gold-light);">10 Aug – 16 Aug 2026 (Live)</span>
+                        <span style="font-size:0.74rem; color:var(--ws-gold-light);">10 Aug – 16 Aug 2026 (Live)</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('month', 'Aug 01 - Aug 31')">
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('month', 'Aug 01 - Aug 31')">
                         <span>📊 <strong>This Month</strong></span>
-                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">August 2026 (Full Month)</span>
+                        <span style="font-size:0.74rem; color:var(--ws-text-muted);">August 2026 (Full Month)</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('last_month', 'Jul 01 - Jul 31')">
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('last_month', 'Jul 01 - Jul 31')">
                         <span>📁 <strong>Last Month</strong></span>
-                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">July 2026 (Reconciled)</span>
+                        <span style="font-size:0.74rem; color:var(--ws-text-muted);">July 2026 (Reconciled)</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('year', 'FY 2026-27')">
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 10px 14px; font-size: 0.84rem;" onclick="applyDatePreset('year', 'FY 2026-27')">
                         <span>👑 <strong>Financial Year</strong></span>
-                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">FY 2026-27 (Q1 & Q2)</span>
+                        <span style="font-size:0.74rem; color:var(--ws-text-muted);">FY 2026-27 (Q1 & Q2)</span>
+                    </button>
+                </div>
+
+                <!-- Custom Calendar Date Pickers -->
+                <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--ws-border);">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: var(--ws-text-main); margin-bottom: 8px;">
+                        Custom Calendar Range:
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label style="font-size: 0.70rem; font-weight:600; color: var(--ws-text-muted); display: block; margin-bottom: 3px;">Start Date</label>
+                            <input type="date" id="customStartDate" value="2026-08-10" class="ws-input" style="height: 38px; font-size: 0.80rem;">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.70rem; font-weight:600; color: var(--ws-text-muted); display: block; margin-bottom: 3px;">End Date</label>
+                            <input type="date" id="customEndDate" value="2026-08-16" class="ws-input" style="height: 38px; font-size: 0.80rem;">
+                        </div>
+                    </div>
+                    <button class="ws-btn ws-btn-primary" style="width: 100%; margin-top: 10px; height: 38px; font-size: 0.82rem;" onclick="applyCustomDateRange()">
+                        ✓ Apply Calendar Filter
                     </button>
                 </div>
             </div>
             <div class="ws-modal-footer">
                 <button class="ws-btn ws-btn-secondary ws-btn-full" onclick="closeDateRangeModal()">
-                    Cancel
+                    Close
                 </button>
             </div>
         </div>
@@ -4214,6 +4237,39 @@ $catalogProducts = [
             closeDateRangeModal();
             updateDashboardAnalytics();
             window.showWsToast('📅 Applied Date Filter: ' + label);
+        };
+
+        window.applyCustomDateRange = function() {
+            var s = document.getElementById('customStartDate').value;
+            var e = document.getElementById('customEndDate').value;
+            if (!s || !e) {
+                alert('Please select both start and end dates.');
+                return;
+            }
+            if (new Date(s) > new Date(e)) {
+                alert('Start date cannot be after end date.');
+                return;
+            }
+
+            var formatD = function(dStr) {
+                var d = new Date(dStr);
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                return months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2, '0');
+            };
+
+            var label = formatD(s) + ' - ' + formatD(e);
+            var labelEl = document.getElementById('selectedDateRangeLabel');
+            if (labelEl) labelEl.textContent = label;
+
+            // Reset preset active buttons
+            var modalButtons = document.querySelectorAll('#datePresetButtons button');
+            modalButtons.forEach(function(b) {
+                b.className = 'ws-btn ws-btn-secondary';
+            });
+
+            closeDateRangeModal();
+            updateDashboardAnalytics();
+            window.showWsToast('📅 Applied Custom Calendar Range: ' + label);
         };
 
         window.handleGlobalQuickSearch = function(input) {
