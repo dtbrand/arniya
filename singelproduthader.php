@@ -33,6 +33,8 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     height: 30px;
+    max-height: 30px;
+    opacity: 1;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -40,6 +42,16 @@
     justify-content: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     user-select: none;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, border-color 0.25s ease;
+}
+
+/* Auto-hide Announcement Ticker on Page Scroll */
+.pdp-header.scrolled .pdp-top-ticker {
+    max-height: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    border-bottom-color: transparent !important;
+    pointer-events: none;
 }
 .pdp-ticker-track {
     position: relative;
@@ -339,8 +351,10 @@
         padding: 0 12px;
     }
     .pdp-top-ticker {
+        height: 26px;
+        max-height: 26px;
         font-size: 0.56rem;
-        padding: 3px 8px;
+        padding: 0 8px;
         gap: 6px;
         line-height: 1.2;
     }
