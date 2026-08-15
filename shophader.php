@@ -573,7 +573,7 @@
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
-/* ── Mobile Layout & Auto-Compact Scroll Adjustments (<768px) ── */
+/* ── Mobile Layout & Perfectly Stable Zero-Vibration Layout (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
         height: auto;
@@ -581,18 +581,17 @@
         gap: 0;
         transition: box-shadow 0.25s ease;
     }
+
+    /* Fixed 42px Slot for both Normal View and Search Bar (Zero Reflow) */
     .header-normal-view,
-    .mobile-full-search-bar,
-    .header-attached-subnav,
-    .mobile-search-input-wrap,
-    .header-plus-btn,
-    .header-icon-btn,
-    .header-brand-name {
-        transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    .mobile-full-search-bar {
+        height: 42px;
+        min-height: 42px;
+        max-height: 42px;
+        box-sizing: border-box;
     }
 
     .header-normal-view {
-        height: 44px;
         padding: 0 10px;
         gap: 8px;
     }
@@ -643,9 +642,8 @@
         display: none !important;
     }
 
-    /* Open Mobile Search Bar (Compact Height) */
+    /* Open Mobile Search Bar (Matching Exact 42px Height) */
     .mobile-full-search-bar {
-        height: 42px;
         padding: 0 8px;
         gap: 6px;
     }
@@ -669,9 +667,13 @@
         height: 13px;
     }
 
+    /* Fixed 26px Subnav (Matching Exact Height) */
     .header-attached-subnav {
         height: 26px;
+        min-height: 26px;
+        max-height: 26px;
         padding: 0 8px;
+        box-sizing: border-box;
     }
     .subnav-item {
         font-size: 0.62rem;
@@ -681,50 +683,6 @@
     .subnav-icon {
         width: 10px;
         height: 10px;
-    }
-
-    /* ── SCROLLED AUTO COMPACT STATE (Height Kum) ── */
-    .shop-header.scrolled .header-normal-view {
-        height: 38px;
-        padding: 0 8px;
-    }
-    .shop-header.scrolled .mobile-full-search-bar {
-        height: 36px;
-        padding: 0 6px;
-    }
-    .shop-header.scrolled .mobile-search-input-wrap {
-        height: 29px;
-        padding: 0 8px;
-    }
-    .shop-header.scrolled .mobile-search-input-field {
-        font-size: 0.74rem;
-    }
-    .shop-header.scrolled .mobile-search-close-btn {
-        width: 27px;
-        height: 27px;
-    }
-    .shop-header.scrolled .header-attached-subnav {
-        height: 22px;
-        padding: 0 6px;
-    }
-    .shop-header.scrolled .subnav-item {
-        height: 16px;
-        font-size: 0.58rem;
-        padding: 1px 5px;
-    }
-    .shop-header.scrolled .header-plus-btn {
-        width: 26px;
-        height: 26px;
-    }
-    .shop-header.scrolled .header-icon-btn {
-        width: 28px;
-        height: 28px;
-    }
-    .shop-header.scrolled .header-brand-name {
-        font-size: 0.82rem;
-    }
-    .shop-header.scrolled .header-brand-tagline {
-        display: none;
     }
 }
 </style>
@@ -1100,29 +1058,39 @@ window.closeWishlistDrawer = function() {
 
     /* Scroll Header Height Auto-Compress & Auto-Open Search Bar Engine */
     var isShopHeaderScrolled = false;
-    window.addEventListener('scroll', function() {
-        var sy = window.scrollY || window.pageYOffset || 0;
-        if (!header) return;
-        var isMobile = window.innerWidth <= 767;
+    var scrollTicking = false;
 
-        if (sy > 25) {
-            if (!isShopHeaderScrolled) {
-                isShopHeaderScrolled = true;
-                header.classList.add('scrolled');
-            }
-            // Auto open mobile search bar on scroll
-            if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
-                header.classList.add('mobile-search-active');
-            }
-        } else if (sy < 10) {
-            if (isShopHeaderScrolled) {
-                isShopHeaderScrolled = false;
-                header.classList.remove('scrolled');
-            }
-            userManuallyClosedMobileSearch = false; // Reset manual close flag when back at top
-            if (isMobile && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
-                header.classList.remove('mobile-search-active');
-            }
+    window.addEventListener('scroll', function() {
+        if (!scrollTicking) {
+            window.requestAnimationFrame(function() {
+                var sy = window.scrollY || window.pageYOffset || 0;
+                if (!header) {
+                    scrollTicking = false;
+                    return;
+                }
+                var isMobile = window.innerWidth <= 767;
+
+                if (sy > 45) {
+                    if (!isShopHeaderScrolled) {
+                        isShopHeaderScrolled = true;
+                        header.classList.add('scrolled');
+                    }
+                    if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
+                        header.classList.add('mobile-search-active');
+                    }
+                } else if (sy < 15) {
+                    if (isShopHeaderScrolled) {
+                        isShopHeaderScrolled = false;
+                        header.classList.remove('scrolled');
+                    }
+                    userManuallyClosedMobileSearch = false;
+                    if (isMobile && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
+                        header.classList.remove('mobile-search-active');
+                    }
+                }
+                scrollTicking = false;
+            });
+            scrollTicking = true;
         }
     }, { passive: true });
 
