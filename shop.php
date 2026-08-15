@@ -1915,7 +1915,7 @@ input[type=range].sf-range::-moz-range-thumb {
                     </div>
 
                     <!-- Share Button on Photo (Directly Above Category Tag) -->
-                    <button type="button" class="card-share-btn" data-id="<?= $p['id'] ?>" data-name="<?= htmlspecialchars($p['name']) ?>" aria-label="Share <?= htmlspecialchars($p['name']) ?>" title="Share <?= htmlspecialchars($p['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard('<?= addslashes(htmlspecialchars($p['name'])) ?>','singelprodut.php?id=<?= $p['id'] ?>');}">
+                    <button type="button" class="card-share-btn" data-id="<?= $p['id'] ?>" aria-label="Share <?= htmlspecialchars($p['name']) ?>" title="Share <?= htmlspecialchars($p['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $p['id'] ?>);}">
                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                     </button>
 
@@ -1972,6 +1972,9 @@ input[type=range].sf-range::-moz-range-thumb {
 <!-- ════════════ QUICK VIEW PARTIAL ════════════ -->
 <?php include 'quickview.php'; ?>
 
+<!-- ════════════ SMART WHATSAPP SHARE MODAL ════════════ -->
+<?php include 'smartshare.php'; ?>
+
 <!-- ════════════ TOAST ════════════ -->
 <div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
 
@@ -2002,38 +2005,29 @@ input[type=range].sf-range::-moz-range-thumb {
         }, 2200);
     };
 
-    /* Global Product Card Share Function */
-    window.shareProductCard = function(name, relativeUrl) {
-        var title = name + ' — Kalaniketan Couture';
-        var fullUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + relativeUrl;
-        if (navigator.share) {
-            navigator.share({
-                title: title,
-                text: 'Check out ' + name + ' at Kalaniketan:\n' + fullUrl,
-                url: fullUrl
-            }).catch(function() {});
-        } else {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(fullUrl).then(function() {
-                    window.showToast('✨ Link for ' + name + ' copied!');
-                }).catch(function() {
-                    fallbackCardShare(fullUrl, name);
-                });
-            } else {
-                fallbackCardShare(fullUrl, name);
-            }
+    /* Global Product Card Share Function (Triggers Meesho Smart Share) */
+    window.shareProductCard = function(productId) {
+        var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
+        if (p && typeof window.openSmartShareModal === 'function') {
+            var itemData = {
+                id: p.id,
+                name: p.name,
+                category: p.category,
+                price: p.price,
+                old_price: p.old_price,
+                discount: p.discount,
+                image: p.image,
+                fabric: p.fabric || 'Pure Silk',
+                colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
+                sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
+                url: 'singelprodut.php?id=' + p.id
+            };
+            window.openSmartShareModal(itemData);
+        } else if (p) {
+            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at Kalaniketan: ' + window.location.origin + '/singelprodut.php?id=' + p.id);
+            window.open(waUrl, '_blank');
         }
     };
-
-    function fallbackCardShare(url, name) {
-        var t = document.createElement('textarea');
-        t.value = url;
-        document.body.appendChild(t);
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-        window.showToast('✨ Link for ' + (name || 'product') + ' copied!');
-    }
 
     /* ════════════════════════════════════════════════════
        MASTER FILTER ENGINE & STATE MANAGEMENT

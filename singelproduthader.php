@@ -539,38 +539,27 @@
 (function() {
     'use strict';
 
-    /* Product Share Handler */
+    /* Product Smart Share Handler (Meesho Flow) */
     window.shareCurrentProduct = function() {
-        var title = document.title || 'Kalaniketan Silk Saree';
-        var url = window.location.href;
-        if (navigator.share) {
-            navigator.share({
-                title: title,
-                text: 'Check out this exquisite ethnic luxury from Kalaniketan Couture:\n' + title,
-                url: url
-            }).catch(function() {});
+        if (typeof window.openSmartShareModal === 'function') {
+            var prodData = {
+                id: <?= json_encode($product['id'] ?? 1) ?>,
+                name: <?= json_encode($product['name'] ?? '') ?>,
+                category: <?= json_encode($product['category'] ?? '') ?>,
+                price: <?= json_encode($product['price'] ?? 0) ?>,
+                old_price: <?= json_encode($product['old_price'] ?? 0) ?>,
+                discount: <?= json_encode($product['discount'] ?? 0) ?>,
+                image: <?= json_encode($product['image'] ?? '') ?>,
+                fabric: <?= json_encode($product['fabric'] ?? '') ?>,
+                colors: <?= json_encode(implode(', ', $product['colors'] ?? [$product['color'] ?? ''])) ?>,
+                sizes: <?= json_encode(implode(', ', $product['size'] ?? ['Free Size'])) ?>,
+                url: window.location.href
+            };
+            window.openSmartShareModal(prodData);
         } else {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(function() {
-                    alert('✨ Product link copied to clipboard!');
-                }).catch(function() {
-                    fallbackCopy(url);
-                });
-            } else {
-                fallbackCopy(url);
-            }
+            alert('Opening Smart Share...');
         }
     };
-
-    function fallbackCopy(text) {
-        var t = document.createElement('textarea');
-        t.value = text;
-        document.body.appendChild(t);
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-        alert('✨ Product link copied to clipboard!');
-    }
 
     /* ── Top Announcement Slider Engine ── */
     var pdpTickerIndex = 0;

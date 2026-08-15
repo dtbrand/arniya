@@ -3191,5 +3191,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 })();
 </script>
+
+<!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
+<?php include 'smartshare.php'; ?>
+
 </body>
 </html>
