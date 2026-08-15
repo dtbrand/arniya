@@ -2150,19 +2150,39 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ── WhatsApp Quick Order Checkout Modal Styles ── */
+.pdp-wa-modal-box {
+    background: #FFFFFF;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    overflow: hidden;
+    border: 1.5px solid var(--gold-border);
+    animation: modalPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.pdp-wa-modal-body {
+    padding: 14px 18px 18px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 .pdp-wa-modal-product {
     display: flex;
     align-items: center;
     gap: 12px;
     background: #FAF8F4;
-    border: 1.5px solid var(--gold-border);
+    border: 1px solid rgba(138, 104, 31, 0.25);
     border-radius: 10px;
     padding: 10px 12px;
-    margin-bottom: 14px;
 }
 .pdp-wa-modal-img {
-    width: 56px;
-    height: 70px;
+    width: 54px;
+    height: 68px;
     border-radius: 6px;
     object-fit: cover;
     object-position: center top;
@@ -2174,15 +2194,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     flex-direction: column;
     gap: 3px;
+    min-width: 0;
 }
 .pdp-wa-modal-name {
     font-size: 0.84rem;
     font-weight: 800;
     color: var(--dark-text);
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .pdp-wa-modal-meta {
-    font-size: 0.72rem;
+    font-size: 0.70rem;
     color: var(--mid-text);
     display: flex;
     gap: 6px;
@@ -2207,11 +2231,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 4px;
 }
 .pdp-wa-label {
-    font-size: 0.72rem;
+    font-size: 0.70rem;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--dark-text);
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.pdp-wa-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 .pdp-wa-input {
     width: 100%;
@@ -2223,17 +2255,41 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     font-size: 0.82rem;
     color: var(--dark-text);
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s ease;
+    background: #FFFFFF;
 }
 .pdp-wa-input:focus {
     border-color: var(--dark-gold);
+    box-shadow: 0 0 0 3px rgba(138, 104, 31, 0.12);
+}
+
+/* Phone input with country code */
+.pdp-wa-phone-row {
+    display: flex;
+    gap: 6px;
+}
+.pdp-wa-prefix-badge {
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 8px;
+    background: #FAF8F4;
+    border: 1.5px solid var(--soft-platinum);
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-shrink: 0;
+    user-select: none;
 }
 
 .pdp-wa-payment-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 .pdp-wa-pay-card {
     display: flex;
@@ -2241,9 +2297,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 8px;
     border: 1.5px solid var(--soft-platinum);
     border-radius: 8px;
-    padding: 8px 10px;
+    padding: 9px 10px;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     font-weight: 700;
     color: var(--dark-text);
     transition: all 0.2s;
@@ -2251,6 +2307,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-wa-pay-card:hover {
     border-color: var(--dark-gold);
+}
+.pdp-wa-pay-card.active {
+    border-color: var(--dark-gold);
+    background: #FAF5E8;
+    color: var(--dark-gold);
 }
 
 .pdp-wa-submit-btn {
@@ -2272,7 +2333,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(37,211,102,0.35);
     transition: all 0.2s ease;
-    margin-top: 6px;
+    margin-top: 4px;
 }
 .pdp-wa-submit-btn:hover {
     background: #0E7063;
@@ -2822,12 +2883,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 <!-- ════ INSTANT WHATSAPP QUICK ORDER CHECKOUT MODAL ════ -->
 <div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Order">
-    <div class="pdp-modal-box" style="max-width: 520px;">
+    <div class="pdp-wa-modal-box">
         <div class="pdp-modal-header">
-            <h3 class="pdp-modal-title">💬 Instant WhatsApp Order Concierge</h3>
-            <button class="pdp-modal-close-btn" onclick="closePdpWhatsAppOrderModal()">&times;</button>
+            <h3 class="pdp-modal-title" style="display:flex; align-items:center; gap:8px;">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:#25D366;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Instant WhatsApp Order Concierge</span>
+            </h3>
+            <button class="pdp-modal-close-btn" onclick="closePdpWhatsAppOrderModal()" aria-label="Close">&times;</button>
         </div>
-        <div class="pdp-modal-body">
+        <div class="pdp-wa-modal-body">
             <!-- Product Preview Card -->
             <div class="pdp-wa-modal-product">
                 <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
@@ -2848,40 +2912,43 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <!-- Quick Checkout Form -->
             <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label">Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" />
+                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
+                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label">WhatsApp Mobile Number *</label>
-                    <input type="tel" id="pdpWaPhone" required placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" class="pdp-wa-input" />
+                    <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
+                    <div class="pdp-wa-phone-row">
+                        <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
+                        <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
+                    </div>
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label">Delivery Address (House / Street / Locality) *</label>
-                    <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" />
+                    <label class="pdp-wa-label" for="pdpWaAddress">📍 Delivery Address (House / Flat / Street) *</label>
+                    <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                     <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label">City & State *</label>
+                        <label class="pdp-wa-label" for="pdpWaCity">🏙️ City & State *</label>
                         <input type="text" id="pdpWaCity" required placeholder="e.g. Mumbai, MH" class="pdp-wa-input" />
                     </div>
                     <div class="pdp-wa-form-group">
-                        <label class="pdp-wa-label">6-Digit Pincode *</label>
-                        <input type="text" id="pdpWaPincode" required placeholder="e.g. 400050" pattern="[0-9]{6}" maxlength="6" class="pdp-wa-input" />
+                        <label class="pdp-wa-label" for="pdpWaPincode">📮 6-Digit Pincode *</label>
+                        <input type="text" id="pdpWaPincode" required placeholder="e.g. 400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
                     </div>
                 </div>
 
                 <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label">Payment Preference *</label>
+                    <label class="pdp-wa-label">💳 Payment Preference *</label>
                     <div class="pdp-wa-payment-options">
-                        <label class="pdp-wa-pay-card">
-                            <input type="radio" name="pdpWaPayment" value="Cash on Delivery (COD)" checked />
+                        <label class="pdp-wa-pay-card active" id="pdpWaPayCodCard">
+                            <input type="radio" name="pdpWaPayment" value="Cash on Delivery (COD)" checked onchange="document.getElementById('pdpWaPayCodCard').classList.add('active'); document.getElementById('pdpWaPayUpiCard').classList.remove('active');" />
                             <span>💵 Cash on Delivery</span>
                         </label>
-                        <label class="pdp-wa-pay-card">
-                            <input type="radio" name="pdpWaPayment" value="UPI / GooglePay / PhonePe" />
+                        <label class="pdp-wa-pay-card" id="pdpWaPayUpiCard">
+                            <input type="radio" name="pdpWaPayment" value="UPI on WhatsApp (GPay / PhonePe / Paytm)" onchange="document.getElementById('pdpWaPayUpiCard').classList.add('active'); document.getElementById('pdpWaPayCodCard').classList.remove('active');" />
                             <span>⚡ UPI on WhatsApp</span>
                         </label>
                     </div>
@@ -3175,26 +3242,63 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     };
 
     window.submitPdpWhatsAppOrder = function(e) {
-        if (e) e.preventDefault();
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
 
-        var name = (document.getElementById('pdpWaName') ? document.getElementById('pdpWaName').value.trim() : '');
-        var phone = (document.getElementById('pdpWaPhone') ? document.getElementById('pdpWaPhone').value.trim() : '');
-        var address = (document.getElementById('pdpWaAddress') ? document.getElementById('pdpWaAddress').value.trim() : '');
-        var city = (document.getElementById('pdpWaCity') ? document.getElementById('pdpWaCity').value.trim() : '');
-        var pincode = (document.getElementById('pdpWaPincode') ? document.getElementById('pdpWaPincode').value.trim() : '');
+        var nameInput = document.getElementById('pdpWaName');
+        var phoneInput = document.getElementById('pdpWaPhone');
+        var addressInput = document.getElementById('pdpWaAddress');
+        var cityInput = document.getElementById('pdpWaCity');
+        var pinInput = document.getElementById('pdpWaPincode');
+
+        var name = nameInput ? nameInput.value.trim() : '';
+        var rawPhone = phoneInput ? phoneInput.value.trim() : '';
+        var address = addressInput ? addressInput.value.trim() : '';
+        var city = cityInput ? cityInput.value.trim() : '';
+        var pincode = pinInput ? pinInput.value.trim() : '';
         var payMethodEl = document.querySelector('input[name="pdpWaPayment"]:checked');
         var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
 
-        if (!name || !phone || !address || !city || !pincode) {
-            window.showToast('⚠️ Please fill in all delivery details.');
+        if (!name) {
+            window.showToast('⚠️ Please enter your Full Name.');
+            if (nameInput) nameInput.focus();
             return;
         }
 
-        // Save address locally
+        // Clean phone number (handles +91, spaces, 0 prefix, dashes)
+        var cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+        if (cleanPhone.length > 10 && cleanPhone.startsWith('91')) {
+            cleanPhone = cleanPhone.substring(2);
+        }
+        if (cleanPhone.length > 10 && cleanPhone.startsWith('0')) {
+            cleanPhone = cleanPhone.substring(1);
+        }
+
+        if (cleanPhone.length < 10) {
+            window.showToast('⚠️ Please enter a valid 10-digit mobile number.');
+            if (phoneInput) phoneInput.focus();
+            return;
+        }
+
+        if (!address) {
+            window.showToast('⚠️ Please enter your Delivery Address.');
+            if (addressInput) addressInput.focus();
+            return;
+        }
+
+        if (!city) {
+            window.showToast('⚠️ Please enter your City & State.');
+            if (cityInput) cityInput.focus();
+            return;
+        }
+
+        // Save address locally for next time
         try {
             localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
                 name: name,
-                phone: phone,
+                phone: cleanPhone,
                 address: address,
                 city: city,
                 pincode: pincode
@@ -3218,11 +3322,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             "🎨 *Color:* " + selColor + "\n" +
             "📏 *Size:* " + selSize + "\n" +
             "🔢 *Quantity:* " + currentQty + "\n" +
-            "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery)\n" +
+            "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery 3–5 Days)\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "👤 *Customer:* " + name + "\n" +
-            "📱 *WhatsApp Phone:* " + phone + "\n" +
-            "📍 *Delivery Address:* " + address + ", " + city + " - " + pincode + "\n" +
+            "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n" +
+            "📍 *Delivery Address:* " + address + ", " + city + (pincode ? (" - " + pincode) : "") + "\n" +
             "💳 *Payment Preference:* " + paymentMethod + "\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "🔗 *Item Link:* " + productUrl + "\n\n" +
@@ -3235,7 +3339,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         setTimeout(function() {
             window.open(waUrl, '_blank');
-        }, 300);
+        }, 250);
     };
 
     // Size Guide Modal
