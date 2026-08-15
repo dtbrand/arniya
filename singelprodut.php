@@ -1092,27 +1092,33 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     min-width: 0;
 }
 .pdp-rc-name {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 800;
     color: var(--dark-text);
-    display: flex;
-    align-items: center;
-    gap: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.pdp-rc-rating-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    flex-shrink: 0;
 }
 .pdp-verified-badge {
     display: inline-flex;
     align-items: center;
     gap: 2px;
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     color: #2E7D32;
     background: #E8F5E9;
     padding: 1.5px 5px;
     border-radius: 4px;
     font-weight: 700;
     white-space: nowrap;
+    line-height: 1.1;
+    border: 1px solid rgba(46, 125, 50, 0.2);
 }
 .pdp-rc-loc-date {
     font-size: 0.64rem;
@@ -1126,7 +1132,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #F59E0B;
     font-size: 0.75rem;
     letter-spacing: 0.5px;
-    flex-shrink: 0;
+    line-height: 1;
 }
 
 .pdp-rc-occasion {
@@ -1657,11 +1663,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                         <div class="pdp-rc-meta">
                             <div class="pdp-rc-name">
                                 <span><?= htmlspecialchars($rev['name']) ?></span>
-                                <span class="pdp-verified-badge">✓ Verified</span>
                             </div>
                             <span class="pdp-rc-loc-date"><?= htmlspecialchars($rev['city']) ?> • <?= htmlspecialchars($rev['date']) ?></span>
                         </div>
-                        <div class="pdp-rc-stars"><?= str_repeat('★', $rev['rating']) ?></div>
+                        <div class="pdp-rc-rating-right">
+                            <span class="pdp-verified-badge">✓ Verified</span>
+                            <div class="pdp-rc-stars"><?= str_repeat('★', $rev['rating']) ?></div>
+                        </div>
                     </div>
 
                     <?php if (!empty($rev['occasion'])): ?>
@@ -2042,11 +2050,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     '<div class="pdp-rc-meta">' +
                         '<div class="pdp-rc-name">' +
                             '<span>' + name + '</span>' +
-                            '<span class="pdp-verified-badge">✓ Verified</span>' +
                         '</div>' +
                         '<span class="pdp-rc-loc-date">' + city + ' • Just now</span>' +
                     '</div>' +
-                    '<div class="pdp-rc-stars">' + '★'.repeat(currentSelectedRating) + '</div>' +
+                    '<div class="pdp-rc-rating-right">' +
+                        '<span class="pdp-verified-badge">✓ Verified</span>' +
+                        '<div class="pdp-rc-stars">' + '★'.repeat(currentSelectedRating) + '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<span class="pdp-rc-occasion">✨ ' + occasion + '</span>' +
                 '<p class="pdp-rc-text">"' + text + '"</p>' +
