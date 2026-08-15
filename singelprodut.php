@@ -2088,13 +2088,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    SIZE GUIDE MODAL
 ════════════════════════════════════════════════════ */
 .pdp-modal-overlay {
-    position: fixed; inset: 0; z-index: 10000;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(4px);
+    position: fixed; inset: 0; z-index: 1000000;
+    background: rgba(0,0,0,0.68);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: none; align-items: center; justify-content: center;
     padding: 16px;
 }
-.pdp-modal-overlay.open { display: flex; }
+.pdp-modal-overlay.open { display: flex !important; }
 .pdp-modal-box {
     background: #FFFFFF;
     border-radius: 16px;
@@ -2817,6 +2818,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </form>
         </div>
     </div>
+</div>
+
 <!-- ════ INSTANT WHATSAPP QUICK ORDER CHECKOUT MODAL ════ -->
 <div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Order">
     <div class="pdp-modal-box" style="max-width: 520px;">
@@ -3255,6 +3258,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var modal = document.getElementById('pdpWriteReviewModal');
         if (modal) modal.classList.remove('open');
     };
+
+    // Close modals on overlay backdrop click
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList && e.target.classList.contains('pdp-modal-overlay')) {
+            e.target.classList.remove('open');
+        }
+    });
     window.setReviewRating = function(val) {
         currentSelectedRating = val;
         var stars = document.querySelectorAll('#pdpStarRatingSelector span');
