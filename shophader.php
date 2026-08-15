@@ -42,26 +42,11 @@
     background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
     border-top: 1px solid rgba(255, 235, 180, 0.35);
     border-bottom: 1.5px solid #5C4310;
-    height: 30px;
-    max-height: 30px;
+    height: 28px;
     display: flex;
     align-items: center;
     padding: 0 20px;
     box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
-    transition: max-height 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, padding 0.3s ease, border-color 0.25s ease;
-    overflow: hidden;
-}
-
-/* Auto-collapse Subnav on Scroll (Auto Height Kum) */
-.shop-header.scrolled .header-attached-subnav {
-    max-height: 0 !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    border-top-color: transparent !important;
-    border-bottom-color: transparent !important;
-    pointer-events: none;
 }
 
 .subnav-scroll-track {
@@ -588,7 +573,7 @@
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
-/* ── Mobile Layout & Auto-Compact Header on Scroll (<768px) ── */
+/* ── Mobile Layout & Ultra-Compact Zero-Vibration Layout (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
         height: auto;
@@ -597,13 +582,13 @@
         transition: box-shadow 0.25s ease;
     }
 
-    /* Fixed 42px Slot for Normal View and Search Bar */
+    /* Fixed Ultra-Compact 38px Slot for Normal View and Search Bar */
     .header-normal-view,
     .mobile-full-search-bar {
-        height: 42px;
-        min-height: 42px;
+        height: 38px;
+        min-height: 38px;
+        max-height: 38px;
         box-sizing: border-box;
-        transition: height 0.25s ease, padding 0.25s ease;
     }
 
     .header-normal-view {
@@ -614,18 +599,18 @@
         gap: 8px;
     }
     .header-plus-btn {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
     .header-plus-btn svg {
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
     }
     .header-brand-name {
-        font-size: 0.95rem;
+        font-size: 0.92rem;
     }
     .header-brand-tagline {
-        font-size: 0.44rem;
+        font-size: 0.42rem;
         letter-spacing: 0.14em;
         margin-top: 1px;
     }
@@ -633,17 +618,17 @@
         gap: 6px;
     }
     .header-icon-btn {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
     }
     .header-icon-btn svg {
-        width: 16px;
-        height: 16px;
+        width: 15px;
+        height: 15px;
     }
     .header-badge {
-        min-width: 15px;
-        height: 15px;
-        font-size: 0.52rem;
+        min-width: 14px;
+        height: 14px;
+        font-size: 0.50rem;
         top: -3px;
         right: -3px;
     }
@@ -657,63 +642,48 @@
         display: none !important;
     }
 
-    /* Open Mobile Search Bar */
+    /* Open Mobile Search Bar (Exact 38px Height) */
     .mobile-full-search-bar {
         padding: 0 8px;
         gap: 6px;
     }
     .mobile-search-input-wrap {
-        height: 32px;
+        height: 28px;
         padding: 0 10px;
-        transition: height 0.25s ease;
     }
     .mobile-search-input-field {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
     }
     .mobile-search-submit-icon-btn svg {
-        width: 14px;
-        height: 14px;
-    }
-    .mobile-search-close-btn {
-        width: 30px;
-        height: 30px;
-    }
-    .mobile-search-close-btn svg {
         width: 13px;
         height: 13px;
     }
+    .mobile-search-close-btn {
+        width: 28px;
+        height: 28px;
+    }
+    .mobile-search-close-btn svg {
+        width: 12px;
+        height: 12px;
+    }
 
-    /* Subnav (26px at Top, Collapses on Scroll to 0px) */
+    /* Permanently Visible Ultra-Compact 24px Category Subnav */
     .header-attached-subnav {
-        height: 26px;
-        max-height: 26px;
+        height: 24px;
+        min-height: 24px;
+        max-height: 24px;
         padding: 0 8px;
         box-sizing: border-box;
     }
     .subnav-item {
-        font-size: 0.62rem;
-        padding: 1px 7px;
-        height: 19px;
+        font-size: 0.60rem;
+        padding: 1px 6px;
+        height: 17px;
+        gap: 4px;
     }
     .subnav-icon {
-        width: 10px;
-        height: 10px;
-    }
-
-    /* ── SCROLLED SLIM SEARCH BAR (Total Height = 38px!) ── */
-    .shop-header.scrolled .mobile-full-search-bar,
-    .shop-header.scrolled .header-normal-view {
-        height: 38px;
-        min-height: 38px;
-        padding: 0 6px;
-    }
-    .shop-header.scrolled .mobile-search-input-wrap {
-        height: 30px;
-        padding: 0 8px;
-    }
-    .shop-header.scrolled .mobile-search-close-btn {
-        width: 28px;
-        height: 28px;
+        width: 9px;
+        height: 9px;
     }
 }
 </style>
@@ -1087,7 +1057,7 @@ window.closeWishlistDrawer = function() {
         }
     }
 
-    /* Scroll Header Height Auto-Compress & Auto-Open Search Bar Engine */
+    /* Smooth Zero-Jitter Scroll Elevation Engine */
     var isShopHeaderScrolled = false;
     var scrollTicking = false;
 
@@ -1095,28 +1065,13 @@ window.closeWishlistDrawer = function() {
         if (!scrollTicking) {
             window.requestAnimationFrame(function() {
                 var sy = window.scrollY || window.pageYOffset || 0;
-                if (!header) {
-                    scrollTicking = false;
-                    return;
-                }
-                var isMobile = window.innerWidth <= 767;
-
-                if (sy > 45) {
-                    if (!isShopHeaderScrolled) {
+                if (header) {
+                    if (sy > 25 && !isShopHeaderScrolled) {
                         isShopHeaderScrolled = true;
                         header.classList.add('scrolled');
-                    }
-                    if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
-                        header.classList.add('mobile-search-active');
-                    }
-                } else if (sy < 15) {
-                    if (isShopHeaderScrolled) {
+                    } else if (sy < 10 && isShopHeaderScrolled) {
                         isShopHeaderScrolled = false;
                         header.classList.remove('scrolled');
-                    }
-                    userManuallyClosedMobileSearch = false;
-                    if (isMobile && (!mobileSearchInput || !mobileSearchInput.value.trim())) {
-                        header.classList.remove('mobile-search-active');
                     }
                 }
                 scrollTicking = false;
