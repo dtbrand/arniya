@@ -482,11 +482,50 @@
         document.execCommand('copy');
         document.body.removeChild(t);
     }
-
-    /* Modal trigger alias */
+    /* 🟢 Open Smart Share Modal with Product Snapshot */
     window.openSmartShareModal = function(itemData) {
-        // Direct 1-Click execution as requested!
-        window.oneClickAllDownloadAndShare(itemData);
+        if (itemData) {
+            currentShareItem = Object.assign({}, currentShareItem, itemData);
+        }
+
+        // Update modal UI elements
+        var thumb = document.getElementById('smartShareThumb');
+        var name = document.getElementById('smartShareName');
+        var meta = document.getElementById('smartShareMeta');
+        var price = document.getElementById('smartSharePrice');
+        var oldPrice = document.getElementById('smartShareOldPrice');
+        var disc = document.getElementById('smartShareDiscount');
+
+        if (thumb) thumb.src = currentShareItem.image || 'images/product1.png';
+        if (name) name.textContent = currentShareItem.name || 'Luxury Outfit';
+        if (meta) meta.textContent = (currentShareItem.fabric ? 'Fabric: ' + currentShareItem.fabric : 'Ethnic Luxury') + ' • ' + (currentShareItem.sizes || 'Free Size');
+        if (price) price.textContent = '₹' + Number(currentShareItem.price || 0).toLocaleString('en-IN');
+        if (oldPrice) {
+            if (currentShareItem.old_price) {
+                oldPrice.textContent = '₹' + Number(currentShareItem.old_price).toLocaleString('en-IN');
+                oldPrice.style.display = 'inline';
+            } else {
+                oldPrice.style.display = 'none';
+            }
+        }
+        if (disc) {
+            if (currentShareItem.discount) {
+                disc.textContent = currentShareItem.discount + '% OFF';
+                disc.style.display = 'inline';
+            } else {
+                disc.style.display = 'none';
+            }
+        }
+
+        var resolvedUrl = currentShareItem.url || window.location.href;
+        if (!resolvedUrl.startsWith('http')) {
+            resolvedUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + resolvedUrl;
+        }
+        currentShareItem.fullUrl = resolvedUrl;
+
+        // Open the Popup Modal
+        var overlay = document.getElementById('smartShareOverlay');
+        if (overlay) overlay.classList.add('active');
     };
 
     window.closeSmartShareModal = function() {
@@ -494,7 +533,9 @@
         if (overlay) overlay.classList.remove('active');
     };
 
+    /* 🟢 1-Click Batch Download & WhatsApp Share from Modal */
     window.executeSmartMeeshoShare = function() {
+        window.closeSmartShareModal();
         window.oneClickAllDownloadAndShare(currentShareItem);
     };
 
