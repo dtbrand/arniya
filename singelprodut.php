@@ -172,6 +172,91 @@ $galleryImages = [
     'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
 ];
 
+// Myntra-Style Detailed Product Specifications
+$myntraSpecsMap = [
+    1 => [
+        ['title' => 'Type', 'val' => 'Banarasi'],
+        ['title' => 'Ornamentation', 'val' => 'Zari'],
+        ['title' => 'Border', 'val' => 'Woven Design'],
+        ['title' => 'Blouse Fabric', 'val' => 'Silk Blend'],
+        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
+        ['title' => 'Saree Fabric', 'val' => 'Pure Silk'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    2 => [
+        ['title' => 'Type', 'val' => 'Banarasi'],
+        ['title' => 'Ornamentation', 'val' => 'Zari Jacquard'],
+        ['title' => 'Border', 'val' => 'Antique Gold Zari'],
+        ['title' => 'Blouse Fabric', 'val' => 'Katan Silk'],
+        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
+        ['title' => 'Saree Fabric', 'val' => 'Katan Silk'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    3 => [
+        ['title' => 'Type', 'val' => 'Kasavu'],
+        ['title' => 'Ornamentation', 'val' => 'Zari'],
+        ['title' => 'Border', 'val' => 'Woven Design'],
+        ['title' => 'Blouse Fabric', 'val' => 'Tissue'],
+        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
+        ['title' => 'Saree Fabric', 'val' => 'Tissue'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    4 => [
+        ['title' => 'Type', 'val' => 'Georgette'],
+        ['title' => 'Ornamentation', 'val' => 'Resham Threadwork'],
+        ['title' => 'Border', 'val' => 'Scalloped Floral'],
+        ['title' => 'Blouse Fabric', 'val' => 'Georgette'],
+        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
+        ['title' => 'Saree Fabric', 'val' => 'Viscose Georgette'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    5 => [
+        ['title' => 'Type', 'val' => 'Anarkali'],
+        ['title' => 'Ornamentation', 'val' => 'Gota Patti'],
+        ['title' => 'Border', 'val' => 'Flared Kali Hem'],
+        ['title' => 'Blouse Fabric', 'val' => 'Chanderi Cotton'],
+        ['title' => 'Blouse', 'val' => 'Kurti & Dupatta Set'],
+        ['title' => 'Saree Fabric', 'val' => 'Chanderi Silk Cotton'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    6 => [
+        ['title' => 'Type', 'val' => 'Bridal Lehenga'],
+        ['title' => 'Ornamentation', 'val' => 'Zardozi & Dabka'],
+        ['title' => 'Border', 'val' => 'Heavy Embroidered'],
+        ['title' => 'Blouse Fabric', 'val' => 'Raw Silk & Velvet'],
+        ['title' => 'Blouse', 'val' => 'Choli Piece with Dupatta'],
+        ['title' => 'Saree Fabric', 'val' => 'Raw Silk & Velvet'],
+        ['title' => 'Wash Care', 'val' => 'Specialist Dry Clean'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    7 => [
+        ['title' => 'Type', 'val' => 'Bagru Block Print'],
+        ['title' => 'Ornamentation', 'val' => 'Natural Vegetable Dye'],
+        ['title' => 'Border', 'val' => 'Printed Zari Border'],
+        ['title' => 'Blouse Fabric', 'val' => 'Mulmul Cotton'],
+        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
+        ['title' => 'Saree Fabric', 'val' => 'Mulmul Cotton'],
+        ['title' => 'Wash Care', 'val' => 'Gentle Hand Wash'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+    8 => [
+        ['title' => 'Type', 'val' => 'Indo-Western Gown'],
+        ['title' => 'Ornamentation', 'val' => 'Swarovski & Pearls'],
+        ['title' => 'Border', 'val' => 'Flowing Cape Hem'],
+        ['title' => 'Blouse Fabric', 'val' => 'Organza Silk'],
+        ['title' => 'Blouse', 'val' => 'Attached Cape Set'],
+        ['title' => 'Saree Fabric', 'val' => 'Organza & Silk Crepe'],
+        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+        ['title' => 'Net Quantity', 'val' => '1'],
+    ],
+];
+$currentSpecs = $myntraSpecsMap[$pid] ?? $myntraSpecsMap[3];
+
 $customerReviews = [
     [
         'id' => 1,
@@ -1110,68 +1195,45 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     stroke-width: 2;
 }
 
-/* Specifications Grid with Real Icons */
-.pdp-specs-grid {
+/* ── Myntra-Style Specifications ────────────────────────────── */
+.pdp-myntra-spec-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    column-gap: 24px;
+    row-gap: 0;
 }
-@media (max-width: 480px) {
-    .pdp-specs-grid {
-        grid-template-columns: 1fr;
-    }
-}
-.pdp-spec-box {
-    background: #FAF9F6;
-    border: 1px solid rgba(138, 104, 31, 0.15);
-    border-radius: 9px;
-    padding: 10px 12px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    transition: all 0.2s ease;
-}
-.pdp-spec-box:hover {
-    background: #FFFFFF;
-    border-color: var(--dark-gold, #8A681F);
-    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.08);
-}
-.pdp-spec-icon-sub {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    background: #FFFFFF;
-    border: 1px solid var(--soft-platinum, #E5E3DE);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--dark-gold, #8A681F);
-    flex-shrink: 0;
-    margin-top: 1px;
-}
-.pdp-spec-icon-sub svg {
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-.pdp-spec-meta {
+.pdp-myntra-spec-cell {
     display: flex;
     flex-direction: column;
+    padding: 10px 0;
+    border-bottom: 1px solid #EAEAEC;
 }
-.pdp-spec-lbl {
-    font-size: 0.64rem;
-    font-weight: 800;
-    color: var(--dark-gold, #8A681F);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 2px;
+.pdp-myntra-spec-title {
+    font-size: 0.74rem;
+    color: #7E818C;
+    font-weight: 500;
+    margin-bottom: 3px;
+    letter-spacing: 0.01em;
 }
-.pdp-spec-val {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--dark-text, #24211C);
+.pdp-myntra-spec-val {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #282C3F;
+    line-height: 1.3;
+}
+@media (max-width: 480px) {
+    .pdp-myntra-spec-grid {
+        column-gap: 16px;
+    }
+    .pdp-myntra-spec-cell {
+        padding: 8px 0;
+    }
+    .pdp-myntra-spec-title {
+        font-size: 0.68rem;
+    }
+    .pdp-myntra-spec-val {
+        font-size: 0.82rem;
+    }
 }
 
 /* Shipping, Authentic & Fast Exchange Cards */
@@ -2093,43 +2155,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                         </div>
                     </button>
                     <div class="pdp-acc-body">
-                        <div class="pdp-specs-grid">
-                            <div class="pdp-spec-box">
-                                <div class="pdp-spec-icon-sub">
-                                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                                </div>
-                                <div class="pdp-spec-meta">
-                                    <span class="pdp-spec-lbl">Fabric Material</span>
-                                    <span class="pdp-spec-val"><?= htmlspecialchars($product['fabric']) ?></span>
-                                </div>
+                        <div class="pdp-myntra-spec-grid">
+                            <?php foreach ($currentSpecs as $spec): ?>
+                            <div class="pdp-myntra-spec-cell">
+                                <span class="pdp-myntra-spec-title"><?= htmlspecialchars($spec['title']) ?></span>
+                                <span class="pdp-myntra-spec-val"><?= htmlspecialchars($spec['val']) ?></span>
                             </div>
-                            <div class="pdp-spec-box">
-                                <div class="pdp-spec-icon-sub">
-                                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                                </div>
-                                <div class="pdp-spec-meta">
-                                    <span class="pdp-spec-lbl">Couture Category</span>
-                                    <span class="pdp-spec-val"><?= htmlspecialchars($product['category']) ?></span>
-                                </div>
-                            </div>
-                            <div class="pdp-spec-box">
-                                <div class="pdp-spec-icon-sub">
-                                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                </div>
-                                <div class="pdp-spec-meta">
-                                    <span class="pdp-spec-lbl">Weaving Technique</span>
-                                    <span class="pdp-spec-val">Master Handloom Jacquard</span>
-                                </div>
-                            </div>
-                            <div class="pdp-spec-box">
-                                <div class="pdp-spec-icon-sub">
-                                    <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-                                </div>
-                                <div class="pdp-spec-meta">
-                                    <span class="pdp-spec-lbl">Care Protocol</span>
-                                    <span class="pdp-spec-val">Dry Clean Only</span>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
