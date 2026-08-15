@@ -2114,37 +2114,37 @@ $catalogProducts = [
                     
                     <!-- Metric Card 1: Account Tier -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label">B2B Account Tier</div>
+                        <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">VIP Tier 1</div>
-                            <span class="ws-trend-pill up">↑ 11.01%</span>
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">VIP Tier 1</div>
+                            <span class="ws-trend-pill up" id="statPill1">↑ 11.01%</span>
                         </div>
                     </div>
 
                     <!-- Metric Card 2: Orders -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label">Total Orders</div>
+                        <div class="ws-stat-label" id="statLabel2">Total Orders</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statTotalOrders">6</div>
-                            <span class="ws-trend-pill up">↑ 14.20%</span>
+                            <div class="ws-stat-val-num" id="statVal2">6</div>
+                            <span class="ws-trend-pill up" id="statPill2">↑ 14.20%</span>
                         </div>
                     </div>
 
                     <!-- Metric Card 3: Total Quantity -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label">Total Quantity (Units)</div>
+                        <div class="ws-stat-label" id="statLabel3">Total Quantity (Units)</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statTotalQty">48 <span style="font-size:0.95rem; font-weight:600; color:var(--ws-text-muted);">Pcs</span></div>
-                            <span class="ws-trend-pill up">↑ 8.50%</span>
+                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.95rem; font-weight:600; color:var(--ws-text-muted);">Pcs</span></div>
+                            <span class="ws-trend-pill up" id="statPill3">↑ 8.50%</span>
                         </div>
                     </div>
 
                     <!-- Metric Card 4: Total Revenue Turnover -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label">Total B2B Turnover</div>
+                        <div class="ws-stat-label" id="statLabel4">Total B2B Turnover</div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statTotalAmount" style="color:var(--ws-gold-primary);">₹2,05,062</div>
-                            <span class="ws-trend-pill up">↑ 18.40%</span>
+                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹2,05,062</div>
+                            <span class="ws-trend-pill up" id="statPill4">↑ 18.40%</span>
                         </div>
                     </div>
 
@@ -2156,11 +2156,11 @@ $catalogProducts = [
                     <!-- Left: Monthly Sales Bar Chart (Heritage Gold Gradient Bars) -->
                     <div class="ws-analytics-card">
                         <div class="ws-card-top-bar">
-                            <h3>Monthly Sales</h3>
+                            <h3 id="chartTitle">Monthly Sales</h3>
                             <button class="ws-dots-btn">⋮</button>
                         </div>
 
-                        <div class="ws-bar-chart-container">
+                        <div class="ws-bar-chart-container" id="barChartContainer">
                             <div class="ws-chart-y-axis">
                                 <span>400</span>
                                 <span>300</span>
@@ -2170,18 +2170,18 @@ $catalogProducts = [
                             </div>
 
                             <!-- 12-Month Bars (Jan - Dec) with Heritage Gold Gradients -->
-                            <div class="ws-bar-col" title="Jan: ₹160K"><div class="ws-bar-pill" style="height: 40%;"></div><span class="ws-bar-month">Jan</span></div>
-                            <div class="ws-bar-col" title="Feb: ₹380K"><div class="ws-bar-pill" style="height: 95%;"></div><span class="ws-bar-month">Feb</span></div>
-                            <div class="ws-bar-col" title="Mar: ₹190K"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Mar</span></div>
-                            <div class="ws-bar-col" title="Apr: ₹290K"><div class="ws-bar-pill" style="height: 72%;"></div><span class="ws-bar-month">Apr</span></div>
-                            <div class="ws-bar-col" title="May: ₹180K"><div class="ws-bar-pill" style="height: 45%;"></div><span class="ws-bar-month">May</span></div>
-                            <div class="ws-bar-col" title="Jun: ₹190K"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Jun</span></div>
-                            <div class="ws-bar-col" title="Jul: ₹280K"><div class="ws-bar-pill" style="height: 70%;"></div><span class="ws-bar-month">Jul</span></div>
-                            <div class="ws-bar-col" title="Aug: ₹100K"><div class="ws-bar-pill" style="height: 25%;"></div><span class="ws-bar-month">Aug</span></div>
-                            <div class="ws-bar-col" title="Sep: ₹210K"><div class="ws-bar-pill" style="height: 52%;"></div><span class="ws-bar-month">Sep</span></div>
-                            <div class="ws-bar-col active" title="Oct: ₹390K"><div class="ws-bar-pill" style="height: 98%;"></div><span class="ws-bar-month">Oct</span></div>
-                            <div class="ws-bar-col" title="Nov: ₹270K"><div class="ws-bar-pill" style="height: 68%;"></div><span class="ws-bar-month">Nov</span></div>
-                            <div class="ws-bar-col" title="Dec: ₹110K"><div class="ws-bar-pill" style="height: 28%;"></div><span class="ws-bar-month">Dec</span></div>
+                            <div class="ws-bar-col" id="barMonth0" title="Jan"><div class="ws-bar-pill" style="height: 40%;"></div><span class="ws-bar-month">Jan</span></div>
+                            <div class="ws-bar-col" id="barMonth1" title="Feb"><div class="ws-bar-pill" style="height: 95%;"></div><span class="ws-bar-month">Feb</span></div>
+                            <div class="ws-bar-col" id="barMonth2" title="Mar"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Mar</span></div>
+                            <div class="ws-bar-col" id="barMonth3" title="Apr"><div class="ws-bar-pill" style="height: 72%;"></div><span class="ws-bar-month">Apr</span></div>
+                            <div class="ws-bar-col" id="barMonth4" title="May"><div class="ws-bar-pill" style="height: 45%;"></div><span class="ws-bar-month">May</span></div>
+                            <div class="ws-bar-col" id="barMonth5" title="Jun"><div class="ws-bar-pill" style="height: 48%;"></div><span class="ws-bar-month">Jun</span></div>
+                            <div class="ws-bar-col" id="barMonth6" title="Jul"><div class="ws-bar-pill" style="height: 70%;"></div><span class="ws-bar-month">Jul</span></div>
+                            <div class="ws-bar-col active" id="barMonth7" title="Aug (Current)"><div class="ws-bar-pill" style="height: 65%;"></div><span class="ws-bar-month">Aug</span></div>
+                            <div class="ws-bar-col" id="barMonth8" title="Sep"><div class="ws-bar-pill" style="height: 52%;"></div><span class="ws-bar-month">Sep</span></div>
+                            <div class="ws-bar-col" id="barMonth9" title="Oct"><div class="ws-bar-pill" style="height: 98%;"></div><span class="ws-bar-month">Oct</span></div>
+                            <div class="ws-bar-col" id="barMonth10" title="Nov"><div class="ws-bar-pill" style="height: 68%;"></div><span class="ws-bar-month">Nov</span></div>
+                            <div class="ws-bar-col" id="barMonth11" title="Dec"><div class="ws-bar-pill" style="height: 28%;"></div><span class="ws-bar-month">Dec</span></div>
                         </div>
                     </div>
 
@@ -2196,25 +2196,25 @@ $catalogProducts = [
                                     </linearGradient>
                                 </defs>
                                 <path class="ws-gauge-bg-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
-                                <path class="ws-gauge-fill-arc" d="M 20 100 A 80 80 0 0 1 180 100"></path>
+                                <path class="ws-gauge-fill-arc" id="targetGaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" style="stroke-dashoffset: 58;"></path>
                             </svg>
-                            <div class="ws-gauge-center-text">75.55%</div>
-                            <div class="ws-gauge-badge">+10%</div>
-                            <p class="ws-gauge-desc">You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!</p>
+                            <div class="ws-gauge-center-text" id="targetGaugeVal">75.55%</div>
+                            <div class="ws-gauge-badge" id="targetGaugeBadge">+10%</div>
+                            <p class="ws-gauge-desc" id="targetGaugeDesc">You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!</p>
                         </div>
 
                         <div class="ws-gauge-stats-row">
                             <div>
                                 <div class="ws-g-stat-label">Target</div>
-                                <div class="ws-g-stat-val" style="color:var(--ws-danger);">₹50K ↓</div>
+                                <div class="ws-g-stat-val" id="gStatTarget" style="color:var(--ws-danger);">₹50K ↓</div>
                             </div>
                             <div>
                                 <div class="ws-g-stat-label">Revenue</div>
-                                <div class="ws-g-stat-val" style="color:var(--ws-success);">₹48.5K ↑</div>
+                                <div class="ws-g-stat-val" id="gStatRevenue" style="color:var(--ws-success);">₹48.5K ↑</div>
                             </div>
                             <div>
                                 <div class="ws-g-stat-label">Today</div>
-                                <div class="ws-g-stat-val" style="color:var(--ws-gold-primary);">₹18.2K ↑</div>
+                                <div class="ws-g-stat-val" id="gStatToday" style="color:var(--ws-gold-primary);">₹18.2K ↑</div>
                             </div>
                         </div>
                     </div>
@@ -2225,7 +2225,7 @@ $catalogProducts = [
                 <div class="ws-statistics-card">
                     <div class="ws-section-header" style="margin-bottom:0;">
                         <div class="ws-sec-title-box">
-                            <h3>Statistics & Performance Analytics</h3>
+                            <h3 id="statsMainTitle">Statistics & Performance Analytics</h3>
                             <p id="statsSubtitle">Monthly Procurement Targets, Category Mix & Logistics Performance</p>
                         </div>
 
@@ -2235,9 +2235,10 @@ $catalogProducts = [
                                 <button class="ws-seg-btn" id="statBtnSales" onclick="setOverviewFilter('sales', this)">Sales</button>
                                 <button class="ws-seg-btn" id="statBtnRevenue" onclick="setOverviewFilter('revenue', this)">Revenue</button>
                             </div>
-                            <div class="ws-date-range-pill" onclick="window.showWsToast('📅 Date Range: 10 Aug - 16 Aug 2026 (Live)')">
+                            <div class="ws-date-range-pill" id="dateRangeBtn" onclick="openDateRangePicker()">
                                 <span>📅</span>
-                                <span>Aug 10 - Aug 16</span>
+                                <span id="selectedDateRangeLabel">Aug 10 - Aug 16</span>
+                                <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;margin-left:2px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
                         </div>
                     </div>
@@ -2248,13 +2249,13 @@ $catalogProducts = [
                         <!-- Column 1: Category Volume Mix & Target Fulfillment -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span>👗 Category Procurement Breakdown</span>
+                                <span id="catBreakdownTitle">👗 Category Procurement Breakdown</span>
                             </div>
-                            <div class="ws-cat-prog-list">
+                            <div class="ws-cat-prog-list" id="catProgList">
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Pure Silk & Zari Sarees</span>
-                                        <span class="ws-cat-prog-val">₹1,14,500 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(56%)</span></span>
+                                        <span class="ws-cat-prog-val">₹1,14,500 (56%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
                                         <div class="ws-cat-prog-fill" style="width: 88%;"></div>
@@ -2264,7 +2265,7 @@ $catalogProducts = [
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Bridal Velvet & Zardosi Lehengas</span>
-                                        <span class="ws-cat-prog-val">₹49,147 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(24%)</span></span>
+                                        <span class="ws-cat-prog-val">₹49,147 (24%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
                                         <div class="ws-cat-prog-fill" style="width: 72%;"></div>
@@ -2274,7 +2275,7 @@ $catalogProducts = [
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Royal Anarkali Kurti Sets</span>
-                                        <span class="ws-cat-prog-val">₹25,825 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(13%)</span></span>
+                                        <span class="ws-cat-prog-val">₹25,825 (13%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
                                         <div class="ws-cat-prog-fill" style="width: 95%;"></div>
@@ -2284,7 +2285,7 @@ $catalogProducts = [
                                 <div class="ws-cat-prog-item">
                                     <div class="ws-cat-prog-header">
                                         <span class="ws-cat-prog-name">Georgette & Chanderi Fabrics</span>
-                                        <span class="ws-cat-prog-val">₹15,590 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(7%)</span></span>
+                                        <span class="ws-cat-prog-val">₹15,590 (7%)</span>
                                     </div>
                                     <div class="ws-cat-prog-track">
                                         <div class="ws-cat-prog-fill" style="width: 60%;"></div>
@@ -2298,7 +2299,7 @@ $catalogProducts = [
                             <div class="ws-stats-col-title">
                                 <span>⚡ Key Wholesale Performance (KPIs)</span>
                             </div>
-                            <div class="ws-kpi-grid">
+                            <div class="ws-kpi-grid" id="kpiGrid">
                                 <div class="ws-kpi-box">
                                     <div class="ws-kpi-label">Avg. Order Value</div>
                                     <div class="ws-kpi-num">₹34,177</div>
@@ -2329,11 +2330,11 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-status-box">
                                 <div>
-                                    <span class="ws-tier-badge">👑 Tier 1 VIP Member</span>
-                                    <h4 style="font-size:1.15rem; font-weight:800; color:var(--ws-gold-primary); margin:8px 0 4px; font-family:var(--ws-font-serif);">
+                                    <span class="ws-tier-badge" id="statsMilestoneBadge">👑 Tier 1 VIP Member</span>
+                                    <h4 id="statsMilestoneVal" style="font-size:1.15rem; font-weight:800; color:var(--ws-gold-primary); margin:8px 0 4px; font-family:var(--ws-font-serif);">
                                         ₹2,05,062 <span style="font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);">/ ₹2,50,000</span>
                                     </h4>
-                                    <p style="font-size:0.74rem; color:var(--ws-text-muted); line-height:1.4;">
+                                    <p id="statsMilestoneDesc" style="font-size:0.74rem; color:var(--ws-text-muted); line-height:1.4;">
                                         <strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!
                                     </p>
                                 </div>
@@ -3024,6 +3025,49 @@ $catalogProducts = [
                     </a>
                 </div>
             </div>
+    </div>
+
+    <!-- ═══ Date Range Selection Modal ═══ -->
+    <div class="ws-modal-overlay" id="wsDateRangeModal" role="dialog" aria-modal="true">
+        <div class="ws-modal-box" style="max-width: 460px;">
+            <div class="ws-modal-header">
+                <div class="ws-modal-title">
+                    <span>📅</span> Select Analytics Date Range
+                </div>
+                <button class="ws-modal-close-btn" onclick="closeDateRangeModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="ws-modal-body" style="padding: 16px 20px;">
+                <div style="font-size:0.80rem; color:var(--ws-text-muted); margin-bottom:12px;">
+                    Select a time window to dynamically filter procurement metrics, graphs, and category breakdowns:
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;" id="datePresetButtons">
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('today', 'Today (16 Aug)')">
+                        <span>⚡ <strong>Today</strong></span>
+                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">16 Aug 2026</span>
+                    </button>
+                    <button class="ws-btn ws-btn-primary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('week', 'Aug 10 - Aug 16')">
+                        <span>📅 <strong>This Week</strong></span>
+                        <span style="font-size:0.75rem; color:var(--ws-gold-light);">10 Aug – 16 Aug 2026 (Live)</span>
+                    </button>
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('month', 'Aug 01 - Aug 31')">
+                        <span>📊 <strong>This Month</strong></span>
+                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">August 2026 (Full Month)</span>
+                    </button>
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('last_month', 'Jul 01 - Jul 31')">
+                        <span>📁 <strong>Last Month</strong></span>
+                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">July 2026 (Reconciled)</span>
+                    </button>
+                    <button class="ws-btn ws-btn-secondary" style="justify-content: space-between; padding: 12px 16px; font-size: 0.85rem;" onclick="applyDatePreset('year', 'FY 2026-27')">
+                        <span>👑 <strong>Financial Year</strong></span>
+                        <span style="font-size:0.75rem; color:var(--ws-text-muted);">FY 2026-27 (Q1 & Q2)</span>
+                    </button>
+                </div>
+            </div>
+            <div class="ws-modal-footer">
+                <button class="ws-btn ws-btn-secondary ws-btn-full" onclick="closeDateRangeModal()">
+                    Cancel
+                </button>
+            </div>
         </div>
     </div>
 
@@ -3599,12 +3643,577 @@ $catalogProducts = [
             filterOrdersTable();
         };
 
+        /* ════════════════════════════════════════════════════
+           ANALYTICS ENGINE: MODES (OVERVIEW/SALES/REVENUE) & DATE RANGES
+        ════════════════════════════════════════════════════ */
+        var analyticsMode = 'overview';
+        var currentSelectedDateRange = 'week';
+
+        var ANALYTICS_DATA = {
+            'overview': {
+                'today': {
+                    sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
+                    cards: [
+                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "Active VIP", isGold: true },
+                        { label: "Today's Orders", val: "1 Lot", pill: "⚡ Dispatched", isGold: false },
+                        { label: "Today's Quantity", val: "6 Pcs", pill: "100% Packed", isGold: false },
+                        { label: "Today's B2B Turnover", val: "₹18,200", pill: "↑ 100%", isGold: true }
+                    ],
+                    chartTitle: "Today's Hourly Procurement (Units)",
+                    barActive: 7,
+                    gauge: { pct: "36.4%", offset: 150, badge: "⚡ Today", desc: "You generated <strong>₹18,200</strong> in wholesale procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
+                    catTitle: "👗 Today's Category Breakdown",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (100%)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "Today's Order Value", num: "₹18,200", sub: "⚡ 1 Consignment" },
+                        { label: "Dispatch Status", num: "In Transit", sub: "AWB: 884729104" },
+                        { label: "Today's GST Credit", num: "₹910", sub: "5% GST" },
+                        { label: "Delivery ETA", num: "Tomorrow", sub: "Priority Air" }
+                    ],
+                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
+                    milestoneDesc: "<strong>36.4%</strong> of today's target achieved."
+                },
+                'week': {
+                    sub: "Weekly Procurement Targets, Category Mix & Logistics Performance",
+                    cards: [
+                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "↑ 11.01%", isGold: true },
+                        { label: "Total Orders", val: "6", pill: "↑ 14.20%", isGold: false },
+                        { label: "Total Quantity (Units)", val: "48 Pcs", pill: "↑ 8.50%", isGold: false },
+                        { label: "Total B2B Turnover", val: "₹2,05,062", pill: "↑ 18.40%", isGold: true }
+                    ],
+                    chartTitle: "Monthly Sales",
+                    barActive: 7,
+                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
+                    catTitle: "👗 Category Procurement Breakdown",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (56%)", fill: 88 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹49,147 (24%)", fill: 72 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹25,825 (13%)", fill: 95 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹15,590 (7%)", fill: 60 }
+                    ],
+                    kpis: [
+                        { label: "Avg. Order Value", num: "₹34,177", sub: "↑ 12.4% vs last month" },
+                        { label: "Dispatch Turnaround", num: "1.8 Days", sub: "⚡ Priority VIP BlueDart" },
+                        { label: "GST Input Tax Credit", num: "₹10,253", sub: "🛡️ 100% GSTR-1 Matched" },
+                        { label: "Lot Reorder Rate", num: "83.3%", sub: "🔁 5 of 6 Lots Repeated" }
+                    ],
+                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
+                    milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
+                },
+                'month': {
+                    sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
+                    cards: [
+                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "↑ 15.30%", isGold: true },
+                        { label: "Total Orders", val: "14", pill: "↑ 21.00%", isGold: false },
+                        { label: "Total Quantity (Units)", val: "112 Pcs", pill: "↑ 16.80%", isGold: false },
+                        { label: "Total B2B Turnover", val: "₹4,86,500", pill: "↑ 24.10%", isGold: true }
+                    ],
+                    chartTitle: "August 2026 Procurement Volume",
+                    barActive: 7,
+                    gauge: { pct: "97.30%", offset: 7, badge: "+18.2%", desc: "Monthly volume tracking ahead of schedule by <strong>+18.2%</strong>!", target: "₹500K", rev: "₹486.5K ↑", today: "₹32.8K ↑" },
+                    catTitle: "👗 August Category Procurement Breakdown",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹2,72,000 (56%)", fill: 92 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹1,18,500 (24%)", fill: 84 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹62,000 (13%)", fill: 98 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹34,000 (7%)", fill: 75 }
+                    ],
+                    kpis: [
+                        { label: "Avg. Order Value", num: "₹34,750", sub: "↑ 15.1% growth" },
+                        { label: "Avg. Turnaround Time", num: "1.6 Days", sub: "⚡ VIP Express" },
+                        { label: "Monthly GST ITC", num: "₹24,325", sub: "🛡️ 100% Claimed" },
+                        { label: "Repeat Order Index", num: "87.5%", sub: "🔁 12 of 14 Lots Reordered" }
+                    ],
+                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneVal: "₹4,86,500 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹5,00,000</span>",
+                    milestoneDesc: "<strong>97.3%</strong> of your target achieved. Only <strong>₹13,500</strong> left to reach Tier 3 Elite Club!"
+                },
+                'last_month': {
+                    sub: "July 2026 Reconciled Performance & Procurements",
+                    cards: [
+                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "Reconciled", isGold: true },
+                        { label: "July Orders", val: "11", pill: "Delivered", isGold: false },
+                        { label: "July Quantity", val: "88 Pcs", pill: "100% Received", isGold: false },
+                        { label: "July Turnover", val: "₹3,92,400", pill: "Settled", isGold: true }
+                    ],
+                    chartTitle: "July 2026 Final Settlement",
+                    barActive: 6,
+                    gauge: { pct: "100%", offset: 0, badge: "100% Done", desc: "July target fully achieved and 100% GST reconciled!", target: "₹350K", rev: "₹392.4K", today: "Closed" },
+                    catTitle: "👗 July 2026 Category Breakdown",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹2,19,000 (56%)", fill: 100 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹94,000 (24%)", fill: 100 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹51,400 (13%)", fill: 100 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹28,000 (7%)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "Avg. Order Value", num: "₹35,672", sub: "Final Settled" },
+                        { label: "Total Transit TAT", num: "2.1 Days", sub: "100% Delivered" },
+                        { label: "Total GST ITC", num: "₹19,620", sub: "Filed in GSTR-3B" },
+                        { label: "Reorder Loyalty", num: "90.9%", sub: "10 of 11 Lots Repeated" }
+                    ],
+                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneVal: "₹3,92,400 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹3,50,000</span>",
+                    milestoneDesc: "<strong>112.1%</strong> target exceeded for July 2026!"
+                },
+                'year': {
+                    sub: "Financial Year 2026-27 Comprehensive B2B Turnover",
+                    cards: [
+                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "FY26-27", isGold: true },
+                        { label: "Annual Orders", val: "58 Lots", pill: "↑ 34.5%", isGold: false },
+                        { label: "Annual Quantity", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
+                        { label: "Annual Turnover", val: "₹19,84,300", pill: "↑ 31.8%", isGold: true }
+                    ],
+                    chartTitle: "FY 2026-27 Monthly Revenue Peak",
+                    barActive: 9,
+                    gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "Annual procurement pace on track to exceed ₹25 Lakhs milestone!", target: "₹2.5M", rev: "₹1.98M ↑", today: "Live" },
+                    catTitle: "👗 FY 2026-27 Cumulative Category Volume",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹11,10,000 (56%)", fill: 82 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹4,76,000 (24%)", fill: 76 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹2,58,000 (13%)", fill: 90 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹1,40,300 (7%)", fill: 68 }
+                    ],
+                    kpis: [
+                        { label: "Annual Avg. Order", num: "₹34,212", sub: "58 Consignments" },
+                        { label: "Fastest Delivery", num: "24 Hours", sub: "Air Priority" },
+                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: "100% Verified" },
+                        { label: "Wholesale Retention", num: "89.6%", sub: "Top Tier Wholesaler" }
+                    ],
+                    milestoneBadge: "👑 Tier 1 VIP Member",
+                    milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
+                    milestoneDesc: "<strong>79.37%</strong> of Annual VIP Target achieved. Procure ₹5,15,700 more to enter ₹50L Super Wholesaler Tier!"
+                }
+            },
+            'sales': {
+                'today': {
+                    sub: "Today's Wholesale Volume & Unit Procurement (Pcs)",
+                    cards: [
+                        { label: "Active SKUs Today", val: "1 SKU", pill: "Kanjivaram", isGold: true },
+                        { label: "Units Dispatched", val: "6 Pcs", pill: "100% QC Passed", isGold: false },
+                        { label: "Pending Packaging", val: "0 Pcs", pill: "Cleared", isGold: false },
+                        { label: "Delivery Mode", val: "Air Express", pill: "BlueDart", isGold: true }
+                    ],
+                    chartTitle: "Today's Unit Dispatch (Pcs)",
+                    barActive: 7,
+                    gauge: { pct: "100%", offset: 0, badge: "100%", desc: "Today's unit dispatch completed with 100% QC stamp.", target: "6 Pcs", rev: "6 Pcs", today: "6 Pcs" },
+                    catTitle: "👗 Unit Distribution by Craft (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "6 Pcs (100%)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "Units Dispatched", num: "6 Pcs", sub: "BlueDart Air" },
+                        { label: "QC Inspection", num: "100% Passed", sub: "Zari Hallmarked" },
+                        { label: "Lot Packaging", num: "Waterproof Bale", sub: "Tamper Evident" },
+                        { label: "Consignment Weight", num: "8.4 Kg", sub: "Air Cargo" }
+                    ],
+                    milestoneBadge: "📦 Daily Lot Target",
+                    milestoneVal: "6 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 10 Pcs</span>",
+                    milestoneDesc: "<strong>60%</strong> of daily packaging capacity fulfilled."
+                },
+                'week': {
+                    sub: "Sales Volume & Procurement Lot Distribution (Units / Pcs)",
+                    cards: [
+                        { label: "Active Catalog SKUs", val: "6 Live Lots", pill: "🔥 Top Trending", isGold: true },
+                        { label: "Dispatched Volume", val: "48 Pcs", pill: "↑ 22.5%", isGold: false },
+                        { label: "Units In Transit", val: "10 Pcs", pill: "Surat Atelier", isGold: false },
+                        { label: "Delivered to Warehouse", val: "38 Pcs", pill: "↑ 18.0%", isGold: true }
+                    ],
+                    chartTitle: "Weekly Unit Sales (Pcs)",
+                    barActive: 7,
+                    gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 wholesale units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
+                    catTitle: "👗 Unit Volume Distribution by Category (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "26 Pcs (54%)", fill: 86 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "8 Pcs (17%)", fill: 80 },
+                        { name: "Royal Anarkali Kurti Sets", val: "10 Pcs (21%)", fill: 100 },
+                        { name: "Georgette & Chanderi Fabrics", val: "4 Pcs (8%)", fill: 50 }
+                    ],
+                    kpis: [
+                        { label: "Total Units Dispatched", num: "48 Pcs", sub: "6 Consignments" },
+                        { label: "Bale Packaging", num: "100% Sealed", sub: "Moisture Protected" },
+                        { label: "Defect Return Rate", num: "0.0%", sub: "Zero Returns" },
+                        { label: "Fastest Moving SKU", num: "KLN-SR-003", sub: "Kanjivaram Temple Silk" }
+                    ],
+                    milestoneBadge: "📦 Weekly Volume Goal",
+                    milestoneVal: "48 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 60 Pcs</span>",
+                    milestoneDesc: "<strong>80.0%</strong> of weekly lot volume fulfilled. 12 pcs remaining for weekly bonus lot!"
+                },
+                'month': {
+                    sub: "Monthly Volume & Wholesale Lot Distribution (Units / Pcs)",
+                    cards: [
+                        { label: "Procured Lots", val: "14 Lots", pill: "↑ 28.0%", isGold: true },
+                        { label: "Monthly Units Sold", val: "112 Pcs", pill: "↑ 24.5%", isGold: false },
+                        { label: "Units In Transit", val: "14 Pcs", pill: "En Route", isGold: false },
+                        { label: "Delivered Quantity", val: "98 Pcs", pill: "↑ 26.0%", isGold: true }
+                    ],
+                    chartTitle: "August Monthly Unit Volume (Pcs)",
+                    barActive: 7,
+                    gauge: { pct: "93.33%", offset: 16, badge: "+24.5%", desc: "112 total pieces procured in August, setting a new monthly high.", target: "120 Pcs", rev: "112 Pcs", today: "6 Pcs" },
+                    catTitle: "👗 August Category Units Breakdown (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "62 Pcs (55%)", fill: 94 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "18 Pcs (16%)", fill: 90 },
+                        { name: "Royal Anarkali Kurti Sets", val: "24 Pcs (22%)", fill: 100 },
+                        { name: "Georgette & Chanderi Fabrics", val: "8 Pcs (7%)", fill: 70 }
+                    ],
+                    kpis: [
+                        { label: "Monthly Units Sold", num: "112 Pcs", sub: "↑ 24.5% MoM" },
+                        { label: "Avg Lot Size", num: "8 Pcs / Lot", sub: "Optimal MOQ" },
+                        { label: "QC Pass Rate", num: "100%", sub: "Surat Atelier" },
+                        { label: "Top Fabric", num: "Mulberry Silk", sub: "62 Units" }
+                    ],
+                    milestoneBadge: "📦 Monthly Lot Milestone",
+                    milestoneVal: "112 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 120 Pcs</span>",
+                    milestoneDesc: "<strong>93.3%</strong> of monthly unit target completed."
+                },
+                'last_month': {
+                    sub: "July 2026 Reconciled Wholesale Volume (Units / Pcs)",
+                    cards: [
+                        { label: "July Lots Closed", val: "11 Lots", pill: "Delivered", isGold: true },
+                        { label: "Units Fulfilled", val: "88 Pcs", pill: "100% Verified", isGold: false },
+                        { label: "Transit Dispatches", val: "11 Bales", pill: "Air Cargo", isGold: false },
+                        { label: "Defect Incident", val: "0 Units", pill: "Zero Defect", isGold: true }
+                    ],
+                    chartTitle: "July Unit Fulfilment (Pcs)",
+                    barActive: 6,
+                    gauge: { pct: "100%", offset: 0, badge: "100%", desc: "88 pieces delivered with 100% customer acceptance and zero defects.", target: "80 Pcs", rev: "88 Pcs", today: "Done" },
+                    catTitle: "👗 July Category Units Breakdown (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "50 Pcs (57%)", fill: 100 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "14 Pcs (16%)", fill: 100 },
+                        { name: "Royal Anarkali Kurti Sets", val: "18 Pcs (20%)", fill: 100 },
+                        { name: "Georgette & Chanderi Fabrics", val: "6 Pcs (7%)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "July Total Delivered", num: "88 Pcs", sub: "11 Consignments" },
+                        { label: "Return Rate", num: "0.0%", sub: "Zero Defects" },
+                        { label: "Transit Success", num: "100%", sub: "BlueDart Express" },
+                        { label: "Wholesale Margin", num: "42.5%", sub: "Net Realized" }
+                    ],
+                    milestoneBadge: "📦 July Volume Target",
+                    milestoneVal: "88 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 80 Pcs</span>",
+                    milestoneDesc: "<strong>110.0%</strong> of July volume target achieved!"
+                },
+                'year': {
+                    sub: "Financial Year 2026-27 Wholesale Unit Volume (Pcs)",
+                    cards: [
+                        { label: "Annual B2B Lots", val: "58 Lots", pill: "FY26-27", isGold: true },
+                        { label: "Annual Units Shipped", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
+                        { label: "Avg Lot Size", val: "8.0 Pcs", pill: "Standard MOQ", isGold: false },
+                        { label: "Delivered Rate", val: "98.5%", pill: "Top Tier", isGold: true }
+                    ],
+                    chartTitle: "FY 2026-27 Monthly Lot Sales (Pcs)",
+                    barActive: 9,
+                    gauge: { pct: "77.33%", offset: 53, badge: "+28.2%", desc: "464 wholesale units shipped across 58 consignments in FY 2026-27.", target: "600 Pcs", rev: "464 Pcs", today: "Live" },
+                    catTitle: "👗 FY 2026-27 Category Volume (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "256 Pcs (55%)", fill: 80 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "74 Pcs (16%)", fill: 74 },
+                        { name: "Royal Anarkali Kurti Sets", val: "98 Pcs (21%)", fill: 88 },
+                        { name: "Georgette & Chanderi Fabrics", val: "36 Pcs (8%)", fill: 65 }
+                    ],
+                    kpis: [
+                        { label: "FY Units Shipped", num: "464 Pcs", sub: "58 Consignments" },
+                        { label: "Avg Consignment Size", num: "8.0 Pcs", sub: "Standard B2B Lot" },
+                        { label: "Total Fabric Meters", num: "2,550m", sub: "Silk & Zari" },
+                        { label: "Damage Incident Rate", num: "0.0%", sub: "Safe Delivery" }
+                    ],
+                    milestoneBadge: "📦 Annual Unit Milestone",
+                    milestoneVal: "464 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 600 Pcs</span>",
+                    milestoneDesc: "<strong>77.33%</strong> of Annual Unit Target completed."
+                }
+            },
+            'revenue': {
+                'today': {
+                    sub: "Today's Tax Invoicing & GST Settlement",
+                    cards: [
+                        { label: "GST Rate Tier", val: "5% GST", pill: "HSN 5007", isGold: true },
+                        { label: "Gross Taxable Value", val: "₹17,333", pill: "Net Base", isGold: false },
+                        { label: "Input Tax Credit (ITC)", val: "₹867", pill: "Claimable", isGold: false },
+                        { label: "Net Invoiced Paid", val: "₹18,200", pill: "NEFT Verified", isGold: true }
+                    ],
+                    chartTitle: "Today's Invoiced Revenue (₹)",
+                    barActive: 7,
+                    gauge: { pct: "100%", offset: 0, badge: "Reconciled", desc: "Today's tax invoice generated with GSTR-1 auto-reconciliation.", target: "₹18.2K", rev: "₹18.2K", today: "₹18.2K" },
+                    catTitle: "👗 Today's Tax Invoiced Breakdown (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (GST ₹867)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "Gross Taxable Amount", num: "₹17,333", sub: "HSN 5007" },
+                        { label: "GST Input Tax Credit", num: "₹867", sub: "5% CGST + SGST" },
+                        { label: "Invoice Number", num: "INV-26-8021", sub: "E-Way Bill Ready" },
+                        { label: "Payment Settlement", num: "₹18,200", sub: "NEFT Verified" }
+                    ],
+                    milestoneBadge: "💳 Daily Revenue Target",
+                    milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
+                    milestoneDesc: "<strong>36.4%</strong> of daily financial turnover goal achieved."
+                },
+                'week': {
+                    sub: "Gross B2B Revenue, Tax Invoices & ITC Credit Accrual",
+                    cards: [
+                        { label: "Gross Taxable Value", val: "₹1,95,297", pill: "5% GST Tier", isGold: true },
+                        { label: "Input Tax Credit (ITC)", val: "₹10,253", pill: "100% Matched", isGold: false },
+                        { label: "VIP Margin Saved", val: "₹13,500", pill: "Tier 1 Rate", isGold: false },
+                        { label: "Total Settled Turnover", val: "₹2,05,062", pill: "Paid In Full", isGold: true }
+                    ],
+                    chartTitle: "Weekly Invoiced Turnover (₹)",
+                    barActive: 7,
+                    gauge: { pct: "82.02%", offset: 42, badge: "Verified", desc: "₹10,253 in GST Input Tax Credit reconciled for current tax cycle.", target: "₹250K", rev: "₹205K ↑", today: "₹18.2K ↑" },
+                    catTitle: "👗 Tax Invoiced Turnover by Category (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (GST: ₹5,725)", fill: 88 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹49,147 (GST: ₹2,457)", fill: 72 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹25,825 (GST: ₹1,291)", fill: 95 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹15,590 (GST: ₹780)", fill: 60 }
+                    ],
+                    kpis: [
+                        { label: "Gross Taxable Value", num: "₹1,95,297", sub: "5% GST Saree/Fabrics" },
+                        { label: "Total GST ITC Accrued", num: "₹10,253", sub: "🛡️ 100% GSTR-1 Verified" },
+                        { label: "Wholesale Margin Saved", num: "₹13,500", sub: "👑 VIP Tier 1 Discount" },
+                        { label: "Settlement Status", num: "100% Cleared", sub: "Zero Pending Dues" }
+                    ],
+                    milestoneBadge: "👑 Financial Target",
+                    milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
+                    milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
+                },
+                'month': {
+                    sub: "August 2026 Tax Invoicing & Input Credit Breakdown",
+                    cards: [
+                        { label: "Monthly Taxable Base", val: "₹4,63,333", pill: "5% GST Base", isGold: true },
+                        { label: "Claimable GST ITC", val: "₹23,167", pill: "GSTR-2B Ready", isGold: false },
+                        { label: "B2B Margin Saved", val: "₹32,400", pill: "Volume Rebate", isGold: false },
+                        { label: "August Settled Total", val: "₹4,86,500", pill: "100% Invoiced", isGold: true }
+                    ],
+                    chartTitle: "August Gross Invoiced Revenue (₹)",
+                    barActive: 7,
+                    gauge: { pct: "97.30%", offset: 7, badge: "97.3%", desc: "August gross revenue stands at ₹4,86,500 with ₹24,325 in claimable GST ITC.", target: "₹500K", rev: "₹486.5K", today: "₹32.8K" },
+                    catTitle: "👗 August Tax Invoiced Breakdown (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹2,72,000 (GST: ₹13,600)", fill: 92 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹1,18,500 (GST: ₹5,925)", fill: 84 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹62,000 (GST: ₹3,100)", fill: 98 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹34,000 (GST: ₹1,700)", fill: 75 }
+                    ],
+                    kpis: [
+                        { label: "Monthly Taxable Value", num: "₹4,63,333", sub: "5% GST Base" },
+                        { label: "Monthly GST ITC", num: "₹23,167", sub: "🛡️ Auto E-Way Matched" },
+                        { label: "B2B Discount Margin", num: "₹32,400", sub: "VIP Volume Rebate" },
+                        { label: "Net Bank Inflow", num: "₹4,86,500", sub: "NEFT & RTGS" }
+                    ],
+                    milestoneBadge: "👑 Monthly Target",
+                    milestoneVal: "₹4,86,500 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹5,00,000</span>",
+                    milestoneDesc: "<strong>97.3%</strong> of monthly revenue target achieved. Only ₹13,500 needed to close out target!"
+                },
+                'last_month': {
+                    sub: "July 2026 Settled Invoices & GSTR-3B Tax Filing",
+                    cards: [
+                        { label: "Audited Taxable Base", val: "₹3,73,714", pill: "Audited", isGold: true },
+                        { label: "GST Claimed in 3B", val: "₹18,686", pill: "100% Realized", isGold: false },
+                        { label: "July Margin Saved", val: "₹26,800", pill: "Saved on MOQ", isGold: false },
+                        { label: "July Gross Settled", val: "₹3,92,400", pill: "Auditor Certified", isGold: true }
+                    ],
+                    chartTitle: "July Settled Tax Invoices (₹)",
+                    barActive: 6,
+                    gauge: { pct: "100%", offset: 0, badge: "Audited", desc: "July financial ledger reconciled and filed in GSTR-3B with full ITC clearance.", target: "₹350K", rev: "₹392.4K", today: "Settled" },
+                    catTitle: "👗 July Tax Invoiced Revenue (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹2,19,000 (GST: ₹10,950)", fill: 100 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹94,000 (GST: ₹4,700)", fill: 100 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹51,400 (GST: ₹2,570)", fill: 100 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹28,000 (GST: ₹1,400)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "July Taxable Value", num: "₹3,73,714", sub: "Audited Ledger" },
+                        { label: "GST Claimed in 3B", num: "₹18,686", sub: "Full ITC Realized" },
+                        { label: "Wholesale Margin", num: "₹26,800", sub: "Saved on MOQ" },
+                        { label: "Ledger Reconciliation", num: "100% Done", sub: "Auditor Certified" }
+                    ],
+                    milestoneBadge: "👑 Reconciled Target",
+                    milestoneVal: "₹3,92,400 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹3,50,000</span>",
+                    milestoneDesc: "<strong>112.1%</strong> of financial target accomplished in July 2026."
+                },
+                'year': {
+                    sub: "Financial Year 2026-27 B2B Revenue & Tax Compliance",
+                    cards: [
+                        { label: "Annual Taxable Base", val: "₹18,89,810", pill: "58 Tax Invoices", isGold: true },
+                        { label: "Total FY ITC Claimed", val: "₹99,215", pill: "100% GSTR-2B", isGold: false },
+                        { label: "Volume Discounts", val: "₹1,45,000", pill: "Saved on B2B", isGold: false },
+                        { label: "Annual Gross Total", val: "₹19,84,300", pill: "100% Cleared", isGold: true }
+                    ],
+                    chartTitle: "FY 2026-27 Revenue Growth (₹)",
+                    barActive: 9,
+                    gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "₹99,215 total GST Input Tax Credit accumulated across all consignments in FY26-27.", target: "₹2.5M", rev: "₹1.98M", today: "Live" },
+                    catTitle: "👗 FY 2026-27 Invoiced Category Revenue (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹11,10,000 (GST: ₹55,500)", fill: 82 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "₹4,76,000 (GST: ₹23,800)", fill: 76 },
+                        { name: "Royal Anarkali Kurti Sets", val: "₹2,58,000 (GST: ₹12,900)", fill: 90 },
+                        { name: "Georgette & Chanderi Fabrics", val: "₹1,40,300 (GST: ₹7,015)", fill: 68 }
+                    ],
+                    kpis: [
+                        { label: "Total Taxable Sales", num: "₹18,89,810", sub: "58 Tax Invoices" },
+                        { label: "Total FY ITC Claimed", num: "₹99,215", sub: "100% GSTR-2B Verified" },
+                        { label: "Annual Margin Savings", num: "₹1,45,000", sub: "B2B Volume Rates" },
+                        { label: "Payment Discipline", num: "100% On-Time", sub: "Zero Penalty" }
+                    ],
+                    milestoneBadge: "👑 Annual VIP Milestone",
+                    milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
+                    milestoneDesc: "<strong>79.37%</strong> of Annual Target achieved. Procure ₹5,15,700 more to unlock ₹50L Super Wholesaler Tier!"
+                }
+            }
+        };
+
+        window.updateDashboardAnalytics = function() {
+            var data = (ANALYTICS_DATA[analyticsMode] && ANALYTICS_DATA[analyticsMode][currentSelectedDateRange]) 
+                ? ANALYTICS_DATA[analyticsMode][currentSelectedDateRange] 
+                : ANALYTICS_DATA['overview']['week'];
+
+            // 1. Update Subtitle
+            var subEl = document.getElementById('statsSubtitle');
+            if (subEl) subEl.textContent = data.sub;
+
+            // 2. Update Top 4 Metric Cards
+            for (var i = 0; i < 4; i++) {
+                var c = data.cards[i];
+                var lbl = document.getElementById('statLabel' + (i + 1));
+                var val = document.getElementById('statVal' + (i + 1));
+                var pill = document.getElementById('statPill' + (i + 1));
+                if (lbl && c) lbl.textContent = c.label;
+                if (val && c) {
+                    val.innerHTML = c.val;
+                    if (c.isGold) {
+                        val.style.color = 'var(--ws-gold-primary)';
+                    } else {
+                        val.style.color = 'var(--ws-text-main)';
+                    }
+                }
+                if (pill && c) pill.textContent = c.pill;
+            }
+
+            // 3. Update Bar Chart Active Column & Title
+            var chartTitleEl = document.getElementById('chartTitle');
+            if (chartTitleEl) chartTitleEl.textContent = data.chartTitle;
+
+            for (var b = 0; b < 12; b++) {
+                var col = document.getElementById('barMonth' + b);
+                if (col) {
+                    col.classList.remove('active');
+                    if (b === data.barActive) col.classList.add('active');
+                }
+            }
+
+            // 4. Update Target Gauge
+            var gVal = document.getElementById('targetGaugeVal');
+            var gBadge = document.getElementById('targetGaugeBadge');
+            var gFill = document.getElementById('targetGaugeFill');
+            var gDesc = document.getElementById('targetGaugeDesc');
+            var gTarget = document.getElementById('gStatTarget');
+            var gRev = document.getElementById('gStatRevenue');
+            var gToday = document.getElementById('gStatToday');
+
+            if (gVal) gVal.textContent = data.gauge.pct;
+            if (gBadge) gBadge.textContent = data.gauge.badge;
+            if (gFill) gFill.style.strokeDashoffset = data.gauge.offset;
+            if (gDesc) gDesc.innerHTML = data.gauge.desc;
+            if (gTarget) gTarget.textContent = data.gauge.target;
+            if (gRev) gRev.textContent = data.gauge.rev;
+            if (gToday) gToday.textContent = data.gauge.today;
+
+            // 5. Update Category Breakdown List
+            var catTitleEl = document.getElementById('catBreakdownTitle');
+            if (catTitleEl) catTitleEl.textContent = data.catTitle;
+
+            var catList = document.getElementById('catProgList');
+            if (catList && data.cats) {
+                catList.innerHTML = '';
+                data.cats.forEach(function(item) {
+                    var row = document.createElement('div');
+                    row.className = 'ws-cat-prog-item';
+                    row.innerHTML = `
+                        <div class="ws-cat-prog-header">
+                            <span class="ws-cat-prog-name">${item.name}</span>
+                            <span class="ws-cat-prog-val">${item.val}</span>
+                        </div>
+                        <div class="ws-cat-prog-track">
+                            <div class="ws-cat-prog-fill" style="width: ${item.fill}%;"></div>
+                        </div>
+                    `;
+                    catList.appendChild(row);
+                });
+            }
+
+            // 6. Update KPIs Grid
+            var kpiContainer = document.getElementById('kpiGrid');
+            if (kpiContainer && data.kpis) {
+                kpiContainer.innerHTML = '';
+                data.kpis.forEach(function(k) {
+                    var box = document.createElement('div');
+                    box.className = 'ws-kpi-box';
+                    box.innerHTML = `
+                        <div class="ws-kpi-label">${k.label}</div>
+                        <div class="ws-kpi-num">${k.num}</div>
+                        <div class="ws-kpi-sub">${k.sub}</div>
+                    `;
+                    kpiContainer.appendChild(box);
+                });
+            }
+
+            // 7. Update Milestone
+            var mBadge = document.getElementById('statsMilestoneBadge');
+            var mVal = document.getElementById('statsMilestoneVal');
+            var mDesc = document.getElementById('statsMilestoneDesc');
+            if (mBadge) mBadge.textContent = data.milestoneBadge;
+            if (mVal) mVal.innerHTML = data.milestoneVal;
+            if (mDesc) mDesc.innerHTML = data.milestoneDesc;
+        };
+
         window.setOverviewFilter = function(mode, btn) {
-            btn.parentElement.querySelectorAll('button').forEach(function(b) {
-                b.classList.remove('active');
+            analyticsMode = mode;
+            if (btn && btn.parentElement) {
+                btn.parentElement.querySelectorAll('button').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+            }
+            updateDashboardAnalytics();
+            window.showWsToast('📊 Switched to ' + mode.toUpperCase() + ' Analytics Mode');
+        };
+
+        /* ── Date Range Modal Controller ── */
+        window.openDateRangePicker = function() {
+            var modal = document.getElementById('wsDateRangeModal');
+            if (modal) modal.classList.add('active');
+        };
+
+        window.closeDateRangeModal = function() {
+            var modal = document.getElementById('wsDateRangeModal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        window.applyDatePreset = function(presetKey, label) {
+            currentSelectedDateRange = presetKey;
+            
+            var labelEl = document.getElementById('selectedDateRangeLabel');
+            if (labelEl) labelEl.textContent = label;
+
+            // Highlight selected button inside modal
+            var modalButtons = document.querySelectorAll('#datePresetButtons button');
+            modalButtons.forEach(function(b) {
+                b.className = 'ws-btn ws-btn-secondary';
+                if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(presetKey)) {
+                    b.className = 'ws-btn ws-btn-primary';
+                }
             });
-            btn.classList.add('active');
-            window.showWsToast('📊 Switched to ' + mode.toUpperCase() + ' analytics mode');
+
+            closeDateRangeModal();
+            updateDashboardAnalytics();
+            window.showWsToast('📅 Applied Date Filter: ' + label);
         };
 
         window.handleGlobalQuickSearch = function(input) {
