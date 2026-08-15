@@ -16,7 +16,7 @@
     background: #FFFFFF;
     border-top: 1.5px solid var(--gold-border, rgba(138,104,31,0.25));
     box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
-    padding: 10px 14px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
     display: none; /* Desktop default */
     align-items: center;
     gap: 10px;
@@ -30,7 +30,7 @@
     }
     /* Add padding to page bottom so content doesn't get covered by sticky bar */
     .pdp-main-wrapper {
-        padding-bottom: 74px !important;
+        padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
     }
 }
 
