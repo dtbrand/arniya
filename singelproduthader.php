@@ -338,11 +338,15 @@
         transform: translateY(-26px);
     }
 
-    /* Reduced Mobile Header Height */
+    /* Mobile Header Layout: Back to Shop (Left) | Brand Logo (Center) | Share Button (Right) */
     .pdp-header-main {
+        position: relative;
         height: 48px;
         min-height: 48px;
-        padding: 0 12px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .pdp-top-ticker {
         height: 26px;
@@ -352,49 +356,87 @@
         line-height: 1.2;
     }
 
-    /* Back to shop on Left, Brand Logo on Right */
     .pdp-header-left {
-        width: 100%;
+        width: auto;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 8px;
     }
     .pdp-header-actions {
         display: none !important;
     }
 
-    /* Normal Small Back to Shop Button */
+    /* Normal Small Back to Shop Button (Left) */
     .pdp-back-btn {
-        padding: 4px 10px;
-        font-size: 0.72rem;
-        gap: 5px;
+        padding: 4px 9px;
+        font-size: 0.70rem;
+        gap: 4px;
         border-radius: 14px;
+        z-index: 2;
     }
     .pdp-back-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    /* Perfectly Centered Brand Seal (Mobile) */
+    .pdp-brand-seal {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        gap: 6px;
+        z-index: 1;
+        pointer-events: auto;
+    }
+    .pdp-logo-badge {
+        width: 26px;
+        height: 26px;
+    }
+    .pdp-logo-badge svg {
         width: 13px;
         height: 13px;
     }
-
-    /* Compact Brand Seal on Right */
-    .pdp-brand-seal {
-        gap: 7px;
-        margin-left: auto;
-    }
-    .pdp-logo-badge {
-        width: 28px;
-        height: 28px;
-    }
-    .pdp-logo-badge svg {
-        width: 14px;
-        height: 14px;
-    }
     .pdp-brand-text h1 {
-        font-size: 0.88rem;
+        font-size: 0.84rem;
     }
     .pdp-brand-text span {
-        font-size: 0.46rem;
-        letter-spacing: 0.14em;
+        font-size: 0.44rem;
+        letter-spacing: 0.12em;
+    }
+
+    /* Right Share Icon Button (Mobile) */
+    .pdp-mobile-share-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #FAF8F4;
+        border: 1.5px solid var(--soft-platinum, #E5E3DE);
+        color: var(--dark-gold, #8A681F);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        z-index: 2;
+    }
+    .pdp-mobile-share-btn:hover {
+        background: #FFFFFF;
+        border-color: var(--dark-gold, #8A681F);
+        color: var(--dark-gold, #8A681F);
+    }
+    .pdp-mobile-share-btn svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        stroke-width: 2.2;
+        fill: none;
+    }
+}
+@media (min-width: 768px) {
+    .pdp-mobile-share-btn {
+        display: none !important;
     }
 }
 @media (max-width: 480px) {
@@ -458,8 +500,18 @@
             <span class="current"><?= htmlspecialchars($product['name'] ?? 'Luxury Outfit') ?></span>
         </nav>
 
-        <!-- Right: Actions (Wishlist, Cart, Account) -->
+        <!-- Right Share Button (Mobile Only) -->
+        <button type="button" class="pdp-mobile-share-btn" id="pdpMobileShareBtn" aria-label="Share Product" title="Share" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+
+        <!-- Right: Actions (Share, Wishlist, Cart, Account - Desktop) -->
         <div class="pdp-header-actions">
+
+            <!-- Share Product Button (Desktop) -->
+            <button class="pdp-icon-btn pdp-share-btn" id="pdpShareBtn" aria-label="Share Product" title="Share Product" onclick="if(typeof window.shareCurrentProduct==='function') window.shareCurrentProduct();">
+                <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
 
             <!-- Wishlist Button -->
             <button class="pdp-icon-btn" id="pdpWishlistBtn" aria-label="Wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); else window.location.href='wishlist.php';">
@@ -486,6 +538,39 @@
 /* ── Single Product Header Sync Engine ── */
 (function() {
     'use strict';
+
+    /* Product Share Handler */
+    window.shareCurrentProduct = function() {
+        var title = document.title || 'Kalaniketan Silk Saree';
+        var url = window.location.href;
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: 'Check out this exquisite ethnic luxury from Kalaniketan Couture:\n' + title,
+                url: url
+            }).catch(function() {});
+        } else {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(function() {
+                    alert('✨ Product link copied to clipboard!');
+                }).catch(function() {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        }
+    };
+
+    function fallbackCopy(text) {
+        var t = document.createElement('textarea');
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        alert('✨ Product link copied to clipboard!');
+    }
 
     /* ── Top Announcement Slider Engine ── */
     var pdpTickerIndex = 0;

@@ -1121,6 +1121,40 @@ input[type=range].sf-range::-moz-range-thumb {
     pointer-events: none;
 }
 
+/* ── Share Icon Button on Product Photo (Directly above Category Tag) ── */
+.card-share-btn {
+    position: absolute;
+    bottom: 28px;
+    right: 6px;
+    width: clamp(22px, 6.8vw, 28px);
+    height: clamp(22px, 6.8vw, 28px);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(138, 104, 31, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-gold);
+    cursor: pointer;
+    z-index: 3;
+    transition: all var(--transition);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.card-share-btn:hover, .card-share-btn:active {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    border-color: var(--dark-gold);
+    transform: scale(1.1);
+}
+.card-share-btn svg {
+    width: clamp(10px, 3vw, 13px);
+    height: clamp(10px, 3vw, 13px);
+    stroke: currentColor;
+    stroke-width: 2.2;
+    fill: none;
+}
+
 .card-info-text-row {
     display: flex;
     align-items: center;
@@ -1880,6 +1914,11 @@ input[type=range].sf-range::-moz-range-thumb {
                         <button class="quick-view-btn" data-id="<?= $p['id'] ?>">Quick View</button>
                     </div>
 
+                    <!-- Share Button on Photo (Directly Above Category Tag) -->
+                    <button type="button" class="card-share-btn" data-id="<?= $p['id'] ?>" data-name="<?= htmlspecialchars($p['name']) ?>" aria-label="Share <?= htmlspecialchars($p['name']) ?>" title="Share <?= htmlspecialchars($p['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard('<?= addslashes(htmlspecialchars($p['name'])) ?>','singelprodut.php?id=<?= $p['id'] ?>');}">
+                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    </button>
+
                     <!-- Category Box on Photo Bottom-Right Corner -->
                     <span class="card-cat-photo-tag"><?= htmlspecialchars($p['category']) ?></span>
                 </div>
@@ -1962,6 +2001,39 @@ input[type=range].sf-range::-moz-range-thumb {
             setTimeout(function () { t.remove(); }, 400);
         }, 2200);
     };
+
+    /* Global Product Card Share Function */
+    window.shareProductCard = function(name, relativeUrl) {
+        var title = name + ' — Kalaniketan Couture';
+        var fullUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + relativeUrl;
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: 'Check out ' + name + ' at Kalaniketan:\n' + fullUrl,
+                url: fullUrl
+            }).catch(function() {});
+        } else {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(fullUrl).then(function() {
+                    window.showToast('✨ Link for ' + name + ' copied!');
+                }).catch(function() {
+                    fallbackCardShare(fullUrl, name);
+                });
+            } else {
+                fallbackCardShare(fullUrl, name);
+            }
+        }
+    };
+
+    function fallbackCardShare(url, name) {
+        var t = document.createElement('textarea');
+        t.value = url;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        window.showToast('✨ Link for ' + (name || 'product') + ' copied!');
+    }
 
     /* ════════════════════════════════════════════════════
        MASTER FILTER ENGINE & STATE MANAGEMENT
