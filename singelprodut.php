@@ -2225,6 +2225,72 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: var(--dark-gold);
 }
 
+/* ── Logged-in Customer Badge Chip ── */
+.pdp-wa-user-chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAF8F4;
+    border: 1.5px solid rgba(138, 104, 31, 0.25);
+    border-radius: 10px;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+.pdp-wa-chip-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.pdp-wa-chip-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gold-primary, #8A681F);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+.pdp-wa-chip-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.pdp-wa-chip-name {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark-text, #24211C);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pdp-wa-chip-phone {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--mid-text, #5A5348);
+}
+.pdp-wa-chip-edit-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--gold-primary, #8A681F);
+    color: var(--gold-primary, #8A681F);
+    font-size: 0.70rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.pdp-wa-chip-edit-btn:hover {
+    background: var(--gold-primary, #8A681F);
+    color: #FFFFFF;
+}
+
 .pdp-wa-form-group {
     display: flex;
     flex-direction: column;
@@ -2911,19 +2977,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <!-- Quick Checkout Form -->
             <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
-                <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
+                
+                <!-- Logged-in Profile Chip (Shows when user is signed in) -->
+                <div class="pdp-wa-user-chip" id="pdpWaUserChip" style="display:none;">
+                    <div class="pdp-wa-chip-left">
+                        <span class="pdp-wa-chip-avatar">👤</span>
+                        <div class="pdp-wa-chip-meta">
+                            <div class="pdp-wa-chip-name" id="pdpWaChipName">Customer</div>
+                            <div class="pdp-wa-chip-phone" id="pdpWaChipPhone">+91</div>
+                        </div>
+                    </div>
+                    <button type="button" class="pdp-wa-chip-edit-btn" id="pdpWaChipEditBtn" onclick="togglePdpWaUserInputs(true)">Change</button>
                 </div>
 
-                <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
-                    <div class="pdp-wa-phone-row">
-                        <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
-                        <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
+                <!-- Name & Phone Inputs (Shown for guests, or when user clicks 'Change') -->
+                <div id="pdpWaInputsWrap" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="pdp-wa-form-group">
+                        <label class="pdp-wa-label" for="pdpWaName">👤 Full Name *</label>
+                        <input type="text" id="pdpWaName" required placeholder="e.g. Priya Sharma" class="pdp-wa-input" autocomplete="name" />
+                    </div>
+
+                    <div class="pdp-wa-form-group">
+                        <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
+                        <div class="pdp-wa-phone-row">
+                            <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
+                            <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input" autocomplete="tel" />
+                        </div>
                     </div>
                 </div>
 
+                <!-- Delivery Address (Always clean and blank for new entries) -->
                 <div class="pdp-wa-form-group">
                     <label class="pdp-wa-label" for="pdpWaAddress">📍 Delivery Address (House / Flat / Street) *</label>
                     <input type="text" id="pdpWaAddress" required placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
@@ -3211,29 +3294,71 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var prEl = document.getElementById('pdpWaModalPrice');
         if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
 
-        // Pre-fill user data if available
-        try {
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            if (userRaw) {
+        // Delivery Address fields start fully blank for new entries
+        var addrField = document.getElementById('pdpWaAddress');
+        if (addrField) addrField.value = '';
+        var cityField = document.getElementById('pdpWaCity');
+        if (cityField) cityField.value = '';
+        var pinField = document.getElementById('pdpWaPincode');
+        if (pinField) pinField.value = '';
+
+        // Check if customer is logged in
+        var userChip = document.getElementById('pdpWaUserChip');
+        var inputsWrap = document.getElementById('pdpWaInputsWrap');
+        var chipEditBtn = document.getElementById('pdpWaChipEditBtn');
+        var nameField = document.getElementById('pdpWaName');
+        var phoneField = document.getElementById('pdpWaPhone');
+
+        var userRaw = localStorage.getItem('kalaniketan_user');
+        if (userRaw) {
+            try {
                 var u = JSON.parse(userRaw);
-                var nameField = document.getElementById('pdpWaName');
-                if (nameField && !nameField.value && u.name) nameField.value = u.name;
-                var phoneField = document.getElementById('pdpWaPhone');
-                if (phoneField && !phoneField.value && u.phone) phoneField.value = u.phone;
+                var userName = u.name || 'Valued Member';
+                var userPhone = u.phone || '';
+                
+                if (nameField) nameField.value = userName;
+                if (phoneField) phoneField.value = userPhone;
+
+                var chipName = document.getElementById('pdpWaChipName');
+                var chipPhone = document.getElementById('pdpWaChipPhone');
+                if (chipName) chipName.textContent = userName;
+                if (chipPhone) {
+                    var cleanP = userPhone.replace(/[^0-9]/g, '');
+                    chipPhone.textContent = cleanP ? ('+91 ' + cleanP.slice(-10)) : 'Verified Customer';
+                }
+
+                if (userChip) userChip.style.display = 'flex';
+                if (inputsWrap) inputsWrap.style.display = 'none';
+                if (chipEditBtn) chipEditBtn.textContent = 'Change';
+            } catch(e) {
+                if (userChip) userChip.style.display = 'none';
+                if (inputsWrap) inputsWrap.style.display = 'flex';
             }
-            var savedAddr = localStorage.getItem('kalaniketan_saved_address');
-            if (savedAddr) {
-                var a = JSON.parse(savedAddr);
-                var addrField = document.getElementById('pdpWaAddress');
-                if (addrField && !addrField.value && a.address) addrField.value = a.address;
-                var cityField = document.getElementById('pdpWaCity');
-                if (cityField && !cityField.value && a.city) cityField.value = a.city;
-                var pinField = document.getElementById('pdpWaPincode');
-                if (pinField && !pinField.value && a.pincode) pinField.value = a.pincode;
-            }
-        } catch(e) {}
+        } else {
+            // Guest mode: show blank name & phone inputs
+            if (userChip) userChip.style.display = 'none';
+            if (inputsWrap) inputsWrap.style.display = 'flex';
+            if (nameField) nameField.value = '';
+            if (phoneField) phoneField.value = '';
+        }
 
         modal.classList.add('open');
+    };
+
+    window.togglePdpWaUserInputs = function() {
+        var inputsWrap = document.getElementById('pdpWaInputsWrap');
+        var chipEditBtn = document.getElementById('pdpWaChipEditBtn');
+        if (!inputsWrap) return;
+
+        if (inputsWrap.style.display === 'none') {
+            inputsWrap.style.display = 'flex';
+            if (chipEditBtn) chipEditBtn.textContent = 'Collapse';
+            var nameField = document.getElementById('pdpWaName');
+            if (nameField) nameField.focus();
+        } else {
+            inputsWrap.style.display = 'none';
+            if (chipEditBtn) chipEditBtn.textContent = 'Change';
+        }
     };
 
     window.closePdpWhatsAppOrderModal = function() {
