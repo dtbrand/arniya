@@ -797,16 +797,147 @@ $catalogProducts = [
         /* ════════════════════════════════════════════════════
            BOTTOM CONTROLS & STATISTICS HEADER (Segmented Tabs)
         ════════════════════════════════════════════════════ */
+        /* ── Statistics Comprehensive Card & Multi-Dimensional Grid ── */
+        .ws-statistics-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--ws-border);
+            border-radius: var(--ws-radius-lg);
+            padding: clamp(18px, 2.2vw, 24px);
+            margin-bottom: clamp(16px, 2vw, 24px);
+            box-shadow: var(--ws-shadow-card);
+        }
+        .ws-stats-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1.2fr 1fr;
+            gap: 22px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--ws-border-light);
+        }
+        .ws-stats-col-title {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* Category Progress Bars */
+        .ws-cat-prog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ws-cat-prog-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ws-cat-prog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.80rem;
+        }
+        .ws-cat-prog-name {
+            font-weight: 700;
+            color: var(--ws-text-main);
+        }
+        .ws-cat-prog-val {
+            font-weight: 800;
+            color: var(--ws-gold-primary);
+        }
+        .ws-cat-prog-track {
+            width: 100%;
+            height: 7px;
+            background: #F4EFE6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .ws-cat-prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ws-gold-primary) 0%, var(--ws-gold-accent) 100%);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        /* KPI Cards Grid */
+        .ws-kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .ws-kpi-box {
+            background: #FAF8F4;
+            border: 1px solid var(--ws-border);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--ws-transition);
+        }
+        .ws-kpi-box:hover {
+            border-color: var(--ws-gold-primary);
+            background: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(138,104,31,0.08);
+        }
+        .ws-kpi-label {
+            font-size: 0.70rem;
+            font-weight: 700;
+            color: var(--ws-text-muted);
+            text-transform: uppercase;
+            line-height: 1.25;
+        }
+        .ws-kpi-num {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+            margin: 4px 0 2px;
+        }
+        .ws-kpi-sub {
+            font-size: 0.68rem;
+            color: var(--ws-success);
+            font-weight: 700;
+        }
+
+        /* Target & Tier Status Box */
+        .ws-tier-status-box {
+            background: linear-gradient(135deg, #FAF5E8 0%, #FDFBF7 100%);
+            border: 1.5px solid var(--ws-gold-border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .ws-tier-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            font-size: 0.70rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            align-self: flex-start;
+            font-family: var(--ws-font-serif);
+        }
+
         .ws-section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 16px;
         }
         .ws-sec-title-box h3 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             color: var(--ws-gold-primary);
             font-family: var(--ws-font-serif);
@@ -2090,23 +2221,129 @@ $catalogProducts = [
 
                 </div>
 
-                <!-- Statistics & Segmented Controls Bar -->
-                <div class="ws-section-header">
-                    <div class="ws-sec-title-box">
-                        <h3>Statistics</h3>
-                        <p>Target you've set for each month</p>
+                <!-- ── Full Comprehensive Statistics & Analytics Card ── -->
+                <div class="ws-statistics-card">
+                    <div class="ws-section-header" style="margin-bottom:0;">
+                        <div class="ws-sec-title-box">
+                            <h3>Statistics & Performance Analytics</h3>
+                            <p id="statsSubtitle">Monthly Procurement Targets, Category Mix & Logistics Performance</p>
+                        </div>
+
+                        <div class="ws-sec-actions-row">
+                            <div class="ws-segmented-control">
+                                <button class="ws-seg-btn active" id="statBtnOverview" onclick="setOverviewFilter('overview', this)">Overview</button>
+                                <button class="ws-seg-btn" id="statBtnSales" onclick="setOverviewFilter('sales', this)">Sales</button>
+                                <button class="ws-seg-btn" id="statBtnRevenue" onclick="setOverviewFilter('revenue', this)">Revenue</button>
+                            </div>
+                            <div class="ws-date-range-pill" onclick="window.showWsToast('📅 Date Range: 10 Aug - 16 Aug 2026 (Live)')">
+                                <span>📅</span>
+                                <span>Aug 10 - Aug 16</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="ws-sec-actions-row">
-                        <div class="ws-segmented-control">
-                            <button class="ws-seg-btn active" onclick="setOverviewFilter('overview', this)">Overview</button>
-                            <button class="ws-seg-btn" onclick="setOverviewFilter('sales', this)">Sales</button>
-                            <button class="ws-seg-btn" onclick="setOverviewFilter('revenue', this)">Revenue</button>
+                    <!-- 3-Column Multi-Dimensional Analytics Grid -->
+                    <div class="ws-stats-grid" id="statsDynamicContent">
+                        
+                        <!-- Column 1: Category Volume Mix & Target Fulfillment -->
+                        <div>
+                            <div class="ws-stats-col-title">
+                                <span>👗 Category Procurement Breakdown</span>
+                            </div>
+                            <div class="ws-cat-prog-list">
+                                <div class="ws-cat-prog-item">
+                                    <div class="ws-cat-prog-header">
+                                        <span class="ws-cat-prog-name">Pure Silk & Zari Sarees</span>
+                                        <span class="ws-cat-prog-val">₹1,14,500 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(56%)</span></span>
+                                    </div>
+                                    <div class="ws-cat-prog-track">
+                                        <div class="ws-cat-prog-fill" style="width: 88%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ws-cat-prog-item">
+                                    <div class="ws-cat-prog-header">
+                                        <span class="ws-cat-prog-name">Bridal Velvet & Zardosi Lehengas</span>
+                                        <span class="ws-cat-prog-val">₹49,147 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(24%)</span></span>
+                                    </div>
+                                    <div class="ws-cat-prog-track">
+                                        <div class="ws-cat-prog-fill" style="width: 72%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ws-cat-prog-item">
+                                    <div class="ws-cat-prog-header">
+                                        <span class="ws-cat-prog-name">Royal Anarkali Kurti Sets</span>
+                                        <span class="ws-cat-prog-val">₹25,825 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(13%)</span></span>
+                                    </div>
+                                    <div class="ws-cat-prog-track">
+                                        <div class="ws-cat-prog-fill" style="width: 95%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ws-cat-prog-item">
+                                    <div class="ws-cat-prog-header">
+                                        <span class="ws-cat-prog-name">Georgette & Chanderi Fabrics</span>
+                                        <span class="ws-cat-prog-val">₹15,590 <span style="font-size:0.70rem; font-weight:600; color:var(--ws-text-muted);">(7%)</span></span>
+                                    </div>
+                                    <div class="ws-cat-prog-track">
+                                        <div class="ws-cat-prog-fill" style="width: 60%;"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="ws-date-range-pill">
-                            <span>📅</span>
-                            <span>Aug 10 - Aug 16</span>
+
+                        <!-- Column 2: Key Operational Metrics (KPIs) -->
+                        <div>
+                            <div class="ws-stats-col-title">
+                                <span>⚡ Key Wholesale Performance (KPIs)</span>
+                            </div>
+                            <div class="ws-kpi-grid">
+                                <div class="ws-kpi-box">
+                                    <div class="ws-kpi-label">Avg. Order Value</div>
+                                    <div class="ws-kpi-num">₹34,177</div>
+                                    <div class="ws-kpi-sub">↑ 12.4% vs last month</div>
+                                </div>
+                                <div class="ws-kpi-box">
+                                    <div class="ws-kpi-label">Dispatch Turnaround</div>
+                                    <div class="ws-kpi-num">1.8 Days</div>
+                                    <div class="ws-kpi-sub">⚡ Priority VIP BlueDart</div>
+                                </div>
+                                <div class="ws-kpi-box">
+                                    <div class="ws-kpi-label">GST Input Tax Credit</div>
+                                    <div class="ws-kpi-num">₹10,253</div>
+                                    <div class="ws-kpi-sub">🛡️ 100% GSTR-1 Matched</div>
+                                </div>
+                                <div class="ws-kpi-box">
+                                    <div class="ws-kpi-label">Lot Reorder Rate</div>
+                                    <div class="ws-kpi-num">83.3%</div>
+                                    <div class="ws-kpi-sub">🔁 5 of 6 Lots Repeated</div>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Column 3: Monthly Target & Milestone -->
+                        <div>
+                            <div class="ws-stats-col-title">
+                                <span>🎯 Monthly Milestone</span>
+                            </div>
+                            <div class="ws-tier-status-box">
+                                <div>
+                                    <span class="ws-tier-badge">👑 Tier 1 VIP Member</span>
+                                    <h4 style="font-size:1.15rem; font-weight:800; color:var(--ws-gold-primary); margin:8px 0 4px; font-family:var(--ws-font-serif);">
+                                        ₹2,05,062 <span style="font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);">/ ₹2,50,000</span>
+                                    </h4>
+                                    <p style="font-size:0.74rem; color:var(--ws-text-muted); line-height:1.4;">
+                                        <strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!
+                                    </p>
+                                </div>
+
+                                <button class="ws-btn ws-btn-primary ws-btn-sm" style="margin-top:12px; width:100%;" onclick="switchWsTab('trending')">
+                                    + Explore Catalog to Unlock Tier 2
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
