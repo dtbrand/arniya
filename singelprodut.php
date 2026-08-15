@@ -2163,31 +2163,169 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border: 1.5px solid var(--gold-border);
     animation: modalPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* ════════════════════════════════════════════════════
+   LUXURY WHATSAPP QUICK CHECKOUT MODAL (MATCHING CHECKOUT.PHP)
+════════════════════════════════════════════════════ */
+.pdp-wa-modal-box {
+    background: #FCFBF8;
+    width: 100%;
+    max-width: 520px;
+    max-height: 94vh;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    overflow: hidden;
+    border: 1.5px solid rgba(138, 104, 31, 0.3);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+    color: #24211C;
+}
+.pdp-modal-overlay.open .pdp-wa-modal-box {
+    transform: translateY(0) scale(1);
+}
+
+/* ── Modal Header (Exact match to checkout.php .co-header) ── */
+.pdp-wa-co-header {
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--gold-primary, #8A681F);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+}
+.pdp-wa-co-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pdp-wa-co-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8A681F 0%, #6F5218 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(138,104,31,0.3);
+    flex-shrink: 0;
+}
+.pdp-wa-co-icon svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+.pdp-wa-co-title-group h3 {
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #8A681F;
+    margin: 0;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+}
+.pdp-wa-co-title-group span {
+    font-size: 0.62rem;
+    color: #5A5348;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.pdp-wa-co-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(138,104,31,0.25);
+    background: #FAF8F4;
+    color: #8A681F;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+.pdp-wa-co-close-btn:hover {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
+    transform: rotate(90deg);
+}
+
+/* ── Modal Body & Section Cards ── */
 .pdp-wa-modal-body {
-    padding: 14px 18px 18px;
+    padding: 14px 16px 16px;
     overflow-y: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    -webkit-overflow-scrolling: touch;
 }
+.pdp-wa-sec-card {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(138, 104, 31, 0.22);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.pdp-wa-sec-card:hover {
+    border-color: #8A681F;
+    box-shadow: 0 4px 14px rgba(138,104,31,0.08);
+}
+.pdp-wa-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed rgba(138,104,31,0.25);
+}
+.pdp-wa-card-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #8A681F;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.pdp-wa-card-title svg {
+    width: 15px;
+    height: 15px;
+    stroke: #8A681F;
+    stroke-width: 2;
+    fill: none;
+    flex-shrink: 0;
+}
+
+/* Product Preview in Section Card */
 .pdp-wa-modal-product {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: #FAF8F4;
-    border: 1px solid rgba(138, 104, 31, 0.25);
-    border-radius: 10px;
-    padding: 10px 12px;
 }
 .pdp-wa-modal-img {
     width: 54px;
-    height: 68px;
-    border-radius: 6px;
+    height: 70px;
+    border-radius: 8px;
     object-fit: cover;
     object-position: center top;
     flex-shrink: 0;
-    border: 1px solid var(--soft-platinum);
+    border: 1.5px solid #F0EAD8;
 }
 .pdp-wa-modal-info {
     flex: 1;
@@ -2197,213 +2335,109 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     min-width: 0;
 }
 .pdp-wa-modal-name {
-    font-size: 0.84rem;
-    font-weight: 800;
-    color: var(--dark-text);
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #24211C;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .pdp-wa-modal-meta {
-    font-size: 0.70rem;
-    color: var(--mid-text);
+    font-size: 0.68rem;
+    color: #5A5348;
     display: flex;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 .pdp-wa-modal-meta span {
-    background: #FFFFFF;
-    border: 1px solid var(--soft-platinum);
+    background: #FAF8F4;
+    border: 1px solid rgba(138, 104, 31, 0.18);
     padding: 1px 6px;
     border-radius: 4px;
     font-weight: 700;
 }
 .pdp-wa-modal-price {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 900;
-    color: var(--dark-gold);
+    color: #8A681F;
 }
 
-/* ── Logged-in Customer Badge Chip ── */
-.pdp-wa-user-chip {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #FAF8F4;
-    border: 1.5px solid rgba(138, 104, 31, 0.25);
-    border-radius: 10px;
-    padding: 8px 12px;
-    transition: all 0.2s ease;
-}
-.pdp-wa-chip-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-}
-.pdp-wa-chip-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--gold-primary, #8A681F);
-    color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-}
-.pdp-wa-chip-meta {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-.pdp-wa-chip-name {
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--dark-text, #24211C);
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.pdp-wa-chip-phone {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--mid-text, #5A5348);
-}
-.pdp-wa-chip-edit-btn {
-    background: #FFFFFF;
-    border: 1px solid var(--gold-primary, #8A681F);
-    color: var(--gold-primary, #8A681F);
-    font-size: 0.70rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    flex-shrink: 0;
-}
-.pdp-wa-chip-edit-btn:hover {
-    background: var(--gold-primary, #8A681F);
-    color: #FFFFFF;
-}
-
-/* ── Form Section Heading ── */
-.pdp-wa-section-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    margin-top: 2px;
-    padding-bottom: 4px;
-    border-bottom: 1.5px solid rgba(138, 104, 31, 0.2);
-}
-.pdp-wa-sec-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-.pdp-wa-sec-icon {
-    font-size: 0.88rem;
-    line-height: 1;
-}
-.pdp-wa-sec-title {
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--dark-gold, #8A681F);
-}
-.pdp-wa-quick-fill-chips {
-    display: flex;
-    gap: 6px;
-}
-.pdp-wa-quick-chip {
-    background: #FFFFFF;
-    border: 1px solid var(--gold-primary, #8A681F);
-    color: var(--gold-primary, #8A681F);
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    line-height: 1.2;
-    user-select: none;
-}
-.pdp-wa-quick-chip:hover, .pdp-wa-quick-chip.active {
-    background: var(--gold-primary, #8A681F);
-    color: #FFFFFF;
-}
-
-/* ── Collapsible Delivery Address Section ── */
-.pdp-wa-addr-collapse-wrap {
-    background: #FAF8F4;
-    border: 1.5px solid rgba(138, 104, 31, 0.25);
-    border-radius: 10px;
-    padding: 9px 12px;
-    transition: all 0.2s ease;
-}
-.pdp-wa-addr-collapse-wrap.open {
-    background: #FFFFFF;
-    border-color: var(--gold-primary, #8A681F);
-    box-shadow: 0 4px 14px rgba(138,104,31,0.08);
-}
-.pdp-wa-addr-toggle-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-align: left;
-    user-select: none;
-}
-.pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
-    transform: rotate(180deg);
-}
-
-.pdp-wa-form-group {
+/* ── Form Inputs (Matching checkout.php) ── */
+.pdp-wa-input-group {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-bottom: 9px;
+}
+.pdp-wa-input-group:last-child {
+    margin-bottom: 0;
 }
 .pdp-wa-label {
-    font-size: 0.70rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--dark-text);
-    letter-spacing: 0.05em;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #24211C;
+    letter-spacing: 0.02em;
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: space-between;
 }
-.pdp-wa-input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
+.pdp-wa-label .required {
+    color: #D32F2F;
 }
 .pdp-wa-input {
     width: 100%;
-    height: 38px;
-    border: 1.5px solid var(--soft-platinum);
+    height: 40px;
+    border: 1.5px solid #DDD8CD;
     border-radius: 8px;
     padding: 0 12px;
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    color: var(--dark-text);
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.84rem;
+    color: #24211C;
+    background: #FAF9F5;
     outline: none;
+    box-sizing: border-box;
     transition: all 0.2s ease;
-    background: #FFFFFF;
 }
 .pdp-wa-input:focus {
-    border-color: var(--dark-gold);
-    box-shadow: 0 0 0 3px rgba(138, 104, 31, 0.12);
+    border-color: #8A681F;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+}
+
+/* Phone input with country code */
+.pdp-wa-phone-wrap {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #DDD8CD;
+    border-radius: 8px;
+    background: #FAF9F5;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+.pdp-wa-phone-wrap:focus-within {
+    border-color: #8A681F;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+}
+.pdp-wa-phone-prefix {
+    padding: 0 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #8A681F;
+    background: #F0EAD8;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #DDD8CD;
+    flex-shrink: 0;
+}
+.pdp-wa-phone-input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 10px !important;
 }
 
 /* 3-column location grid */
@@ -2421,84 +2455,115 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Phone input with country code */
-.pdp-wa-phone-row {
-    display: flex;
-    gap: 6px;
+/* ── Collapsible Delivery Address Toggle ── */
+.pdp-wa-addr-collapse-wrap {
+    transition: all 0.2s ease;
 }
-.pdp-wa-prefix-badge {
-    height: 38px;
-    padding: 0 10px;
-    border-radius: 8px;
-    background: #FAF8F4;
-    border: 1.5px solid var(--soft-platinum);
-    font-size: 0.80rem;
-    font-weight: 700;
-    color: var(--dark-text);
+.pdp-wa-addr-toggle-btn {
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
-    flex-shrink: 0;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
     user-select: none;
 }
+.pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
+    transform: rotate(180deg);
+}
 
-.pdp-wa-payment-options {
+/* ── Payment Mode Selection Cards (Matching checkout.php) ── */
+.pdp-wa-payment-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-    margin-top: 2px;
 }
 .pdp-wa-pay-card {
     display: flex;
     align-items: center;
-    gap: 8px;
-    border: 1.5px solid var(--soft-platinum);
-    border-radius: 8px;
-    padding: 9px 10px;
+    gap: 9px;
+    padding: 10px 11px;
+    border-radius: 10px;
+    border: 1.5px solid #DDD8CD;
+    background: #FAF9F5;
     cursor: pointer;
-    font-size: 0.74rem;
-    font-weight: 700;
-    color: var(--dark-text);
-    transition: all 0.2s;
-    background: #FFFFFF;
+    transition: all 0.2s ease;
+    user-select: none;
 }
 .pdp-wa-pay-card:hover {
-    border-color: var(--dark-gold);
+    border-color: #8A681F;
+    background: #FFFFFF;
 }
-.pdp-wa-pay-card.active {
-    border-color: var(--dark-gold);
-    background: #FAF5E8;
-    color: var(--dark-gold);
+.pdp-wa-pay-card.selected {
+    border-color: #8A681F;
+    background: #FCF8EE;
+    box-shadow: 0 2px 10px rgba(138,104,31,0.12);
 }
+.pdp-wa-pay-radio {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #C5BBAA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.pdp-wa-pay-card.selected .pdp-wa-pay-radio {
+    border-color: #8A681F;
+}
+.pdp-wa-pay-card.selected .pdp-wa-pay-radio::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8A681F;
+}
+.pdp-wa-pay-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.pdp-wa-pay-icon.cod { background: #FFF3E0; color: #E65100; }
+.pdp-wa-pay-icon.upi { background: #EDE7F6; color: #673AB7; }
+.pdp-wa-pay-icon svg { width: 16px; height: 16px; fill: currentColor; }
 
+/* ── CTA Button ── */
 .pdp-wa-submit-btn {
     width: 100%;
-    height: 44px;
+    height: 48px;
     border-radius: 10px;
     background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: 0.82rem;
+    font-size: 0.88rem;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(37,211,102,0.35);
-    transition: all 0.2s ease;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 4px;
 }
 .pdp-wa-submit-btn:hover {
-    background: #0E7063;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(37,211,102,0.45);
+    background: linear-gradient(135deg, #20BD5A 0%, #0E7063 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(37,211,102,0.45);
 }
-.pdp-wa-submit-btn svg { width: 19px; height: 19px; fill: currentColor; }
+.pdp-wa-submit-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
 /* Toast Container */
 .toast-container {
@@ -3040,116 +3105,154 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 </div>
 
 <!-- ════ INSTANT WHATSAPP QUICK ORDER CHECKOUT MODAL ════ -->
-<div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Order">
+<div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Checkout">
     <div class="pdp-wa-modal-box">
-        <div class="pdp-modal-header">
-            <h3 class="pdp-modal-title" style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:#25D366;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                <span>Instant WhatsApp Order Concierge</span>
-            </h3>
-            <button class="pdp-modal-close-btn" onclick="closePdpWhatsAppOrderModal()" aria-label="Close">&times;</button>
+        <!-- Brand Header (Matching checkout.php .co-header) -->
+        <div class="pdp-wa-co-header">
+            <div class="pdp-wa-co-brand">
+                <div class="pdp-wa-co-icon">
+                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
+                <div class="pdp-wa-co-title-group">
+                    <h3>KALANIKETAN</h3>
+                    <span>Luxury Ethnic • WhatsApp Checkout</span>
+                </div>
+            </div>
+            <button class="pdp-wa-co-close-btn" onclick="closePdpWhatsAppOrderModal()" aria-label="Close">&times;</button>
         </div>
+
         <div class="pdp-wa-modal-body">
-            <!-- Product Preview Card -->
-            <div class="pdp-wa-modal-product">
-                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
-                <div class="pdp-wa-modal-info">
-                    <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
-                    <div class="pdp-wa-modal-meta">
-                        <span>Color: <strong id="pdpWaModalColor"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
-                        <span>Size: <strong id="pdpWaModalSize"><?= htmlspecialchars($product['size'][0] ?? 'Free Size') ?></strong></span>
-                        <span>Qty: <strong id="pdpWaModalQty">1</strong></span>
-                    </div>
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
-                        <span class="pdp-wa-modal-price" id="pdpWaModalPrice">₹<?= number_format($product['price']) ?></span>
-                        <span style="font-size:0.68rem; color:#2E7D32; font-weight:800;">⚡ Free Delivery (3–5 Days)</span>
+            <!-- Order Item Summary Card (Matching checkout.php) -->
+            <div class="pdp-wa-sec-card">
+                <div class="pdp-wa-modal-product">
+                    <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
+                    <div class="pdp-wa-modal-info">
+                        <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
+                        <div class="pdp-wa-modal-meta">
+                            <span>Color: <strong id="pdpWaModalColor" style="color:var(--dark-text);"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
+                            <span>Size: <strong id="pdpWaModalSize" style="color:var(--dark-text);"><?= htmlspecialchars($product['size'][0] ?? 'Free Size') ?></strong></span>
+                            <span>Qty: <strong id="pdpWaModalQty" style="color:var(--dark-text);">1</strong></span>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
+                            <span class="pdp-wa-modal-price" id="pdpWaModalPrice">₹<?= number_format($product['price']) ?></span>
+                            <span style="font-size:0.65rem; color:#2E7D32; font-weight:800; background:#E8F5E9; padding:2px 7px; border-radius:4px;">⚡ Free Delivery (3–5 Days)</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Checkout Form -->
-            <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:10px;">
+            <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:12px;">
                 
-                <!-- Section 1: Customer Contact Details (ALWAYS VISIBLE & OPEN) -->
-                <div class="pdp-wa-section-heading">
-                    <div class="pdp-wa-sec-title-wrap">
-                        <span class="pdp-wa-sec-icon">👤</span>
-                        <span class="pdp-wa-sec-title">Customer Contact Details</span>
-                    </div>
-                </div>
-
-                <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaName">👤 Customer Full Name *</label>
-                    <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
-                </div>
-
-                <div class="pdp-wa-form-group">
-                    <label class="pdp-wa-label" for="pdpWaPhone">📱 WhatsApp Mobile Number *</label>
-                    <div class="pdp-wa-phone-row">
-                        <div class="pdp-wa-prefix-badge">🇮🇳 +91</div>
-                        <input type="text" id="pdpWaPhone" required placeholder="Enter 10-Digit Mobile Number" class="pdp-wa-input" autocomplete="tel" />
-                    </div>
-                </div>
-
-                <!-- Section 2: Delivery & Billing Address (COLLAPSIBLE / HIDDEN BY DEFAULT) -->
-                <div class="pdp-wa-addr-collapse-wrap" id="pdpWaAddrCollapseWrap">
-                    <button type="button" class="pdp-wa-addr-toggle-btn" onclick="togglePdpWaAddressSection()" aria-expanded="false">
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span style="font-size:0.9rem;">📍</span>
-                            <span style="font-weight:800; font-size:0.74rem; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.04em;">Delivery & Billing Address</span>
-                            <span style="font-size:0.62rem; background:#FAF5E8; color:var(--dark-gold, #8A681F); padding:1px 5px; border-radius:3px; font-weight:700;">Optional</span>
+                <!-- Section 1: Customer Contact Details Card (ALWAYS VISIBLE & OPEN) -->
+                <div class="pdp-wa-sec-card">
+                    <div class="pdp-wa-card-header">
+                        <div class="pdp-wa-card-title">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>Customer Contact Details</span>
                         </div>
-                        <span class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="font-size:0.75rem; color:var(--dark-gold, #8A681F); transition:transform 0.2s;">▼</span>
+                    </div>
+
+                    <div class="pdp-wa-input-group">
+                        <label class="pdp-wa-label" for="pdpWaName">Customer Full Name <span class="required">*</span></label>
+                        <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
+                    </div>
+
+                    <div class="pdp-wa-input-group">
+                        <label class="pdp-wa-label" for="pdpWaPhone">WhatsApp Mobile Number <span class="required">*</span></label>
+                        <div class="pdp-wa-phone-wrap">
+                            <div class="pdp-wa-phone-prefix">🇮🇳 +91</div>
+                            <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input pdp-wa-phone-input" autocomplete="tel" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Delivery & Billing Address Card (COLLAPSIBLE / OPTIONAL) -->
+                <div class="pdp-wa-sec-card pdp-wa-addr-collapse-wrap" id="pdpWaAddrCollapseWrap">
+                    <button type="button" class="pdp-wa-addr-toggle-btn" onclick="togglePdpWaAddressSection()" aria-expanded="false">
+                        <div class="pdp-wa-card-title">
+                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Delivery & Billing Address</span>
+                            <span style="font-size:0.62rem; background:#FAF5E8; color:#8A681F; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid rgba(138,104,31,0.2);">Optional</span>
+                        </div>
+                        <span class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="font-size:0.75rem; color:#8A681F; transition:transform 0.25s;">▼</span>
                     </button>
 
-                    <div class="pdp-wa-addr-collapsible-body" id="pdpWaAddrBody" style="display:none; flex-direction:column; gap:8px; margin-top:8px;">
+                    <div class="pdp-wa-addr-collapsible-body" id="pdpWaAddrBody" style="display:none; flex-direction:column; gap:9px; margin-top:10px; padding-top:8px; border-top:1px dashed rgba(138,104,31,0.25);">
                         <!-- Full Address -->
-                        <div class="pdp-wa-form-group">
-                            <label class="pdp-wa-label" for="pdpWaAddress">🏠 Full Address (House / Flat / Street / Landmark)</label>
+                        <div class="pdp-wa-input-group">
+                            <label class="pdp-wa-label" for="pdpWaAddress">House / Flat No., Street, Landmark</label>
                             <input type="text" id="pdpWaAddress" placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
                         </div>
 
                         <!-- City, State & Pincode Grid -->
                         <div class="pdp-wa-loc-grid">
-                            <div class="pdp-wa-form-group">
-                                <label class="pdp-wa-label" for="pdpWaCity">🏙️ City</label>
+                            <div class="pdp-wa-input-group">
+                                <label class="pdp-wa-label" for="pdpWaCity">City</label>
                                 <input type="text" id="pdpWaCity" placeholder="e.g. Mumbai" class="pdp-wa-input" />
                             </div>
-                            <div class="pdp-wa-form-group">
-                                <label class="pdp-wa-label" for="pdpWaState">🗺️ State</label>
+                            <div class="pdp-wa-input-group">
+                                <label class="pdp-wa-label" for="pdpWaState">State</label>
                                 <input type="text" id="pdpWaState" placeholder="e.g. Maharashtra" class="pdp-wa-input" />
                             </div>
-                            <div class="pdp-wa-form-group pdp-wa-col-pin">
-                                <label class="pdp-wa-label" for="pdpWaPincode">📮 Pincode</label>
-                                <input type="text" id="pdpWaPincode" placeholder="e.g. 400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
+                            <div class="pdp-wa-input-group pdp-wa-col-pin">
+                                <label class="pdp-wa-label" for="pdpWaPincode">Pincode</label>
+                                <input type="text" id="pdpWaPincode" placeholder="400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Payment Preference Section -->
-                <div class="pdp-wa-section-heading">
-                    <span class="pdp-wa-sec-icon">💳</span>
-                    <span class="pdp-wa-sec-title">Payment Method</span>
-                </div>
+                <!-- Section 3: Payment Preference Card (Matching checkout.php) -->
+                <div class="pdp-wa-sec-card">
+                    <div class="pdp-wa-card-header">
+                        <div class="pdp-wa-card-title">
+                            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            <span>Payment Preference</span>
+                        </div>
+                    </div>
 
-                <div class="pdp-wa-form-group">
-                    <div class="pdp-wa-payment-options">
-                        <label class="pdp-wa-pay-card active" id="pdpWaPayCodCard">
-                            <input type="radio" name="pdpWaPayment" value="Cash on Delivery (COD)" checked onchange="document.getElementById('pdpWaPayCodCard').classList.add('active'); document.getElementById('pdpWaPayUpiCard').classList.remove('active');" />
-                            <span>💵 Cash on Delivery</span>
+                    <div class="pdp-wa-payment-grid">
+                        <label class="pdp-wa-pay-card selected" id="pdpWaPayCodCard" onclick="selectPdpWaPayment('cod')">
+                            <input type="radio" name="pdpWaPayment" id="pdpWaRadioCod" value="Cash on Delivery (COD)" checked style="display:none;" />
+                            <div class="pdp-wa-pay-radio"></div>
+                            <div class="pdp-wa-pay-icon cod">
+                                <svg viewBox="0 0 24 24"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1"/><polyline points="10 12 14 12 14 16"/><line x1="10" y1="14" x2="14" y2="14"/><rect x="14" y="6" width="7" height="12" rx="2"/></svg>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-size:0.75rem; font-weight:800; color:#24211C; line-height:1.2;">Cash on Delivery</div>
+                                <div style="font-size:0.62rem; color:#5A5348;">Pay upon arrival</div>
+                            </div>
                         </label>
-                        <label class="pdp-wa-pay-card" id="pdpWaPayUpiCard">
-                            <input type="radio" name="pdpWaPayment" value="UPI on WhatsApp (GPay / PhonePe / Paytm)" onchange="document.getElementById('pdpWaPayUpiCard').classList.add('active'); document.getElementById('pdpWaPayCodCard').classList.remove('active');" />
-                            <span>⚡ UPI on WhatsApp</span>
+
+                        <label class="pdp-wa-pay-card" id="pdpWaPayUpiCard" onclick="selectPdpWaPayment('upi')">
+                            <input type="radio" name="pdpWaPayment" id="pdpWaRadioUpi" value="UPI on WhatsApp (GPay / PhonePe / Paytm)" style="display:none;" />
+                            <div class="pdp-wa-pay-radio"></div>
+                            <div class="pdp-wa-pay-icon upi">
+                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-size:0.75rem; font-weight:800; color:#24211C; line-height:1.2;">UPI on WhatsApp</div>
+                                <div style="font-size:0.62rem; color:#5A5348;">Instant scan / pay</div>
+                            </div>
                         </label>
                     </div>
                 </div>
 
+                <!-- Submit Button -->
                 <button type="submit" class="pdp-wa-submit-btn">
                     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     <span>Confirm Order & Send to WhatsApp</span>
                 </button>
+
+                <!-- Trust Badges Row -->
+                <div style="display:flex; align-items:center; justify-content:center; gap:12px; font-size:0.64rem; color:#5A5348; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">
+                    <span>🔒 256-Bit Encrypted</span>
+                    <span>•</span>
+                    <span>⚡ 3–5 Day Fast Delivery</span>
+                    <span>•</span>
+                    <span>💎 100% Authentic</span>
+                </div>
             </form>
         </div>
     </div>
@@ -3464,6 +3567,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         restoreUserSavedAddress();
 
         modal.classList.add('open');
+    };
+
+    window.selectPdpWaPayment = function(type) {
+        var codCard = document.getElementById('pdpWaPayCodCard');
+        var upiCard = document.getElementById('pdpWaPayUpiCard');
+        var codRadio = document.getElementById('pdpWaRadioCod');
+        var upiRadio = document.getElementById('pdpWaRadioUpi');
+
+        if (type === 'cod') {
+            if (codCard) codCard.classList.add('selected');
+            if (upiCard) upiCard.classList.remove('selected');
+            if (codRadio) codRadio.checked = true;
+        } else {
+            if (upiCard) upiCard.classList.add('selected');
+            if (codCard) codCard.classList.remove('selected');
+            if (upiRadio) upiRadio.checked = true;
+        }
     };
 
     window.closePdpWhatsAppOrderModal = function() {
