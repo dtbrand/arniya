@@ -683,6 +683,11 @@
                     </div>
                 </div>
 
+                <a href="wholesaler.php" id="acModalWsBtn" style="display:none; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
+                    <span>📦 Open Wholesaler B2B Dashboard</span>
+                    <span>→</span>
+                </a>
+
                 <div class="ac-stat-grid">
                     <div class="ac-stat-card" onclick="if(typeof window.openWishlistDrawer==='function'){window.closeAccountModal();window.openWishlistDrawer();}">
                         <div class="ac-stat-num" id="acStatWishlist">0</div>
@@ -896,6 +901,10 @@
                     var r = user.role || 'Retailer';
                     tierEl.textContent = `👑 Royal ${r} VIP Member`;
                 }
+                var wsBtn = document.getElementById('acModalWsBtn');
+                var isWs = (user.role || '').toLowerCase() === 'wholesaler';
+                if (wsBtn) wsBtn.style.display = isWs ? 'flex' : 'none';
+
                 if (initEl) {
                     var parts = (user.name || 'RS').split(' ');
                     initEl.textContent = (parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '')).toUpperCase();

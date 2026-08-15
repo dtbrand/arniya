@@ -1256,6 +1256,17 @@
                 </button>
             </div>
 
+            <!-- Wholesaler VIP Access Banner -->
+            <div class="ws-vip-access-banner" id="wsVipAccessBanner" style="display:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:2px solid var(--dark-gold, #8A681F); border-radius:14px; padding:14px 18px; margin-bottom:18px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <div style="font-family:var(--font-serif, 'Cinzel', serif); font-size:1.05rem; font-weight:800; color:var(--dark-gold, #8A681F);">👑 Wholesaler B2B VIP Hub Ready</div>
+                    <div style="font-size:0.75rem; color:var(--mid-text, #423C34); margin-top:2px;">Access bulk tier pricing, live courier dispatch tracking, GST billing, and reports.</div>
+                </div>
+                <a href="wholesaler.php" class="auth-btn-submit" style="padding:8px 18px; font-size:0.78rem; text-decoration:none; display:inline-flex; width:auto; border-radius:8px;">
+                    Open Wholesaler Portal →
+                </a>
+            </div>
+
             <!-- Dashboard Grid -->
             <div class="dash-grid">
                 
@@ -1636,6 +1647,10 @@
                     var icon = r === 'Wholesaler' ? '📦' : (r === 'Reseller' ? '💼' : '🛍️');
                     roleEl.textContent = `${icon} ${r} Member`;
                 }
+
+                var wsBanner = document.getElementById('wsVipAccessBanner');
+                var isWs = (user.role || '').toLowerCase() === 'wholesaler';
+                if (wsBanner) wsBanner.style.display = isWs ? 'flex' : 'none';
 
                 if (initEl) {
                     var parts = (user.name || 'Member').split(' ');

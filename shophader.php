@@ -884,6 +884,10 @@
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
                     </a>
+                    <a href="wholesaler.php" class="ac-drop-item" id="acDropWholesaler" style="display:none; color:#8A681F; font-weight:800;">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>📦 Wholesaler B2B Hub</span>
+                    </a>
                     <a href="myaccount.php?tab=login" class="ac-drop-item" id="acDropLogin">
                         <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                         <span>Sign In / Login</span>
@@ -1153,13 +1157,16 @@ window.closeWishlistDrawer = function() {
         var dropLogin = document.getElementById('acDropLogin');
         var dropRegister = document.getElementById('acDropRegister');
         var dropForgot = document.getElementById('acDropForgot');
+        var dropWholesaler = document.getElementById('acDropWholesaler');
         var dropDivider = document.getElementById('acDropDivider');
         var dropLogout = document.getElementById('acDropLogout');
 
         if (userRaw && label) {
             var user = JSON.parse(userRaw);
             var firstName = (user.name || 'Member').split(' ')[0];
+            var isWholesaler = (user.role || '').toLowerCase() === 'wholesaler';
             label.textContent = firstName;
+            if (dropWholesaler) dropWholesaler.style.display = isWholesaler ? 'flex' : 'none';
             if (dropLogin) dropLogin.style.display = 'none';
             if (dropRegister) dropRegister.style.display = 'none';
             if (dropForgot) dropForgot.style.display = 'none';
@@ -1167,6 +1174,7 @@ window.closeWishlistDrawer = function() {
             if (dropLogout) dropLogout.style.display = 'flex';
         } else if (label) {
             label.textContent = 'Account';
+            if (dropWholesaler) dropWholesaler.style.display = 'none';
             if (dropLogin) dropLogin.style.display = 'flex';
             if (dropRegister) dropRegister.style.display = 'flex';
             if (dropForgot) dropForgot.style.display = 'flex';

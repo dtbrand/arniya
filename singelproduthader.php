@@ -645,14 +645,18 @@
             var userRaw = localStorage.getItem('kalaniketan_user');
             var userLabel = document.getElementById('pdpUserLabel');
             var userAvatar = document.getElementById('pdpUserAvatar');
+            var acBtn = document.getElementById('pdpAccountBtn');
             if (userRaw && userLabel && userAvatar) {
                 var user = JSON.parse(userRaw);
                 var firstName = (user.name || 'Member').split(' ')[0];
+                var isWholesaler = (user.role || '').toLowerCase() === 'wholesaler';
                 userLabel.textContent = firstName;
                 userAvatar.textContent = firstName.charAt(0).toUpperCase();
+                if (acBtn) acBtn.href = isWholesaler ? 'wholesaler.php' : 'myaccount.php';
             } else if (userLabel && userAvatar) {
                 userLabel.textContent = 'Account';
                 userAvatar.textContent = '👤';
+                if (acBtn) acBtn.href = 'myaccount.php';
             }
         } catch(e) {}
     };
