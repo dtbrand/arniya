@@ -19,11 +19,105 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    transition: box-shadow 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+    will-change: transform;
 }
 .shop-header.scrolled {
+    transform: translateY(-30px);
     box-shadow: 0 4px 20px rgba(138,104,31,0.14);
 }
+
+/* ── Top Announcement Slider Bar ── */
+.shop-top-ticker {
+    background: linear-gradient(90deg, #705114 0%, #8E6B1F 50%, #705114 100%);
+    color: #FFF9EE;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    user-select: none;
+}
+.shop-ticker-track {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.shop-ticker-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 24px;
+}
+.shop-ticker-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+}
+.shop-ticker-slide.exit-up {
+    opacity: 0;
+    transform: translateY(-100%);
+    position: absolute;
+}
+.shop-ticker-icon {
+    font-size: 0.82rem;
+    display: inline-block;
+}
+.shop-ticker-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.shop-ticker-text strong {
+    font-weight: 800;
+    color: #FFE699;
+}
+.shop-ticker-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 2;
+}
+.shop-ticker-arrow:hover {
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.15);
+}
+.shop-ticker-arrow.prev { left: 4px; }
+.shop-ticker-arrow.next { right: 4px; }
 
 /* ── Normal Header Container ── */
 .header-normal-view {
@@ -690,6 +784,30 @@
 
 <header class="shop-header" id="shopHeader">
 
+    <!-- Top Announcement Bar (Auto-Sliding Slider) -->
+    <div class="shop-top-ticker" id="shopAnnouncementTicker">
+        <button type="button" class="shop-ticker-arrow prev" onclick="slideShopTicker(-1)" aria-label="Previous announcement">‹</button>
+        <div class="shop-ticker-track" id="shopTickerTrack">
+            <div class="shop-ticker-slide active">
+                <span class="shop-ticker-icon">✨</span>
+                <span class="shop-ticker-text"><strong>100% Original Product</strong> • Certified Handloom Silk</span>
+            </div>
+            <div class="shop-ticker-slide">
+                <span class="shop-ticker-icon">⚡</span>
+                <span class="shop-ticker-text"><strong>Fast Delivery in 3–5 Days</strong> • All India Express</span>
+            </div>
+            <div class="shop-ticker-slide">
+                <span class="shop-ticker-icon">💎</span>
+                <span class="shop-ticker-text"><strong>7-Day Fast Exchange</strong> • Zero-Hassle Doorstep Pickup</span>
+            </div>
+            <div class="shop-ticker-slide">
+                <span class="shop-ticker-icon">🎁</span>
+                <span class="shop-ticker-text"><strong>Luxury Gift Box</strong> • Complimentary Royal Packaging</span>
+            </div>
+        </div>
+        <button type="button" class="shop-ticker-arrow next" onclick="slideShopTicker(1)" aria-label="Next announcement">›</button>
+    </div>
+
     <!-- ═══ Normal Header Bar (shown on desktop, and mobile default) ═══ -->
     <div class="header-normal-view" id="headerNormalView">
         <!-- Left: Stylish Plus Button & Brand Logo -->
@@ -1057,6 +1175,46 @@ window.closeWishlistDrawer = function() {
         }
     }
 
+    /* ── Top Announcement Slider Engine ── */
+    var shopTickerIndex = 0;
+    var shopTickerInterval = null;
+
+    window.slideShopTicker = function(dir) {
+        var slides = document.querySelectorAll('#shopTickerTrack .shop-ticker-slide');
+        if (!slides.length) return;
+        
+        var currentSlide = slides[shopTickerIndex];
+        shopTickerIndex = (shopTickerIndex + dir + slides.length) % slides.length;
+        var nextSlide = slides[shopTickerIndex];
+
+        slides.forEach(function(s) {
+            s.classList.remove('active', 'exit-up');
+        });
+
+        if (currentSlide && currentSlide !== nextSlide) {
+            currentSlide.classList.add('exit-up');
+        }
+        if (nextSlide) {
+            nextSlide.classList.add('active');
+        }
+
+        restartShopTickerTimer();
+    };
+
+    function restartShopTickerTimer() {
+        if (shopTickerInterval) clearInterval(shopTickerInterval);
+        shopTickerInterval = setInterval(function() {
+            window.slideShopTicker(1);
+        }, 3200);
+    }
+
+    // Auto-start ticker slider
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', restartShopTickerTimer);
+    } else {
+        restartShopTickerTimer();
+    }
+
     /* Smooth Zero-Jitter Scroll & Auto-Open Search Bar Engine */
     var isShopHeaderScrolled = false;
     var userManuallyClosedMobileSearch = false;
@@ -1069,7 +1227,7 @@ window.closeWishlistDrawer = function() {
                 if (header) {
                     var isMobile = window.innerWidth <= 767;
 
-                    if (sy > 25) {
+                    if (sy > 45) {
                         if (!isShopHeaderScrolled) {
                             isShopHeaderScrolled = true;
                             header.classList.add('scrolled');
@@ -1078,7 +1236,7 @@ window.closeWishlistDrawer = function() {
                         if (isMobile && !userManuallyClosedMobileSearch && !header.classList.contains('mobile-search-active')) {
                             header.classList.add('mobile-search-active');
                         }
-                    } else if (sy < 8) {
+                    } else if (sy < 10) {
                         if (isShopHeaderScrolled) {
                             isShopHeaderScrolled = false;
                             header.classList.remove('scrolled');
