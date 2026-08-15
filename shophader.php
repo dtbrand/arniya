@@ -43,10 +43,25 @@
     border-top: 1px solid rgba(255, 235, 180, 0.35);
     border-bottom: 1.5px solid #5C4310;
     height: 30px;
+    max-height: 30px;
     display: flex;
     align-items: center;
     padding: 0 20px;
     box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
+    transition: max-height 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, padding 0.3s ease, border-color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Auto-collapse Subnav on Scroll (Auto Height Kum) */
+.shop-header.scrolled .header-attached-subnav {
+    max-height: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+    pointer-events: none;
 }
 
 .subnav-scroll-track {
@@ -573,7 +588,7 @@
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
-/* ── Mobile Layout & Perfectly Stable Zero-Vibration Layout (<768px) ── */
+/* ── Mobile Layout & Auto-Compact Header on Scroll (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
         height: auto;
@@ -582,13 +597,13 @@
         transition: box-shadow 0.25s ease;
     }
 
-    /* Fixed 42px Slot for both Normal View and Search Bar (Zero Reflow) */
+    /* Fixed 42px Slot for Normal View and Search Bar */
     .header-normal-view,
     .mobile-full-search-bar {
         height: 42px;
         min-height: 42px;
-        max-height: 42px;
         box-sizing: border-box;
+        transition: height 0.25s ease, padding 0.25s ease;
     }
 
     .header-normal-view {
@@ -642,7 +657,7 @@
         display: none !important;
     }
 
-    /* Open Mobile Search Bar (Matching Exact 42px Height) */
+    /* Open Mobile Search Bar */
     .mobile-full-search-bar {
         padding: 0 8px;
         gap: 6px;
@@ -650,6 +665,7 @@
     .mobile-search-input-wrap {
         height: 32px;
         padding: 0 10px;
+        transition: height 0.25s ease;
     }
     .mobile-search-input-field {
         font-size: 0.78rem;
@@ -667,10 +683,9 @@
         height: 13px;
     }
 
-    /* Fixed 26px Subnav (Matching Exact Height) */
+    /* Subnav (26px at Top, Collapses on Scroll to 0px) */
     .header-attached-subnav {
         height: 26px;
-        min-height: 26px;
         max-height: 26px;
         padding: 0 8px;
         box-sizing: border-box;
@@ -683,6 +698,22 @@
     .subnav-icon {
         width: 10px;
         height: 10px;
+    }
+
+    /* ── SCROLLED SLIM SEARCH BAR (Total Height = 38px!) ── */
+    .shop-header.scrolled .mobile-full-search-bar,
+    .shop-header.scrolled .header-normal-view {
+        height: 38px;
+        min-height: 38px;
+        padding: 0 6px;
+    }
+    .shop-header.scrolled .mobile-search-input-wrap {
+        height: 30px;
+        padding: 0 8px;
+    }
+    .shop-header.scrolled .mobile-search-close-btn {
+        width: 28px;
+        height: 28px;
     }
 }
 </style>
