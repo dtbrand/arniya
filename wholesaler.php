@@ -1878,6 +1878,9 @@ $catalogProducts = [
                 padding: 6px 12px;
                 height: 54px;
             }
+            .ws-header-btn {
+                display: none;
+            }
             .ws-main-content {
                 padding: 12px 10px 80px;
             }
@@ -2836,10 +2839,10 @@ $catalogProducts = [
             <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             <span>Orders</span>
         </button>
-        <button class="ws-dock-btn" id="dockBtnTracking" onclick="switchWsTab('tracking')">
-            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-            <span>Track</span>
-        </button>
+        <a href="shop.php" class="ws-dock-btn" id="dockBtnShop">
+            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span>Shop</span>
+        </a>
         <button class="ws-dock-btn" id="dockBtnReports" onclick="switchWsTab('reports')">
             <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             <span>Reports</span>
