@@ -2598,6 +2598,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .pdp-wa-submit-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
+/* ── Trust Badges Single Line on Mobile ── */
+.pdp-wa-trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: clamp(0.52rem, 2vw, 0.62rem);
+    color: #6E675D;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 2px 2px;
+    user-select: none;
+    margin-top: 1px;
+}
+.pdp-wa-trust-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.pdp-wa-trust-dot {
+    color: rgba(138, 104, 31, 0.4);
+    font-size: 0.55rem;
+    flex-shrink: 0;
+}
+
 /* Toast Container */
 .toast-container {
     position: fixed; bottom: 84px; left: 50%;
@@ -3278,13 +3308,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span>Confirm Order & Send to WhatsApp</span>
                 </button>
 
-                <!-- Trust Badges Row -->
-                <div style="display:flex; align-items:center; justify-content:center; gap:12px; font-size:0.64rem; color:#5A5348; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">
-                    <span>🔒 256-Bit Encrypted</span>
-                    <span>•</span>
-                    <span>⚡ 3–5 Day Fast Delivery</span>
-                    <span>•</span>
-                    <span>💎 100% Authentic</span>
+                <!-- Trust Badges Row (All in 1 Single Line on Mobile) -->
+                <div class="pdp-wa-trust-row">
+                    <span class="pdp-wa-trust-item">🔒 256-Bit Encrypted</span>
+                    <span class="pdp-wa-trust-dot">•</span>
+                    <span class="pdp-wa-trust-item">⚡ 3–5 Day Delivery</span>
+                    <span class="pdp-wa-trust-dot">•</span>
+                    <span class="pdp-wa-trust-item">💎 100% Authentic</span>
                 </div>
             </form>
         </div>
