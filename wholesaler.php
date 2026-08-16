@@ -2186,16 +2186,29 @@ $catalogProducts = [
         }
         .ws-slider-track .product-card,
         .ws-slider-track .ws-product-card {
-            flex: 0 0 calc((100% - 36px) / 4);
-            min-width: 180px;
-            max-width: 280px;
+            flex: 0 0 calc((100% - 48px) / 5);
+            min-width: 155px;
+            max-width: 240px;
             scroll-snap-align: start;
+        }
+        @media (min-width: 1400px) {
+            .ws-slider-track .product-card,
+            .ws-slider-track .ws-product-card {
+                flex: 0 0 calc((100% - 48px) / 5);
+            }
+        }
+        @media (max-width: 1200px) and (min-width: 1024px) {
+            .ws-slider-track .product-card,
+            .ws-slider-track .ws-product-card {
+                flex: 0 0 calc((100% - 40px) / 4.4);
+                min-width: 160px;
+            }
         }
         @media (max-width: 1023px) {
             .ws-slider-track .product-card,
             .ws-slider-track .ws-product-card {
                 flex: 0 0 calc((100% - 24px) / 3.3);
-                min-width: 150px;
+                min-width: 145px;
             }
         }
         @media (max-width: 600px) {
