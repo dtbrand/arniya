@@ -2440,7 +2440,7 @@ $catalogProducts = [
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1.5px solid rgba(212, 175, 55, 0.55);
             border-radius: 16px;
-            padding: 12px 18px;
+            padding: 12px 18px 12px 32px;
             margin-bottom: 16px;
             color: #16130F;
             box-shadow: 0 8px 30px rgba(180, 140, 40, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95), inset 0 0 20px rgba(245, 215, 130, 0.15);
@@ -2451,6 +2451,38 @@ $catalogProducts = [
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
+        }
+        /* 3D Diagonal Tircha Corner Ribbon Tag */
+        .ws-wallet-ribbon-tag {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 82px;
+            height: 82px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
+            border-top-left-radius: 14px;
+        }
+        .ws-wallet-ribbon-tag span {
+            position: absolute;
+            display: block;
+            width: 118px;
+            padding: 3.5px 0;
+            background: linear-gradient(135deg, #785912 0%, #D4AF37 40%, #FEF08A 60%, #8A681F 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+            color: #1A1204;
+            font-size: 0.58rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            left: -28px;
+            top: 16px;
+            transform: rotate(-45deg);
+            letter-spacing: 0.9px;
+            border-top: 1px solid rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid rgba(120, 89, 18, 0.5);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
         }
         /* Glowing Gold Light Radial Background Orb */
         .ws-wallet-strip::before {
@@ -2591,7 +2623,7 @@ $catalogProducts = [
 
         @media (max-width: 768px) {
             .ws-wallet-strip {
-                padding: 10px 12px;
+                padding: 10px 12px 10px 28px;
                 gap: 10px;
             }
             .ws-wallet-metrics-group {
@@ -3262,6 +3294,11 @@ $catalogProducts = [
 
                 <!-- ── Modern Frosted Gold Glassy Animated B2B Wallet & Coins Strip ── -->
                 <div class="ws-wallet-strip">
+                    <!-- Left Corner 3D Diagonal Tircha Tag -->
+                    <div class="ws-wallet-ribbon-tag">
+                        <span>★ B2B GOLD</span>
+                    </div>
+
                     <!-- Background Corner Animated Wallet Icon -->
                     <svg class="ws-wallet-corner-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
