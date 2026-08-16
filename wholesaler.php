@@ -598,12 +598,12 @@ $catalogProducts = [
             position: relative;
             z-index: 1;
             width: 100%;
-            height: 30px;
-            padding: 0 52px 0 12px;
+            height: 32px;
+            padding: 0 34px 0 38px;
             border-radius: 16px;
             border: 1px solid transparent;
             background: #FFFFFF;
-            font-size: 0.74rem;
+            font-size: 0.76rem;
             font-weight: 600;
             color: var(--ws-text-main);
             outline: none;
@@ -622,7 +622,8 @@ $catalogProducts = [
         .ws-luxury-search-icon {
             z-index: 2;
             position: absolute;
-            right: 4px;
+            left: 6px;
+            right: auto;
             top: 50%;
             transform: translateY(-50%);
             width: 22px;
@@ -648,7 +649,7 @@ $catalogProducts = [
         .ws-luxury-search-clear {
             z-index: 3;
             position: absolute;
-            right: 30px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             width: 16px;
@@ -4587,18 +4588,19 @@ $catalogProducts = [
             .ws-luxury-search-input {
                 height: 30px !important;
                 font-size: 0.73rem !important;
-                padding: 0 50px 0 10px !important;
+                padding: 0 30px 0 36px !important;
             }
             .ws-luxury-search-icon {
                 width: 20px !important;
                 height: 20px !important;
-                right: 3px !important;
+                left: 5px !important;
+                right: auto !important;
                 padding: 4px !important;
             }
             .ws-luxury-search-clear {
                 width: 15px !important;
                 height: 15px !important;
-                right: 27px !important;
+                right: 8px !important;
                 font-size: 0.55rem !important;
             }
             .ws-rep-filter-btn {
@@ -5797,8 +5799,8 @@ $catalogProducts = [
                                     <line x1="12" y1="22.08" x2="12" y2="12"></line>
                                 </svg>
                             </div>
-                            <h3 style="font-family:var(--ws-font-serif); font-size:clamp(0.96rem, 1.8vw, 1.18rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
-                                New Catalogue
+                            <h3 style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
+                                Wholesale Orders
                             </h3>
                         </div>
                         <a href="shop.php" class="ws-btn-new-order">
