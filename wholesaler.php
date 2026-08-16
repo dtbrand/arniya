@@ -5574,13 +5574,13 @@ $catalogProducts = [
                     </div>
 
                     <!-- 2 Saved Address Preview Cards (Billing vs Shipping) -->
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:20px;">
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:24px;">
                         
                         <!-- Card 1: Registered GST Billing Address -->
                         <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:12px; padding:14px 16px; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase;">★ Registered GST Billing Address</span>
-                                <button type="button" onclick="openEditMainAddressModal()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
+                                <button type="button" onclick="focusMainAddressSection()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
@@ -5599,7 +5599,7 @@ $catalogProducts = [
                         <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:12px; padding:14px 16px; position:relative;" id="addrPreviewDispatchCard">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase;" id="addrPreviewDispatchBadge">📦 Dispatch: Same as Billing</span>
-                                <button type="button" onclick="openCustomShippingEdit()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
+                                <button type="button" onclick="focusCustomShippingSection()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
@@ -5617,60 +5617,42 @@ $catalogProducts = [
 
                     <form id="wsAddressForm" onsubmit="handleSaveAddress(event)">
                         
-                        <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
-                        <div style="background:linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:12px; padding:12px 16px; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin:0; user-select:none;">
-                                <input type="checkbox" id="wsSameAsBillingCheckbox" onchange="toggleSameAsBillingAddress(this.checked)" checked style="width:18px; height:18px; accent-color:var(--ws-gold-primary); cursor:pointer;">
-                                <div>
-                                    <span style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main);">Shipping / Delivery Address is SAME as GST Registered Business Address</span>
-                                    <div style="font-size:0.72rem; color:var(--ws-text-muted);">Consignments will be dispatched directly to your GST registered billing premises.</div>
+                        <!-- ════ SECTION 1: MAIN REGISTERED BILLING ADDRESS ════ -->
+                        <div id="wsMainAddressSectionWrap" style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:14px; padding:18px; margin-bottom:22px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(212,175,55,0.3);">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                    <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
+                                        1. Main Registered Business & GST Billing Address
+                                    </h4>
                                 </div>
-                            </label>
-                            <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill">✓ Default Active</span>
-                        </div>
-
-                        <!-- Notice when "Same as Billing" is selected (Form is hidden!) -->
-                        <div id="wsSameAddressNotice" style="display:block; background:#FAF8F4; border:1px dashed var(--ws-gold-border); border-radius:10px; padding:14px 16px; margin-bottom:18px; text-align:center;">
-                            <p style="margin:0; font-size:0.82rem; color:var(--ws-text-sub); font-weight:600;">
-                                ✓ Dispatch destination is set to your <strong>Registered Business Address</strong>. No separate shipping address form needed.
-                            </p>
-                            <button type="button" onclick="document.getElementById('wsSameAsBillingCheckbox').checked = false; toggleSameAsBillingAddress(false);" style="margin-top:8px; background:transparent; border:none; color:var(--ws-gold-primary); font-size:0.78rem; font-weight:800; cursor:pointer; text-decoration:underline;">+ Click here to specify a different Godown / Warehouse / Transport Address</button>
-                        </div>
-
-                        <!-- Custom Shipping & Dispatch Address Form (Hidden when Same as Billing is checked!) -->
-                        <div id="wsCustomShippingFormWrap" style="display:none;">
-                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid var(--ws-border);">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"></path><path d="M16 8h4l3 3v5h-7V8z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                                <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
-                                    Warehouse / Godown / Secondary Dispatch Address
-                                </h4>
+                                <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:2px 7px; border-radius:5px; border:1px solid rgba(217,119,6,0.3);">PRIMARY BILLING</span>
                             </div>
 
                             <div class="ws-form-grid">
-                                
                                 <div class="ws-form-group">
-                                    <label class="ws-label" for="wsShipWarehouseName">Warehouse / Hub Name <span class="req">*</span></label>
-                                    <input type="text" id="wsShipWarehouseName" class="ws-input" placeholder="e.g. Ring Road Godown Hub #4">
+                                    <label class="ws-label" for="wsMainCompName">Business / Firm / Company Name <span class="req">*</span></label>
+                                    <input type="text" id="wsMainCompName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd" required>
                                 </div>
 
                                 <div class="ws-form-group">
-                                    <label class="ws-label" for="wsShipReceiverPhone">Receiver / Gate Phone <span class="req">*</span></label>
-                                    <input type="tel" id="wsShipReceiverPhone" class="ws-input" placeholder="10-digit mobile number">
+                                    <label class="ws-label" for="wsMainContactPhone">Registered Contact Phone <span class="req">*</span></label>
+                                    <input type="tel" id="wsMainContactPhone" class="ws-input" placeholder="10-digit mobile number" required>
                                 </div>
 
                                 <div class="ws-form-group full">
-                                    <label class="ws-label" for="wsShipAddress">Detailed Godown Address & Landmark <span class="req">*</span></label>
-                                    <textarea id="wsShipAddress" class="ws-textarea" placeholder="Gate No, Plot No, Transport Nagar, Street, Landmark"></textarea>
+                                    <label class="ws-label" for="wsFullAddress">Registered Shop / Office / Market Address <span class="req">*</span></label>
+                                    <textarea id="wsFullAddress" class="ws-textarea" placeholder="Shop No, Building Name, Textile Market, Street, Landmark" required></textarea>
                                 </div>
 
                                 <div class="ws-form-group">
-                                    <label class="ws-label" for="wsShipCity">City / District <span class="req">*</span></label>
-                                    <input type="text" id="wsShipCity" class="ws-input" placeholder="e.g. Surat / Ahmedabad">
+                                    <label class="ws-label" for="wsCity">City / District <span class="req">*</span></label>
+                                    <input type="text" id="wsCity" class="ws-input" placeholder="e.g. Surat" required>
                                 </div>
 
                                 <div class="ws-form-group">
-                                    <label class="ws-label" for="wsShipStateSelect">State / UT (India) <span class="req">*</span></label>
-                                    <select id="wsShipStateSelect" class="ws-select">
+                                    <label class="ws-label" for="wsStateSelect">State / UT (India) <span class="req">*</span></label>
+                                    <select id="wsStateSelect" class="ws-select" required>
                                         <option value="Gujarat">Gujarat (24)</option>
                                         <option value="Maharashtra">Maharashtra (27)</option>
                                         <option value="Rajasthan">Rajasthan (08)</option>
@@ -5686,21 +5668,100 @@ $catalogProducts = [
                                 </div>
 
                                 <div class="ws-form-group">
-                                    <label class="ws-label" for="wsShipPincode">6-Digit PIN Code <span class="req">*</span></label>
-                                    <input type="text" id="wsShipPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
+                                    <label class="ws-label" for="wsPincode">6-Digit PIN Code <span class="req">*</span></label>
+                                    <input type="text" id="wsPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}" required>
                                 </div>
-
-                                <div class="ws-form-group full">
-                                    <label class="ws-label" for="wsShipTransporter">Preferred Transporter / Logistics Hub (Optional)</label>
-                                    <input type="text" id="wsShipTransporter" class="ws-input" placeholder="e.g. Surat Ring Road Goods Transport, BlueDart Air, V-Trans Cargo">
-                                </div>
-
                             </div>
                         </div>
 
-                        <div class="ws-btn-group" style="margin-top:16px;">
-                            <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        <!-- ════ SECTION 2: SHIPPING & DELIVERY DISPATCH HUB ════ -->
+                        <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:14px; padding:18px; margin-bottom:22px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--ws-border);">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                    <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">
+                                        2. Wholesale Delivery & Shipping Hub Configuration
+                                    </h4>
+                                </div>
+                                <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:2px 7px; border-radius:5px; border:1px solid #BAE6FD;">DISPATCH HUB</span>
+                            </div>
+
+                            <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
+                            <div style="background:linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:12px; padding:12px 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin:0; user-select:none;">
+                                    <input type="checkbox" id="wsSameAsBillingCheckbox" onchange="toggleSameAsBillingAddress(this.checked)" checked style="width:18px; height:18px; accent-color:var(--ws-gold-primary); cursor:pointer;">
+                                    <div>
+                                        <span style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main);">Shipping / Delivery Address is SAME as Registered Billing Address</span>
+                                        <div style="font-size:0.72rem; color:var(--ws-text-muted);">Consignments will be dispatched directly to your primary registered address above.</div>
+                                    </div>
+                                </label>
+                                <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill">✓ Default Active</span>
+                            </div>
+
+                            <!-- Notice when "Same as Billing" is selected (Form is hidden!) -->
+                            <div id="wsSameAddressNotice" style="display:block; background:#FAF8F4; border:1px dashed var(--ws-gold-border); border-radius:10px; padding:14px 16px; text-align:center;">
+                                <p style="margin:0; font-size:0.82rem; color:var(--ws-text-sub); font-weight:600;">
+                                    ✓ Dispatch destination is set to your <strong>Registered Business Address</strong>. Separate shipping address form is collapsed.
+                                </p>
+                                <button type="button" onclick="focusCustomShippingSection()" style="margin-top:8px; background:transparent; border:none; color:var(--ws-gold-primary); font-size:0.78rem; font-weight:800; cursor:pointer; text-decoration:underline;">+ Click here to specify a different Godown / Warehouse / Transport Hub</button>
+                            </div>
+
+                            <!-- Custom Shipping & Dispatch Address Form (Hidden when Same as Billing is checked!) -->
+                            <div id="wsCustomShippingFormWrap" style="display:none; margin-top:14px;">
+                                <div class="ws-form-grid">
+                                    <div class="ws-form-group">
+                                        <label class="ws-label" for="wsShipWarehouseName">Warehouse / Hub Name <span class="req">*</span></label>
+                                        <input type="text" id="wsShipWarehouseName" class="ws-input" placeholder="e.g. Ring Road Godown Hub #4">
+                                    </div>
+
+                                    <div class="ws-form-group">
+                                        <label class="ws-label" for="wsShipReceiverPhone">Receiver / Gate Phone <span class="req">*</span></label>
+                                        <input type="tel" id="wsShipReceiverPhone" class="ws-input" placeholder="10-digit mobile number">
+                                    </div>
+
+                                    <div class="ws-form-group full">
+                                        <label class="ws-label" for="wsShipAddress">Detailed Godown Address & Landmark <span class="req">*</span></label>
+                                        <textarea id="wsShipAddress" class="ws-textarea" placeholder="Gate No, Plot No, Transport Nagar, Street, Landmark"></textarea>
+                                    </div>
+
+                                    <div class="ws-form-group">
+                                        <label class="ws-label" for="wsShipCity">City / District <span class="req">*</span></label>
+                                        <input type="text" id="wsShipCity" class="ws-input" placeholder="e.g. Surat / Ahmedabad">
+                                    </div>
+
+                                    <div class="ws-form-group">
+                                        <label class="ws-label" for="wsShipStateSelect">State / UT (India) <span class="req">*</span></label>
+                                        <select id="wsShipStateSelect" class="ws-select">
+                                            <option value="Gujarat">Gujarat (24)</option>
+                                            <option value="Maharashtra">Maharashtra (27)</option>
+                                            <option value="Rajasthan">Rajasthan (08)</option>
+                                            <option value="Delhi">Delhi (07)</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
+                                            <option value="Karnataka">Karnataka (29)</option>
+                                            <option value="Tamil Nadu">Tamil Nadu (33)</option>
+                                            <option value="Telangana">Telangana (36)</option>
+                                            <option value="West Bengal">West Bengal (19)</option>
+                                            <option value="Other States">Other Indian State / UT</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="ws-form-group">
+                                        <label class="ws-label" for="wsShipPincode">6-Digit PIN Code <span class="req">*</span></label>
+                                        <input type="text" id="wsShipPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
+                                    </div>
+
+                                    <div class="ws-form-group full">
+                                        <label class="ws-label" for="wsShipTransporter">Preferred Transporter / Logistics Hub (Optional)</label>
+                                        <input type="text" id="wsShipTransporter" class="ws-input" placeholder="e.g. Surat Ring Road Goods Transport, BlueDart Air, V-Trans Cargo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ws-btn-group" style="margin-top:20px;">
+                            <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:8px; padding:10px 24px; font-size:0.92rem; font-weight:800;">
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                 <span>Save Address Configuration</span>
                             </button>
                         </div>
@@ -7373,38 +7434,16 @@ $catalogProducts = [
             }
         }
 
-        window.openEditMainAddressModal = function() {
-            var modal = document.getElementById('wsEditMainAddressModal');
-            if (!modal) return;
+        function focusMainAddressSection() {
+            var section = document.getElementById('wsMainAddressSectionWrap');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                var inp = section.querySelector('input, textarea');
+                if (inp) inp.focus();
+            }
+        }
 
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
-
-            var comp = document.getElementById('wsMainEditCompName');
-            var gst = document.getElementById('wsMainEditGstNumber');
-            var addr = document.getElementById('wsMainEditAddress');
-            var city = document.getElementById('wsMainEditCity');
-            var state = document.getElementById('wsMainEditState');
-            var pin = document.getElementById('wsMainEditPincode');
-            var phone = document.getElementById('wsMainEditContactPhone');
-
-            if (comp) comp.value = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            if (gst) gst.value = user.gst_number || '24AABCU9603R1ZM';
-            if (addr) addr.value = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            if (city) city.value = user.city || 'Surat';
-            if (state && user.state) state.value = user.state;
-            if (pin) pin.value = user.pincode || '395002';
-            if (phone) phone.value = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
-
-            modal.classList.add('active');
-        };
-
-        window.closeEditMainAddressModal = function() {
-            var modal = document.getElementById('wsEditMainAddressModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        window.openCustomShippingEdit = function() {
+        function focusCustomShippingSection() {
             var chk = document.getElementById('wsSameAsBillingCheckbox');
             if (chk) chk.checked = false;
             toggleSameAsBillingAddress(false);
@@ -7415,42 +7454,103 @@ $catalogProducts = [
                 var firstInput = formWrap.querySelector('input, textarea');
                 if (firstInput) firstInput.focus();
             }
-        };
+        }
 
-        window.handleSaveMainAddressForm = function(e) {
-            if (e) e.preventDefault();
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
+        function renderAddressBookData(user) {
+            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
+            var gstNum = user.gst_number || '24AABCU9603R1ZM';
+            var name = user.name || 'Rajesh Kumar';
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
+            var billCity = user.city || 'Surat';
+            var billState = user.state || 'Gujarat';
+            var billPin = user.pincode || '395002';
 
-            var comp = document.getElementById('wsMainEditCompName').value.trim();
-            var gst = document.getElementById('wsMainEditGstNumber').value.trim().toUpperCase();
-            var addr = document.getElementById('wsMainEditAddress').value.trim();
-            var city = document.getElementById('wsMainEditCity').value.trim();
-            var state = document.getElementById('wsMainEditState').value;
-            var pin = document.getElementById('wsMainEditPincode').value.trim();
-            var phone = document.getElementById('wsMainEditContactPhone').value.trim();
+            // Populate Section 1 form inputs directly
+            var mComp = document.getElementById('wsMainCompName');
+            var mPhone = document.getElementById('wsMainContactPhone');
+            var mAddr = document.getElementById('wsFullAddress');
+            var mCity = document.getElementById('wsCity');
+            var mState = document.getElementById('wsStateSelect');
+            var mPin = document.getElementById('wsPincode');
 
-            user.companyName = comp || user.companyName;
-            user.gst_number = gst || user.gst_number;
-            user.address = addr || user.address;
-            user.city = city || user.city;
-            user.state = state || user.state;
-            user.pincode = pin || user.pincode;
-            user.phone = '+91 ' + phone;
-            user.rawPhone = phone;
+            if (mComp) mComp.value = comp;
+            if (mPhone) mPhone.value = phone;
+            if (mAddr) mAddr.value = billAddr;
+            if (mCity) mCity.value = billCity;
+            if (mState && billState) mState.value = billState;
+            if (mPin) mPin.value = billPin;
 
-            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
-            closeEditMainAddressModal();
-            renderAddressBookData(user);
-            loadSavedWholesalerData();
-            window.showWsToast('✓ Main Registered Billing Address updated successfully!');
-        };
+            // Populate Card 1 preview
+            var bCompEl = document.getElementById('addrPreviewBillingComp');
+            var bFullEl = document.getElementById('addrPreviewBillingFull');
+            var bAttnEl = document.getElementById('addrPreviewBillingAttn');
+            if (bCompEl) bCompEl.textContent = comp;
+            if (bFullEl) bFullEl.innerHTML = `${billAddr}<br>${billCity}, ${billState} - ${billPin} (GSTIN: <strong>${gstNum}</strong>)`;
+            if (bAttnEl) bAttnEl.textContent = `Attn: ${name} (+91 ${phone})`;
+
+            // Populate Section 2 toggle and shipping inputs
+            var isSame = user.shipping_same_as_billing !== false;
+            var chk = document.getElementById('wsSameAsBillingCheckbox');
+            if (chk) chk.checked = isSame;
+            toggleSameAsBillingAddress(isSame);
+
+            var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
+            var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
+            var dispatchFull = document.getElementById('addrPreviewDispatchFull');
+            var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
+
+            var ship = user.custom_shipping || {};
+            if (!isSame && ship.address) {
+                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
+                if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
+                if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
+                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
+
+                var shipWarehouse = document.getElementById('wsShipWarehouseName');
+                var shipPhone = document.getElementById('wsShipReceiverPhone');
+                var shipAddr = document.getElementById('wsShipAddress');
+                var shipCity = document.getElementById('wsShipCity');
+                var shipState = document.getElementById('wsShipStateSelect');
+                var shipPin = document.getElementById('wsShipPincode');
+                var shipTransporter = document.getElementById('wsShipTransporter');
+
+                if (shipWarehouse) shipWarehouse.value = ship.warehouse_name || '';
+                if (shipPhone) shipPhone.value = ship.receiver_phone || '';
+                if (shipAddr) shipAddr.value = ship.address || '';
+                if (shipCity) shipCity.value = ship.city || '';
+                if (shipState && ship.state) shipState.value = ship.state;
+                if (shipPin) shipPin.value = ship.pincode || '';
+                if (shipTransporter) shipTransporter.value = ship.transporter || '';
+            } else {
+                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
+                if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
+                if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
+                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
+            }
+        }
 
         window.handleSaveAddress = function(e) {
             if (e) e.preventDefault();
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
+            // Save Section 1: Main Address
+            var mComp = document.getElementById('wsMainCompName') ? document.getElementById('wsMainCompName').value.trim() : '';
+            var mPhone = document.getElementById('wsMainContactPhone') ? document.getElementById('wsMainContactPhone').value.trim() : '';
+            var mAddr = document.getElementById('wsFullAddress') ? document.getElementById('wsFullAddress').value.trim() : '';
+            var mCity = document.getElementById('wsCity') ? document.getElementById('wsCity').value.trim() : '';
+            var mState = document.getElementById('wsStateSelect') ? document.getElementById('wsStateSelect').value : 'Gujarat';
+            var mPin = document.getElementById('wsPincode') ? document.getElementById('wsPincode').value.trim() : '';
+
+            if (mComp) user.companyName = mComp;
+            if (mPhone) { user.rawPhone = mPhone; user.phone = '+91 ' + mPhone; }
+            if (mAddr) user.address = mAddr;
+            if (mCity) user.city = mCity;
+            if (mState) user.state = mState;
+            if (mPin) user.pincode = mPin;
+
+            // Save Section 2: Shipping / Dispatch
             var isSame = document.getElementById('wsSameAsBillingCheckbox') ? document.getElementById('wsSameAsBillingCheckbox').checked : true;
             user.shipping_same_as_billing = isSame;
 
@@ -7465,18 +7565,19 @@ $catalogProducts = [
 
                 user.custom_shipping = {
                     warehouse_name: wName || 'Primary Godown Hub',
-                    receiver_phone: rPhone,
-                    address: sAddr,
-                    city: sCity,
-                    state: sState,
-                    pincode: sPin,
+                    receiver_phone: rPhone || mPhone,
+                    address: sAddr || mAddr,
+                    city: sCity || mCity,
+                    state: sState || mState,
+                    pincode: sPin || mPin,
                     transporter: sTrans
                 };
             }
 
             localStorage.setItem('kalaniketan_user', JSON.stringify(user));
             renderAddressBookData(user);
-            window.showWsToast('✓ Address configuration saved successfully!');
+            loadSavedWholesalerData();
+            window.showWsToast('✓ Address Book & Dispatch Configuration saved successfully!');
         };
 
         /* ── GST Mode Toggle ── */
