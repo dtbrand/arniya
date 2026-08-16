@@ -2283,6 +2283,25 @@ $catalogProducts = [
         }
         .ws-dock-btn.active svg { stroke: var(--ws-gold-primary); }
 
+        .ws-dock-cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            border-radius: 9px;
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            font-size: 0.60rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.35);
+        }
+
         /* ── Toast Container ── */
         .ws-toast-container {
             position: fixed;
@@ -3619,9 +3638,12 @@ $catalogProducts = [
             <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             <span>Reports</span>
         </button>
-        <button class="ws-dock-btn" id="dockBtnDetails" onclick="switchWsTab('details')">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Profile</span>
+        <button class="ws-dock-btn" id="dockBtnCart" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer(); else window.location.href='cart.php';" aria-label="Shopping Cart">
+            <div style="position:relative; display:inline-flex;">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="ws-dock-cart-badge" id="wsDockCartBadge" style="display:none;">0</span>
+            </div>
+            <span>Cart</span>
         </button>
     </nav>
 
@@ -5453,17 +5475,48 @@ $catalogProducts = [
             renderReportsView(activeOrdersList);
             renderTicketsView();
             window.animateTargetGauge(75.55);
+            window.updateWholesaleCartBadge();
         }
+
+        /* ── Wholesale Cart Badge Synchronization ── */
+        window.updateWholesaleCartBadge = function() {
+            try {
+                var raw = localStorage.getItem('kalaniketan_cart');
+                var cart = raw ? JSON.parse(raw) : [];
+                var totalCount = 0;
+                if (Array.isArray(cart)) {
+                    totalCount = cart.reduce(function(acc, item) { return acc + (Number(item.qty) || 1); }, 0);
+                }
+                var badge = document.getElementById('wsDockCartBadge');
+                if (badge) {
+                    if (totalCount > 0) {
+                        badge.textContent = totalCount;
+                        badge.style.display = 'flex';
+                    } else {
+                        badge.style.display = 'none';
+                    }
+                }
+            } catch(e) {}
+        };
 
         document.addEventListener('DOMContentLoaded', initWholesalerApp);
         window.addEventListener('storage', function(e) {
             if (e.key === 'kalaniketan_user') {
                 initWholesalerApp();
             }
+            if (e.key === 'kalaniketan_cart') {
+                window.updateWholesaleCartBadge();
+            }
         });
 
     })();
     </script>
+
+    <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
+    <?php include 'cart.php'; ?>
+
+    <!-- ════════════ CHECKOUT MODAL PARTIAL ════════════ -->
+    <?php include 'checkout.php'; ?>
 
     <!-- ════════════ QUICK VIEW PARTIAL ════════════ -->
     <?php include 'quickview.php'; ?>
