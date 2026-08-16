@@ -4751,7 +4751,6 @@ $catalogProducts = [
                             <span class="ws-full-card-pill">Active</span>
                         </div>
                         <div class="ws-full-card-val" id="fullModalWalletBal">₹1,45,280</div>
-                        <div class="ws-full-card-sub">Refunded Balance: <strong>₹45,280</strong></div>
                     </div>
 
                     <!-- Silk Reward Coins Card -->
