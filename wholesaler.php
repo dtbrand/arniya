@@ -5574,13 +5574,13 @@ $catalogProducts = [
                     </div>
 
                     <!-- 2 Saved Address Preview Cards (Billing vs Shipping) -->
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:24px;">
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:16px;">
                         
                         <!-- Card 1: Registered GST Billing Address -->
                         <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:12px; padding:14px 16px; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase;">★ Registered GST Billing Address</span>
-                                <button type="button" onclick="focusMainAddressSection()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
+                                <button type="button" id="btnEditMainAddr" onclick="toggleEditAddressSection('main')" style="font-size:0.72rem; padding:4px 10px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
@@ -5599,7 +5599,7 @@ $catalogProducts = [
                         <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:12px; padding:14px 16px; position:relative;" id="addrPreviewDispatchCard">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase;" id="addrPreviewDispatchBadge">📦 Dispatch: Same as Billing</span>
-                                <button type="button" onclick="focusCustomShippingSection()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
+                                <button type="button" id="btnEditDispatchAddr" onclick="toggleEditAddressSection('dispatch')" style="font-size:0.72rem; padding:4px 10px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
@@ -5615,123 +5615,46 @@ $catalogProducts = [
 
                     </div>
 
-                    <form id="wsAddressForm" onsubmit="handleSaveAddress(event)">
-                        
-                        <!-- ════ SECTION 1: MAIN REGISTERED BILLING ADDRESS ════ -->
-                        <div id="wsMainAddressSectionWrap" style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:14px; padding:18px; margin-bottom:22px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(212,175,55,0.3);">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                                    <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
-                                        1. Main Registered Business & GST Billing Address
-                                    </h4>
-                                </div>
-                                <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:2px 7px; border-radius:5px; border:1px solid rgba(217,119,6,0.3);">PRIMARY BILLING</span>
-                            </div>
-
-                            <div class="ws-form-grid">
-                                <div class="ws-form-group">
-                                    <label class="ws-label" for="wsMainCompName">Business / Firm / Company Name <span class="req">*</span></label>
-                                    <input type="text" id="wsMainCompName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd" required>
-                                </div>
-
-                                <div class="ws-form-group">
-                                    <label class="ws-label" for="wsMainContactPhone">Registered Contact Phone <span class="req">*</span></label>
-                                    <input type="tel" id="wsMainContactPhone" class="ws-input" placeholder="10-digit mobile number" required>
-                                </div>
-
-                                <div class="ws-form-group full">
-                                    <label class="ws-label" for="wsFullAddress">Registered Shop / Office / Market Address <span class="req">*</span></label>
-                                    <textarea id="wsFullAddress" class="ws-textarea" placeholder="Shop No, Building Name, Textile Market, Street, Landmark" required></textarea>
-                                </div>
-
-                                <div class="ws-form-group">
-                                    <label class="ws-label" for="wsCity">City / District <span class="req">*</span></label>
-                                    <input type="text" id="wsCity" class="ws-input" placeholder="e.g. Surat" required>
-                                </div>
-
-                                <div class="ws-form-group">
-                                    <label class="ws-label" for="wsStateSelect">State / UT (India) <span class="req">*</span></label>
-                                    <select id="wsStateSelect" class="ws-select" required>
-                                        <option value="Gujarat">Gujarat (24)</option>
-                                        <option value="Maharashtra">Maharashtra (27)</option>
-                                        <option value="Rajasthan">Rajasthan (08)</option>
-                                        <option value="Delhi">Delhi (07)</option>
-                                        <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
-                                        <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
-                                        <option value="Karnataka">Karnataka (29)</option>
-                                        <option value="Tamil Nadu">Tamil Nadu (33)</option>
-                                        <option value="Telangana">Telangana (36)</option>
-                                        <option value="West Bengal">West Bengal (19)</option>
-                                        <option value="Other States">Other Indian State / UT</option>
-                                    </select>
-                                </div>
-
-                                <div class="ws-form-group">
-                                    <label class="ws-label" for="wsPincode">6-Digit PIN Code <span class="req">*</span></label>
-                                    <input type="text" id="wsPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ════ SECTION 2: SHIPPING & DELIVERY DISPATCH HUB ════ -->
-                        <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:14px; padding:18px; margin-bottom:22px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--ws-border);">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                                    <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">
-                                        2. Wholesale Delivery & Shipping Hub Configuration
-                                    </h4>
-                                </div>
-                                <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:2px 7px; border-radius:5px; border:1px solid #BAE6FD;">DISPATCH HUB</span>
-                            </div>
-
-                            <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
-                            <div style="background:linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:12px; padding:12px 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
-                                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin:0; user-select:none;">
-                                    <input type="checkbox" id="wsSameAsBillingCheckbox" onchange="toggleSameAsBillingAddress(this.checked)" checked style="width:18px; height:18px; accent-color:var(--ws-gold-primary); cursor:pointer;">
-                                    <div>
-                                        <span style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main);">Shipping / Delivery Address is SAME as Registered Billing Address</span>
-                                        <div style="font-size:0.72rem; color:var(--ws-text-muted);">Consignments will be dispatched directly to your primary registered address above.</div>
+                    <!-- COLLAPSIBLE EDIT FORM CONTAINER (HIDDEN BY DEFAULT!) -->
+                    <div id="wsAddressEditDrawer" style="display:none; margin-top:10px;">
+                        <form id="wsAddressForm" onsubmit="handleSaveAddress(event)">
+                            
+                            <!-- ════ FORM 1: EDIT MAIN REGISTERED BILLING ADDRESS ════ -->
+                            <div id="wsMainAddressSectionWrap" style="display:none; background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:14px; padding:18px; margin-bottom:18px; box-shadow:0 4px 14px rgba(217,119,6,0.08);">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid rgba(212,175,55,0.3);">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                        <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
+                                            Edit Main Registered Business & GST Billing Address
+                                        </h4>
                                     </div>
-                                </label>
-                                <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill">✓ Default Active</span>
-                            </div>
+                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                </div>
 
-                            <!-- Notice when "Same as Billing" is selected (Form is hidden!) -->
-                            <div id="wsSameAddressNotice" style="display:block; background:#FAF8F4; border:1px dashed var(--ws-gold-border); border-radius:10px; padding:14px 16px; text-align:center;">
-                                <p style="margin:0; font-size:0.82rem; color:var(--ws-text-sub); font-weight:600;">
-                                    ✓ Dispatch destination is set to your <strong>Registered Business Address</strong>. Separate shipping address form is collapsed.
-                                </p>
-                                <button type="button" onclick="focusCustomShippingSection()" style="margin-top:8px; background:transparent; border:none; color:var(--ws-gold-primary); font-size:0.78rem; font-weight:800; cursor:pointer; text-decoration:underline;">+ Click here to specify a different Godown / Warehouse / Transport Hub</button>
-                            </div>
-
-                            <!-- Custom Shipping & Dispatch Address Form (Hidden when Same as Billing is checked!) -->
-                            <div id="wsCustomShippingFormWrap" style="display:none; margin-top:14px;">
                                 <div class="ws-form-grid">
                                     <div class="ws-form-group">
-                                        <label class="ws-label" for="wsShipWarehouseName">Warehouse / Hub Name <span class="req">*</span></label>
-                                        <input type="text" id="wsShipWarehouseName" class="ws-input" placeholder="e.g. Ring Road Godown Hub #4">
+                                        <label class="ws-label" for="wsMainCompName">Business / Firm / Company Name <span class="req">*</span></label>
+                                        <input type="text" id="wsMainCompName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd">
                                     </div>
 
                                     <div class="ws-form-group">
-                                        <label class="ws-label" for="wsShipReceiverPhone">Receiver / Gate Phone <span class="req">*</span></label>
-                                        <input type="tel" id="wsShipReceiverPhone" class="ws-input" placeholder="10-digit mobile number">
+                                        <label class="ws-label" for="wsMainContactPhone">Registered Contact Phone <span class="req">*</span></label>
+                                        <input type="tel" id="wsMainContactPhone" class="ws-input" placeholder="10-digit mobile number">
                                     </div>
 
                                     <div class="ws-form-group full">
-                                        <label class="ws-label" for="wsShipAddress">Detailed Godown Address & Landmark <span class="req">*</span></label>
-                                        <textarea id="wsShipAddress" class="ws-textarea" placeholder="Gate No, Plot No, Transport Nagar, Street, Landmark"></textarea>
+                                        <label class="ws-label" for="wsFullAddress">Registered Shop / Office / Market Address <span class="req">*</span></label>
+                                        <textarea id="wsFullAddress" class="ws-textarea" placeholder="Shop No, Building Name, Textile Market, Street, Landmark"></textarea>
                                     </div>
 
                                     <div class="ws-form-group">
-                                        <label class="ws-label" for="wsShipCity">City / District <span class="req">*</span></label>
-                                        <input type="text" id="wsShipCity" class="ws-input" placeholder="e.g. Surat / Ahmedabad">
+                                        <label class="ws-label" for="wsCity">City / District <span class="req">*</span></label>
+                                        <input type="text" id="wsCity" class="ws-input" placeholder="e.g. Surat">
                                     </div>
 
                                     <div class="ws-form-group">
-                                        <label class="ws-label" for="wsShipStateSelect">State / UT (India) <span class="req">*</span></label>
-                                        <select id="wsShipStateSelect" class="ws-select">
+                                        <label class="ws-label" for="wsStateSelect">State / UT (India) <span class="req">*</span></label>
+                                        <select id="wsStateSelect" class="ws-select">
                                             <option value="Gujarat">Gujarat (24)</option>
                                             <option value="Maharashtra">Maharashtra (27)</option>
                                             <option value="Rajasthan">Rajasthan (08)</option>
@@ -5747,25 +5670,107 @@ $catalogProducts = [
                                     </div>
 
                                     <div class="ws-form-group">
-                                        <label class="ws-label" for="wsShipPincode">6-Digit PIN Code <span class="req">*</span></label>
-                                        <input type="text" id="wsShipPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
-                                    </div>
-
-                                    <div class="ws-form-group full">
-                                        <label class="ws-label" for="wsShipTransporter">Preferred Transporter / Logistics Hub (Optional)</label>
-                                        <input type="text" id="wsShipTransporter" class="ws-input" placeholder="e.g. Surat Ring Road Goods Transport, BlueDart Air, V-Trans Cargo">
+                                        <label class="ws-label" for="wsPincode">6-Digit PIN Code <span class="req">*</span></label>
+                                        <input type="text" id="wsPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="ws-btn-group" style="margin-top:20px;">
-                            <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:8px; padding:10px 24px; font-size:0.92rem; font-weight:800;">
-                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                                <span>Save Address Configuration</span>
-                            </button>
-                        </div>
-                    </form>
+                            <!-- ════ FORM 2: EDIT DELIVERY & SHIPPING DISPATCH HUB ════ -->
+                            <div id="wsDispatchSectionWrap" style="display:none; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:14px; padding:18px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.04);">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--ws-border);">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                        <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">
+                                            Edit Delivery & Shipping Hub Configuration
+                                        </h4>
+                                    </div>
+                                    <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
+                                </div>
+
+                                <!-- Smart Toggle Checkbox Option: Same as Billing Address -->
+                                <div style="background:linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:12px; padding:12px 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin:0; user-select:none;">
+                                        <input type="checkbox" id="wsSameAsBillingCheckbox" onchange="toggleSameAsBillingAddress(this.checked)" checked style="width:18px; height:18px; accent-color:var(--ws-gold-primary); cursor:pointer;">
+                                        <div>
+                                            <span style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main);">Shipping / Delivery Address is SAME as Registered Billing Address</span>
+                                            <div style="font-size:0.72rem; color:var(--ws-text-muted);">Consignments will be dispatched directly to your primary registered address.</div>
+                                        </div>
+                                    </label>
+                                    <span style="font-size:0.72rem; font-weight:800; background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:6px; border:1px solid #BBF7D0;" id="wsSameAddressStatusPill">✓ Default Active</span>
+                                </div>
+
+                                <!-- Notice when "Same as Billing" is selected (Form is hidden!) -->
+                                <div id="wsSameAddressNotice" style="display:block; background:#FAF8F4; border:1px dashed var(--ws-gold-border); border-radius:10px; padding:14px 16px; text-align:center;">
+                                    <p style="margin:0; font-size:0.82rem; color:var(--ws-text-sub); font-weight:600;">
+                                        ✓ Dispatch destination is set to your <strong>Registered Business Address</strong>.
+                                    </p>
+                                    <button type="button" onclick="document.getElementById('wsSameAsBillingCheckbox').checked = false; toggleSameAsBillingAddress(false);" style="margin-top:8px; background:transparent; border:none; color:var(--ws-gold-primary); font-size:0.78rem; font-weight:800; cursor:pointer; text-decoration:underline;">+ Specify a different Godown / Warehouse / Transport Hub</button>
+                                </div>
+
+                                <!-- Custom Shipping & Dispatch Address Form -->
+                                <div id="wsCustomShippingFormWrap" style="display:none; margin-top:14px;">
+                                    <div class="ws-form-grid">
+                                        <div class="ws-form-group">
+                                            <label class="ws-label" for="wsShipWarehouseName">Warehouse / Hub Name <span class="req">*</span></label>
+                                            <input type="text" id="wsShipWarehouseName" class="ws-input" placeholder="e.g. Ring Road Godown Hub #4">
+                                        </div>
+
+                                        <div class="ws-form-group">
+                                            <label class="ws-label" for="wsShipReceiverPhone">Receiver / Gate Phone <span class="req">*</span></label>
+                                            <input type="tel" id="wsShipReceiverPhone" class="ws-input" placeholder="10-digit mobile number">
+                                        </div>
+
+                                        <div class="ws-form-group full">
+                                            <label class="ws-label" for="wsShipAddress">Detailed Godown Address & Landmark <span class="req">*</span></label>
+                                            <textarea id="wsShipAddress" class="ws-textarea" placeholder="Gate No, Plot No, Transport Nagar, Street, Landmark"></textarea>
+                                        </div>
+
+                                        <div class="ws-form-group">
+                                            <label class="ws-label" for="wsShipCity">City / District <span class="req">*</span></label>
+                                            <input type="text" id="wsShipCity" class="ws-input" placeholder="e.g. Surat / Ahmedabad">
+                                        </div>
+
+                                        <div class="ws-form-group">
+                                            <label class="ws-label" for="wsShipStateSelect">State / UT (India) <span class="req">*</span></label>
+                                            <select id="wsShipStateSelect" class="ws-select">
+                                                <option value="Gujarat">Gujarat (24)</option>
+                                                <option value="Maharashtra">Maharashtra (27)</option>
+                                                <option value="Rajasthan">Rajasthan (08)</option>
+                                                <option value="Delhi">Delhi (07)</option>
+                                                <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
+                                                <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
+                                                <option value="Karnataka">Karnataka (29)</option>
+                                                <option value="Tamil Nadu">Tamil Nadu (33)</option>
+                                                <option value="Telangana">Telangana (36)</option>
+                                                <option value="West Bengal">West Bengal (19)</option>
+                                                <option value="Other States">Other Indian State / UT</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="ws-form-group">
+                                            <label class="ws-label" for="wsShipPincode">6-Digit PIN Code <span class="req">*</span></label>
+                                            <input type="text" id="wsShipPincode" class="ws-input" placeholder="395002" maxlength="6" pattern="[0-9]{6}">
+                                        </div>
+
+                                        <div class="ws-form-group full">
+                                            <label class="ws-label" for="wsShipTransporter">Preferred Transporter / Logistics Hub (Optional)</label>
+                                            <input type="text" id="wsShipTransporter" class="ws-input" placeholder="e.g. Surat Ring Road Goods Transport, BlueDart Air, V-Trans Cargo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons: Save or Cancel -->
+                            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px;">
+                                <button type="button" class="ws-btn ws-btn-secondary" onclick="closeEditAddressDrawer()">Cancel</button>
+                                <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                    <span>Save Address</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </section>
 
@@ -7434,27 +7439,55 @@ $catalogProducts = [
             }
         }
 
-        function focusMainAddressSection() {
-            var section = document.getElementById('wsMainAddressSectionWrap');
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                var inp = section.querySelector('input, textarea');
-                if (inp) inp.focus();
-            }
-        }
+        window.toggleEditAddressSection = function(sectionType) {
+            var drawer = document.getElementById('wsAddressEditDrawer');
+            var mainWrap = document.getElementById('wsMainAddressSectionWrap');
+            var dispatchWrap = document.getElementById('wsDispatchSectionWrap');
+            if (!drawer) return;
 
-        function focusCustomShippingSection() {
-            var chk = document.getElementById('wsSameAsBillingCheckbox');
-            if (chk) chk.checked = false;
-            toggleSameAsBillingAddress(false);
+            // If already open for this section, toggle close
+            var isAlreadyOpen = drawer.style.display === 'block' && (
+                (sectionType === 'main' && mainWrap.style.display === 'block' && dispatchWrap.style.display !== 'block') ||
+                (sectionType === 'dispatch' && dispatchWrap.style.display === 'block' && mainWrap.style.display !== 'block')
+            );
 
-            var formWrap = document.getElementById('wsCustomShippingFormWrap');
-            if (formWrap) {
-                formWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                var firstInput = formWrap.querySelector('input, textarea');
-                if (firstInput) firstInput.focus();
+            if (isAlreadyOpen) {
+                closeEditAddressDrawer();
+                return;
             }
-        }
+
+            drawer.style.display = 'block';
+
+            if (sectionType === 'main') {
+                if (mainWrap) mainWrap.style.display = 'block';
+                if (dispatchWrap) dispatchWrap.style.display = 'none';
+                if (mainWrap) {
+                    mainWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    var firstInp = mainWrap.querySelector('input, textarea');
+                    if (firstInp) firstInp.focus();
+                }
+            } else if (sectionType === 'dispatch') {
+                if (mainWrap) mainWrap.style.display = 'none';
+                if (dispatchWrap) dispatchWrap.style.display = 'block';
+                if (dispatchWrap) {
+                    dispatchWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    var firstInp = dispatchWrap.querySelector('input, textarea');
+                    if (firstInp) firstInp.focus();
+                }
+            } else {
+                if (mainWrap) mainWrap.style.display = 'block';
+                if (dispatchWrap) dispatchWrap.style.display = 'block';
+            }
+        };
+
+        window.closeEditAddressDrawer = function() {
+            var drawer = document.getElementById('wsAddressEditDrawer');
+            var mainWrap = document.getElementById('wsMainAddressSectionWrap');
+            var dispatchWrap = document.getElementById('wsDispatchSectionWrap');
+            if (drawer) drawer.style.display = 'none';
+            if (mainWrap) mainWrap.style.display = 'none';
+            if (dispatchWrap) dispatchWrap.style.display = 'none';
+        };
 
         function renderAddressBookData(user) {
             var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
@@ -7466,7 +7499,7 @@ $catalogProducts = [
             var billState = user.state || 'Gujarat';
             var billPin = user.pincode || '395002';
 
-            // Populate Section 1 form inputs directly
+            // Populate Section 1 form inputs
             var mComp = document.getElementById('wsMainCompName');
             var mPhone = document.getElementById('wsMainContactPhone');
             var mAddr = document.getElementById('wsFullAddress');
@@ -7535,7 +7568,7 @@ $catalogProducts = [
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
-            // Save Section 1: Main Address
+            // Save Section 1: Main Address (if entered/updated)
             var mComp = document.getElementById('wsMainCompName') ? document.getElementById('wsMainCompName').value.trim() : '';
             var mPhone = document.getElementById('wsMainContactPhone') ? document.getElementById('wsMainContactPhone').value.trim() : '';
             var mAddr = document.getElementById('wsFullAddress') ? document.getElementById('wsFullAddress').value.trim() : '';
@@ -7575,9 +7608,10 @@ $catalogProducts = [
             }
 
             localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+            closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedWholesalerData();
-            window.showWsToast('✓ Address Book & Dispatch Configuration saved successfully!');
+            window.showWsToast('✓ Address configuration saved successfully!');
         };
 
         /* ── GST Mode Toggle ── */
