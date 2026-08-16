@@ -2649,9 +2649,12 @@ $catalogProducts = [
                 padding: 12px 14px !important;
             }
             #wsFullWalletModal .ws-modal-footer {
-                padding: 8px 14px calc(10px + env(safe-area-inset-bottom)) !important;
+                padding: 10px 14px calc(12px + env(safe-area-inset-bottom)) !important;
                 background: #FFFFFF !important;
-                border-top: 1px solid var(--ws-border) !important;
+                border-top: 1.5px solid var(--ws-border) !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
             }
         }
 
@@ -4767,21 +4770,6 @@ $catalogProducts = [
                     </div>
                 </div>
 
-                <!-- Action Bar: Download Statement & Withdraw Balance with Animated SVGs -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
-                    <!-- Button 1: Download Statement -->
-                    <button class="ws-btn ws-btn-primary" style="height:38px; justify-content:center; font-size:0.75rem; font-weight:800; padding:0 8px;" onclick="window.showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
-                        <svg class="ws-anim-dl-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <span>Download Statement</span>
-                    </button>
-
-                    <!-- Button 2: Withdraw Balance -->
-                    <button class="ws-btn ws-btn-secondary" style="height:38px; justify-content:center; font-size:0.75rem; font-weight:700; padding:0 8px; border:1.5px solid rgba(197, 168, 89, 0.6); color:var(--ws-gold-primary);" onclick="requestWalletWithdrawal()">
-                        <svg class="ws-anim-withdraw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 9v6M9 12h6"></path><path d="M16 8l3-3M19 8V5h-3"></path></svg>
-                        <span>Withdraw Balance</span>
-                    </button>
-                </div>
-
                 <!-- Passbook / Statement Table -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                     <h4 style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif); display:flex; align-items:center; gap:6px;">
@@ -4851,9 +4839,17 @@ $catalogProducts = [
                     </div>
                 </div>
             </div>
-            <div class="ws-modal-footer">
-                <button class="ws-btn ws-btn-secondary" style="width:100%; height:38px; justify-content:center; font-size:0.78rem; font-weight:700;" onclick="closeFullWalletModal()">
-                    <span>Close Passbook</span>
+            <div class="ws-modal-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
+                <!-- Button 1: Download Statement -->
+                <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px;" onclick="window.showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
+                    <svg class="ws-anim-dl-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Download Statement</span>
+                </button>
+
+                <!-- Button 2: Withdraw Balance -->
+                <button class="ws-btn ws-btn-secondary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px; border:1.5px solid rgba(197, 168, 89, 0.6); color:var(--ws-gold-primary); background:linear-gradient(135deg, #FFFFFF 0%, #FEF3C7 100%);" onclick="requestWalletWithdrawal()">
+                    <svg class="ws-anim-withdraw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 9v6M9 12h6"></path><path d="M16 8l3-3M19 8V5h-3"></path></svg>
+                    <span>Withdraw Balance</span>
                 </button>
             </div>
         </div>
