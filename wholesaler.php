@@ -1909,27 +1909,58 @@ $catalogProducts = [
             gap: 12px;
             margin-bottom: 16px;
         }
+        /* ── Wholesale Filter Pills Design System ── */
+        .ws-orders-filter-btns,
+        .ws-filter-pill-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            flex-wrap: nowrap;
+            padding: 2px 2px 6px;
+            width: 100%;
+        }
+        .ws-orders-filter-btns::-webkit-scrollbar,
+        .ws-filter-pill-group::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
         .ws-rep-filter-btn {
             background: #FAF8F4;
-            color: var(--ws-text-sub);
-            border: 1.2px solid var(--ws-border);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.76rem;
+            color: #57534E;
+            border: 1.2px solid rgba(138, 104, 31, 0.22);
+            padding: 7px 14px;
+            border-radius: 24px;
+            font-size: clamp(0.72rem, 1.2vw, 0.78rem);
             font-weight: 700;
             cursor: pointer;
-            transition: var(--ws-transition);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            line-height: 1.1;
+            user-select: none;
         }
         .ws-rep-filter-btn:hover {
             border-color: var(--ws-gold-primary);
             color: var(--ws-gold-primary);
             background: #FFFFFF;
+            transform: translateY(-1px);
         }
         .ws-rep-filter-btn.active {
-            background: var(--ws-gold-primary);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
+            color: #785912;
             border-color: var(--ws-gold-primary);
-            box-shadow: 0 2px 8px rgba(138,104,31,0.25);
+            box-shadow: 0 2px 8px rgba(138, 104, 31, 0.18);
+            font-weight: 800;
+            transform: translateY(-1px);
         }
         .ws-mobile-reports-cards {
             display: none;
@@ -3793,18 +3824,30 @@ $catalogProducts = [
                 flex: none !important;
             }
             .ws-filter-controls-row .ws-orders-filter-btns,
-            .ws-filter-controls-row .ws-filter-pill-group {
+            .ws-filter-controls-row .ws-filter-pill-group,
+            .ws-orders-filter-btns,
+            .ws-filter-pill-group {
                 width: 100% !important;
                 display: flex !important;
                 overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 4px;
-                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch !important;
+                padding-bottom: 4px !important;
+                scrollbar-width: none !important;
                 flex-wrap: nowrap !important;
+                gap: 8px !important;
             }
             .ws-filter-controls-row .ws-orders-filter-btns::-webkit-scrollbar,
-            .ws-filter-controls-row .ws-filter-pill-group::-webkit-scrollbar {
-                display: none;
+            .ws-filter-controls-row .ws-filter-pill-group::-webkit-scrollbar,
+            .ws-orders-filter-btns::-webkit-scrollbar,
+            .ws-filter-pill-group::-webkit-scrollbar {
+                display: none !important;
+            }
+            .ws-rep-filter-btn {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                display: inline-flex !important;
+                padding: 6px 12px !important;
+                font-size: 0.74rem !important;
             }
             .ws-luxury-search-input {
                 height: 42px;
@@ -4814,8 +4857,8 @@ $catalogProducts = [
 
                     <!-- Search & Filter Controls -->
                     <div class="ws-filter-controls-row">
-                        <!-- Status Filter Pills -->
-                        <div class="ws-orders-filter-btns" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
+                        <!-- Status Filter Pills (1-Line Horizontal Scroll) -->
+                        <div class="ws-orders-filter-btns">
                             <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders (6)</button>
                             <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped (2)</button>
                             <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered (3)</button>
