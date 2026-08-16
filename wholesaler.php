@@ -751,6 +751,12 @@ $catalogProducts = [
         .ws-anim-stat-ico.box { animation: boxFloatPulse 2.4s ease-in-out infinite; }
         .ws-anim-stat-ico.stack { animation: stackShimmer 2.6s ease-in-out infinite; }
         .ws-anim-stat-ico.turnover { animation: turnoverCoinPulse 2.8s ease-in-out infinite; }
+        .ws-anim-flame-star { animation: flameStarPulse 2.4s ease-in-out infinite; }
+
+        @keyframes flameStarPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 1px 3px rgba(217,119,6,0.3)); }
+            50% { transform: scale(1.15) rotate(6deg); filter: drop-shadow(0 2px 8px rgba(245,158,11,0.6)); }
+        }
 
         @keyframes crownGlowPulse {
             0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 1px 3px rgba(212,175,55,0.3)); }
@@ -4359,12 +4365,26 @@ $catalogProducts = [
                 <!-- Trending Catalog Carousel (Matches Shop Page Product Cards) -->
                 <div class="ws-card">
                     <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <svg style="width:18px;height:18px;stroke:var(--ws-gold-primary);fill:none;stroke-width:2;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            <h3>Trending Wholesale Catalog (MOQ Ready)</h3>
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                                <svg class="ws-anim-flame-star" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2l2.4 5.2 5.6.8-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.6-.8L12 2z" fill="url(#goldStarGradCatalog)" stroke="#B45309" stroke-width="1.2" stroke-linejoin="round"></path>
+                                    <defs>
+                                        <linearGradient id="goldStarGradCatalog" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE047"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h3 style="font-family:var(--ws-font-serif); font-size:clamp(1.02rem, 1.8vw, 1.18rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
+                                Trending Catalog
+                            </h3>
                         </div>
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('trending')">
-                            View All (<?= count($catalogProducts) ?>) →
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('trending')" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                            <span>View All (<?= count($catalogProducts) ?>)</span>
+                            <span style="font-size:1rem; line-height:1;">→</span>
                         </button>
                     </div>
 
