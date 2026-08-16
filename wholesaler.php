@@ -3413,23 +3413,83 @@ $catalogProducts = [
                 padding: 7px 12px;
             }
             .ws-metric-cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+                margin-bottom: 10px !important;
             }
             .ws-stat-box {
-                padding: 12px 10px;
-                border-radius: 12px;
+                padding: 7px 9px !important;
+                border-radius: 10px !important;
+                min-height: 64px !important;
+                height: 64px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                box-sizing: border-box !important;
+            }
+            .ws-stat-head-row {
+                margin-bottom: 0 !important;
+                gap: 3px !important;
             }
             .ws-stat-label {
-                font-size: 0.68rem;
-                margin-bottom: 4px;
+                font-size: 0.54rem !important;
+                font-weight: 800 !important;
+                letter-spacing: 0.2px !important;
+                line-height: 1 !important;
+            }
+            .ws-stat-ico-wrap {
+                width: 20px !important;
+                height: 20px !important;
+                border-radius: 5px !important;
+            }
+            .ws-stat-ico-wrap svg {
+                width: 11px !important;
+                height: 11px !important;
+            }
+            .ws-stat-val-row {
+                gap: 4px !important;
+                align-items: baseline !important;
             }
             .ws-stat-val-num {
-                font-size: 1.20rem;
+                font-size: 0.98rem !important;
+                font-weight: 900 !important;
+                line-height: 1 !important;
+            }
+            #statVal1 {
+                font-size: 0.78rem !important;
             }
             .ws-trend-pill {
-                font-size: 0.62rem;
-                padding: 2px 6px;
+                font-size: 0.48rem !important;
+                font-weight: 800 !important;
+                padding: 1.5px 4px !important;
+                border-radius: 4px !important;
+            }
+            .ws-wallet-strip {
+                padding: 6px 10px !important;
+                margin-bottom: 10px !important;
+                border-radius: 10px !important;
+                min-height: 44px !important;
+                gap: 6px !important;
+            }
+            .ws-wallet-icon-wrapper {
+                width: 26px !important;
+                height: 26px !important;
+                border-radius: 7px !important;
+            }
+            .ws-anim-wallet-svg, .ws-anim-coin-svg {
+                width: 15px !important;
+                height: 15px !important;
+            }
+            .ws-wallet-metric-value {
+                font-size: 0.88rem !important;
+            }
+            .ws-wallet-metric-label {
+                font-size: 0.50rem !important;
+            }
+            .ws-btn-wallet-view-sm {
+                height: 26px !important;
+                font-size: 0.65rem !important;
+                padding: 0 8px !important;
             }
             .ws-stats-grid {
                 grid-template-columns: 1fr;
