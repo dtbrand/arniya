@@ -3,3 +3,6 @@
 .idea/
 .vscode/
 *.log
+temp_*
+*.tmp
+scratch/
