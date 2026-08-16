@@ -2233,7 +2233,7 @@ $catalogProducts = [
 
         .card-image-wrap, .ws-prod-img-wrap {
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             background: #FAF8F4;
             aspect-ratio: 3 / 3.75;
             display: flex;
@@ -2241,12 +2241,62 @@ $catalogProducts = [
             justify-content: center;
             width: 100%;
         }
+        .card-image-wrap > a, .ws-prod-img-wrap > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 11px 11px 0 0;
+        }
         .card-img, .ws-prod-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center top;
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ── Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) ── */
+        .card-smart-add-cart-btn {
+            position: absolute;
+            bottom: -13px;
+            right: 8px;
+            width: clamp(26px, 7vw, 30px);
+            height: clamp(26px, 7vw, 30px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4AF37 0%, #B45309 100%);
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 3px 8px rgba(180, 83, 9, 0.42), 0 1px 3px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #FFFFFF;
+            padding: 0;
+        }
+        .card-smart-add-cart-btn:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 5px 15px rgba(180, 83, 9, 0.6);
+            background: linear-gradient(135deg, #F59E0B 0%, #92400E 100%);
+        }
+        .card-smart-add-cart-btn:active {
+            transform: scale(0.92);
+        }
+        .card-smart-add-cart-btn.added {
+            background: #10B981 !important;
+            border-color: #FFFFFF;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.5);
+            transform: scale(1.1);
+        }
+        .card-smart-add-cart-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: #FFFFFF;
+            stroke-width: 2.6;
+            fill: none;
+            transition: transform 0.2s ease;
         }
         .product-card:hover .card-img,
         .product-card:hover .ws-prod-img,
@@ -4741,6 +4791,11 @@ $catalogProducts = [
                                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                     </button>
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+
+                                    <!-- Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) -->
+                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-name">
@@ -5334,6 +5389,11 @@ $catalogProducts = [
 
                                     <!-- Category Box on Photo Bottom-Right Corner -->
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+
+                                    <!-- Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) -->
+                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
                                 </div>
 
                                 <div class="card-body">
@@ -7708,7 +7768,50 @@ $catalogProducts = [
             initSmartCatalogAutoSliders();
         }
 
-        /* ── Quick Wholesale Lot WhatsApp Order ── */
+        /* ── Direct Add Wholesale Lot to Cart with Smart Button Feedback ── */
+        window.directAddWholesaleToCart = function(prod, btn) {
+            try {
+                var raw = localStorage.getItem('kalaniketan_cart');
+                var cart = raw ? JSON.parse(raw) : [];
+                var prodId = prod.id;
+                var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
+                var addQty = Number(prod.moq) || 12;
+                if (exists) {
+                    exists.qty = (Number(exists.qty) || addQty) + addQty;
+                } else {
+                    cart.push({
+                        id: prod.id,
+                        name: prod.name,
+                        price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                        wholesale_price: Number(prod.wholesale_price) || 2199,
+                        retail_price: Number(prod.retail_price) || 3299,
+                        qty: addQty,
+                        image: prod.image || 'images/product1.png',
+                        color: prod.color || 'Standard',
+                        moq: addQty,
+                        category: prod.category || 'Wholesale'
+                    });
+                }
+                localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+                window.updateWholesaleCartBadge();
+
+                // Button Ripple & Check Animation
+                if (btn) {
+                    btn.classList.add('added');
+                    btn.innerHTML = '<svg style="width:14px;height:14px;stroke:#FFFFFF;fill:none;stroke-width:2.8;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                    setTimeout(function() {
+                        btn.classList.remove('added');
+                        btn.innerHTML = '<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>';
+                    }, 1400);
+                }
+
+                if (typeof window.showWsToast === 'function') {
+                    window.showWsToast('🛍️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        };
         window.openQuickOrderModal = function(prod) {
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
