@@ -3657,12 +3657,9 @@ $catalogProducts = [
                 </div>
 
                 <div class="ws-card">
-                    <div class="ws-card-header" style="flex-wrap:wrap; gap:12px;">
+                    <div class="ws-card-header" style="flex-wrap:wrap; gap:12px; align-items:center;">
                         <div class="ws-card-title-group">
-                            <h3>Wholesale B2B Sales & Procurement Reports</h3>
-                            <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
-                                Verified Tax Invoices, Consignment HSN Logs & GSTR-2B ITC Reconciliation
-                            </div>
+                            <h3>B2B Wholesale Procurement Reports</h3>
                         </div>
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportReportsToCsv()">
@@ -3726,14 +3723,11 @@ $catalogProducts = [
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneTracking">
                 <div class="ws-card">
-                    <div class="ws-card-header" style="flex-wrap:wrap; gap:12px;">
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:nowrap; gap:10px;">
                         <div class="ws-card-title-group">
-                            <h3>Live Consignment Tracking</h3>
-                            <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
-                                Real-Time Courier Dispatch Status, Air Cargo Logs & Milestones
-                            </div>
+                            <h3 style="margin:0; font-size:1.05rem;">Live Consignment Tracking</h3>
                         </div>
-                        <span class="ws-status-badge shipped" id="trackHeaderBadge">⚡ BlueDart Priority Air</span>
+                        <span class="ws-status-badge shipped" id="trackHeaderBadge" style="white-space:nowrap; font-size:0.75rem;">⚡ BlueDart Express</span>
                     </div>
 
                     <!-- Active Tracking Hero Visual Card -->
@@ -3744,14 +3738,9 @@ $catalogProducts = [
                     <!-- All Consignments Selector Section -->
                     <div style="margin-top:24px; padding-top:18px; border-top:1.5px solid var(--ws-border);">
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
-                            <div>
-                                <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
-                                    📦 Select Consignment to Track
-                                </h4>
-                                <div style="font-size:0.75rem; color:var(--ws-text-muted);">
-                                    Click any consignment below to view its live real-time logistics progress
-                                </div>
-                            </div>
+                            <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); font-family:var(--ws-font-serif); margin:0;">
+                                Select Consignment to Track
+                            </h4>
                             <div class="ws-filter-pill-group" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
                                 <button class="ws-rep-filter-btn active" onclick="filterTrackingOrders('all', this)">All (6)</button>
                                 <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('shipped', this)">In Transit</button>
@@ -6178,31 +6167,31 @@ $catalogProducts = [
             var etaColor = isDelivered ? '#15803D' : (isProcessing ? '#B45309' : 'var(--ws-gold-primary)');
 
             heroContainer.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed var(--ws-border);">
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:58px; height:74px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FFFFFF;">
-                        <div>
-                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                                <span class="ws-order-id-cell" style="font-size:1.05rem;">${currentOrder.id}</span>
-                                <span class="ws-status-badge ${currentOrder.status.toLowerCase()}">${currentOrder.status}</span>
-                            </div>
-                            <h4 style="font-size:0.90rem; font-weight:800; color:var(--ws-text-main); margin-top:2px;">${currentOrder.productName}</h4>
-                            <div style="font-size:0.75rem; color:var(--ws-text-muted);">
-                                Consignment Lot: <strong>${currentOrder.qty} Pcs</strong> • ${currentOrder.color || 'Silk Assorted'}
-                            </div>
-                        </div>
+                <!-- Top Header: Consignment ID + Status Pill + ETA -->
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px; padding-bottom:10px; border-bottom:1px dashed var(--ws-border);">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span class="ws-order-id-cell" style="font-size:1.05rem; font-weight:800;">${currentOrder.id}</span>
+                        <span class="ws-status-badge ${currentOrder.status.toLowerCase()}" style="font-size:0.75rem; padding:3px 8px;">${currentOrder.status}</span>
                     </div>
-                    <div style="text-align:right;">
-                        <div style="font-size:0.74rem; color:var(--ws-text-muted);">Courier & AWB Tracking</div>
-                        <div style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:2px;">
-                            <span>${currentOrder.courier}</span>
-                            <span style="font-family:monospace; background:#FFFFFF; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border);">${currentOrder.awb}</span>
-                            <button onclick="copyAwbNumber('${currentOrder.awb}')" style="background:transparent; border:none; color:var(--ws-gold-primary); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:3px;" title="Copy AWB">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                            </button>
+                    <div style="font-size:0.80rem; font-weight:800; color:${etaColor};">
+                        📅 ${etaText}
+                    </div>
+                </div>
+
+                <!-- Product & Courier Info Strip -->
+                <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='images/product1.png';">
+                    <div style="flex:1; min-width:0;">
+                        <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px;">${currentOrder.productName}</h4>
+                        <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:4px;">
+                            Consignment Lot: <strong>${currentOrder.qty} Pcs</strong> • ${currentOrder.color || 'Standard'}
                         </div>
-                        <div style="font-size:0.78rem; font-weight:800; color:${etaColor}; margin-top:4px;">
-                            ${etaText}
+                        <div style="font-size:0.74rem; color:var(--ws-text-sub); display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <span>${currentOrder.courier}</span>
+                            <span style="font-family:monospace; background:#FAF8F4; padding:1px 6px; border-radius:4px; border:1px solid var(--ws-border); font-weight:700;">${currentOrder.awb}</span>
+                            <button onclick="copyAwbNumber('${currentOrder.awb}')" style="background:transparent; border:none; color:var(--ws-gold-primary); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:2px;" title="Copy AWB">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
