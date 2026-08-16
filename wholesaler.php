@@ -2621,6 +2621,40 @@ $catalogProducts = [
             }
         }
 
+        /* ── Fullscreen Responsive Passbook & Wallet Modal on Mobile ── */
+        @media (max-width: 640px) {
+            #wsFullWalletModal.ws-modal-overlay {
+                padding: 0 !important;
+                align-items: stretch !important;
+            }
+            #wsFullWalletModal .ws-modal-box {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                border-radius: 0 !important;
+                border: none !important;
+                margin: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            #wsFullWalletModal .ws-modal-header {
+                padding: 12px 16px !important;
+                border-bottom: 1.5px solid var(--ws-gold-border) !important;
+            }
+            #wsFullWalletModal .ws-modal-body {
+                flex: 1 1 auto !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch;
+                padding: 14px 16px !important;
+            }
+            #wsFullWalletModal .ws-modal-footer {
+                padding: 10px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+                background: #FFFFFF !important;
+                border-top: 1px solid var(--ws-border) !important;
+            }
+        }
+
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
             background: #FFFFFF;
@@ -4511,83 +4545,100 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK
+         MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK (100% FULL SCREEN)
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsFullWalletModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box" style="max-width: 640px;">
+        <div class="ws-modal-box" style="max-width: 680px;">
             <div class="ws-modal-header">
-                <h3 class="ws-modal-title">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect x="2" y="5" width="20" height="14" rx="3"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                    <span>Kalaniketan B2B Gold Wallet & Passbook</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeFullWalletModal()" aria-label="Close Modal">&times;</button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button class="ws-modal-close-btn" onclick="closeFullWalletModal()" aria-label="Back" title="Back" style="width:30px; height:30px;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
+                    <h3 class="ws-modal-title" style="margin:0; font-size:1.05rem;">
+                        <span>Kalaniketan B2B Gold Wallet & Passbook</span>
+                    </h3>
+                </div>
+                <button class="ws-modal-close-btn" onclick="closeFullWalletModal()" aria-label="Close Modal" style="width:30px; height:30px;">&times;</button>
             </div>
             <div class="ws-modal-body">
                 <!-- Dual Balance Cards Grid -->
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
                     <!-- Balance Card -->
-                    <div style="background:linear-gradient(135deg, #1C1813 0%, #2A2319 100%); border:1.5px solid rgba(197, 168, 89, 0.4); border-radius:10px; padding:14px; color:#FFFFFF;">
-                        <div style="font-size:0.70rem; text-transform:uppercase; color:#A89F91; font-weight:700; letter-spacing:0.5px;">Available Balance</div>
-                        <div style="font-size:1.45rem; font-weight:900; color:#FFFFFF; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalWalletBal">₹1,45,280</div>
+                    <div style="background:linear-gradient(135deg, #1C1813 0%, #2A2319 100%); border:1.5px solid rgba(197, 168, 89, 0.45); border-radius:12px; padding:14px; color:#FFFFFF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                        <div style="font-size:0.70rem; text-transform:uppercase; color:#A89F91; font-weight:800; letter-spacing:0.5px;">Available Balance</div>
+                        <div style="font-size:1.5rem; font-weight:900; color:#FFFFFF; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalWalletBal">₹1,45,280</div>
                         <div style="font-size:0.70rem; color:#D6CEC3;">Prepaid: ₹45,280 • Credit: ₹1.0L</div>
                     </div>
                     <!-- Coins Card -->
-                    <div style="background:linear-gradient(135deg, #1E1B16 0%, #2E261B 100%); border:1.5px solid rgba(245, 158, 11, 0.4); border-radius:10px; padding:14px; color:#FFFFFF;">
-                        <div style="font-size:0.70rem; text-transform:uppercase; color:#FBBF24; font-weight:700; letter-spacing:0.5px;">Silk Reward Coins</div>
-                        <div style="font-size:1.45rem; font-weight:900; color:#FBBF24; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalCoinsBal">3,850 Coins</div>
+                    <div style="background:linear-gradient(135deg, #1E1B16 0%, #2E261B 100%); border:1.5px solid rgba(245, 158, 11, 0.45); border-radius:12px; padding:14px; color:#FFFFFF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
+                        <div style="font-size:0.70rem; text-transform:uppercase; color:#FBBF24; font-weight:800; letter-spacing:0.5px;">Silk Reward Coins</div>
+                        <div style="font-size:1.5rem; font-weight:900; color:#FBBF24; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalCoinsBal">3,850 Coins</div>
                         <div style="font-size:0.70rem; color:#D6CEC3;">1 Coin = ₹1.00 Off on Checkout</div>
                     </div>
                 </div>
 
                 <!-- Action Bar -->
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px;">
-                    <button class="ws-btn ws-btn-primary" style="height:40px; justify-content:center;" onclick="closeFullWalletModal(); openWalletTopupModal();">
+                    <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-weight:800;" onclick="closeFullWalletModal(); openWalletTopupModal();">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Top-Up Balance</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="height:40px; justify-content:center;" onclick="requestCreditLimitBoost()">
+                    <button class="ws-btn ws-btn-secondary" style="height:42px; justify-content:center; font-weight:700;" onclick="requestCreditLimitBoost()">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         <span>Request Limit Boost</span>
                     </button>
                 </div>
 
                 <!-- Passbook / Statement Table -->
-                <h4 style="font-size:0.88rem; font-weight:800; color:var(--ws-text-main); margin-bottom:8px; font-family:var(--ws-font-serif);">Recent Passbook Transactions</h4>
-                <div style="border:1px solid var(--ws-border); border-radius:8px; overflow:hidden; background:#FFFFFF;">
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:10px 12px; border-bottom:1px solid var(--ws-border); font-size:0.78rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">Recent Passbook Transactions</h4>
+                    <span style="font-size:0.70rem; color:var(--ws-gold-primary); font-weight:700; cursor:pointer;" onclick="window.showWsToast('📄 Full GSTR passbook statement downloaded!')">📥 Download PDF</span>
+                </div>
+                <div style="border:1.5px solid var(--ws-border); border-radius:10px; overflow:hidden; background:#FFFFFF; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
                         <div>
                             <strong style="color:var(--ws-text-main);">Wallet Top-Up (RTGS)</strong>
                             <div style="font-size:0.70rem; color:var(--ws-text-muted);">14 Aug 2026, 11:20 AM • UTR #RTGS992104</div>
                         </div>
                         <div style="text-align:right;">
                             <strong style="color:#15803D;">+₹50,000</strong>
-                            <div style="font-size:0.70rem; color:#15803D;">Success</div>
+                            <div style="font-size:0.70rem; color:#15803D; font-weight:700;">Credited</div>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:10px 12px; border-bottom:1px solid var(--ws-border); font-size:0.78rem;">
+                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
                         <div>
-                            <strong style="color:var(--ws-text-main);">Order Deduction #KLN-WS-8021</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">14 Aug 2026, 10:30 AM • 12 Pcs Lot</div>
+                            <strong style="color:var(--ws-text-main);">Order Lot Deduction #KLN-WS-8021</strong>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">14 Aug 2026, 10:30 AM • 12 Pcs Silk Lot</div>
                         </div>
                         <div style="text-align:right;">
                             <strong style="color:#DC2626;">-₹38,308</strong>
                             <div style="font-size:0.70rem; color:var(--ws-text-muted);">Debited</div>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:10px 12px; font-size:0.78rem;">
+                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
                         <div>
-                            <strong style="color:var(--ws-text-main);">Wholesale Reward Cash Coins Credited</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">12 Aug 2026, 04:15 PM • Volume Bonus</div>
+                            <strong style="color:var(--ws-text-main);">Wholesale Silk Cashback Coins</strong>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">12 Aug 2026, 04:15 PM • Volume Order Bonus</div>
                         </div>
                         <div style="text-align:right;">
                             <strong style="color:#D97706;">+500 Coins</strong>
-                            <div style="font-size:0.70rem; color:#D97706;">Earned</div>
+                            <div style="font-size:0.70rem; color:#D97706; font-weight:700;">Earned</div>
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; font-size:0.80rem;">
+                        <div>
+                            <strong style="color:var(--ws-text-main);">Consignment Advance Settlement</strong>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">10 Aug 2026, 02:00 PM • Credit Line Release</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <strong style="color:#15803D;">+₹1,00,000</strong>
+                            <div style="font-size:0.70rem; color:#15803D; font-weight:700;">Restored</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="ws-modal-footer">
-                <button class="ws-btn ws-btn-secondary" style="width:100%; height:40px; justify-content:center;" onclick="closeFullWalletModal()">
+                <button class="ws-btn ws-btn-secondary" style="width:100%; height:42px; justify-content:center; font-weight:700;" onclick="closeFullWalletModal()">
                     <span>Close Passbook</span>
                 </button>
             </div>
