@@ -2433,25 +2433,25 @@ $catalogProducts = [
             100% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
 
-        /* ── Luxury B2B Gold Wallet & Credit Line Component ── */
+        /* ── Compact Luxury B2B Gold Wallet & Credit Line Component ── */
         .ws-wallet-hero-card {
             background: linear-gradient(135deg, #1C1813 0%, #2A2319 50%, #15110B 100%);
             border: 1.5px solid rgba(197, 168, 89, 0.35);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
             color: #FFFFFF;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
         .ws-wallet-hero-card::after {
             content: '';
             position: absolute;
-            right: -40px;
-            top: -40px;
-            width: 180px;
-            height: 180px;
+            right: -30px;
+            top: -30px;
+            width: 120px;
+            height: 120px;
             background: radial-gradient(circle, rgba(197, 168, 89, 0.15) 0%, rgba(197, 168, 89, 0) 70%);
             pointer-events: none;
         }
@@ -2460,20 +2460,20 @@ $catalogProducts = [
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(197, 168, 89, 0.2);
-            margin-bottom: 14px;
+            gap: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(197, 168, 89, 0.18);
+            margin-bottom: 8px;
         }
         .ws-wallet-brand-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
         }
         .ws-wallet-chip-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             background: rgba(197, 168, 89, 0.15);
             border: 1px solid rgba(197, 168, 89, 0.35);
             color: #E6C875;
@@ -2483,78 +2483,77 @@ $catalogProducts = [
             flex-shrink: 0;
         }
         .ws-wallet-tag {
-            font-size: 0.70rem;
+            font-size: 0.66rem;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
             color: #E6C875;
             text-transform: uppercase;
         }
         .ws-wallet-account-no {
-            font-size: 0.72rem;
+            font-size: 0.66rem;
             color: #A89F91;
             font-family: monospace;
-            margin-top: 1px;
         }
         .ws-wallet-rewards-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: rgba(197, 168, 89, 0.15);
             border: 1px solid rgba(197, 168, 89, 0.3);
             color: #F3E5AB;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.68rem;
             font-weight: 700;
             cursor: pointer;
             transition: var(--ws-transition);
         }
         .ws-wallet-rewards-badge:hover {
             background: rgba(197, 168, 89, 0.25);
-            transform: scale(1.02);
         }
         .ws-wallet-main-row {
             display: grid;
-            grid-template-columns: 1.3fr 1.6fr 1fr;
-            gap: 18px;
+            grid-template-columns: 1.2fr 1.5fr 1fr;
+            gap: 12px;
             align-items: center;
         }
         .ws-wallet-label {
-            font-size: 0.72rem;
+            font-size: 0.65rem;
             color: #A89F91;
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.4px;
-            margin-bottom: 2px;
+            letter-spacing: 0.3px;
         }
         .ws-wallet-val-row {
             display: flex;
             align-items: baseline;
-            gap: 3px;
+            gap: 2px;
+            margin: 1px 0;
         }
         .ws-wallet-curr {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #E6C875;
         }
         .ws-wallet-amount {
-            font-size: clamp(1.4rem, 3.2vw, 1.85rem);
+            font-size: clamp(1.15rem, 2.6vw, 1.45rem);
             font-weight: 900;
             color: #FFFFFF;
             font-family: var(--ws-font-serif);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            line-height: 1.1;
         }
         .ws-wallet-sub-pills {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             flex-wrap: wrap;
-            margin-top: 6px;
+            margin-top: 3px;
         }
         .ws-wallet-sub-pill {
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 2px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1px 5px;
             border-radius: 4px;
             color: #D6CEC3;
         }
@@ -2563,41 +2562,41 @@ $catalogProducts = [
         }
         .ws-wallet-util-block {
             background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(197, 168, 89, 0.2);
-            border-radius: 10px;
-            padding: 10px 14px;
+            border: 1px solid rgba(197, 168, 89, 0.18);
+            border-radius: 8px;
+            padding: 6px 10px;
         }
         .ws-wallet-util-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.72rem;
+            font-size: 0.66rem;
             color: #D6CEC3;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
         }
         .ws-wallet-util-header strong {
             color: #E6C875;
         }
         .ws-wallet-util-track {
-            height: 7px;
+            height: 5px;
             background: rgba(255, 255, 255, 0.12);
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
             position: relative;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         .ws-wallet-util-fill {
             height: 100%;
             background: linear-gradient(90deg, #8A681F 0%, #C5A859 60%, #E6C875 100%);
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(197, 168, 89, 0.5);
+            border-radius: 3px;
+            box-shadow: 0 0 6px rgba(197, 168, 89, 0.5);
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .ws-wallet-util-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             color: #A89F91;
         }
         .ws-wallet-util-meta strong {
@@ -2606,41 +2605,42 @@ $catalogProducts = [
         .ws-wallet-actions-block {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
         .ws-btn-gold-recharge {
             background: linear-gradient(135deg, #C5A859 0%, #8A681F 100%);
             color: #FFFFFF !important;
             border: 1px solid #E6C875;
-            font-size: 0.80rem;
+            font-size: 0.74rem;
             font-weight: 800;
-            padding: 9px 12px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.3);
+            height: 32px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(138, 104, 31, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: var(--ws-transition);
         }
         .ws-btn-gold-recharge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(197, 168, 89, 0.4);
+            transform: translateY(-1px);
             filter: brightness(1.08);
         }
         .ws-btn-wallet-outline {
             background: rgba(255, 255, 255, 0.06);
             color: #E6C875 !important;
             border: 1px solid rgba(197, 168, 89, 0.35);
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 8px;
+            height: 32px;
+            padding: 4px 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: var(--ws-transition);
         }
@@ -2653,14 +2653,15 @@ $catalogProducts = [
         @media (max-width: 900px) {
             .ws-wallet-main-row {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 8px;
             }
             .ws-wallet-actions-block {
                 flex-direction: row;
-                gap: 8px;
+                gap: 6px;
             }
             .ws-wallet-actions-block .ws-btn {
                 flex: 1;
+                height: 34px;
             }
         }
 
@@ -3322,61 +3323,61 @@ $catalogProducts = [
 
                 </div>
 
-                <!-- ── Wholesale B2B Gold Wallet & Credit Line Card ── -->
+                <!-- ── Compact Wholesale B2B Gold Wallet & Credit Line Card ── -->
                 <div class="ws-wallet-hero-card">
                     <div class="ws-wallet-top-strip">
                         <div class="ws-wallet-brand-group">
                             <div class="ws-wallet-chip-icon">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"></rect><line x1="2" y1="10" x2="22" y2="10"></line><circle cx="6" cy="15" r="1"></circle></svg>
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                             </div>
-                            <div>
-                                <div class="ws-wallet-tag">KALANIKETAN B2B GOLD CREDIT LINE</div>
-                                <div class="ws-wallet-account-no">ACC #KLN-SURAT-9021 • GST RECONCILED</div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span class="ws-wallet-tag">B2B GOLD CREDIT LINE</span>
+                                <span class="ws-wallet-account-no">• ACC #KLN-9021</span>
                             </div>
                         </div>
-                        <div class="ws-wallet-rewards-badge" onclick="window.showWsToast('⭐ 3,850 Silk Coins available! Use ₹3,850 off on your next lot checkout.')">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            <span><strong>3,850</strong> Silk Coins</span>
+                        <div class="ws-wallet-rewards-badge" onclick="window.showWsToast('⭐ 3,850 Silk Coins available!')">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <span><strong>3,850</strong> Coins</span>
                         </div>
                     </div>
 
                     <div class="ws-wallet-main-row">
                         <!-- Balance Metric Block -->
                         <div class="ws-wallet-balance-block">
-                            <div class="ws-wallet-label">Total Available Purchasing Power</div>
+                            <div class="ws-wallet-label">Purchasing Power</div>
                             <div class="ws-wallet-val-row">
                                 <span class="ws-wallet-curr">₹</span>
                                 <span class="ws-wallet-amount" id="walletAvailableBalance">1,45,280</span>
                             </div>
                             <div class="ws-wallet-sub-pills">
-                                <span class="ws-wallet-sub-pill">Prepaid Cash: <strong id="walletCashBalance">₹45,280</strong></span>
-                                <span class="ws-wallet-sub-pill">Credit Line: <strong id="walletCreditLimit">₹1,00,000</strong></span>
+                                <span class="ws-wallet-sub-pill">Cash: <strong id="walletCashBalance">₹45,280</strong></span>
+                                <span class="ws-wallet-sub-pill">Credit: <strong id="walletCreditLimit">₹1,00,000</strong></span>
                             </div>
                         </div>
 
                         <!-- Credit Utilization Tracker -->
                         <div class="ws-wallet-util-block">
                             <div class="ws-wallet-util-header">
-                                <span>Credit Line Utilization (30-Day Interest Free)</span>
-                                <strong id="walletUtilPct">63.7% Used</strong>
+                                <span>Limit Utilization (30-Day)</span>
+                                <strong id="walletUtilPct">63.7%</strong>
                             </div>
                             <div class="ws-wallet-util-track">
                                 <div class="ws-wallet-util-fill" id="walletUtilFill" style="width: 63.7%;"></div>
                             </div>
                             <div class="ws-wallet-util-meta">
-                                <span>₹2,54,720 Used of ₹4,00,000 Limit</span>
-                                <span>Settlement Due: <strong>28 Aug 2026</strong></span>
+                                <span>₹2.54L / ₹4.0L Limit</span>
+                                <span>Due: <strong>28 Aug</strong></span>
                             </div>
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="ws-wallet-actions-block">
                             <button class="ws-btn ws-btn-gold-recharge" onclick="openWalletTopupModal()">
-                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                <span>Top-Up Wallet</span>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Top-Up</span>
                             </button>
                             <button class="ws-btn ws-btn-wallet-outline" onclick="requestCreditLimitBoost()">
-                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                                 <span>Boost Limit</span>
                             </button>
                         </div>
