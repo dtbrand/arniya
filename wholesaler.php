@@ -5690,19 +5690,10 @@ $catalogProducts = [
                                     </defs>
                                 </svg>
                             </div>
-                            <div>
-                                <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
-                                    Procure By Price Store
-                                </h3>
-                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin:2px 0 0; font-weight:600;">
-                                    Direct Mill Wholesale Lots Filtered by Retailer Budget
-                                </p>
-                            </div>
+                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                                Procure By Price Store
+                            </h3>
                         </div>
-                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
-                            <span>All Price Points</span>
-                            <span style="font-size:1rem; line-height:1;">→</span>
-                        </a>
                     </div>
 
                     <div class="ws-price-slider-wrap">
