@@ -475,9 +475,9 @@
     <div class="pdp-header-main">
         <!-- Left: Back Button & Royal Seal -->
         <div class="pdp-header-left">
-            <a href="shop.php" class="pdp-back-btn" aria-label="Back to Shop">
+            <a href="shop.php" class="pdp-back-btn" aria-label="Shop">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                <span>Back to Shop</span>
+                <span>Shop</span>
             </a>
 
             <a href="shop.php" class="pdp-brand-seal" aria-label="Kalaniketan Home">
