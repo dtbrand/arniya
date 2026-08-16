@@ -6028,16 +6028,20 @@ $catalogProducts = [
                         </button>
                     </div>
 
-                    <!-- Active Category Filter Status Banner -->
-                    <div id="wsActiveCategoryFilterBar" class="ws-active-cat-bar" style="display:none; margin-bottom:10px; align-items:center; justify-content:space-between; background:linear-gradient(135deg, #FFFBEB, #FEF3C7); border:1px solid rgba(217,119,6,0.25); border-radius:10px; padding:6px 10px;">
-                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <span style="font-size:0.74rem; font-weight:800; color:#B45309; display:inline-flex; align-items:center; gap:4px;">
-                                <span>Category:</span>
-                                <span id="wsActiveCatName" style="background:#B45309; color:#FFF; padding:1px 7px; border-radius:10px; font-size:0.7rem; font-weight:800;">Sarees</span>
+                    <!-- Active Combined Filter Status Banner (Category + Price Store) -->
+                    <div id="wsActiveCategoryFilterBar" class="ws-active-cat-bar" style="display:none; margin-bottom:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; background:linear-gradient(135deg, #FFFBEB, #FEF3C7); border:1px solid rgba(217,119,6,0.25); border-radius:10px; padding:6px 12px;">
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <span id="wsFilterCategoryPill" style="display:none; background:#B45309; color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
+                                <span id="wsActiveCatName">Sarees</span>
+                                <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Category">✕</span>
                             </span>
-                            <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:700;">(12 Lots)</span>
+                            <span id="wsFilterPricePill" style="display:none; background:linear-gradient(135deg, #D97706, #B45309); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
+                                <span id="wsActivePriceName">Under ₹1,000</span>
+                                <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Price Filter">✕</span>
+                            </span>
+                            <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:800;">(12 Lots Available)</span>
                         </div>
-                        <button type="button" onclick="clearCategoryFilter()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0;">✕ Clear</button>
+                        <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0;">✕ Clear All</button>
                     </div>
 
                     <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
@@ -8548,70 +8552,198 @@ $catalogProducts = [
                 return;
             }
 
-            activePriceTier = maxPrice;
-            cards.forEach(function(c) { c.classList.remove('active'); });
+        /* ── Unified Real-Time Category & Price Store Filter Engine ── */
+        var activePriceTier = null;
+        var activeCatalogCategory = 'All';
 
-            if (cardElem) {
-                cardElem.classList.add('active');
+        window.filterByPriceTier = function(maxPrice, cardElem) {
+            var cards = document.querySelectorAll('.ws-price-box-card');
+
+            if (activePriceTier === maxPrice) {
+                // Clicking active price box again toggles off the price filter
+                activePriceTier = null;
+                cards.forEach(function(c) { c.classList.remove('active'); });
             } else {
-                cards.forEach(function(c) {
-                    if (c.textContent.indexOf('₹' + Number(maxPrice).toLocaleString('en-IN')) !== -1 || (c.getAttribute('onclick') && c.getAttribute('onclick').indexOf(String(maxPrice)) !== -1)) {
-                        c.classList.add('active');
-                    }
-                });
+                activePriceTier = maxPrice;
+                cards.forEach(function(c) { c.classList.remove('active'); });
+                if (cardElem) {
+                    cardElem.classList.add('active');
+                } else {
+                    cards.forEach(function(c) {
+                        if (c.textContent.indexOf('₹' + Number(maxPrice).toLocaleString('en-IN')) !== -1 || (c.getAttribute('onclick') && c.getAttribute('onclick').indexOf(String(maxPrice)) !== -1)) {
+                            c.classList.add('active');
+                        }
+                    });
+                }
             }
 
-            var tracks = ['wsForYouSliderTrack', 'wsTrendingSliderTrack'];
-            var matchCount = 0;
+            applyUnifiedCatalogFilterEngine(true);
+        };
 
-            tracks.forEach(function(trackId) {
-                var track = document.getElementById(trackId);
-                if (!track) return;
-                var productCards = track.querySelectorAll('.product-card');
-                productCards.forEach(function(pCard) {
-                    var prodId = pCard.getAttribute('data-product-id');
-                    var pData = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(prodId); });
-                    var price = pData ? (Number(pData.wholesale_price) || Number(pData.price) || 0) : 0;
-                    if (price > 0 && price <= maxPrice) {
-                        pCard.style.display = 'flex';
-                        matchCount++;
-                    } else {
-                        pCard.style.display = 'none';
-                    }
-                });
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-            });
-
-            if (typeof window.showWsToast === 'function') {
-                window.showWsToast('🏷️ Filter Active: Under ₹' + Number(maxPrice).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+        window.selectWsCategory = function(catName) {
+            closeWsCatalogCategoryModal();
+            if (typeof window.switchWsTab === 'function') {
+                window.switchWsTab('trending');
             }
+            activeCatalogCategory = catName || 'All';
+            applyUnifiedCatalogFilterEngine(true);
+        };
 
-            // Smooth scroll up to the catalog container
-            var forYouContainer = document.getElementById('wsForYouSliderTrack');
-            if (forYouContainer) {
-                forYouContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+        window.filterCatalogByCategory = function(catName) {
+            activeCatalogCategory = catName || 'All';
+            applyUnifiedCatalogFilterEngine(true);
+        };
+
+        window.clearCategoryOnlyFilter = function() {
+            activeCatalogCategory = 'All';
+            applyUnifiedCatalogFilterEngine(false);
+        };
+
+        window.clearPriceOnlyFilter = function() {
+            activePriceTier = null;
+            document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
+            applyUnifiedCatalogFilterEngine(false);
+        };
+
+        window.clearAllCatalogFilters = function() {
+            activeCatalogCategory = 'All';
+            activePriceTier = null;
+            document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
+            applyUnifiedCatalogFilterEngine(false);
         };
 
         window.resetCatalogFilter = function() {
-            activePriceTier = null;
-            document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
-            var tracks = ['wsForYouSliderTrack', 'wsTrendingSliderTrack'];
-            tracks.forEach(function(trackId) {
-                var track = document.getElementById(trackId);
-                if (!track) return;
-                track.querySelectorAll('.product-card').forEach(function(pCard) {
-                    pCard.style.display = 'flex';
-                });
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-            });
-            if (typeof window.showWsToast === 'function') {
-                window.showWsToast('✓ Showing All Available Wholesale Lots');
-            }
+            window.clearAllCatalogFilters();
         };
 
-        /* ── Smart Wholesale Category Selection Popup & Filtering Engine ── */
-        var activeCatalogCategory = 'All';
+        function applyUnifiedCatalogFilterEngine(showToast) {
+            var btnLabel = document.getElementById('wsCatPickerBtnLabel');
+            var titleElem = document.getElementById('wsCatalogMainTitle');
+            var filterBar = document.getElementById('wsActiveCategoryFilterBar');
+            var catPill = document.getElementById('wsFilterCategoryPill');
+            var pricePill = document.getElementById('wsFilterPricePill');
+            var activeNameElem = document.getElementById('wsActiveCatName');
+            var activePriceElem = document.getElementById('wsActivePriceName');
+            var activeCountElem = document.getElementById('wsActiveCatCount');
+
+            var track = document.getElementById('wsForYouSliderTrack');
+            if (!track) return;
+
+            var productCards = Array.from(track.querySelectorAll('.product-card'));
+            var matchCount = 0;
+            var matchingCards = [];
+            var nonMatchingCards = [];
+
+            // Update UI headers
+            if (btnLabel) {
+                btnLabel.textContent = activeCatalogCategory === 'All' ? 'All Categories ▾' : (activeCatalogCategory + ' ▾');
+            }
+            if (titleElem) {
+                titleElem.textContent = activeCatalogCategory === 'All' ? 'For You' : (activeCatalogCategory + ' Catalog');
+            }
+
+            // Filter products matching BOTH category and price
+            productCards.forEach(function(card) {
+                var prodId = card.getAttribute('data-product-id');
+                var pData = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(prodId); });
+                var pCat = pData ? (pData.category || '') : '';
+                var cardCat = card.querySelector('.card-cat-photo-tag') ? card.querySelector('.card-cat-photo-tag').textContent.trim() : '';
+                var price = pData ? (Number(pData.wholesale_price) || Number(pData.price) || 0) : 0;
+
+                // Category Check
+                var isCatMatch = false;
+                if (activeCatalogCategory === 'All') {
+                    isCatMatch = true;
+                } else if (activeCatalogCategory === 'Sarees' && (pCat.toLowerCase().indexOf('saree') !== -1 || cardCat.toLowerCase().indexOf('saree') !== -1)) {
+                    isCatMatch = true;
+                } else if (activeCatalogCategory === 'Kurtis' && (pCat.toLowerCase().indexOf('kurti') !== -1 || cardCat.toLowerCase().indexOf('kurti') !== -1)) {
+                    isCatMatch = true;
+                } else if (activeCatalogCategory === 'Lehengas' && (pCat.toLowerCase().indexOf('lehenga') !== -1 || cardCat.toLowerCase().indexOf('lehenga') !== -1)) {
+                    isCatMatch = true;
+                } else if (activeCatalogCategory === 'Gowns' && (pCat.toLowerCase().indexOf('gown') !== -1 || cardCat.toLowerCase().indexOf('gown') !== -1)) {
+                    isCatMatch = true;
+                } else if (activeCatalogCategory === 'Dress Materials' && (pCat.toLowerCase().indexOf('dress') !== -1 || pCat.toLowerCase().indexOf('dupatta') !== -1 || cardCat.toLowerCase().indexOf('dress') !== -1 || cardCat.toLowerCase().indexOf('dupatta') !== -1)) {
+                    isCatMatch = true;
+                } else if (pCat.toLowerCase() === activeCatalogCategory.toLowerCase() || cardCat.toLowerCase() === activeCatalogCategory.toLowerCase()) {
+                    isCatMatch = true;
+                }
+
+                // Price Check
+                var isPriceMatch = true;
+                if (activePriceTier !== null) {
+                    isPriceMatch = (price > 0 && price <= activePriceTier);
+                }
+
+                if (isCatMatch && isPriceMatch) {
+                    card.style.display = 'flex';
+                    matchingCards.push(card);
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
+                    nonMatchingCards.push(card);
+                }
+            });
+
+            // Sort matching cards: new arrivals & new catalogue lots first
+            matchingCards.sort(function(a, b) {
+                var badgeA = (a.querySelector('.card-badge') ? a.querySelector('.card-badge').textContent.toLowerCase() : '');
+                var badgeB = (b.querySelector('.card-badge') ? b.querySelector('.card-badge').textContent.toLowerCase() : '');
+                var isNewA = badgeA.indexOf('new') !== -1 ? 1 : 0;
+                var isNewB = badgeB.indexOf('new') !== -1 ? 1 : 0;
+                return isNewB - isNewA;
+            });
+
+            // Append matching cards in prioritized order
+            matchingCards.forEach(function(card) { track.appendChild(card); });
+            nonMatchingCards.forEach(function(card) { track.appendChild(card); });
+
+            // Update Filter Status Bar
+            var hasFilter = (activeCatalogCategory !== 'All' || activePriceTier !== null);
+            if (filterBar) {
+                if (hasFilter) {
+                    filterBar.style.display = 'flex';
+                    if (catPill) {
+                        if (activeCatalogCategory !== 'All') {
+                            catPill.style.display = 'inline-flex';
+                            if (activeNameElem) activeNameElem.textContent = activeCatalogCategory;
+                        } else {
+                            catPill.style.display = 'none';
+                        }
+                    }
+                    if (pricePill) {
+                        if (activePriceTier !== null) {
+                            pricePill.style.display = 'inline-flex';
+                            if (activePriceElem) activePriceElem.textContent = 'Under ₹' + Number(activePriceTier).toLocaleString('en-IN');
+                        } else {
+                            pricePill.style.display = 'none';
+                        }
+                    }
+                    if (activeCountElem) {
+                        activeCountElem.textContent = '(' + matchCount + ' Lots Available)';
+                    }
+                } else {
+                    filterBar.style.display = 'none';
+                }
+            }
+
+            if (showToast && typeof window.showWsToast === 'function') {
+                if (!hasFilter) {
+                    window.showWsToast('✓ Showing All Available Wholesale Lots');
+                } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
+                    window.showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                } else if (activeCatalogCategory !== 'All') {
+                    window.showWsToast('🥻 ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                } else if (activePriceTier !== null) {
+                    window.showWsToast('🏷️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                }
+            }
+
+            // Smooth scroll to catalog view
+            var scrollTarget = document.getElementById('wsActiveCategoryFilterBar') || track;
+            if (scrollTarget && hasFilter) {
+                scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
 
         window.openWsCatalogCategoryModal = function() {
             var modal = document.getElementById('wsCatalogCategoryModal');
@@ -8621,112 +8753,6 @@ $catalogProducts = [
         window.closeWsCatalogCategoryModal = function() {
             var modal = document.getElementById('wsCatalogCategoryModal');
             if (modal) modal.classList.remove('active');
-        };
-
-        window.selectWsCategory = function(catName) {
-            closeWsCatalogCategoryModal();
-            // Switch to Catalog Tab 9
-            if (typeof window.switchWsTab === 'function') {
-                window.switchWsTab('trending');
-            }
-            filterCatalogByCategory(catName);
-        };
-
-        window.filterCatalogByCategory = function(catName) {
-            activeCatalogCategory = catName || 'All';
-
-            var btnLabel = document.getElementById('wsCatPickerBtnLabel');
-            var titleElem = document.getElementById('wsCatalogMainTitle');
-            var filterBar = document.getElementById('wsActiveCategoryFilterBar');
-            var activeNameElem = document.getElementById('wsActiveCatName');
-            var activeCountElem = document.getElementById('wsActiveCatCount');
-
-            var track = document.getElementById('wsForYouSliderTrack');
-            if (!track) return;
-
-            var productCards = Array.from(track.querySelectorAll('.product-card'));
-            var matchCount = 0;
-
-            if (activeCatalogCategory === 'All') {
-                if (btnLabel) btnLabel.textContent = 'All Categories ▾';
-                if (titleElem) titleElem.textContent = 'For You';
-                if (filterBar) filterBar.style.display = 'none';
-
-                productCards.forEach(function(card) {
-                    card.style.display = 'flex';
-                    matchCount++;
-                });
-
-                if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('✓ Showing All Available Wholesale Lots');
-                }
-            } else {
-                if (btnLabel) btnLabel.textContent = activeCatalogCategory + ' ▾';
-                if (titleElem) titleElem.textContent = activeCatalogCategory + ' Catalog';
-                if (filterBar) {
-                    filterBar.style.display = 'flex';
-                    if (activeNameElem) activeNameElem.textContent = activeCatalogCategory;
-                }
-
-                // Filter products and re-sort so New Arrival / New Catalogue appear at the top
-                var matchingCards = [];
-                var nonMatchingCards = [];
-
-                productCards.forEach(function(card) {
-                    var prodId = card.getAttribute('data-product-id');
-                    var pData = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(prodId); });
-                    var pCat = pData ? (pData.category || '') : '';
-                    var cardCat = card.querySelector('.card-cat-photo-tag') ? card.querySelector('.card-cat-photo-tag').textContent.trim() : '';
-
-                    var isMatch = false;
-                    if (activeCatalogCategory === 'Sarees' && (pCat.toLowerCase().indexOf('saree') !== -1 || cardCat.toLowerCase().indexOf('saree') !== -1)) isMatch = true;
-                    else if (activeCatalogCategory === 'Kurtis' && (pCat.toLowerCase().indexOf('kurti') !== -1 || cardCat.toLowerCase().indexOf('kurti') !== -1)) isMatch = true;
-                    else if (activeCatalogCategory === 'Lehengas' && (pCat.toLowerCase().indexOf('lehenga') !== -1 || cardCat.toLowerCase().indexOf('lehenga') !== -1)) isMatch = true;
-                    else if (activeCatalogCategory === 'Gowns' && (pCat.toLowerCase().indexOf('gown') !== -1 || cardCat.toLowerCase().indexOf('gown') !== -1)) isMatch = true;
-                    else if (activeCatalogCategory === 'Dress Materials' && (pCat.toLowerCase().indexOf('dress') !== -1 || pCat.toLowerCase().indexOf('dupatta') !== -1 || cardCat.toLowerCase().indexOf('dress') !== -1 || cardCat.toLowerCase().indexOf('dupatta') !== -1)) isMatch = true;
-                    else if (pCat.toLowerCase() === activeCatalogCategory.toLowerCase() || cardCat.toLowerCase() === activeCatalogCategory.toLowerCase()) isMatch = true;
-
-                    if (isMatch) {
-                        card.style.display = 'flex';
-                        matchingCards.push(card);
-                        matchCount++;
-                    } else {
-                        card.style.display = 'none';
-                        nonMatchingCards.push(card);
-                    }
-                });
-
-                if (activeCountElem) {
-                    activeCountElem.textContent = '(' + matchCount + ' Lots Available)';
-                }
-
-                // Sort matching cards: new arrivals & new catalogue lots first
-                matchingCards.sort(function(a, b) {
-                    var badgeA = (a.querySelector('.card-badge') ? a.querySelector('.card-badge').textContent.toLowerCase() : '');
-                    var badgeB = (b.querySelector('.card-badge') ? b.querySelector('.card-badge').textContent.toLowerCase() : '');
-                    var isNewA = badgeA.indexOf('new') !== -1 ? 1 : 0;
-                    var isNewB = badgeB.indexOf('new') !== -1 ? 1 : 0;
-                    return isNewB - isNewA;
-                });
-
-                // Append matching cards in prioritized order
-                matchingCards.forEach(function(card) { track.appendChild(card); });
-                nonMatchingCards.forEach(function(card) { track.appendChild(card); });
-
-                if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('🥻 Filtered: ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
-                }
-            }
-
-            // Scroll to catalog view
-            var catSection = document.getElementById('wsActiveCategoryFilterBar') || track;
-            if (catSection) {
-                catSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        };
-
-        window.clearCategoryFilter = function() {
-            filterCatalogByCategory('All');
         };
 
         /* ── Smart 1-Line Auto Slider Engine (For Sliders Only) ── */
