@@ -4892,7 +4892,7 @@ $catalogProducts = [
                                 </svg>
                             </div>
                             <h3 style="font-family:var(--ws-font-serif); font-size:clamp(0.96rem, 1.8vw, 1.18rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
-                                Wholesale Consignments
+                                New Catalogue
                             </h3>
                         </div>
                         <a href="shop.php" class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:5px; box-shadow:0 3px 10px rgba(138,104,31,0.25);">
