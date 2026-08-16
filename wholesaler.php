@@ -648,22 +648,38 @@ $catalogProducts = [
         }
 
         /* ════════════════════════════════════════════════════
-           TAILADMIN TOP STAT METRIC CARDS (4 Cards Grid)
+           3D FROSTED GOLD GLASS TOP STAT METRIC CARDS (4 Cards Grid)
         ════════════════════════════════════════════════════ */
         .ws-metric-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 22vw, 260px), 1fr));
-            gap: clamp(12px, 1.8vw, 20px);
-            margin-bottom: clamp(16px, 2vw, 24px);
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 16px;
         }
-        /* KPI Stat Box — stagger-in on load */
+        @media (max-width: 1024px) {
+            .ws-metric-cards-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+        }
+        @media (max-width: 380px) {
+            .ws-metric-cards-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Glassmorphic 3D KPI Stat Box */
         .ws-stat-box {
-            background: var(--ws-bg-card);
-            border: 1.5px solid var(--ws-border);
-            border-radius: var(--ws-radius-lg);
-            padding: clamp(16px, 2vw, 22px);
-            box-shadow: var(--ws-shadow-card);
-            transition: var(--ws-transition);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(254, 250, 238, 0.88) 50%, rgba(248, 238, 210, 0.92) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+            border-radius: 14px;
+            padding: 12px 14px;
+            min-height: 98px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 18px rgba(180, 140, 40, 0.08), inset 0 1px 2px #FFFFFF, inset 0 0 12px rgba(245, 215, 130, 0.10);
+            transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -674,9 +690,10 @@ $catalogProducts = [
             animation: wsCardFadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         .ws-stat-box:nth-child(1) { animation-delay: 0.05s; }
-        .ws-stat-box:nth-child(2) { animation-delay: 0.13s; }
-        .ws-stat-box:nth-child(3) { animation-delay: 0.21s; }
-        .ws-stat-box:nth-child(4) { animation-delay: 0.29s; }
+        .ws-stat-box:nth-child(2) { animation-delay: 0.12s; }
+        .ws-stat-box:nth-child(3) { animation-delay: 0.19s; }
+        .ws-stat-box:nth-child(4) { animation-delay: 0.26s; }
+
         @keyframes wsCardFadeUp {
             from { opacity: 0; transform: translateY(18px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -685,58 +702,108 @@ $catalogProducts = [
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 60%; height: 100%;
-            background: linear-gradient(105deg, transparent 40%, rgba(197,168,89,0.07) 60%, transparent 80%);
-            transition: left 0.55s ease;
+            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.6) 60%, transparent 80%);
+            transition: left 0.6s ease;
             pointer-events: none;
         }
         .ws-stat-box:hover::after {
             left: 150%;
         }
         .ws-stat-box:hover {
-            box-shadow: var(--ws-shadow-hover);
-            border-color: var(--ws-gold-primary);
-            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(180, 140, 40, 0.16), inset 0 1px 2px #FFFFFF;
+            border-color: rgba(212, 175, 55, 0.75);
+            transform: translateY(-3px) scale(1.01);
+        }
+        .ws-stat-head-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-bottom: 6px;
         }
         .ws-stat-label {
-            font-size: 0.80rem;
-            font-weight: 700;
-            color: var(--ws-text-muted);
-            margin-bottom: 8px;
+            font-size: clamp(0.66rem, 1.1vw, 0.72rem);
+            font-weight: 800;
+            color: #8A681F;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+        .ws-stat-ico-wrap {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .ws-stat-ico-wrap.tier { background: #FEF3C7; border: 1px solid rgba(217, 119, 6, 0.3); }
+        .ws-stat-ico-wrap.orders { background: #EFF6FF; border: 1px solid rgba(37, 99, 235, 0.25); }
+        .ws-stat-ico-wrap.qty { background: #ECFDF5; border: 1px solid rgba(16, 185, 129, 0.25); }
+        .ws-stat-ico-wrap.turnover { background: #FFFBEB; border: 1px solid rgba(245, 158, 11, 0.35); }
+
+        .ws-anim-stat-ico.crown { animation: crownGlowPulse 2.8s ease-in-out infinite; }
+        .ws-anim-stat-ico.box { animation: boxFloatPulse 2.4s ease-in-out infinite; }
+        .ws-anim-stat-ico.stack { animation: stackShimmer 2.6s ease-in-out infinite; }
+        .ws-anim-stat-ico.turnover { animation: turnoverCoinPulse 2.8s ease-in-out infinite; }
+
+        @keyframes crownGlowPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 1px 3px rgba(212,175,55,0.3)); }
+            50% { transform: scale(1.1) rotate(-3deg); filter: drop-shadow(0 2px 8px rgba(212,175,55,0.6)); }
+        }
+        @keyframes boxFloatPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2.5px); }
+        }
+        @keyframes stackShimmer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 2px 6px rgba(16,185,129,0.35)); }
+        }
+        @keyframes turnoverCoinPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(4deg); filter: drop-shadow(0 2px 8px rgba(245,158,11,0.5)); }
+        }
+
         .ws-stat-val-row {
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
         }
         .ws-stat-val-num {
-            font-size: clamp(1.45rem, 2.5vw, 1.75rem);
+            font-size: clamp(1.22rem, 2.2vw, 1.50rem);
             font-weight: 900;
-            color: var(--ws-text-main);
-            letter-spacing: -0.02em;
-            line-height: 1.1;
+            color: #16130F;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
             font-variant-numeric: tabular-nums;
+            white-space: nowrap;
         }
         .ws-trend-pill {
             display: inline-flex;
             align-items: center;
-            gap: 3px;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            transition: transform 0.2s ease;
+            gap: 2px;
+            padding: 2.5px 7px;
+            border-radius: 6px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
         }
-        .ws-trend-pill:hover { transform: scale(1.06); }
         .ws-trend-pill.up {
-            background: var(--ws-success-bg);
-            color: var(--ws-success);
+            background: #DCFCE7;
+            color: #15803D;
+            border: 1px solid rgba(22, 163, 74, 0.25);
         }
         .ws-trend-pill.down {
-            background: var(--ws-danger-bg);
-            color: var(--ws-danger);
+            background: #FEE2E2;
+            color: #DC2626;
+            border: 1px solid rgba(220, 38, 38, 0.25);
         }
 
         /* ════════════════════════════════════════════════════
@@ -3647,24 +3714,31 @@ $catalogProducts = [
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane active" id="tabPaneOverview">
                 
-                <!-- Top 4 Primary Metric Stat Cards (Matching TailAdmin Sizing with Gold Palette) -->
+                <!-- Top 4 Primary Metric Stat Cards (3D Frosted Glass Palette with Animated SVGs) -->
                 <div class="ws-metric-cards-grid">
                     
                     <!-- Metric Card 1: Account Tier (Interactive VIP Tier Roadmap Modal Trigger) -->
                     <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer;" title="Tap to view VIP Tier Roadmap">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="ws-stat-head-row">
                             <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
-                            <span style="font-size:0.58rem; color:var(--ws-gold-primary); font-weight:800;">Roadmap ›</span>
+                            <div class="ws-stat-ico-wrap tier">
+                                <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                            </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 2.5vw, 1.22rem);">Tier 1: Non VIP</div>
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif); font-size:clamp(1.02rem, 1.8vw, 1.25rem);">Tier 1: Non VIP</div>
                             <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
                         </div>
                     </div>
 
                     <!-- Metric Card 2: Orders -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label" id="statLabel2">Total Orders</div>
+                        <div class="ws-stat-head-row">
+                            <div class="ws-stat-label" id="statLabel2">Total Orders</div>
+                            <div class="ws-stat-ico-wrap orders">
+                                <svg class="ws-anim-stat-ico box" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                        </div>
                         <div class="ws-stat-val-row">
                             <div class="ws-stat-val-num" id="statVal2">6</div>
                             <span class="ws-trend-pill up" id="statPill2">↑ 14.20%</span>
@@ -3673,16 +3747,26 @@ $catalogProducts = [
 
                     <!-- Metric Card 3: Total Quantity -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label" id="statLabel3">Total Quantity (Units)</div>
+                        <div class="ws-stat-head-row">
+                            <div class="ws-stat-label" id="statLabel3">Total Quantity (Units)</div>
+                            <div class="ws-stat-ico-wrap qty">
+                                <svg class="ws-anim-stat-ico stack" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            </div>
+                        </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.95rem; font-weight:600; color:var(--ws-text-muted);">Pcs</span></div>
+                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
                             <span class="ws-trend-pill up" id="statPill3">↑ 8.50%</span>
                         </div>
                     </div>
 
                     <!-- Metric Card 4: Total Revenue Turnover -->
                     <div class="ws-stat-box">
-                        <div class="ws-stat-label" id="statLabel4">Total B2B Turnover</div>
+                        <div class="ws-stat-head-row">
+                            <div class="ws-stat-label" id="statLabel4">Total B2B Turnover</div>
+                            <div class="ws-stat-ico-wrap turnover">
+                                <svg class="ws-anim-stat-ico turnover" viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#F59E0B" fill-opacity="0.2" stroke="#D97706" stroke-width="1.5"></circle><path d="M10 8h4M10 11h3.5M10 8v8M12.5 11c1.4 0 1.8 1 1.8 1.8s-.4 1.8-1.8 1.8h-2.5" stroke="#78350F" stroke-width="1.4" stroke-linecap="round"></path></svg>
+                            </div>
+                        </div>
                         <div class="ws-stat-val-row">
                             <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹2,05,062</div>
                             <span class="ws-trend-pill up" id="statPill4">↑ 18.40%</span>
