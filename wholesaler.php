@@ -5739,68 +5739,117 @@ $catalogProducts = [
 
             if (!modal || !body) return;
 
-            title.textContent = `Order Details #${o.id}`;
+            if (title) title.textContent = `Order Details #${o.id}`;
             body.innerHTML = `
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--ws-border);">
+                <!-- Consignment Status Banner -->
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:10px; padding:12px 16px; margin-bottom:14px;">
                     <div>
-                        <div style="font-size:0.76rem; color:var(--ws-text-muted);">Consignment Placed</div>
-                        <strong style="font-size:0.92rem; color:var(--ws-text-main);">${o.date}</strong>
+                        <div style="font-size:0.72rem; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; color:var(--ws-text-muted);">Consignment Placed</div>
+                        <div style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin-top:2px;">${o.date}</div>
                     </div>
                     <div style="text-align:right;">
-                        <div style="font-size:0.76rem; color:var(--ws-text-muted);">Current Status</div>
-                        <span class="ws-status-badge ${o.status.toLowerCase()}">${o.status}</span>
+                        <div style="font-size:0.72rem; text-transform:uppercase; font-weight:700; letter-spacing:0.5px; color:var(--ws-text-muted); margin-bottom:3px;">Consignment Status</div>
+                        <span class="ws-status-badge ${o.status.toLowerCase()}" style="font-size:0.75rem; padding:4px 10px;">${o.status}</span>
                     </div>
                 </div>
 
-                <div style="display:flex; gap:14px; margin-bottom:14px; background:#FAF8F4; border:1px solid var(--ws-border); border-radius:10px; padding:12px;">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0;">
-                    <div style="flex:1;">
-                        <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.25;">${o.productName}</h4>
-                        <div style="font-size:0.78rem; color:var(--ws-text-muted);">SKU: ${o.sku} • HSN Code: ${o.hsn}</div>
-                        <div style="font-size:0.78rem; color:var(--ws-text-muted);">Color: ${o.color} • Size: ${o.size}</div>
-                        <div style="font-size:0.86rem; font-weight:800; color:var(--ws-gold-primary); margin-top:6px;">
-                            ${o.qty} Pcs @ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc
+                <!-- Product Details Box -->
+                <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='images/product1.png';">
+                    <div style="flex:1; min-width:0;">
+                        <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">SKU: ${o.sku}</span>
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">HSN: ${o.hsn}</span>
+                            <span style="font-size:0.72rem; font-weight:600; background:#FAF8F4; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border); color:var(--ws-text-sub);">${o.color || 'Silk Assorted'}</span>
+                        </div>
+                        <div style="font-size:0.88rem; font-weight:800; color:var(--ws-gold-primary);">
+                            ${o.qty} Pcs Lot <span style="font-size:0.76rem; font-weight:600; color:var(--ws-text-muted);">(@ ₹${Number(o.unitPrice).toLocaleString('en-IN')} / Pc)</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; font-size:0.82rem;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:var(--ws-text-muted);">Taxable Item Total</span>
-                        <strong style="color:var(--ws-text-main);">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
+                <!-- Price & Tax Breakdown Card -->
+                <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:10px; padding:14px 16px; margin-bottom:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
+                        <span style="color:var(--ws-text-sub); font-weight:600;">Taxable Consignment Value</span>
+                        <span style="color:var(--ws-text-main); font-weight:700;">₹${Number(o.subtotal).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:var(--ws-text-muted);">CGST (2.5%) + SGST (2.5%)</span>
-                        <strong style="color:#10B981;">₹${Number(o.tax).toLocaleString('en-IN')}</strong>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
+                        <span style="color:var(--ws-text-sub); font-weight:600;">GST Input Tax (5% CGST + SGST)</span>
+                        <span style="color:#15803D; font-weight:700;">+₹${Number(o.tax).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                        <span style="color:var(--ws-text-muted);">Wholesale Volume Discount</span>
-                        <strong style="color:#10B981;">-₹${Number(o.discount).toLocaleString('en-IN')}</strong>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
+                        <span style="color:var(--ws-text-sub); font-weight:600;">Wholesale Volume Discount</span>
+                        <span style="color:#15803D; font-weight:700;">-₹${Number(o.discount).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; padding-top:8px; border-top:1px solid var(--ws-border); font-size:1.05rem; font-weight:900; color:var(--ws-gold-primary);">
-                        <span>Total Paid / Payable</span>
-                        <span>₹${Number(o.total).toLocaleString('en-IN')}</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; margin-top:4px; border-top:1.5px dashed var(--ws-border); font-size:1.1rem;">
+                        <span style="font-weight:800; color:var(--ws-text-main);">Net Amount Paid</span>
+                        <span style="font-weight:900; color:var(--ws-gold-primary);">₹${Number(o.total).toLocaleString('en-IN')}</span>
                     </div>
                 </div>
 
-                <div style="font-size:0.80rem; color:var(--ws-text-sub); line-height:1.5; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
-                    <p><strong>Logistics Partner:</strong> ${o.courier} (AWB: ${o.awb})</p>
-                    <p><strong>Payment Instrument:</strong> ${o.payment}</p>
+                <!-- Logistics & Payment Strip -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:0.78rem; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
+                    <div>
+                        <div style="color:var(--ws-text-muted); font-size:0.70rem; text-transform:uppercase; font-weight:700;">Courier Partner</div>
+                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${o.courier} (AWB: ${o.awb})</div>
+                    </div>
+                    <div>
+                        <div style="color:var(--ws-text-muted); font-size:0.70rem; text-transform:uppercase; font-weight:700;">Payment Mode</div>
+                        <div style="font-weight:700; color:var(--ws-text-main); margin-top:2px;">${o.payment}</div>
+                    </div>
                 </div>
             `;
 
             if (footer) {
                 footer.innerHTML = `
-                    <button class="ws-btn ws-btn-primary" style="flex:1;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                        📄 Download GST Bill PDF
-                    </button>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20repeat%20wholesale%20lot%20order%20for%20${encodeURIComponent(o.productName)}%20(${o.qty}%20Pcs)" target="_blank" class="ws-btn ws-btn-wa" style="flex:1;">
-                        💬 Repeat Wholesale Lot
-                    </a>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
+                        <button class="ws-btn ws-btn-primary" style="height:42px; font-size:0.84rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span>Download GST Bill PDF</span>
+                        </button>
+                        <button class="ws-btn ws-btn-secondary" style="height:42px; font-size:0.84rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='repeatWholesaleOrder(${JSON.stringify(o)})'>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            <span>Re-Order Lot</span>
+                        </button>
+                    </div>
                 `;
             }
 
             modal.classList.add('active');
+        };
+
+        window.repeatWholesaleOrder = function(o) {
+            closeOrderDetailsModal();
+            try {
+                var raw = localStorage.getItem('kalaniketan_cart');
+                var cart = raw ? JSON.parse(raw) : [];
+                var exists = cart.find(function(item){ return item.id === o.id || item.name === o.productName; });
+                if (exists) {
+                    exists.qty = (Number(exists.qty) || 1) + 1;
+                } else {
+                    cart.push({
+                        id: o.id || ('PROD-' + Date.now()),
+                        name: o.productName,
+                        price: o.unitPrice || 3199,
+                        wholesale_price: o.unitPrice || 3199,
+                        qty: Number(o.qty) || 12,
+                        image: o.image || 'images/product1.png',
+                        color: o.color || 'Standard',
+                        moq: 12
+                    });
+                }
+                localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+                window.updateWholesaleCartBadge();
+                if (typeof window.openCartDrawer === 'function') {
+                    window.openCartDrawer();
+                } else {
+                    window.showWsToast('🛒 ' + o.productName + ' added to wholesale cart!');
+                }
+            } catch(e) {
+                window.showWsToast('🛒 Added to cart!');
+            }
         };
 
         window.closeOrderDetailsModal = function() {
