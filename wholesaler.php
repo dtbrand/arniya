@@ -1557,6 +1557,99 @@ $catalogProducts = [
             border-top: 1px solid var(--ws-border-light);
         }
 
+        /* ── Wholesale Reports Tab Styles ── */
+        .ws-report-kpis-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .ws-rep-filter-btn {
+            background: #FAF8F4;
+            color: var(--ws-text-sub);
+            border: 1.2px solid var(--ws-border);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--ws-transition);
+        }
+        .ws-rep-filter-btn:hover {
+            border-color: var(--ws-gold-primary);
+            color: var(--ws-gold-primary);
+            background: #FFFFFF;
+        }
+        .ws-rep-filter-btn.active {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.25);
+        }
+        .ws-mobile-reports-cards {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .ws-mob-report-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--ws-border);
+            border-radius: var(--ws-radius-md);
+            padding: 14px;
+            box-shadow: var(--ws-shadow-card);
+            transition: var(--ws-transition);
+        }
+        .ws-mob-report-card:hover {
+            border-color: var(--ws-gold-border);
+            box-shadow: 0 4px 16px rgba(138,104,31,0.12);
+        }
+        .ws-mob-rep-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--ws-border);
+        }
+        .ws-mob-rep-body {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .ws-mob-rep-img {
+            width: 58px;
+            height: 74px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid var(--ws-border);
+            flex-shrink: 0;
+            background: #FAF8F4;
+        }
+        .ws-mob-rep-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .ws-mob-rep-tax-grid {
+            background: #FAF8F4;
+            border: 1px solid var(--ws-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.74rem;
+            margin-bottom: 12px;
+        }
+        .ws-mob-rep-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-top: 10px;
+            border-top: 1px solid var(--ws-border-light);
+        }
+
         /* ── Trending Products Slider ── */
         .ws-slider-wrap {
             position: relative;
@@ -2486,10 +2579,15 @@ $catalogProducts = [
             .ws-table-container {
                 display: none;
             }
-            .ws-mobile-order-cards {
-                display: flex;
+            .ws-mobile-order-cards,
+            .ws-mobile-reports-cards {
+                display: flex !important;
                 flex-direction: column;
                 gap: 10px;
+            }
+            .ws-report-kpis-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px;
             }
             .ws-mob-order-card {
                 padding: 12px;
@@ -3365,21 +3463,63 @@ $catalogProducts = [
                  TAB 6: REPORTS & EXPORT
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneReports">
+                <!-- Top 4 KPI Summary Cards for Reports -->
+                <div class="ws-report-kpis-grid">
+                    <div class="ws-kpi-box">
+                        <div class="ws-kpi-label">Total Invoiced Turnover</div>
+                        <div class="ws-kpi-num" id="repKpiTurnover" style="color:var(--ws-gold-primary);">₹2,05,062</div>
+                        <div class="ws-kpi-sub">100% Cleared GST Invoices</div>
+                    </div>
+                    <div class="ws-kpi-box">
+                        <div class="ws-kpi-label">Input Tax Credit (ITC)</div>
+                        <div class="ws-kpi-num" id="repKpiItc" style="color:#10B981;">₹10,253</div>
+                        <div class="ws-kpi-sub">GSTR-2B Reconciled (5% GST)</div>
+                    </div>
+                    <div class="ws-kpi-box">
+                        <div class="ws-kpi-label">Total Units Procured</div>
+                        <div class="ws-kpi-num" id="repKpiUnits">48 Pcs</div>
+                        <div class="ws-kpi-sub">6 Wholesale Consignments</div>
+                    </div>
+                    <div class="ws-kpi-box">
+                        <div class="ws-kpi-label">Avg. Consignment Value</div>
+                        <div class="ws-kpi-num" id="repKpiAvg">₹34,177</div>
+                        <div class="ws-kpi-sub">Tier 1 Volume Margin Rates</div>
+                    </div>
+                </div>
+
                 <div class="ws-card">
-                    <div class="ws-card-header">
+                    <div class="ws-card-header" style="flex-wrap:wrap; gap:12px;">
                         <div class="ws-card-title-group">
                             <h3>Wholesale B2B Sales & Procurement Reports</h3>
+                            <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Verified Tax Invoices, Consignment HSN Logs & GSTR-2B ITC Reconciliation
+                            </div>
                         </div>
-                        <div style="display:flex; gap:8px;">
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportReportsToCsv()">
                                 📥 Export CSV
                             </button>
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="window.print()">
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printWholesaleReport()">
                                 🖨️ Print Report
                             </button>
                         </div>
                     </div>
 
+                    <!-- Filter Pills & Real Search Bar -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:14px; border-bottom:1.5px solid var(--ws-border);">
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <button class="ws-rep-filter-btn active" onclick="filterReportsByCategory('all', this)">All Categories</button>
+                            <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('saree', this)">Sarees</button>
+                            <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('lehenga', this)">Lehengas</button>
+                            <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('kurti', this)">Kurtis</button>
+                            <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('fabric', this)">Fabrics</button>
+                        </div>
+                        <div style="position:relative; width:clamp(220px, 30vw, 320px);">
+                            <input type="text" id="reportSearchInput" class="ws-cmd-search-input" style="padding-left:14px; width:100%;" placeholder="Search consignment, HSN, SKU..." oninput="handleReportSearch(this.value)">
+                        </div>
+                    </div>
+
+                    <!-- Desktop Reports Table View -->
                     <div class="ws-table-container">
                         <table class="ws-table">
                             <thead>
@@ -3387,18 +3527,24 @@ $catalogProducts = [
                                     <th>Consignment</th>
                                     <th>Date</th>
                                     <th>HSN</th>
-                                    <th>Item Summary</th>
-                                    <th>Qty (Pcs)</th>
+                                    <th>Product / Lot Details</th>
+                                    <th>Qty</th>
                                     <th>Taxable Value</th>
                                     <th>GST (5%)</th>
                                     <th>Net Total</th>
                                     <th>Payment Mode</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="wsReportsTbody">
                                 <!-- Populated dynamically by JS -->
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Mobile Responsive Reports Card Feed -->
+                    <div class="ws-mobile-reports-cards" id="wsMobileReportsCards">
+                        <!-- Populated dynamically by JS -->
                     </div>
                 </div>
             </section>
@@ -3759,6 +3905,99 @@ $catalogProducts = [
                             <div style="width:110px; border-bottom:1.5px solid var(--ws-gold-primary); margin-bottom:4px;"></div>
                             <strong>Authorized Signatory</strong><br>
                             Kalaniketan Couture
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL 2.5: FORMAL PRINTABLE WHOLESALE PROCUREMENT AUDIT REPORT
+    ═══════════════════════════════════════════ -->
+    <div class="ws-modal-overlay" id="wsPrintableAuditReportModal" role="dialog" aria-modal="true">
+        <div class="ws-modal-box" style="max-width: 820px;">
+            <div class="ws-modal-header">
+                <h3 class="ws-modal-title">
+                    <span>📊 Wholesale B2B Sales & Procurement Audit Statement</span>
+                </h3>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="window.print()">
+                        🖨️ Print Statement
+                    </button>
+                    <button class="ws-modal-close-btn" onclick="closePrintableAuditReportModal()" aria-label="Close Modal">&times;</button>
+                </div>
+            </div>
+            <div class="ws-modal-body">
+                <div class="ws-invoice-sheet">
+                    <div class="ws-inv-header">
+                        <div class="ws-inv-brand">
+                            <h2>KALANIKETAN B2B</h2>
+                            <p><strong>Kalaniketan Wholesale Procurement & Logistics Ledger</strong><br>
+                            Surat Silk Cluster, Ring Road, Surat, Gujarat - 395002<br>
+                            GSTIN: 24AABCK4820P1Z8 | Input Tax Credit (ITC) Reconciled</p>
+                        </div>
+                        <div class="ws-inv-meta">
+                            <p><strong>PROCUREMENT AUDIT</strong></p>
+                            <p>Fiscal Cycle: <strong>FY 2026-27</strong></p>
+                            <p>Tax Compliance: <span style="color:#10B981; font-weight:700;">100% GSTR-1 Verified</span></p>
+                        </div>
+                    </div>
+
+                    <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:12px; margin-bottom:14px; font-size:0.80rem;" id="auditReportBuyerInfo">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="ws-inv-items-table-wrap">
+                        <table class="ws-inv-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Consignment ID</th>
+                                    <th>Date</th>
+                                    <th>HSN</th>
+                                    <th>Product Details</th>
+                                    <th>Qty</th>
+                                    <th>Taxable Base</th>
+                                    <th>GST (5%)</th>
+                                    <th>Net Total</th>
+                                    <th>Payment Instrument</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditReportTbody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="ws-inv-totals-box">
+                        <div class="ws-inv-tot-row">
+                            <span>Total Procured Units:</span>
+                            <strong id="auditTotalQty">48 Pcs</strong>
+                        </div>
+                        <div class="ws-inv-tot-row">
+                            <span>Total Taxable Base:</span>
+                            <strong id="auditTotalSub">₹1,95,297</strong>
+                        </div>
+                        <div class="ws-inv-tot-row">
+                            <span>Total GST ITC (5%):</span>
+                            <strong id="auditTotalTax" style="color:#10B981;">₹10,253</strong>
+                        </div>
+                        <div class="ws-inv-tot-row grand">
+                            <span>Total Settled Procurement:</span>
+                            <span id="auditTotalGrand">₹2,05,062</span>
+                        </div>
+                    </div>
+
+                    <div class="ws-inv-footer-note">
+                        <div>
+                            <p>Certified B2B wholesale statement generated for statutory tax filing & ledger accounting.</p>
+                            <p>All textiles dispatched comply with Surat Silk Weaver Guild certified standards.</p>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="width:120px; border-bottom:1.5px solid var(--ws-gold-primary); margin-bottom:4px;"></div>
+                            <strong>Chief Logistics Officer</strong><br>
+                            Kalaniketan B2B Hub
                         </div>
                     </div>
                 </div>
@@ -5005,28 +5244,224 @@ $catalogProducts = [
             }
         };
 
-        /* ── Render Reports Table ── */
+        /* ── Render Reports Table & Mobile Cards ── */
+        var currentReportCategoryFilter = 'all';
+        var currentReportSearchQuery = '';
+
         function renderReportsView(orders) {
             var tbody = document.getElementById('wsReportsTbody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
+            var mobContainer = document.getElementById('wsMobileReportsCards');
+            if (!tbody || !mobContainer) return;
 
-            orders.forEach(function(o) {
+            tbody.innerHTML = '';
+            mobContainer.innerHTML = '';
+
+            var filtered = (orders || activeOrdersList).filter(function(o) {
+                var matchCat = true;
+                if (currentReportCategoryFilter !== 'all') {
+                    var prodLow = (o.productName || '').toLowerCase();
+                    matchCat = prodLow.includes(currentReportCategoryFilter);
+                }
+                var matchSearch = true;
+                if (currentReportSearchQuery) {
+                    var q = currentReportSearchQuery.toLowerCase();
+                    matchSearch = (o.id || '').toLowerCase().includes(q) ||
+                                  (o.productName || '').toLowerCase().includes(q) ||
+                                  (o.sku || '').toLowerCase().includes(q) ||
+                                  (o.hsn || '').toLowerCase().includes(q) ||
+                                  (o.payment || '').toLowerCase().includes(q);
+                }
+                return matchCat && matchSearch;
+            });
+
+            // Update Report KPIs
+            var totalTurnover = filtered.reduce(function(acc, o) { return acc + Number(o.total || 0); }, 0);
+            var totalTax = filtered.reduce(function(acc, o) { return acc + Number(o.tax || 0); }, 0);
+            var totalUnits = filtered.reduce(function(acc, o) { return acc + Number(o.qty || 0); }, 0);
+            var avgValue = filtered.length ? Math.round(totalTurnover / filtered.length) : 0;
+
+            var elTurnover = document.getElementById('repKpiTurnover');
+            var elTax = document.getElementById('repKpiItc');
+            var elUnits = document.getElementById('repKpiUnits');
+            var elAvg = document.getElementById('repKpiAvg');
+
+            if (elTurnover) elTurnover.textContent = '₹' + totalTurnover.toLocaleString('en-IN');
+            if (elTax) elTax.textContent = '₹' + totalTax.toLocaleString('en-IN');
+            if (elUnits) elUnits.textContent = totalUnits + ' Pcs';
+            if (elAvg) elAvg.textContent = '₹' + avgValue.toLocaleString('en-IN');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:30px; color:#6B6358;">No matching report consignments found.</td></tr>';
+                mobContainer.innerHTML = '<div style="text-align:center; padding:30px; color:#6B6358; font-weight:600;">No matching report consignments found.</div>';
+                return;
+            }
+
+            filtered.forEach(function(o) {
+                // 1. Desktop Table Row
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="ws-order-id-cell">${o.id}</td>
-                    <td style="font-size:0.78rem; color:#6B6358;">${o.date}</td>
+                    <td style="font-size:0.78rem; color:#6B6358; white-space:nowrap;">${o.date}</td>
                     <td><span style="font-family:monospace; background:var(--ws-gold-light); color:var(--ws-gold-primary); padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
-                    <td><strong>${o.productName}</strong></td>
-                    <td><strong>${o.qty}</strong></td>
+                    <td>
+                        <div class="ws-prod-mini-cell">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='images/product1.png';">
+                            <div>
+                                <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
+                                <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><strong style="font-size:0.84rem;">${o.qty}</strong></td>
                     <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
                     <td style="color:#10B981; font-weight:700;">₹${Number(o.tax).toLocaleString('en-IN')}</td>
                     <td><strong style="color:var(--ws-gold-primary); font-size:0.90rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
                     <td style="font-size:0.76rem; color:var(--ws-text-muted);">${o.payment}</td>
+                    <td>
+                        <div style="display:flex; gap:6px;">
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})' title="Download GST Tax Invoice PDF">
+                                📄 Bill
+                            </button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details">
+                                👁️
+                            </button>
+                        </div>
+                    </td>
                 `;
                 tbody.appendChild(tr);
+
+                // 2. Mobile Responsive Report Card
+                var card = document.createElement('div');
+                card.className = 'ws-mob-report-card';
+                card.innerHTML = `
+                    <div class="ws-mob-rep-top">
+                        <div>
+                            <span class="ws-order-id-cell" style="font-size:0.90rem;">${o.id}</span>
+                            <span style="font-size:0.72rem; color:var(--ws-text-muted); margin-left:6px;">📅 ${o.date}</span>
+                        </div>
+                        <span class="ws-status-badge delivered" style="font-size:0.65rem;">✓ 5% GST Verified</span>
+                    </div>
+
+                    <div class="ws-mob-rep-body">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.src='images/product1.png';">
+                        <div class="ws-mob-rep-info">
+                            <h4 style="font-size:0.88rem; font-weight:700; color:var(--ws-text-main); line-height:1.25; margin-bottom:2px;">${o.productName}</h4>
+                            <div style="font-size:0.74rem; color:var(--ws-text-muted);">
+                                SKU: <strong>${o.sku}</strong> • HSN: <strong style="color:var(--ws-gold-primary); font-family:monospace;">${o.hsn}</strong>
+                            </div>
+                            <div style="font-size:0.76rem; font-weight:700; color:var(--ws-text-main); margin-top:2px;">
+                                Quantity Lot: <span style="color:var(--ws-gold-primary);">${o.qty} Pcs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ws-mob-rep-tax-grid">
+                        <div>
+                            <span style="color:var(--ws-text-muted); font-size:0.68rem; display:block;">Taxable Base:</span>
+                            <strong style="color:var(--ws-text-main);">₹${Number(o.subtotal).toLocaleString('en-IN')}</strong>
+                        </div>
+                        <div>
+                            <span style="color:var(--ws-text-muted); font-size:0.68rem; display:block;">GST ITC Accrued (5%):</span>
+                            <strong style="color:#10B981;">₹${Number(o.tax).toLocaleString('en-IN')}</strong>
+                        </div>
+                        <div>
+                            <span style="color:var(--ws-text-muted); font-size:0.68rem; display:block;">Payment Instrument:</span>
+                            <span style="color:var(--ws-text-sub); font-size:0.72rem; font-weight:600;">${o.payment.split('(')[0]}</span>
+                        </div>
+                        <div>
+                            <span style="color:var(--ws-text-muted); font-size:0.68rem; display:block;">Total Invoiced:</span>
+                            <strong style="color:var(--ws-gold-primary); font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong>
+                        </div>
+                    </div>
+
+                    <div class="ws-mob-rep-actions">
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; justify-content:center;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                            📄 Download GST Bill PDF
+                        </button>
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="width:100%; justify-content:center;" onclick='viewOrderDetails(${JSON.stringify(o)})'>
+                            👁️ View Details
+                        </button>
+                    </div>
+                `;
+                mobContainer.appendChild(card);
             });
         }
+
+        window.filterReportsByCategory = function(category, btn) {
+            currentReportCategoryFilter = category;
+            if (btn && btn.parentElement) {
+                btn.parentElement.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+            }
+            renderReportsView(activeOrdersList);
+        };
+
+        window.handleReportSearch = function(val) {
+            currentReportSearchQuery = val.trim();
+            renderReportsView(activeOrdersList);
+        };
+
+        /* ── Formal Printable Wholesale Procurement Audit Report ── */
+        window.printWholesaleReport = function() {
+            var modal = document.getElementById('wsPrintableAuditReportModal');
+            if (modal) {
+                var userRaw = localStorage.getItem('kalaniketan_user');
+                var user = userRaw ? JSON.parse(userRaw) : {};
+                var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
+                var gst = user.gst_number || '24AABCU9603R1ZM';
+                var rep = user.name || 'Rajesh Kumar';
+
+                var repInfoEl = document.getElementById('auditReportBuyerInfo');
+                if (repInfoEl) {
+                    repInfoEl.innerHTML = `
+                        <strong>${comp}</strong> (GSTIN: <strong>${gst}</strong>)<br>
+                        Authorized Wholesaler: ${rep} • Period: FY 2026-27<br>
+                        Report Generated: ${new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}
+                    `;
+                }
+
+                var tbody = document.getElementById('auditReportTbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                    var totalSub = 0, totalTax = 0, totalGrand = 0, totalQty = 0;
+                    activeOrdersList.forEach(function(o, idx) {
+                        totalSub += Number(o.subtotal || 0);
+                        totalTax += Number(o.tax || 0);
+                        totalGrand += Number(o.total || 0);
+                        totalQty += Number(o.qty || 0);
+
+                        var tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${idx + 1}</td>
+                            <td><strong>${o.id}</strong></td>
+                            <td>${o.date}</td>
+                            <td>${o.hsn}</td>
+                            <td>${o.productName}</td>
+                            <td>${o.qty} Pcs</td>
+                            <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
+                            <td>₹${Number(o.tax).toLocaleString('en-IN')}</td>
+                            <td><strong>₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
+                            <td>${o.payment}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+                    document.getElementById('auditTotalSub').textContent = '₹' + totalSub.toLocaleString('en-IN');
+                    document.getElementById('auditTotalTax').textContent = '₹' + totalTax.toLocaleString('en-IN');
+                    document.getElementById('auditTotalGrand').textContent = '₹' + totalGrand.toLocaleString('en-IN');
+                    document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
+                }
+
+                modal.classList.add('active');
+            } else {
+                window.print();
+            }
+        };
+
+        window.closePrintableAuditReportModal = function() {
+            var modal = document.getElementById('wsPrintableAuditReportModal');
+            if (modal) modal.classList.remove('active');
+        };
 
         /* ── Export Reports to CSV ── */
         window.exportReportsToCsv = function() {
