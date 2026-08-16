@@ -1800,12 +1800,12 @@ $catalogProducts = [
             letter-spacing: 0.04em;
             white-space: nowrap;
         }
-        .ws-status-badge.delivered { background: #DCFCE7; color: #15803D; }
-        .ws-status-badge.processing { background: #FEF3C7; color: #B45309; }
-        .ws-status-badge.shipped { background: #DBEAFE; color: #1D4ED8; }
-        .ws-status-badge.confirmed { background: #F3E8FF; color: #6B21A8; }
-        .ws-status-badge.returned { background: #FEE2E2; color: #B91C1C; }
-        .ws-status-badge.refund { background: #FFE4E6; color: #9F1239; }
+        .ws-status-badge.delivered { background: #DCFCE7; color: #15803D; border: 1px solid #BBF7D0; }
+        .ws-status-badge.processing { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
+        .ws-status-badge.shipped { background: #DBEAFE; color: #1D4ED8; border: 1px solid #BFDBFE; }
+        .ws-status-badge.confirmed { background: #F3E8FF; color: #6B21A8; border: 1px solid #E9D5FF; }
+        .ws-status-badge.returned { background: #FEE2E2; color: #B91C1C; border: 1px solid #FECACA; }
+        .ws-status-badge.refund { background: #FFE4E6; color: #9F1239; border: 1px solid #FECDD3; }
 
         /* ── Mobile Order Cards ── */
         .ws-mobile-order-cards {
@@ -1814,49 +1814,74 @@ $catalogProducts = [
             gap: 12px;
         }
         .ws-mob-order-card {
-            background: #FFFFFF;
-            border: 1.5px solid var(--ws-border);
-            border-radius: var(--ws-radius-md);
-            padding: 14px;
-            box-shadow: var(--ws-shadow-card);
+            background: linear-gradient(180deg, #FFFFFF 0%, #FEFCF8 100%);
+            border: 1.5px solid rgba(212, 175, 55, 0.28);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ws-mob-order-card:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 4px 14px rgba(138, 104, 31, 0.12);
+            transform: translateY(-2px);
         }
         .ws-mob-order-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             padding-bottom: 8px;
-            border-bottom: 1px dashed var(--ws-border);
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.25);
         }
         .ws-mob-order-body {
             display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
         .ws-mob-order-img {
-            width: 56px;
-            height: 70px;
-            border-radius: 6px;
+            width: 58px;
+            height: 72px;
+            border-radius: 8px;
             object-fit: cover;
-            border: 1px solid var(--ws-border);
+            border: 1px solid rgba(212, 175, 55, 0.25);
             flex-shrink: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
         }
         .ws-mob-order-info {
             flex: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
         .ws-mob-order-title {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--ws-text-main);
+            font-family: var(--ws-font-serif);
+            font-size: clamp(0.84rem, 1.5vw, 0.94rem);
+            font-weight: 800;
+            color: #1C1917;
             line-height: 1.25;
+            letter-spacing: 0.1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .ws-mob-order-meta {
-            font-size: 0.75rem;
-            color: var(--ws-text-muted);
-            font-weight: 500;
+            font-size: 0.70rem;
+            color: #78716C;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .ws-mob-order-price {
+            font-size: 0.96rem;
+            font-weight: 900;
+            color: var(--ws-gold-primary);
+            letter-spacing: 0.2px;
+        }
+        .ws-mob-order-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
         .ws-mob-order-price-row {
             display: flex;
@@ -4767,12 +4792,23 @@ $catalogProducts = [
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneOrders">
                 <div class="ws-card">
-                    <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <h3>All Wholesale Orders & Consignments</h3>
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                                <svg class="ws-anim-stat-ico box" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <h3 style="font-family:var(--ws-font-serif); font-size:clamp(0.96rem, 1.8vw, 1.18rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
+                                Wholesale Consignments
+                            </h3>
                         </div>
-                        <a href="shop.php" class="ws-btn ws-btn-primary ws-btn-sm">
-                            + Place New Bulk Lot
+                        <a href="shop.php" class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:5px; box-shadow:0 3px 10px rgba(138,104,31,0.25);">
+                            <svg style="width:14px; height:14px; stroke:#FFFFFF; fill:none; stroke-width:2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Place Bulk Lot</span>
                         </a>
                     </div>
 
@@ -4780,10 +4816,10 @@ $catalogProducts = [
                     <div class="ws-filter-controls-row">
                         <!-- Status Filter Pills -->
                         <div class="ws-orders-filter-btns" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
-                            <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
-                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Processing', this)">Processing</button>
+                            <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders (6)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped (2)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered (3)</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Processing', this)">Processing (1)</button>
                         </div>
 
                         <!-- Search Bar -->
@@ -6125,79 +6161,21 @@ $catalogProducts = [
             }
         };
 
-        /* ── Save Wholesaler Details ── */
-        window.handleSaveWholesalerDetails = function(e) {
-            e.preventDefault();
-            var name = document.getElementById('wsProfName').value.trim();
-            var phone = document.getElementById('wsProfPhone').value.trim();
-            var email = document.getElementById('wsProfEmail').value.trim();
-            var newPass = document.getElementById('wsNewPass').value.trim();
-
-            if (!name) { alert('Please enter representative name'); return; }
-            if (phone.length !== 10) { alert('Please enter a valid 10-digit WhatsApp number'); return; }
-
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
-            user.name = name;
-            user.phone = '+91 ' + phone;
-            user.rawPhone = phone;
-            user.email = email;
-            if (newPass) user.password = newPass;
-
-            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
-            loadSavedWholesalerData();
-            window.showWsToast('🎉 Profile details saved successfully!');
-        };
-
-        /* ── Save GST Profile ── */
-        window.handleSaveGstProfile = function(e) {
-            e.preventDefault();
-            var company = (document.getElementById('wsCompanyName') ? document.getElementById('wsCompanyName').value.trim() : '');
-            var gstNum = (document.getElementById('wsGstNumber') ? document.getElementById('wsGstNumber').value.trim().toUpperCase() : '');
-
-            if (activeGstMode === 'gst') {
-                if (!company) { alert('Please enter legal business company name'); return; }
-                if (gstNum.length !== 15) {
-                    alert('Please enter a valid 15-character GSTIN number');
-                    return;
-                }
-            }
-
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
-            user.companyName = activeGstMode === 'gst' ? company : (user.name || 'Individual Trader');
-            user.gst_type = activeGstMode;
-            user.gst_number = activeGstMode === 'gst' ? gstNum : '';
-
-            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
-            loadSavedWholesalerData();
-            window.showWsToast('🛡️ Business Tax Profile saved successfully!');
-        };
-
-        /* ── Save Address ── */
-        window.handleSaveAddress = function(e) {
-            e.preventDefault();
-            var addr = document.getElementById('wsFullAddress').value.trim();
-            var city = document.getElementById('wsCity').value.trim();
-            var state = document.getElementById('wsStateSelect').value;
-            var pin = document.getElementById('wsPincode').value.trim();
-
-            if (!addr || !city || !pin) { alert('Please complete all address fields'); return; }
-            if (pin.length !== 6) { alert('Please enter a valid 6-digit Indian PIN code'); return; }
-
-            var userRaw = localStorage.getItem('kalaniketan_user');
-            var user = userRaw ? JSON.parse(userRaw) : {};
-            user.address = addr;
-            user.city = city;
-            user.state = state;
-            user.pincode = pin;
-
-            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
-            loadSavedWholesalerData();
-            window.showWsToast('📍 Wholesale Dispatch Address updated!');
-        };
-
         /* ── Render Orders Table & Mobile Cards ── */
+        function getWsStatusBadgeHtml(status) {
+            var s = (status || '').toLowerCase();
+            if (s === 'delivered') {
+                return `<span class="ws-status-badge delivered" style="display:inline-flex; align-items:center; gap:3px;"><svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> DELIVERED</span>`;
+            }
+            if (s === 'shipped') {
+                return `<span class="ws-status-badge shipped" style="display:inline-flex; align-items:center; gap:3px;"><svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><path d="M1 3h15v13H1z"></path><path d="M16 8h4l3 3v5h-7V8z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> SHIPPED</span>`;
+            }
+            if (s === 'processing') {
+                return `<span class="ws-status-badge processing" style="display:inline-flex; align-items:center; gap:3px;"><svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> PROCESSING</span>`;
+            }
+            return `<span class="ws-status-badge ${s}">${status}</span>`;
+        }
+
         function renderOrdersView(orders) {
             var tbody = document.getElementById('wsOrdersTbody');
             var mobContainer = document.getElementById('wsMobileOrdersCards');
@@ -6215,32 +6193,32 @@ $catalogProducts = [
             }
 
             orders.forEach(function(o) {
-                var statusClass = o.status.toLowerCase();
+                var badgeHtml = getWsStatusBadgeHtml(o.status);
 
                 // 1. Desktop Row
                 var tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="ws-order-id-cell">${o.id}</td>
+                    <td class="ws-order-id-cell"><span style="font-weight:800; padding:2px 7px; background:#FAF8F4; border:1px solid rgba(212,175,55,0.3); border-radius:6px;">${o.id}</span></td>
                     <td style="color:#6B6358; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
                             <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='images/product1.png';">
                             <div>
-                                <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
-                                <div style="font-size:0.74rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
+                                <strong style="font-size:0.84rem; color:var(--ws-text-main); font-family:var(--ws-font-serif);">${o.productName}</strong>
+                                <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
                             </div>
                         </div>
                     </td>
                     <td><strong style="font-size:0.84rem;">${o.qty} Pcs</strong></td>
                     <td><strong style="color:var(--ws-gold-primary); font-size:0.92rem;">₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                    <td><span class="ws-status-badge ${statusClass}">${o.status}</span></td>
+                    <td>${badgeHtml}</td>
                     <td>
                         <div style="display:flex; gap:6px;">
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})'>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:700;" onclick='viewOrderDetails(${JSON.stringify(o)})'>
                                 Details
                             </button>
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                                📄 Bill PDF
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:700;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                                📄 Invoice
                             </button>
                         </div>
                     </td>
@@ -6252,26 +6230,26 @@ $catalogProducts = [
                 card.className = 'ws-mob-order-card';
                 card.innerHTML = `
                     <div class="ws-mob-order-top">
-                        <span class="ws-order-id-cell" style="font-size:0.88rem;">${o.id}</span>
-                        <span class="ws-status-badge ${statusClass}">${o.status}</span>
+                        <span class="ws-order-id-cell" style="font-size:0.84rem; font-weight:800; padding:2px 7px; background:#FAF8F4; border:1px solid rgba(212,175,55,0.3); border-radius:6px;">${o.id}</span>
+                        ${badgeHtml}
                     </div>
                     <div class="ws-mob-order-body">
                         <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='images/product1.png';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
-                            <div class="ws-mob-order-meta">${o.date} • Lot: <strong>${o.qty} Pcs</strong></div>
+                            <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
                             <div class="ws-mob-order-meta">${o.courier} (AWB: ${o.awb})</div>
-                            <div class="ws-mob-order-price-row">
+                            <div class="ws-mob-order-price-row" style="margin-top:2px;">
                                 <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
                             </div>
                         </div>
                     </div>
                     <div class="ws-mob-order-actions">
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="flex:1;" onclick='viewOrderDetails(${JSON.stringify(o)})'>
-                            View Details
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:4px;" onclick='viewOrderDetails(${JSON.stringify(o)})'>
+                            <svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Details
                         </button>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                            <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:3px;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> GST Bill
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:4px;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                            <svg style="width:13px;height:13px;stroke:#FFFFFF;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> GST Invoice
                         </button>
                     </div>
                 `;
@@ -6286,23 +6264,24 @@ $catalogProducts = [
                 overList.className = 'ws-mobile-order-cards';
                 overList.style.display = 'flex';
                 recent3.forEach(function(o) {
-                    var statusClass = o.status.toLowerCase();
+                    var badgeHtml = getWsStatusBadgeHtml(o.status);
                     var card = document.createElement('div');
                     card.className = 'ws-mob-order-card';
                     card.innerHTML = `
                         <div class="ws-mob-order-top">
-                            <span class="ws-order-id-cell" style="font-size:0.88rem;">${o.id}</span>
-                            <span class="ws-status-badge ${statusClass}">${o.status}</span>
+                            <span class="ws-order-id-cell" style="font-size:0.84rem; font-weight:800; padding:2px 7px; background:#FAF8F4; border:1px solid rgba(212,175,55,0.3); border-radius:6px;">${o.id}</span>
+                            ${badgeHtml}
                         </div>
                         <div class="ws-mob-order-body">
                             <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='images/product1.png';">
                             <div class="ws-mob-order-info">
                                 <h4 class="ws-mob-order-title">${o.productName}</h4>
-                                <div class="ws-mob-order-meta">${o.date} • Lot: <strong>${o.qty} Pcs</strong></div>
-                                <div class="ws-mob-order-price-row">
+                                <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
+                                <div class="ws-mob-order-meta">${o.courier} (AWB: ${o.awb})</div>
+                                <div class="ws-mob-order-price-row" style="margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
                                     <span class="ws-mob-order-price">₹${Number(o.total).toLocaleString('en-IN')}</span>
-                                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                                        <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:3px;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> GST Bill
+                                    <button class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:700; display:inline-flex; align-items:center; gap:4px;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                                        <svg style="width:12px;height:12px;stroke:#FFFFFF;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> GST Invoice
                                     </button>
                                 </div>
                             </div>
