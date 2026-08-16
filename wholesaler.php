@@ -2621,7 +2621,7 @@ $catalogProducts = [
             }
         }
 
-        /* ── Fullscreen Responsive Passbook & Wallet Modal on Mobile ── */
+        /* ── Fullscreen Compact Responsive Passbook & Wallet Modal on Mobile ── */
         @media (max-width: 640px) {
             #wsFullWalletModal.ws-modal-overlay {
                 padding: 0 !important;
@@ -2639,22 +2639,88 @@ $catalogProducts = [
                 flex-direction: column !important;
             }
             #wsFullWalletModal .ws-modal-header {
-                padding: 10px 14px !important;
+                padding: 8px 12px !important;
                 border-bottom: 1.5px solid var(--ws-gold-border) !important;
+            }
+            #wsFullWalletModal .ws-modal-title {
+                font-size: 0.88rem !important;
+            }
+            #wsFullWalletModal .ws-modal-close-btn {
+                width: 26px !important;
+                height: 26px !important;
+                font-size: 0.95rem !important;
             }
             #wsFullWalletModal .ws-modal-body {
                 flex: 1 1 auto !important;
                 overflow-y: auto !important;
                 -webkit-overflow-scrolling: touch;
-                padding: 12px 14px !important;
+                padding: 8px 10px !important;
+            }
+            #wsFullWalletModal .ws-full-wallet-card {
+                padding: 8px 10px !important;
+                border-radius: 10px !important;
+            }
+            #wsFullWalletModal .ws-full-card-top {
+                margin-bottom: 3px !important;
+            }
+            #wsFullWalletModal .ws-full-card-badge {
+                font-size: 0.58rem !important;
+            }
+            #wsFullWalletModal .ws-full-card-pill {
+                font-size: 0.52rem !important;
+                padding: 1px 4px !important;
+            }
+            #wsFullWalletModal .ws-full-card-val {
+                font-size: 1.15rem !important;
+                margin-bottom: 2px !important;
+            }
+            #wsFullWalletModal .ws-full-card-sub {
+                font-size: 0.60rem !important;
+            }
+            #wsFullWalletModal .ws-txn-row {
+                padding: 6px 8px !important;
+                gap: 8px !important;
+            }
+            #wsFullWalletModal .ws-txn-icon-wrap {
+                width: 28px !important;
+                height: 28px !important;
+                border-radius: 6px !important;
+            }
+            #wsFullWalletModal .ws-txn-icon-wrap svg {
+                width: 13px !important;
+                height: 13px !important;
+            }
+            #wsFullWalletModal .ws-txn-info strong {
+                font-size: 0.70rem !important;
+            }
+            #wsFullWalletModal .ws-txn-info span {
+                font-size: 0.58rem !important;
+            }
+            #wsFullWalletModal .ws-txn-amt strong {
+                font-size: 0.76rem !important;
+            }
+            #wsFullWalletModal .ws-txn-badge {
+                font-size: 0.52rem !important;
+                padding: 1px 4px !important;
             }
             #wsFullWalletModal .ws-modal-footer {
-                padding: 10px 14px calc(12px + env(safe-area-inset-bottom)) !important;
+                padding: 6px 10px calc(8px + env(safe-area-inset-bottom)) !important;
                 background: #FFFFFF !important;
                 border-top: 1.5px solid var(--ws-border) !important;
                 display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
                 gap: 8px !important;
+            }
+            #wsFullWalletModal .ws-modal-footer .ws-btn {
+                height: 34px !important;
+                font-size: 0.70rem !important;
+                padding: 0 6px !important;
+                border-radius: 6px !important;
+            }
+            #wsFullWalletModal .ws-modal-footer .ws-btn svg {
+                width: 13px !important;
+                height: 13px !important;
+                margin-right: 4px !important;
             }
         }
 
