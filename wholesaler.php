@@ -4815,7 +4815,6 @@ $catalogProducts = [
                                             <?php if (!empty($prod['retail_price'])): ?>
                                             <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
                                             <?php endif; ?>
-                                            <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
                                         </div>
                                         <!-- Direct Add to Cart '+' Button next to Sale Price -->
                                         <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
@@ -5419,7 +5418,6 @@ $catalogProducts = [
                                             <?php if (!empty($prod['retail_price'])): ?>
                                             <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
                                             <?php endif; ?>
-                                            <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
                                         </div>
                                         <!-- Direct Add to Cart '+' Button next to Sale Price -->
                                         <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
