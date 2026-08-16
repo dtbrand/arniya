@@ -2337,6 +2337,65 @@ $catalogProducts = [
             gap: 12px;
         }
 
+        /* ── Auto-Responsive Dual Action Button Grid ── */
+        .ws-dual-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--ws-border);
+            box-sizing: border-box;
+        }
+        .ws-dual-action-grid .ws-btn {
+            width: 100%;
+            height: 42px;
+            padding: 8px 8px;
+            font-size: clamp(0.72rem, 2.7vw, 0.82rem);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            border-radius: 8px;
+            gap: 5px;
+            box-sizing: border-box;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ws-dual-action-grid .ws-btn svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+        @media (max-width: 440px) {
+            .ws-dual-action-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .ws-dual-action-grid .ws-btn {
+                padding: 6px 4px;
+                font-size: 0.74rem;
+                gap: 4px;
+            }
+            .ws-dual-action-grid .ws-btn svg {
+                width: 13px;
+                height: 13px;
+            }
+        }
+        @media (max-width: 350px) {
+            .ws-dual-action-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .ws-dual-action-grid .ws-btn {
+                height: 40px;
+                font-size: 0.80rem;
+            }
+        }
+
         /* ── Support Ticket Card ── */
         .ws-ticket-card {
             border: 1.5px solid var(--ws-border);
@@ -5793,13 +5852,13 @@ $catalogProducts = [
 
             if (footer) {
                 footer.innerHTML = `
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%;">
-                        <button class="ws-btn ws-btn-primary" style="height:42px; font-size:0.84rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            <span>Download GST Bill PDF</span>
+                    <div class="ws-dual-action-grid" style="margin-top:0; padding-top:0; border-top:none;">
+                        <button class="ws-btn ws-btn-primary" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span>GST Bill PDF</span>
                         </button>
-                        <button class="ws-btn ws-btn-secondary" style="height:42px; font-size:0.84rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='repeatWholesaleOrder(${JSON.stringify(o)})'>
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                        <button class="ws-btn ws-btn-secondary" onclick='repeatWholesaleOrder(${JSON.stringify(o)})'>
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="10 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
                             <span>Re-Order Lot</span>
                         </button>
                     </div>
@@ -6220,15 +6279,15 @@ $catalogProducts = [
                     </div>
                 </div>
 
-                <!-- Action Buttons: Only 2 Buttons with Real SVG Icons -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; padding-top:14px; border-top:1px dashed var(--ws-border);">
-                    <button class="ws-btn ws-btn-primary" style="padding:10px 14px; font-size:0.82rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='openBillInvoiceModal(${JSON.stringify(currentOrder)})'>
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <span>Download GST Invoice</span>
+                <!-- Action Buttons: Clean Dual Grid with Auto Sizes -->
+                <div class="ws-dual-action-grid">
+                    <button class="ws-btn ws-btn-primary" onclick='openBillInvoiceModal(${JSON.stringify(currentOrder)})'>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>GST Invoice</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="padding:10px 14px; font-size:0.82rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='viewOrderDetails(${JSON.stringify(currentOrder)})'>
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        <span>View Order Details</span>
+                    <button class="ws-btn ws-btn-secondary" onclick='viewOrderDetails(${JSON.stringify(currentOrder)})'>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>Order Details</span>
                     </button>
                 </div>
             `;
