@@ -865,6 +865,58 @@ $catalogProducts = [
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
+        /* ── Roadmap Link with Animated Running Glowing Line ── */
+        .ws-roadmap-link-wrap {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            padding: 1px 4px;
+            text-decoration: none;
+            transition: var(--ws-transition);
+        }
+        .ws-roadmap-link-text {
+            font-size: clamp(0.56rem, 1vw, 0.62rem);
+            font-weight: 800;
+            color: #8A681F;
+            letter-spacing: 0.3px;
+            line-height: 1.1;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s ease;
+        }
+        .ws-roadmap-link-wrap:hover .ws-roadmap-link-text {
+            color: #B45309;
+            transform: translateX(1px);
+        }
+        .ws-roadmap-running-line {
+            width: 100%;
+            height: 2px;
+            margin-top: 1.5px;
+            background: rgba(212, 175, 55, 0.25);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ws-roadmap-running-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, #F59E0B 40%, #D4AF37 70%, transparent 100%);
+            box-shadow: 0 0 6px #F59E0B;
+            border-radius: 2px;
+            animation: roadMapRunningLine 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes roadMapRunningLine {
+            0% { left: -100%; }
+            100% { left: 150%; }
+        }
+
         /* ════════════════════════════════════════════════════
            MIDDLE ANALYTICS ROW (Sales Bar Chart & Target Gauge)
         ════════════════════════════════════════════════════ */
@@ -3538,6 +3590,12 @@ $catalogProducts = [
                 top: 7px !important;
                 transform: rotate(-45deg) !important;
             }
+            .ws-roadmap-link-text {
+                font-size: 0.50rem !important;
+            }
+            .ws-roadmap-running-line {
+                height: 1.5px !important;
+            }
             .ws-wallet-strip {
                 padding: 6px 10px !important;
                 margin-bottom: 10px !important;
@@ -3860,8 +3918,14 @@ $catalogProducts = [
 
                         <div class="ws-stat-head-row" style="padding-left:14px;">
                             <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
-                            <div class="ws-stat-ico-wrap tier">
-                                <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <div class="ws-roadmap-link-wrap" onclick="event.stopPropagation(); openVipTierModal();" title="View VIP Roadmap">
+                                    <span class="ws-roadmap-link-text">Roadmap ›</span>
+                                    <div class="ws-roadmap-running-line"></div>
+                                </div>
+                                <div class="ws-stat-ico-wrap tier">
+                                    <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                                </div>
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
