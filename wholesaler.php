@@ -285,15 +285,15 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
         }
 
-        /* ── Luxury Search Bar Design System (Reports, Orders, Catalog) ── */
+        /* ── Luxury Search Bar Design System (Running Border Line Animation) ── */
         .ws-filter-controls-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
-            padding-bottom: 14px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
             border-bottom: 1.5px solid var(--ws-border);
         }
         .ws-luxury-search-wrap {
@@ -301,37 +301,57 @@ $catalogProducts = [
             width: clamp(240px, 34vw, 360px);
             display: flex;
             align-items: center;
+            border-radius: 18px;
+            background: #FFFFFF;
+        }
+        .ws-luxury-search-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -1.5px;
+            border-radius: 20px;
+            background: linear-gradient(90deg, rgba(212,175,55,0.3) 0%, #D4AF37 35%, #F59E0B 50%, #D4AF37 65%, rgba(212,175,55,0.3) 100%);
+            background-size: 200% 100%;
+            animation: searchRunningBorder 3.5s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes searchRunningBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
         .ws-luxury-search-input {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            height: 42px;
-            padding: 0 38px 0 42px;
-            border-radius: 22px;
-            border: 1.5px solid rgba(138, 104, 31, 0.25);
+            height: 35px;
+            padding: 0 34px 0 36px;
+            border-radius: 18px;
+            border: 1px solid transparent;
             background: #FFFFFF;
-            font-size: 0.84rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: var(--ws-text-main);
             outline: none;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 6px rgba(138, 104, 31, 0.05);
+            transition: all 0.25s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
         }
         .ws-luxury-search-input::placeholder {
             color: #9E978E;
             font-weight: 500;
+            font-size: 0.76rem;
         }
         .ws-luxury-search-input:focus {
-            border-color: var(--ws-gold-primary);
-            box-shadow: 0 0 0 3.5px rgba(197, 168, 89, 0.22), 0 4px 14px rgba(138, 104, 31, 0.08);
             background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.25);
         }
         .ws-luxury-search-icon {
+            z-index: 2;
             position: absolute;
-            left: 14px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
+            width: 15px;
+            height: 15px;
             stroke: var(--ws-gold-primary);
             stroke-width: 2.2;
             fill: none;
@@ -343,12 +363,13 @@ $catalogProducts = [
             transform: translateY(-50%) scale(1.08);
         }
         .ws-luxury-search-clear {
+            z-index: 2;
             position: absolute;
-            right: 12px;
+            right: 9px;
             top: 50%;
             transform: translateY(-50%);
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: var(--ws-gold-light);
             color: var(--ws-gold-primary);
@@ -357,7 +378,7 @@ $catalogProducts = [
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 0.72rem;
+            font-size: 0.62rem;
             font-weight: 800;
             transition: var(--ws-transition);
         }
@@ -1914,14 +1935,15 @@ $catalogProducts = [
         .ws-filter-pill-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             -ms-overflow-style: none;
             flex-wrap: nowrap;
-            padding: 2px 2px 6px;
+            padding: 2px 2px 4px;
             width: 100%;
+            scroll-snap-type: x mandatory;
         }
         .ws-orders-filter-btns::-webkit-scrollbar,
         .ws-filter-pill-group::-webkit-scrollbar {
@@ -1933,9 +1955,9 @@ $catalogProducts = [
             background: #FAF8F4;
             color: #57534E;
             border: 1.2px solid rgba(138, 104, 31, 0.22);
-            padding: 7px 14px;
-            border-radius: 24px;
-            font-size: clamp(0.72rem, 1.2vw, 0.78rem);
+            padding: 4.5px 12px;
+            border-radius: 18px;
+            font-size: clamp(0.70rem, 1.1vw, 0.75rem);
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1944,9 +1966,11 @@ $catalogProducts = [
             display: inline-flex !important;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            line-height: 1.1;
+            gap: 3px;
+            line-height: 1;
+            height: 28px;
             user-select: none;
+            scroll-snap-align: start;
         }
         .ws-rep-filter-btn:hover {
             border-color: var(--ws-gold-primary);
@@ -1958,7 +1982,7 @@ $catalogProducts = [
             background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
             color: #785912;
             border-color: var(--ws-gold-primary);
-            box-shadow: 0 2px 8px rgba(138, 104, 31, 0.18);
+            box-shadow: 0 2px 6px rgba(138, 104, 31, 0.15);
             font-weight: 800;
             transform: translateY(-1px);
         }
@@ -3842,16 +3866,29 @@ $catalogProducts = [
             .ws-filter-pill-group::-webkit-scrollbar {
                 display: none !important;
             }
+            .ws-luxury-search-input {
+                height: 34px !important;
+                font-size: 0.76rem !important;
+                padding: 0 30px 0 34px !important;
+            }
+            .ws-luxury-search-icon {
+                width: 14px !important;
+                height: 14px !important;
+                left: 11px !important;
+            }
+            .ws-luxury-search-clear {
+                width: 17px !important;
+                height: 17px !important;
+                right: 8px !important;
+                font-size: 0.58rem !important;
+            }
             .ws-rep-filter-btn {
                 white-space: nowrap !important;
                 flex-shrink: 0 !important;
                 display: inline-flex !important;
-                padding: 6px 12px !important;
-                font-size: 0.74rem !important;
-            }
-            .ws-luxury-search-input {
-                height: 42px;
-                font-size: 0.84rem;
+                padding: 4px 10px !important;
+                font-size: 0.70rem !important;
+                height: 26px !important;
             }
             .ws-mob-order-card {
                 padding: 12px;
