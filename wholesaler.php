@@ -3192,12 +3192,14 @@ $catalogProducts = [
             justify-content: center;
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
             transition: opacity 0.24s ease, visibility 0.24s ease;
             padding: 14px;
         }
         .ws-modal-overlay.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
         .ws-modal-box {
             background: #FFFFFF;
