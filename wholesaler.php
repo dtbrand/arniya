@@ -5085,7 +5085,7 @@ $catalogProducts = [
                         </div>
                     </div>
                     <div style="font-size:0.72rem; color:#57534E; margin-bottom:8px; line-height:1.3;">
-                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a 5% wholesale margin rebate!
+                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!
                     </div>
                     <!-- Progress Bar -->
                     <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden;">
@@ -5988,7 +5988,7 @@ $catalogProducts = [
                     ],
                     milestoneBadge: WS_ICONS.crown + " Tier 1: Non VIP Member",
                     milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
-                    milestoneDesc: "<strong>82.02%</strong> of target achieved. Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong> with 5% rebate!"
+                    milestoneDesc: "<strong>82.02%</strong> of target achieved. Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
                 },
                 'month': {
                     sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
