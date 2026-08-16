@@ -4541,7 +4541,7 @@ $catalogProducts = [
                     <form id="wsGstForm" onsubmit="handleSaveGstProfile(event)">
                         <div class="ws-form-grid">
                             
-                            <div class="ws-form-group full">
+                            <div class="ws-form-group full" id="wsCompanyNameFieldWrap">
                                 <label class="ws-label" for="wsCompanyName">Registered Legal Trade Name / Firm Name <span class="req">*</span></label>
                                 <input type="text" id="wsCompanyName" class="ws-input" placeholder="e.g. Shree Krishna Silks Pvt Ltd" required>
                             </div>
@@ -4552,6 +4552,13 @@ $catalogProducts = [
                                     <span id="gstStateDetectTag" style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700;">Format: 24AABCU9603R1ZM</span>
                                 </label>
                                 <input type="text" id="wsGstNumber" class="ws-input" placeholder="e.g. 24AABCU9603R1ZM" maxlength="15" style="text-transform:uppercase; font-family:monospace; letter-spacing:0.08em;" oninput="validateGstinInput(this)">
+                            </div>
+
+                            <div class="ws-form-group full" id="nonGstNoticeWrap" style="display:none;">
+                                <div style="padding:12px 14px; background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:8px; font-size:0.80rem; color:#475569; line-height:1.4;">
+                                    <strong style="color:#0F172A; display:block; margin-bottom:2px;">ℹ️ Unregistered / Non-GST Mode Active</strong>
+                                    No registered company name or GSTIN number is required. Orders will be processed under your personal account.
+                                </div>
                             </div>
 
                         </div>
@@ -5923,18 +5930,27 @@ $catalogProducts = [
             activeGstMode = mode;
             var cardGst = document.getElementById('gstCardGst');
             var cardNonGst = document.getElementById('gstCardNonGst');
-            var fieldWrap = document.getElementById('gstNumberFieldWrap');
+            var compFieldWrap = document.getElementById('wsCompanyNameFieldWrap');
+            var gstNumberWrap = document.getElementById('gstNumberFieldWrap');
+            var nonGstNoticeWrap = document.getElementById('nonGstNoticeWrap');
+            var compInput = document.getElementById('wsCompanyName');
             var gstInput = document.getElementById('wsGstNumber');
 
             if (mode === 'gst') {
                 if (cardGst) cardGst.classList.add('selected');
                 if (cardNonGst) cardNonGst.classList.remove('selected');
-                if (fieldWrap) fieldWrap.style.display = 'flex';
+                if (compFieldWrap) compFieldWrap.style.display = 'flex';
+                if (gstNumberWrap) gstNumberWrap.style.display = 'flex';
+                if (nonGstNoticeWrap) nonGstNoticeWrap.style.display = 'none';
+                if (compInput) compInput.required = true;
                 if (gstInput) gstInput.required = true;
             } else {
                 if (cardGst) cardGst.classList.remove('selected');
                 if (cardNonGst) cardNonGst.classList.add('selected');
-                if (fieldWrap) fieldWrap.style.display = 'none';
+                if (compFieldWrap) compFieldWrap.style.display = 'none';
+                if (gstNumberWrap) gstNumberWrap.style.display = 'none';
+                if (nonGstNoticeWrap) nonGstNoticeWrap.style.display = 'block';
+                if (compInput) compInput.required = false;
                 if (gstInput) gstInput.required = false;
             }
         };
@@ -5990,18 +6006,20 @@ $catalogProducts = [
         /* ── Save GST Profile ── */
         window.handleSaveGstProfile = function(e) {
             e.preventDefault();
-            var company = document.getElementById('wsCompanyName').value.trim();
-            var gstNum = document.getElementById('wsGstNumber').value.trim().toUpperCase();
+            var company = (document.getElementById('wsCompanyName') ? document.getElementById('wsCompanyName').value.trim() : '');
+            var gstNum = (document.getElementById('wsGstNumber') ? document.getElementById('wsGstNumber').value.trim().toUpperCase() : '');
 
-            if (!company) { alert('Please enter legal business company name'); return; }
-            if (activeGstMode === 'gst' && gstNum.length !== 15) {
-                alert('Please enter a valid 15-character GSTIN number');
-                return;
+            if (activeGstMode === 'gst') {
+                if (!company) { alert('Please enter legal business company name'); return; }
+                if (gstNum.length !== 15) {
+                    alert('Please enter a valid 15-character GSTIN number');
+                    return;
+                }
             }
 
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
-            user.companyName = company;
+            user.companyName = activeGstMode === 'gst' ? company : (user.name || 'Individual Trader');
             user.gst_type = activeGstMode;
             user.gst_number = activeGstMode === 'gst' ? gstNum : '';
 
