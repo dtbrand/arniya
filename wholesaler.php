@@ -5689,7 +5689,7 @@ $catalogProducts = [
                                     <div style="display:flex; align-items:center; gap:8px;">
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                                         <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">
-                                            Edit Delivery & Shipping Hub Configuration
+                                            Edit Delivery Address
                                         </h4>
                                     </div>
                                     <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
