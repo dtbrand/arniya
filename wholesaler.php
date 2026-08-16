@@ -4433,12 +4433,17 @@ $catalogProducts = [
                 <!-- Recent Orders Snapshot -->
                 <div class="ws-card">
                     <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <svg style="width:18px;height:18px;stroke:var(--ws-gold-primary);fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                            <h3>Recent Wholesale Dispatches</h3>
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                                <svg style="width:17px; height:17px; stroke:#B45309; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                            <h3 style="font-family:var(--ws-font-serif); font-size:clamp(1.02rem, 1.8vw, 1.18rem); font-weight:800; color:var(--ws-text-main); margin:0; letter-spacing:0.2px;">
+                                Recent Dispatches
+                            </h3>
                         </div>
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('orders')">
-                            Full Order Book →
+                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="switchWsTab('orders')" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                            <span>Full Order Book</span>
+                            <span style="font-size:1rem; line-height:1;">→</span>
                         </button>
                     </div>
 
