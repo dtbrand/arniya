@@ -2305,6 +2305,201 @@ $catalogProducts = [
             fill: none;
             transition: transform 0.2s ease;
         }
+
+        /* ── Procure / Check By Price Smart Slider ── */
+        .ws-price-slider-wrap {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .ws-price-slider-track {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 8px 4px 14px;
+            width: 100%;
+        }
+        .ws-price-slider-track::-webkit-scrollbar { display: none; }
+        .ws-price-slider-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .ws-price-box-card {
+            flex: 0 0 calc((100% - 60px) / 6);
+            min-width: 165px;
+            max-width: 220px;
+            scroll-snap-align: start;
+            background: linear-gradient(145deg, #FFFFFF 0%, #FAF7F0 100%);
+            border: 1.5px solid rgba(138, 104, 31, 0.22);
+            border-radius: 16px;
+            padding: 16px 12px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+            transition: all 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .ws-price-box-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+            transform: skewX(-25deg);
+            transition: 0.6s ease;
+            pointer-events: none;
+        }
+        .ws-price-box-card:hover {
+            transform: translateY(-5px);
+            border-color: #D4AF37;
+            box-shadow: 0 10px 24px rgba(180, 83, 9, 0.18), 0 0 0 1px rgba(212, 175, 55, 0.4);
+        }
+        .ws-price-box-card:hover::before {
+            left: 140%;
+        }
+
+        .ws-price-box-pill {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 0.52rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 2.5px 6px;
+            border-radius: 8px;
+            background: #FEF3C7;
+            color: #92400E;
+            border: 1px solid rgba(217, 119, 6, 0.3);
+        }
+
+        .ws-price-box-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 1.5px solid rgba(217, 119, 6, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.18);
+            transition: transform 0.3s ease;
+        }
+        .ws-price-box-card:hover .ws-price-box-icon-wrap {
+            transform: scale(1.12) rotate(6deg);
+        }
+
+        .ws-price-box-tag {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #8A681F;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 2px;
+        }
+        .ws-price-box-val {
+            font-family: var(--ws-font-serif);
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #24211C;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #8A681F 0%, #D4AF37 50%, #7A284D 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .ws-price-box-sub {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: #6B7280;
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+        .ws-price-box-moq {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.60rem;
+            font-weight: 700;
+            color: #047857;
+            background: #ECFDF5;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            margin-bottom: 10px;
+        }
+        .ws-price-box-btn {
+            width: 100%;
+            padding: 6px 8px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #8A681F 0%, #A37E2C 100%);
+            color: #FFFFFF;
+            font-size: 0.70rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border: none;
+            box-shadow: 0 2px 6px rgba(138, 104, 31, 0.25);
+            transition: all 0.2s ease;
+        }
+        .ws-price-box-card:hover .ws-price-box-btn {
+            background: linear-gradient(135deg, #A37E2C 0%, #C5A859 100%);
+            box-shadow: 0 4px 10px rgba(138, 104, 31, 0.4);
+        }
+
+        @media (max-width: 1023px) {
+            .ws-price-box-card {
+                flex: 0 0 calc((100% - 36px) / 3.4);
+                min-width: 145px;
+            }
+        }
+        @media (max-width: 600px) {
+            .ws-price-slider-track {
+                gap: 8px !important;
+                padding: 4px 2px 10px !important;
+            }
+            .ws-price-box-card {
+                flex: 0 0 calc((100% - 16px) / 2.38) !important;
+                min-width: 128px !important;
+                max-width: 155px !important;
+                padding: 12px 8px 10px !important;
+                border-radius: 12px !important;
+            }
+            .ws-price-box-icon-wrap {
+                width: 36px !important;
+                height: 36px !important;
+                border-radius: 10px !important;
+                margin-bottom: 6px !important;
+            }
+            .ws-price-box-val {
+                font-size: 1.15rem !important;
+            }
+            .ws-price-box-sub {
+                font-size: 0.60rem !important;
+                margin-bottom: 6px !important;
+            }
+            .ws-price-box-moq {
+                font-size: 0.54rem !important;
+                padding: 1.5px 5px !important;
+                margin-bottom: 6px !important;
+            }
+            .ws-price-box-btn {
+                font-size: 0.64rem !important;
+                padding: 4.5px 6px !important;
+            }
+        }
         .product-card:hover .card-img,
         .product-card:hover .ws-prod-img,
         .ws-product-card:hover .card-img,
@@ -5431,6 +5626,157 @@ $catalogProducts = [
                         <button class="ws-slider-nav-btn next" onclick="slideForYouProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
+
+                <!-- ═══ Check / Procure By Price Smart Box Slider Section ═══ -->
+                <div class="ws-card" style="margin-top:16px;">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(217,119,6,0.18);">
+                                <svg class="ws-anim-flame-star" style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" fill="url(#priceTagGoldGrad)" stroke="#B45309" stroke-width="1.6" stroke-linejoin="round"></path>
+                                    <circle cx="7" cy="7" r="1.5" fill="#FFFFFF"></circle>
+                                    <defs>
+                                        <linearGradient id="priceTagGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE047"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                                    Procure By Price Store
+                                </h3>
+                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin:2px 0 0; font-weight:600;">
+                                    Direct Mill Wholesale Lots Filtered by Retailer Budget
+                                </p>
+                            </div>
+                        </div>
+                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                            <span>All Price Points</span>
+                            <span style="font-size:1rem; line-height:1;">→</span>
+                        </a>
+                    </div>
+
+                    <div class="ws-price-slider-wrap">
+                        <button class="ws-slider-nav-btn prev" onclick="slidePriceBoxes(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <div class="ws-price-slider-track" id="wsPriceSliderTrack">
+
+                            <!-- Tier 1: Under ₹300 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(300)">
+                                <span class="ws-price-box-pill">🚀 SUPER VALUE</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹300</div>
+                                <div class="ws-price-box-sub">Daily Wear & Cotton Kurtis</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 24 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                            <!-- Tier 2: Under ₹500 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(500)">
+                                <span class="ws-price-box-pill">⚡ BEST MARGIN</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹500</div>
+                                <div class="ws-price-box-sub">Fancy Georgette & Rayon Sets</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 18 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                            <!-- Tier 3: Under ₹800 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(800)">
+                                <span class="ws-price-box-pill">🔥 FESTIVE HOT</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹800</div>
+                                <div class="ws-price-box-sub">Festive Organza & Chanderi</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 12 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                            <!-- Tier 4: Under ₹1,000 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(1000)">
+                                <span class="ws-price-box-pill">⭐ BESTSELLER</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹1,000</div>
+                                <div class="ws-price-box-sub">Semi-Bridal & Jacquard Silk</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 10 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                            <!-- Tier 5: Under ₹1,500 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(1500)">
+                                <span class="ws-price-box-pill">💎 BOUTIQUE VIP</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <path d="M6 3h12l4 6-10 12L2 9z"></path>
+                                        <path d="M11 3L8 9l4 12 4-12-3-6"></path>
+                                        <path d="M2 9h20"></path>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹1,500</div>
+                                <div class="ws-price-box-sub">Pure Kanjivaram & Designer</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 8 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                            <!-- Tier 6: Under ₹2,000 -->
+                            <div class="ws-price-box-card" onclick="filterByPriceTier(2000)">
+                                <span class="ws-price-box-pill">👑 ROYAL HERITAGE</span>
+                                <div class="ws-price-box-icon-wrap">
+                                    <svg style="width:22px;height:22px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
+                                    </svg>
+                                </div>
+                                <span class="ws-price-box-tag">WHOLESALE</span>
+                                <div class="ws-price-box-val">Under ₹2,000</div>
+                                <div class="ws-price-box-sub">Royal Bridal Zardosi Lots</div>
+                                <div class="ws-price-box-moq">
+                                    <svg style="width:10px;height:10px;fill:currentColor;" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm3.707 6.707l-4.5 4.5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L9 10.586l3.793-3.793a1 1 0 011.414 1.414z"></path></svg>
+                                    MOQ: 6 Pcs
+                                </div>
+                                <button type="button" class="ws-price-box-btn">Explore Lots →</button>
+                            </div>
+
+                        </div>
+                        <button class="ws-slider-nav-btn next" onclick="slidePriceBoxes(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                    </div>
+                </div>
             </section>
 
         </main>
@@ -7742,9 +8088,25 @@ $catalogProducts = [
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
 
+        window.slidePriceBoxes = function(dir) {
+            var track = document.getElementById('wsPriceSliderTrack');
+            if (!track) return;
+            var scrollAmount = track.offsetWidth * 0.75 * dir;
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        };
+
+        window.filterByPriceTier = function(maxPrice) {
+            if (typeof window.showWsToast === 'function') {
+                window.showWsToast('🔍 Filtering Wholesale Lots Under ₹' + Number(maxPrice).toLocaleString('en-IN') + '...');
+            }
+            setTimeout(function() {
+                window.location.href = 'shop.php?max_price=' + maxPrice;
+            }, 500);
+        };
+
         /* ── Smart 1-Line Auto Slider Engine ── */
         function initSmartCatalogAutoSliders() {
-            var sliderIds = ['wsTrendingSliderTrack', 'wsForYouSliderTrack'];
+            var sliderIds = ['wsTrendingSliderTrack', 'wsForYouSliderTrack', 'wsPriceSliderTrack'];
             sliderIds.forEach(function(id) {
                 var track = document.getElementById(id);
                 if (!track) return;
@@ -7762,11 +8124,11 @@ $catalogProducts = [
                     if (track.scrollLeft >= maxScroll - 8) {
                         track.scrollTo({ left: 0, behavior: 'smooth' });
                     } else {
-                        var card = track.querySelector('.product-card');
+                        var card = track.querySelector('.product-card, .ws-price-box-card');
                         var step = card ? (card.offsetWidth + 12) : 200;
                         track.scrollBy({ left: step, behavior: 'smooth' });
                     }
-                }, 3800);
+                }, 4000);
             });
         }
         if (document.readyState === 'loading') {
