@@ -2628,29 +2628,54 @@ $catalogProducts = [
             }
         }
         @media (max-width: 600px) {
+            .ws-card {
+                padding: 10px 10px 12px !important;
+                border-radius: 12px !important;
+            }
+            .ws-card-header {
+                padding-bottom: 6px !important;
+                margin-bottom: 8px !important;
+            }
+            .ws-anim-shimmer-title {
+                font-size: 0.88rem !important;
+                letter-spacing: 0.1px !important;
+            }
+            .ws-header-icon-badge {
+                width: 26px !important;
+                height: 26px !important;
+                border-radius: 7px !important;
+            }
+            .ws-header-icon-badge svg {
+                width: 14px !important;
+                height: 14px !important;
+            }
+            .ws-price-slider-wrap .ws-slider-nav-btn {
+                display: none !important;
+            }
             .ws-price-slider-track {
                 gap: 6px !important;
-                padding: 3px 2px 6px !important;
+                padding: 2px 1px 4px !important;
             }
             .ws-price-box-card {
-                flex: 0 0 calc((100% - 14px) / 2.5) !important;
-                min-width: 96px !important;
-                max-width: 125px !important;
-                padding: 7px 5px 6px !important;
-                border-radius: 10px !important;
+                flex: 0 0 calc((100% - 14px) / 3.25) !important;
+                min-width: 90px !important;
+                max-width: 112px !important;
+                padding: 6px 4px 5px !important;
+                border-radius: 9px !important;
             }
             .ws-price-box-icon-wrap {
-                width: 28px !important;
-                height: 28px !important;
-                border-radius: 8px !important;
+                width: 26px !important;
+                height: 26px !important;
+                border-radius: 7px !important;
                 margin-bottom: 3px !important;
             }
             .ws-price-box-icon-wrap svg {
-                width: 15px !important;
-                height: 15px !important;
+                width: 14px !important;
+                height: 14px !important;
             }
             .ws-price-box-val {
-                font-size: 0.76rem !important;
+                font-size: 0.72rem !important;
+                font-weight: 800 !important;
             }
         }
         .product-card:hover .card-img,
@@ -5682,7 +5707,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
-                            <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(217,119,6,0.18);">
+                            <div class="ws-header-icon-badge" style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(217,119,6,0.18);">
                                 <svg class="ws-anim-flame-star" style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none">
                                     <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" fill="url(#priceTagGoldGrad)" stroke="#B45309" stroke-width="1.6" stroke-linejoin="round"></path>
                                     <circle cx="7" cy="7" r="1.5" fill="#FFFFFF"></circle>
@@ -5695,7 +5720,7 @@ $catalogProducts = [
                                     </defs>
                                 </svg>
                             </div>
-                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(0.95rem, 1.6vw, 1.15rem); font-weight:900; margin:0; letter-spacing:0.2px;">
                                 Procure By Price Store
                             </h3>
                         </div>
@@ -5773,10 +5798,10 @@ $catalogProducts = [
                 </div>
 
                 <!-- ═══ For You Product Grid (Below Price Filter) ═══ -->
-                <div class="ws-card" style="margin-top:10px;">
+                <div class="ws-card" style="margin-top:8px;">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
-                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                            <div class="ws-header-icon-badge" style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
                                 <svg class="ws-anim-flame-star" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
                                     <path d="M12 2l2.4 5.2 5.6.8-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.6-.8L12 2z" fill="url(#goldStarGradForYou)" stroke="#B45309" stroke-width="1.2" stroke-linejoin="round"></path>
                                     <defs>
@@ -5788,7 +5813,7 @@ $catalogProducts = [
                                     </defs>
                                 </svg>
                             </div>
-                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(0.95rem, 1.6vw, 1.15rem); font-weight:900; margin:0; letter-spacing:0.2px;">
                                 For You
                             </h3>
                         </div>
