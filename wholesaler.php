@@ -5103,7 +5103,6 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-info">
                                 <strong>Tier 1: Non-VIP (1 to 50 Orders)</strong>
-                                <span>Standard Wholesale Pricing • Instant WhatsApp Booking</span>
                             </div>
                         </div>
                         <span class="ws-tier-badge active">ACTIVE</span>
@@ -5117,7 +5116,6 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-info">
                                 <strong>Tier 2: Silver (50 to 200 Orders)</strong>
-                                <span>5% Wholesale Margin Rebate • Priority Air Cargo Dispatch</span>
                             </div>
                         </div>
                         <span class="ws-tier-badge silver">50–200 ORDERS</span>
@@ -5131,7 +5129,6 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-info">
                                 <strong>Tier 3: Gold (200 to 300 Orders)</strong>
-                                <span>7.5% Wholesale Margin Rebate • Dedicated B2B Manager</span>
                             </div>
                         </div>
                         <span class="ws-tier-badge gold">200–300 ORDERS</span>
@@ -5145,7 +5142,6 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-info">
                                 <strong>Tier 4: Gold (300 to 500 Orders)</strong>
-                                <span>10% Wholesale Margin Rebate • 30-Day Revolving Credit Line</span>
                             </div>
                         </div>
                         <span class="ws-tier-badge supergold">300–500 ORDERS</span>
@@ -5159,7 +5155,6 @@ $catalogProducts = [
                             </div>
                             <div class="ws-tier-info">
                                 <strong style="color:#8A681F;">Tier 5: Platinum Smart (1,000+ Orders)</strong>
-                                <span style="color:#786D5E;">15% Super Margin Rebate • Custom Lot Weaving & Concierge</span>
                             </div>
                         </div>
                         <span class="ws-tier-badge platinum">TOP TIER</span>
