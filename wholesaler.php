@@ -806,6 +806,65 @@ $catalogProducts = [
             border: 1px solid rgba(220, 38, 38, 0.25);
         }
 
+        /* ── 3D Diagonal Tircha Top-Right Corner Ribbon Tag for Tier Card ── */
+        .ws-tier-ribbon-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 54px;
+            height: 54px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
+            border-top-right-radius: 14px;
+        }
+        .ws-tier-ribbon-tag span {
+            position: absolute;
+            display: block;
+            width: 78px;
+            padding: 1.5px 0;
+            background: linear-gradient(135deg, #785912 0%, #D4AF37 40%, #FEF08A 60%, #8A681F 100%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+            color: #1A1204;
+            font-size: 0.42rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            right: -20px;
+            top: 9px;
+            transform: rotate(45deg);
+            letter-spacing: 0.6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid rgba(120, 89, 18, 0.5);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .ws-tier-ribbon-tag.non-vip span {
+            background: linear-gradient(135deg, #047857 0%, #10B981 40%, #A7F3D0 60%, #059669 100%);
+            color: #064E3B;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-bottom-color: rgba(6, 78, 59, 0.5);
+        }
+        .ws-tier-ribbon-tag.silver span {
+            background: linear-gradient(135deg, #475569 0%, #94A3B8 40%, #F1F5F9 60%, #64748B 100%);
+            color: #0F172A;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-bottom-color: rgba(15, 23, 42, 0.5);
+        }
+        .ws-tier-ribbon-tag.gold span {
+            background: linear-gradient(135deg, #785912 0%, #D4AF37 40%, #FEF08A 60%, #8A681F 100%);
+            color: #1A1204;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-bottom-color: rgba(120, 89, 18, 0.5);
+        }
+        .ws-tier-ribbon-tag.platinum span {
+            background: linear-gradient(135deg, #1E1B18 0%, #524738 40%, #D4AF37 60%, #1E1B18 100%);
+            color: #FFFFFF;
+            border-top-color: rgba(212, 175, 55, 0.8);
+            border-bottom-color: rgba(0, 0, 0, 0.8);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+
         /* ════════════════════════════════════════════════════
            MIDDLE ANALYTICS ROW (Sales Bar Chart & Target Gauge)
         ════════════════════════════════════════════════════ */
@@ -3464,6 +3523,18 @@ $catalogProducts = [
                 padding: 1.5px 4px !important;
                 border-radius: 4px !important;
             }
+            .ws-tier-ribbon-tag {
+                width: 40px !important;
+                height: 40px !important;
+                border-top-right-radius: 10px !important;
+            }
+            .ws-tier-ribbon-tag span {
+                width: 58px !important;
+                font-size: 0.34rem !important;
+                padding: 1px 0 !important;
+                right: -16px !important;
+                top: 7px !important;
+            }
             .ws-wallet-strip {
                 padding: 6px 10px !important;
                 margin-bottom: 10px !important;
@@ -3778,7 +3849,12 @@ $catalogProducts = [
                 <div class="ws-metric-cards-grid">
                     
                     <!-- Metric Card 1: Account Tier (Interactive VIP Tier Roadmap Modal Trigger) -->
-                    <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer;" title="Tap to view VIP Tier Roadmap">
+                    <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer; position:relative;" title="Tap to view VIP Tier Roadmap">
+                        <!-- Right Corner 3D Diagonal Tircha Tag -->
+                        <div class="ws-tier-ribbon-tag non-vip" id="wsTierRibbonTag">
+                            <span id="wsTierRibbonText">★ NON VIP</span>
+                        </div>
+
                         <div class="ws-stat-head-row">
                             <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
                             <div class="ws-stat-ico-wrap tier">
@@ -6468,6 +6544,26 @@ $catalogProducts = [
                     }
                 }
                 if (pill && c) pill.textContent = c.pill;
+            }
+
+            // Update 3D Corner Tag dynamically based on tier
+            var ribbonTag = document.getElementById('wsTierRibbonTag');
+            var ribbonText = document.getElementById('wsTierRibbonText');
+            if (ribbonTag && ribbonText) {
+                var tierName = (data.cards && data.cards[0] && data.cards[0].val) ? data.cards[0].val.toLowerCase() : '';
+                if (tierName.includes('platinum')) {
+                    ribbonTag.className = 'ws-tier-ribbon-tag platinum';
+                    ribbonText.textContent = '★ PLATINUM';
+                } else if (tierName.includes('gold')) {
+                    ribbonTag.className = 'ws-tier-ribbon-tag gold';
+                    ribbonText.textContent = '★ GOLD';
+                } else if (tierName.includes('silver')) {
+                    ribbonTag.className = 'ws-tier-ribbon-tag silver';
+                    ribbonText.textContent = '★ SILVER';
+                } else {
+                    ribbonTag.className = 'ws-tier-ribbon-tag non-vip';
+                    ribbonText.textContent = '★ NON VIP';
+                }
             }
 
             // 3. Update Bar Chart Active Column & Title
