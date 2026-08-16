@@ -2639,21 +2639,169 @@ $catalogProducts = [
                 flex-direction: column !important;
             }
             #wsFullWalletModal .ws-modal-header {
-                padding: 12px 16px !important;
+                padding: 10px 14px !important;
                 border-bottom: 1.5px solid var(--ws-gold-border) !important;
             }
             #wsFullWalletModal .ws-modal-body {
                 flex: 1 1 auto !important;
                 overflow-y: auto !important;
                 -webkit-overflow-scrolling: touch;
-                padding: 14px 16px !important;
+                padding: 12px 14px !important;
             }
             #wsFullWalletModal .ws-modal-footer {
-                padding: 10px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+                padding: 8px 14px calc(10px + env(safe-area-inset-bottom)) !important;
                 background: #FFFFFF !important;
                 border-top: 1px solid var(--ws-border) !important;
             }
         }
+
+        /* ── Styled Full Wallet Modal Component Styles ── */
+        .ws-full-wallet-card {
+            background: linear-gradient(135deg, #1C1813 0%, #262016 100%);
+            border: 1.5px solid rgba(197, 168, 89, 0.45);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        .ws-full-wallet-card.coin {
+            background: linear-gradient(135deg, #1E1B15 0%, #2B2317 100%);
+            border-color: rgba(245, 158, 11, 0.45);
+        }
+        .ws-full-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .ws-full-card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #D4AF37;
+        }
+        .ws-full-card-badge.coin {
+            color: #FBBF24;
+        }
+        .ws-full-card-pill {
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            letter-spacing: 0.3px;
+        }
+        .ws-full-card-pill.coin {
+            background: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+        .ws-full-card-val {
+            font-size: clamp(1.20rem, 3vw, 1.40rem);
+            font-weight: 900;
+            color: #FFFFFF;
+            font-family: var(--ws-font-serif);
+            letter-spacing: 0.3px;
+            line-height: 1.15;
+            margin-bottom: 4px;
+        }
+        .ws-full-card-val.gold {
+            color: #FBBF24;
+        }
+        .ws-full-card-sub {
+            font-size: 0.68rem;
+            color: #C7BFB3;
+            line-height: 1.2;
+        }
+        .ws-full-card-sub strong {
+            color: #FFFFFF;
+        }
+        .ws-txn-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--ws-border);
+            transition: var(--ws-transition);
+        }
+        .ws-txn-row:last-child {
+            border-bottom: none;
+        }
+        .ws-txn-row:hover {
+            background: #FAF8F4;
+        }
+        .ws-txn-icon-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ws-txn-icon-wrap.green {
+            background: #DCFCE7;
+            color: #15803D;
+        }
+        .ws-txn-icon-wrap.red {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        .ws-txn-icon-wrap.amber {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+        .ws-txn-icon-wrap.blue {
+            background: #DBEAFE;
+            color: #1D4ED8;
+        }
+        .ws-txn-info strong {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
+            display: block;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .ws-txn-info span {
+            font-size: 0.65rem;
+            color: var(--ws-text-muted);
+            display: block;
+            line-height: 1.1;
+        }
+        .ws-txn-amt {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .ws-txn-amt strong {
+            font-size: 0.80rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1.2;
+        }
+        .ws-txn-amt .ws-txn-badge {
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 1.5px 5px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .ws-txn-badge.green { background: #DCFCE7; color: #15803D; }
+        .ws-txn-badge.red { background: #FEE2E2; color: #DC2626; }
+        .ws-txn-badge.amber { background: #FEF3C7; color: #D97706; }
+        .ws-txn-badge.blue { background: #DBEAFE; color: #1D4ED8; }
 
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
@@ -4545,100 +4693,132 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK (100% FULL SCREEN)
+         MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsFullWalletModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box" style="max-width: 680px;">
+        <div class="ws-modal-box" style="max-width: 640px;">
             <div class="ws-modal-header">
                 <div style="display:flex; align-items:center; gap:8px;">
                     <button class="ws-modal-close-btn" onclick="closeFullWalletModal()" aria-label="Back" title="Back" style="width:30px; height:30px;">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </button>
-                    <h3 class="ws-modal-title" style="margin:0; font-size:1.05rem;">
-                        <span>Kalaniketan B2B Gold Wallet & Passbook</span>
+                    <h3 class="ws-modal-title" style="margin:0; font-size:0.95rem;">
+                        <span>Gold Wallet & Passbook</span>
                     </h3>
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeFullWalletModal()" aria-label="Close Modal" style="width:30px; height:30px;">&times;</button>
             </div>
             <div class="ws-modal-body">
                 <!-- Dual Balance Cards Grid -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
-                    <!-- Balance Card -->
-                    <div style="background:linear-gradient(135deg, #1C1813 0%, #2A2319 100%); border:1.5px solid rgba(197, 168, 89, 0.45); border-radius:12px; padding:14px; color:#FFFFFF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-                        <div style="font-size:0.70rem; text-transform:uppercase; color:#A89F91; font-weight:800; letter-spacing:0.5px;">Available Balance</div>
-                        <div style="font-size:1.5rem; font-weight:900; color:#FFFFFF; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalWalletBal">₹1,45,280</div>
-                        <div style="font-size:0.70rem; color:#D6CEC3;">Prepaid: ₹45,280 • Credit: ₹1.0L</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                    <!-- Available Balance Card -->
+                    <div class="ws-full-wallet-card">
+                        <div class="ws-full-card-top">
+                            <div class="ws-full-card-badge">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path><path d="M15 10h5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"></path><circle cx="18" cy="12" r="1"></circle></svg>
+                                <span>Available Balance</span>
+                            </div>
+                            <span class="ws-full-card-pill">Active</span>
+                        </div>
+                        <div class="ws-full-card-val" id="fullModalWalletBal">₹1,45,280</div>
+                        <div class="ws-full-card-sub">Prepaid: <strong>₹45,280</strong> • Credit: <strong>₹1.0L</strong></div>
                     </div>
-                    <!-- Coins Card -->
-                    <div style="background:linear-gradient(135deg, #1E1B16 0%, #2E261B 100%); border:1.5px solid rgba(245, 158, 11, 0.45); border-radius:12px; padding:14px; color:#FFFFFF; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
-                        <div style="font-size:0.70rem; text-transform:uppercase; color:#FBBF24; font-weight:800; letter-spacing:0.5px;">Silk Reward Coins</div>
-                        <div style="font-size:1.5rem; font-weight:900; color:#FBBF24; font-family:var(--ws-font-serif); margin:4px 0;" id="fullModalCoinsBal">3,850 Coins</div>
-                        <div style="font-size:0.70rem; color:#D6CEC3;">1 Coin = ₹1.00 Off on Checkout</div>
+
+                    <!-- Silk Reward Coins Card -->
+                    <div class="ws-full-wallet-card coin">
+                        <div class="ws-full-card-top">
+                            <div class="ws-full-card-badge coin">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><circle cx="12" cy="12" r="9" fill="#F59E0B" stroke="#D97706" stroke-width="1.2"></circle><circle cx="12" cy="12" r="6.5" stroke="#FFFFFF" stroke-dasharray="2 1" stroke-width="0.8"></circle><path d="M10 8h4M10 11h3.5M10 8v8M12.5 11c1.4 0 1.8 1 1.8 1.8s-.4 1.8-1.8 1.8h-2.5" stroke="#78350F" stroke-width="1.3" stroke-linecap="round"></path></svg>
+                                <span>Silk Coins</span>
+                            </div>
+                            <span class="ws-full-card-pill coin">1 Coin = ₹1</span>
+                        </div>
+                        <div class="ws-full-card-val gold" id="fullModalCoinsBal">3,850 Coins</div>
+                        <div class="ws-full-card-sub">Worth <strong>₹3,850</strong> Cash Off</div>
                     </div>
                 </div>
 
                 <!-- Action Bar -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px;">
-                    <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-weight:800;" onclick="closeFullWalletModal(); openWalletTopupModal();">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
+                    <button class="ws-btn ws-btn-primary" style="height:36px; justify-content:center; font-size:0.76rem; font-weight:800;" onclick="closeFullWalletModal(); openWalletTopupModal();">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Top-Up Balance</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="height:42px; justify-content:center; font-weight:700;" onclick="requestCreditLimitBoost()">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <button class="ws-btn ws-btn-secondary" style="height:36px; justify-content:center; font-size:0.76rem; font-weight:700;" onclick="requestCreditLimitBoost()">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         <span>Request Limit Boost</span>
                     </button>
                 </div>
 
                 <!-- Passbook / Statement Table -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">Recent Passbook Transactions</h4>
-                    <span style="font-size:0.70rem; color:var(--ws-gold-primary); font-weight:700; cursor:pointer;" onclick="window.showWsToast('📄 Full GSTR passbook statement downloaded!')">📥 Download PDF</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <h4 style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">Recent Passbook Transactions</h4>
+                    <span style="font-size:0.68rem; color:var(--ws-gold-primary); font-weight:700; cursor:pointer;" onclick="window.showWsToast('📄 Full GSTR passbook statement downloaded!')">📥 Download PDF</span>
                 </div>
-                <div style="border:1.5px solid var(--ws-border); border-radius:10px; overflow:hidden; background:#FFFFFF; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
-                        <div>
-                            <strong style="color:var(--ws-text-main);">Wallet Top-Up (RTGS)</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">14 Aug 2026, 11:20 AM • UTR #RTGS992104</div>
+                <div style="border:1.5px solid var(--ws-border); border-radius:10px; overflow:hidden; background:#FFFFFF; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+                    <!-- Row 1: RTGS Top-Up -->
+                    <div class="ws-txn-row">
+                        <div class="ws-txn-icon-wrap green">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
                         </div>
-                        <div style="text-align:right;">
+                        <div class="ws-txn-info">
+                            <strong>Wallet Top-Up (RTGS)</strong>
+                            <span>14 Aug 2026, 11:20 AM • UTR #RTGS992104</span>
+                        </div>
+                        <div class="ws-txn-amt">
                             <strong style="color:#15803D;">+₹50,000</strong>
-                            <div style="font-size:0.70rem; color:#15803D; font-weight:700;">Credited</div>
+                            <span class="ws-txn-badge green">Credited</span>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
-                        <div>
-                            <strong style="color:var(--ws-text-main);">Order Lot Deduction #KLN-WS-8021</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">14 Aug 2026, 10:30 AM • 12 Pcs Silk Lot</div>
+
+                    <!-- Row 2: Order Deduction -->
+                    <div class="ws-txn-row">
+                        <div class="ws-txn-icon-wrap red">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                         </div>
-                        <div style="text-align:right;">
+                        <div class="ws-txn-info">
+                            <strong>Order Deduction #KLN-WS-8021</strong>
+                            <span>14 Aug 2026, 10:30 AM • 12 Pcs Silk Lot</span>
+                        </div>
+                        <div class="ws-txn-amt">
                             <strong style="color:#DC2626;">-₹38,308</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Debited</div>
+                            <span class="ws-txn-badge red">Debited</span>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; border-bottom:1px solid var(--ws-border); font-size:0.80rem;">
-                        <div>
-                            <strong style="color:var(--ws-text-main);">Wholesale Silk Cashback Coins</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">12 Aug 2026, 04:15 PM • Volume Order Bonus</div>
+
+                    <!-- Row 3: Cashback Coins -->
+                    <div class="ws-txn-row">
+                        <div class="ws-txn-icon-wrap amber">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 2.5 5 1.5 5 4a2.5 2.5 0 0 1-5 0"></path></svg>
                         </div>
-                        <div style="text-align:right;">
+                        <div class="ws-txn-info">
+                            <strong>Silk Cashback Coins Reward</strong>
+                            <span>12 Aug 2026, 04:15 PM • Volume Order Bonus</span>
+                        </div>
+                        <div class="ws-txn-amt">
                             <strong style="color:#D97706;">+500 Coins</strong>
-                            <div style="font-size:0.70rem; color:#D97706; font-weight:700;">Earned</div>
+                            <span class="ws-txn-badge amber">Earned</span>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr auto; padding:12px 14px; font-size:0.80rem;">
-                        <div>
-                            <strong style="color:var(--ws-text-main);">Consignment Advance Settlement</strong>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">10 Aug 2026, 02:00 PM • Credit Line Release</div>
+
+                    <!-- Row 4: Settlement -->
+                    <div class="ws-txn-row">
+                        <div class="ws-txn-icon-wrap blue">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                         </div>
-                        <div style="text-align:right;">
-                            <strong style="color:#15803D;">+₹1,00,000</strong>
-                            <div style="font-size:0.70rem; color:#15803D; font-weight:700;">Restored</div>
+                        <div class="ws-txn-info">
+                            <strong>Consignment Advance Settlement</strong>
+                            <span>10 Aug 2026, 02:00 PM • Credit Line Release</span>
+                        </div>
+                        <div class="ws-txn-amt">
+                            <strong style="color:#1D4ED8;">+₹1,00,000</strong>
+                            <span class="ws-txn-badge blue">Restored</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="ws-modal-footer">
-                <button class="ws-btn ws-btn-secondary" style="width:100%; height:42px; justify-content:center; font-weight:700;" onclick="closeFullWalletModal()">
+                <button class="ws-btn ws-btn-secondary" style="width:100%; height:38px; justify-content:center; font-size:0.78rem; font-weight:700;" onclick="closeFullWalletModal()">
                     <span>Close Passbook</span>
                 </button>
             </div>
