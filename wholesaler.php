@@ -8536,22 +8536,6 @@ $catalogProducts = [
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
 
-        var activePriceTier = null;
-
-        window.filterByPriceTier = function(maxPrice, cardElem) {
-            var cards = document.querySelectorAll('.ws-price-box-card');
-            
-            if (activePriceTier === maxPrice) {
-                // Clicking same tier again resets filter
-                activePriceTier = null;
-                cards.forEach(function(c) { c.classList.remove('active'); });
-                resetCatalogFilter();
-                if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('✓ Showing All Available Wholesale Lots');
-                }
-                return;
-            }
-
         /* ── Unified Real-Time Category & Price Store Filter Engine ── */
         var activePriceTier = null;
         var activeCatalogCategory = 'All';
