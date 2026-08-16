@@ -1,10 +1,19 @@
 <?php
 /**
- * singelprodut.php — Dedicated Luxury Single Product Page (PDP)
- * Fully responsive on Mobile and Desktop with touch-swipe gallery,
- * Size Chart Modal, Pincode Estimator, WhatsApp Order, and Cart Integration.
+ * singelprodut.php — Premium Mobile-First Single Product Page (PDP)
+ * Inspired by Luxury E-Commerce / Myntra Experience
+ * Features:
+ *  1. Product Image Gallery (Auto-Slide + Touch Swipe + Dot/Counter Indicators)
+ *  2. Second Image / Key Highlights (Myntra-Style Multi-Image Slider + Specs Grid)
+ *  3. Product Information (Dynamic PHP Data, Color Swatches, Size Selector, Quantity)
+ *  4. Customer Reviews Carousel (Auto-Slide + Touch Swipe + Star Ratings + Helpful Votes)
+ *  5. "You May Also Admire" Related Products Carousel (Auto-Slide + Touch Swipe + Price Badges)
+ *  6. Common Reusable Carousel Engine (AgyCarousel)
+ *  7. Sticky Mobile Action Bar (Add to Bag | Buy Now | WhatsApp Direct Order)
+ *  8. Size Guide Modal, Write Review Modal, and Instant WhatsApp Order Modal
  */
 
+// ── 1. Comprehensive Luxury Product Catalog Database ───────────────────────
 $products = [
     1 => [
         'id'       => 1,
@@ -23,7 +32,29 @@ $products = [
         'fabric'   => 'Pure Kanchipuram Silk',
         'in_stock' => true,
         'sku'      => 'KN-SAR-001',
-        'desc'     => 'An exquisite masterpiece from our Royal Heritage edit. The Nilambari Silk Saree features pure gold zari brocade work along the pallu, finished with artisanal floral buttas and rich temple borders.'
+        'desc'     => 'An exquisite masterpiece from our Royal Heritage edit. The Nilambari Silk Saree features pure gold zari brocade work along the pallu, finished with artisanal floral buttas and rich temple borders.',
+        'gallery'  => [
+            'images/product1.png',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product1.png', 'title' => 'Heritage Weave Detail'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => 'Pure Gold Zari Pallu'],
+            ['url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80', 'title' => 'Artisanal Border Finish']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Kanchipuram Silk',
+            'Shape'            => 'Traditional 6-Yard Saree',
+            'Pattern / Work'   => 'Pure Gold Zari Floral Jaal',
+            'Occasion'         => 'Wedding, Festive & Reception',
+            'Border Style'     => 'Double-Wide Contrast Temple Border',
+            'Blouse Piece'     => 'Included (0.8m Silk Blend)',
+            'Wash Care'        => 'Dry Clean Only',
+            'Weave Type'       => 'Handloom Kadhwa Jacquard',
+            'Transparency'     => 'Opaque with Lustrous Sheen'
+        ]
     ],
     2 => [
         'id'       => 2,
@@ -42,7 +73,29 @@ $products = [
         'fabric'   => 'Pure Banarasi Katan Silk',
         'in_stock' => true,
         'sku'      => 'KN-SAR-002',
-        'desc'     => 'Handwoven in Varanasi using centuries-old kadhwa weaving techniques. Adorned with delicate antique gold floral jaal, this saree exudes regal Indian heritage.'
+        'desc'     => 'Handwoven in Varanasi using centuries-old kadhwa weaving techniques. Adorned with delicate antique gold floral jaal, this saree exudes regal Indian heritage.',
+        'gallery'  => [
+            'images/product2.png',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product2.png', 'title' => 'Varanasi Handloom Weave'],
+            ['url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80', 'title' => 'Antique Gold Zari Motif'],
+            ['url' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80', 'title' => 'Katan Silk Texture']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Banarasi Katan Silk',
+            'Shape'            => 'Traditional 6-Yard Saree',
+            'Pattern / Work'   => 'Antique Gold Floral Jaal',
+            'Occasion'         => 'Bridal & Royal Gala',
+            'Border Style'     => 'Heavy Kadwa Zari Border',
+            'Blouse Piece'     => 'Unstitched Katan Silk Piece',
+            'Wash Care'        => 'Dry Clean Only',
+            'Weave Type'       => 'Handwoven Kadwa Technique',
+            'Transparency'     => 'Opaque'
+        ]
     ],
     3 => [
         'id'       => 3,
@@ -61,7 +114,29 @@ $products = [
         'fabric'   => 'Pure Mulberry Silk (3-Ply)',
         'in_stock' => true,
         'sku'      => 'KN-SAR-003',
-        'desc'     => 'Woven with three-ply twisted silk yarn and dipped in pure metallic gold zari. Features monumental temple gopuram motifs along the double-wide contrast border.'
+        'desc'     => 'Woven with three-ply twisted silk yarn and dipped in pure metallic gold zari. Features monumental temple gopuram motifs along the double-wide contrast border.',
+        'gallery'  => [
+            'images/product3.png',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product3.png', 'title' => 'Gopuram Motif Zoom'],
+            ['url' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80', 'title' => '3-Ply Silk Weft & Warp'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => 'Rich Contrast Pallu']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Mulberry Silk (3-Ply)',
+            'Shape'            => 'Traditional 6-Yard Saree',
+            'Pattern / Work'   => 'Monumental Temple Gopuram Motifs',
+            'Occasion'         => 'Temple Ceremonies & Muhurtham',
+            'Border Style'     => 'Contrast Double-Wide Border',
+            'Blouse Piece'     => 'Contrast Tissue Blouse Piece',
+            'Wash Care'        => 'Specialist Dry Clean Only',
+            'Weave Type'       => 'Korvai Interlock Weaving',
+            'Transparency'     => 'Opaque'
+        ]
     ],
     4 => [
         'id'       => 4,
@@ -80,7 +155,29 @@ $products = [
         'fabric'   => 'Viscose Georgette',
         'in_stock' => true,
         'sku'      => 'KN-SAR-004',
-        'desc'     => 'Lightweight, fluid, and romantic. Decorated with hand-embroidered resham florals and delicate scalloped borders for celebratory evening soirees.'
+        'desc'     => 'Lightweight, fluid, and romantic. Decorated with hand-embroidered resham florals and delicate scalloped borders for celebratory evening soirees.',
+        'gallery'  => [
+            'images/product4.png',
+            'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product4.png', 'title' => 'Resham Threadwork Floral'],
+            ['url' => 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80', 'title' => 'Scalloped Cutwork Border'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => 'Fluid Drape Sheen']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Viscose Georgette',
+            'Shape'            => 'Fluid Contemporary Saree',
+            'Pattern / Work'   => 'Hand-Embroidered Resham Florals',
+            'Occasion'         => 'Evening Soiree, Cocktail & Party',
+            'Border Style'     => 'Delicate Scalloped Embroidered Border',
+            'Blouse Piece'     => 'Matching Georgette Blouse Piece',
+            'Wash Care'        => 'Dry Clean Only',
+            'Weave Type'       => 'Artisanal Embroidery',
+            'Transparency'     => 'Semi-Sheer'
+        ]
     ],
     5 => [
         'id'       => 5,
@@ -99,7 +196,29 @@ $products = [
         'fabric'   => 'Chanderi Silk Cotton',
         'in_stock' => true,
         'sku'      => 'KN-KUR-005',
-        'desc'     => 'Flared 32-kali royal floor-length anarkali silhouette with intricate gota patti handwork on the yoke and bell sleeves.'
+        'desc'     => 'Flared 32-kali royal floor-length anarkali silhouette with intricate gota patti handwork on the yoke and bell sleeves.',
+        'gallery'  => [
+            'images/product5.png',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product5.png', 'title' => 'Gota Patti Yoke Embroidery'],
+            ['url' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80', 'title' => '32-Kali Flare Volume'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => 'Sheer Organza Dupatta']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Chanderi Silk Cotton',
+            'Shape'            => 'Flared 32-Kali Anarkali',
+            'Pattern / Work'   => 'Authentic Gota Patti & Zari Work',
+            'Occasion'         => 'Festive Celebrations & Sangeet',
+            'Neckline'         => 'Sweetheart Neck with Bell Sleeves',
+            'Set Contains'     => 'Floor-Length Kurti, Churidar & Dupatta',
+            'Wash Care'        => 'Dry Clean Only',
+            'Weave Type'       => 'Handcrafted Chanderi Weave',
+            'Transparency'     => 'Opaque with Sheer Dupatta'
+        ]
     ],
     6 => [
         'id'       => 6,
@@ -118,7 +237,29 @@ $products = [
         'fabric'   => 'Raw Silk & Velvet Dupatta',
         'in_stock' => true,
         'sku'      => 'KN-LEH-006',
-        'desc'     => 'A couture bridal creation featuring 180 hours of meticulous dabka, nakshi, and zardozi bullion embroidery over deep crimson silk, complete with dual dupattas.'
+        'desc'     => 'A couture bridal creation featuring 180 hours of meticulous dabka, nakshi, and zardozi bullion embroidery over deep crimson silk, complete with dual dupattas.',
+        'gallery'  => [
+            'images/product6.png',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product6.png', 'title' => 'Zardozi & Dabka Craftsmanship'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => '4.5m Grand Gher Flare'],
+            ['url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80', 'title' => 'Dual Velvet & Net Dupattas']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Raw Silk & Micro-Velvet',
+            'Shape'            => 'Royal Flared Silhouette (4.5m Flare)',
+            'Pattern / Work'   => 'Dabka, Nakshi & Zardozi Bullion',
+            'Occasion'         => 'Royal Wedding & Pheras',
+            'Choli Detail'     => 'Heavily Embellished Padded Choli',
+            'Dupatta Style'    => 'Dual Dupattas (1 Velvet + 1 Soft Net)',
+            'Wash Care'        => 'Specialist Couture Dry Clean Only',
+            'Weave Type'       => 'Hand-Bullion Embroidery (180 Hours)',
+            'Transparency'     => 'Opaque'
+        ]
     ],
     7 => [
         'id'       => 7,
@@ -137,7 +278,29 @@ $products = [
         'fabric'   => 'Mulmul Cotton',
         'in_stock' => true,
         'sku'      => 'KN-SAR-007',
-        'desc'     => 'Authentic Bagru hand block printed natural vegetable dyes on airy mulmul cotton. Perfect for daytime cultural gatherings and warm weather celebrations.'
+        'desc'     => 'Authentic Bagru hand block printed natural vegetable dyes on airy mulmul cotton. Perfect for daytime cultural gatherings and warm weather celebrations.',
+        'gallery'  => [
+            'images/product7.png',
+            'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product7.png', 'title' => 'Hand Carved Block Print Motif'],
+            ['url' => 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80', 'title' => '100% Breathable Mulmul Cotton'],
+            ['url' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', 'title' => 'Natural Vegetable Dye Sheen']
+        ],
+        'key_highlights' => [
+            'Fabric'           => '100% Organic Mulmul Cotton',
+            'Shape'            => 'Airy 6-Yard Saree',
+            'Pattern / Work'   => 'Authentic Bagru Hand Block Print',
+            'Occasion'         => 'Daytime Festive, Cultural & Casual',
+            'Border Style'     => 'Hand-Printed Geometric Zari Edge',
+            'Blouse Piece'     => 'Attached Mulmul Cotton Piece',
+            'Wash Care'        => 'Gentle Hand Wash in Cold Water',
+            'Weave Type'       => 'Artisanal Wooden Block Carving',
+            'Transparency'     => 'Semi-Opaque'
+        ]
     ],
     8 => [
         'id'       => 8,
@@ -156,259 +319,51 @@ $products = [
         'fabric'   => 'Organza & Silk Crepe',
         'in_stock' => true,
         'sku'      => 'KN-GWN-008',
-        'desc'     => 'Dramatic cape-sleeved indo-western evening gown embellished with swarovski crystals and tone-on-tone pearl embroidery.'
-    ],
+        'desc'     => 'Dramatic cape-sleeved indo-western evening gown embellished with swarovski crystals and tone-on-tone pearl embroidery.',
+        'gallery'  => [
+            'images/product8.png',
+            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80'
+        ],
+        'highlights_images' => [
+            ['url' => 'images/product8.png', 'title' => 'Swarovski Crystal Bodice'],
+            ['url' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80', 'title' => 'Floor-Sweeping Silk Cape'],
+            ['url' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80', 'title' => 'Tone-on-Tone Pearl Work']
+        ],
+        'key_highlights' => [
+            'Fabric'           => 'Pure Organza & Silk Crepe',
+            'Shape'            => 'Floor-Length Indo-Western Gown',
+            'Pattern / Work'   => 'Swarovski Crystals & Pearl Beads',
+            'Occasion'         => 'Cocktail, Reception & Red Carpet',
+            'Sleeve Style'     => 'Dramatic Flowing Cape Sleeves',
+            'Inner Lining'     => 'Soft Butter Crepe Lining',
+            'Wash Care'        => 'Dry Clean Only',
+            'Weave Type'       => 'Couture Hand Embroidery',
+            'Transparency'     => 'Opaque with Sheer Cape'
+        ]
+    ]
 ];
 
 // Resolve requested product ID (Default to #1)
 $pid = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 $product = $products[$pid] ?? $products[1];
+$galleryImages = $product['gallery'] ?? [$product['image']];
+$highlightsImages = $product['highlights_images'] ?? [['url' => $product['image'], 'title' => 'Master Craftsmanship']];
 
-// Generate variation gallery images
-$galleryImages = [
-    $product['image'],
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+// Color Hex Code Palette
+$colorHex = [
+    'Navy' => '#1B2A4A', 'Royal Blue' => '#204B8C', 'Midnight Black' => '#1A1A1A',
+    'Maroon' => '#6D1A24', 'Deep Wine' => '#4A1521', 'Ruby Red' => '#9E1B32',
+    'Yellow' => '#E5A93B', 'Golden Ochre' => '#C68B29', 'Emerald Green' => '#1E5E3A',
+    'Pink' => '#E88B9E', 'Blush Peach' => '#F4B2A0', 'Rose' => '#D46A84',
+    'Green' => '#2D6A4F', 'Teal' => '#1D6870', 'Mint' => '#74B39B',
+    'Red' => '#B22222', 'Crimson' => '#DC143C', 'Orange' => '#D96B27',
+    'Mustard' => '#C88A24', 'Rust Gold' => '#A85A1D', 'White' => '#FAF8F5',
+    'Ivory' => '#FFFFF0', 'Pearl Cream' => '#EFEBD9'
 ];
 
-// Myntra-Style Detailed Product Specifications
-$myntraSpecsMap = [
-    1 => [
-        ['title' => 'Type', 'val' => 'Banarasi'],
-        ['title' => 'Ornamentation', 'val' => 'Zari'],
-        ['title' => 'Border', 'val' => 'Woven Design'],
-        ['title' => 'Blouse Fabric', 'val' => 'Silk Blend'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Pure Silk'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    2 => [
-        ['title' => 'Type', 'val' => 'Banarasi'],
-        ['title' => 'Ornamentation', 'val' => 'Zari Jacquard'],
-        ['title' => 'Border', 'val' => 'Antique Gold Zari'],
-        ['title' => 'Blouse Fabric', 'val' => 'Katan Silk'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Katan Silk'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    3 => [
-        ['title' => 'Type', 'val' => 'Kasavu'],
-        ['title' => 'Ornamentation', 'val' => 'Zari'],
-        ['title' => 'Border', 'val' => 'Woven Design'],
-        ['title' => 'Blouse Fabric', 'val' => 'Tissue'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Tissue'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    4 => [
-        ['title' => 'Type', 'val' => 'Georgette'],
-        ['title' => 'Ornamentation', 'val' => 'Resham Threadwork'],
-        ['title' => 'Border', 'val' => 'Scalloped Floral'],
-        ['title' => 'Blouse Fabric', 'val' => 'Georgette'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Viscose Georgette'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    5 => [
-        ['title' => 'Type', 'val' => 'Anarkali'],
-        ['title' => 'Ornamentation', 'val' => 'Gota Patti'],
-        ['title' => 'Border', 'val' => 'Flared Kali Hem'],
-        ['title' => 'Blouse Fabric', 'val' => 'Chanderi Cotton'],
-        ['title' => 'Blouse', 'val' => 'Kurti & Dupatta Set'],
-        ['title' => 'Saree Fabric', 'val' => 'Chanderi Silk Cotton'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    6 => [
-        ['title' => 'Type', 'val' => 'Bridal Lehenga'],
-        ['title' => 'Ornamentation', 'val' => 'Zardozi & Dabka'],
-        ['title' => 'Border', 'val' => 'Heavy Embroidered'],
-        ['title' => 'Blouse Fabric', 'val' => 'Raw Silk & Velvet'],
-        ['title' => 'Blouse', 'val' => 'Choli Piece with Dupatta'],
-        ['title' => 'Saree Fabric', 'val' => 'Raw Silk & Velvet'],
-        ['title' => 'Wash Care', 'val' => 'Specialist Dry Clean'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    7 => [
-        ['title' => 'Type', 'val' => 'Bagru Block Print'],
-        ['title' => 'Ornamentation', 'val' => 'Natural Vegetable Dye'],
-        ['title' => 'Border', 'val' => 'Printed Zari Border'],
-        ['title' => 'Blouse Fabric', 'val' => 'Mulmul Cotton'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Mulmul Cotton'],
-        ['title' => 'Wash Care', 'val' => 'Gentle Hand Wash'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    8 => [
-        ['title' => 'Type', 'val' => 'Indo-Western Gown'],
-        ['title' => 'Ornamentation', 'val' => 'Swarovski & Pearls'],
-        ['title' => 'Border', 'val' => 'Flowing Cape Hem'],
-        ['title' => 'Blouse Fabric', 'val' => 'Organza Silk'],
-        ['title' => 'Blouse', 'val' => 'Attached Cape Set'],
-        ['title' => 'Saree Fabric', 'val' => 'Organza & Silk Crepe'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-];
-$currentSpecs = $myntraSpecsMap[$pid] ?? $myntraSpecsMap[3];
-
-// Myntra-Style Detailed Product Descriptions (Design Details, Size & Fit, Material & Care)
-$myntraProductDetailsMap = [
-    1 => [
-        'design_lines' => [
-            'Midnight Blue and Royal Gold-Toned Banarasi Silk saree',
-            'Intricate floral jaal woven design with contrast zari border',
-            'Has Zari detail',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Wedding & Festive Reception'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Pure Banarasi Katan Silk',
-            'Blouse fabric: Pure Silk Blend',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    2 => [
-        'design_lines' => [
-            'Deep Wine and Ruby Red Banarasi Zari saree',
-            'Centuries-old kadhwa weaving technique with rich gold zari motifs',
-            'Opulent pallu with floral jaal and double zari border',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Bridal & Royal Gala'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Pure Katan Silk',
-            'Blouse fabric: Katan Silk',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    3 => [
-        'design_lines' => [
-            'Off White and Gold-Toned Kasavu sarees',
-            'Woven Design saree with Woven Design Border border',
-            'Has Zari detail',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Onam'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Silk Blend',
-            'Blouse fabric: Silk Blend',
-            'Wash Care: Machine wash'
-        ]
-    ],
-    4 => [
-        'design_lines' => [
-            'Blush Pink floral embroidered Viscose Georgette saree',
-            'Hand-embroidered resham florals and delicate scalloped borders',
-            'Lightweight, fluid drape with romantic evening sheen',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Evening Soiree & Cocktail'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Viscose Georgette',
-            'Blouse fabric: Georgette',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    5 => [
-        'design_lines' => [
-            'Emerald Green Royal Anarkali Floor-Length Kurti Set',
-            '32-kali flared silhouette with intricate gota patti handwork on yoke and bell sleeves',
-            'Comes with matching churidar and sheer organza dupatta',
-            'Special Occasion: Festive Celebrations & Sangeet'
-        ],
-        'size_fit' => [
-            'Kurti Length: 52 inches (Floor Length)',
-            'Sleeve Length: 3/4th Bell Sleeves',
-            'Dupatta: 2.25 metres'
-        ],
-        'material_care' => [
-            'Kurti & Churidar: Chanderi Silk Cotton',
-            'Dupatta: Pure Organza',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    6 => [
-        'design_lines' => [
-            'Crimson Red Bridal Zardosi Couture Lehenga Set',
-            '180 hours of hand-embroidery with dabka, nakshi, and zardozi bullion',
-            'Complete with heavily embellished choli and dual dupattas (Velvet & Net)',
-            'Special Occasion: Royal Wedding & Pheras'
-        ],
-        'size_fit' => [
-            'Lehenga Flare (Gher): 4.5 metres',
-            'Lehenga Length: 43 inches',
-            'Choli Fabric: 1.2 metres (Unstitched)'
-        ],
-        'material_care' => [
-            'Lehenga & Choli: Raw Silk & Velvet',
-            'Dupatta: Soft Net & Velvet Border',
-            'Wash Care: Specialist Dry Clean Only'
-        ]
-    ],
-    7 => [
-        'design_lines' => [
-            'Mustard & Indigo Bagru Hand Block Printed Saree',
-            'Handcrafted using traditional wooden block carving and natural vegetable dyes',
-            'Soft breathable drape with geometric zari border',
-            'The saree comes with an unstitched blouse piece',
-            'Special Occasion: Daytime Cultural & Festive Events'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: 100% Mulmul Cotton',
-            'Blouse fabric: Mulmul Cotton',
-            'Wash Care: Gentle Hand Wash in Cold Water'
-        ]
-    ],
-    8 => [
-        'design_lines' => [
-            'Ivory & Pearl Tone-on-Tone Embroidered Evening Gown',
-            'Dramatic sheer cape sleeves embellished with authentic Swarovski crystals',
-            'Modern indo-western structured silhouette',
-            'Special Occasion: Cocktail, Reception & Red Carpet'
-        ],
-        'size_fit' => [
-            'Gown Length: 56 inches',
-            'Cape Length: Floor-Sweeping (58 inches)'
-        ],
-        'material_care' => [
-            'Fabric: Organza & Silk Crepe',
-            'Lining: Butter Crepe',
-            'Wash Care: Dry Clean Only'
-        ]
-    ]
-];
-$currentDetails = $myntraProductDetailsMap[$pid] ?? $myntraProductDetailsMap[3];
-
+// Verified Customer Reviews Dataset
 $customerReviews = [
     [
         'id' => 1,
@@ -418,7 +373,6 @@ $customerReviews = [
         'date' => '2 days ago',
         'occasion' => 'Wedding Sangeet',
         'text' => 'The fabric quality and real zari weave is breathtaking! Arrived in luxury royal gift packaging within 3 days to Mumbai. Wore it for my cousin’s sangeet and received endless compliments.',
-        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
         'helpful' => 38
     ],
     [
@@ -429,7 +383,6 @@ $customerReviews = [
         'date' => '4 days ago',
         'occasion' => 'Diwali Festive Puja',
         'text' => 'Exactly as depicted in the photos. The silk drape feels extremely luxurious, pure, and lightweight. The WhatsApp styling concierge was very helpful with size selection.',
-        'photo' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80',
         'helpful' => 29
     ],
     [
@@ -440,7 +393,6 @@ $customerReviews = [
         'date' => '1 week ago',
         'occasion' => 'Temple Inauguration',
         'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend Kalaniketan!',
-        'photo' => null,
         'helpful' => 21
     ],
     [
@@ -451,7 +403,6 @@ $customerReviews = [
         'date' => '1 week ago',
         'occasion' => 'Reception Night',
         'text' => 'The color is deep, royal, and rich under evening chandelier lighting. Everyone asked where I purchased it from. Fast express delivery with zero hassle.',
-        'photo' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80',
         'helpful' => 44
     ],
     [
@@ -462,7 +413,6 @@ $customerReviews = [
         'date' => '2 weeks ago',
         'occasion' => 'International Wedding',
         'text' => 'Ordered from London with international DHL shipping. Reached in 5 business days in pristine condition! Truly magnificent quality and authentic silk sheen.',
-        'photo' => 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80',
         'helpful' => 52
     ],
     [
@@ -473,7 +423,6 @@ $customerReviews = [
         'date' => '3 weeks ago',
         'occasion' => 'Engagement Ceremony',
         'text' => 'Beautiful attire! Heavy royal border and very comfortable to wear all night. Delivery was smooth and packaging was top notch.',
-        'photo' => null,
         'helpful' => 17
     ],
     [
@@ -484,20 +433,8 @@ $customerReviews = [
         'date' => '1 month ago',
         'occasion' => 'Sister’s Haldi',
         'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about Kalaniketan.',
-        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
         'helpful' => 31
     ]
-];
-
-$colorHex = [
-    'Navy' => '#1B2A4A', 'Royal Blue' => '#204B8C', 'Midnight Black' => '#1A1A1A',
-    'Maroon' => '#6D1A24', 'Deep Wine' => '#4A1521', 'Ruby Red' => '#9E1B32',
-    'Yellow' => '#E5A93B', 'Golden Ochre' => '#C68B29', 'Emerald Green' => '#1E5E3A',
-    'Pink' => '#E88B9E', 'Blush Peach' => '#F4B2A0', 'Rose' => '#D46A84',
-    'Green' => '#2D6A4F', 'Teal' => '#1D6870', 'Mint' => '#74B39B',
-    'Red' => '#B22222', 'Crimson' => '#DC143C', 'Orange' => '#D96B27',
-    'Mustard' => '#C88A24', 'Rust Gold' => '#A85A1D', 'White' => '#FAF8F5',
-    'Ivory' => '#FFFFF0', 'Pearl Cream' => '#EFEBD9'
 ];
 ?>
 <!DOCTYPE html>
@@ -512,21 +449,27 @@ $colorHex = [
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
-/* ── Design Tokens ── */
+/* ── Design Tokens ─────────────────────────────────────────── */
 :root {
     --off-white:      #F8F6F0;
     --off-white-2:    #F2EFE8;
     --dark-gold:      #8A681F;
     --deep-gold:      #6F5218;
+    --gold-accent:    #C5A859;
     --gold-pale:      #FAF3E0;
-    --gold-border:    rgba(138,104,31,0.25);
+    --gold-border:    rgba(138, 104, 31, 0.25);
+    --gold-glow:      rgba(197, 168, 89, 0.35);
     --soft-platinum:  #E5E3DE;
     --dark-text:      #24211C;
     --mid-text:       #5A5348;
     --light-text:     #9A9490;
+    --success-green:  #15803D;
     --font-serif:     'Cinzel', serif;
     --font-sans:      'Inter', sans-serif;
     --transition:     0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm:      0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md:      0 8px 24px rgba(138,104,31,0.08);
+    --shadow-lg:      0 16px 36px rgba(0,0,0,0.12);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -536,12 +479,13 @@ body {
     color: var(--dark-text);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    touch-action: pan-y pinch-zoom;
 }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-/* ── Main Layout ── */
+/* ── Main Layout ───────────────────────────────────────────── */
 .pdp-main-wrapper {
     max-width: 1240px;
     margin: 0 auto;
@@ -560,9 +504,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* ════════════════════════════════════════════════════
-   LEFT COLUMN: TOUCH-SWIPEABLE GALLERY & SLIDER
-════════════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════════════
+   SECTION 1: PRODUCT IMAGE GALLERY (TOP)
+═════════════════════════════════════════════════════════════ */
 .pdp-gallery-column {
     display: flex;
     flex-direction: column;
@@ -580,7 +524,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Main Image Slider Viewport (Elegant Vertical Fashion Portrait) */
+/* Main Image Slider Viewport */
 .pdp-gallery-slider {
     position: relative;
     border-radius: 16px;
@@ -590,8 +534,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     max-height: 580px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid rgba(138, 104, 31, 0.22);
+    border: 1px solid var(--gold-border);
     box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+    user-select: none;
+    touch-action: pan-y pinch-zoom;
 }
 
 @media (max-width: 767px) {
@@ -610,7 +556,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Swipeable Track */
+/* Shared Slider Track Styling (Used across all carousels) */
 .pdp-slider-track {
     display: flex;
     width: 100%;
@@ -647,210 +593,224 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     transition: transform 0.4s ease;
 }
 
-/* Slide Counter Badge (Mobile) */
+/* Slide Counter Badge */
 .pdp-slide-counter {
     position: absolute;
     bottom: 12px;
     right: 12px;
-    background: rgba(24, 21, 18, 0.78);
-    backdrop-filter: blur(8px);
-    color: #FFFFFF;
-    font-size: 0.68rem;
-    font-weight: 700;
+    background: rgba(20, 16, 12, 0.75);
+    color: #FFF9EE;
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
     padding: 3px 10px;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.25);
-    letter-spacing: 0.08em;
-    z-index: 5;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-/* Slider Navigation Arrows */
+/* Badge Tag on Image */
+.pdp-badge-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    font-family: var(--font-serif);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    pointer-events: none;
+}
+
+/* Fullscreen Zoom Button */
+.pdp-zoom-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-gold);
+    z-index: 10;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.pdp-zoom-btn:hover {
+    background: var(--dark-gold);
+    color: #FFFFFF;
+    transform: scale(1.08);
+}
+.pdp-zoom-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* Navigation Arrows */
 .pdp-slider-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 38px; height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(6px);
     border: 1px solid var(--gold-border);
     color: var(--dark-gold);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    z-index: 6;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+    z-index: 12;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
 .pdp-slider-arrow:hover {
     background: var(--dark-gold);
     color: #FFFFFF;
     transform: translateY(-50%) scale(1.08);
 }
-.pdp-slider-arrow.prev { left: 12px; }
-.pdp-slider-arrow.next { right: 12px; }
+.pdp-slider-arrow.prev { left: 10px; }
+.pdp-slider-arrow.next { right: 10px; }
 .pdp-slider-arrow svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.4; }
 
 @media (max-width: 767px) {
     .pdp-slider-arrow { display: none; }
 }
 
-/* Badge Tag */
-.pdp-badge-tag {
-    position: absolute;
-    top: 12px; left: 12px;
-    background: rgba(138, 104, 31, 0.94);
-    backdrop-filter: blur(8px);
-    color: #FFFFFF;
-    font-size: 0.62rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding: 4px 11px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.3);
-    z-index: 5;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-
-/* Fullscreen Zoom Trigger Icon */
-.pdp-zoom-btn {
-    position: absolute;
-    top: 12px; right: 12px;
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(138,104,31,0.28);
-    color: var(--dark-gold);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 5;
-    transition: all 0.2s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-}
-.pdp-zoom-btn:hover {
-    background: var(--dark-gold);
-    color: #FFFFFF;
-    transform: scale(1.1);
-}
-.pdp-zoom-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
-
-/* Thumbnails Strip */
-.pdp-thumbnails-strip {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 4px 2px;
-    scrollbar-width: none;
-}
-.pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
-.pdp-thumb-item {
-    width: 56px;
-    height: 70px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1.5px solid var(--soft-platinum);
-    background: #FAF8F4;
-    cursor: pointer;
-    flex-shrink: 0;
-    opacity: 0.75;
-    transition: all 0.25s ease;
+/* Pagination Dots */
+.pdp-slider-dots {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
+    padding: 6px 0;
 }
-.pdp-thumb-item:hover {
-    opacity: 0.95;
-    border-color: var(--dark-gold);
+.pdp-slider-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--soft-platinum);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pdp-slider-dot.active {
+    width: 20px;
+    border-radius: 8px;
+    background: var(--dark-gold);
+}
+
+/* Multi-Photo Thumbnails Strip */
+.pdp-thumbnails-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 2px;
+}
+.pdp-thumbnails-strip::-webkit-scrollbar { display: none; }
+.pdp-thumb-item {
+    flex: 0 0 68px;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: var(--transition);
+    background: #FFFFFF;
 }
 .pdp-thumb-item.active {
-    opacity: 1;
     border-color: var(--dark-gold);
-    box-shadow: 0 0 0 2px rgba(138,104,31,0.35);
-    transform: translateY(-2px);
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--gold-glow);
 }
 .pdp-thumb-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
-}
-@media (max-width: 767px) {
-    .pdp-thumb-item {
-        width: 48px;
-        height: 60px;
-    }
 }
 
-/* ════════════════════════════════════════════════════
-   RIGHT COLUMN: PRODUCT DETAILS & CONVERSION ACTIONS
-════════════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════════════
+   PRODUCT DETAILS & PURCHASE AREA (RIGHT COLUMN)
+═════════════════════════════════════════════════════════════ */
 .pdp-details-column {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
 
 .pdp-brand-tag {
-    font-size: 0.68rem;
+    font-family: var(--font-serif);
+    font-size: 0.72rem;
     font-weight: 800;
     color: var(--dark-gold);
-    letter-spacing: 0.18em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
+
 .pdp-title {
     font-family: var(--font-serif);
-    font-size: clamp(1.35rem, 3.5vw, 1.95rem);
-    font-weight: 800;
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    font-weight: 700;
     color: var(--dark-text);
     line-height: 1.25;
+    margin-top: 2px;
 }
 
-/* Ratings Badge */
+/* Rating Pill */
 .pdp-rating-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 0.8rem;
+    gap: 10px;
     flex-wrap: wrap;
 }
 .pdp-rating-pill {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 10px;
-    border-radius: 14px;
     background: #1B5E20;
     color: #FFFFFF;
+    font-size: 0.74rem;
     font-weight: 800;
-    font-size: 0.76rem;
+    padding: 3px 8px;
+    border-radius: 4px;
 }
-.pdp-rating-pill svg { width: 13px; height: 13px; fill: #FFFFFF; }
 .pdp-review-count {
+    font-size: 0.78rem;
     color: var(--mid-text);
     font-weight: 600;
 }
 .pdp-sku-badge {
     margin-left: auto;
-    font-size: 0.68rem;
-    color: var(--light-text);
+    font-size: 0.70rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    color: var(--light-text);
+    background: #FAF8F4;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--soft-platinum);
 }
 
-/* ════ Price Card (Next-Level Luxury Design & Clear Visibility) ════ */
+/* Price Card */
 .pdp-price-card {
     background: #FFFFFF;
-    border: 1px solid rgba(138, 104, 31, 0.24);
-    border-left: 4px solid var(--dark-gold, #8A681F);
-    border-radius: 12px;
-    padding: 12px 16px;
-    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+    border: 1.5px solid var(--gold-border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.05);
 }
 .pdp-price-main-row {
     display: flex;
@@ -859,176 +819,106 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     flex-wrap: wrap;
 }
 .pdp-price-val {
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: clamp(1.7rem, 4.5vw, 2.2rem);
+    font-size: clamp(1.5rem, 3.2vw, 1.95rem);
     font-weight: 900;
-    color: var(--dark-text, #1E1B18);
-    line-height: 1;
+    color: var(--dark-gold);
     letter-spacing: -0.02em;
 }
 .pdp-mrp-val {
-    font-size: 0.88rem;
-    color: var(--light-text, #8E8883);
+    font-size: 0.95rem;
+    color: var(--light-text);
     text-decoration: line-through;
-    font-weight: 500;
+    font-weight: 600;
 }
 .pdp-discount-badge {
-    font-size: 0.70rem;
+    background: #ECFDF5;
+    color: var(--success-green);
+    border: 1px solid #A7F3D0;
+    font-size: 0.74rem;
     font-weight: 800;
-    color: #15803D;
-    background: #DCFCE7;
-    border: 1px solid #BBF7D0;
-    padding: 2.5px 8px;
-    border-radius: 6px;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    padding: 2px 8px;
+    border-radius: 20px;
 }
 .pdp-tax-line {
-    font-size: 0.65rem;
-    color: var(--mid-text, #5A5348);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: -1px;
+    font-size: 0.72rem;
+    color: var(--light-text);
+    margin-top: 4px;
 }
-.pdp-tax-line span.green {
-    color: #15803D;
-    font-weight: 700;
-}
+.pdp-tax-line .green { color: var(--success-green); font-weight: 700; }
 
-/* Animated Luxury Perks Badge Strip */
+/* Animated Perks Strip */
 .pdp-animated-perks-strip {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 6px;
-    margin-top: 2px;
-    padding-top: 8px;
-    border-top: 1px dashed rgba(138, 104, 31, 0.22);
-}
-@media (min-width: 900px) {
-    .pdp-animated-perks-strip {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--soft-platinum);
 }
 .pdp-perk-badge {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 9px;
-    border-radius: 8px;
-    font-size: 0.66rem;
+    gap: 5px;
+    font-size: 0.68rem;
     font-weight: 700;
-    line-height: 1.2;
-    transition: all 0.2s ease;
-    border: 1px solid var(--soft-platinum, #E5E3DE);
-    background: #FAF8F4;
-    color: var(--dark-text, #24211C);
-    position: relative;
-    overflow: hidden;
+    color: var(--mid-text);
 }
-.pdp-perk-badge:hover {
-    border-color: var(--dark-gold);
-    background: #FFFFFF;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.12);
-}
+.pdp-perk-svg { width: 14px; height: 14px; color: var(--dark-gold); flex-shrink: 0; }
 
-.pdp-perk-svg {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-    display: inline-block;
-    color: var(--dark-gold, #8A681F);
-}
-.pdp-perk-svg.pulse {
-    animation: pdpIconPulse 2s infinite ease-in-out;
-}
-@keyframes pdpIconPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.22); }
-}
-.pdp-perk-svg.flash {
-    animation: pdpIconFlash 1.6s infinite ease-in-out;
-}
-@keyframes pdpIconFlash {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.65; transform: scale(1.2); }
-}
-.pdp-perk-svg.spin {
-    animation: pdpIconWiggle 3.5s infinite ease-in-out;
-}
-@keyframes pdpIconWiggle {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-20deg); }
-    60% { transform: rotate(20deg); }
-    80% { transform: rotate(0deg); }
-}
-.pdp-perk-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Color Options */
+/* Color Swatches */
 .pdp-section-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    font-size: 0.74rem;
+    align-items: center;
+    font-size: 0.78rem;
     font-weight: 800;
     color: var(--dark-text);
-    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
 }
-.pdp-selected-txt {
-    color: var(--dark-gold);
-    font-weight: 800;
-}
-
+.pdp-selected-txt { color: var(--dark-gold); }
 .pdp-color-swatches {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 .pdp-color-btn {
-    width: 28px; height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    border: 2px solid #FFFFFF;
-    outline: 1.5px solid var(--soft-platinum);
+    border: 2.5px solid #FFFFFF;
+    box-shadow: 0 0 0 1.5px var(--soft-platinum);
     cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.pdp-color-btn:hover {
-    outline-color: var(--dark-gold);
-    transform: scale(1.1);
+    transition: var(--transition);
 }
 .pdp-color-btn.active {
-    outline: 2px solid var(--dark-gold);
-    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.25), 0 3px 8px rgba(0,0,0,0.18);
+    box-shadow: 0 0 0 2.5px var(--dark-gold);
     transform: scale(1.1);
 }
 
-/* Size Options */
+/* Size Selector Grid */
+.pdp-size-guide-link {
+    color: var(--dark-gold);
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: underline;
+}
 .pdp-size-grid {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
 }
 .pdp-size-btn {
-    min-width: 44px; height: 35px;
+    padding: 8px 16px;
     border-radius: 8px;
     border: 1.5px solid var(--soft-platinum);
     background: #FFFFFF;
     font-size: 0.78rem;
     font-weight: 800;
     color: var(--dark-text);
-    display: flex; align-items: center; justify-content: center;
-    padding: 0 12px;
-    transition: all 0.2s ease;
+    cursor: pointer;
+    transition: var(--transition);
 }
 .pdp-size-btn:hover {
     border-color: var(--dark-gold);
@@ -1038,660 +928,475 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-color: var(--dark-gold);
     background: var(--dark-gold);
     color: #FFFFFF;
-    box-shadow: 0 3px 10px rgba(138,104,31,0.28);
+    box-shadow: 0 2px 8px rgba(138,104,31,0.25);
 }
 
-.pdp-size-guide-link {
-    font-size: 0.70rem;
-    font-weight: 700;
-    color: var(--dark-gold);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.2s;
-}
-.pdp-size-guide-link:hover { text-decoration: underline; }
-
-/* Quantity & Action CTAs */
+/* Actions Box */
 .pdp-actions-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 4px;
 }
 .pdp-qty-row {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
 }
 .pdp-qty-box {
     display: inline-flex;
     align-items: center;
     border: 1.5px solid var(--soft-platinum);
-    border-radius: 7px;
+    border-radius: 8px;
     background: #FFFFFF;
     overflow: hidden;
 }
 .pdp-qty-btn {
-    width: 32px; height: 32px;
-    background: #FAF8F4;
-    font-size: 0.95rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
     font-weight: 800;
-    color: var(--dark-gold);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-text);
     cursor: pointer;
-    transition: background 0.15s;
+    transition: var(--transition);
 }
-.pdp-qty-btn:hover { background: var(--gold-pale); }
+.pdp-qty-btn:hover { background: var(--off-white); }
 .pdp-qty-num {
-    width: 34px;
-    text-align: center;
-    font-size: 0.82rem;
+    padding: 0 12px;
+    font-size: 0.85rem;
     font-weight: 800;
+    color: var(--dark-text);
 }
 
 .pdp-btn-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.pdp-atc-btn, .pdp-buy-btn {
+    height: 46px;
+    border-radius: 10px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
 }
 .pdp-atc-btn {
-    height: 40px;
-    padding: 0 14px;
-    border-radius: 8px;
-    border: 1.8px solid var(--dark-gold);
+    border: 2px solid var(--dark-gold);
     background: #FFFFFF;
     color: var(--dark-gold);
-    font-family: var(--font-sans);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    transition: all 0.2s ease;
-    cursor: pointer;
 }
-.pdp-atc-btn:hover, .pdp-atc-btn:active {
-    background: #FAF3E0;
-    transform: scale(0.98);
+.pdp-atc-btn:hover {
+    background: var(--gold-pale);
 }
-.pdp-atc-btn svg {
-    width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2;
-    animation: pdpBagSwing 2.4s infinite ease-in-out;
-    transform-origin: top center;
-    flex-shrink: 0;
-}
-
 .pdp-buy-btn {
-    height: 40px;
-    padding: 0 14px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, #947124 0%, #684E17 100%);
+    background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
     color: #FFFFFF;
-    font-family: var(--font-sans);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    box-shadow: 0 3px 12px rgba(138,104,31,0.35);
-    transition: all 0.2s ease;
-    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 14px rgba(138,104,31,0.3);
 }
-.pdp-buy-btn:hover, .pdp-buy-btn:active {
-    background: #5A4212;
-    transform: scale(0.98);
+.pdp-buy-btn:hover {
+    box-shadow: 0 6px 20px rgba(138,104,31,0.4);
+    transform: translateY(-1px);
 }
-.pdp-buy-btn svg {
-    width: 15px; height: 15px; fill: currentColor; stroke: currentColor; stroke-width: 1;
-    animation: pdpBoltPulse 1.6s infinite ease-in-out;
-    flex-shrink: 0;
-}
+.pdp-atc-btn svg, .pdp-buy-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
-/* Direct WhatsApp Order CTA */
+/* Direct WhatsApp Order Button */
 .pdp-wa-order-btn {
     width: 100%;
-    height: 38px;
-    padding: 0 14px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    height: 44px;
+    border-radius: 10px;
+    background: #25D366;
     color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
     font-weight: 800;
-    font-size: 0.78rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    text-decoration: none;
-    box-shadow: 0 3px 12px rgba(37,211,102,0.32);
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+    transition: var(--transition);
 }
-.pdp-wa-order-btn:hover, .pdp-wa-order-btn:active {
-    transform: scale(0.98);
-    box-shadow: 0 5px 16px rgba(37,211,102,0.42);
+.pdp-wa-order-btn:hover {
+    background: #20BA56;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
 }
-.pdp-wa-order-btn svg { width: 17px; height: 17px; fill: currentColor; flex-shrink: 0; }
+.pdp-wa-order-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 
-/* Pincode Delivery Estimator */
+/* Pincode Estimator */
 .pdp-delivery-box {
-    background: #FFFFFF;
-    border: 1.5px solid var(--soft-platinum);
-    border-radius: 10px;
+    background: #FAF8F4;
+    border: 1px solid var(--soft-platinum);
+    border-radius: 12px;
     padding: 12px 14px;
 }
 .pdp-del-title {
-    font-size: 0.74rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
     font-weight: 800;
     color: var(--dark-text);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 8px;
 }
-.pdp-del-title svg { width: 16px; height: 16px; stroke: var(--dark-gold); fill: none; stroke-width: 2; flex-shrink: 0; }
+.pdp-del-title svg { width: 16px; height: 16px; stroke: var(--dark-gold); fill: none; stroke-width: 2; }
 .pdp-pincode-input-row {
     display: flex;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 8px;
 }
 .pdp-pincode-input {
     flex: 1;
-    height: 36px;
+    height: 38px;
     border: 1.5px solid var(--soft-platinum);
-    border-radius: 7px;
+    border-radius: 8px;
     padding: 0 12px;
     font-family: var(--font-sans);
-    font-size: 0.80rem;
+    font-size: 0.82rem;
     font-weight: 600;
     outline: none;
+    background: #FFFFFF;
 }
-.pdp-pincode-input:focus {
-    border-color: var(--dark-gold);
-}
+.pdp-pincode-input:focus { border-color: var(--dark-gold); }
 .pdp-pincode-btn {
     padding: 0 16px;
-    height: 36px;
-    border-radius: 7px;
+    height: 38px;
+    border-radius: 8px;
     background: var(--dark-gold);
     color: #FFFFFF;
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.2s;
 }
-.pdp-pincode-btn:hover { background: var(--deep-gold); }
 .pdp-pincode-result {
     font-size: 0.74rem;
     font-weight: 600;
     margin-top: 8px;
     display: none;
-    line-height: 1.4;
-}
-
-/* ── Luxury Accordion & Specifications Section ─────────────────────── */
-.pdp-accordion-wrap {
-    margin-top: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.pdp-acc-item {
-    background: #FFFFFF;
-    border: 1.5px solid var(--gold-border, rgba(138, 104, 31, 0.22));
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    transition: all 0.25s ease;
-}
-.pdp-acc-item:hover {
-    border-color: var(--dark-gold, #8A681F);
-    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.08);
-}
-.pdp-acc-item.open {
-    border-color: var(--dark-gold, #8A681F);
-    background: #FFFFFF;
-    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.1);
-}
-
-.pdp-acc-header {
-    width: 100%;
-    padding: 13px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    gap: 12px;
-    transition: background 0.2s ease;
-}
-.pdp-acc-header:hover {
-    background: rgba(138, 104, 31, 0.03);
-}
-
-.pdp-acc-title-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-}
-
-.pdp-acc-icon-box {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: var(--gold-pale, #FAF4E6);
-    border: 1px solid var(--gold-border, rgba(138, 104, 31, 0.25));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--dark-gold, #8A681F);
-    flex-shrink: 0;
-    transition: all 0.25s ease;
-}
-.pdp-acc-item.open .pdp-acc-icon-box {
-    background: var(--dark-gold, #8A681F);
-    color: #FFFFFF;
-    border-color: var(--dark-gold, #8A681F);
-}
-.pdp-acc-icon-box svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-.pdp-acc-title-text {
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--dark-text, #24211C);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1.3;
-}
-
-.pdp-acc-chevron-wrap {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #FAF8F4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--dark-gold, #8A681F);
-    flex-shrink: 0;
-    transition: all 0.25s ease;
-}
-.pdp-acc-chevron {
-    width: 14px;
-    height: 14px;
-    stroke: currentColor;
-    stroke-width: 2.5;
-    fill: none;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.pdp-acc-item.open .pdp-acc-chevron {
-    transform: rotate(180deg);
-}
-
-.pdp-acc-body {
-    display: none;
-    padding: 0 16px 16px;
-    font-size: 0.82rem;
-    color: var(--mid-text, #5A5348);
-    line-height: 1.65;
-    border-top: 1px dashed rgba(138, 104, 31, 0.15);
-    margin-top: 2px;
-    padding-top: 14px;
-    animation: pdpFadeSlide 0.25s ease-out;
-}
-@keyframes pdpFadeSlide {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.pdp-acc-item.open .pdp-acc-body {
-    display: block;
-}
-
-/* Feature tags inside description */
-.pdp-desc-highlights {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-}
-.pdp-desc-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 9px;
-    background: #FAF8F4;
-    border: 1px solid var(--soft-platinum, #E5E3DE);
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--dark-gold, #8A681F);
-}
-.pdp-desc-pill svg {
-    width: 13px;
-    height: 13px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-/* ── Myntra-Style Product Details (Accordion 1) ─────────────────────── */
-.pdp-myntra-details-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.pdp-myntra-section-block {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.pdp-myntra-heading {
-    font-size: 0.88rem;
-    font-weight: 800;
-    color: #282C3F;
-    letter-spacing: 0.02em;
-    margin: 0;
-}
-.pdp-myntra-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.pdp-myntra-list-item {
-    font-size: 0.83rem;
-    color: #535766;
-    line-height: 1.5;
-}
-.pdp-myntra-disclaimer {
-    font-size: 0.77rem;
-    color: #7E818C;
     line-height: 1.45;
-    background: #FAF9F6;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border-left: 3px solid var(--dark-gold, #8A681F);
+}
+
+/* ═════════════════════════════════════════════════════════════
+   SECTION 2: SECOND IMAGE / KEY HIGHLIGHTS — MYNTRA STYLE
+═════════════════════════════════════════════════════════════ */
+.pdp-key-highlights-section {
+    margin-top: clamp(24px, 4vw, 44px);
+    background: #FFFFFF;
+    border: 1.5px solid var(--gold-border);
+    border-radius: 16px;
+    padding: clamp(16px, 3vw, 28px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.pdp-kh-header-wrap {
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--soft-platinum);
+    padding-bottom: 12px;
+}
+.pdp-kh-badge {
+    font-family: var(--font-serif);
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--dark-gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.pdp-kh-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-top: 2px;
+}
+.pdp-kh-subtitle {
+    font-size: 0.78rem;
+    color: var(--mid-text);
     margin-top: 4px;
 }
 
-/* ── Myntra-Style Specifications ────────────────────────────── */
-.pdp-myntra-spec-grid {
+.pdp-kh-layout-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 24px;
-    row-gap: 0;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: stretch;
 }
-.pdp-myntra-spec-cell {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    border-bottom: 1px solid #EAEAEC;
-}
-.pdp-myntra-spec-title {
-    font-size: 0.74rem;
-    color: #7E818C;
-    font-weight: 500;
-    margin-bottom: 3px;
-    letter-spacing: 0.01em;
-}
-.pdp-myntra-spec-val {
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: #282C3F;
-    line-height: 1.3;
-}
-@media (max-width: 480px) {
-    .pdp-myntra-spec-grid {
-        column-gap: 16px;
-    }
-    .pdp-myntra-spec-cell {
-        padding: 8px 0;
-    }
-    .pdp-myntra-spec-title {
-        font-size: 0.68rem;
-    }
-    .pdp-myntra-spec-val {
-        font-size: 0.82rem;
+@media (min-width: 820px) {
+    .pdp-kh-layout-grid {
+        grid-template-columns: 380px 1fr;
     }
 }
 
-/* Shipping, Authentic & Fast Exchange Cards */
-.pdp-trust-cards-list {
+/* Key Highlights Independent Image Slider */
+.pdp-kh-slider-card {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.pdp-trust-mini-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    padding: 10px 12px;
-    border-radius: 9px;
+.pdp-kh-slider-viewport {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
     background: #FAF8F4;
-    border: 1px solid rgba(138, 104, 31, 0.15);
+    aspect-ratio: 3 / 3.8;
+    max-height: 420px;
+    border: 1.2px solid var(--gold-border);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    touch-action: pan-y pinch-zoom;
+    user-select: none;
 }
-.pdp-trust-mini-card.gold {
-    background: linear-gradient(135deg, #FFFDF7 0%, #FAF4E6 100%);
-    border-color: rgba(212, 175, 55, 0.35);
-}
-.pdp-trust-mini-card.green {
-    background: linear-gradient(135deg, #F8FCF8 0%, #E8F5E9 100%);
-    border-color: rgba(46, 125, 50, 0.25);
-}
-.pdp-trust-mini-card.blue {
-    background: linear-gradient(135deg, #F8FAFD 0%, #E3F2FD 100%);
-    border-color: rgba(25, 118, 210, 0.25);
+.pdp-kh-slide-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(20, 16, 12, 0.78);
+    color: #FFF9EE;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    pointer-events: none;
 }
 
-.pdp-trust-mini-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
+/* Key Highlights Specifications Grid */
+.pdp-kh-specs-card {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--off-white);
+    border-radius: 12px;
+    border: 1px solid var(--soft-platinum);
+    padding: clamp(14px, 2.5vw, 20px);
 }
-.pdp-trust-mini-card.gold .pdp-trust-mini-icon {
-    background: rgba(138, 104, 31, 0.12);
-    color: #8A681F;
+.pdp-kh-product-summary {
+    border-bottom: 1px dashed var(--soft-platinum);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
 }
-.pdp-trust-mini-card.green .pdp-trust-mini-icon {
-    background: rgba(46, 125, 50, 0.12);
-    color: #2E7D32;
-}
-.pdp-trust-mini-card.blue .pdp-trust-mini-icon {
-    background: rgba(25, 118, 210, 0.12);
-    color: #1976D2;
-}
-.pdp-trust-mini-icon svg {
-    width: 15px;
-    height: 15px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-}
-
-.pdp-trust-mini-text h5 {
-    font-size: 0.78rem;
+.pdp-kh-cat {
+    font-size: 0.68rem;
     font-weight: 800;
-    color: var(--dark-text, #24211C);
-    margin: 0 0 2px 0;
+    color: var(--dark-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
-.pdp-trust-mini-text p {
-    font-size: 0.72rem;
-    color: var(--mid-text, #5A5348);
-    margin: 0;
-    line-height: 1.4;
+.pdp-kh-prod-name {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--dark-text);
+    margin: 2px 0 6px;
+}
+.pdp-kh-price-line {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+.pdp-kh-price {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--dark-gold);
+}
+.pdp-kh-mrp {
+    font-size: 0.82rem;
+    color: var(--light-text);
+    text-decoration: line-through;
+}
+.pdp-kh-disc {
+    font-size: 0.70rem;
+    font-weight: 800;
+    color: var(--success-green);
+    background: #E8F5E9;
+    padding: 2px 6px;
+    border-radius: 4px;
 }
 
-/* ════════════════════════════════════════════════════
-   CUSTOMER REVIEWS & BREAKDOWN SECTION
-════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════
-   CUSTOMER REVIEWS & BREAKDOWN SECTION
-════════════════════════════════════════════════════ */
+.pdp-kh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+.pdp-kh-item {
+    background: #FFFFFF;
+    border: 1px solid var(--soft-platinum);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: var(--transition);
+}
+.pdp-kh-item:hover {
+    border-color: var(--dark-gold);
+    transform: translateY(-1px);
+}
+.pdp-kh-item-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--light-text);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.pdp-kh-item-val {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark-text);
+    line-height: 1.25;
+}
+
+/* ═════════════════════════════════════════════════════════════
+   SECTION 4: CUSTOMER REVIEWS CAROUSEL
+═════════════════════════════════════════════════════════════ */
 .pdp-reviews-section {
-    margin-top: clamp(36px, 5vw, 60px);
+    margin-top: clamp(24px, 4vw, 44px);
     background: #FFFFFF;
     border: 1.5px solid var(--gold-border);
     border-radius: 16px;
-    padding: clamp(20px, 4vw, 36px);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.03);
+    padding: clamp(16px, 3vw, 28px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.pdp-section-title-large {
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 16px;
 }
 
 .pdp-rev-header-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
-    border-bottom: 1.5px solid var(--soft-platinum);
-    padding-bottom: 24px;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--soft-platinum);
     align-items: center;
 }
 @media (min-width: 768px) {
     .pdp-rev-header-grid {
-        grid-template-columns: 220px 1fr auto;
+        grid-template-columns: 180px 1fr auto;
     }
 }
+
 .pdp-overall-score {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--gold-pale);
-    border-radius: 12px;
-    padding: 16px;
     text-align: center;
-    border: 1px solid var(--gold-border);
+    background: var(--off-white);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid var(--soft-platinum);
 }
 .pdp-big-rating {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     font-weight: 900;
     color: var(--dark-gold);
+    font-family: var(--font-serif);
     line-height: 1;
 }
 .pdp-big-stars {
     color: #F59E0B;
-    font-size: 1.2rem;
-    margin: 6px 0;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin: 4px 0;
 }
 .pdp-score-sub {
-    font-size: 0.72rem;
-    color: var(--mid-text);
+    font-size: 0.68rem;
+    color: var(--light-text);
     font-weight: 600;
 }
 
 .pdp-bars-wrap {
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    justify-content: center;
+    gap: 5px;
 }
 .pdp-bar-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.75rem;
+    gap: 8px;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: var(--dark-text);
+    color: var(--mid-text);
 }
 .pdp-bar-track {
     flex: 1;
-    height: 8px;
+    height: 6px;
     background: var(--soft-platinum);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
 }
 .pdp-bar-fill {
     height: 100%;
     background: var(--dark-gold);
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
-/* Write Review CTA Button */
 .pdp-write-rev-btn {
-    padding: 12px 20px;
-    border-radius: 9px;
+    padding: 10px 16px;
+    border-radius: 8px;
     border: 1.5px solid var(--dark-gold);
     background: #FFFFFF;
     color: var(--dark-gold);
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 800;
-    letter-spacing: 0.06em;
     text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition);
 }
 .pdp-write-rev-btn:hover {
     background: var(--dark-gold);
     color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(138,104,31,0.25);
 }
 
-/* Auto-Sliding Carousel Wrapper */
 .pdp-reviews-carousel-wrap {
     position: relative;
     margin-top: 18px;
 }
 .pdp-reviews-track {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    padding: 6px 2px 14px;
-    touch-action: pan-y pinch-zoom;
+    padding: 4px 2px 12px;
     overscroll-behavior-x: contain;
+    touch-action: pan-y pinch-zoom;
 }
 .pdp-reviews-track::-webkit-scrollbar { display: none; }
 
-/* Review Card — Compact Luxury Small Size */
 .pdp-review-card {
-    flex: 0 0 270px;
-    max-width: 290px;
+    flex: 0 0 clamp(260px, 75vw, 320px);
     scroll-snap-align: start;
     background: var(--off-white);
     border-radius: 12px;
     padding: 14px 16px;
     border: 1.2px solid var(--soft-platinum);
-    box-shadow: 0 3px 12px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: all 0.25s ease;
-}
-@media (max-width: 600px) {
-    .pdp-review-card {
-        flex: 0 0 250px;
-        max-width: 265px;
-        padding: 12px 14px;
-    }
+    transition: var(--transition);
 }
 .pdp-review-card:hover {
     border-color: var(--dark-gold);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(138,104,31,0.12);
+    box-shadow: var(--shadow-sm);
 }
 
 .pdp-rc-top {
@@ -1700,19 +1405,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 8px;
 }
 .pdp-rc-avatar {
-    width: 32px; height: 32px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--dark-gold) 0%, var(--deep-gold) 100%);
     color: #FFFFFF;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
 }
 .pdp-rc-meta {
     display: flex;
     flex-direction: column;
-    gap: 1px;
     flex: 1;
     min-width: 0;
 }
@@ -1724,42 +1431,30 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.pdp-rc-loc-date {
+    font-size: 0.66rem;
+    color: var(--light-text);
+    font-weight: 600;
+}
 .pdp-rc-rating-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 3px;
-    flex-shrink: 0;
+    gap: 2px;
 }
 .pdp-verified-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 2px;
-    font-size: 0.56rem;
-    color: #2E7D32;
+    font-size: 0.58rem;
+    color: var(--success-green);
     background: #E8F5E9;
     padding: 1.5px 5px;
     border-radius: 4px;
-    font-weight: 700;
-    white-space: nowrap;
-    line-height: 1.1;
-    border: 1px solid rgba(46, 125, 50, 0.2);
-}
-.pdp-rc-loc-date {
-    font-size: 0.64rem;
-    color: var(--light-text);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-weight: 800;
 }
 .pdp-rc-stars {
     color: #F59E0B;
     font-size: 0.75rem;
-    letter-spacing: 0.5px;
     line-height: 1;
 }
-
 .pdp-rc-occasion {
     display: inline-block;
     align-self: flex-start;
@@ -1767,19 +1462,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-radius: 4px;
     background: var(--gold-pale);
     color: var(--dark-gold);
-    font-size: 0.6rem;
+    font-size: 0.62rem;
     font-weight: 800;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
-
 .pdp-rc-text {
     font-size: 0.78rem;
     color: var(--mid-text);
     line-height: 1.45;
     flex: 1;
 }
-
 .pdp-rc-bottom {
     display: flex;
     align-items: center;
@@ -1793,98 +1485,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 7px;
+    padding: 3px 8px;
     border-radius: 5px;
     border: 1px solid var(--soft-platinum);
     background: #FFFFFF;
     color: var(--mid-text);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
 }
-.pdp-rc-helpful-btn:hover, .pdp-rc-helpful-btn.voted {
+.pdp-rc-helpful-btn:hover {
     border-color: var(--dark-gold);
     color: var(--dark-gold);
-    background: var(--gold-pale);
 }
 
-/* Carousel Navigation Arrows */
-.pdp-rev-arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.95);
-    border: 1.5px solid var(--gold-border);
-    color: var(--dark-gold);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-.pdp-rev-arrow:hover {
-    background: var(--dark-gold);
-    color: #FFFFFF;
-    transform: translateY(-50%) scale(1.08);
-}
-.pdp-rev-arrow.prev { left: -14px; }
-.pdp-rev-arrow.next { right: -14px; }
-.pdp-rev-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-
-@media (max-width: 900px) {
-    .pdp-rev-arrow { display: none; }
-}
-
-/* Dot Indicators */
-.pdp-rev-dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 8px;
-}
-.pdp-rev-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--soft-platinum);
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-.pdp-rev-dot.active {
-    width: 18px;
-    border-radius: 8px;
-    background: var(--dark-gold);
-}
-
-/* ════════════════════════════════════════════════════
-   RELATED PRODUCTS SECTION
-════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════
-   RELATED PRODUCTS CAROUSEL ("You May Also Admire")
-════════════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════════════
+   SECTION 5: "YOU MAY ALSO ADMIRE" RELATED PRODUCTS
+═════════════════════════════════════════════════════════════ */
 .pdp-bottom-section {
-    margin-top: clamp(36px, 5vw, 60px);
-}
-.pdp-section-title-large {
-    font-family: var(--font-serif);
-    font-size: clamp(1.15rem, 3vw, 1.5rem);
-    font-weight: 800;
-    color: var(--dark-text);
-    letter-spacing: 0.06em;
-    text-align: center;
-    margin-bottom: 18px;
-    position: relative;
-}
-.pdp-section-title-large::after {
-    content: '';
-    display: block;
-    width: 44px;
-    height: 2px;
-    background: var(--dark-gold);
-    margin: 6px auto 0;
+    margin-top: clamp(24px, 4vw, 44px);
+    margin-bottom: 20px;
 }
 
 .pdp-rel-carousel-wrap {
@@ -1898,195 +1519,105 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    padding: 6px 2px 14px;
-    touch-action: pan-y pinch-zoom;
+    padding: 4px 2px 14px;
     overscroll-behavior-x: contain;
+    touch-action: pan-y pinch-zoom;
 }
 .pdp-rel-track::-webkit-scrollbar { display: none; }
 
-/* Product Card - Sleek 2-Show on Mobile, 4-Show on Desktop */
 .pdp-rel-card {
-    flex: 0 0 220px;
-    max-width: 240px;
+    flex: 0 0 clamp(160px, 44vw, 230px);
     scroll-snap-align: start;
     background: #FFFFFF;
     border-radius: 12px;
-    border: 1.2px solid var(--soft-platinum);
     overflow: hidden;
-    transition: all 0.25s ease;
+    border: 1.2px solid var(--soft-platinum);
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    position: relative;
-}
-@media (max-width: 767px) {
-    .pdp-rel-card {
-        flex: 0 0 calc(50% - 6px);
-        min-width: 140px;
-        max-width: 175px;
-        border-radius: 10px;
-    }
-}
-@media (max-width: 360px) {
-    .pdp-rel-card {
-        flex: 0 0 135px;
-        min-width: 135px;
-    }
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: var(--transition);
 }
 .pdp-rel-card:hover {
     border-color: var(--dark-gold);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(138,104,31,0.14);
+    box-shadow: var(--shadow-md);
 }
-
 .pdp-rel-img-wrap {
-    aspect-ratio: 3/4;
-    overflow: hidden;
     position: relative;
-    background: var(--off-white-2);
+    width: 100%;
+    aspect-ratio: 3 / 3.75;
+    background: #FAF8F4;
+    overflow: hidden;
 }
 .pdp-rel-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover; object-position: top;
-    transition: transform 0.35s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
 }
-.pdp-rel-card:hover .pdp-rel-img-wrap img { transform: scale(1.06); }
-
+.pdp-rel-card:hover .pdp-rel-img-wrap img {
+    transform: scale(1.05);
+}
 .pdp-rel-badge {
     position: absolute;
-    top: 6px;
-    left: 6px;
+    top: 8px;
+    left: 8px;
     background: var(--dark-gold);
     color: #FFFFFF;
-    font-size: 0.55rem;
+    font-size: 0.60rem;
     font-weight: 800;
-    padding: 2px 6px;
-    border-radius: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    z-index: 2;
+    padding: 2px 6px;
+    border-radius: 3px;
 }
 
 .pdp-rel-body {
-    padding: 8px 10px 10px;
+    padding: 10px 12px 12px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
     flex: 1;
-}
-@media (max-width: 600px) {
-    .pdp-rel-body {
-        padding: 6px 8px 8px;
-        gap: 2px;
-    }
+    gap: 3px;
 }
 .pdp-rel-cat {
-    font-size: 0.58rem;
+    font-size: 0.62rem;
     font-weight: 800;
-    color: var(--dark-gold);
+    color: var(--light-text);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
 }
 .pdp-rel-title {
     font-family: var(--font-serif);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--dark-text);
-    line-height: 1.25;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-@media (max-width: 600px) {
-    .pdp-rel-title {
-        font-size: 0.74rem;
-    }
-}
-
 .pdp-rel-price-row {
     display: flex;
-    align-items: center;
-    gap: 5px;
+    align-items: baseline;
+    gap: 6px;
     margin-top: auto;
-    padding-top: 4px;
-    flex-wrap: wrap;
+    padding-top: 6px;
 }
 .pdp-rel-price {
-    font-size: 0.85rem;
+    font-size: 0.92rem;
     font-weight: 900;
     color: var(--dark-gold);
-    line-height: 1;
-}
-@media (max-width: 600px) {
-    .pdp-rel-price {
-        font-size: 0.8rem;
-    }
 }
 .pdp-rel-mrp {
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     color: var(--light-text);
     text-decoration: line-through;
 }
 .pdp-rel-disc {
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     font-weight: 800;
-    color: #2E7D32;
+    color: var(--success-green);
 }
 
-/* Related Navigation Arrows */
-.pdp-rel-arrow {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.95);
-    border: 1.5px solid var(--gold-border);
-    color: var(--dark-gold);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-.pdp-rel-arrow:hover {
-    background: var(--dark-gold);
-    color: #FFFFFF;
-    transform: translateY(-50%) scale(1.08);
-}
-.pdp-rel-arrow.prev { left: -14px; }
-.pdp-rel-arrow.next { right: -14px; }
-.pdp-rel-arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.4; }
-
-@media (max-width: 900px) {
-    .pdp-rel-arrow { display: none; }
-}
-
-/* Related Dots */
-.pdp-rel-dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 8px;
-}
-.pdp-rel-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--soft-platinum);
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-.pdp-rel-dot.active {
-    width: 18px;
-    border-radius: 8px;
-    background: var(--dark-gold);
-}
-
-/* ════════════════════════════════════════════════════
-   SIZE GUIDE MODAL
-════════════════════════════════════════════════════ */
+/* Modals Overlay */
 .pdp-modal-overlay {
     position: fixed; inset: 0; z-index: 1000000;
     background: rgba(0,0,0,0.68);
@@ -2099,533 +1630,48 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .pdp-modal-box {
     background: #FFFFFF;
     border-radius: 16px;
-    max-width: 580px; width: 100%;
+    max-width: 540px; width: 100%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     overflow: hidden;
     border: 1.5px solid var(--gold-border);
-    animation: modalPop 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-@keyframes modalPop {
-    from { opacity: 0; transform: scale(0.92) translateY(20px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 .pdp-modal-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 22px; border-bottom: 1.5px solid var(--soft-platinum);
+    padding: 14px 18px; border-bottom: 1.5px solid var(--soft-platinum);
     background: #FAF8F4;
 }
 .pdp-modal-title {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
     color: var(--dark-gold);
-    margin: 0;
 }
 .pdp-modal-close-btn {
-    width: 32px; height: 32px; border-radius: 50%;
+    width: 30px; height: 30px; border-radius: 50%;
     background: #FFFFFF; border: 1px solid var(--soft-platinum);
-    font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--dark-text);
+    font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
 }
 .pdp-modal-body {
-    padding: 20px 22px;
+    padding: 18px;
     max-height: 75vh;
     overflow-y: auto;
 }
 .pdp-size-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     text-align: center;
-    margin-top: 12px;
+    margin-top: 10px;
 }
 .pdp-size-table th, .pdp-size-table td {
-    padding: 10px 8px;
+    padding: 8px;
     border: 1px solid var(--soft-platinum);
 }
 .pdp-size-table th {
     background: var(--gold-pale);
     color: var(--dark-gold);
     font-weight: 800;
-}
-
-/* ════════════════════════════════════════════════════
-   LUXURY WHATSAPP QUICK CHECKOUT MODAL (FULLSCREEN ON MOBILE)
-════════════════════════════════════════════════════ */
-#pdpWhatsAppOrderModal.pdp-modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(20, 16, 12, 0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 1000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    padding: 0;
-    box-sizing: border-box;
-}
-#pdpWhatsAppOrderModal.pdp-modal-overlay.open {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* ── Fullscreen on Mobile by Default ── */
-.pdp-wa-modal-box {
-    background: #FCFBF8;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100vh;
-    max-height: 100dvh;
-    border-radius: 0;
-    display: flex;
-    flex-direction: column;
-    box-shadow: none;
-    border: none;
-    transform: translateY(100%);
-    transition: transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
-    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
-    color: #24211C;
-    overflow: hidden;
-    position: fixed;
-    top: 0; left: 0;
-}
-#pdpWhatsAppOrderModal.open .pdp-wa-modal-box {
-    transform: translateY(0);
-}
-
-/* ── Desktop Dialog Mode (>= 601px) ── */
-@media (min-width: 601px) {
-    #pdpWhatsAppOrderModal.pdp-modal-overlay {
-        padding: 16px;
-    }
-    .pdp-wa-modal-box {
-        position: relative;
-        top: auto; left: auto;
-        max-width: 500px;
-        height: auto;
-        max-height: 92vh;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-        border: 1.5px solid rgba(138, 104, 31, 0.3);
-        transform: translateY(20px) scale(0.97);
-        transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    #pdpWhatsAppOrderModal.open .pdp-wa-modal-box {
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* ── Modal Header (Slim, Compact, Luxury Header) ── */
-.pdp-wa-co-header {
-    background: #FFFFFF;
-    border-bottom: 1.5px solid var(--gold-primary, #8A681F);
-    padding: 9px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 10;
-}
-.pdp-wa-co-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.pdp-wa-co-icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #8A681F 0%, #6F5218 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-    box-shadow: 0 2px 6px rgba(138,104,31,0.25);
-    flex-shrink: 0;
-}
-.pdp-wa-co-icon svg {
-    width: 13px;
-    height: 13px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-}
-.pdp-wa-co-title-group h3 {
-    font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.88rem;
-    font-weight: 800;
-    color: #8A681F;
-    margin: 0;
-    letter-spacing: 0.05em;
-    line-height: 1.1;
-}
-.pdp-wa-co-title-group span {
-    font-size: 0.56rem;
-    color: #5A5348;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-.pdp-wa-co-close-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid rgba(138,104,31,0.25);
-    background: #FAF8F4;
-    color: #8A681F;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    font-size: 1.05rem;
-    line-height: 1;
-    flex-shrink: 0;
-}
-.pdp-wa-co-close-btn:hover {
-    background: #8A681F;
-    color: #FFFFFF;
-    border-color: #8A681F;
-    transform: rotate(90deg);
-}
-
-/* ── Modal Body & Section Cards ── */
-.pdp-wa-modal-body {
-    padding: 10px 13px 13px;
-    overflow-y: auto;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    -webkit-overflow-scrolling: touch;
-}
-.pdp-wa-sec-card {
-    background: #FFFFFF;
-    border: 1.2px solid rgba(138, 104, 31, 0.22);
-    border-radius: 10px;
-    padding: 9px 11px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.03);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.pdp-wa-sec-card:hover {
-    border-color: #8A681F;
-    box-shadow: 0 3px 10px rgba(138,104,31,0.08);
-}
-.pdp-wa-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 7px;
-    padding-bottom: 4px;
-    border-bottom: 1px dashed rgba(138,104,31,0.22);
-}
-.pdp-wa-card-title {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: #8A681F;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-.pdp-wa-card-title svg {
-    width: 14px;
-    height: 14px;
-    stroke: #8A681F;
-    stroke-width: 2;
-    fill: none;
-    flex-shrink: 0;
-}
-
-/* Product Preview in Section Card */
-.pdp-wa-modal-product {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.pdp-wa-modal-img {
-    width: 44px;
-    height: 56px;
-    border-radius: 6px;
-    object-fit: cover;
-    object-position: center top;
-    flex-shrink: 0;
-    border: 1px solid #F0EAD8;
-}
-.pdp-wa-modal-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-.pdp-wa-modal-name {
-    font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #24211C;
-    line-height: 1.15;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.pdp-wa-modal-meta {
-    font-size: 0.64rem;
-    color: #5A5348;
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-}
-.pdp-wa-modal-meta span {
-    background: #FAF8F4;
-    border: 1px solid rgba(138, 104, 31, 0.15);
-    padding: 0 5px;
-    border-radius: 3px;
-    font-weight: 700;
-}
-.pdp-wa-modal-price {
-    font-size: 0.90rem;
-    font-weight: 900;
-    color: #8A681F;
-}
-
-/* ── Form Inputs (Matching checkout.php) ── */
-.pdp-wa-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    margin-bottom: 7px;
-}
-.pdp-wa-input-group:last-child {
-    margin-bottom: 0;
-}
-.pdp-wa-label {
-    font-size: 0.68rem;
-    font-weight: 800;
-    color: #24211C;
-    letter-spacing: 0.02em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.pdp-wa-label .required {
-    color: #D32F2F;
-}
-.pdp-wa-input {
-    width: 100%;
-    height: 35px;
-    border: 1.2px solid #DDD8CD;
-    border-radius: 7px;
-    padding: 0 10px;
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.80rem;
-    color: #24211C;
-    background: #FAF9F5;
-    outline: none;
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-}
-.pdp-wa-input:focus {
-    border-color: #8A681F;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.14);
-}
-
-/* Phone input with country code */
-.pdp-wa-phone-wrap {
-    display: flex;
-    align-items: center;
-    border: 1.2px solid #DDD8CD;
-    border-radius: 7px;
-    background: #FAF9F5;
-    overflow: hidden;
-    transition: all 0.2s ease;
-}
-.pdp-wa-phone-wrap:focus-within {
-    border-color: #8A681F;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 2.5px rgba(138,104,31,0.14);
-}
-.pdp-wa-phone-prefix {
-    padding: 0 8px;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: #8A681F;
-    background: #F0EAD8;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    border-right: 1px solid #DDD8CD;
-    flex-shrink: 0;
-}
-.pdp-wa-phone-input {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 8px !important;
-}
-
-/* 3-column location grid */
-.pdp-wa-loc-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1.1fr 0.9fr;
-    gap: 6px;
-}
-@media (max-width: 480px) {
-    .pdp-wa-loc-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .pdp-wa-loc-grid .pdp-wa-col-pin {
-        grid-column: span 2;
-    }
-}
-
-/* ── Collapsible Delivery Address Toggle ── */
-.pdp-wa-addr-collapse-wrap {
-    transition: all 0.2s ease;
-}
-.pdp-wa-addr-toggle-btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-align: left;
-    user-select: none;
-}
-.pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
-    transform: rotate(180deg);
-}
-
-/* ── Payment Mode Selection Cards (Matching checkout.php) ── */
-.pdp-wa-payment-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-}
-.pdp-wa-pay-card {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1.2px solid #DDD8CD;
-    background: #FAF9F5;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-.pdp-wa-pay-card:hover {
-    border-color: #8A681F;
-    background: #FFFFFF;
-}
-.pdp-wa-pay-card.selected {
-    border-color: #8A681F;
-    background: #FCF8EE;
-    box-shadow: 0 1px 8px rgba(138,104,31,0.12);
-}
-.pdp-wa-pay-radio {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1.8px solid #C5BBAA;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.2s ease;
-}
-.pdp-wa-pay-card.selected .pdp-wa-pay-radio {
-    border-color: #8A681F;
-}
-.pdp-wa-pay-card.selected .pdp-wa-pay-radio::after {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #8A681F;
-}
-.pdp-wa-pay-icon {
-    width: 25px;
-    height: 25px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-.pdp-wa-pay-icon.cod { background: #FFF3E0; color: #E65100; }
-.pdp-wa-pay-icon.upi { background: #EDE7F6; color: #673AB7; }
-.pdp-wa-pay-icon svg { width: 14px; height: 14px; fill: currentColor; }
-
-/* ── CTA Button ── */
-.pdp-wa-submit-btn {
-    width: 100%;
-    height: 42px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-    color: #FFFFFF;
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(37,211,102,0.35);
-    transition: all 0.2s ease;
-    margin-top: 2px;
-}
-.pdp-wa-submit-btn:hover {
-    background: linear-gradient(135deg, #20BD5A 0%, #0E7063 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(37,211,102,0.45);
-}
-.pdp-wa-submit-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
-/* ── Trust Badges Single Line on Mobile ── */
-.pdp-wa-trust-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-size: clamp(0.52rem, 2vw, 0.62rem);
-    color: #6E675D;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 2px 2px;
-    user-select: none;
-    margin-top: 1px;
-}
-.pdp-wa-trust-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.pdp-wa-trust-dot {
-    color: rgba(138, 104, 31, 0.4);
-    font-size: 0.55rem;
-    flex-shrink: 0;
 }
 
 /* Toast Container */
@@ -2654,7 +1700,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <main class="pdp-main-wrapper">
     <div class="pdp-layout-grid">
         
-        <!-- ── Left: Interactive Swipeable Gallery ── -->
+        <!-- ── 1. Left: Product Image Gallery ── -->
         <div class="pdp-gallery-column">
             <div class="pdp-gallery-slider" id="pdpGallerySlider">
                 <?php if (!empty($product['badge'])): ?>
@@ -2666,15 +1712,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 </button>
 
                 <!-- Navigation Arrows (Desktop) -->
-                <button class="pdp-slider-arrow prev" id="pdpSlidePrev" aria-label="Previous image" onclick="slidePdpGallery(-1)">
+                <button class="pdp-slider-arrow prev" id="pdpMainSlidePrev" aria-label="Previous image">
                     <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
-                <button class="pdp-slider-arrow next" id="pdpSlideNext" aria-label="Next image" onclick="slidePdpGallery(1)">
+                <button class="pdp-slider-arrow next" id="pdpMainSlideNext" aria-label="Next image">
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
                 <!-- Swipeable Track -->
-                <div class="pdp-slider-track" id="pdpSliderTrack">
+                <div class="pdp-slider-track" id="pdpMainSliderTrack">
                     <?php foreach ($galleryImages as $index => $img): ?>
                     <div class="pdp-slide" data-idx="<?= $index ?>">
                         <img
@@ -2686,21 +1732,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Slide Index Counter -->
-                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= count($galleryImages) ?></div>
+                <!-- Slide Counter Badge -->
+                <div class="pdp-slide-counter" id="pdpMainSlideCounter">1 / <?= count($galleryImages) ?></div>
             </div>
 
-            <!-- Multi-Photo Thumbnails -->
-            <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
+            <!-- Pagination Dots (Mobile) -->
+            <div class="pdp-slider-dots" id="pdpMainSliderDots"></div>
+
+            <!-- Multi-Photo Thumbnails (Desktop & Mobile) -->
+            <div class="pdp-thumbnails-strip" id="pdpMainThumbnailsStrip">
                 <?php foreach ($galleryImages as $index => $img): ?>
-                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
+                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>">
                     <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80'" />
                 </div>
                 <?php endforeach; ?>
             </div>
         </div>
 
-        <!-- ── Right: Product Details & Conversion Actions ── -->
+        <!-- ── 2. Right: Product Information & Purchase Bar ── -->
         <div class="pdp-details-column">
             <div>
                 <span class="pdp-brand-tag">KALANIKETAN ETHNIC LUXURY</span>
@@ -2716,7 +1765,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <span class="pdp-sku-badge">SKU: <?= htmlspecialchars($product['sku']) ?></span>
             </div>
 
-            <!-- Price Card (Next-Level Luxury & Clear Visibility) -->
+            <!-- Price Card -->
             <div class="pdp-price-card">
                 <div class="pdp-price-main-row">
                     <span class="pdp-price-val">₹<?= number_format($product['price']) ?></span>
@@ -2730,23 +1779,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="pdp-tax-line">
                     <span>Inclusive of all taxes</span> • <span class="green">⚡ Fast Delivery in 3–5 Days</span>
                 </div>
+                
                 <!-- Animated Luxury Perks Strip -->
                 <div class="pdp-animated-perks-strip">
                     <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg pulse" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
-                        <span class="pdp-perk-text">100% Handloom Silk</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
+                        <span>100% Handloom</span>
                     </div>
                     <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span class="pdp-perk-text">Fast 24-48h Dispatch</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        <span>24-48h Dispatch</span>
                     </div>
                     <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg spin" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                        <span class="pdp-perk-text">7-Day Easy Exchange</span>
-                    </div>
-                    <div class="pdp-perk-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M19 12H5"/><path d="M12 3a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z"/></svg>
-                        <span class="pdp-perk-text">Royal Gift Packaging</span>
+                        <svg viewBox="0 0 24 24" class="pdp-perk-svg" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        <span>7-Day Exchange</span>
                     </div>
                 </div>
             </div>
@@ -2832,133 +1878,72 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 </div>
                 <div class="pdp-pincode-result" id="pdpPincodeResult"></div>
             </div>
-
-            <!-- Accordion Details & Specifications -->
-            <div class="pdp-accordion-wrap">
-                <!-- 1. Product Details (Myntra Style) -->
-                <div class="pdp-acc-item open">
-                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="true">
-                        <div class="pdp-acc-title-group">
-                            <div class="pdp-acc-icon-box">
-                                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                            </div>
-                            <span class="pdp-acc-title-text">Product Details</span>
-                        </div>
-                        <div class="pdp-acc-chevron-wrap">
-                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
-                        </div>
-                    </button>
-                    <div class="pdp-acc-body">
-                        <div class="pdp-myntra-details-wrap">
-                            <!-- Design Details -->
-                            <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Design Details</h4>
-                                <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['design_lines'] as $line): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($line) ?></div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-
-                            <!-- Size & Fit -->
-                            <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Size & Fit</h4>
-                                <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['size_fit'] as $sf): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($sf) ?></div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-
-                            <!-- Material & Care -->
-                            <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Material & Care</h4>
-                                <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['material_care'] as $mc): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($mc) ?></div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Specifications -->
-                <div class="pdp-acc-item">
-                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="false">
-                        <div class="pdp-acc-title-group">
-                            <div class="pdp-acc-icon-box">
-                                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                            </div>
-                            <span class="pdp-acc-title-text">Fabric & Garment Specifications</span>
-                        </div>
-                        <div class="pdp-acc-chevron-wrap">
-                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
-                        </div>
-                    </button>
-                    <div class="pdp-acc-body">
-                        <div class="pdp-myntra-spec-grid">
-                            <?php foreach ($currentSpecs as $spec): ?>
-                            <div class="pdp-myntra-spec-cell">
-                                <span class="pdp-myntra-spec-title"><?= htmlspecialchars($spec['title']) ?></span>
-                                <span class="pdp-myntra-spec-val"><?= htmlspecialchars($spec['val']) ?></span>
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Fast Delivery, 100% Original & Fast Exchange -->
-                <div class="pdp-acc-item">
-                    <button type="button" class="pdp-acc-header" onclick="togglePdpAcc(this)" aria-expanded="false">
-                        <div class="pdp-acc-title-group">
-                            <div class="pdp-acc-icon-box">
-                                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                            </div>
-                            <span class="pdp-acc-title-text">Fast Delivery, 100% Original & Fast Exchange</span>
-                        </div>
-                        <div class="pdp-acc-chevron-wrap">
-                            <svg viewBox="0 0 24 24" class="pdp-acc-chevron"><polyline points="6 9 12 15 18 9"/></svg>
-                        </div>
-                    </button>
-                    <div class="pdp-acc-body">
-                        <div class="pdp-trust-cards-list">
-                            <div class="pdp-trust-mini-card gold">
-                                <div class="pdp-trust-mini-icon">
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
-                                </div>
-                                <div class="pdp-trust-mini-text">
-                                    <h5>100% Original Certified Handloom</h5>
-                                    <p>Authentic ethnic couture directly sourced from Kalaniketan master weavers with silk authenticity guarantee.</p>
-                                </div>
-                            </div>
-                            <div class="pdp-trust-mini-card green">
-                                <div class="pdp-trust-mini-icon">
-                                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                </div>
-                                <div class="pdp-trust-mini-text">
-                                    <h5>⚡ Fast Express Priority Dispatch</h5>
-                                    <p>Dispatched within 24–48 hours with live SMS/WhatsApp shipment tracking across 19,000+ Indian pincodes.</p>
-                                </div>
-                            </div>
-                            <div class="pdp-trust-mini-card blue">
-                                <div class="pdp-trust-mini-icon">
-                                    <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-                                </div>
-                                <div class="pdp-trust-mini-text">
-                                    <h5>💎 7-Day Fast Doorstep Exchange</h5>
-                                    <p>Zero-hassle size or fit exchanges arranged instantly with doorstep pickup via our dedicated WhatsApp concierge.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
+    <!-- ════════════ 3. KEY HIGHLIGHTS — MYNTRA STYLE ════════════ -->
+    <section class="pdp-key-highlights-section" id="pdpKeyHighlightsSection">
+        <div class="pdp-kh-header-wrap">
+            <span class="pdp-kh-badge">Product Highlights</span>
+            <h2 class="pdp-kh-title">Key Highlights &amp; Craft Details</h2>
+            <p class="pdp-kh-subtitle">Handcrafted with traditional weaving techniques and pure authenticity.</p>
+        </div>
+
+        <div class="pdp-kh-layout-grid">
+            <!-- Left/Top: Independent Key Highlights Multi-Image Slider -->
+            <div class="pdp-kh-slider-card">
+                <div class="pdp-kh-slider-viewport" id="pdpKeyHighlightsSlider">
+                    <button class="pdp-slider-arrow prev" id="pdpKhPrev" aria-label="Previous highlight image">
+                        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="pdp-slider-arrow next" id="pdpKhNext" aria-label="Next highlight image">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+
+                    <div class="pdp-slider-track" id="pdpKhTrack">
+                        <?php foreach ($highlightsImages as $hIdx => $hImg): ?>
+                        <div class="pdp-slide" data-idx="<?= $hIdx ?>">
+                            <img src="<?= htmlspecialchars($hImg['url']) ?>" alt="<?= htmlspecialchars($product['name']) ?> - <?= htmlspecialchars($hImg['title']) ?>" loading="lazy" />
+                            <div class="pdp-kh-slide-tag"><?= htmlspecialchars($hImg['title']) ?></div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="pdp-slide-counter" id="pdpKhCounter">1 / <?= count($highlightsImages) ?></div>
+                </div>
+                
+                <div class="pdp-slider-dots" id="pdpKhDots"></div>
+            </div>
+
+            <!-- Right: Key Highlights Attribute Grid -->
+            <div class="pdp-kh-specs-card">
+                <div class="pdp-kh-product-summary">
+                    <span class="pdp-kh-cat"><?= htmlspecialchars($product['category']) ?></span>
+                    <h3 class="pdp-kh-prod-name"><?= htmlspecialchars($product['name']) ?></h3>
+                    <div class="pdp-kh-price-line">
+                        <span class="pdp-kh-price">₹<?= number_format($product['price']) ?></span>
+                        <?php if (!empty($product['old_price'])): ?>
+                        <span class="pdp-kh-mrp">₹<?= number_format($product['old_price']) ?></span>
+                        <span class="pdp-kh-disc"><?= $product['discount'] ?>% OFF</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="pdp-kh-grid">
+                    <?php if (!empty($product['key_highlights'])): ?>
+                        <?php foreach ($product['key_highlights'] as $khKey => $khVal): ?>
+                        <div class="pdp-kh-item">
+                            <span class="pdp-kh-item-label"><?= htmlspecialchars($khKey) ?></span>
+                            <span class="pdp-kh-item-val"><?= htmlspecialchars($khVal) ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ 4. CUSTOMER REVIEWS CAROUSEL ════════════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
         <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
         
@@ -2977,7 +1962,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="pdp-bar-row"><span>1 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 0%;"></div></div><span>0%</span></div>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+            <div>
                 <button class="pdp-write-rev-btn" onclick="openWriteReviewModal()">
                     <span>✍️ Write a Review</span>
                 </button>
@@ -2986,18 +1971,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         <!-- Auto-Sliding Carousel Wrapper -->
         <div class="pdp-reviews-carousel-wrap" id="pdpRevCarouselWrap">
-            <button class="pdp-rev-arrow prev" id="pdpRevPrev" aria-label="Previous review" onclick="slidePdpReviews(-1)">
+            <button class="pdp-slider-arrow prev" id="pdpRevPrev" aria-label="Previous review">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <button class="pdp-rev-arrow next" id="pdpRevNext" aria-label="Next review" onclick="slidePdpReviews(1)">
+            <button class="pdp-slider-arrow next" id="pdpRevNext" aria-label="Next review">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
             <div class="pdp-reviews-track" id="pdpReviewsTrack">
                 <?php foreach ($customerReviews as $idx => $rev): ?>
-                <?php 
-                $initial = strtoupper(substr($rev['name'], 0, 1));
-                ?>
+                <?php $initial = strtoupper(substr($rev['name'], 0, 1)); ?>
                 <article class="pdp-review-card" data-rating="<?= $rev['rating'] ?>">
                     <div class="pdp-rc-top">
                         <div class="pdp-rc-avatar"><?= $initial ?></div>
@@ -3017,9 +2000,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     <span class="pdp-rc-occasion">✨ <?= htmlspecialchars($rev['occasion']) ?></span>
                     <?php endif; ?>
 
-                    <p class="pdp-rc-text">
-                        "<?= htmlspecialchars($rev['text']) ?>"
-                    </p>
+                    <p class="pdp-rc-text">"<?= htmlspecialchars($rev['text']) ?>"</p>
 
                     <div class="pdp-rc-bottom">
                         <span>Helpful?</span>
@@ -3033,24 +2014,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
 
             <!-- Dots -->
-            <div class="pdp-rev-dots" id="pdpRevDots"></div>
+            <div class="pdp-slider-dots" id="pdpRevDots"></div>
         </div>
     </section>
 
-    <!-- ════ RELATED PRODUCTS CAROUSEL ════ -->
+    <!-- ════════════ 5. "YOU MAY ALSO ADMIRE" RELATED PRODUCTS ════════════ -->
     <section class="pdp-bottom-section" id="pdpRelatedSection">
         <h2 class="pdp-section-title-large">You May Also Admire</h2>
 
         <div class="pdp-rel-carousel-wrap" id="pdpRelCarouselWrap">
             <!-- Navigation Arrows (Desktop) -->
-            <button class="pdp-rel-arrow prev" id="pdpRelPrev" aria-label="Previous related products" onclick="slidePdpRelated(-1)">
+            <button class="pdp-slider-arrow prev" id="pdpRelPrev" aria-label="Previous related products">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
-            <button class="pdp-rel-arrow next" id="pdpRelNext" aria-label="Next related products" onclick="slidePdpRelated(1)">
+            <button class="pdp-slider-arrow next" id="pdpRelNext" aria-label="Next related products">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <!-- Scrollable Track (2-show on mobile) -->
+            <!-- Scrollable Track -->
             <div class="pdp-rel-track" id="pdpRelTrack">
                 <?php 
                 $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
@@ -3081,16 +2062,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </div>
 
             <!-- Dots -->
-            <div class="pdp-rel-dots" id="pdpRelDots"></div>
+            <div class="pdp-slider-dots" id="pdpRelDots"></div>
         </div>
     </section>
 </main>
 
-<!-- ════ SIZE GUIDE MODAL ════ -->
+<!-- ════════════ SIZE GUIDE MODAL ════════════ -->
 <div class="pdp-modal-overlay" id="pdpSizeChartModal" role="dialog" aria-modal="true" aria-label="Size Guide">
     <div class="pdp-modal-box">
         <div class="pdp-modal-header">
-            <h3 class="pdp-modal-title">📏 Royal Size & Measurement Guide</h3>
+            <h3 class="pdp-modal-title">📏 Royal Size &amp; Measurement Guide</h3>
             <button class="pdp-modal-close-btn" onclick="closeSizeGuideModal()">&times;</button>
         </div>
         <div class="pdp-modal-body">
@@ -3120,7 +2101,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </div>
 </div>
 
-<!-- ════ WRITE A REVIEW MODAL ════ -->
+<!-- ════════════ WRITE A REVIEW MODAL ════════════ -->
 <div class="pdp-modal-overlay" id="pdpWriteReviewModal" role="dialog" aria-modal="true" aria-label="Write a Review">
     <div class="pdp-modal-box" style="max-width: 520px;">
         <div class="pdp-modal-header">
@@ -3167,242 +2148,367 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     </div>
 </div>
 
-<!-- ════ INSTANT WHATSAPP QUICK ORDER CHECKOUT MODAL ════ -->
-<div class="pdp-modal-overlay" id="pdpWhatsAppOrderModal" role="dialog" aria-modal="true" aria-label="Instant WhatsApp Checkout">
-    <div class="pdp-wa-modal-box">
-        <!-- Brand Header (Matching checkout.php .co-header) -->
-        <div class="pdp-wa-co-header">
-            <div class="pdp-wa-co-brand">
-                <div class="pdp-wa-co-icon">
-                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                </div>
-                <div class="pdp-wa-co-title-group">
-                    <h3>KALANIKETAN</h3>
-                    <span>Luxury Ethnic • WhatsApp Checkout</span>
-                </div>
-            </div>
-            <button class="pdp-wa-co-close-btn" onclick="closePdpWhatsAppOrderModal()" aria-label="Close">&times;</button>
-        </div>
-
-        <div class="pdp-wa-modal-body">
-            <!-- Order Item Summary Card (Matching checkout.php) -->
-            <div class="pdp-wa-sec-card">
-                <div class="pdp-wa-modal-product">
-                    <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
-                    <div class="pdp-wa-modal-info">
-                        <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
-                        <div class="pdp-wa-modal-meta">
-                            <span>Color: <strong id="pdpWaModalColor" style="color:var(--dark-text);"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
-                            <span>Size: <strong id="pdpWaModalSize" style="color:var(--dark-text);"><?= htmlspecialchars($product['size'][0] ?? 'Free Size') ?></strong></span>
-                            <span>Qty: <strong id="pdpWaModalQty" style="color:var(--dark-text);">1</strong></span>
-                        </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
-                            <span class="pdp-wa-modal-price" id="pdpWaModalPrice">₹<?= number_format($product['price']) ?></span>
-                            <span style="font-size:0.65rem; color:#2E7D32; font-weight:800; background:#E8F5E9; padding:2px 7px; border-radius:4px;">⚡ Free Delivery (3–5 Days)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Checkout Form -->
-            <form id="pdpWhatsAppOrderForm" onsubmit="submitPdpWhatsAppOrder(event)" style="display:flex; flex-direction:column; gap:12px;">
-                
-                <!-- Section 1: Customer Contact Details Card (ALWAYS VISIBLE & OPEN) -->
-                <div class="pdp-wa-sec-card">
-                    <div class="pdp-wa-card-header">
-                        <div class="pdp-wa-card-title">
-                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            <span>Customer Contact Details</span>
-                        </div>
-                    </div>
-
-                    <div class="pdp-wa-input-group">
-                        <label class="pdp-wa-label" for="pdpWaName">Customer Full Name <span class="required">*</span></label>
-                        <input type="text" id="pdpWaName" required placeholder="Enter Customer Full Name (e.g. Priya Sharma)" class="pdp-wa-input" autocomplete="name" />
-                    </div>
-
-                    <div class="pdp-wa-input-group">
-                        <label class="pdp-wa-label" for="pdpWaPhone">WhatsApp Mobile Number <span class="required">*</span></label>
-                        <div class="pdp-wa-phone-wrap">
-                            <div class="pdp-wa-phone-prefix">🇮🇳 +91</div>
-                            <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input pdp-wa-phone-input" autocomplete="tel" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 2: Delivery & Billing Address Card (COLLAPSIBLE / OPTIONAL) -->
-                <div class="pdp-wa-sec-card pdp-wa-addr-collapse-wrap" id="pdpWaAddrCollapseWrap">
-                    <button type="button" class="pdp-wa-addr-toggle-btn" onclick="togglePdpWaAddressSection()" aria-expanded="false">
-                        <div class="pdp-wa-card-title">
-                            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                            <span>Delivery & Billing Address</span>
-                            <span style="font-size:0.62rem; background:#FAF5E8; color:#8A681F; padding:2px 6px; border-radius:4px; font-weight:700; border:1px solid rgba(138,104,31,0.2);">Optional</span>
-                        </div>
-                        <span class="pdp-wa-addr-arrow" id="pdpWaAddrArrow" style="font-size:0.75rem; color:#8A681F; transition:transform 0.25s;">▼</span>
-                    </button>
-
-                    <div class="pdp-wa-addr-collapsible-body" id="pdpWaAddrBody" style="display:none; flex-direction:column; gap:9px; margin-top:10px; padding-top:8px; border-top:1px dashed rgba(138,104,31,0.25);">
-                        <!-- Full Address -->
-                        <div class="pdp-wa-input-group">
-                            <label class="pdp-wa-label" for="pdpWaAddress">House / Flat No., Street, Landmark</label>
-                            <input type="text" id="pdpWaAddress" placeholder="e.g. Flat 402, Royal Palms, Bandra West" class="pdp-wa-input" autocomplete="street-address" />
-                        </div>
-
-                        <!-- City, State & Pincode Grid -->
-                        <div class="pdp-wa-loc-grid">
-                            <div class="pdp-wa-input-group">
-                                <label class="pdp-wa-label" for="pdpWaCity">City</label>
-                                <input type="text" id="pdpWaCity" placeholder="e.g. Mumbai" class="pdp-wa-input" />
-                            </div>
-                            <div class="pdp-wa-input-group">
-                                <label class="pdp-wa-label" for="pdpWaState">State</label>
-                                <input type="text" id="pdpWaState" placeholder="e.g. Maharashtra" class="pdp-wa-input" />
-                            </div>
-                            <div class="pdp-wa-input-group pdp-wa-col-pin">
-                                <label class="pdp-wa-label" for="pdpWaPincode">Pincode</label>
-                                <input type="text" id="pdpWaPincode" placeholder="400050" maxlength="8" class="pdp-wa-input" autocomplete="postal-code" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 3: Payment Preference Card (Matching checkout.php) -->
-                <div class="pdp-wa-sec-card">
-                    <div class="pdp-wa-card-header">
-                        <div class="pdp-wa-card-title">
-                            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                            <span>Payment Preference</span>
-                        </div>
-                    </div>
-
-                    <div class="pdp-wa-payment-grid">
-                        <label class="pdp-wa-pay-card selected" id="pdpWaPayCodCard" onclick="selectPdpWaPayment('cod')">
-                            <input type="radio" name="pdpWaPayment" id="pdpWaRadioCod" value="Cash on Delivery (COD)" checked style="display:none;" />
-                            <div class="pdp-wa-pay-radio"></div>
-                            <div class="pdp-wa-pay-icon cod">
-                                <svg viewBox="0 0 24 24"><path d="M21 18v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v1"/><polyline points="10 12 14 12 14 16"/><line x1="10" y1="14" x2="14" y2="14"/><rect x="14" y="6" width="7" height="12" rx="2"/></svg>
-                            </div>
-                            <div style="flex:1;">
-                                <div style="font-size:0.75rem; font-weight:800; color:#24211C; line-height:1.2;">Cash on Delivery</div>
-                                <div style="font-size:0.62rem; color:#5A5348;">Pay upon arrival</div>
-                            </div>
-                        </label>
-
-                        <label class="pdp-wa-pay-card" id="pdpWaPayUpiCard" onclick="selectPdpWaPayment('upi')">
-                            <input type="radio" name="pdpWaPayment" id="pdpWaRadioUpi" value="UPI on WhatsApp (GPay / PhonePe / Paytm)" style="display:none;" />
-                            <div class="pdp-wa-pay-radio"></div>
-                            <div class="pdp-wa-pay-icon upi">
-                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                            </div>
-                            <div style="flex:1;">
-                                <div style="font-size:0.75rem; font-weight:800; color:#24211C; line-height:1.2;">UPI on WhatsApp</div>
-                                <div style="font-size:0.62rem; color:#5A5348;">Instant scan / pay</div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="pdp-wa-submit-btn">
-                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    <span>Confirm Order & Send to WhatsApp</span>
-                </button>
-
-                <!-- Trust Badges Row (All in 1 Single Line on Mobile) -->
-                <div class="pdp-wa-trust-row">
-                    <span class="pdp-wa-trust-item">🔒 256-Bit Encrypted</span>
-                    <span class="pdp-wa-trust-dot">•</span>
-                    <span class="pdp-wa-trust-item">⚡ 3–5 Day Delivery</span>
-                    <span class="pdp-wa-trust-dot">•</span>
-                    <span class="pdp-wa-trust-item">💎 100% Authentic</span>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- ════ TOAST CONTAINER ════ -->
-<div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
-
-<!-- ════ FOOTER PARTIAL ════ -->
+<!-- ════════════ STICKY MOBILE BOTTOM ACTION BAR ════════════ -->
 <?php include 'singelprodutbottomfotoer.php'; ?>
 
-<!-- ════ CART DRAWER PARTIAL ════ -->
-<?php include 'cart.php'; ?>
+<!-- ════════════ SMART WHATSAPP SHARE MODAL ════════════ -->
+<?php include 'smartshare.php'; ?>
 
-<!-- ════ WISHLIST DRAWER PARTIAL ════ -->
-<?php include 'wishlist.php'; ?>
-
-<!-- ════ CHECKOUT MODAL PARTIAL ════ -->
-<?php include 'checkout.php'; ?>
-
-<!-- ════ SCRIPT ENGINE ════ -->
+<!-- ════════════ REUSABLE CAROUSEL ENGINE & INTERACTION SCRIPTS ════════════ -->
 <script>
 (function() {
     'use strict';
 
+    // Current Product Object
     var currentProduct = <?= json_encode($product) ?>;
-    window.currentPdpProduct = currentProduct;
 
-    // Toast helper
+    // Toast Notification System
     window.showToast = function(msg) {
-        var c = document.getElementById('toastContainer');
-        if (!c) return;
+        var c = document.querySelector('.toast-container');
+        if (!c) {
+            c = document.createElement('div');
+            c.className = 'toast-container';
+            document.body.appendChild(c);
+        }
         var t = document.createElement('div');
         t.className = 'toast';
         t.textContent = msg;
         c.appendChild(t);
-        requestAnimationFrame(function() {
-            requestAnimationFrame(function() { t.classList.add('show'); });
-        });
+        requestAnimationFrame(function() { t.classList.add('show'); });
         setTimeout(function() {
             t.classList.remove('show');
-            setTimeout(function() { t.remove(); }, 350);
-        }, 2200);
+            setTimeout(function() { t.remove(); }, 300);
+        }, 2800);
     };
 
-    // Gallery Slider Controls
-    var track = document.getElementById('pdpSliderTrack');
-    var counter = document.getElementById('pdpSlideCounter');
-    var totalSlides = <?= count($galleryImages) ?>;
-    var currentSlideIdx = 0;
+    // ═════════════════════════════════════════════════════════════
+    // COMMON REUSABLE CAROUSEL / SLIDER CLASS (AgyCarousel)
+    // ═════════════════════════════════════════════════════════════
+    class AgyCarousel {
+        constructor(config) {
+            this.container = typeof config.container === 'string' ? document.querySelector(config.container) : config.container;
+            if (!this.container) return;
 
-    window.goToSlide = function(idx) {
-        if (!track) return;
-        currentSlideIdx = idx;
-        var width = track.clientWidth;
-        track.scrollTo({ left: idx * width, behavior: 'smooth' });
-        updateActiveThumbnail(idx);
-        if (counter) counter.textContent = (idx + 1) + ' / ' + totalSlides;
-    };
+            this.track = config.track ? (typeof config.track === 'string' ? this.container.querySelector(config.track) : config.track) : this.container.querySelector('.pdp-slider-track, .pdp-reviews-track, .pdp-rel-track');
+            if (!this.track) return;
 
-    window.slidePdpGallery = function(delta) {
-        var next = currentSlideIdx + delta;
-        if (next < 0) next = totalSlides - 1;
-        if (next >= totalSlides) next = 0;
-        window.goToSlide(next);
-    };
+            this.slides = Array.from(this.track.children);
+            if (!this.slides.length) return;
 
-    function updateActiveThumbnail(idx) {
-        document.querySelectorAll('.pdp-thumb-item').forEach(function(item, i) {
-            item.classList.toggle('active', i === idx);
-        });
-    }
+            this.autoplayInterval = config.autoplayInterval || 4000;
+            this.touchThreshold = config.touchThreshold || 40;
+            this.dotsWrap = typeof config.dotsWrap === 'string' ? document.querySelector(config.dotsWrap) : config.dotsWrap;
+            this.counterEl = typeof config.counterEl === 'string' ? document.querySelector(config.counterEl) : config.counterEl;
+            this.prevBtn = typeof config.prevBtn === 'string' ? document.querySelector(config.prevBtn) : config.prevBtn;
+            this.nextBtn = typeof config.nextBtn === 'string' ? document.querySelector(config.nextBtn) : config.nextBtn;
+            this.thumbnailsWrap = typeof config.thumbnailsWrap === 'string' ? document.querySelector(config.thumbnailsWrap) : config.thumbnailsWrap;
+            this.isMultiItem = config.isMultiItem || false;
 
-    // Touch Swipe scroll sync listener for Main Gallery
-    if (track) {
-        track.addEventListener('scroll', function() {
-            var width = track.clientWidth;
-            if (width > 0) {
-                var idx = Math.round(track.scrollLeft / width);
-                if (idx !== currentSlideIdx && idx >= 0 && idx < totalSlides) {
-                    currentSlideIdx = idx;
-                    updateActiveThumbnail(idx);
-                    if (counter) counter.textContent = (idx + 1) + ' / ' + totalSlides;
-                }
+            this.currentIndex = 0;
+            this.timer = null;
+            this.isDragging = false;
+            this.startX = 0;
+            this.startY = 0;
+            this.currentX = 0;
+            this.currentY = 0;
+            this.startScrollLeft = 0;
+            this.isTouchHorizontal = false;
+            this.resumeTimeout = null;
+
+            this.init();
+        }
+
+        init() {
+            this.buildDots();
+            this.updateUI();
+            this.bindEvents();
+            this.startAutoplay();
+        }
+
+        buildDots() {
+            if (!this.dotsWrap) return;
+            this.dotsWrap.innerHTML = '';
+            
+            var totalDots = this.isMultiItem 
+                ? Math.ceil(this.slides.length / (window.innerWidth <= 767 ? 1.5 : 3)) 
+                : this.slides.length;
+
+            for (var i = 0; i < totalDots; i++) {
+                var dot = document.createElement('div');
+                dot.className = 'pdp-slider-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('data-idx', i);
+                var self = this;
+                dot.onclick = (function(idx) {
+                    return function() {
+                        self.goTo(idx);
+                    };
+                })(i);
+                this.dotsWrap.appendChild(dot);
             }
-        }, { passive: true });
+        }
+
+        updateUI() {
+            // Update counter
+            if (this.counterEl) {
+                this.counterEl.textContent = (this.currentIndex + 1) + ' / ' + this.slides.length;
+            }
+
+            // Update dots
+            if (this.dotsWrap) {
+                var dots = this.dotsWrap.querySelectorAll('.pdp-slider-dot');
+                var totalDots = dots.length;
+                var dotIndex = this.isMultiItem ? Math.min(this.currentIndex, totalDots - 1) : this.currentIndex;
+                dots.forEach(function(d, i) {
+                    d.classList.toggle('active', i === dotIndex);
+                });
+            }
+
+            // Update thumbnails
+            if (this.thumbnailsWrap) {
+                var thumbs = this.thumbnailsWrap.querySelectorAll('.pdp-thumb-item');
+                var self = this;
+                thumbs.forEach(function(t, i) {
+                    t.classList.toggle('active', i === self.currentIndex);
+                });
+            }
+        }
+
+        goTo(index) {
+            var total = this.slides.length;
+            this.currentIndex = ((index % total) + total) % total;
+            var targetSlide = this.slides[this.currentIndex];
+            if (targetSlide) {
+                var targetLeft = targetSlide.offsetLeft - this.track.offsetLeft;
+                this.track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+            }
+            this.updateUI();
+        }
+
+        next() {
+            this.goTo(this.currentIndex + 1);
+        }
+
+        prev() {
+            this.goTo(this.currentIndex - 1);
+        }
+
+        startAutoplay() {
+            var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced || this.autoplayInterval <= 0) return;
+
+            this.pauseAutoplay();
+            var self = this;
+            this.timer = setInterval(function() {
+                self.next();
+            }, this.autoplayInterval);
+        }
+
+        pauseAutoplay() {
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
+            if (this.resumeTimeout) {
+                clearTimeout(this.resumeTimeout);
+                this.resumeTimeout = null;
+            }
+        }
+
+        resumeAutoplayAfterDelay(ms) {
+            this.pauseAutoplay();
+            var self = this;
+            this.resumeTimeout = setTimeout(function() {
+                self.startAutoplay();
+            }, ms || 3500);
+        }
+
+        bindEvents() {
+            var self = this;
+
+            // Arrow buttons
+            if (this.prevBtn) {
+                this.prevBtn.onclick = function(e) {
+                    e.preventDefault();
+                    self.prev();
+                    self.resumeAutoplayAfterDelay();
+                };
+            }
+            if (this.nextBtn) {
+                this.nextBtn.onclick = function(e) {
+                    e.preventDefault();
+                    self.next();
+                    self.resumeAutoplayAfterDelay();
+                };
+            }
+
+            // Thumbnails click
+            if (this.thumbnailsWrap) {
+                var thumbs = this.thumbnailsWrap.querySelectorAll('.pdp-thumb-item');
+                thumbs.forEach(function(t, idx) {
+                    t.onclick = function() {
+                        self.goTo(idx);
+                        self.resumeAutoplayAfterDelay();
+                    };
+                });
+            }
+
+            // Hover pause on desktop
+            this.container.addEventListener('mouseenter', function() {
+                self.pauseAutoplay();
+            });
+            this.container.addEventListener('mouseleave', function() {
+                self.startAutoplay();
+            });
+
+            // Touch / Mouse Drag Handling (Fluid, Native & Direction Locked)
+            var onStart = function(e) {
+                self.isDragging = true;
+                self.startX = e.touches ? e.touches[0].clientX : e.clientX;
+                self.startY = e.touches ? e.touches[0].clientY : e.clientY;
+                self.currentX = self.startX;
+                self.currentY = self.startY;
+                self.startScrollLeft = self.track.scrollLeft;
+                self.isTouchHorizontal = false;
+                self.pauseAutoplay();
+            };
+
+            var onMove = function(e) {
+                if (!self.isDragging) return;
+                self.currentX = e.touches ? e.touches[0].clientX : e.clientX;
+                self.currentY = e.touches ? e.touches[0].clientY : e.clientY;
+                var diffX = self.currentX - self.startX;
+                var diffY = self.currentY - self.startY;
+
+                if (!self.isTouchHorizontal) {
+                    if (Math.abs(diffX) > 8 || Math.abs(diffY) > 8) {
+                        if (Math.abs(diffX) >= Math.abs(diffY)) {
+                            self.isTouchHorizontal = true;
+                        } else {
+                            self.isDragging = false;
+                            return;
+                        }
+                    }
+                }
+
+                if (self.isTouchHorizontal) {
+                    if (e.cancelable) e.preventDefault();
+                    self.track.scrollLeft = self.startScrollLeft - diffX;
+                }
+            };
+
+            var onEnd = function() {
+                if (!self.isDragging && !self.isTouchHorizontal) return;
+                self.isDragging = false;
+
+                if (self.isTouchHorizontal) {
+                    var diffX = self.currentX - self.startX;
+                    if (diffX < -self.touchThreshold) {
+                        self.next();
+                    } else if (diffX > self.touchThreshold) {
+                        self.prev();
+                    } else {
+                        self.goTo(self.currentIndex);
+                    }
+                }
+                self.resumeAutoplayAfterDelay(3500);
+            };
+
+            // Bind Touch
+            this.track.addEventListener('touchstart', onStart, { passive: true });
+            this.track.addEventListener('touchmove', onMove, { passive: false });
+            this.track.addEventListener('touchend', onEnd, { passive: true });
+
+            // Bind Mouse Drag
+            this.track.addEventListener('mousedown', onStart);
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onEnd);
+
+            // Sync index on native momentum scroll
+            var scrollTimeout = null;
+            this.track.addEventListener('scroll', function() {
+                if (scrollTimeout) clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    if (!self.slides.length) return;
+                    var slideWidth = self.slides[0].offsetWidth || 300;
+                    var newIndex = Math.round(self.track.scrollLeft / slideWidth);
+                    if (newIndex >= 0 && newIndex < self.slides.length && newIndex !== self.currentIndex) {
+                        self.currentIndex = newIndex;
+                        self.updateUI();
+                    }
+                }, 80);
+            }, { passive: true });
+
+            // Page Visibility change
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    self.pauseAutoplay();
+                } else {
+                    self.startAutoplay();
+                }
+            });
+
+            // Window Resize
+            window.addEventListener('resize', function() {
+                self.buildDots();
+                self.updateUI();
+            }, { passive: true });
+        }
     }
+
+    // ═════════════════════════════════════════════════════════════
+    // INITIALIZE ALL 4 CAROUSELS INDEPENDENTLY
+    // ═════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. Main Product Gallery Carousel (Top)
+        var mainGallery = new AgyCarousel({
+            container: '#pdpGallerySlider',
+            track: '#pdpMainSliderTrack',
+            dotsWrap: '#pdpMainSliderDots',
+            counterEl: '#pdpMainSlideCounter',
+            prevBtn: '#pdpMainSlidePrev',
+            nextBtn: '#pdpMainSlideNext',
+            thumbnailsWrap: '#pdpMainThumbnailsStrip',
+            autoplayInterval: 3800
+        });
+
+        // 2. Key Highlights Detail Image Carousel (Myntra Style)
+        var keyHighlightsGallery = new AgyCarousel({
+            container: '#pdpKeyHighlightsSlider',
+            track: '#pdpKhTrack',
+            dotsWrap: '#pdpKhDots',
+            counterEl: '#pdpKhCounter',
+            prevBtn: '#pdpKhPrev',
+            nextBtn: '#pdpKhNext',
+            autoplayInterval: 4000
+        });
+
+        // 3. Customer Reviews Carousel
+        var reviewsCarousel = new AgyCarousel({
+            container: '#pdpRevCarouselWrap',
+            track: '#pdpReviewsTrack',
+            dotsWrap: '#pdpRevDots',
+            prevBtn: '#pdpRevPrev',
+            nextBtn: '#pdpRevNext',
+            autoplayInterval: 4800,
+            isMultiItem: true
+        });
+
+        // 4. "You May Also Admire" Related Products Carousel
+        var relatedCarousel = new AgyCarousel({
+            container: '#pdpRelCarouselWrap',
+            track: '#pdpRelTrack',
+            dotsWrap: '#pdpRelDots',
+            prevBtn: '#pdpRelPrev',
+            nextBtn: '#pdpRelNext',
+            autoplayInterval: 5000,
+            isMultiItem: true
+        });
+    });
+
+    // ═════════════════════════════════════════════════════════════
+    // PRODUCT INTERACTION CONTROLLERS
+    // ═════════════════════════════════════════════════════════════
 
     // Color Selector
     window.selectPdpColor = function(btn) {
@@ -3428,15 +2534,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (qEl) qEl.textContent = currentQty;
     };
 
-    // Accordion Toggle
-    window.togglePdpAcc = function(headerBtn) {
-        var parentItem = headerBtn.closest('.pdp-acc-item');
-        if (parentItem) {
-            var isOpen = parentItem.classList.toggle('open');
-            headerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-    };
-
     // Add To Bag Function (Integrates directly with Cart Drawer)
     window.handlePdpAddToCart = function() {
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
@@ -3450,7 +2547,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 window.addToCart(currentProduct, selSize, selColor);
             }
         } else {
-            // Local fallback
             try {
                 var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
                 cart.push({
@@ -3489,12 +2585,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
 
-        // Close cart drawer if open
         if (typeof window.closeCartDrawer === 'function') {
             window.closeCartDrawer();
         }
 
-        // Open checkout modal directly
         if (typeof window.openCheckout === 'function') {
             setTimeout(function() {
                 window.openCheckout();
@@ -3542,175 +2636,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
     // Fullscreen Image Lightbox
     window.openFullscreenImage = function() {
-        var activeSlide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"] img');
+        var activeSlide = document.querySelector('#pdpMainSliderTrack .pdp-slide img');
         if (activeSlide) {
             window.open(activeSlide.src, '_blank');
         }
     };
 
-    function restoreUserSavedAddress() {
-        var nameField = document.getElementById('pdpWaName');
-        var phoneField = document.getElementById('pdpWaPhone');
-        var addrField = document.getElementById('pdpWaAddress');
-        var cityField = document.getElementById('pdpWaCity');
-        var stateField = document.getElementById('pdpWaState');
-        var pinField = document.getElementById('pdpWaPincode');
-
-        var savedAddrRaw = localStorage.getItem('kalaniketan_saved_address');
-        var userRaw = localStorage.getItem('kalaniketan_user');
-
-        var savedAddr = null;
-        var user = null;
-
-        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch(e) {}
-        try { if (userRaw) user = JSON.parse(userRaw); } catch(e) {}
-
-        var nameVal = (savedAddr && savedAddr.name) ? savedAddr.name : (user && user.name ? user.name : '');
-        var phoneVal = (savedAddr && savedAddr.phone) ? savedAddr.phone : (user && user.phone ? user.phone : '');
-        var addrVal = (savedAddr && savedAddr.address) ? savedAddr.address : (user && user.address ? user.address : '');
-        var cityVal = (savedAddr && savedAddr.city) ? savedAddr.city : (user && user.city ? user.city : '');
-        var stateVal = (savedAddr && savedAddr.state) ? savedAddr.state : (user && user.state ? user.state : '');
-        var pinVal = (savedAddr && savedAddr.pincode) ? savedAddr.pincode : (user && user.pincode ? user.pincode : '');
-
-        if (nameField && nameVal) nameField.value = nameVal;
-        if (phoneField && phoneVal) {
-            var cleanP = phoneVal.replace(/[^0-9]/g, '');
-            phoneField.value = cleanP ? cleanP.slice(-10) : '';
-        }
-        if (addrField && addrVal) addrField.value = addrVal;
-        if (cityField && cityVal) cityField.value = cityVal;
-        if (stateField && stateVal) stateField.value = stateVal;
-        if (pinField && pinVal) pinField.value = pinVal;
-    }
-
-    // WhatsApp Quick Order Checkout Modal Engine
-    window.togglePdpWaAddressSection = function() {
-        var body = document.getElementById('pdpWaAddrBody');
-        var wrap = document.getElementById('pdpWaAddrCollapseWrap');
-        if (!body || !wrap) return;
-
-        if (body.style.display === 'none' || body.style.display === '') {
-            body.style.display = 'flex';
-            wrap.classList.add('open');
-            var addrInput = document.getElementById('pdpWaAddress');
-            if (addrInput) addrInput.focus();
-        } else {
-            body.style.display = 'none';
-            wrap.classList.remove('open');
-        }
-    };
-
+    // WhatsApp Instant Order Flow
     window.openPdpWhatsAppOrderModal = function() {
-        var modal = document.getElementById('pdpWhatsAppOrderModal');
-        if (!modal) return;
-
-        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
-
-        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
-
-        // Populate Modal Preview Fields
-        var colEl = document.getElementById('pdpWaModalColor');
-        if (colEl) colEl.textContent = selColor;
-        var sizeEl = document.getElementById('pdpWaModalSize');
-        if (sizeEl) sizeEl.textContent = selSize;
-        var qtyEl = document.getElementById('pdpWaModalQty');
-        if (qtyEl) qtyEl.textContent = currentQty;
-        var prEl = document.getElementById('pdpWaModalPrice');
-        if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
-
-        // Hide collapsible address section by default to keep form compact and clean
-        var addrBody = document.getElementById('pdpWaAddrBody');
-        var addrWrap = document.getElementById('pdpWaAddrCollapseWrap');
-        if (addrBody) addrBody.style.display = 'none';
-        if (addrWrap) addrWrap.classList.remove('open');
-
-        // Auto-load and prefill saved user billing & delivery info
-        restoreUserSavedAddress();
-
-        modal.classList.add('open');
-    };
-
-    window.selectPdpWaPayment = function(type) {
-        var codCard = document.getElementById('pdpWaPayCodCard');
-        var upiCard = document.getElementById('pdpWaPayUpiCard');
-        var codRadio = document.getElementById('pdpWaRadioCod');
-        var upiRadio = document.getElementById('pdpWaRadioUpi');
-
-        if (type === 'cod') {
-            if (codCard) codCard.classList.add('selected');
-            if (upiCard) upiCard.classList.remove('selected');
-            if (codRadio) codRadio.checked = true;
-        } else {
-            if (upiCard) upiCard.classList.add('selected');
-            if (codCard) codCard.classList.remove('selected');
-            if (upiRadio) upiRadio.checked = true;
-        }
-    };
-
-    window.closePdpWhatsAppOrderModal = function() {
-        var modal = document.getElementById('pdpWhatsAppOrderModal');
-        if (modal) modal.classList.remove('open');
-    };
-
-    window.submitPdpWhatsAppOrder = function(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        var nameInput = document.getElementById('pdpWaName');
-        var phoneInput = document.getElementById('pdpWaPhone');
-        var addressInput = document.getElementById('pdpWaAddress');
-        var cityInput = document.getElementById('pdpWaCity');
-        var stateInput = document.getElementById('pdpWaState');
-        var pinInput = document.getElementById('pdpWaPincode');
-
-        var name = nameInput ? nameInput.value.trim() : '';
-        var rawPhone = phoneInput ? phoneInput.value.trim() : '';
-        var address = addressInput ? addressInput.value.trim() : '';
-        var city = cityInput ? cityInput.value.trim() : '';
-        var state = stateInput ? stateInput.value.trim() : '';
-        var pincode = pinInput ? pinInput.value.trim() : '';
-        var payMethodEl = document.querySelector('input[name="pdpWaPayment"]:checked');
-        var paymentMethod = payMethodEl ? payMethodEl.value : 'Cash on Delivery (COD)';
-
-        if (!name) {
-            window.showToast('⚠️ Please enter Customer Full Name.');
-            if (nameInput) nameInput.focus();
-            return;
-        }
-
-        // Clean phone number (handles +91, spaces, 0 prefix, dashes)
-        var cleanPhone = rawPhone.replace(/[^0-9]/g, '');
-        if (cleanPhone.length > 10 && cleanPhone.startsWith('91')) {
-            cleanPhone = cleanPhone.substring(2);
-        }
-        if (cleanPhone.length > 10 && cleanPhone.startsWith('0')) {
-            cleanPhone = cleanPhone.substring(1);
-        }
-
-        if (cleanPhone.length < 10) {
-            window.showToast('⚠️ Please enter a valid 10-digit WhatsApp mobile number.');
-            if (phoneInput) phoneInput.focus();
-            return;
-        }
-
-        // Save address locally if entered
-        if (address || city) {
-            try {
-                localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
-                    name: name,
-                    phone: cleanPhone,
-                    address: address,
-                    city: city,
-                    state: state,
-                    pincode: pincode
-                }));
-            } catch(err) {}
-        }
-
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
         var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
 
@@ -3719,44 +2652,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
         var totalPrice = Number(currentProduct.price * currentQty).toLocaleString('en-IN');
         var productUrl = window.location.href;
-        var fullLoc = city ? (city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "")) : '';
 
-        // Build WhatsApp Message
-        var waMessage = "🛍️ *NEW INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n" +
-            "━━━━━━━━━━━━━━━━━━━━\n" +
-            "👗 *Product:* " + currentProduct.name + "\n" +
-            "🏷️ *SKU:* " + (currentProduct.sku || 'KLN-ETH-01') + "\n" +
-            "🎨 *Color:* " + selColor + "\n" +
-            "📏 *Size:* " + selSize + "\n" +
-            "🔢 *Quantity:* " + currentQty + "\n" +
-            "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery 3–5 Days)\n" +
-            "━━━━━━━━━━━━━━━━━━━━\n" +
-            "👤 *Customer:* " + name + "\n" +
-            "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n";
+        var text = "👑 *INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n\n" +
+                   "*Product:* " + currentProduct.name + "\n" +
+                   "*SKU:* " + (currentProduct.sku || 'KN-01') + "\n" +
+                   "*Price:* ₹" + totalPrice + " (Qty: " + currentQty + ")\n" +
+                   "*Color:* " + selColor + " • *Size:* " + selSize + "\n\n" +
+                   "*Product Link:* " + productUrl + "\n\n" +
+                   "Please confirm availability and share dispatch details. Thank you!";
 
-        if (address) {
-            waMessage += "🏠 *Full Address:* " + address + "\n";
-        }
-        if (fullLoc) {
-            waMessage += "🏙️ *Location:* " + fullLoc + "\n";
-        }
-        if (!address && !fullLoc) {
-            waMessage += "📍 *Delivery Address:* Will share directly on WhatsApp chat\n";
-        }
-
-        waMessage += "💳 *Payment Preference:* " + paymentMethod + "\n" +
-            "━━━━━━━━━━━━━━━━━━━━\n" +
-            "🔗 *Item Link:* " + productUrl + "\n\n" +
-            "Please confirm my order and share estimated dispatch details. Thank you! 🙏✨";
-
-        var waUrl = "https://api.whatsapp.com/send?phone=919876543210&text=" + encodeURIComponent(waMessage);
-
-        window.closePdpWhatsAppOrderModal();
-        window.showToast('🚀 Opening WhatsApp to confirm your order...');
-
-        setTimeout(function() {
-            window.open(waUrl, '_blank');
-        }, 250);
+        var waUrl = "https://api.whatsapp.com/send?phone=919876543210&text=" + encodeURIComponent(text);
+        window.open(waUrl, '_blank');
     };
 
     // Size Guide Modal
@@ -3780,12 +2686,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (modal) modal.classList.remove('open');
     };
 
-    // Close modals on overlay backdrop click
-    document.addEventListener('click', function(e) {
-        if (e.target && e.target.classList && e.target.classList.contains('pdp-modal-overlay')) {
-            e.target.classList.remove('open');
-        }
-    });
+    // Rating selector in write review modal
     window.setReviewRating = function(val) {
         currentSelectedRating = val;
         var stars = document.querySelectorAll('#pdpStarRatingSelector span');
@@ -3808,7 +2709,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             var card = document.createElement('article');
             card.className = 'pdp-review-card';
             card.dataset.rating = currentSelectedRating;
-            card.dataset.hasphoto = '0';
             card.innerHTML = 
                 '<div class="pdp-rc-top">' +
                     '<div class="pdp-rc-avatar">' + name.charAt(0).toUpperCase() + '</div>' +
@@ -3836,7 +2736,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         window.closeWriteReviewModal();
         window.showToast('✨ Thank you! Your review is now live.');
         document.getElementById('pdpReviewForm').reset();
-        window.rebuildReviewDots();
     };
 
     // Helpful upvote button
@@ -3847,217 +2746,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         window.showToast('❤️ Thank you for your feedback!');
     };
 
-    // Review Filter Pills
-    window.filterReviews = function(type, btn) {
-        document.querySelectorAll('.pdp-rev-filter-pill').forEach(function(p) { p.classList.remove('active'); });
-        btn.classList.add('active');
-
-        var cards = document.querySelectorAll('.pdp-review-card');
-        cards.forEach(function(card) {
-            if (type === 'all') {
-                card.style.display = 'flex';
-            } else if (type === '5') {
-                card.style.display = (card.dataset.rating === '5') ? 'flex' : 'none';
-            } else if (type === 'photo') {
-                card.style.display = (card.dataset.hasphoto === '1') ? 'flex' : 'none';
-            }
-        });
-        window.rebuildReviewDots();
-    };
-
-    // ════ AUTO-SLIDER CONTROLLER FOR CUSTOMER REVIEWS ════
-    var revTrack = document.getElementById('pdpReviewsTrack');
-    var revDotsWrap = document.getElementById('pdpRevDots');
-    var revAutoSlideTimer = null;
-
-    window.rebuildReviewDots = function() {
-        if (!revDotsWrap || !revTrack) return;
-        revDotsWrap.innerHTML = '';
-        var visibleCards = Array.from(revTrack.querySelectorAll('.pdp-review-card')).filter(function(c) {
-            return c.style.display !== 'none';
-        });
-
-        visibleCards.forEach(function(_, idx) {
-            var dot = document.createElement('div');
-            dot.className = 'pdp-rev-dot ' + (idx === 0 ? 'active' : '');
-            dot.onclick = function() {
-                var card = visibleCards[idx];
-                if (card) {
-                    revTrack.scrollTo({ left: card.offsetLeft - revTrack.offsetLeft, behavior: 'smooth' });
-                }
-            };
-            revDotsWrap.appendChild(dot);
-        });
-    };
-
-    window.slidePdpReviews = function(direction) {
-        if (!revTrack) return;
-        var firstCard = revTrack.querySelector('.pdp-review-card');
-        var cardWidth = firstCard ? (firstCard.clientWidth + 16) : 320;
-        
-        var maxScroll = revTrack.scrollWidth - revTrack.clientWidth;
-        var newLeft = revTrack.scrollLeft + (direction * cardWidth);
-
-        if (newLeft > maxScroll + 10) {
-            revTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        } else if (newLeft < 0) {
-            revTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        } else {
-            revTrack.scrollTo({ left: newLeft, behavior: 'smooth' });
+    // Close modals on overlay backdrop click
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList && e.target.classList.contains('pdp-modal-overlay')) {
+            e.target.classList.remove('open');
         }
-    };
-
-    function startReviewAutoSlide() {
-        if (revAutoSlideTimer) clearInterval(revAutoSlideTimer);
-        revAutoSlideTimer = setInterval(function() {
-            window.slidePdpReviews(1);
-        }, 3800);
-    }
-
-    function pauseReviewAutoSlide() {
-        if (revAutoSlideTimer) {
-            clearInterval(revAutoSlideTimer);
-            revAutoSlideTimer = null;
-        }
-    }
-
-    if (revTrack) {
-        window.rebuildReviewDots();
-        startReviewAutoSlide();
-
-        // Pause on hover or touch
-        var carouselWrap = document.getElementById('pdpRevCarouselWrap');
-        if (carouselWrap) {
-            carouselWrap.addEventListener('mouseenter', pauseReviewAutoSlide);
-            carouselWrap.addEventListener('mouseleave', startReviewAutoSlide);
-            carouselWrap.addEventListener('touchstart', pauseReviewAutoSlide, { passive: true });
-            carouselWrap.addEventListener('touchend', function() {
-                setTimeout(startReviewAutoSlide, 3000);
-            }, { passive: true });
-        }
-
-        // Sync review dots on scroll
-        revTrack.addEventListener('scroll', function() {
-            var firstCard = revTrack.querySelector('.pdp-review-card');
-            if (!firstCard) return;
-            var cardWidth = firstCard.clientWidth + 16;
-            var activeIdx = Math.round(revTrack.scrollLeft / cardWidth);
-            var dots = document.querySelectorAll('.pdp-rev-dot');
-            dots.forEach(function(d, i) {
-                d.classList.toggle('active', i === activeIdx);
-            });
-        }, { passive: true });
-    }
-
-    // ════ AUTO-SLIDER CONTROLLER FOR RELATED PRODUCTS ════
-    var relTrack = document.getElementById('pdpRelTrack');
-    var relDotsWrap = document.getElementById('pdpRelDots');
-    var relAutoSlideTimer = null;
-
-    window.rebuildRelDots = function() {
-        if (!relDotsWrap || !relTrack) return;
-        relDotsWrap.innerHTML = '';
-        var cards = relTrack.querySelectorAll('.pdp-rel-card');
-        var step = window.innerWidth <= 767 ? 2 : 4;
-        var totalDots = Math.ceil(cards.length / step);
-
-        for (var i = 0; i < totalDots; i++) {
-            (function(idx) {
-                var dot = document.createElement('div');
-                dot.className = 'pdp-rel-dot ' + (idx === 0 ? 'active' : '');
-                dot.onclick = function() {
-                    var targetCard = cards[idx * step] || cards[cards.length - 1];
-                    if (targetCard) {
-                        relTrack.scrollTo({ left: targetCard.offsetLeft - relTrack.offsetLeft, behavior: 'smooth' });
-                    }
-                };
-                relDotsWrap.appendChild(dot);
-            })(i);
-        }
-    };
-
-    window.slidePdpRelated = function(direction) {
-        if (!relTrack) return;
-        var firstCard = relTrack.querySelector('.pdp-rel-card');
-        var cardWidth = firstCard ? (firstCard.clientWidth + 12) : 200;
-        var scrollAmount = cardWidth * (window.innerWidth <= 767 ? 2 : 3);
-        
-        var maxScroll = relTrack.scrollWidth - relTrack.clientWidth;
-        var newLeft = relTrack.scrollLeft + (direction * scrollAmount);
-
-        if (newLeft > maxScroll + 10) {
-            relTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        } else if (newLeft < 0) {
-            relTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        } else {
-            relTrack.scrollTo({ left: newLeft, behavior: 'smooth' });
-        }
-    };
-
-    function startRelAutoSlide() {
-        if (relAutoSlideTimer) clearInterval(relAutoSlideTimer);
-        relAutoSlideTimer = setInterval(function() {
-            window.slidePdpRelated(1);
-        }, 4500);
-    }
-
-    function pauseRelAutoSlide() {
-        if (relAutoSlideTimer) {
-            clearInterval(relAutoSlideTimer);
-            relAutoSlideTimer = null;
-        }
-    }
-
-    if (relTrack) {
-        window.rebuildRelDots();
-        startRelAutoSlide();
-
-        var relWrap = document.getElementById('pdpRelCarouselWrap');
-        if (relWrap) {
-            relWrap.addEventListener('mouseenter', pauseRelAutoSlide);
-            relWrap.addEventListener('mouseleave', startRelAutoSlide);
-            relWrap.addEventListener('touchstart', pauseRelAutoSlide, { passive: true });
-            relWrap.addEventListener('touchend', function() {
-                setTimeout(startRelAutoSlide, 3000);
-            }, { passive: true });
-        }
-
-        // Sync related dots on scroll
-        relTrack.addEventListener('scroll', function() {
-            var firstCard = relTrack.querySelector('.pdp-rel-card');
-            if (!firstCard) return;
-            var cardWidth = firstCard.clientWidth + 12;
-            var step = window.innerWidth <= 767 ? 2 : 4;
-            var activeIdx = Math.round(relTrack.scrollLeft / (cardWidth * step));
-            var dots = document.querySelectorAll('.pdp-rel-dot');
-            dots.forEach(function(d, i) {
-                d.classList.toggle('active', i === activeIdx);
-            });
-        }, { passive: true });
-
-        window.addEventListener('resize', window.rebuildRelDots, { passive: true });
-    }
-
-    // Modal background click dismiss
-    var writeRevModal = document.getElementById('pdpWriteReviewModal');
-    if (writeRevModal) {
-        writeRevModal.addEventListener('click', function(e) {
-            if (e.target === writeRevModal) window.closeWriteReviewModal();
-        });
-    }
-
-    var sizeModal = document.getElementById('pdpSizeChartModal');
-    if (sizeModal) {
-        sizeModal.addEventListener('click', function(e) {
-            if (e.target === sizeModal) window.closeSizeGuideModal();
-        });
-    }
+    });
 
 })();
 </script>
-
-<!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
-<?php include 'smartshare.php'; ?>
 
 </body>
 </html>
