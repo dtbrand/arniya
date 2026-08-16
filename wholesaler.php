@@ -5673,106 +5673,8 @@ $catalogProducts = [
                  TAB 9: TRENDING CATALOG (FULL VIEW)
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneTrending">
-                <div class="ws-card">
-                    <div class="ws-card-header">
-                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
-                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
-                                <svg class="ws-anim-flame-star" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
-                                    <path d="M12 2l2.4 5.2 5.6.8-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.6-.8L12 2z" fill="url(#goldStarGradForYou)" stroke="#B45309" stroke-width="1.2" stroke-linejoin="round"></path>
-                                    <defs>
-                                        <linearGradient id="goldStarGradForYou" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#FDE047"/>
-                                            <stop offset="50%" stop-color="#F59E0B"/>
-                                            <stop offset="100%" stop-color="#D97706"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
-                                For You
-                            </h3>
-                        </div>
-                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
-                            <span>Browse Retail Store</span>
-                            <span style="font-size:1rem; line-height:1;">→</span>
-                        </a>
-                    </div>
-
-                    <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
-                        <?php foreach ($catalogProducts as $prod): 
-                            $badge_raw = $prod['badge'] ?? 'Bestseller';
-                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
-                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
-                        ?>
-                        <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
-                            <div class="card-image-wrap">
-                                <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
-                                </a>
-
-                                <!-- Status Badge -->
-                                <?php if (!empty($prod['badge'])): ?>
-                                <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
-                                <?php endif; ?>
-
-                                <!-- Wishlist Button -->
-                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
-                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                </button>
-
-                                <!-- Mobile Quick View Button -->
-                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-
-                                <!-- Desktop Quick View Overlay -->
-                                <div class="card-quick-view" aria-hidden="true">
-                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
-                                </div>
-
-                                <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
-                                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                </button>
-
-                                <!-- Category Box on Photo Bottom-Right Corner -->
-                                <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
-                            </div>
-
-                            <div class="card-body">
-                                <!-- Product Title -->
-                                <h2 class="card-name">
-                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
-                                        <?= htmlspecialchars($prod['name']) ?>
-                                    </a>
-                                </h2>
-
-                                <!-- Clean Text Info Row: Available Colors & Sizes -->
-                                <div class="card-info-text-row">
-                                    <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
-                                    <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
-                                </div>
-
-                                <div class="card-price-row">
-                                    <div class="card-price-stack">
-                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                        <?php if (!empty($prod['retail_price'])): ?>
-                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <!-- Direct Add to Cart '+' Button next to Sale Price -->
-                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
-                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
                 <!-- ═══ Check / Procure By Price Smart Box Slider Section ═══ -->
-                <div class="ws-card" style="margin-top:16px;">
+                <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
                             <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(217,119,6,0.18);">
@@ -5871,6 +5773,104 @@ $catalogProducts = [
 
                         </div>
                         <button class="ws-slider-nav-btn next" onclick="slidePriceBoxes(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                    </div>
+                </div>
+
+                <div class="ws-card" style="margin-top:16px;">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                                <svg class="ws-anim-flame-star" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2l2.4 5.2 5.6.8-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.6-.8L12 2z" fill="url(#goldStarGradForYou)" stroke="#B45309" stroke-width="1.2" stroke-linejoin="round"></path>
+                                    <defs>
+                                        <linearGradient id="goldStarGradForYou" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE047"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                                For You
+                            </h3>
+                        </div>
+                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                            <span>Browse Retail Store</span>
+                            <span style="font-size:1rem; line-height:1;">→</span>
+                        </a>
+                    </div>
+
+                    <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
+                        <?php foreach ($catalogProducts as $prod): 
+                            $badge_raw = $prod['badge'] ?? 'Bestseller';
+                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                        ?>
+                        <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
+                            <div class="card-image-wrap">
+                                <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
+                                </a>
+
+                                <!-- Status Badge -->
+                                <?php if (!empty($prod['badge'])): ?>
+                                <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
+                                <?php endif; ?>
+
+                                <!-- Wishlist Button -->
+                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
+                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                </button>
+
+                                <!-- Mobile Quick View Button -->
+                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+
+                                <!-- Desktop Quick View Overlay -->
+                                <div class="card-quick-view" aria-hidden="true">
+                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
+                                </div>
+
+                                <!-- Share Button on Photo (Directly Above Category Tag) -->
+                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
+                                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                </button>
+
+                                <!-- Category Box on Photo Bottom-Right Corner -->
+                                <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                            </div>
+
+                            <div class="card-body">
+                                <!-- Product Title -->
+                                <h2 class="card-name">
+                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                        <?= htmlspecialchars($prod['name']) ?>
+                                    </a>
+                                </h2>
+
+                                <!-- Clean Text Info Row: Available Colors & Sizes -->
+                                <div class="card-info-text-row">
+                                    <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
+                                    <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
+                                </div>
+
+                                <div class="card-price-row">
+                                    <div class="card-price-stack">
+                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
+                                        <?php if (!empty($prod['retail_price'])): ?>
+                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <!-- Direct Add to Cart '+' Button next to Sale Price -->
+                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </section>
