@@ -1713,6 +1713,65 @@ $catalogProducts = [
             font-size: 0.76rem;
         }
 
+        /* ── Luxury Animated 'New Order' Button ── */
+        .ws-btn-new-order {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #D4AF37 0%, #B45309 100%);
+            color: #FFFFFF !important;
+            font-weight: 800;
+            font-size: clamp(0.72rem, 1.2vw, 0.78rem);
+            padding: 5px 12px 5px 6px;
+            border-radius: 20px;
+            text-decoration: none;
+            box-shadow: 0 3px 12px rgba(180, 83, 9, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.2px;
+        }
+        .ws-btn-new-order::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-20deg);
+            animation: wsBtnShimmer 3s infinite;
+        }
+        @keyframes wsBtnShimmer {
+            0%, 70% { left: -100%; }
+            100% { left: 160%; }
+        }
+        .ws-btn-new-order:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 5px 16px rgba(180, 83, 9, 0.45);
+        }
+        .ws-new-order-icon-badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .ws-anim-plus-bounce {
+            width: 12px;
+            height: 12px;
+            stroke: #FFFFFF;
+            animation: plusPulseSpin 3s ease-in-out infinite;
+        }
+        @keyframes plusPulseSpin {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(90deg); }
+        }
+
         /* ── GST Radio Cards ── */
         .ws-gst-selector-grid {
             display: grid;
@@ -4895,9 +4954,14 @@ $catalogProducts = [
                                 New Catalogue
                             </h3>
                         </div>
-                        <a href="shop.php" class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:5px; box-shadow:0 3px 10px rgba(138,104,31,0.25);">
-                            <svg style="width:14px; height:14px; stroke:#FFFFFF; fill:none; stroke-width:2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Place Bulk Lot</span>
+                        <a href="shop.php" class="ws-btn-new-order">
+                            <span class="ws-new-order-icon-badge">
+                                <svg class="ws-anim-plus-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>New Order</span>
                         </a>
                     </div>
 
