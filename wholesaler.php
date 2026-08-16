@@ -2396,19 +2396,41 @@ $catalogProducts = [
             }
         }
 
-        /* ── Support Ticket Card ── */
+        /* ── Support Ticket Card & Animations ── */
         .ws-ticket-card {
             border: 1.5px solid var(--ws-border);
             border-radius: var(--ws-radius-md);
             padding: 14px;
             background: #FFFFFF;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            transition: all 0.25s ease;
+        }
+        .ws-ticket-card:hover {
+            border-color: var(--ws-gold-border);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(138, 104, 31, 0.08);
         }
         .ws-ticket-head {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 8px;
             margin-bottom: 6px;
+        }
+        .ws-pulse-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            margin-right: 4px;
+            animation: pulseGlow 1.8s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 0 5px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
 
         /* ── Printable PDF Bill Styling ── */
@@ -3822,22 +3844,26 @@ $catalogProducts = [
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneSupport">
                 <div class="ws-card">
-                    <div class="ws-card-header">
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div class="ws-card-title-group">
-                            <h3>B2B Wholesaler Concierge & Ticket Desk</h3>
+                            <h3 style="margin:0; font-size:1.05rem;">Wholesale Concierge & Support</h3>
                         </div>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20am%20a%20registered%20Wholesaler%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
-                            ⚡ Instant WhatsApp Stylist
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20am%20a%20registered%20Wholesaler%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm" style="display:inline-flex; align-items:center; gap:6px; font-weight:700;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
+                            <span>WhatsApp Concierge</span>
                         </a>
                     </div>
 
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(clamp(260px, 45vw, 320px), 1fr)); gap:16px;">
                         
                         <!-- Open New Ticket Form -->
-                        <div style="background:#FAF8F4; padding:16px; border-radius:12px; border:1.5px solid var(--ws-border);">
-                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:12px; font-family:var(--ws-font-serif);">
-                                ✍️ Create New Support Ticket
-                            </h4>
+                        <div style="background:#FAF8F4; padding:18px; border-radius:12px; border:1.5px solid var(--ws-border); box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--ws-border);">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
+                                    Create Support Ticket
+                                </h4>
+                            </div>
 
                             <form id="wsTicketForm" onsubmit="handleCreateTicket(event)">
                                 <div class="ws-form-group">
@@ -3845,6 +3871,7 @@ $catalogProducts = [
                                     <select id="ticketOrderId" class="ws-select" required>
                                         <option value="KLN-WS-8021">KLN-WS-8021 (Nilambari Silk 12 Pcs)</option>
                                         <option value="KLN-WS-7914">KLN-WS-7914 (Banarasi Zari 8 Pcs)</option>
+                                        <option value="KLN-WS-6540">KLN-WS-6540 (Bridal Velvet 4 Pcs)</option>
                                         <option value="General Inquiry">General / Custom Catalog Inquiry</option>
                                     </select>
                                 </div>
@@ -3852,9 +3879,10 @@ $catalogProducts = [
                                 <div class="ws-form-group">
                                     <label class="ws-label" for="ticketCategory">Issue Category <span class="req">*</span></label>
                                     <select id="ticketCategory" class="ws-select" required>
-                                        <option value="Delivery Delay">Logistics & Dispatch Inquiry</option>
+                                        <option value="Logistics & Dispatch">Logistics & Dispatch Inquiry</option>
                                         <option value="Bulk Pricing Negotiation">Bulk Lot Pricing & Discount Enquiry</option>
                                         <option value="GST Tax Invoice Issue">GST Input Tax Credit Invoice Query</option>
+                                        <option value="Quality Inspection">Sample & Quality Assurance Query</option>
                                     </select>
                                 </div>
 
@@ -3863,17 +3891,21 @@ $catalogProducts = [
                                     <textarea id="ticketMessage" class="ws-textarea" required placeholder="Describe your inquiry or order feedback in detail..."></textarea>
                                 </div>
 
-                                <button type="submit" class="ws-btn ws-btn-primary" style="width:100%;">
-                                    Submit Ticket
+                                <button type="submit" class="ws-btn ws-btn-primary" style="width:100%; height:42px; font-size:0.86rem; font-weight:700; justify-content:center; border-radius:8px; display:inline-flex; align-items:center; gap:8px;">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                    <span>Submit Support Ticket</span>
                                 </button>
                             </form>
                         </div>
 
                         <!-- Ticket History List -->
                         <div>
-                            <h4 style="font-size:0.95rem; font-weight:700; color:var(--ws-gold-primary); margin-bottom:12px; font-family:var(--ws-font-serif);">
-                                📋 My Open & Resolved Tickets
-                            </h4>
+                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--ws-border);">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
+                                    Support Ticket History
+                                </h4>
+                            </div>
 
                             <div class="ws-ticket-list" id="wsTicketList">
                                 <!-- Populated dynamically by JS -->
@@ -5734,20 +5766,30 @@ $catalogProducts = [
             list.innerHTML = '';
 
             activeTicketsList.forEach(function(t) {
-                var statusColor = t.status === 'Resolved' ? '#10B981' : '#F59E0B';
+                var isResolved = t.status === 'Resolved';
+                var statusColor = isResolved ? '#15803D' : '#D97706';
+                var statusBg = isResolved ? 'rgba(21, 128, 61, 0.08)' : 'rgba(217, 119, 6, 0.08)';
+                var statusBorder = isResolved ? 'rgba(21, 128, 61, 0.25)' : 'rgba(217, 119, 6, 0.25)';
+
                 var card = document.createElement('div');
                 card.className = 'ws-ticket-card';
                 card.innerHTML = `
                     <div class="ws-ticket-head">
-                        <span style="font-size:0.80rem; font-weight:800; color:var(--ws-gold-primary);">Ticket #${t.id}</span>
-                        <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:#F8FAFC; padding:2px 8px; border-radius:12px; border:1px solid ${statusColor};">${t.status}</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <strong class="ws-order-id-cell" style="font-size:0.86rem;">Ticket #${t.id}</strong>
+                            <span style="font-size:0.70rem; color:var(--ws-text-muted);">• Ref: <strong>${t.orderId}</strong></span>
+                        </div>
+                        <span style="font-size:0.70rem; font-weight:800; color:${statusColor}; background:${statusBg}; border:1px solid ${statusBorder}; padding:2px 8px; border-radius:12px; display:inline-flex; align-items:center;">
+                            ${isResolved ? '✓ ' + t.status : '<span class="ws-pulse-dot"></span> ' + t.status}
+                        </span>
                     </div>
-                    <div style="font-size:0.80rem; font-weight:700; color:var(--ws-text-main);">Order Ref: ${t.orderId} • ${t.category}</div>
-                    <p style="font-size:0.78rem; color:var(--ws-text-muted); margin-top:4px;">"${t.message}"</p>
-                    <div style="font-size:0.72rem; color:var(--ws-text-light); margin-top:6px; display:flex; justify-content:space-between;">
+                    <div style="font-size:0.82rem; font-weight:700; color:var(--ws-text-main); margin:4px 0 2px;">${t.category}</div>
+                    <p style="font-size:0.78rem; color:var(--ws-text-sub); margin:0; line-height:1.4; background:#FAF8F4; padding:8px 10px; border-radius:6px; border:1px solid var(--ws-border);">"${t.message}"</p>
+                    <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
                         <span>📅 ${t.date}</span>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:800; text-decoration:none;">
-                            WhatsApp Followup →
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
+                            <span>WhatsApp Followup →</span>
                         </a>
                     </div>
                 `;
