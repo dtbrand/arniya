@@ -4751,7 +4751,7 @@ $catalogProducts = [
                             <span class="ws-full-card-pill">Active</span>
                         </div>
                         <div class="ws-full-card-val" id="fullModalWalletBal">₹1,45,280</div>
-                        <div class="ws-full-card-sub">Prepaid: <strong>₹45,280</strong> • Credit: <strong>₹1.0L</strong></div>
+                        <div class="ws-full-card-sub">Refunded Balance: <strong>₹45,280</strong></div>
                     </div>
 
                     <!-- Silk Reward Coins Card -->
@@ -4761,10 +4761,10 @@ $catalogProducts = [
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><circle cx="12" cy="12" r="9" fill="#F59E0B" stroke="#D97706" stroke-width="1.2"></circle><circle cx="12" cy="12" r="6.5" stroke="#FFFFFF" stroke-dasharray="2 1" stroke-width="0.8"></circle><path d="M10 8h4M10 11h3.5M10 8v8M12.5 11c1.4 0 1.8 1 1.8 1.8s-.4 1.8-1.8 1.8h-2.5" stroke="#78350F" stroke-width="1.3" stroke-linecap="round"></path></svg>
                                 <span>Silk Coins</span>
                             </div>
-                            <span class="ws-full-card-pill coin">1 Coin = ₹1</span>
+                            <span class="ws-full-card-pill coin">50 Coins = ₹1</span>
                         </div>
                         <div class="ws-full-card-val gold" id="fullModalCoinsBal">3,850 Coins</div>
-                        <div class="ws-full-card-sub">Worth <strong>₹3,850</strong> Cash Off</div>
+                        <div class="ws-full-card-sub">Worth <strong>₹77</strong> Cash Discount</div>
                     </div>
                 </div>
 
