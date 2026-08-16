@@ -610,7 +610,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     }
 }
 
-/* Swipeable Track */
+/* Swipeable Track with Hand Scroll & Mouse Drag */
 .pdp-slider-track {
     display: flex;
     width: 100%;
@@ -621,8 +621,46 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     touch-action: pan-y pinch-zoom;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
 }
 .pdp-slider-track::-webkit-scrollbar { display: none; }
+.pdp-slider-track.dragging, .pdp-slider-track:active {
+    cursor: grabbing;
+}
+
+/* Gallery Pagination Dots (Mobile) */
+.pdp-gallery-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+.pdp-gallery-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--soft-platinum);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.pdp-gallery-dot.active {
+    width: 18px;
+    border-radius: 8px;
+    background: var(--dark-gold);
+}
+
+.pdp-reviews-track, .pdp-rel-track {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.pdp-reviews-track.dragging, .pdp-reviews-track:active,
+.pdp-rel-track.dragging, .pdp-rel-track:active {
+    cursor: grabbing;
+}
 
 .pdp-slide {
     flex: 0 0 100%;
@@ -2690,6 +2728,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= count($galleryImages) ?></div>
             </div>
 
+            <!-- Mobile & Desktop Pagination Dots -->
+            <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
+
             <!-- Multi-Photo Thumbnails -->
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
                 <?php foreach ($galleryImages as $index => $img): ?>
@@ -3361,26 +3402,48 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }, 2200);
     };
 
-    // Gallery Slider Controls
+    // ═════════════════════════════════════════════════════════════
+    // SMART HAND SCROLLING & AUTO-SLIDER (MAIN PRODUCT GALLERY)
+    // ═════════════════════════════════════════════════════════════
     var track = document.getElementById('pdpSliderTrack');
     var counter = document.getElementById('pdpSlideCounter');
+    var dotsWrap = document.getElementById('pdpGalleryDots');
     var totalSlides = <?= count($galleryImages) ?>;
     var currentSlideIdx = 0;
+    var galleryAutoTimer = null;
+    var galleryResumeTimeout = null;
+
+    // Generate Gallery Dots
+    function buildGalleryDots() {
+        if (!dotsWrap) return;
+        dotsWrap.innerHTML = '';
+        for (var i = 0; i < totalSlides; i++) {
+            var dot = document.createElement('div');
+            dot.className = 'pdp-gallery-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('data-idx', i);
+            dot.onclick = (function(idx) {
+                return function() {
+                    window.goToSlide(idx);
+                };
+            })(i);
+            dotsWrap.appendChild(dot);
+        }
+    }
+    buildGalleryDots();
 
     window.goToSlide = function(idx) {
         if (!track) return;
-        currentSlideIdx = idx;
+        currentSlideIdx = ((idx % totalSlides) + totalSlides) % totalSlides;
         var width = track.clientWidth;
-        track.scrollTo({ left: idx * width, behavior: 'smooth' });
-        updateActiveThumbnail(idx);
-        if (counter) counter.textContent = (idx + 1) + ' / ' + totalSlides;
+        track.scrollTo({ left: currentSlideIdx * width, behavior: 'smooth' });
+        updateActiveThumbnail(currentSlideIdx);
+        updateActiveDots(currentSlideIdx);
+        if (counter) counter.textContent = (currentSlideIdx + 1) + ' / ' + totalSlides;
+        restartGalleryAutoTimer();
     };
 
     window.slidePdpGallery = function(delta) {
-        var next = currentSlideIdx + delta;
-        if (next < 0) next = totalSlides - 1;
-        if (next >= totalSlides) next = 0;
-        window.goToSlide(next);
+        window.goToSlide(currentSlideIdx + delta);
     };
 
     function updateActiveThumbnail(idx) {
@@ -3389,8 +3452,139 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         });
     }
 
-    // Touch Swipe scroll sync listener for Main Gallery
+    function updateActiveDots(idx) {
+        if (!dotsWrap) return;
+        dotsWrap.querySelectorAll('.pdp-gallery-dot').forEach(function(dot, i) {
+            dot.classList.toggle('active', i === idx);
+        });
+    }
+
+    function startGalleryAutoTimer() {
+        if (galleryAutoTimer) clearInterval(galleryAutoTimer);
+        galleryAutoTimer = setInterval(function() {
+            window.slidePdpGallery(1);
+        }, 3600);
+    }
+
+    function pauseGalleryAutoTimer() {
+        if (galleryAutoTimer) {
+            clearInterval(galleryAutoTimer);
+            galleryAutoTimer = null;
+        }
+        if (galleryResumeTimeout) {
+            clearTimeout(galleryResumeTimeout);
+            galleryResumeTimeout = null;
+        }
+    }
+
+    function restartGalleryAutoTimer() {
+        pauseGalleryAutoTimer();
+        galleryResumeTimeout = setTimeout(startGalleryAutoTimer, 3500);
+    }
+
     if (track) {
+        startGalleryAutoTimer();
+
+        // Pause on hover
+        var sliderBox = document.getElementById('pdpGallerySlider');
+        if (sliderBox) {
+            sliderBox.addEventListener('mouseenter', pauseGalleryAutoTimer);
+            sliderBox.addEventListener('mouseleave', startGalleryAutoTimer);
+        }
+
+        // Smart Touch Swipe Hand Scrolling
+        var isTouchDrag = false;
+        var touchStartX = 0, touchStartY = 0;
+        var touchCurrentX = 0, touchCurrentY = 0;
+        var touchStartScroll = 0;
+        var isHorizontalSwipe = false;
+
+        track.addEventListener('touchstart', function(e) {
+            pauseGalleryAutoTimer();
+            isTouchDrag = true;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchCurrentX = touchStartX;
+            touchCurrentY = touchStartY;
+            touchStartScroll = track.scrollLeft;
+            isHorizontalSwipe = false;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', function(e) {
+            if (!isTouchDrag) return;
+            touchCurrentX = e.touches[0].clientX;
+            touchCurrentY = e.touches[0].clientY;
+            var diffX = touchCurrentX - touchStartX;
+            var diffY = touchCurrentY - touchStartY;
+
+            if (!isHorizontalSwipe) {
+                if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
+                    if (Math.abs(diffX) >= Math.abs(diffY)) {
+                        isHorizontalSwipe = true;
+                    } else {
+                        isTouchDrag = false;
+                        return; // Normal vertical page scrolling
+                    }
+                }
+            }
+
+            if (isHorizontalSwipe) {
+                if (e.cancelable) e.preventDefault();
+                track.scrollLeft = touchStartScroll - diffX;
+            }
+        }, { passive: false });
+
+        track.addEventListener('touchend', function(e) {
+            if (isTouchDrag && isHorizontalSwipe) {
+                var diffX = touchCurrentX - touchStartX;
+                if (diffX < -40) {
+                    window.slidePdpGallery(1);
+                } else if (diffX > 40) {
+                    window.slidePdpGallery(-1);
+                } else {
+                    window.goToSlide(currentSlideIdx);
+                }
+            }
+            isTouchDrag = false;
+            isHorizontalSwipe = false;
+            restartGalleryAutoTimer();
+        }, { passive: true });
+
+        // Mouse Dragging on Desktop
+        var isMouseDrag = false;
+        var mouseStartX = 0;
+        var mouseStartScroll = 0;
+
+        track.addEventListener('mousedown', function(e) {
+            pauseGalleryAutoTimer();
+            isMouseDrag = true;
+            mouseStartX = e.clientX;
+            mouseStartScroll = track.scrollLeft;
+            track.classList.add('dragging');
+        });
+
+        window.addEventListener('mousemove', function(e) {
+            if (!isMouseDrag) return;
+            var diffX = e.clientX - mouseStartX;
+            track.scrollLeft = mouseStartScroll - diffX;
+        });
+
+        window.addEventListener('mouseup', function(e) {
+            if (!isMouseDrag) return;
+            isMouseDrag = false;
+            track.classList.remove('dragging');
+            var diffX = e.clientX - mouseStartX;
+            if (diffX < -40) {
+                window.slidePdpGallery(1);
+            } else if (diffX > 40) {
+                window.slidePdpGallery(-1);
+            } else {
+                window.goToSlide(currentSlideIdx);
+            }
+            restartGalleryAutoTimer();
+        });
+
+        // Scroll listener for syncing counter and dots
         track.addEventListener('scroll', function() {
             var width = track.clientWidth;
             if (width > 0) {
@@ -3398,6 +3592,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 if (idx !== currentSlideIdx && idx >= 0 && idx < totalSlides) {
                     currentSlideIdx = idx;
                     updateActiveThumbnail(idx);
+                    updateActiveDots(idx);
                     if (counter) counter.textContent = (idx + 1) + ' / ' + totalSlides;
                 }
             }
@@ -3865,10 +4060,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         window.rebuildReviewDots();
     };
 
-    // ════ AUTO-SLIDER CONTROLLER FOR CUSTOMER REVIEWS ════
+    // ═════════════════════════════════════════════════════════════
+    // SMART HAND SCROLLING & AUTO-SLIDER (CUSTOMER REVIEWS)
+    // ═════════════════════════════════════════════════════════════
     var revTrack = document.getElementById('pdpReviewsTrack');
     var revDotsWrap = document.getElementById('pdpRevDots');
     var revAutoSlideTimer = null;
+    var revResumeTimeout = null;
 
     window.rebuildReviewDots = function() {
         if (!revDotsWrap || !revTrack) return;
@@ -3884,6 +4082,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 var card = visibleCards[idx];
                 if (card) {
                     revTrack.scrollTo({ left: card.offsetLeft - revTrack.offsetLeft, behavior: 'smooth' });
+                    restartRevAutoSlide();
                 }
             };
             revDotsWrap.appendChild(dot);
@@ -3894,7 +4093,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (!revTrack) return;
         var firstCard = revTrack.querySelector('.pdp-review-card');
         var cardWidth = firstCard ? (firstCard.clientWidth + 16) : 320;
-        
         var maxScroll = revTrack.scrollWidth - revTrack.clientWidth;
         var newLeft = revTrack.scrollLeft + (direction * cardWidth);
 
@@ -3911,7 +4109,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (revAutoSlideTimer) clearInterval(revAutoSlideTimer);
         revAutoSlideTimer = setInterval(function() {
             window.slidePdpReviews(1);
-        }, 3800);
+        }, 4200);
     }
 
     function pauseReviewAutoSlide() {
@@ -3919,22 +4117,99 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             clearInterval(revAutoSlideTimer);
             revAutoSlideTimer = null;
         }
+        if (revResumeTimeout) {
+            clearTimeout(revResumeTimeout);
+            revResumeTimeout = null;
+        }
+    }
+
+    function restartRevAutoSlide() {
+        pauseReviewAutoSlide();
+        revResumeTimeout = setTimeout(startReviewAutoSlide, 3500);
     }
 
     if (revTrack) {
         window.rebuildReviewDots();
         startReviewAutoSlide();
 
-        // Pause on hover or touch
+        // Pause on hover
         var carouselWrap = document.getElementById('pdpRevCarouselWrap');
         if (carouselWrap) {
             carouselWrap.addEventListener('mouseenter', pauseReviewAutoSlide);
             carouselWrap.addEventListener('mouseleave', startReviewAutoSlide);
-            carouselWrap.addEventListener('touchstart', pauseReviewAutoSlide, { passive: true });
-            carouselWrap.addEventListener('touchend', function() {
-                setTimeout(startReviewAutoSlide, 3000);
-            }, { passive: true });
         }
+
+        // Smart Touch Hand Scrolling
+        var isRevTouch = false;
+        var revTouchStartX = 0, revTouchStartY = 0;
+        var revTouchCurrentX = 0;
+        var revTouchStartScroll = 0;
+        var isRevHorizontal = false;
+
+        revTrack.addEventListener('touchstart', function(e) {
+            pauseReviewAutoSlide();
+            isRevTouch = true;
+            revTouchStartX = e.touches[0].clientX;
+            revTouchStartY = e.touches[0].clientY;
+            revTouchCurrentX = revTouchStartX;
+            revTouchStartScroll = revTrack.scrollLeft;
+            isRevHorizontal = false;
+        }, { passive: true });
+
+        revTrack.addEventListener('touchmove', function(e) {
+            if (!isRevTouch) return;
+            revTouchCurrentX = e.touches[0].clientX;
+            var diffX = revTouchCurrentX - revTouchStartX;
+            var diffY = e.touches[0].clientY - revTouchStartY;
+
+            if (!isRevHorizontal) {
+                if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
+                    if (Math.abs(diffX) >= Math.abs(diffY)) {
+                        isRevHorizontal = true;
+                    } else {
+                        isRevTouch = false;
+                        return;
+                    }
+                }
+            }
+
+            if (isRevHorizontal) {
+                if (e.cancelable) e.preventDefault();
+                revTrack.scrollLeft = revTouchStartScroll - diffX;
+            }
+        }, { passive: false });
+
+        revTrack.addEventListener('touchend', function() {
+            isRevTouch = false;
+            isRevHorizontal = false;
+            restartRevAutoSlide();
+        }, { passive: true });
+
+        // Mouse Drag on Desktop
+        var isRevMouse = false;
+        var revMouseStartX = 0;
+        var revMouseStartScroll = 0;
+
+        revTrack.addEventListener('mousedown', function(e) {
+            pauseReviewAutoSlide();
+            isRevMouse = true;
+            revMouseStartX = e.clientX;
+            revMouseStartScroll = revTrack.scrollLeft;
+            revTrack.classList.add('dragging');
+        });
+
+        window.addEventListener('mousemove', function(e) {
+            if (!isRevMouse) return;
+            var diffX = e.clientX - revMouseStartX;
+            revTrack.scrollLeft = revMouseStartScroll - diffX;
+        });
+
+        window.addEventListener('mouseup', function() {
+            if (!isRevMouse) return;
+            isRevMouse = false;
+            revTrack.classList.remove('dragging');
+            restartRevAutoSlide();
+        });
 
         // Sync review dots on scroll
         revTrack.addEventListener('scroll', function() {
@@ -3949,10 +4224,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         }, { passive: true });
     }
 
-    // ════ AUTO-SLIDER CONTROLLER FOR RELATED PRODUCTS ════
+    // ═════════════════════════════════════════════════════════════
+    // SMART HAND SCROLLING & AUTO-SLIDER (YOU MAY ALSO ADMIRE)
+    // ═════════════════════════════════════════════════════════════
     var relTrack = document.getElementById('pdpRelTrack');
     var relDotsWrap = document.getElementById('pdpRelDots');
     var relAutoSlideTimer = null;
+    var relResumeTimeout = null;
 
     window.rebuildRelDots = function() {
         if (!relDotsWrap || !relTrack) return;
@@ -3969,6 +4247,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                     var targetCard = cards[idx * step] || cards[cards.length - 1];
                     if (targetCard) {
                         relTrack.scrollTo({ left: targetCard.offsetLeft - relTrack.offsetLeft, behavior: 'smooth' });
+                        restartRelAutoSlide();
                     }
                 };
                 relDotsWrap.appendChild(dot);
@@ -3981,7 +4260,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         var firstCard = relTrack.querySelector('.pdp-rel-card');
         var cardWidth = firstCard ? (firstCard.clientWidth + 12) : 200;
         var scrollAmount = cardWidth * (window.innerWidth <= 767 ? 2 : 3);
-        
         var maxScroll = relTrack.scrollWidth - relTrack.clientWidth;
         var newLeft = relTrack.scrollLeft + (direction * scrollAmount);
 
@@ -3998,7 +4276,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (relAutoSlideTimer) clearInterval(relAutoSlideTimer);
         relAutoSlideTimer = setInterval(function() {
             window.slidePdpRelated(1);
-        }, 4500);
+        }, 4600);
     }
 
     function pauseRelAutoSlide() {
@@ -4006,6 +4284,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             clearInterval(relAutoSlideTimer);
             relAutoSlideTimer = null;
         }
+        if (relResumeTimeout) {
+            clearTimeout(relResumeTimeout);
+            relResumeTimeout = null;
+        }
+    }
+
+    function restartRelAutoSlide() {
+        pauseRelAutoSlide();
+        relResumeTimeout = setTimeout(startRelAutoSlide, 3500);
     }
 
     if (relTrack) {
@@ -4016,11 +4303,79 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         if (relWrap) {
             relWrap.addEventListener('mouseenter', pauseRelAutoSlide);
             relWrap.addEventListener('mouseleave', startRelAutoSlide);
-            relWrap.addEventListener('touchstart', pauseRelAutoSlide, { passive: true });
-            relWrap.addEventListener('touchend', function() {
-                setTimeout(startRelAutoSlide, 3000);
-            }, { passive: true });
         }
+
+        // Smart Touch Hand Scrolling
+        var isRelTouch = false;
+        var relTouchStartX = 0, relTouchStartY = 0;
+        var relTouchCurrentX = 0;
+        var relTouchStartScroll = 0;
+        var isRelHorizontal = false;
+
+        relTrack.addEventListener('touchstart', function(e) {
+            pauseRelAutoSlide();
+            isRelTouch = true;
+            relTouchStartX = e.touches[0].clientX;
+            relTouchStartY = e.touches[0].clientY;
+            relTouchCurrentX = relTouchStartX;
+            relTouchStartScroll = relTrack.scrollLeft;
+            isRelHorizontal = false;
+        }, { passive: true });
+
+        relTrack.addEventListener('touchmove', function(e) {
+            if (!isRelTouch) return;
+            relTouchCurrentX = e.touches[0].clientX;
+            var diffX = relTouchCurrentX - relTouchStartX;
+            var diffY = e.touches[0].clientY - relTouchStartY;
+
+            if (!isRelHorizontal) {
+                if (Math.abs(diffX) > 6 || Math.abs(diffY) > 6) {
+                    if (Math.abs(diffX) >= Math.abs(diffY)) {
+                        isRelHorizontal = true;
+                    } else {
+                        isRelTouch = false;
+                        return;
+                    }
+                }
+            }
+
+            if (isRelHorizontal) {
+                if (e.cancelable) e.preventDefault();
+                relTrack.scrollLeft = relTouchStartScroll - diffX;
+            }
+        }, { passive: false });
+
+        relTrack.addEventListener('touchend', function() {
+            isRelTouch = false;
+            isRelHorizontal = false;
+            restartRelAutoSlide();
+        }, { passive: true });
+
+        // Mouse Drag on Desktop
+        var isRelMouse = false;
+        var relMouseStartX = 0;
+        var relMouseStartScroll = 0;
+
+        relTrack.addEventListener('mousedown', function(e) {
+            pauseRelAutoSlide();
+            isRelMouse = true;
+            relMouseStartX = e.clientX;
+            relMouseStartScroll = relTrack.scrollLeft;
+            relTrack.classList.add('dragging');
+        });
+
+        window.addEventListener('mousemove', function(e) {
+            if (!isRelMouse) return;
+            var diffX = e.clientX - relMouseStartX;
+            relTrack.scrollLeft = relMouseStartScroll - diffX;
+        });
+
+        window.addEventListener('mouseup', function() {
+            if (!isRelMouse) return;
+            isRelMouse = false;
+            relTrack.classList.remove('dragging');
+            restartRelAutoSlide();
+        });
 
         // Sync related dots on scroll
         relTrack.addEventListener('scroll', function() {
