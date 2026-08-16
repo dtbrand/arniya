@@ -5343,18 +5343,13 @@ $catalogProducts = [
          MODAL 2.75: VIP TIER ROADMAP & BENEFITS
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsVipTierModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box" style="max-width: 580px;">
+        <div class="ws-modal-box" style="max-width: 540px;">
             <div class="ws-modal-header">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Back" title="Back" style="width:28px; height:28px;">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    </button>
-                    <div style="display:flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
-                        <h3 class="ws-modal-title" style="margin:0; font-size:0.92rem; font-weight:800;">
-                            <span>VIP Account Tier Roadmap</span>
-                        </h3>
-                    </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                    <h3 class="ws-modal-title" style="margin:0; font-size:0.92rem; font-weight:800;">
+                        <span>VIP Account Tier Roadmap</span>
+                    </h3>
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Close Modal" style="width:28px; height:28px;">&times;</button>
             </div>
@@ -5447,11 +5442,6 @@ $catalogProducts = [
                         <span class="ws-tier-badge platinum">TOP TIER</span>
                     </div>
                 </div>
-            </div>
-            <div class="ws-modal-footer" style="padding:10px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
-                <button class="ws-btn ws-btn-secondary" style="width:100%; height:38px; justify-content:center; font-size:0.78rem; font-weight:700;" onclick="closeVipTierModal()">
-                    <span>Close Roadmap</span>
-                </button>
             </div>
         </div>
     </div>
