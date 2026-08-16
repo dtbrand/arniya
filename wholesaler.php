@@ -2803,6 +2803,26 @@ $catalogProducts = [
         .ws-txn-badge.amber { background: #FEF3C7; color: #D97706; }
         .ws-txn-badge.blue { background: #DBEAFE; color: #1D4ED8; }
 
+        /* Animated Download & Withdraw Action Icons */
+        .ws-anim-dl-icon {
+            width: 15px;
+            height: 15px;
+            animation: dlBounce 2s ease-in-out infinite;
+        }
+        @keyframes dlBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(2.5px); }
+        }
+        .ws-anim-withdraw-icon {
+            width: 15px;
+            height: 15px;
+            animation: withdrawPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes withdrawPulse {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.12) translate(1px, -1px); }
+        }
+
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
             background: #FFFFFF;
@@ -4738,15 +4758,18 @@ $catalogProducts = [
                     </div>
                 </div>
 
-                <!-- Action Bar -->
+                <!-- Action Bar: Download Statement & Withdraw Balance with Animated SVGs -->
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
-                    <button class="ws-btn ws-btn-primary" style="height:36px; justify-content:center; font-size:0.76rem; font-weight:800;" onclick="closeFullWalletModal(); openWalletTopupModal();">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>Top-Up Balance</span>
+                    <!-- Button 1: Download Statement -->
+                    <button class="ws-btn ws-btn-primary" style="height:38px; justify-content:center; font-size:0.75rem; font-weight:800; padding:0 8px;" onclick="window.showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
+                        <svg class="ws-anim-dl-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Download Statement</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary" style="height:36px; justify-content:center; font-size:0.76rem; font-weight:700;" onclick="requestCreditLimitBoost()">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        <span>Request Limit Boost</span>
+
+                    <!-- Button 2: Withdraw Balance -->
+                    <button class="ws-btn ws-btn-secondary" style="height:38px; justify-content:center; font-size:0.75rem; font-weight:700; padding:0 8px; border:1.5px solid rgba(197, 168, 89, 0.6); color:var(--ws-gold-primary);" onclick="requestWalletWithdrawal()">
+                        <svg class="ws-anim-withdraw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:5px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 9v6M9 12h6"></path><path d="M16 8l3-3M19 8V5h-3"></path></svg>
+                        <span>Withdraw Balance</span>
                     </button>
                 </div>
 
@@ -7094,6 +7117,10 @@ $catalogProducts = [
 
         window.requestCreditLimitBoost = function() {
             window.showWsToast('⚡ Credit Limit Boost Request submitted to Kalaniketan Credit Desk!');
+        };
+
+        window.requestWalletWithdrawal = function() {
+            window.showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
         /* ── Wholesale Cart Badge Synchronization ── */
