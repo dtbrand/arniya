@@ -3266,7 +3266,7 @@ $catalogProducts = [
 
                 <!-- ── Modern Animated B2B Wallet & Coins Strip ── -->
                 <div class="ws-wallet-strip">
-                    <!-- Left: Total Balance & Total Coins Metrics -->
+                    <!-- Left: Total Balance & Total Coins Metrics (Only Core Values) -->
                     <div class="ws-wallet-metrics-group">
                         <!-- Metric 1: Total Balance -->
                         <div class="ws-wallet-metric-item">
@@ -3280,7 +3280,6 @@ $catalogProducts = [
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Balance</span>
                                 <span class="ws-wallet-metric-value" id="walletAvailableBalance">₹1,45,280</span>
-                                <span class="ws-wallet-metric-sub">Cash ₹45k • Credit ₹1.0L</span>
                             </div>
                         </div>
 
@@ -3294,8 +3293,7 @@ $catalogProducts = [
                             </div>
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Coins</span>
-                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins">3,850 Coins</span>
-                                <span class="ws-wallet-metric-sub">Worth ₹3,850 Cash Off</span>
+                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins">3,850</span>
                             </div>
                         </div>
                     </div>
