@@ -286,6 +286,16 @@ $catalogProducts = [
         }
 
         /* ── Luxury Search Bar Design System (Reports, Orders, Catalog) ── */
+        .ws-filter-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1.5px solid var(--ws-border);
+        }
         .ws-luxury-search-wrap {
             position: relative;
             width: clamp(240px, 34vw, 360px);
@@ -2660,13 +2670,35 @@ $catalogProducts = [
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 8px;
             }
+            .ws-filter-controls-row {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+            }
+            .ws-filter-controls-row .ws-luxury-search-wrap,
             .ws-luxury-search-wrap {
                 width: 100% !important;
-                margin-top: 6px;
+                max-width: 100% !important;
+                margin-top: 4px;
+                flex: none !important;
+            }
+            .ws-filter-controls-row .ws-orders-filter-btns,
+            .ws-filter-controls-row .ws-filter-pill-group {
+                width: 100% !important;
+                display: flex !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+                flex-wrap: nowrap !important;
+            }
+            .ws-filter-controls-row .ws-orders-filter-btns::-webkit-scrollbar,
+            .ws-filter-controls-row .ws-filter-pill-group::-webkit-scrollbar {
+                display: none;
             }
             .ws-luxury-search-input {
-                height: 40px;
-                font-size: 0.82rem;
+                height: 42px;
+                font-size: 0.84rem;
             }
             .ws-mob-order-card {
                 padding: 12px;
@@ -3499,18 +3531,20 @@ $catalogProducts = [
                     </div>
 
                     <!-- Search & Filter Controls -->
-                    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
-                        <div class="ws-luxury-search-wrap" style="flex:1; max-width:360px;">
-                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier..." oninput="filterOrdersTable()">
-                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
+                    <div class="ws-filter-controls-row">
+                        <!-- Status Filter Pills -->
+                        <div class="ws-orders-filter-btns" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
+                            <button class="ws-rep-filter-btn active" onclick="setOrderStatusFilter('all', this)">All Orders</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
+                            <button class="ws-rep-filter-btn" onclick="setOrderStatusFilter('Processing', this)">Processing</button>
                         </div>
 
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm active" onclick="setOrderStatusFilter('all', this)">All</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Processing', this)">Processing</button>
+                        <!-- Search Bar -->
+                        <div class="ws-luxury-search-wrap">
+                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier, AWB..." oninput="filterOrdersTable()">
+                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
                         </div>
                     </div>
 
@@ -3589,8 +3623,8 @@ $catalogProducts = [
                     </div>
 
                     <!-- Filter Pills & Luxury Search Bar -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1.5px solid var(--ws-border);">
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <div class="ws-filter-controls-row">
+                        <div class="ws-filter-pill-group" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
                             <button class="ws-rep-filter-btn active" onclick="filterReportsByCategory('all', this)">All Categories</button>
                             <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('saree', this)">Sarees</button>
                             <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('lehenga', this)">Lehengas</button>
@@ -3599,7 +3633,7 @@ $catalogProducts = [
                         </div>
                         <div class="ws-luxury-search-wrap">
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU..." oninput="handleReportSearch(this.value)">
+                            <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU, lot..." oninput="handleReportSearch(this.value)">
                             <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search">✕</button>
                         </div>
                     </div>
