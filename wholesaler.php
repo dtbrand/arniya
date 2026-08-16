@@ -12,6 +12,257 @@
  */
 
 $catalogProducts = [
+    // ── Tier: Under ₹300 (Daily Wear & High Resell Margin) ──
+    [
+        'id'              => 101,
+        'sku'             => 'KLN-KT-101',
+        'hsn'             => '6204',
+        'name'            => 'Jaipuri Printed Cotton Kurti',
+        'category'        => 'Kurtis',
+        'retail_price'    => 599,
+        'wholesale_price' => 249,
+        'moq'             => 24,
+        'image'           => 'images/product7.png',
+        'badge'           => 'Super Value',
+        'badge_icon'      => '🚀',
+        'color'           => 'Indigo Blue',
+        'fabric'          => '100% Pure Cotton',
+        'in_stock'        => 320,
+        'tier_prices'     => '24-49 pcs: ₹249 | 50-99 pcs: ₹229 | 100+ pcs: ₹199'
+    ],
+    [
+        'id'              => 102,
+        'sku'             => 'KLN-DP-102',
+        'hsn'             => '5208',
+        'name'            => 'Bandhani Silk Touch Dupatta',
+        'category'        => 'Dupattas',
+        'retail_price'    => 449,
+        'wholesale_price' => 189,
+        'moq'             => 30,
+        'image'           => 'images/product8.png',
+        'badge'           => 'Fast Selling',
+        'badge_icon'      => '⚡',
+        'color'           => 'Ruby Red',
+        'fabric'          => 'Art Silk Bandhani',
+        'in_stock'        => 450,
+        'tier_prices'     => '30-59 pcs: ₹189 | 60-119 pcs: ₹169 | 120+ pcs: ₹149'
+    ],
+    [
+        'id'              => 103,
+        'sku'             => 'KLN-KT-103',
+        'hsn'             => '6204',
+        'name'            => 'Rayon Floral Straight Kurti',
+        'category'        => 'Kurtis',
+        'retail_price'    => 699,
+        'wholesale_price' => 289,
+        'moq'             => 20,
+        'image'           => 'images/product9.png',
+        'badge'           => 'Bestseller',
+        'badge_icon'      => '🔥',
+        'color'           => 'Mustard Yellow',
+        'fabric'          => '14kg Heavy Rayon',
+        'in_stock'        => 280,
+        'tier_prices'     => '20-39 pcs: ₹289 | 40-79 pcs: ₹269 | 80+ pcs: ₹245'
+    ],
+
+    // ── Tier: Under ₹500 (Fancy Georgette & Festive Sets) ──
+    [
+        'id'              => 104,
+        'sku'             => 'KLN-KT-104',
+        'hsn'             => '6204',
+        'name'            => 'Chikan Embroidered Rayon Kurti',
+        'category'        => 'Kurtis',
+        'retail_price'    => 999,
+        'wholesale_price' => 399,
+        'moq'             => 18,
+        'image'           => 'images/product10.png',
+        'badge'           => 'Best Margin',
+        'badge_icon'      => '⚡',
+        'color'           => 'Pastel Mint',
+        'fabric'          => 'Lakhnavi Handwork Rayon',
+        'in_stock'        => 220,
+        'tier_prices'     => '18-35 pcs: ₹399 | 36-71 pcs: ₹369 | 72+ pcs: ₹339'
+    ],
+    [
+        'id'              => 105,
+        'sku'             => 'KLN-SR-105',
+        'hsn'             => '5407',
+        'name'            => 'Digital Floral Georgette Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 1299,
+        'wholesale_price' => 489,
+        'moq'             => 16,
+        'image'           => 'images/product12.png',
+        'badge'           => 'Trending',
+        'badge_icon'      => '🔥',
+        'color'           => 'Lavender Rose',
+        'fabric'          => '60gm Pure Georgette',
+        'in_stock'        => 260,
+        'tier_prices'     => '16-31 pcs: ₹489 | 32-63 pcs: ₹449 | 64+ pcs: ₹419'
+    ],
+
+    // ── Tier: Under ₹800 (Festive Organza & Chanderi) ──
+    [
+        'id'              => 106,
+        'sku'             => 'KLN-SR-106',
+        'hsn'             => '5007',
+        'name'            => 'Chanderi Silk Festive Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 1599,
+        'wholesale_price' => 649,
+        'moq'             => 12,
+        'image'           => 'images/product1.png',
+        'badge'           => 'Festive Hot',
+        'badge_icon'      => '✨',
+        'color'           => 'Peacock Green',
+        'fabric'          => 'Chanderi Zari Weave',
+        'in_stock'        => 190,
+        'tier_prices'     => '12-23 pcs: ₹649 | 24-47 pcs: ₹599 | 48+ pcs: ₹559'
+    ],
+    [
+        'id'              => 107,
+        'sku'             => 'KLN-SR-107',
+        'hsn'             => '5407',
+        'name'            => 'Organza Mirror Work Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 1899,
+        'wholesale_price' => 749,
+        'moq'             => 12,
+        'image'           => 'images/product2.png',
+        'badge'           => 'Party Wear',
+        'badge_icon'      => '💎',
+        'color'           => 'Blush Pink',
+        'fabric'          => 'Glass Organza Silk',
+        'in_stock'        => 170,
+        'tier_prices'     => '12-23 pcs: ₹749 | 24-47 pcs: ₹699 | 48+ pcs: ₹649'
+    ],
+
+    // ── Tier: Under ₹1,000 (Semi-Bridal & Jacquard Silk) ──
+    [
+        'id'              => 108,
+        'sku'             => 'KLN-SR-108',
+        'hsn'             => '5007',
+        'name'            => 'Banarasi Brocade Semi-Silk',
+        'category'        => 'Sarees',
+        'retail_price'    => 2499,
+        'wholesale_price' => 949,
+        'moq'             => 10,
+        'image'           => 'images/product3.png',
+        'badge'           => 'Bestseller',
+        'badge_icon'      => '⭐',
+        'color'           => 'Royal Maroon',
+        'fabric'          => 'Katan Art Silk',
+        'in_stock'        => 140,
+        'tier_prices'     => '10-19 pcs: ₹949 | 20-39 pcs: ₹889 | 40+ pcs: ₹829'
+    ],
+    [
+        'id'              => 109,
+        'sku'             => 'KLN-KT-109',
+        'hsn'             => '6204',
+        'name'            => 'Party Festive Sharara Suit Set',
+        'category'        => 'Kurtis',
+        'retail_price'    => 2699,
+        'wholesale_price' => 989,
+        'moq'             => 8,
+        'image'           => 'images/product5.png',
+        'badge'           => 'Festive Hot',
+        'badge_icon'      => '🔥',
+        'color'           => 'Teal Blue',
+        'fabric'          => 'Chanderi Gotapatti Work',
+        'in_stock'        => 125,
+        'tier_prices'     => '8-15 pcs: ₹989 | 16-31 pcs: ₹929 | 32+ pcs: ₹869'
+    ],
+
+    // ── Tier: Under ₹1,500 (Paithani & Dola Silk Meenakari) ──
+    [
+        'id'              => 110,
+        'sku'             => 'KLN-SR-110',
+        'hsn'             => '5007',
+        'name'            => 'Paithani Rich Pallu Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 3199,
+        'wholesale_price' => 1249,
+        'moq'             => 8,
+        'image'           => 'images/product1.png',
+        'badge'           => 'Boutique VIP',
+        'badge_icon'      => '💎',
+        'color'           => 'Bottle Green',
+        'fabric'          => 'Art Silk Peacock Pallu',
+        'in_stock'        => 110,
+        'tier_prices'     => '8-15 pcs: ₹1,249 | 16-31 pcs: ₹1,169 | 32+ pcs: ₹1,099'
+    ],
+    [
+        'id'              => 111,
+        'sku'             => 'KLN-SR-111',
+        'hsn'             => '5007',
+        'name'            => 'Pure Dola Silk Meenakari Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 3499,
+        'wholesale_price' => 1399,
+        'moq'             => 8,
+        'image'           => 'images/product2.png',
+        'badge'           => 'Royal VIP',
+        'badge_icon'      => '👑',
+        'color'           => 'Crimson Rani',
+        'fabric'          => 'Dola Silk with Meena Border',
+        'in_stock'        => 95,
+        'tier_prices'     => '8-15 pcs: ₹1,399 | 16-31 pcs: ₹1,299 | 32+ pcs: ₹1,219'
+    ],
+
+    // ── Tier: Under ₹2,000 (Royal Anarkali & Pure Kanjivaram) ──
+    [
+        'id'              => 5,
+        'sku'             => 'KLN-KT-005',
+        'hsn'             => '6204',
+        'name'            => 'Royal Anarkali Kurti Set',
+        'category'        => 'Kurtis',
+        'retail_price'    => 2799,
+        'wholesale_price' => 1799,
+        'moq'             => 10,
+        'image'           => 'images/product5.png',
+        'badge'           => 'Party Wear',
+        'badge_icon'      => '💎',
+        'color'           => 'Emerald Teal',
+        'fabric'          => 'Chanderi Cotton',
+        'in_stock'        => 180,
+        'tier_prices'     => '10-19 pcs: ₹1,799 | 20-39 pcs: ₹1,599 | 40+ pcs: ₹1,449'
+    ],
+    [
+        'id'              => 112,
+        'sku'             => 'KLN-SR-112',
+        'hsn'             => '5007',
+        'name'            => 'Pure Kanjivaram Bridal Art Silk',
+        'category'        => 'Sarees',
+        'retail_price'    => 4499,
+        'wholesale_price' => 1899,
+        'moq'             => 6,
+        'image'           => 'images/product3.png',
+        'badge'           => 'Royal Heritage',
+        'badge_icon'      => '👑',
+        'color'           => 'Copper Gold',
+        'fabric'          => 'Heavy Bridal Zari Silk',
+        'in_stock'        => 85,
+        'tier_prices'     => '6-11 pcs: ₹1,899 | 12-23 pcs: ₹1,779 | 24+ pcs: ₹1,659'
+    ],
+
+    // ── Premium Heritage Tier (Bridal & Handloom Masters) ──
+    [
+        'id'              => 4,
+        'sku'             => 'KLN-SR-004',
+        'hsn'             => '5407',
+        'name'            => 'Georgette Bloom Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 3299,
+        'wholesale_price' => 2199,
+        'moq'             => 8,
+        'image'           => 'images/product4.png',
+        'badge'           => 'Fast Selling',
+        'badge_icon'      => '⚡',
+        'color'           => 'Blush Peach',
+        'fabric'          => 'Pure Georgette',
+        'in_stock'        => 210,
+        'tier_prices'     => '8-15 pcs: ₹2,199 | 16-30 pcs: ₹1,999 | 31+ pcs: ₹1,799'
+    ],
     [
         'id'              => 1,
         'sku'             => 'KLN-SR-001',
@@ -62,40 +313,6 @@ $catalogProducts = [
         'fabric'          => 'Pure Mulberry Silk',
         'in_stock'        => 60,
         'tier_prices'     => '3-5 pcs: ₹8,499 | 6-11 pcs: ₹7,999 | 12+ pcs: ₹7,499'
-    ],
-    [
-        'id'              => 4,
-        'sku'             => 'KLN-SR-004',
-        'hsn'             => '5407',
-        'name'            => 'Georgette Bloom Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3299,
-        'wholesale_price' => 2199,
-        'moq'             => 8,
-        'image'           => 'images/product4.png',
-        'badge'           => 'Fast Selling',
-        'badge_icon'      => '⚡',
-        'color'           => 'Blush Peach',
-        'fabric'          => 'Pure Georgette',
-        'in_stock'        => 210,
-        'tier_prices'     => '8-15 pcs: ₹2,199 | 16-30 pcs: ₹1,999 | 31+ pcs: ₹1,799'
-    ],
-    [
-        'id'              => 5,
-        'sku'             => 'KLN-KT-005',
-        'hsn'             => '6204',
-        'name'            => 'Royal Anarkali Kurti Set',
-        'category'        => 'Kurtis',
-        'retail_price'    => 2799,
-        'wholesale_price' => 1799,
-        'moq'             => 10,
-        'image'           => 'images/product5.png',
-        'badge'           => 'Party Wear',
-        'badge_icon'      => '💎',
-        'color'           => 'Emerald Teal',
-        'fabric'          => 'Chanderi Cotton',
-        'in_stock'        => 180,
-        'tier_prices'     => '10-19 pcs: ₹1,799 | 20-39 pcs: ₹1,599 | 40+ pcs: ₹1,449'
     ],
     [
         'id'              => 6,
@@ -2495,10 +2712,15 @@ $catalogProducts = [
                 padding: 1.5px 5px !important;
                 margin-bottom: 6px !important;
             }
-            .ws-price-box-btn {
-                font-size: 0.64rem !important;
-                padding: 4.5px 6px !important;
-            }
+        .ws-price-box-card.active {
+            border-color: #B45309 !important;
+            background: linear-gradient(145deg, #FEF3C7 0%, #FDE68A 100%) !important;
+            box-shadow: 0 0 0 2.5px #B45309, 0 8px 24px rgba(180, 83, 9, 0.28) !important;
+            transform: translateY(-4px);
+        }
+        .ws-price-box-card.active .ws-price-box-btn {
+            background: #B45309 !important;
+            color: #FFFFFF !important;
         }
         .product-card:hover .card-img,
         .product-card:hover .ws-prod-img,
@@ -8095,13 +8317,82 @@ $catalogProducts = [
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
 
-        window.filterByPriceTier = function(maxPrice) {
-            if (typeof window.showWsToast === 'function') {
-                window.showWsToast('🔍 Filtering Wholesale Lots Under ₹' + Number(maxPrice).toLocaleString('en-IN') + '...');
+        var activePriceTier = null;
+
+        window.filterByPriceTier = function(maxPrice, cardElem) {
+            var cards = document.querySelectorAll('.ws-price-box-card');
+            
+            if (activePriceTier === maxPrice) {
+                // Clicking same tier again resets filter
+                activePriceTier = null;
+                cards.forEach(function(c) { c.classList.remove('active'); });
+                resetCatalogFilter();
+                if (typeof window.showWsToast === 'function') {
+                    window.showWsToast('✓ Showing All Available Wholesale Lots');
+                }
+                return;
             }
-            setTimeout(function() {
-                window.location.href = 'shop.php?max_price=' + maxPrice;
-            }, 500);
+
+            activePriceTier = maxPrice;
+            cards.forEach(function(c) { c.classList.remove('active'); });
+
+            if (cardElem) {
+                cardElem.classList.add('active');
+            } else {
+                cards.forEach(function(c) {
+                    if (c.textContent.indexOf('₹' + Number(maxPrice).toLocaleString('en-IN')) !== -1 || (c.getAttribute('onclick') && c.getAttribute('onclick').indexOf(String(maxPrice)) !== -1)) {
+                        c.classList.add('active');
+                    }
+                });
+            }
+
+            var tracks = ['wsForYouSliderTrack', 'wsTrendingSliderTrack'];
+            var matchCount = 0;
+
+            tracks.forEach(function(trackId) {
+                var track = document.getElementById(trackId);
+                if (!track) return;
+                var productCards = track.querySelectorAll('.product-card');
+                productCards.forEach(function(pCard) {
+                    var prodId = pCard.getAttribute('data-product-id');
+                    var pData = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(prodId); });
+                    var price = pData ? (Number(pData.wholesale_price) || Number(pData.price) || 0) : 0;
+                    if (price > 0 && price <= maxPrice) {
+                        pCard.style.display = 'flex';
+                        matchCount++;
+                    } else {
+                        pCard.style.display = 'none';
+                    }
+                });
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            });
+
+            if (typeof window.showWsToast === 'function') {
+                window.showWsToast('🏷️ Filter Active: Under ₹' + Number(maxPrice).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+            }
+
+            // Smooth scroll up to the catalog container
+            var forYouContainer = document.getElementById('wsForYouSliderTrack');
+            if (forYouContainer) {
+                forYouContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        };
+
+        window.resetCatalogFilter = function() {
+            activePriceTier = null;
+            document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
+            var tracks = ['wsForYouSliderTrack', 'wsTrendingSliderTrack'];
+            tracks.forEach(function(trackId) {
+                var track = document.getElementById(trackId);
+                if (!track) return;
+                track.querySelectorAll('.product-card').forEach(function(pCard) {
+                    pCard.style.display = 'flex';
+                });
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            });
+            if (typeof window.showWsToast === 'function') {
+                window.showWsToast('✓ Showing All Available Wholesale Lots');
+            }
         };
 
         /* ── Smart 1-Line Auto Slider Engine ── */
