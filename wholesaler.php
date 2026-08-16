@@ -2233,19 +2233,13 @@ $catalogProducts = [
 
         .card-image-wrap, .ws-prod-img-wrap {
             position: relative;
-            overflow: visible;
+            overflow: hidden;
             background: #FAF8F4;
             aspect-ratio: 3 / 3.75;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-        }
-        .card-image-wrap > a, .ws-prod-img-wrap > a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
             border-radius: 11px 11px 0 0;
         }
         .card-img, .ws-prod-img {
@@ -2256,29 +2250,42 @@ $catalogProducts = [
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* ── Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) ── */
+        /* ── Direct Add to Cart '+' Button (Integrated in Price Row) ── */
+        .card-price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .card-price-stack {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            flex-wrap: wrap;
+            flex: 1;
+            min-width: 0;
+        }
         .card-smart-add-cart-btn {
-            position: absolute;
-            bottom: -13px;
-            right: 8px;
-            width: clamp(26px, 7vw, 30px);
-            height: clamp(26px, 7vw, 30px);
+            width: clamp(24px, 6.5vw, 28px);
+            height: clamp(24px, 6.5vw, 28px);
+            min-width: clamp(24px, 6.5vw, 28px);
             border-radius: 50%;
             background: linear-gradient(135deg, #D4AF37 0%, #B45309 100%);
-            border: 2px solid #FFFFFF;
-            box-shadow: 0 3px 8px rgba(180, 83, 9, 0.42), 0 1px 3px rgba(0,0,0,0.12);
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 6px rgba(180, 83, 9, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             color: #FFFFFF;
             padding: 0;
+            flex-shrink: 0;
         }
         .card-smart-add-cart-btn:hover {
-            transform: scale(1.15) rotate(90deg);
-            box-shadow: 0 5px 15px rgba(180, 83, 9, 0.6);
+            transform: scale(1.14) rotate(90deg);
+            box-shadow: 0 4px 12px rgba(180, 83, 9, 0.55);
             background: linear-gradient(135deg, #F59E0B 0%, #92400E 100%);
         }
         .card-smart-add-cart-btn:active {
@@ -2287,12 +2294,12 @@ $catalogProducts = [
         .card-smart-add-cart-btn.added {
             background: #10B981 !important;
             border-color: #FFFFFF;
-            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.5);
-            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
+            transform: scale(1.08);
         }
         .card-smart-add-cart-btn svg {
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             stroke: #FFFFFF;
             stroke-width: 2.6;
             fill: none;
@@ -4791,11 +4798,6 @@ $catalogProducts = [
                                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                     </button>
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
-
-                                    <!-- Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) -->
-                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
-                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </button>
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-name">
@@ -4808,11 +4810,17 @@ $catalogProducts = [
                                         <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
                                     </div>
                                     <div class="card-price-row">
-                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                        <?php if (!empty($prod['retail_price'])): ?>
-                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
-                                        <?php endif; ?>
-                                        <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+                                        <div class="card-price-stack">
+                                            <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
+                                            <?php if (!empty($prod['retail_price'])): ?>
+                                            <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                            <?php endif; ?>
+                                            <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+                                        </div>
+                                        <!-- Direct Add to Cart '+' Button next to Sale Price -->
+                                        <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </button>
                                     </div>
                                 </div>
                             </article>
@@ -5389,11 +5397,6 @@ $catalogProducts = [
 
                                     <!-- Category Box on Photo Bottom-Right Corner -->
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
-
-                                    <!-- Floating Smart Direct Add to Cart '+' Button (Half In, Half Out) -->
-                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
-                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    </button>
                                 </div>
 
                                 <div class="card-body">
@@ -5411,11 +5414,17 @@ $catalogProducts = [
                                     </div>
 
                                     <div class="card-price-row">
-                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                        <?php if (!empty($prod['retail_price'])): ?>
-                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
-                                        <?php endif; ?>
-                                        <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+                                        <div class="card-price-stack">
+                                            <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
+                                            <?php if (!empty($prod['retail_price'])): ?>
+                                            <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                            <?php endif; ?>
+                                            <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+                                        </div>
+                                        <!-- Direct Add to Cart '+' Button next to Sale Price -->
+                                        <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </button>
                                     </div>
                                 </div>
                             </article>
