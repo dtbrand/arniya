@@ -407,6 +407,30 @@ $catalogProducts = [
             border: 1.5px solid #FFFFFF;
         }
 
+        .ws-hdr-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            border-radius: 9px;
+            background: #DC2626;
+            color: #FFFFFF;
+            font-size: 0.58rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            line-height: 1;
+        }
+        .ws-hdr-badge.gold {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+        }
+
         .ws-user-profile-btn {
             display: flex;
             align-items: center;
@@ -3811,13 +3835,6 @@ $catalogProducts = [
                 <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
 
-            <!-- Command Search Bar (Desktop) -->
-            <div class="ws-cmd-search-wrap">
-                <svg class="ws-cmd-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" class="ws-cmd-search-input" id="globalSearchInput" placeholder="Search order, product, HSN, invoice..." oninput="handleGlobalQuickSearch(this)">
-                <span class="ws-cmd-badge">⌘K</span>
-            </div>
-
             <!-- Mobile Brand Title (Center/Left) -->
             <div class="ws-mobile-header-brand">
                 <span class="ws-mob-logo-text">KALANIKETAN B2B</span>
@@ -3825,6 +3842,18 @@ $catalogProducts = [
         </div>
 
         <div class="ws-header-right">
+            <!-- Wishlist Button -->
+            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Wholesale Wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); else window.location.href='wishlist.php';" aria-label="Wholesale Wishlist">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="ws-hdr-badge" id="headerWishlistBadge" style="display:none;">0</span>
+            </button>
+
+            <!-- Cart Button -->
+            <button class="ws-hdr-icon-btn" id="headerCartBtn" title="Wholesale Cart" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer(); else window.location.href='cart.php';" aria-label="Wholesale Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span class="ws-hdr-badge gold" id="headerCartBadge" style="display:none;">0</span>
+            </button>
+
             <!-- Notifications Bell -->
             <button class="ws-hdr-icon-btn" title="Notifications" onclick="window.showWsToast('2 new consignment dispatches in transit')">
                 <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -3947,19 +3976,19 @@ $catalogProducts = [
 
                         <div class="ws-stat-head-row" style="padding-left:14px;">
                             <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
+                            <div class="ws-stat-ico-wrap tier">
+                                <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                            </div>
+                        </div>
+                        <div class="ws-stat-val-row">
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">Tier 1</div>
                             <div style="display:flex; align-items:center; gap:5px;">
                                 <div class="ws-roadmap-link-wrap" onclick="event.stopPropagation(); openVipTierModal();" title="View VIP Roadmap">
                                     <span class="ws-roadmap-link-text">Roadmap ›</span>
                                     <div class="ws-roadmap-running-line"></div>
                                 </div>
-                                <div class="ws-stat-ico-wrap tier">
-                                    <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
-                                </div>
+                                <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
                             </div>
-                        </div>
-                        <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">Tier 1</div>
-                            <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
                         </div>
                     </div>
 
@@ -7932,10 +7961,31 @@ $catalogProducts = [
                 if (Array.isArray(cart)) {
                     totalCount = cart.reduce(function(acc, item) { return acc + (Number(item.qty) || 1); }, 0);
                 }
-                var badge = document.getElementById('wsDockCartBadge');
+                var dockBadge = document.getElementById('wsDockCartBadge');
+                var hdrBadge = document.getElementById('headerCartBadge');
+                [dockBadge, hdrBadge].forEach(function(badge) {
+                    if (badge) {
+                        if (totalCount > 0) {
+                            badge.textContent = totalCount;
+                            badge.style.display = 'flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    }
+                });
+            } catch(e) {}
+        };
+
+        /* ── Wholesale Wishlist Badge Synchronization ── */
+        window.updateWholesaleWishlistBadge = function() {
+            try {
+                var raw = localStorage.getItem('kalaniketan_wishlist');
+                var wishlist = raw ? JSON.parse(raw) : [];
+                var count = Array.isArray(wishlist) ? wishlist.length : 0;
+                var badge = document.getElementById('headerWishlistBadge');
                 if (badge) {
-                    if (totalCount > 0) {
-                        badge.textContent = totalCount;
+                    if (count > 0) {
+                        badge.textContent = count;
                         badge.style.display = 'flex';
                     } else {
                         badge.style.display = 'none';
@@ -7944,13 +7994,20 @@ $catalogProducts = [
             } catch(e) {}
         };
 
-        document.addEventListener('DOMContentLoaded', initWholesalerApp);
+        document.addEventListener('DOMContentLoaded', function() {
+            initWholesalerApp();
+            window.updateWholesaleCartBadge();
+            window.updateWholesaleWishlistBadge();
+        });
         window.addEventListener('storage', function(e) {
             if (e.key === 'kalaniketan_user') {
                 initWholesalerApp();
             }
             if (e.key === 'kalaniketan_cart') {
                 window.updateWholesaleCartBadge();
+            }
+            if (e.key === 'kalaniketan_wishlist') {
+                window.updateWholesaleWishlistBadge();
             }
         });
 
