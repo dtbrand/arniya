@@ -712,8 +712,7 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
         }
 
-        /* ── SVG Zigzag & Spline Line Chart (Metrica / TailAdmin Style) ── */
-        /* ── SVG Zigzag & Spline Line Chart (Metrica / TailAdmin Style) ── */
+        /* ── SVG Zigzag & Spline Line Chart (Luxury Admin Style) ── */
         .ws-chart-wrapper {
             position: relative;
             width: 100%;
@@ -862,7 +861,7 @@ $catalogProducts = [
             box-shadow: 0 2px 6px rgba(138, 104, 31, 0.3);
         }
 
-        /* ── Semi-Circular Target Gauge Arc (Metrica / ApexCharts Luxury Gold) ── */
+        /* ── Semi-Circular Target Gauge Arc (Luxury Gold Dashboard) ── */
         .ws-gauge-wrap {
             display: flex;
             flex-direction: column;
@@ -2734,7 +2733,7 @@ $catalogProducts = [
                 <!-- Middle Analytics Grid (Monthly Sales Bar Chart + Target Gauge) -->
                 <div class="ws-analytics-grid">
                     
-                    <!-- Left: Monthly Sales Zigzag Line & Spline Area Chart (Metrica Luxury Style) -->
+                    <!-- Left: Monthly Sales Zigzag Line & Spline Area Chart (Luxury Style) -->
                     <div class="ws-analytics-card">
                         <div class="ws-card-top-bar" style="margin-bottom: 12px;">
                             <div>
@@ -3579,7 +3578,7 @@ $catalogProducts = [
                                     </a>
                                 </h2>
 
-                                <!-- Clean Text Info Row: Available Colours & Sizes -->
+                                <!-- Clean Text Info Row: Available Colors & Sizes -->
                                 <div class="card-info-text-row">
                                     <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
                                     <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
@@ -4659,7 +4658,7 @@ $catalogProducts = [
                         { label: "Transit Dispatches", val: "11 Bales", pill: "Air Cargo", isGold: false },
                         { label: "Defect Incident", val: "0 Units", pill: "Zero Defect", isGold: true }
                     ],
-                    chartTitle: "July Unit Fulfilment (Pcs)",
+                    chartTitle: "July Unit Fulfillment (Pcs)",
                     barActive: 6,
                     gauge: { pct: "100%", offset: 0, badge: "100%", desc: "88 pieces delivered with 100% customer acceptance and zero defects.", target: "80 Pcs", rev: "88 Pcs", today: "Done" },
                     catTitle: WS_ICONS.dress + " July Category Units Breakdown (Pcs)",
@@ -5371,13 +5370,13 @@ $catalogProducts = [
             if (!line || !area) return;
 
             if (type === 'smooth') {
-                // Smooth curved spline wave (Metrica / ApexCharts Cubic Curve)
+                // Smooth curved spline wave (Luxury Cubic Curve)
                 var smoothLine = 'M 40,115 C 63,115 63,96 86,96 C 109,96 109,102 132,102 C 155,102 155,85 178,85 C 201,85 201,76 224,76 C 247,76 247,82 270,82 C 293,82 293,62 316,62 C 339,62 339,88 362,88 C 385,88 385,68 408,68 C 431,68 431,38 454,38 C 477,38 477,52 500,52 C 523,52 523,94 546,94';
                 var smoothArea = smoothLine + ' L 546,158 L 40,158 Z';
                 line.setAttribute('d', smoothLine);
                 area.setAttribute('d', smoothArea);
             } else {
-                // Crisp Zigzag Lines (Metrica Style)
+                // Crisp Zigzag Lines (Luxury Style)
                 var zigzagLine = 'M 40,115 L 86,96 L 132,102 L 178,85 L 224,76 L 270,82 L 316,62 L 362,88 L 408,68 L 454,38 L 500,52 L 546,94';
                 var zigzagArea = zigzagLine + ' L 546,158 L 40,158 Z';
                 line.setAttribute('d', zigzagLine);
