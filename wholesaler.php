@@ -2747,26 +2747,26 @@ $catalogProducts = [
             }
         }
 
-        /* ── Smart Wholesale Category Popup Modal & Filter Styling ── */
+        /* ── Smart Wholesale Category Popup Modal & Filter Styling (Clean Luxury Visibility) ── */
         .ws-cat-modal-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 14px;
         }
         @media (max-width: 580px) {
             .ws-cat-modal-grid {
                 grid-template-columns: 1fr;
-                gap: 9px;
+                gap: 10px;
             }
         }
         .ws-cat-tile-card {
-            background: linear-gradient(145deg, #FFFFFF 0%, #FAF8F2 100%);
+            background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F2 100%);
             border: 1.5px solid rgba(180, 83, 9, 0.22);
-            border-radius: 14px;
-            padding: 12px 14px;
+            border-radius: 16px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -2774,31 +2774,31 @@ $catalogProducts = [
             transition: all 0.24s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .ws-cat-tile-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             border-color: #D4AF37;
-            background: linear-gradient(145deg, #FEFBF4 0%, #FDF3DB 100%);
-            box-shadow: 0 6px 18px rgba(180, 83, 9, 0.18), 0 0 0 1px rgba(212, 175, 55, 0.35);
+            background: linear-gradient(135deg, #FFFDF8 0%, #FEF5DF 100%);
+            box-shadow: 0 10px 24px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(212, 175, 55, 0.35);
         }
         .ws-cat-tile-card.all-cat {
-            background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 100%);
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
             border-color: rgba(217, 119, 6, 0.45);
         }
         .ws-cat-tile-icon-wrap {
-            width: 40px;
-            height: 40px;
-            border-radius: 11px;
+            width: 46px;
+            height: 46px;
+            border-radius: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-            border: 1.2px solid rgba(217, 119, 6, 0.35);
-            box-shadow: 0 2px 6px rgba(217, 119, 6, 0.15);
-            transition: transform 0.22s ease;
+            border: 1.5px solid rgba(217, 119, 6, 0.4);
+            box-shadow: 0 3px 8px rgba(217, 119, 6, 0.18);
+            transition: transform 0.24s ease;
         }
         .ws-cat-tile-icon-wrap svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             stroke: #B45309;
             fill: none;
             stroke-width: 2;
@@ -2812,38 +2812,41 @@ $catalogProducts = [
         }
         .ws-cat-tile-title {
             font-family: var(--ws-font-serif);
-            font-size: 0.92rem;
-            font-weight: 900;
+            font-size: 0.98rem;
+            font-weight: 800;
             color: #1E1B18;
             line-height: 1.25;
-            margin-bottom: 2px;
-        }
-        .ws-cat-tile-sub {
-            font-size: 0.72rem;
-            color: var(--ws-text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 500;
-            margin-bottom: 4px;
+            letter-spacing: 0.2px;
+            margin: 0;
         }
         .ws-cat-tile-badge {
             display: inline-block;
-            font-size: 0.64rem;
-            font-weight: 800;
+            font-size: 0.70rem;
+            font-weight: 700;
             color: #92400E;
             background: rgba(217, 119, 6, 0.12);
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 6px;
             letter-spacing: 0.2px;
+            margin-top: 4px;
         }
         .ws-cat-tile-arrow {
-            font-size: 1rem;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(180, 83, 9, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
             color: #B45309;
             font-weight: 800;
-            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            transition: all 0.22s ease;
         }
         .ws-cat-tile-card:hover .ws-cat-tile-arrow {
+            background: #B45309;
+            color: #FFFFFF;
             transform: translateX(3px);
         }
 
@@ -6112,12 +6115,12 @@ $catalogProducts = [
     </nav>
 
     <!-- ═══════════════════════════════════════════
-         SMART WHOLESALE CATEGORY POPUP MODAL
+         SMART WHOLESALE CATEGORY POPUP MODAL (CLEAN DESIGNER)
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsCatalogCategoryModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box ws-cat-modal-box" style="max-width: 640px; border-radius: 20px; background: linear-gradient(165deg, #FFFFFF 0%, #FDFBF7 100%); border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(212, 175, 55, 0.25);">
+        <div class="ws-modal-box ws-cat-modal-box" style="max-width: 620px; border-radius: 20px; background: linear-gradient(165deg, #FFFFFF 0%, #FDFBF7 100%); border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(212, 175, 55, 0.25);">
             
-            <div class="ws-modal-header" style="padding: 14px 18px 12px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
+            <div class="ws-modal-header" style="padding: 16px 20px 14px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:10px;">
                     <div style="width:36px; height:36px; border-radius:11px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(217,119,6,0.18);">
                         <svg style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none">
@@ -6132,18 +6135,18 @@ $catalogProducts = [
                         </svg>
                     </div>
                     <div>
-                        <h3 style="font-family:var(--ws-font-serif); font-size:1.05rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
-                            Select Wholesale Category
+                        <h3 style="font-family:var(--ws-font-serif); font-size:1.08rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
+                            Select Category
                         </h3>
                         <p style="font-size:0.72rem; color:var(--ws-text-muted); margin:2px 0 0; font-weight:600;">
-                            Choose a category to view fresh mill lots & new arrivals
+                            Direct Mill Wholesale Collections
                         </p>
                     </div>
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeWsCatalogCategoryModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
             </div>
 
-            <div class="ws-modal-body" style="padding: 14px 16px 18px;">
+            <div class="ws-modal-body" style="padding: 16px 20px 20px;">
                 <div class="ws-cat-modal-grid">
                     
                     <!-- Card 1: Sarees -->
@@ -6152,11 +6155,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Sarees (साड़ियां)</div>
-                            <div class="ws-cat-tile-sub">Banarasi, Kanjivaram, Dola Silk, Georgette</div>
-                            <div class="ws-cat-tile-badge">✨ New Arrivals First</div>
+                            <div class="ws-cat-tile-title">Sarees</div>
+                            <span class="ws-cat-tile-badge">✨ New Arrivals First</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                     <!-- Card 2: Kurtis & Sets -->
@@ -6165,11 +6167,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Kurtis & Sets (कुर्ती एवं सेट)</div>
-                            <div class="ws-cat-tile-sub">Anarkali, Straight Cut, Rayon, Lakhnavi</div>
-                            <div class="ws-cat-tile-badge">🔥 Bestseller Lots</div>
+                            <div class="ws-cat-tile-title">Kurtis & Sets</div>
+                            <span class="ws-cat-tile-badge">🔥 Bestseller Lots</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                     <!-- Card 3: Lehengas -->
@@ -6178,11 +6179,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><polygon points="12 2 2 22 22 22 12 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Lehengas (लहंगा चोली)</div>
-                            <div class="ws-cat-tile-sub">Bridal Velvet, Zardosi, Semi-Bridal Silk</div>
-                            <div class="ws-cat-tile-badge">👑 Royal VIP Lots</div>
+                            <div class="ws-cat-tile-title">Lehengas</div>
+                            <span class="ws-cat-tile-badge">👑 Royal Bridal Lots</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                     <!-- Card 4: Gowns -->
@@ -6191,11 +6191,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4z"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Gowns (गाउन एवं इंडो-वेस्टर्न)</div>
-                            <div class="ws-cat-tile-sub">Party Flared Gowns, Embroidered Festive</div>
-                            <div class="ws-cat-tile-badge">💎 High Demand</div>
+                            <div class="ws-cat-tile-title">Gowns & Indo-Western</div>
+                            <span class="ws-cat-tile-badge">💎 Party Wear</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                     <!-- Card 5: Dress Materials -->
@@ -6204,11 +6203,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Dress Materials (ड्रेस मटेरियल)</div>
-                            <div class="ws-cat-tile-sub">Pure Cotton Suits, Chanderi Jacquard, Silk</div>
-                            <div class="ws-cat-tile-badge">🚀 Best Margins</div>
+                            <div class="ws-cat-tile-title">Dress Materials</div>
+                            <span class="ws-cat-tile-badge">🚀 High Margin Suits</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                     <!-- Card 6: All Complete Catalog -->
@@ -6217,11 +6215,10 @@ $catalogProducts = [
                             <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                         </div>
                         <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">All Catalog Lots (सम्पूर्ण कैटलॉग)</div>
-                            <div class="ws-cat-tile-sub">View All Wholesale Mill Lots Together</div>
-                            <div class="ws-cat-tile-badge" style="background:#B45309; color:#FFF;">⭐ All Collections</div>
+                            <div class="ws-cat-tile-title">All Collections</div>
+                            <span class="ws-cat-tile-badge" style="background:#B45309; color:#FFF;">⭐ Complete Inventory</span>
                         </div>
-                        <span class="ws-cat-tile-arrow">→</span>
+                        <div class="ws-cat-tile-arrow">→</div>
                     </div>
 
                 </div>
