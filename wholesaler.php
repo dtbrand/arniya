@@ -3382,59 +3382,61 @@ $catalogProducts = [
             left: 0;
             right: 0;
             background: #FFFFFF;
-            border-top: 1.5px solid var(--ws-gold-border);
-            padding: 6px 12px calc(6px + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--ws-gold-border);
+            padding: 3px 6px calc(3px + env(safe-area-inset-bottom));
             z-index: 1500;
-            box-shadow: 0 -2px 14px rgba(138,104,31,0.08);
+            box-shadow: 0 -2px 10px rgba(138,104,31,0.06);
             justify-content: space-around;
             align-items: center;
+            height: auto;
+            min-height: 46px;
         }
         .ws-dock-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
+            gap: 1.5px;
             color: var(--ws-text-muted);
-            font-size: 0.65rem;
+            font-size: 0.58rem;
             font-weight: 700;
             text-decoration: none;
             cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 2px 6px;
+            border-radius: 6px;
             border: none;
             background: transparent;
             transition: var(--ws-transition);
         }
         .ws-dock-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 17px;
+            height: 17px;
             stroke: currentColor;
-            stroke-width: 2.2;
+            stroke-width: 2;
             fill: none;
         }
         .ws-dock-btn.active {
             color: var(--ws-gold-primary);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         .ws-dock-btn.active svg { stroke: var(--ws-gold-primary); }
 
         .ws-dock-cart-badge {
             position: absolute;
-            top: -6px;
-            right: -10px;
-            min-width: 17px;
-            height: 17px;
-            padding: 0 4px;
-            border-radius: 9px;
+            top: -5px;
+            right: -8px;
+            min-width: 15px;
+            height: 15px;
+            padding: 0 3px;
+            border-radius: 8px;
             background: var(--ws-gold-primary);
             color: #FFFFFF;
-            font-size: 0.60rem;
+            font-size: 0.54rem;
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1.5px solid #FFFFFF;
-            box-shadow: 0 2px 6px rgba(138,104,31,0.35);
+            border: 1.2px solid #FFFFFF;
+            box-shadow: 0 2px 4px rgba(138,104,31,0.25);
         }
 
         /* ── Toast Container ── */
@@ -3537,27 +3539,50 @@ $catalogProducts = [
 
         @media (max-width: 768px) {
             .ws-header {
-                padding: 0 12px;
-                height: 58px;
+                padding: 0 10px;
+                height: 48px;
+            }
+            .ws-menu-toggle-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .ws-menu-toggle-btn svg {
+                width: 16px;
+                height: 16px;
             }
             .ws-mobile-header-brand {
                 display: flex;
                 align-items: center;
-                margin-left: 8px;
+                margin-left: 6px;
+            }
+            .ws-mob-logo-text {
+                font-size: 0.86rem;
             }
             #headerWishlistBtn,
             #headerCartBtn {
                 display: none !important;
             }
+            .ws-hdr-icon-btn {
+                width: 32px;
+                height: 32px;
+            }
+            .ws-hdr-icon-btn svg {
+                width: 15px;
+                height: 15px;
+            }
             .ws-user-name-text {
                 display: none;
             }
             .ws-user-profile-btn {
-                padding: 3px;
+                padding: 2px;
                 border-radius: 50%;
             }
+            .ws-user-avatar-img {
+                width: 28px;
+                height: 28px;
+            }
             .ws-main-content {
-                padding: 12px 10px 85px;
+                padding: 10px 8px calc(52px + env(safe-area-inset-bottom));
             }
             .ws-section-header {
                 flex-direction: column;
