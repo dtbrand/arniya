@@ -6151,7 +6151,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">Sarees</div>
-                            <span class="ws-cat-tile-badge">✨ New Arrivals First</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
@@ -6163,7 +6162,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">Kurtis & Sets</div>
-                            <span class="ws-cat-tile-badge">🔥 Bestseller Lots</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
@@ -6175,7 +6173,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">Lehengas</div>
-                            <span class="ws-cat-tile-badge">👑 Royal Bridal Lots</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
@@ -6187,7 +6184,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">Gowns & Indo-Western</div>
-                            <span class="ws-cat-tile-badge">💎 Party Wear</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
@@ -6199,7 +6195,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">Dress Materials</div>
-                            <span class="ws-cat-tile-badge">🚀 High Margin Suits</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
@@ -6211,7 +6206,6 @@ $catalogProducts = [
                         </div>
                         <div class="ws-cat-tile-content">
                             <div class="ws-cat-tile-title">All Collections</div>
-                            <span class="ws-cat-tile-badge" style="background:#B45309; color:#FFF;">⭐ Complete Inventory</span>
                         </div>
                         <div class="ws-cat-tile-arrow">→</div>
                     </div>
