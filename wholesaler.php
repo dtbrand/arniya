@@ -4324,24 +4324,31 @@ $catalogProducts = [
                             </div>
                         </div>
 
-                        <!-- Column 3: Monthly Milestone -->
+                        <!-- Column 3: VIP Tier Roadmap Milestone -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> Monthly Milestone</span>
+                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg> VIP Tier Milestone</span>
                             </div>
-                            <div class="ws-tier-status-box">
+                            <div class="ws-tier-status-box" style="padding:14px; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, #FFFFFF 0%, #FEFAF0 100%); border:1.5px solid rgba(212,175,55,0.45); border-radius:12px;">
                                 <div>
-                                    <span class="ws-tier-badge" id="statsMilestoneBadge"><svg class="ws-ico" style="width:13px;height:13px;margin-right:3px;stroke:#FFFFFF;" viewBox="0 0 24 24"><polygon points="2 4 5 18 19 18 22 4 16 11 12 2 8 11 2 4"></polygon></svg> Tier 1 VIP Member</span>
-                                    <h4 id="statsMilestoneVal" style="font-size:1.15rem; font-weight:800; color:var(--ws-gold-primary); margin:8px 0 4px; font-family:var(--ws-font-serif);">
-                                        ₹2,05,062 <span style="font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);">/ ₹2,50,000</span>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                        <span class="ws-tier-badge active" id="statsMilestoneBadge" style="font-size:0.60rem; font-weight:800;">Tier 1: Non-VIP (Active)</span>
+                                        <span id="statsMilestoneOrders" style="font-size:0.66rem; font-weight:800; color:#15803D;">6 / 50 Orders</span>
+                                    </div>
+                                    <h4 id="statsMilestoneVal" style="font-size:1.10rem; font-weight:900; color:var(--ws-text-main); margin:0 0 6px; font-family:var(--ws-font-serif); letter-spacing:0.2px;">
+                                        Tier 1: Non-VIP Member
                                     </h4>
-                                    <p id="statsMilestoneDesc" style="font-size:0.74rem; color:var(--ws-text-muted); line-height:1.4;">
-                                        <strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!
+                                    <!-- Progress Bar -->
+                                    <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden; margin-bottom:8px;">
+                                        <div id="statsMilestoneBar" style="height:100%; width:12%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
+                                    </div>
+                                    <p id="statsMilestoneDesc" style="font-size:0.73rem; color:#57534E; line-height:1.35; margin:0;">
+                                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!
                                     </p>
                                 </div>
 
-                                <button class="ws-btn ws-btn-primary ws-btn-sm" style="margin-top:12px; width:100%;" onclick="switchWsTab('trending')">
-                                    <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:4px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Explore Catalog to Unlock Tier 2
+                                <button class="ws-btn ws-btn-primary ws-btn-sm" style="margin-top:10px; width:100%; justify-content:center;" onclick="openVipTierModal()">
+                                    <svg class="ws-ico" style="stroke:#FFFFFF;margin-right:4px;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> View VIP Roadmap
                                 </button>
                             </div>
                         </div>
@@ -6263,9 +6270,9 @@ $catalogProducts = [
                         { label: "Today's GST Credit", num: "₹910", sub: "5% GST" },
                         { label: "Delivery ETA", num: "Tomorrow", sub: "Priority Air" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1: Non VIP (1–50 Orders)",
-                    milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
-                    milestoneDesc: "<strong>36.4%</strong> of today's target achieved."
+                    milestoneBadge: "Tier 1: Non-VIP (Active)",
+                    milestoneVal: "Tier 1: Non-VIP Member",
+                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
                 },
                 'week': {
                     sub: "Weekly Procurement Targets, Category Mix & Logistics Performance",
@@ -6291,9 +6298,9 @@ $catalogProducts = [
                         { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% Verified" },
                         { label: "Active Consignments", num: "2 Orders", sub: WS_ICONS.repeat + " In Transit" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1: Non VIP Member",
-                    milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
-                    milestoneDesc: "<strong>82.02%</strong> of target achieved. Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
+                    milestoneBadge: "Tier 1: Non-VIP (Active)",
+                    milestoneVal: "Tier 1: Non-VIP Member",
+                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
                 },
                 'month': {
                     sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
@@ -6319,9 +6326,9 @@ $catalogProducts = [
                         { label: "Monthly GST ITC", num: "₹24,325", sub: WS_ICONS.shield + " 100% Claimed" },
                         { label: "Repeat Order Index", num: "87.5%", sub: WS_ICONS.repeat + " 12 of 14 Lots Reordered" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
-                    milestoneVal: "₹4,86,500 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹5,00,000</span>",
-                    milestoneDesc: "<strong>97.3%</strong> of your target achieved. Only <strong>₹13,500</strong> left to reach Tier 3 Elite Club!"
+                    milestoneBadge: "Tier 1: Non-VIP (Active)",
+                    milestoneVal: "Tier 1: Non-VIP Member",
+                    milestoneDesc: "Complete <strong>36 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
                 },
                 'last_month': {
                     sub: "July 2026 Reconciled Performance & Procurements",
@@ -6347,14 +6354,14 @@ $catalogProducts = [
                         { label: "Total GST ITC", num: "₹19,620", sub: "Filed in GSTR-3B" },
                         { label: "Reorder Loyalty", num: "90.9%", sub: WS_ICONS.repeat + " 10 of 11 Lots Repeated" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
-                    milestoneVal: "₹3,92,400 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹3,50,000</span>",
-                    milestoneDesc: "<strong>112.1%</strong> target exceeded for July 2026!"
+                    milestoneBadge: "Tier 1: Non-VIP (Reconciled)",
+                    milestoneVal: "Tier 1: Non-VIP Member",
+                    milestoneDesc: "July 2026 orders settled. Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong>!"
                 },
                 'year': {
                     sub: "Financial Year 2026-27 Comprehensive B2B Turnover",
                     cards: [
-                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "FY26-27", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 2", pill: "FY26-27", isGold: true },
                         { label: "Annual Orders", val: "58 Lots", pill: "↑ 34.5%", isGold: false },
                         { label: "Annual Quantity", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
                         { label: "Annual Turnover", val: "₹19,84,300", pill: "↑ 31.8%", isGold: true }
@@ -6375,9 +6382,9 @@ $catalogProducts = [
                         { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% Verified" },
                         { label: "Wholesale Retention", num: "89.6%", sub: "Top Tier Wholesaler" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
-                    milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
-                    milestoneDesc: "<strong>79.37%</strong> of Annual VIP Target achieved. Procure ₹5,15,700 more to enter ₹50L Super Wholesaler Tier!"
+                    milestoneBadge: "Tier 2: Silver (Active)",
+                    milestoneVal: "Tier 2: Silver Member",
+                    milestoneDesc: "Complete <strong>192 more orders</strong> to automatically unlock <strong>Tier 3: Gold (250+ Orders)</strong>!"
                 }
             },
             'sales': {
