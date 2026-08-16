@@ -126,7 +126,7 @@ $catalogProducts = [
         'retail_price'    => 699,
         'wholesale_price' => 289,
         'moq'             => 20,
-        'image'           => 'images/product9.png',
+        'image'           => 'images/product5.png',
         'badge'           => 'Bestseller',
         'badge_icon'      => '🔥',
         'color'           => 'Mustard Yellow',
@@ -143,7 +143,7 @@ $catalogProducts = [
         'retail_price'    => 999,
         'wholesale_price' => 399,
         'moq'             => 18,
-        'image'           => 'images/product10.png',
+        'image'           => 'images/product6.png',
         'badge'           => 'Best Margin',
         'badge_icon'      => '⚡',
         'color'           => 'Pastel Mint',
@@ -160,7 +160,7 @@ $catalogProducts = [
         'retail_price'    => 1299,
         'wholesale_price' => 489,
         'moq'             => 16,
-        'image'           => 'images/product12.png',
+        'image'           => 'images/product4.png',
         'badge'           => 'Trending',
         'badge_icon'      => '🔥',
         'color'           => 'Lavender Rose',
@@ -5564,51 +5564,61 @@ $catalogProducts = [
                  TAB 4: MY ADDRESS BOOK (BILLING & DISPATCH HUBS)
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneAddress">
-                <div class="ws-card">
-                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <div class="ws-card-title-group">
-                            <h3 style="margin:0; font-size:1.05rem;">Wholesale Address Book & Dispatch Hub</h3>
-                            <p style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">Manage Registered GST Billing Address & Custom Godown / Warehouse Delivery Hubs</p>
+                <div class="ws-card" style="padding: clamp(14px, 3vw, 22px);">
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid rgba(212,175,55,0.25);">
+                        <div class="ws-card-title-group" style="flex:1; min-width:200px;">
+                            <h3 style="margin:0; font-size:clamp(0.96rem, 3vw, 1.12rem); font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
+                                Wholesale Address Book & Dispatch Hub
+                            </h3>
+                            <p style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:3px; line-height:1.4;">
+                                Manage Registered GST Billing Address & Custom Godown / Warehouse Delivery Hubs
+                            </p>
                         </div>
-                        <span class="ws-status-badge delivered" style="font-size:0.72rem; padding:3px 8px;">★ GST Verified Dispatch</span>
+                        <span class="ws-status-badge delivered" style="font-size:0.70rem; padding:4px 9px; font-weight:800; border-radius:6px; flex-shrink:0;">
+                            ★ GST Verified Dispatch
+                        </span>
                     </div>
 
                     <!-- 2 Saved Address Preview Cards (Billing vs Shipping) -->
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-bottom:16px;">
                         
                         <!-- Card 1: Registered GST Billing Address -->
-                        <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:12px; padding:14px 16px; position:relative;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase;">★ Registered GST Billing Address</span>
-                                <button type="button" id="btnEditMainAddr" onclick="toggleEditAddressSection('main')" style="font-size:0.72rem; padding:4px 10px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
+                        <div style="background:linear-gradient(145deg, #FFFCF7 0%, #FAF5E8 100%); border:1.5px solid rgba(212,175,55,0.4); border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(180,83,9,0.05);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
+                                <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px;">
+                                    ★ Registered GST Billing Address
+                                </span>
+                                <button type="button" id="btnEditMainAddr" onclick="toggleEditAddressSection('main')" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Main Address">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
                             </div>
-                            <div style="font-weight:800; font-size:0.92rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp">Shree Krishna Silks Pvt Ltd</div>
-                            <div style="font-size:0.76rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
+                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp">Shree Krishna Silks Pvt Ltd</div>
+                            <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
                                 Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road<br>
                                 Surat, Gujarat - 395002 (GSTIN: 24AABCU9603R1ZM)
                             </div>
-                            <div style="font-size:0.72rem; font-weight:700; color:var(--ws-gold-primary); margin-top:6px;" id="addrPreviewBillingAttn">
+                            <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
                                 Attn: Rajesh Kumar (+91 98765 43210)
                             </div>
                         </div>
 
                         <!-- Card 2: Active Dispatch & Shipping Hub -->
-                        <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:12px; padding:14px 16px; position:relative;" id="addrPreviewDispatchCard">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase;" id="addrPreviewDispatchBadge">📦 Dispatch: Same as Billing</span>
-                                <button type="button" id="btnEditDispatchAddr" onclick="toggleEditAddressSection('dispatch')" style="font-size:0.72rem; padding:4px 10px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
+                        <div style="background:linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%); border:1.5px solid #E2E8F0; border-radius:14px; padding:14px 16px; position:relative; box-shadow:0 3px 12px rgba(0,0,0,0.03);" id="addrPreviewDispatchCard">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px;">
+                                <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase; letter-spacing:0.3px;" id="addrPreviewDispatchBadge">
+                                    📦 Dispatch: Same as Billing
+                                </span>
+                                <button type="button" id="btnEditDispatchAddr" onclick="toggleEditAddressSection('dispatch')" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Dispatch Hub">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
                             </div>
-                            <div style="font-weight:800; font-size:0.92rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
-                            <div style="font-size:0.76rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
+                            <div style="font-weight:800; font-size:0.95rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
+                            <div style="font-size:0.78rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
                                 Dispatched to GST registered address: Shop No. 402, Millennium Textile Market 2, Surat - 395002
                             </div>
-                            <div style="font-size:0.72rem; font-weight:700; color:var(--ws-text-sub); margin-top:6px;" id="addrPreviewDispatchTransporter">
+                            <div style="font-size:0.74rem; font-weight:700; color:var(--ws-text-sub); margin-top:8px;" id="addrPreviewDispatchTransporter">
                                 Preferred Hub: BlueDart Express / Surat Goods Transporter
                             </div>
                         </div>
