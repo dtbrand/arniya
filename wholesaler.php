@@ -3529,6 +3529,10 @@ $catalogProducts = [
             .ws-cmd-search-wrap {
                 display: none;
             }
+            #headerWishlistBtn,
+            #headerCartBtn {
+                display: none !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -3540,6 +3544,10 @@ $catalogProducts = [
                 display: flex;
                 align-items: center;
                 margin-left: 8px;
+            }
+            #headerWishlistBtn,
+            #headerCartBtn {
+                display: none !important;
             }
             .ws-user-name-text {
                 display: none;
