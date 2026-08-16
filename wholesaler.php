@@ -2433,15 +2433,17 @@ $catalogProducts = [
             100% { transform: scale(0.95); opacity: 0.7; box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
 
-        /* ── Modern Animated B2B Wallet & Coins Strip ── */
+        /* ── Modern White Glassy Animated B2B Wallet & Coins Strip ── */
         .ws-wallet-strip {
-            background: linear-gradient(135deg, #1C1813 0%, #2A2319 50%, #15110B 100%);
-            border: 1.5px solid rgba(197, 168, 89, 0.4);
-            border-radius: 12px;
-            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(197, 168, 89, 0.38);
+            border-radius: 14px;
+            padding: 12px 18px;
             margin-bottom: 16px;
-            color: #FFFFFF;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: #16130F;
+            box-shadow: 0 8px 24px rgba(138, 104, 31, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -2450,57 +2452,73 @@ $catalogProducts = [
             position: relative;
             overflow: hidden;
         }
-        .ws-wallet-strip::after {
-            content: '';
+        /* Big Animated Corner Wallet Icon Background Watermark */
+        .ws-wallet-corner-svg {
             position: absolute;
-            right: -30px;
-            top: -30px;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(197, 168, 89, 0.15) 0%, rgba(197, 168, 89, 0) 70%);
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-8deg);
+            width: 78px;
+            height: 78px;
+            color: rgba(197, 168, 89, 0.12);
             pointer-events: none;
+            animation: cornerWalletFloat 5s ease-in-out infinite alternate;
+        }
+        @keyframes cornerWalletFloat {
+            0% { transform: translateY(-50%) rotate(-8deg) scale(1); opacity: 0.12; }
+            50% { transform: translateY(-56%) rotate(-4deg) scale(1.08); opacity: 0.22; }
+            100% { transform: translateY(-50%) rotate(-8deg) scale(1); opacity: 0.12; }
         }
         .ws-wallet-metrics-group {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 28px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
         .ws-wallet-metric-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .ws-wallet-icon-wrapper {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: rgba(197, 168, 89, 0.15);
-            border: 1.5px solid rgba(197, 168, 89, 0.4);
-            color: #E6C875;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(197, 168, 89, 0.18) 0%, rgba(138, 104, 31, 0.08) 100%);
+            border: 1.5px solid rgba(197, 168, 89, 0.45);
+            color: #8A681F;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             position: relative;
+            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.12);
+        }
+        .ws-wallet-icon-wrapper.coin {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(217, 119, 6, 0.08) 100%);
+            border-color: rgba(245, 158, 11, 0.45);
+            color: #D97706;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12);
         }
         .ws-anim-wallet-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             animation: walletFloat 3s ease-in-out infinite;
         }
         @keyframes walletFloat {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(230,200,117,0)); }
-            50% { transform: translateY(-2px) scale(1.05); filter: drop-shadow(0 0 6px rgba(230,200,117,0.6)); }
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(138, 104, 31, 0)); }
+            50% { transform: translateY(-2px) scale(1.08); filter: drop-shadow(0 2px 6px rgba(138, 104, 31, 0.35)); }
         }
         .ws-anim-coin-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             animation: coinSpinShimmer 4s ease-in-out infinite;
         }
         @keyframes coinSpinShimmer {
-            0%, 100% { transform: rotateY(0deg) scale(1); filter: drop-shadow(0 0 0 rgba(245,158,11,0)); }
-            50% { transform: rotateY(180deg) scale(1.08); filter: drop-shadow(0 0 8px rgba(245,158,11,0.8)); }
+            0%, 100% { transform: rotateY(0deg) scale(1); filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0)); }
+            50% { transform: rotateY(180deg) scale(1.1); filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.45)); }
         }
         .ws-wallet-metric-content {
             display: flex;
@@ -2508,57 +2526,53 @@ $catalogProducts = [
         }
         .ws-wallet-metric-label {
             font-size: 0.68rem;
-            color: #A89F91;
+            color: #756E63;
             text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
             margin-bottom: 2px;
         }
         .ws-wallet-metric-value {
-            font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+            font-size: clamp(1.15rem, 2.8vw, 1.4rem);
             font-weight: 900;
-            color: #FFFFFF;
+            color: #16130F;
             font-family: var(--ws-font-serif);
             letter-spacing: 0.3px;
             line-height: 1.1;
         }
         .ws-wallet-metric-value.gold {
-            color: #E6C875;
-        }
-        .ws-wallet-metric-sub {
-            font-size: 0.65rem;
-            color: #D6CEC3;
-            margin-top: 2px;
+            color: #B45309;
         }
         .ws-wallet-strip-actions {
             display: flex;
             align-items: center;
             flex-shrink: 0;
+            position: relative;
+            z-index: 2;
         }
         .ws-btn-wallet-view-sm {
-            background: linear-gradient(135deg, rgba(197, 168, 89, 0.18) 0%, rgba(138, 104, 31, 0.28) 100%);
-            color: #F5E8C7 !important;
-            border: 1px solid rgba(197, 168, 89, 0.45);
-            font-size: 0.72rem;
-            font-weight: 700;
-            height: 28px;
-            padding: 0 10px;
-            border-radius: 6px;
+            background: linear-gradient(135deg, #8A681F 0%, #6E5114 100%);
+            color: #FFFFFF !important;
+            border: 1px solid #A17C2A;
+            font-size: 0.76rem;
+            font-weight: 800;
+            height: 32px;
+            padding: 0 14px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
             transition: var(--ws-transition);
             white-space: nowrap;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 3px 10px rgba(138, 104, 31, 0.25);
         }
         .ws-btn-wallet-view-sm:hover {
-            background: linear-gradient(135deg, rgba(197, 168, 89, 0.35) 0%, rgba(138, 104, 31, 0.45) 100%);
-            border-color: #E6C875;
-            color: #FFFFFF !important;
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(197, 168, 89, 0.25);
+            box-shadow: 0 5px 14px rgba(138, 104, 31, 0.38);
+            filter: brightness(1.08);
         }
 
         @media (max-width: 768px) {
@@ -2567,7 +2581,10 @@ $catalogProducts = [
                 gap: 10px;
             }
             .ws-wallet-metrics-group {
-                gap: 14px;
+                gap: 16px;
+            }
+            .ws-wallet-corner-svg {
+                display: none;
             }
         }
 
@@ -3229,14 +3246,21 @@ $catalogProducts = [
 
                 </div>
 
-                <!-- ── Modern Animated B2B Wallet & Coins Strip ── -->
+                <!-- ── Modern White Glassy Animated B2B Wallet & Coins Strip ── -->
                 <div class="ws-wallet-strip">
-                    <!-- Left: Total Balance & Total Coins Metrics (Only Core Values) -->
+                    <!-- Background Corner Animated Wallet Icon -->
+                    <svg class="ws-wallet-corner-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="3"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                        <circle cx="16" cy="14" r="1.5" fill="currentColor"></circle>
+                    </svg>
+
+                    <!-- Left: Total Balance & Total Coins Metrics (White Glass Styling) -->
                     <div class="ws-wallet-metrics-group">
                         <!-- Metric 1: Total Balance -->
                         <div class="ws-wallet-metric-item">
                             <div class="ws-wallet-icon-wrapper">
-                                <svg class="ws-anim-wallet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="ws-anim-wallet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="2" y="5" width="20" height="14" rx="3"></rect>
                                     <line x1="2" y1="10" x2="22" y2="10"></line>
                                     <circle cx="16" cy="14" r="1.5" fill="currentColor"></circle>
@@ -3250,8 +3274,8 @@ $catalogProducts = [
 
                         <!-- Metric 2: Total Coins -->
                         <div class="ws-wallet-metric-item">
-                            <div class="ws-wallet-icon-wrapper" style="background:rgba(245,158,11,0.15); border-color:rgba(245,158,11,0.4); color:#FBBF24;">
-                                <svg class="ws-anim-coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="ws-wallet-icon-wrapper coin">
+                                <svg class="ws-anim-coin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="9"></circle>
                                     <path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 2.5 5 1.5 5 4a2.5 2.5 0 0 1-5 0"></path>
                                 </svg>
@@ -3266,9 +3290,9 @@ $catalogProducts = [
                     <!-- Right: Small Styled View Button -->
                     <div class="ws-wallet-strip-actions">
                         <button class="ws-btn ws-btn-wallet-view-sm" onclick="openFullWalletModal()">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             <span>View</span>
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
                 </div>
