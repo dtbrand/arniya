@@ -5248,71 +5248,75 @@ $catalogProducts = [
                         </a>
                     </div>
 
-                    <div class="products-grid ws-master-catalog-grid">
-                        <?php foreach ($catalogProducts as $prod): 
-                            $badge_raw = $prod['badge'] ?? 'Bestseller';
-                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
-                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
-                        ?>
-                        <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
-                            <div class="card-image-wrap">
-                                <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
-                                </a>
-
-                                <!-- Status Badge -->
-                                <?php if (!empty($prod['badge'])): ?>
-                                <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
-                                <?php endif; ?>
-
-                                <!-- Wishlist Button -->
-                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
-                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                </button>
-
-                                <!-- Mobile Quick View Button -->
-                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                </button>
-
-                                <!-- Desktop Quick View Overlay -->
-                                <div class="card-quick-view" aria-hidden="true">
-                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
-                                </div>
-
-                                <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
-                                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                </button>
-
-                                <!-- Category Box on Photo Bottom-Right Corner -->
-                                <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
-                            </div>
-
-                            <div class="card-body">
-                                <!-- Product Title -->
-                                <h2 class="card-name">
-                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
-                                        <?= htmlspecialchars($prod['name']) ?>
+                    <div class="ws-slider-wrap">
+                        <button class="ws-slider-nav-btn prev" onclick="slideForYouProducts(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <div class="ws-slider-track" id="wsForYouSliderTrack">
+                            <?php foreach ($catalogProducts as $prod): 
+                                $badge_raw = $prod['badge'] ?? 'Bestseller';
+                                $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                                $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                            ?>
+                            <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
+                                <div class="card-image-wrap">
+                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
                                     </a>
-                                </h2>
 
-                                <!-- Clean Text Info Row: Available Colors & Sizes -->
-                                <div class="card-info-text-row">
-                                    <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
-                                    <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
-                                </div>
-
-                                <div class="card-price-row">
-                                    <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                    <?php if (!empty($prod['retail_price'])): ?>
-                                    <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                    <!-- Status Badge -->
+                                    <?php if (!empty($prod['badge'])): ?>
+                                    <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
                                     <?php endif; ?>
-                                    <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+
+                                    <!-- Wishlist Button -->
+                                    <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
+                                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    </button>
+
+                                    <!-- Mobile Quick View Button -->
+                                    <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
+                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    </button>
+
+                                    <!-- Desktop Quick View Overlay -->
+                                    <div class="card-quick-view" aria-hidden="true">
+                                        <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
+                                    </div>
+
+                                    <!-- Share Button on Photo (Directly Above Category Tag) -->
+                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
+                                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                    </button>
+
+                                    <!-- Category Box on Photo Bottom-Right Corner -->
+                                    <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
                                 </div>
-                            </div>
-                        </article>
-                        <?php endforeach; ?>
+
+                                <div class="card-body">
+                                    <!-- Product Title -->
+                                    <h2 class="card-name">
+                                        <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                            <?= htmlspecialchars($prod['name']) ?>
+                                        </a>
+                                    </h2>
+
+                                    <!-- Clean Text Info Row: Available Colors & Sizes -->
+                                    <div class="card-info-text-row">
+                                        <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
+                                        <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
+                                    </div>
+
+                                    <div class="card-price-row">
+                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
+                                        <?php if (!empty($prod['retail_price'])): ?>
+                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                        <?php endif; ?>
+                                        <span class="card-price-discount"><?= $margin_pct ?>% OFF</span>
+                                    </div>
+                                </div>
+                            </article>
+                            <?php endforeach; ?>
+                        </div>
+                        <button class="ws-slider-nav-btn next" onclick="slideForYouProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
             </section>
@@ -7611,13 +7615,53 @@ $catalogProducts = [
             window.print();
         };
 
-        /* ── Trending Products Slider Scrolling ── */
+        /* ── Trending & For You Products Slider Scrolling ── */
         window.slideTrendingProducts = function(dir) {
             var track = document.getElementById('wsTrendingSliderTrack');
             if (!track) return;
             var scrollAmount = track.offsetWidth * 0.75 * dir;
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
+
+        window.slideForYouProducts = function(dir) {
+            var track = document.getElementById('wsForYouSliderTrack');
+            if (!track) return;
+            var scrollAmount = track.offsetWidth * 0.75 * dir;
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        };
+
+        /* ── Smart 1-Line Auto Slider Engine ── */
+        function initSmartCatalogAutoSliders() {
+            var sliderIds = ['wsTrendingSliderTrack', 'wsForYouSliderTrack'];
+            sliderIds.forEach(function(id) {
+                var track = document.getElementById(id);
+                if (!track) return;
+                var isPaused = false;
+                track.addEventListener('mouseenter', function() { isPaused = true; });
+                track.addEventListener('mouseleave', function() { isPaused = false; });
+                track.addEventListener('touchstart', function() { isPaused = true; }, { passive: true });
+                track.addEventListener('touchend', function() {
+                    setTimeout(function() { isPaused = false; }, 3000);
+                }, { passive: true });
+
+                setInterval(function() {
+                    if (isPaused || !track.offsetParent) return;
+                    var maxScroll = track.scrollWidth - track.clientWidth;
+                    if (track.scrollLeft >= maxScroll - 8) {
+                        track.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        var card = track.querySelector('.product-card');
+                        var step = card ? (card.offsetWidth + 12) : 200;
+                        track.scrollBy({ left: step, behavior: 'smooth' });
+                    }
+                }, 3800);
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSmartCatalogAutoSliders);
+        } else {
+            initSmartCatalogAutoSliders();
+        }
 
         /* ── Quick Wholesale Lot WhatsApp Order ── */
         window.openQuickOrderModal = function(prod) {
