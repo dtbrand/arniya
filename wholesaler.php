@@ -2657,24 +2657,28 @@ $catalogProducts = [
 
         /* ── Styled Full Wallet Modal Component Styles ── */
         .ws-full-wallet-card {
-            background: linear-gradient(135deg, #1C1813 0%, #262016 100%);
-            border: 1.5px solid rgba(197, 168, 89, 0.45);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 250, 238, 0.92) 100%);
+            border: 1.5px solid rgba(212, 175, 55, 0.55);
             border-radius: 12px;
             padding: 12px 14px;
-            color: #FFFFFF;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+            color: #16130F;
+            box-shadow: 0 4px 14px rgba(180, 140, 40, 0.08), inset 0 1px 2px #FFFFFF;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .ws-full-wallet-card.coin {
-            background: linear-gradient(135deg, #1E1B15 0%, #2B2317 100%);
-            border-color: rgba(245, 158, 11, 0.45);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(254, 243, 225, 0.92) 100%);
+            border-color: rgba(245, 158, 11, 0.55);
         }
         .ws-full-card-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 4px;
+            gap: 6px;
+            margin-bottom: 6px;
         }
         .ws-full-card-badge {
             display: inline-flex;
@@ -2684,52 +2688,54 @@ $catalogProducts = [
             text-transform: uppercase;
             font-weight: 800;
             letter-spacing: 0.5px;
-            color: #D4AF37;
+            color: #8A681F;
         }
         .ws-full-card-badge.coin {
-            color: #FBBF24;
+            color: #B45309;
         }
         .ws-full-card-pill {
             font-size: 0.58rem;
             font-weight: 800;
             padding: 2px 6px;
             border-radius: 4px;
-            background: rgba(16, 185, 129, 0.2);
-            color: #10B981;
-            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: #DCFCE7;
+            color: #15803D;
+            border: 1px solid rgba(22, 163, 74, 0.3);
             letter-spacing: 0.3px;
+            white-space: nowrap;
         }
         .ws-full-card-pill.coin {
-            background: rgba(245, 158, 11, 0.2);
-            color: #FBBF24;
-            border-color: rgba(245, 158, 11, 0.4);
+            background: #FEF3C7;
+            color: #B45309;
+            border-color: rgba(217, 119, 6, 0.3);
         }
         .ws-full-card-val {
-            font-size: clamp(1.20rem, 3vw, 1.40rem);
+            font-size: clamp(1.25rem, 3.2vw, 1.45rem);
             font-weight: 900;
-            color: #FFFFFF;
+            color: #16130F;
             font-family: var(--ws-font-serif);
             letter-spacing: 0.3px;
             line-height: 1.15;
             margin-bottom: 4px;
         }
         .ws-full-card-val.gold {
-            color: #FBBF24;
+            color: #B45309;
         }
         .ws-full-card-sub {
             font-size: 0.68rem;
-            color: #C7BFB3;
+            color: #6B6357;
             line-height: 1.2;
         }
         .ws-full-card-sub strong {
-            color: #FFFFFF;
+            color: #16130F;
+            font-weight: 700;
         }
         .ws-txn-row {
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
+            gap: 12px;
+            padding: 10px 14px;
             border-bottom: 1px solid var(--ws-border);
             transition: var(--ws-transition);
         }
@@ -2740,9 +2746,9 @@ $catalogProducts = [
             background: #FAF8F4;
         }
         .ws-txn-icon-wrap {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2751,21 +2757,25 @@ $catalogProducts = [
         .ws-txn-icon-wrap.green {
             background: #DCFCE7;
             color: #15803D;
+            border: 1px solid rgba(22, 163, 74, 0.25);
         }
         .ws-txn-icon-wrap.red {
             background: #FEE2E2;
             color: #DC2626;
+            border: 1px solid rgba(220, 38, 38, 0.25);
         }
         .ws-txn-icon-wrap.amber {
             background: #FEF3C7;
             color: #D97706;
+            border: 1px solid rgba(217, 119, 6, 0.25);
         }
         .ws-txn-icon-wrap.blue {
             background: #DBEAFE;
             color: #1D4ED8;
+            border: 1px solid rgba(29, 78, 216, 0.25);
         }
         .ws-txn-info strong {
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--ws-text-main);
             display: block;
@@ -2773,7 +2783,7 @@ $catalogProducts = [
             margin-bottom: 2px;
         }
         .ws-txn-info span {
-            font-size: 0.65rem;
+            font-size: 0.66rem;
             color: var(--ws-text-muted);
             display: block;
             line-height: 1.1;
@@ -2783,7 +2793,7 @@ $catalogProducts = [
             flex-shrink: 0;
         }
         .ws-txn-amt strong {
-            font-size: 0.80rem;
+            font-size: 0.84rem;
             font-weight: 800;
             display: block;
             line-height: 1.2;
@@ -2791,8 +2801,8 @@ $catalogProducts = [
         .ws-txn-amt .ws-txn-badge {
             font-size: 0.58rem;
             font-weight: 800;
-            padding: 1.5px 5px;
-            border-radius: 3px;
+            padding: 2px 6px;
+            border-radius: 4px;
             display: inline-block;
             margin-top: 2px;
             text-transform: uppercase;
@@ -4775,8 +4785,10 @@ $catalogProducts = [
 
                 <!-- Passbook / Statement Table -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <h4 style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif);">Recent Passbook Transactions</h4>
-                    <span style="font-size:0.68rem; color:var(--ws-gold-primary); font-weight:700; cursor:pointer;" onclick="window.showWsToast('📄 Full GSTR passbook statement downloaded!')">📥 Download PDF</span>
+                    <h4 style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); margin:0; font-family:var(--ws-font-serif); display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Recent Passbook Transactions</span>
+                    </h4>
                 </div>
                 <div style="border:1.5px solid var(--ws-border); border-radius:10px; overflow:hidden; background:#FFFFFF; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
                     <!-- Row 1: RTGS Top-Up -->
