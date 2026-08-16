@@ -5580,6 +5580,10 @@ $catalogProducts = [
                         <div style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:12px; padding:14px 16px; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase;">★ Registered GST Billing Address</span>
+                                <button type="button" onclick="openEditMainAddressModal()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Main Address">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                    <span>Edit</span>
+                                </button>
                             </div>
                             <div style="font-weight:800; font-size:0.92rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewBillingComp">Shree Krishna Silks Pvt Ltd</div>
                             <div style="font-size:0.76rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewBillingFull">
@@ -5595,6 +5599,10 @@ $catalogProducts = [
                         <div style="background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:12px; padding:14px 16px; position:relative;" id="addrPreviewDispatchCard">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.68rem; font-weight:800; background:#E0F2FE; color:#0369A1; padding:3px 8px; border-radius:6px; border:1px solid #BAE6FD; text-transform:uppercase;" id="addrPreviewDispatchBadge">📦 Dispatch: Same as Billing</span>
+                                <button type="button" onclick="openCustomShippingEdit()" style="font-size:0.72rem; padding:3px 9px; font-weight:800; background:#FFFFFF; border:1.2px solid #BAE6FD; color:#0369A1; display:inline-flex; align-items:center; gap:4px; border-radius:6px; cursor:pointer; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Edit Dispatch Hub">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                    <span>Edit</span>
+                                </button>
                             </div>
                             <div style="font-weight:800; font-size:0.92rem; color:var(--ws-text-main); margin-bottom:4px;" id="addrPreviewDispatchTitle">Direct Storefront Delivery</div>
                             <div style="font-size:0.76rem; color:var(--ws-text-muted); line-height:1.45;" id="addrPreviewDispatchFull">
@@ -6267,10 +6275,92 @@ $catalogProducts = [
                 <div class="ws-cat-modal-grid" id="wsCatModalDynamicGrid">
                     <!-- Rendered dynamically by JS -->
                 </div>
-            </div>
-
         </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════
+         SMART EDIT MAIN REGISTERED BILLING ADDRESS MODAL
+    ═══════════════════════════════════════════ -->
+    <div class="ws-modal-overlay" id="wsEditMainAddressModal" role="dialog" aria-modal="true">
+        <div class="ws-modal-box" style="max-width: 560px; border-radius: 18px; background:#FFFFFF; border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22);">
+            
+            <div class="ws-modal-header" style="padding: 14px 18px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:space-between;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center;">
+                        <svg style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 style="font-family:var(--ws-font-serif); font-size:1.02rem; font-weight:900; color:#1E1B18; margin:0;">
+                            Edit Registered Main Address
+                        </h3>
+                        <div style="font-size:0.70rem; color:var(--ws-text-muted);">GST Invoicing & Primary Business Premises</div>
+                    </div>
+                </div>
+                <button class="ws-modal-close-btn" onclick="closeEditMainAddressModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
+            </div>
+
+            <form onsubmit="handleSaveMainAddressForm(event)" style="padding: 16px 18px 20px;">
+                <div class="ws-form-grid">
+                    
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditCompName">Business / Company Name <span class="req">*</span></label>
+                        <input type="text" id="wsMainEditCompName" class="ws-input" required placeholder="e.g. Shree Krishna Silks Pvt Ltd">
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditGstNumber">GSTIN (Tax ID) <span class="req">*</span></label>
+                        <input type="text" id="wsMainEditGstNumber" class="ws-input" maxlength="15" style="text-transform:uppercase;" placeholder="24AABCU9603R1ZM">
+                    </div>
+
+                    <div class="ws-form-group full">
+                        <label class="ws-label" for="wsMainEditAddress">Registered Street Address & Market <span class="req">*</span></label>
+                        <textarea id="wsMainEditAddress" class="ws-textarea" required placeholder="Shop No, Building Name, Textile Market, Street, Landmark"></textarea>
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditCity">City / District <span class="req">*</span></label>
+                        <input type="text" id="wsMainEditCity" class="ws-input" required placeholder="e.g. Surat">
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditState">State / UT <span class="req">*</span></label>
+                        <select id="wsMainEditState" class="ws-select" required>
+                            <option value="Gujarat">Gujarat (24)</option>
+                            <option value="Maharashtra">Maharashtra (27)</option>
+                            <option value="Rajasthan">Rajasthan (08)</option>
+                            <option value="Delhi">Delhi (07)</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh (09)</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh (23)</option>
+                            <option value="Karnataka">Karnataka (29)</option>
+                            <option value="Tamil Nadu">Tamil Nadu (33)</option>
+                            <option value="Telangana">Telangana (36)</option>
+                            <option value="West Bengal">West Bengal (19)</option>
+                            <option value="Other States">Other Indian State / UT</option>
+                        </select>
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditPincode">6-Digit PIN Code <span class="req">*</span></label>
+                        <input type="text" id="wsMainEditPincode" class="ws-input" required maxlength="6" pattern="[0-9]{6}" placeholder="395002">
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-label" for="wsMainEditContactPhone">Contact Mobile <span class="req">*</span></label>
+                        <input type="tel" id="wsMainEditContactPhone" class="ws-input" required placeholder="10-digit phone">
+                    </div>
+
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeEditMainAddressModal()">Cancel</button>
+                    <button type="submit" class="ws-btn ws-btn-primary" style="display:inline-flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Update Main Address</span>
+                    </button>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -7283,6 +7373,79 @@ $catalogProducts = [
             }
         }
 
+        window.openEditMainAddressModal = function() {
+            var modal = document.getElementById('wsEditMainAddressModal');
+            if (!modal) return;
+
+            var userRaw = localStorage.getItem('kalaniketan_user');
+            var user = userRaw ? JSON.parse(userRaw) : {};
+
+            var comp = document.getElementById('wsMainEditCompName');
+            var gst = document.getElementById('wsMainEditGstNumber');
+            var addr = document.getElementById('wsMainEditAddress');
+            var city = document.getElementById('wsMainEditCity');
+            var state = document.getElementById('wsMainEditState');
+            var pin = document.getElementById('wsMainEditPincode');
+            var phone = document.getElementById('wsMainEditContactPhone');
+
+            if (comp) comp.value = user.companyName || 'Shree Krishna Silks Pvt Ltd';
+            if (gst) gst.value = user.gst_number || '24AABCU9603R1ZM';
+            if (addr) addr.value = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
+            if (city) city.value = user.city || 'Surat';
+            if (state && user.state) state.value = user.state;
+            if (pin) pin.value = user.pincode || '395002';
+            if (phone) phone.value = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+
+            modal.classList.add('active');
+        };
+
+        window.closeEditMainAddressModal = function() {
+            var modal = document.getElementById('wsEditMainAddressModal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        window.openCustomShippingEdit = function() {
+            var chk = document.getElementById('wsSameAsBillingCheckbox');
+            if (chk) chk.checked = false;
+            toggleSameAsBillingAddress(false);
+
+            var formWrap = document.getElementById('wsCustomShippingFormWrap');
+            if (formWrap) {
+                formWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                var firstInput = formWrap.querySelector('input, textarea');
+                if (firstInput) firstInput.focus();
+            }
+        };
+
+        window.handleSaveMainAddressForm = function(e) {
+            if (e) e.preventDefault();
+            var userRaw = localStorage.getItem('kalaniketan_user');
+            var user = userRaw ? JSON.parse(userRaw) : {};
+
+            var comp = document.getElementById('wsMainEditCompName').value.trim();
+            var gst = document.getElementById('wsMainEditGstNumber').value.trim().toUpperCase();
+            var addr = document.getElementById('wsMainEditAddress').value.trim();
+            var city = document.getElementById('wsMainEditCity').value.trim();
+            var state = document.getElementById('wsMainEditState').value;
+            var pin = document.getElementById('wsMainEditPincode').value.trim();
+            var phone = document.getElementById('wsMainEditContactPhone').value.trim();
+
+            user.companyName = comp || user.companyName;
+            user.gst_number = gst || user.gst_number;
+            user.address = addr || user.address;
+            user.city = city || user.city;
+            user.state = state || user.state;
+            user.pincode = pin || user.pincode;
+            user.phone = '+91 ' + phone;
+            user.rawPhone = phone;
+
+            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+            closeEditMainAddressModal();
+            renderAddressBookData(user);
+            loadSavedWholesalerData();
+            window.showWsToast('✓ Main Registered Billing Address updated successfully!');
+        };
+
         window.handleSaveAddress = function(e) {
             if (e) e.preventDefault();
             var userRaw = localStorage.getItem('kalaniketan_user');
@@ -7292,14 +7455,22 @@ $catalogProducts = [
             user.shipping_same_as_billing = isSame;
 
             if (!isSame) {
+                var wName = document.getElementById('wsShipWarehouseName') ? document.getElementById('wsShipWarehouseName').value.trim() : '';
+                var rPhone = document.getElementById('wsShipReceiverPhone') ? document.getElementById('wsShipReceiverPhone').value.trim() : '';
+                var sAddr = document.getElementById('wsShipAddress') ? document.getElementById('wsShipAddress').value.trim() : '';
+                var sCity = document.getElementById('wsShipCity') ? document.getElementById('wsShipCity').value.trim() : '';
+                var sState = document.getElementById('wsShipStateSelect') ? document.getElementById('wsShipStateSelect').value : 'Gujarat';
+                var sPin = document.getElementById('wsShipPincode') ? document.getElementById('wsShipPincode').value.trim() : '';
+                var sTrans = document.getElementById('wsShipTransporter') ? document.getElementById('wsShipTransporter').value.trim() : '';
+
                 user.custom_shipping = {
-                    warehouse_name: document.getElementById('wsShipWarehouseName').value.trim(),
-                    receiver_phone: document.getElementById('wsShipReceiverPhone').value.trim(),
-                    address: document.getElementById('wsShipAddress').value.trim(),
-                    city: document.getElementById('wsShipCity').value.trim(),
-                    state: document.getElementById('wsShipStateSelect').value,
-                    pincode: document.getElementById('wsShipPincode').value.trim(),
-                    transporter: document.getElementById('wsShipTransporter').value.trim()
+                    warehouse_name: wName || 'Primary Godown Hub',
+                    receiver_phone: rPhone,
+                    address: sAddr,
+                    city: sCity,
+                    state: sState,
+                    pincode: sPin,
+                    transporter: sTrans
                 };
             }
 
