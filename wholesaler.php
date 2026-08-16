@@ -5565,14 +5565,11 @@ $catalogProducts = [
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneAddress">
                 <div class="ws-card" style="padding: clamp(14px, 3vw, 22px);">
-                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid rgba(212,175,55,0.25);">
-                        <div class="ws-card-title-group" style="flex:1; min-width:200px;">
-                            <h3 style="margin:0; font-size:clamp(0.96rem, 3vw, 1.12rem); font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
-                                Wholesale Address Book & Dispatch Hub
+                    <div class="ws-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid rgba(212,175,55,0.25);">
+                        <div class="ws-card-title-group">
+                            <h3 style="margin:0; font-size:clamp(1.05rem, 3vw, 1.2rem); font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
+                                Address Book
                             </h3>
-                            <p style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:3px; line-height:1.4;">
-                                Manage Registered GST Billing Address & Custom Godown / Warehouse Delivery Hubs
-                            </p>
                         </div>
                         <span class="ws-status-badge delivered" style="font-size:0.70rem; padding:4px 9px; font-weight:800; border-radius:6px; flex-shrink:0;">
                             ★ GST Verified Dispatch
