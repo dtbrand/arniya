@@ -2751,22 +2751,16 @@ $catalogProducts = [
         .ws-cat-modal-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-        @media (max-width: 580px) {
-            .ws-cat-modal-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
+            gap: 12px;
         }
         .ws-cat-tile-card {
             background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F2 100%);
             border: 1.5px solid rgba(180, 83, 9, 0.22);
-            border-radius: 16px;
-            padding: 14px 16px;
+            border-radius: 14px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -2774,37 +2768,37 @@ $catalogProducts = [
             transition: all 0.24s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .ws-cat-tile-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             border-color: #D4AF37;
             background: linear-gradient(135deg, #FFFDF8 0%, #FEF5DF 100%);
-            box-shadow: 0 10px 24px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(212, 175, 55, 0.35);
+            box-shadow: 0 8px 20px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(212, 175, 55, 0.35);
         }
         .ws-cat-tile-card.all-cat {
             background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
             border-color: rgba(217, 119, 6, 0.45);
         }
         .ws-cat-tile-icon-wrap {
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-            border: 1.5px solid rgba(217, 119, 6, 0.4);
-            box-shadow: 0 3px 8px rgba(217, 119, 6, 0.18);
+            border: 1.2px solid rgba(217, 119, 6, 0.4);
+            box-shadow: 0 2px 6px rgba(217, 119, 6, 0.16);
             transition: transform 0.24s ease;
         }
         .ws-cat-tile-icon-wrap svg {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             stroke: #B45309;
             fill: none;
             stroke-width: 2;
         }
         .ws-cat-tile-card:hover .ws-cat-tile-icon-wrap {
-            transform: scale(1.12);
+            transform: scale(1.1);
         }
         .ws-cat-tile-content {
             flex: 1;
@@ -2812,33 +2806,22 @@ $catalogProducts = [
         }
         .ws-cat-tile-title {
             font-family: var(--ws-font-serif);
-            font-size: 0.98rem;
+            font-size: 0.94rem;
             font-weight: 800;
             color: #1E1B18;
             line-height: 1.25;
             letter-spacing: 0.2px;
             margin: 0;
         }
-        .ws-cat-tile-badge {
-            display: inline-block;
-            font-size: 0.70rem;
-            font-weight: 700;
-            color: #92400E;
-            background: rgba(217, 119, 6, 0.12);
-            padding: 2px 7px;
-            border-radius: 6px;
-            letter-spacing: 0.2px;
-            margin-top: 4px;
-        }
         .ws-cat-tile-arrow {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: rgba(180, 83, 9, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #B45309;
             font-weight: 800;
             flex-shrink: 0;
@@ -2848,6 +2831,53 @@ $catalogProducts = [
             background: #B45309;
             color: #FFFFFF;
             transform: translateX(3px);
+        }
+
+        @media (max-width: 600px) {
+            .ws-cat-modal-box {
+                max-width: 92% !important;
+                border-radius: 16px !important;
+                margin: auto !important;
+            }
+            .ws-cat-modal-box .ws-modal-header {
+                padding: 10px 14px 8px !important;
+            }
+            .ws-cat-modal-box .ws-modal-header h3 {
+                font-size: 0.92rem !important;
+            }
+            .ws-cat-modal-box .ws-modal-body {
+                padding: 10px 10px 14px !important;
+            }
+            .ws-cat-modal-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+            }
+            .ws-cat-tile-card {
+                flex-direction: column !important;
+                text-align: center !important;
+                justify-content: center !important;
+                padding: 10px 6px 8px !important;
+                gap: 6px !important;
+                border-radius: 12px !important;
+            }
+            .ws-cat-tile-icon-wrap {
+                width: 34px !important;
+                height: 34px !important;
+                border-radius: 9px !important;
+                margin-bottom: 2px !important;
+            }
+            .ws-cat-tile-icon-wrap svg {
+                width: 17px !important;
+                height: 17px !important;
+            }
+            .ws-cat-tile-title {
+                font-size: 0.78rem !important;
+                font-weight: 800 !important;
+                line-height: 1.2 !important;
+            }
+            .ws-cat-tile-arrow {
+                display: none !important;
+            }
         }
 
         .product-card:hover .card-img,
