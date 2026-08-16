@@ -2439,47 +2439,48 @@ $catalogProducts = [
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1.5px solid rgba(212, 175, 55, 0.55);
-            border-radius: 16px;
-            padding: 12px 18px 12px 32px;
-            margin-bottom: 16px;
+            border-radius: 12px;
+            padding: 8px 12px 8px 16px;
+            margin-bottom: 14px;
             color: #16130F;
-            box-shadow: 0 8px 30px rgba(180, 140, 40, 0.14), inset 0 1px 2px rgba(255, 255, 255, 0.95), inset 0 0 20px rgba(245, 215, 130, 0.15);
+            box-shadow: 0 4px 20px rgba(180, 140, 40, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.95), inset 0 0 16px rgba(245, 215, 130, 0.15);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 10px;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
+            flex-wrap: nowrap;
         }
         /* 3D Diagonal Tircha Corner Ribbon Tag */
         .ws-wallet-ribbon-tag {
             position: absolute;
             top: 0;
             left: 0;
-            width: 82px;
-            height: 82px;
+            width: 48px;
+            height: 48px;
             overflow: hidden;
             pointer-events: none;
             z-index: 10;
-            border-top-left-radius: 14px;
+            border-top-left-radius: 12px;
         }
         .ws-wallet-ribbon-tag span {
             position: absolute;
             display: block;
-            width: 118px;
-            padding: 3.5px 0;
+            width: 68px;
+            padding: 1.5px 0;
             background: linear-gradient(135deg, #785912 0%, #D4AF37 40%, #FEF08A 60%, #8A681F 100%);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7);
             color: #1A1204;
-            font-size: 0.58rem;
+            font-size: 0.46rem;
             font-weight: 900;
             text-transform: uppercase;
             text-align: center;
-            left: -28px;
-            top: 16px;
+            left: -18px;
+            top: 8px;
             transform: rotate(-45deg);
-            letter-spacing: 0.9px;
+            letter-spacing: 0.6px;
             border-top: 1px solid rgba(255, 255, 255, 0.7);
             border-bottom: 1px solid rgba(120, 89, 18, 0.5);
             text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -2488,10 +2489,10 @@ $catalogProducts = [
         .ws-wallet-strip::before {
             content: '';
             position: absolute;
-            top: -40px;
+            top: -30px;
             right: -20px;
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             background: radial-gradient(circle, rgba(230, 195, 95, 0.35) 0%, rgba(230, 195, 95, 0) 70%);
             pointer-events: none;
             animation: goldOrbPulse 4s ease-in-out infinite alternate;
@@ -2500,40 +2501,25 @@ $catalogProducts = [
             0% { transform: scale(1); opacity: 0.6; }
             100% { transform: scale(1.25); opacity: 0.95; }
         }
-        /* Big Animated Corner Wallet Icon Background Watermark */
-        .ws-wallet-corner-svg {
-            position: absolute;
-            right: 88px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-10deg);
-            width: 80px;
-            height: 80px;
-            color: rgba(180, 140, 40, 0.14);
-            pointer-events: none;
-            animation: cornerWalletFloat 6s ease-in-out infinite alternate;
-        }
-        @keyframes cornerWalletFloat {
-            0% { transform: translateY(-50%) rotate(-10deg) scale(1); opacity: 0.14; }
-            50% { transform: translateY(-56%) rotate(-4deg) scale(1.1); opacity: 0.26; }
-            100% { transform: translateY(-50%) rotate(-10deg) scale(1); opacity: 0.14; }
-        }
         .ws-wallet-metrics-group {
             display: flex;
             align-items: center;
-            gap: 28px;
-            flex-wrap: wrap;
+            gap: clamp(8px, 2.5vw, 18px);
+            flex-wrap: nowrap;
             position: relative;
             z-index: 2;
+            min-width: 0;
         }
         .ws-wallet-metric-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-shrink: 0;
         }
         .ws-wallet-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #FFFFFF 0%, #FEF3C7 60%, #FDE68A 100%);
             border: 1.5px solid rgba(212, 175, 55, 0.6);
             display: flex;
@@ -2541,50 +2527,54 @@ $catalogProducts = [
             justify-content: center;
             flex-shrink: 0;
             position: relative;
-            box-shadow: 0 4px 14px rgba(180, 140, 40, 0.22), inset 0 1px 2px #FFFFFF;
+            box-shadow: 0 3px 10px rgba(180, 140, 40, 0.2), inset 0 1px 2px #FFFFFF;
         }
         .ws-wallet-icon-wrapper.coin {
             background: linear-gradient(135deg, #FFFFFF 0%, #FED7AA 60%, #FDBA74 100%);
             border-color: rgba(245, 158, 11, 0.6);
-            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.22), inset 0 1px 2px #FFFFFF;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.2), inset 0 1px 2px #FFFFFF;
         }
         .ws-anim-wallet-svg {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
             animation: walletFloat 3s ease-in-out infinite;
         }
         @keyframes walletFloat {
             0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 0 rgba(138, 104, 31, 0)); }
-            50% { transform: translateY(-2px) scale(1.08); filter: drop-shadow(0 3px 8px rgba(180, 140, 40, 0.45)); }
+            50% { transform: translateY(-1.5px) scale(1.06); filter: drop-shadow(0 2px 6px rgba(180, 140, 40, 0.4)); }
         }
         .ws-anim-coin-svg {
-            width: 28px;
-            height: 28px;
+            width: 22px;
+            height: 22px;
             animation: coinSpinShimmer 4s ease-in-out infinite;
         }
         @keyframes coinSpinShimmer {
             0%, 100% { transform: rotateY(0deg) scale(1); filter: drop-shadow(0 0 0 rgba(245, 158, 11, 0)); }
-            50% { transform: rotateY(180deg) scale(1.1); filter: drop-shadow(0 3px 10px rgba(245, 158, 11, 0.55)); }
+            50% { transform: rotateY(180deg) scale(1.08); filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5)); }
         }
         .ws-wallet-metric-content {
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
         .ws-wallet-metric-label {
-            font-size: 0.68rem;
+            font-size: 0.60rem;
             color: #786D5E;
             text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.4px;
+            line-height: 1;
             margin-bottom: 2px;
+            white-space: nowrap;
         }
         .ws-wallet-metric-value {
-            font-size: clamp(1.2rem, 3vw, 1.45rem);
+            font-size: clamp(0.92rem, 2.8vw, 1.25rem);
             font-weight: 900;
             color: #16130F;
             font-family: var(--ws-font-serif);
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             line-height: 1.1;
+            white-space: nowrap;
         }
         .ws-wallet-metric-value.gold {
             color: #B45309;
@@ -2600,37 +2590,34 @@ $catalogProducts = [
             background: linear-gradient(135deg, #8A681F 0%, #6E5114 100%);
             color: #FFFFFF !important;
             border: 1px solid #D4AF37;
-            font-size: 0.76rem;
+            font-size: 0.72rem;
             font-weight: 800;
-            height: 32px;
-            padding: 0 14px;
-            border-radius: 8px;
+            height: 28px;
+            padding: 0 10px;
+            border-radius: 6px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
             cursor: pointer;
             transition: var(--ws-transition);
             white-space: nowrap;
-            letter-spacing: 0.3px;
-            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.3);
+            letter-spacing: 0.2px;
+            box-shadow: 0 3px 8px rgba(138, 104, 31, 0.25);
         }
         .ws-btn-wallet-view-sm:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(138, 104, 31, 0.45);
+            box-shadow: 0 4px 12px rgba(138, 104, 31, 0.4);
             filter: brightness(1.1);
         }
 
         @media (max-width: 768px) {
             .ws-wallet-strip {
-                padding: 10px 12px 10px 28px;
-                gap: 10px;
+                padding: 8px 10px 8px 14px;
+                gap: 8px;
             }
             .ws-wallet-metrics-group {
-                gap: 16px;
-            }
-            .ws-wallet-corner-svg {
-                display: none;
+                gap: 10px;
             }
         }
 
@@ -3294,17 +3281,10 @@ $catalogProducts = [
 
                 <!-- ── Modern Frosted Gold Glassy Animated B2B Wallet & Coins Strip ── -->
                 <div class="ws-wallet-strip">
-                    <!-- Left Corner 3D Diagonal Tircha Tag -->
+                    <!-- Left Corner Micro 3D Diagonal Tircha Tag -->
                     <div class="ws-wallet-ribbon-tag">
-                        <span>★ B2B GOLD</span>
+                        <span>★ GOLD</span>
                     </div>
-
-                    <!-- Background Corner Animated Wallet Icon -->
-                    <svg class="ws-wallet-corner-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path>
-                        <path d="M15 10h5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"></path>
-                        <circle cx="18" cy="12" r="1"></circle>
-                    </svg>
 
                     <!-- Left: Total Balance & Total Coins Metrics (Frosted Gold Glass Styling) -->
                     <div class="ws-wallet-metrics-group">
@@ -3347,8 +3327,15 @@ $catalogProducts = [
                         <div class="ws-wallet-metric-item">
                             <div class="ws-wallet-icon-wrapper coin">
                                 <svg class="ws-anim-coin-svg" viewBox="0 0 28 28" fill="none">
+                                    <defs>
+                                        <linearGradient id="wsCoinGradDirect" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FFFBEB"/>
+                                            <stop offset="50%" stop-color="#FCD34D"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
                                     <!-- Outer Golden Coin Ring -->
-                                    <circle cx="14" cy="14" r="11" fill="url(#wsGoldCoinShine)" stroke="#8A681F" stroke-width="1.4"/>
+                                    <circle cx="14" cy="14" r="11" fill="url(#wsCoinGradDirect)" stroke="#8A681F" stroke-width="1.4"/>
                                     <!-- Inner Star/Coin Ring Pattern -->
                                     <circle cx="14" cy="14" r="8.5" stroke="#FFFFFF" stroke-opacity="0.85" stroke-dasharray="2 1.5" stroke-width="1"/>
                                     <!-- Centered Rupee / Silk Emblem -->
@@ -3365,9 +3352,9 @@ $catalogProducts = [
                     <!-- Right: Small Styled View Button -->
                     <div class="ws-wallet-strip-actions">
                         <button class="ws-btn ws-btn-wallet-view-sm" onclick="openFullWalletModal()">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             <span>View</span>
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
                 </div>
