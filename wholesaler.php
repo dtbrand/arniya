@@ -2285,6 +2285,58 @@ $catalogProducts = [
             margin-top: 2px;
         }
 
+        /* ── Consignment Tracking Cards & Grid ── */
+        .ws-track-order-card {
+            background: #FFFFFF;
+            border: 1.5px solid var(--ws-border);
+            border-radius: var(--ws-radius-md);
+            padding: 12px;
+            cursor: pointer;
+            transition: var(--ws-transition);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .ws-track-order-card:hover {
+            border-color: var(--ws-gold-border);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(138,104,31,0.12);
+        }
+        .ws-track-order-card.selected {
+            border-color: var(--ws-gold-primary);
+            background: #FDFBF7;
+            box-shadow: 0 0 0 2px rgba(138,104,31,0.2), 0 4px 14px rgba(138,104,31,0.12);
+        }
+        .ws-track-order-img {
+            width: 54px;
+            height: 68px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid var(--ws-border);
+            flex-shrink: 0;
+            background: #FAF8F4;
+        }
+        .ws-track-order-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .ws-track-order-title {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: var(--ws-text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ws-track-orders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(clamp(260px, 45vw, 360px), 1fr));
+            gap: 12px;
+        }
+
         /* ── Support Ticket Card ── */
         .ws-ticket-card {
             border: 1.5px solid var(--ws-border);
@@ -3670,61 +3722,47 @@ $catalogProducts = [
 
 
             <!-- ═══════════════════════════════════════
-                 TAB 7: LIVE SHIPMENT TRACKING
+                 TAB 7: LIVE SHIPMENT & CONSIGNMENT TRACKING
             ═══════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneTracking">
                 <div class="ws-card">
-                    <div class="ws-card-header">
+                    <div class="ws-card-header" style="flex-wrap:wrap; gap:12px;">
                         <div class="ws-card-title-group">
-                            <h3>Live Heavy Logistics & Parcel Tracking</h3>
+                            <h3>Live Consignment Tracking</h3>
+                            <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Real-Time Courier Dispatch Status, Air Cargo Logs & Milestones
+                            </div>
                         </div>
-                        <span class="ws-status-badge shipped">⚡ BlueDart Air Express</span>
+                        <span class="ws-status-badge shipped" id="trackHeaderBadge">⚡ BlueDart Priority Air</span>
                     </div>
 
-                    <div style="background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:10px; padding:16px; margin-bottom:16px;">
-                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                    <!-- Active Tracking Hero Visual Card -->
+                    <div id="wsActiveTrackHero" style="background:#FAF8F4; border:1.5px solid var(--ws-gold-border); border-radius:12px; padding:18px; margin-bottom:20px; box-shadow:0 4px 16px rgba(138,104,31,0.08);">
+                        <!-- Injected dynamically by JS for active consignment -->
+                    </div>
+
+                    <!-- All Consignments Selector Section -->
+                    <div style="margin-top:24px; padding-top:18px; border-top:1.5px solid var(--ws-border);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                             <div>
-                                <h4 style="font-size:1rem; font-weight:800; color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">
-                                    Order #KLN-WS-8021
+                                <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-text-main); font-family:var(--ws-font-serif);">
+                                    📦 Select Consignment to Track
                                 </h4>
-                                <div style="font-size:0.80rem; color:var(--ws-text-muted); margin-top:2px;">
-                                    Nilambari Silk Saree (Pack of 12) • AWB: <strong>884729104</strong>
+                                <div style="font-size:0.75rem; color:var(--ws-text-muted);">
+                                    Click any consignment below to view its live real-time logistics progress
                                 </div>
                             </div>
-                            <div style="text-align:right;">
-                                <div style="font-size:0.74rem; color:var(--ws-text-muted);">Estimated Delivery</div>
-                                <div style="font-size:0.95rem; font-weight:800; color:var(--ws-success);">Tomorrow, 17 Aug 2026</div>
+                            <div class="ws-filter-pill-group" style="display:flex; gap:6px; flex-wrap:nowrap; overflow-x:auto;">
+                                <button class="ws-rep-filter-btn active" onclick="filterTrackingOrders('all', this)">All (6)</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('shipped', this)">In Transit</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('delivered', this)">Delivered</button>
+                                <button class="ws-rep-filter-btn" onclick="filterTrackingOrders('processing', this)">Processing</button>
                             </div>
                         </div>
 
-                        <!-- 5-Stage Logistics Timeline -->
-                        <div class="ws-track-timeline">
-                            <div class="ws-timeline-step completed">
-                                <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
-                                <div class="ws-timeline-date">Kalaniketan Head Atelier, Surat • 14 Aug, 10:30 AM</div>
-                            </div>
-                            <div class="ws-timeline-step completed">
-                                <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                <div class="ws-timeline-title">QC Inspection & Bale Packaging Completed</div>
-                                <div class="ws-timeline-date">Zari & Silk Warehouse • 14 Aug, 03:45 PM</div>
-                            </div>
-                            <div class="ws-timeline-step active">
-                                <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                                <div class="ws-timeline-title">In Transit — Arrived at Regional Distribution Hub</div>
-                                <div class="ws-timeline-date">Mumbai Sort Facility • 16 Aug, 01:15 AM (Live Update)</div>
-                            </div>
-                            <div class="ws-timeline-step">
-                                <div class="ws-timeline-dot"></div>
-                                <div class="ws-timeline-title">Out for Delivery to Warehouse</div>
-                                <div class="ws-timeline-date">Expected 17 Aug, by 04:00 PM</div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:14px;">
-                            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20share%20driver%20contact%20for%20consignment%20KLN-WS-8021" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
-                                💬 WhatsApp Driver Desk
-                            </a>
+                        <!-- Orders Grid for Tracking -->
+                        <div class="ws-track-orders-grid" id="wsTrackingOrdersGrid">
+                            <!-- Populated dynamically by JS -->
                         </div>
                     </div>
                 </div>
@@ -6056,10 +6094,170 @@ $catalogProducts = [
             loadSavedWholesalerData();
             renderOrdersView(activeOrdersList);
             renderReportsView(activeOrdersList);
+            renderTrackingTab(activeOrdersList);
             renderTicketsView();
             window.animateTargetGauge(75.55);
             window.updateWholesaleCartBadge();
         }
+
+        /* ── Live Shipment Tracking Controller ── */
+        var activeTrackOrderId = 'KLN-WS-8021';
+        var currentTrackFilter = 'all';
+
+        function renderTrackingTab(orders, selectedId) {
+            if (selectedId) activeTrackOrderId = selectedId;
+            var heroContainer = document.getElementById('wsActiveTrackHero');
+            var gridContainer = document.getElementById('wsTrackingOrdersGrid');
+            var headerBadge = document.getElementById('trackHeaderBadge');
+            if (!heroContainer || !gridContainer) return;
+
+            var list = orders || activeOrdersList;
+            var currentOrder = list.find(function(o){ return o.id === activeTrackOrderId; }) || list[0];
+            if (!currentOrder) return;
+            activeTrackOrderId = currentOrder.id;
+
+            if (headerBadge) {
+                headerBadge.className = 'ws-status-badge ' + currentOrder.status.toLowerCase();
+                headerBadge.innerHTML = '⚡ ' + currentOrder.courier;
+            }
+
+            // 1. Render Active Hero Card
+            var isDelivered = currentOrder.status.toLowerCase() === 'delivered';
+            var isProcessing = currentOrder.status.toLowerCase() === 'processing';
+
+            var etaText = isDelivered ? 'Delivered on ' + currentOrder.date : (isProcessing ? 'Dispatching from Atelier' : 'Tomorrow, 17 Aug 2026');
+            var etaColor = isDelivered ? '#15803D' : (isProcessing ? '#B45309' : 'var(--ws-gold-primary)');
+
+            heroContainer.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed var(--ws-border);">
+                    <div style="display:flex; gap:12px; align-items:center;">
+                        <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:58px; height:74px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FFFFFF;">
+                        <div>
+                            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                <span class="ws-order-id-cell" style="font-size:1.05rem;">${currentOrder.id}</span>
+                                <span class="ws-status-badge ${currentOrder.status.toLowerCase()}">${currentOrder.status}</span>
+                            </div>
+                            <h4 style="font-size:0.90rem; font-weight:800; color:var(--ws-text-main); margin-top:2px;">${currentOrder.productName}</h4>
+                            <div style="font-size:0.75rem; color:var(--ws-text-muted);">
+                                Consignment Lot: <strong>${currentOrder.qty} Pcs</strong> • ${currentOrder.color || 'Silk Assorted'}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:0.74rem; color:var(--ws-text-muted);">Courier & AWB Tracking</div>
+                        <div style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:2px;">
+                            <span>${currentOrder.courier}</span>
+                            <span style="font-family:monospace; background:#FFFFFF; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border);">${currentOrder.awb}</span>
+                            <button onclick="copyAwbNumber('${currentOrder.awb}')" style="background:transparent; border:none; color:var(--ws-gold-primary); cursor:pointer; font-size:0.82rem;" title="Copy AWB">📋</button>
+                        </div>
+                        <div style="font-size:0.78rem; font-weight:800; color:${etaColor}; margin-top:4px;">
+                            ${etaText}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Logistics Milestones Timeline -->
+                <div class="ws-track-timeline">
+                    <div class="ws-timeline-step completed">
+                        <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
+                        <div class="ws-timeline-date">Kalaniketan Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
+                    </div>
+                    <div class="ws-timeline-step ${isProcessing ? 'active' : 'completed'}">
+                        <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div class="ws-timeline-title">QC Inspection & Sealed Bale Packaging Completed</div>
+                        <div class="ws-timeline-date">Zari & Silk Logistics Warehouse • Verified for Transit</div>
+                    </div>
+                    <div class="ws-timeline-step ${isDelivered ? 'completed' : (isProcessing ? '' : 'active')}">
+                        <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div class="ws-timeline-title">${isDelivered ? 'Transit Completed — Received at Warehouse Godown' : 'In Transit — Dispatched via Priority Air Cargo'}</div>
+                        <div class="ws-timeline-date">${currentOrder.courier} (AWB: ${currentOrder.awb}) • Live GPS Tracking Active</div>
+                    </div>
+                    <div class="ws-timeline-step ${isDelivered ? 'completed' : ''}">
+                        <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div class="ws-timeline-title">${isDelivered ? 'Delivered & Consignment Accepted' : 'Out for Final Delivery'}</div>
+                        <div class="ws-timeline-date">${isDelivered ? 'Delivered on ' + currentOrder.date + ' with OTP Verification' : 'Expected delivery window: 10:00 AM - 04:00 PM'}</div>
+                    </div>
+                </div>
+
+                <!-- Action Links -->
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; padding-top:12px; border-top:1px dashed var(--ws-border);">
+                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20consignment%20${encodeURIComponent(currentOrder.id)}%20(AWB%3A%20${encodeURIComponent(currentOrder.awb)})" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
+                        💬 WhatsApp Logistics Desk
+                    </a>
+                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(currentOrder)})'>
+                        📄 Download GST Invoice
+                    </button>
+                    <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(currentOrder)})'>
+                        👁️ View Order Details
+                    </button>
+                </div>
+            `;
+
+            // 2. Render All Consignments List
+            gridContainer.innerHTML = '';
+            var filteredList = list.filter(function(o) {
+                if (currentTrackFilter === 'all') return true;
+                return o.status.toLowerCase() === currentTrackFilter.toLowerCase();
+            });
+
+            filteredList.forEach(function(o) {
+                var isSelected = o.id === activeTrackOrderId;
+                var card = document.createElement('div');
+                card.className = 'ws-track-order-card' + (isSelected ? ' selected' : '');
+                card.onclick = function() {
+                    selectTrackingOrder(o.id);
+                };
+                card.innerHTML = `
+                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.src='images/product1.png';">
+                    <div class="ws-track-order-info">
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                            <strong class="ws-order-id-cell" style="font-size:0.86rem;">${o.id}</strong>
+                            <span class="ws-status-badge ${o.status.toLowerCase()}" style="font-size:0.65rem;">${o.status}</span>
+                        </div>
+                        <div class="ws-track-order-title">${o.productName}</div>
+                        <div style="font-size:0.74rem; color:var(--ws-text-muted);">
+                            ${o.date} • <strong>${o.qty} Pcs</strong> • ${o.courier}
+                        </div>
+                        <div style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700; margin-top:2px;">
+                            ${isSelected ? '● Currently Tracking' : '⚡ Track Consignment ›'}
+                        </div>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        window.selectTrackingOrder = function(orderId) {
+            activeTrackOrderId = orderId;
+            renderTrackingTab(activeOrdersList, orderId);
+            var hero = document.getElementById('wsActiveTrackHero');
+            if (hero) {
+                hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            window.showWsToast('📍 Loaded tracking timeline for ' + orderId);
+        };
+
+        window.filterTrackingOrders = function(status, btn) {
+            currentTrackFilter = status;
+            if (btn && btn.parentElement) {
+                btn.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+            }
+            renderTrackingTab(activeOrdersList, activeTrackOrderId);
+        };
+
+        window.copyAwbNumber = function(awb) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(awb).then(function() {
+                    window.showWsToast('📋 AWB ' + awb + ' copied to clipboard!');
+                }).catch(function() {
+                    window.showWsToast('AWB: ' + awb);
+                });
+            } else {
+                window.showWsToast('AWB: ' + awb);
+            }
+        };
 
         /* ── Wholesale Cart Badge Synchronization ── */
         window.updateWholesaleCartBadge = function() {
