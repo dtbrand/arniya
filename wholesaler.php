@@ -2194,15 +2194,21 @@ $catalogProducts = [
         @media (max-width: 1023px) {
             .ws-slider-track .product-card,
             .ws-slider-track .ws-product-card {
-                flex: 0 0 calc((100% - 24px) / 3);
+                flex: 0 0 calc((100% - 24px) / 3.3);
                 min-width: 150px;
             }
         }
         @media (max-width: 600px) {
+            .ws-slider-track {
+                gap: 8px !important;
+                padding: 4px 2px 10px !important;
+            }
             .ws-slider-track .product-card,
             .ws-slider-track .ws-product-card {
-                flex: 0 0 calc((100% - 12px) / 2);
-                min-width: 140px;
+                flex: 0 0 calc((100% - 16px) / 2.38) !important;
+                min-width: 125px !important;
+                max-width: 160px !important;
+                border-radius: 10px !important;
             }
         }
 
@@ -3977,14 +3983,39 @@ $catalogProducts = [
                 display: none;
             }
             .ws-slider-track {
-                gap: 10px;
-                padding: 4px 2px 12px;
+                gap: 8px !important;
+                padding: 4px 2px 10px !important;
             }
             .ws-slider-track .product-card,
             .ws-slider-track .ws-product-card {
-                flex: 0 0 calc((100% - 10px) / 2);
-                min-width: 140px;
-                max-width: 175px;
+                flex: 0 0 calc((100% - 16px) / 2.38) !important;
+                min-width: 125px !important;
+                max-width: 160px !important;
+                border-radius: 10px !important;
+            }
+            .ws-slider-track .card-name,
+            .ws-slider-track .ws-prod-name {
+                font-size: 0.72rem !important;
+                line-height: 1.2 !important;
+            }
+            .ws-slider-track .card-price,
+            .ws-slider-track .ws-prod-price {
+                font-size: 0.82rem !important;
+            }
+            .ws-slider-track .card-old-price {
+                font-size: 0.60rem !important;
+            }
+            .ws-slider-track .card-price-discount {
+                font-size: 0.50rem !important;
+                padding: 1px 3.5px !important;
+            }
+            .ws-slider-track .card-info-text-row {
+                font-size: 0.56rem !important;
+                gap: 3px !important;
+            }
+            .ws-slider-track .card-body {
+                padding: 7px !important;
+                gap: 2px !important;
             }
             .products-grid, .ws-master-catalog-grid {
                 grid-template-columns: repeat(2, 1fr) !important;
@@ -4030,7 +4061,8 @@ $catalogProducts = [
             }
             .ws-slider-track .product-card,
             .ws-slider-track .ws-product-card {
-                flex: 0 0 85%;
+                flex: 0 0 calc((100% - 14px) / 2.3) !important;
+                min-width: 115px !important;
                 max-width: none;
             }
             .products-grid, .ws-master-catalog-grid {
