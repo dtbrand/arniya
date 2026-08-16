@@ -6028,18 +6028,22 @@ $catalogProducts = [
                         </button>
                     </div>
 
-                    <!-- Active Combined Filter Status Banner (Category + Price Store) -->
+                    <!-- Active Combined Filter Status Banner (Category + Sub-Category + Price Store) -->
                     <div id="wsActiveCategoryFilterBar" class="ws-active-cat-bar" style="display:none; margin-bottom:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; background:linear-gradient(135deg, #FFFBEB, #FEF3C7); border:1px solid rgba(217,119,6,0.25); border-radius:10px; padding:6px 12px;">
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                             <span id="wsFilterCategoryPill" style="display:none; background:#B45309; color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
-                                <span id="wsActiveCatName">Sarees</span>
+                                <span id="wsActiveCatName">Kurtis</span>
                                 <span onclick="event.stopPropagation(); clearCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Category">✕</span>
+                            </span>
+                            <span id="wsFilterSubCategoryPill" style="display:none; background:linear-gradient(135deg, #F59E0B, #D97706); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
+                                <span id="wsActiveSubCatName">Sharara Sets</span>
+                                <span onclick="event.stopPropagation(); clearSubCategoryOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Sub-Category">✕</span>
                             </span>
                             <span id="wsFilterPricePill" style="display:none; background:linear-gradient(135deg, #D97706, #B45309); color:#FFF; padding:2px 8px; border-radius:12px; font-size:0.72rem; font-weight:800; align-items:center; gap:5px;">
                                 <span id="wsActivePriceName">Under ₹1,000</span>
                                 <span onclick="event.stopPropagation(); clearPriceOnlyFilter();" style="cursor:pointer; font-size:0.8rem; line-height:1;" title="Remove Price Filter">✕</span>
                             </span>
-                            <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:800;">(12 Lots Available)</span>
+                            <span id="wsActiveCatCount" style="font-size:0.72rem; color:#78350F; font-weight:800;">(5 Lots Available)</span>
                         </div>
                         <button type="button" onclick="clearAllCatalogFilters()" style="background:transparent; border:none; color:#B45309; font-size:0.74rem; font-weight:800; cursor:pointer; text-decoration:underline; padding:0;">✕ Clear All</button>
                     </div>
@@ -6149,15 +6153,16 @@ $catalogProducts = [
     </nav>
 
     <!-- ═══════════════════════════════════════════
-         SMART WHOLESALE CATEGORY POPUP MODAL (CLEAN DESIGNER)
+         SMART WHOLESALE CATEGORY & SUB-CATEGORY POPUP MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsCatalogCategoryModal" role="dialog" aria-modal="true">
         <div class="ws-modal-box ws-cat-modal-box" style="max-width: 620px; border-radius: 20px; background: linear-gradient(165deg, #FFFFFF 0%, #FDFBF7 100%); border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(212, 175, 55, 0.25);">
             
-            <div class="ws-modal-header" style="padding: 16px 20px 14px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
+            <div class="ws-modal-header" style="padding: 14px 18px 12px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:10px;">
-                    <div style="width:36px; height:36px; border-radius:11px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(217,119,6,0.18);">
-                        <svg style="width:18px; height:18px;" viewBox="0 0 24 24" fill="none">
+                    <button id="wsCatModalBackBtn" onclick="renderMainCategoriesInModal()" type="button" style="display:none; background:rgba(180,83,9,0.1); border:1px solid rgba(180,83,9,0.25); color:#92400E; font-size:0.72rem; font-weight:800; padding:4px 8px; border-radius:8px; cursor:pointer;">← Main</button>
+                    <div id="wsCatModalIconWrap" style="width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #FEF3C7, #FDE68A); border:1.5px solid rgba(217,119,6,0.4); display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(217,119,6,0.18);">
+                        <svg style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
                             <path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-7z" fill="url(#catModalGoldGrad)" stroke="#B45309" stroke-width="1.2"/>
                             <defs>
                                 <linearGradient id="catModalGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -6168,84 +6173,21 @@ $catalogProducts = [
                             </defs>
                         </svg>
                     </div>
-                    <h3 style="font-family:var(--ws-font-serif); font-size:1.08rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
+                    <h3 id="wsCatModalHeaderTitle" style="font-family:var(--ws-font-serif); font-size:1.02rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
                         Select Category
                     </h3>
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeWsCatalogCategoryModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
             </div>
 
-            <div class="ws-modal-body" style="padding: 16px 20px 20px;">
-                <div class="ws-cat-modal-grid">
-                    
-                    <!-- Card 1: Sarees -->
-                    <div class="ws-cat-tile-card" onclick="selectWsCategory('Sarees')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Sarees</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
-                    <!-- Card 2: Kurtis & Sets -->
-                    <div class="ws-cat-tile-card" onclick="selectWsCategory('Kurtis')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Kurtis & Sets</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
-                    <!-- Card 3: Lehengas -->
-                    <div class="ws-cat-tile-card" onclick="selectWsCategory('Lehengas')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><polygon points="12 2 2 22 22 22 12 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Lehengas</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
-                    <!-- Card 4: Gowns -->
-                    <div class="ws-cat-tile-card" onclick="selectWsCategory('Gowns')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4z"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Gowns & Indo-Western</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
-                    <!-- Card 5: Dress Materials -->
-                    <div class="ws-cat-tile-card" onclick="selectWsCategory('Dress Materials')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">Dress Materials</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
-                    <!-- Card 6: All Complete Catalog -->
-                    <div class="ws-cat-tile-card all-cat" onclick="selectWsCategory('All')">
-                        <div class="ws-cat-tile-icon-wrap">
-                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        </div>
-                        <div class="ws-cat-tile-content">
-                            <div class="ws-cat-tile-title">All Collections</div>
-                        </div>
-                        <div class="ws-cat-tile-arrow">→</div>
-                    </div>
-
+            <div class="ws-modal-body" style="padding: 14px 18px 18px;">
+                <div class="ws-cat-modal-grid" id="wsCatModalDynamicGrid">
+                    <!-- Rendered dynamically by JS -->
                 </div>
             </div>
+
+        </div>
+    </div>
 
         </div>
     </div>
@@ -8537,8 +8479,69 @@ $catalogProducts = [
         };
 
         /* ── Unified Real-Time Category & Price Store Filter Engine ── */
+        /* ── Unified Real-Time Category, Sub-Category & Price Store Filter Engine ── */
         var activePriceTier = null;
         var activeCatalogCategory = 'All';
+        var activeCatalogSubCategory = 'all_sub';
+        var activeCatalogSubCategoryLabel = '';
+
+        var wsCategoryTaxonomy = {
+            'Kurtis': {
+                title: 'Kurtis & Sets',
+                icon: '<svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>',
+                subcategories: [
+                    { name: 'All Kurtis & Sets', filter: 'all_sub', icon: '✨' },
+                    { name: 'Sharara & Anarkali Sets', filter: 'sharara', icon: '🔥' },
+                    { name: 'Straight Cut Kurtis', filter: 'straight', icon: '👗' },
+                    { name: 'Lakhnavi Chikan Work', filter: 'chikan', icon: '💎' },
+                    { name: 'Printed Cotton Kurtis', filter: 'cotton', icon: '🌸' },
+                    { name: 'Rayon Everyday Sets', filter: 'rayon', icon: '⚡' }
+                ]
+            },
+            'Sarees': {
+                title: 'Sarees',
+                icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
+                subcategories: [
+                    { name: 'All Sarees', filter: 'all_sub', icon: '🥻' },
+                    { name: 'Kanjivaram Silk', filter: 'kanjivaram', icon: '👑' },
+                    { name: 'Dola & Paithani Silk', filter: 'dola', icon: '✨' },
+                    { name: 'Georgette & Chiffon', filter: 'georgette', icon: '🔥' },
+                    { name: 'Chanderi Festive', filter: 'chanderi', icon: '💎' },
+                    { name: 'Bandhani Art Silk', filter: 'bandhani', icon: '⚡' }
+                ]
+            },
+            'Lehengas': {
+                title: 'Lehengas',
+                icon: '<svg viewBox="0 0 24 24"><polygon points="12 2 2 22 22 22 12 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>',
+                subcategories: [
+                    { name: 'All Lehengas', filter: 'all_sub', icon: '👑' },
+                    { name: 'Bridal Velvet', filter: 'velvet', icon: '💎' },
+                    { name: 'Zardosi Heavy Work', filter: 'zardosi', icon: '✨' },
+                    { name: 'Semi-Bridal Art Silk', filter: 'silk', icon: '🔥' },
+                    { name: 'Festive Georgette', filter: 'georgette', icon: '🌸' }
+                ]
+            },
+            'Gowns': {
+                title: 'Gowns & Indo-Western',
+                icon: '<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4z"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>',
+                subcategories: [
+                    { name: 'All Gowns', filter: 'all_sub', icon: '💃' },
+                    { name: 'Flared Designer Gowns', filter: 'flared', icon: '✨' },
+                    { name: 'Indo-Western Fusion', filter: 'indo', icon: '🔥' },
+                    { name: 'Embroidered Festive', filter: 'embroidered', icon: '💎' }
+                ]
+            },
+            'Dress Materials': {
+                title: 'Dress Materials',
+                icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
+                subcategories: [
+                    { name: 'All Dress Materials', filter: 'all_sub', icon: '🧵' },
+                    { name: 'Pure Cotton Suit Lots', filter: 'cotton', icon: '🚀' },
+                    { name: 'Chanderi Jacquard Suits', filter: 'chanderi', icon: '✨' },
+                    { name: 'Silk Touch Unstitched', filter: 'silk', icon: '💎' }
+                ]
+            }
+        };
 
         window.filterByPriceTier = function(maxPrice, cardElem) {
             var cards = document.querySelectorAll('.ws-price-box-card');
@@ -8565,21 +8568,43 @@ $catalogProducts = [
         };
 
         window.selectWsCategory = function(catName) {
+            if (catName === 'All') {
+                closeWsCatalogCategoryModal();
+                if (typeof window.switchWsTab === 'function') {
+                    window.switchWsTab('trending');
+                }
+                activeCatalogCategory = 'All';
+                activeCatalogSubCategory = 'all_sub';
+                activeCatalogSubCategoryLabel = '';
+                applyUnifiedCatalogFilterEngine(true);
+                return;
+            }
+
+            // Drill down into sub-categories inside the modal
+            renderSubCategoriesInModal(catName);
+        };
+
+        window.selectWsSubCategory = function(catName, subFilter, subLabel) {
             closeWsCatalogCategoryModal();
             if (typeof window.switchWsTab === 'function') {
                 window.switchWsTab('trending');
             }
-            activeCatalogCategory = catName || 'All';
-            applyUnifiedCatalogFilterEngine(true);
-        };
-
-        window.filterCatalogByCategory = function(catName) {
-            activeCatalogCategory = catName || 'All';
+            activeCatalogCategory = catName;
+            activeCatalogSubCategory = subFilter || 'all_sub';
+            activeCatalogSubCategoryLabel = (subFilter === 'all_sub' ? '' : subLabel);
             applyUnifiedCatalogFilterEngine(true);
         };
 
         window.clearCategoryOnlyFilter = function() {
             activeCatalogCategory = 'All';
+            activeCatalogSubCategory = 'all_sub';
+            activeCatalogSubCategoryLabel = '';
+            applyUnifiedCatalogFilterEngine(false);
+        };
+
+        window.clearSubCategoryOnlyFilter = function() {
+            activeCatalogSubCategory = 'all_sub';
+            activeCatalogSubCategoryLabel = '';
             applyUnifiedCatalogFilterEngine(false);
         };
 
@@ -8591,6 +8616,8 @@ $catalogProducts = [
 
         window.clearAllCatalogFilters = function() {
             activeCatalogCategory = 'All';
+            activeCatalogSubCategory = 'all_sub';
+            activeCatalogSubCategoryLabel = '';
             activePriceTier = null;
             document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
             applyUnifiedCatalogFilterEngine(false);
@@ -8600,13 +8627,85 @@ $catalogProducts = [
             window.clearAllCatalogFilters();
         };
 
+        function renderMainCategoriesInModal() {
+            var backBtn = document.getElementById('wsCatModalBackBtn');
+            var titleElem = document.getElementById('wsCatModalHeaderTitle');
+            var grid = document.getElementById('wsCatModalDynamicGrid');
+
+            if (backBtn) backBtn.style.display = 'none';
+            if (titleElem) titleElem.textContent = 'Select Category';
+            if (!grid) return;
+
+            var cats = [
+                { id: 'Sarees', title: 'Sarees', icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' },
+                { id: 'Kurtis', title: 'Kurtis & Sets', icon: '<svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>' },
+                { id: 'Lehengas', title: 'Lehengas', icon: '<svg viewBox="0 0 24 24"><polygon points="12 2 2 22 22 22 12 2"/><line x1="12" y1="2" x2="12" y2="22"/></svg>' },
+                { id: 'Gowns', title: 'Gowns & Indo-Western', icon: '<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 3 4 8 4 8s4-5 4-8a4 4 0 0 0-4-4z"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg>' },
+                { id: 'Dress Materials', title: 'Dress Materials', icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>' },
+                { id: 'All', title: 'All Collections', isAll: true, icon: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' }
+            ];
+
+            var html = '';
+            cats.forEach(function(c) {
+                html += `
+                    <div class="ws-cat-tile-card ${c.isAll ? 'all-cat' : ''}" onclick="selectWsCategory('${c.id}')">
+                        <div class="ws-cat-tile-icon-wrap">
+                            ${c.icon}
+                        </div>
+                        <div class="ws-cat-tile-content">
+                            <div class="ws-cat-tile-title">${c.title}</div>
+                        </div>
+                        <div class="ws-cat-tile-arrow">→</div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function renderSubCategoriesInModal(catName) {
+            var backBtn = document.getElementById('wsCatModalBackBtn');
+            var titleElem = document.getElementById('wsCatModalHeaderTitle');
+            var grid = document.getElementById('wsCatModalDynamicGrid');
+
+            var catData = wsCategoryTaxonomy[catName];
+            if (!catData || !catData.subcategories) {
+                // If no subcategories, filter directly
+                selectWsSubCategory(catName, 'all_sub', '');
+                return;
+            }
+
+            if (backBtn) backBtn.style.display = 'inline-block';
+            if (titleElem) titleElem.textContent = catData.title + ' Sub-Categories';
+            if (!grid) return;
+
+            var html = '';
+            catData.subcategories.forEach(function(sub) {
+                html += `
+                    <div class="ws-cat-tile-card" onclick="selectWsSubCategory('${catName}', '${sub.filter}', '${sub.name}')">
+                        <div class="ws-cat-tile-icon-wrap">
+                            <span style="font-size:1.15rem; line-height:1;">${sub.icon}</span>
+                        </div>
+                        <div class="ws-cat-tile-content">
+                            <div class="ws-cat-tile-title">${sub.name}</div>
+                        </div>
+                        <div class="ws-cat-tile-arrow">→</div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
         function applyUnifiedCatalogFilterEngine(showToast) {
             var btnLabel = document.getElementById('wsCatPickerBtnLabel');
             var titleElem = document.getElementById('wsCatalogMainTitle');
             var filterBar = document.getElementById('wsActiveCategoryFilterBar');
             var catPill = document.getElementById('wsFilterCategoryPill');
+            var subCatPill = document.getElementById('wsFilterSubCategoryPill');
             var pricePill = document.getElementById('wsFilterPricePill');
             var activeNameElem = document.getElementById('wsActiveCatName');
+            var activeSubNameElem = document.getElementById('wsActiveSubCatName');
             var activePriceElem = document.getElementById('wsActivePriceName');
             var activeCountElem = document.getElementById('wsActiveCatCount');
 
@@ -8620,45 +8719,69 @@ $catalogProducts = [
 
             // Update UI headers
             if (btnLabel) {
-                btnLabel.textContent = activeCatalogCategory === 'All' ? 'All Categories ▾' : (activeCatalogCategory + ' ▾');
+                if (activeCatalogCategory === 'All') {
+                    btnLabel.textContent = 'All Categories ▾';
+                } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
+                    btnLabel.textContent = activeCatalogSubCategoryLabel + ' ▾';
+                } else {
+                    btnLabel.textContent = activeCatalogCategory + ' ▾';
+                }
             }
             if (titleElem) {
-                titleElem.textContent = activeCatalogCategory === 'All' ? 'For You' : (activeCatalogCategory + ' Catalog');
+                if (activeCatalogCategory === 'All') {
+                    titleElem.textContent = 'For You';
+                } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
+                    titleElem.textContent = activeCatalogCategory + ' • ' + activeCatalogSubCategoryLabel;
+                } else {
+                    titleElem.textContent = activeCatalogCategory + ' Catalog';
+                }
             }
 
-            // Filter products matching BOTH category and price
+            // Filter products matching category, sub-category and price
             productCards.forEach(function(card) {
                 var prodId = card.getAttribute('data-product-id');
                 var pData = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(prodId); });
-                var pCat = pData ? (pData.category || '') : '';
-                var cardCat = card.querySelector('.card-cat-photo-tag') ? card.querySelector('.card-cat-photo-tag').textContent.trim() : '';
+                var pCat = pData ? (pData.category || '').toLowerCase() : '';
+                var cardCat = card.querySelector('.card-cat-photo-tag') ? card.querySelector('.card-cat-photo-tag').textContent.trim().toLowerCase() : '';
+                var pName = pData ? (pData.name || '').toLowerCase() : '';
+                var pFabric = pData ? (pData.fabric || '').toLowerCase() : '';
                 var price = pData ? (Number(pData.wholesale_price) || Number(pData.price) || 0) : 0;
 
-                // Category Check
+                // 1. Main Category Check
                 var isCatMatch = false;
                 if (activeCatalogCategory === 'All') {
                     isCatMatch = true;
-                } else if (activeCatalogCategory === 'Sarees' && (pCat.toLowerCase().indexOf('saree') !== -1 || cardCat.toLowerCase().indexOf('saree') !== -1)) {
+                } else if (activeCatalogCategory === 'Sarees' && (pCat.indexOf('saree') !== -1 || cardCat.indexOf('saree') !== -1)) {
                     isCatMatch = true;
-                } else if (activeCatalogCategory === 'Kurtis' && (pCat.toLowerCase().indexOf('kurti') !== -1 || cardCat.toLowerCase().indexOf('kurti') !== -1)) {
+                } else if (activeCatalogCategory === 'Kurtis' && (pCat.indexOf('kurti') !== -1 || cardCat.indexOf('kurti') !== -1)) {
                     isCatMatch = true;
-                } else if (activeCatalogCategory === 'Lehengas' && (pCat.toLowerCase().indexOf('lehenga') !== -1 || cardCat.toLowerCase().indexOf('lehenga') !== -1)) {
+                } else if (activeCatalogCategory === 'Lehengas' && (pCat.indexOf('lehenga') !== -1 || cardCat.indexOf('lehenga') !== -1)) {
                     isCatMatch = true;
-                } else if (activeCatalogCategory === 'Gowns' && (pCat.toLowerCase().indexOf('gown') !== -1 || cardCat.toLowerCase().indexOf('gown') !== -1)) {
+                } else if (activeCatalogCategory === 'Gowns' && (pCat.indexOf('gown') !== -1 || cardCat.indexOf('gown') !== -1)) {
                     isCatMatch = true;
-                } else if (activeCatalogCategory === 'Dress Materials' && (pCat.toLowerCase().indexOf('dress') !== -1 || pCat.toLowerCase().indexOf('dupatta') !== -1 || cardCat.toLowerCase().indexOf('dress') !== -1 || cardCat.toLowerCase().indexOf('dupatta') !== -1)) {
+                } else if (activeCatalogCategory === 'Dress Materials' && (pCat.indexOf('dress') !== -1 || pCat.indexOf('dupatta') !== -1 || cardCat.indexOf('dress') !== -1 || cardCat.indexOf('dupatta') !== -1)) {
                     isCatMatch = true;
-                } else if (pCat.toLowerCase() === activeCatalogCategory.toLowerCase() || cardCat.toLowerCase() === activeCatalogCategory.toLowerCase()) {
+                } else if (pCat === activeCatalogCategory.toLowerCase() || cardCat === activeCatalogCategory.toLowerCase()) {
                     isCatMatch = true;
                 }
 
-                // Price Check
+                // 2. Sub-Category Check
+                var isSubMatch = true;
+                if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
+                    var kw = activeCatalogSubCategory.toLowerCase();
+                    var combinedText = pName + ' ' + pFabric + ' ' + pCat;
+                    if (combinedText.indexOf(kw) === -1) {
+                        isSubMatch = false;
+                    }
+                }
+
+                // 3. Price Check
                 var isPriceMatch = true;
                 if (activePriceTier !== null) {
                     isPriceMatch = (price > 0 && price <= activePriceTier);
                 }
 
-                if (isCatMatch && isPriceMatch) {
+                if (isCatMatch && isSubMatch && isPriceMatch) {
                     card.style.display = 'flex';
                     matchingCards.push(card);
                     matchCount++;
@@ -8682,7 +8805,7 @@ $catalogProducts = [
             nonMatchingCards.forEach(function(card) { track.appendChild(card); });
 
             // Update Filter Status Bar
-            var hasFilter = (activeCatalogCategory !== 'All' || activePriceTier !== null);
+            var hasFilter = (activeCatalogCategory !== 'All' || (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') || activePriceTier !== null);
             if (filterBar) {
                 if (hasFilter) {
                     filterBar.style.display = 'flex';
@@ -8692,6 +8815,14 @@ $catalogProducts = [
                             if (activeNameElem) activeNameElem.textContent = activeCatalogCategory;
                         } else {
                             catPill.style.display = 'none';
+                        }
+                    }
+                    if (subCatPill) {
+                        if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
+                            subCatPill.style.display = 'inline-flex';
+                            if (activeSubNameElem) activeSubNameElem.textContent = activeCatalogSubCategoryLabel;
+                        } else {
+                            subCatPill.style.display = 'none';
                         }
                     }
                     if (pricePill) {
@@ -8713,6 +8844,8 @@ $catalogProducts = [
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
                     window.showWsToast('✓ Showing All Available Wholesale Lots');
+                } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
+                    window.showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
                     window.showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
                 } else if (activeCatalogCategory !== 'All') {
@@ -8731,7 +8864,16 @@ $catalogProducts = [
 
         window.openWsCatalogCategoryModal = function() {
             var modal = document.getElementById('wsCatalogCategoryModal');
-            if (modal) modal.classList.add('active');
+            if (!modal) return;
+
+            // If a specific category like Kurtis or Sarees is already active, open its sub-categories directly!
+            if (activeCatalogCategory && activeCatalogCategory !== 'All' && wsCategoryTaxonomy[activeCatalogCategory]) {
+                renderSubCategoriesInModal(activeCatalogCategory);
+            } else {
+                renderMainCategoriesInModal();
+            }
+
+            modal.classList.add('active');
         };
 
         window.closeWsCatalogCategoryModal = function() {
