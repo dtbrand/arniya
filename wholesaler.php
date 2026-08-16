@@ -285,6 +285,77 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
         }
 
+        /* ── Luxury Search Bar Design System (Reports, Orders, Catalog) ── */
+        .ws-luxury-search-wrap {
+            position: relative;
+            width: clamp(240px, 34vw, 360px);
+            display: flex;
+            align-items: center;
+        }
+        .ws-luxury-search-input {
+            width: 100%;
+            height: 42px;
+            padding: 0 38px 0 42px;
+            border-radius: 22px;
+            border: 1.5px solid rgba(138, 104, 31, 0.25);
+            background: #FFFFFF;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--ws-text-main);
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px rgba(138, 104, 31, 0.05);
+        }
+        .ws-luxury-search-input::placeholder {
+            color: #9E978E;
+            font-weight: 500;
+        }
+        .ws-luxury-search-input:focus {
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 0 0 3.5px rgba(197, 168, 89, 0.22), 0 4px 14px rgba(138, 104, 31, 0.08);
+            background: #FFFFFF;
+        }
+        .ws-luxury-search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            stroke: var(--ws-gold-primary);
+            stroke-width: 2.2;
+            fill: none;
+            pointer-events: none;
+            transition: var(--ws-transition);
+        }
+        .ws-luxury-search-wrap:focus-within .ws-luxury-search-icon {
+            stroke: var(--ws-gold-deep);
+            transform: translateY(-50%) scale(1.08);
+        }
+        .ws-luxury-search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--ws-gold-light);
+            color: var(--ws-gold-primary);
+            border: 1px solid var(--ws-gold-border);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            transition: var(--ws-transition);
+        }
+        .ws-luxury-search-clear:hover {
+            background: var(--ws-gold-primary);
+            color: #FFFFFF;
+        }
+
         .ws-header-right {
             display: flex;
             align-items: center;
@@ -2589,6 +2660,14 @@ $catalogProducts = [
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 8px;
             }
+            .ws-luxury-search-wrap {
+                width: 100% !important;
+                margin-top: 6px;
+            }
+            .ws-luxury-search-input {
+                height: 40px;
+                font-size: 0.82rem;
+            }
             .ws-mob-order-card {
                 padding: 12px;
                 border-radius: 12px;
@@ -3420,10 +3499,14 @@ $catalogProducts = [
                     </div>
 
                     <!-- Search & Filter Controls -->
-                    <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
-                        <input type="text" id="wsOrdersSearchInput" class="ws-input" style="max-width:320px;" placeholder="Search Order ID, Product, Courier..." oninput="filterOrdersTable()">
+                    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; align-items:center;">
+                        <div class="ws-luxury-search-wrap" style="flex:1; max-width:360px;">
+                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier..." oninput="filterOrdersTable()">
+                            <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
+                        </div>
 
-                        <div style="display:flex; gap:6px;">
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm active" onclick="setOrderStatusFilter('all', this)">All</button>
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Shipped', this)">Shipped</button>
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="setOrderStatusFilter('Delivered', this)">Delivered</button>
@@ -3505,8 +3588,8 @@ $catalogProducts = [
                         </div>
                     </div>
 
-                    <!-- Filter Pills & Real Search Bar -->
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; padding-bottom:14px; border-bottom:1.5px solid var(--ws-border);">
+                    <!-- Filter Pills & Luxury Search Bar -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1.5px solid var(--ws-border);">
                         <div style="display:flex; gap:6px; flex-wrap:wrap;">
                             <button class="ws-rep-filter-btn active" onclick="filterReportsByCategory('all', this)">All Categories</button>
                             <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('saree', this)">Sarees</button>
@@ -3514,8 +3597,10 @@ $catalogProducts = [
                             <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('kurti', this)">Kurtis</button>
                             <button class="ws-rep-filter-btn" onclick="filterReportsByCategory('fabric', this)">Fabrics</button>
                         </div>
-                        <div style="position:relative; width:clamp(220px, 30vw, 320px);">
-                            <input type="text" id="reportSearchInput" class="ws-cmd-search-input" style="padding-left:14px; width:100%;" placeholder="Search consignment, HSN, SKU..." oninput="handleReportSearch(this.value)">
+                        <div class="ws-luxury-search-wrap">
+                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU..." oninput="handleReportSearch(this.value)">
+                            <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search">✕</button>
                         </div>
                     </div>
 
@@ -4649,7 +4734,11 @@ $catalogProducts = [
 
         /* ── Filter Orders Controller ── */
         window.filterOrdersTable = function() {
-            var search = (document.getElementById('wsOrdersSearchInput').value || '').toLowerCase().trim();
+            var input = document.getElementById('wsOrdersSearchInput');
+            var search = (input ? input.value : '').toLowerCase().trim();
+            var clearBtn = document.getElementById('wsOrdersSearchClear');
+            if (clearBtn) clearBtn.style.display = search ? 'flex' : 'none';
+
             var filtered = activeOrdersList.filter(function(o) {
                 var matchStatus = (currentOrderStatusFilter === 'all') || (o.status.toLowerCase() === currentOrderStatusFilter.toLowerCase());
                 var matchSearch = !search || 
@@ -4660,6 +4749,17 @@ $catalogProducts = [
                 return matchStatus && matchSearch;
             });
             renderOrdersView(filtered);
+        };
+
+        window.clearOrdersSearch = function() {
+            var input = document.getElementById('wsOrdersSearchInput');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+            var clearBtn = document.getElementById('wsOrdersSearchClear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            filterOrdersTable();
         };
 
         window.setOrderStatusFilter = function(status, btn) {
@@ -5398,6 +5498,20 @@ $catalogProducts = [
 
         window.handleReportSearch = function(val) {
             currentReportSearchQuery = val.trim();
+            var clearBtn = document.getElementById('reportSearchClear');
+            if (clearBtn) clearBtn.style.display = val.trim() ? 'flex' : 'none';
+            renderReportsView(activeOrdersList);
+        };
+
+        window.clearReportSearch = function() {
+            var input = document.getElementById('reportSearchInput');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+            var clearBtn = document.getElementById('reportSearchClear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            currentReportSearchQuery = '';
             renderReportsView(activeOrdersList);
         };
 
