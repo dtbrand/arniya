@@ -8124,10 +8124,11 @@ $catalogProducts = [
 
                 var repInfoEl = document.getElementById('auditReportBuyerInfo');
                 if (repInfoEl) {
+                    var genDate = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
                     repInfoEl.innerHTML = `
                         <strong>${comp}</strong> (GSTIN: <strong>${gst}</strong>)<br>
                         Authorized Wholesaler: ${rep} • Period: FY 2026-27<br>
-                        Report Generated: ${new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}
+                        Report Generated: ${genDate}
                     `;
                 }
 
@@ -9282,6 +9283,7 @@ $catalogProducts = [
             filteredList.forEach(function(o) {
                 var isSelected = o.id === activeTrackOrderId;
                 var card = document.createElement('div');
+                var trackStatusLabel = isSelected ? '● Currently Tracking' : '⚡ Track Consignment &rsaquo;';
                 card.className = 'ws-track-order-card' + (isSelected ? ' selected' : '');
                 card.onclick = function() {
                     selectTrackingOrder(o.id);
@@ -9298,7 +9300,7 @@ $catalogProducts = [
                             ${o.date} • <strong>${o.qty} Pcs</strong> • ${o.courier}
                         </div>
                         <div style="font-size:0.72rem; color:var(--ws-gold-primary); font-weight:700; margin-top:2px;">
-                            ${isSelected ? '● Currently Tracking' : '⚡ Track Consignment ›'}
+                            ${trackStatusLabel}
                         </div>
                     </div>
                 `;
