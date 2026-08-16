@@ -2545,26 +2545,26 @@ $catalogProducts = [
         }
         .ws-price-slider-track {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            padding: 8px 4px 14px;
+            padding: 4px 2px 6px;
             width: 100%;
         }
         .ws-price-slider-track::-webkit-scrollbar { display: none; }
         .ws-price-slider-track { -ms-overflow-style: none; scrollbar-width: none; }
 
         .ws-price-box-card {
-            flex: 0 0 calc((100% - 60px) / 6);
-            min-width: 140px;
-            max-width: 190px;
+            flex: 1 1 0;
+            min-width: 105px;
+            max-width: 160px;
             scroll-snap-align: start;
-            background: linear-gradient(145deg, #FFFFFF 0%, #FAF7F0 100%);
-            border: 1.5px solid rgba(138, 104, 31, 0.22);
-            border-radius: 14px;
-            padding: 14px 10px;
+            background: linear-gradient(145deg, #FFFFFF 0%, #FAF8F2 100%);
+            border: 1.2px solid rgba(180, 83, 9, 0.2);
+            border-radius: 12px;
+            padding: 8px 6px 7px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -2572,48 +2572,49 @@ $catalogProducts = [
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-            transition: all 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.24s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
             text-decoration: none;
             color: inherit;
         }
         .ws-price-box-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             border-color: #D4AF37;
-            box-shadow: 0 8px 20px rgba(180, 83, 9, 0.18), 0 0 0 1px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 5px 14px rgba(180, 83, 9, 0.16), 0 0 0 1px rgba(212, 175, 55, 0.35);
         }
         .ws-price-box-card.active {
             border-color: #B45309 !important;
             background: linear-gradient(145deg, #FEF3C7 0%, #FDE68A 100%) !important;
-            box-shadow: 0 0 0 2.5px #B45309, 0 8px 20px rgba(180, 83, 9, 0.28) !important;
-            transform: translateY(-3px);
+            box-shadow: 0 0 0 2px #B45309, 0 5px 14px rgba(180, 83, 9, 0.22) !important;
+            transform: translateY(-2px);
         }
         .ws-price-box-icon-wrap {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
             background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-            border: 1.5px solid rgba(217, 119, 6, 0.35);
+            border: 1.2px solid rgba(217, 119, 6, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
-            box-shadow: 0 3px 8px rgba(217, 119, 6, 0.16);
-            transition: transform 0.3s ease;
+            margin-bottom: 4px;
+            box-shadow: 0 2px 6px rgba(217, 119, 6, 0.14);
+            transition: transform 0.24s ease;
         }
         .ws-price-box-card:hover .ws-price-box-icon-wrap,
         .ws-price-box-card.active .ws-price-box-icon-wrap {
-            transform: scale(1.12);
+            transform: scale(1.1);
         }
         .ws-price-box-val {
             font-family: var(--ws-font-serif);
-            font-size: 1.05rem;
+            font-size: 0.82rem;
             font-weight: 800;
             color: #24211C;
             line-height: 1.2;
             margin: 0;
             white-space: nowrap;
+            letter-spacing: 0.1px;
         }
         .ws-price-box-card.active .ws-price-box-val {
             color: #92400E;
@@ -2622,30 +2623,34 @@ $catalogProducts = [
 
         @media (max-width: 1023px) {
             .ws-price-box-card {
-                flex: 0 0 calc((100% - 30px) / 3.4);
-                min-width: 130px;
+                flex: 0 0 calc((100% - 24px) / 3.4);
+                min-width: 100px;
             }
         }
         @media (max-width: 600px) {
             .ws-price-slider-track {
-                gap: 8px !important;
-                padding: 4px 2px 10px !important;
+                gap: 6px !important;
+                padding: 3px 2px 6px !important;
             }
             .ws-price-box-card {
-                flex: 0 0 calc((100% - 16px) / 2.38) !important;
-                min-width: 115px !important;
-                max-width: 145px !important;
-                padding: 10px 6px !important;
-                border-radius: 12px !important;
+                flex: 0 0 calc((100% - 14px) / 2.5) !important;
+                min-width: 96px !important;
+                max-width: 125px !important;
+                padding: 7px 5px 6px !important;
+                border-radius: 10px !important;
             }
             .ws-price-box-icon-wrap {
-                width: 36px !important;
-                height: 36px !important;
-                border-radius: 10px !important;
-                margin-bottom: 6px !important;
+                width: 28px !important;
+                height: 28px !important;
+                border-radius: 8px !important;
+                margin-bottom: 3px !important;
+            }
+            .ws-price-box-icon-wrap svg {
+                width: 15px !important;
+                height: 15px !important;
             }
             .ws-price-box-val {
-                font-size: 0.88rem !important;
+                font-size: 0.76rem !important;
             }
         }
         .product-card:hover .card-img,
@@ -5697,13 +5702,13 @@ $catalogProducts = [
                     </div>
 
                     <div class="ws-price-slider-wrap">
-                        <button class="ws-slider-nav-btn prev" onclick="slidePriceBoxes(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                        <button class="ws-slider-nav-btn prev" onclick="slidePriceBoxes(-1)" aria-label="Previous"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                         <div class="ws-price-slider-track" id="wsPriceSliderTrack">
 
                             <!-- Tier 1: Under ₹300 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(300, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                                     </svg>
                                 </div>
@@ -5713,7 +5718,7 @@ $catalogProducts = [
                             <!-- Tier 2: Under ₹500 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(500, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                                     </svg>
                                 </div>
@@ -5723,7 +5728,7 @@ $catalogProducts = [
                             <!-- Tier 3: Under ₹800 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(800, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"></path>
                                     </svg>
                                 </div>
@@ -5733,7 +5738,7 @@ $catalogProducts = [
                             <!-- Tier 4: Under ₹1,000 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(1000, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                     </svg>
                                 </div>
@@ -5743,7 +5748,7 @@ $catalogProducts = [
                             <!-- Tier 5: Under ₹1,500 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(1500, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <path d="M6 3h12l4 6-10 12L2 9z"></path>
                                         <path d="M11 3L8 9l4 12 4-12-3-6"></path>
                                         <path d="M2 9h20"></path>
@@ -5755,7 +5760,7 @@ $catalogProducts = [
                             <!-- Tier 6: Under ₹2,000 -->
                             <div class="ws-price-box-card" onclick="filterByPriceTier(2000, this)" role="button" tabindex="0">
                                 <div class="ws-price-box-icon-wrap">
-                                    <svg style="width:24px;height:24px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+                                    <svg style="width:18px;height:18px;stroke:#B45309;fill:none;stroke-width:2;" viewBox="0 0 24 24">
                                         <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path>
                                     </svg>
                                 </div>
@@ -5763,11 +5768,12 @@ $catalogProducts = [
                             </div>
 
                         </div>
-                        <button class="ws-slider-nav-btn next" onclick="slidePriceBoxes(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        <button class="ws-slider-nav-btn next" onclick="slidePriceBoxes(1)" aria-label="Next"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
                 </div>
 
-                <div class="ws-card" style="margin-top:16px;">
+                <!-- ═══ For You Product Grid (Below Price Filter) ═══ -->
+                <div class="ws-card" style="margin-top:10px;">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
                             <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
