@@ -2458,8 +2458,8 @@ $catalogProducts = [
             position: absolute;
             top: 0;
             left: 0;
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             overflow: hidden;
             pointer-events: none;
             z-index: 10;
@@ -2468,17 +2468,17 @@ $catalogProducts = [
         .ws-wallet-ribbon-tag span {
             position: absolute;
             display: block;
-            width: 68px;
+            width: 74px;
             padding: 1.5px 0;
             background: linear-gradient(135deg, #785912 0%, #D4AF37 40%, #FEF08A 60%, #8A681F 100%);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7);
             color: #1A1204;
-            font-size: 0.46rem;
+            font-size: 0.44rem;
             font-weight: 900;
             text-transform: uppercase;
             text-align: center;
-            left: -18px;
-            top: 8px;
+            left: -19px;
+            top: 9px;
             transform: rotate(-45deg);
             letter-spacing: 0.6px;
             border-top: 1px solid rgba(255, 255, 255, 0.7);
@@ -3283,7 +3283,7 @@ $catalogProducts = [
                 <div class="ws-wallet-strip">
                     <!-- Left Corner Micro 3D Diagonal Tircha Tag -->
                     <div class="ws-wallet-ribbon-tag">
-                        <span>★ GOLD</span>
+                        <span>★ WALLET</span>
                     </div>
 
                     <!-- Left: Total Balance & Total Coins Metrics (Frosted Gold Glass Styling) -->
