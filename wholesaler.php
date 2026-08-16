@@ -6134,14 +6134,9 @@ $catalogProducts = [
                             </defs>
                         </svg>
                     </div>
-                    <div>
-                        <h3 style="font-family:var(--ws-font-serif); font-size:1.08rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
-                            Select Category
-                        </h3>
-                        <p style="font-size:0.72rem; color:var(--ws-text-muted); margin:2px 0 0; font-weight:600;">
-                            Direct Mill Wholesale Collections
-                        </p>
-                    </div>
+                    <h3 style="font-family:var(--ws-font-serif); font-size:1.08rem; font-weight:900; color:#1E1B18; margin:0; letter-spacing:0.2px;">
+                        Select Category
+                    </h3>
                 </div>
                 <button class="ws-modal-close-btn" onclick="closeWsCatalogCategoryModal()" aria-label="Close Modal" style="font-size:1.4rem; color:#92400E; width:30px; height:30px; border-radius:50%; background:rgba(180,83,9,0.08); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;">&times;</button>
             </div>
