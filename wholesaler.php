@@ -775,6 +775,21 @@ $catalogProducts = [
             50% { transform: scale(1.1) rotate(4deg); filter: drop-shadow(0 2px 8px rgba(245,158,11,0.5)); }
         }
 
+        /* ── Animated Shimmer Text for 'For You' Header ── */
+        .ws-anim-shimmer-title {
+            background: linear-gradient(90deg, #785912 0%, #D4AF37 25%, #FEF08A 50%, #D4AF37 75%, #785912 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldTextFlow 3.5s linear infinite;
+            display: inline-block;
+        }
+        @keyframes goldTextFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
         .ws-stat-val-row {
             display: flex;
             align-items: baseline;
@@ -4937,11 +4952,26 @@ $catalogProducts = [
             <section class="ws-tab-pane" id="tabPaneTrending">
                 <div class="ws-card">
                     <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <h3>B2B Wholesale Master Catalog (Wholesale Tier Pricing)</h3>
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border:1.5px solid rgba(217, 119, 6, 0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 6px rgba(217,119,6,0.15);">
+                                <svg class="ws-anim-flame-star" style="width:17px; height:17px;" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2l2.4 5.2 5.6.8-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.6-.8L12 2z" fill="url(#goldStarGradForYou)" stroke="#B45309" stroke-width="1.2" stroke-linejoin="round"></path>
+                                    <defs>
+                                        <linearGradient id="goldStarGradForYou" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE047"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h3 class="ws-anim-shimmer-title" style="font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 1.8vw, 1.25rem); font-weight:900; margin:0; letter-spacing:0.2px;">
+                                For You
+                            </h3>
                         </div>
-                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm">
-                            Browse Retail Store →
+                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                            <span>Browse Retail Store</span>
+                            <span style="font-size:1rem; line-height:1;">→</span>
                         </a>
                     </div>
 
