@@ -857,6 +857,12 @@ $catalogProducts = [
             border-top-color: rgba(255, 255, 255, 0.8);
             border-bottom-color: rgba(120, 89, 18, 0.5);
         }
+        .ws-tier-ribbon-tag.diamond span {
+            background: linear-gradient(135deg, #0369A1 0%, #38BDF8 40%, #E0F2FE 60%, #0284C7 100%);
+            color: #082F49;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            border-bottom-color: rgba(3, 105, 161, 0.5);
+        }
         .ws-tier-ribbon-tag.platinum span {
             background: linear-gradient(135deg, #1E1B18 0%, #524738 40%, #D4AF37 60%, #1E1B18 100%);
             color: #FFFFFF;
@@ -3120,6 +3126,7 @@ $catalogProducts = [
         .ws-tier-icon-wrap.green { background: #DCFCE7; border: 1px solid rgba(22, 163, 74, 0.3); }
         .ws-tier-icon-wrap.silver { background: #F1F5F9; border: 1px solid rgba(148, 163, 184, 0.35); }
         .ws-tier-icon-wrap.gold { background: #FEF3C7; border: 1px solid rgba(217, 119, 6, 0.35); }
+        .ws-tier-icon-wrap.diamond { background: #E0F2FE; border: 1.5px solid rgba(2, 132, 199, 0.4); }
         .ws-tier-icon-wrap.supergold { background: #FEF3C7; border: 1.5px solid rgba(212, 175, 55, 0.5); }
         .ws-tier-icon-wrap.platinum { background: linear-gradient(135deg, #1C1813, #2B2317); border: 1.5px solid #D4AF37; }
 
@@ -3152,6 +3159,7 @@ $catalogProducts = [
         .ws-tier-badge.active { background: #DCFCE7; color: #15803D; border: 1px solid rgba(22, 163, 74, 0.3); }
         .ws-tier-badge.silver { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
         .ws-tier-badge.gold { background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
+        .ws-tier-badge.diamond { background: #E0F2FE; color: #0369A1; border: 1px solid #7DD3FC; }
         .ws-tier-badge.supergold { background: #FEF3C7; color: #92400E; border: 1px solid #F59E0B; }
         .ws-tier-badge.platinum { background: linear-gradient(135deg, #8A681F, #6E5114); color: #FFFFFF; }
 
@@ -5390,56 +5398,56 @@ $catalogProducts = [
                         <span class="ws-tier-badge active">ACTIVE</span>
                     </div>
 
-                    <!-- Tier 2: Silver -->
+                    <!-- Tier 2: Silver (50 to 250 Orders) -->
                     <div class="ws-tier-card">
                         <div class="ws-tier-card-left">
                             <div class="ws-tier-icon-wrap silver">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#94A3B8" fill-opacity="0.2" stroke="#64748B" stroke-width="1.5"></circle><polygon points="12 6 13.8 9.6 17.8 10.2 14.9 13 15.6 17 12 15.1 8.4 17 9.1 13 6.2 10.2 10.2 9.6" fill="#64748B"></polygon></svg>
                             </div>
                             <div class="ws-tier-info">
-                                <strong>Tier 2: Silver (50 to 200 Orders)</strong>
+                                <strong>Tier 2: Silver (50 to 250 Orders)</strong>
                             </div>
                         </div>
-                        <span class="ws-tier-badge silver">50–200 ORDERS</span>
+                        <span class="ws-tier-badge silver">50–250 ORDERS</span>
                     </div>
 
-                    <!-- Tier 3: Gold -->
+                    <!-- Tier 3: Gold (250 to 450 Orders) -->
                     <div class="ws-tier-card">
                         <div class="ws-tier-card-left">
                             <div class="ws-tier-icon-wrap gold">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#F59E0B" fill-opacity="0.2" stroke="#D97706" stroke-width="1.5"></circle><path d="M7 15l2-6 3 3 3-3 2 6H7z" fill="#D97706"></path><circle cx="12" cy="7" r="1.5" fill="#B45309"></circle></svg>
                             </div>
                             <div class="ws-tier-info">
-                                <strong>Tier 3: Gold (200 to 300 Orders)</strong>
+                                <strong>Tier 3: Gold (250 to 450 Orders)</strong>
                             </div>
                         </div>
-                        <span class="ws-tier-badge gold">200–300 ORDERS</span>
+                        <span class="ws-tier-badge gold">250–450 ORDERS</span>
                     </div>
 
-                    <!-- Tier 4: Gold -->
+                    <!-- Tier 4: Diamond (450 to 800 Orders) -->
                     <div class="ws-tier-card">
                         <div class="ws-tier-card-left">
-                            <div class="ws-tier-icon-wrap supergold">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#F59E0B" stroke="#B45309" stroke-width="1.3"></path></svg>
+                            <div class="ws-tier-icon-wrap diamond">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><polygon points="6 3 18 3 22 9 12 22 2 9" stroke="#0284C7" stroke-width="1.5" fill="#38BDF8" fill-opacity="0.3"></polygon><line x1="2" y1="9" x2="22" y2="9" stroke="#0284C7" stroke-width="1.2"></line><line x1="12" y1="22" x2="6" y2="9" stroke="#0284C7" stroke-width="1.2"></line><line x1="12" y1="22" x2="18" y2="9" stroke="#0284C7" stroke-width="1.2"></line></svg>
                             </div>
                             <div class="ws-tier-info">
-                                <strong>Tier 4: Gold (300 to 500 Orders)</strong>
+                                <strong>Tier 4: Diamond (450 to 800 Orders)</strong>
                             </div>
                         </div>
-                        <span class="ws-tier-badge supergold">300–500 ORDERS</span>
+                        <span class="ws-tier-badge diamond">450–800 ORDERS</span>
                     </div>
 
-                    <!-- Tier 5: Platinum Smart -->
+                    <!-- Tier 5: Platinum Smart (800+ Orders) -->
                     <div class="ws-tier-card" style="background:linear-gradient(135deg, #FFFDF7 0%, #FDF7E7 100%); border-color:rgba(212,175,55,0.6);">
                         <div class="ws-tier-card-left">
                             <div class="ws-tier-icon-wrap platinum">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><polygon points="12 2 2 9 12 22 22 9" stroke="#D4AF37" stroke-width="1.5" fill="#F59E0B" fill-opacity="0.3"></polygon><line x1="2" y1="9" x2="22" y2="9" stroke="#D4AF37" stroke-width="1.2"></line><line x1="12" y1="2" x2="12" y2="22" stroke="#D4AF37" stroke-width="1.2"></line></svg>
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><polygon points="12 2 2 9 12 22 22 9" stroke="#D4AF37" stroke-width="1.5" fill="#F59E0B" fill-opacity="0.3"></polygon><line x1="2" y1="9" x2="22" y2="9" stroke="#D4AF37" stroke-width="1.2"></line><line x1="12" y1="22" x2="12" y2="22" stroke="#D4AF37" stroke-width="1.2"></line></svg>
                             </div>
                             <div class="ws-tier-info">
-                                <strong style="color:#8A681F;">Tier 5: Platinum Smart (1,000+ Orders)</strong>
+                                <strong style="color:#8A681F;">Tier 5: Platinum Smart (800+ Orders)</strong>
                             </div>
                         </div>
-                        <span class="ws-tier-badge platinum">TOP TIER</span>
+                        <span class="ws-tier-badge platinum">TOP TIER (800+)</span>
                     </div>
                 </div>
             </div>
@@ -6144,9 +6152,9 @@ $catalogProducts = [
 
         /* ── Helper: Get Tier ── */
         window.getWholesaleTier = function(ordersCount) {
-            if (ordersCount >= 1000) return { name: 'Tier 5', tag: 'PLATINUM', discount: '15%' };
-            if (ordersCount >= 300) return { name: 'Tier 4', tag: 'GOLD', discount: '10%' };
-            if (ordersCount >= 200) return { name: 'Tier 3', tag: 'GOLD', discount: '7.5%' };
+            if (ordersCount >= 800) return { name: 'Tier 5', tag: 'PLATINUM', discount: '15%' };
+            if (ordersCount >= 450) return { name: 'Tier 4', tag: 'DIAMOND', discount: '12.5%' };
+            if (ordersCount >= 250) return { name: 'Tier 3', tag: 'GOLD', discount: '10%' };
             if (ordersCount >= 50) return { name: 'Tier 2', tag: 'SILVER', discount: '5%' };
             return { name: 'Tier 1', tag: 'NON VIP', discount: '0%' };
         };
@@ -6613,7 +6621,10 @@ $catalogProducts = [
                 if (tierVal.includes('5') || tierVal.includes('platinum')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag platinum';
                     ribbonText.textContent = '★ PLATINUM';
-                } else if (tierVal.includes('3') || tierVal.includes('4') || tierVal.includes('gold')) {
+                } else if (tierVal.includes('4') || tierVal.includes('diamond')) {
+                    ribbonTag.className = 'ws-tier-ribbon-tag diamond';
+                    ribbonText.textContent = '★ DIAMOND';
+                } else if (tierVal.includes('3') || tierVal.includes('gold')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag gold';
                     ribbonText.textContent = '★ GOLD';
                 } else if (tierVal.includes('2') || tierVal.includes('silver')) {
