@@ -3522,12 +3522,15 @@ $catalogProducts = [
                 <!-- Top 4 Primary Metric Stat Cards (Matching TailAdmin Sizing with Gold Palette) -->
                 <div class="ws-metric-cards-grid">
                     
-                    <!-- Metric Card 1: Account Tier -->
-                    <div class="ws-stat-box">
-                        <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
+                    <!-- Metric Card 1: Account Tier (Interactive VIP Tier Roadmap Modal Trigger) -->
+                    <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer;" title="Tap to view VIP Tier Roadmap">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
+                            <span style="font-size:0.58rem; color:var(--ws-gold-primary); font-weight:800;">Roadmap ›</span>
+                        </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">VIP Tier 1</div>
-                            <span class="ws-trend-pill up" id="statPill1">↑ 11.01%</span>
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif); font-size:clamp(1.05rem, 2.5vw, 1.22rem);">Tier 1: Non VIP</div>
+                            <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
                         </div>
                     </div>
 
@@ -4922,6 +4925,97 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
+         MODAL 2.75: VIP TIER ROADMAP & BENEFITS
+    ═══════════════════════════════════════════ -->
+    <div class="ws-modal-overlay" id="wsVipTierModal" role="dialog" aria-modal="true">
+        <div class="ws-modal-box" style="max-width: 580px;">
+            <div class="ws-modal-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Back" title="Back" style="width:30px; height:30px;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
+                    <h3 class="ws-modal-title" style="margin:0; font-size:0.95rem;">
+                        <span>👑 VIP Account Tier Roadmap</span>
+                    </h3>
+                </div>
+                <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Close Modal" style="width:30px; height:30px;">&times;</button>
+            </div>
+            <div class="ws-modal-body" style="padding:14px 16px;">
+                <!-- Current Active Tier Card -->
+                <div style="background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,250,238,0.92)); border:1.5px solid rgba(212,175,55,0.55); border-radius:12px; padding:12px 14px; margin-bottom:12px; box-shadow:0 4px 14px rgba(180,140,40,0.08);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:0.68rem; font-weight:800; text-transform:uppercase; color:var(--ws-gold-primary); letter-spacing:0.5px;">Current Active Tier</span>
+                        <span class="ws-txn-badge amber" style="font-size:0.58rem;">6 / 50 Orders Completed</span>
+                    </div>
+                    <div style="font-size:1.30rem; font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif); margin-bottom:4px;">
+                        🥉 Tier 1: Non VIP
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:8px;">
+                        Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong> with 5% wholesale rebate!
+                    </div>
+                    <!-- Progress Bar -->
+                    <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden;">
+                        <div style="height:100%; width:12%; background:linear-gradient(90deg, #D4AF37, #F59E0B); border-radius:4px;"></div>
+                    </div>
+                </div>
+
+                <!-- 5-Tier Level Cards List -->
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Tier 1: Non VIP -->
+                    <div class="ws-tier-card active" style="padding:10px 12px; border:1.5px solid #10B981; border-radius:10px; background:#F0FDF4; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:0.82rem; font-weight:800; color:#15803D;">🥉 Tier 1: Non VIP (1 to 50 Orders)</div>
+                            <div style="font-size:0.68rem; color:#166534;">Standard Wholesale Pricing • Instant WhatsApp Dispatch</div>
+                        </div>
+                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#DCFCE7; color:#15803D;">ACTIVE</span>
+                    </div>
+
+                    <!-- Tier 2: Silver -->
+                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:0.82rem; font-weight:800; color:#475569;">🥈 Tier 2: Silver (50 to 200 Orders)</div>
+                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">5% Wholesale Rebate • Priority Air Cargo Dispatch</div>
+                        </div>
+                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#F1F5F9; color:#475569;">50–200 ORDERS</span>
+                    </div>
+
+                    <!-- Tier 3: Gold -->
+                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:0.82rem; font-weight:800; color:#B45309;">🥇 Tier 3: Gold (200 to 300 Orders)</div>
+                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">7.5% Wholesale Rebate • Dedicated B2B Account Manager</div>
+                        </div>
+                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#FEF3C7; color:#B45309;">200–300 ORDERS</span>
+                    </div>
+
+                    <!-- Tier 4: Gold -->
+                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:0.82rem; font-weight:800; color:#92400E;">👑 Tier 4: Gold (300 to 500 Orders)</div>
+                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">10% Wholesale Rebate • 30-Day Revolving Credit Line</div>
+                        </div>
+                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#FEF3C7; color:#92400E;">300–500 ORDERS</span>
+                    </div>
+
+                    <!-- Tier 5: Platinum -->
+                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid rgba(212,175,55,0.4); border-radius:10px; background:linear-gradient(135deg, #FFFDF7, #FDF7E7); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="font-size:0.82rem; font-weight:800; color:#8A681F;">💎 Tier 5: Platinum Smart (1000+ Orders)</div>
+                            <div style="font-size:0.68rem; color:#786D5E;">15% Super Margin Rebate • Custom Lot Weaving & VIP Concierge</div>
+                        </div>
+                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:linear-gradient(135deg, #8A681F, #6E5114); color:#FFFFFF;">TOP TIER</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ws-modal-footer" style="padding:10px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
+                <button class="ws-btn ws-btn-secondary" style="width:100%; height:38px; justify-content:center; font-size:0.78rem; font-weight:700;" onclick="closeVipTierModal()">
+                    <span>Close Roadmap</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
          MODAL 2.8: WHOLESALE WALLET TOP-UP & RECHARGE
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsWalletTopupModal" role="dialog" aria-modal="true">
@@ -5617,6 +5711,19 @@ $catalogProducts = [
             }
         }
 
+        /* ── Helper: Get Tier ── */
+        window.getWholesaleTier = function(ordersCount) {
+            if (ordersCount >= 200) return { name: 'Tier 3: Gold', discount: '10%' };
+            if (ordersCount >= 50) return { name: 'Tier 2: Silver', discount: '5%' };
+            return { name: 'Tier 1: Non VIP', discount: '0%' };
+        };
+
+        /* ── Helper: Open VIP Modal ── */
+        window.openVipTierModal = function() {
+            var modal = document.getElementById('wsVipTierModal');
+            if (modal) modal.style.display = 'flex';
+        };
+
         /* ── Filter Orders Controller ── */
         window.filterOrdersTable = function() {
             var input = document.getElementById('wsOrdersSearchInput');
@@ -5679,7 +5786,7 @@ $catalogProducts = [
                 'today': {
                     sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
                     cards: [
-                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "Active VIP", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "Active", isGold: true },
                         { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
                         { label: "Today's Quantity", val: "6 Pcs", pill: "100% Packed", isGold: false },
                         { label: "Today's B2B Turnover", val: "₹18,200", pill: "↑ 100%", isGold: true }
@@ -5697,14 +5804,14 @@ $catalogProducts = [
                         { label: "Today's GST Credit", num: "₹910", sub: "5% GST" },
                         { label: "Delivery ETA", num: "Tomorrow", sub: "Priority Air" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1: Non VIP (1–50 Orders)",
                     milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
                     milestoneDesc: "<strong>36.4%</strong> of today's target achieved."
                 },
                 'week': {
                     sub: "Weekly Procurement Targets, Category Mix & Logistics Performance",
                     cards: [
-                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "↑ 11.01%", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "1–50 Orders", isGold: true },
                         { label: "Total Orders", val: "6", pill: "↑ 14.20%", isGold: false },
                         { label: "Total Quantity (Units)", val: "48 Pcs", pill: "↑ 8.50%", isGold: false },
                         { label: "Total B2B Turnover", val: "₹2,05,062", pill: "↑ 18.40%", isGold: true }
@@ -5720,19 +5827,19 @@ $catalogProducts = [
                         { name: "Georgette & Chanderi Fabrics", val: "₹15,590 (7%)", fill: 60 }
                     ],
                     kpis: [
-                        { label: "Avg. Order Value", num: "₹34,177", sub: "↑ 12.4% vs last month" },
-                        { label: "Dispatch Turnaround", num: "1.8 Days", sub: WS_ICONS.lightning + " Priority VIP BlueDart" },
-                        { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-1 Matched" },
-                        { label: "Lot Reorder Rate", num: "83.3%", sub: WS_ICONS.repeat + " 5 of 6 Lots Repeated" }
+                        { label: "Avg. Turnaround Time", num: "1.8 Days", sub: WS_ICONS.lightning + " Fast Dispatch" },
+                        { label: "Weekly Dispatch Reliability", num: "99.2%", sub: WS_ICONS.target + " Target Achieved" },
+                        { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% Verified" },
+                        { label: "Active Consignments", num: "2 Orders", sub: WS_ICONS.repeat + " In Transit" }
                     ],
-                    milestoneBadge: WS_ICONS.crown + " Tier 1 VIP Member",
+                    milestoneBadge: WS_ICONS.crown + " Tier 1: Non VIP Member",
                     milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
-                    milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
+                    milestoneDesc: "<strong>82.02%</strong> of target achieved. Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong> with 5% rebate!"
                 },
                 'month': {
                     sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
                     cards: [
-                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "↑ 15.30%", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "1–50 Orders", isGold: true },
                         { label: "Total Orders", val: "14", pill: "↑ 21.00%", isGold: false },
                         { label: "Total Quantity (Units)", val: "112 Pcs", pill: "↑ 16.80%", isGold: false },
                         { label: "Total B2B Turnover", val: "₹4,86,500", pill: "↑ 24.10%", isGold: true }
@@ -7130,6 +7237,82 @@ $catalogProducts = [
             } else {
                 window.showWsToast('AWB: ' + awb);
             }
+        };
+
+        /* ── Wholesale VIP Tier Controller ── */
+        window.getWholesaleTier = function(orderCount) {
+            var count = Number(orderCount) || 0;
+            if (count >= 1000) {
+                return {
+                    tierNum: 5,
+                    title: "Tier 5: Platinum",
+                    shortTitle: "Platinum (Tier 5)",
+                    badgeText: "👑 Platinum VIP",
+                    pillText: "1000+ Orders",
+                    discount: "15% Margin Rebate",
+                    minOrders: 1000,
+                    maxOrders: Infinity,
+                    nextGoal: "Top VIP Tier Reached"
+                };
+            } else if (count >= 301) {
+                return {
+                    tierNum: 4,
+                    title: "Tier 4: Gold",
+                    shortTitle: "Gold (Tier 4)",
+                    badgeText: "⭐ Gold VIP",
+                    pillText: "300–500 Orders",
+                    discount: "10% Margin Rebate",
+                    minOrders: 301,
+                    maxOrders: 500,
+                    nextGoal: (1000 - count) + " orders to Tier 5 Platinum"
+                };
+            } else if (count >= 201) {
+                return {
+                    tierNum: 3,
+                    title: "Tier 3: Gold",
+                    shortTitle: "Gold (Tier 3)",
+                    badgeText: "⭐ Gold VIP",
+                    pillText: "200–300 Orders",
+                    discount: "7.5% Margin Rebate",
+                    minOrders: 201,
+                    maxOrders: 300,
+                    nextGoal: (301 - count) + " orders to Tier 4 Gold"
+                };
+            } else if (count >= 51) {
+                return {
+                    tierNum: 2,
+                    title: "Tier 2: Silver",
+                    shortTitle: "Silver (Tier 2)",
+                    badgeText: "🥈 Silver VIP",
+                    pillText: "50–200 Orders",
+                    discount: "5% Margin Rebate",
+                    minOrders: 51,
+                    maxOrders: 200,
+                    nextGoal: (201 - count) + " orders to Tier 3 Gold"
+                };
+            } else {
+                return {
+                    tierNum: 1,
+                    title: "Tier 1: Non VIP",
+                    shortTitle: "Non VIP (Tier 1)",
+                    badgeText: "Standard Member",
+                    pillText: "1–50 Orders",
+                    discount: "Standard Wholesale",
+                    minOrders: 1,
+                    maxOrders: 50,
+                    nextGoal: (51 - count) + " orders to Tier 2 Silver"
+                };
+            }
+        };
+
+        window.openVipTierModal = function() {
+            var modal = document.getElementById('wsVipTierModal');
+            if (modal) modal.classList.add('active');
+        };
+
+        window.closeVipTierModal = function() {
+            var modal = document.getElementById('wsVipTierModal');
+            if (modal) modal.classList.remove('active');
         };
 
         /* ── Wholesale Wallet Controller ── */
