@@ -806,17 +806,17 @@ $catalogProducts = [
             border: 1px solid rgba(220, 38, 38, 0.25);
         }
 
-        /* ── 3D Diagonal Tircha Top-Right Corner Ribbon Tag for Tier Card ── */
+        /* ── 3D Diagonal Tircha Top-Left Corner Ribbon Tag for Tier Card ── */
         .ws-tier-ribbon-tag {
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
             width: 54px;
             height: 54px;
             overflow: hidden;
             pointer-events: none;
             z-index: 10;
-            border-top-right-radius: 14px;
+            border-top-left-radius: 14px;
         }
         .ws-tier-ribbon-tag span {
             position: absolute;
@@ -830,9 +830,9 @@ $catalogProducts = [
             font-weight: 900;
             text-transform: uppercase;
             text-align: center;
-            right: -20px;
+            left: -20px;
             top: 9px;
-            transform: rotate(45deg);
+            transform: rotate(-45deg);
             letter-spacing: 0.6px;
             border-top: 1px solid rgba(255, 255, 255, 0.7);
             border-bottom: 1px solid rgba(120, 89, 18, 0.5);
@@ -3526,14 +3526,17 @@ $catalogProducts = [
             .ws-tier-ribbon-tag {
                 width: 40px !important;
                 height: 40px !important;
-                border-top-right-radius: 10px !important;
+                border-top-left-radius: 10px !important;
+                border-top-right-radius: 0 !important;
             }
             .ws-tier-ribbon-tag span {
                 width: 58px !important;
                 font-size: 0.34rem !important;
                 padding: 1px 0 !important;
-                right: -16px !important;
+                left: -16px !important;
+                right: auto !important;
                 top: 7px !important;
+                transform: rotate(-45deg) !important;
             }
             .ws-wallet-strip {
                 padding: 6px 10px !important;
@@ -3850,12 +3853,12 @@ $catalogProducts = [
                     
                     <!-- Metric Card 1: Account Tier (Interactive VIP Tier Roadmap Modal Trigger) -->
                     <div class="ws-stat-box" onclick="openVipTierModal()" style="cursor:pointer; position:relative;" title="Tap to view VIP Tier Roadmap">
-                        <!-- Right Corner 3D Diagonal Tircha Tag -->
+                        <!-- Left Corner 3D Diagonal Tircha Tag -->
                         <div class="ws-tier-ribbon-tag non-vip" id="wsTierRibbonTag">
                             <span id="wsTierRibbonText">★ NON VIP</span>
                         </div>
 
-                        <div class="ws-stat-head-row">
+                        <div class="ws-stat-head-row" style="padding-left:14px;">
                             <div class="ws-stat-label" id="statLabel1">B2B Account Tier</div>
                             <div class="ws-stat-ico-wrap tier">
                                 <svg class="ws-anim-stat-ico crown" viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
