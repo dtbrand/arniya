@@ -2533,76 +2533,41 @@ $catalogProducts = [
         .ws-wallet-strip-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
             flex-shrink: 0;
         }
-        .ws-btn-wallet-view {
-            background: rgba(255, 255, 255, 0.08);
-            color: #FFFFFF !important;
-            border: 1.5px solid rgba(197, 168, 89, 0.45);
-            font-size: 0.78rem;
-            font-weight: 800;
-            height: 36px;
-            padding: 0 12px;
-            border-radius: 8px;
+        .ws-btn-wallet-view-sm {
+            background: linear-gradient(135deg, rgba(197, 168, 89, 0.18) 0%, rgba(138, 104, 31, 0.28) 100%);
+            color: #F5E8C7 !important;
+            border: 1px solid rgba(197, 168, 89, 0.45);
+            font-size: 0.72rem;
+            font-weight: 700;
+            height: 28px;
+            padding: 0 10px;
+            border-radius: 6px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             cursor: pointer;
             transition: var(--ws-transition);
             white-space: nowrap;
+            letter-spacing: 0.2px;
         }
-        .ws-btn-wallet-view:hover {
-            background: rgba(197, 168, 89, 0.25);
+        .ws-btn-wallet-view-sm:hover {
+            background: linear-gradient(135deg, rgba(197, 168, 89, 0.35) 0%, rgba(138, 104, 31, 0.45) 100%);
             border-color: #E6C875;
-            transform: translateY(-1px);
-        }
-        .ws-btn-wallet-topup {
-            background: linear-gradient(135deg, #C5A859 0%, #8A681F 100%);
             color: #FFFFFF !important;
-            border: 1px solid #E6C875;
-            font-size: 0.78rem;
-            font-weight: 800;
-            height: 36px;
-            padding: 0 14px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(138, 104, 31, 0.3);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: var(--ws-transition);
-            white-space: nowrap;
-        }
-        .ws-btn-wallet-topup:hover {
             transform: translateY(-1px);
-            filter: brightness(1.08);
-            box-shadow: 0 5px 14px rgba(197, 168, 89, 0.4);
+            box-shadow: 0 2px 8px rgba(197, 168, 89, 0.25);
         }
 
         @media (max-width: 768px) {
             .ws-wallet-strip {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 12px;
-                gap: 12px;
+                padding: 10px 12px;
+                gap: 10px;
             }
             .ws-wallet-metrics-group {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                width: 100%;
-            }
-            .ws-wallet-strip-actions {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-                width: 100%;
-            }
-            .ws-wallet-strip-actions .ws-btn {
-                width: 100%;
+                gap: 14px;
             }
         }
 
@@ -3298,15 +3263,12 @@ $catalogProducts = [
                         </div>
                     </div>
 
-                    <!-- Right: View Wallet & Top-Up Buttons -->
+                    <!-- Right: Small Styled View Button -->
                     <div class="ws-wallet-strip-actions">
-                        <button class="ws-btn ws-btn-wallet-view" onclick="openFullWalletModal()">
-                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span>View Wallet</span>
-                        </button>
-                        <button class="ws-btn ws-btn-wallet-topup" onclick="openWalletTopupModal()">
-                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Top-Up</span>
+                        <button class="ws-btn ws-btn-wallet-view-sm" onclick="openFullWalletModal()">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <span>View</span>
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
                 </div>
