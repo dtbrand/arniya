@@ -2902,6 +2902,134 @@ $catalogProducts = [
             50% { transform: scale(1.12) translate(1px, -1px); }
         }
 
+        /* ── VIP Tier Roadmap Modal Component Styles ── */
+        .ws-tier-card {
+            padding: 10px 12px;
+            border: 1.5px solid var(--ws-border);
+            border-radius: 10px;
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: var(--ws-transition);
+        }
+        .ws-tier-card:hover {
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 4px 12px rgba(180, 140, 40, 0.08);
+            transform: translateY(-1px);
+        }
+        .ws-tier-card.active {
+            border-color: #10B981;
+            background: #F0FDF4;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.10);
+        }
+        .ws-tier-card-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .ws-tier-icon-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ws-tier-icon-wrap.green { background: #DCFCE7; border: 1px solid rgba(22, 163, 74, 0.3); }
+        .ws-tier-icon-wrap.silver { background: #F1F5F9; border: 1px solid rgba(148, 163, 184, 0.35); }
+        .ws-tier-icon-wrap.gold { background: #FEF3C7; border: 1px solid rgba(217, 119, 6, 0.35); }
+        .ws-tier-icon-wrap.supergold { background: #FEF3C7; border: 1.5px solid rgba(212, 175, 55, 0.5); }
+        .ws-tier-icon-wrap.platinum { background: linear-gradient(135deg, #1C1813, #2B2317); border: 1.5px solid #D4AF37; }
+
+        .ws-tier-info strong {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--ws-text-main);
+            display: block;
+            line-height: 1.25;
+            margin-bottom: 2px;
+        }
+        .ws-tier-card.active .ws-tier-info strong {
+            color: #15803D;
+        }
+        .ws-tier-info span {
+            font-size: 0.68rem;
+            color: var(--ws-text-muted);
+            display: block;
+            line-height: 1.2;
+        }
+        .ws-tier-badge {
+            font-size: 0.60rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        .ws-tier-badge.active { background: #DCFCE7; color: #15803D; border: 1px solid rgba(22, 163, 74, 0.3); }
+        .ws-tier-badge.silver { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
+        .ws-tier-badge.gold { background: #FEF3C7; color: #B45309; border: 1px solid #FCD34D; }
+        .ws-tier-badge.supergold { background: #FEF3C7; color: #92400E; border: 1px solid #F59E0B; }
+        .ws-tier-badge.platinum { background: linear-gradient(135deg, #8A681F, #6E5114); color: #FFFFFF; }
+
+        @media (max-width: 640px) {
+            #wsVipTierModal.ws-modal-overlay {
+                padding: 0 !important;
+                align-items: stretch !important;
+            }
+            #wsVipTierModal .ws-modal-box {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                border-radius: 0 !important;
+                border: none !important;
+                margin: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            #wsVipTierModal .ws-modal-header {
+                padding: 8px 12px !important;
+                border-bottom: 1.5px solid var(--ws-gold-border) !important;
+            }
+            #wsVipTierModal .ws-modal-body {
+                flex: 1 1 auto !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch;
+                padding: 10px 12px !important;
+            }
+            #wsVipTierModal .ws-tier-card {
+                padding: 8px 10px !important;
+                gap: 8px !important;
+            }
+            #wsVipTierModal .ws-tier-icon-wrap {
+                width: 30px !important;
+                height: 30px !important;
+            }
+            #wsVipTierModal .ws-tier-icon-wrap svg {
+                width: 15px !important;
+                height: 15px !important;
+            }
+            #wsVipTierModal .ws-tier-info strong {
+                font-size: 0.74rem !important;
+            }
+            #wsVipTierModal .ws-tier-info span {
+                font-size: 0.60rem !important;
+            }
+            #wsVipTierModal .ws-tier-badge {
+                font-size: 0.52rem !important;
+                padding: 2px 6px !important;
+            }
+            #wsVipTierModal .ws-modal-footer {
+                padding: 8px 12px calc(8px + env(safe-area-inset-bottom)) !important;
+            }
+        }
+
         /* ── Printable PDF Bill Styling ── */
         .ws-invoice-sheet {
             background: #FFFFFF;
@@ -4931,79 +5059,110 @@ $catalogProducts = [
         <div class="ws-modal-box" style="max-width: 580px;">
             <div class="ws-modal-header">
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Back" title="Back" style="width:30px; height:30px;">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Back" title="Back" style="width:28px; height:28px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </button>
-                    <h3 class="ws-modal-title" style="margin:0; font-size:0.95rem;">
-                        <span>👑 VIP Account Tier Roadmap</span>
-                    </h3>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" fill="#D4AF37" stroke="#92400E" stroke-width="1.2" stroke-linejoin="round"></path><circle cx="12" cy="3" r="1.5" fill="#F59E0B"></circle><circle cx="4" cy="4" r="1.2" fill="#F59E0B"></circle><circle cx="20" cy="4" r="1.2" fill="#F59E0B"></circle></svg>
+                        <h3 class="ws-modal-title" style="margin:0; font-size:0.92rem; font-weight:800;">
+                            <span>VIP Account Tier Roadmap</span>
+                        </h3>
+                    </div>
                 </div>
-                <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Close Modal" style="width:30px; height:30px;">&times;</button>
+                <button class="ws-modal-close-btn" onclick="closeVipTierModal()" aria-label="Close Modal" style="width:28px; height:28px;">&times;</button>
             </div>
             <div class="ws-modal-body" style="padding:14px 16px;">
                 <!-- Current Active Tier Card -->
-                <div style="background:linear-gradient(135deg, rgba(255,255,255,0.98), rgba(254,250,238,0.92)); border:1.5px solid rgba(212,175,55,0.55); border-radius:12px; padding:12px 14px; margin-bottom:12px; box-shadow:0 4px 14px rgba(180,140,40,0.08);">
+                <div style="background:linear-gradient(135deg, #FFFFFF 0%, #FEFAF0 100%); border:1.5px solid rgba(212,175,55,0.55); border-radius:12px; padding:12px 14px; margin-bottom:12px; box-shadow:0 4px 14px rgba(180,140,40,0.08);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:0.68rem; font-weight:800; text-transform:uppercase; color:var(--ws-gold-primary); letter-spacing:0.5px;">Current Active Tier</span>
-                        <span class="ws-txn-badge amber" style="font-size:0.58rem;">6 / 50 Orders Completed</span>
+                        <span style="font-size:0.65rem; font-weight:800; text-transform:uppercase; color:#8A681F; letter-spacing:0.5px;">Current Active Tier</span>
+                        <span class="ws-txn-badge green" style="font-size:0.58rem; font-weight:800;">6 / 50 Orders Completed</span>
                     </div>
-                    <div style="font-size:1.30rem; font-weight:900; color:var(--ws-text-main); font-family:var(--ws-font-serif); margin-bottom:4px;">
-                        🥉 Tier 1: Non VIP
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><circle cx="12" cy="12" r="9" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-width="1.5"></circle><path d="M9 12l2 2 4-4" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        <div style="font-size:1.15rem; font-weight:900; color:#16130F; letter-spacing:0.2px;">
+                            Tier 1: Non-VIP
+                        </div>
                     </div>
-                    <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:8px;">
-                        Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong> with 5% wholesale rebate!
+                    <div style="font-size:0.72rem; color:#57534E; margin-bottom:8px; line-height:1.3;">
+                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a 5% wholesale margin rebate!
                     </div>
                     <!-- Progress Bar -->
                     <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden;">
-                        <div style="height:100%; width:12%; background:linear-gradient(90deg, #D4AF37, #F59E0B); border-radius:4px;"></div>
+                        <div style="height:100%; width:12%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
                     </div>
                 </div>
 
-                <!-- 5-Tier Level Cards List -->
+                <!-- 5-Tier Level Cards List with Real Vector SVGs -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <!-- Tier 1: Non VIP -->
-                    <div class="ws-tier-card active" style="padding:10px 12px; border:1.5px solid #10B981; border-radius:10px; background:#F0FDF4; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:#15803D;">🥉 Tier 1: Non VIP (1 to 50 Orders)</div>
-                            <div style="font-size:0.68rem; color:#166534;">Standard Wholesale Pricing • Instant WhatsApp Dispatch</div>
+                    <div class="ws-tier-card active">
+                        <div class="ws-tier-card-left">
+                            <div class="ws-tier-icon-wrap green">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                            <div class="ws-tier-info">
+                                <strong>Tier 1: Non-VIP (1 to 50 Orders)</strong>
+                                <span>Standard Wholesale Pricing • Instant WhatsApp Booking</span>
+                            </div>
                         </div>
-                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#DCFCE7; color:#15803D;">ACTIVE</span>
+                        <span class="ws-tier-badge active">ACTIVE</span>
                     </div>
 
                     <!-- Tier 2: Silver -->
-                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:#475569;">🥈 Tier 2: Silver (50 to 200 Orders)</div>
-                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">5% Wholesale Rebate • Priority Air Cargo Dispatch</div>
+                    <div class="ws-tier-card">
+                        <div class="ws-tier-card-left">
+                            <div class="ws-tier-icon-wrap silver">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#94A3B8" fill-opacity="0.2" stroke="#64748B" stroke-width="1.5"></circle><polygon points="12 6 13.8 9.6 17.8 10.2 14.9 13 15.6 17 12 15.1 8.4 17 9.1 13 6.2 10.2 10.2 9.6" fill="#64748B"></polygon></svg>
+                            </div>
+                            <div class="ws-tier-info">
+                                <strong>Tier 2: Silver (50 to 200 Orders)</strong>
+                                <span>5% Wholesale Margin Rebate • Priority Air Cargo Dispatch</span>
+                            </div>
                         </div>
-                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#F1F5F9; color:#475569;">50–200 ORDERS</span>
+                        <span class="ws-tier-badge silver">50–200 ORDERS</span>
                     </div>
 
                     <!-- Tier 3: Gold -->
-                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:#B45309;">🥇 Tier 3: Gold (200 to 300 Orders)</div>
-                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">7.5% Wholesale Rebate • Dedicated B2B Account Manager</div>
+                    <div class="ws-tier-card">
+                        <div class="ws-tier-card-left">
+                            <div class="ws-tier-icon-wrap gold">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="9" fill="#F59E0B" fill-opacity="0.2" stroke="#D97706" stroke-width="1.5"></circle><path d="M7 15l2-6 3 3 3-3 2 6H7z" fill="#D97706"></path><circle cx="12" cy="7" r="1.5" fill="#B45309"></circle></svg>
+                            </div>
+                            <div class="ws-tier-info">
+                                <strong>Tier 3: Gold (200 to 300 Orders)</strong>
+                                <span>7.5% Wholesale Margin Rebate • Dedicated B2B Manager</span>
+                            </div>
                         </div>
-                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#FEF3C7; color:#B45309;">200–300 ORDERS</span>
+                        <span class="ws-tier-badge gold">200–300 ORDERS</span>
                     </div>
 
                     <!-- Tier 4: Gold -->
-                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid var(--ws-border); border-radius:10px; background:#FFFFFF; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:#92400E;">👑 Tier 4: Gold (300 to 500 Orders)</div>
-                            <div style="font-size:0.68rem; color:var(--ws-text-muted);">10% Wholesale Rebate • 30-Day Revolving Credit Line</div>
+                    <div class="ws-tier-card">
+                        <div class="ws-tier-card-left">
+                            <div class="ws-tier-icon-wrap supergold">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#F59E0B" stroke="#B45309" stroke-width="1.3"></path></svg>
+                            </div>
+                            <div class="ws-tier-info">
+                                <strong>Tier 4: Gold (300 to 500 Orders)</strong>
+                                <span>10% Wholesale Margin Rebate • 30-Day Revolving Credit Line</span>
+                            </div>
                         </div>
-                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:#FEF3C7; color:#92400E;">300–500 ORDERS</span>
+                        <span class="ws-tier-badge supergold">300–500 ORDERS</span>
                     </div>
 
-                    <!-- Tier 5: Platinum -->
-                    <div class="ws-tier-card" style="padding:10px 12px; border:1.5px solid rgba(212,175,55,0.4); border-radius:10px; background:linear-gradient(135deg, #FFFDF7, #FDF7E7); display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:#8A681F;">💎 Tier 5: Platinum Smart (1000+ Orders)</div>
-                            <div style="font-size:0.68rem; color:#786D5E;">15% Super Margin Rebate • Custom Lot Weaving & VIP Concierge</div>
+                    <!-- Tier 5: Platinum Smart -->
+                    <div class="ws-tier-card" style="background:linear-gradient(135deg, #FFFDF7 0%, #FDF7E7 100%); border-color:rgba(212,175,55,0.6);">
+                        <div class="ws-tier-card-left">
+                            <div class="ws-tier-icon-wrap platinum">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><polygon points="12 2 2 9 12 22 22 9" stroke="#D4AF37" stroke-width="1.5" fill="#F59E0B" fill-opacity="0.3"></polygon><line x1="2" y1="9" x2="22" y2="9" stroke="#D4AF37" stroke-width="1.2"></line><line x1="12" y1="2" x2="12" y2="22" stroke="#D4AF37" stroke-width="1.2"></line></svg>
+                            </div>
+                            <div class="ws-tier-info">
+                                <strong style="color:#8A681F;">Tier 5: Platinum Smart (1,000+ Orders)</strong>
+                                <span style="color:#786D5E;">15% Super Margin Rebate • Custom Lot Weaving & Concierge</span>
+                            </div>
                         </div>
-                        <span style="font-size:0.60rem; font-weight:800; padding:2px 8px; border-radius:4px; background:linear-gradient(135deg, #8A681F, #6E5114); color:#FFFFFF;">TOP TIER</span>
+                        <span class="ws-tier-badge platinum">TOP TIER</span>
                     </div>
                 </div>
             </div>
