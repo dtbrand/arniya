@@ -3862,7 +3862,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif); font-size:clamp(1.02rem, 1.8vw, 1.25rem);">Tier 1: Non VIP</div>
+                            <div class="ws-stat-val-num" id="statVal1" style="color:var(--ws-gold-primary); font-family:var(--ws-font-serif);">Tier 1</div>
                             <span class="ws-trend-pill up" id="statPill1">1–50 Orders</span>
                         </div>
                     </div>
@@ -6087,9 +6087,11 @@ $catalogProducts = [
 
         /* ── Helper: Get Tier ── */
         window.getWholesaleTier = function(ordersCount) {
-            if (ordersCount >= 200) return { name: 'Tier 3: Gold', discount: '10%' };
-            if (ordersCount >= 50) return { name: 'Tier 2: Silver', discount: '5%' };
-            return { name: 'Tier 1: Non VIP', discount: '0%' };
+            if (ordersCount >= 1000) return { name: 'Tier 5', tag: 'PLATINUM', discount: '15%' };
+            if (ordersCount >= 300) return { name: 'Tier 4', tag: 'GOLD', discount: '10%' };
+            if (ordersCount >= 200) return { name: 'Tier 3', tag: 'GOLD', discount: '7.5%' };
+            if (ordersCount >= 50) return { name: 'Tier 2', tag: 'SILVER', discount: '5%' };
+            return { name: 'Tier 1', tag: 'NON VIP', discount: '0%' };
         };
 
         /* ── Helper: Open VIP Modal ── */
@@ -6160,7 +6162,7 @@ $catalogProducts = [
                 'today': {
                     sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "Active", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1", pill: "Active", isGold: true },
                         { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
                         { label: "Today's Quantity", val: "6 Pcs", pill: "100% Packed", isGold: false },
                         { label: "Today's B2B Turnover", val: "₹18,200", pill: "↑ 100%", isGold: true }
@@ -6185,7 +6187,7 @@ $catalogProducts = [
                 'week': {
                     sub: "Weekly Procurement Targets, Category Mix & Logistics Performance",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "1–50 Orders", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
                         { label: "Total Orders", val: "6", pill: "↑ 14.20%", isGold: false },
                         { label: "Total Quantity (Units)", val: "48 Pcs", pill: "↑ 8.50%", isGold: false },
                         { label: "Total B2B Turnover", val: "₹2,05,062", pill: "↑ 18.40%", isGold: true }
@@ -6213,7 +6215,7 @@ $catalogProducts = [
                 'month': {
                     sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1: Non VIP", pill: "1–50 Orders", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
                         { label: "Total Orders", val: "14", pill: "↑ 21.00%", isGold: false },
                         { label: "Total Quantity (Units)", val: "112 Pcs", pill: "↑ 16.80%", isGold: false },
                         { label: "Total B2B Turnover", val: "₹4,86,500", pill: "↑ 24.10%", isGold: true }
@@ -6241,7 +6243,7 @@ $catalogProducts = [
                 'last_month': {
                     sub: "July 2026 Reconciled Performance & Procurements",
                     cards: [
-                        { label: "B2B Account Tier", val: "VIP Tier 1", pill: "Reconciled", isGold: true },
+                        { label: "B2B Account Tier", val: "Tier 1", pill: "Reconciled", isGold: true },
                         { label: "July Orders", val: "11", pill: "Delivered", isGold: false },
                         { label: "July Quantity", val: "88 Pcs", pill: "100% Received", isGold: false },
                         { label: "July Turnover", val: "₹3,92,400", pill: "Settled", isGold: true }
@@ -6550,14 +6552,14 @@ $catalogProducts = [
             var ribbonTag = document.getElementById('wsTierRibbonTag');
             var ribbonText = document.getElementById('wsTierRibbonText');
             if (ribbonTag && ribbonText) {
-                var tierName = (data.cards && data.cards[0] && data.cards[0].val) ? data.cards[0].val.toLowerCase() : '';
-                if (tierName.includes('platinum')) {
+                var tierVal = (data.cards && data.cards[0] && data.cards[0].val) ? data.cards[0].val.toLowerCase() : '';
+                if (tierVal.includes('5') || tierVal.includes('platinum')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag platinum';
                     ribbonText.textContent = '★ PLATINUM';
-                } else if (tierName.includes('gold')) {
+                } else if (tierVal.includes('3') || tierVal.includes('4') || tierVal.includes('gold')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag gold';
                     ribbonText.textContent = '★ GOLD';
-                } else if (tierName.includes('silver')) {
+                } else if (tierVal.includes('2') || tierVal.includes('silver')) {
                     ribbonTag.className = 'ws-tier-ribbon-tag silver';
                     ribbonText.textContent = '★ SILVER';
                 } else {
