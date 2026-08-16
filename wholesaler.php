@@ -12,7 +12,77 @@
  */
 
 $catalogProducts = [
-    // ── Tier: Under ₹300 (Daily Wear & High Resell Margin) ──
+    // ── NEW CATALOGUE / FRESH ARRIVALS (Shown First Always) ──
+    [
+        'id'              => 111,
+        'sku'             => 'KLN-SR-111',
+        'hsn'             => '5007',
+        'name'            => 'Pure Dola Silk Meenakari Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 3499,
+        'wholesale_price' => 1399,
+        'moq'             => 8,
+        'image'           => 'images/product2.png',
+        'badge'           => 'New Catalogue',
+        'badge_icon'      => '✨',
+        'color'           => 'Crimson Rani',
+        'fabric'          => 'Dola Silk with Meena Border',
+        'in_stock'        => 95,
+        'tier_prices'     => '8-15 pcs: ₹1,399 | 16-31 pcs: ₹1,299 | 32+ pcs: ₹1,219'
+    ],
+    [
+        'id'              => 109,
+        'sku'             => 'KLN-KT-109',
+        'hsn'             => '6204',
+        'name'            => 'Party Festive Sharara Suit Set',
+        'category'        => 'Kurtis',
+        'retail_price'    => 2699,
+        'wholesale_price' => 989,
+        'moq'             => 8,
+        'image'           => 'images/product5.png',
+        'badge'           => 'New Arrival',
+        'badge_icon'      => '🔥',
+        'color'           => 'Teal Blue',
+        'fabric'          => 'Chanderi Gotapatti Work',
+        'in_stock'        => 125,
+        'tier_prices'     => '8-15 pcs: ₹989 | 16-31 pcs: ₹929 | 32+ pcs: ₹869'
+    ],
+    [
+        'id'              => 110,
+        'sku'             => 'KLN-SR-110',
+        'hsn'             => '5007',
+        'name'            => 'Paithani Rich Pallu Saree',
+        'category'        => 'Sarees',
+        'retail_price'    => 3199,
+        'wholesale_price' => 1249,
+        'moq'             => 8,
+        'image'           => 'images/product1.png',
+        'badge'           => 'New Catalogue',
+        'badge_icon'      => '💎',
+        'color'           => 'Bottle Green',
+        'fabric'          => 'Art Silk Peacock Pallu',
+        'in_stock'        => 110,
+        'tier_prices'     => '8-15 pcs: ₹1,249 | 16-31 pcs: ₹1,169 | 32+ pcs: ₹1,099'
+    ],
+    [
+        'id'              => 112,
+        'sku'             => 'KLN-SR-112',
+        'hsn'             => '5007',
+        'name'            => 'Pure Kanjivaram Bridal Art Silk',
+        'category'        => 'Sarees',
+        'retail_price'    => 4499,
+        'wholesale_price' => 1899,
+        'moq'             => 6,
+        'image'           => 'images/product3.png',
+        'badge'           => 'New Arrival',
+        'badge_icon'      => '👑',
+        'color'           => 'Copper Gold',
+        'fabric'          => 'Heavy Bridal Zari Silk',
+        'in_stock'        => 85,
+        'tier_prices'     => '6-11 pcs: ₹1,899 | 12-23 pcs: ₹1,779 | 24+ pcs: ₹1,659'
+    ],
+
+    // ── SUPER VALUE & BEST MARGIN LOTS ──
     [
         'id'              => 101,
         'sku'             => 'KLN-KT-101',
@@ -64,8 +134,6 @@ $catalogProducts = [
         'in_stock'        => 280,
         'tier_prices'     => '20-39 pcs: ₹289 | 40-79 pcs: ₹269 | 80+ pcs: ₹245'
     ],
-
-    // ── Tier: Under ₹500 (Fancy Georgette & Festive Sets) ──
     [
         'id'              => 104,
         'sku'             => 'KLN-KT-104',
@@ -100,8 +168,6 @@ $catalogProducts = [
         'in_stock'        => 260,
         'tier_prices'     => '16-31 pcs: ₹489 | 32-63 pcs: ₹449 | 64+ pcs: ₹419'
     ],
-
-    // ── Tier: Under ₹800 (Festive Organza & Chanderi) ──
     [
         'id'              => 106,
         'sku'             => 'KLN-SR-106',
@@ -136,8 +202,6 @@ $catalogProducts = [
         'in_stock'        => 170,
         'tier_prices'     => '12-23 pcs: ₹749 | 24-47 pcs: ₹699 | 48+ pcs: ₹649'
     ],
-
-    // ── Tier: Under ₹1,000 (Semi-Bridal & Jacquard Silk) ──
     [
         'id'              => 108,
         'sku'             => 'KLN-SR-108',
@@ -156,61 +220,6 @@ $catalogProducts = [
         'tier_prices'     => '10-19 pcs: ₹949 | 20-39 pcs: ₹889 | 40+ pcs: ₹829'
     ],
     [
-        'id'              => 109,
-        'sku'             => 'KLN-KT-109',
-        'hsn'             => '6204',
-        'name'            => 'Party Festive Sharara Suit Set',
-        'category'        => 'Kurtis',
-        'retail_price'    => 2699,
-        'wholesale_price' => 989,
-        'moq'             => 8,
-        'image'           => 'images/product5.png',
-        'badge'           => 'Festive Hot',
-        'badge_icon'      => '🔥',
-        'color'           => 'Teal Blue',
-        'fabric'          => 'Chanderi Gotapatti Work',
-        'in_stock'        => 125,
-        'tier_prices'     => '8-15 pcs: ₹989 | 16-31 pcs: ₹929 | 32+ pcs: ₹869'
-    ],
-
-    // ── Tier: Under ₹1,500 (Paithani & Dola Silk Meenakari) ──
-    [
-        'id'              => 110,
-        'sku'             => 'KLN-SR-110',
-        'hsn'             => '5007',
-        'name'            => 'Paithani Rich Pallu Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3199,
-        'wholesale_price' => 1249,
-        'moq'             => 8,
-        'image'           => 'images/product1.png',
-        'badge'           => 'Boutique VIP',
-        'badge_icon'      => '💎',
-        'color'           => 'Bottle Green',
-        'fabric'          => 'Art Silk Peacock Pallu',
-        'in_stock'        => 110,
-        'tier_prices'     => '8-15 pcs: ₹1,249 | 16-31 pcs: ₹1,169 | 32+ pcs: ₹1,099'
-    ],
-    [
-        'id'              => 111,
-        'sku'             => 'KLN-SR-111',
-        'hsn'             => '5007',
-        'name'            => 'Pure Dola Silk Meenakari Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3499,
-        'wholesale_price' => 1399,
-        'moq'             => 8,
-        'image'           => 'images/product2.png',
-        'badge'           => 'Royal VIP',
-        'badge_icon'      => '👑',
-        'color'           => 'Crimson Rani',
-        'fabric'          => 'Dola Silk with Meena Border',
-        'in_stock'        => 95,
-        'tier_prices'     => '8-15 pcs: ₹1,399 | 16-31 pcs: ₹1,299 | 32+ pcs: ₹1,219'
-    ],
-
-    // ── Tier: Under ₹2,000 (Royal Anarkali & Pure Kanjivaram) ──
-    [
         'id'              => 5,
         'sku'             => 'KLN-KT-005',
         'hsn'             => '6204',
@@ -227,25 +236,6 @@ $catalogProducts = [
         'in_stock'        => 180,
         'tier_prices'     => '10-19 pcs: ₹1,799 | 20-39 pcs: ₹1,599 | 40+ pcs: ₹1,449'
     ],
-    [
-        'id'              => 112,
-        'sku'             => 'KLN-SR-112',
-        'hsn'             => '5007',
-        'name'            => 'Pure Kanjivaram Bridal Art Silk',
-        'category'        => 'Sarees',
-        'retail_price'    => 4499,
-        'wholesale_price' => 1899,
-        'moq'             => 6,
-        'image'           => 'images/product3.png',
-        'badge'           => 'Royal Heritage',
-        'badge_icon'      => '👑',
-        'color'           => 'Copper Gold',
-        'fabric'          => 'Heavy Bridal Zari Silk',
-        'in_stock'        => 85,
-        'tier_prices'     => '6-11 pcs: ₹1,899 | 12-23 pcs: ₹1,779 | 24+ pcs: ₹1,659'
-    ],
-
-    // ── Premium Heritage Tier (Bridal & Handloom Masters) ──
     [
         'id'              => 4,
         'sku'             => 'KLN-SR-004',
@@ -2378,16 +2368,39 @@ $catalogProducts = [
         .ws-slider-track::-webkit-scrollbar { display: none; }
 
         /* ════════════════════════════════════════════════════
-           EXACT SHOP PAGE PRODUCT CARD DESIGN & SIZES
+           EXACT SHOP PAGE PRODUCT CARD DESIGN & RESPONSIVE GRID
         ════════════════════════════════════════════════════ */
         .products-grid, .ws-master-catalog-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
+            width: 100%;
         }
-        @media (min-width: 600px) { .products-grid, .ws-master-catalog-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
-        @media (min-width: 1024px) { .products-grid, .ws-master-catalog-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
-        @media (min-width: 1280px) { .products-grid, .ws-master-catalog-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+        @media (min-width: 600px) { 
+            .products-grid, .ws-master-catalog-grid { 
+                grid-template-columns: repeat(3, 1fr); 
+                gap: 14px; 
+            } 
+        }
+        @media (min-width: 1024px) { 
+            .products-grid, .ws-master-catalog-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 16px; 
+            } 
+        }
+        @media (min-width: 1280px) { 
+            .products-grid, .ws-master-catalog-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 18px; 
+            } 
+        }
+
+        .ws-master-catalog-grid .product-card {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            flex: unset !important;
+        }
 
         .product-card, .ws-product-card {
             position: relative;
@@ -5685,80 +5698,76 @@ $catalogProducts = [
                         </a>
                     </div>
 
-                    <div class="ws-slider-wrap">
-                        <button class="ws-slider-nav-btn prev" onclick="slideForYouProducts(-1)" aria-label="Previous"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-                        <div class="ws-slider-track" id="wsForYouSliderTrack">
-                            <?php foreach ($catalogProducts as $prod): 
-                                $badge_raw = $prod['badge'] ?? 'Bestseller';
-                                $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
-                                $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
-                            ?>
-                            <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
-                                <div class="card-image-wrap">
-                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
+                    <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
+                        <?php foreach ($catalogProducts as $prod): 
+                            $badge_raw = $prod['badge'] ?? 'Bestseller';
+                            $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
+                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                        ?>
+                        <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
+                            <div class="card-image-wrap">
+                                <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='images/product1.png';" loading="lazy">
+                                </a>
+
+                                <!-- Status Badge -->
+                                <?php if (!empty($prod['badge'])): ?>
+                                <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
+                                <?php endif; ?>
+
+                                <!-- Wishlist Button -->
+                                <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
+                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                </button>
+
+                                <!-- Mobile Quick View Button -->
+                                <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </button>
+
+                                <!-- Desktop Quick View Overlay -->
+                                <div class="card-quick-view" aria-hidden="true">
+                                    <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
+                                </div>
+
+                                <!-- Share Button on Photo (Directly Above Category Tag) -->
+                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
+                                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                </button>
+
+                                <!-- Category Box on Photo Bottom-Right Corner -->
+                                <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                            </div>
+
+                            <div class="card-body">
+                                <!-- Product Title -->
+                                <h2 class="card-name">
+                                    <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                        <?= htmlspecialchars($prod['name']) ?>
                                     </a>
+                                </h2>
 
-                                    <!-- Status Badge -->
-                                    <?php if (!empty($prod['badge'])): ?>
-                                    <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
-                                    <?php endif; ?>
-
-                                    <!-- Wishlist Button -->
-                                    <button type="button" class="card-wishlist-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();toggleWholesaleWishlist(<?= $prod['id'] ?>, this)" aria-label="Wishlist <?= htmlspecialchars($prod['name']) ?>" aria-pressed="false">
-                                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                    </button>
-
-                                    <!-- Mobile Quick View Button -->
-                                    <button type="button" class="card-mobile-qv-btn quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}" aria-label="Quick View <?= htmlspecialchars($prod['name']) ?>">
-                                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    </button>
-
-                                    <!-- Desktop Quick View Overlay -->
-                                    <div class="card-quick-view" aria-hidden="true">
-                                        <button type="button" class="quick-view-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.openQV==='function'){window.openQV(<?= $prod['id'] ?>);}else{openQuickOrderModal(<?= htmlspecialchars(json_encode($prod)) ?>);}">Quick View</button>
-                                    </div>
-
-                                    <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
-                                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                                    </button>
-
-                                    <!-- Category Box on Photo Bottom-Right Corner -->
-                                    <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                                <!-- Clean Text Info Row: Available Colors & Sizes -->
+                                <div class="card-info-text-row">
+                                    <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
+                                    <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
                                 </div>
 
-                                <div class="card-body">
-                                    <!-- Product Title -->
-                                    <h2 class="card-name">
-                                        <a href="singelprodut.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
-                                            <?= htmlspecialchars($prod['name']) ?>
-                                        </a>
-                                    </h2>
-
-                                    <!-- Clean Text Info Row: Available Colors & Sizes -->
-                                    <div class="card-info-text-row">
-                                        <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
-                                        <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
+                                <div class="card-price-row">
+                                    <div class="card-price-stack">
+                                        <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
+                                        <?php if (!empty($prod['retail_price'])): ?>
+                                        <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
+                                        <?php endif; ?>
                                     </div>
-
-                                    <div class="card-price-row">
-                                        <div class="card-price-stack">
-                                            <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                            <?php if (!empty($prod['retail_price'])): ?>
-                                            <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <!-- Direct Add to Cart '+' Button next to Sale Price -->
-                                        <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
-                                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                        </button>
-                                    </div>
+                                    <!-- Direct Add to Cart '+' Button next to Sale Price -->
+                                    <button type="button" class="card-smart-add-cart-btn" data-id="<?= $prod['id'] ?>" onclick="event.stopPropagation();event.preventDefault();directAddWholesaleToCart(<?= htmlspecialchars(json_encode($prod)) ?>, this)" aria-label="Add <?= htmlspecialchars($prod['name']) ?> to Cart" title="Direct Add to Cart">
+                                        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    </button>
                                 </div>
-                            </article>
-                            <?php endforeach; ?>
-                        </div>
-                        <button class="ws-slider-nav-btn next" onclick="slideForYouProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                            </div>
+                        </article>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
@@ -8260,9 +8269,9 @@ $catalogProducts = [
             }
         };
 
-        /* ── Smart 1-Line Auto Slider Engine ── */
+        /* ── Smart 1-Line Auto Slider Engine (For Sliders Only) ── */
         function initSmartCatalogAutoSliders() {
-            var sliderIds = ['wsTrendingSliderTrack', 'wsForYouSliderTrack', 'wsPriceSliderTrack'];
+            var sliderIds = ['wsTrendingSliderTrack', 'wsPriceSliderTrack'];
             sliderIds.forEach(function(id) {
                 var track = document.getElementById(id);
                 if (!track) return;
