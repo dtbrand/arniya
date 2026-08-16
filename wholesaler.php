@@ -5786,10 +5786,6 @@ $catalogProducts = [
                                 For You
                             </h3>
                         </div>
-                        <a href="shop.php" class="ws-btn ws-btn-secondary ws-btn-sm" style="font-weight:800; display:inline-flex; align-items:center; gap:4px;">
-                            <span>Browse Retail Store</span>
-                            <span style="font-size:1rem; line-height:1;">→</span>
-                        </a>
                     </div>
 
                     <div class="ws-master-catalog-grid" id="wsForYouSliderTrack">
