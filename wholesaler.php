@@ -6148,7 +6148,9 @@ $catalogProducts = [
                         <div style="font-size:0.86rem; font-weight:800; color:var(--ws-text-main); display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:2px;">
                             <span>${currentOrder.courier}</span>
                             <span style="font-family:monospace; background:#FFFFFF; padding:2px 6px; border-radius:4px; border:1px solid var(--ws-border);">${currentOrder.awb}</span>
-                            <button onclick="copyAwbNumber('${currentOrder.awb}')" style="background:transparent; border:none; color:var(--ws-gold-primary); cursor:pointer; font-size:0.82rem;" title="Copy AWB">📋</button>
+                            <button onclick="copyAwbNumber('${currentOrder.awb}')" style="background:transparent; border:none; color:var(--ws-gold-primary); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:3px;" title="Copy AWB">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
                         </div>
                         <div style="font-size:0.78rem; font-weight:800; color:${etaColor}; margin-top:4px;">
                             ${etaText}
@@ -6180,16 +6182,15 @@ $catalogProducts = [
                     </div>
                 </div>
 
-                <!-- Action Links -->
-                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; padding-top:12px; border-top:1px dashed var(--ws-border);">
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20consignment%20${encodeURIComponent(currentOrder.id)}%20(AWB%3A%20${encodeURIComponent(currentOrder.awb)})" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm">
-                        💬 WhatsApp Logistics Desk
-                    </a>
-                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(currentOrder)})'>
-                        📄 Download GST Invoice
+                <!-- Action Buttons: Only 2 Buttons with Real SVG Icons -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; padding-top:14px; border-top:1px dashed var(--ws-border);">
+                    <button class="ws-btn ws-btn-primary" style="padding:10px 14px; font-size:0.82rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='openBillInvoiceModal(${JSON.stringify(currentOrder)})'>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Download GST Invoice</span>
                     </button>
-                    <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(currentOrder)})'>
-                        👁️ View Order Details
+                    <button class="ws-btn ws-btn-secondary" style="padding:10px 14px; font-size:0.82rem; font-weight:700; justify-content:center; width:100%; border-radius:8px;" onclick='viewOrderDetails(${JSON.stringify(currentOrder)})'>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>View Order Details</span>
                     </button>
                 </div>
             `;
