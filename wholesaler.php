@@ -501,23 +501,26 @@ $catalogProducts = [
             height: 100%;
         }
         .ws-sidebar-brand-box {
-            padding: 16px 18px 14px;
+            padding: 8px 14px;
+            height: 48px;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--ws-border-light);
+            gap: 9px;
+            border-bottom: 1.5px solid rgba(212,175,55,0.2);
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F4 100%);
             flex-shrink: 0;
         }
         .ws-sidebar-close-btn {
             display: none;
             margin-left: auto;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: 1.2px solid var(--ws-gold-border);
             background: var(--ws-gold-light);
             color: var(--ws-gold-primary);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             align-items: center;
@@ -537,76 +540,83 @@ $catalogProducts = [
             scrollbar-width: thin;
         }
         .ws-side-logo-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
             background: linear-gradient(135deg, var(--ws-gold-accent) 0%, var(--ws-gold-primary) 50%, var(--ws-gold-deep) 100%);
             color: #FFFFFF;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(138,104,31,0.3);
-            border: 1.2px solid #FFFFFF;
+            font-size: 0.84rem;
+            box-shadow: 0 2px 6px rgba(138,104,31,0.25);
+            border: 1px solid #FFFFFF;
         }
         .ws-side-brand-title {
             font-family: var(--ws-font-serif);
-            font-size: 1.05rem;
-            font-weight: 800;
+            font-size: 0.96rem;
+            font-weight: 900;
             color: var(--ws-gold-primary);
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
         }
 
         .ws-nav-category {
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--ws-text-muted);
-            padding: 14px 20px 6px;
+            color: #A8A29E;
+            padding: 10px 16px 4px;
         }
         .ws-nav-list {
             list-style: none;
-            padding: 6px 12px;
+            padding: 4px 8px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
         }
         .ws-nav-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 9px 14px;
-            border-radius: 10px;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 9px;
             color: var(--ws-text-sub);
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            transition: var(--ws-transition);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
             user-select: none;
         }
         .ws-nav-item:hover {
-            background: var(--ws-gold-light);
+            background: linear-gradient(90deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%);
             color: var(--ws-gold-primary);
+            transform: translateX(2px);
         }
         .ws-nav-item.active {
-            background: var(--ws-gold-light);
-            color: var(--ws-gold-primary);
-            border-color: var(--ws-gold-border);
+            background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
+            color: #785912;
+            border-color: rgba(212,175,55,0.45);
             font-weight: 800;
-            box-shadow: 0 2px 6px rgba(138,104,31,0.08);
+            box-shadow: 0 2px 8px rgba(138,104,31,0.10);
+            transform: translateX(2px);
         }
         .ws-nav-item svg {
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             stroke: currentColor;
             stroke-width: 2.2;
             fill: none;
             flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .ws-nav-item:hover svg,
+        .ws-nav-item.active svg {
+            transform: scale(1.08);
         }
         .ws-nav-badge {
             margin-left: auto;
@@ -3916,6 +3926,18 @@ $catalogProducts = [
             </div>
 
             <div class="ws-sidebar-scroll">
+                <!-- VIP Wholesaler User Card in Sidebar -->
+                <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
+                    <img src="images/profile.png" onerror="this.src='images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;">
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
+                        <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
+                            <span>★ Verified Wholesaler</span>
+                        </div>
+                    </div>
+                    <span style="font-size: 0.58rem; font-weight: 800; background: #DCFCE7; color: #15803D; padding: 2px 5px; border-radius: 6px; border: 1px solid #BBF7D0; flex-shrink: 0;">Tier 1</span>
+                </div>
+
                 <div class="ws-nav-category">MENU</div>
                 <ul class="ws-nav-list">
                     <li>
