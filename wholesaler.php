@@ -5635,7 +5635,7 @@ $catalogProducts = [
                                     <div style="display:flex; align-items:center; gap:8px;">
                                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                                         <h4 style="font-size:0.95rem; font-weight:800; color:var(--ws-gold-primary); margin:0; font-family:var(--ws-font-serif);">
-                                            Edit Main Registered Business & GST Billing Address
+                                            Edit Billing Address
                                         </h4>
                                     </div>
                                     <button type="button" onclick="closeEditAddressDrawer()" style="background:transparent; border:none; color:var(--ws-text-muted); cursor:pointer; font-size:1.1rem; font-weight:800;">✕</button>
