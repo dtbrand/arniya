@@ -5437,7 +5437,7 @@ $catalogProducts = [
                 <div class="ws-card">
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
-                            <h3>Wholesaler Representative Profile</h3>
+                            <h3>Profile Edit</h3>
                         </div>
                     </div>
 
