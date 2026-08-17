@@ -6774,12 +6774,8 @@ $catalogProducts = [
                         <div style="color:#4B5563; margin-top:2px;">Thank you for doing business with us.</div>
                     </div>
 
-                    <!-- Footer: Vyapar Tag & Signature -->
-                    <div class="ws-ti-footer-sign-row">
-                        <div class="ws-ti-vyapar-tag">
-                            <span>Generated For Free On</span>
-                            <span style="font-weight:900; font-size:11px; color:#111827;">Vyapar</span>
-                        </div>
+                    <!-- Footer: Authorized Signature Box -->
+                    <div class="ws-ti-footer-sign-row" style="display:flex; justify-content:flex-end; padding:10px 14px 12px;">
                         <div class="ws-ti-sign-box">
                             <div style="font-weight:800; font-size:11px; margin-bottom:8px;">For Arniya®:</div>
                             <!-- Vector Signature Emblem -->
