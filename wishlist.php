@@ -12,9 +12,10 @@
     background: rgba(24, 20, 16, 0.78); backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: flex-end;
     z-index: 999999 !important; opacity: 0; visibility: hidden;
+    pointer-events: none;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.wishlist-drawer-backdrop.active { opacity: 1; visibility: visible; }
+.wishlist-drawer-backdrop.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
 .wishlist-drawer-content {
     background: linear-gradient(180deg, #FFFFFF 0%, #FAF6EE 100%);

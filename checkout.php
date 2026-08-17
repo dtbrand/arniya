@@ -43,6 +43,7 @@
     justify-content: center;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.32s ease;
     padding: 0;
     box-sizing: border-box;
@@ -50,6 +51,7 @@
 .checkout-backdrop.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 /* ── Checkout Main Container (Full screen on mobile, elegant dialog on desktop) ── */

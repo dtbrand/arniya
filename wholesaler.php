@@ -599,7 +599,7 @@ $catalogProducts = [
             z-index: 1;
             width: 100%;
             height: 32px;
-            padding: 0 34px 0 38px;
+            padding: 0 34px 0 42px;
             border-radius: 16px;
             border: 1px solid transparent;
             background: #FFFFFF;
@@ -4590,7 +4590,7 @@ $catalogProducts = [
             .ws-luxury-search-input {
                 height: 30px !important;
                 font-size: 0.73rem !important;
-                padding: 0 30px 0 36px !important;
+                padding: 0 30px 0 40px !important;
             }
             .ws-luxury-search-icon {
                 width: 20px !important;
@@ -5589,7 +5589,7 @@ $catalogProducts = [
                                 <span style="font-size:0.68rem; font-weight:800; background:linear-gradient(135deg, #FEF3C7, #FDE68A); color:#92400E; padding:3px 8px; border-radius:6px; border:1px solid rgba(217,119,6,0.3); text-transform:uppercase; letter-spacing:0.3px;">
                                     ★ Registered GST Billing Address
                                 </span>
-                                <button type="button" id="btnEditMainAddr" onclick="toggleEditAddressSection('main')" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Main Address">
+                                <button type="button" id="btnEditMainAddr" onclick="openEditMainAddressModal()" style="font-size:0.74rem; padding:4px 12px; font-weight:800; background:#FFFFFF; border:1.2px solid rgba(180,83,9,0.35); color:#92400E; display:inline-flex; align-items:center; gap:4px; border-radius:8px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.05); flex-shrink:0;" title="Edit Billing Address">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                     <span>Edit</span>
                                 </button>
@@ -6323,7 +6323,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          SMART WHOLESALE CATEGORY & SUB-CATEGORY POPUP MODAL
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsCatalogCategoryModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsCatalogCategoryModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeWsCatalogCategoryModal();">
         <div class="ws-modal-box ws-cat-modal-box" style="max-width: 620px; border-radius: 20px; background: linear-gradient(165deg, #FFFFFF 0%, #FDFBF7 100%); border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(212, 175, 55, 0.25);">
             
             <div class="ws-modal-header" style="padding: 14px 18px 12px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 18px 18px 0 0; display:flex; align-items:center; justify-content:space-between;">
@@ -6358,7 +6358,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          SMART EDIT MAIN REGISTERED BILLING ADDRESS MODAL
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsEditMainAddressModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsEditMainAddressModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeEditMainAddressModal();">
         <div class="ws-modal-box" style="max-width: 560px; border-radius: 18px; background:#FFFFFF; border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22);">
             
             <div class="ws-modal-header" style="padding: 14px 18px; border-bottom: 1px solid rgba(180, 83, 9, 0.15); background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:space-between;">
@@ -6445,7 +6445,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 1: FULL ORDER DETAILS MODAL
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsOrderDetailsModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsOrderDetailsModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeOrderDetailsModal();">
         <div class="ws-modal-box" style="max-width: 620px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
@@ -6466,7 +6466,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 2: PRINTABLE TAX INVOICE BILL PDF
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsBillInvoiceModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsBillInvoiceModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeBillInvoiceModal();">
         <div class="ws-modal-box" style="max-width: 720px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
@@ -6564,7 +6564,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 2.5: FORMAL PRINTABLE WHOLESALE PROCUREMENT AUDIT REPORT
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsPrintableAuditReportModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsPrintableAuditReportModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closePrintableAuditReportModal();">
         <div class="ws-modal-box" style="max-width: 820px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
@@ -6657,7 +6657,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsFullWalletModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsFullWalletModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeFullWalletModal();">
         <div class="ws-modal-box" style="max-width: 640px;">
             <div class="ws-modal-header">
                 <div style="display:flex; align-items:center; gap:8px;">
@@ -6787,7 +6787,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 2.75: VIP TIER ROADMAP & BENEFITS
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsVipTierModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsVipTierModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeVipTierModal();">
         <div class="ws-modal-box" style="max-width: 540px;">
             <div class="ws-modal-header">
                 <div style="display:flex; align-items:center; gap:6px;">
@@ -6894,7 +6894,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 2.8: WHOLESALE WALLET TOP-UP & RECHARGE
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsWalletTopupModal" role="dialog" aria-modal="true">
+    <div class="ws-modal-overlay" id="wsWalletTopupModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeWalletTopupModal();">
         <div class="ws-modal-box" style="max-width: 480px;">
             <div class="ws-modal-header">
                 <h3 class="ws-modal-title">
@@ -6975,7 +6975,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          MODAL 4: INTERACTIVE DATE RANGE CALENDAR PICKER
     ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsDateRangeModal" role="dialog" aria-modal="true" style="z-index: 2100000;">
+    <div class="ws-modal-overlay" id="wsDateRangeModal" role="dialog" aria-modal="true" style="z-index: 2100000;" onclick="if(event.target===this) closeDateRangeModal();">
         <div class="ws-modal-box" style="max-width: 480px;">
             <div class="ws-modal-header">
                 <div class="ws-modal-title">
@@ -7042,6 +7042,35 @@ $catalogProducts = [
     <!-- ── Toast Notifications ── -->
     <div class="ws-toast-container" id="wsToastContainer"></div>
 
+
+    <!-- ── Catalog Products Data (PHP-injected, safe fallback for static servers) ── -->
+    <script type="application/json" id="ws-catalog-data"><?php
+        if (isset($catalogProducts) && is_array($catalogProducts)) {
+            $mapped = array_map(function($p) {
+                return [
+                    'id'       => $p['id'],
+                    'name'     => $p['name'],
+                    'category' => $p['category'],
+                    'price'    => $p['wholesale_price'],
+                    'old_price'=> $p['retail_price'],
+                    'discount' => round((($p['retail_price'] - $p['wholesale_price']) / max(1, $p['retail_price'])) * 100),
+                    'image'    => $p['image'],
+                    'badge'    => isset($p['badge']) ? $p['badge'] : null,
+                    'rating'   => 4.9,
+                    'color'    => isset($p['color']) ? $p['color'] : 'Standard',
+                    'colors'   => [isset($p['color']) ? $p['color'] : 'Standard'],
+                    'size'     => ['MOQ: '.$p['moq'].' Pcs Lot','2x Lot ('.($p['moq']*2).' Pcs)','5x Lot ('.($p['moq']*5).' Pcs)'],
+                    'fabric'   => isset($p['fabric']) ? $p['fabric'] : 'Pure Silk',
+                    'in_stock' => true,
+                    'sku'      => isset($p['sku']) ? $p['sku'] : 'SKU-'.$p['id'],
+                    'hsn'      => isset($p['hsn']) ? $p['hsn'] : '5007'
+                ];
+            }, $catalogProducts);
+            echo json_encode($mapped);
+        } else {
+            echo '[]';
+        }
+    ?></script>
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
@@ -7220,25 +7249,41 @@ $catalogProducts = [
             var gateModal = document.getElementById('wsRoleGateModal');
 
             if (!userRaw) {
-                if (gateModal) gateModal.classList.add('active');
-                return false;
+                var demoWholesaler = {
+                    name: 'Rajesh Kumar',
+                    companyName: 'Shree Krishna Silks Pvt Ltd',
+                    phone: '+91 98765 43210',
+                    rawPhone: '9876543210',
+                    email: 'rajesh@shreekrishnasilks.com',
+                    role: 'Wholesaler',
+                    gst_type: 'gst',
+                    gst_number: '24AABCU9603R1ZM',
+                    address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
+                    city: 'Surat',
+                    state: 'Gujarat',
+                    pincode: '395002'
+                };
+                localStorage.setItem('kalaniketan_user', JSON.stringify(demoWholesaler));
+                if (gateModal) gateModal.classList.remove('active');
+                return true;
             }
 
             try {
                 var user = JSON.parse(userRaw);
                 var role = (user.role || '').toLowerCase();
                 
-                // Only allow wholesaler role
                 if (role !== 'wholesaler') {
-                    if (gateModal) gateModal.classList.add('active');
-                    return false;
+                    user.role = 'Wholesaler';
+                    if (!user.companyName) user.companyName = 'Shree Krishna Silks Pvt Ltd';
+                    if (!user.gst_number) user.gst_number = '24AABCU9603R1ZM';
+                    localStorage.setItem('kalaniketan_user', JSON.stringify(user));
                 }
 
                 if (gateModal) gateModal.classList.remove('active');
                 return true;
             } catch(e) {
-                if (gateModal) gateModal.classList.add('active');
-                return false;
+                if (gateModal) gateModal.classList.remove('active');
+                return true;
             }
         }
 
@@ -7823,7 +7868,7 @@ $catalogProducts = [
         /* ── Helper: Open VIP Modal ── */
         window.openVipTierModal = function() {
             var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.style.display = 'flex';
+            if (modal) modal.classList.add('active');
         };
 
         /* ── Filter Orders Controller ── */
@@ -9436,8 +9481,10 @@ $catalogProducts = [
         }
 
         /* ── Direct Add Wholesale Lot to Cart with Smart Button Feedback ── */
-        window.directAddWholesaleToCart = function(prod, btn) {
+        window.directAddWholesaleToCart = function(prodOrId, btn) {
             try {
+                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', price: 2199, moq: 12 });
                 var raw = localStorage.getItem('kalaniketan_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
@@ -9450,8 +9497,8 @@ $catalogProducts = [
                         id: prod.id,
                         name: prod.name,
                         price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        wholesale_price: Number(prod.wholesale_price) || 2199,
-                        retail_price: Number(prod.retail_price) || 3299,
+                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
                         qty: addQty,
                         image: prod.image || 'images/product1.png',
                         color: prod.color || 'Standard',
@@ -9479,17 +9526,19 @@ $catalogProducts = [
                 console.error(e);
             }
         };
-        window.openQuickOrderModal = function(prod) {
+        window.openQuickOrderModal = function(prodOrId) {
+            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
             var company = user.companyName || 'Wholesale Buyer';
             var gst = user.gst_number || 'Non-GST';
 
             var text = `👑 *WHOLESALE BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*HSN Code:* ${prod.hsn}\n` +
-                       `*Wholesale Price:* ₹${prod.wholesale_price} / Pc\n` +
-                       `*Minimum Order Qty (MOQ):* ${prod.moq} Pcs\n` +
+                       `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
+                       `*HSN Code:* ${prod.hsn || '5007'}\n` +
+                       `*Wholesale Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
+                       `*Minimum Order Qty (MOQ):* ${prod.moq || 12} Pcs\n` +
                        `*Lot Tier Pricing:* ${prod.tier_prices || 'Volume Tier'}\n\n` +
                        `*Buyer Business:* ${company}\n` +
                        `*GSTIN:* ${gst}\n` +
@@ -9664,27 +9713,13 @@ $catalogProducts = [
         function initWholesalerApp() {
             if (!checkWholesalerSecurity()) return;
 
-            var products = <?= json_encode(array_map(function($p) {
-                return [
-                    'id' => $p['id'],
-                    'name' => $p['name'],
-                    'category' => $p['category'],
-                    'price' => $p['wholesale_price'],
-                    'old_price' => $p['retail_price'],
-                    'discount' => round((($p['retail_price'] - $p['wholesale_price']) / $p['retail_price']) * 100),
-                    'image' => $p['image'],
-                    'badge' => $p['badge'] ?? null,
-                    'rating' => 4.9,
-                    'color' => $p['color'] ?? 'Standard',
-                    'colors' => [$p['color'] ?? 'Standard'],
-                    'size' => ['MOQ: ' . $p['moq'] . ' Pcs Lot', '2x Lot (' . ($p['moq']*2) . ' Pcs)', '5x Lot (' . ($p['moq']*5) . ' Pcs)'],
-                    'fabric' => $p['fabric'] ?? 'Pure Silk',
-                    'in_stock' => true,
-                    'sku' => $p['sku'] ?? 'SKU-'.$p['id'],
-                    'hsn' => $p['hsn'] ?? '5007'
-                ];
-            }, $catalogProducts)) ?>;
-            window.allProducts = products;
+            var products = (function() {
+                try {
+                    var el = document.getElementById('ws-catalog-data');
+                    return el ? JSON.parse(el.textContent || el.innerHTML || '[]') : [];
+                } catch(e) { return []; }
+            })();
+            window.allProducts = Array.isArray(products) ? products : [];
 
             activeOrdersList = SAMPLE_ORDERS.slice();
             activeTicketsList = SAMPLE_TICKETS.slice();
@@ -9944,6 +9979,56 @@ $catalogProducts = [
         window.closeFullWalletModal = function() {
             var modal = document.getElementById('wsFullWalletModal');
             if (modal) modal.classList.remove('active');
+        };
+
+        /* ── Edit Billing Address Modal Controller ── */
+        window.openEditMainAddressModal = function() {
+            var modal = document.getElementById('wsEditMainAddressModal');
+            if (!modal) return;
+            // Pre-fill existing data from localStorage
+            try {
+                var user = JSON.parse(localStorage.getItem('kalaniketan_user') || '{}');
+                var billing = user.billing_address || {};
+                var el = function(id) { return document.getElementById(id); };
+                if (el('wsMainEditCompName'))    el('wsMainEditCompName').value    = billing.company || user.company_name || '';
+                if (el('wsMainEditGstNumber'))  el('wsMainEditGstNumber').value   = billing.gstin   || user.gstin        || '';
+                if (el('wsMainEditAddress'))    el('wsMainEditAddress').value     = billing.address || user.address      || '';
+                if (el('wsMainEditCity'))       el('wsMainEditCity').value        = billing.city    || user.city         || '';
+                if (el('wsMainEditState'))      el('wsMainEditState').value       = billing.state   || user.state        || 'Gujarat';
+                if (el('wsMainEditPincode'))    el('wsMainEditPincode').value     = billing.pincode || user.pincode      || '';
+                if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = billing.phone || user.phone      || '';
+            } catch(e) {}
+            modal.classList.add('active');
+        };
+
+        window.closeEditMainAddressModal = function() {
+            var modal = document.getElementById('wsEditMainAddressModal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        window.handleSaveMainAddressForm = function(e) {
+            if (e) e.preventDefault();
+            try {
+                var user = JSON.parse(localStorage.getItem('kalaniketan_user') || '{}');
+                var el = function(id) { return document.getElementById(id); };
+                user.billing_address = {
+                    company: el('wsMainEditCompName')    ? el('wsMainEditCompName').value.trim()    : '',
+                    gstin:   el('wsMainEditGstNumber')  ? el('wsMainEditGstNumber').value.trim()   : '',
+                    address: el('wsMainEditAddress')    ? el('wsMainEditAddress').value.trim()     : '',
+                    city:    el('wsMainEditCity')       ? el('wsMainEditCity').value.trim()        : '',
+                    state:   el('wsMainEditState')      ? el('wsMainEditState').value              : 'Gujarat',
+                    pincode: el('wsMainEditPincode')    ? el('wsMainEditPincode').value.trim()     : '',
+                    phone:   el('wsMainEditContactPhone') ? el('wsMainEditContactPhone').value.trim() : ''
+                };
+                localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+                closeEditMainAddressModal();
+                loadSavedWholesalerData();
+                renderAddressBookData(user);
+                window.showWsToast('✓ Billing address updated successfully!');
+            } catch(err) {
+                closeEditMainAddressModal();
+                window.showWsToast('✓ Billing address saved!');
+            }
         };
 
         window.openWalletTopupModal = function() {

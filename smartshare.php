@@ -62,11 +62,13 @@
     justify-content: center;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .smart-share-overlay.active {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 .smart-share-sheet {
     width: 100%;

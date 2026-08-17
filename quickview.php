@@ -14,9 +14,10 @@
     z-index: 15000;
     display: flex; align-items: center; justify-content: center;
     padding: 16px; opacity: 0; visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.32s ease, visibility 0.32s ease;
 }
-.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
 
 .quick-modal {
     background: #FFFFFF;
