@@ -4947,7 +4947,7 @@ $catalogProducts = [
                 </div>
 
                 <!-- ── Modern Frosted Gold Glassy Animated B2B Wallet & Coins Strip ── -->
-                <div class="ws-wallet-strip">
+                <div class="ws-wallet-strip" onclick="openFullWalletModal()" style="cursor:pointer;" title="Click to view Gold Wallet & Passbook">
                     <!-- Left Corner Micro 3D Diagonal Tircha Tag -->
                     <div class="ws-wallet-ribbon-tag">
                         <span>★ WALLET</span>
@@ -5018,7 +5018,7 @@ $catalogProducts = [
 
                     <!-- Right: Small Styled View Button -->
                     <div class="ws-wallet-strip-actions">
-                        <button class="ws-btn ws-btn-wallet-view-sm" onclick="openFullWalletModal()">
+                        <button type="button" class="ws-btn ws-btn-wallet-view-sm" onclick="event.stopPropagation();openFullWalletModal();">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             <span>View</span>
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -7307,6 +7307,36 @@ $catalogProducts = [
             if (gateModal) gateModal.classList.remove('active');
             initWholesalerApp();
             window.showWsToast('👑 Logged in as Verified Wholesaler (Rajesh Kumar)!');
+        };
+
+        /* ── Wholesale Wallet Controller ── */
+        window.openFullWalletModal = function() {
+            var modal = document.getElementById('wsFullWalletModal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.setProperty('display', 'flex', 'important');
+                modal.style.setProperty('opacity', '1', 'important');
+                modal.style.setProperty('visibility', 'visible', 'important');
+                modal.style.setProperty('pointer-events', 'auto', 'important');
+                
+                var availEl = document.getElementById('walletAvailableBalance');
+                var coinsEl = document.getElementById('walletTotalCoins');
+                var mBal = document.getElementById('fullModalWalletBal');
+                var mCoins = document.getElementById('fullModalCoinsBal');
+                if (availEl && mBal) mBal.textContent = availEl.textContent;
+                if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
+            }
+        };
+
+        window.closeFullWalletModal = function() {
+            var modal = document.getElementById('wsFullWalletModal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.removeProperty('display');
+                modal.style.removeProperty('opacity');
+                modal.style.removeProperty('visibility');
+                modal.style.removeProperty('pointer-events');
+            }
         };
 
         /* ── Tab Navigation Controller ── */
@@ -9973,12 +10003,32 @@ $catalogProducts = [
         /* ── Wholesale Wallet Controller ── */
         window.openFullWalletModal = function() {
             var modal = document.getElementById('wsFullWalletModal');
-            if (modal) modal.classList.add('active');
+            if (modal) {
+                modal.classList.add('active');
+                modal.style.setProperty('display', 'flex', 'important');
+                modal.style.setProperty('opacity', '1', 'important');
+                modal.style.setProperty('visibility', 'visible', 'important');
+                modal.style.setProperty('pointer-events', 'auto', 'important');
+                
+                // Sync latest balance
+                var availEl = document.getElementById('walletAvailableBalance');
+                var coinsEl = document.getElementById('walletTotalCoins');
+                var mBal = document.getElementById('fullModalWalletBal');
+                var mCoins = document.getElementById('fullModalCoinsBal');
+                if (availEl && mBal) mBal.textContent = availEl.textContent;
+                if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
+            }
         };
 
         window.closeFullWalletModal = function() {
             var modal = document.getElementById('wsFullWalletModal');
-            if (modal) modal.classList.remove('active');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.style.removeProperty('display');
+                modal.style.removeProperty('opacity');
+                modal.style.removeProperty('visibility');
+                modal.style.removeProperty('pointer-events');
+            }
         };
 
         /* ── Edit Billing Address Modal Controller ── */
