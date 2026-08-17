@@ -1,0 +1,29 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Root URL -> Frontend Shop
+RewriteRule ^$ Frontend/Shop/shop.php [L,R=301]
+
+# Page rewrites
+RewriteRule ^shop(\.php)?$ Frontend/Shop/shop.php [L,QSA]
+RewriteRule ^singleproduct(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
+RewriteRule ^singelprodut(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
+RewriteRule ^wholesale(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
+RewriteRule ^wholesaler(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
+RewriteRule ^retailer(\.php)?$ Frontend/Retailer/retailer.php [L,QSA]
+RewriteRule ^reseller(\.php)?$ Frontend/Reseller/reseller.php [L,QSA]
+
+# Auth & Shared Rewrites
+RewriteRule ^myaccount(\.php)?$ Shared/Auth/myaccount.php [L,QSA]
+RewriteRule ^account(\.php)?$ Shared/Includes/account.php [L,QSA]
+RewriteRule ^cart(\.php)?$ Shared/Includes/cart.php [L,QSA]
+RewriteRule ^checkout(\.php)?$ Shared/Includes/checkout.php [L,QSA]
+RewriteRule ^quickview(\.php)?$ Shared/Includes/quickview.php [L,QSA]
+RewriteRule ^smartshare(\.php)?$ Shared/Includes/smartshare.php [L,QSA]
+RewriteRule ^wishlist(\.php)?$ Shared/Includes/wishlist.php [L,QSA]
+RewriteRule ^reels(\.php)?$ Shared/Includes/reels.php [L,QSA]
+
+# Images rewrite
+RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
+</IfModule>
