@@ -4233,26 +4233,119 @@ $catalogProducts = [
             width: 170px;
         }
         @media print {
-            body * {
-                visibility: hidden;
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #FFFFFF !important;
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible !important;
             }
-            #invoicePrintArea, #invoicePrintArea * {
-                visibility: visible;
+            body > *:not(#wsBillInvoiceModal) {
+                display: none !important;
             }
-            #invoicePrintArea {
-                position: absolute;
-                left: 0;
-                top: 0;
+            .ws-header, .ws-sidebar, .ws-mobile-dock, .ws-main, .ws-toast-container, .ws-sidebar-backdrop {
+                display: none !important;
+            }
+            .ws-modal-overlay:not(#wsBillInvoiceModal) {
+                display: none !important;
+            }
+            #wsBillInvoiceModal {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+            #wsBillInvoiceModal .ws-modal-box {
+                position: static !important;
+                display: block !important;
                 width: 100% !important;
                 max-width: 100% !important;
+                height: auto !important;
+                padding: 0 !important;
                 margin: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                overflow: visible !important;
+            }
+            #wsBillInvoiceModal .ws-modal-header {
+                display: none !important;
+            }
+            #wsBillInvoiceModal .ws-tax-invoice-wrapper {
+                position: static !important;
+                display: block !important;
+                width: 100% !important;
+                max-height: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                background: transparent !important;
+                overflow: visible !important;
+            }
+            #invoicePrintArea {
+                position: relative !important;
+                display: block !important;
+                left: auto !important;
+                top: auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
                 padding: 0 !important;
                 border: 1.5px solid #000 !important;
                 box-shadow: none !important;
+                visibility: visible !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
+                font-size: 10.5px !important;
+            }
+            #invoicePrintArea * {
+                visibility: visible !important;
+            }
+            .ws-ti-title-header {
+                padding: 4px 0 !important;
+                font-size: 17px !important;
+            }
+            .ws-ti-top-seller-box,
+            .ws-ti-cell-billto,
+            .ws-ti-cell-invmeta,
+            .ws-ti-shipto-box {
+                padding: 5px 10px !important;
+            }
+            .ws-ti-items-table th,
+            .ws-ti-items-table td {
+                padding: 4px 6px !important;
+                font-size: 10px !important;
+            }
+            .ws-ti-tax-subtable th,
+            .ws-ti-tax-subtable td {
+                padding: 3.5px 5px !important;
+                font-size: 9.5px !important;
+            }
+            .ws-ti-calc-row {
+                padding: 3px 8px !important;
+                font-size: 10px !important;
+            }
+            .ws-ti-words-box {
+                padding: 3px 8px !important;
+                font-size: 9.5px !important;
+            }
+            .ws-ti-terms-row {
+                padding: 5px 10px !important;
+                font-size: 9.5px !important;
+            }
+            .ws-ti-footer-sign-row {
+                padding: 8px 12px 10px !important;
             }
             @page {
                 size: A4 portrait;
-                margin: 8mm;
+                margin: 8mm 10mm;
             }
         }
 
@@ -9431,6 +9524,8 @@ $catalogProducts = [
             }
 
             window.showModal('wsBillInvoiceModal');
+            var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
+            if (wrapper) wrapper.scrollTop = 0;
         };
 
         window.closeBillInvoiceModal = function() {
@@ -9438,6 +9533,11 @@ $catalogProducts = [
         };
 
         window.printInvoiceSheet = function() {
+            var modal = document.getElementById('wsBillInvoiceModal');
+            if (modal) {
+                var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
+                if (wrapper) wrapper.scrollTop = 0;
+            }
             window.print();
         };
 
