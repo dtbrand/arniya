@@ -470,7 +470,14 @@
         if (modal) {
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
             document.body.style.overflow = 'hidden';
+            if (typeof window.renderCart === 'function') {
+                window.renderCart();
+            }
         }
     };
 
@@ -479,6 +486,10 @@
         if (modal) {
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
+            modal.style.removeProperty('display');
+            modal.style.removeProperty('opacity');
+            modal.style.removeProperty('visibility');
+            modal.style.removeProperty('pointer-events');
             document.body.style.overflow = '';
         }
     };

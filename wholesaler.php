@@ -4329,9 +4329,11 @@ $catalogProducts = [
                 -webkit-backdrop-filter: blur(5px);
                 z-index: 1999;
                 display: none;
+                pointer-events: none;
             }
             .ws-sidebar-backdrop.active {
                 display: block;
+                pointer-events: auto;
             }
             .ws-sidebar-scroll {
                 padding-bottom: calc(60px + env(safe-area-inset-bottom));
@@ -7309,34 +7311,58 @@ $catalogProducts = [
             window.showWsToast('👑 Logged in as Verified Wholesaler (Rajesh Kumar)!');
         };
 
+        /* ── Universal Modal Show & Hide Engine ── */
+        window.showModal = function(modalId) {
+            var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
+            if (!modal) return;
+            modal.classList.add('active');
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
+            modal.style.setProperty('z-index', '2500000', 'important');
+        };
+
+        window.hideModal = function(modalId) {
+            var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
+            if (!modal) return;
+            modal.classList.remove('active');
+            modal.style.removeProperty('display');
+            modal.style.removeProperty('opacity');
+            modal.style.removeProperty('visibility');
+            modal.style.removeProperty('pointer-events');
+            modal.style.removeProperty('z-index');
+        };
+
         /* ── Wholesale Wallet Controller ── */
         window.openFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) {
-                modal.classList.add('active');
-                modal.style.setProperty('display', 'flex', 'important');
-                modal.style.setProperty('opacity', '1', 'important');
-                modal.style.setProperty('visibility', 'visible', 'important');
-                modal.style.setProperty('pointer-events', 'auto', 'important');
-                
-                var availEl = document.getElementById('walletAvailableBalance');
-                var coinsEl = document.getElementById('walletTotalCoins');
-                var mBal = document.getElementById('fullModalWalletBal');
-                var mCoins = document.getElementById('fullModalCoinsBal');
-                if (availEl && mBal) mBal.textContent = availEl.textContent;
-                if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
-            }
+            window.showModal('wsFullWalletModal');
+            var availEl = document.getElementById('walletAvailableBalance');
+            var coinsEl = document.getElementById('walletTotalCoins');
+            var mBal = document.getElementById('fullModalWalletBal');
+            var mCoins = document.getElementById('fullModalCoinsBal');
+            if (availEl && mBal) mBal.textContent = availEl.textContent;
+            if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
         };
 
         window.closeFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) {
-                modal.classList.remove('active');
-                modal.style.removeProperty('display');
-                modal.style.removeProperty('opacity');
-                modal.style.removeProperty('visibility');
-                modal.style.removeProperty('pointer-events');
-            }
+            window.hideModal('wsFullWalletModal');
+        };
+
+        window.openVipTierModal = function() {
+            window.showModal('wsVipTierModal');
+        };
+
+        window.closeVipTierModal = function() {
+            window.hideModal('wsVipTierModal');
+        };
+
+        window.openWalletTopupModal = function() {
+            window.showModal('wsWalletTopupModal');
+        };
+
+        window.closeWalletTopupModal = function() {
+            window.hideModal('wsWalletTopupModal');
         };
 
         /* ── Tab Navigation Controller ── */
@@ -8463,13 +8489,11 @@ $catalogProducts = [
 
         /* ── Date Range Modal Controller ── */
         window.openDateRangePicker = function() {
-            var modal = document.getElementById('wsDateRangeModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsDateRangeModal');
         };
 
         window.closeDateRangeModal = function() {
-            var modal = document.getElementById('wsDateRangeModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsDateRangeModal');
         };
 
         window.applyDatePreset = function(presetKey, label) {
@@ -8759,15 +8783,18 @@ $catalogProducts = [
                     document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
                 }
 
-                modal.classList.add('active');
+                window.showModal('wsPrintableAuditReportModal');
             } else {
                 window.print();
             }
         };
 
+        window.openPrintableAuditReportModal = function() {
+            window.printWholesaleReport();
+        };
+
         window.closePrintableAuditReportModal = function() {
-            var modal = document.getElementById('wsPrintableAuditReportModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsPrintableAuditReportModal');
         };
 
         /* ── Export Reports to CSV ── */
@@ -9469,12 +9496,11 @@ $catalogProducts = [
                 renderMainCategoriesInModal();
             }
 
-            modal.classList.add('active');
+            window.showModal('wsCatalogCategoryModal');
         };
 
         window.closeWsCatalogCategoryModal = function() {
-            var modal = document.getElementById('wsCatalogCategoryModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsCatalogCategoryModal');
         };
 
         /* ── Smart 1-Line Auto Slider Engine (For Sliders Only) ── */
@@ -9991,44 +10017,26 @@ $catalogProducts = [
         };
 
         window.openVipTierModal = function() {
-            var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsVipTierModal');
         };
 
         window.closeVipTierModal = function() {
-            var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsVipTierModal');
         };
 
         /* ── Wholesale Wallet Controller ── */
         window.openFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) {
-                modal.classList.add('active');
-                modal.style.setProperty('display', 'flex', 'important');
-                modal.style.setProperty('opacity', '1', 'important');
-                modal.style.setProperty('visibility', 'visible', 'important');
-                modal.style.setProperty('pointer-events', 'auto', 'important');
-                
-                // Sync latest balance
-                var availEl = document.getElementById('walletAvailableBalance');
-                var coinsEl = document.getElementById('walletTotalCoins');
-                var mBal = document.getElementById('fullModalWalletBal');
-                var mCoins = document.getElementById('fullModalCoinsBal');
-                if (availEl && mBal) mBal.textContent = availEl.textContent;
-                if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
-            }
+            window.showModal('wsFullWalletModal');
+            var availEl = document.getElementById('walletAvailableBalance');
+            var coinsEl = document.getElementById('walletTotalCoins');
+            var mBal = document.getElementById('fullModalWalletBal');
+            var mCoins = document.getElementById('fullModalCoinsBal');
+            if (availEl && mBal) mBal.textContent = availEl.textContent;
+            if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
         };
 
         window.closeFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) {
-                modal.classList.remove('active');
-                modal.style.removeProperty('display');
-                modal.style.removeProperty('opacity');
-                modal.style.removeProperty('visibility');
-                modal.style.removeProperty('pointer-events');
-            }
+            window.hideModal('wsFullWalletModal');
         };
 
         /* ── Edit Billing Address Modal Controller ── */
@@ -10048,12 +10056,11 @@ $catalogProducts = [
                 if (el('wsMainEditPincode'))    el('wsMainEditPincode').value     = billing.pincode || user.pincode      || '';
                 if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = billing.phone || user.phone      || '';
             } catch(e) {}
-            modal.classList.add('active');
+            window.showModal('wsEditMainAddressModal');
         };
 
         window.closeEditMainAddressModal = function() {
-            var modal = document.getElementById('wsEditMainAddressModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsEditMainAddressModal');
         };
 
         window.handleSaveMainAddressForm = function(e) {
@@ -10082,13 +10089,11 @@ $catalogProducts = [
         };
 
         window.openWalletTopupModal = function() {
-            var modal = document.getElementById('wsWalletTopupModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsWalletTopupModal');
         };
 
         window.closeWalletTopupModal = function() {
-            var modal = document.getElementById('wsWalletTopupModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsWalletTopupModal');
         };
 
         window.setTopupAmount = function(amount, btn) {

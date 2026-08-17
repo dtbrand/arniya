@@ -354,9 +354,10 @@
     background: rgba(24, 20, 16, 0.78); backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: center;
     z-index: 16000; opacity: 0; visibility: hidden;
+    pointer-events: none;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); padding: 16px;
 }
-.product-details-backdrop.active { opacity: 1; visibility: visible; }
+.product-details-backdrop.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
 .product-details-content {
     background: linear-gradient(180deg, #FFFFFF 0%, #FAF6EE 100%); width: 100%; max-width: 560px;
