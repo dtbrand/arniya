@@ -503,6 +503,12 @@ $colorHex = [
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ── Speed & Resource Hints ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title><?= htmlspecialchars($product['name']) ?> — Kalaniketan | Ethnic Luxury</title>
@@ -547,7 +553,7 @@ $colorHex = [
                     <?php foreach ($galleryImages as $index => $img): ?>
                     <div class="pdp-slide" data-idx="<?= $index ?>">
                         <img
-                            src="<?= htmlspecialchars($img) ?>"
+                            src="<?= htmlspecialchars($img) ? loading="lazy" decoding="async">"
                             alt="<?= htmlspecialchars($product['name']) ?> - View <?= $index + 1 ?>"
                             onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80'"
                         />
@@ -566,7 +572,7 @@ $colorHex = [
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
                 <?php foreach ($galleryImages as $index => $img): ?>
                 <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
-                    <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80'" />
+                    <img src="<?= htmlspecialchars($img) ? loading="lazy" decoding="async">" alt="Thumb <?= $index + 1 ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80'" />
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -933,7 +939,7 @@ $colorHex = [
                         <?php if (!empty($rel['badge'])): ?>
                         <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>
                         <?php endif; ?>
-                        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80'" loading="lazy" />
+                        <img src="<?= htmlspecialchars($rel['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80'" loading="lazy" />
                     </div>
                     <div class="pdp-rel-body">
                         <span class="pdp-rel-cat"><?= htmlspecialchars($rel['category']) ?></span>
@@ -1060,7 +1066,7 @@ $colorHex = [
             <!-- Order Item Summary Card (Matching checkout.php) -->
             <div class="pdp-wa-sec-card">
                 <div class="pdp-wa-modal-product">
-                    <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
+                    <img src="<?= htmlspecialchars($product['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
                     <div class="pdp-wa-modal-info">
                         <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
                         <div class="pdp-wa-modal-meta">

@@ -142,6 +142,12 @@ $total_products = count($products);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ── Speed & Resource Hints ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="description" content="Shop premium Indian ethnic wear — silk sarees, kurtis, lehengas and designer gowns at Kalaniketan." />
@@ -477,7 +483,7 @@ $total_products = count($products);
             >
                 <div class="card-image-wrap">
                     <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" />
+                        <img src="<?= htmlspecialchars($p['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" />
                     </a>
 
                     <?php if (!empty($p['badge'])): ?>

@@ -394,6 +394,12 @@ $catalogProducts = [
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ── Speed & Resource Hints ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wholesaler B2B Dashboard — Kalaniketan Couture</title>
@@ -445,7 +451,7 @@ $catalogProducts = [
 
             <!-- User Profile Pill -->
             <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Wholesaler Profile">
-                <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar">
+                <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
                 <div class="ws-user-name-text">
                     <span id="headerUserName">Rajesh Kumar</span>
                     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -468,7 +474,7 @@ $catalogProducts = [
             <div class="ws-sidebar-scroll">
                 <!-- VIP Wholesaler User Card in Sidebar -->
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
-                    <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;">
+                    <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
@@ -1039,7 +1045,7 @@ $catalogProducts = [
                             <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                                 <div class="card-image-wrap">
                                     <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                        <img src="<?= htmlspecialchars($prod['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                     </a>
                                     <?php if (!empty($prod['badge'])): ?>
                                     <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
@@ -1911,7 +1917,7 @@ $catalogProducts = [
                         <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                             <div class="card-image-wrap">
                                 <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                    <img src="<?= htmlspecialchars($prod['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                 </a>
 
                                 <!-- Status Badge -->
