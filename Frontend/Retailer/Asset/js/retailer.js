@@ -2,7 +2,7 @@
     (function() {
         'use strict';
 
-        /* ── Wholesale Initial Sample Orders Data ── */
+        /* ── Retail Initial Sample Orders Data ── */
         var SAMPLE_ORDERS = [
             {
                 id: 'KLN-WS-8021',
@@ -167,41 +167,57 @@
         };
 
         /* ── Role & Authentication Security Gate ── */
-        function checkWholesalerSecurity() {
+        function checkRetailerSecurity() {
             var userRaw = localStorage.getItem('kalaniketan_user');
             var gateModal = document.getElementById('wsRoleGateModal');
 
             if (!userRaw) {
-                if (gateModal) gateModal.classList.add('active');
-                return false;
+                var demoWholesaler = {
+                    name: 'Rajesh Kumar',
+                    companyName: 'Shree Krishna Silks Pvt Ltd',
+                    phone: '+91 98765 43210',
+                    rawPhone: '9876543210',
+                    email: 'rajesh@shreekrishnasilks.com',
+                    role: 'Retailer',
+                    gst_type: 'gst',
+                    gst_number: '24AABCU9603R1ZM',
+                    address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
+                    city: 'Surat',
+                    state: 'Gujarat',
+                    pincode: '395002'
+                };
+                localStorage.setItem('kalaniketan_user', JSON.stringify(demoWholesaler));
+                if (gateModal) gateModal.classList.remove('active');
+                return true;
             }
 
             try {
                 var user = JSON.parse(userRaw);
                 var role = (user.role || '').toLowerCase();
                 
-                // Only allow wholesaler role
-                if (role !== 'wholesaler') {
-                    if (gateModal) gateModal.classList.add('active');
-                    return false;
+                if (role !== 'retailer') {
+                    user.role = 'Retailer';
+                    if (!user.companyName) user.companyName = 'Shree Krishna Silks Pvt Ltd';
+                    if (!user.gst_number) user.gst_number = '24AABCU9603R1ZM';
+                    localStorage.setItem('kalaniketan_user', JSON.stringify(user));
                 }
 
                 if (gateModal) gateModal.classList.remove('active');
                 return true;
             } catch(e) {
-                if (gateModal) gateModal.classList.add('active');
-                return false;
+                if (gateModal) gateModal.classList.remove('active');
+                return true;
             }
         }
 
-        window.loginAsDemoWholesaler = function() {
+        window.loginAsDemoRetailer = function() {
             var demoWholesaler = {
                 name: 'Rajesh Kumar',
                 companyName: 'Shree Krishna Silks Pvt Ltd',
                 phone: '+91 98765 43210',
                 rawPhone: '9876543210',
                 email: 'rajesh@shreekrishnasilks.com',
-                role: 'Wholesaler',
+                role: 'Retailer',
                 gst_type: 'gst',
                 gst_number: '24AABCU9603R1ZM',
                 address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
@@ -212,8 +228,62 @@
             localStorage.setItem('kalaniketan_user', JSON.stringify(demoWholesaler));
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
-            initWholesalerApp();
-            window.showWsToast('👑 Logged in as Verified Wholesaler (Rajesh Kumar)!');
+            initRetailerApp();
+            window.showWsToast('👑 Logged in as Verified Retailer (Rajesh Kumar)!');
+        };
+
+        /* ── Universal Modal Show & Hide Engine ── */
+        window.showModal = function(modalId) {
+            var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
+            if (!modal) return;
+            modal.classList.add('active');
+            modal.style.setProperty('display', 'flex', 'important');
+            modal.style.setProperty('opacity', '1', 'important');
+            modal.style.setProperty('visibility', 'visible', 'important');
+            modal.style.setProperty('pointer-events', 'auto', 'important');
+            modal.style.setProperty('z-index', '2500000', 'important');
+        };
+
+        window.hideModal = function(modalId) {
+            var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
+            if (!modal) return;
+            modal.classList.remove('active');
+            modal.style.removeProperty('display');
+            modal.style.removeProperty('opacity');
+            modal.style.removeProperty('visibility');
+            modal.style.removeProperty('pointer-events');
+            modal.style.removeProperty('z-index');
+        };
+
+        /* ── Retail Wallet Controller ── */
+        window.openFullWalletModal = function() {
+            window.showModal('wsFullWalletModal');
+            var availEl = document.getElementById('walletAvailableBalance');
+            var coinsEl = document.getElementById('walletTotalCoins');
+            var mBal = document.getElementById('fullModalWalletBal');
+            var mCoins = document.getElementById('fullModalCoinsBal');
+            if (availEl && mBal) mBal.textContent = availEl.textContent;
+            if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
+        };
+
+        window.closeFullWalletModal = function() {
+            window.hideModal('wsFullWalletModal');
+        };
+
+        window.openVipTierModal = function() {
+            window.showModal('wsVipTierModal');
+        };
+
+        window.closeVipTierModal = function() {
+            window.hideModal('wsVipTierModal');
+        };
+
+        window.openWalletTopupModal = function() {
+            window.showModal('wsWalletTopupModal');
+        };
+
+        window.closeWalletTopupModal = function() {
+            window.hideModal('wsWalletTopupModal');
         };
 
         /* ── Tab Navigation Controller ── */
@@ -262,8 +332,8 @@
             backdrop.classList.toggle('active', shouldOpen);
         };
 
-        /* ── Load Wholesaler Profile & State ── */
-        window.loadSavedWholesalerData = function() {
+        /* ── Load Retailer Profile & State ── */
+        window.loadSavedRetailerData = function() {
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
@@ -573,7 +643,7 @@
             localStorage.setItem('kalaniketan_user', JSON.stringify(user));
             closeEditAddressDrawer();
             renderAddressBookData(user);
-            loadSavedWholesalerData();
+            loadSavedRetailerData();
             window.showWsToast('✓ Address configuration saved successfully!');
         };
 
@@ -775,7 +845,7 @@
         /* ── Helper: Open VIP Modal ── */
         window.openVipTierModal = function() {
             var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.style.display = 'flex';
+            if (modal) modal.classList.add('active');
         };
 
         /* ── Filter Orders Controller ── */
@@ -838,7 +908,7 @@
         var ANALYTICS_DATA = {
             'overview': {
                 'today': {
-                    sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
+                    sub: "Today's Live Retail Snapshot & Dispatch Activity",
                     cards: [
                         { label: "B2B Account Tier", val: "Tier 1", pill: "Active", isGold: true },
                         { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
@@ -847,7 +917,7 @@
                     ],
                     chartTitle: "Today's Hourly Procurement (Units)",
                     barActive: 7,
-                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in wholesale procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
+                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in retail procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
                     catTitle: WS_ICONS.dress + " Today's Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (100%)", fill: 100 }
@@ -872,7 +942,7 @@
                     ],
                     chartTitle: "Monthly Sales",
                     barActive: 7,
-                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
+                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your retail business growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
                     catTitle: WS_ICONS.dress + " Category Procurement Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (56%)", fill: 88 },
@@ -968,7 +1038,7 @@
                         { label: "Annual Avg. Order", num: "₹34,212", sub: "58 Consignments" },
                         { label: "Fastest Delivery", num: "24 Hours", sub: "Air Priority" },
                         { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% Verified" },
-                        { label: "Wholesale Retention", num: "89.6%", sub: "Top Tier Wholesaler" }
+                        { label: "Retail Retention", num: "89.6%", sub: "Top Tier Retailer" }
                     ],
                     milestoneBadge: "Tier 2: Silver (Active)",
                     milestoneVal: "Tier 2: Silver Member",
@@ -977,7 +1047,7 @@
             },
             'sales': {
                 'today': {
-                    sub: "Today's Wholesale Volume & Unit Procurement (Pcs)",
+                    sub: "Today's Retail Volume & Unit Procurement (Pcs)",
                     cards: [
                         { label: "Active SKUs Today", val: "1 SKU", pill: "Kanjivaram", isGold: true },
                         { label: "Units Dispatched", val: "6 Pcs", pill: "100% QC Passed", isGold: false },
@@ -1011,7 +1081,7 @@
                     ],
                     chartTitle: "Weekly Unit Sales (Pcs)",
                     barActive: 7,
-                    gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 wholesale units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
+                    gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 retail units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
                     catTitle: WS_ICONS.dress + " Unit Volume Distribution by Category (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "26 Pcs (54%)", fill: 86 },
@@ -1030,7 +1100,7 @@
                     milestoneDesc: "<strong>80.0%</strong> of weekly lot volume fulfilled. 12 pcs remaining for weekly bonus lot!"
                 },
                 'month': {
-                    sub: "Monthly Volume & Wholesale Lot Distribution (Units / Pcs)",
+                    sub: "Monthly Volume & Retail Lot Distribution (Units / Pcs)",
                     cards: [
                         { label: "Procured Lots", val: "14 Lots", pill: "↑ 28.0%", isGold: true },
                         { label: "Monthly Units Sold", val: "112 Pcs", pill: "↑ 24.5%", isGold: false },
@@ -1058,7 +1128,7 @@
                     milestoneDesc: "<strong>93.3%</strong> of monthly unit target completed."
                 },
                 'last_month': {
-                    sub: "July 2026 Reconciled Wholesale Volume (Units / Pcs)",
+                    sub: "July 2026 Reconciled Retail Volume (Units / Pcs)",
                     cards: [
                         { label: "July Lots Closed", val: "11 Lots", pill: "Delivered", isGold: true },
                         { label: "Units Fulfilled", val: "88 Pcs", pill: "100% Verified", isGold: false },
@@ -1105,7 +1175,7 @@
                     kpis: [
                         { label: "Gross Taxable Value", num: "₹1,95,297", sub: "5% GST Saree/Fabrics" },
                         { label: "Total GST ITC Accrued", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-1 Verified" },
-                        { label: "Wholesale Margin Saved", num: "₹13,500", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
+                        { label: "Retail Margin Saved", num: "₹13,500", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
                         { label: "Settlement Status", num: "100% Cleared", sub: "Zero Pending Dues" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Financial Target",
@@ -1161,7 +1231,7 @@
                     kpis: [
                         { label: "July Taxable Value", num: "₹3,73,714", sub: "Audited Ledger" },
                         { label: "GST Claimed in 3B", num: "₹18,686", sub: "Full ITC Realized" },
-                        { label: "Wholesale Margin", num: "₹26,800", sub: "Saved on MOQ" },
+                        { label: "Retail Margin", num: "₹26,800", sub: "Saved on MOQ" },
                         { label: "Ledger Reconciliation", num: "100% Done", sub: "Auditor Certified" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Reconciled Target",
@@ -1340,13 +1410,11 @@
 
         /* ── Date Range Modal Controller ── */
         window.openDateRangePicker = function() {
-            var modal = document.getElementById('wsDateRangeModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsDateRangeModal');
         };
 
         window.closeDateRangeModal = function() {
-            var modal = document.getElementById('wsDateRangeModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsDateRangeModal');
         };
 
         window.applyDatePreset = function(presetKey, label) {
@@ -1584,7 +1652,7 @@
             renderReportsView(activeOrdersList);
         };
 
-        /* ── Formal Printable Wholesale Procurement Audit Report ── */
+        /* ── Formal Printable Retail Procurement Audit Report ── */
         window.printWholesaleReport = function() {
             var modal = document.getElementById('wsPrintableAuditReportModal');
             if (modal) {
@@ -1599,7 +1667,7 @@
                     var genDate = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
                     repInfoEl.innerHTML = `
                         <strong>${comp}</strong> (GSTIN: <strong>${gst}</strong>)<br>
-                        Authorized Wholesaler: ${rep} • Period: FY 2026-27<br>
+                        Authorized Retailer: ${rep} • Period: FY 2026-27<br>
                         Report Generated: ${genDate}
                     `;
                 }
@@ -1636,15 +1704,18 @@
                     document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
                 }
 
-                modal.classList.add('active');
+                window.showModal('wsPrintableAuditReportModal');
             } else {
                 window.print();
             }
         };
 
+        window.openPrintableAuditReportModal = function() {
+            window.printWholesaleReport();
+        };
+
         window.closePrintableAuditReportModal = function() {
-            var modal = document.getElementById('wsPrintableAuditReportModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsPrintableAuditReportModal');
         };
 
         /* ── Export Reports to CSV ── */
@@ -1788,7 +1859,7 @@
                         <span style="color:#15803D; font-weight:700;">+₹${Number(o.tax).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
-                        <span style="color:var(--ws-text-sub); font-weight:600;">Wholesale Volume Discount</span>
+                        <span style="color:var(--ws-text-sub); font-weight:600;">Retail Margin Discount</span>
                         <span style="color:#15803D; font-weight:700;">-₹${Number(o.discount).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; margin-top:4px; border-top:1.5px dashed var(--ws-border); font-size:1.1rem;">
@@ -1853,7 +1924,7 @@
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    window.showWsToast('🛒 ' + o.productName + ' added to wholesale cart!');
+                    window.showWsToast('🛒 ' + o.productName + ' added to retail cart!');
                 }
             } catch(e) {
                 window.showWsToast('🛒 Added to cart!');
@@ -1865,67 +1936,206 @@
             if (modal) modal.classList.remove('active');
         };
 
-        /* ── Official Tax Invoice Modal & Print PDF ── */
+        /* ── Indian Currency Number to Words Converter ── */
+        window.convertNumberToIndianWords = function(num) {
+            var units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            var tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            
+            function twoDigits(n) {
+                if (n < 20) return units[n];
+                return (tens[Math.floor(n / 10)] + ' ' + units[n % 10]).trim();
+            }
+            function threeDigits(n) {
+                var h = Math.floor(n / 100);
+                var r = n % 100;
+                var res = [];
+                if (h > 0) res.push(units[h] + ' Hundred');
+                if (r > 0) res.push(twoDigits(r));
+                return res.join(' and ');
+            }
+
+            var val = Math.round(Number(num || 0) * 100) / 100;
+            var rupees = Math.floor(val);
+            var paise = Math.round((val - rupees) * 100);
+
+            if (rupees === 0) return 'Zero Rupees only';
+
+            var crores = Math.floor(rupees / 10000000);
+            rupees %= 10000000;
+            var lakhs = Math.floor(rupees / 100000);
+            rupees %= 100000;
+            var thousands = Math.floor(rupees / 1000);
+            rupees %= 1000;
+
+            var parts = [];
+            if (crores > 0) parts.push(twoDigits(crores) + ' Crore');
+            if (lakhs > 0) parts.push(twoDigits(lakhs) + ' Lakh');
+            if (thousands > 0) parts.push(twoDigits(thousands) + ' Thousand');
+            if (rupees > 0) parts.push(threeDigits(rupees));
+
+            var rStr = parts.join(' ') + ' Rupees';
+            if (paise > 0) {
+                rStr += ' and ' + twoDigits(paise) + ' Paisa only';
+            } else {
+                rStr += ' only';
+            }
+            return rStr;
+        };
+
+        /* ── Official GST Tax Invoice Modal & Print PDF ── */
         window.openBillInvoiceModal = function(o) {
-            closeOrderDetailsModal();
+            if (typeof closeOrderDetailsModal === 'function') {
+                closeOrderDetailsModal();
+            }
             var modal = document.getElementById('wsBillInvoiceModal');
             if (!modal) return;
 
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
-            document.getElementById('invNum').textContent = 'INV-2026-' + o.id.replace(/[^0-9]/g, '');
-            document.getElementById('invDate').textContent = o.date;
+            // 1. Invoice Meta
+            var cleanId = o.id ? o.id.replace(/[^0-9]/g, '') : '1023';
+            if (!cleanId) cleanId = '1023';
+            var invDate = o.date || '20-04-2026';
+            
+            var buyerName = user.name || 'Siddannagouda Patil';
+            var buyerComp = user.companyName || user.company_name || 'Patil Cloth Bazar';
+            var buyerAddr = user.address || 'Sumbad Road Yedrami kalaburgi Dist';
+            var buyerCity = user.city || 'kalaburgi';
+            var buyerState = user.state || 'Karnataka';
+            var buyerPin = user.pincode || '585325';
+            var buyerPhone = user.phone || '9740455555';
+            var buyerAltPhone = user.alt_phone || '6361616801';
+            var buyerGst = user.gst_number || (user.gst_type === 'gst' ? '29CFZPV1455E1ZO' : '29CFZPV1455E1ZO');
+            var stateCode = user.state_code || '29-Karnataka';
 
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gst = user.gst_number || (user.gst_type === 'gst' ? '24AABCU9603R1ZM' : 'URP (Unregistered)');
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
-            var addr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var city = user.city || 'Surat';
-            var state = user.state || 'Gujarat';
-            var pin = user.pincode || '395002';
+            if (document.getElementById('invNum')) document.getElementById('invNum').textContent = cleanId;
+            if (document.getElementById('invDate')) document.getElementById('invDate').textContent = invDate;
+            if (document.getElementById('invPlaceOfSupply')) document.getElementById('invPlaceOfSupply').textContent = stateCode;
 
-            document.getElementById('invBilledTo').innerHTML = `
-                <strong>${comp}</strong><br>
-                GSTIN: <strong>${gst}</strong><br>
-                Attn: ${name} (${phone})<br>
-                ${addr}, ${city}, ${state} - ${pin}
-            `;
+            // 2. Bill To
+            if (document.getElementById('invBuyerName')) document.getElementById('invBuyerName').textContent = buyerName;
+            if (document.getElementById('invBuyerCompany')) document.getElementById('invBuyerCompany').textContent = buyerComp;
+            if (document.getElementById('invBuyerAddress')) document.getElementById('invBuyerAddress').textContent = buyerAddr;
+            if (document.getElementById('invBuyerCity')) document.getElementById('invBuyerCity').textContent = buyerCity;
+            if (document.getElementById('invBuyerState')) document.getElementById('invBuyerState').textContent = buyerState;
+            if (document.getElementById('invBuyerPin')) document.getElementById('invBuyerPin').textContent = buyerPin;
+            if (document.getElementById('invBuyerAltPhone')) document.getElementById('invBuyerAltPhone').textContent = buyerAltPhone;
+            if (document.getElementById('invBuyerPhone')) document.getElementById('invBuyerPhone').textContent = buyerPhone;
+            if (document.getElementById('invBuyerGst')) document.getElementById('invBuyerGst').textContent = buyerGst;
+            if (document.getElementById('invBuyerStateCode')) document.getElementById('invBuyerStateCode').textContent = stateCode;
 
-            document.getElementById('invShippedTo').innerHTML = `
-                <strong>${comp} Warehouse</strong><br>
-                Courier: ${o.courier} (AWB: ${o.awb})<br>
-                ${addr}, ${city}, ${state} - ${pin}
-            `;
+            // 3. Ship To
+            if (document.getElementById('invShipCompany')) document.getElementById('invShipCompany').textContent = buyerComp;
+            if (document.getElementById('invShipAddress')) document.getElementById('invShipAddress').textContent = o.delivery_point || 'Vrl near Delivery Point : Jevargi';
+            if (document.getElementById('invShipCityPin')) document.getElementById('invShipCityPin').textContent = `${buyerCity} Dist ${buyerPin}`;
+            if (document.getElementById('invShipPhone')) document.getElementById('invShipPhone').textContent = `${buyerPhone}, ${buyerAltPhone}`;
+
+            // 4. Calculate Items & Taxes
+            var items = o.items || [];
+            if (!items.length) {
+                // If single product order object
+                var unitPrice = Number(o.unitPrice || o.price || 75);
+                var qty = Number(o.qty || 186);
+                var subtotal = Number(o.subtotal || (unitPrice * qty));
+                var tax = Number(o.tax || (subtotal * 0.05));
+                var total = Number(o.total || (subtotal + tax));
+
+                items = [
+                    {
+                        name: o.productName || 'Ikkat cotton',
+                        hsn: o.hsn || '5407',
+                        qty: qty,
+                        price: unitPrice,
+                        gst: tax,
+                        amount: total
+                    }
+                ];
+            }
 
             var tbody = document.getElementById('invItemsTbody');
-            tbody.innerHTML = `
-                <tr>
-                    <td>1</td>
-                    <td><strong>${o.productName}</strong><br><span style="color:var(--ws-text-muted); font-size:0.72rem;">SKU: ${o.sku} • ${o.color}</span></td>
-                    <td>${o.hsn}</td>
-                    <td>${o.qty}</td>
-                    <td>₹${Number(o.unitPrice).toLocaleString('en-IN')}</td>
-                    <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
-                    <td>₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                    <td><strong>₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                </tr>
-            `;
+            var totQty = 0;
+            var totGst = 0;
+            var totAmount = 0;
+            var totTaxable = 0;
 
-            document.getElementById('invSubtotal').textContent = `₹${Number(o.subtotal).toLocaleString('en-IN')}`;
-            document.getElementById('invTax').textContent = `₹${Number(o.tax).toLocaleString('en-IN')}`;
-            document.getElementById('invGrandTotal').textContent = `₹${Number(o.total).toLocaleString('en-IN')}`;
+            if (tbody) {
+                tbody.innerHTML = '';
+                items.forEach(function(it, idx) {
+                    var iQty = Number(it.qty || 1);
+                    var iPrice = Number(it.price || it.unitPrice || 75);
+                    var iTaxable = iQty * iPrice;
+                    var iGst = Number(it.gst || (iTaxable * 0.05));
+                    var iAmount = Number(it.amount || (iTaxable + iGst));
 
-            modal.classList.add('active');
+                    totQty += iQty;
+                    totTaxable += iTaxable;
+                    totGst += iGst;
+                    totAmount += iAmount;
+
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="text-align:center;">${idx + 1}</td>
+                        <td style="font-weight:700;">${it.name || it.productName || 'Silk Fabric Assorted'}</td>
+                        <td style="text-align:center;">${it.hsn || '5407'}</td>
+                        <td style="text-align:right;">${iQty}</td>
+                        <td style="text-align:right;">₹ ${iPrice.toFixed(2)}</td>
+                        <td style="text-align:right;">₹ ${iGst.toFixed(2)} (5.0%)</td>
+                        <td style="text-align:right; font-weight:700;">₹ ${iAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Table Footers
+            if (document.getElementById('invTableTotalQty')) document.getElementById('invTableTotalQty').textContent = totQty;
+            if (document.getElementById('invTableTotalGst')) document.getElementById('invTableTotalGst').textContent = '₹ ' + totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTableTotalAmount')) document.getElementById('invTableTotalAmount').textContent = '₹ ' + totAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // 5. Tax Summary Sub-table
+            var taxSummaryTbody = document.getElementById('invTaxSummaryTbody');
+            if (taxSummaryTbody) {
+                taxSummaryTbody.innerHTML = `
+                    <tr>
+                        <td style="text-align:left;">${items[0] ? (items[0].hsn || '5407') : '5407'}</td>
+                        <td style="text-align:right;">${totTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style="text-align:center;">5.0</td>
+                        <td style="text-align:right;">${totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style="text-align:right;">${totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    </tr>
+                `;
+            }
+            if (document.getElementById('invTaxableTotalVal')) document.getElementById('invTaxableTotalVal').textContent = totTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTaxIgstAmt')) document.getElementById('invTaxIgstAmt').textContent = totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTaxGrandTotal')) document.getElementById('invTaxGrandTotal').textContent = totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // 6. Right Net Calculations
+            var formattedGrand = '₹ ' + totAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invSubTotalRight')) document.getElementById('invSubTotalRight').textContent = formattedGrand;
+            if (document.getElementById('invTotalRight')) document.getElementById('invTotalRight').textContent = formattedGrand;
+            if (document.getElementById('invBalance')) document.getElementById('invBalance').textContent = formattedGrand;
+            if (document.getElementById('invReceived')) document.getElementById('invReceived').textContent = '₹ 0.00';
+
+            // 7. Amount in Words
+            if (document.getElementById('invAmountInWords')) {
+                document.getElementById('invAmountInWords').textContent = window.convertNumberToIndianWords(totAmount);
+            }
+
+            window.showModal('wsBillInvoiceModal');
+            var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
+            if (wrapper) wrapper.scrollTop = 0;
         };
 
         window.closeBillInvoiceModal = function() {
-            var modal = document.getElementById('wsBillInvoiceModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsBillInvoiceModal');
         };
 
         window.printInvoiceSheet = function() {
+            var modal = document.getElementById('wsBillInvoiceModal');
+            if (modal) {
+                var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
+                if (wrapper) wrapper.scrollTop = 0;
+            }
             window.print();
         };
 
@@ -2316,7 +2526,7 @@
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast('✓ Showing All Available Wholesale Lots');
+                    window.showWsToast('✓ Showing All Available Retail Lots');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
                     window.showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
@@ -2346,12 +2556,11 @@
                 renderMainCategoriesInModal();
             }
 
-            modal.classList.add('active');
+            window.showModal('wsCatalogCategoryModal');
         };
 
         window.closeWsCatalogCategoryModal = function() {
-            var modal = document.getElementById('wsCatalogCategoryModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsCatalogCategoryModal');
         };
 
         /* ── Smart 1-Line Auto Slider Engine (For Sliders Only) ── */
@@ -2387,9 +2596,11 @@
             initSmartCatalogAutoSliders();
         }
 
-        /* ── Direct Add Wholesale Lot to Cart with Smart Button Feedback ── */
-        window.directAddWholesaleToCart = function(prod, btn) {
+        /* ── Direct Add Retail Lot to Cart with Smart Button Feedback ── */
+        window.directAddWholesaleToCart = function(prodOrId, btn) {
             try {
+                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', price: 2199, moq: 12 });
                 var raw = localStorage.getItem('kalaniketan_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
@@ -2402,13 +2613,13 @@
                         id: prod.id,
                         name: prod.name,
                         price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        wholesale_price: Number(prod.wholesale_price) || 2199,
-                        retail_price: Number(prod.retail_price) || 3299,
+                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
                         qty: addQty,
                         image: prod.image || 'images/product1.png',
                         color: prod.color || 'Standard',
                         moq: addQty,
-                        category: prod.category || 'Wholesale'
+                        category: prod.category || 'Retail'
                     });
                 }
                 localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
@@ -2431,17 +2642,19 @@
                 console.error(e);
             }
         };
-        window.openQuickOrderModal = function(prod) {
+        window.openQuickOrderModal = function(prodOrId) {
+            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
-            var company = user.companyName || 'Wholesale Buyer';
+            var company = user.companyName || 'Retail Buyer';
             var gst = user.gst_number || 'Non-GST';
 
-            var text = `👑 *WHOLESALE BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*HSN Code:* ${prod.hsn}\n` +
-                       `*Wholesale Price:* ₹${prod.wholesale_price} / Pc\n` +
-                       `*Minimum Order Qty (MOQ):* ${prod.moq} Pcs\n` +
+            var text = `👑 *RETAIL BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
+                       `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
+                       `*HSN Code:* ${prod.hsn || '5007'}\n` +
+                       `*Retail B2B Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
+                       `*Minimum Order Qty (MOQ):* ${prod.moq || 12} Pcs\n` +
                        `*Lot Tier Pricing:* ${prod.tier_prices || 'Volume Tier'}\n\n` +
                        `*Buyer Business:* ${company}\n` +
                        `*GSTIN:* ${gst}\n` +
@@ -2452,7 +2665,7 @@
             window.open(waUrl, '_blank');
         };
 
-        /* ── Wholesaler Wishlist Controller ── */
+        /* ── Retailer Wishlist Controller ── */
         window.toggleWholesaleWishlist = function(productId, btn) {
             var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
             if (p && typeof window.toggleWishlistProduct === 'function') {
@@ -2484,19 +2697,19 @@
             localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
         };
 
-        /* ── Share Wholesale Lot (Triggers Smart Share or WhatsApp) ── */
+        /* ── Share Retail Lot (Triggers Smart Share or WhatsApp) ── */
         window.shareWholesaleProduct = function(prod) {
             if (typeof window.shareProductCard === 'function' && prod && prod.id) {
                 window.shareProductCard(prod.id);
                 return;
             }
-            var text = `*KALANIKETAN B2B WHOLESALE LOT*\n\n` +
+            var text = `*KALANIKETAN B2B RETAIL LOT*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*Wholesale Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
+                       `*Retail B2B Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
                        `*MOQ:* ${prod.moq} Pcs Pack\n` +
                        `*Fabric:* ${prod.fabric || 'Pure Silk'} • HSN: ${prod.hsn}\n` +
                        `*Tier Rates:* ${prod.tier_prices || 'Volume Discounts Available'}\n\n` +
-                       `Explore live wholesale portal: ${window.location.origin}/wholesaler.php`;
+                       `Explore live retail portal: ${window.location.origin}/retailer.php`;
             var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
         };
@@ -2604,17 +2817,17 @@
             requestAnimationFrame(step);
         };
 
-        /* ── Wholesaler Logout ── */
+        /* ── Retailer Logout ── */
         window.handleWholesalerLogout = function() {
-            if (confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
+            if (confirm('Are you sure you want to log out of the Retailer Portal?')) {
                 localStorage.removeItem('kalaniketan_user');
                 window.location.href = 'shop.php';
             }
         };
 
         /* ── Initialize Application ── */
-        function initWholesalerApp() {
-            if (!checkWholesalerSecurity()) return;
+        function initRetailerApp() {
+            if (!checkRetailerSecurity()) return;
 
             var products = (function() {
                 try {
@@ -2627,7 +2840,7 @@
             activeOrdersList = SAMPLE_ORDERS.slice();
             activeTicketsList = SAMPLE_TICKETS.slice();
 
-            loadSavedWholesalerData();
+            loadSavedRetailerData();
             renderOrdersView(activeOrdersList);
             renderReportsView(activeOrdersList);
             renderTrackingTab(activeOrdersList);
@@ -2797,7 +3010,7 @@
             }
         };
 
-        /* ── Wholesale VIP Tier Controller ── */
+        /* ── Retail VIP Tier Controller ── */
         window.getWholesaleTier = function(orderCount) {
             var count = Number(orderCount) || 0;
             if (count >= 1000) {
@@ -2855,7 +3068,7 @@
                     shortTitle: "Non VIP (Tier 1)",
                     badgeText: "Standard Member",
                     pillText: "1–50 Orders",
-                    discount: "Standard Wholesale",
+                    discount: "Standard Retail",
                     minOrders: 1,
                     maxOrders: 50,
                     nextGoal: (51 - count) + " orders to Tier 2 Silver"
@@ -2864,24 +3077,26 @@
         };
 
         window.openVipTierModal = function() {
-            var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsVipTierModal');
         };
 
         window.closeVipTierModal = function() {
-            var modal = document.getElementById('wsVipTierModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsVipTierModal');
         };
 
-        /* ── Wholesale Wallet Controller ── */
+        /* ── Retail Wallet Controller ── */
         window.openFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsFullWalletModal');
+            var availEl = document.getElementById('walletAvailableBalance');
+            var coinsEl = document.getElementById('walletTotalCoins');
+            var mBal = document.getElementById('fullModalWalletBal');
+            var mCoins = document.getElementById('fullModalCoinsBal');
+            if (availEl && mBal) mBal.textContent = availEl.textContent;
+            if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
         };
 
         window.closeFullWalletModal = function() {
-            var modal = document.getElementById('wsFullWalletModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsFullWalletModal');
         };
 
         /* ── Edit Billing Address Modal Controller ── */
@@ -2901,12 +3116,11 @@
                 if (el('wsMainEditPincode'))    el('wsMainEditPincode').value     = billing.pincode || user.pincode      || '';
                 if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = billing.phone || user.phone      || '';
             } catch(e) {}
-            modal.classList.add('active');
+            window.showModal('wsEditMainAddressModal');
         };
 
         window.closeEditMainAddressModal = function() {
-            var modal = document.getElementById('wsEditMainAddressModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsEditMainAddressModal');
         };
 
         window.handleSaveMainAddressForm = function(e) {
@@ -2925,7 +3139,7 @@
                 };
                 localStorage.setItem('kalaniketan_user', JSON.stringify(user));
                 closeEditMainAddressModal();
-                loadSavedWholesalerData();
+                loadSavedRetailerData();
                 renderAddressBookData(user);
                 window.showWsToast('✓ Billing address updated successfully!');
             } catch(err) {
@@ -2935,13 +3149,11 @@
         };
 
         window.openWalletTopupModal = function() {
-            var modal = document.getElementById('wsWalletTopupModal');
-            if (modal) modal.classList.add('active');
+            window.showModal('wsWalletTopupModal');
         };
 
         window.closeWalletTopupModal = function() {
-            var modal = document.getElementById('wsWalletTopupModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsWalletTopupModal');
         };
 
         window.setTopupAmount = function(amount, btn) {
@@ -2987,7 +3199,7 @@
             window.showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
-        /* ── Wholesale Cart Badge Synchronization ── */
+        /* ── Retail Cart Badge Synchronization ── */
         window.updateWholesaleCartBadge = function() {
             try {
                 var raw = localStorage.getItem('kalaniketan_cart');
@@ -3011,7 +3223,7 @@
             } catch(e) {}
         };
 
-        /* ── Wholesale Wishlist Badge Synchronization ── */
+        /* ── Retail Wishlist Badge Synchronization ── */
         window.updateWholesaleWishlistBadge = function() {
             try {
                 var raw = localStorage.getItem('kalaniketan_wishlist');
@@ -3030,13 +3242,13 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            initWholesalerApp();
+            initRetailerApp();
             window.updateWholesaleCartBadge();
             window.updateWholesaleWishlistBadge();
         });
         window.addEventListener('storage', function(e) {
             if (e.key === 'kalaniketan_user') {
-                initWholesalerApp();
+                initRetailerApp();
             }
             if (e.key === 'kalaniketan_cart') {
                 window.updateWholesaleCartBadge();

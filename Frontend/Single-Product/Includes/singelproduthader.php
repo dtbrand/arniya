@@ -475,12 +475,12 @@
     <div class="pdp-header-main">
         <!-- Left: Back Button & Royal Seal -->
         <div class="pdp-header-left">
-            <a href="shop.php" class="pdp-back-btn" aria-label="Shop">
+            <a href="../Shop/shop.php" class="pdp-back-btn" aria-label="Shop">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Shop</span>
             </a>
 
-            <a href="shop.php" class="pdp-brand-seal" aria-label="Kalaniketan Home">
+            <a href="../Shop/shop.php" class="pdp-brand-seal" aria-label="Kalaniketan Home">
                 <div class="pdp-logo-badge">
                     <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
@@ -493,9 +493,9 @@
 
         <!-- Center: Breadcrumbs -->
         <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
-            <a href="shop.php">Home</a>
+            <a href="../Shop/shop.php">Home</a>
             <span class="sep">›</span>
-            <a href="shop.php?cat=<?= urlencode($product['category'] ?? 'Sarees') ?>"><?= htmlspecialchars($product['category'] ?? 'Sarees') ?></a>
+            <a href="../Shop/shop.php?cat=<?= urlencode($product['category'] ?? 'Sarees') ?>"><?= htmlspecialchars($product['category'] ?? 'Sarees') ?></a>
             <span class="sep">›</span>
             <span class="current"><?= htmlspecialchars($product['name'] ?? 'Luxury Outfit') ?></span>
         </nav>
@@ -526,7 +526,7 @@
             </button>
 
             <!-- Member Account Button -->
-            <a href="myaccount.php" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
+            <a href="../../Shared/Auth/myaccount.php" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
                 <div class="pdp-account-avatar" id="pdpUserAvatar">👤</div>
                 <span id="pdpUserLabel">Account</span>
             </a>
@@ -654,19 +654,19 @@
                 userAvatar.textContent = firstName.charAt(0).toUpperCase();
                 if (acBtn) {
                     if (role === 'wholesaler') {
-                        acBtn.href = 'wholesaler.php';
+                        acBtn.href = '../Wholesale/wholesale.php';
                     } else if (role === 'retailer') {
-                        acBtn.href = 'retailer.php';
+                        acBtn.href = '../Retailer/retailer.php';
                     } else if (role === 'reseller') {
-                        acBtn.href = 'reseller.php';
+                        acBtn.href = '../Reseller/reseller.php';
                     } else {
-                        acBtn.href = 'myaccount.php';
+                        acBtn.href = '../../Shared/Auth/myaccount.php';
                     }
                 }
             } else if (userLabel && userAvatar) {
                 userLabel.textContent = 'Account';
                 userAvatar.textContent = '👤';
-                if (acBtn) acBtn.href = 'myaccount.php';
+                if (acBtn) acBtn.href = '../../Shared/Auth/myaccount.php';
             }
         } catch(e) {}
     };

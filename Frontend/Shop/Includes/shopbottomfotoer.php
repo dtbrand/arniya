@@ -767,7 +767,6 @@ input[type=range].mf-range::-moz-range-thumb {
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
             <div><div class="add-action-label">Styling Advice</div><div class="add-action-sub">Chat with our stylists on WhatsApp</div></div>
         </div>
-    </div>
 </aside>
 
 <!-- ════ MOBILE FILTER CONTROLLER ════ -->
@@ -1065,7 +1064,7 @@ input[type=range].mf-range::-moz-range-thumb {
         document.body.style.overflow='hidden'; 
     }
 
-    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php'; });
+    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php'; });
     if (logoutItem) logoutItem.addEventListener('click', function(){ 
         closeMore(); 
         localStorage.removeItem('kalaniketan_user');
@@ -1073,8 +1072,8 @@ input[type=range].mf-range::-moz-range-thumb {
         syncMobileMoreAccountState();
         if (typeof window.syncHeaderAccountState === 'function') window.syncHeaderAccountState();
     });
-    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=login'; });
-    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); window.location.href = 'myaccount.php?tab=register'; });
+    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php?tab=login'; });
+    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php?tab=register'; });
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
