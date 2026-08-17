@@ -1177,6 +1177,11 @@ window.closeWishlistDrawer = function() {
                     dropWholesaler.href = 'retailer.php';
                     var span = dropWholesaler.querySelector('span');
                     if (span) span.textContent = '🛍️ Retailer B2B Hub';
+                } else if (role === 'reseller') {
+                    dropWholesaler.style.display = 'flex';
+                    dropWholesaler.href = 'reseller.php';
+                    var span = dropWholesaler.querySelector('span');
+                    if (span) span.textContent = '💼 Reseller B2B Hub';
                 } else {
                     dropWholesaler.style.display = 'none';
                 }

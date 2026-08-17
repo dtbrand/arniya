@@ -1691,6 +1691,19 @@
                         heroBtn.href = 'retailer.php';
                         heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
                     }
+                } else if (role === 'reseller') {
+                    if (wsBanner) wsBanner.style.display = 'flex';
+                    if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
+                    if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
+                    if (linkEl) {
+                        linkEl.href = 'reseller.php';
+                        linkEl.textContent = 'Open Reseller Portal →';
+                    }
+                    if (heroBtn) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = 'reseller.php';
+                        heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
+                    }
                 } else {
                     if (wsBanner) wsBanner.style.display = 'none';
                     if (heroBtn) heroBtn.style.display = 'none';

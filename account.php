@@ -912,6 +912,10 @@
                         wsBtn.style.display = 'flex';
                         wsBtn.href = 'retailer.php';
                         wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
+                    } else if (role === 'reseller') {
+                        wsBtn.style.display = 'flex';
+                        wsBtn.href = 'reseller.php';
+                        wsBtn.innerHTML = '<span>💼 Open Reseller B2B Dashboard</span><span>→</span>';
                     } else {
                         wsBtn.style.display = 'none';
                     }

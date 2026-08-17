@@ -657,6 +657,8 @@
                         acBtn.href = 'wholesaler.php';
                     } else if (role === 'retailer') {
                         acBtn.href = 'retailer.php';
+                    } else if (role === 'reseller') {
+                        acBtn.href = 'reseller.php';
                     } else {
                         acBtn.href = 'myaccount.php';
                     }
