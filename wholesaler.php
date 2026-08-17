@@ -4056,78 +4056,204 @@ $catalogProducts = [
             }
         }
 
-        /* ── Printable PDF Bill Styling ── */
-        .ws-invoice-sheet {
+        /* ── Authentic GST B2B Tax Invoice (Vyapar Standard Design Matching User Reference) ── */
+        .ws-tax-invoice-wrapper {
+            padding: 8px;
+            background: #F8F9FA;
+            border-radius: 8px;
+            max-height: 82vh;
+            overflow-y: auto;
+        }
+        .ws-tax-invoice-container {
             background: #FFFFFF;
-            border: 1px solid var(--ws-border);
-            border-radius: 10px;
-            padding: 24px;
-            color: var(--ws-text-main);
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            font-size: 11px;
+            line-height: 1.4;
+            width: 100%;
+            max-width: 780px;
+            margin: 0 auto;
+            border: 1.5px solid #262626;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
         }
-        .ws-inv-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            border-bottom: 2px solid var(--ws-gold-primary);
-            padding-bottom: 16px;
-            margin-bottom: 18px;
-        }
-        .ws-inv-brand h2 {
-            font-size: 1.35rem;
-            color: var(--ws-gold-primary);
-            font-family: var(--ws-font-serif);
+        .ws-ti-title-header {
+            text-align: center;
+            font-size: 18px;
             font-weight: 800;
+            color: #111827;
+            padding: 6px 0;
+            margin: 0;
+            letter-spacing: 0.5px;
         }
-        .ws-inv-brand p {
-            font-size: 0.76rem;
-            color: var(--ws-text-muted);
+        .ws-ti-top-seller-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 14px;
+            border-bottom: 1.5px solid #262626;
+        }
+        .ws-ti-seller-brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .ws-ti-brand-logo {
+            width: 68px;
+            height: auto;
+            object-fit: contain;
+        }
+        .ws-ti-seller-info h3 {
+            margin: 0 0 2px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #111827;
+        }
+        .ws-ti-seller-info p {
+            margin: 0;
+            font-size: 10.5px;
+            color: #374151;
             line-height: 1.35;
         }
-        .ws-inv-meta {
+        .ws-ti-seller-meta {
             text-align: right;
-            font-size: 0.78rem;
-            line-height: 1.45;
+            font-size: 10.5px;
+            color: #374151;
         }
-        .ws-inv-parties {
+        .ws-ti-grid-2col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            background: var(--ws-gold-light);
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 18px;
-            font-size: 0.80rem;
+            border-bottom: 1.5px solid #262626;
         }
-        .ws-inv-table {
+        .ws-ti-cell-billto {
+            padding: 6px 12px 8px;
+            border-right: 1.5px solid #262626;
+        }
+        .ws-ti-cell-invmeta {
+            padding: 6px 12px 8px;
+        }
+        .ws-ti-cell-header {
+            font-weight: 800;
+            font-size: 11px;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+        .ws-ti-shipto-box {
+            padding: 6px 12px 8px;
+            border-bottom: 1.5px solid #262626;
+        }
+        .ws-ti-items-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.80rem;
-            margin-bottom: 18px;
+            font-size: 10.5px;
         }
-        .ws-inv-table th {
-            background: var(--ws-gold-primary);
-            color: #FFFFFF;
-            padding: 10px 12px;
-            text-align: left;
-            font-size: 0.76rem;
+        .ws-ti-items-table th,
+        .ws-ti-items-table td {
+            border: 1px solid #262626;
+            padding: 5px 8px;
         }
-        .ws-inv-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--ws-border);
+        .ws-ti-items-table th {
+            background: #FAFAFA;
+            font-weight: 800;
+            color: #111827;
+            font-size: 10.5px;
         }
-        .ws-inv-totals {
+        .ws-ti-items-table tr.ws-ti-total-row {
+            font-weight: 800;
+            background: #FAFAFA;
+        }
+        .ws-ti-bottom-split {
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            border-top: 1.5px solid #262626;
+            border-bottom: 1.5px solid #262626;
+        }
+        .ws-ti-tax-summary-col {
+            border-right: 1.5px solid #262626;
+        }
+        .ws-ti-tax-summary-title {
+            font-weight: 800;
+            font-size: 10.5px;
+            padding: 4px 8px;
+            border-bottom: 1px solid #262626;
+            background: #FAFAFA;
+        }
+        .ws-ti-tax-subtable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+        .ws-ti-tax-subtable th,
+        .ws-ti-tax-subtable td {
+            border: 1px solid #262626;
+            padding: 4px 6px;
+        }
+        .ws-ti-tax-subtable th {
+            background: #FAFAFA;
+            font-weight: 700;
+            text-align: center;
+        }
+        .ws-ti-net-calc-col {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 6px;
-            font-size: 0.82rem;
-            border-top: 2px solid var(--ws-gold-primary);
-            padding-top: 12px;
         }
-        .ws-inv-grand-total {
-            font-size: 1.18rem;
-            font-weight: 900;
-            color: var(--ws-gold-primary);
+        .ws-ti-calc-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 8px;
+            border-bottom: 1px solid #262626;
+            font-size: 10.5px;
+        }
+        .ws-ti-words-box {
+            padding: 4px 8px;
+            border-bottom: 1px solid #262626;
+            font-size: 10px;
+            line-height: 1.3;
+        }
+        .ws-ti-terms-row {
+            padding: 6px 10px;
+            border-bottom: 1.5px solid #262626;
+            font-size: 10px;
+        }
+        .ws-ti-footer-sign-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 8px 14px 10px;
+        }
+        .ws-ti-vyapar-tag {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 9.5px;
+            color: #6B7280;
+        }
+        .ws-ti-sign-box {
+            text-align: center;
+            width: 170px;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoicePrintArea, #invoicePrintArea * {
+                visibility: visible;
+            }
+            #invoicePrintArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: 1.5px solid #000 !important;
+                box-shadow: none !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
         }
 
         /* ── Role Access Gate Modal ── */
@@ -6451,96 +6577,219 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2: PRINTABLE TAX INVOICE BILL PDF
+         MODAL 2: PRINTABLE GST B2B TAX INVOICE
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsBillInvoiceModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeBillInvoiceModal();">
-        <div class="ws-modal-box" style="max-width: 720px;">
-            <div class="ws-modal-header">
-                <h3 class="ws-modal-title">
-                    <span>📄 Official GST Tax Invoice Bill</span>
-                </h3>
-                <div style="display:flex; gap:8px; align-items:center;">
-                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printInvoiceSheet()">
-                        🖨️ Print / Download PDF
+        <div class="ws-modal-box" style="max-width: 820px; padding: 0; background: #FFFFFF; border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(138, 104, 31, 0.35);">
+            <div class="ws-modal-header" style="padding: 12px 18px; background: #FAF8F4; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A681F" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <h3 class="ws-modal-title" style="margin: 0; font-size: 0.95rem; font-weight: 800; color: #1F2937;">
+                        <span>GST B2B Tax Invoice</span>
+                    </h3>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printInvoiceSheet()" style="display:inline-flex; align-items:center; gap:6px; font-weight:700; padding:6px 14px; font-size:0.76rem;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        <span>Print / Save PDF</span>
                     </button>
-                    <button class="ws-modal-close-btn" onclick="closeBillInvoiceModal()" aria-label="Close Modal">&times;</button>
+                    <button class="ws-modal-close-btn" onclick="closeBillInvoiceModal()" aria-label="Close Modal" style="font-size: 1.4rem; color: #6B7280; width: 28px; height: 28px;">&times;</button>
                 </div>
             </div>
-            <div class="ws-modal-body">
-                <div class="ws-invoice-sheet" id="invoicePrintArea">
-                    <!-- Dynamic Invoice Header -->
-                    <div class="ws-inv-header">
-                        <div class="ws-inv-brand">
-                            <h2>KALANIKETAN</h2>
-                            <p><strong>Kalaniketan Ethnic Luxury Couture Pvt. Ltd.</strong><br>
-                            Millennium Textile Market, Ring Road, Surat, Gujarat - 395002<br>
-                            GSTIN: 24AABCK4820P1Z8 | CIN: U17111GJ2018PTC104521</p>
+            
+            <div class="ws-tax-invoice-wrapper">
+                <div class="ws-tax-invoice-container" id="invoicePrintArea">
+                    <!-- Title Header -->
+                    <div class="ws-ti-title-header">Tax Invoice</div>
+
+                    <!-- Top Seller Box: Arniya Logo, Address, Contact & Email -->
+                    <div class="ws-ti-top-seller-box">
+                        <div class="ws-ti-seller-brand">
+                            <!-- Arniya Stylized Calligraphy Logo Emblem -->
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <svg viewBox="0 0 120 48" style="height:42px; width:auto;">
+                                    <defs>
+                                        <linearGradient id="arniyaGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#8A681F"/>
+                                            <stop offset="50%" stop-color="#B45309"/>
+                                            <stop offset="100%" stop-color="#78350F"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Stylized 'A' Crest -->
+                                    <path d="M12 40L24 6l12 34M17 28h14" stroke="url(#arniyaGoldGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                    <circle cx="24" cy="4" r="2.2" fill="#B45309"/>
+                                    <!-- Arniya Text -->
+                                    <text x="42" y="26" font-family="'Cinzel', serif, Georgia" font-size="20" font-weight="900" fill="#1E1B18" letter-spacing="1">Arniya</text>
+                                    <text x="108" y="16" font-family="sans-serif" font-size="9" font-weight="bold" fill="#B45309">®</text>
+                                    <text x="42" y="38" font-family="sans-serif" font-size="6.5" font-weight="700" fill="#8A681F" letter-spacing="1.2">MADE FOR CELEBRATIONS</text>
+                                </svg>
+                            </div>
+                            <div class="ws-ti-seller-info">
+                                <h3>Arniya®</h3>
+                                <p>
+                                    Shop No-246<br>
+                                    Sankruti AC Market Nearby The Fabrizo,<br>
+                                    Surat Gujarat<br>
+                                    Phone: <strong>+91 87990 46736</strong><br>
+                                    State: <strong>24-Gujarat</strong>
+                                </p>
+                            </div>
                         </div>
-                        <div class="ws-inv-meta">
-                            <p><strong>TAX INVOICE</strong></p>
-                            <p>Invoice No: <strong id="invNum">INV-2026-8021</strong></p>
-                            <p>Invoice Date: <span id="invDate">15 Aug 2026</span></p>
-                            <p>Reverse Charge: <strong>No</strong></p>
+                        <div class="ws-ti-seller-meta">
+                            Email: <strong>info@arniya.in</strong>
                         </div>
                     </div>
 
-                    <!-- Parties (Billed To & Shipped To) -->
-                    <div class="ws-inv-parties">
-                        <div>
-                            <strong style="color:var(--ws-gold-primary);">BILLED TO (BUYER):</strong>
-                            <div id="invBilledTo" style="margin-top:4px; line-height:1.4;">
-                                <strong>Shree Krishna Silks Pvt Ltd</strong><br>
-                                GSTIN: 24AABCU9603R1ZM<br>
-                                Rajesh Kumar (+91 98765 43210)<br>
-                                Shop 402, Ring Road, Surat, Gujarat - 395002
+                    <!-- 2-Column Grid for Bill To & Invoice Details -->
+                    <div class="ws-ti-grid-2col">
+                        <!-- Left: Bill To -->
+                        <div class="ws-ti-cell-billto">
+                            <div class="ws-ti-cell-header">Bill To:</div>
+                            <div id="invBillToBody" style="line-height:1.42;">
+                                <strong id="invBuyerName">Siddannagouda Patil</strong><br>
+                                <span id="invBuyerCompany">Patil Cloth Bazar</span><br>
+                                <span id="invBuyerAddress">Sumbad Road Yedrami kalaburgi Dist</span><br>
+                                City: <span id="invBuyerCity">kalaburgi</span><br>
+                                States : <span id="invBuyerState">Karnataka</span><br>
+                                PIN code: <span id="invBuyerPin">585325</span><br>
+                                M/n :- <span id="invBuyerAltPhone">6361616801</span><br>
+                                Contact No: <strong id="invBuyerPhone">9740455555</strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst">29CFZPV1455E1ZO</strong><br>
+                                State: <strong id="invBuyerStateCode">29-Karnataka</strong>
                             </div>
                         </div>
-                        <div>
-                            <strong style="color:var(--ws-gold-primary);">DISPATCHED / SHIPPED TO:</strong>
-                            <div id="invShippedTo" style="margin-top:4px; line-height:1.4;">
-                                <strong>Warehouse Central Store</strong><br>
-                                Fast Cargo Express<br>
-                                Surat, Gujarat - 395002
+
+                        <!-- Right: Invoice Details -->
+                        <div class="ws-ti-cell-invmeta">
+                            <div class="ws-ti-cell-header">Invoice Details:</div>
+                            <div style="line-height:1.5;">
+                                No: <strong id="invNum">1023</strong><br>
+                                Date: <strong id="invDate">20-04-2026</strong><br>
+                                Place of Supply: <strong id="invPlaceOfSupply">29-Karnataka</strong>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Products Table -->
-                    <table class="ws-inv-table">
+                    <!-- Ship To Box -->
+                    <div class="ws-ti-shipto-box">
+                        <div class="ws-ti-cell-header">Ship To:</div>
+                        <div id="invShipToBody" style="line-height:1.4;">
+                            <strong id="invShipCompany">Patil Cloth Bazar</strong><br>
+                            <span id="invShipAddress">Vrl near Delivery Point : Jevargi</span><br>
+                            <span id="invShipCityPin">kalaburgi Dist 585310</span><br>
+                            Number : <span id="invShipPhone">9740455555, 6361616801</span>
+                        </div>
+                    </div>
+
+                    <!-- Items Table -->
+                    <table class="ws-ti-items-table">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Item Description</th>
-                                <th>HSN</th>
-                                <th>Qty</th>
-                                <th>Unit Rate</th>
-                                <th>Taxable Value</th>
-                                <th>GST (5%)</th>
-                                <th>Total</th>
+                                <th style="width:30px; text-align:center;">#</th>
+                                <th style="text-align:left;">Item Name</th>
+                                <th style="width:75px; text-align:center;">HSN/ SAC</th>
+                                <th style="width:65px; text-align:right;">Quantity</th>
+                                <th style="width:85px; text-align:right;">Price/ Unit (₹)</th>
+                                <th style="width:105px; text-align:right;">GST(₹)</th>
+                                <th style="width:100px; text-align:right;">Amount(₹)</th>
                             </tr>
                         </thead>
                         <tbody id="invItemsTbody">
-                            <!-- Populated dynamically -->
+                            <!-- Injected dynamically by JS -->
                         </tbody>
+                        <tfoot>
+                            <tr class="ws-ti-total-row">
+                                <td colspan="2" style="font-weight:800; text-align:left; padding-left:12px;">Total</td>
+                                <td></td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalQty">373</td>
+                                <td></td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalGst">₹ 1,492.25</td>
+                                <td style="text-align:right; font-weight:800;" id="invTableTotalAmount">₹ 31,337.25</td>
+                            </tr>
+                        </tfoot>
                     </table>
 
-                    <!-- Totals and Signature -->
-                    <div class="ws-inv-totals">
-                        <div>Subtotal (Taxable Value): <strong id="invSubtotal">₹38,388</strong></div>
-                        <div>CGST (2.5%) + SGST (2.5%): <strong id="invTax">₹1,920</strong></div>
-                        <div>Wholesale Volume Discount: <strong style="color:#10B981;">-₹2,000</strong></div>
-                        <div class="ws-inv-grand-total">Grand Net Payable: <span id="invGrandTotal">₹38,308</span></div>
+                    <!-- Bottom Split: Tax Summary on Left, Calculation on Right -->
+                    <div class="ws-ti-bottom-split">
+                        <!-- Left Column: Tax Summary -->
+                        <div class="ws-ti-tax-summary-col">
+                            <div class="ws-ti-tax-summary-title">Tax Summary:</div>
+                            <table class="ws-ti-tax-subtable">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="text-align:left; vertical-align:middle;">HSN/ SAC</th>
+                                        <th rowspan="2" style="text-align:right; vertical-align:middle;">Taxable Amount (₹)</th>
+                                        <th colspan="2" style="text-align:center;" id="invTaxTypeHeader">IGST</th>
+                                        <th rowspan="2" style="text-align:right; vertical-align:middle;">Total Tax(₹)</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-size:9px;">Rate (%)</th>
+                                        <th style="font-size:9px;">Amt (₹)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invTaxSummaryTbody">
+                                    <!-- Injected dynamically -->
+                                </tbody>
+                                <tfoot>
+                                    <tr style="font-weight:800; background:#FAFAFA;">
+                                        <td style="text-align:left;">TOTAL</td>
+                                        <td style="text-align:right;" id="invTaxableTotalVal">29,845.00</td>
+                                        <td></td>
+                                        <td style="text-align:right;" id="invTaxIgstAmt">1,492.25</td>
+                                        <td style="text-align:right;" id="invTaxGrandTotal">1,492.25</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <!-- Right Column: Net Calculation & Amount In Words -->
+                        <div class="ws-ti-net-calc-col">
+                            <div class="ws-ti-calc-row">
+                                <span>Sub Total</span>
+                                <span>: <strong id="invSubTotalRight">₹ 31,337.25</strong></span>
+                            </div>
+                            <div class="ws-ti-calc-row" style="background:#FAFAFA; font-weight:800;">
+                                <span>Total</span>
+                                <span>: <strong id="invTotalRight">₹ 31,337.25</strong></span>
+                            </div>
+                            <div class="ws-ti-words-box">
+                                <div style="font-weight:700; color:#374151; font-size:10px;">Invoice Amount In Words :</div>
+                                <div id="invAmountInWords" style="font-weight:600; color:#111827; margin-top:2px; font-size:10px;">
+                                    Thirty One Thousand Three Hundred and Thirty Seven Rupees and Twenty Five Paisa only
+                                </div>
+                            </div>
+                            <div class="ws-ti-calc-row">
+                                <span>Received</span>
+                                <span>: <span id="invReceived">₹ 0.00</span></span>
+                            </div>
+                            <div class="ws-ti-calc-row" style="border-bottom:none; font-weight:800;">
+                                <span>Balance</span>
+                                <span>: <strong id="invBalance">₹ 31,337.25</strong></span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div style="margin-top:20px; display:flex; align-items:flex-end; justify-content:space-between; font-size:0.75rem; color:var(--ws-text-muted);">
-                        <div>
-                            <p>Terms: Payment received against Proforma / Advance NEFT.</p>
-                            <p>This is a computer-generated luxury tax invoice.</p>
+                    <!-- Terms And Conditions -->
+                    <div class="ws-ti-terms-row">
+                        <strong>Terms And Conditions:</strong>
+                        <div style="color:#4B5563; margin-top:2px;">Thank you for doing business with us.</div>
+                    </div>
+
+                    <!-- Footer: Vyapar Tag & Signature -->
+                    <div class="ws-ti-footer-sign-row">
+                        <div class="ws-ti-vyapar-tag">
+                            <span>Generated For Free On</span>
+                            <span style="font-weight:900; font-size:11px; color:#111827;">Vyapar</span>
                         </div>
-                        <div style="text-align:center;">
-                            <div style="width:110px; border-bottom:1.5px solid var(--ws-gold-primary); margin-bottom:4px;"></div>
-                            <strong>Authorized Signatory</strong><br>
-                            Kalaniketan Couture
+                        <div class="ws-ti-sign-box">
+                            <div style="font-weight:800; font-size:11px; margin-bottom:8px;">For Arniya®:</div>
+                            <!-- Vector Signature Emblem -->
+                            <div style="height:32px; display:flex; align-items:center; justify-content:center;">
+                                <svg viewBox="0 0 100 35" style="width:78px; height:28px;">
+                                    <path d="M5 25 Q 20 5, 35 22 T 60 12 Q 75 30, 95 15" stroke="#1E293B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                                    <path d="M22 28 Q 50 32, 85 24" stroke="#1E293B" stroke-width="1.2" fill="none"/>
+                                </svg>
+                            </div>
+                            <div style="font-size:10px; color:#4B5563; margin-top:4px; border-top:1px dashed #9CA3AF; padding-top:2px;">Authorized Signatory</div>
                         </div>
                     </div>
                 </div>
@@ -9000,64 +9249,196 @@ $catalogProducts = [
             if (modal) modal.classList.remove('active');
         };
 
-        /* ── Official Tax Invoice Modal & Print PDF ── */
+        /* ── Indian Currency Number to Words Converter ── */
+        window.convertNumberToIndianWords = function(num) {
+            var units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            var tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            
+            function twoDigits(n) {
+                if (n < 20) return units[n];
+                return (tens[Math.floor(n / 10)] + ' ' + units[n % 10]).trim();
+            }
+            function threeDigits(n) {
+                var h = Math.floor(n / 100);
+                var r = n % 100;
+                var res = [];
+                if (h > 0) res.push(units[h] + ' Hundred');
+                if (r > 0) res.push(twoDigits(r));
+                return res.join(' and ');
+            }
+
+            var val = Math.round(Number(num || 0) * 100) / 100;
+            var rupees = Math.floor(val);
+            var paise = Math.round((val - rupees) * 100);
+
+            if (rupees === 0) return 'Zero Rupees only';
+
+            var crores = Math.floor(rupees / 10000000);
+            rupees %= 10000000;
+            var lakhs = Math.floor(rupees / 100000);
+            rupees %= 100000;
+            var thousands = Math.floor(rupees / 1000);
+            rupees %= 1000;
+
+            var parts = [];
+            if (crores > 0) parts.push(twoDigits(crores) + ' Crore');
+            if (lakhs > 0) parts.push(twoDigits(lakhs) + ' Lakh');
+            if (thousands > 0) parts.push(twoDigits(thousands) + ' Thousand');
+            if (rupees > 0) parts.push(threeDigits(rupees));
+
+            var rStr = parts.join(' ') + ' Rupees';
+            if (paise > 0) {
+                rStr += ' and ' + twoDigits(paise) + ' Paisa only';
+            } else {
+                rStr += ' only';
+            }
+            return rStr;
+        };
+
+        /* ── Official GST Tax Invoice Modal & Print PDF ── */
         window.openBillInvoiceModal = function(o) {
-            closeOrderDetailsModal();
+            if (typeof closeOrderDetailsModal === 'function') {
+                closeOrderDetailsModal();
+            }
             var modal = document.getElementById('wsBillInvoiceModal');
             if (!modal) return;
 
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
-            document.getElementById('invNum').textContent = 'INV-2026-' + o.id.replace(/[^0-9]/g, '');
-            document.getElementById('invDate').textContent = o.date;
+            // 1. Invoice Meta
+            var cleanId = o.id ? o.id.replace(/[^0-9]/g, '') : '1023';
+            if (!cleanId) cleanId = '1023';
+            var invDate = o.date || '20-04-2026';
+            
+            var buyerName = user.name || 'Siddannagouda Patil';
+            var buyerComp = user.companyName || user.company_name || 'Patil Cloth Bazar';
+            var buyerAddr = user.address || 'Sumbad Road Yedrami kalaburgi Dist';
+            var buyerCity = user.city || 'kalaburgi';
+            var buyerState = user.state || 'Karnataka';
+            var buyerPin = user.pincode || '585325';
+            var buyerPhone = user.phone || '9740455555';
+            var buyerAltPhone = user.alt_phone || '6361616801';
+            var buyerGst = user.gst_number || (user.gst_type === 'gst' ? '29CFZPV1455E1ZO' : '29CFZPV1455E1ZO');
+            var stateCode = user.state_code || '29-Karnataka';
 
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gst = user.gst_number || (user.gst_type === 'gst' ? '24AABCU9603R1ZM' : 'URP (Unregistered)');
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
-            var addr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var city = user.city || 'Surat';
-            var state = user.state || 'Gujarat';
-            var pin = user.pincode || '395002';
+            if (document.getElementById('invNum')) document.getElementById('invNum').textContent = cleanId;
+            if (document.getElementById('invDate')) document.getElementById('invDate').textContent = invDate;
+            if (document.getElementById('invPlaceOfSupply')) document.getElementById('invPlaceOfSupply').textContent = stateCode;
 
-            document.getElementById('invBilledTo').innerHTML = `
-                <strong>${comp}</strong><br>
-                GSTIN: <strong>${gst}</strong><br>
-                Attn: ${name} (${phone})<br>
-                ${addr}, ${city}, ${state} - ${pin}
-            `;
+            // 2. Bill To
+            if (document.getElementById('invBuyerName')) document.getElementById('invBuyerName').textContent = buyerName;
+            if (document.getElementById('invBuyerCompany')) document.getElementById('invBuyerCompany').textContent = buyerComp;
+            if (document.getElementById('invBuyerAddress')) document.getElementById('invBuyerAddress').textContent = buyerAddr;
+            if (document.getElementById('invBuyerCity')) document.getElementById('invBuyerCity').textContent = buyerCity;
+            if (document.getElementById('invBuyerState')) document.getElementById('invBuyerState').textContent = buyerState;
+            if (document.getElementById('invBuyerPin')) document.getElementById('invBuyerPin').textContent = buyerPin;
+            if (document.getElementById('invBuyerAltPhone')) document.getElementById('invBuyerAltPhone').textContent = buyerAltPhone;
+            if (document.getElementById('invBuyerPhone')) document.getElementById('invBuyerPhone').textContent = buyerPhone;
+            if (document.getElementById('invBuyerGst')) document.getElementById('invBuyerGst').textContent = buyerGst;
+            if (document.getElementById('invBuyerStateCode')) document.getElementById('invBuyerStateCode').textContent = stateCode;
 
-            document.getElementById('invShippedTo').innerHTML = `
-                <strong>${comp} Warehouse</strong><br>
-                Courier: ${o.courier} (AWB: ${o.awb})<br>
-                ${addr}, ${city}, ${state} - ${pin}
-            `;
+            // 3. Ship To
+            if (document.getElementById('invShipCompany')) document.getElementById('invShipCompany').textContent = buyerComp;
+            if (document.getElementById('invShipAddress')) document.getElementById('invShipAddress').textContent = o.delivery_point || 'Vrl near Delivery Point : Jevargi';
+            if (document.getElementById('invShipCityPin')) document.getElementById('invShipCityPin').textContent = `${buyerCity} Dist ${buyerPin}`;
+            if (document.getElementById('invShipPhone')) document.getElementById('invShipPhone').textContent = `${buyerPhone}, ${buyerAltPhone}`;
+
+            // 4. Calculate Items & Taxes
+            var items = o.items || [];
+            if (!items.length) {
+                // If single product order object
+                var unitPrice = Number(o.unitPrice || o.price || 75);
+                var qty = Number(o.qty || 186);
+                var subtotal = Number(o.subtotal || (unitPrice * qty));
+                var tax = Number(o.tax || (subtotal * 0.05));
+                var total = Number(o.total || (subtotal + tax));
+
+                items = [
+                    {
+                        name: o.productName || 'Ikkat cotton',
+                        hsn: o.hsn || '5407',
+                        qty: qty,
+                        price: unitPrice,
+                        gst: tax,
+                        amount: total
+                    }
+                ];
+            }
 
             var tbody = document.getElementById('invItemsTbody');
-            tbody.innerHTML = `
-                <tr>
-                    <td>1</td>
-                    <td><strong>${o.productName}</strong><br><span style="color:var(--ws-text-muted); font-size:0.72rem;">SKU: ${o.sku} • ${o.color}</span></td>
-                    <td>${o.hsn}</td>
-                    <td>${o.qty}</td>
-                    <td>₹${Number(o.unitPrice).toLocaleString('en-IN')}</td>
-                    <td>₹${Number(o.subtotal).toLocaleString('en-IN')}</td>
-                    <td>₹${Number(o.tax).toLocaleString('en-IN')}</td>
-                    <td><strong>₹${Number(o.total).toLocaleString('en-IN')}</strong></td>
-                </tr>
-            `;
+            var totQty = 0;
+            var totGst = 0;
+            var totAmount = 0;
+            var totTaxable = 0;
 
-            document.getElementById('invSubtotal').textContent = `₹${Number(o.subtotal).toLocaleString('en-IN')}`;
-            document.getElementById('invTax').textContent = `₹${Number(o.tax).toLocaleString('en-IN')}`;
-            document.getElementById('invGrandTotal').textContent = `₹${Number(o.total).toLocaleString('en-IN')}`;
+            if (tbody) {
+                tbody.innerHTML = '';
+                items.forEach(function(it, idx) {
+                    var iQty = Number(it.qty || 1);
+                    var iPrice = Number(it.price || it.unitPrice || 75);
+                    var iTaxable = iQty * iPrice;
+                    var iGst = Number(it.gst || (iTaxable * 0.05));
+                    var iAmount = Number(it.amount || (iTaxable + iGst));
 
-            modal.classList.add('active');
+                    totQty += iQty;
+                    totTaxable += iTaxable;
+                    totGst += iGst;
+                    totAmount += iAmount;
+
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="text-align:center;">${idx + 1}</td>
+                        <td style="font-weight:700;">${it.name || it.productName || 'Silk Fabric Assorted'}</td>
+                        <td style="text-align:center;">${it.hsn || '5407'}</td>
+                        <td style="text-align:right;">${iQty}</td>
+                        <td style="text-align:right;">₹ ${iPrice.toFixed(2)}</td>
+                        <td style="text-align:right;">₹ ${iGst.toFixed(2)} (5.0%)</td>
+                        <td style="text-align:right; font-weight:700;">₹ ${iAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Table Footers
+            if (document.getElementById('invTableTotalQty')) document.getElementById('invTableTotalQty').textContent = totQty;
+            if (document.getElementById('invTableTotalGst')) document.getElementById('invTableTotalGst').textContent = '₹ ' + totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTableTotalAmount')) document.getElementById('invTableTotalAmount').textContent = '₹ ' + totAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // 5. Tax Summary Sub-table
+            var taxSummaryTbody = document.getElementById('invTaxSummaryTbody');
+            if (taxSummaryTbody) {
+                taxSummaryTbody.innerHTML = `
+                    <tr>
+                        <td style="text-align:left;">${items[0] ? (items[0].hsn || '5407') : '5407'}</td>
+                        <td style="text-align:right;">${totTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style="text-align:center;">5.0</td>
+                        <td style="text-align:right;">${totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style="text-align:right;">${totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    </tr>
+                `;
+            }
+            if (document.getElementById('invTaxableTotalVal')) document.getElementById('invTaxableTotalVal').textContent = totTaxable.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTaxIgstAmt')) document.getElementById('invTaxIgstAmt').textContent = totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invTaxGrandTotal')) document.getElementById('invTaxGrandTotal').textContent = totGst.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // 6. Right Net Calculations
+            var formattedGrand = '₹ ' + totAmount.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (document.getElementById('invSubTotalRight')) document.getElementById('invSubTotalRight').textContent = formattedGrand;
+            if (document.getElementById('invTotalRight')) document.getElementById('invTotalRight').textContent = formattedGrand;
+            if (document.getElementById('invBalance')) document.getElementById('invBalance').textContent = formattedGrand;
+            if (document.getElementById('invReceived')) document.getElementById('invReceived').textContent = '₹ 0.00';
+
+            // 7. Amount in Words
+            if (document.getElementById('invAmountInWords')) {
+                document.getElementById('invAmountInWords').textContent = window.convertNumberToIndianWords(totAmount);
+            }
+
+            window.showModal('wsBillInvoiceModal');
         };
 
         window.closeBillInvoiceModal = function() {
-            var modal = document.getElementById('wsBillInvoiceModal');
-            if (modal) modal.classList.remove('active');
+            window.hideModal('wsBillInvoiceModal');
         };
 
         window.printInvoiceSheet = function() {
