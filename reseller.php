@@ -6855,6 +6855,290 @@ $catalogProducts = [
                 </div>
             </section>
 
+        
+            <!-- ═══════════════════════════════════════════
+                 TAB 10: RESELLER CUSTOMERS CRM DIRECTORY
+            ═══════════════════════════════════════════ -->
+            <section class="ws-tab-pane" id="tabPaneCustomers">
+                <div class="ws-card">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group">
+                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
+                                👥 Reseller Customers CRM Directory
+                            </h2>
+                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Manage customer profiles, lifetime purchase history, margin profits, tags, and 1-tap reorders
+                            </p>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportCustomersCSV()">
+                                📥 Export CSV
+                            </button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="openSavedFiltersModal('customers')">
+                                ⭐ Saved Filters
+                            </button>
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openAddCustomerModal()">
+                                + Add New Customer
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CRM KPI Cards -->
+                    <div class="crm-kpi-grid">
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" id="crmTotalCustomersCount">12</div>
+                                <div class="crm-kpi-label">Total Customers</div>
+                            </div>
+                            <div class="crm-kpi-icon">👥</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val gold" id="crmVipCustomersCount">4</div>
+                                <div class="crm-kpi-label">VIP Customers</div>
+                            </div>
+                            <div class="crm-kpi-icon">👑</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" id="crmRepeatRateVal">66.7%</div>
+                                <div class="crm-kpi-label">Repeat Purchase Rate</div>
+                            </div>
+                            <div class="crm-kpi-icon">🔄</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" style="color:#EF4444;" id="crmFollowupsDueVal">2</div>
+                                <div class="crm-kpi-label">Follow-ups Due Today</div>
+                            </div>
+                            <div class="crm-kpi-icon">⏰</div>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Action Bar -->
+                    <div class="crm-bulk-bar" id="crmBulkActionBar">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.80rem; font-weight:700;"><span id="crmSelectedCount">0</span> Customers Selected</span>
+                        </div>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkAddTagToCustomers()" style="color:#111; background:#FFF;">🏷️ Add Tag</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkWhatsAppCustomers()" style="color:#FFF; background:#25D366;">💬 WhatsApp</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportSelectedCustomersCSV()" style="color:#111; background:#FFF;">📥 Export</button>
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="clearCustomerSelection()" style="color:#FFF; background:#4B5563;">✕ Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Controls Row (Tags, Search, State) -->
+                    <div class="ws-filter-controls-row">
+                        <div class="ws-filter-pills" id="customerTagFilterPills">
+                            <button class="ws-filter-pill active" onclick="filterCustomersByTag('all', this)">All Customers</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('VIP', this)">👑 VIP</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('REPEAT', this)">🔄 Repeat</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('NEW', this)">✨ New</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('HIGH VALUE', this)">💎 High Value</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('FOLLOW-UP', this)">⏰ Follow-up</button>
+                            <button class="ws-filter-pill" onclick="filterCustomersByTag('INACTIVE', this)">💤 Inactive</button>
+                        </div>
+
+                        <div class="ws-luxury-search-wrap">
+                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="customerSearchInput" class="ws-luxury-search-input" placeholder="Search by name, phone, city..." oninput="handleCustomerSearch(this.value)" autocomplete="off">
+                            <button class="ws-luxury-search-clear" id="customerSearchClear" onclick="clearCustomerSearch()" aria-label="Clear Search">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Customers Directory Table -->
+                    <div class="ws-table-container">
+                        <table class="ws-orders-table" id="crmCustomersTable">
+                            <thead>
+                                <tr>
+                                    <th style="width:36px;"><input type="checkbox" id="crmSelectAllCheckbox" onchange="toggleSelectAllCustomers(this.checked)"></th>
+                                    <th>Customer Name & Contact</th>
+                                    <th>Location</th>
+                                    <th>Tags</th>
+                                    <th style="text-align:right;">Orders</th>
+                                    <th style="text-align:right;">Total Spend</th>
+                                    <th style="text-align:right;">Reseller Profit</th>
+                                    <th style="text-align:center;">Last Order</th>
+                                    <th style="text-align:center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crmCustomersTbody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Mobile Customers Card Grid -->
+                    <div class="ws-mobile-orders-list" id="crmCustomersMobileList">
+                        <!-- Populated dynamically by JS on Mobile -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 TAB 11: RESELLER PROFIT CENTER & MARGINS
+            ═══════════════════════════════════════════ -->
+            <section class="ws-tab-pane" id="tabPaneProfit">
+                <div class="ws-card">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group">
+                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
+                                💰 Reseller Profit Center & Margin Ledger
+                            </h2>
+                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Track net earnings, margins, paid vs pending profits, and customer margin ledger
+                            </p>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportProfitLedgerCSV()">
+                                📥 Export Profit Ledger
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Profit Summary Cards -->
+                    <div class="crm-kpi-grid">
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val gold" id="profitTotalRealized">₹58,490</div>
+                                <div class="crm-kpi-label">Total Realized Profit</div>
+                            </div>
+                            <div class="crm-kpi-icon">💰</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" style="color:#10B981;" id="profitMonthVal">₹24,850</div>
+                                <div class="crm-kpi-label">Profit This Month</div>
+                            </div>
+                            <div class="crm-kpi-icon">📈</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" style="color:#3B82F6;" id="profitWeekVal">₹8,420</div>
+                                <div class="crm-kpi-label">Profit This Week</div>
+                            </div>
+                            <div class="crm-kpi-icon">⚡</div>
+                        </div>
+                        <div class="crm-kpi-card">
+                            <div>
+                                <div class="crm-kpi-val" style="color:#F59E0B;" id="profitPendingVal">₹4,200</div>
+                                <div class="crm-kpi-label">In-Transit / Pending Profit</div>
+                            </div>
+                            <div class="crm-kpi-icon">⏳</div>
+                        </div>
+                    </div>
+
+                    <!-- Profit Ledger Table -->
+                    <div class="ws-table-container">
+                        <table class="ws-orders-table" id="crmProfitTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Product & Qty</th>
+                                    <th style="text-align:right;">Customer Price</th>
+                                    <th style="text-align:right;">Reseller Cost</th>
+                                    <th style="text-align:right;">Net Profit</th>
+                                    <th style="text-align:center;">Margin %</th>
+                                    <th style="text-align:center;">Status</th>
+                                    <th style="text-align:center;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crmProfitTbody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 TAB 12: CUSTOMER FOLLOW-UPS & ENGAGEMENT
+            ═══════════════════════════════════════════ -->
+            <section class="ws-tab-pane" id="tabPaneFollowups">
+                <div class="ws-card">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group">
+                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
+                                📅 Customer Follow-ups & Reminders
+                            </h2>
+                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Scheduled calls, WhatsApp follow-ups, and repeat order check-ins
+                            </p>
+                        </div>
+                        <div>
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openScheduleFollowupModal()">
+                                + Schedule New Follow-up
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Status Pills -->
+                    <div class="ws-filter-controls-row" style="margin-bottom:14px;">
+                        <div class="ws-filter-pills" id="followupFilterPills">
+                            <button class="ws-filter-pill active" onclick="filterFollowups('all', this)">All Follow-ups</button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('pending', this)">⏳ Pending</button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('today', this)">🚨 Due Today</button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('completed', this)">✅ Completed</button>
+                        </div>
+                    </div>
+
+                    <!-- Follow-ups Table -->
+                    <div class="ws-table-container">
+                        <table class="ws-orders-table" id="crmFollowupsTable">
+                            <thead>
+                                <tr>
+                                    <th>Scheduled Date & Time</th>
+                                    <th>Customer Name</th>
+                                    <th>Mobile / WhatsApp</th>
+                                    <th>Note / Task</th>
+                                    <th style="text-align:center;">Status</th>
+                                    <th style="text-align:center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crmFollowupsTbody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════
+                 TAB 13: SMART RECOMMENDATIONS CENTER
+            ═══════════════════════════════════════════ -->
+            <section class="ws-tab-pane" id="tabPaneRecommendations">
+                <div class="ws-card">
+                    <div class="ws-card-header">
+                        <div class="ws-card-title-group">
+                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
+                                🌟 Reseller Smart Recommendation Center
+                            </h2>
+                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
+                                Data-driven product suggestions for your customer network
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:12px; padding:16px; margin-bottom:18px;">
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--ws-gold-primary); margin-bottom:6px;">Select Customer to Generate Tailored Catalog Recommendations</div>
+                        <div style="display:flex; gap:10px; max-width:480px;">
+                            <select id="recommendationCustomerSelect" class="ws-input" onchange="generateCustomerRecommendations(this.value)">
+                                <option value="">-- Choose Customer --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ws-catalog-grid" id="recommendationsProductGrid">
+                        <!-- Injected dynamically -->
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
@@ -7973,41 +8257,7 @@ $catalogProducts = [
 
         // 3. Tab Switching Extension
         var originalSwitchWsTab = window.switchWsTab;
-        window.switchWsTab = function(tabId) {
-            var crmPanes = ['customers', 'profit', 'followups', 'recommendations'];
-            document.querySelectorAll('.ws-view-pane').forEach(function(pane) {
-                pane.classList.remove('active');
-            });
-            document.querySelectorAll('.ws-nav-item').forEach(function(item) {
-                item.classList.remove('active');
-            });
-
-            var targetPane = document.getElementById('pane-' + tabId);
-            if (targetPane) {
-                targetPane.classList.add('active');
-            }
-
-            // Find matching nav item
-            document.querySelectorAll('.ws-nav-item').forEach(function(item) {
-                var onclickAttr = item.getAttribute('onclick') || '';
-                if (onclickAttr.indexOf("'" + tabId + "'") !== -1) {
-                    item.classList.add('active');
-                }
-            });
-
-            if (tabId === 'customers') {
-                window.renderCrmCustomers();
-            } else if (tabId === 'profit') {
-                window.renderProfitLedger();
-            } else if (tabId === 'followups') {
-                window.renderFollowupsTable();
-            } else if (tabId === 'recommendations') {
-                window.populateRecommendationSelect();
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (typeof toggleSidebar === 'function') toggleSidebar(false);
-        };
+        
 
         // 4. Render Customers Table & Mobile Cards
         window.renderCrmCustomers = function() {
@@ -9052,6 +9302,161 @@ Rajesh Kumar (Reseller Partner)`;
             window.renderDashboardCrmWidgets();
         });
 
+    
+        /* ── Profit Ledger Renderer ── */
+        window.renderProfitLedger = function() {
+            var tbody = document.getElementById('crmProfitTbody');
+            if (!tbody) return;
+
+            var profitData = [
+                { id: '#ORD-77492', cust: 'Ananya Deshmukh', prod: 'Paithani Silk Saree (Qty: 1)', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
+                { id: '#ORD-77450', cust: 'Pooja Varma', prod: 'Bridal Velvet Lehenga (Qty: 1)', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
+                { id: '#ORD-77412', cust: 'Kavita Singhania', prod: 'Banarasi Zari Saree (Qty: 2)', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
+                { id: '#ORD-77388', cust: 'Priyanka Reddy', prod: 'Kanjivaram Temple Silk (Qty: 1)', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
+                { id: '#ORD-77350', cust: 'Sneha Patel', prod: 'Royal Anarkali Kurti (Qty: 3)', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
+                { id: '#ORD-77510', cust: 'Ritu Aggarwal', prod: 'Georgette Bloom Saree (Qty: 1)', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
+            ];
+
+            tbody.innerHTML = profitData.map(function(item) {
+                var statusCls = item.status === 'Delivered' ? 'background:#DCFCE7; color:#15803D;' : 'background:#FEF3C7; color:#B45309;';
+                return `
+                    <tr>
+                        <td><strong>${item.id}</strong></td>
+                        <td><div style="font-weight:700;">${item.cust}</div></td>
+                        <td>${item.prod}</td>
+                        <td style="text-align:right; font-weight:800;">₹${item.sell.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; color:var(--ws-text-muted);">₹${item.cost.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; font-weight:900; color:#047857;">+₹${item.profit.toLocaleString('en-IN')}</td>
+                        <td style="text-align:center;"><span style="font-weight:800; font-size:0.72rem; color:#047857;">${item.margin}</span></td>
+                        <td style="text-align:center;"><span class="crm-tag" style="${statusCls}">${item.status}</span></td>
+                        <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${item.date}</td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        /* ── Follow-ups Table Renderer ── */
+        var currentFollowupFilter = 'all';
+        window.filterFollowups = function(filter, btn) {
+            currentFollowupFilter = filter;
+            var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
+            pills.forEach(function(p) { p.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            window.renderFollowupsTable();
+        };
+
+        window.renderFollowupsTable = function() {
+            var tbody = document.getElementById('crmFollowupsTbody');
+            if (!tbody) return;
+
+            var customers = window.getResellerCustomers();
+            var allFollowups = [];
+            customers.forEach(function(c) {
+                (c.followups || []).forEach(function(f) {
+                    allFollowups.push({ customer: c, task: f });
+                });
+            });
+
+            var filtered = allFollowups.filter(function(item) {
+                if (currentFollowupFilter === 'pending') return item.task.status === 'Pending';
+                if (currentFollowupFilter === 'completed') return item.task.status === 'Completed';
+                if (currentFollowupFilter === 'today') return item.task.date === new Date().toISOString().split('T')[0];
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No follow-ups found for this filter.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(function(item) {
+                var isCompleted = item.task.status === 'Completed';
+                var statusTag = isCompleted ? '<span class="crm-tag crm-tag-repeat">Completed</span>' : '<span class="crm-tag crm-tag-followup">Pending</span>';
+                return `
+                    <tr>
+                        <td>
+                            <div style="font-weight:800; font-size:0.82rem;">📅 ${item.task.date}</div>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Time: ${item.task.time || '11:00 AM'}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:800; font-size:0.84rem; cursor:pointer;" onclick="openCustomerProfileModal(${item.customer.id})">
+                                ${item.customer.name}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.76rem;">📞 ${item.customer.mobile}</div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.80rem; font-weight:600; color:var(--ws-text-main);">${item.task.note}</div>
+                        </td>
+                        <td style="text-align:center;">${statusTag}</td>
+                        <td style="text-align:center;">
+                            <div style="display:flex; gap:6px; justify-content:center;">
+                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:3px 8px; font-size:0.70rem;">💬 Chat</button>
+                                ${!isCompleted ? `<button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})" style="padding:3px 8px; font-size:0.70rem;">✅ Done</button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        /* ── Recommendations Center Renderer ── */
+        window.populateRecommendationSelect = function() {
+            var select = document.getElementById('recommendationCustomerSelect');
+            if (!select) return;
+            var customers = window.getResellerCustomers();
+            select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
+                return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
+            }).join('');
+
+            if (customers.length > 0) {
+                select.value = customers[0].id;
+                window.generateCustomerRecommendations(customers[0].id);
+            }
+        };
+
+        window.generateCustomerRecommendations = function(custId) {
+            var grid = document.getElementById('recommendationsProductGrid');
+            if (!grid) return;
+
+            var customers = window.getResellerCustomers();
+            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
+            var prods = window.allProducts || [];
+
+            if (!c || prods.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">Please select a customer to view recommendations.</div>';
+                return;
+            }
+
+            // Algorithm: Pick top tailored products
+            grid.innerHTML = prods.slice(0, 6).map(function(p) {
+                var cost = p.wholesale_price || p.price || 2199;
+                var mrp = p.retail_price || 3499;
+                var estProfit = mrp - cost;
+                return `
+                    <article class="ws-product-card" style="padding:10px;">
+                        <img src="${p.image}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
+                        <div class="card-title" style="font-weight:800; font-size:0.84rem; margin-bottom:4px;">${p.name}</div>
+                        <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:6px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; padding:6px 8px; border-radius:6px; margin-bottom:8px;">
+                            <div>
+                                <div style="font-size:0.65rem; color:var(--ws-text-muted);">Cost: ₹${cost.toLocaleString('en-IN')}</div>
+                                <div style="font-weight:900; font-size:0.86rem; color:var(--ws-gold-primary);">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:0.65rem; color:#047857; font-weight:700;">Est. Margin</div>
+                                <div style="font-weight:900; font-size:0.86rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%;" onclick="openResellerQuickOrderDrawer(${c.id})">
+                            ⚡ Create Order for ${c.name.split(' ')[0]}
+                        </button>
+                    </article>
+                `;
+            }).join('');
+        };
+
     </script>
 
     <!-- ═══════════════════════════════════════════
@@ -9346,39 +9751,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Tab Navigation Controller ── */
-        window.switchWsTab = function(tabName) {
-            document.querySelectorAll('.ws-nav-item').forEach(function(el) {
-                el.classList.remove('active');
-            });
-            document.querySelectorAll('.ws-tab-pane').forEach(function(el) {
-                el.classList.remove('active');
-            });
-            document.querySelectorAll('.ws-dock-btn').forEach(function(el) {
-                el.classList.remove('active');
-            });
-
-            var targetPaneId = 'tabPane' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
-            var targetPane = document.getElementById(targetPaneId);
-            if (targetPane) targetPane.classList.add('active');
-
-            // Sidebar highlight
-            var items = document.querySelectorAll('.ws-nav-item');
-            items.forEach(function(btn) {
-                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabName)) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Mobile dock highlight
-            var dockBtn = document.getElementById('dockBtn' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
-            if (dockBtn) dockBtn.classList.add('active');
-
-            // Auto close mobile drawer
-            toggleSidebar(false);
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        
 
         /* ── Mobile Sidebar Drawer ── */
         window.toggleSidebar = function(force) {
@@ -12536,41 +12909,7 @@ Rajesh Kumar (Reseller Partner)`;
 
         // 3. Tab Switching Extension
         var originalSwitchWsTab = window.switchWsTab;
-        window.switchWsTab = function(tabId) {
-            var crmPanes = ['customers', 'profit', 'followups', 'recommendations'];
-            document.querySelectorAll('.ws-view-pane').forEach(function(pane) {
-                pane.classList.remove('active');
-            });
-            document.querySelectorAll('.ws-nav-item').forEach(function(item) {
-                item.classList.remove('active');
-            });
-
-            var targetPane = document.getElementById('pane-' + tabId);
-            if (targetPane) {
-                targetPane.classList.add('active');
-            }
-
-            // Find matching nav item
-            document.querySelectorAll('.ws-nav-item').forEach(function(item) {
-                var onclickAttr = item.getAttribute('onclick') || '';
-                if (onclickAttr.indexOf("'" + tabId + "'") !== -1) {
-                    item.classList.add('active');
-                }
-            });
-
-            if (tabId === 'customers') {
-                window.renderCrmCustomers();
-            } else if (tabId === 'profit') {
-                window.renderProfitLedger();
-            } else if (tabId === 'followups') {
-                window.renderFollowupsTable();
-            } else if (tabId === 'recommendations') {
-                window.populateRecommendationSelect();
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (typeof toggleSidebar === 'function') toggleSidebar(false);
-        };
+        
 
         // 4. Render Customers Table & Mobile Cards
         window.renderCrmCustomers = function() {
@@ -13614,6 +13953,161 @@ Rajesh Kumar (Reseller Partner)`;
             window.updateCrmCounts();
             window.renderDashboardCrmWidgets();
         });
+
+    
+        /* ── Profit Ledger Renderer ── */
+        window.renderProfitLedger = function() {
+            var tbody = document.getElementById('crmProfitTbody');
+            if (!tbody) return;
+
+            var profitData = [
+                { id: '#ORD-77492', cust: 'Ananya Deshmukh', prod: 'Paithani Silk Saree (Qty: 1)', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
+                { id: '#ORD-77450', cust: 'Pooja Varma', prod: 'Bridal Velvet Lehenga (Qty: 1)', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
+                { id: '#ORD-77412', cust: 'Kavita Singhania', prod: 'Banarasi Zari Saree (Qty: 2)', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
+                { id: '#ORD-77388', cust: 'Priyanka Reddy', prod: 'Kanjivaram Temple Silk (Qty: 1)', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
+                { id: '#ORD-77350', cust: 'Sneha Patel', prod: 'Royal Anarkali Kurti (Qty: 3)', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
+                { id: '#ORD-77510', cust: 'Ritu Aggarwal', prod: 'Georgette Bloom Saree (Qty: 1)', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
+            ];
+
+            tbody.innerHTML = profitData.map(function(item) {
+                var statusCls = item.status === 'Delivered' ? 'background:#DCFCE7; color:#15803D;' : 'background:#FEF3C7; color:#B45309;';
+                return `
+                    <tr>
+                        <td><strong>${item.id}</strong></td>
+                        <td><div style="font-weight:700;">${item.cust}</div></td>
+                        <td>${item.prod}</td>
+                        <td style="text-align:right; font-weight:800;">₹${item.sell.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; color:var(--ws-text-muted);">₹${item.cost.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; font-weight:900; color:#047857;">+₹${item.profit.toLocaleString('en-IN')}</td>
+                        <td style="text-align:center;"><span style="font-weight:800; font-size:0.72rem; color:#047857;">${item.margin}</span></td>
+                        <td style="text-align:center;"><span class="crm-tag" style="${statusCls}">${item.status}</span></td>
+                        <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${item.date}</td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        /* ── Follow-ups Table Renderer ── */
+        var currentFollowupFilter = 'all';
+        window.filterFollowups = function(filter, btn) {
+            currentFollowupFilter = filter;
+            var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
+            pills.forEach(function(p) { p.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            window.renderFollowupsTable();
+        };
+
+        window.renderFollowupsTable = function() {
+            var tbody = document.getElementById('crmFollowupsTbody');
+            if (!tbody) return;
+
+            var customers = window.getResellerCustomers();
+            var allFollowups = [];
+            customers.forEach(function(c) {
+                (c.followups || []).forEach(function(f) {
+                    allFollowups.push({ customer: c, task: f });
+                });
+            });
+
+            var filtered = allFollowups.filter(function(item) {
+                if (currentFollowupFilter === 'pending') return item.task.status === 'Pending';
+                if (currentFollowupFilter === 'completed') return item.task.status === 'Completed';
+                if (currentFollowupFilter === 'today') return item.task.date === new Date().toISOString().split('T')[0];
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No follow-ups found for this filter.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(function(item) {
+                var isCompleted = item.task.status === 'Completed';
+                var statusTag = isCompleted ? '<span class="crm-tag crm-tag-repeat">Completed</span>' : '<span class="crm-tag crm-tag-followup">Pending</span>';
+                return `
+                    <tr>
+                        <td>
+                            <div style="font-weight:800; font-size:0.82rem;">📅 ${item.task.date}</div>
+                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Time: ${item.task.time || '11:00 AM'}</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:800; font-size:0.84rem; cursor:pointer;" onclick="openCustomerProfileModal(${item.customer.id})">
+                                ${item.customer.name}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.76rem;">📞 ${item.customer.mobile}</div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.80rem; font-weight:600; color:var(--ws-text-main);">${item.task.note}</div>
+                        </td>
+                        <td style="text-align:center;">${statusTag}</td>
+                        <td style="text-align:center;">
+                            <div style="display:flex; gap:6px; justify-content:center;">
+                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:3px 8px; font-size:0.70rem;">💬 Chat</button>
+                                ${!isCompleted ? `<button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})" style="padding:3px 8px; font-size:0.70rem;">✅ Done</button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        /* ── Recommendations Center Renderer ── */
+        window.populateRecommendationSelect = function() {
+            var select = document.getElementById('recommendationCustomerSelect');
+            if (!select) return;
+            var customers = window.getResellerCustomers();
+            select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
+                return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
+            }).join('');
+
+            if (customers.length > 0) {
+                select.value = customers[0].id;
+                window.generateCustomerRecommendations(customers[0].id);
+            }
+        };
+
+        window.generateCustomerRecommendations = function(custId) {
+            var grid = document.getElementById('recommendationsProductGrid');
+            if (!grid) return;
+
+            var customers = window.getResellerCustomers();
+            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
+            var prods = window.allProducts || [];
+
+            if (!c || prods.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">Please select a customer to view recommendations.</div>';
+                return;
+            }
+
+            // Algorithm: Pick top tailored products
+            grid.innerHTML = prods.slice(0, 6).map(function(p) {
+                var cost = p.wholesale_price || p.price || 2199;
+                var mrp = p.retail_price || 3499;
+                var estProfit = mrp - cost;
+                return `
+                    <article class="ws-product-card" style="padding:10px;">
+                        <img src="${p.image}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
+                        <div class="card-title" style="font-weight:800; font-size:0.84rem; margin-bottom:4px;">${p.name}</div>
+                        <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:6px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; padding:6px 8px; border-radius:6px; margin-bottom:8px;">
+                            <div>
+                                <div style="font-size:0.65rem; color:var(--ws-text-muted);">Cost: ₹${cost.toLocaleString('en-IN')}</div>
+                                <div style="font-weight:900; font-size:0.86rem; color:var(--ws-gold-primary);">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:0.65rem; color:#047857; font-weight:700;">Est. Margin</div>
+                                <div style="font-weight:900; font-size:0.86rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%;" onclick="openResellerQuickOrderDrawer(${c.id})">
+                            ⚡ Create Order for ${c.name.split(' ')[0]}
+                        </button>
+                    </article>
+                `;
+            }).join('');
+        };
 
     </script>
 
