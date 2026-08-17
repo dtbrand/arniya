@@ -5234,7 +5234,441 @@ $catalogProducts = [
             transform: scale(1.08);
         }
 
-    </style>
+    
+
+/* ═════════════════════════════════════════════════════════════════════
+   RESELLER CRM, CUSTOMERS, PROFIT & OPERATIONS LUXURY CSS SUITE
+═════════════════════════════════════════════════════════════════════ */
+
+/* ── Filter Controls & Pills ── */
+.ws-filter-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 18px 0 16px;
+    flex-wrap: wrap;
+}
+
+.ws-filter-pills {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+    padding: 2px 0;
+}
+.ws-filter-pills::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.ws-filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 24px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #4A3E2C;
+    background: #FAF6EE;
+    border: 1.5px solid #E5DCBE;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.ws-filter-pill:hover {
+    background: #F4ECE0;
+    border-color: #D4AF37;
+    color: #8A681F;
+    transform: translateY(-1px);
+}
+
+.ws-filter-pill.active {
+    background: linear-gradient(135deg, #8A681F 0%, #D4AF37 100%) !important;
+    color: #FFFFFF !important;
+    border-color: #8A681F !important;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.35) !important;
+    font-weight: 800;
+}
+
+/* ── Left-Aligned Search Input (Search Bar Placement Rule) ── */
+.ws-luxury-search-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-width: 240px;
+    max-width: 340px;
+    flex: 1;
+}
+
+.ws-luxury-search-icon {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    stroke: #8A681F;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.ws-luxury-search-input {
+    width: 100%;
+    height: 38px;
+    padding-left: 40px !important;
+    padding-right: 32px !important;
+    background: #FFFFFF;
+    border: 1.5px solid #E5DCBE;
+    border-radius: 20px;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: #2C251E;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.ws-luxury-search-input:focus {
+    border-color: #8A681F;
+    box-shadow: 0 0 0 3.5px rgba(212, 175, 55, 0.18);
+    background: #FFFFFF;
+}
+
+.ws-luxury-search-input::placeholder {
+    color: #A39686;
+    font-weight: 500;
+}
+
+/* ── CRM KPI Metric Cards ── */
+.crm-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.crm-kpi-card {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FDFCF9 100%);
+    border: 1.5px solid #ECE3D0;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: all 0.22s ease;
+}
+
+.crm-kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: #D4AF37;
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.12);
+}
+
+.crm-kpi-val {
+    font-size: 1.45rem;
+    font-weight: 900;
+    font-family: var(--ws-font-serif);
+    color: #1E1B18;
+    line-height: 1.1;
+}
+
+.crm-kpi-val.gold {
+    color: #8A681F;
+}
+
+.crm-kpi-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8C8072;
+    margin-top: 4px;
+}
+
+.crm-kpi-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FAF4E6 0%, #F3E7C9 100%);
+    border: 1px solid #E8D9B5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: #8A681F;
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.08);
+}
+
+/* ── Bulk Actions Toolbar ── */
+.crm-bulk-bar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #1E1B18 0%, #352D24 100%);
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    animation: fadeInSlide 0.2s ease;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Customer Tags ── */
+.crm-tag {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 0.68rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+.crm-tag-vip {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    color: #92400E;
+    border: 1px solid #F59E0B;
+}
+.crm-tag-repeat {
+    background: #E0F2FE;
+    color: #0369A1;
+    border: 1px solid #7DD3FC;
+}
+.crm-tag-new {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+.crm-tag-highvalue {
+    background: #FCE7F3;
+    color: #9D174D;
+    border: 1px solid #F472B6;
+}
+.crm-tag-inactive {
+    background: #F3F4F6;
+    color: #4B5563;
+    border: 1px solid #D1D5DB;
+}
+.crm-tag-followup {
+    background: #FFF7ED;
+    color: #C2410C;
+    border: 1px solid #FDBA74;
+}
+.crm-tag-regular {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #E8D9B5;
+}
+
+/* ── Table Action Buttons & Cell Enhancements ── */
+.crm-action-btn-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.crm-btn-view {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #FAF6EE;
+    border: 1px solid #E2D7C0;
+    color: #69562A;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.85rem;
+}
+.crm-btn-view:hover {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+.crm-btn-wa {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #25D366;
+    border: none;
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.25);
+}
+.crm-btn-wa:hover {
+    background: #1EBE5D;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+}
+
+.crm-btn-reorder {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8A681F 0%, #D4AF37 100%);
+    border: none;
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+}
+.crm-btn-reorder:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.45);
+}
+
+.crm-wa-chat-pill {
+    background: #25D366;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.25);
+    transition: all 0.15s ease;
+}
+.crm-wa-chat-pill:hover {
+    background: #1EBE5D;
+    transform: translateY(-1px);
+}
+
+.crm-done-pill {
+    background: #F0FDF4;
+    color: #16A34A;
+    border: 1px solid #BBF7D0;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.crm-done-pill:hover {
+    background: #DCFCE7;
+    border-color: #86EFAC;
+}
+
+/* ── Luxury Modals & Quick Order Drawer ── */
+.crm-modal-luxury {
+    background: #FFFFFF;
+    border-radius: 18px;
+    border: 1.5px solid #E8D9B5;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    max-width: 580px;
+    width: 100%;
+}
+
+.crm-modal-luxury .ws-modal-header {
+    background: linear-gradient(135deg, #FEFBF4 0%, #FAF5E8 100%);
+    border-bottom: 1.5px solid #EBDDBD;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crm-modal-luxury .ws-modal-header h3 {
+    font-family: var(--ws-font-serif);
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #8A681F;
+    margin: 0;
+}
+
+.crm-form-group {
+    margin-bottom: 14px;
+}
+
+.crm-form-label {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #69562A;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.crm-form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #E2D7C0;
+    background: #FAFAF8;
+    font-size: 0.84rem;
+    color: #2C251E;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.crm-form-control:focus {
+    border-color: #8A681F;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.crm-profit-calc-box {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1.5px solid #A7F3D0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.crm-profit-calc-val {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #047857;
+    font-family: var(--ws-font-serif);
+}
+
+.crm-rec-customer-select-wrap {
+    background: #FAF6EE;
+    border: 1.5px solid #E8D9B5;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+
+</style>
 </head>
 <body>
 
@@ -8039,1686 +8473,7 @@ $catalogProducts = [
         } else {
             echo '[]';
         }
-    ?>
-
-        /* ════════════════════════════════════════════════════════════
-           RESELLER CRM, CUSTOMERS & OPERATIONS ENGINE
-        ════════════════════════════════════════════════════════════ */
-
-        // 1. Initial Real-World Reseller Customers Dataset
-        var DEFAULT_RESELLER_CUSTOMERS = [
-            {
-                id: 1,
-                name: "Ananya Deshmukh",
-                mobile: "9820144521",
-                whatsapp: "9820144521",
-                email: "ananya.d@gmail.com",
-                address: "402, Lotus Grandeur, Linking Road, Bandra West",
-                city: "Mumbai",
-                state: "Maharashtra",
-                pincode: "400050",
-                tags: ["VIP", "REPEAT", "HIGH VALUE"],
-                totalOrders: 8,
-                totalPurchase: 114500,
-                totalProfit: 24800,
-                firstOrder: "2026-02-14",
-                lastOrder: "2026-08-12",
-                reorderCycleDays: 25,
-                notes: [
-                    { id: 101, text: "Prefers Pure Silk & Paithani sarees in Navy and Maroon colors.", date: "2026-08-12 14:30", creator: "Rajesh Kumar" },
-                    { id: 102, text: "Always pays via UPI immediately on order booking.", date: "2026-07-20 11:15", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 201, date: "2026-08-19", time: "11:30", note: "Send festive Paithani catalog collection on WhatsApp", status: "Pending" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Pooja Varma",
-                mobile: "9876543210",
-                whatsapp: "9876543210",
-                email: "pooja.varma@outlook.com",
-                address: "Flat 12B, Regency Heights, Civil Lines",
-                city: "Jaipur",
-                state: "Rajasthan",
-                pincode: "302006",
-                tags: ["VIP", "REPEAT"],
-                totalOrders: 6,
-                totalPurchase: 84900,
-                totalProfit: 18200,
-                firstOrder: "2026-03-10",
-                lastOrder: "2026-08-05",
-                reorderCycleDays: 30,
-                notes: [
-                    { id: 103, text: "Boutique owner in Jaipur. Buys bridal sets and heavy dupattas.", date: "2026-08-05 16:20", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 202, date: "2026-08-18", time: "16:00", note: "Follow-up for Rakhi & Teej bridal orders", status: "Pending" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Sneha Patel",
-                mobile: "9426011223",
-                whatsapp: "9426011223",
-                email: "sneha.patel@gmail.com",
-                address: "Plot 88, Sunrise Park, Bodakdev",
-                city: "Ahmedabad",
-                state: "Gujarat",
-                pincode: "380054",
-                tags: ["REPEAT", "REGULAR"],
-                totalOrders: 4,
-                totalPurchase: 48900,
-                totalProfit: 10400,
-                firstOrder: "2026-04-18",
-                lastOrder: "2026-07-28",
-                reorderCycleDays: 28,
-                notes: [
-                    { id: 104, text: "Loves soft georgette and organza sarees.", date: "2026-07-28 10:45", creator: "Rajesh Kumar" }
-                ],
-                followups: []
-            },
-            {
-                id: 4,
-                name: "Kavita Singhania",
-                mobile: "9831098765",
-                whatsapp: "9831098765",
-                email: "kavita.singhania@yahoo.com",
-                address: "Flat 5C, Queens Mansion, Park Street",
-                city: "Kolkata",
-                state: "West Bengal",
-                pincode: "700016",
-                tags: ["VIP", "HIGH VALUE"],
-                totalOrders: 5,
-                totalPurchase: 92400,
-                totalProfit: 21500,
-                firstOrder: "2026-01-22",
-                lastOrder: "2026-08-14",
-                reorderCycleDays: 20,
-                notes: [
-                    { id: 105, text: "High-ticket buyer for designer wedding lehengas.", date: "2026-08-14 18:00", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 203, date: "2026-08-20", time: "12:00", note: "Confirm dispatch tracking of Zardosi Lehenga", status: "Pending" }
-                ]
-            },
-            {
-                id: 5,
-                name: "Ritu Aggarwal",
-                mobile: "9811223344",
-                whatsapp: "9811223344",
-                email: "ritu.aggarwal@gmail.com",
-                address: "House 24, Block C, Greater Kailash 1",
-                city: "New Delhi",
-                state: "Delhi",
-                pincode: "110048",
-                tags: ["NEW"],
-                totalOrders: 1,
-                totalPurchase: 14500,
-                totalProfit: 3200,
-                firstOrder: "2026-08-15",
-                lastOrder: "2026-08-15",
-                reorderCycleDays: 30,
-                notes: [
-                    { id: 106, text: "New customer inquiry from Instagram advertisement.", date: "2026-08-15 09:30", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 204, date: "2026-08-18", time: "14:00", note: "Call for feedback after delivery", status: "Pending" }
-                ]
-            },
-            {
-                id: 6,
-                name: "Meera Nair",
-                mobile: "9745012345",
-                whatsapp: "9745012345",
-                email: "meera.nair@gmail.com",
-                address: "Kairali Villa, Panampilly Nagar",
-                city: "Kochi",
-                state: "Kerala",
-                pincode: "682036",
-                tags: ["REPEAT", "REGULAR"],
-                totalOrders: 3,
-                totalPurchase: 32400,
-                totalProfit: 7100,
-                firstOrder: "2026-05-04",
-                lastOrder: "2026-08-01",
-                reorderCycleDays: 35,
-                notes: [],
-                followups: []
-            },
-            {
-                id: 7,
-                name: "Priyanka Reddy",
-                mobile: "9849019283",
-                whatsapp: "9849019283",
-                email: "priyanka.reddy@gmail.com",
-                address: "Plot 104, Road No. 36, Jubilee Hills",
-                city: "Hyderabad",
-                state: "Telangana",
-                pincode: "500033",
-                tags: ["VIP", "REPEAT", "HIGH VALUE"],
-                totalOrders: 7,
-                totalPurchase: 108900,
-                totalProfit: 23600,
-                firstOrder: "2026-02-01",
-                lastOrder: "2026-08-10",
-                reorderCycleDays: 22,
-                notes: [
-                    { id: 107, text: "Frequent orders of Kanjivaram & Zari border sarees.", date: "2026-08-10 15:10", creator: "Rajesh Kumar" }
-                ],
-                followups: []
-            },
-            {
-                id: 8,
-                name: "Sunita Mehra",
-                mobile: "9872019284",
-                whatsapp: "9872019284",
-                email: "sunita.mehra@gmail.com",
-                address: "House 102, Sector 9D",
-                city: "Chandigarh",
-                state: "Punjab",
-                pincode: "160009",
-                tags: ["INACTIVE"],
-                totalOrders: 2,
-                totalPurchase: 18900,
-                totalProfit: 4100,
-                firstOrder: "2026-03-12",
-                lastOrder: "2026-05-10",
-                reorderCycleDays: 45,
-                notes: [
-                    { id: 108, text: "Has not ordered for 90+ days. Needs re-engagement offer.", date: "2026-07-01 11:00", creator: "Rajesh Kumar" }
-                ],
-                followups: [
-                    { id: 205, date: "2026-08-21", time: "15:30", note: "Send 10% discount promo code for re-activation", status: "Pending" }
-                ]
-            }
-        ];
-
-        // 2. Load / Save Reseller Customers State
-        function getResellerCustomers() {
-            try {
-                var raw = localStorage.getItem('reseller_customers_db');
-                if (raw) return JSON.parse(raw);
-            } catch(e) {}
-            localStorage.setItem('reseller_customers_db', JSON.stringify(DEFAULT_RESELLER_CUSTOMERS));
-            return DEFAULT_RESELLER_CUSTOMERS;
-        };
-
-        function saveResellerCustomers(customers) {
-            localStorage.setItem('reseller_customers_db', JSON.stringify(customers));
-            renderCrmCustomers();
-            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
-            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
-        };
-
-        var currentCustomerFilterTag = 'all';
-        var currentCustomerSearchTerm = '';
-        var selectedCustomerIds = new Set();
-        var currentActiveProfileCustomer = null;
-
-                // 3. Tab Switching Extension
-        function switchWsTab(tabName) {
-            try {
-                if (!tabName) return;
-                var cleanName = tabName.toLowerCase();
-                
-                // Hide all panes
-                document.querySelectorAll('.ws-tab-pane').forEach(function(el) {
-                    el.classList.remove('active');
-                });
-                // Unhighlight all sidebar nav items
-                document.querySelectorAll('.ws-nav-item').forEach(function(el) {
-                    el.classList.remove('active');
-                });
-                // Unhighlight all mobile dock items
-                document.querySelectorAll('.ws-dock-btn').forEach(function(el) {
-                    el.classList.remove('active');
-                });
-
-                var targetPaneId = 'tabPane' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
-                var targetPane = document.getElementById(targetPaneId);
-                if (targetPane) {
-                    targetPane.classList.add('active');
-                } else {
-                    console.warn('Pane not found for:', targetPaneId);
-                }
-
-                // Highlight active nav item
-                document.querySelectorAll('.ws-nav-item').forEach(function(btn) {
-                    var attr = btn.getAttribute('onclick') || '';
-                    if (attr.toLowerCase().indexOf("'" + cleanName + "'") !== -1 || attr.toLowerCase().indexOf('"' + cleanName + '"') !== -1) {
-                        btn.classList.add('active');
-                    }
-                });
-
-                // Highlight mobile dock item
-                var dockBtn = document.getElementById('dockBtn' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
-                if (dockBtn) dockBtn.classList.add('active');
-
-                // Trigger tab-specific data rendering
-                if (cleanName === 'customers') {
-                    if (typeof renderCrmCustomers === 'function') renderCrmCustomers();
-                    if (typeof updateCrmCounts === 'function') updateCrmCounts();
-                } else if (cleanName === 'profit') {
-                    if (typeof renderProfitLedger === 'function') renderProfitLedger();
-                } else if (cleanName === 'followups') {
-                    if (typeof renderFollowupsTable === 'function') renderFollowupsTable();
-                } else if (cleanName === 'recommendations') {
-                    if (typeof populateRecommendationSelect === 'function') populateRecommendationSelect();
-                } else if (cleanName === 'orders') {
-                    if (typeof renderOrdersView === 'function') renderOrdersView(activeOrdersList);
-                } else if (cleanName === 'overview') {
-                    if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
-                }
-
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                if (typeof toggleSidebar === 'function') toggleSidebar(false);
-            } catch(e) {
-                console.error('switchWsTab error:', e);
-            }
-        }
-        window.switchWsTab = switchWsTab;
-        
-
-        // 4. Render Customers Table & Mobile Cards
-        function renderCrmCustomers() {
-            var customers = getResellerCustomers();
-            var tbody = document.getElementById('crmCustomersTbody');
-            var mobList = document.getElementById('crmCustomersMobileList');
-            if (!tbody || !mobList) return;
-
-            tbody.innerHTML = '';
-            mobList.innerHTML = '';
-
-            var filtered = customers.filter(function(c) {
-                var matchTag = currentCustomerFilterTag === 'all' || (c.tags || []).some(function(t) { return t.toUpperCase() === currentCustomerFilterTag.toUpperCase(); });
-                var matchSearch = !currentCustomerSearchTerm || 
-                    c.name.toLowerCase().indexOf(currentCustomerSearchTerm.toLowerCase()) !== -1 ||
-                    c.mobile.indexOf(currentCustomerSearchTerm) !== -1 ||
-                    c.city.toLowerCase().indexOf(currentCustomerSearchTerm.toLowerCase()) !== -1;
-                return matchTag && matchSearch;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No customers found matching the criteria.</td></tr>';
-                mobList.innerHTML = '<div style="text-align:center; padding:30px; color:var(--ws-text-muted);">No customers found.</div>';
-                return;
-            }
-
-            filtered.forEach(function(c) {
-                var isChecked = selectedCustomerIds.has(c.id);
-                var tagsHtml = (c.tags || []).map(function(t) {
-                    var cls = 'crm-tag-regular';
-                    if (t === 'VIP') cls = 'crm-tag-vip';
-                    else if (t === 'REPEAT') cls = 'crm-tag-repeat';
-                    else if (t === 'NEW') cls = 'crm-tag-new';
-                    else if (t === 'HIGH VALUE') cls = 'crm-tag-highvalue';
-                    else if (t === 'INACTIVE') cls = 'crm-tag-inactive';
-                    else if (t === 'FOLLOW-UP') cls = 'crm-tag-followup';
-                    return '<span class="crm-tag ' + cls + '">' + t + '</span>';
-                }).join(' ');
-
-                // Desktop Table Row
-                var tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCustomerSelect(${c.id}, this.checked)"></td>
-                    <td>
-                        <div style="display:flex; align-items:center; gap:10px; cursor:pointer;" onclick="openCustomerProfileModal(${c.id})">
-                            <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg, #8A681F, #D4AF37); color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.80rem;">
-                                ${c.name.charAt(0)}
-                            </div>
-                            <div>
-                                <div style="font-weight:800; font-size:0.84rem; color:var(--ws-text-main);">${c.name}</div>
-                                <div style="font-size:0.70rem; color:var(--ws-text-muted);">${c.mobile} &bull; ${c.email || 'No email'}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="font-size:0.78rem; font-weight:700;">${c.city}, ${c.state}</div>
-                        <div style="font-size:0.68rem; color:var(--ws-text-muted);">${c.pincode}</div>
-                    </td>
-                    <td><div style="display:flex; gap:4px; flex-wrap:wrap;">${tagsHtml}</div></td>
-                    <td style="text-align:right; font-weight:800;">${c.totalOrders}</td>
-                    <td style="text-align:right; font-weight:800; color:var(--ws-text-main);">₹${Number(c.totalPurchase).toLocaleString('en-IN')}</td>
-                    <td style="text-align:right; font-weight:900; color:#047857;">₹${Number(c.totalProfit).toLocaleString('en-IN')}</td>
-                    <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${c.lastOrder || 'N/A'}</td>
-                    <td style="text-align:center;">
-                        <div style="display:flex; gap:4px; justify-content:center;">
-                            <button class="ws-action-btn view" onclick="openCustomerProfileModal(${c.id})" title="View CRM Profile">👁️</button>
-                            <button class="ws-action-btn print" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Send WhatsApp Message" style="background:#25D366; border-color:#25D366; color:#FFF;">💬</button>
-                            <button class="ws-action-btn" onclick="openResellerQuickOrderDrawer(${c.id})" title="Quick Order" style="background:#FAF5E8; border-color:var(--ws-gold-primary); color:var(--ws-gold-primary); font-weight:800;">⚡</button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-
-                // Mobile Card View
-                var card = document.createElement('div');
-                card.className = 'ws-mobile-order-card';
-                card.style.borderLeft = '3px solid var(--ws-gold-primary)';
-                card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
-                        <div style="display:flex; align-items:center; gap:8px;" onclick="openCustomerProfileModal(${c.id})">
-                            <div style="width:36px; height:36px; border-radius:50%; background:var(--ws-gold-primary); color:#FFF; display:flex; align-items:center; justify-content:center; font-weight:800;">
-                                ${c.name.charAt(0)}
-                            </div>
-                            <div>
-                                <div style="font-weight:800; font-size:0.86rem;">${c.name}</div>
-                                <div style="font-size:0.72rem; color:var(--ws-text-muted);">${c.mobile} &bull; ${c.city}</div>
-                            </div>
-                        </div>
-                        <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${c.id})" style="background:#25D366; color:#FFF; padding:4px 8px; border-radius:6px;">💬 WhatsApp</button>
-                    </div>
-                    <div style="margin-bottom:8px;">${tagsHtml}</div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; background:#FAF8F4; padding:8px; border-radius:8px; text-align:center; margin-bottom:10px;">
-                        <div>
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted);">Orders</div>
-                            <div style="font-weight:800; font-size:0.80rem;">${c.totalOrders}</div>
-                        </div>
-                        <div>
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted);">Total Spend</div>
-                            <div style="font-weight:800; font-size:0.80rem;">₹${Number(c.totalPurchase).toLocaleString('en-IN')}</div>
-                        </div>
-                        <div>
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted);">Profit</div>
-                            <div style="font-weight:900; font-size:0.80rem; color:#047857;">₹${Number(c.totalProfit).toLocaleString('en-IN')}</div>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:6px;">
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" style="flex:1;" onclick="openCustomerProfileModal(${c.id})">👤 View Profile</button>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1;" onclick="openResellerQuickOrderDrawer(${c.id})">⚡ Quick Order</button>
-                    </div>
-                `;
-                mobList.appendChild(card);
-            });
-        };
-
-        // 5. Update CRM KPI summary numbers
-        function updateCrmCounts() {
-            var customers = getResellerCustomers();
-            var total = customers.length;
-            var vip = customers.filter(function(c) { return (c.tags || []).indexOf('VIP') !== -1; }).length;
-            var repeat = customers.filter(function(c) { return Number(c.totalOrders) > 1; }).length;
-            var rate = total > 0 ? ((repeat / total) * 100).toFixed(1) + '%' : '0%';
-
-            var elTotal = document.getElementById('crmTotalCustomersCount');
-            var elVip = document.getElementById('crmVipCustomersCount');
-            var elRate = document.getElementById('crmRepeatRateVal');
-            var elNav = document.getElementById('navCustomersCount');
-
-            if (elTotal) elTotal.textContent = total;
-            if (elVip) elVip.textContent = vip;
-            if (elRate) elRate.textContent = rate;
-            if (elNav) elNav.textContent = total;
-        };
-
-        // 6. Customer Search & Tag Filters
-        function filterCustomersByTag(tag, btn) {
-            currentCustomerFilterTag = tag;
-            var pills = document.querySelectorAll('#customerTagFilterPills .ws-filter-pill');
-            pills.forEach(function(p) { p.classList.remove('active'); });
-            if (btn) btn.classList.add('active');
-            renderCrmCustomers();
-        };
-
-        function handleCustomerSearch(val) {
-            currentCustomerSearchTerm = (val || '').trim();
-            var clearBtn = document.getElementById('customerSearchClear');
-            if (clearBtn) clearBtn.style.display = currentCustomerSearchTerm ? 'block' : 'none';
-            renderCrmCustomers();
-        };
-
-        function clearCustomerSearch() {
-            var input = document.getElementById('customerSearchInput');
-            if (input) input.value = '';
-            handleCustomerSearch('');
-        };
-
-        // 7. Customer Profile Modal Controller
-        function openCustomerProfileModal(custId) {
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (!c) return;
-
-            currentActiveProfileCustomer = c;
-            var hero = document.getElementById('crmProfileHero');
-            var ribbon = document.getElementById('crmProfileActionRibbon');
-
-            var tagsHtml = (c.tags || []).map(function(t) {
-                return '<span class="crm-tag crm-tag-vip">' + t + '</span>';
-            }).join(' ');
-
-            var aov = c.totalOrders > 0 ? Math.round(c.totalPurchase / c.totalOrders) : 0;
-
-            if (hero) {
-                hero.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:14px;">
-                        <div class="crm-avatar-lg">${c.name.charAt(0)}</div>
-                        <div>
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <h2 style="margin:0; font-size:1.15rem; font-weight:900; color:var(--ws-text-main);">${c.name}</h2>
-                                ${tagsHtml}
-                            </div>
-                            <div style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:3px;">
-                                📞 ${c.mobile} &bull; 📍 ${c.city}, ${c.state} &bull; ✉️ ${c.email || 'N/A'}
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:16px; background:#FFFFFF; padding:10px 16px; border-radius:10px; border:1px solid var(--ws-border);">
-                        <div style="text-align:center;">
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted); font-weight:700;">TOTAL SPEND</div>
-                            <div style="font-size:1.05rem; font-weight:900; color:var(--ws-gold-primary);">₹${Number(c.totalPurchase).toLocaleString('en-IN')}</div>
-                        </div>
-                        <div style="text-align:center; border-left:1px solid var(--ws-border); padding-left:14px;">
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted); font-weight:700;">PROFIT EARNED</div>
-                            <div style="font-size:1.05rem; font-weight:900; color:#047857;">₹${Number(c.totalProfit).toLocaleString('en-IN')}</div>
-                        </div>
-                        <div style="text-align:center; border-left:1px solid var(--ws-border); padding-left:14px;">
-                            <div style="font-size:0.65rem; color:var(--ws-text-muted); font-weight:700;">AOV</div>
-                            <div style="font-size:1.05rem; font-weight:800; color:var(--ws-text-main);">₹${aov.toLocaleString('en-IN')}</div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            if (ribbon) {
-                ribbon.innerHTML = `
-                    <button class="crm-btn-action wa" onclick="sendCustomerWhatsAppMessage(${c.id})">
-                        💬 WhatsApp Customer
-                    </button>
-                    <a href="tel:${c.mobile}" class="crm-btn-action">
-                        📞 Call
-                    </a>
-                    <button class="crm-btn-action primary" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">
-                        ⚡ New Order
-                    </button>
-                    <button class="crm-btn-action" onclick="openRepeatOrderModal(${c.id})">
-                        🔁 Repeat Order
-                    </button>
-                    <button class="crm-btn-action" onclick="openAddNoteModal(${c.id})">
-                        📝 Add Note
-                    </button>
-                    <button class="crm-btn-action" onclick="openScheduleFollowupModal(${c.id})">
-                        ⏰ Add Follow-up
-                    </button>
-                    <button class="crm-btn-action" onclick="openAddCustomerModal(${c.id})">
-                        ✏️ Edit Customer
-                    </button>
-                `;
-            }
-
-            // Update badge counts
-            var notesBadge = document.getElementById('profNotesBadge');
-            var followBadge = document.getElementById('profFollowupsBadge');
-            if (notesBadge) notesBadge.textContent = (c.notes || []).length;
-            if (followBadge) followBadge.textContent = (c.followups || []).length;
-
-            // Load sub tabs
-            renderProfileOrdersTab(c);
-            renderProfileProductsTab(c);
-            renderProfileRecommendedTab(c);
-            renderProfileLedgerTab(c);
-            renderProfileNotesTab(c);
-            renderProfileFollowupsTab(c);
-            renderProfileTimelineTab(c);
-
-            var modal = document.getElementById('resellerCustomerProfileModal');
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeCustomerProfileModal() {
-            var modal = document.getElementById('resellerCustomerProfileModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function switchProfileTab(tabKey, btn) {
-            document.querySelectorAll('.crm-prof-tab-content').forEach(function(el) {
-                el.style.display = 'none';
-            });
-            document.querySelectorAll('.crm-profile-tab').forEach(function(b) {
-                b.classList.remove('active');
-            });
-            var target = document.getElementById('profTab-' + tabKey);
-            if (target) target.style.display = 'block';
-            if (btn) btn.classList.add('active');
-        };
-
-        // 8. Profile Tab Renderers
-        function renderProfileOrdersTab(c) {
-            var container = document.getElementById('profOrdersList');
-            if (!container) return;
-            var orders = (window.allOrders || []).slice(0, c.totalOrders || 2);
-            container.innerHTML = orders.map(function(o) {
-                return `
-                    <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <div>
-                            <div style="font-weight:800; font-size:0.84rem; color:var(--ws-text-main);">${o.orderId} &bull; ${o.productName}</div>
-                            <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;">Ordered: ${o.date} &bull; Qty: ${o.quantity} &bull; Status: <strong style="color:#047857;">${o.status}</strong></div>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-weight:900; font-size:0.95rem; color:var(--ws-gold-primary);">₹${Number(o.total).toLocaleString('en-IN')}</span>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="openRepeatOrderModal(${c.id}, '${o.orderId}')">🔁 Reorder</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function renderProfileProductsTab(c) {
-            var container = document.getElementById('profProductsList');
-            if (!container) return;
-            var prods = (window.allProducts || []).slice(0, 4);
-            container.innerHTML = prods.map(function(p) {
-                return `
-                    <div class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
-                        <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</div>
-                        <div style="font-size:0.70rem; color:var(--ws-gold-primary); font-weight:700; margin-top:2px;">Purchased 2 Times</div>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function renderProfileRecommendedTab(c) {
-            var container = document.getElementById('profRecommendedList');
-            if (!container) return;
-            var prods = (window.allProducts || []).slice(2, 6);
-            container.innerHTML = prods.map(function(p) {
-                return `
-                    <div class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
-                        <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</div>
-                        <div style="font-size:0.78rem; font-weight:900; color:var(--ws-gold-primary); margin-top:2px;">₹${Number(p.wholesale_price || p.price || 2199).toLocaleString('en-IN')}</div>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; margin-top:6px; font-size:0.68rem; padding:4px;" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">⚡ Create Order</button>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function renderProfileLedgerTab(c) {
-            var container = document.getElementById('profLedgerContent');
-            if (!container) return;
-            container.innerHTML = `
-                <table class="ws-orders-table">
-                    <thead>
-                        <tr>
-                            <th>Transaction / Order</th>
-                            <th>Total Purchase</th>
-                            <th>Reseller Cost</th>
-                            <th style="color:#047857;">Net Profit</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#ORD-77492 (Paithani Saree)</td>
-                            <td>₹18,200</td>
-                            <td>₹14,000</td>
-                            <td style="font-weight:900; color:#047857;">+₹4,200</td>
-                            <td>2026-08-12</td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-77450 (Silk Kurti Lot)</td>
-                            <td>₹12,400</td>
-                            <td>₹9,600</td>
-                            <td style="font-weight:900; color:#047857;">+₹2,800</td>
-                            <td>2026-07-20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
-        };
-
-        function renderProfileNotesTab(c) {
-            var container = document.getElementById('profNotesList');
-            if (!container) return;
-            var notes = c.notes || [];
-            if (notes.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--ws-text-muted); padding:20px;">No notes yet. Click "+ Add Note" to create one.</div>';
-                return;
-            }
-            container.innerHTML = notes.map(function(n) {
-                return `
-                    <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px;">
-                        <div style="font-size:0.80rem; color:var(--ws-text-main); font-weight:600; line-height:1.4;">${n.text}</div>
-                        <div style="font-size:0.68rem; color:var(--ws-text-muted); margin-top:4px;">📅 ${n.date} &bull; By: <strong>${n.creator}</strong></div>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function renderProfileFollowupsTab(c) {
-            var container = document.getElementById('profFollowupsList');
-            if (!container) return;
-            var fList = c.followups || [];
-            if (fList.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--ws-text-muted); padding:20px;">No scheduled follow-ups. Click "+ Add Follow-up" to schedule one.</div>';
-                return;
-            }
-            container.innerHTML = fList.map(function(f) {
-                return `
-                    <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <div style="font-size:0.82rem; font-weight:800; color:var(--ws-text-main);">${f.note}</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted); margin-top:2px;">📅 ${f.date} at ${f.time} &bull; Status: <span class="crm-tag crm-tag-followup">${f.status}</span></div>
-                        </div>
-                        <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${c.id}, ${f.id})">✅ Mark Done</button>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function renderProfileTimelineTab(c) {
-            var container = document.getElementById('profTimelineList');
-            if (!container) return;
-            container.innerHTML = `
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">✓</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">📦 Order #ORD-77492 Delivered Successfully</div>
-                        <div class="crm-timeline-time">August 14, 2026 &bull; BlueDart AWB: 884729104</div>
-                    </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">💬</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">WhatsApp Catalog Sent</div>
-                        <div class="crm-timeline-time">August 12, 2026 &bull; Shared Diwali silk saree collection</div>
-                    </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">📝</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">Note Added by Rajesh Kumar</div>
-                        <div class="crm-timeline-time">July 28, 2026 &bull; Customer preferred soft georgette fabrics</div>
-                    </div>
-                </div>
-                <div class="crm-timeline-item">
-                    <div class="crm-timeline-dot">👤</div>
-                    <div class="crm-timeline-content">
-                        <div class="crm-timeline-title">Customer Created</div>
-                        <div class="crm-timeline-time">${c.firstOrder || 'February 14, 2026'} &bull; First booking</div>
-                    </div>
-                </div>
-            `;
-        };
-
-        // 9. Add / Edit Customer Modal
-        function openAddCustomerModal(editId) {
-            var modal = document.getElementById('resellerAddCustomerModal');
-            var title = document.getElementById('addCustomerModalTitle');
-            var formId = document.getElementById('custFormId');
-            var formName = document.getElementById('custFormName');
-            var formMobile = document.getElementById('custFormMobile');
-            var formWhatsapp = document.getElementById('custFormWhatsapp');
-            var formEmail = document.getElementById('custFormEmail');
-            var formAddress = document.getElementById('custFormAddress');
-            var formCity = document.getElementById('custFormCity');
-            var formState = document.getElementById('custFormState');
-            var formPincode = document.getElementById('custFormPincode');
-            var formTags = document.getElementById('custFormTags');
-            var formNotes = document.getElementById('custFormNotes');
-
-            if (editId) {
-                var customers = getResellerCustomers();
-                var c = customers.find(function(x) { return x.id === editId; });
-                if (c) {
-                    if (title) title.innerHTML = '<span>✏️ Edit Customer Profile</span>';
-                    if (formId) formId.value = c.id;
-                    if (formName) formName.value = c.name;
-                    if (formMobile) formMobile.value = c.mobile;
-                    if (formWhatsapp) formWhatsapp.value = c.whatsapp || c.mobile;
-                    if (formEmail) formEmail.value = c.email || '';
-                    if (formAddress) formAddress.value = c.address || '';
-                    if (formCity) formCity.value = c.city || '';
-                    if (formState) formState.value = c.state || '';
-                    if (formPincode) formPincode.value = c.pincode || '';
-                    if (formTags) formTags.value = (c.tags || []).join(', ');
-                }
-            } else {
-                if (title) title.innerHTML = '<span>👤 Add New Customer</span>';
-                if (formId) formId.value = '';
-                if (formName) formName.value = '';
-                if (formMobile) formMobile.value = '';
-                if (formWhatsapp) formWhatsapp.value = '';
-                if (formEmail) formEmail.value = '';
-                if (formAddress) formAddress.value = '';
-                if (formCity) formCity.value = '';
-                if (formState) formState.value = '';
-                if (formPincode) formPincode.value = '';
-                if (formTags) formTags.value = 'NEW';
-                if (formNotes) formNotes.value = '';
-            }
-
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeAddCustomerModal() {
-            var modal = document.getElementById('resellerAddCustomerModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function handleSaveCustomerSubmit() {
-            var formId = document.getElementById('custFormId').value;
-            var name = document.getElementById('custFormName').value.trim();
-            var mobile = document.getElementById('custFormMobile').value.trim();
-            var whatsapp = document.getElementById('custFormWhatsapp').value.trim() || mobile;
-            var email = document.getElementById('custFormEmail').value.trim();
-            var address = document.getElementById('custFormAddress').value.trim();
-            var city = document.getElementById('custFormCity').value.trim();
-            var state = document.getElementById('custFormState').value.trim();
-            var pincode = document.getElementById('custFormPincode').value.trim();
-            var tagsRaw = document.getElementById('custFormTags').value.trim();
-            var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim().toUpperCase(); }) : ['NEW'];
-            var notesText = (document.getElementById('custFormNotes') ? document.getElementById('custFormNotes').value.trim() : '');
-
-            var customers = getResellerCustomers();
-
-            if (formId) {
-                var c = customers.find(function(x) { return Number(x.id) === Number(formId); });
-                if (c) {
-                    c.name = name;
-                    c.mobile = mobile;
-                    c.whatsapp = whatsapp;
-                    c.email = email;
-                    c.address = address;
-                    c.city = city;
-                    c.state = state;
-                    c.pincode = pincode;
-                    c.tags = tags;
-                }
-            } else {
-                var newCust = {
-                    id: Date.now(),
-                    name: name,
-                    mobile: mobile,
-                    whatsapp: whatsapp,
-                    email: email,
-                    address: address,
-                    city: city,
-                    state: state,
-                    pincode: pincode,
-                    tags: tags,
-                    totalOrders: 0,
-                    totalPurchase: 0,
-                    totalProfit: 0,
-                    firstOrder: new Date().toISOString().split('T')[0],
-                    lastOrder: 'N/A',
-                    notes: notesText ? [{ id: Date.now(), text: notesText, date: new Date().toLocaleString(), creator: 'Rajesh Kumar' }] : [],
-                    followups: []
-                };
-                customers.unshift(newCust);
-            }
-
-            saveResellerCustomers(customers);
-            closeAddCustomerModal();
-            showWsToast('✅ Customer saved successfully!');
-        };
-
-        // 10. Quick Order Flow
-        function openResellerQuickOrderDrawer(prefillCustId) {
-            var modal = document.getElementById('resellerQuickOrderDrawer');
-            var custSelect = document.getElementById('qoCustomerSelect');
-            var prodSelect = document.getElementById('qoProductSelect');
-
-            var customers = getResellerCustomers();
-            if (custSelect) {
-                custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                    return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
-                }).join('');
-            }
-
-            var prods = window.allProducts || [];
-            if (prodSelect) {
-                prodSelect.innerHTML = '<option value="">-- Choose Product --</option>' + prods.map(function(p) {
-                    return '<option value="' + p.id + '" data-cost="' + (p.wholesale_price || p.price || 2199) + '" data-mrp="' + (p.retail_price || 3299) + '">' + p.name + ' (Cost: ₹' + (p.wholesale_price || p.price || 2199) + ')</option>';
-                }).join('');
-            }
-
-            if (prefillCustId) {
-                handleQoCustomerChange(prefillCustId);
-            }
-
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeResellerQuickOrderDrawer() {
-            var modal = document.getElementById('resellerQuickOrderDrawer');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function handleQoCustomerChange(custId) {
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
-            var addr = document.getElementById('qoShippingAddress');
-            if (c && addr) {
-                addr.value = c.address + ', ' + c.city + ', ' + c.state + ' - ' + c.pincode;
-            }
-        };
-
-        function handleQoProductChange(prodId) {
-            var select = document.getElementById('qoProductSelect');
-            var opt = select.options[select.selectedIndex];
-            var cost = opt ? Number(opt.getAttribute('data-cost')) || 2199 : 2199;
-            var mrp = opt ? Number(opt.getAttribute('data-mrp')) || 3299 : 3299;
-
-            var costEl = document.getElementById('qoCostPrice');
-            var sellEl = document.getElementById('qoSellingPrice');
-            if (costEl) costEl.value = cost;
-            if (sellEl) sellEl.value = mrp;
-            calculateQoProfit();
-        };
-
-        function calculateQoProfit() {
-            var qty = Number(document.getElementById('qoQuantity').value) || 1;
-            var cost = Number(document.getElementById('qoCostPrice').value) || 0;
-            var sell = Number(document.getElementById('qoSellingPrice').value) || 0;
-
-            var totalOrder = qty * sell;
-            var totalProfit = qty * (sell - cost);
-
-            var elProfit = document.getElementById('qoProfitCalculated');
-            var elTotal = document.getElementById('qoTotalOrderVal');
-
-            if (elProfit) elProfit.textContent = '₹' + totalProfit.toLocaleString('en-IN');
-            if (elTotal) elTotal.textContent = '₹' + totalOrder.toLocaleString('en-IN');
-        };
-
-        function handleQuickOrderSubmit() {
-            var custId = Number(document.getElementById('qoCustomerSelect').value);
-            var prodId = Number(document.getElementById('qoProductSelect').value);
-            var qty = Number(document.getElementById('qoQuantity').value) || 1;
-            var sell = Number(document.getElementById('qoSellingPrice').value) || 0;
-            var cost = Number(document.getElementById('qoCostPrice').value) || 0;
-            var profit = qty * (sell - cost);
-            var total = qty * sell;
-
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (c) {
-                c.totalOrders = (Number(c.totalOrders) || 0) + 1;
-                c.totalPurchase = (Number(c.totalPurchase) || 0) + total;
-                c.totalProfit = (Number(c.totalProfit) || 0) + profit;
-                c.lastOrder = new Date().toISOString().split('T')[0];
-                if ((c.tags || []).indexOf('REPEAT') === -1 && c.totalOrders > 1) {
-                    c.tags.push('REPEAT');
-                }
-                saveResellerCustomers(customers);
-            }
-
-            closeResellerQuickOrderDrawer();
-            showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
-        };
-
-        // 11. Repeat Order Modal Flow
-        function openRepeatOrderModal(custId, origOrderId) {
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (!c) return;
-
-            var modal = document.getElementById('resellerRepeatOrderModal');
-            var custIdEl = document.getElementById('repeatCustId');
-            var origIdEl = document.getElementById('repeatOrigOrderId');
-            var detailsBox = document.getElementById('repeatOrderDetailsBox');
-            var addr = document.getElementById('repeatOrderAddress');
-            var qty = document.getElementById('repeatOrderQty');
-
-            if (custIdEl) custIdEl.value = c.id;
-            if (origIdEl) origIdEl.value = origOrderId || 'PREV';
-            if (addr) addr.value = c.address + ', ' + c.city + ', ' + c.state + ' - ' + c.pincode;
-            if (qty) qty.value = 1;
-
-            if (detailsBox) {
-                detailsBox.innerHTML = `
-                    <div style="font-weight:800; font-size:0.84rem; color:var(--ws-text-main);">Customer: ${c.name} (${c.mobile})</div>
-                    <div style="font-size:0.75rem; color:var(--ws-gold-primary); font-weight:700; margin-top:3px;">Repeating Last Purchased Silk Saree (Lot Size: 1 Pc)</div>
-                `;
-            }
-
-            recalcRepeatOrderTotal();
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeRepeatOrderModal() {
-            var modal = document.getElementById('resellerRepeatOrderModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function recalcRepeatOrderTotal() {
-            var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
-            var total = qty * 4899;
-            var el = document.getElementById('repeatOrderEstimatedTotal');
-            if (el) el.textContent = '₹' + total.toLocaleString('en-IN');
-        };
-
-        function handleRepeatOrderConfirm() {
-            var custId = Number(document.getElementById('repeatCustId').value);
-            var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
-            var total = qty * 4899;
-            var profit = qty * 1200;
-
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (c) {
-                c.totalOrders = (Number(c.totalOrders) || 0) + 1;
-                c.totalPurchase = (Number(c.totalPurchase) || 0) + total;
-                c.totalProfit = (Number(c.totalProfit) || 0) + profit;
-                c.lastOrder = new Date().toISOString().split('T')[0];
-                saveResellerCustomers(customers);
-            }
-
-            closeRepeatOrderModal();
-            showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
-        };
-
-        // 12. Notes Engine
-        function openAddNoteModal(custId) {
-            var modal = document.getElementById('resellerAddNoteModal');
-            var formCustId = document.getElementById('noteFormCustomerId');
-            var formText = document.getElementById('noteFormText');
-            if (formCustId) formCustId.value = custId;
-            if (formText) formText.value = '';
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeAddNoteModal() {
-            var modal = document.getElementById('resellerAddNoteModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function handleSaveNoteSubmit() {
-            var custId = Number(document.getElementById('noteFormCustomerId').value);
-            var text = document.getElementById('noteFormText').value.trim();
-
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (c) {
-                if (!c.notes) c.notes = [];
-                c.notes.unshift({
-                    id: Date.now(),
-                    text: text,
-                    date: new Date().toLocaleString(),
-                    creator: 'Rajesh Kumar'
-                });
-                saveResellerCustomers(customers);
-                if (currentActiveProfileCustomer && currentActiveProfileCustomer.id === custId) {
-                    renderProfileNotesTab(c);
-                }
-            }
-
-            closeAddNoteModal();
-            showWsToast('📝 Note saved successfully!');
-        };
-
-        // 13. Follow-ups Engine & Dashboard Widget
-        function openScheduleFollowupModal(prefillCustId) {
-            var modal = document.getElementById('resellerScheduleFollowupModal');
-            var custSelect = document.getElementById('followupFormCustomer');
-            var dateEl = document.getElementById('followupFormDate');
-            var noteEl = document.getElementById('followupFormNote');
-
-            var customers = getResellerCustomers();
-            if (custSelect) {
-                custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                    return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ')</option>';
-                }).join('');
-            }
-
-            if (dateEl) {
-                var tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                dateEl.value = tomorrow.toISOString().split('T')[0];
-            }
-            if (noteEl) noteEl.value = '';
-
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeScheduleFollowupModal() {
-            var modal = document.getElementById('resellerScheduleFollowupModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        function handleSaveFollowupSubmit() {
-            var custId = Number(document.getElementById('followupFormCustomer').value);
-            var date = document.getElementById('followupFormDate').value;
-            var time = document.getElementById('followupFormTime').value;
-            var note = document.getElementById('followupFormNote').value.trim();
-            var status = document.getElementById('followupFormStatus').value;
-
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (c) {
-                if (!c.followups) c.followups = [];
-                c.followups.unshift({
-                    id: Date.now(),
-                    date: date,
-                    time: time,
-                    note: note,
-                    status: status
-                });
-                saveResellerCustomers(customers);
-            }
-
-            closeScheduleFollowupModal();
-            showWsToast('⏰ Follow-up task scheduled!');
-        };
-
-        function markFollowupCompleted(custId, fId) {
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (c && c.followups) {
-                var f = c.followups.find(function(x) { return x.id === fId; });
-                if (f) f.status = 'Completed';
-                saveResellerCustomers(customers);
-                showWsToast('✅ Follow-up marked as completed!');
-            }
-        };
-
-        // 14. Render Dashboard CRM Widgets
-        function renderDashboardCrmWidgets() {
-            var customers = getResellerCustomers();
-
-            // 1. Follow-ups widget
-            var fContainer = document.getElementById('dashFollowupsList');
-            if (fContainer) {
-                var allFollowups = [];
-                customers.forEach(function(c) {
-                    (c.followups || []).forEach(function(f) {
-                        if (f.status !== 'Completed') {
-                            allFollowups.push({ customer: c, task: f });
-                        }
-                    });
-                });
-
-                if (allFollowups.length === 0) {
-                    fContainer.innerHTML = '<div style="text-align:center; color:var(--ws-text-muted); font-size:0.75rem; padding:15px;">No pending follow-ups today.</div>';
-                } else {
-                    fContainer.innerHTML = allFollowups.map(function(item) {
-                        return `
-                            <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <div style="font-weight:800; font-size:0.78rem;">${item.customer.name}</div>
-                                    <div style="font-size:0.68rem; color:var(--ws-text-muted);">${item.task.note} &bull; <strong>${item.task.date}</strong></div>
-                                </div>
-                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:2px 8px; font-size:0.68rem;">💬 Chat</button>
-                            </div>
-                        `;
-                    }).join('');
-                }
-            }
-
-            // 2. Top Customers Leaderboard widget
-            renderTopCustomersList('month');
-
-            // 3. Reorder Opportunities widget
-            var rContainer = document.getElementById('dashReorderAlertsList');
-            if (rContainer) {
-                var opps = customers.filter(function(c) { return Number(c.totalOrders) >= 2; });
-                rContainer.innerHTML = opps.slice(0, 3).map(function(c) {
-                    return `
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <div style="font-weight:800; font-size:0.78rem;">${c.name} &bull; Reorder Cycle ${c.reorderCycleDays || 30} Days</div>
-                                <div style="font-size:0.68rem; color:#B45309; font-weight:700;">Last order was 28 days ago</div>
-                            </div>
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openRepeatOrderModal(${c.id})" style="padding:2px 8px; font-size:0.68rem;">🔁 Reorder</button>
-                        </div>
-                    `;
-                }).join('');
-            }
-        };
-
-        function renderTopCustomersList(period) {
-            var container = document.getElementById('dashTopCustomersList');
-            if (!container) return;
-            var customers = getResellerCustomers();
-            var sorted = customers.slice().sort(function(a, b) { return b.totalPurchase - a.totalPurchase; });
-            container.innerHTML = sorted.slice(0, 4).map(function(c, idx) {
-                var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : '⭐'));
-                return `
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:6px 10px; cursor:pointer;" onclick="openCustomerProfileModal(${c.id})">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.90rem;">${medal}</span>
-                            <div>
-                                <div style="font-weight:800; font-size:0.78rem;">${c.name}</div>
-                                <div style="font-size:0.68rem; color:var(--ws-text-muted);">${c.totalOrders} Orders &bull; Profit: ₹${Number(c.totalProfit).toLocaleString('en-IN')}</div>
-                            </div>
-                        </div>
-                        <span style="font-weight:900; font-size:0.82rem; color:var(--ws-gold-primary);">₹${Number(c.totalPurchase).toLocaleString('en-IN')}</span>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        function switchTopCustomersPeriod(period, btn) {
-            var pills = btn.parentElement.querySelectorAll('.ws-filter-pill');
-            pills.forEach(function(p) { p.classList.remove('active'); });
-            btn.classList.add('active');
-            renderTopCustomersList(period);
-        };
-
-        // 15. Global Live Search (Customers, Orders, Products)
-        function handleGlobalSearch(query) {
-            var q = (query || '').trim().toLowerCase();
-            var resultsBox = document.getElementById('wsGlobalSearchResults');
-            if (!resultsBox) return;
-
-            if (!q) {
-                resultsBox.style.display = 'none';
-                resultsBox.innerHTML = '';
-                return;
-            }
-
-            var customers = getResellerCustomers().filter(function(c) {
-                return c.name.toLowerCase().indexOf(q) !== -1 || c.mobile.indexOf(q) !== -1;
-            });
-
-            var orders = (window.allOrders || []).filter(function(o) {
-                return o.orderId.toLowerCase().indexOf(q) !== -1 || o.productName.toLowerCase().indexOf(q) !== -1;
-            });
-
-            var prods = (window.allProducts || []).filter(function(p) {
-                return p.name.toLowerCase().indexOf(q) !== -1;
-            });
-
-            var html = '';
-
-            if (customers.length > 0) {
-                html += '<div class="ws-search-group-title">👥 Customers</div>';
-                customers.slice(0, 3).forEach(function(c) {
-                    html += `
-                        <div class="ws-search-item" onclick="openCustomerProfileModal(${c.id}); document.getElementById('wsGlobalSearchResults').style.display='none';">
-                            <div>
-                                <div class="ws-search-item-title">${c.name}</div>
-                                <div class="ws-search-item-sub">📞 ${c.mobile} &bull; 📍 ${c.city}</div>
-                            </div>
-                            <span class="crm-tag crm-tag-vip">Profile →</span>
-                        </div>
-                    `;
-                });
-            }
-
-            if (orders.length > 0) {
-                html += '<div class="ws-search-group-title">📦 Orders</div>';
-                orders.slice(0, 3).forEach(function(o) {
-                    html += `
-                        <div class="ws-search-item" onclick="openWsOrderModal('${o.orderId}'); document.getElementById('wsGlobalSearchResults').style.display='none';">
-                            <div>
-                                <div class="ws-search-item-title">${o.orderId} - ${o.productName}</div>
-                                <div class="ws-search-item-sub">Status: ${o.status} &bull; Total: ₹${o.total}</div>
-                            </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary);">View →</span>
-                        </div>
-                    `;
-                });
-            }
-
-            if (prods.length > 0) {
-                html += '<div class="ws-search-group-title">👗 Catalog Products</div>';
-                prods.slice(0, 3).forEach(function(p) {
-                    html += `
-                        <div class="ws-search-item" onclick="openResellerQuickOrderDrawer(); document.getElementById('wsGlobalSearchResults').style.display='none';">
-                            <div>
-                                <div class="ws-search-item-title">${p.name}</div>
-                                <div class="ws-search-item-sub">₹${p.wholesale_price || p.price} &bull; ${p.category}</div>
-                            </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:#047857;">Order →</span>
-                        </div>
-                    `;
-                });
-            }
-
-            if (!html) {
-                html = '<div style="padding:12px; font-size:0.75rem; color:var(--ws-text-muted); text-align:center;">No matching results found.</div>';
-            }
-
-            resultsBox.innerHTML = html;
-            resultsBox.style.display = 'block';
-        };
-
-        // 16. WhatsApp Actions Generator
-        function sendCustomerWhatsAppMessage(custId) {
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return x.id === custId; });
-            if (!c) return;
-
-            var phone = c.whatsapp || c.mobile;
-            var text = `Namaste ${c.name} ji 🙏,
-
-We have exciting new luxury silk saree collections and festive arrivals at Kalaniketan / Arniya.
-
-Would you like me to share the latest catalog?
-
-Warm regards,
-Rajesh Kumar (Reseller Partner)`;
-            var url = 'https://api.whatsapp.com/send?phone=91' + phone + '&text=' + encodeURIComponent(text);
-            window.open(url, '_blank');
-        };
-
-        // 17. CSV / Excel Exports
-        function exportCustomersCSV() {
-            var customers = getResellerCustomers();
-            var csv = 'ID,Name,Mobile,WhatsApp,Email,Address,City,State,Pincode,Tags,TotalOrders,TotalPurchase,TotalProfit,LastOrder\n';
-            customers.forEach(function(c) {
-                csv += `"${c.id}","${c.name}","${c.mobile}","${c.whatsapp || ''}","${c.email || ''}","${c.address || ''}","${c.city}","${c.state}","${c.pincode}","${(c.tags||[]).join(';')}","${c.totalOrders}","${c.totalPurchase}","${c.totalProfit}","${c.lastOrder}"\n`;
-            });
-
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'Reseller_Customers_' + new Date().toISOString().split('T')[0] + '.csv';
-            a.click();
-            showWsToast('📥 Customers CSV exported!');
-        };
-
-        function exportProfitLedgerCSV() {
-            var csv = 'OrderID,Customer,Product,SellingPrice,BaseCost,NetProfit,MarginPct,Date\n';
-            csv += '#ORD-77492,Ananya Deshmukh,Paithani Silk Saree,18200,14000,4200,23.08%,2026-08-12\n';
-            csv += '#ORD-77450,Pooja Varma,Bridal Lehenga Set,24800,19000,5800,23.38%,2026-08-05\n';
-
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'Reseller_Profit_Ledger_' + new Date().toISOString().split('T')[0] + '.csv';
-            a.click();
-            showWsToast('📥 Profit Ledger CSV exported!');
-        };
-
-        // 18. Notifications Modal
-        function openResellerNotificationsModal() {
-            var modal = document.getElementById('resellerNotificationsModal');
-            var list = document.getElementById('resellerNotificationsList');
-            if (list) {
-                list.innerHTML = `
-                    <div style="display:flex; flex-direction:column; gap:8px;">
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:var(--ws-text-main);">📦 Order #ORD-77492 Dispatched</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">BlueDart courier in transit to Ananya Deshmukh (Mumbai)</div>
-                        </div>
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:#B45309;">⏰ Follow-up Due Today: Pooja Varma</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Scheduled call at 4:00 PM for festive orders</div>
-                        </div>
-                        <div style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:10px;">
-                            <div style="font-weight:800; font-size:0.78rem; color:#047857;">💰 Profit Updated: +₹4,200</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Realized margin credited to Reseller Gold Wallet</div>
-                        </div>
-                    </div>
-                `;
-            }
-            if (modal) modal.classList.add('active');
-        };
-
-        function closeResellerNotificationsModal() {
-            var modal = document.getElementById('resellerNotificationsModal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        // 19. Initial Boot Hook for CRM
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
-            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
-        });
-
-    
-        /* ── Profit Ledger Renderer ── */
-        function renderProfitLedger() {
-            var tbody = document.getElementById('crmProfitTbody');
-            if (!tbody) return;
-
-            var profitData = [
-                { id: '#ORD-77492', cust: 'Ananya Deshmukh', prod: 'Paithani Silk Saree (Qty: 1)', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
-                { id: '#ORD-77450', cust: 'Pooja Varma', prod: 'Bridal Velvet Lehenga (Qty: 1)', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
-                { id: '#ORD-77412', cust: 'Kavita Singhania', prod: 'Banarasi Zari Saree (Qty: 2)', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
-                { id: '#ORD-77388', cust: 'Priyanka Reddy', prod: 'Kanjivaram Temple Silk (Qty: 1)', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
-                { id: '#ORD-77350', cust: 'Sneha Patel', prod: 'Royal Anarkali Kurti (Qty: 3)', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
-                { id: '#ORD-77510', cust: 'Ritu Aggarwal', prod: 'Georgette Bloom Saree (Qty: 1)', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
-            ];
-
-            tbody.innerHTML = profitData.map(function(item) {
-                var statusCls = item.status === 'Delivered' ? 'background:#DCFCE7; color:#15803D;' : 'background:#FEF3C7; color:#B45309;';
-                return `
-                    <tr>
-                        <td><strong>${item.id}</strong></td>
-                        <td><div style="font-weight:700;">${item.cust}</div></td>
-                        <td>${item.prod}</td>
-                        <td style="text-align:right; font-weight:800;">₹${item.sell.toLocaleString('en-IN')}</td>
-                        <td style="text-align:right; color:var(--ws-text-muted);">₹${item.cost.toLocaleString('en-IN')}</td>
-                        <td style="text-align:right; font-weight:900; color:#047857;">+₹${item.profit.toLocaleString('en-IN')}</td>
-                        <td style="text-align:center;"><span style="font-weight:800; font-size:0.72rem; color:#047857;">${item.margin}</span></td>
-                        <td style="text-align:center;"><span class="crm-tag" style="${statusCls}">${item.status}</span></td>
-                        <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${item.date}</td>
-                    </tr>
-                `;
-            }).join('');
-        };
-
-        /* ── Follow-ups Table Renderer ── */
-        var currentFollowupFilter = 'all';
-        function filterFollowups(filter, btn) {
-            currentFollowupFilter = filter;
-            var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
-            pills.forEach(function(p) { p.classList.remove('active'); });
-            if (btn) btn.classList.add('active');
-            renderFollowupsTable();
-        };
-
-        function renderFollowupsTable() {
-            var tbody = document.getElementById('crmFollowupsTbody');
-            if (!tbody) return;
-
-            var customers = getResellerCustomers();
-            var allFollowups = [];
-            customers.forEach(function(c) {
-                (c.followups || []).forEach(function(f) {
-                    allFollowups.push({ customer: c, task: f });
-                });
-            });
-
-            var filtered = allFollowups.filter(function(item) {
-                if (currentFollowupFilter === 'pending') return item.task.status === 'Pending';
-                if (currentFollowupFilter === 'completed') return item.task.status === 'Completed';
-                if (currentFollowupFilter === 'today') return item.task.date === new Date().toISOString().split('T')[0];
-                return true;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No follow-ups found for this filter.</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = filtered.map(function(item) {
-                var isCompleted = item.task.status === 'Completed';
-                var statusTag = isCompleted ? '<span class="crm-tag crm-tag-repeat">Completed</span>' : '<span class="crm-tag crm-tag-followup">Pending</span>';
-                return `
-                    <tr>
-                        <td>
-                            <div style="font-weight:800; font-size:0.82rem;">📅 ${item.task.date}</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Time: ${item.task.time || '11:00 AM'}</div>
-                        </td>
-                        <td>
-                            <div style="font-weight:800; font-size:0.84rem; cursor:pointer;" onclick="openCustomerProfileModal(${item.customer.id})">
-                                ${item.customer.name}
-                            </div>
-                        </td>
-                        <td>
-                            <div style="font-size:0.76rem;">📞 ${item.customer.mobile}</div>
-                        </td>
-                        <td>
-                            <div style="font-size:0.80rem; font-weight:600; color:var(--ws-text-main);">${item.task.note}</div>
-                        </td>
-                        <td style="text-align:center;">${statusTag}</td>
-                        <td style="text-align:center;">
-                            <div style="display:flex; gap:6px; justify-content:center;">
-                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:3px 8px; font-size:0.70rem;">💬 Chat</button>
-                                ${!isCompleted ? `<button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})" style="padding:3px 8px; font-size:0.70rem;">✅ Done</button>` : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        };
-
-        /* ── Recommendations Center Renderer ── */
-        function populateRecommendationSelect() {
-            var select = document.getElementById('recommendationCustomerSelect');
-            if (!select) return;
-            var customers = getResellerCustomers();
-            select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
-            }).join('');
-
-            if (customers.length > 0) {
-                select.value = customers[0].id;
-                generateCustomerRecommendations(customers[0].id);
-            }
-        };
-
-        function generateCustomerRecommendations(custId) {
-            var grid = document.getElementById('recommendationsProductGrid');
-            if (!grid) return;
-
-            var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
-            var prods = window.allProducts || [];
-
-            if (!c || prods.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">Please select a customer to view recommendations.</div>';
-                return;
-            }
-
-            // Algorithm: Pick top tailored products
-            grid.innerHTML = prods.slice(0, 6).map(function(p) {
-                var cost = p.wholesale_price || p.price || 2199;
-                var mrp = p.retail_price || 3499;
-                var estProfit = mrp - cost;
-                return `
-                    <article class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
-                        <div class="card-title" style="font-weight:800; font-size:0.84rem; margin-bottom:4px;">${p.name}</div>
-                        <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:6px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; padding:6px 8px; border-radius:6px; margin-bottom:8px;">
-                            <div>
-                                <div style="font-size:0.65rem; color:var(--ws-text-muted);">Cost: ₹${cost.toLocaleString('en-IN')}</div>
-                                <div style="font-weight:900; font-size:0.86rem; color:var(--ws-gold-primary);">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div style="font-size:0.65rem; color:#047857; font-weight:700;">Est. Margin</div>
-                                <div style="font-weight:900; font-size:0.86rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
-                            </div>
-                        </div>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%;" onclick="openResellerQuickOrderDrawer(${c.id})">
-                            ⚡ Create Order for ${c.name.split(' ')[0]}
-                        </button>
-                    </article>
-                `;
-            }).join('');
-        };
-
-    
-
-
-
-
-        /* ── CRM Bulk Actions & Modal Controllers ── */
-        function toggleCustomerSelect(id, isChecked) {
-            if (isChecked) {
-                selectedCustomerIds.add(id);
-            } else {
-                selectedCustomerIds.delete(id);
-            }
-            updateBulkToolbarState();
-        }
-        window.toggleCustomerSelect = toggleCustomerSelect;
-
-        function toggleSelectAllCustomers(masterCheckbox) {
-            var customers = getResellerCustomers();
-            if (masterCheckbox.checked) {
-                customers.forEach(function(c) { selectedCustomerIds.add(c.id); });
-            } else {
-                selectedCustomerIds.clear();
-            }
-            renderCrmCustomers();
-            updateBulkToolbarState();
-        }
-        window.toggleSelectAllCustomers = toggleSelectAllCustomers;
-
-        function updateBulkToolbarState() {
-            var bar = document.getElementById('crmBulkActionBar');
-            var countEl = document.getElementById('crmSelectedCount');
-            if (countEl) countEl.textContent = selectedCustomerIds.size;
-            if (bar) {
-                bar.style.display = selectedCustomerIds.size > 0 ? 'flex' : 'none';
-            }
-        }
-        window.updateBulkToolbarState = updateBulkToolbarState;
-
-        function clearCustomerSelection() {
-            selectedCustomerIds.clear();
-            var master = document.getElementById('crmMasterCheckbox');
-            if (master) master.checked = false;
-            renderCrmCustomers();
-            updateBulkToolbarState();
-            showWsToast('Selection cleared.');
-        }
-        window.clearCustomerSelection = clearCustomerSelection;
-
-        function bulkWhatsAppCustomers() {
-            if (selectedCustomerIds.size === 0) {
-                showWsToast('Please select at least one customer.');
-                return;
-            }
-            var customers = getResellerCustomers();
-            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
-            var msg = prompt('Enter WhatsApp broadcast message template:', 'Namaste! Check out our latest festive saree catalogue at exclusive reseller discounts: https://jaihanumantex.in/shop.php');
-            if (!msg) return;
-
-            var first = selected[0];
-            var cleanPhone = first.whatsapp || first.mobile;
-            cleanPhone = cleanPhone.replace(/[^0-9]/g, '');
-            if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
-            window.open('https://api.whatsapp.com/send?phone=' + cleanPhone + '&text=' + encodeURIComponent(msg), '_blank');
-            showWsToast('🚀 Opened WhatsApp broadcast for ' + selected.length + ' selected customers!');
-        }
-        window.bulkWhatsAppCustomers = bulkWhatsAppCustomers;
-
-        function bulkAddTagToCustomers() {
-            if (selectedCustomerIds.size === 0) {
-                showWsToast('Please select at least one customer.');
-                return;
-            }
-            var tag = prompt('Enter tag name to add (e.g. VIP, FESTIVE, HIGH VALUE, PROMO):', 'PROMO');
-            if (!tag) return;
-            tag = tag.trim().toUpperCase();
-            var customers = getResellerCustomers();
-            customers.forEach(function(c) {
-                if (selectedCustomerIds.has(c.id)) {
-                    if (!c.tags) c.tags = [];
-                    if (!c.tags.includes(tag)) c.tags.push(tag);
-                }
-            });
-            saveResellerCustomers(customers);
-            showWsToast('🏷️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
-        }
-        window.bulkAddTagToCustomers = bulkAddTagToCustomers;
-
-        function exportSelectedCustomersCSV() {
-            if (selectedCustomerIds.size === 0) {
-                exportCustomersCSV();
-                return;
-            }
-            var customers = getResellerCustomers();
-            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
-            var headers = ["ID", "Name", "Mobile", "WhatsApp", "Email", "City", "State", "Pincode", "Tags", "Total Orders", "Total Purchase (INR)", "Total Profit (INR)"];
-            var rows = selected.map(function(c) {
-                return [
-                    c.id,
-                    '"' + (c.name || '').replace(/"/g, '""') + '"',
-                    c.mobile || '',
-                    c.whatsapp || '',
-                    c.email || '',
-                    '"' + (c.city || '') + '"',
-                    '"' + (c.state || '') + '"',
-                    c.pincode || '',
-                    '"' + (c.tags || []).join('; ') + '"',
-                    c.totalOrders || 0,
-                    c.totalPurchase || 0,
-                    c.totalProfit || 0
-                ];
-            });
-
-            var csvContent = "data:text/csv;charset=utf-8," + [headers.join(",")].concat(rows.map(function(e) { return e.join(","); })).join("\n");
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "reseller_selected_customers_" + new Date().toISOString().slice(0,10) + ".csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showWsToast('📥 Exported ' + selected.length + ' selected customers to CSV!');
-        }
-        window.exportSelectedCustomersCSV = exportSelectedCustomersCSV;
-
-        /* ── Saved Filters Modals ── */
-        function openSavedFiltersModal() {
-            var m = document.getElementById('resellerSavedFiltersModal');
-            if (m) m.classList.add('active');
-        }
-        window.openSavedFiltersModal = openSavedFiltersModal;
-
-        function closeSavedFiltersModal() {
-            var m = document.getElementById('resellerSavedFiltersModal');
-            if (m) m.classList.remove('active');
-        }
-        window.closeSavedFiltersModal = closeSavedFiltersModal;
-
-        function saveCurrentFilterPreset() {
-            var name = prompt('Enter a name for this filter preset:', 'My Custom Filter');
-            if (!name) return;
-            showWsToast('💾 Saved filter preset: ' + name);
-            closeSavedFiltersModal();
-        }
-        window.saveCurrentFilterPreset = saveCurrentFilterPreset;
-
-        /* ── Order Detail Modal Controller ── */
-        function openWsOrderModal(orderId) {
-            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
-            if (modal) {
-                modal.classList.add('active');
-            } else {
-                showWsToast('📦 Viewing Order Details for #' + orderId);
-            }
-        }
-        window.openWsOrderModal = openWsOrderModal;
-
-        function closeWsOrderModal() {
-            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
-            if (modal) modal.classList.remove('active');
-        }
-        window.closeWsOrderModal = closeWsOrderModal;
-
-
-// ── Global Window Function Safe Exposer ──
-(function() {
-    var exposedList = [
-        'switchWsTab', 'setOverviewFilter', 'switchSalesChartStyle', 'filterByPriceTier',
-        'handleWholesalerLogout', 'initResellerApp', 'checkResellerSecurity', 'loginAsDemoReseller',
-        'openWsCatalogCategoryModal', 'closeWsCatalogCategoryModal', 'openSmartShareModal', 'closeSmartShareModal',
-        'openWalletTopupModal', 'closeWalletTopupModal', 'openEditAddressDrawer', 'closeEditAddressDrawer',
-        'selectGstMode', 'toggleSameAsBillingAddress', 'saveGstSettings', 'saveAddressBookSettings',
-        'saveProfileSettings', 'updateWholesaleCartBadge', 'updateWholesaleWishlistBadge',
-        'animateTargetGauge', 'showWsToast', 'toggleSidebar', 'getResellerCustomers',
-        'saveResellerCustomers', 'renderCrmCustomers', 'updateCrmCounts', 'filterCustomersByTag',
-        'handleCustomerSearch', 'clearCustomerSearch', 'openCustomerProfileModal', 'closeCustomerProfileModal',
-        'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
-        'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
-        'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
-        'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
-        'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
-        'handleSaveFollowupSubmit', 'markFollowupCompleted', 'renderDashboardCrmWidgets', 'renderTopCustomersList',
-        'switchTopCustomersPeriod', 'handleGlobalSearch', 'sendCustomerWhatsAppMessage', 'exportCustomersCSV',
-        'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
-        'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',
-        'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
-        'resetAdvancedOrderFilters', 'openSaveFilterModal', 'openSavedFiltersModal', 'closeSavedFiltersModal',
-        'saveCurrentFilterPreset', 'renderOrdersView', 'renderReportsView', 'renderTrackingTab',
-        'renderTicketsView', 'renderAddressBookData'
-    ];
-
-    exposedList.forEach(function(name) {
-        try {
-            var fn = eval('typeof ' + name + ' !== "undefined" ? ' + name + ' : null');
-            if (typeof fn === 'function') {
-                window[name] = fn;
-            }
-        } catch(e) {}
-    });
-})();
-
-</script>
+    ?></script>
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
@@ -13331,10 +12086,10 @@ window.animateTargetGauge = animateTargetGauge;
                     <td style="text-align:right; font-weight:900; color:#047857;">₹${Number(c.totalProfit).toLocaleString('en-IN')}</td>
                     <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${c.lastOrder || 'N/A'}</td>
                     <td style="text-align:center;">
-                        <div style="display:flex; gap:4px; justify-content:center;">
-                            <button class="ws-action-btn view" onclick="openCustomerProfileModal(${c.id})" title="View CRM Profile">👁️</button>
-                            <button class="ws-action-btn print" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Send WhatsApp Message" style="background:#25D366; border-color:#25D366; color:#FFF;">💬</button>
-                            <button class="ws-action-btn" onclick="openResellerQuickOrderDrawer(${c.id})" title="Quick Order" style="background:#FAF5E8; border-color:var(--ws-gold-primary); color:var(--ws-gold-primary); font-weight:800;">⚡</button>
+                        <div class="crm-action-btn-group">
+                            <button class="crm-btn-view" onclick="openCustomerProfileModal(${c.id})" title="View Profile">👁️</button>
+                            <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="WhatsApp">💬</button>
+                            <button class="crm-btn-reorder" onclick="openResellerQuickOrderDrawer(${c.id})" title="Quick Order">⚡</button>
                         </div>
                     </td>
                 `;
@@ -14411,6 +13166,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Recommendations Center Renderer ── */
+                /* ── Tailored Recommendation Engine ── */
         function populateRecommendationSelect() {
             var select = document.getElementById('recommendationCustomerSelect');
             if (!select) return;
@@ -14418,53 +13174,73 @@ Rajesh Kumar (Reseller Partner)`;
             select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                 return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
             }).join('');
-
             if (customers.length > 0) {
                 select.value = customers[0].id;
                 generateCustomerRecommendations(customers[0].id);
             }
-        };
+        }
+        window.populateRecommendationSelect = populateRecommendationSelect;
 
         function generateCustomerRecommendations(custId) {
             var grid = document.getElementById('recommendationsProductGrid');
             if (!grid) return;
 
             var customers = getResellerCustomers();
-            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
-            var prods = window.allProducts || [];
+            var c = customers.find(function(x) { return Number(x.id) === Number(custId); }) || customers[0];
+            
+            var el = document.getElementById('ws-catalog-data');
+            var prods = (window.allProducts && window.allProducts.length > 0) ? window.allProducts : (el ? JSON.parse(el.textContent || '[]') : []);
+            
+            if (prods.length === 0) {
+                prods = [
+                    { id: 101, name: "Kanjivaram Pure Zari Bridal Silk Saree", category: "Bridal Silk", wholesale_price: 3499, retail_price: 5999, image: "images/product1.png" },
+                    { id: 102, name: "Banarasi Tanchoi Brocade Saree", category: "Banarasi", wholesale_price: 2899, retail_price: 4999, image: "images/product2.png" },
+                    { id: 103, name: "Paithani Handloom Peacock Pallu Saree", category: "Paithani", wholesale_price: 4200, retail_price: 6999, image: "images/product3.png" },
+                    { id: 104, name: "Chanderi Cotton Silk Floral Saree", category: "Chanderi", wholesale_price: 1850, retail_price: 3200, image: "images/product4.png" },
+                    { id: 105, name: "Mysore Crepe Silk Festive Saree", category: "Mysore Silk", wholesale_price: 2450, retail_price: 4199, image: "images/product1.png" },
+                    { id: 106, name: "Tussar Ghicha Embroidered Silk Saree", category: "Tussar Silk", wholesale_price: 3100, retail_price: 5299, image: "images/product2.png" }
+                ];
+            }
 
-            if (!c || prods.length === 0) {
+            if (!c) {
                 grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">Please select a customer to view recommendations.</div>';
                 return;
             }
 
-            // Algorithm: Pick top tailored products
             grid.innerHTML = prods.slice(0, 6).map(function(p) {
                 var cost = p.wholesale_price || p.price || 2199;
                 var mrp = p.retail_price || 3499;
                 var estProfit = mrp - cost;
                 return `
-                    <article class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:8px; margin-bottom:8px;">
-                        <div class="card-title" style="font-weight:800; font-size:0.84rem; margin-bottom:4px;">${p.name}</div>
-                        <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-bottom:6px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; padding:6px 8px; border-radius:6px; margin-bottom:8px;">
+                    <article class="ws-product-card" style="padding:14px; background:#FFFFFF; border:1.5px solid #E8D9B5; border-radius:14px; box-shadow:0 4px 14px rgba(0,0,0,0.03); transition:all 0.2s ease;">
+                        <img src="${p.image || 'images/product1.png'}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
+                        <div class="card-title" style="font-weight:800; font-size:0.86rem; color:#2C251E; margin-bottom:4px; line-height:1.3;">${p.name}</div>
+                        <div style="font-size:0.72rem; color:#8C8072; margin-bottom:8px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF6EE; border:1px solid #EAE0C8; padding:8px 10px; border-radius:8px; margin-bottom:10px;">
                             <div>
-                                <div style="font-size:0.65rem; color:var(--ws-text-muted);">Cost: ₹${cost.toLocaleString('en-IN')}</div>
-                                <div style="font-weight:900; font-size:0.86rem; color:var(--ws-gold-primary);">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.68rem; color:#8C8072;">Cost: ₹${cost.toLocaleString('en-IN')}</div>
+                                <div style="font-weight:900; font-size:0.88rem; color:#8A681F;">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
                             </div>
                             <div style="text-align:right;">
-                                <div style="font-size:0.65rem; color:#047857; font-weight:700;">Est. Margin</div>
-                                <div style="font-weight:900; font-size:0.86rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.68rem; color:#047857; font-weight:700;">Est. Margin</div>
+                                <div style="font-weight:900; font-size:0.88rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
                             </div>
                         </div>
-                        <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%;" onclick="openResellerQuickOrderDrawer(${c.id})">
-                            ⚡ Create Order for ${c.name.split(' ')[0]}
-                        </button>
+                        <div style="display:flex; gap:6px;">
+                            <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1; justify-content:center;" onclick="openResellerQuickOrderDrawer(${c.id})">
+                                ⚡ Create Order
+                            </button>
+                            <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Pitch to Customer on WhatsApp">
+                                💬
+                            </button>
+                        </div>
                     </article>
                 `;
             }).join('');
-        };
+        }
+        window.generateCustomerRecommendations = generateCustomerRecommendations;
+
+
 
     
 
