@@ -5939,7 +5939,7 @@ $catalogProducts = [
                                     </div>
 
                                     <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
+                                    <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
                                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                     </button>
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
@@ -6814,7 +6814,7 @@ $catalogProducts = [
                                 </div>
 
                                 <!-- Share Button on Photo (Directly Above Category Tag) -->
-                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
+                                <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
                                     <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                 </button>
 
@@ -7739,7 +7739,7 @@ $catalogProducts = [
             </div>
             <div class="ws-modal-footer" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:12px 16px; background:#FFFFFF; border-top:1.5px solid var(--ws-border);">
                 <!-- Button 1: Download Statement -->
-                <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px;" onclick="window.showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
+                <button class="ws-btn ws-btn-primary" style="height:42px; justify-content:center; font-size:0.78rem; font-weight:800; padding:0 10px;" onclick="showWsToast('📄 Full GSTR Passbook Statement downloaded (PDF)!')">
                     <svg class="ws-anim-dl-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download Statement</span>
                 </button>
@@ -8040,6 +8040,7 @@ $catalogProducts = [
             echo '[]';
         }
     ?>
+
         /* ════════════════════════════════════════════════════════════
            RESELLER CRM, CUSTOMERS & OPERATIONS ENGINE
         ════════════════════════════════════════════════════════════ */
@@ -8234,7 +8235,7 @@ $catalogProducts = [
         ];
 
         // 2. Load / Save Reseller Customers State
-        window.getResellerCustomers = function() {
+        function getResellerCustomers() {
             try {
                 var raw = localStorage.getItem('reseller_customers_db');
                 if (raw) return JSON.parse(raw);
@@ -8243,11 +8244,11 @@ $catalogProducts = [
             return DEFAULT_RESELLER_CUSTOMERS;
         };
 
-        window.saveResellerCustomers = function(customers) {
+        function saveResellerCustomers(customers) {
             localStorage.setItem('reseller_customers_db', JSON.stringify(customers));
-            window.renderCrmCustomers();
-            window.renderDashboardCrmWidgets();
-            window.updateCrmCounts();
+            renderCrmCustomers();
+            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
+            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
         };
 
         var currentCustomerFilterTag = 'all';
@@ -8255,13 +8256,73 @@ $catalogProducts = [
         var selectedCustomerIds = new Set();
         var currentActiveProfileCustomer = null;
 
-        // 3. Tab Switching Extension
-        var originalSwitchWsTab = window.switchWsTab;
+                // 3. Tab Switching Extension
+        function switchWsTab(tabName) {
+            try {
+                if (!tabName) return;
+                var cleanName = tabName.toLowerCase();
+                
+                // Hide all panes
+                document.querySelectorAll('.ws-tab-pane').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+                // Unhighlight all sidebar nav items
+                document.querySelectorAll('.ws-nav-item').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+                // Unhighlight all mobile dock items
+                document.querySelectorAll('.ws-dock-btn').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+
+                var targetPaneId = 'tabPane' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                var targetPane = document.getElementById(targetPaneId);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                } else {
+                    console.warn('Pane not found for:', targetPaneId);
+                }
+
+                // Highlight active nav item
+                document.querySelectorAll('.ws-nav-item').forEach(function(btn) {
+                    var attr = btn.getAttribute('onclick') || '';
+                    if (attr.toLowerCase().indexOf("'" + cleanName + "'") !== -1 || attr.toLowerCase().indexOf('"' + cleanName + '"') !== -1) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                // Highlight mobile dock item
+                var dockBtn = document.getElementById('dockBtn' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
+                if (dockBtn) dockBtn.classList.add('active');
+
+                // Trigger tab-specific data rendering
+                if (cleanName === 'customers') {
+                    if (typeof renderCrmCustomers === 'function') renderCrmCustomers();
+                    if (typeof updateCrmCounts === 'function') updateCrmCounts();
+                } else if (cleanName === 'profit') {
+                    if (typeof renderProfitLedger === 'function') renderProfitLedger();
+                } else if (cleanName === 'followups') {
+                    if (typeof renderFollowupsTable === 'function') renderFollowupsTable();
+                } else if (cleanName === 'recommendations') {
+                    if (typeof populateRecommendationSelect === 'function') populateRecommendationSelect();
+                } else if (cleanName === 'orders') {
+                    if (typeof renderOrdersView === 'function') renderOrdersView(activeOrdersList);
+                } else if (cleanName === 'overview') {
+                    if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (typeof toggleSidebar === 'function') toggleSidebar(false);
+            } catch(e) {
+                console.error('switchWsTab error:', e);
+            }
+        }
+        window.switchWsTab = switchWsTab;
         
 
         // 4. Render Customers Table & Mobile Cards
-        window.renderCrmCustomers = function() {
-            var customers = window.getResellerCustomers();
+        function renderCrmCustomers() {
+            var customers = getResellerCustomers();
             var tbody = document.getElementById('crmCustomersTbody');
             var mobList = document.getElementById('crmCustomersMobileList');
             if (!tbody || !mobList) return;
@@ -8373,8 +8434,8 @@ $catalogProducts = [
         };
 
         // 5. Update CRM KPI summary numbers
-        window.updateCrmCounts = function() {
-            var customers = window.getResellerCustomers();
+        function updateCrmCounts() {
+            var customers = getResellerCustomers();
             var total = customers.length;
             var vip = customers.filter(function(c) { return (c.tags || []).indexOf('VIP') !== -1; }).length;
             var repeat = customers.filter(function(c) { return Number(c.totalOrders) > 1; }).length;
@@ -8392,30 +8453,30 @@ $catalogProducts = [
         };
 
         // 6. Customer Search & Tag Filters
-        window.filterCustomersByTag = function(tag, btn) {
+        function filterCustomersByTag(tag, btn) {
             currentCustomerFilterTag = tag;
             var pills = document.querySelectorAll('#customerTagFilterPills .ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-            window.renderCrmCustomers();
+            renderCrmCustomers();
         };
 
-        window.handleCustomerSearch = function(val) {
+        function handleCustomerSearch(val) {
             currentCustomerSearchTerm = (val || '').trim();
             var clearBtn = document.getElementById('customerSearchClear');
             if (clearBtn) clearBtn.style.display = currentCustomerSearchTerm ? 'block' : 'none';
-            window.renderCrmCustomers();
+            renderCrmCustomers();
         };
 
-        window.clearCustomerSearch = function() {
+        function clearCustomerSearch() {
             var input = document.getElementById('customerSearchInput');
             if (input) input.value = '';
-            window.handleCustomerSearch('');
+            handleCustomerSearch('');
         };
 
         // 7. Customer Profile Modal Controller
-        window.openCustomerProfileModal = function(custId) {
-            var customers = window.getResellerCustomers();
+        function openCustomerProfileModal(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -8493,24 +8554,24 @@ $catalogProducts = [
             if (followBadge) followBadge.textContent = (c.followups || []).length;
 
             // Load sub tabs
-            window.renderProfileOrdersTab(c);
-            window.renderProfileProductsTab(c);
-            window.renderProfileRecommendedTab(c);
-            window.renderProfileLedgerTab(c);
-            window.renderProfileNotesTab(c);
-            window.renderProfileFollowupsTab(c);
-            window.renderProfileTimelineTab(c);
+            renderProfileOrdersTab(c);
+            renderProfileProductsTab(c);
+            renderProfileRecommendedTab(c);
+            renderProfileLedgerTab(c);
+            renderProfileNotesTab(c);
+            renderProfileFollowupsTab(c);
+            renderProfileTimelineTab(c);
 
             var modal = document.getElementById('resellerCustomerProfileModal');
             if (modal) modal.classList.add('active');
         };
 
-        window.closeCustomerProfileModal = function() {
+        function closeCustomerProfileModal() {
             var modal = document.getElementById('resellerCustomerProfileModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.switchProfileTab = function(tabKey, btn) {
+        function switchProfileTab(tabKey, btn) {
             document.querySelectorAll('.crm-prof-tab-content').forEach(function(el) {
                 el.style.display = 'none';
             });
@@ -8523,7 +8584,7 @@ $catalogProducts = [
         };
 
         // 8. Profile Tab Renderers
-        window.renderProfileOrdersTab = function(c) {
+        function renderProfileOrdersTab(c) {
             var container = document.getElementById('profOrdersList');
             if (!container) return;
             var orders = (window.allOrders || []).slice(0, c.totalOrders || 2);
@@ -8543,7 +8604,7 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.renderProfileProductsTab = function(c) {
+        function renderProfileProductsTab(c) {
             var container = document.getElementById('profProductsList');
             if (!container) return;
             var prods = (window.allProducts || []).slice(0, 4);
@@ -8558,7 +8619,7 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.renderProfileRecommendedTab = function(c) {
+        function renderProfileRecommendedTab(c) {
             var container = document.getElementById('profRecommendedList');
             if (!container) return;
             var prods = (window.allProducts || []).slice(2, 6);
@@ -8574,7 +8635,7 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.renderProfileLedgerTab = function(c) {
+        function renderProfileLedgerTab(c) {
             var container = document.getElementById('profLedgerContent');
             if (!container) return;
             container.innerHTML = `
@@ -8608,7 +8669,7 @@ $catalogProducts = [
             `;
         };
 
-        window.renderProfileNotesTab = function(c) {
+        function renderProfileNotesTab(c) {
             var container = document.getElementById('profNotesList');
             if (!container) return;
             var notes = c.notes || [];
@@ -8626,7 +8687,7 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.renderProfileFollowupsTab = function(c) {
+        function renderProfileFollowupsTab(c) {
             var container = document.getElementById('profFollowupsList');
             if (!container) return;
             var fList = c.followups || [];
@@ -8647,7 +8708,7 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.renderProfileTimelineTab = function(c) {
+        function renderProfileTimelineTab(c) {
             var container = document.getElementById('profTimelineList');
             if (!container) return;
             container.innerHTML = `
@@ -8683,7 +8744,7 @@ $catalogProducts = [
         };
 
         // 9. Add / Edit Customer Modal
-        window.openAddCustomerModal = function(editId) {
+        function openAddCustomerModal(editId) {
             var modal = document.getElementById('resellerAddCustomerModal');
             var title = document.getElementById('addCustomerModalTitle');
             var formId = document.getElementById('custFormId');
@@ -8699,7 +8760,7 @@ $catalogProducts = [
             var formNotes = document.getElementById('custFormNotes');
 
             if (editId) {
-                var customers = window.getResellerCustomers();
+                var customers = getResellerCustomers();
                 var c = customers.find(function(x) { return x.id === editId; });
                 if (c) {
                     if (title) title.innerHTML = '<span>✏️ Edit Customer Profile</span>';
@@ -8732,12 +8793,12 @@ $catalogProducts = [
             if (modal) modal.classList.add('active');
         };
 
-        window.closeAddCustomerModal = function() {
+        function closeAddCustomerModal() {
             var modal = document.getElementById('resellerAddCustomerModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveCustomerSubmit = function() {
+        function handleSaveCustomerSubmit() {
             var formId = document.getElementById('custFormId').value;
             var name = document.getElementById('custFormName').value.trim();
             var mobile = document.getElementById('custFormMobile').value.trim();
@@ -8751,7 +8812,7 @@ $catalogProducts = [
             var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim().toUpperCase(); }) : ['NEW'];
             var notesText = (document.getElementById('custFormNotes') ? document.getElementById('custFormNotes').value.trim() : '');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
 
             if (formId) {
                 var c = customers.find(function(x) { return Number(x.id) === Number(formId); });
@@ -8789,18 +8850,18 @@ $catalogProducts = [
                 customers.unshift(newCust);
             }
 
-            window.saveResellerCustomers(customers);
-            window.closeAddCustomerModal();
-            window.showWsToast('✅ Customer saved successfully!');
+            saveResellerCustomers(customers);
+            closeAddCustomerModal();
+            showWsToast('✅ Customer saved successfully!');
         };
 
         // 10. Quick Order Flow
-        window.openResellerQuickOrderDrawer = function(prefillCustId) {
+        function openResellerQuickOrderDrawer(prefillCustId) {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             var custSelect = document.getElementById('qoCustomerSelect');
             var prodSelect = document.getElementById('qoProductSelect');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             if (custSelect) {
                 custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                     return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
@@ -8815,19 +8876,19 @@ $catalogProducts = [
             }
 
             if (prefillCustId) {
-                window.handleQoCustomerChange(prefillCustId);
+                handleQoCustomerChange(prefillCustId);
             }
 
             if (modal) modal.classList.add('active');
         };
 
-        window.closeResellerQuickOrderDrawer = function() {
+        function closeResellerQuickOrderDrawer() {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleQoCustomerChange = function(custId) {
-            var customers = window.getResellerCustomers();
+        function handleQoCustomerChange(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
             var addr = document.getElementById('qoShippingAddress');
             if (c && addr) {
@@ -8835,7 +8896,7 @@ $catalogProducts = [
             }
         };
 
-        window.handleQoProductChange = function(prodId) {
+        function handleQoProductChange(prodId) {
             var select = document.getElementById('qoProductSelect');
             var opt = select.options[select.selectedIndex];
             var cost = opt ? Number(opt.getAttribute('data-cost')) || 2199 : 2199;
@@ -8845,10 +8906,10 @@ $catalogProducts = [
             var sellEl = document.getElementById('qoSellingPrice');
             if (costEl) costEl.value = cost;
             if (sellEl) sellEl.value = mrp;
-            window.calculateQoProfit();
+            calculateQoProfit();
         };
 
-        window.calculateQoProfit = function() {
+        function calculateQoProfit() {
             var qty = Number(document.getElementById('qoQuantity').value) || 1;
             var cost = Number(document.getElementById('qoCostPrice').value) || 0;
             var sell = Number(document.getElementById('qoSellingPrice').value) || 0;
@@ -8863,7 +8924,7 @@ $catalogProducts = [
             if (elTotal) elTotal.textContent = '₹' + totalOrder.toLocaleString('en-IN');
         };
 
-        window.handleQuickOrderSubmit = function() {
+        function handleQuickOrderSubmit() {
             var custId = Number(document.getElementById('qoCustomerSelect').value);
             var prodId = Number(document.getElementById('qoProductSelect').value);
             var qty = Number(document.getElementById('qoQuantity').value) || 1;
@@ -8872,7 +8933,7 @@ $catalogProducts = [
             var profit = qty * (sell - cost);
             var total = qty * sell;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 c.totalOrders = (Number(c.totalOrders) || 0) + 1;
@@ -8882,16 +8943,16 @@ $catalogProducts = [
                 if ((c.tags || []).indexOf('REPEAT') === -1 && c.totalOrders > 1) {
                     c.tags.push('REPEAT');
                 }
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeResellerQuickOrderDrawer();
-            window.showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
+            closeResellerQuickOrderDrawer();
+            showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
         };
 
         // 11. Repeat Order Modal Flow
-        window.openRepeatOrderModal = function(custId, origOrderId) {
-            var customers = window.getResellerCustomers();
+        function openRepeatOrderModal(custId, origOrderId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -8914,44 +8975,44 @@ $catalogProducts = [
                 `;
             }
 
-            window.recalcRepeatOrderTotal();
+            recalcRepeatOrderTotal();
             if (modal) modal.classList.add('active');
         };
 
-        window.closeRepeatOrderModal = function() {
+        function closeRepeatOrderModal() {
             var modal = document.getElementById('resellerRepeatOrderModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.recalcRepeatOrderTotal = function() {
+        function recalcRepeatOrderTotal() {
             var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
             var total = qty * 4899;
             var el = document.getElementById('repeatOrderEstimatedTotal');
             if (el) el.textContent = '₹' + total.toLocaleString('en-IN');
         };
 
-        window.handleRepeatOrderConfirm = function() {
+        function handleRepeatOrderConfirm() {
             var custId = Number(document.getElementById('repeatCustId').value);
             var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
             var total = qty * 4899;
             var profit = qty * 1200;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 c.totalOrders = (Number(c.totalOrders) || 0) + 1;
                 c.totalPurchase = (Number(c.totalPurchase) || 0) + total;
                 c.totalProfit = (Number(c.totalProfit) || 0) + profit;
                 c.lastOrder = new Date().toISOString().split('T')[0];
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeRepeatOrderModal();
-            window.showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
+            closeRepeatOrderModal();
+            showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
         };
 
         // 12. Notes Engine
-        window.openAddNoteModal = function(custId) {
+        function openAddNoteModal(custId) {
             var modal = document.getElementById('resellerAddNoteModal');
             var formCustId = document.getElementById('noteFormCustomerId');
             var formText = document.getElementById('noteFormText');
@@ -8960,16 +9021,16 @@ $catalogProducts = [
             if (modal) modal.classList.add('active');
         };
 
-        window.closeAddNoteModal = function() {
+        function closeAddNoteModal() {
             var modal = document.getElementById('resellerAddNoteModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveNoteSubmit = function() {
+        function handleSaveNoteSubmit() {
             var custId = Number(document.getElementById('noteFormCustomerId').value);
             var text = document.getElementById('noteFormText').value.trim();
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 if (!c.notes) c.notes = [];
@@ -8979,24 +9040,24 @@ $catalogProducts = [
                     date: new Date().toLocaleString(),
                     creator: 'Rajesh Kumar'
                 });
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
                 if (currentActiveProfileCustomer && currentActiveProfileCustomer.id === custId) {
-                    window.renderProfileNotesTab(c);
+                    renderProfileNotesTab(c);
                 }
             }
 
-            window.closeAddNoteModal();
-            window.showWsToast('📝 Note saved successfully!');
+            closeAddNoteModal();
+            showWsToast('📝 Note saved successfully!');
         };
 
         // 13. Follow-ups Engine & Dashboard Widget
-        window.openScheduleFollowupModal = function(prefillCustId) {
+        function openScheduleFollowupModal(prefillCustId) {
             var modal = document.getElementById('resellerScheduleFollowupModal');
             var custSelect = document.getElementById('followupFormCustomer');
             var dateEl = document.getElementById('followupFormDate');
             var noteEl = document.getElementById('followupFormNote');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             if (custSelect) {
                 custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                     return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ')</option>';
@@ -9013,19 +9074,19 @@ $catalogProducts = [
             if (modal) modal.classList.add('active');
         };
 
-        window.closeScheduleFollowupModal = function() {
+        function closeScheduleFollowupModal() {
             var modal = document.getElementById('resellerScheduleFollowupModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveFollowupSubmit = function() {
+        function handleSaveFollowupSubmit() {
             var custId = Number(document.getElementById('followupFormCustomer').value);
             var date = document.getElementById('followupFormDate').value;
             var time = document.getElementById('followupFormTime').value;
             var note = document.getElementById('followupFormNote').value.trim();
             var status = document.getElementById('followupFormStatus').value;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 if (!c.followups) c.followups = [];
@@ -9036,27 +9097,27 @@ $catalogProducts = [
                     note: note,
                     status: status
                 });
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeScheduleFollowupModal();
-            window.showWsToast('⏰ Follow-up task scheduled!');
+            closeScheduleFollowupModal();
+            showWsToast('⏰ Follow-up task scheduled!');
         };
 
-        window.markFollowupCompleted = function(custId, fId) {
-            var customers = window.getResellerCustomers();
+        function markFollowupCompleted(custId, fId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c && c.followups) {
                 var f = c.followups.find(function(x) { return x.id === fId; });
                 if (f) f.status = 'Completed';
-                window.saveResellerCustomers(customers);
-                window.showWsToast('✅ Follow-up marked as completed!');
+                saveResellerCustomers(customers);
+                showWsToast('✅ Follow-up marked as completed!');
             }
         };
 
         // 14. Render Dashboard CRM Widgets
-        window.renderDashboardCrmWidgets = function() {
-            var customers = window.getResellerCustomers();
+        function renderDashboardCrmWidgets() {
+            var customers = getResellerCustomers();
 
             // 1. Follow-ups widget
             var fContainer = document.getElementById('dashFollowupsList');
@@ -9088,7 +9149,7 @@ $catalogProducts = [
             }
 
             // 2. Top Customers Leaderboard widget
-            window.renderTopCustomersList('month');
+            renderTopCustomersList('month');
 
             // 3. Reorder Opportunities widget
             var rContainer = document.getElementById('dashReorderAlertsList');
@@ -9108,10 +9169,10 @@ $catalogProducts = [
             }
         };
 
-        window.renderTopCustomersList = function(period) {
+        function renderTopCustomersList(period) {
             var container = document.getElementById('dashTopCustomersList');
             if (!container) return;
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var sorted = customers.slice().sort(function(a, b) { return b.totalPurchase - a.totalPurchase; });
             container.innerHTML = sorted.slice(0, 4).map(function(c, idx) {
                 var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : '⭐'));
@@ -9130,15 +9191,15 @@ $catalogProducts = [
             }).join('');
         };
 
-        window.switchTopCustomersPeriod = function(period, btn) {
+        function switchTopCustomersPeriod(period, btn) {
             var pills = btn.parentElement.querySelectorAll('.ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             btn.classList.add('active');
-            window.renderTopCustomersList(period);
+            renderTopCustomersList(period);
         };
 
         // 15. Global Live Search (Customers, Orders, Products)
-        window.handleGlobalSearch = function(query) {
+        function handleGlobalSearch(query) {
             var q = (query || '').trim().toLowerCase();
             var resultsBox = document.getElementById('wsGlobalSearchResults');
             if (!resultsBox) return;
@@ -9149,7 +9210,7 @@ $catalogProducts = [
                 return;
             }
 
-            var customers = window.getResellerCustomers().filter(function(c) {
+            var customers = getResellerCustomers().filter(function(c) {
                 return c.name.toLowerCase().indexOf(q) !== -1 || c.mobile.indexOf(q) !== -1;
             });
 
@@ -9217,8 +9278,8 @@ $catalogProducts = [
         };
 
         // 16. WhatsApp Actions Generator
-        window.sendCustomerWhatsAppMessage = function(custId) {
-            var customers = window.getResellerCustomers();
+        function sendCustomerWhatsAppMessage(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -9236,8 +9297,8 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 17. CSV / Excel Exports
-        window.exportCustomersCSV = function() {
-            var customers = window.getResellerCustomers();
+        function exportCustomersCSV() {
+            var customers = getResellerCustomers();
             var csv = 'ID,Name,Mobile,WhatsApp,Email,Address,City,State,Pincode,Tags,TotalOrders,TotalPurchase,TotalProfit,LastOrder\n';
             customers.forEach(function(c) {
                 csv += `"${c.id}","${c.name}","${c.mobile}","${c.whatsapp || ''}","${c.email || ''}","${c.address || ''}","${c.city}","${c.state}","${c.pincode}","${(c.tags||[]).join(';')}","${c.totalOrders}","${c.totalPurchase}","${c.totalProfit}","${c.lastOrder}"\n`;
@@ -9249,10 +9310,10 @@ Rajesh Kumar (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Customers_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            window.showWsToast('📥 Customers CSV exported!');
+            showWsToast('📥 Customers CSV exported!');
         };
 
-        window.exportProfitLedgerCSV = function() {
+        function exportProfitLedgerCSV() {
             var csv = 'OrderID,Customer,Product,SellingPrice,BaseCost,NetProfit,MarginPct,Date\n';
             csv += '#ORD-77492,Ananya Deshmukh,Paithani Silk Saree,18200,14000,4200,23.08%,2026-08-12\n';
             csv += '#ORD-77450,Pooja Varma,Bridal Lehenga Set,24800,19000,5800,23.38%,2026-08-05\n';
@@ -9263,11 +9324,11 @@ Rajesh Kumar (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Profit_Ledger_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            window.showWsToast('📥 Profit Ledger CSV exported!');
+            showWsToast('📥 Profit Ledger CSV exported!');
         };
 
         // 18. Notifications Modal
-        window.openResellerNotificationsModal = function() {
+        function openResellerNotificationsModal() {
             var modal = document.getElementById('resellerNotificationsModal');
             var list = document.getElementById('resellerNotificationsList');
             if (list) {
@@ -9291,20 +9352,20 @@ Rajesh Kumar (Reseller Partner)`;
             if (modal) modal.classList.add('active');
         };
 
-        window.closeResellerNotificationsModal = function() {
+        function closeResellerNotificationsModal() {
             var modal = document.getElementById('resellerNotificationsModal');
             if (modal) modal.classList.remove('active');
         };
 
         // 19. Initial Boot Hook for CRM
         document.addEventListener('DOMContentLoaded', function() {
-            window.updateCrmCounts();
-            window.renderDashboardCrmWidgets();
+            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
+            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
         });
 
     
         /* ── Profit Ledger Renderer ── */
-        window.renderProfitLedger = function() {
+        function renderProfitLedger() {
             var tbody = document.getElementById('crmProfitTbody');
             if (!tbody) return;
 
@@ -9337,19 +9398,19 @@ Rajesh Kumar (Reseller Partner)`;
 
         /* ── Follow-ups Table Renderer ── */
         var currentFollowupFilter = 'all';
-        window.filterFollowups = function(filter, btn) {
+        function filterFollowups(filter, btn) {
             currentFollowupFilter = filter;
             var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-            window.renderFollowupsTable();
+            renderFollowupsTable();
         };
 
-        window.renderFollowupsTable = function() {
+        function renderFollowupsTable() {
             var tbody = document.getElementById('crmFollowupsTbody');
             if (!tbody) return;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var allFollowups = [];
             customers.forEach(function(c) {
                 (c.followups || []).forEach(function(f) {
@@ -9402,25 +9463,25 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Recommendations Center Renderer ── */
-        window.populateRecommendationSelect = function() {
+        function populateRecommendationSelect() {
             var select = document.getElementById('recommendationCustomerSelect');
             if (!select) return;
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                 return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
             }).join('');
 
             if (customers.length > 0) {
                 select.value = customers[0].id;
-                window.generateCustomerRecommendations(customers[0].id);
+                generateCustomerRecommendations(customers[0].id);
             }
         };
 
-        window.generateCustomerRecommendations = function(custId) {
+        function generateCustomerRecommendations(custId) {
             var grid = document.getElementById('recommendationsProductGrid');
             if (!grid) return;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
             var prods = window.allProducts || [];
 
@@ -9457,13 +9518,258 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-    </script>
+    
+
+
+
+
+        /* ── CRM Bulk Actions & Modal Controllers ── */
+        function toggleCustomerSelect(id, isChecked) {
+            if (isChecked) {
+                selectedCustomerIds.add(id);
+            } else {
+                selectedCustomerIds.delete(id);
+            }
+            updateBulkToolbarState();
+        }
+        window.toggleCustomerSelect = toggleCustomerSelect;
+
+        function toggleSelectAllCustomers(masterCheckbox) {
+            var customers = getResellerCustomers();
+            if (masterCheckbox.checked) {
+                customers.forEach(function(c) { selectedCustomerIds.add(c.id); });
+            } else {
+                selectedCustomerIds.clear();
+            }
+            renderCrmCustomers();
+            updateBulkToolbarState();
+        }
+        window.toggleSelectAllCustomers = toggleSelectAllCustomers;
+
+        function updateBulkToolbarState() {
+            var bar = document.getElementById('crmBulkActionBar');
+            var countEl = document.getElementById('crmSelectedCount');
+            if (countEl) countEl.textContent = selectedCustomerIds.size;
+            if (bar) {
+                bar.style.display = selectedCustomerIds.size > 0 ? 'flex' : 'none';
+            }
+        }
+        window.updateBulkToolbarState = updateBulkToolbarState;
+
+        function clearCustomerSelection() {
+            selectedCustomerIds.clear();
+            var master = document.getElementById('crmMasterCheckbox');
+            if (master) master.checked = false;
+            renderCrmCustomers();
+            updateBulkToolbarState();
+            showWsToast('Selection cleared.');
+        }
+        window.clearCustomerSelection = clearCustomerSelection;
+
+        function bulkWhatsAppCustomers() {
+            if (selectedCustomerIds.size === 0) {
+                showWsToast('Please select at least one customer.');
+                return;
+            }
+            var customers = getResellerCustomers();
+            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
+            var msg = prompt('Enter WhatsApp broadcast message template:', 'Namaste! Check out our latest festive saree catalogue at exclusive reseller discounts: https://jaihanumantex.in/shop.php');
+            if (!msg) return;
+
+            var first = selected[0];
+            var cleanPhone = first.whatsapp || first.mobile;
+            cleanPhone = cleanPhone.replace(/[^0-9]/g, '');
+            if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+            window.open('https://api.whatsapp.com/send?phone=' + cleanPhone + '&text=' + encodeURIComponent(msg), '_blank');
+            showWsToast('🚀 Opened WhatsApp broadcast for ' + selected.length + ' selected customers!');
+        }
+        window.bulkWhatsAppCustomers = bulkWhatsAppCustomers;
+
+        function bulkAddTagToCustomers() {
+            if (selectedCustomerIds.size === 0) {
+                showWsToast('Please select at least one customer.');
+                return;
+            }
+            var tag = prompt('Enter tag name to add (e.g. VIP, FESTIVE, HIGH VALUE, PROMO):', 'PROMO');
+            if (!tag) return;
+            tag = tag.trim().toUpperCase();
+            var customers = getResellerCustomers();
+            customers.forEach(function(c) {
+                if (selectedCustomerIds.has(c.id)) {
+                    if (!c.tags) c.tags = [];
+                    if (!c.tags.includes(tag)) c.tags.push(tag);
+                }
+            });
+            saveResellerCustomers(customers);
+            showWsToast('🏷️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
+        }
+        window.bulkAddTagToCustomers = bulkAddTagToCustomers;
+
+        function exportSelectedCustomersCSV() {
+            if (selectedCustomerIds.size === 0) {
+                exportCustomersCSV();
+                return;
+            }
+            var customers = getResellerCustomers();
+            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
+            var headers = ["ID", "Name", "Mobile", "WhatsApp", "Email", "City", "State", "Pincode", "Tags", "Total Orders", "Total Purchase (INR)", "Total Profit (INR)"];
+            var rows = selected.map(function(c) {
+                return [
+                    c.id,
+                    '"' + (c.name || '').replace(/"/g, '""') + '"',
+                    c.mobile || '',
+                    c.whatsapp || '',
+                    c.email || '',
+                    '"' + (c.city || '') + '"',
+                    '"' + (c.state || '') + '"',
+                    c.pincode || '',
+                    '"' + (c.tags || []).join('; ') + '"',
+                    c.totalOrders || 0,
+                    c.totalPurchase || 0,
+                    c.totalProfit || 0
+                ];
+            });
+
+            var csvContent = "data:text/csv;charset=utf-8," + [headers.join(",")].concat(rows.map(function(e) { return e.join(","); })).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "reseller_selected_customers_" + new Date().toISOString().slice(0,10) + ".csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showWsToast('📥 Exported ' + selected.length + ' selected customers to CSV!');
+        }
+        window.exportSelectedCustomersCSV = exportSelectedCustomersCSV;
+
+        /* ── Saved Filters Modals ── */
+        function openSavedFiltersModal() {
+            var m = document.getElementById('resellerSavedFiltersModal');
+            if (m) m.classList.add('active');
+        }
+        window.openSavedFiltersModal = openSavedFiltersModal;
+
+        function closeSavedFiltersModal() {
+            var m = document.getElementById('resellerSavedFiltersModal');
+            if (m) m.classList.remove('active');
+        }
+        window.closeSavedFiltersModal = closeSavedFiltersModal;
+
+        function saveCurrentFilterPreset() {
+            var name = prompt('Enter a name for this filter preset:', 'My Custom Filter');
+            if (!name) return;
+            showWsToast('💾 Saved filter preset: ' + name);
+            closeSavedFiltersModal();
+        }
+        window.saveCurrentFilterPreset = saveCurrentFilterPreset;
+
+        /* ── Order Detail Modal Controller ── */
+        function openWsOrderModal(orderId) {
+            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
+            if (modal) {
+                modal.classList.add('active');
+            } else {
+                showWsToast('📦 Viewing Order Details for #' + orderId);
+            }
+        }
+        window.openWsOrderModal = openWsOrderModal;
+
+        function closeWsOrderModal() {
+            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
+            if (modal) modal.classList.remove('active');
+        }
+        window.closeWsOrderModal = closeWsOrderModal;
+
+
+// ── Global Window Function Safe Exposer ──
+(function() {
+    var exposedList = [
+        'switchWsTab', 'setOverviewFilter', 'switchSalesChartStyle', 'filterByPriceTier',
+        'handleWholesalerLogout', 'initResellerApp', 'checkResellerSecurity', 'loginAsDemoReseller',
+        'openWsCatalogCategoryModal', 'closeWsCatalogCategoryModal', 'openSmartShareModal', 'closeSmartShareModal',
+        'openWalletTopupModal', 'closeWalletTopupModal', 'openEditAddressDrawer', 'closeEditAddressDrawer',
+        'selectGstMode', 'toggleSameAsBillingAddress', 'saveGstSettings', 'saveAddressBookSettings',
+        'saveProfileSettings', 'updateWholesaleCartBadge', 'updateWholesaleWishlistBadge',
+        'animateTargetGauge', 'showWsToast', 'toggleSidebar', 'getResellerCustomers',
+        'saveResellerCustomers', 'renderCrmCustomers', 'updateCrmCounts', 'filterCustomersByTag',
+        'handleCustomerSearch', 'clearCustomerSearch', 'openCustomerProfileModal', 'closeCustomerProfileModal',
+        'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
+        'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
+        'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
+        'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
+        'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
+        'handleSaveFollowupSubmit', 'markFollowupCompleted', 'renderDashboardCrmWidgets', 'renderTopCustomersList',
+        'switchTopCustomersPeriod', 'handleGlobalSearch', 'sendCustomerWhatsAppMessage', 'exportCustomersCSV',
+        'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
+        'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',
+        'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
+        'resetAdvancedOrderFilters', 'openSaveFilterModal', 'openSavedFiltersModal', 'closeSavedFiltersModal',
+        'saveCurrentFilterPreset', 'renderOrdersView', 'renderReportsView', 'renderTrackingTab',
+        'renderTicketsView', 'renderAddressBookData'
+    ];
+
+    exposedList.forEach(function(name) {
+        try {
+            var fn = eval('typeof ' + name + ' !== "undefined" ? ' + name + ' : null');
+            if (typeof fn === 'function') {
+                window[name] = fn;
+            }
+        } catch(e) {}
+    });
+})();
+
+</script>
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
     <script>
-    (function() {
+
+function updateWholesaleCartBadge() {
+    try {
+        var raw = localStorage.getItem('kalaniketan_cart');
+        var cart = raw ? JSON.parse(raw) : [];
+        var total = cart.reduce(function(acc, item) { return acc + (Number(item.qty) || 1); }, 0);
+        var dockBadge = document.getElementById('wsDockCartBadge');
+        var hdrBadge = document.getElementById('headerCartBadge');
+        if (dockBadge) { dockBadge.textContent = total; dockBadge.style.display = total > 0 ? 'flex' : 'none'; }
+        if (hdrBadge) { hdrBadge.textContent = total; hdrBadge.style.display = total > 0 ? 'block' : 'none'; }
+    } catch(e) {}
+}
+window.updateWholesaleCartBadge = updateWholesaleCartBadge;
+
+function updateWholesaleWishlistBadge() {
+    try {
+        var raw = localStorage.getItem('kalaniketan_wishlist');
+        var wl = raw ? JSON.parse(raw) : [];
+        var total = wl.length;
+        var badge = document.getElementById('headerWishlistBadge');
+        if (badge) { badge.textContent = total; badge.style.display = total > 0 ? 'block' : 'none'; }
+    } catch(e) {}
+}
+window.updateWholesaleWishlistBadge = updateWholesaleWishlistBadge;
+
+
+
+        /* ── Target Gauge Animation ── */
+        
+function animateTargetGauge(pct) {
+    try {
+        var p = Number(pct) || 75.55;
+        var valEl = document.getElementById('targetGaugeVal');
+        var fillEl = document.getElementById('targetGaugeFill');
+        if (valEl) valEl.textContent = p.toFixed(2) + '%';
+        if (fillEl) {
+            var totalLen = 251.2;
+            var offset = totalLen - (totalLen * (p / 100));
+            fillEl.style.strokeDashoffset = offset;
+        }
+    } catch(e) {}
+}
+window.animateTargetGauge = animateTargetGauge;
+
+
+     // for global access
         'use strict';
 
         /* ── Reseller Initial Sample Orders Data ── */
@@ -9615,8 +9921,8 @@ Rajesh Kumar (Reseller Partner)`;
         var activeGstMode = 'gst';
         var currentOrderStatusFilter = 'all';
 
-        /* ── Toast Helper ── */
-        window.showWsToast = function(msg) {
+                /* ── Toast Helper ── */
+        function showWsToast(msg) {
             var container = document.getElementById('wsToastContainer');
             if (!container) return;
             var t = document.createElement('div');
@@ -9628,7 +9934,8 @@ Rajesh Kumar (Reseller Partner)`;
                 t.style.transform = 'translateY(-10px)';
                 setTimeout(function() { t.remove(); }, 300);
             }, 3200);
-        };
+        }
+        window.showWsToast = showWsToast;
 
         /* ── Role & Authentication Security Gate ── */
         function checkResellerSecurity() {
@@ -9674,7 +9981,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         }
 
-        window.loginAsDemoReseller = function() {
+        function loginAsDemoReseller() {
             var demoWholesaler = {
                 name: 'Rajesh Kumar',
                 companyName: 'Shree Krishna Silks Pvt Ltd',
@@ -9693,11 +10000,11 @@ Rajesh Kumar (Reseller Partner)`;
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
             initResellerApp();
-            window.showWsToast('👑 Logged in as Verified Reseller (Rajesh Kumar)!');
+            showWsToast('👑 Logged in as Verified Reseller (Rajesh Kumar)!');
         };
 
         /* ── Universal Modal Show & Hide Engine ── */
-        window.showModal = function(modalId) {
+        function showModal(modalId) {
             var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
             if (!modal) return;
             modal.classList.add('active');
@@ -9708,7 +10015,7 @@ Rajesh Kumar (Reseller Partner)`;
             modal.style.setProperty('z-index', '2500000', 'important');
         };
 
-        window.hideModal = function(modalId) {
+        function hideModal(modalId) {
             var modal = (typeof modalId === 'string') ? document.getElementById(modalId) : modalId;
             if (!modal) return;
             modal.classList.remove('active');
@@ -9720,8 +10027,8 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Reseller Wallet Controller ── */
-        window.openFullWalletModal = function() {
-            window.showModal('wsFullWalletModal');
+        function openFullWalletModal() {
+            showModal('wsFullWalletModal');
             var availEl = document.getElementById('walletAvailableBalance');
             var coinsEl = document.getElementById('walletTotalCoins');
             var mBal = document.getElementById('fullModalWalletBal');
@@ -9730,31 +10037,31 @@ Rajesh Kumar (Reseller Partner)`;
             if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
         };
 
-        window.closeFullWalletModal = function() {
-            window.hideModal('wsFullWalletModal');
+        function closeFullWalletModal() {
+            hideModal('wsFullWalletModal');
         };
 
-        window.openVipTierModal = function() {
-            window.showModal('wsVipTierModal');
+        function openVipTierModal() {
+            showModal('wsVipTierModal');
         };
 
-        window.closeVipTierModal = function() {
-            window.hideModal('wsVipTierModal');
+        function closeVipTierModal() {
+            hideModal('wsVipTierModal');
         };
 
-        window.openWalletTopupModal = function() {
-            window.showModal('wsWalletTopupModal');
+        function openWalletTopupModal() {
+            showModal('wsWalletTopupModal');
         };
 
-        window.closeWalletTopupModal = function() {
-            window.hideModal('wsWalletTopupModal');
+        function closeWalletTopupModal() {
+            hideModal('wsWalletTopupModal');
         };
 
         /* ── Tab Navigation Controller ── */
         
 
         /* ── Mobile Sidebar Drawer ── */
-        window.toggleSidebar = function(force) {
+        function toggleSidebar(force) {
             var sidebar = document.getElementById('wsSidebar');
             var backdrop = document.getElementById('wsSidebarBackdrop');
             if (!sidebar || !backdrop) return;
@@ -9765,7 +10072,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Load Reseller Profile & State ── */
-        window.loadSavedResellerData = function() {
+        function loadSavedResellerData() {
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
@@ -9802,7 +10109,7 @@ Rajesh Kumar (Reseller Partner)`;
             renderAddressBookData(user);
         };
 
-        window.toggleSameAsBillingAddress = function(isSame) {
+        function toggleSameAsBillingAddress(isSame) {
             var notice = document.getElementById('wsSameAddressNotice');
             var customForm = document.getElementById('wsCustomShippingFormWrap');
             var statusPill = document.getElementById('wsSameAddressStatusPill');
@@ -9904,7 +10211,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         }
 
-        window.toggleEditAddressSection = function(sectionType) {
+        function toggleEditAddressSection(sectionType) {
             var drawer = document.getElementById('wsAddressEditDrawer');
             var mainWrap = document.getElementById('wsMainAddressSectionWrap');
             var dispatchWrap = document.getElementById('wsDispatchSectionWrap');
@@ -9945,7 +10252,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.closeEditAddressDrawer = function() {
+        function closeEditAddressDrawer() {
             var drawer = document.getElementById('wsAddressEditDrawer');
             var mainWrap = document.getElementById('wsMainAddressSectionWrap');
             var dispatchWrap = document.getElementById('wsDispatchSectionWrap');
@@ -10028,7 +10335,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         }
 
-        window.handleSaveAddress = function(e) {
+        function handleSaveAddress(e) {
             if (e) e.preventDefault();
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
@@ -10076,11 +10383,11 @@ Rajesh Kumar (Reseller Partner)`;
             closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedResellerData();
-            window.showWsToast('✓ Address configuration saved successfully!');
+            showWsToast('✓ Address configuration saved successfully!');
         };
 
         /* ── GST Mode Toggle ── */
-        window.selectGstMode = function(mode) {
+        function selectGstMode(mode) {
             activeGstMode = mode;
             var cardGst = document.getElementById('gstCardGst');
             var cardNonGst = document.getElementById('gstCardNonGst');
@@ -10110,7 +10417,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Indian GSTIN Validation ── */
-        window.validateGstinInput = function(input) {
+        function validateGstinInput(input) {
             var val = input.value.toUpperCase().replace(/[^0-9A-Z]/g, '');
             input.value = val;
             var stateTag = document.getElementById('gstStateDetectTag');
@@ -10266,7 +10573,7 @@ Rajesh Kumar (Reseller Partner)`;
         }
 
         /* ── Helper: Get Tier ── */
-        window.getWholesaleTier = function(ordersCount) {
+        function getWholesaleTier(ordersCount) {
             if (ordersCount >= 800) return { name: 'Tier 5', tag: 'PLATINUM', discount: '15%' };
             if (ordersCount >= 450) return { name: 'Tier 4', tag: 'DIAMOND', discount: '12.5%' };
             if (ordersCount >= 250) return { name: 'Tier 3', tag: 'GOLD', discount: '10%' };
@@ -10275,13 +10582,13 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Helper: Open VIP Modal ── */
-        window.openVipTierModal = function() {
+        function openVipTierModal() {
             var modal = document.getElementById('wsVipTierModal');
             if (modal) modal.classList.add('active');
         };
 
         /* ── Filter Orders Controller ── */
-        window.filterOrdersTable = function() {
+        function filterOrdersTable() {
             var input = document.getElementById('wsOrdersSearchInput');
             var search = (input ? input.value : '').toLowerCase().trim();
             var clearBtn = document.getElementById('wsOrdersSearchClear');
@@ -10299,7 +10606,7 @@ Rajesh Kumar (Reseller Partner)`;
             renderOrdersView(filtered);
         };
 
-        window.clearOrdersSearch = function() {
+        function clearOrdersSearch() {
             var input = document.getElementById('wsOrdersSearchInput');
             if (input) {
                 input.value = '';
@@ -10310,7 +10617,7 @@ Rajesh Kumar (Reseller Partner)`;
             filterOrdersTable();
         };
 
-        window.setOrderStatusFilter = function(status, btn) {
+        function setOrderStatusFilter(status, btn) {
             currentOrderStatusFilter = status;
             btn.parentElement.querySelectorAll('button').forEach(function(b) {
                 b.classList.remove('active');
@@ -10701,7 +11008,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.updateDashboardAnalytics = function() {
+        function updateDashboardAnalytics() {
             var data = (ANALYTICS_DATA[analyticsMode] && ANALYTICS_DATA[analyticsMode][currentSelectedDateRange]) 
                 ? ANALYTICS_DATA[analyticsMode][currentSelectedDateRange] 
                 : ANALYTICS_DATA['overview']['week'];
@@ -10828,7 +11135,7 @@ Rajesh Kumar (Reseller Partner)`;
             if (mDesc) mDesc.innerHTML = data.milestoneDesc;
         };
 
-        window.setOverviewFilter = function(mode, btn) {
+        function setOverviewFilter(mode, btn) {
             analyticsMode = mode;
             if (btn && btn.parentElement) {
                 btn.parentElement.querySelectorAll('button').forEach(function(b) {
@@ -10837,19 +11144,19 @@ Rajesh Kumar (Reseller Partner)`;
                 btn.classList.add('active');
             }
             updateDashboardAnalytics();
-            window.showWsToast('📊 Switched to ' + mode.toUpperCase() + ' Analytics Mode');
+            showWsToast('📊 Switched to ' + mode.toUpperCase() + ' Analytics Mode');
         };
 
         /* ── Date Range Modal Controller ── */
-        window.openDateRangePicker = function() {
-            window.showModal('wsDateRangeModal');
+        function openDateRangePicker() {
+            showModal('wsDateRangeModal');
         };
 
-        window.closeDateRangeModal = function() {
-            window.hideModal('wsDateRangeModal');
+        function closeDateRangeModal() {
+            hideModal('wsDateRangeModal');
         };
 
-        window.applyDatePreset = function(presetKey, label) {
+        function applyDatePreset(presetKey, label) {
             currentSelectedDateRange = presetKey;
             
             var labelEl = document.getElementById('selectedDateRangeLabel');
@@ -10866,10 +11173,10 @@ Rajesh Kumar (Reseller Partner)`;
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast('📅 Applied Date Filter: ' + label);
+            showWsToast('📅 Applied Date Filter: ' + label);
         };
 
-        window.applyCustomDateRange = function() {
+        function applyCustomDateRange() {
             var s = document.getElementById('customStartDate').value;
             var e = document.getElementById('customEndDate').value;
             if (!s || !e) {
@@ -10899,10 +11206,10 @@ Rajesh Kumar (Reseller Partner)`;
 
             closeDateRangeModal();
             updateDashboardAnalytics();
-            window.showWsToast('📅 Applied Custom Calendar Range: ' + label);
+            showWsToast('📅 Applied Custom Calendar Range: ' + label);
         };
 
-        window.handleGlobalQuickSearch = function(input) {
+        function handleGlobalQuickSearch(input) {
             var val = input.value.trim().toLowerCase();
             if (!val) return;
             var match = activeOrdersList.find(function(o) {
@@ -11056,7 +11363,7 @@ Rajesh Kumar (Reseller Partner)`;
             });
         }
 
-        window.filterReportsByCategory = function(category, btn) {
+        function filterReportsByCategory(category, btn) {
             currentReportCategoryFilter = category;
             if (btn && btn.parentElement) {
                 btn.parentElement.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
@@ -11065,14 +11372,14 @@ Rajesh Kumar (Reseller Partner)`;
             renderReportsView(activeOrdersList);
         };
 
-        window.handleReportSearch = function(val) {
+        function handleReportSearch(val) {
             currentReportSearchQuery = val.trim();
             var clearBtn = document.getElementById('reportSearchClear');
             if (clearBtn) clearBtn.style.display = val.trim() ? 'flex' : 'none';
             renderReportsView(activeOrdersList);
         };
 
-        window.clearReportSearch = function() {
+        function clearReportSearch() {
             var input = document.getElementById('reportSearchInput');
             if (input) {
                 input.value = '';
@@ -11085,7 +11392,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Formal Printable Reseller Procurement Audit Report ── */
-        window.printWholesaleReport = function() {
+        function printWholesaleReport() {
             var modal = document.getElementById('wsPrintableAuditReportModal');
             if (modal) {
                 var userRaw = localStorage.getItem('kalaniketan_user');
@@ -11136,22 +11443,22 @@ Rajesh Kumar (Reseller Partner)`;
                     document.getElementById('auditTotalQty').textContent = totalQty + ' Pcs';
                 }
 
-                window.showModal('wsPrintableAuditReportModal');
+                showModal('wsPrintableAuditReportModal');
             } else {
                 window.print();
             }
         };
 
-        window.openPrintableAuditReportModal = function() {
-            window.printWholesaleReport();
+        function openPrintableAuditReportModal() {
+            printWholesaleReport();
         };
 
-        window.closePrintableAuditReportModal = function() {
-            window.hideModal('wsPrintableAuditReportModal');
+        function closePrintableAuditReportModal() {
+            hideModal('wsPrintableAuditReportModal');
         };
 
         /* ── Export Reports to CSV ── */
-        window.exportReportsToCsv = function() {
+        function exportReportsToCsv() {
             var headers = ["Consignment ID", "Date", "HSN", "Product Name", "Quantity", "Taxable Value", "GST (5%)", "Net Total", "Payment Mode", "Courier", "AWB"];
             var rows = activeOrdersList.map(function(o) {
                 return [
@@ -11177,7 +11484,7 @@ Rajesh Kumar (Reseller Partner)`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            window.showWsToast('📁 CSV Spreadsheet downloaded successfully!');
+            showWsToast('📁 CSV Spreadsheet downloaded successfully!');
         };
 
         /* ── Render Support Tickets ── */
@@ -11218,7 +11525,7 @@ Rajesh Kumar (Reseller Partner)`;
             });
         }
 
-        window.handleCreateTicket = function(e) {
+        function handleCreateTicket(e) {
             e.preventDefault();
             var orderId = document.getElementById('ticketOrderId').value;
             var category = document.getElementById('ticketCategory').value;
@@ -11238,11 +11545,11 @@ Rajesh Kumar (Reseller Partner)`;
             activeTicketsList.unshift(newTicket);
             renderTicketsView();
             document.getElementById('wsTicketForm').reset();
-            window.showWsToast('🎫 Support ticket created! Concierge assigned.');
+            showWsToast('🎫 Support ticket created! Concierge assigned.');
         };
 
         /* ── Order Details Modal ── */
-        window.viewOrderDetails = function(o) {
+        function viewOrderDetails(o) {
             var modal = document.getElementById('wsOrderDetailsModal');
             var title = document.getElementById('modalOrderTitle');
             var body = document.getElementById('modalOrderBody');
@@ -11331,7 +11638,7 @@ Rajesh Kumar (Reseller Partner)`;
             modal.classList.add('active');
         };
 
-        window.repeatWholesaleOrder = function(o) {
+        function repeatWholesaleOrder(o) {
             closeOrderDetailsModal();
             try {
                 var raw = localStorage.getItem('kalaniketan_cart');
@@ -11352,24 +11659,24 @@ Rajesh Kumar (Reseller Partner)`;
                     });
                 }
                 localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
-                window.updateWholesaleCartBadge();
+                updateWholesaleCartBadge();
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    window.showWsToast('🛒 ' + o.productName + ' added to reseller cart!');
+                    showWsToast('🛒 ' + o.productName + ' added to reseller cart!');
                 }
             } catch(e) {
-                window.showWsToast('🛒 Added to cart!');
+                showWsToast('🛒 Added to cart!');
             }
         };
 
-        window.closeOrderDetailsModal = function() {
+        function closeOrderDetailsModal() {
             var modal = document.getElementById('wsOrderDetailsModal');
             if (modal) modal.classList.remove('active');
         };
 
         /* ── Indian Currency Number to Words Converter ── */
-        window.convertNumberToIndianWords = function(num) {
+        function convertNumberToIndianWords(num) {
             var units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
             var tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
             
@@ -11415,7 +11722,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Official GST Tax Invoice Modal & Print PDF ── */
-        window.openBillInvoiceModal = function(o) {
+        function openBillInvoiceModal(o) {
             if (typeof closeOrderDetailsModal === 'function') {
                 closeOrderDetailsModal();
             }
@@ -11550,19 +11857,19 @@ Rajesh Kumar (Reseller Partner)`;
 
             // 7. Amount in Words
             if (document.getElementById('invAmountInWords')) {
-                document.getElementById('invAmountInWords').textContent = window.convertNumberToIndianWords(totAmount);
+                document.getElementById('invAmountInWords').textContent = convertNumberToIndianWords(totAmount);
             }
 
-            window.showModal('wsBillInvoiceModal');
+            showModal('wsBillInvoiceModal');
             var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
             if (wrapper) wrapper.scrollTop = 0;
         };
 
-        window.closeBillInvoiceModal = function() {
-            window.hideModal('wsBillInvoiceModal');
+        function closeBillInvoiceModal() {
+            hideModal('wsBillInvoiceModal');
         };
 
-        window.printInvoiceSheet = function() {
+        function printInvoiceSheet() {
             var modal = document.getElementById('wsBillInvoiceModal');
             if (modal) {
                 var wrapper = modal.querySelector('.ws-tax-invoice-wrapper');
@@ -11572,21 +11879,21 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Trending & For You Products Slider Scrolling ── */
-        window.slideTrendingProducts = function(dir) {
+        function slideTrendingProducts(dir) {
             var track = document.getElementById('wsTrendingSliderTrack');
             if (!track) return;
             var scrollAmount = track.offsetWidth * 0.75 * dir;
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
 
-        window.slideForYouProducts = function(dir) {
+        function slideForYouProducts(dir) {
             var track = document.getElementById('wsForYouSliderTrack');
             if (!track) return;
             var scrollAmount = track.offsetWidth * 0.75 * dir;
             track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         };
 
-        window.slidePriceBoxes = function(dir) {
+        function slidePriceBoxes(dir) {
             var track = document.getElementById('wsPriceSliderTrack');
             if (!track) return;
             var scrollAmount = track.offsetWidth * 0.75 * dir;
@@ -11658,7 +11965,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.filterByPriceTier = function(maxPrice, cardElem) {
+        function filterByPriceTier(maxPrice, cardElem) {
             var cards = document.querySelectorAll('.ws-price-box-card');
 
             if (activePriceTier === maxPrice) {
@@ -11682,7 +11989,7 @@ Rajesh Kumar (Reseller Partner)`;
             applyUnifiedCatalogFilterEngine(true);
         };
 
-        window.selectWsCategory = function(catName) {
+        function selectWsCategory(catName) {
             if (catName === 'All') {
                 closeWsCatalogCategoryModal();
                 if (typeof window.switchWsTab === 'function') {
@@ -11699,7 +12006,7 @@ Rajesh Kumar (Reseller Partner)`;
             renderSubCategoriesInModal(catName);
         };
 
-        window.selectWsSubCategory = function(catName, subFilter, subLabel) {
+        function selectWsSubCategory(catName, subFilter, subLabel) {
             closeWsCatalogCategoryModal();
             if (typeof window.switchWsTab === 'function') {
                 window.switchWsTab('trending');
@@ -11710,26 +12017,26 @@ Rajesh Kumar (Reseller Partner)`;
             applyUnifiedCatalogFilterEngine(true);
         };
 
-        window.clearCategoryOnlyFilter = function() {
+        function clearCategoryOnlyFilter() {
             activeCatalogCategory = 'All';
             activeCatalogSubCategory = 'all_sub';
             activeCatalogSubCategoryLabel = '';
             applyUnifiedCatalogFilterEngine(false);
         };
 
-        window.clearSubCategoryOnlyFilter = function() {
+        function clearSubCategoryOnlyFilter() {
             activeCatalogSubCategory = 'all_sub';
             activeCatalogSubCategoryLabel = '';
             applyUnifiedCatalogFilterEngine(false);
         };
 
-        window.clearPriceOnlyFilter = function() {
+        function clearPriceOnlyFilter() {
             activePriceTier = null;
             document.querySelectorAll('.ws-price-box-card').forEach(function(c) { c.classList.remove('active'); });
             applyUnifiedCatalogFilterEngine(false);
         };
 
-        window.clearAllCatalogFilters = function() {
+        function clearAllCatalogFilters() {
             activeCatalogCategory = 'All';
             activeCatalogSubCategory = 'all_sub';
             activeCatalogSubCategoryLabel = '';
@@ -11738,8 +12045,8 @@ Rajesh Kumar (Reseller Partner)`;
             applyUnifiedCatalogFilterEngine(false);
         };
 
-        window.resetCatalogFilter = function() {
-            window.clearAllCatalogFilters();
+        function resetCatalogFilter() {
+            clearAllCatalogFilters();
         };
 
         function renderMainCategoriesInModal() {
@@ -11958,15 +12265,15 @@ Rajesh Kumar (Reseller Partner)`;
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast('✓ Showing All Available Reseller Lots');
+                    showWsToast('✓ Showing All Available Reseller Lots');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
-                    window.showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
+                    showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
-                    window.showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
+                    showWsToast('🏷️ ' + activeCatalogCategory + ' Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots)');
                 } else if (activeCatalogCategory !== 'All') {
-                    window.showWsToast('🥻 ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
+                    showWsToast('🥻 ' + activeCatalogCategory + ' (' + matchCount + ' Lots Available)');
                 } else if (activePriceTier !== null) {
-                    window.showWsToast('🏷️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
+                    showWsToast('🏷️ Under ₹' + Number(activePriceTier).toLocaleString('en-IN') + ' (' + matchCount + ' Lots Available)');
                 }
             }
 
@@ -11977,7 +12284,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         }
 
-        window.openWsCatalogCategoryModal = function() {
+        function openWsCatalogCategoryModal() {
             var modal = document.getElementById('wsCatalogCategoryModal');
             if (!modal) return;
 
@@ -11988,11 +12295,11 @@ Rajesh Kumar (Reseller Partner)`;
                 renderMainCategoriesInModal();
             }
 
-            window.showModal('wsCatalogCategoryModal');
+            showModal('wsCatalogCategoryModal');
         };
 
-        window.closeWsCatalogCategoryModal = function() {
-            window.hideModal('wsCatalogCategoryModal');
+        function closeWsCatalogCategoryModal() {
+            hideModal('wsCatalogCategoryModal');
         };
 
         /* ── Smart 1-Line Auto Slider Engine (For Sliders Only) ── */
@@ -12029,7 +12336,7 @@ Rajesh Kumar (Reseller Partner)`;
         }
 
         /* ── Direct Add Reseller Lot to Cart with Smart Button Feedback ── */
-        window.directAddWholesaleToCart = function(prodOrId, btn) {
+        function directAddWholesaleToCart(prodOrId, btn) {
             try {
                 var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
                     ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Reseller Item', price: 2199, moq: 12 });
@@ -12055,7 +12362,7 @@ Rajesh Kumar (Reseller Partner)`;
                     });
                 }
                 localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
-                window.updateWholesaleCartBadge();
+                updateWholesaleCartBadge();
 
                 // Button Ripple & Check Animation
                 if (btn) {
@@ -12068,13 +12375,13 @@ Rajesh Kumar (Reseller Partner)`;
                 }
 
                 if (typeof window.showWsToast === 'function') {
-                    window.showWsToast('🛍️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
+                    showWsToast('🛍️ Added ' + prod.name + ' (' + addQty + ' Pcs Lot) to Cart!');
                 }
             } catch(e) {
                 console.error(e);
             }
         };
-        window.openQuickOrderModal = function(prodOrId) {
+        function openQuickOrderModal(prodOrId) {
             var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
                 ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Reseller Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
             var userRaw = localStorage.getItem('kalaniketan_user');
@@ -12098,7 +12405,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Reseller Wishlist Controller ── */
-        window.toggleWholesaleWishlist = function(productId, btn) {
+        function toggleWholesaleWishlist(productId, btn) {
             var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
             if (p && typeof window.toggleWishlistProduct === 'function') {
                 var added = window.toggleWishlistProduct(p);
@@ -12109,7 +12416,7 @@ Rajesh Kumar (Reseller Partner)`;
                 if (typeof showToast === 'function') {
                     showToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 } else if (typeof window.showWsToast === 'function') {
-                    window.showWsToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
+                    showWsToast(added ? '♡ Saved ' + p.name + ' to Wishlist' : 'Removed from Wishlist');
                 }
                 return;
             }
@@ -12120,19 +12427,19 @@ Rajesh Kumar (Reseller Partner)`;
             if (idx > -1) {
                 wish.splice(idx, 1);
                 if (btn) btn.classList.remove('active');
-                if (typeof window.showWsToast === 'function') window.showWsToast('Item removed from Procurement Wishlist');
+                if (typeof window.showWsToast === 'function') showWsToast('Item removed from Procurement Wishlist');
             } else {
                 wish.push({ id: productId });
                 if (btn) btn.classList.add('active');
-                if (typeof window.showWsToast === 'function') window.showWsToast('Saved to B2B Procurement Wishlist');
+                if (typeof window.showWsToast === 'function') showWsToast('Saved to B2B Procurement Wishlist');
             }
             localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
         };
 
         /* ── Share Reseller Lot (Triggers Smart Share or WhatsApp) ── */
-        window.shareWholesaleProduct = function(prod) {
+        function shareWholesaleProduct(prod) {
             if (typeof window.shareProductCard === 'function' && prod && prod.id) {
-                window.shareProductCard(prod.id);
+                shareProductCard(prod.id);
                 return;
             }
             var text = `*KALANIKETAN B2B RESELLER LOT*\n\n` +
@@ -12147,7 +12454,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Global Product Card Share Function (Matches shop.php Smart Share) ── */
-        window.shareProductCard = function(productId) {
+        function shareProductCard(productId) {
             var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
             if (p && typeof window.openSmartShareModal === 'function') {
                 var itemData = {
@@ -12186,7 +12493,7 @@ Rajesh Kumar (Reseller Partner)`;
             { m: 'Dec', val: '₹1,15,000', qty: '28 Pcs', growth: '-5.0%' }
         ];
 
-        window.showChartNodeTooltip = function(idx) {
+        function showChartNodeTooltip(idx) {
             var item = MONTH_SALES_DATA[idx];
             if (!item) return;
             var el = document.getElementById('chartTooltipText');
@@ -12199,7 +12506,7 @@ Rajesh Kumar (Reseller Partner)`;
             });
         };
 
-        window.switchSalesChartStyle = function(type, btn) {
+        function switchSalesChartStyle(type, btn) {
             document.querySelectorAll('.ws-chart-type-btn').forEach(function(b) { b.classList.remove('active'); });
             if (btn) btn.classList.add('active');
 
@@ -12223,34 +12530,25 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Animate Target Gauge Percentage Count-up ── */
-        window.animateTargetGauge = function(targetPercent) {
-            var valEl = document.getElementById('targetGaugeVal');
-            var fillEl = document.getElementById('targetGaugeFill');
-            if (!valEl) return;
-
-            var target = targetPercent || 75.55;
-            var start = performance.now();
-            var duration = 1200;
-
-            var targetOffset = Math.round(236 - (236 * (target / 100)));
-            if (fillEl) fillEl.style.strokeDashoffset = targetOffset;
-
-            function step(time) {
-                var progress = Math.min((time - start) / duration, 1);
-                var ease = 1 - Math.pow(1 - progress, 3);
-                var val = (ease * target).toFixed(2);
-                valEl.textContent = val + '%';
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                } else {
-                    valEl.textContent = target.toFixed(2) + '%';
-                }
-            }
-            requestAnimationFrame(step);
-        };
+        
+function animateTargetGauge(pct) {
+    try {
+        var p = Number(pct) || 75.55;
+        var valEl = document.getElementById('targetGaugeVal');
+        var fillEl = document.getElementById('targetGaugeFill');
+        if (valEl) valEl.textContent = p.toFixed(2) + '%';
+        if (fillEl) {
+            var totalLen = 251.2;
+            var offset = totalLen - (totalLen * (p / 100));
+            fillEl.style.strokeDashoffset = offset;
+        }
+    } catch(e) {}
+}
+window.animateTargetGauge = animateTargetGauge;
+ 
 
         /* ── Reseller Logout ── */
-        window.handleWholesalerLogout = function() {
+        function handleWholesalerLogout() {
             if (confirm('Are you sure you want to log out of the Reseller Portal?')) {
                 localStorage.removeItem('kalaniketan_user');
                 window.location.href = 'shop.php';
@@ -12277,8 +12575,8 @@ Rajesh Kumar (Reseller Partner)`;
             renderReportsView(activeOrdersList);
             renderTrackingTab(activeOrdersList);
             renderTicketsView();
-            window.animateTargetGauge(75.55);
-            window.updateWholesaleCartBadge();
+            animateTargetGauge(75.55);
+            updateWholesaleCartBadge();
         }
 
         /* ── Live Shipment Tracking Controller ── */
@@ -12411,17 +12709,17 @@ Rajesh Kumar (Reseller Partner)`;
             });
         }
 
-        window.selectTrackingOrder = function(orderId) {
+        function selectTrackingOrder(orderId) {
             activeTrackOrderId = orderId;
             renderTrackingTab(activeOrdersList, orderId);
             var hero = document.getElementById('wsActiveTrackHero');
             if (hero) {
                 hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            window.showWsToast('📍 Loaded tracking timeline for ' + orderId);
+            showWsToast('📍 Loaded tracking timeline for ' + orderId);
         };
 
-        window.filterTrackingOrders = function(status, btn) {
+        function filterTrackingOrders(status, btn) {
             currentTrackFilter = status;
             if (btn && btn.parentElement) {
                 btn.parentElement.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
@@ -12430,20 +12728,21 @@ Rajesh Kumar (Reseller Partner)`;
             renderTrackingTab(activeOrdersList, activeTrackOrderId);
         };
 
-        window.copyAwbNumber = function(awb) {
+                function copyAwbNumber(awb) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(awb).then(function() {
-                    window.showWsToast('📋 AWB ' + awb + ' copied to clipboard!');
+                    showWsToast('📋 AWB ' + awb + ' copied to clipboard!');
                 }).catch(function() {
-                    window.showWsToast('AWB: ' + awb);
+                    showWsToast('AWB: ' + awb);
                 });
             } else {
-                window.showWsToast('AWB: ' + awb);
+                showWsToast('AWB: ' + awb);
             }
-        };
+        }
+        window.copyAwbNumber = copyAwbNumber;
 
         /* ── Reseller VIP Tier Controller ── */
-        window.getWholesaleTier = function(orderCount) {
+        function getWholesaleTier(orderCount) {
             var count = Number(orderCount) || 0;
             if (count >= 1000) {
                 return {
@@ -12508,17 +12807,17 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.openVipTierModal = function() {
-            window.showModal('wsVipTierModal');
+        function openVipTierModal() {
+            showModal('wsVipTierModal');
         };
 
-        window.closeVipTierModal = function() {
-            window.hideModal('wsVipTierModal');
+        function closeVipTierModal() {
+            hideModal('wsVipTierModal');
         };
 
         /* ── Reseller Wallet Controller ── */
-        window.openFullWalletModal = function() {
-            window.showModal('wsFullWalletModal');
+        function openFullWalletModal() {
+            showModal('wsFullWalletModal');
             var availEl = document.getElementById('walletAvailableBalance');
             var coinsEl = document.getElementById('walletTotalCoins');
             var mBal = document.getElementById('fullModalWalletBal');
@@ -12527,12 +12826,12 @@ Rajesh Kumar (Reseller Partner)`;
             if (coinsEl && mCoins) mCoins.textContent = coinsEl.textContent + ' Coins';
         };
 
-        window.closeFullWalletModal = function() {
-            window.hideModal('wsFullWalletModal');
+        function closeFullWalletModal() {
+            hideModal('wsFullWalletModal');
         };
 
         /* ── Edit Billing Address Modal Controller ── */
-        window.openEditMainAddressModal = function() {
+        function openEditMainAddressModal() {
             var modal = document.getElementById('wsEditMainAddressModal');
             if (!modal) return;
             // Pre-fill existing data from localStorage
@@ -12548,14 +12847,14 @@ Rajesh Kumar (Reseller Partner)`;
                 if (el('wsMainEditPincode'))    el('wsMainEditPincode').value     = billing.pincode || user.pincode      || '';
                 if (el('wsMainEditContactPhone')) el('wsMainEditContactPhone').value = billing.phone || user.phone      || '';
             } catch(e) {}
-            window.showModal('wsEditMainAddressModal');
+            showModal('wsEditMainAddressModal');
         };
 
-        window.closeEditMainAddressModal = function() {
-            window.hideModal('wsEditMainAddressModal');
+        function closeEditMainAddressModal() {
+            hideModal('wsEditMainAddressModal');
         };
 
-        window.handleSaveMainAddressForm = function(e) {
+        function handleSaveMainAddressForm(e) {
             if (e) e.preventDefault();
             try {
                 var user = JSON.parse(localStorage.getItem('kalaniketan_user') || '{}');
@@ -12573,22 +12872,22 @@ Rajesh Kumar (Reseller Partner)`;
                 closeEditMainAddressModal();
                 loadSavedResellerData();
                 renderAddressBookData(user);
-                window.showWsToast('✓ Billing address updated successfully!');
+                showWsToast('✓ Billing address updated successfully!');
             } catch(err) {
                 closeEditMainAddressModal();
-                window.showWsToast('✓ Billing address saved!');
+                showWsToast('✓ Billing address saved!');
             }
         };
 
-        window.openWalletTopupModal = function() {
-            window.showModal('wsWalletTopupModal');
+        function openWalletTopupModal() {
+            showModal('wsWalletTopupModal');
         };
 
-        window.closeWalletTopupModal = function() {
-            window.hideModal('wsWalletTopupModal');
+        function closeWalletTopupModal() {
+            hideModal('wsWalletTopupModal');
         };
 
-        window.setTopupAmount = function(amount, btn) {
+        function setTopupAmount(amount, btn) {
             var input = document.getElementById('wsTopupAmountInput');
             if (input) input.value = amount;
             if (btn && btn.parentElement) {
@@ -12597,7 +12896,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.handleProcessWalletTopup = function() {
+        function handleProcessWalletTopup() {
             var input = document.getElementById('wsTopupAmountInput');
             var amount = Number(input ? input.value : 50000);
             if (!amount || amount < 1000) {
@@ -12620,19 +12919,19 @@ Rajesh Kumar (Reseller Partner)`;
             if (availEl) availEl.textContent = (newBal + 100000).toLocaleString('en-IN');
             if (modalBal) modalBal.textContent = '₹' + newBal.toLocaleString('en-IN');
 
-            window.showWsToast('💳 Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
+            showWsToast('💳 Wallet recharged with ₹' + amount.toLocaleString('en-IN') + ' successfully!');
         };
 
-        window.requestCreditLimitBoost = function() {
-            window.showWsToast('⚡ Credit Limit Boost Request submitted to Kalaniketan Credit Desk!');
+        function requestCreditLimitBoost() {
+            showWsToast('⚡ Credit Limit Boost Request submitted to Kalaniketan Credit Desk!');
         };
 
-        window.requestWalletWithdrawal = function() {
-            window.showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
+        function requestWalletWithdrawal() {
+            showWsToast('🏦 Payout withdrawal request for available balance submitted to registered Bank A/C!');
         };
 
         /* ── Reseller Cart Badge Synchronization ── */
-        window.updateWholesaleCartBadge = function() {
+        function updateWholesaleCartBadge() {
             try {
                 var raw = localStorage.getItem('kalaniketan_cart');
                 var cart = raw ? JSON.parse(raw) : [];
@@ -12656,7 +12955,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Reseller Wishlist Badge Synchronization ── */
-        window.updateWholesaleWishlistBadge = function() {
+        function updateWholesaleWishlistBadge() {
             try {
                 var raw = localStorage.getItem('kalaniketan_wishlist');
                 var wishlist = raw ? JSON.parse(raw) : [];
@@ -12675,24 +12974,22 @@ Rajesh Kumar (Reseller Partner)`;
 
         document.addEventListener('DOMContentLoaded', function() {
             initResellerApp();
-            window.updateWholesaleCartBadge();
-            window.updateWholesaleWishlistBadge();
+            updateWholesaleCartBadge();
+            updateWholesaleWishlistBadge();
         });
         window.addEventListener('storage', function(e) {
-            if (e.key === 'kalaniketan_user') {
+            if (e && e.key === 'kalaniketan_user') {
                 initResellerApp();
             }
-            if (e.key === 'kalaniketan_cart') {
-                window.updateWholesaleCartBadge();
+            if (e && e.key === 'kalaniketan_cart') {
+                updateWholesaleCartBadge();
             }
-            if (e.key === 'kalaniketan_wishlist') {
-                window.updateWholesaleWishlistBadge();
+            if (e && e.key === 'kalaniketan_wishlist') {
+                updateWholesaleWishlistBadge();
             }
         });
 
-    })();
-    
-        /* ════════════════════════════════════════════════════════════
+    /* ════════════════════════════════════════════════════════════
            RESELLER CRM, CUSTOMERS & OPERATIONS ENGINE
         ════════════════════════════════════════════════════════════ */
 
@@ -12886,7 +13183,7 @@ Rajesh Kumar (Reseller Partner)`;
         ];
 
         // 2. Load / Save Reseller Customers State
-        window.getResellerCustomers = function() {
+        function getResellerCustomers() {
             try {
                 var raw = localStorage.getItem('reseller_customers_db');
                 if (raw) return JSON.parse(raw);
@@ -12895,11 +13192,11 @@ Rajesh Kumar (Reseller Partner)`;
             return DEFAULT_RESELLER_CUSTOMERS;
         };
 
-        window.saveResellerCustomers = function(customers) {
+        function saveResellerCustomers(customers) {
             localStorage.setItem('reseller_customers_db', JSON.stringify(customers));
-            window.renderCrmCustomers();
-            window.renderDashboardCrmWidgets();
-            window.updateCrmCounts();
+            renderCrmCustomers();
+            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
+            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
         };
 
         var currentCustomerFilterTag = 'all';
@@ -12907,13 +13204,73 @@ Rajesh Kumar (Reseller Partner)`;
         var selectedCustomerIds = new Set();
         var currentActiveProfileCustomer = null;
 
-        // 3. Tab Switching Extension
-        var originalSwitchWsTab = window.switchWsTab;
+                // 3. Tab Switching Extension
+        function switchWsTab(tabName) {
+            try {
+                if (!tabName) return;
+                var cleanName = tabName.toLowerCase();
+                
+                // Hide all panes
+                document.querySelectorAll('.ws-tab-pane').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+                // Unhighlight all sidebar nav items
+                document.querySelectorAll('.ws-nav-item').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+                // Unhighlight all mobile dock items
+                document.querySelectorAll('.ws-dock-btn').forEach(function(el) {
+                    el.classList.remove('active');
+                });
+
+                var targetPaneId = 'tabPane' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                var targetPane = document.getElementById(targetPaneId);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                } else {
+                    console.warn('Pane not found for:', targetPaneId);
+                }
+
+                // Highlight active nav item
+                document.querySelectorAll('.ws-nav-item').forEach(function(btn) {
+                    var attr = btn.getAttribute('onclick') || '';
+                    if (attr.toLowerCase().indexOf("'" + cleanName + "'") !== -1 || attr.toLowerCase().indexOf('"' + cleanName + '"') !== -1) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                // Highlight mobile dock item
+                var dockBtn = document.getElementById('dockBtn' + cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
+                if (dockBtn) dockBtn.classList.add('active');
+
+                // Trigger tab-specific data rendering
+                if (cleanName === 'customers') {
+                    if (typeof renderCrmCustomers === 'function') renderCrmCustomers();
+                    if (typeof updateCrmCounts === 'function') updateCrmCounts();
+                } else if (cleanName === 'profit') {
+                    if (typeof renderProfitLedger === 'function') renderProfitLedger();
+                } else if (cleanName === 'followups') {
+                    if (typeof renderFollowupsTable === 'function') renderFollowupsTable();
+                } else if (cleanName === 'recommendations') {
+                    if (typeof populateRecommendationSelect === 'function') populateRecommendationSelect();
+                } else if (cleanName === 'orders') {
+                    if (typeof renderOrdersView === 'function') renderOrdersView(activeOrdersList);
+                } else if (cleanName === 'overview') {
+                    if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (typeof toggleSidebar === 'function') toggleSidebar(false);
+            } catch(e) {
+                console.error('switchWsTab error:', e);
+            }
+        }
+        window.switchWsTab = switchWsTab;
         
 
         // 4. Render Customers Table & Mobile Cards
-        window.renderCrmCustomers = function() {
-            var customers = window.getResellerCustomers();
+        function renderCrmCustomers() {
+            var customers = getResellerCustomers();
             var tbody = document.getElementById('crmCustomersTbody');
             var mobList = document.getElementById('crmCustomersMobileList');
             if (!tbody || !mobList) return;
@@ -13025,8 +13382,8 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 5. Update CRM KPI summary numbers
-        window.updateCrmCounts = function() {
-            var customers = window.getResellerCustomers();
+        function updateCrmCounts() {
+            var customers = getResellerCustomers();
             var total = customers.length;
             var vip = customers.filter(function(c) { return (c.tags || []).indexOf('VIP') !== -1; }).length;
             var repeat = customers.filter(function(c) { return Number(c.totalOrders) > 1; }).length;
@@ -13044,30 +13401,30 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 6. Customer Search & Tag Filters
-        window.filterCustomersByTag = function(tag, btn) {
+        function filterCustomersByTag(tag, btn) {
             currentCustomerFilterTag = tag;
             var pills = document.querySelectorAll('#customerTagFilterPills .ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-            window.renderCrmCustomers();
+            renderCrmCustomers();
         };
 
-        window.handleCustomerSearch = function(val) {
+        function handleCustomerSearch(val) {
             currentCustomerSearchTerm = (val || '').trim();
             var clearBtn = document.getElementById('customerSearchClear');
             if (clearBtn) clearBtn.style.display = currentCustomerSearchTerm ? 'block' : 'none';
-            window.renderCrmCustomers();
+            renderCrmCustomers();
         };
 
-        window.clearCustomerSearch = function() {
+        function clearCustomerSearch() {
             var input = document.getElementById('customerSearchInput');
             if (input) input.value = '';
-            window.handleCustomerSearch('');
+            handleCustomerSearch('');
         };
 
         // 7. Customer Profile Modal Controller
-        window.openCustomerProfileModal = function(custId) {
-            var customers = window.getResellerCustomers();
+        function openCustomerProfileModal(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -13145,24 +13502,24 @@ Rajesh Kumar (Reseller Partner)`;
             if (followBadge) followBadge.textContent = (c.followups || []).length;
 
             // Load sub tabs
-            window.renderProfileOrdersTab(c);
-            window.renderProfileProductsTab(c);
-            window.renderProfileRecommendedTab(c);
-            window.renderProfileLedgerTab(c);
-            window.renderProfileNotesTab(c);
-            window.renderProfileFollowupsTab(c);
-            window.renderProfileTimelineTab(c);
+            renderProfileOrdersTab(c);
+            renderProfileProductsTab(c);
+            renderProfileRecommendedTab(c);
+            renderProfileLedgerTab(c);
+            renderProfileNotesTab(c);
+            renderProfileFollowupsTab(c);
+            renderProfileTimelineTab(c);
 
             var modal = document.getElementById('resellerCustomerProfileModal');
             if (modal) modal.classList.add('active');
         };
 
-        window.closeCustomerProfileModal = function() {
+        function closeCustomerProfileModal() {
             var modal = document.getElementById('resellerCustomerProfileModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.switchProfileTab = function(tabKey, btn) {
+        function switchProfileTab(tabKey, btn) {
             document.querySelectorAll('.crm-prof-tab-content').forEach(function(el) {
                 el.style.display = 'none';
             });
@@ -13175,7 +13532,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 8. Profile Tab Renderers
-        window.renderProfileOrdersTab = function(c) {
+        function renderProfileOrdersTab(c) {
             var container = document.getElementById('profOrdersList');
             if (!container) return;
             var orders = (window.allOrders || []).slice(0, c.totalOrders || 2);
@@ -13195,7 +13552,7 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.renderProfileProductsTab = function(c) {
+        function renderProfileProductsTab(c) {
             var container = document.getElementById('profProductsList');
             if (!container) return;
             var prods = (window.allProducts || []).slice(0, 4);
@@ -13210,7 +13567,7 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.renderProfileRecommendedTab = function(c) {
+        function renderProfileRecommendedTab(c) {
             var container = document.getElementById('profRecommendedList');
             if (!container) return;
             var prods = (window.allProducts || []).slice(2, 6);
@@ -13226,7 +13583,7 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.renderProfileLedgerTab = function(c) {
+        function renderProfileLedgerTab(c) {
             var container = document.getElementById('profLedgerContent');
             if (!container) return;
             container.innerHTML = `
@@ -13260,7 +13617,7 @@ Rajesh Kumar (Reseller Partner)`;
             `;
         };
 
-        window.renderProfileNotesTab = function(c) {
+        function renderProfileNotesTab(c) {
             var container = document.getElementById('profNotesList');
             if (!container) return;
             var notes = c.notes || [];
@@ -13278,7 +13635,7 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.renderProfileFollowupsTab = function(c) {
+        function renderProfileFollowupsTab(c) {
             var container = document.getElementById('profFollowupsList');
             if (!container) return;
             var fList = c.followups || [];
@@ -13299,7 +13656,7 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.renderProfileTimelineTab = function(c) {
+        function renderProfileTimelineTab(c) {
             var container = document.getElementById('profTimelineList');
             if (!container) return;
             container.innerHTML = `
@@ -13335,7 +13692,7 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 9. Add / Edit Customer Modal
-        window.openAddCustomerModal = function(editId) {
+        function openAddCustomerModal(editId) {
             var modal = document.getElementById('resellerAddCustomerModal');
             var title = document.getElementById('addCustomerModalTitle');
             var formId = document.getElementById('custFormId');
@@ -13351,7 +13708,7 @@ Rajesh Kumar (Reseller Partner)`;
             var formNotes = document.getElementById('custFormNotes');
 
             if (editId) {
-                var customers = window.getResellerCustomers();
+                var customers = getResellerCustomers();
                 var c = customers.find(function(x) { return x.id === editId; });
                 if (c) {
                     if (title) title.innerHTML = '<span>✏️ Edit Customer Profile</span>';
@@ -13384,12 +13741,12 @@ Rajesh Kumar (Reseller Partner)`;
             if (modal) modal.classList.add('active');
         };
 
-        window.closeAddCustomerModal = function() {
+        function closeAddCustomerModal() {
             var modal = document.getElementById('resellerAddCustomerModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveCustomerSubmit = function() {
+        function handleSaveCustomerSubmit() {
             var formId = document.getElementById('custFormId').value;
             var name = document.getElementById('custFormName').value.trim();
             var mobile = document.getElementById('custFormMobile').value.trim();
@@ -13403,7 +13760,7 @@ Rajesh Kumar (Reseller Partner)`;
             var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim().toUpperCase(); }) : ['NEW'];
             var notesText = (document.getElementById('custFormNotes') ? document.getElementById('custFormNotes').value.trim() : '');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
 
             if (formId) {
                 var c = customers.find(function(x) { return Number(x.id) === Number(formId); });
@@ -13441,18 +13798,18 @@ Rajesh Kumar (Reseller Partner)`;
                 customers.unshift(newCust);
             }
 
-            window.saveResellerCustomers(customers);
-            window.closeAddCustomerModal();
-            window.showWsToast('✅ Customer saved successfully!');
+            saveResellerCustomers(customers);
+            closeAddCustomerModal();
+            showWsToast('✅ Customer saved successfully!');
         };
 
         // 10. Quick Order Flow
-        window.openResellerQuickOrderDrawer = function(prefillCustId) {
+        function openResellerQuickOrderDrawer(prefillCustId) {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             var custSelect = document.getElementById('qoCustomerSelect');
             var prodSelect = document.getElementById('qoProductSelect');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             if (custSelect) {
                 custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                     return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
@@ -13467,19 +13824,19 @@ Rajesh Kumar (Reseller Partner)`;
             }
 
             if (prefillCustId) {
-                window.handleQoCustomerChange(prefillCustId);
+                handleQoCustomerChange(prefillCustId);
             }
 
             if (modal) modal.classList.add('active');
         };
 
-        window.closeResellerQuickOrderDrawer = function() {
+        function closeResellerQuickOrderDrawer() {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleQoCustomerChange = function(custId) {
-            var customers = window.getResellerCustomers();
+        function handleQoCustomerChange(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
             var addr = document.getElementById('qoShippingAddress');
             if (c && addr) {
@@ -13487,7 +13844,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.handleQoProductChange = function(prodId) {
+        function handleQoProductChange(prodId) {
             var select = document.getElementById('qoProductSelect');
             var opt = select.options[select.selectedIndex];
             var cost = opt ? Number(opt.getAttribute('data-cost')) || 2199 : 2199;
@@ -13497,10 +13854,10 @@ Rajesh Kumar (Reseller Partner)`;
             var sellEl = document.getElementById('qoSellingPrice');
             if (costEl) costEl.value = cost;
             if (sellEl) sellEl.value = mrp;
-            window.calculateQoProfit();
+            calculateQoProfit();
         };
 
-        window.calculateQoProfit = function() {
+        function calculateQoProfit() {
             var qty = Number(document.getElementById('qoQuantity').value) || 1;
             var cost = Number(document.getElementById('qoCostPrice').value) || 0;
             var sell = Number(document.getElementById('qoSellingPrice').value) || 0;
@@ -13515,7 +13872,7 @@ Rajesh Kumar (Reseller Partner)`;
             if (elTotal) elTotal.textContent = '₹' + totalOrder.toLocaleString('en-IN');
         };
 
-        window.handleQuickOrderSubmit = function() {
+        function handleQuickOrderSubmit() {
             var custId = Number(document.getElementById('qoCustomerSelect').value);
             var prodId = Number(document.getElementById('qoProductSelect').value);
             var qty = Number(document.getElementById('qoQuantity').value) || 1;
@@ -13524,7 +13881,7 @@ Rajesh Kumar (Reseller Partner)`;
             var profit = qty * (sell - cost);
             var total = qty * sell;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 c.totalOrders = (Number(c.totalOrders) || 0) + 1;
@@ -13534,16 +13891,16 @@ Rajesh Kumar (Reseller Partner)`;
                 if ((c.tags || []).indexOf('REPEAT') === -1 && c.totalOrders > 1) {
                     c.tags.push('REPEAT');
                 }
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeResellerQuickOrderDrawer();
-            window.showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
+            closeResellerQuickOrderDrawer();
+            showWsToast('🎉 Quick Order placed successfully! Net Profit: ₹' + profit.toLocaleString('en-IN'));
         };
 
         // 11. Repeat Order Modal Flow
-        window.openRepeatOrderModal = function(custId, origOrderId) {
-            var customers = window.getResellerCustomers();
+        function openRepeatOrderModal(custId, origOrderId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -13566,44 +13923,44 @@ Rajesh Kumar (Reseller Partner)`;
                 `;
             }
 
-            window.recalcRepeatOrderTotal();
+            recalcRepeatOrderTotal();
             if (modal) modal.classList.add('active');
         };
 
-        window.closeRepeatOrderModal = function() {
+        function closeRepeatOrderModal() {
             var modal = document.getElementById('resellerRepeatOrderModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.recalcRepeatOrderTotal = function() {
+        function recalcRepeatOrderTotal() {
             var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
             var total = qty * 4899;
             var el = document.getElementById('repeatOrderEstimatedTotal');
             if (el) el.textContent = '₹' + total.toLocaleString('en-IN');
         };
 
-        window.handleRepeatOrderConfirm = function() {
+        function handleRepeatOrderConfirm() {
             var custId = Number(document.getElementById('repeatCustId').value);
             var qty = Number(document.getElementById('repeatOrderQty').value) || 1;
             var total = qty * 4899;
             var profit = qty * 1200;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 c.totalOrders = (Number(c.totalOrders) || 0) + 1;
                 c.totalPurchase = (Number(c.totalPurchase) || 0) + total;
                 c.totalProfit = (Number(c.totalProfit) || 0) + profit;
                 c.lastOrder = new Date().toISOString().split('T')[0];
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeRepeatOrderModal();
-            window.showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
+            closeRepeatOrderModal();
+            showWsToast('🔁 Repeat Order confirmed & dispatched to customer!');
         };
 
         // 12. Notes Engine
-        window.openAddNoteModal = function(custId) {
+        function openAddNoteModal(custId) {
             var modal = document.getElementById('resellerAddNoteModal');
             var formCustId = document.getElementById('noteFormCustomerId');
             var formText = document.getElementById('noteFormText');
@@ -13612,16 +13969,16 @@ Rajesh Kumar (Reseller Partner)`;
             if (modal) modal.classList.add('active');
         };
 
-        window.closeAddNoteModal = function() {
+        function closeAddNoteModal() {
             var modal = document.getElementById('resellerAddNoteModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveNoteSubmit = function() {
+        function handleSaveNoteSubmit() {
             var custId = Number(document.getElementById('noteFormCustomerId').value);
             var text = document.getElementById('noteFormText').value.trim();
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 if (!c.notes) c.notes = [];
@@ -13631,24 +13988,24 @@ Rajesh Kumar (Reseller Partner)`;
                     date: new Date().toLocaleString(),
                     creator: 'Rajesh Kumar'
                 });
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
                 if (currentActiveProfileCustomer && currentActiveProfileCustomer.id === custId) {
-                    window.renderProfileNotesTab(c);
+                    renderProfileNotesTab(c);
                 }
             }
 
-            window.closeAddNoteModal();
-            window.showWsToast('📝 Note saved successfully!');
+            closeAddNoteModal();
+            showWsToast('📝 Note saved successfully!');
         };
 
         // 13. Follow-ups Engine & Dashboard Widget
-        window.openScheduleFollowupModal = function(prefillCustId) {
+        function openScheduleFollowupModal(prefillCustId) {
             var modal = document.getElementById('resellerScheduleFollowupModal');
             var custSelect = document.getElementById('followupFormCustomer');
             var dateEl = document.getElementById('followupFormDate');
             var noteEl = document.getElementById('followupFormNote');
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             if (custSelect) {
                 custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                     return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ')</option>';
@@ -13665,19 +14022,19 @@ Rajesh Kumar (Reseller Partner)`;
             if (modal) modal.classList.add('active');
         };
 
-        window.closeScheduleFollowupModal = function() {
+        function closeScheduleFollowupModal() {
             var modal = document.getElementById('resellerScheduleFollowupModal');
             if (modal) modal.classList.remove('active');
         };
 
-        window.handleSaveFollowupSubmit = function() {
+        function handleSaveFollowupSubmit() {
             var custId = Number(document.getElementById('followupFormCustomer').value);
             var date = document.getElementById('followupFormDate').value;
             var time = document.getElementById('followupFormTime').value;
             var note = document.getElementById('followupFormNote').value.trim();
             var status = document.getElementById('followupFormStatus').value;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c) {
                 if (!c.followups) c.followups = [];
@@ -13688,27 +14045,27 @@ Rajesh Kumar (Reseller Partner)`;
                     note: note,
                     status: status
                 });
-                window.saveResellerCustomers(customers);
+                saveResellerCustomers(customers);
             }
 
-            window.closeScheduleFollowupModal();
-            window.showWsToast('⏰ Follow-up task scheduled!');
+            closeScheduleFollowupModal();
+            showWsToast('⏰ Follow-up task scheduled!');
         };
 
-        window.markFollowupCompleted = function(custId, fId) {
-            var customers = window.getResellerCustomers();
+        function markFollowupCompleted(custId, fId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (c && c.followups) {
                 var f = c.followups.find(function(x) { return x.id === fId; });
                 if (f) f.status = 'Completed';
-                window.saveResellerCustomers(customers);
-                window.showWsToast('✅ Follow-up marked as completed!');
+                saveResellerCustomers(customers);
+                showWsToast('✅ Follow-up marked as completed!');
             }
         };
 
         // 14. Render Dashboard CRM Widgets
-        window.renderDashboardCrmWidgets = function() {
-            var customers = window.getResellerCustomers();
+        function renderDashboardCrmWidgets() {
+            var customers = getResellerCustomers();
 
             // 1. Follow-ups widget
             var fContainer = document.getElementById('dashFollowupsList');
@@ -13740,7 +14097,7 @@ Rajesh Kumar (Reseller Partner)`;
             }
 
             // 2. Top Customers Leaderboard widget
-            window.renderTopCustomersList('month');
+            renderTopCustomersList('month');
 
             // 3. Reorder Opportunities widget
             var rContainer = document.getElementById('dashReorderAlertsList');
@@ -13760,10 +14117,10 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        window.renderTopCustomersList = function(period) {
+        function renderTopCustomersList(period) {
             var container = document.getElementById('dashTopCustomersList');
             if (!container) return;
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var sorted = customers.slice().sort(function(a, b) { return b.totalPurchase - a.totalPurchase; });
             container.innerHTML = sorted.slice(0, 4).map(function(c, idx) {
                 var medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : '⭐'));
@@ -13782,15 +14139,15 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-        window.switchTopCustomersPeriod = function(period, btn) {
+        function switchTopCustomersPeriod(period, btn) {
             var pills = btn.parentElement.querySelectorAll('.ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             btn.classList.add('active');
-            window.renderTopCustomersList(period);
+            renderTopCustomersList(period);
         };
 
         // 15. Global Live Search (Customers, Orders, Products)
-        window.handleGlobalSearch = function(query) {
+        function handleGlobalSearch(query) {
             var q = (query || '').trim().toLowerCase();
             var resultsBox = document.getElementById('wsGlobalSearchResults');
             if (!resultsBox) return;
@@ -13801,7 +14158,7 @@ Rajesh Kumar (Reseller Partner)`;
                 return;
             }
 
-            var customers = window.getResellerCustomers().filter(function(c) {
+            var customers = getResellerCustomers().filter(function(c) {
                 return c.name.toLowerCase().indexOf(q) !== -1 || c.mobile.indexOf(q) !== -1;
             });
 
@@ -13869,8 +14226,8 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 16. WhatsApp Actions Generator
-        window.sendCustomerWhatsAppMessage = function(custId) {
-            var customers = window.getResellerCustomers();
+        function sendCustomerWhatsAppMessage(custId) {
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
             if (!c) return;
 
@@ -13888,8 +14245,8 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         // 17. CSV / Excel Exports
-        window.exportCustomersCSV = function() {
-            var customers = window.getResellerCustomers();
+        function exportCustomersCSV() {
+            var customers = getResellerCustomers();
             var csv = 'ID,Name,Mobile,WhatsApp,Email,Address,City,State,Pincode,Tags,TotalOrders,TotalPurchase,TotalProfit,LastOrder\n';
             customers.forEach(function(c) {
                 csv += `"${c.id}","${c.name}","${c.mobile}","${c.whatsapp || ''}","${c.email || ''}","${c.address || ''}","${c.city}","${c.state}","${c.pincode}","${(c.tags||[]).join(';')}","${c.totalOrders}","${c.totalPurchase}","${c.totalProfit}","${c.lastOrder}"\n`;
@@ -13901,10 +14258,10 @@ Rajesh Kumar (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Customers_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            window.showWsToast('📥 Customers CSV exported!');
+            showWsToast('📥 Customers CSV exported!');
         };
 
-        window.exportProfitLedgerCSV = function() {
+        function exportProfitLedgerCSV() {
             var csv = 'OrderID,Customer,Product,SellingPrice,BaseCost,NetProfit,MarginPct,Date\n';
             csv += '#ORD-77492,Ananya Deshmukh,Paithani Silk Saree,18200,14000,4200,23.08%,2026-08-12\n';
             csv += '#ORD-77450,Pooja Varma,Bridal Lehenga Set,24800,19000,5800,23.38%,2026-08-05\n';
@@ -13915,11 +14272,11 @@ Rajesh Kumar (Reseller Partner)`;
             a.href = url;
             a.download = 'Reseller_Profit_Ledger_' + new Date().toISOString().split('T')[0] + '.csv';
             a.click();
-            window.showWsToast('📥 Profit Ledger CSV exported!');
+            showWsToast('📥 Profit Ledger CSV exported!');
         };
 
         // 18. Notifications Modal
-        window.openResellerNotificationsModal = function() {
+        function openResellerNotificationsModal() {
             var modal = document.getElementById('resellerNotificationsModal');
             var list = document.getElementById('resellerNotificationsList');
             if (list) {
@@ -13943,20 +14300,20 @@ Rajesh Kumar (Reseller Partner)`;
             if (modal) modal.classList.add('active');
         };
 
-        window.closeResellerNotificationsModal = function() {
+        function closeResellerNotificationsModal() {
             var modal = document.getElementById('resellerNotificationsModal');
             if (modal) modal.classList.remove('active');
         };
 
         // 19. Initial Boot Hook for CRM
         document.addEventListener('DOMContentLoaded', function() {
-            window.updateCrmCounts();
-            window.renderDashboardCrmWidgets();
+            if (typeof updateCrmCounts === 'function') updateCrmCounts(); else if (typeof window.updateCrmCounts === 'function') updateCrmCounts();
+            if (typeof renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets(); else if (typeof window.renderDashboardCrmWidgets === 'function') renderDashboardCrmWidgets();
         });
 
     
         /* ── Profit Ledger Renderer ── */
-        window.renderProfitLedger = function() {
+        function renderProfitLedger() {
             var tbody = document.getElementById('crmProfitTbody');
             if (!tbody) return;
 
@@ -13989,19 +14346,19 @@ Rajesh Kumar (Reseller Partner)`;
 
         /* ── Follow-ups Table Renderer ── */
         var currentFollowupFilter = 'all';
-        window.filterFollowups = function(filter, btn) {
+        function filterFollowups(filter, btn) {
             currentFollowupFilter = filter;
             var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
             pills.forEach(function(p) { p.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-            window.renderFollowupsTable();
+            renderFollowupsTable();
         };
 
-        window.renderFollowupsTable = function() {
+        function renderFollowupsTable() {
             var tbody = document.getElementById('crmFollowupsTbody');
             if (!tbody) return;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var allFollowups = [];
             customers.forEach(function(c) {
                 (c.followups || []).forEach(function(f) {
@@ -14054,25 +14411,25 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Recommendations Center Renderer ── */
-        window.populateRecommendationSelect = function() {
+        function populateRecommendationSelect() {
             var select = document.getElementById('recommendationCustomerSelect');
             if (!select) return;
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
                 return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
             }).join('');
 
             if (customers.length > 0) {
                 select.value = customers[0].id;
-                window.generateCustomerRecommendations(customers[0].id);
+                generateCustomerRecommendations(customers[0].id);
             }
         };
 
-        window.generateCustomerRecommendations = function(custId) {
+        function generateCustomerRecommendations(custId) {
             var grid = document.getElementById('recommendationsProductGrid');
             if (!grid) return;
 
-            var customers = window.getResellerCustomers();
+            var customers = getResellerCustomers();
             var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
             var prods = window.allProducts || [];
 
@@ -14109,7 +14466,207 @@ Rajesh Kumar (Reseller Partner)`;
             }).join('');
         };
 
-    </script>
+    
+
+
+
+
+        /* ── CRM Bulk Actions & Modal Controllers ── */
+        function toggleCustomerSelect(id, isChecked) {
+            if (isChecked) {
+                selectedCustomerIds.add(id);
+            } else {
+                selectedCustomerIds.delete(id);
+            }
+            updateBulkToolbarState();
+        }
+        window.toggleCustomerSelect = toggleCustomerSelect;
+
+        function toggleSelectAllCustomers(masterCheckbox) {
+            var customers = getResellerCustomers();
+            if (masterCheckbox.checked) {
+                customers.forEach(function(c) { selectedCustomerIds.add(c.id); });
+            } else {
+                selectedCustomerIds.clear();
+            }
+            renderCrmCustomers();
+            updateBulkToolbarState();
+        }
+        window.toggleSelectAllCustomers = toggleSelectAllCustomers;
+
+        function updateBulkToolbarState() {
+            var bar = document.getElementById('crmBulkActionBar');
+            var countEl = document.getElementById('crmSelectedCount');
+            if (countEl) countEl.textContent = selectedCustomerIds.size;
+            if (bar) {
+                bar.style.display = selectedCustomerIds.size > 0 ? 'flex' : 'none';
+            }
+        }
+        window.updateBulkToolbarState = updateBulkToolbarState;
+
+        function clearCustomerSelection() {
+            selectedCustomerIds.clear();
+            var master = document.getElementById('crmMasterCheckbox');
+            if (master) master.checked = false;
+            renderCrmCustomers();
+            updateBulkToolbarState();
+            showWsToast('Selection cleared.');
+        }
+        window.clearCustomerSelection = clearCustomerSelection;
+
+        function bulkWhatsAppCustomers() {
+            if (selectedCustomerIds.size === 0) {
+                showWsToast('Please select at least one customer.');
+                return;
+            }
+            var customers = getResellerCustomers();
+            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
+            var msg = prompt('Enter WhatsApp broadcast message template:', 'Namaste! Check out our latest festive saree catalogue at exclusive reseller discounts: https://jaihanumantex.in/shop.php');
+            if (!msg) return;
+
+            var first = selected[0];
+            var cleanPhone = first.whatsapp || first.mobile;
+            cleanPhone = cleanPhone.replace(/[^0-9]/g, '');
+            if (cleanPhone.length === 10) cleanPhone = '91' + cleanPhone;
+            window.open('https://api.whatsapp.com/send?phone=' + cleanPhone + '&text=' + encodeURIComponent(msg), '_blank');
+            showWsToast('🚀 Opened WhatsApp broadcast for ' + selected.length + ' selected customers!');
+        }
+        window.bulkWhatsAppCustomers = bulkWhatsAppCustomers;
+
+        function bulkAddTagToCustomers() {
+            if (selectedCustomerIds.size === 0) {
+                showWsToast('Please select at least one customer.');
+                return;
+            }
+            var tag = prompt('Enter tag name to add (e.g. VIP, FESTIVE, HIGH VALUE, PROMO):', 'PROMO');
+            if (!tag) return;
+            tag = tag.trim().toUpperCase();
+            var customers = getResellerCustomers();
+            customers.forEach(function(c) {
+                if (selectedCustomerIds.has(c.id)) {
+                    if (!c.tags) c.tags = [];
+                    if (!c.tags.includes(tag)) c.tags.push(tag);
+                }
+            });
+            saveResellerCustomers(customers);
+            showWsToast('🏷️ Added tag "' + tag + '" to ' + selectedCustomerIds.size + ' customers!');
+        }
+        window.bulkAddTagToCustomers = bulkAddTagToCustomers;
+
+        function exportSelectedCustomersCSV() {
+            if (selectedCustomerIds.size === 0) {
+                exportCustomersCSV();
+                return;
+            }
+            var customers = getResellerCustomers();
+            var selected = customers.filter(function(c) { return selectedCustomerIds.has(c.id); });
+            var headers = ["ID", "Name", "Mobile", "WhatsApp", "Email", "City", "State", "Pincode", "Tags", "Total Orders", "Total Purchase (INR)", "Total Profit (INR)"];
+            var rows = selected.map(function(c) {
+                return [
+                    c.id,
+                    '"' + (c.name || '').replace(/"/g, '""') + '"',
+                    c.mobile || '',
+                    c.whatsapp || '',
+                    c.email || '',
+                    '"' + (c.city || '') + '"',
+                    '"' + (c.state || '') + '"',
+                    c.pincode || '',
+                    '"' + (c.tags || []).join('; ') + '"',
+                    c.totalOrders || 0,
+                    c.totalPurchase || 0,
+                    c.totalProfit || 0
+                ];
+            });
+
+            var csvContent = "data:text/csv;charset=utf-8," + [headers.join(",")].concat(rows.map(function(e) { return e.join(","); })).join("\n");
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "reseller_selected_customers_" + new Date().toISOString().slice(0,10) + ".csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showWsToast('📥 Exported ' + selected.length + ' selected customers to CSV!');
+        }
+        window.exportSelectedCustomersCSV = exportSelectedCustomersCSV;
+
+        /* ── Saved Filters Modals ── */
+        function openSavedFiltersModal() {
+            var m = document.getElementById('resellerSavedFiltersModal');
+            if (m) m.classList.add('active');
+        }
+        window.openSavedFiltersModal = openSavedFiltersModal;
+
+        function closeSavedFiltersModal() {
+            var m = document.getElementById('resellerSavedFiltersModal');
+            if (m) m.classList.remove('active');
+        }
+        window.closeSavedFiltersModal = closeSavedFiltersModal;
+
+        function saveCurrentFilterPreset() {
+            var name = prompt('Enter a name for this filter preset:', 'My Custom Filter');
+            if (!name) return;
+            showWsToast('💾 Saved filter preset: ' + name);
+            closeSavedFiltersModal();
+        }
+        window.saveCurrentFilterPreset = saveCurrentFilterPreset;
+
+        /* ── Order Detail Modal Controller ── */
+        function openWsOrderModal(orderId) {
+            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
+            if (modal) {
+                modal.classList.add('active');
+            } else {
+                showWsToast('📦 Viewing Order Details for #' + orderId);
+            }
+        }
+        window.openWsOrderModal = openWsOrderModal;
+
+        function closeWsOrderModal() {
+            var modal = document.getElementById('wsOrderDetailsModal') || document.getElementById('resellerOrderModal');
+            if (modal) modal.classList.remove('active');
+        }
+        window.closeWsOrderModal = closeWsOrderModal;
+
+
+// ── Global Window Function Safe Exposer ──
+(function() {
+    var exposedList = [
+        'switchWsTab', 'setOverviewFilter', 'switchSalesChartStyle', 'filterByPriceTier',
+        'handleWholesalerLogout', 'initResellerApp', 'checkResellerSecurity', 'loginAsDemoReseller',
+        'openWsCatalogCategoryModal', 'closeWsCatalogCategoryModal', 'openSmartShareModal', 'closeSmartShareModal',
+        'openWalletTopupModal', 'closeWalletTopupModal', 'openEditAddressDrawer', 'closeEditAddressDrawer',
+        'selectGstMode', 'toggleSameAsBillingAddress', 'saveGstSettings', 'saveAddressBookSettings',
+        'saveProfileSettings', 'updateWholesaleCartBadge', 'updateWholesaleWishlistBadge',
+        'animateTargetGauge', 'showWsToast', 'toggleSidebar', 'getResellerCustomers',
+        'saveResellerCustomers', 'renderCrmCustomers', 'updateCrmCounts', 'filterCustomersByTag',
+        'handleCustomerSearch', 'clearCustomerSearch', 'openCustomerProfileModal', 'closeCustomerProfileModal',
+        'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
+        'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
+        'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
+        'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
+        'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
+        'handleSaveFollowupSubmit', 'markFollowupCompleted', 'renderDashboardCrmWidgets', 'renderTopCustomersList',
+        'switchTopCustomersPeriod', 'handleGlobalSearch', 'sendCustomerWhatsAppMessage', 'exportCustomersCSV',
+        'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
+        'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',
+        'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
+        'resetAdvancedOrderFilters', 'openSaveFilterModal', 'openSavedFiltersModal', 'closeSavedFiltersModal',
+        'saveCurrentFilterPreset', 'renderOrdersView', 'renderReportsView', 'renderTrackingTab',
+        'renderTicketsView', 'renderAddressBookData'
+    ];
+
+    exposedList.forEach(function(name) {
+        try {
+            var fn = eval('typeof ' + name + ' !== "undefined" ? ' + name + ' : null');
+            if (typeof fn === 'function') {
+                window[name] = fn;
+            }
+        } catch(e) {}
+    });
+})();
+
+</script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include 'cart.php'; ?>
