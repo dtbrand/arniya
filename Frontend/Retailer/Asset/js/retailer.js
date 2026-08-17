@@ -11,7 +11,7 @@
                 productName: 'Nilambari Silk Saree (Pack of 12)',
                 sku: 'KLN-SR-001',
                 hsn: '5007',
-                image: '/Shared/Asset/images/product1.png',
+                image: '/Frontend/Retailer/Asset/images/product1.png',
                 qty: 12,
                 unitPrice: 3199,
                 subtotal: 38388,
@@ -31,7 +31,7 @@
                 productName: 'Banarasi Zari Saree (Pack of 8)',
                 sku: 'KLN-SR-002',
                 hsn: '5007',
-                image: '/Shared/Asset/images/product2.png',
+                image: '/Frontend/Retailer/Asset/images/product2.png',
                 qty: 8,
                 unitPrice: 5499,
                 subtotal: 43992,
@@ -51,7 +51,7 @@
                 productName: 'Kanjivaram Temple Silk (Pack of 6)',
                 sku: 'KLN-SR-003',
                 hsn: '5007',
-                image: '/Shared/Asset/images/product3.png',
+                image: '/Frontend/Retailer/Asset/images/product3.png',
                 qty: 6,
                 unitPrice: 8499,
                 subtotal: 50994,
@@ -71,7 +71,7 @@
                 productName: 'Royal Anarkali Kurti Sets (Pack of 10)',
                 sku: 'KLN-KT-005',
                 hsn: '6204',
-                image: '/Shared/Asset/images/product5.png',
+                image: '/Frontend/Retailer/Asset/images/product5.png',
                 qty: 10,
                 unitPrice: 1799,
                 subtotal: 17990,
@@ -91,7 +91,7 @@
                 productName: 'Bridal Zardosi Velvet Lehenga (Pack of 2)',
                 sku: 'KLN-LH-006',
                 hsn: '6204',
-                image: '/Shared/Asset/images/product6.png',
+                image: '/Frontend/Retailer/Asset/images/product6.png',
                 qty: 2,
                 unitPrice: 16499,
                 subtotal: 32998,
@@ -111,7 +111,7 @@
                 productName: 'Georgette Bloom Saree (Pack of 10)',
                 sku: 'KLN-SR-004',
                 hsn: '5407',
-                image: '/Shared/Asset/images/product4.png',
+                image: '/Frontend/Retailer/Asset/images/product4.png',
                 qty: 10,
                 unitPrice: 2199,
                 subtotal: 21990,
@@ -742,7 +742,7 @@
                     <td style="color:#6B6358; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main); font-family:var(--ws-font-serif);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -774,7 +774,7 @@
                         ${badgeHtml}
                     </div>
                     <div class="ws-mob-order-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
                             <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -813,7 +813,7 @@
                             ${badgeHtml}
                         </div>
                         <div class="ws-mob-order-body">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                             <div class="ws-mob-order-info">
                                 <h4 class="ws-mob-order-title">${o.productName}</h4>
                                 <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -1542,7 +1542,7 @@
                     <td><span style="font-family:monospace; background:var(--ws-gold-light); color:var(--ws-gold-primary); padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -1580,7 +1580,7 @@
                     </div>
 
                     <div class="ws-mob-rep-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                         <div class="ws-mob-rep-info">
                             <h4 style="font-size:0.88rem; font-weight:700; color:var(--ws-text-main); line-height:1.25; margin-bottom:2px;">${o.productName}</h4>
                             <div style="font-size:0.74rem; color:var(--ws-text-muted);">
@@ -1834,7 +1834,7 @@
 
                 <!-- Product Details Box -->
                 <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
                         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
@@ -1914,7 +1914,7 @@
                         price: o.unitPrice || 3199,
                         wholesale_price: o.unitPrice || 3199,
                         qty: Number(o.qty) || 12,
-                        image: o.image || '/Shared/Asset/images/product1.png',
+                        image: o.image || '/Frontend/Retailer/Asset/images/product1.png',
                         color: o.color || 'Standard',
                         moq: 12
                     });
@@ -2616,7 +2616,7 @@
                         wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
                         retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
                         qty: addQty,
-                        image: prod.image || '/Shared/Asset/images/product1.png',
+                        image: prod.image || '/Frontend/Retailer/Asset/images/product1.png',
                         color: prod.color || 'Standard',
                         moq: addQty,
                         category: prod.category || 'Retail'
@@ -2891,7 +2891,7 @@
 
                 <!-- Product & Courier Info Strip -->
                 <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
-                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px;">${currentOrder.productName}</h4>
                         <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:4px;">
@@ -2960,7 +2960,7 @@
                     selectTrackingOrder(o.id);
                 };
                 card.innerHTML = `
-                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';">
                     <div class="ws-track-order-info">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
                             <strong class="ws-order-id-cell" style="font-size:0.86rem;">${o.id}</strong>
