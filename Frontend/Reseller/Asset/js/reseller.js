@@ -3604,8 +3604,8 @@ window.animateTargetGauge = animateTargetGauge;
                     <td style="text-align:right; font-weight:800;">${c.totalOrders}</td>
                     <td style="text-align:right; font-weight:800; color:var(--ws-text-main);">₹${Number(c.totalPurchase).toLocaleString('en-IN')}</td>
                     <td style="text-align:right; font-weight:900; color:#047857;">₹${Number(c.totalProfit).toLocaleString('en-IN')}</td>
-                    <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${c.lastOrder || 'N/A'}</td>
-                    <td style="text-align:center;">
+                    <td style="text-align:center; font-size:0.76rem; font-weight:600; color:var(--ws-text-muted); white-space:nowrap; padding:12px 14px;">${c.lastOrder || 'N/A'}</td>
+                    <td style="text-align:center; padding:12px 14px; white-space:nowrap;">
                         <div class="crm-action-btn-group">
                             <button class="crm-btn-view" onclick="openCustomerProfileModal(${c.id})" title="View Profile">👁️</button>
                             <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="WhatsApp">💬</button>
