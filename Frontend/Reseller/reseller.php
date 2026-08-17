@@ -1087,7 +1087,7 @@ $catalogProducts = [
                             ?>
                             <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                                 <div class="card-image-wrap">
-                                    <a href="../Single-Product/../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                    <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
                                         <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                     </a>
                                     <?php if (!empty($prod['badge'])): ?>
@@ -1116,7 +1116,7 @@ $catalogProducts = [
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-name">
-                                        <a href="../Single-Product/../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                        <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
                                             <?= htmlspecialchars($prod['name']) ?>
                                         </a>
                                     </h2>
@@ -1959,7 +1959,7 @@ $catalogProducts = [
                         ?>
                         <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                             <div class="card-image-wrap">
-                                <a href="../Single-Product/../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
+                                <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
                                     <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                 </a>
 
@@ -1995,7 +1995,7 @@ $catalogProducts = [
                             <div class="card-body">
                                 <!-- Product Title -->
                                 <h2 class="card-name">
-                                    <a href="../Single-Product/../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
+                                    <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="color:inherit;text-decoration:none;">
                                         <?= htmlspecialchars($prod['name']) ?>
                                     </a>
                                 </h2>

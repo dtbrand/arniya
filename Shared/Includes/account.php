@@ -683,7 +683,7 @@
                     </div>
                 </div>
 
-                <a href="wholesaler.php" id="acModalWsBtn" style="display:none; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
+                <a href="../Wholesale/wholesale.php" id="acModalWsBtn" style="display:none; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
                     <span>📦 Open Wholesaler B2B Dashboard</span>
                     <span>→</span>
                 </a>
@@ -906,15 +906,15 @@
                 if (wsBtn) {
                     if (role === 'wholesaler') {
                         wsBtn.style.display = 'flex';
-                        wsBtn.href = 'wholesaler.php';
+                        wsBtn.href = '../Wholesale/wholesale.php';
                         wsBtn.innerHTML = '<span>📦 Open Wholesaler B2B Dashboard</span><span>→</span>';
                     } else if (role === 'retailer') {
                         wsBtn.style.display = 'flex';
-                        wsBtn.href = 'retailer.php';
+                        wsBtn.href = '../Retailer/retailer.php';
                         wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
                     } else if (role === 'reseller') {
                         wsBtn.style.display = 'flex';
-                        wsBtn.href = 'reseller.php';
+                        wsBtn.href = '../Reseller/reseller.php';
                         wsBtn.innerHTML = '<span>💼 Open Reseller B2B Dashboard</span><span>→</span>';
                     } else {
                         wsBtn.style.display = 'none';

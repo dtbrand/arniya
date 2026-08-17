@@ -1252,7 +1252,7 @@
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
+                    <a href="../../Frontend/Retailer/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
                         <span>🛍️ Open Retailer Dashboard</span>
                         <span>→</span>
                     </a>
@@ -1272,7 +1272,7 @@
                         Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
                     </div>
                 </div>
-                <a href="retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
+                <a href="../../Frontend/Retailer/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
                     Open Retailer Portal →
                 </a>
             </div>
@@ -1670,12 +1670,12 @@
                     if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
                     if (linkEl) {
-                        linkEl.href = 'wholesaler.php';
+                        linkEl.href = '../../Frontend/Wholesale/wholesale.php';
                         linkEl.textContent = 'Open Wholesaler Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = 'wholesaler.php';
+                        heroBtn.href = '../../Frontend/Wholesale/wholesale.php';
                         heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'retailer') {
@@ -1683,12 +1683,12 @@
                     if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = 'retailer.php';
+                        linkEl.href = '../../Frontend/Retailer/retailer.php';
                         linkEl.textContent = 'Open Retailer Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = 'retailer.php';
+                        heroBtn.href = '../../Frontend/Retailer/retailer.php';
                         heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'reseller') {
@@ -1696,12 +1696,12 @@
                     if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = 'reseller.php';
+                        linkEl.href = '../../Frontend/Reseller/reseller.php';
                         linkEl.textContent = 'Open Reseller Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = 'reseller.php';
+                        heroBtn.href = '../../Frontend/Reseller/reseller.php';
                         heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
                     }
                 } else {

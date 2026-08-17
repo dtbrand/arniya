@@ -5,7 +5,7 @@ RewriteBase /
 # Root URL -> Frontend Shop
 RewriteRule ^$ Frontend/Shop/shop.php [L,R=301]
 
-# Page rewrites
+# Page rewrites from Root
 RewriteRule ^shop(\.php)?$ Frontend/Shop/shop.php [L,QSA]
 RewriteRule ^singleproduct(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
 RewriteRule ^singelprodut(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
@@ -13,6 +13,13 @@ RewriteRule ^wholesale(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
 RewriteRule ^wholesaler(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
 RewriteRule ^retailer(\.php)?$ Frontend/Retailer/retailer.php [L,QSA]
 RewriteRule ^reseller(\.php)?$ Frontend/Reseller/reseller.php [L,QSA]
+
+# Rewrites from Shared/Auth/ or nested paths
+RewriteRule ^Shared/Auth/(?:wholesale|wholesaler)(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301,QSA]
+RewriteRule ^Shared/Auth/(?:retailer)(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301,QSA]
+RewriteRule ^Shared/Auth/(?:reseller)(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301,QSA]
+RewriteRule ^Shared/Auth/(?:shop)(\.php)?$ /Frontend/Shop/shop.php [L,R=301,QSA]
+RewriteRule ^Shared/Auth/(?:singleproduct|singelprodut)(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301,QSA]
 
 # Auth & Shared Rewrites
 RewriteRule ^myaccount(\.php)?$ Shared/Auth/myaccount.php [L,QSA]

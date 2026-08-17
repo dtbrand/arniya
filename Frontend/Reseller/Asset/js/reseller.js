@@ -2743,11 +2743,11 @@ window.animateTargetGauge = animateTargetGauge;
                     fabric: p.fabric || 'Pure Silk',
                     colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
                     sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                    url: 'singelprodut.php?id=' + p.id
+                    url: '../Single-Product/singleproduct.php?id=' + p.id
                 };
                 window.openSmartShareModal(itemData);
             } else if (p) {
-                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' on Kalaniketan Reseller Hub: ' + window.location.origin + '/singelprodut.php?id=' + p.id);
+                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' on Kalaniketan Reseller Hub: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
                 window.open(waUrl, '_blank');
             }
         };
@@ -2826,7 +2826,7 @@ window.animateTargetGauge = animateTargetGauge;
         function handleWholesalerLogout() {
             if (confirm('Are you sure you want to log out of the Reseller Portal?')) {
                 localStorage.removeItem('kalaniketan_user');
-                window.location.href = 'shop.php';
+                window.location.href = '../Shop/shop.php';
             }
         };
 
