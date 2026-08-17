@@ -6354,6 +6354,7 @@ $catalogProducts = [
                 <div class="ws-cat-modal-grid" id="wsCatModalDynamicGrid">
                     <!-- Rendered dynamically by JS -->
                 </div>
+            </div>
         </div>
     </div>
 
