@@ -1101,7 +1101,7 @@
 
             html += `
                 <div class="co-item-row">
-                    <img src="${item.img || 'images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='images/product1.png';">
+                    <img src="${item.img || 'images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/Shared/Asset/images/product1.png';">
                     <div class="co-item-info">
                         <div class="co-item-name">${item.title || 'Ethnic Attire'}</div>
                         <div class="co-item-meta">Size: <strong>${item.size || 'M'}</strong> | Qty: <strong>${item.qty || 1}</strong></div>

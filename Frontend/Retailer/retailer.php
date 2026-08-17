@@ -22,7 +22,7 @@ $catalogProducts = [
         'retail_price'    => 3499,
         'wholesale_price' => 1399,
         'moq'             => 8,
-        'image'           => 'Asset/images/product2.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product2.png',
         'badge'           => 'New Catalogue',
         'badge_icon'      => '✨',
         'color'           => 'Crimson Rani',
@@ -39,7 +39,7 @@ $catalogProducts = [
         'retail_price'    => 2699,
         'wholesale_price' => 989,
         'moq'             => 8,
-        'image'           => 'Asset/images/product5.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product5.png',
         'badge'           => 'New Arrival',
         'badge_icon'      => '🔥',
         'color'           => 'Teal Blue',
@@ -56,7 +56,7 @@ $catalogProducts = [
         'retail_price'    => 3199,
         'wholesale_price' => 1249,
         'moq'             => 8,
-        'image'           => 'Asset/images/product1.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product1.png',
         'badge'           => 'New Catalogue',
         'badge_icon'      => '💎',
         'color'           => 'Bottle Green',
@@ -73,7 +73,7 @@ $catalogProducts = [
         'retail_price'    => 4499,
         'wholesale_price' => 1899,
         'moq'             => 6,
-        'image'           => 'Asset/images/product3.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product3.png',
         'badge'           => 'New Arrival',
         'badge_icon'      => '👑',
         'color'           => 'Copper Gold',
@@ -92,7 +92,7 @@ $catalogProducts = [
         'retail_price'    => 599,
         'wholesale_price' => 249,
         'moq'             => 24,
-        'image'           => 'Asset/images/product7.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product7.png',
         'badge'           => 'Super Value',
         'badge_icon'      => '🚀',
         'color'           => 'Indigo Blue',
@@ -109,7 +109,7 @@ $catalogProducts = [
         'retail_price'    => 449,
         'wholesale_price' => 189,
         'moq'             => 30,
-        'image'           => 'Asset/images/product8.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product8.png',
         'badge'           => 'Fast Selling',
         'badge_icon'      => '⚡',
         'color'           => 'Ruby Red',
@@ -126,7 +126,7 @@ $catalogProducts = [
         'retail_price'    => 699,
         'wholesale_price' => 289,
         'moq'             => 20,
-        'image'           => 'Asset/images/product5.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product5.png',
         'badge'           => 'Bestseller',
         'badge_icon'      => '🔥',
         'color'           => 'Mustard Yellow',
@@ -143,7 +143,7 @@ $catalogProducts = [
         'retail_price'    => 999,
         'wholesale_price' => 399,
         'moq'             => 18,
-        'image'           => 'Asset/images/product6.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product6.png',
         'badge'           => 'Best Margin',
         'badge_icon'      => '⚡',
         'color'           => 'Pastel Mint',
@@ -160,7 +160,7 @@ $catalogProducts = [
         'retail_price'    => 1299,
         'wholesale_price' => 489,
         'moq'             => 16,
-        'image'           => 'Asset/images/product4.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product4.png',
         'badge'           => 'Trending',
         'badge_icon'      => '🔥',
         'color'           => 'Lavender Rose',
@@ -177,7 +177,7 @@ $catalogProducts = [
         'retail_price'    => 1599,
         'wholesale_price' => 649,
         'moq'             => 12,
-        'image'           => 'Asset/images/product1.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product1.png',
         'badge'           => 'Festive Hot',
         'badge_icon'      => '✨',
         'color'           => 'Peacock Green',
@@ -194,7 +194,7 @@ $catalogProducts = [
         'retail_price'    => 1899,
         'wholesale_price' => 749,
         'moq'             => 12,
-        'image'           => 'Asset/images/product2.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product2.png',
         'badge'           => 'Party Wear',
         'badge_icon'      => '💎',
         'color'           => 'Blush Pink',
@@ -211,7 +211,7 @@ $catalogProducts = [
         'retail_price'    => 2499,
         'wholesale_price' => 949,
         'moq'             => 10,
-        'image'           => 'Asset/images/product3.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product3.png',
         'badge'           => 'Bestseller',
         'badge_icon'      => '⭐',
         'color'           => 'Royal Maroon',
@@ -228,7 +228,7 @@ $catalogProducts = [
         'retail_price'    => 2799,
         'wholesale_price' => 1799,
         'moq'             => 10,
-        'image'           => 'Asset/images/product5.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product5.png',
         'badge'           => 'Party Wear',
         'badge_icon'      => '💎',
         'color'           => 'Emerald Teal',
@@ -245,7 +245,7 @@ $catalogProducts = [
         'retail_price'    => 3299,
         'wholesale_price' => 2199,
         'moq'             => 8,
-        'image'           => 'Asset/images/product4.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product4.png',
         'badge'           => 'Fast Selling',
         'badge_icon'      => '⚡',
         'color'           => 'Blush Peach',
@@ -262,7 +262,7 @@ $catalogProducts = [
         'retail_price'    => 4899,
         'wholesale_price' => 3199,
         'moq'             => 6,
-        'image'           => 'Asset/images/product1.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product1.png',
         'badge'           => 'Bestseller',
         'badge_icon'      => '🔥',
         'color'           => 'Navy Blue',
@@ -279,7 +279,7 @@ $catalogProducts = [
         'retail_price'    => 8499,
         'wholesale_price' => 5499,
         'moq'             => 4,
-        'image'           => 'Asset/images/product2.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product2.png',
         'badge'           => 'Heritage',
         'badge_icon'      => '✨',
         'color'           => 'Maroon Wine',
@@ -296,7 +296,7 @@ $catalogProducts = [
         'retail_price'    => 12999,
         'wholesale_price' => 8499,
         'moq'             => 3,
-        'image'           => 'Asset/images/product3.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product3.png',
         'badge'           => 'Royal VIP',
         'badge_icon'      => '👑',
         'color'           => 'Golden Yellow',
@@ -313,7 +313,7 @@ $catalogProducts = [
         'retail_price'    => 24999,
         'wholesale_price' => 16499,
         'moq'             => 2,
-        'image'           => 'Asset/images/product6.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product6.png',
         'badge'           => 'Bridal Couture',
         'badge_icon'      => '💍',
         'color'           => 'Crimson Red',
@@ -330,7 +330,7 @@ $catalogProducts = [
         'retail_price'    => 3999,
         'wholesale_price' => 1699,
         'moq'             => 6,
-        'image'           => 'Asset/images/product5.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product5.png',
         'badge'           => 'New Arrival',
         'badge_icon'      => '🔥',
         'color'           => 'Royal Emerald',
@@ -347,7 +347,7 @@ $catalogProducts = [
         'retail_price'    => 4599,
         'wholesale_price' => 1999,
         'moq'             => 6,
-        'image'           => 'Asset/images/product6.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product6.png',
         'badge'           => 'New Catalogue',
         'badge_icon'      => '✨',
         'color'           => 'Wine Burgundy',
@@ -364,7 +364,7 @@ $catalogProducts = [
         'retail_price'    => 1999,
         'wholesale_price' => 849,
         'moq'             => 10,
-        'image'           => 'Asset/images/product7.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product7.png',
         'badge'           => 'New Catalogue',
         'badge_icon'      => '✨',
         'color'           => 'Mustard Ochre',
@@ -381,7 +381,7 @@ $catalogProducts = [
         'retail_price'    => 1499,
         'wholesale_price' => 599,
         'moq'             => 12,
-        'image'           => 'Asset/images/product8.png',
+        'image'           => '/Frontend/Retailer/Asset/images/product8.png',
         'badge'           => 'New Arrival',
         'badge_icon'      => '⚡',
         'color'           => 'Pastel Sky',
@@ -399,7 +399,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
+    <link rel="preload" as="image" href="/Frontend/Retailer/Asset/images/product1.png" fetchpriority="high">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Retailer B2B Dashboard — Kalaniketan Couture</title>
@@ -409,7 +409,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="Asset/css/retailer.css">
+    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css">
 
 </head>
 <body>
@@ -451,7 +451,7 @@ $catalogProducts = [
 
             <!-- User Profile Pill -->
             <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Retailer Profile">
-                <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
+                <img src="/Frontend/Retailer/Asset/images/profile.png" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
                 <div class="ws-user-name-text">
                     <span id="headerUserName">Rajesh Kumar</span>
                     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -474,7 +474,7 @@ $catalogProducts = [
             <div class="ws-sidebar-scroll">
                 <!-- VIP Retailer User Card in Sidebar -->
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
-                    <img src="Asset/images/profile.png" onerror="this.src='Asset/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
+                    <img src="/Frontend/Retailer/Asset/images/profile.png" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
@@ -1045,7 +1045,7 @@ $catalogProducts = [
                             <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                                 <div class="card-image-wrap">
                                     <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';" loading="lazy">
                                     </a>
                                     <?php if (!empty($prod['badge'])): ?>
                                     <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
@@ -1917,7 +1917,7 @@ $catalogProducts = [
                         <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                             <div class="card-image-wrap">
                                 <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='/Frontend/Retailer/Asset/images/product1.png';" loading="lazy">
                                 </a>
 
                                 <!-- Status Badge -->
@@ -2887,7 +2887,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="Asset/js/retailer.js"></script>
+    <script src="/Frontend/Retailer/Asset/js/retailer.js"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

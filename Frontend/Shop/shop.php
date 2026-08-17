@@ -13,7 +13,7 @@ $products = [
         'price'    => 4899,
         'old_price'=> 6500,
         'discount' => 25,
-        'image'    => 'Asset/images/product1.png',
+        'image'    => '/Frontend/Shop/Asset/images/product1.png',
         'badge'    => 'New',
         'rating'   => 4.8,
         'color'    => 'Navy',
@@ -29,7 +29,7 @@ $products = [
         'price'    => 8499,
         'old_price'=> 11000,
         'discount' => 23,
-        'image'    => 'Asset/images/product2.png',
+        'image'    => '/Frontend/Shop/Asset/images/product2.png',
         'badge'    => 'Bestseller',
         'rating'   => 4.9,
         'color'    => 'Maroon',
@@ -45,7 +45,7 @@ $products = [
         'price'    => 12999,
         'old_price'=> 16500,
         'discount' => 21,
-        'image'    => 'Asset/images/product3.png',
+        'image'    => '/Frontend/Shop/Asset/images/product3.png',
         'badge'    => 'Heritage',
         'rating'   => 5.0,
         'color'    => 'Yellow',
@@ -61,7 +61,7 @@ $products = [
         'price'    => 3299,
         'old_price'=> null,
         'discount' => 0,
-        'image'    => 'Asset/images/product4.png',
+        'image'    => '/Frontend/Shop/Asset/images/product4.png',
         'badge'    => null,
         'rating'   => 4.6,
         'color'    => 'Pink',
@@ -77,7 +77,7 @@ $products = [
         'price'    => 2799,
         'old_price'=> 3900,
         'discount' => 28,
-        'image'    => 'Asset/images/product5.png',
+        'image'    => '/Frontend/Shop/Asset/images/product5.png',
         'badge'    => 'New',
         'rating'   => 4.7,
         'color'    => 'Green',
@@ -93,7 +93,7 @@ $products = [
         'price'    => 24999,
         'old_price'=> 32000,
         'discount' => 22,
-        'image'    => 'Asset/images/product6.png',
+        'image'    => '/Frontend/Shop/Asset/images/product6.png',
         'badge'    => 'Bridal',
         'rating'   => 5.0,
         'color'    => 'Red',
@@ -109,7 +109,7 @@ $products = [
         'price'    => 1899,
         'old_price'=> 2600,
         'discount' => 27,
-        'image'    => 'Asset/images/product7.png',
+        'image'    => '/Frontend/Shop/Asset/images/product7.png',
         'badge'    => null,
         'rating'   => 4.5,
         'color'    => 'Orange',
@@ -125,7 +125,7 @@ $products = [
         'price'    => 7499,
         'old_price'=> 9500,
         'discount' => 21,
-        'image'    => 'Asset/images/product8.png',
+        'image'    => '/Frontend/Shop/Asset/images/product8.png',
         'badge'    => 'Trending',
         'rating'   => 4.8,
         'color'    => 'White',
@@ -147,7 +147,7 @@ $total_products = count($products);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
+    <link rel="preload" as="image" href="/Frontend/Shop/Asset/images/product1.png" fetchpriority="high">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="description" content="Shop premium Indian ethnic wear — silk sarees, kurtis, lehengas and designer gowns at Kalaniketan." />
@@ -156,7 +156,7 @@ $total_products = count($products);
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="Asset/css/shop.css">
+<link rel="stylesheet" href="/Frontend/Shop/Asset/css/shop.css">
 
 </head>
 <body>
@@ -181,7 +181,7 @@ $total_products = count($products);
                         <button class="hero-slide-btn">Explore Sarees &rarr;</button>
                     </div>
                     <div class="hero-slide-img-wrap">
-                        <img src="Asset/images/product1.png" alt="Royal Silk Sarees" loading="lazy" />
+                        <img src="/Frontend/Shop/Asset/images/product1.png" alt="Royal Silk Sarees" loading="lazy" />
                     </div>
                 </div>
 
@@ -194,7 +194,7 @@ $total_products = count($products);
                         <button class="hero-slide-btn">Shop Kurtis &rarr;</button>
                     </div>
                     <div class="hero-slide-img-wrap">
-                        <img src="Asset/images/product5.png" alt="Designer Kurtis" loading="lazy" />
+                        <img src="/Frontend/Shop/Asset/images/product5.png" alt="Designer Kurtis" loading="lazy" />
                     </div>
                 </div>
 
@@ -207,7 +207,7 @@ $total_products = count($products);
                         <button class="hero-slide-btn">View Bridal &rarr;</button>
                     </div>
                     <div class="hero-slide-img-wrap">
-                        <img src="Asset/images/product6.png" alt="Bridal Lehengas" loading="lazy" />
+                        <img src="/Frontend/Shop/Asset/images/product6.png" alt="Bridal Lehengas" loading="lazy" />
                     </div>
                 </div>
 
@@ -571,7 +571,7 @@ $total_products = count($products);
 <script>
         window.shopProductsData = <?= json_encode(array_values($products)) ?>;
     </script>
-    <script src="Asset/js/shop.js"></script>
+    <script src="/Frontend/Shop/Asset/js/shop.js"></script>
 
 <!-- ════════════ INSTAGRAM REELS VIDEO FEED PARTIAL ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/reels.php'; ?>

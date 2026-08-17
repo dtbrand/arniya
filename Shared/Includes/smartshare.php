@@ -308,7 +308,7 @@
             </button>
         </div>
         <div class="smart-share-product-card">
-            <img src="images/product1.png" alt="Product" class="smart-share-thumb" id="smartShareThumb" />
+            <img src="/Shared/Asset/images/product1.png" alt="Product" class="smart-share-thumb" id="smartShareThumb" />
             <div class="smart-share-product-info">
                 <div class="smart-share-prod-name" id="smartShareName">Nilambari Silk Saree</div>
                 <div class="smart-share-prod-meta" id="smartShareMeta">Fabric: Pure Silk • Free Size</div>

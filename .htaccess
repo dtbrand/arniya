@@ -7,41 +7,44 @@ RewriteEngine On
 RewriteBase /
 
 # Root URL -> Frontend Shop
-RewriteRule ^$ Frontend/Shop/shop.php [L,R=301]
+RewriteRule ^$ /Frontend/Shop/shop.php [L,R=301]
 
-# Page rewrites from Root
-RewriteRule ^shop(\.php)?$ Frontend/Shop/shop.php [L,QSA]
-RewriteRule ^singleproduct(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
-RewriteRule ^singelprodut(\.php)?$ Frontend/Single-Product/singleproduct.php [L,QSA]
-RewriteRule ^wholesale(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
-RewriteRule ^wholesaler(\.php)?$ Frontend/Wholesale/wholesale.php [L,QSA]
-RewriteRule ^retailer(\.php)?$ Frontend/Retailer/retailer.php [L,QSA]
-RewriteRule ^reseller(\.php)?$ Frontend/Reseller/reseller.php [L,QSA]
-
-# Rewrites from Shared/Auth/ or nested paths
-RewriteRule ^Shared/Auth/(?:wholesale|wholesaler)(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301,QSA]
-RewriteRule ^Shared/Auth/(?:retailer)(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301,QSA]
-RewriteRule ^Shared/Auth/(?:reseller)(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301,QSA]
-RewriteRule ^Shared/Auth/(?:shop)(\.php)?$ /Frontend/Shop/shop.php [L,R=301,QSA]
-RewriteRule ^Shared/Auth/(?:singleproduct|singelprodut)(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301,QSA]
+# Page redirects from Root to respective Module folders
+RewriteRule ^shop(\.php)?$ /Frontend/Shop/shop.php [L,R=301]
+RewriteRule ^singleproduct(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301]
+RewriteRule ^singelprodut(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301]
+RewriteRule ^wholesale(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
+RewriteRule ^wholesaler(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
+RewriteRule ^retailer(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301]
+RewriteRule ^reseller(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301]
 
 # Auth & Shared Rewrites
-RewriteRule ^myaccount(\.php)?$ Shared/Auth/myaccount.php [L,QSA]
-RewriteRule ^account(\.php)?$ Shared/Includes/account.php [L,QSA]
-RewriteRule ^cart(\.php)?$ Shared/Includes/cart.php [L,QSA]
-RewriteRule ^checkout(\.php)?$ Shared/Includes/checkout.php [L,QSA]
-RewriteRule ^quickview(\.php)?$ Shared/Includes/quickview.php [L,QSA]
-RewriteRule ^smartshare(\.php)?$ Shared/Includes/smartshare.php [L,QSA]
-RewriteRule ^wishlist(\.php)?$ Shared/Includes/wishlist.php [L,QSA]
-RewriteRule ^reels(\.php)?$ Shared/Includes/reels.php [L,QSA]
+RewriteRule ^myaccount(\.php)?$ /Shared/Auth/myaccount.php [L,R=301]
+RewriteRule ^account(\.php)?$ /Shared/Includes/account.php [L,R=301]
+RewriteRule ^cart(\.php)?$ /Shared/Includes/cart.php [L,R=301]
+RewriteRule ^checkout(\.php)?$ /Shared/Includes/checkout.php [L,R=301]
+RewriteRule ^quickview(\.php)?$ /Shared/Includes/quickview.php [L,R=301]
+RewriteRule ^smartshare(\.php)?$ /Shared/Includes/smartshare.php [L,R=301]
+RewriteRule ^wishlist(\.php)?$ /Shared/Includes/wishlist.php [L,R=301]
+RewriteRule ^reels(\.php)?$ /Shared/Includes/reels.php [L,R=301]
 
-# Images rewrite
+# Fallback asset routing if requested from Root
+RewriteRule ^Asset/css/shop\.css$ Frontend/Shop/Asset/css/shop.css [L]
+RewriteRule ^Asset/js/shop\.js$ Frontend/Shop/Asset/js/shop.js [L]
+RewriteRule ^Asset/css/singleproduct\.css$ Frontend/Single-Product/Asset/css/singleproduct.css [L]
+RewriteRule ^Asset/js/singleproduct\.js$ Frontend/Single-Product/Asset/js/singleproduct.js [L]
+RewriteRule ^Asset/css/wholesale\.css$ Frontend/Wholesale/Asset/css/wholesale.css [L]
+RewriteRule ^Asset/js/wholesale\.js$ Frontend/Wholesale/Asset/js/wholesale.js [L]
+RewriteRule ^Asset/css/retailer\.css$ Frontend/Retailer/Asset/css/retailer.css [L]
+RewriteRule ^Asset/js/retailer\.js$ Frontend/Retailer/Asset/js/retailer.js [L]
+RewriteRule ^Asset/css/reseller\.css$ Frontend/Reseller/Asset/css/reseller.css [L]
+RewriteRule ^Asset/js/reseller\.js$ Frontend/Reseller/Asset/js/reseller.js [L]
+RewriteRule ^Asset/images/(.*)$ Shared/Asset/images/$1 [L]
 RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
 </IfModule>
 
 # ── 1. GZIP / DEFLATE COMPRESSION (Ultra-Fast Transfer) ──
 <IfModule mod_deflate.c>
-    # Compress HTML, CSS, JavaScript, Text, XML and fonts
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/rss+xml
     AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
@@ -68,7 +71,7 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
     AddOutputFilterByType DEFLATE application/json
 </IfModule>
 
-# ── 2. BROWSER CACHING HEADERS (Instant Repeat Loads) ──
+# ── 2. BROWSER CACHING HEADERS ──
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault "access plus 1 month"
@@ -96,19 +99,16 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
 
 # ── 3. CACHE-CONTROL HEADERS ──
 <IfModule mod_headers.c>
-    # 1 Year Cache for Static Assets
     <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$">
         Header set Cache-Control "max-age=31536000, public, immutable"
     </FilesMatch>
 
-    # 1 Month Cache for CSS and JS
     <FilesMatch "\.(css|js)$">
         Header set Cache-Control "max-age=2592000, public"
     </FilesMatch>
 
-    # Keep-Alive Header
     Header set Connection keep-alive
 </IfModule>
 
-# ── 4. DISABLE ETAGS (Prevents 304 roundtrip overhead) ──
+# ── 4. DISABLE ETAGS ──
 FileETag None

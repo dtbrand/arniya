@@ -13,7 +13,7 @@ $products = [
         'price'    => 4899,
         'old_price'=> 6500,
         'discount' => 25,
-        'image'    => 'Asset/images/product1.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product1.png',
         'badge'    => 'New',
         'rating'   => 4.8,
         'reviews'  => 142,
@@ -32,7 +32,7 @@ $products = [
         'price'    => 8499,
         'old_price'=> 11000,
         'discount' => 23,
-        'image'    => 'Asset/images/product2.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product2.png',
         'badge'    => 'Bestseller',
         'rating'   => 4.9,
         'reviews'  => 218,
@@ -51,7 +51,7 @@ $products = [
         'price'    => 12999,
         'old_price'=> 16500,
         'discount' => 21,
-        'image'    => 'Asset/images/product3.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product3.png',
         'badge'    => 'Heritage',
         'rating'   => 5.0,
         'reviews'  => 96,
@@ -70,7 +70,7 @@ $products = [
         'price'    => 3299,
         'old_price'=> 4200,
         'discount' => 21,
-        'image'    => 'Asset/images/product4.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product4.png',
         'badge'    => null,
         'rating'   => 4.6,
         'reviews'  => 74,
@@ -89,7 +89,7 @@ $products = [
         'price'    => 2799,
         'old_price'=> 3900,
         'discount' => 28,
-        'image'    => 'Asset/images/product5.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product5.png',
         'badge'    => 'New',
         'rating'   => 4.7,
         'reviews'  => 89,
@@ -108,7 +108,7 @@ $products = [
         'price'    => 24999,
         'old_price'=> 32000,
         'discount' => 22,
-        'image'    => 'Asset/images/product6.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product6.png',
         'badge'    => 'Bridal',
         'rating'   => 5.0,
         'reviews'  => 310,
@@ -127,7 +127,7 @@ $products = [
         'price'    => 1899,
         'old_price'=> 2600,
         'discount' => 27,
-        'image'    => 'Asset/images/product7.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product7.png',
         'badge'    => null,
         'rating'   => 4.5,
         'reviews'  => 56,
@@ -146,7 +146,7 @@ $products = [
         'price'    => 7499,
         'old_price'=> 9500,
         'discount' => 21,
-        'image'    => 'Asset/images/product8.png',
+        'image'    => '/Frontend/Single-Product/Asset/images/product8.png',
         'badge'    => 'Trending',
         'rating'   => 4.8,
         'reviews'  => 115,
@@ -508,7 +508,7 @@ $colorHex = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preload" as="image" href="Asset/images/product1.png" fetchpriority="high">
+    <link rel="preload" as="image" href="/Frontend/Single-Product/Asset/images/product1.png" fetchpriority="high">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title><?= htmlspecialchars($product['name']) ?> — Kalaniketan | Ethnic Luxury</title>
@@ -517,7 +517,7 @@ $colorHex = [
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="Asset/css/singleproduct.css">
+<link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css">
 
 </head>
 <body>
@@ -1219,7 +1219,7 @@ $colorHex = [
         window.currentProductData = <?= json_encode($product) ?>;
         window.totalSlidesCount = <?= isset($galleryImages) ? count($galleryImages) : 4 ?>;
     </script>
-    <script src="Asset/js/singleproduct.js"></script>
+    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/smartshare.php'; ?>
