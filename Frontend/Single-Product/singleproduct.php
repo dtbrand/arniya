@@ -503,18 +503,13 @@ $colorHex = [
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ── Speed & Resource Hints ── -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="preload" as="image" href="/Frontend/Single-Product/Asset/images/product1.png" fetchpriority="high">
+    
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title><?= htmlspecialchars($product['name']) ?> — Kalaniketan | Ethnic Luxury</title>
 <meta name="description" content="<?= htmlspecialchars(substr($product['desc'], 0, 160)) ?>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css">
