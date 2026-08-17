@@ -1242,28 +1242,38 @@
             <!-- Hero Profile Banner -->
             <div class="profile-hero">
                 <div class="profile-main-group">
-                    <div class="profile-avatar-circle" id="dashUserInitials">RS</div>
+                    <div class="profile-avatar-circle" id="dashUserInitials">GV</div>
                     <div class="profile-details">
-                        <h2 id="dashUserName">Radhika Sharma</h2>
-                        <div class="profile-phone" id="dashUserPhone">+91 98765 43210</div>
+                        <h2 id="dashUserName">Gautam Vaishnav</h2>
+                        <div class="profile-phone" id="dashUserPhone">+91 8890639215</div>
                         <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
                         <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
                     </div>
                 </div>
 
-                <button class="logout-btn" onclick="handleLogoutClick()">
-                    Logout
-                </button>
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <a href="retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
+                        <span>🛍️ Open Retailer Dashboard</span>
+                        <span>→</span>
+                    </a>
+                    <button class="logout-btn" onclick="handleLogoutClick()">
+                        Logout
+                    </button>
+                </div>
             </div>
 
-            <!-- Wholesaler VIP Access Banner -->
-            <div class="ws-vip-access-banner" id="wsVipAccessBanner" style="display:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:2px solid var(--dark-gold, #8A681F); border-radius:14px; padding:14px 18px; margin-bottom:18px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <!-- Dedicated B2B VIP Hub Banner for Retailers & Wholesalers -->
+            <div class="ws-vip-access-banner" id="wsVipAccessBanner" style="display:flex; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:2px solid var(--dark-gold, #8A681F); border-radius:14px; padding:16px 20px; margin-bottom:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 16px rgba(138, 104, 31, 0.12);">
                 <div>
-                    <div style="font-family:var(--font-serif, 'Cinzel', serif); font-size:1.05rem; font-weight:800; color:var(--dark-gold, #8A681F);">👑 Wholesaler B2B VIP Hub Ready</div>
-                    <div style="font-size:0.75rem; color:var(--mid-text, #423C34); margin-top:2px;">Access bulk tier pricing, live courier dispatch tracking, GST billing, and reports.</div>
+                    <div id="wsVipBannerTitle" style="font-family:var(--font-serif, 'Cinzel', serif); font-size:1.1rem; font-weight:800; color:var(--dark-gold, #8A681F);">
+                        🛍️ Retailer B2B VIP Hub Ready
+                    </div>
+                    <div id="wsVipBannerSubtitle" style="font-size:0.82rem; color:var(--mid-text, #423C34); margin-top:3px;">
+                        Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
+                    </div>
                 </div>
-                <a href="wholesaler.php" class="auth-btn-submit" style="padding:8px 18px; font-size:0.78rem; text-decoration:none; display:inline-flex; width:auto; border-radius:8px;">
-                    Open Wholesaler Portal →
+                <a href="retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
+                    Open Retailer Portal →
                 </a>
             </div>
 
@@ -1648,22 +1658,42 @@
                     roleEl.textContent = `${icon} ${r} Member`;
                 }
 
+                var role = (user.role || 'Retailer').toLowerCase();
                 var wsBanner = document.getElementById('wsVipAccessBanner');
-                var role = (user.role || '').toLowerCase();
-                if (wsBanner) {
-                    if (role === 'wholesaler') {
-                        wsBanner.style.display = 'flex';
-                        wsBanner.querySelector('.ws-vip-title, div > div:first-child').textContent = '👑 Wholesaler B2B VIP Hub Ready';
-                        wsBanner.querySelector('a').href = 'wholesaler.php';
-                        wsBanner.querySelector('a').textContent = 'Open Wholesaler Portal →';
-                    } else if (role === 'retailer') {
-                        wsBanner.style.display = 'flex';
-                        wsBanner.querySelector('div > div:first-child').textContent = '🛍️ Retailer B2B VIP Hub Ready';
-                        wsBanner.querySelector('a').href = 'retailer.php';
-                        wsBanner.querySelector('a').textContent = 'Open Retailer Portal →';
-                    } else {
-                        wsBanner.style.display = 'none';
+                var heroBtn = document.getElementById('dashHeroPortalBtn');
+                var titleEl = document.getElementById('wsVipBannerTitle');
+                var subEl = document.getElementById('wsVipBannerSubtitle');
+                var linkEl = document.getElementById('wsVipBannerLink');
+
+                if (role === 'wholesaler') {
+                    if (wsBanner) wsBanner.style.display = 'flex';
+                    if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
+                    if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
+                    if (linkEl) {
+                        linkEl.href = 'wholesaler.php';
+                        linkEl.textContent = 'Open Wholesaler Portal →';
                     }
+                    if (heroBtn) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = 'wholesaler.php';
+                        heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
+                    }
+                } else if (role === 'retailer') {
+                    if (wsBanner) wsBanner.style.display = 'flex';
+                    if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
+                    if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
+                    if (linkEl) {
+                        linkEl.href = 'retailer.php';
+                        linkEl.textContent = 'Open Retailer Portal →';
+                    }
+                    if (heroBtn) {
+                        heroBtn.style.display = 'inline-flex';
+                        heroBtn.href = 'retailer.php';
+                        heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
+                    }
+                } else {
+                    if (wsBanner) wsBanner.style.display = 'none';
+                    if (heroBtn) heroBtn.style.display = 'none';
                 }
 
                 if (initEl) {
