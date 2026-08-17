@@ -1,6 +1,6 @@
 <?php
 /**
- * wholesaler.php — Luxury Kalaniketan B2B Wholesaler Dashboard
+ * retailer.php — Luxury Kalaniketan B2B Retailer Dashboard
  * Clean Modern TailAdmin Sizing & Layout + 100% Signature Heritage Gold Brand Colors
  * 
  * Brand Color System:
@@ -2249,14 +2249,14 @@ $catalogProducts = [
             border-top: 1px solid var(--ws-border-light);
         }
 
-        /* ── Wholesale Reports Tab Styles ── */
+        /* ── Retail Reports Tab Styles ── */
         .ws-report-kpis-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             margin-bottom: 16px;
         }
-        /* ── Wholesale Filter Pills Design System ── */
+        /* ── Retail Filter Pills Design System ── */
         .ws-orders-filter-btns,
         .ws-filter-pill-group {
             display: flex;
@@ -2732,7 +2732,7 @@ $catalogProducts = [
             }
         }
 
-        /* ── Smart Wholesale Category Popup Modal & Filter Styling (Clean Luxury Visibility) ── */
+        /* ── Smart Retail Category Popup Modal & Filter Styling (Clean Luxury Visibility) ── */
         .ws-cat-modal-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -4945,7 +4945,7 @@ $catalogProducts = [
 
         <div class="ws-header-right">
             <!-- Wishlist Button -->
-            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Wholesale Wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); else window.location.href='wishlist.php';" aria-label="Wholesale Wishlist">
+            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Retail Wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); else window.location.href='wishlist.php';" aria-label="Retail Wishlist">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <span class="ws-hdr-badge" id="headerWishlistBadge" style="display:none;">0</span>
             </button>
@@ -4963,7 +4963,7 @@ $catalogProducts = [
             </button>
 
             <!-- User Profile Pill -->
-            <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Wholesaler Profile">
+            <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Retailer Profile">
                 <img src="images/profile.png" onerror="this.src='images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar">
                 <div class="ws-user-name-text">
                     <span id="headerUserName">Rajesh Kumar</span>
@@ -4985,7 +4985,7 @@ $catalogProducts = [
             </div>
 
             <div class="ws-sidebar-scroll">
-                <!-- VIP Wholesaler User Card in Sidebar -->
+                <!-- VIP Retailer User Card in Sidebar -->
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
                     <img src="images/profile.png" onerror="this.src='images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;">
                     <div style="flex: 1; min-width: 0;">
@@ -5239,7 +5239,7 @@ $catalogProducts = [
                         <div class="ws-card-top-bar" style="margin-bottom: 12px;">
                             <div>
                                 <h3 id="chartTitle" style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Monthly Sales Trend</h3>
-                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;" id="chartSubtitle">Consignment units & wholesale turnover</p>
+                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;" id="chartSubtitle">Consignment units & retail turnover</p>
                             </div>
                             <div class="ws-chart-type-pill">
                                 <button class="ws-chart-type-btn active" id="btnChartZigzag" onclick="switchSalesChartStyle('zigzag', this)">Zigzag</button>
@@ -5463,7 +5463,7 @@ $catalogProducts = [
                         <!-- Column 2: Key Operational Metrics (KPIs) -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Key Wholesale Performance (KPIs)</span>
+                                <span><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Key Retail Performance (KPIs)</span>
                             </div>
                             <div class="ws-kpi-grid" id="kpiGrid">
                                 <div class="ws-kpi-box">
@@ -5673,7 +5673,7 @@ $catalogProducts = [
 
                             <div class="ws-form-group">
                                 <label class="ws-label">Account Role Designation</label>
-                                <input type="text" class="ws-input" value="👑 Wholesaler B2B VIP Tier" disabled>
+                                <input type="text" class="ws-input" value="👑 Retailer B2B VIP Tier" disabled>
                             </div>
 
                         </div>
@@ -6086,7 +6086,7 @@ $catalogProducts = [
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Total Units Procured</div>
                         <div class="ws-kpi-num" id="repKpiUnits">48 Pcs</div>
-                        <div class="ws-kpi-sub">6 Wholesale Consignments</div>
+                        <div class="ws-kpi-sub">6 Retail Consignments</div>
                     </div>
                     <div class="ws-kpi-box">
                         <div class="ws-kpi-label">Avg. Consignment Value</div>
@@ -6526,7 +6526,7 @@ $catalogProducts = [
     </nav>
 
     <!-- ═══════════════════════════════════════════
-         SMART WHOLESALE CATEGORY & SUB-CATEGORY POPUP MODAL
+         SMART RETAIL CATEGORY & SUB-CATEGORY POPUP MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsCatalogCategoryModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeWsCatalogCategoryModal();">
         <div class="ws-modal-box ws-cat-modal-box" style="max-width: 620px; border-radius: 20px; background: linear-gradient(165deg, #FFFFFF 0%, #FDFBF7 100%); border: 1.5px solid rgba(180, 83, 9, 0.28); box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(212, 175, 55, 0.25);">
@@ -6887,7 +6887,7 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2.5: FORMAL PRINTABLE WHOLESALE PROCUREMENT AUDIT REPORT
+         MODAL 2.5: FORMAL PRINTABLE RETAIL PROCUREMENT AUDIT REPORT
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsPrintableAuditReportModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closePrintableAuditReportModal();">
         <div class="ws-modal-box" style="max-width: 820px;">
@@ -6965,7 +6965,7 @@ $catalogProducts = [
 
                     <div class="ws-inv-footer-note">
                         <div>
-                            <p>Certified B2B wholesale statement generated for statutory tax filing & ledger accounting.</p>
+                            <p>Certified B2B retail statement generated for statutory tax filing & ledger accounting.</p>
                             <p>All textiles dispatched comply with Surat Silk Weaver Guild certified standards.</p>
                         </div>
                         <div style="text-align:center;">
@@ -6980,7 +6980,7 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2.7: FULL B2B WHOLESALE GOLD WALLET & PASSBOOK
+         MODAL 2.7: FULL B2B RETAIL GOLD WALLET & PASSBOOK
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsFullWalletModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeFullWalletModal();">
         <div class="ws-modal-box" style="max-width: 640px;">
@@ -7217,7 +7217,7 @@ $catalogProducts = [
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL 2.8: WHOLESALE WALLET TOP-UP & RECHARGE
+         MODAL 2.8: RETAIL WALLET TOP-UP & RECHARGE
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="wsWalletTopupModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeWalletTopupModal();">
         <div class="ws-modal-box" style="max-width: 480px;">
@@ -7279,8 +7279,8 @@ $catalogProducts = [
                 <div class="ws-gate-icon">
                     <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 </div>
-                <h3>Wholesaler Authentication Gate</h3>
-                <p>This portal is exclusively authorized for verified <strong>Wholesaler B2B Members</strong>. Please sign in with your registered wholesaler account to access bulk tier pricing, order tracking, and GST invoicing.</p>
+                <h3>Retailer Authentication Gate</h3>
+                <p>This portal is exclusively authorized for verified <strong>Retailer B2B Members</strong>. Please sign in with your registered retailer account to access bulk tier pricing, order tracking, and GST invoicing.</p>
                 
                 <div style="display:flex; flex-direction:column; gap:10px;">
                     <button class="ws-btn ws-btn-primary" onclick="loginAsDemoRetailer()">
@@ -7404,7 +7404,7 @@ $catalogProducts = [
     (function() {
         'use strict';
 
-        /* ── Wholesale Initial Sample Orders Data ── */
+        /* ── Retail Initial Sample Orders Data ── */
         var SAMPLE_ORDERS = [
             {
                 id: 'KLN-WS-8021',
@@ -7657,7 +7657,7 @@ $catalogProducts = [
             modal.style.removeProperty('z-index');
         };
 
-        /* ── Wholesale Wallet Controller ── */
+        /* ── Retail Wallet Controller ── */
         window.openFullWalletModal = function() {
             window.showModal('wsFullWalletModal');
             var availEl = document.getElementById('walletAvailableBalance');
@@ -7734,7 +7734,7 @@ $catalogProducts = [
             backdrop.classList.toggle('active', shouldOpen);
         };
 
-        /* ── Load Wholesaler Profile & State ── */
+        /* ── Load Retailer Profile & State ── */
         window.loadSavedRetailerData = function() {
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
@@ -8310,7 +8310,7 @@ $catalogProducts = [
         var ANALYTICS_DATA = {
             'overview': {
                 'today': {
-                    sub: "Today's Live Wholesale Snapshot & Dispatch Activity",
+                    sub: "Today's Live Retail Snapshot & Dispatch Activity",
                     cards: [
                         { label: "B2B Account Tier", val: "Tier 1", pill: "Active", isGold: true },
                         { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
@@ -8319,7 +8319,7 @@ $catalogProducts = [
                     ],
                     chartTitle: "Today's Hourly Procurement (Units)",
                     barActive: 7,
-                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in wholesale procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
+                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in retail procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
                     catTitle: WS_ICONS.dress + " Today's Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (100%)", fill: 100 }
@@ -8344,7 +8344,7 @@ $catalogProducts = [
                     ],
                     chartTitle: "Monthly Sales",
                     barActive: 7,
-                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your wholesale growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
+                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your retail business growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
                     catTitle: WS_ICONS.dress + " Category Procurement Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (56%)", fill: 88 },
@@ -8440,7 +8440,7 @@ $catalogProducts = [
                         { label: "Annual Avg. Order", num: "₹34,212", sub: "58 Consignments" },
                         { label: "Fastest Delivery", num: "24 Hours", sub: "Air Priority" },
                         { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% Verified" },
-                        { label: "Wholesale Retention", num: "89.6%", sub: "Top Tier Wholesaler" }
+                        { label: "Retail Retention", num: "89.6%", sub: "Top Tier Retailer" }
                     ],
                     milestoneBadge: "Tier 2: Silver (Active)",
                     milestoneVal: "Tier 2: Silver Member",
@@ -8449,7 +8449,7 @@ $catalogProducts = [
             },
             'sales': {
                 'today': {
-                    sub: "Today's Wholesale Volume & Unit Procurement (Pcs)",
+                    sub: "Today's Retail Volume & Unit Procurement (Pcs)",
                     cards: [
                         { label: "Active SKUs Today", val: "1 SKU", pill: "Kanjivaram", isGold: true },
                         { label: "Units Dispatched", val: "6 Pcs", pill: "100% QC Passed", isGold: false },
@@ -8483,7 +8483,7 @@ $catalogProducts = [
                     ],
                     chartTitle: "Weekly Unit Sales (Pcs)",
                     barActive: 7,
-                    gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 wholesale units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
+                    gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 retail units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
                     catTitle: WS_ICONS.dress + " Unit Volume Distribution by Category (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "26 Pcs (54%)", fill: 86 },
@@ -8502,7 +8502,7 @@ $catalogProducts = [
                     milestoneDesc: "<strong>80.0%</strong> of weekly lot volume fulfilled. 12 pcs remaining for weekly bonus lot!"
                 },
                 'month': {
-                    sub: "Monthly Volume & Wholesale Lot Distribution (Units / Pcs)",
+                    sub: "Monthly Volume & Retail Lot Distribution (Units / Pcs)",
                     cards: [
                         { label: "Procured Lots", val: "14 Lots", pill: "↑ 28.0%", isGold: true },
                         { label: "Monthly Units Sold", val: "112 Pcs", pill: "↑ 24.5%", isGold: false },
@@ -8530,7 +8530,7 @@ $catalogProducts = [
                     milestoneDesc: "<strong>93.3%</strong> of monthly unit target completed."
                 },
                 'last_month': {
-                    sub: "July 2026 Reconciled Wholesale Volume (Units / Pcs)",
+                    sub: "July 2026 Reconciled Retail Volume (Units / Pcs)",
                     cards: [
                         { label: "July Lots Closed", val: "11 Lots", pill: "Delivered", isGold: true },
                         { label: "Units Fulfilled", val: "88 Pcs", pill: "100% Verified", isGold: false },
@@ -8577,7 +8577,7 @@ $catalogProducts = [
                     kpis: [
                         { label: "Gross Taxable Value", num: "₹1,95,297", sub: "5% GST Saree/Fabrics" },
                         { label: "Total GST ITC Accrued", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-1 Verified" },
-                        { label: "Wholesale Margin Saved", num: "₹13,500", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
+                        { label: "Retail Margin Saved", num: "₹13,500", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
                         { label: "Settlement Status", num: "100% Cleared", sub: "Zero Pending Dues" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Financial Target",
@@ -8633,7 +8633,7 @@ $catalogProducts = [
                     kpis: [
                         { label: "July Taxable Value", num: "₹3,73,714", sub: "Audited Ledger" },
                         { label: "GST Claimed in 3B", num: "₹18,686", sub: "Full ITC Realized" },
-                        { label: "Wholesale Margin", num: "₹26,800", sub: "Saved on MOQ" },
+                        { label: "Retail Margin", num: "₹26,800", sub: "Saved on MOQ" },
                         { label: "Ledger Reconciliation", num: "100% Done", sub: "Auditor Certified" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Reconciled Target",
@@ -9261,7 +9261,7 @@ $catalogProducts = [
                         <span style="color:#15803D; font-weight:700;">+₹${Number(o.tax).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.84rem;">
-                        <span style="color:var(--ws-text-sub); font-weight:600;">Wholesale Volume Discount</span>
+                        <span style="color:var(--ws-text-sub); font-weight:600;">Retail Margin Discount</span>
                         <span style="color:#15803D; font-weight:700;">-₹${Number(o.discount).toLocaleString('en-IN')}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; margin-top:4px; border-top:1.5px dashed var(--ws-border); font-size:1.1rem;">
@@ -9326,7 +9326,7 @@ $catalogProducts = [
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
                 } else {
-                    window.showWsToast('🛒 ' + o.productName + ' added to wholesale cart!');
+                    window.showWsToast('🛒 ' + o.productName + ' added to retail cart!');
                 }
             } catch(e) {
                 window.showWsToast('🛒 Added to cart!');
@@ -9928,7 +9928,7 @@ $catalogProducts = [
 
             if (showToast && typeof window.showWsToast === 'function') {
                 if (!hasFilter) {
-                    window.showWsToast('✓ Showing All Available Wholesale Lots');
+                    window.showWsToast('✓ Showing All Available Retail Lots');
                 } else if (activeCatalogSubCategory && activeCatalogSubCategory !== 'all_sub') {
                     window.showWsToast('👗 ' + activeCatalogSubCategoryLabel + ' (' + matchCount + ' Lots Available)');
                 } else if (activeCatalogCategory !== 'All' && activePriceTier !== null) {
@@ -9998,11 +9998,11 @@ $catalogProducts = [
             initSmartCatalogAutoSliders();
         }
 
-        /* ── Direct Add Wholesale Lot to Cart with Smart Button Feedback ── */
+        /* ── Direct Add Retail Lot to Cart with Smart Button Feedback ── */
         window.directAddWholesaleToCart = function(prodOrId, btn) {
             try {
                 var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', price: 2199, moq: 12 });
+                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', price: 2199, moq: 12 });
                 var raw = localStorage.getItem('kalaniketan_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
@@ -10021,7 +10021,7 @@ $catalogProducts = [
                         image: prod.image || 'images/product1.png',
                         color: prod.color || 'Standard',
                         moq: addQty,
-                        category: prod.category || 'Wholesale'
+                        category: prod.category || 'Retail'
                     });
                 }
                 localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
@@ -10046,16 +10046,16 @@ $catalogProducts = [
         };
         window.openQuickOrderModal = function(prodOrId) {
             var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
+                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
             var userRaw = localStorage.getItem('kalaniketan_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
-            var company = user.companyName || 'Wholesale Buyer';
+            var company = user.companyName || 'Retail Buyer';
             var gst = user.gst_number || 'Non-GST';
 
-            var text = `👑 *WHOLESALE BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
+            var text = `👑 *RETAIL BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
                        `*HSN Code:* ${prod.hsn || '5007'}\n` +
-                       `*Wholesale Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
+                       `*Retail B2B Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
                        `*Minimum Order Qty (MOQ):* ${prod.moq || 12} Pcs\n` +
                        `*Lot Tier Pricing:* ${prod.tier_prices || 'Volume Tier'}\n\n` +
                        `*Buyer Business:* ${company}\n` +
@@ -10067,7 +10067,7 @@ $catalogProducts = [
             window.open(waUrl, '_blank');
         };
 
-        /* ── Wholesaler Wishlist Controller ── */
+        /* ── Retailer Wishlist Controller ── */
         window.toggleWholesaleWishlist = function(productId, btn) {
             var p = (window.allProducts || []).find(function(item) { return Number(item.id) === Number(productId); });
             if (p && typeof window.toggleWishlistProduct === 'function') {
@@ -10099,7 +10099,7 @@ $catalogProducts = [
             localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
         };
 
-        /* ── Share Wholesale Lot (Triggers Smart Share or WhatsApp) ── */
+        /* ── Share Retail Lot (Triggers Smart Share or WhatsApp) ── */
         window.shareWholesaleProduct = function(prod) {
             if (typeof window.shareProductCard === 'function' && prod && prod.id) {
                 window.shareProductCard(prod.id);
@@ -10107,7 +10107,7 @@ $catalogProducts = [
             }
             var text = `*KALANIKETAN B2B RETAIL LOT*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*Wholesale Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
+                       `*Retail B2B Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
                        `*MOQ:* ${prod.moq} Pcs Pack\n` +
                        `*Fabric:* ${prod.fabric || 'Pure Silk'} • HSN: ${prod.hsn}\n` +
                        `*Tier Rates:* ${prod.tier_prices || 'Volume Discounts Available'}\n\n` +
@@ -10219,9 +10219,9 @@ $catalogProducts = [
             requestAnimationFrame(step);
         };
 
-        /* ── Wholesaler Logout ── */
+        /* ── Retailer Logout ── */
         window.handleWholesalerLogout = function() {
-            if (confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
+            if (confirm('Are you sure you want to log out of the Retailer Portal?')) {
                 localStorage.removeItem('kalaniketan_user');
                 window.location.href = 'shop.php';
             }
@@ -10412,7 +10412,7 @@ $catalogProducts = [
             }
         };
 
-        /* ── Wholesale VIP Tier Controller ── */
+        /* ── Retail VIP Tier Controller ── */
         window.getWholesaleTier = function(orderCount) {
             var count = Number(orderCount) || 0;
             if (count >= 1000) {
@@ -10470,7 +10470,7 @@ $catalogProducts = [
                     shortTitle: "Non VIP (Tier 1)",
                     badgeText: "Standard Member",
                     pillText: "1–50 Orders",
-                    discount: "Standard Wholesale",
+                    discount: "Standard Retail",
                     minOrders: 1,
                     maxOrders: 50,
                     nextGoal: (51 - count) + " orders to Tier 2 Silver"
@@ -10486,7 +10486,7 @@ $catalogProducts = [
             window.hideModal('wsVipTierModal');
         };
 
-        /* ── Wholesale Wallet Controller ── */
+        /* ── Retail Wallet Controller ── */
         window.openFullWalletModal = function() {
             window.showModal('wsFullWalletModal');
             var availEl = document.getElementById('walletAvailableBalance');
@@ -10625,7 +10625,7 @@ $catalogProducts = [
             } catch(e) {}
         };
 
-        /* ── Wholesale Wishlist Badge Synchronization ── */
+        /* ── Retail Wishlist Badge Synchronization ── */
         window.updateWholesaleWishlistBadge = function() {
             try {
                 var raw = localStorage.getItem('kalaniketan_wishlist');
