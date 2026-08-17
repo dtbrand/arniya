@@ -1094,7 +1094,7 @@ $catalogProducts = [
                             <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                                 <div class="card-image-wrap">
                                     <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                        <img src="<?= htmlspecialchars($prod['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                     </a>
                                     <?php if (!empty($prod['badge'])): ?>
                                     <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
@@ -1966,7 +1966,7 @@ $catalogProducts = [
                         <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                             <div class="card-image-wrap">
                                 <a href="../Single-Product/singleproduct.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ? loading="lazy" decoding="async">" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='Asset/images/product1.png';" loading="lazy">
                                 </a>
 
                                 <!-- Status Badge -->
