@@ -473,6 +473,8 @@ display: flex;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
             -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
         }
         .ws-nav-item:hover {
@@ -1645,6 +1647,8 @@ display: flex;
             gap: 12px;
             transition: var(--ws-transition);
             -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
         }
         .ws-gst-option-card:hover {
@@ -1893,6 +1897,8 @@ scrollbar-width: none;
             line-height: 1;
             height: 28px;
             -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
             scroll-snap-align: start;
         }
@@ -2606,8 +2612,8 @@ padding: 4px 2px 6px;
             letter-spacing: 0.12em; text-transform: uppercase;
             color: #24211C; padding: 7px 18px; border-radius: 20px;
             border: 1px solid rgba(138,104,31,0.3);
-            background: rgba(248,246,240,0.95); -webkit-backdrop-filter: blur(8px);
-            background: rgba(248,246,240,0.95); backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
             transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }

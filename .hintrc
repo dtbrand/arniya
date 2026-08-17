@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "webhint"
+  ],
+  "hints": {
+    "compat-api/css": "off",
+    "compat-api/html": "off",
+    "compat-api/js": "off"
+  }
+}

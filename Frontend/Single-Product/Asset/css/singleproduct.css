@@ -109,6 +109,8 @@ overscroll-behavior-x: contain;
     touch-action: pan-y pinch-zoom;
     cursor: grab;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 .pdp-slider-track::-webkit-scrollbar { display: none; }
@@ -141,6 +143,8 @@ overscroll-behavior-x: contain;
 .pdp-reviews-track, .pdp-rel-track {
     cursor: grab;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 .pdp-reviews-track.dragging, .pdp-reviews-track:active,
@@ -166,6 +170,8 @@ overscroll-behavior-x: contain;
     object-fit: cover;
     object-position: center top;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 cursor: zoom-in;
     transition: transform 0.4s ease;
@@ -2028,6 +2034,8 @@ padding: 6px 2px 14px;
     cursor: pointer;
     text-align: left;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 .pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
@@ -2051,6 +2059,8 @@ padding: 6px 2px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 .pdp-wa-pay-card:hover {
@@ -2140,6 +2150,8 @@ padding: 6px 2px 14px;
     overflow: hidden;
     padding: 2px 2px;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     margin-top: 1px;
 }
