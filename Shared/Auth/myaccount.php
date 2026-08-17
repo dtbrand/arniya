@@ -1300,7 +1300,7 @@
                                 <span class="order-status-badge status-processing">Processing & Stitching</span>
                             </div>
                             <div class="order-item-detail">
-                                <img src="../Asset/images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src='../Asset/images/product1.png';">
+                                <img src="/Shared/Asset/images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src="/Shared/Asset/images/product1.png";">
                                 <div>
                                     <div style="font-weight:800; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
                                     <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
@@ -1321,7 +1321,7 @@
                                 <span class="order-status-badge status-delivered">Delivered</span>
                             </div>
                             <div class="order-item-detail">
-                                <img src="../Asset/images/product1.png" alt="Saree" class="order-thumb">
+                                <img src="/Shared/Asset/images/product1.png" alt="Saree" class="order-thumb">
                                 <div>
                                     <div style="font-weight:800; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
                                     <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>

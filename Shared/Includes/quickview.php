@@ -544,7 +544,7 @@
 
     // Helper to generate photo variations for catalog items
     function getProductImages(p) {
-        var baseImg = p.image || 'images/product1.png';
+        var baseImg = p.image || '/Shared/Asset/images/product1.png';
         var list = [baseImg];
         var cat = (p.category || '').toLowerCase();
         
@@ -910,7 +910,7 @@
 
         document.getElementById('pdTitle').textContent = p.name;
         document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; Kalaniketan Luxury';
-        document.getElementById('pdImg').src = p.image || 'images/product1.png';
+        document.getElementById('pdImg').src = p.image || '/Shared/Asset/images/product1.png';
         document.getElementById('pdPrice').textContent = '₹' + Number(p.price).toLocaleString('en-IN');
         
         var oldPriceEl = document.getElementById('pdOldPrice');

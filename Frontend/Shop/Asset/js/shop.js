@@ -66,48 +66,48 @@
     var subCategoryData = {
         'All': [
             { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all' },
-            { label: 'Banarasi', img: 'images/product1.png', type: 'fabric', val: 'Pure Silk' },
-            { label: 'Kanjeevaram', img: 'images/product2.png', type: 'fabric', val: 'Art Silk' },
-            { label: 'Chanderi', img: 'images/product3.png', type: 'fabric', val: 'Cotton' },
-            { label: 'Anarkali', img: 'images/product5.png', type: 'category', val: 'Kurtis' },
-            { label: 'Lehengas', img: 'images/product6.png', type: 'category', val: 'Lehengas' },
-            { label: 'Royal Gowns', img: 'images/product8.png', type: 'category', val: 'Gowns' },
-            { label: 'Straight Cut', img: 'images/product7.png', type: 'fabric', val: 'Georgette' }
+            { label: 'Banarasi', img: '/Shared/Asset/images/product1.png', type: 'fabric', val: 'Pure Silk' },
+            { label: 'Kanjeevaram', img: '/Shared/Asset/images/product2.png', type: 'fabric', val: 'Art Silk' },
+            { label: 'Chanderi', img: '/Shared/Asset/images/product3.png', type: 'fabric', val: 'Cotton' },
+            { label: 'Anarkali', img: '/Shared/Asset/images/product5.png', type: 'category', val: 'Kurtis' },
+            { label: 'Lehengas', img: '/Shared/Asset/images/product6.png', type: 'category', val: 'Lehengas' },
+            { label: 'Royal Gowns', img: '/Shared/Asset/images/product8.png', type: 'category', val: 'Gowns' },
+            { label: 'Straight Cut', img: '/Shared/Asset/images/product7.png', type: 'fabric', val: 'Georgette' }
         ],
         'Sarees': [
-            { label: 'All Sarees', img: 'images/product1.png', type: 'all_sub' },
-            { label: 'Banarasi Silk', img: 'images/product1.png', type: 'fabric', val: 'Pure Silk' },
-            { label: 'Kanjeevaram', img: 'images/product2.png', type: 'fabric', val: 'Art Silk' },
-            { label: 'Chanderi', img: 'images/product3.png', type: 'fabric', val: 'Cotton' },
-            { label: 'Organza', img: 'images/product4.png', type: 'fabric', val: 'Organza' },
-            { label: 'Georgette', img: 'images/product1.png', type: 'fabric', val: 'Georgette' },
-            { label: 'Silk Blend', img: 'images/product2.png', type: 'fabric', val: 'Silk Blend' }
+            { label: 'All Sarees', img: '/Shared/Asset/images/product1.png', type: 'all_sub' },
+            { label: 'Banarasi Silk', img: '/Shared/Asset/images/product1.png', type: 'fabric', val: 'Pure Silk' },
+            { label: 'Kanjeevaram', img: '/Shared/Asset/images/product2.png', type: 'fabric', val: 'Art Silk' },
+            { label: 'Chanderi', img: '/Shared/Asset/images/product3.png', type: 'fabric', val: 'Cotton' },
+            { label: 'Organza', img: '/Shared/Asset/images/product4.png', type: 'fabric', val: 'Organza' },
+            { label: 'Georgette', img: '/Shared/Asset/images/product1.png', type: 'fabric', val: 'Georgette' },
+            { label: 'Silk Blend', img: '/Shared/Asset/images/product2.png', type: 'fabric', val: 'Silk Blend' }
         ],
         'Kurtis': [
-            { label: 'All Kurtis', img: 'images/product5.png', type: 'all_sub' },
-            { label: 'Anarkali Sets', img: 'images/product5.png', type: 'fabric', val: 'Georgette' },
-            { label: 'Straight Cut', img: 'images/product7.png', type: 'fabric', val: 'Cotton' },
-            { label: 'Silk Festive', img: 'images/product5.png', type: 'fabric', val: 'Pure Silk' },
-            { label: 'Chiffon Print', img: 'images/product7.png', type: 'fabric', val: 'Chiffon' }
+            { label: 'All Kurtis', img: '/Shared/Asset/images/product5.png', type: 'all_sub' },
+            { label: 'Anarkali Sets', img: '/Shared/Asset/images/product5.png', type: 'fabric', val: 'Georgette' },
+            { label: 'Straight Cut', img: '/Shared/Asset/images/product7.png', type: 'fabric', val: 'Cotton' },
+            { label: 'Silk Festive', img: '/Shared/Asset/images/product5.png', type: 'fabric', val: 'Pure Silk' },
+            { label: 'Chiffon Print', img: '/Shared/Asset/images/product7.png', type: 'fabric', val: 'Chiffon' }
         ],
         'Gowns': [
-            { label: 'All Gowns', img: 'images/product8.png', type: 'all_sub' },
-            { label: 'Indo-Western', img: 'images/product8.png', type: 'fabric', val: 'Georgette' },
-            { label: 'Party Wear', img: 'images/product8.png', type: 'fabric', val: 'Silk Blend' },
-            { label: 'Zardozi Work', img: 'images/product8.png', type: 'fabric', val: 'Velvet' }
+            { label: 'All Gowns', img: '/Shared/Asset/images/product8.png', type: 'all_sub' },
+            { label: 'Indo-Western', img: '/Shared/Asset/images/product8.png', type: 'fabric', val: 'Georgette' },
+            { label: 'Party Wear', img: '/Shared/Asset/images/product8.png', type: 'fabric', val: 'Silk Blend' },
+            { label: 'Zardozi Work', img: '/Shared/Asset/images/product8.png', type: 'fabric', val: 'Velvet' }
         ],
         'Lehengas': [
-            { label: 'All Lehengas', img: 'images/product6.png', type: 'all_sub' },
-            { label: 'Bridal Velvet', img: 'images/product6.png', type: 'fabric', val: 'Velvet' },
-            { label: 'Silk Festive', img: 'images/product6.png', type: 'fabric', val: 'Pure Silk' },
-            { label: 'Georgette', img: 'images/product6.png', type: 'fabric', val: 'Georgette' }
+            { label: 'All Lehengas', img: '/Shared/Asset/images/product6.png', type: 'all_sub' },
+            { label: 'Bridal Velvet', img: '/Shared/Asset/images/product6.png', type: 'fabric', val: 'Velvet' },
+            { label: 'Silk Festive', img: '/Shared/Asset/images/product6.png', type: 'fabric', val: 'Pure Silk' },
+            { label: 'Georgette', img: '/Shared/Asset/images/product6.png', type: 'fabric', val: 'Georgette' }
         ],
         'New Arrivals': [
             { label: '★ All New In', icon: '★', gradient: 'gradient-6', type: 'all_sub' },
-            { label: 'Silk Sarees', img: 'images/product1.png', type: 'category', val: 'Sarees' },
-            { label: 'Bridal Sets', img: 'images/product6.png', type: 'category', val: 'Lehengas' },
-            { label: 'Designer Gowns', img: 'images/product8.png', type: 'category', val: 'Gowns' },
-            { label: 'Anarkalis', img: 'images/product5.png', type: 'category', val: 'Kurtis' }
+            { label: 'Silk Sarees', img: '/Shared/Asset/images/product1.png', type: 'category', val: 'Sarees' },
+            { label: 'Bridal Sets', img: '/Shared/Asset/images/product6.png', type: 'category', val: 'Lehengas' },
+            { label: 'Designer Gowns', img: '/Shared/Asset/images/product8.png', type: 'category', val: 'Gowns' },
+            { label: 'Anarkalis', img: '/Shared/Asset/images/product5.png', type: 'category', val: 'Kurtis' }
         ]
     };
 

@@ -350,7 +350,7 @@
         price: 4899,
         old_price: 6500,
         discount: 25,
-        image: 'images/product1.png',
+        image: '/Shared/Asset/images/product1.png',
         fabric: 'Pure Silk',
         colors: 'Navy, Royal Blue',
         sizes: 'Free Size, M, L',
@@ -417,7 +417,7 @@
     function downloadAllProductPhotos(item) {
         var sanitizedName = (item.name || 'product').toLowerCase().replace(/[^a-z0-9]/g, '-');
         var imagesToDownload = [
-            item.image || 'images/product1.png'
+            item.image || '/Shared/Asset/images/product1.png'
         ];
 
         // If on PDP with gallery, include all gallery angles
@@ -498,7 +498,7 @@
         var oldPrice = document.getElementById('smartShareOldPrice');
         var disc = document.getElementById('smartShareDiscount');
 
-        if (thumb) thumb.src = currentShareItem.image || 'images/product1.png';
+        if (thumb) thumb.src = currentShareItem.image || '/Shared/Asset/images/product1.png';
         if (name) name.textContent = currentShareItem.name || 'Luxury Outfit';
         if (meta) meta.textContent = (currentShareItem.fabric ? 'Fabric: ' + currentShareItem.fabric : 'Ethnic Luxury') + ' • ' + (currentShareItem.sizes || 'Free Size');
         if (price) price.textContent = '₹' + Number(currentShareItem.price || 0).toLocaleString('en-IN');

@@ -188,7 +188,7 @@
                 name: 'Royal Anarkali Kurti',
                 price: 2799,
                 old_price: 3900,
-                image: 'images/product5.png',
+                image: '/Shared/Asset/images/product5.png',
                 category: 'Kurtis',
                 fabric: 'Cotton',
                 color: 'Green'
@@ -198,7 +198,7 @@
                 name: 'Ivory Designer Gown',
                 price: 7499,
                 old_price: 9500,
-                image: 'images/product8.png',
+                image: '/Shared/Asset/images/product8.png',
                 category: 'Gowns',
                 fabric: 'Chiffon',
                 color: 'White'
@@ -287,10 +287,10 @@
         if (items.length === 0) {
             /* Render Animated Floating Heart SVG Empty Wishlist + Recommended Product Slider */
             var products = window.allProducts || [
-                { id: 2, name: 'Banarasi Zari Saree', price: 8499, image: 'images/product2.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: 'images/product4.png' },
-                { id: 6, name: 'Bridal Zardosi Lehenga', price: 24999, image: 'images/product6.png' },
-                { id: 7, name: 'Mustard Block Print', price: 1899, image: 'images/product7.png' }
+                { id: 2, name: 'Banarasi Zari Saree', price: 8499, image: '/Shared/Asset/images/product2.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Shared/Asset/images/product4.png' },
+                { id: 6, name: 'Bridal Zardosi Lehenga', price: 24999, image: '/Shared/Asset/images/product6.png' },
+                { id: 7, name: 'Mustard Block Print', price: 1899, image: '/Shared/Asset/images/product7.png' }
             ];
 
             var fullList = products.concat(products);
@@ -341,7 +341,7 @@
         } else {
             var html = '';
             items.forEach(function(item, idx) {
-                var imgUrl = item.image || 'images/product1.png';
+                var imgUrl = item.image || '/Shared/Asset/images/product1.png';
 
                 html += '<div class="wd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +

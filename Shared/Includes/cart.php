@@ -212,7 +212,7 @@
                 name: 'Banarasi Zari Saree',
                 price: 8499,
                 old_price: 11000,
-                image: 'images/product2.png',
+                image: '/Shared/Asset/images/product2.png',
                 size: 'Free Size',
                 color: 'Maroon',
                 qty: 1
@@ -222,7 +222,7 @@
                 name: 'Bridal Zardosi Lehenga',
                 price: 24999,
                 old_price: 32000,
-                image: 'images/product6.png',
+                image: '/Shared/Asset/images/product6.png',
                 size: 'S',
                 color: 'Red',
                 qty: 1
@@ -316,11 +316,11 @@
 
             /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider */
             var products = window.allProducts || [
-                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: 'images/product1.png' },
-                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: 'images/product3.png' },
-                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: 'images/product5.png' },
-                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: 'images/product8.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: 'images/product4.png' }
+                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/Shared/Asset/images/product1.png' },
+                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/Shared/Asset/images/product3.png' },
+                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/Shared/Asset/images/product5.png' },
+                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/Shared/Asset/images/product8.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Shared/Asset/images/product4.png' }
             ];
 
             // Render loop duplicates for seamless long scrolling
@@ -378,7 +378,7 @@
             var totalPrice = 0;
             items.forEach(function(item, idx) {
                 totalPrice += item.price * item.qty;
-                var imgUrl = item.image || 'images/product1.png';
+                var imgUrl = item.image || '/Shared/Asset/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
