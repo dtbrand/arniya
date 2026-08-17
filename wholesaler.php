@@ -560,50 +560,40 @@ $catalogProducts = [
             color: var(--ws-gold-primary);
         }
 
-        /* ── Luxury Search Bar Design System (Compact 30px & Right-Side Icon) ── */
+        /* ── Luxury Search Bar Design System (Clean Left Icon & Right Aligned) ── */
         .ws-filter-controls-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
+            gap: 12px;
+            flex-wrap: nowrap;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
             border-bottom: 1.5px solid var(--ws-border);
         }
         .ws-luxury-search-wrap {
             position: relative;
-            width: clamp(230px, 32vw, 340px);
+            width: clamp(240px, 30vw, 360px);
             display: flex;
             align-items: center;
-            border-radius: 16px;
+            border-radius: 20px;
             background: #FFFFFF;
+            margin-left: auto;
+            flex-shrink: 0;
         }
         .ws-luxury-search-wrap::before {
-            content: '';
-            position: absolute;
-            inset: -1.2px;
-            border-radius: 18px;
-            background: linear-gradient(90deg, rgba(212,175,55,0.3) 0%, #D4AF37 35%, #F59E0B 50%, #D4AF37 65%, rgba(212,175,55,0.3) 100%);
-            background-size: 200% 100%;
-            animation: searchRunningBorder 3.5s linear infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-        @keyframes searchRunningBorder {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            display: none;
         }
         .ws-luxury-search-input {
             position: relative;
             z-index: 1;
             width: 100%;
-            height: 32px;
-            padding: 0 34px 0 42px;
-            border-radius: 16px;
-            border: 1px solid transparent;
+            height: 36px;
+            padding: 0 34px 0 38px;
+            border-radius: 20px;
+            border: 1.5px solid rgba(138, 104, 31, 0.28);
             background: #FFFFFF;
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: var(--ws-text-main);
             outline: none;
@@ -613,47 +603,40 @@ $catalogProducts = [
         .ws-luxury-search-input::placeholder {
             color: #9E978E;
             font-weight: 500;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
         }
         .ws-luxury-search-input:focus {
             background: #FFFFFF;
-            box-shadow: 0 0 0 2.5px rgba(212,175,55,0.25);
+            border-color: var(--ws-gold-primary);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.18);
         }
         .ws-luxury-search-icon {
             z-index: 2;
             position: absolute;
-            left: 6px;
+            left: 12px;
             right: auto;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--ws-gold-primary) 0%, var(--ws-gold-deep) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 1px 4px rgba(138,104,31,0.25);
-            pointer-events: none;
-            transition: var(--ws-transition);
-            stroke: #FFFFFF;
-            stroke-width: 2.4;
-            fill: none;
-            padding: 4.5px;
-            box-sizing: border-box;
-        }
-        .ws-luxury-search-wrap:focus-within .ws-luxury-search-icon {
-            transform: translateY(-50%) scale(1.05);
-            box-shadow: 0 2px 8px rgba(138,104,31,0.4);
-        }
-        .ws-luxury-search-clear {
-            z-index: 3;
-            position: absolute;
-            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             width: 16px;
             height: 16px;
+            stroke: #8A681F;
+            stroke-width: 2.2;
+            fill: none;
+            pointer-events: none;
+            transition: var(--ws-transition);
+        }
+        .ws-luxury-search-wrap:focus-within .ws-luxury-search-icon {
+            stroke: #B45309;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .ws-luxury-search-clear {
+            z-index: 3;
+            position: absolute;
+            right: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: #FAF8F4;
             color: #78716C;
@@ -662,7 +645,7 @@ $catalogProducts = [
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 0.58rem;
+            font-size: 0.65rem;
             font-weight: 800;
             transition: var(--ws-transition);
         }
@@ -2285,7 +2268,8 @@ $catalogProducts = [
             -ms-overflow-style: none;
             flex-wrap: nowrap;
             padding: 2px 2px 4px;
-            width: 100%;
+            flex: 1;
+            min-width: 0;
             scroll-snap-type: x mandatory;
         }
         .ws-orders-filter-btns::-webkit-scrollbar,
@@ -4590,22 +4574,22 @@ $catalogProducts = [
                 display: none !important;
             }
             .ws-luxury-search-input {
-                height: 30px !important;
-                font-size: 0.73rem !important;
-                padding: 0 30px 0 40px !important;
+                height: 34px !important;
+                font-size: 0.75rem !important;
+                padding: 0 32px 0 36px !important;
             }
             .ws-luxury-search-icon {
-                width: 20px !important;
-                height: 20px !important;
-                left: 5px !important;
-                right: auto !important;
-                padding: 4px !important;
-            }
-            .ws-luxury-search-clear {
                 width: 15px !important;
                 height: 15px !important;
-                right: 8px !important;
-                font-size: 0.55rem !important;
+                left: 11px !important;
+                right: auto !important;
+                stroke-width: 2.2 !important;
+            }
+            .ws-luxury-search-clear {
+                width: 18px !important;
+                height: 18px !important;
+                right: 9px !important;
+                font-size: 0.65rem !important;
             }
             .ws-rep-filter-btn {
                 white-space: nowrap !important;
