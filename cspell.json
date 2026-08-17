@@ -101,7 +101,17 @@
     "wsGaugeDrawIn",
     "wsCardFadeUp",
     "wsProgBarIn",
-    "wsPulseBadge"
+    "wsPulseBadge",
+    "ftplib",
+    "Hostinger",
+    "hostinger",
+    "jaihanumantex",
+    "Gautam",
+    "gautam",
+    "dtbrand",
+    "GEMINI",
+    "HTACCESS",
+    "htaccess"
   ],
   "ignorePaths": [
     "node_modules/**",

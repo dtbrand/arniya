@@ -261,8 +261,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     gap: 4px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+scrollbar-width: none;
     padding: 2px 14px 4px;
 }
 .cat-slider-track::-webkit-scrollbar { display: none; }
@@ -404,6 +403,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     position: sticky;
     top: 0;
     background: rgba(248,246,240,0.96);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     z-index: 5;
 }
@@ -791,6 +791,7 @@ input[type=range].sf-range::-moz-range-thumb {
     padding: 3px 8px; border-radius: 12px;
     font-size: 0.52rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
     z-index: 2; background: rgba(138, 104, 31, 0.85); color: #FFFFFF;
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 2px 8px rgba(0,0,0,0.18);
@@ -826,6 +827,7 @@ input[type=range].sf-range::-moz-range-thumb {
     justify-content: center;
     z-index: 3;
     transition: all var(--transition);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
@@ -862,6 +864,7 @@ input[type=range].sf-range::-moz-range-thumb {
     justify-content: center;
     z-index: 3;
     transition: all var(--transition);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     cursor: pointer;
@@ -903,6 +906,7 @@ input[type=range].sf-range::-moz-range-thumb {
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--dark-text); padding: 7px 18px; border-radius: 20px;
     border: 1px solid rgba(138,104,31,0.3);
+    background: rgba(248,246,240,0.95); -webkit-backdrop-filter: blur(8px);
     background: rgba(248,246,240,0.95); backdrop-filter: blur(8px);
     transition: all var(--transition); cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -942,7 +946,7 @@ input[type=range].sf-range::-moz-range-thumb {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    min-height: auto;
+    min-height: 0;
     margin-bottom: 2px;
     transition: color var(--transition);
 }
@@ -963,6 +967,7 @@ input[type=range].sf-range::-moz-range-thumb {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.1;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     z-index: 2;
@@ -986,6 +991,7 @@ input[type=range].sf-range::-moz-range-thumb {
     cursor: pointer;
     z-index: 3;
     transition: all var(--transition);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
@@ -1067,6 +1073,7 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex; align-items: flex-end; justify-content: center;
     opacity: 0; pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
@@ -1193,6 +1200,7 @@ input[type=range].sf-range::-moz-range-thumb {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    -webkit-user-select: none;
     user-select: none;
 }
 .modal-product-details-btn::after {
@@ -1264,6 +1272,7 @@ input[type=range].sf-range::-moz-range-thumb {
 /* ── Luxury Product Details Modal (Gold Theme & Line Accents) ── */
 .product-details-backdrop {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(24, 20, 16, 0.78); -webkit-backdrop-filter: blur(10px);
     background: rgba(24, 20, 16, 0.78); backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: center;
     z-index: 10000; opacity: 0; visibility: hidden;
@@ -1321,6 +1330,7 @@ input[type=range].sf-range::-moz-range-thumb {
 /* ── Cart Drawer & Wishlist Drawer Modals ── */
 .cart-drawer-backdrop, .wishlist-drawer-backdrop {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(24, 20, 16, 0.78); -webkit-backdrop-filter: blur(10px);
     background: rgba(24, 20, 16, 0.78); backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: flex-end;
     z-index: 999999 !important; opacity: 0; visibility: hidden;
