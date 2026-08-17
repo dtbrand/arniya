@@ -649,10 +649,18 @@
             if (userRaw && userLabel && userAvatar) {
                 var user = JSON.parse(userRaw);
                 var firstName = (user.name || 'Member').split(' ')[0];
-                var isWholesaler = (user.role || '').toLowerCase() === 'wholesaler';
+                var role = (user.role || '').toLowerCase();
                 userLabel.textContent = firstName;
                 userAvatar.textContent = firstName.charAt(0).toUpperCase();
-                if (acBtn) acBtn.href = isWholesaler ? 'wholesaler.php' : 'myaccount.php';
+                if (acBtn) {
+                    if (role === 'wholesaler') {
+                        acBtn.href = 'wholesaler.php';
+                    } else if (role === 'retailer') {
+                        acBtn.href = 'retailer.php';
+                    } else {
+                        acBtn.href = 'myaccount.php';
+                    }
+                }
             } else if (userLabel && userAvatar) {
                 userLabel.textContent = 'Account';
                 userAvatar.textContent = '👤';

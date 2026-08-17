@@ -1164,9 +1164,23 @@ window.closeWishlistDrawer = function() {
         if (userRaw && label) {
             var user = JSON.parse(userRaw);
             var firstName = (user.name || 'Member').split(' ')[0];
-            var isWholesaler = (user.role || '').toLowerCase() === 'wholesaler';
+            var role = (user.role || '').toLowerCase();
             label.textContent = firstName;
-            if (dropWholesaler) dropWholesaler.style.display = isWholesaler ? 'flex' : 'none';
+            if (dropWholesaler) {
+                if (role === 'wholesaler') {
+                    dropWholesaler.style.display = 'flex';
+                    dropWholesaler.href = 'wholesaler.php';
+                    var span = dropWholesaler.querySelector('span');
+                    if (span) span.textContent = '📦 Wholesaler B2B Hub';
+                } else if (role === 'retailer') {
+                    dropWholesaler.style.display = 'flex';
+                    dropWholesaler.href = 'retailer.php';
+                    var span = dropWholesaler.querySelector('span');
+                    if (span) span.textContent = '🛍️ Retailer B2B Hub';
+                } else {
+                    dropWholesaler.style.display = 'none';
+                }
+            }
             if (dropLogin) dropLogin.style.display = 'none';
             if (dropRegister) dropRegister.style.display = 'none';
             if (dropForgot) dropForgot.style.display = 'none';

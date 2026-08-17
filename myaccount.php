@@ -1649,8 +1649,22 @@
                 }
 
                 var wsBanner = document.getElementById('wsVipAccessBanner');
-                var isWs = (user.role || '').toLowerCase() === 'wholesaler';
-                if (wsBanner) wsBanner.style.display = isWs ? 'flex' : 'none';
+                var role = (user.role || '').toLowerCase();
+                if (wsBanner) {
+                    if (role === 'wholesaler') {
+                        wsBanner.style.display = 'flex';
+                        wsBanner.querySelector('.ws-vip-title, div > div:first-child').textContent = '👑 Wholesaler B2B VIP Hub Ready';
+                        wsBanner.querySelector('a').href = 'wholesaler.php';
+                        wsBanner.querySelector('a').textContent = 'Open Wholesaler Portal →';
+                    } else if (role === 'retailer') {
+                        wsBanner.style.display = 'flex';
+                        wsBanner.querySelector('div > div:first-child').textContent = '🛍️ Retailer B2B VIP Hub Ready';
+                        wsBanner.querySelector('a').href = 'retailer.php';
+                        wsBanner.querySelector('a').textContent = 'Open Retailer Portal →';
+                    } else {
+                        wsBanner.style.display = 'none';
+                    }
+                }
 
                 if (initEl) {
                     var parts = (user.name || 'Member').split(' ');

@@ -902,8 +902,20 @@
                     tierEl.textContent = `👑 Royal ${r} VIP Member`;
                 }
                 var wsBtn = document.getElementById('acModalWsBtn');
-                var isWs = (user.role || '').toLowerCase() === 'wholesaler';
-                if (wsBtn) wsBtn.style.display = isWs ? 'flex' : 'none';
+                var role = (user.role || '').toLowerCase();
+                if (wsBtn) {
+                    if (role === 'wholesaler') {
+                        wsBtn.style.display = 'flex';
+                        wsBtn.href = 'wholesaler.php';
+                        wsBtn.innerHTML = '<span>📦 Open Wholesaler B2B Dashboard</span><span>→</span>';
+                    } else if (role === 'retailer') {
+                        wsBtn.style.display = 'flex';
+                        wsBtn.href = 'retailer.php';
+                        wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
+                    } else {
+                        wsBtn.style.display = 'none';
+                    }
+                }
 
                 if (initEl) {
                     var parts = (user.name || 'RS').split(' ');
