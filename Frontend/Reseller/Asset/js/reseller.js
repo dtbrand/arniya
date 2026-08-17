@@ -3607,9 +3607,15 @@ window.animateTargetGauge = animateTargetGauge;
                     <td style="text-align:center; font-size:0.76rem; font-weight:600; color:var(--ws-text-muted); white-space:nowrap; padding:12px 14px;">${c.lastOrder || 'N/A'}</td>
                     <td style="text-align:center; padding:12px 14px; white-space:nowrap;">
                         <div class="crm-action-btn-group">
-                            <button class="crm-btn-view" onclick="openCustomerProfileModal(${c.id})" title="View Profile">👁️</button>
-                            <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="WhatsApp">💬</button>
-                            <button class="crm-btn-reorder" onclick="openResellerQuickOrderDrawer(${c.id})" title="Quick Order">⚡</button>
+                            <button class="crm-btn-view" onclick="openCustomerProfileModal(${c.id})" title="View Customer Profile" aria-label="View Customer Profile">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                            <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Chat on WhatsApp" aria-label="WhatsApp Customer">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                            </button>
+                            <button class="crm-btn-reorder" onclick="openResellerQuickOrderDrawer(${c.id})" title="1-Tap Quick Reorder" aria-label="Quick Reorder">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            </button>
                         </div>
                     </td>
                 `;
