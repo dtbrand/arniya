@@ -329,7 +329,7 @@
             var sliderCardsHtml = fullList.map(function(p) {
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80\'" />' +
+                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                     '</div>' +
                     '<h5 class="cd-rec-title">' + p.name + '</h5>' +
                     '<div class="cd-price-row">' +
@@ -381,7 +381,7 @@
                 var imgUrl = item.image || 'images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80\'" />' +
+                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                     '<div class="cd-item-info">' +
                         '<h4 class="cd-item-title">' + item.name + '</h4>' +
                         '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +

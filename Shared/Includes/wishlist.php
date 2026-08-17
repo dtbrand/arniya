@@ -298,7 +298,7 @@
             var sliderCardsHtml = fullList.map(function(p) {
                 return '<div class="wd-rec-card">' +
                     '<div class="wd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="wd-rec-img" onError="this.src=\'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80\'" />' +
+                        '<img src="' + p.image + '" alt="' + p.name + '" class="wd-rec-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                     '</div>' +
                     '<h5 class="wd-rec-title">' + p.name + '</h5>' +
                     '<div class="wd-rec-price-row">' +
@@ -344,7 +344,7 @@
                 var imgUrl = item.image || 'images/product1.png';
 
                 html += '<div class="wd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" onError="this.src=\'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80\'" />' +
+                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                     '<div class="wd-item-info">' +
                         '<h4 class="wd-item-title">' + item.name + '</h4>' +
                         '<span class="wd-item-meta">' + (item.category || 'Ethnic Wear') + ' &bull; ' + (item.fabric || 'Pure Silk') + ' &bull; ' + (item.color || 'Standard') + '</span>' +

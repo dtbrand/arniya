@@ -550,17 +550,17 @@
         
         // Push premium catalog variation photoshoot links
         if (cat === 'sarees') {
-            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
         } else if (cat === 'lehengas') {
-            list.push('https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
         } else {
-            list.push('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80');
-            list.push('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
+            list.push('/Shared/Asset/images/product1.png');
         }
         return list;
     }
@@ -611,12 +611,12 @@
         imagesList.forEach(function(imgUrl, idx) {
             slidesHtml += 
                 '<div class="qv-slide-img-wrap">' +
-                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80\'" />' +
+                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                 '</div>';
             dotsHtml += '<div class="qv-dot ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '"></div>';
             thumbsHtml += 
                 '<div class="qv-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" onError="this.src=\'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=100&q=80\'" />' +
+                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
                 '</div>';
         });
 

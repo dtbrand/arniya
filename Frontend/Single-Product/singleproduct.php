@@ -167,9 +167,9 @@ $product = $products[$pid] ?? $products[1];
 // Generate variation gallery images
 $galleryImages = [
     $product['image'],
-    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80'
+    '/Shared/Asset/images/product1.png',
+    '/Shared/Asset/images/product1.png',
+    '/Shared/Asset/images/product1.png'
 ];
 
 // Myntra-Style Detailed Product Specifications
@@ -418,7 +418,7 @@ $customerReviews = [
         'date' => '2 days ago',
         'occasion' => 'Wedding Sangeet',
         'text' => 'The fabric quality and real zari weave is breathtaking! Arrived in luxury royal gift packaging within 3 days to Mumbai. Wore it for my cousin’s sangeet and received endless compliments.',
-        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
+        'photo' => '/Shared/Asset/images/product1.png',
         'helpful' => 38
     ],
     [
@@ -429,7 +429,7 @@ $customerReviews = [
         'date' => '4 days ago',
         'occasion' => 'Diwali Festive Puja',
         'text' => 'Exactly as depicted in the photos. The silk drape feels extremely luxurious, pure, and lightweight. The WhatsApp styling concierge was very helpful with size selection.',
-        'photo' => 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=400&q=80',
+        'photo' => '/Shared/Asset/images/product1.png',
         'helpful' => 29
     ],
     [
@@ -451,7 +451,7 @@ $customerReviews = [
         'date' => '1 week ago',
         'occasion' => 'Reception Night',
         'text' => 'The color is deep, royal, and rich under evening chandelier lighting. Everyone asked where I purchased it from. Fast express delivery with zero hassle.',
-        'photo' => 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80',
+        'photo' => '/Shared/Asset/images/product1.png',
         'helpful' => 44
     ],
     [
@@ -462,7 +462,7 @@ $customerReviews = [
         'date' => '2 weeks ago',
         'occasion' => 'International Wedding',
         'text' => 'Ordered from London with international DHL shipping. Reached in 5 business days in pristine condition! Truly magnificent quality and authentic silk sheen.',
-        'photo' => 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80',
+        'photo' => '/Shared/Asset/images/product1.png',
         'helpful' => 52
     ],
     [
@@ -484,7 +484,7 @@ $customerReviews = [
         'date' => '1 month ago',
         'occasion' => 'Sister’s Haldi',
         'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about Kalaniketan.',
-        'photo' => 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80',
+        'photo' => '/Shared/Asset/images/product1.png',
         'helpful' => 31
     ]
 ];
@@ -550,7 +550,7 @@ $colorHex = [
                         <img
                             src="<?= htmlspecialchars($img) ?>"
                             alt="<?= htmlspecialchars($product['name']) ?> - View <?= $index + 1 ?>"
-                            onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80'"
+                            onError="this.src='/Shared/Asset/images/product1.png'"
                         />
                     </div>
                     <?php endforeach; ?>
@@ -567,7 +567,7 @@ $colorHex = [
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
                 <?php foreach ($galleryImages as $index => $img): ?>
                 <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
-                    <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=200&q=80'" />
+                    <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='/Shared/Asset/images/product1.png'" />
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -934,7 +934,7 @@ $colorHex = [
                         <?php if (!empty($rel['badge'])): ?>
                         <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>
                         <?php endif; ?>
-                        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80'" loading="lazy" />
+                        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='/Shared/Asset/images/product1.png'" loading="lazy" />
                     </div>
                     <div class="pdp-rel-body">
                         <span class="pdp-rel-cat"><?= htmlspecialchars($rel['category']) ?></span>
