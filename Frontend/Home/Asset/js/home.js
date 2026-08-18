@@ -1005,6 +1005,41 @@
         }
     };
 
+    /* ═════════════════════════════════════════════════════════════════════
+       SMART TRENDING NOW 1-LINE HORIZONTAL RAIL CONTROLLER
+    ═════════════════════════════════════════════════════════════════════ */
+    var trendingTrack = document.getElementById('productsGrid');
+    var trendingPrevBtn = document.getElementById('trendingScrollPrevBtn');
+    var trendingNextBtn = document.getElementById('trendingScrollNextBtn');
+
+    function syncTrendingScrollState() {
+        if (!trendingTrack) return;
+        var scrollLeft = trendingTrack.scrollLeft;
+        var maxScroll = trendingTrack.scrollWidth - trendingTrack.clientWidth;
+
+        if (trendingPrevBtn) {
+            trendingPrevBtn.disabled = (scrollLeft <= 6);
+        }
+        if (trendingNextBtn) {
+            trendingNextBtn.disabled = (scrollLeft >= maxScroll - 6);
+        }
+    }
+
+    window.scrollTrendingRail = function(direction) {
+        if (!trendingTrack) return;
+        var scrollAmount = Math.max(260, Math.floor(trendingTrack.clientWidth * 0.75));
+        trendingTrack.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    if (trendingTrack) {
+        trendingTrack.addEventListener('scroll', syncTrendingScrollState, { passive: true });
+        setTimeout(syncTrendingScrollState, 200);
+        window.addEventListener('resize', syncTrendingScrollState, { passive: true });
+    }
+
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
     window.applyMasterFilters();

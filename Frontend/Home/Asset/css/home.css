@@ -725,15 +725,160 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 .active-filter-tag button:hover { background: var(--dark-gold); color: #fff; }
 
-/* Grid Responsive Columns */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+/* ═════════════════════════════════════════════════════════════════════
+   TRENDING NOW: 1-LINE CONTINUOUS HORIZONTAL SCROLL RAIL
+   • Desktop: Exactly 6 visible product cards (flex: calc((100% - 5*14px)/6))
+   • Tablet / Medium Desktop: 3.2 - 4.2 visible product cards
+   • Mobile: Exactly 2 full cards + 1 half peeking card (2.35 ratio)
+   • Zig-Zag Rhythmic Cadence: Alternating soft champagne cadence
+═════════════════════════════════════════════════════════════════════ */
+.home-trending-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
-@media (min-width: 600px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
-@media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
-@media (min-width: 1280px) { .products-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+
+.home-trending-arrows-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.trending-scroll-arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid var(--soft-platinum, #E5E3DE);
+    color: var(--dark-gold, #8A681F);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.08);
+    transition: all 0.22s ease;
+    outline: none;
+    flex-shrink: 0;
+}
+
+.trending-scroll-arrow:hover:not(:disabled) {
+    background: linear-gradient(135deg, #8A681F 0%, #6F5218 100%);
+    color: #FFFFFF;
+    border-color: #8A681F;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(138, 104, 31, 0.22);
+}
+
+.trending-scroll-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.trending-scroll-arrow svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    fill: none;
+}
+
+.trending-rail-container {
+    position: relative;
+    width: 100%;
+}
+
+.products-grid.products-scroll-rail,
+.products-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 6px 4px 18px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.products-grid::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Product Card Structure in 1-Line Rail ── */
+.products-grid .product-card {
+    scroll-snap-align: start;
+    flex-shrink: 0 !important;
+    user-select: none;
+    border: 1.5px solid var(--soft-platinum, #E5E3DE);
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+/* ── Zig-Zag Alternating Rhythmic Styling ── */
+.products-grid .product-card:nth-child(even) {
+    background: #FFFCF7;
+    border-color: rgba(138, 104, 31, 0.22);
+}
+
+.products-grid .product-card:nth-child(odd) {
+    background: #FFFFFF;
+}
+
+.products-grid .product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--dark-gold, #8A681F);
+    box-shadow: 0 10px 24px rgba(138, 104, 31, 0.16);
+    z-index: 3;
+}
+
+/* Desktop: Exactly 6 cards visible at once */
+@media (min-width: 1100px) {
+    .products-grid .product-card {
+        flex: 0 0 calc((100% - (5 * 14px)) / 6) !important;
+        min-width: calc((100% - (5 * 14px)) / 6) !important;
+        max-width: calc((100% - (5 * 14px)) / 6) !important;
+    }
+}
+
+/* Medium Desktop / Laptop: 4.2 cards visible */
+@media (min-width: 820px) and (max-width: 1099px) {
+    .products-grid .product-card {
+        flex: 0 0 calc((100% - (3 * 12px)) / 4.2) !important;
+        min-width: calc((100% - (3 * 12px)) / 4.2) !important;
+        max-width: calc((100% - (3 * 12px)) / 4.2) !important;
+    }
+}
+
+/* Tablet: 3.2 cards visible */
+@media (min-width: 601px) and (max-width: 819px) {
+    .products-grid .product-card {
+        flex: 0 0 calc((100% - (2 * 10px)) / 3.2) !important;
+        min-width: calc((100% - (2 * 10px)) / 3.2) !important;
+        max-width: calc((100% - (2 * 10px)) / 3.2) !important;
+    }
+}
+
+/* Mobile: Exactly 2 full cards + 1 half peeking card (2.35 ratio) */
+@media (max-width: 600px) {
+    .products-grid.products-scroll-rail,
+    .products-grid {
+        gap: 10px;
+        padding: 4px 2px 14px;
+    }
+    .products-grid .product-card {
+        flex: 0 0 calc((100% - 14px) / 2.35) !important;
+        min-width: calc((100% - 14px) / 2.35) !important;
+        max-width: calc((100% - 14px) / 2.35) !important;
+        border-radius: 12px;
+    }
+    .home-trending-arrows-group {
+        display: none;
+    }
+}
 
 /* No products found state */
 .no-products-found {
