@@ -4319,7 +4319,7 @@ window.animateTargetGauge = animateTargetGauge;
         };
 
         // 10. Quick Order Flow
-        function openResellerQuickOrderDrawer(prefillCustId) {
+        function openResellerQuickOrderDrawer(prefillCustId, prefillProdId) {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             var custSelect = document.getElementById('qoCustomerSelect');
             var prodSelect = document.getElementById('qoProductSelect');
@@ -4327,19 +4327,22 @@ window.animateTargetGauge = animateTargetGauge;
             var customers = getResellerCustomers();
             if (custSelect) {
                 custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                    return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
+                    return '<option value="' + c.id + '" ' + (Number(c.id) === Number(prefillCustId) ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
                 }).join('');
             }
 
             var prods = window.allProducts || [];
             if (prodSelect) {
                 prodSelect.innerHTML = '<option value="">-- Choose Product --</option>' + prods.map(function(p) {
-                    return '<option value="' + p.id + '" data-cost="' + (p.wholesale_price || p.price || 2199) + '" data-mrp="' + (p.retail_price || 3299) + '">' + p.name + ' (Cost: ₹' + (p.wholesale_price || p.price || 2199) + ')</option>';
+                    return '<option value="' + p.id + '" data-cost="' + (p.wholesale_price || p.price || 2199) + '" data-mrp="' + (p.retail_price || 3299) + '" ' + (Number(p.id) === Number(prefillProdId) ? 'selected' : '') + '>' + p.name + ' (Cost: ₹' + (p.wholesale_price || p.price || 2199) + ')</option>';
                 }).join('');
             }
 
             if (prefillCustId) {
                 handleQoCustomerChange(prefillCustId);
+            }
+            if (prefillProdId) {
+                handleQoProductChange(prefillProdId);
             }
 
             if (modal) modal.classList.add('active');
@@ -5343,13 +5346,14 @@ Rajesh Kumar (Reseller Partner)`;
         };
 
         /* ── Recommendations Center Renderer ── */
-                /* ── Tailored Recommendation Engine ── */
+        /* ── Tailored Recommendation Engine ── */
         function populateRecommendationSelect() {
             var select = document.getElementById('recommendationCustomerSelect');
             if (!select) return;
             var customers = getResellerCustomers();
             select.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                return '<option value="' + c.id + '">' + c.name + ' (' + c.city + ' - ' + (c.tags || []).join(', ') + ')</option>';
+                var vipTag = (c.tags && c.tags.length > 0) ? ' [' + c.tags.slice(0, 2).join(', ') + ']' : '';
+                return '<option value="' + c.id + '">' + c.name + ' (' + c.city + vipTag + ')</option>';
             }).join('');
             if (customers.length > 0) {
                 select.value = customers[0].id;
@@ -5360,6 +5364,7 @@ Rajesh Kumar (Reseller Partner)`;
 
         function generateCustomerRecommendations(custId) {
             var grid = document.getElementById('recommendationsProductGrid');
+            var insightBar = document.getElementById('recommendationCustomerInsightBar');
             if (!grid) return;
 
             var customers = getResellerCustomers();
@@ -5380,42 +5385,124 @@ Rajesh Kumar (Reseller Partner)`;
             }
 
             if (!c) {
+                if (insightBar) insightBar.innerHTML = '';
                 grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">Please select a customer to view recommendations.</div>';
                 return;
             }
 
-            grid.innerHTML = prods.slice(0, 6).map(function(p) {
+            // Update Dynamic Customer Persona Bar
+            if (insightBar) {
+                var initials = (c.name || 'C').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+                var tagHtml = (c.tags || ['VIP', 'Repeat']).map(function(t, idx) {
+                    var cls = idx === 0 ? 'gold' : (idx === 1 ? 'green' : '');
+                    return '<span class="ws-rec-persona-pill ' + cls + '">' + t + '</span>';
+                }).join('');
+
+                insightBar.innerHTML = `
+                    <div class="ws-rec-persona-left">
+                        <div class="ws-rec-persona-avatar">${initials}</div>
+                        <div>
+                            <div class="ws-rec-persona-name">${c.name}</div>
+                            <div class="ws-rec-persona-city">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                ${c.city || 'Surat'}, ${c.state || 'Gujarat'} &bull; ${c.totalOrders || 1} Orders (₹${Number(c.totalPurchase || 4500).toLocaleString('en-IN')})
+                            </div>
+                        </div>
+                        <div class="ws-rec-persona-pills">
+                            ${tagHtml}
+                            <span class="ws-rec-persona-pill gold">Prefers: Pure Silk & Sarees</span>
+                        </div>
+                    </div>
+                    <button class="ws-rec-persona-chat-btn" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Open WhatsApp Chat">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                        <span>Chat on WA</span>
+                    </button>
+                `;
+            }
+
+            var matchScores = ["99% Match", "97% Match", "95% Match", "93% Match", "91% Match", "89% Match"];
+
+            grid.innerHTML = prods.slice(0, 6).map(function(p, idx) {
                 var cost = p.wholesale_price || p.price || 2199;
                 var mrp = p.retail_price || 3499;
                 var estProfit = mrp - cost;
+                var marginPct = Math.round((estProfit / mrp) * 100);
+                var matchTag = matchScores[idx % matchScores.length];
+                var catName = p.category || 'Pure Silk';
+                var imgUrl = p.image || '/Frontend/Reseller/Asset/images/product1.png';
+
                 return `
-                    <article class="ws-product-card" style="padding:14px; background:#FFFFFF; border:1.5px solid #E8D9B5; border-radius:14px; box-shadow:0 4px 14px rgba(0,0,0,0.03); transition:all 0.2s ease;">
-                        <img src="${p.image || '/Frontend/Reseller/Asset/images/product1.png'}" alt="${p.name}" style="width:100%; height:160px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
-                        <div class="card-title" style="font-weight:800; font-size:0.86rem; color:#2C251E; margin-bottom:4px; line-height:1.3;">${p.name}</div>
-                        <div style="font-size:0.72rem; color:#8C8072; margin-bottom:8px;">Category: <strong>${p.category || 'Silk Saree'}</strong></div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF6EE; border:1px solid #EAE0C8; padding:8px 10px; border-radius:8px; margin-bottom:10px;">
-                            <div>
-                                <div style="font-size:0.68rem; color:#8C8072;">Cost: ₹${cost.toLocaleString('en-IN')}</div>
-                                <div style="font-weight:900; font-size:0.88rem; color:#8A681F;">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div style="font-size:0.68rem; color:#047857; font-weight:700;">Est. Margin</div>
-                                <div style="font-weight:900; font-size:0.88rem; color:#047857;">+₹${estProfit.toLocaleString('en-IN')}</div>
-                            </div>
+                    <article class="ws-rec-card">
+                        <div class="ws-rec-img-wrap">
+                            <img src="${imgUrl}" alt="${p.name}" class="ws-rec-img" loading="lazy">
+                            <span class="ws-rec-badge-match">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                ${matchTag}
+                            </span>
+                            <span class="ws-rec-badge-cat">${catName}</span>
                         </div>
-                        <div style="display:flex; gap:6px;">
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" style="flex:1; justify-content:center;" onclick="openResellerQuickOrderDrawer(${c.id})">
-                                ⚡ Create Order
-                            </button>
-                            <button class="crm-btn-wa" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Pitch to Customer on WhatsApp">
-                                💬
-                            </button>
+                        <div class="ws-rec-card-body">
+                            <div>
+                                <h3 class="ws-rec-card-title" title="${p.name}">${p.name}</h3>
+                                <div class="ws-rec-card-craft">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
+                                    Handloom Pure Zari &bull; Silk Mark Assured
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="ws-rec-pricing-box">
+                                    <div>
+                                        <div class="ws-rec-cost-label">Reseller Cost: ₹${cost.toLocaleString('en-IN')}</div>
+                                        <div class="ws-rec-mrp-val">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
+                                    </div>
+                                    <div class="ws-rec-margin-box">
+                                        <div style="font-size:0.66rem; color:#047857; font-weight:800; margin-bottom:2px;">Est. Reseller Profit</div>
+                                        <span class="ws-rec-margin-pill">
+                                            +₹${estProfit.toLocaleString('en-IN')} (${marginPct}%)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="ws-rec-actions-row">
+                                    <button class="ws-rec-btn-create-order" onclick="openResellerQuickOrderDrawer(${c.id}, ${p.id})" title="Create Direct Order for ${c.name}">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                        <span>Create Order</span>
+                                    </button>
+                                    <button class="ws-rec-btn-wa-pitch" onclick="pitchProductToCustomerWhatsApp(${c.id}, ${p.id})" title="Pitch ${p.name} to ${c.name} on WhatsApp" aria-label="Pitch to Customer on WhatsApp">
+                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </article>
                 `;
             }).join('');
         }
         window.generateCustomerRecommendations = generateCustomerRecommendations;
+
+        function pitchProductToCustomerWhatsApp(custId, prodId) {
+            var customers = getResellerCustomers();
+            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
+            if (!c) return;
+
+            var el = document.getElementById('ws-catalog-data');
+            var prods = (window.allProducts && window.allProducts.length > 0) ? window.allProducts : (el ? JSON.parse(el.textContent || '[]') : []);
+            var p = prods.find(function(x) { return Number(x.id) === Number(prodId); });
+            
+            var pName = p ? p.name : 'Exclusive Pure Silk Saree';
+            var pPrice = p ? (p.retail_price || 3499) : 3499;
+            var phone = c.whatsapp || c.mobile || '9876543210';
+            
+            var text = `Namaste ${c.name} ji 🙏,\n\nI handpicked this exclusive *${pName}* specially for you based on your taste!\n\n✨ *Special Boutique Price*: ₹${Number(pPrice).toLocaleString('en-IN')}\n💎 *Craft*: Handloom Pure Zari & Silk Mark Assured\n🚚 *Dispatch*: Fast 24-hr Doorstep Delivery\n\nWould you like me to reserve this piece or share the full color catalog for you?\n\nWarm regards,\n*Rajesh Kumar* (Reseller Partner)`;
+            
+            var url = 'https://api.whatsapp.com/send?phone=91' + phone + '&text=' + encodeURIComponent(text);
+            window.open(url, '_blank');
+            if (typeof showWsToast === 'function') {
+                showWsToast('📲 Opening WhatsApp pitch for ' + c.name + '...');
+            }
+        }
+        window.pitchProductToCustomerWhatsApp = pitchProductToCustomerWhatsApp;
 
 
 
@@ -5608,7 +5695,7 @@ Rajesh Kumar (Reseller Partner)`;
         'openMobileSearchOverlay', 'closeMobileSearchOverlay', 'handleMobileSearchInput', 'clearMobileGlobalSearch', 'clearGlobalSearch',
         'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
         'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',
-        'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
+        'generateCustomerRecommendations', 'pitchProductToCustomerWhatsApp', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
         'resetAdvancedOrderFilters', 'openSaveFilterModal', 'openSavedFiltersModal', 'closeSavedFiltersModal',
         'saveCurrentFilterPreset', 'renderOrdersView', 'renderReportsView', 'renderTrackingTab',
         'renderTicketsView', 'renderAddressBookData',

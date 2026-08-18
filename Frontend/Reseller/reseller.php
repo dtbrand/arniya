@@ -2508,29 +2508,64 @@ $catalogProducts = [
                  TAB 13: SMART RECOMMENDATIONS CENTER
             ═══════════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneRecommendations">
-                <div class="ws-card">
-                    <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
-                                🌟 Reseller Smart Recommendation Center
-                            </h2>
-                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
-                                Data-driven product suggestions for your customer network
-                            </p>
+                <div class="ws-card ws-rec-main-card">
+                    
+                    <!-- Luxury Ambient Header Bar -->
+                    <div class="ws-rec-header-banner">
+                        <div class="ws-rec-header-left">
+                            <div class="ws-rec-icon-glow">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                    <h2 class="ws-rec-title">Reseller Smart Recommendation Center</h2>
+                                    <span class="ws-rec-live-badge">
+                                        <span class="ws-rec-pulse-dot"></span>
+                                        AI Match Engine
+                                    </span>
+                                </div>
+                                <p class="ws-rec-subtitle">
+                                    AI-powered catalog matching tailored to your buyers' purchase history, boutique tastes & high margin profit yields
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="background:#FAF8F4; border:1.5px solid var(--ws-border); border-radius:12px; padding:16px; margin-bottom:18px;">
-                        <div style="font-size:0.85rem; font-weight:800; color:var(--ws-gold-primary); margin-bottom:6px;">Select Customer to Generate Tailored Catalog Recommendations</div>
-                        <div style="display:flex; gap:10px; max-width:480px;">
-                            <select id="recommendationCustomerSelect" class="ws-input" onchange="generateCustomerRecommendations(this.value)">
-                                <option value="">-- Choose Customer --</option>
-                            </select>
+                    <!-- Customer Selector & Real-Time Buyer Persona Box -->
+                    <div class="ws-rec-customer-box">
+                        <div class="ws-rec-select-header">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <label for="recommendationCustomerSelect" class="ws-rec-select-label">Select Target Buyer for Tailored Recommendations</label>
+                            </div>
+                            <span class="ws-rec-select-hint">⚡ 1-Tap Personalized WhatsApp Pitch</span>
+                        </div>
+
+                        <div class="ws-rec-select-row">
+                            <div class="ws-rec-dropdown-wrap">
+                                <select id="recommendationCustomerSelect" class="ws-rec-select" onchange="generateCustomerRecommendations(this.value)">
+                                    <option value="">-- Choose Customer --</option>
+                                </select>
+                                <svg class="ws-rec-dropdown-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Customer Persona & Insights Bar -->
+                        <div class="ws-rec-persona-bar" id="recommendationCustomerInsightBar">
+                            <!-- Populated dynamically by JS -->
                         </div>
                     </div>
 
-                    <div class="ws-catalog-grid" id="recommendationsProductGrid">
-                        <!-- Injected dynamically -->
+                    <!-- Auto-sized Smart Recommendations Grid -->
+                    <div class="ws-recommendations-grid" id="recommendationsProductGrid">
+                        <!-- Populated dynamically by JS with next-level responsive luxury cards -->
                     </div>
                 </div>
             </section>
@@ -4175,7 +4210,9 @@ $catalogProducts = [
 
     <!-- Floating Quick Order Action Button -->
     <button class="crm-floating-quick-order-btn" onclick="openResellerQuickOrderDrawer()" title="Quick Order (⚡ Fast)" aria-label="Quick Order">
-        ⚡
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
     </button>
 
     <!-- ═══════════════════════════════════════════
