@@ -1200,9 +1200,11 @@ input[type=range].sf-range::-moz-range-thumb {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .modal-product-details-btn::after {

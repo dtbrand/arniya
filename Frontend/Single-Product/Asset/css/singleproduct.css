@@ -108,9 +108,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 overscroll-behavior-x: contain;
     touch-action: pan-y pinch-zoom;
     cursor: grab;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .pdp-slider-track::-webkit-scrollbar { display: none; }
@@ -142,9 +144,11 @@ overscroll-behavior-x: contain;
 
 .pdp-reviews-track, .pdp-rel-track {
     cursor: grab;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .pdp-reviews-track.dragging, .pdp-reviews-track:active,
@@ -169,9 +173,11 @@ overscroll-behavior-x: contain;
     height: 100%;
     object-fit: cover;
     object-position: center top;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 cursor: zoom-in;
     transition: transform 0.4s ease;
@@ -2033,9 +2039,11 @@ padding: 6px 2px 14px;
     padding: 0;
     cursor: pointer;
     text-align: left;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .pdp-wa-addr-collapse-wrap.open .pdp-wa-addr-arrow {
@@ -2058,9 +2066,11 @@ padding: 6px 2px 14px;
     background: #FAF9F5;
     cursor: pointer;
     transition: all 0.2s ease;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .pdp-wa-pay-card:hover {
@@ -2149,9 +2159,11 @@ padding: 6px 2px 14px;
     white-space: nowrap;
     overflow: hidden;
     padding: 2px 2px;
+    -moz--webkit-user-select: none;
+    user-select: none;
+    -ms--webkit-user-select: none;
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     margin-top: 1px;
 }
