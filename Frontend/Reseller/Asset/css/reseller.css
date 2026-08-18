@@ -6335,19 +6335,37 @@ scrollbar-width: none;
     width: 100%;
 }
 
-.ws-smart-input-icon {
-    position: absolute;
-    left: 11px;
-    width: 16px;
-    height: 16px;
+.ws-smart-input-icon,
+svg.ws-smart-input-icon,
+.ws-smart-input-wrap > svg {
+    position: absolute !important;
+    left: 11px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
     stroke: #8A681F;
-    fill: none;
+    fill: none !important;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    pointer-events: none;
-    z-index: 2;
+    pointer-events: none !important;
+    z-index: 2 !important;
     opacity: 0.85;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+}
+
+.ws-smart-input-wrap textarea ~ svg,
+.ws-smart-input-wrap textarea + svg,
+.ws-smart-input-wrap svg[style*="top:12px"],
+.ws-smart-input-wrap svg[style*="top: 12px"] {
+    top: 12px !important;
+    transform: none !important;
 }
 
 .ws-smart-input {
