@@ -417,6 +417,9 @@
         }
     };
 
+    window.openWishlist = window.openWishlistDrawer;
+    window.closeWishlist = window.closeWishlistDrawer;
+
     window.closeWishlistDrawer = function() {
         var modal = document.getElementById('wishlistDrawerModal');
         if (modal) {

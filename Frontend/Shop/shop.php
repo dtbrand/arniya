@@ -151,8 +151,16 @@ $total_products = count($products);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/Frontend/Shop/Asset/css/shop.css?v=1787016787">
+<link rel="stylesheet" href="/Frontend/Shop/Asset/css/shop.css?v=1787017812">
 
+    <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
+    <script>
+        window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
+        window.catalogProducts = window.allProducts;
+        window.products = window.allProducts;
+        window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+        window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+    </script>
 </head>
 <body>
 
@@ -566,7 +574,7 @@ $total_products = count($products);
 <script>
         window.shopProductsData = <?= json_encode(array_values($products)) ?>;
     </script>
-    <script src="/Frontend/Shop/Asset/js/shop.js?v=1787016787"></script>
+    <script src="/Frontend/Shop/Asset/js/shop.js?v=1787017812"></script>
 
 <!-- ════════════ INSTAGRAM REELS VIDEO FEED PARTIAL ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/reels.php'; ?>

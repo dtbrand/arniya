@@ -512,8 +512,16 @@ $colorHex = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css?v=1787016787">
+<link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css?v=1787017812">
 
+    <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
+    <script>
+        window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
+        window.catalogProducts = window.allProducts;
+        window.products = window.allProducts;
+        window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+        window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+    </script>
 </head>
 <body>
 
@@ -1201,7 +1209,8 @@ $colorHex = [
 <?php include_once __DIR__ . '/Includes/singelprodutbottomfotoer.php'; ?>
 
 <!-- ════ CART DRAWER PARTIAL ════ -->
-<?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/quickview.php'; ?>
+    <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
 
 <!-- ════ WISHLIST DRAWER PARTIAL ════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/wishlist.php'; ?>
@@ -1214,7 +1223,7 @@ $colorHex = [
         window.currentProductData = <?= json_encode($product) ?>;
         window.totalSlidesCount = <?= isset($galleryImages) ? count($galleryImages) : 4 ?>;
     </script>
-    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=1787016787"></script>
+    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=1787017812"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/smartshare.php'; ?>

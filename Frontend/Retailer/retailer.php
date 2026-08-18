@@ -404,8 +404,16 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css?v=1787016787">
+    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css?v=1787017812">
 
+    <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
+    <script>
+        window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
+        window.catalogProducts = window.allProducts;
+        window.products = window.allProducts;
+        window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+        window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
+    </script>
 </head>
 <body>
 
@@ -2883,7 +2891,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Retailer/Asset/js/retailer.js?v=1787016787"></script>
+    <script src="/Frontend/Retailer/Asset/js/retailer.js?v=1787017812"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

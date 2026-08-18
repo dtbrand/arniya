@@ -572,8 +572,9 @@
         var content = document.getElementById('quickModalContent');
         if (!overlay || !content) return;
 
-        var products = window.allProducts || [];
-        var p = products.find(function(x) { return x.id == id; });
+        var products = window.allProducts || window.catalogProducts || window.products || [];
+        var p = products.find(function(x) { return x.id == id || String(x.id) === String(id) || String(x.sku) === String(id); });
+        if (!p && typeof id === 'object' && id !== null) p = id;
         if (!p) return;
 
         window.currentQVProduct = p;
@@ -904,8 +905,9 @@
         var modal = document.getElementById('productDetailsModal');
         if (!modal) return;
 
-        var products = window.allProducts || [];
-        var p = products.find(function(x) { return x.id == id; });
+        var products = window.allProducts || window.catalogProducts || window.products || [];
+        var p = products.find(function(x) { return x.id == id || String(x.id) === String(id) || String(x.sku) === String(id); });
+        if (!p && typeof id === 'object' && id !== null) p = id;
         if (!p) return;
 
         document.getElementById('pdTitle').textContent = p.name;

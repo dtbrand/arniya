@@ -484,6 +484,9 @@
         }
     };
 
+    window.openCart = window.openCartDrawer;
+    window.closeCart = window.closeCartDrawer;
+
     window.closeCartDrawer = function() {
         var modal = document.getElementById('cartDrawerModal');
         if (modal) {
