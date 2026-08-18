@@ -1999,6 +1999,25 @@ input[type=range].sf-range::-moz-range-thumb {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* ── Mobile Home Header: Completely Remove Search Bar & Search Trigger ── */
+@media (max-width: 767px) {
+    .shop-header .mobile-search-trigger-btn,
+    .shop-header #mobileSearchTriggerBtn,
+    .shop-header .mobile-full-search-bar,
+    .shop-header #mobileFullSearchBar,
+    .shop-header .header-search-bar,
+    .shop-header #headerSearchBar {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    .shop-header .header-normal-view {
+        display: flex !important;
+        height: 52px;
+        padding: 0 14px;
+    }
+}
+
 .home-cat-nav-scroll {
     display: flex;
     align-items: center;
