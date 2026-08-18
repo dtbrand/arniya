@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787012121">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787012528">
 
 </head>
 <body>
@@ -2176,7 +2176,7 @@ $catalogProducts = [
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
                             <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
-                                💰 Reseller Profit Center & Margin Ledger
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" style="display:inline-block; vertical-align:middle; margin-right:6px;"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Reseller Profit Center & Margin Ledger
                             </h2>
                             <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
                                 Track net earnings, margins, paid vs pending profits, and customer margin ledger
@@ -2184,7 +2184,7 @@ $catalogProducts = [
                         </div>
                         <div style="display:flex; gap:8px;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportProfitLedgerCSV()">
-                                📥 Export Profit Ledger
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Export Profit Ledger
                             </button>
                         </div>
                     </div>
@@ -2196,28 +2196,28 @@ $catalogProducts = [
                                 <div class="crm-kpi-val gold" id="profitTotalRealized">₹58,490</div>
                                 <div class="crm-kpi-label">Total Realized Profit</div>
                             </div>
-                            <div class="crm-kpi-icon">💰</div>
+                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M15 9.5H10a2.5 2.5 0 0 1 0-5h4M9 19.5h5a2.5 2.5 0 0 0 0-5h-4"></path></svg></div>
                         </div>
                         <div class="crm-kpi-card">
                             <div>
                                 <div class="crm-kpi-val" style="color:#10B981;" id="profitMonthVal">₹24,850</div>
                                 <div class="crm-kpi-label">Profit This Month</div>
                             </div>
-                            <div class="crm-kpi-icon">📈</div>
+                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#10B981" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
                         </div>
                         <div class="crm-kpi-card">
                             <div>
                                 <div class="crm-kpi-val" style="color:#3B82F6;" id="profitWeekVal">₹8,420</div>
                                 <div class="crm-kpi-label">Profit This Week</div>
                             </div>
-                            <div class="crm-kpi-icon">⚡</div>
+                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3B82F6" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
                         </div>
                         <div class="crm-kpi-card">
                             <div>
                                 <div class="crm-kpi-val" style="color:#F59E0B;" id="profitPendingVal">₹4,200</div>
                                 <div class="crm-kpi-label">In-Transit / Pending Profit</div>
                             </div>
-                            <div class="crm-kpi-icon">⏳</div>
+                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg></div>
                         </div>
                     </div>
 
@@ -2242,6 +2242,7 @@ $catalogProducts = [
                             </tbody>
                         </table>
                     </div>
+                    <div class="ws-mobile-orders-list" id="crmProfitMobileList"></div>
                 </div>
             </section>
 
@@ -2253,7 +2254,7 @@ $catalogProducts = [
                     <div class="ws-card-header">
                         <div class="ws-card-title-group">
                             <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
-                                📅 Customer Follow-ups & Reminders
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" style="display:inline-block; vertical-align:middle; margin-right:6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Customer Follow-ups & Reminders
                             </h2>
                             <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
                                 Scheduled calls, WhatsApp follow-ups, and repeat order check-ins
@@ -2294,6 +2295,7 @@ $catalogProducts = [
                             </tbody>
                         </table>
                     </div>
+                    <div class="ws-mobile-orders-list" id="crmProfitMobileList"></div>
                 </div>
             </section>
 
@@ -3233,7 +3235,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787012121"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787012528"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

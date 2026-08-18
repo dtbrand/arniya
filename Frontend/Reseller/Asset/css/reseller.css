@@ -5503,6 +5503,7 @@ scrollbar-width: none;
         display: none !important;
     }
     #crmCustomersMobileList,
+#crmProfitMobileList,
     .ws-mobile-order-cards,
     .ws-mobile-reports-cards {
         display: flex !important;
@@ -5802,6 +5803,7 @@ scrollbar-width: none;
 
 .ws-mobile-orders-list,
 #crmCustomersMobileList,
+#crmProfitMobileList,
 .ws-mobile-order-cards,
 #wsMobileOrdersCards,
 .ws-mobile-reports-cards,
@@ -5819,6 +5821,7 @@ scrollbar-width: none;
     
     .ws-mobile-orders-list,
     #crmCustomersMobileList,
+#crmProfitMobileList,
     .ws-mobile-order-cards,
     #wsMobileOrdersCards,
     .ws-mobile-reports-cards,

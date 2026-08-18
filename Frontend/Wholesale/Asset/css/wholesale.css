@@ -4759,6 +4759,7 @@ padding-bottom: 4px !important;
         display: none !important;
     }
     #crmCustomersMobileList,
+#crmProfitMobileList,
     .ws-mobile-order-cards,
     .ws-mobile-reports-cards {
         display: flex !important;
@@ -5058,6 +5059,7 @@ padding-bottom: 4px !important;
 
 .ws-mobile-orders-list,
 #crmCustomersMobileList,
+#crmProfitMobileList,
 .ws-mobile-order-cards,
 #wsMobileOrdersCards,
 .ws-mobile-reports-cards,
@@ -5075,6 +5077,7 @@ padding-bottom: 4px !important;
     
     .ws-mobile-orders-list,
     #crmCustomersMobileList,
+#crmProfitMobileList,
     .ws-mobile-order-cards,
     #wsMobileOrdersCards,
     .ws-mobile-reports-cards,

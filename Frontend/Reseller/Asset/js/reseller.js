@@ -4593,9 +4593,10 @@ Rajesh Kumar (Reseller Partner)`;
         });
 
     
-        /* ── Profit Ledger Renderer ── */
+                /* ── Profit Ledger Renderer ── */
         function renderProfitLedger() {
             var tbody = document.getElementById('crmProfitTbody');
+            var mobList = document.getElementById('crmProfitMobileList');
             if (!tbody) return;
 
             var profitData = [
@@ -4607,22 +4608,56 @@ Rajesh Kumar (Reseller Partner)`;
                 { id: '#ORD-77510', cust: 'Ritu Aggarwal', prod: 'Georgette Bloom Saree (Qty: 1)', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
             ];
 
+            // 1. Desktop Table
             tbody.innerHTML = profitData.map(function(item) {
-                var statusCls = item.status === 'Delivered' ? 'background:#DCFCE7; color:#15803D;' : 'background:#FEF3C7; color:#B45309;';
+                var isDel = item.status === 'Delivered';
+                var statusCls = isDel ? 'background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;' : 'background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;';
                 return `
                     <tr>
-                        <td><strong>${item.id}</strong></td>
-                        <td><div style="font-weight:700;">${item.cust}</div></td>
-                        <td>${item.prod}</td>
-                        <td style="text-align:right; font-weight:800;">₹${item.sell.toLocaleString('en-IN')}</td>
-                        <td style="text-align:right; color:var(--ws-text-muted);">₹${item.cost.toLocaleString('en-IN')}</td>
-                        <td style="text-align:right; font-weight:900; color:#047857;">+₹${item.profit.toLocaleString('en-IN')}</td>
-                        <td style="text-align:center;"><span style="font-weight:800; font-size:0.72rem; color:#047857;">${item.margin}</span></td>
-                        <td style="text-align:center;"><span class="crm-tag" style="${statusCls}">${item.status}</span></td>
-                        <td style="text-align:center; font-size:0.72rem; color:var(--ws-text-muted);">${item.date}</td>
+                        <td style="white-space:nowrap; font-weight:800; color:var(--ws-gold-primary);">${item.id}</td>
+                        <td style="white-space:nowrap; font-weight:700; color:var(--ws-text-main);">${item.cust}</td>
+                        <td style="font-weight:600;">${item.prod}</td>
+                        <td style="text-align:right; font-weight:800; white-space:nowrap;">₹${item.sell.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; color:var(--ws-text-muted); white-space:nowrap;">₹${item.cost.toLocaleString('en-IN')}</td>
+                        <td style="text-align:right; font-weight:900; color:#047857; white-space:nowrap;">+₹${item.profit.toLocaleString('en-IN')}</td>
+                        <td style="text-align:center; white-space:nowrap;"><span style="font-weight:900; font-size:0.76rem; color:#047857; background:#ECFDF5; padding:2px 6px; border-radius:4px; border:1px solid #A7F3D0;">${item.margin}</span></td>
+                        <td style="text-align:center; white-space:nowrap;"><span class="crm-tag" style="${statusCls}">${item.status}</span></td>
+                        <td style="text-align:center; font-size:0.76rem; font-weight:600; color:var(--ws-text-muted); white-space:nowrap;">${item.date}</td>
                     </tr>
                 `;
             }).join('');
+
+            // 2. Mobile Responsive Cards
+            if (mobList) {
+                mobList.innerHTML = profitData.map(function(item) {
+                    var isDel = item.status === 'Delivered';
+                    var statusCls = isDel ? 'background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;' : 'background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;';
+                    return `
+                        <div class="ws-mobile-order-card" style="border-left:4.5px solid var(--ws-gold-primary);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                                <strong style="color:var(--ws-gold-primary); font-size:0.86rem;">${item.id}</strong>
+                                <span class="crm-tag" style="${statusCls}">${item.status}</span>
+                            </div>
+                            <div style="font-weight:800; font-size:0.86rem; color:var(--ws-text-main);">${item.cust}</div>
+                            <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:8px;">${item.prod} &bull; 📅 ${item.date}</div>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; background:#FAF8F4; border:1px solid #EADBBE; border-radius:8px; padding:8px; text-align:center;">
+                                <div>
+                                    <div style="font-size:0.65rem; color:var(--ws-text-muted);">Selling Price</div>
+                                    <div style="font-weight:800; font-size:0.80rem;">₹${item.sell.toLocaleString('en-IN')}</div>
+                                </div>
+                                <div>
+                                    <div style="font-size:0.65rem; color:var(--ws-text-muted);">Reseller Cost</div>
+                                    <div style="font-weight:700; font-size:0.80rem; color:var(--ws-text-muted);">₹${item.cost.toLocaleString('en-IN')}</div>
+                                </div>
+                                <div>
+                                    <div style="font-size:0.65rem; color:var(--ws-text-muted);">Net Profit (${item.margin})</div>
+                                    <div style="font-weight:900; font-size:0.82rem; color:#047857;">+₹${item.profit.toLocaleString('en-IN')}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
         };
 
         /* ── Follow-ups Table Renderer ── */
