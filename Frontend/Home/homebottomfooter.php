@@ -60,7 +60,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    padding-bottom: 9px;
     text-decoration: none;
     color: #A89F91;
     z-index: 5;
@@ -72,10 +73,11 @@
 .smart-nav-icon-box {
     position: relative;
     width: 32px;
-    height: 32px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 3px;
     transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
 }
 
@@ -91,14 +93,16 @@
 }
 
 .smart-nav-label {
-    font-size: 0.56rem;
+    font-size: 0.58rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    margin-top: 2px;
-    transition: opacity 0.22s ease, transform 0.28s ease, color 0.25s ease;
-    opacity: 0.85;
+    margin: 0;
+    line-height: 1;
+    transition: color 0.25s ease, font-weight 0.25s ease;
+    opacity: 0.9;
     white-space: nowrap;
+    transform: none !important;
 }
 
 /* ── Active Floating Bubble (Animated Notch Pill) ── */
@@ -152,7 +156,7 @@
     opacity: 1;
     color: #F5D77F;
     font-weight: 800;
-    transform: translateY(14px);
+    transform: none !important;
 }
 
 /* ── Live Badge Bubble (Wishlist & Orders) ── */
