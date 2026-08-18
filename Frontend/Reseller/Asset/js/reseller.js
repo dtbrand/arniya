@@ -4315,7 +4315,24 @@ window.animateTargetGauge = animateTargetGauge;
 
             saveResellerCustomers(customers);
             closeAddCustomerModal();
-            showWsToast('✅ Customer saved successfully!');
+
+            // Refresh Quick Order customer dropdown & check if quick order is active
+            var qoModal = document.getElementById('resellerQuickOrderDrawer');
+            var targetId = formId ? Number(formId) : newCust.id;
+            
+            var custSelect = document.getElementById('qoCustomerSelect');
+            if (custSelect) {
+                custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
+                    return '<option value="' + c.id + '" ' + (Number(c.id) === Number(targetId) ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' - ' + c.city + ')</option>';
+                }).join('');
+            }
+
+            if (qoModal && qoModal.classList.contains('active')) {
+                selectQoCustomer(targetId);
+                showWsToast('🎉 Customer "' + name + '" saved & selected for Quick Order!');
+            } else {
+                showWsToast('✅ Customer saved successfully!');
+            }
         };
 
         // 10. Quick Order Flow

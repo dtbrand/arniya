@@ -8210,6 +8210,16 @@ svg.ws-smart-input-icon,
 /* ═════════════════════════════════════════════════════════════════════
    QUICK ORDER CUSTOMER SEARCH & SMART SELECTOR SUITE
 ═════════════════════════════════════════════════════════════════════ */
+#resellerAddCustomerModal.ws-modal-overlay {
+    z-index: 2000500 !important;
+}
+
+#resellerScheduleFollowupModal.ws-modal-overlay,
+#resellerAddNoteModal.ws-modal-overlay,
+#resellerSavedFiltersModal.ws-modal-overlay {
+    z-index: 2000500 !important;
+}
+
 .ws-qo-cust-search-row {
     display: flex;
     gap: 8px;
