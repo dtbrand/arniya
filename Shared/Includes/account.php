@@ -510,14 +510,12 @@
     <div class="account-dialog">
         
         <!-- Header -->
-        <div class="ac-header">
-            <div class="ac-brand-group">
-                <div class="ac-avatar-icon">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
+        <div class="ac-header" style="display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1.5px solid var(--ac-gold-primary); background:#FFFFFF;">
+            <div class="ac-brand-group" style="display:flex; align-items:center; gap:10px;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="ac-title-wrap">
-                    <h3 id="acModalHeading">Luxury Member Access</h3>
-                    <span>Kalaniketan Ethnic Couture</span>
+                    <h3 id="acModalHeading" style="margin:0; font-size:0.96rem;">Luxury Member Access</h3>
+                    <span style="font-size:0.56rem;">Ethnic Luxury Couture</span>
                 </div>
             </div>
             <button class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close Account Modal">✕</button>

@@ -1003,14 +1003,8 @@
 
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
-        <a href="../../Frontend/Shop/shop.php" class="account-nav-brand">
-            <div class="brand-seal">
-                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="brand-text">
-                <h1>Kalaniketan</h1>
-                <span>Ethnic Luxury</span>
-            </div>
+        <a href="../../Frontend/Shop/shop.php" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
         <a href="../../Frontend/Shop/shop.php" class="return-shop-btn">
@@ -1025,13 +1019,9 @@
         <!-- ════════ VIEW 1: AUTHENTICATION (FOR GUEST USERS) ════════ -->
         <div class="auth-card-wrap" id="authCardWrap">
             <div class="auth-card-header">
-                <!-- Royal Brand Logo & Seal -->
-                <div class="auth-brand-seal-wrap">
-                    <div class="auth-logo-badge">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <div class="auth-brand-title">Kalaniketan</div>
-                    <div class="auth-brand-sub">Ethnic Luxury Couture</div>
+                <!-- Royal Brand Real Logo -->
+                <div class="auth-brand-seal-wrap" style="display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
+                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
                 </div>
 
                 <h2 id="authHeading">Sign In</h2>

@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css?v=1787018623">
+    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css?v=1787018938">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -2891,7 +2891,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Retailer/Asset/js/retailer.js?v=1787018623"></script>
+    <script src="/Frontend/Retailer/Asset/js/retailer.js?v=1787018938"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
