@@ -978,8 +978,8 @@ $catalogProducts = [
                     <div class="ws-analytics-card">
                         <div class="ws-card-top-bar" style="margin-bottom: 8px;">
                             <div>
-                                <h3 style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Procurement Target</h3>
-                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;">Monthly quota & milestone velocity</p>
+                                <h3 style="margin:0; font-family:var(--ws-font-serif); font-size:1.02rem; color:var(--ws-gold-primary); font-weight:800;">Reseller Target</h3>
+                                <p style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:2px;">Monthly resale target & profit velocity</p>
                             </div>
                             <span class="ws-trend-pill up">75.5% Quota</span>
                         </div>
@@ -1009,7 +1009,7 @@ $catalogProducts = [
                                 <svg style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                                 <span>+10.4% vs Target</span>
                             </div>
-                            <p class="ws-gauge-desc" id="targetGaugeDesc">You achieved <strong>₹1,84,500</strong> this cycle. Just <strong>₹65,500</strong> left to complete Tier 1 VIP quota!</p>
+                            <p class="ws-gauge-desc" id="targetGaugeDesc">You achieved <strong>₹1,84,500</strong> in resale orders. Just <strong>₹65,500</strong> left to complete Tier 1 VIP quota!</p>
                         </div>
 
                         <div class="ws-gauge-stats-row">
@@ -1035,7 +1035,7 @@ $catalogProducts = [
                     <div class="ws-section-header" style="margin-bottom:0;">
                         <div class="ws-sec-title-box">
                             <h3 id="statsMainTitle">Statistics & Performance Analytics</h3>
-                            <p id="statsSubtitle">Monthly Procurement Targets, Category Mix & Logistics Performance</p>
+                            <p id="statsSubtitle">Weekly Reseller Sales, Profit Margins & Customer Delivery Performance</p>
                         </div>
 
                         <div class="ws-sec-actions-row">
@@ -1058,7 +1058,7 @@ $catalogProducts = [
                         <!-- Column 1: Category Volume Mix & Target Fulfillment -->
                         <div>
                             <div class="ws-stats-col-title">
-                                <span id="catBreakdownTitle"><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg> Category Procurement Breakdown</span>
+                                <span id="catBreakdownTitle"><svg class="ws-ico gold" style="margin-right:5px;" viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg> Category Resale Breakdown</span>
                             </div>
                             <div class="ws-cat-prog-list" id="catProgList">
                                 <div class="ws-cat-prog-item">
@@ -1110,24 +1110,24 @@ $catalogProducts = [
                             </div>
                             <div class="ws-kpi-grid" id="kpiGrid">
                                 <div class="ws-kpi-box">
-                                    <div class="ws-kpi-label">Avg. Order Value</div>
-                                    <div class="ws-kpi-num">₹34,177</div>
-                                    <div class="ws-kpi-sub">↑ 12.4% vs last month</div>
+                                    <div class="ws-kpi-label">Avg. Reseller Margin</div>
+                                    <div class="ws-kpi-num">28.5%</div>
+                                    <div class="ws-kpi-sub">↑ 3.2% vs last month</div>
                                 </div>
                                 <div class="ws-kpi-box">
-                                    <div class="ws-kpi-label">Dispatch Turnaround</div>
+                                    <div class="ws-kpi-label">Customer Delivery TAT</div>
                                     <div class="ws-kpi-num">1.8 Days</div>
-                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Priority VIP BlueDart</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Express Customer Dispatch</div>
                                 </div>
                                 <div class="ws-kpi-box">
-                                    <div class="ws-kpi-label">GST Input Tax Credit</div>
-                                    <div class="ws-kpi-num">₹10,253</div>
-                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> 100% GSTR-1 Matched</div>
+                                    <div class="ws-kpi-label">Share Conversion</div>
+                                    <div class="ws-kpi-num">14.8%</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> 342 WhatsApp Shares</div>
                                 </div>
                                 <div class="ws-kpi-box">
-                                    <div class="ws-kpi-label">Lot Reorder Rate</div>
-                                    <div class="ws-kpi-num">83.3%</div>
-                        <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> 5 of 6 Lots Repeated</div>
+                                    <div class="ws-kpi-label">Customer Repeat Rate</div>
+                                    <div class="ws-kpi-num">88.5%</div>
+                                    <div class="ws-kpi-sub"><svg class="ws-ico gold ws-ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg> 4.9 ★ Buyer Rating</div>
                                 </div>
                             </div>
                         </div>
@@ -1140,18 +1140,18 @@ $catalogProducts = [
                             <div class="ws-tier-status-box" style="padding:14px; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(135deg, #FFFFFF 0%, #FEFAF0 100%); border:1.5px solid rgba(212,175,55,0.45); border-radius:12px;">
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                        <span class="ws-tier-badge active" id="statsMilestoneBadge" style="font-size:0.60rem; font-weight:800;">Tier 1: Non-VIP (Active)</span>
+                                        <span class="ws-tier-badge active" id="statsMilestoneBadge" style="font-size:0.60rem; font-weight:800;">Tier 1: Active Reseller</span>
                                         <span id="statsMilestoneOrders" style="font-size:0.66rem; font-weight:800; color:#15803D;">6 / 50 Orders</span>
                                     </div>
                                     <h4 id="statsMilestoneVal" style="font-size:1.10rem; font-weight:900; color:var(--ws-text-main); margin:0 0 6px; font-family:var(--ws-font-serif); letter-spacing:0.2px;">
-                                        Tier 1: Non-VIP Member
+                                        Tier 1: Active Reseller
                                     </h4>
                                     <!-- Progress Bar -->
                                     <div style="height:6px; background:#F1ECE1; border-radius:4px; overflow:hidden; margin-bottom:8px;">
                                         <div id="statsMilestoneBar" style="height:100%; width:12%; background:linear-gradient(90deg, #10B981, #059669); border-radius:4px;"></div>
                                     </div>
                                     <p id="statsMilestoneDesc" style="font-size:0.73rem; color:#57534E; line-height:1.35; margin:0;">
-                                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!
+                                        Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver Reseller</strong> with an extra +3% margin rebate!
                                     </p>
                                 </div>
 
