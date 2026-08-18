@@ -3901,27 +3901,65 @@ $catalogProducts = [
                         </select>
                     </div>
 
-                    <!-- Step 2: Product & Quantity -->
+                    <!-- Step 2: Product & Quantity with Smart SKU/Name Search -->
                     <div class="ws-smart-form-section">
-                        <div class="ws-smart-section-header">
+                        <div class="ws-smart-section-header" style="display:flex; justify-content:space-between; align-items:center;">
                             <span class="ws-smart-section-title">
                                 <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                                 2. Product Selection & Quantity
                             </span>
+                            <span class="ws-qo-hint" style="font-size:0.70rem; color:var(--ws-text-muted);">Search by SKU or Title</span>
                         </div>
-                        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-bottom:10px;" class="ws-smart-grid-2">
-                            <div class="ws-smart-input-wrap">
-                                <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path></svg>
-                                <select id="qoProductSelect" class="ws-smart-input" required onchange="handleQoProductChange(this.value)">
-                                    <option value="">-- Choose Product --</option>
-                                </select>
+
+                        <!-- Product Search Input & Quantity Stepper Row -->
+                        <div class="ws-qo-prod-search-row" id="qoProdSearchRow">
+                            <div class="ws-qo-search-wrap" style="flex:1;">
+                                <svg class="ws-qo-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="qoProductSearchInput" class="ws-qo-search-input" placeholder="Search product by SKU, name (e.g. Silk, Banarasi, JHT-101)..." autocomplete="off" oninput="handleQoProductSearchInput(this.value)" onfocus="handleQoProductSearchFocus()">
+                                <button type="button" id="qoProductSearchClearBtn" class="ws-qo-search-clear" onclick="clearQoProductSearch()" title="Clear search" style="display:none;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <!-- Live Product Autocomplete Dropdown -->
+                                <div class="ws-qo-autocomplete-list ws-qo-prod-autocomplete" id="qoProductSearchResults" style="display:none;">
+                                    <!-- Injected dynamically by JS -->
+                                </div>
                             </div>
-                            <div class="ws-smart-input-wrap">
-                                <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M12 5v14M5 12h14"></path></svg>
-                                <input type="number" id="qoQuantity" class="ws-smart-input" min="1" value="1" required oninput="calculateQoProfit()" placeholder="Qty">
+                            <div class="ws-qo-qty-wrap">
+                                <label class="ws-qo-qty-label">Qty</label>
+                                <input type="number" id="qoQuantity" class="ws-smart-input ws-qo-qty-input" min="1" value="1" required oninput="calculateQoProfit()" placeholder="Qty">
                             </div>
                         </div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;" class="ws-smart-grid-2">
+
+                        <!-- Selected Product Active Card (Shown when a product is selected) -->
+                        <div class="ws-qo-selected-prod-card" id="qoSelectedProductCard" style="display:none;">
+                            <div class="ws-qo-selected-prod-left">
+                                <img src="/Frontend/Reseller/Asset/images/product1.png" alt="Product" class="ws-qo-prod-img" id="qoSelectedProdImg">
+                                <div>
+                                    <div class="ws-qo-prod-name-row">
+                                        <span class="ws-qo-prod-name" id="qoSelectedProdName">Pure Kanjivaram Silk Saree</span>
+                                        <span class="ws-qo-prod-sku" id="qoSelectedProdSku">SKU: JHT-101</span>
+                                    </div>
+                                    <div class="ws-qo-prod-pricing-snippet" id="qoSelectedProdPricing">
+                                        Cost: <strong id="qoSelectedProdCost">₹1,399</strong> &bull; MRP: <strong id="qoSelectedProdMrp">₹3,499</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="ws-qo-btn-change-cust" onclick="resetQoProductSelection()" title="Change Product">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <span>Change</span>
+                            </button>
+                        </div>
+
+                        <!-- Underlying Synchronized Product Select -->
+                        <select id="qoProductSelect" style="display:none;" required onchange="handleQoProductChange(this.value)">
+                            <option value="">-- Choose Product --</option>
+                        </select>
+
+                        <!-- Price & Margins Grid -->
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;" class="ws-smart-grid-2">
                             <div>
                                 <label class="ws-smart-label">Reseller Cost / Pc</label>
                                 <div class="ws-smart-input-wrap">

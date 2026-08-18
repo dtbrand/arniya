@@ -4362,9 +4362,11 @@ window.animateTargetGauge = animateTargetGauge;
                 resetQoCustomerSelection();
             }
 
+            // Product selection state
             if (prefillProdId) {
-                if (prodSelect) prodSelect.value = prefillProdId;
-                handleQoProductChange(prefillProdId);
+                selectQoProduct(prefillProdId);
+            } else {
+                resetQoProductSelection();
             }
 
             if (modal) modal.classList.add('active');
@@ -4375,6 +4377,8 @@ window.animateTargetGauge = animateTargetGauge;
             if (modal) modal.classList.remove('active');
             var results = document.getElementById('qoCustomerSearchResults');
             if (results) results.style.display = 'none';
+            var prodResults = document.getElementById('qoProductSearchResults');
+            if (prodResults) prodResults.style.display = 'none';
         };
 
         function handleQoCustomerSearchInput(query) {
@@ -4493,6 +4497,132 @@ window.animateTargetGauge = animateTargetGauge;
                 addr.value = c.address + ', ' + c.city + ', ' + c.state + ' - ' + c.pincode;
             }
         };
+
+        // Product SKU & Name Search Handler Suite
+        function handleQoProductSearchInput(query) {
+            var input = document.getElementById('qoProductSearchInput');
+            var clearBtn = document.getElementById('qoProductSearchClearBtn');
+            var resultsBox = document.getElementById('qoProductSearchResults');
+            if (!resultsBox) return;
+
+            var q = (query || '').trim().toLowerCase();
+            if (clearBtn) clearBtn.style.display = q.length > 0 ? 'flex' : 'none';
+
+            var prods = window.allProducts || [];
+            var matches = prods.filter(function(p) {
+                var name = (p.name || '').toLowerCase();
+                var sku = (p.sku || 'JHT-' + p.id).toLowerCase();
+                var cat = (p.category || '').toLowerCase();
+                var fabric = (p.fabric || '').toLowerCase();
+                return name.indexOf(q) !== -1 || sku.indexOf(q) !== -1 || cat.indexOf(q) !== -1 || fabric.indexOf(q) !== -1;
+            });
+
+            if (matches.length === 0) {
+                resultsBox.innerHTML = `
+                    <div style="padding:12px; text-align:center; color:var(--ws-text-muted); font-size:0.78rem;">
+                        No product found matching "<strong>${q}</strong>"
+                    </div>
+                `;
+            } else {
+                resultsBox.innerHTML = matches.map(function(p) {
+                    var cost = p.wholesale_price || p.price || 2199;
+                    var mrp = p.retail_price || Math.round(cost * 1.5);
+                    var img = p.image || '/Frontend/Reseller/Asset/images/product1.png';
+                    var sku = p.sku || ('JHT-' + p.id);
+                    return `
+                        <div class="ws-qo-prod-item" onclick="selectQoProduct(${p.id})">
+                            <div class="ws-qo-prod-item-left">
+                                <img src="${img}" alt="${p.name}" class="ws-qo-prod-item-thumb" onerror="this.src='/Frontend/Reseller/Asset/images/product1.png'">
+                                <div>
+                                    <div class="ws-qo-prod-item-title">${p.name}</div>
+                                    <div class="ws-qo-prod-item-sub"><span class="ws-qo-prod-item-sku">SKU: ${sku}</span> 🏷️ ${p.category || 'Silk Saree'}</div>
+                                </div>
+                            </div>
+                            <div class="ws-qo-prod-item-price">
+                                <div>₹${cost.toLocaleString('en-IN')}</div>
+                                <div style="font-size:0.62rem; color:var(--ws-text-muted); font-weight:600; text-decoration:line-through;">₹${mrp.toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            resultsBox.style.display = 'block';
+        }
+
+        function handleQoProductSearchFocus() {
+            var input = document.getElementById('qoProductSearchInput');
+            handleQoProductSearchInput(input ? input.value : '');
+        }
+
+        function clearQoProductSearch() {
+            var input = document.getElementById('qoProductSearchInput');
+            var clearBtn = document.getElementById('qoProductSearchClearBtn');
+            var resultsBox = document.getElementById('qoProductSearchResults');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+            if (clearBtn) clearBtn.style.display = 'none';
+            if (resultsBox) resultsBox.style.display = 'none';
+        }
+
+        function selectQoProduct(prodId) {
+            var prods = window.allProducts || [];
+            var p = prods.find(function(x) { return Number(x.id) === Number(prodId); });
+            if (!p) return;
+
+            var select = document.getElementById('qoProductSelect');
+            if (select) select.value = p.id;
+
+            handleQoProductChange(p.id);
+
+            // Populate selected product preview card
+            var searchRow = document.getElementById('qoProdSearchRow');
+            var card = document.getElementById('qoSelectedProductCard');
+            var img = document.getElementById('qoSelectedProdImg');
+            var name = document.getElementById('qoSelectedProdName');
+            var sku = document.getElementById('qoSelectedProdSku');
+            var costEl = document.getElementById('qoSelectedProdCost');
+            var mrpEl = document.getElementById('qoSelectedProdMrp');
+            var resultsBox = document.getElementById('qoProductSearchResults');
+
+            if (resultsBox) resultsBox.style.display = 'none';
+
+            var cost = p.wholesale_price || p.price || 2199;
+            var mrp = p.retail_price || Math.round(cost * 1.5);
+            var skuText = p.sku || ('JHT-' + p.id);
+
+            if (img) img.src = p.image || '/Frontend/Reseller/Asset/images/product1.png';
+            if (name) name.textContent = p.name;
+            if (sku) sku.textContent = 'SKU: ' + skuText;
+            if (costEl) costEl.textContent = '₹' + cost.toLocaleString('en-IN');
+            if (mrpEl) mrpEl.textContent = '₹' + mrp.toLocaleString('en-IN');
+
+            if (searchRow) searchRow.style.display = 'none';
+            if (card) card.style.display = 'flex';
+        }
+
+        function resetQoProductSelection() {
+            var select = document.getElementById('qoProductSelect');
+            if (select) select.value = '';
+
+            var searchRow = document.getElementById('qoProdSearchRow');
+            var card = document.getElementById('qoSelectedProductCard');
+            var input = document.getElementById('qoProductSearchInput');
+
+            var costEl = document.getElementById('qoCostPrice');
+            var sellEl = document.getElementById('qoSellingPrice');
+            if (costEl) costEl.value = '';
+            if (sellEl) sellEl.value = '';
+            calculateQoProfit();
+
+            if (card) card.style.display = 'none';
+            if (searchRow) searchRow.style.display = 'flex';
+            if (input) {
+                input.value = '';
+            }
+            clearQoProductSearch();
+        }
 
         function handleQoProductChange(prodId) {
             var select = document.getElementById('qoProductSelect');
@@ -5817,7 +5947,8 @@ Rajesh Kumar (Reseller Partner)`;
         'handleSmartInputChange', 'clearSmartInput',
         'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerSearchInput',
         'handleQoCustomerSearchFocus', 'clearQoCustomerSearch', 'selectQoCustomer', 'resetQoCustomerSelection',
-        'handleQoCustomerChange',
+        'handleQoCustomerChange', 'handleQoProductSearchInput', 'handleQoProductSearchFocus',
+        'clearQoProductSearch', 'selectQoProduct', 'resetQoProductSelection',
         'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
         'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
         'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
@@ -5846,10 +5977,16 @@ Rajesh Kumar (Reseller Partner)`;
     });
 
     document.addEventListener('click', function(e) {
-        var searchWrap = document.querySelector('.ws-qo-search-wrap');
-        var resultsBox = document.getElementById('qoCustomerSearchResults');
-        if (resultsBox && searchWrap && !searchWrap.contains(e.target)) {
-            resultsBox.style.display = 'none';
+        var custSearchWrap = document.querySelector('#qoCustSearchRow .ws-qo-search-wrap');
+        var custResultsBox = document.getElementById('qoCustomerSearchResults');
+        if (custResultsBox && custSearchWrap && !custSearchWrap.contains(e.target)) {
+            custResultsBox.style.display = 'none';
+        }
+
+        var prodSearchWrap = document.querySelector('#qoProdSearchRow .ws-qo-search-wrap');
+        var prodResultsBox = document.getElementById('qoProductSearchResults');
+        if (prodResultsBox && prodSearchWrap && !prodSearchWrap.contains(e.target)) {
+            prodResultsBox.style.display = 'none';
         }
     });
 })();
