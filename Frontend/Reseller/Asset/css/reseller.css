@@ -5884,3 +5884,79 @@ scrollbar-width: none;
     border-left: 4.5px solid #8A681F !important;
     border-radius: 4px 12px 12px 4px !important;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   FLOATING LEFT INDICATOR BAR WITH GAP & LUXURY SELECTED BOX
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-nav-list {
+    list-style: none;
+    padding: 4px 10px 4px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.ws-nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    color: var(--ws-text-sub, #574D3F);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1.2px solid transparent;
+}
+
+/* Hover Unselected */
+.ws-nav-item:hover:not(.active) {
+    background: linear-gradient(135deg, #FAF7F0 0%, #F5EFE0 100%) !important;
+    color: #8A681F !important;
+    border-color: rgba(212, 175, 55, 0.25) !important;
+    transform: translateX(2px);
+}
+
+/* Active / Selected Box Styling */
+.ws-nav-item.active {
+    background: linear-gradient(135deg, #FAF5E8 0%, #F7EFD8 100%) !important;
+    color: #785912 !important;
+    border: 1.2px solid #E2D1A6 !important;
+    border-radius: 10px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transform: translateX(2px) !important;
+}
+
+/* Floating Left Indicator Bar with Distinct Gap from Selected Box */
+.ws-nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: -9px; /* Gap between left indicator bar and selected box */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    min-height: 20px;
+    max-height: 26px;
+    background: linear-gradient(180deg, #D4AF37 0%, #8A681F 100%) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5), 0 2px 4px rgba(138, 104, 31, 0.3) !important;
+}
+
+.ws-nav-item.active svg {
+    stroke: #8A681F !important;
+    transform: scale(1.12) !important;
+}
+
+.ws-nav-item.active .ws-nav-badge {
+    background: #8A681F !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.3) !important;
+}
