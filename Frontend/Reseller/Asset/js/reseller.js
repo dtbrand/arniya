@@ -4630,10 +4630,68 @@ window.animateTargetGauge = animateTargetGauge;
             renderTopCustomersList(period);
         };
 
-        // 15. Global Live Search (Customers, Orders, Products)
+        // 15. Global Live Search (Desktop + Mobile Overlay)
+        function openMobileSearchOverlay() {
+            var header = document.getElementById('wsMainHeader');
+            if (header) header.classList.add('mobile-search-active');
+            var mobileInp = document.getElementById('wsMobileSearchInput');
+            if (mobileInp) {
+                setTimeout(function() {
+                    mobileInp.focus();
+                }, 100);
+            }
+        };
+
+        function closeMobileSearchOverlay() {
+            var header = document.getElementById('wsMainHeader');
+            if (header) header.classList.remove('mobile-search-active');
+            var mobileInp = document.getElementById('wsMobileSearchInput');
+            if (mobileInp) mobileInp.value = '';
+            var desktopInp = document.getElementById('wsGlobalSearchInput');
+            if (desktopInp) desktopInp.value = '';
+            var clearBtn = document.getElementById('wsMobileSearchClearBtn');
+            if (clearBtn) clearBtn.style.display = 'none';
+            var resultsBox = document.getElementById('wsGlobalSearchResults');
+            if (resultsBox) {
+                resultsBox.style.display = 'none';
+                resultsBox.innerHTML = '';
+            }
+        };
+
+        function handleMobileSearchInput(val) {
+            var clearBtn = document.getElementById('wsMobileSearchClearBtn');
+            if (clearBtn) {
+                clearBtn.style.display = (val && val.trim()) ? 'flex' : 'none';
+            }
+        };
+
+        function clearMobileGlobalSearch() {
+            var mobileInp = document.getElementById('wsMobileSearchInput');
+            if (mobileInp) {
+                mobileInp.value = '';
+                mobileInp.focus();
+            }
+            handleMobileSearchInput('');
+            handleGlobalSearch('');
+        };
+
+        function clearGlobalSearch() {
+            var inp = document.getElementById('wsGlobalSearchInput');
+            if (inp) {
+                inp.value = '';
+                inp.focus();
+            }
+            var clearBtn = document.getElementById('wsGlobalSearchClear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            handleGlobalSearch('');
+        };
+
         function handleGlobalSearch(query) {
             var q = (query || '').trim().toLowerCase();
             var resultsBox = document.getElementById('wsGlobalSearchResults');
+            var desktopClearBtn = document.getElementById('wsGlobalSearchClear');
+            if (desktopClearBtn) desktopClearBtn.style.display = q ? 'block' : 'none';
+
             if (!resultsBox) return;
 
             if (!q) {
@@ -4643,27 +4701,27 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             var customers = getResellerCustomers().filter(function(c) {
-                return c.name.toLowerCase().indexOf(q) !== -1 || c.mobile.indexOf(q) !== -1;
+                return (c.name || '').toLowerCase().indexOf(q) !== -1 || (c.mobile || '').indexOf(q) !== -1 || (c.city || '').toLowerCase().indexOf(q) !== -1;
             });
 
             var orders = (window.allOrders || []).filter(function(o) {
-                return o.orderId.toLowerCase().indexOf(q) !== -1 || o.productName.toLowerCase().indexOf(q) !== -1;
+                return (o.orderId || o.id || '').toLowerCase().indexOf(q) !== -1 || (o.productName || '').toLowerCase().indexOf(q) !== -1;
             });
 
             var prods = (window.allProducts || []).filter(function(p) {
-                return p.name.toLowerCase().indexOf(q) !== -1;
+                return (p.name || '').toLowerCase().indexOf(q) !== -1 || (p.category || '').toLowerCase().indexOf(q) !== -1;
             });
 
             var html = '';
 
             if (customers.length > 0) {
-                html += '<div class="ws-search-group-title">👥 Customers</div>';
-                customers.slice(0, 3).forEach(function(c) {
+                html += '<div class="ws-search-group-title">👥 Customers (' + customers.length + ')</div>';
+                customers.slice(0, 4).forEach(function(c) {
                     html += `
-                        <div class="ws-search-item" onclick="openCustomerProfileModal(${c.id}); document.getElementById('wsGlobalSearchResults').style.display='none';">
+                        <div class="ws-search-item" onclick="openCustomerProfileModal(${c.id}); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
                             <div>
                                 <div class="ws-search-item-title">${c.name}</div>
-                                <div class="ws-search-item-sub">📞 ${c.mobile} &bull; 📍 ${c.city}</div>
+                                <div class="ws-search-item-sub">📞 ${c.mobile} &bull; 📍 ${c.city || 'Surat'}</div>
                             </div>
                             <span class="crm-tag crm-tag-vip">Profile →</span>
                         </div>
@@ -4672,37 +4730,38 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             if (orders.length > 0) {
-                html += '<div class="ws-search-group-title">📦 Orders</div>';
-                orders.slice(0, 3).forEach(function(o) {
+                html += '<div class="ws-search-group-title">📦 Consignments & Orders (' + orders.length + ')</div>';
+                orders.slice(0, 4).forEach(function(o) {
+                    var oId = o.orderId || o.id;
                     html += `
-                        <div class="ws-search-item" onclick="openWsOrderModal('${o.orderId}'); document.getElementById('wsGlobalSearchResults').style.display='none';">
+                        <div class="ws-search-item" onclick="openWsOrderModal('${oId}'); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
                             <div>
-                                <div class="ws-search-item-title">${o.orderId} - ${o.productName}</div>
-                                <div class="ws-search-item-sub">Status: ${o.status} &bull; Total: ₹${o.total}</div>
+                                <div class="ws-search-item-title">${oId} - ${o.productName}</div>
+                                <div class="ws-search-item-sub">Status: <strong>${o.status}</strong> &bull; Consignment Total: ₹${o.total}</div>
                             </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary);">View →</span>
+                            <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary);">Track →</span>
                         </div>
                     `;
                 });
             }
 
             if (prods.length > 0) {
-                html += '<div class="ws-search-group-title">👗 Catalog Products</div>';
-                prods.slice(0, 3).forEach(function(p) {
+                html += '<div class="ws-search-group-title">👗 Catalog Lots (' + prods.length + ')</div>';
+                prods.slice(0, 4).forEach(function(p) {
                     html += `
-                        <div class="ws-search-item" onclick="openResellerQuickOrderDrawer(); document.getElementById('wsGlobalSearchResults').style.display='none';">
+                        <div class="ws-search-item" onclick="openResellerQuickOrderDrawer(); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
                             <div>
                                 <div class="ws-search-item-title">${p.name}</div>
-                                <div class="ws-search-item-sub">₹${p.wholesale_price || p.price} &bull; ${p.category}</div>
+                                <div class="ws-search-item-sub">₹${p.wholesale_price || p.price} &bull; ${p.category} &bull; MOQ: ${p.moq || 8} Pcs</div>
                             </div>
-                            <span style="font-size:0.70rem; font-weight:800; color:#047857;">Order →</span>
+                            <span style="font-size:0.70rem; font-weight:800; color:#047857;">Quick Order →</span>
                         </div>
                     `;
                 });
             }
 
             if (!html) {
-                html = '<div style="padding:12px; font-size:0.75rem; color:var(--ws-text-muted); text-align:center;">No matching results found.</div>';
+                html = '<div style="padding:14px; font-size:0.78rem; color:var(--ws-text-muted); text-align:center;">No matching customers, orders, or products found for "<strong>' + q + '</strong>".</div>';
             }
 
             resultsBox.innerHTML = html;
@@ -5433,6 +5492,7 @@ Rajesh Kumar (Reseller Partner)`;
         'setFollowupDatePreset', 'insertFollowupTaskPrompt', 'filterFollowups', 'handleFollowupSearch', 'clearFollowupSearch',
         'renderDashboardCrmWidgets', 'renderTopCustomersList',
         'switchTopCustomersPeriod', 'handleGlobalSearch', 'sendCustomerWhatsAppMessage', 'exportCustomersCSV',
+        'openMobileSearchOverlay', 'closeMobileSearchOverlay', 'handleMobileSearchInput', 'clearMobileGlobalSearch', 'clearGlobalSearch',
         'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
         'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',
         'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',

@@ -494,58 +494,97 @@ $catalogProducts = [
     <!-- ═══ Mobile Sidebar Backdrop ═══ -->
     <div class="ws-sidebar-backdrop" id="wsSidebarBackdrop" onclick="toggleSidebar(false)"></div>
 
-    <!-- ═══ Modern Clean Top Header (TailAdmin Style with Gold Brand Theme) ═══ -->
-    <header class="ws-header">
-        <div class="ws-header-left">
-            <button class="ws-menu-toggle-btn" id="wsMenuToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Menu">
-                <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
+    <!-- ═══ Modern Clean Top Header (TailAdmin Style with Gold Brand Theme & Shop Page Mobile Search) ═══ -->
+    <header class="ws-header" id="wsMainHeader">
+        <!-- Normal Header View (Desktop & Mobile Initial View) -->
+        <div class="ws-header-normal-view" id="wsHeaderNormalView">
+            <div class="ws-header-left">
+                <button class="ws-menu-toggle-btn" id="wsMenuToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Menu">
+                    <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
 
-            <!-- Mobile Brand Title (Center/Left) -->
-            <div class="ws-mobile-header-brand">
-                <span class="ws-mob-logo-text">KALANIKETAN B2B</span>
-            </div>
-        </div>
-
-        <!-- Global Header Live Search (Customers, Orders, Products) -->
-        <div class="ws-hdr-search-box">
-            <svg class="ws-hdr-search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" class="ws-hdr-search-input" id="wsGlobalSearchInput" placeholder="Search customers, orders, SKU, phone..." oninput="handleGlobalSearch(this.value)" autocomplete="off">
-            <div class="ws-hdr-search-results" id="wsGlobalSearchResults">
-                <!-- Populated dynamically by live search engine -->
-            </div>
-        </div>
-
-        <div class="ws-header-right">
-            <!-- Wishlist Button -->
-            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Reseller Wishlist" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" aria-label="Reseller Wishlist">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                <span class="ws-hdr-badge" id="headerWishlistBadge" style="display:none;">0</span>
-            </button>
-
-            <!-- Cart Button -->
-            <button class="ws-hdr-icon-btn" id="headerCartBtn" title="Reseller Cart" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}" aria-label="Reseller Cart">
-                <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span class="ws-hdr-badge gold" id="headerCartBadge" style="display:none;">0</span>
-            </button>
-
-            <!-- Notifications Bell -->
-            <button class="ws-hdr-icon-btn" title="Notifications" onclick="openResellerNotificationsModal()">
-                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                <span class="ws-notif-dot"></span>
-            </button>
-
-            <!-- User Profile Pill -->
-            <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Reseller Profile">
-                <img src="/Frontend/Reseller/Asset/images/profile.png" onerror="this.src='/Frontend/Reseller/Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
-                <div class="ws-user-name-text">
-                    <span id="headerUserName">Rajesh Kumar</span>
-                    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <!-- Mobile Brand Title (Center/Left) -->
+                <div class="ws-mobile-header-brand">
+                    <span class="ws-mob-logo-text">KALANIKETAN B2B</span>
                 </div>
             </div>
+
+            <!-- Global Header Live Search (Desktop) -->
+            <div class="ws-hdr-search-box" id="wsHdrDesktopSearchBox">
+                <svg class="ws-hdr-search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="ws-hdr-search-input" id="wsGlobalSearchInput" placeholder="Search customers, orders, SKU, phone..." oninput="handleGlobalSearch(this.value)" autocomplete="off">
+                <button type="button" class="ws-input-clear-btn" id="wsGlobalSearchClear" onclick="clearGlobalSearch()" title="Clear">✕</button>
+                <div class="ws-hdr-search-results" id="wsGlobalSearchResults">
+                    <!-- Populated dynamically by live search engine -->
+                </div>
+            </div>
+
+            <div class="ws-header-right">
+                <!-- Mobile Search Icon Trigger Button (Shown on mobile only, like Shop Page Header) -->
+                <button class="ws-hdr-icon-btn mobile-search-trigger-btn" id="wsMobileSearchTriggerBtn" onclick="openMobileSearchOverlay()" aria-label="Open Search" title="Search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+
+                <!-- Wishlist Button -->
+                <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Reseller Wishlist" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" aria-label="Reseller Wishlist">
+                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="ws-hdr-badge" id="headerWishlistBadge" style="display:none;">0</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button class="ws-hdr-icon-btn" id="headerCartBtn" title="Reseller Cart" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}" aria-label="Reseller Cart">
+                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span class="ws-hdr-badge gold" id="headerCartBadge" style="display:none;">0</span>
+                </button>
+
+                <!-- Notifications Bell -->
+                <button class="ws-hdr-icon-btn" title="Notifications" onclick="openResellerNotificationsModal()">
+                    <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="ws-notif-dot"></span>
+                </button>
+
+                <!-- User Profile Pill -->
+                <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Reseller Profile">
+                    <img src="/Frontend/Reseller/Asset/images/profile.png" onerror="this.src='/Frontend/Reseller/Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
+                    <div class="ws-user-name-text">
+                        <span id="headerUserName">Rajesh Kumar</span>
+                        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Mobile Full-Header Search Bar Overlay (Exact Shop Page Style & Rules) ═══ -->
+        <div class="mobile-full-search-bar ws-mobile-search-overlay" id="wsMobileFullSearchBar">
+            <div class="mobile-search-input-wrap">
+                <svg class="mobile-search-left-icon" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input
+                    type="text"
+                    class="mobile-search-input-field"
+                    id="wsMobileSearchInput"
+                    placeholder="Search customers, orders, SKU, phone..."
+                    autocomplete="off"
+                    oninput="handleGlobalSearch(this.value); handleMobileSearchInput(this.value);"
+                    aria-label="Search dashboard items"
+                >
+                <button type="button" class="mobile-search-clear-btn" id="wsMobileSearchClearBtn" onclick="clearMobileGlobalSearch()" aria-label="Clear search">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Right Close '✕' Button (Closes mobile search overlay) -->
+            <button type="button" class="mobile-search-close-btn" id="wsMobileSearchCloseBtn" onclick="closeMobileSearchOverlay()" aria-label="Close search">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
     </header>
 
