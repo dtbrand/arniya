@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787013432">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787013677">
 
 </head>
 <body>
@@ -552,8 +552,8 @@ $catalogProducts = [
                     </li>
                     <li>
                         <a class="ws-nav-item" onclick="switchWsTab('profit')">
-                            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                            <span>Profit Center</span>
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            <span>Margin Ledger</span>
                         </a>
                     </li>
                     <li>
@@ -2174,14 +2174,30 @@ $catalogProducts = [
             <section class="ws-tab-pane" id="tabPaneProfit">
                 <div class="ws-card">
                     <div class="ws-card-header">
-                        <div class="ws-card-title-group">
-                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" style="display:inline-block; vertical-align:middle; margin-right:6px;"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Reseller Profit Center & Margin Ledger
-                            </h2>
-                            <p class="ws-card-subtitle" style="font-size:0.76rem; font-weight:600; color:#78716C; margin-top:3px; display:inline-flex; align-items:center; gap:6px;">
-                                <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10B981; box-shadow:0 0 6px rgba(16,185,129,0.5);"></span>
-                                <span>Track net earnings</span>
-                            </p>
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:10px;">
+                            <div class="ws-anim-profit-badge">
+                                <svg class="ws-anim-profit-svg" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="9" stroke="#B45309" stroke-width="1.8" fill="url(#profitGoldGrad)"></circle>
+                                    <path d="M8 14l3-4 2 2 3-4" stroke="#78350F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <polyline points="13 8 16 8 16 11" stroke="#78350F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                    <defs>
+                                        <linearGradient id="profitGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FDE047"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary); letter-spacing:0.2px;">
+                                    Margin Ledger
+                                </h2>
+                                <p class="ws-card-subtitle" style="font-size:0.76rem; font-weight:600; color:#78716C; margin-top:2px; display:inline-flex; align-items:center; gap:6px;">
+                                    <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10B981; box-shadow:0 0 6px rgba(16,185,129,0.5);"></span>
+                                    <span>Track net earnings</span>
+                                </p>
+                            </div>
                         </div>
                         <div style="display:flex; gap:8px;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportProfitLedgerCSV()">
@@ -3236,7 +3252,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787013432"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787013677"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

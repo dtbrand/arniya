@@ -6043,3 +6043,49 @@ scrollbar-width: none;
     text-transform: uppercase;
     white-space: nowrap;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ANIMATED LUXURY PROFIT BADGE & MARGIN LEDGER STYLING
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-anim-profit-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1.5px solid rgba(217, 119, 6, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(217, 119, 6, 0.22);
+    animation: profitBadgePulse 3s ease-in-out infinite alternate;
+}
+
+.ws-anim-profit-svg {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 1px 2px rgba(180, 83, 9, 0.3));
+    animation: profitArrowBounce 2s ease-in-out infinite;
+}
+
+@keyframes profitBadgePulse {
+    0% {
+        box-shadow: 0 3px 8px rgba(217, 119, 6, 0.18);
+        transform: scale(1);
+    }
+    100% {
+        box-shadow: 0 5px 16px rgba(217, 119, 6, 0.35);
+        transform: scale(1.04);
+    }
+}
+
+@keyframes profitArrowBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+}
