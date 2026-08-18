@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787013901">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014113">
 
 </head>
 <body>
@@ -2201,12 +2201,24 @@ $catalogProducts = [
 
                     <!-- Profit Summary Cards -->
                     <div class="crm-kpi-grid">
-                        <div class="crm-kpi-card">
+                        <div class="crm-kpi-card ws-anim-rupee-card">
                             <div>
                                 <div class="crm-kpi-val gold" id="profitTotalRealized">₹58,490</div>
                                 <div class="crm-kpi-label">Total Realized Profit</div>
                             </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M15 9.5H10a2.5 2.5 0 0 1 0-5h4M9 19.5h5a2.5 2.5 0 0 0 0-5h-4"></path></svg></div>
+                            <div class="crm-kpi-icon ws-anim-rupee-icon">
+                                <svg class="ws-anim-rupee-svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+                                    <circle cx="12" cy="12" r="9.5" stroke="#B45309" stroke-width="1.8" fill="url(#kpiRupeeGoldGrad)"></circle>
+                                    <path d="M8 6h8M8 9.5h6.5M8 6v8c2 0 4.5-0.5 4.5-3.5S10 6 8 6zm3.5 8L16 19" stroke="#78350F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <defs>
+                                        <linearGradient id="kpiRupeeGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#FEF08A"/>
+                                            <stop offset="50%" stop-color="#F59E0B"/>
+                                            <stop offset="100%" stop-color="#D97706"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
                         </div>
                         <div class="crm-kpi-card">
                             <div>
@@ -3245,7 +3257,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787013901"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014113"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

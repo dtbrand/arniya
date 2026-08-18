@@ -5391,3 +5391,52 @@ padding-bottom: 4px !important;
         filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.9));
     }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ANIMATED INDIAN RUPEE (₹) COIN & KPI CARD STYLING
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-anim-rupee-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%) !important;
+    border: 1.5px solid rgba(217, 119, 6, 0.45) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.22);
+    animation: rupeeIconGlow 3s ease-in-out infinite alternate;
+}
+
+.ws-anim-rupee-svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    animation: rupeeSpinTilt 4s ease-in-out infinite;
+    filter: drop-shadow(0 1px 2px rgba(180, 83, 9, 0.35));
+}
+
+@keyframes rupeeIconGlow {
+    0% {
+        box-shadow: 0 3px 8px rgba(217, 119, 6, 0.18);
+        transform: scale(1);
+    }
+    100% {
+        box-shadow: 0 6px 18px rgba(217, 119, 6, 0.38);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes rupeeSpinTilt {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    25% {
+        transform: rotate(-6deg) scale(1.05);
+    }
+    75% {
+        transform: rotate(6deg) scale(1.05);
+    }
+}
