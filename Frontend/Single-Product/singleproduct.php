@@ -439,7 +439,7 @@ $customerReviews = [
         'rating' => 5,
         'date' => '1 week ago',
         'occasion' => 'Temple Inauguration',
-        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend DT Brand's!',
+        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend DT Brand\'s!',
         'photo' => null,
         'helpful' => 21
     ],
@@ -483,7 +483,7 @@ $customerReviews = [
         'rating' => 5,
         'date' => '1 month ago',
         'occasion' => 'Sister’s Haldi',
-        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about DT Brand's.',
+        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about DT Brand\'s.',
         'photo' => '/Frontend/Single-Product/Asset/images/product1.png',
         'helpful' => 31
     ]

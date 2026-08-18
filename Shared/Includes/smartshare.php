@@ -359,7 +359,7 @@
 
     /* Build Rich Meesho-Style Formatted WhatsApp Message */
     function buildFormattedWhatsAppMessage(item) {
-        var msg = '👑 *DT BRAND'S — ETHNIC LUXURY COUTURE*\n';
+        var msg = '👑 *DT BRAND\'S — ETHNIC LUXURY COUTURE*\n';
         msg += '✨ *' + (item.name || 'Luxury Saree') + '*\n\n';
         msg += '🏷️ *Deal Price:* ₹' + Number(item.price || 0).toLocaleString('en-IN');
         if (item.old_price) {
