@@ -1,15 +1,15 @@
 <?php
 /**
- * homebottomfooter.php — PERMANENT HERO REELS MOBILE BOTTOM FOOTER
+ * homebottomfooter.php — SMART MOBILE BOTTOM FOOTER & RESELLER-STYLE MEGA MENU DRAWER
  * Luxury DT Brand Center Elevated Floating Reels Action Button with Animated HOT Badge
- * Color-transition hover/active states for Home, Shop, Wishlist, Account
+ * Luxury Reseller-style slide-in mobile navigation drawer & real vector menu SVG
  */
 ?>
 <!-- ══════════════════════════════════════════════════════════════════
-     PERMANENT HERO REELS MOBILE BOTTOM FOOTER (DT BRAND LUXURY GOLD)
+     SMART MOBILE BOTTOM FOOTER & RESELLER-STYLE MEGA MENU DRAWER
 ══════════════════════════════════════════════════════════════════ -->
 <style>
-/* ── Container & Floating Bar ── */
+/* ── Container & Floating Bottom Bar ── */
 .home-smart-bottom-footer {
     display: none;
     position: fixed;
@@ -249,23 +249,416 @@
     box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
     z-index: 6;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   RESELLER-STYLE LUXURY MOBILE MEGA MENU DRAWER
+══════════════════════════════════════════════════════════════════ */
+.home-menu-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 12, 10, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.home-menu-drawer-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.home-menu-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(85vw, 340px);
+    background: #181512;
+    background: linear-gradient(180deg, #1F1B16 0%, #14110E 100%);
+    border-right: 1.5px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.34, 1.25, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.home-menu-drawer-backdrop.active .home-menu-drawer {
+    transform: translateX(0);
+}
+
+/* Drawer Header with Logo & Close */
+.home-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.home-menu-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+}
+
+.home-menu-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: #F5D77F;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.home-menu-close-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: rotate(90deg);
+}
+
+/* Scroll Content */
+.home-menu-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px 24px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Reseller-Style VIP User Card */
+.home-menu-user-card {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(30, 27, 24, 0.8) 100%);
+    border: 1.2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.home-menu-user-card:hover {
+    transform: translateY(-1px);
+    border-color: #F5D77F;
+}
+
+.home-menu-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid #D4AF37;
+    object-fit: cover;
+    background: #2A241E;
+}
+
+.home-menu-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.home-menu-user-name {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-menu-user-tier {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #F5D77F;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 1px;
+}
+
+.home-menu-tier-badge {
+    font-size: 0.58rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #D4AF37 0%, #8A681F 100%);
+    color: #1E1B18;
+    padding: 2px 6px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+/* Category Sections (Reseller TailAdmin Style) */
+.home-menu-cat-title {
+    font-size: 0.60rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8A681F;
+    margin: 14px 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.home-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #D6CFC7;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.home-menu-link:hover,
+.home-menu-link.active {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: #F5D77F;
+    transform: translateX(3px);
+}
+
+.home-menu-link svg {
+    width: 17px;
+    height: 17px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    transition: stroke 0.2s ease;
+}
+
+.home-menu-link-badge {
+    margin-left: auto;
+    font-size: 0.56rem;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.home-menu-link-badge.gold {
+    background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 100%);
+    color: #1E1B18;
+}
+
+.home-menu-link-badge.hot {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: #FFFFFF;
+}
+
+.home-menu-link-badge.green {
+    background: #10B981;
+    color: #FFFFFF;
+}
+
+/* Footer Action */
+.home-menu-footer {
+    padding: 12px 14px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.home-menu-wa-btn {
+    width: 100%;
+    height: 38px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    transition: all 0.2s ease;
+}
+
+.home-menu-wa-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.45);
+}
 </style>
 
+<!-- ════════════ RESELLER-STYLE HOME MEGA MENU DRAWER OVERLAY ════════════ -->
+<div class="home-menu-drawer-backdrop" id="homeMenuDrawerBackdrop" onclick="toggleHomeMobileMenu(false)">
+    <aside class="home-menu-drawer" id="homeMenuDrawer" onclick="event.stopPropagation()">
+        <!-- Header with Brand Logo & Close Button -->
+        <div class="home-menu-header">
+            <a href="/Frontend/Home/home.php" style="display:flex; align-items:center;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
+            </a>
+            <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">✕</button>
+        </div>
+
+        <!-- Scrollable Navigation Area -->
+        <div class="home-menu-scroll">
+            <!-- VIP User Card (Reseller Desktop Menu Inspired) -->
+            <div class="home-menu-user-card" onclick="toggleHomeMobileMenu(false); if(typeof window.openAccountModal==='function') window.openAccountModal();">
+                <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" alt="Member" class="home-menu-user-avatar">
+                <div class="home-menu-user-info">
+                    <div class="home-menu-user-name" id="homeMenuUserName">VIP Member / Reseller</div>
+                    <div class="home-menu-user-tier">
+                        <span>★ Verified Club</span>
+                    </div>
+                </div>
+                <span class="home-menu-tier-badge">GOLD</span>
+            </div>
+
+            <!-- SECTION 1: STOREFRONT CATALOG -->
+            <div class="home-menu-cat-title">
+                <span>STOREFRONT MENU</span>
+                <span style="font-size:0.50rem; color:#A89F91;">EXPLORE</span>
+            </div>
+            <ul class="home-menu-list">
+                <li>
+                    <a href="/Frontend/Home/home.php" class="home-menu-link active">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>Home Storefront</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Frontend/Shop/shop.php" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5"></path><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path><path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path><path d="M10 22v-6h4v6"></path></svg>
+                        <span>All Products Shop</span>
+                        <span class="home-menu-link-badge gold">ALL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Frontend/Shop/shop.php?cat=Sarees" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Silk Sarees</span>
+                        <span class="home-menu-link-badge hot">450+</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Frontend/Shop/shop.php?cat=Kurtis" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
+                        <span>Designer Kurtis</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Frontend/Shop/shop.php?cat=Lehengas" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
+                        <span>Bridal Lehengas & Gowns</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openReelsModal==='function') window.openReelsModal(0);" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="4"></rect><line x1="2" y1="8" x2="22" y2="8"></line><polygon points="10 12 15 15 10 18" fill="currentColor"></polygon></svg>
+                        <span>Video Reels Stream</span>
+                        <span class="home-menu-link-badge hot">🔥 HOT</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- SECTION 2: B2B & RESELLER HUB -->
+            <div class="home-menu-cat-title">
+                <span>B2B & RESELLER HUB</span>
+                <span style="font-size:0.50rem; color:#D4AF37;">EARN ₹₹₹</span>
+            </div>
+            <ul class="home-menu-list">
+                <li>
+                    <a href="/Frontend/Reseller/reseller.php" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>Reseller Partner Portal</span>
+                        <span class="home-menu-link-badge gold">VIP</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Frontend/Wholesale/wholesale.php" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span>Wholesale Bulk Factory</span>
+                        <span class="home-menu-link-badge green">SLABS</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- SECTION 3: ACCOUNT & ASSISTANCE -->
+            <div class="home-menu-cat-title">
+                <span>ACCOUNT & ASSISTANCE</span>
+            </div>
+            <ul class="home-menu-list">
+                <li>
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <span>My Wishlist</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openAccountModal==='function') window.openAccountModal();" class="home-menu-link">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>My Account & Orders</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Footer Action (WhatsApp Concierge) -->
+        <div class="home-menu-footer">
+            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20assistance%20with%20DT%20Brand%20catalog." target="_blank" class="home-menu-wa-btn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFFFFF"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                <span>WhatsApp Stylist Concierge</span>
+            </a>
+        </div>
+    </aside>
+</div>
+
+<!-- ════════════ BOTTOM FIXED FLOATING BAR ════════════ -->
 <nav class="home-smart-bottom-footer" id="homeSmartBottomFooter" aria-label="Mobile Bottom Navigation">
     <div class="smart-nav-wrapper" id="smartNavWrapper">
 
-        <!-- 1: HOME -->
-        <a href="/Frontend/Home/home.php" class="smart-nav-item active" id="smartNavHome" data-tab="home" onclick="handleSmartFooterAction(event, '/Frontend/Home/home.php', 'home')">
+        <!-- 1: MENU / DRAWER (Real Vector Menu SVG with 3-Line Tier Icon) -->
+        <a href="javascript:void(0)" class="smart-nav-item" id="smartNavMenu" data-tab="menu" onclick="handleSmartFooterAction(event, '', 'menu')" aria-label="Open Mobile Menu Drawer">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="16" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </div>
-            <span class="smart-nav-label">Home</span>
+            <span class="smart-nav-label">Menu</span>
         </a>
 
-        <!-- 2: SHOP / BOUTIQUE STORE -->
+        <!-- 2: SHOP / BOUTIQUE STORE (Real Storefront Canopy SVG) -->
         <a href="/Frontend/Shop/shop.php" class="smart-nav-item" id="smartNavShop" data-tab="shop" onclick="handleSmartFooterAction(event, '/Frontend/Shop/shop.php', 'shop')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
@@ -322,8 +715,30 @@
 
 <script>
 (function() {
+    // Toggle Reseller-style Home Mobile Menu Drawer
+    window.toggleHomeMobileMenu = function(show) {
+        var backdrop = document.getElementById('homeMenuDrawerBackdrop');
+        if (!backdrop) return;
+        if (typeof show === 'undefined') {
+            backdrop.classList.toggle('active');
+        } else if (show) {
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        } else {
+            backdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    };
+
     window.handleSmartFooterAction = function(e, targetUrl, actionKey) {
-        // 1. REELS ACTION (Open Fullscreen Reels Player)
+        // 1. MENU ACTION (Open Reseller-Style Mega Menu Drawer)
+        if (actionKey === 'menu') {
+            if (e) e.preventDefault();
+            window.toggleHomeMobileMenu(true);
+            return;
+        }
+
+        // 2. REELS ACTION (Open Fullscreen Reels Player)
         if (actionKey === 'reels') {
             if (e) e.preventDefault();
             if (typeof window.openReelsModal === 'function') {
@@ -335,7 +750,7 @@
             return;
         }
 
-        // 2. WISHLIST ACTION (Open Slide-over Drawer)
+        // 3. WISHLIST ACTION (Open Slide-over Drawer)
         if (actionKey === 'wishlist') {
             if (e) e.preventDefault();
             if (typeof window.openWishlistDrawer === 'function') {
@@ -350,7 +765,7 @@
             return;
         }
 
-        // 3. MY ACCOUNT ACTION (Open Account Modal)
+        // 4. MY ACCOUNT ACTION (Open Account Modal)
         if (actionKey === 'account') {
             if (e) e.preventDefault();
             if (typeof window.openAccountModal === 'function') {
@@ -365,9 +780,9 @@
             return;
         }
 
-        // 4. PAGE NAVIGATION (Smooth scroll to top if already on page)
+        // 5. PAGE NAVIGATION (Smooth scroll to top if already on page)
         var currentPath = window.location.pathname;
-        if (targetUrl && (currentPath.endsWith(targetUrl) || (actionKey === 'home' && currentPath.indexOf('home.php') !== -1))) {
+        if (targetUrl && (currentPath.endsWith(targetUrl) || (actionKey === 'shop' && currentPath.indexOf('shop.php') !== -1))) {
             if (e) e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
@@ -394,8 +809,7 @@
         items.forEach(function(item) {
             var tab = item.getAttribute('data-tab');
             var isCurrent = false;
-            if (tab === 'home' && (currentPath.indexOf('home.php') !== -1 || currentPath === '/' || currentPath === '')) isCurrent = true;
-            else if (tab === 'shop' && currentPath.indexOf('shop.php') !== -1) isCurrent = true;
+            if (tab === 'shop' && currentPath.indexOf('shop.php') !== -1) isCurrent = true;
 
             item.classList.toggle('active', isCurrent);
         });
