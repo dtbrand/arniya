@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014318">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014635">
 
 </head>
 <body>
@@ -2056,183 +2056,20 @@ $catalogProducts = [
 
                     <!-- CRM KPI Cards -->
                     <div class="crm-kpi-grid">
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" id="crmTotalCustomersCount">12</div>
-                                <div class="crm-kpi-label">Total Customers</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
-                        </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val gold" id="crmVipCustomersCount">4</div>
-                                <div class="crm-kpi-label">VIP Customers</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#B45309" stroke-width="2"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"></path></svg></div>
-                        </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" id="crmRepeatRateVal">66.7%</div>
-                                <div class="crm-kpi-label">Repeat Purchase Rate</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#059669" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></div>
-                        </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" style="color:#EF4444;" id="crmFollowupsDueVal">2</div>
-                                <div class="crm-kpi-label">Follow-ups Due Today</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#DC2626" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
-                        </div>
-                    </div>
-
-                    <!-- Bulk Action Bar -->
-                    <div class="crm-bulk-bar" id="crmBulkActionBar">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.80rem; font-weight:700;"><span id="crmSelectedCount">0</span> Customers Selected</span>
-                        </div>
-                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkAddTagToCustomers()" style="color:#111; background:#FFF;">🏷️ Add Tag</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="bulkWhatsAppCustomers()" style="color:#FFF; background:#25D366;">💬 WhatsApp</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportSelectedCustomersCSV()" style="color:#111; background:#FFF;">📥 Export</button>
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="clearCustomerSelection()" style="color:#FFF; background:#4B5563;">✕ Cancel</button>
-                        </div>
-                    </div>
-
-                    <!-- Filter Controls Row (Tags, Search, State) -->
-                    <div class="ws-filter-controls-row">
-                        <div class="ws-filter-pills ws-1line-scroll" id="customerTagFilterPills">
-                            <button class="ws-filter-pill active" onclick="filterCustomersByTag('all', this)">All Customers</button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('VIP', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"></path></svg>
-                                <span>VIP</span>
-                            </button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('REPEAT', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                                <span>Repeat</span>
-                            </button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('NEW', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                <span>New</span>
-                            </button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('HIGH VALUE', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"></path></svg>
-                                <span>High Value</span>
-                            </button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('FOLLOW-UP', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span>Follow-up</span>
-                            </button>
-                            <button class="ws-filter-pill" onclick="filterCustomersByTag('INACTIVE', this)">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
-                                <span>Inactive</span>
-                            </button>
-                        </div>
-
-                        <div class="ws-luxury-search-wrap">
-                            <svg class="ws-luxury-search-icon" viewBox="0 0 24 24">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="customerSearchInput" class="ws-luxury-search-input" placeholder="Search by name, phone, city..." oninput="handleCustomerSearch(this.value)" autocomplete="off">
-                            <button class="ws-luxury-search-clear" id="customerSearchClear" onclick="clearCustomerSearch()" aria-label="Clear Search">✕</button>
-                        </div>
-                    </div>
-
-                    <!-- Customers Directory Table -->
-                    <div class="ws-table-container">
-                        <table class="ws-orders-table" id="crmCustomersTable">
-                            <thead>
-                                <tr>
-                                    <th style="width:36px;"><input type="checkbox" id="crmSelectAllCheckbox" onchange="toggleSelectAllCustomers(this.checked)"></th>
-                                    <th>Customer Name & Contact</th>
-                                    <th>Location</th>
-                                    <th>Tags</th>
-                                    <th style="text-align:right;">Orders</th>
-                                    <th style="text-align:right;">Total Spend</th>
-                                    <th style="text-align:right;">Reseller Profit</th>
-                                    <th style="text-align:center;">Last Order</th>
-                                    <th style="text-align:center;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="crmCustomersTbody">
-                                <!-- Populated dynamically by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Mobile Customers Card Grid -->
-                    <div class="ws-mobile-orders-list" id="crmCustomersMobileList">
-                        <!-- Populated dynamically by JS on Mobile -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- ═══════════════════════════════════════════
-                 TAB 11: RESELLER PROFIT CENTER & MARGINS
-            ═══════════════════════════════════════════ -->
-            <section class="ws-tab-pane" id="tabPaneProfit">
-                <div class="ws-card">
-                    <div class="ws-card-header">
-                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:10px;">
-                            <div class="crm-kpi-icon" style="width:36px; height:36px; border-radius:10px; flex-shrink:0;">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                                    <polyline points="17 6 23 6 23 12"></polyline>
-                                </svg>
-                            </div>
-                            <div>
-                                <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.18rem; font-weight:900; margin:0; color:var(--ws-gold-primary); letter-spacing:0.3px;">
-                                    Profit Center
-                                </h2>
-                                <p class="ws-card-subtitle" style="font-size:0.76rem; font-weight:600; color:#78716C; margin-top:2px; display:inline-flex; align-items:center; gap:6px;">
-                                    <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10B981; box-shadow:0 0 6px rgba(16,185,129,0.6);"></span>
-                                    <span>Track net earnings</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportProfitLedgerCSV()">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Export Profit Ledger
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Profit Summary Cards -->
-                    <div class="crm-kpi-grid">
-                        <div class="crm-kpi-card">
+                                                <div class="crm-kpi-card">
                             <div>
                                 <div class="crm-kpi-val gold" id="profitTotalRealized">₹58,490</div>
                                 <div class="crm-kpi-label">Total Realized Profit</div>
                             </div>
                             <div class="crm-kpi-icon">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 3h12M6 8h9M6 3v9.5c3 0 5.5-0.8 5.5-4.5S9 3 6 3zm4.5 9.5L16.5 21"></path>
+                                    <path d="M6 3h12"></path>
+                                    <path d="M6 8h9"></path>
+                                    <path d="M6 3v9.5c3.5 0 6-1 6-4.75S9.5 3 6 3"></path>
+                                    <path d="M10.5 12.5L16.5 21"></path>
                                 </svg>
                             </div>
                         </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" style="color:#10B981;" id="profitMonthVal">₹24,850</div>
-                                <div class="crm-kpi-label">Profit This Month</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#10B981" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
-                        </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" style="color:#3B82F6;" id="profitWeekVal">₹8,420</div>
-                                <div class="crm-kpi-label">Profit This Week</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3B82F6" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
-                        </div>
-                        <div class="crm-kpi-card">
-                            <div>
-                                <div class="crm-kpi-val" style="color:#F59E0B;" id="profitPendingVal">₹4,200</div>
-                                <div class="crm-kpi-label">In-Transit / Pending Profit</div>
-                            </div>
-                            <div class="crm-kpi-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg></div>
-                        </div>
-                    </div>
 
                     <!-- Profit Ledger Table -->
                     <div class="ws-table-container">
@@ -3248,7 +3085,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014318"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014635"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
