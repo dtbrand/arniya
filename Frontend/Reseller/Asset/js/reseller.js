@@ -3972,7 +3972,7 @@ window.animateTargetGauge = animateTargetGauge;
             `;
         };
 
-        // 9. Add / Edit Customer Modal
+        // 9. Add / Edit Customer Modal & Smart UI Helpers
         function openAddCustomerModal(editId) {
             var modal = document.getElementById('resellerAddCustomerModal');
             var title = document.getElementById('addCustomerModalTitle');
@@ -4019,7 +4019,84 @@ window.animateTargetGauge = animateTargetGauge;
                 if (formNotes) formNotes.value = '';
             }
 
+            syncCustTagChips();
+
             if (modal) modal.classList.add('active');
+        };
+
+        function setCustWhatsappSame() {
+            var mobile = document.getElementById('custFormMobile');
+            var whatsapp = document.getElementById('custFormWhatsapp');
+            if (mobile && whatsapp) {
+                if (!mobile.value.trim()) {
+                    showWsToast('⚠️ Please enter Mobile Number first');
+                    mobile.focus();
+                    return;
+                }
+                whatsapp.value = mobile.value.trim();
+                showWsToast('⚡ WhatsApp number synced with Mobile!');
+            }
+        };
+
+        function toggleCustTagChip(chipEl, tagName) {
+            var input = document.getElementById('custFormTags');
+            if (!input) return;
+            var currentTags = input.value.split(',').map(function(t) { return t.trim().toUpperCase(); }).filter(Boolean);
+            var tagUpper = tagName.toUpperCase();
+            var idx = currentTags.indexOf(tagUpper);
+            if (idx > -1) {
+                currentTags.splice(idx, 1);
+            } else {
+                currentTags.push(tagUpper);
+            }
+            input.value = currentTags.join(', ');
+            syncCustTagChips();
+        };
+
+        function syncCustTagChips() {
+            var input = document.getElementById('custFormTags');
+            if (!input) return;
+            var currentTags = input.value.split(',').map(function(t) { return t.trim().toUpperCase(); }).filter(Boolean);
+            var chips = document.querySelectorAll('#custSmartTagChips .ws-smart-chip');
+            chips.forEach(function(chip) {
+                var text = chip.textContent.replace(/[^a-zA-Z0-9 ]/g, '').trim().toUpperCase();
+                if (currentTags.indexOf(text) > -1) {
+                    chip.classList.add('active');
+                } else {
+                    chip.classList.remove('active');
+                }
+            });
+        };
+
+        function insertCustNotePrompt(promptText) {
+            var notes = document.getElementById('custFormNotes');
+            if (!notes) return;
+            if (notes.value.trim()) {
+                if (notes.value.indexOf(promptText) === -1) {
+                    notes.value = notes.value.trim() + ' • ' + promptText;
+                }
+            } else {
+                notes.value = promptText;
+            }
+            notes.focus();
+        };
+
+        function handleSmartPinAutoFill(pinVal) {
+            var cleanPin = (pinVal || '').trim();
+            if (cleanPin.length === 6) {
+                var cityInput = document.getElementById('custFormCity');
+                var stateInput = document.getElementById('custFormState');
+                if (cleanPin.startsWith('395') || cleanPin.startsWith('394')) {
+                    if (cityInput && !cityInput.value) cityInput.value = 'Surat';
+                    if (stateInput && !stateInput.value) stateInput.value = 'Gujarat';
+                } else if (cleanPin.startsWith('380') || cleanPin.startsWith('382')) {
+                    if (cityInput && !cityInput.value) cityInput.value = 'Ahmedabad';
+                    if (stateInput && !stateInput.value) stateInput.value = 'Gujarat';
+                } else if (cleanPin.startsWith('400')) {
+                    if (cityInput && !cityInput.value) cityInput.value = 'Mumbai';
+                    if (stateInput && !stateInput.value) stateInput.value = 'Maharashtra';
+                }
+            }
         };
 
         function closeAddCustomerModal() {
@@ -4979,6 +5056,7 @@ Rajesh Kumar (Reseller Partner)`;
         'saveResellerCustomers', 'renderCrmCustomers', 'updateCrmCounts', 'filterCustomersByTag',
         'handleCustomerSearch', 'clearCustomerSearch', 'openCustomerProfileModal', 'closeCustomerProfileModal',
         'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
+        'setCustWhatsappSame', 'toggleCustTagChip', 'syncCustTagChips', 'insertCustNotePrompt', 'handleSmartPinAutoFill',
         'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
         'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
         'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',

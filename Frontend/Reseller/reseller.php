@@ -3424,64 +3424,171 @@ $catalogProducts = [
          MODAL CRM 2: ADD / EDIT CUSTOMER MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerAddCustomerModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeAddCustomerModal();">
-        <div class="ws-modal-box" style="max-width: 520px;">
-            <div class="ws-modal-header">
-                <h3 class="ws-modal-title" id="addCustomerModalTitle">
-                    <span>👤 Add New Customer</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeAddCustomerModal()">&times;</button>
+        <div class="ws-modal-box ws-modal-luxury-box">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title" id="addCustomerModalTitle">
+                            <span>👤 Add New Customer</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Customer profile for 1-tap WhatsApp sharing & orders</div>
+                    </div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeAddCustomerModal()" title="Close">&times;</button>
             </div>
-            <form onsubmit="event.preventDefault(); handleSaveCustomerSubmit();" style="padding: 16px;">
+            <form onsubmit="event.preventDefault(); handleSaveCustomerSubmit();" style="display: flex; flex-direction: column; height: 100%;">
                 <input type="hidden" id="custFormId">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
-                    <div>
-                        <label class="ws-label">Full Name <span style="color:#EF4444;">*</span></label>
-                        <input type="text" id="custFormName" class="ws-input" placeholder="e.g. Rahul Sharma" required>
+                <div class="ws-modal-luxury-body">
+                    
+                    <!-- Section 1: Contact Information -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                1. Personal & Contact Details
+                            </span>
+                        </div>
+                        
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;" class="ws-smart-grid-2">
+                            <div>
+                                <label class="ws-smart-label">Full Name <span style="color:#EF4444;">*</span></label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    <input type="text" id="custFormName" class="ws-smart-input" placeholder="e.g. Rahul Sharma" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">Mobile Number <span style="color:#EF4444;">*</span></label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <input type="tel" id="custFormMobile" class="ws-smart-input" placeholder="10-digit mobile" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;" class="ws-smart-grid-2">
+                            <div>
+                                <label class="ws-smart-label">
+                                    <span>WhatsApp Number</span>
+                                    <button type="button" class="ws-quick-action-link" onclick="setCustWhatsappSame()" title="Auto-copy Mobile Number">⚡ Same as Mobile</button>
+                                </label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24" style="stroke:#25D366;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                    <input type="tel" id="custFormWhatsapp" class="ws-smart-input" placeholder="WhatsApp number">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">Email Address <span style="font-size:0.65rem; color:#94A3B8; text-transform:none;">(Optional)</span></label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    <input type="email" id="custFormEmail" class="ws-smart-input" placeholder="customer@example.com">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label class="ws-label">Mobile Number <span style="color:#EF4444;">*</span></label>
-                        <input type="tel" id="custFormMobile" class="ws-input" placeholder="10-digit mobile" required>
+
+                    <!-- Section 2: Delivery & Shipping Address -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                2. Shipping & Delivery Address
+                            </span>
+                        </div>
+
+                        <div style="margin-bottom:10px;">
+                            <label class="ws-smart-label">Flat, Building, Street Area</label>
+                            <div class="ws-smart-input-wrap">
+                                <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <input type="text" id="custFormAddress" class="ws-smart-input" placeholder="Flat / Shop No., Building, Road, Landmark...">
+                            </div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap:8px;" class="ws-smart-grid-3">
+                            <div>
+                                <label class="ws-smart-label">City</label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>
+                                    <input type="text" id="custFormCity" class="ws-smart-input" placeholder="e.g. Surat">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">State</label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                    <input type="text" id="custFormState" class="ws-smart-input" placeholder="e.g. Gujarat">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">Pincode</label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+                                    <input type="text" id="custFormPincode" class="ws-smart-input" placeholder="395002" maxlength="6" oninput="handleSmartPinAutoFill(this.value)">
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Section 3: Smart Tags & Segmentation -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                                3. Customer Tags & Segmentation
+                            </span>
+                            <span style="font-size:0.65rem; color:#8C8072; font-weight:600;">Tap chips to add/remove</span>
+                        </div>
+
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                            <input type="text" id="custFormTags" class="ws-smart-input" placeholder="e.g. VIP, REPEAT, BRIDAL" oninput="syncCustTagChips()">
+                        </div>
+
+                        <div class="ws-smart-chips-wrap" id="custSmartTagChips">
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'VIP')">⭐ VIP</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'REPEAT')">🔁 Repeat</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'BRIDAL')">✨ Bridal</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'WHOLESALE')">📦 Wholesale</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'RETAIL')">🛍️ Retail</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'HIGH VALUE')">🔥 High Value</span>
+                            <span class="ws-smart-chip" onclick="toggleCustTagChip(this, 'SURAT LOCAL')">📍 Surat Local</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Notes & Preferences -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                4. Reseller Notes & Preferences
+                            </span>
+                        </div>
+
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24" style="top:12px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <textarea id="custFormNotes" class="ws-smart-textarea" style="height:60px;" placeholder="Customer fabric preference, favorite colors, order frequency..."></textarea>
+                        </div>
+
+                        <div class="ws-note-prompts-wrap">
+                            <span class="ws-note-prompt-pill" onclick="insertCustNotePrompt('Prefers Pure Silk & Jacquard sarees')">+ Silk Preference</span>
+                            <span class="ws-note-prompt-pill" onclick="insertCustNotePrompt('Orders monthly for boutique')">+ Boutique Buyer</span>
+                            <span class="ws-note-prompt-pill" onclick="insertCustNotePrompt('Requires fast express shipping')">+ Fast Dispatch</span>
+                            <span class="ws-note-prompt-pill" onclick="insertCustNotePrompt('Send new catalog every Friday')">+ Catalog Request</span>
+                        </div>
+                    </div>
+
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
-                    <div>
-                        <label class="ws-label">WhatsApp Number</label>
-                        <input type="tel" id="custFormWhatsapp" class="ws-input" placeholder="WhatsApp number">
-                    </div>
-                    <div>
-                        <label class="ws-label">Email Address</label>
-                        <input type="email" id="custFormEmail" class="ws-input" placeholder="customer@example.com">
-                    </div>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="ws-label">Delivery Address</label>
-                    <input type="text" id="custFormAddress" class="ws-input" placeholder="Flat, building, street, area...">
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
-                    <div>
-                        <label class="ws-label">City</label>
-                        <input type="text" id="custFormCity" class="ws-input" placeholder="e.g. Surat">
-                    </div>
-                    <div>
-                        <label class="ws-label">State</label>
-                        <input type="text" id="custFormState" class="ws-input" placeholder="e.g. Gujarat">
-                    </div>
-                    <div>
-                        <label class="ws-label">Pincode</label>
-                        <input type="text" id="custFormPincode" class="ws-input" placeholder="395002">
-                    </div>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <label class="ws-label">Initial Tags (comma separated)</label>
-                    <input type="text" id="custFormTags" class="ws-input" placeholder="e.g. VIP, REPEAT, BRIDAL">
-                </div>
-                <div style="margin-bottom:16px;">
-                    <label class="ws-label">Initial Notes</label>
-                    <textarea id="custFormNotes" class="ws-input" style="height:60px; resize:none;" placeholder="Customer preferences, fabric choices..."></textarea>
-                </div>
-                <div style="display:flex; justify-content:flex-end; gap:8px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeAddCustomerModal()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary">💾 Save Customer</button>
+
+                <!-- Footer -->
+                <div class="ws-modal-luxury-footer">
+                    <button type="button" class="ws-btn-luxury-cancel" onclick="closeAddCustomerModal()">Cancel</button>
+                    <button type="submit" class="ws-btn-luxury-save">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        Save Customer
+                    </button>
                 </div>
             </form>
         </div>
@@ -3491,64 +3598,110 @@ $catalogProducts = [
          MODAL CRM 3: QUICK ORDER DRAWER & FLOW
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerQuickOrderDrawer" role="dialog" aria-modal="true" onclick="if(event.target===this) closeResellerQuickOrderDrawer();">
-        <div class="ws-modal-box" style="max-width: 580px; max-height: 90vh; display: flex; flex-direction: column;">
-            <div class="ws-modal-header" style="background:#FAF8F4;">
-                <h3 class="ws-modal-title">
-                    <span>⚡ Reseller Quick Order Flow</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeResellerQuickOrderDrawer()">&times;</button>
-            </div>
-            <form onsubmit="event.preventDefault(); handleQuickOrderSubmit();" style="padding:16px; overflow-y:auto;">
-                <!-- Step 1: Customer Selection -->
-                <div style="margin-bottom:14px; background:#FAF8F4; padding:12px; border-radius:8px; border:1px solid var(--ws-border);">
-                    <div style="font-size:0.80rem; font-weight:800; color:var(--ws-gold-primary); margin-bottom:8px;">1. Select Customer</div>
-                    <select id="qoCustomerSelect" class="ws-input" required onchange="handleQoCustomerChange(this.value)">
-                        <option value="">-- Choose Customer --</option>
-                    </select>
-                </div>
-
-                <!-- Step 2: Product & Quantity -->
-                <div style="margin-bottom:14px; background:#FAF8F4; padding:12px; border-radius:8px; border:1px solid var(--ws-border);">
-                    <div style="font-size:0.80rem; font-weight:800; color:var(--ws-gold-primary); margin-bottom:8px;">2. Select Product & Quantity</div>
-                    <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-bottom:8px;">
-                        <select id="qoProductSelect" class="ws-input" required onchange="handleQoProductChange(this.value)">
-                            <option value="">-- Choose Product --</option>
-                        </select>
-                        <input type="number" id="qoQuantity" class="ws-input" min="1" value="1" required oninput="calculateQoProfit()">
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 580px;">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                        <div>
-                            <label class="ws-label" style="font-size:0.70rem;">Reseller Cost / Pc</label>
-                            <input type="number" id="qoCostPrice" class="ws-input" readonly style="background:#EEEEEE;">
-                        </div>
-                        <div>
-                            <label class="ws-label" style="font-size:0.70rem;">Customer Selling Price / Pc <span style="color:#EF4444;">*</span></label>
-                            <input type="number" id="qoSellingPrice" class="ws-input" required oninput="calculateQoProfit()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 3: Margin & Profit Live Preview -->
-                <div style="margin-bottom:14px; background:#ECFDF5; border:1.5px solid #A7F3D0; border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:0.72rem; color:#065F46; font-weight:700;">Calculated Net Profit</div>
-                        <div style="font-size:1.15rem; font-weight:900; color:#047857;" id="qoProfitCalculated">₹0.00</div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>⚡ Reseller Quick Order Flow</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Instant 1-tap customer ordering & net margin calculation</div>
                     </div>
-                    <div style="text-align:right;">
-                        <div style="font-size:0.72rem; color:#065F46; font-weight:700;">Total Order Value</div>
-                        <div style="font-size:1.15rem; font-weight:900; color:#1F2937;" id="qoTotalOrderVal">₹0.00</div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeResellerQuickOrderDrawer()" title="Close">&times;</button>
+            </div>
+            <form onsubmit="event.preventDefault(); handleQuickOrderSubmit();" style="display:flex; flex-direction:column; height:100%;">
+                <div class="ws-modal-luxury-body">
+                    <!-- Step 1: Customer Selection -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                1. Select Customer
+                            </span>
+                        </div>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <select id="qoCustomerSelect" class="ws-smart-input" required onchange="handleQoCustomerChange(this.value)">
+                                <option value="">-- Choose Customer --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Product & Quantity -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                2. Product Selection & Quantity
+                            </span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-bottom:10px;" class="ws-smart-grid-2">
+                            <div class="ws-smart-input-wrap">
+                                <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path></svg>
+                                <select id="qoProductSelect" class="ws-smart-input" required onchange="handleQoProductChange(this.value)">
+                                    <option value="">-- Choose Product --</option>
+                                </select>
+                            </div>
+                            <div class="ws-smart-input-wrap">
+                                <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+                                <input type="number" id="qoQuantity" class="ws-smart-input" min="1" value="1" required oninput="calculateQoProfit()" placeholder="Qty">
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;" class="ws-smart-grid-2">
+                            <div>
+                                <label class="ws-smart-label">Reseller Cost / Pc</label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 10h8"></path></svg>
+                                    <input type="number" id="qoCostPrice" class="ws-smart-input" readonly style="background:#F3F4F6 !important;">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">Customer Price / Pc <span style="color:#EF4444;">*</span></label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v12M8 10h8"></path></svg>
+                                    <input type="number" id="qoSellingPrice" class="ws-smart-input" required oninput="calculateQoProfit()" placeholder="Enter sell price">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Margin & Profit Live Preview -->
+                    <div style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border:1.5px solid #A7F3D0; border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(16,185,129,0.1);">
+                        <div>
+                            <div style="font-size:0.70rem; color:#065F46; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">Calculated Net Profit</div>
+                            <div style="font-size:1.25rem; font-weight:900; color:#047857; font-family:var(--ws-font-serif, serif);" id="qoProfitCalculated">₹0.00</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:0.70rem; color:#065F46; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">Total Order Value</div>
+                            <div style="font-size:1.25rem; font-weight:900; color:#1F2937; font-family:var(--ws-font-serif, serif);" id="qoTotalOrderVal">₹0.00</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Shipping Address -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+                                3. Delivery / Shipping Destination
+                            </span>
+                        </div>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24" style="top:12px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                            <textarea id="qoShippingAddress" class="ws-smart-textarea" style="height:55px;" required placeholder="Customer shipping address..."></textarea>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Step 4: Shipping Address -->
-                <div style="margin-bottom:16px;">
-                    <label class="ws-label">Shipping / Delivery Address</label>
-                    <textarea id="qoShippingAddress" class="ws-input" style="height:55px; resize:none;" required placeholder="Customer full address..."></textarea>
-                </div>
-
-                <div style="display:flex; justify-content:flex-end; gap:8px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeResellerQuickOrderDrawer()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary" style="background:#10B981; border-color:#10B981;">⚡ Confirm & Create Order</button>
+                <div class="ws-modal-luxury-footer">
+                    <button type="button" class="ws-btn-luxury-cancel" onclick="closeResellerQuickOrderDrawer()">Cancel</button>
+                    <button type="submit" class="ws-btn-luxury-save" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important; border-color:#059669 !important;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Confirm & Create Order
+                    </button>
                 </div>
             </form>
         </div>
@@ -3558,34 +3711,50 @@ $catalogProducts = [
          MODAL CRM 4: 1-TAP REPEAT ORDER MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerRepeatOrderModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeRepeatOrderModal();">
-        <div class="ws-modal-box" style="max-width: 520px;">
-            <div class="ws-modal-header" style="background:#FAF8F4;">
-                <h3 class="ws-modal-title">
-                    <span>🔁 1-Tap Repeat Order</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeRepeatOrderModal()">&times;</button>
+        <div class="ws-modal-box ws-modal-luxury-box">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>🔁 1-Tap Repeat Order</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Quickly reorder previously purchased products</div>
+                    </div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeRepeatOrderModal()" title="Close">&times;</button>
             </div>
-            <form onsubmit="event.preventDefault(); handleRepeatOrderConfirm();" style="padding:16px;">
+            <form onsubmit="event.preventDefault(); handleRepeatOrderConfirm();" style="display:flex; flex-direction:column; height:100%;">
                 <input type="hidden" id="repeatCustId">
                 <input type="hidden" id="repeatOrigOrderId">
-                <div id="repeatOrderDetailsBox" style="background:#FAF8F4; border:1px solid var(--ws-border); border-radius:8px; padding:12px; margin-bottom:14px;">
-                    <!-- Populated dynamically -->
+                <div class="ws-modal-luxury-body">
+                    <div id="repeatOrderDetailsBox" class="ws-smart-form-section">
+                        <!-- Populated dynamically -->
+                    </div>
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Adjust Repeat Quantity</label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+                            <input type="number" id="repeatOrderQty" class="ws-smart-input" min="1" value="1" required oninput="recalcRepeatOrderTotal()">
+                        </div>
+                    </div>
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Confirm Shipping Address</label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24" style="top:12px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                            <textarea id="repeatOrderAddress" class="ws-smart-textarea" style="height:50px;" required></textarea>
+                        </div>
+                    </div>
+                    <div style="background:#FAF5E8; border:1.2px solid var(--ws-gold-border); border-radius:10px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:700; font-size:0.78rem; color:#69562A; text-transform:uppercase;">Estimated Total:</span>
+                        <strong style="font-size:1.15rem; color:var(--ws-gold-primary); font-family:var(--ws-font-serif, serif);" id="repeatOrderEstimatedTotal">₹0.00</strong>
+                    </div>
                 </div>
-                <div style="margin-bottom:12px;">
-                    <label class="ws-label">Adjust Repeat Quantity</label>
-                    <input type="number" id="repeatOrderQty" class="ws-input" min="1" value="1" required oninput="recalcRepeatOrderTotal()">
-                </div>
-                <div style="margin-bottom:14px;">
-                    <label class="ws-label">Confirm Shipping Address</label>
-                    <textarea id="repeatOrderAddress" class="ws-input" style="height:50px; resize:none;" required></textarea>
-                </div>
-                <div style="background:#FAF5E8; border:1.2px solid var(--ws-gold-border); border-radius:8px; padding:10px; margin-bottom:16px; display:flex; justify-content:space-between;">
-                    <span style="font-weight:700; font-size:0.80rem;">Estimated Total:</span>
-                    <strong style="font-size:0.95rem; color:var(--ws-gold-primary);" id="repeatOrderEstimatedTotal">₹0.00</strong>
-                </div>
-                <div style="display:flex; justify-content:flex-end; gap:8px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeRepeatOrderModal()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary">🔁 Confirm Repeat Order</button>
+                <div class="ws-modal-luxury-footer">
+                    <button type="button" class="ws-btn-luxury-cancel" onclick="closeRepeatOrderModal()">Cancel</button>
+                    <button type="submit" class="ws-btn-luxury-save">🔁 Confirm Repeat Order</button>
                 </div>
             </form>
         </div>
@@ -3595,22 +3764,35 @@ $catalogProducts = [
          MODAL CRM 5: ADD NOTE MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerAddNoteModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeAddNoteModal();">
-        <div class="ws-modal-box" style="max-width: 440px;">
-            <div class="ws-modal-header">
-                <h3 class="ws-modal-title">
-                    <span>📝 Add Customer Note</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeAddNoteModal()">&times;</button>
-            </div>
-            <form onsubmit="event.preventDefault(); handleSaveNoteSubmit();" style="padding:16px;">
-                <input type="hidden" id="noteFormCustomerId">
-                <div style="margin-bottom:14px;">
-                    <label class="ws-label">Note Content</label>
-                    <textarea id="noteFormText" class="ws-input" style="height:90px; resize:none;" required placeholder="e.g. Customer prefers designer sarees, usually orders at month end..."></textarea>
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 460px;">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>📝 Add Customer Note</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Log preferences, inquiries or interactions</div>
+                    </div>
                 </div>
-                <div style="display:flex; justify-content:flex-end; gap:8px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeAddNoteModal()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary">💾 Save Note</button>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeAddNoteModal()" title="Close">&times;</button>
+            </div>
+            <form onsubmit="event.preventDefault(); handleSaveNoteSubmit();" style="display:flex; flex-direction:column; height:100%;">
+                <input type="hidden" id="noteFormCustomerId">
+                <div class="ws-modal-luxury-body">
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Note Content</label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24" style="top:12px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                            <textarea id="noteFormText" class="ws-smart-textarea" style="height:90px;" required placeholder="e.g. Customer prefers designer sarees, usually orders at month end..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="ws-modal-luxury-footer">
+                    <button type="button" class="ws-btn-luxury-cancel" onclick="closeAddNoteModal()">Cancel</button>
+                    <button type="submit" class="ws-btn-luxury-save">💾 Save Note</button>
                 </div>
             </form>
         </div>
@@ -3620,47 +3802,72 @@ $catalogProducts = [
          MODAL CRM 6: SCHEDULE FOLLOW-UP MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerScheduleFollowupModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeScheduleFollowupModal();">
-        <div class="ws-modal-box" style="max-width: 480px;">
-            <div class="ws-modal-header">
-                <h3 class="ws-modal-title">
-                    <span>⏰ Schedule Customer Follow-up</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeScheduleFollowupModal()">&times;</button>
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 480px;">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>⏰ Schedule Follow-up</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Set timely reminders to reconnect with buyers</div>
+                    </div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeScheduleFollowupModal()" title="Close">&times;</button>
             </div>
-            <form onsubmit="event.preventDefault(); handleSaveFollowupSubmit();" style="padding:16px;">
+            <form onsubmit="event.preventDefault(); handleSaveFollowupSubmit();" style="display:flex; flex-direction:column; height:100%;">
                 <input type="hidden" id="followupFormId">
-                <div style="margin-bottom:10px;">
-                    <label class="ws-label">Customer <span style="color:#EF4444;">*</span></label>
-                    <select id="followupFormCustomer" class="ws-input" required>
-                        <option value="">-- Choose Customer --</option>
-                    </select>
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:10px;">
-                    <div>
-                        <label class="ws-label">Follow-up Date <span style="color:#EF4444;">*</span></label>
-                        <input type="date" id="followupFormDate" class="ws-input" required>
+                <div class="ws-modal-luxury-body">
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Customer <span style="color:#EF4444;">*</span></label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <select id="followupFormCustomer" class="ws-smart-input" required>
+                                <option value="">-- Choose Customer --</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label class="ws-label">Time</label>
-                        <input type="time" id="followupFormTime" class="ws-input" value="11:00">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;" class="ws-smart-grid-2">
+                        <div class="ws-smart-form-section">
+                            <label class="ws-smart-label">Follow-up Date <span style="color:#EF4444;">*</span></label>
+                            <div class="ws-smart-input-wrap">
+                                <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <input type="date" id="followupFormDate" class="ws-smart-input" required>
+                            </div>
+                        </div>
+                        <div class="ws-smart-form-section">
+                            <label class="ws-smart-label">Time</label>
+                            <div class="ws-smart-input-wrap">
+                                <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <input type="time" id="followupFormTime" class="ws-smart-input" value="11:00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Follow-up Task / Note</label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                            <input type="text" id="followupFormNote" class="ws-smart-input" placeholder="e.g. Send Diwali catalog, ask for repeat order..." required>
+                        </div>
+                    </div>
+                    <div class="ws-smart-form-section">
+                        <label class="ws-smart-label">Status</label>
+                        <div class="ws-smart-input-wrap">
+                            <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                            <select id="followupFormStatus" class="ws-smart-input">
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Rescheduled">Rescheduled</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div style="margin-bottom:10px;">
-                    <label class="ws-label">Follow-up Task / Note</label>
-                    <input type="text" id="followupFormNote" class="ws-input" placeholder="e.g. Send Diwali catalog, ask for repeat order..." required>
-                </div>
-                <div style="margin-bottom:16px;">
-                    <label class="ws-label">Status</label>
-                    <select id="followupFormStatus" class="ws-input">
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Rescheduled">Rescheduled</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
-                </div>
-                <div style="display:flex; justify-content:flex-end; gap:8px;">
-                    <button type="button" class="ws-btn ws-btn-secondary" onclick="closeScheduleFollowupModal()">Cancel</button>
-                    <button type="submit" class="ws-btn ws-btn-primary">⏰ Save Task</button>
+                <div class="ws-modal-luxury-footer">
+                    <button type="button" class="ws-btn-luxury-cancel" onclick="closeScheduleFollowupModal()">Cancel</button>
+                    <button type="submit" class="ws-btn-luxury-save">⏰ Save Task</button>
                 </div>
             </form>
         </div>
@@ -3670,12 +3877,20 @@ $catalogProducts = [
          MODAL CRM 7: NOTIFICATIONS CENTER
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerNotificationsModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeResellerNotificationsModal();">
-        <div class="ws-modal-box" style="max-width: 460px;">
-            <div class="ws-modal-header" style="background:#FAF8F4;">
-                <h3 class="ws-modal-title">
-                    <span>🔔 Reseller Notification Center</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeResellerNotificationsModal()">&times;</button>
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 460px;">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>🔔 Notification Center</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Recent orders, follow-ups & alerts</div>
+                    </div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeResellerNotificationsModal()" title="Close">&times;</button>
             </div>
             <div style="padding:14px; max-height:360px; overflow-y:auto;" id="resellerNotificationsList">
                 <!-- Injected dynamically -->
@@ -3687,17 +3902,28 @@ $catalogProducts = [
          MODAL CRM 8: SAVED FILTERS MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerSavedFiltersModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeSavedFiltersModal();">
-        <div class="ws-modal-box" style="max-width: 440px;">
-            <div class="ws-modal-header">
-                <h3 class="ws-modal-title">
-                    <span>⭐ My Saved Filters</span>
-                </h3>
-                <button class="ws-modal-close-btn" onclick="closeSavedFiltersModal()">&times;</button>
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 440px;">
+            <div class="ws-modal-luxury-header">
+                <div class="ws-modal-luxury-title-wrap">
+                    <div class="ws-modal-luxury-icon-badge">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div>
+                        <h3 class="ws-modal-luxury-title">
+                            <span>⭐ My Saved Filters</span>
+                        </h3>
+                        <div class="ws-modal-luxury-subtitle">Quickly filter customers with 1 click</div>
+                    </div>
+                </div>
+                <button type="button" class="ws-modal-luxury-close" onclick="closeSavedFiltersModal()" title="Close">&times;</button>
             </div>
             <div style="padding:16px;">
                 <div style="display:flex; gap:8px; margin-bottom:12px;">
-                    <input type="text" id="newFilterNameInput" class="ws-input" placeholder="Filter name (e.g. VIP Surat)...">
-                    <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="saveCurrentFilterPreset()">Save</button>
+                    <div class="ws-smart-input-wrap" style="flex:1;">
+                        <svg class="ws-smart-input-icon" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <input type="text" id="newFilterNameInput" class="ws-smart-input" placeholder="Filter name (e.g. VIP Surat)...">
+                    </div>
+                    <button class="ws-btn-luxury-save" style="padding: 0 16px !important;" onclick="saveCurrentFilterPreset()">Save</button>
                 </div>
                 <div id="savedFiltersList" style="display:flex; flex-direction:column; gap:6px;">
                     <!-- Injected dynamically -->
