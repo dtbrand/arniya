@@ -759,8 +759,167 @@
         if (typeof window.syncMobileFilterUI === 'function') window.syncMobileFilterUI();
     };
 
+    /* ═════════════════════════════════════════════════════════════════
+       HOME PAGE 31-SECTION CONTROLLERS
+    ═════════════════════════════════════════════════════════════════ */
+
+    /* 1. Category Navigation Filter & Smooth Scroll */
+    window.filterHomeCategory = function(catName) {
+        var pills = document.querySelectorAll('.home-cat-pill');
+        pills.forEach(function(p) {
+            var text = p.textContent.trim();
+            if (catName === 'All' && text.indexOf('All') !== -1) {
+                p.classList.add('active');
+            } else if (text.indexOf(catName) !== -1) {
+                p.classList.add('active');
+            } else {
+                p.classList.remove('active');
+            }
+        });
+
+        var st = window.masterFilterState;
+        if (st) {
+            st.category = catName;
+            window.applyMasterFilters();
+        }
+
+        var trendSec = document.getElementById('section-trending');
+        if (trendSec) {
+            trendSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        if (typeof showToast === 'function') {
+            showToast('Showing category: ' + catName, 'filter');
+        }
+    };
+
+    /* 2. Sort Change Handler */
+    window.handleSortChange = function(val) {
+        if (window.masterFilterState) {
+            window.masterFilterState.sortBy = val;
+            window.applyMasterFilters();
+        }
+    };
+
+    /* 3. Review Tabs Switcher */
+    window.switchReviewTab = function(tabKey) {
+        var btns = document.querySelectorAll('.rev-tab-btn');
+        btns.forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('onclick').indexOf(tabKey) !== -1);
+        });
+
+        var tabCustomers = document.getElementById('tab-reviews-customers');
+        var tabResellers = document.getElementById('tab-reviews-resellers');
+        var tabWholesale = document.getElementById('tab-reviews-wholesale');
+
+        if (tabCustomers) tabCustomers.style.display = tabKey === 'customers' ? 'block' : 'none';
+        if (tabResellers) tabResellers.style.display = tabKey === 'resellers' ? 'block' : 'none';
+        if (tabWholesale) tabWholesale.style.display = tabKey === 'wholesale' ? 'block' : 'none';
+    };
+
+    /* 4. Deal of the Day Live Countdown Timer */
+    function startDealCountdown() {
+        var cdHours = document.getElementById('cdHours');
+        var cdMins  = document.getElementById('cdMins');
+        var cdSecs  = document.getElementById('cdSecs');
+        if (!cdHours || !cdMins || !cdSecs) return;
+
+        function updateTimer() {
+            var now = new Date();
+            var midnight = new Date();
+            midnight.setHours(23, 59, 59, 999);
+            var diff = midnight.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                diff = 24 * 60 * 60 * 1000;
+            }
+
+            var h = Math.floor(diff / (1000 * 60 * 60));
+            var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            cdHours.textContent = h < 10 ? '0' + h : h;
+            cdMins.textContent  = m < 10 ? '0' + m : m;
+            cdSecs.textContent  = s < 10 ? '0' + s : s;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    startDealCountdown();
+
+    /* 5. Recently Viewed Tracking System */
+    window.trackRecentlyViewed = function(productId) {
+        var p = (window.allProducts || []).find(function(x) { return Number(x.id) === Number(productId); });
+        if (!p) return;
+
+        try {
+            var stored = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
+            stored = stored.filter(function(x) { return Number(x.id) !== Number(p.id); });
+            stored.unshift({
+                id: p.id,
+                name: p.name,
+                price: p.price,
+                old_price: p.old_price,
+                discount: p.discount,
+                image: p.image,
+                category: p.category
+            });
+            if (stored.length > 8) stored = stored.slice(0, 8);
+            localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
+            renderRecentlyViewed();
+        } catch (e) {}
+    };
+
+    function renderRecentlyViewed() {
+        var sec = document.getElementById('section-recently-viewed');
+        var track = document.getElementById('recentlyViewedTrack');
+        if (!sec || !track) return;
+
+        try {
+            var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
+            if (!items || items.length === 0) {
+                sec.style.display = 'none';
+                return;
+            }
+
+            sec.style.display = 'block';
+            track.innerHTML = items.map(function(item) {
+                return '<div class="home-deal-card" style="min-width:180px;">' +
+                    '<a href="../Single-Product/singleproduct.php?id=' + item.id + '">' +
+                    '<img src="' + item.image + '" alt="' + item.name + '" class="deal-card-img" />' +
+                    '</a>' +
+                    '<div class="deal-card-body">' +
+                    '<h4 class="deal-card-title">' + item.name + '</h4>' +
+                    '<div class="deal-card-prices">' +
+                    '<span class="deal-sale-price">₹' + (Number(item.price)).toLocaleString('en-IN') + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+        } catch (e) {}
+    }
+
+    window.clearRecentlyViewed = function() {
+        localStorage.removeItem('dtbrands_recently_viewed');
+        var sec = document.getElementById('section-recently-viewed');
+        if (sec) sec.style.display = 'none';
+        if (typeof showToast === 'function') showToast('Recently viewed history cleared');
+    };
+
+    renderRecentlyViewed();
+
+    /* Track clicks on product cards */
+    document.addEventListener('click', function(e) {
+        var card = e.target.closest('.product-card, .home-reseller-card, .home-ws-card');
+        if (card && card.dataset.productId) {
+            window.trackRecentlyViewed(card.dataset.productId);
+        }
+    });
+
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
     window.applyMasterFilters();
 
 })();
+
