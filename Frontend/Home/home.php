@@ -493,65 +493,6 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 7: 🔥 RESELLER SPECIAL ════════════ -->
-    <section class="home-section home-section-gold-bg" id="section-reseller">
-        <div class="home-section-container">
-            <div class="home-section-header">
-                <div>
-                    <span class="home-section-tag gold-tag">⚡ ZERO INVESTMENT RESELLING</span>
-                    <h2 class="home-section-title">🔥 Reseller Special — High Margin Catalog</h2>
-                    <p class="home-section-desc">Share products directly on WhatsApp with your customers. Add your custom profit margin with 1-tap dispatch.</p>
-                </div>
-                <a href="/Frontend/Reseller/reseller.php" class="home-btn-gold">Open Reseller Dashboard &rarr;</a>
-            </div>
-
-            <div class="home-reseller-grid">
-                <?php foreach (array_slice($products, 0, 4) as $p): ?>
-                <div class="home-reseller-card">
-                    <div class="home-reseller-card-img-wrap">
-                        <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" loading="lazy" />
-                        <span class="reseller-margin-pill">+₹<?= number_format($p['reseller_profit']) ?> Margin</span>
-                    </div>
-                    <div class="home-reseller-card-body">
-                        <div class="home-reseller-sku-row">
-                            <span class="reseller-sku-badge"><?= $p['sku'] ?></span>
-                            <span class="reseller-stock-text">🟢 <?= $p['in_stock'] ?> in stock</span>
-                        </div>
-                        <h4 class="home-reseller-title"><?= htmlspecialchars($p['name']) ?></h4>
-
-                        <!-- Pricing Breakdown -->
-                        <div class="home-reseller-pricing-box">
-                            <div class="reseller-price-col">
-                                <span class="r-lbl">Reseller Cost</span>
-                                <span class="r-val-cost">₹<?= number_format($p['wholesale_price']) ?></span>
-                            </div>
-                            <div class="reseller-sep">&rarr;</div>
-                            <div class="reseller-price-col">
-                                <span class="r-lbl">Sell Price</span>
-                                <span class="r-val-sell">₹<?= number_format($p['price']) ?></span>
-                            </div>
-                            <div class="reseller-sep">=</div>
-                            <div class="reseller-price-col profit-col">
-                                <span class="r-lbl">Your Profit</span>
-                                <span class="r-val-profit">₹<?= number_format($p['reseller_profit']) ?></span>
-                            </div>
-                        </div>
-
-                        <!-- Reseller Action Suite -->
-                        <div class="home-reseller-actions">
-                            <button type="button" class="reseller-btn-wa" onclick="shareProductCard(<?= $p['id'] ?>)">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="#25D366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-                                <span>WhatsApp Pitch</span>
-                            </button>
-                            <a href="/Frontend/Reseller/reseller.php" class="reseller-btn-order">⚡ Quick Order</a>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
     <!-- ════════════ SECTION 8: 💰 HIGH MARGIN PRODUCTS ════════════ -->
     <section class="home-section" id="section-high-margin">
         <div class="home-section-container">
