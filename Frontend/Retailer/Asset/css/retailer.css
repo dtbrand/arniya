@@ -5219,3 +5219,83 @@ padding-bottom: 4px !important;
     color: #FFFFFF !important;
     box-shadow: 0 2px 6px rgba(138, 104, 31, 0.3) !important;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   UNIFIED LUXURY TABLE BOX LINING & CRYSTAL CLEAR VISIBILITY
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 14px;
+    border: 1.5px solid #E8DFCE;
+    box-shadow: 0 4px 18px rgba(138, 104, 31, 0.06);
+    background: #FFFFFF;
+    margin-top: 14px;
+    margin-bottom: 20px;
+}
+
+.ws-table,
+.ws-orders-table,
+#crmProfitTable,
+#crmCustomersTable,
+#wsReportsTable,
+#wsOrdersTable,
+#crmFollowupsTable {
+    width: 100%;
+    min-width: 960px;
+    border-collapse: collapse !important;
+    text-align: left;
+    font-size: 0.84rem;
+    background: #FFFFFF;
+}
+
+.ws-table thead,
+.ws-orders-table thead {
+    background: linear-gradient(180deg, #FAF6EE 0%, #F5EEDD 100%) !important;
+}
+
+.ws-table th,
+.ws-orders-table th {
+    background: linear-gradient(180deg, #FAF6EE 0%, #F5EEDD 100%) !important;
+    color: #785912 !important;
+    font-weight: 800 !important;
+    font-size: 0.76rem !important;
+    padding: 14px 18px !important;
+    border-bottom: 2px solid #DFC994 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.6px !important;
+    white-space: nowrap !important;
+}
+
+.ws-table td,
+.ws-orders-table td {
+    padding: 14px 18px !important;
+    border-bottom: 1px solid #F1ECE2 !important;
+    color: #24211C !important;
+    vertical-align: middle !important;
+}
+
+.ws-table tbody tr:hover td,
+.ws-orders-table tbody tr:hover td {
+    background: #FAF7F0 !important;
+}
+
+.ws-table tbody tr:last-child td,
+.ws-orders-table tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Margin and Tag Badges */
+.crm-tag {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 0.70rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
