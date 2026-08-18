@@ -472,7 +472,6 @@ $total_products = count($products);
                 <div>
                     <span class="home-section-tag">✨ CURATED ETHNIC COLLECTIONS</span>
                     <h2 class="home-section-title">Shop By Category</h2>
-                    <p class="home-section-subtitle">Direct from Surat master artisans & weavers • Handpicked couture at factory prices</p>
                 </div>
                 <div class="home-cat-header-actions">
                     <!-- Carousel Navigation Controls -->
@@ -484,7 +483,6 @@ $total_products = count($products);
                             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
                     </div>
-                    <span class="home-section-sub-link" onclick="document.getElementById('section-trending').scrollIntoView({behavior:'smooth'});">View All (450+) &rarr;</span>
                 </div>
             </div>
 
@@ -503,11 +501,6 @@ $total_products = count($products);
                             <?php endif; ?>
                             
                             <span class="home-cat-icon-badge" title="<?= $cat['name'] ?>"><?= $cat['icon'] ?></span>
-
-                            <!-- Bottom Starting Price Tag -->
-                            <div class="home-cat-price-chip">
-                                <span><?= $cat['price_from'] ?? 'From ₹549' ?></span>
-                            </div>
                         </div>
                         <div class="home-cat-card-body">
                             <h3 class="home-cat-card-name"><?= $cat['name'] ?></h3>
