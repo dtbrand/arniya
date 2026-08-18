@@ -819,7 +819,7 @@
                 </svg>
             </button>
 
-            <a href="/Frontend/Shop/shop.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <a href="/Frontend/Home/home.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
             </a>
         </div>
@@ -879,6 +879,14 @@
                     <span id="headerAccountLabel">Account</span>
                 </a>
                 <div class="header-account-dropdown" id="headerAccountDropdown">
+                    <a href="/Frontend/Home/home.php" class="ac-drop-item" style="color:var(--dark-gold, #8A681F); font-weight:800;">
+                        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>🏠 Home Page</span>
+                    </a>
+                    <a href="/Frontend/Shop/shop.php" class="ac-drop-item">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <span>🛍️ Shop All Catalog</span>
+                    </a>
                     <a href="../../Shared/Auth/myaccount.php" class="ac-drop-item" id="acDropMyAccount">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
@@ -900,7 +908,7 @@
                         <span>Forgot Password</span>
                     </a>
                     <div class="ac-drop-divider" id="acDropDivider" style="display:none;"></div>
-                    <a href="javascript:void(0)" class="ac-drop-item" id="acDropLogout" style="display:none; color:#D32F2F;" onclick="localStorage.removeItem('dtbrands_user'); window.location.href='shop.php';">
+                    <a href="javascript:void(0)" class="ac-drop-item" id="acDropLogout" style="display:none; color:#D32F2F;" onclick="localStorage.removeItem('dtbrands_user'); window.location.href='/Frontend/Shop/shop.php';">
                         <svg viewBox="0 0 24 24" style="stroke:#D32F2F;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                         <span>Log Out</span>
                     </a>
@@ -959,6 +967,14 @@
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
         <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
+            <a href="/Frontend/Home/home.php" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
+                <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+            </a>
+            <a href="/Frontend/Shop/shop.php" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
+                <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span>Shop All</span>
+            </a>
             <button class="subnav-item main-cat-tab active" role="tab" data-cat="All" aria-selected="true">
                 <svg class="subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 <span>All Categories</span>

@@ -749,7 +749,15 @@ input[type=range].mf-range::-moz-range-thumb {
 
         <!-- Bag & Shopping Options -->
         <div style="font-size:0.68rem; font-weight:700; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.1em; padding:12px 0 4px; border-bottom:1.5px solid rgba(138,104,31,0.2);">
-            Shopping & Concierge
+            Navigation & Shopping
+        </div>
+        <div class="add-action-item" id="moreHomeAction" onclick="window.location.href='/Frontend/Home/home.php';">
+            <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
+            <div><div class="add-action-label" style="color:var(--dark-gold, #8A681F); font-weight:800;">Home Page</div><div class="add-action-sub">Main shopping hub, offers & wholesale</div></div>
+        </div>
+        <div class="add-action-item" id="moreShopAction" onclick="window.location.href='/Frontend/Shop/shop.php';">
+            <div class="add-action-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></div>
+            <div><div class="add-action-label">Shop All Catalog</div><div class="add-action-sub">Browse full catalogue with filters</div></div>
         </div>
         <div class="add-action-item" id="moreCartAction">
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
