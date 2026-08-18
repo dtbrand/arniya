@@ -445,11 +445,11 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 6: TRENDING NOW (MAIN STOREFRONT LISTING) ════════════ -->
-    <section class="home-section" id="section-trending">
+    <section class="home-section home-trending-section" id="section-trending">
         <div class="home-section-container">
-            <div class="home-section-header">
+            <div class="home-section-header home-trending-section-header">
                 <div>
-                    <span class="home-section-tag">🔥 HOTTEST PICKS THIS WEEK</span>
+                    <span class="home-section-tag trending-tag">🔥 HOTTEST PICKS THIS WEEK</span>
                     <h2 class="home-section-title">Trending Now</h2>
                 </div>
                 <div class="home-trending-header-actions">
@@ -461,16 +461,6 @@ $total_products = count($products);
                         <button type="button" class="trending-scroll-arrow next" id="trendingScrollNextBtn" onclick="if(typeof scrollTrendingRail==='function') scrollTrendingRail(1);" aria-label="Next products">
                             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </button>
-                    </div>
-                    <div class="home-sort-pill-wrap">
-                        <span style="font-size:0.75rem; color:var(--mid-text); font-weight:600;">Sort:</span>
-                        <select class="home-sort-select" id="ptbSortSelect" onchange="if(typeof window.handleSortChange==='function') window.handleSortChange(this.value);">
-                            <option value="recommended">Recommended</option>
-                            <option value="newest">Newest First</option>
-                            <option value="price_asc">Price — Low to High</option>
-                            <option value="price_desc">Price — High to Low</option>
-                            <option value="discount">Best Discount</option>
-                        </select>
                     </div>
                 </div>
             </div>

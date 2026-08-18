@@ -862,18 +862,75 @@ input[type=range].sf-range::-moz-range-thumb {
     }
 }
 
+/* Trending Tag Upper Side Refining */
+.home-section-tag.trending-tag {
+    font-size: 0.60rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--dark-gold, #8A681F);
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
 /* Mobile: Exactly 2 full cards + 1 half peeking card (2.35 ratio) */
 @media (max-width: 600px) {
+    .home-trending-section {
+        padding: 16px 0 12px;
+    }
+    .home-trending-section-header {
+        margin-bottom: 8px;
+    }
+    .home-section-tag.trending-tag {
+        font-size: 0.54rem;
+        letter-spacing: 0.06em;
+        margin-bottom: 1px;
+    }
+    .home-trending-section .home-section-title {
+        font-size: 1.12rem;
+        line-height: 1.2;
+    }
     .products-grid.products-scroll-rail,
     .products-grid {
-        gap: 10px;
-        padding: 4px 2px 14px;
+        gap: 8px;
+        padding: 2px 2px 12px;
     }
     .products-grid .product-card {
-        flex: 0 0 calc((100% - 14px) / 2.35) !important;
-        min-width: calc((100% - 14px) / 2.35) !important;
-        max-width: calc((100% - 14px) / 2.35) !important;
+        flex: 0 0 calc((100% - 12px) / 2.35) !important;
+        min-width: calc((100% - 12px) / 2.35) !important;
+        max-width: calc((100% - 12px) / 2.35) !important;
         border-radius: 12px;
+    }
+    .products-grid .product-card .card-body {
+        padding: 7px 6px 8px;
+    }
+    .products-grid .product-card .card-sku-text {
+        font-size: 0.54rem;
+    }
+    .products-grid .product-card .card-rating-badge {
+        font-size: 0.54rem;
+        padding: 1px 3px;
+    }
+    .products-grid .product-card .card-name {
+        font-size: 0.72rem;
+        line-height: 1.25;
+        margin-bottom: 2px;
+    }
+    .products-grid .product-card .card-info-text-row {
+        font-size: 0.58rem;
+        margin-bottom: 2px;
+    }
+    .products-grid .product-card .card-price {
+        font-size: 0.82rem;
+    }
+    .products-grid .product-card .card-old-price {
+        font-size: 0.65rem;
+    }
+    .products-grid .product-card .card-price-discount {
+        font-size: 0.58rem;
+    }
+    .products-grid .product-card .card-add-cart-btn {
+        height: 28px;
+        font-size: 0.64rem;
     }
     .home-trending-arrows-group {
         display: none;
