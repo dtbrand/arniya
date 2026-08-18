@@ -585,7 +585,7 @@
             // Fallback product if not in array
             p = {
                 id: id,
-                name: 'DT Brand's Ethnic Saree',
+                name: "DT Brand's Ethnic Saree",
                 price: 4999,
                 old_price: 6999,
                 image: '/Shared/Asset/images/product1.png',
@@ -658,7 +658,7 @@
 
             // Right Column: Details & Actions
             '<div class="modal-details">' +
-                '<div class="modal-brand-name">DT BRAND'S ETHNIC LUXURY</div>' +
+                '<div class="modal-brand-name">DT BRAND\'S ETHNIC LUXURY</div>' +
                 '<h2 class="modal-name">' + p.name + '</h2>' +
 
                 '<div class="modal-price-block">' +
@@ -905,6 +905,9 @@
         }
     };
 
+    window.openQuickView = window.openQV;
+    window.openQuickViewModal = window.openQV;
+
     window.closeQV = function() {
         var overlay = document.getElementById('quickViewOverlay');
         if (overlay) {
@@ -917,6 +920,8 @@
             window.qvSliderInterval = null;
         }
     };
+    window.closeQuickView = window.closeQV;
+    window.closeQuickViewModal = window.closeQV;
 
     /* Full Product Details Modal Controller */
     window.openProductDetails = function(id) {
@@ -929,7 +934,7 @@
         if (!p) return;
 
         document.getElementById('pdTitle').textContent = p.name;
-        document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; DT Brand's Luxury';
+        document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; DT Brand\'s Luxury';
         document.getElementById('pdImg').src = p.image || '/Shared/Asset/images/product1.png';
         document.getElementById('pdPrice').textContent = '₹' + Number(p.price).toLocaleString('en-IN');
         
