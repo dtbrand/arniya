@@ -1,9 +1,9 @@
 <?php
 /**
  * account.php — Luxury Account & Authentication Modal Component
- * Styled 100% Identical to High-End Dedicated Register Page (myaccount.php)
- * Features Smart 2-Tab Bar (LOGIN | REGISTER), Searchable World Countries & States Dropdowns,
- * Animated Vector SVG Role Cards, Real-time WhatsApp Validation, and Auto-Redirect to Role Dashboard
+ * Ultra-Clean, High-Fashion Styling Matching myaccount.php
+ * Features Smart 2-Tab Bar (LOGIN | REGISTER), Autofill CSS Fix, Show/Hide Password Eye Toggle,
+ * Searchable World Countries & States Dropdowns, Animated Vector SVG Role Cards, and Auto Role Dashboard Redirect
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -14,11 +14,11 @@
     --ac-gold-deep: #5F4512;
     --ac-gold-light: #C5A859;
     --ac-gold-pale: #FAF5E8;
-    --ac-gold-border: rgba(138, 104, 31, 0.30);
+    --ac-gold-border: rgba(138, 104, 31, 0.28);
     --ac-dark-text: #181512;
     --ac-mid-text: #423C34;
     --ac-light-text: #6E675D;
-    --ac-soft-platinum: #DDD8CD;
+    --ac-soft-platinum: #DCD6CA;
     --ac-cream-bg: #FFFFFF;
 }
 
@@ -26,7 +26,7 @@
 .account-modal-backdrop {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(20, 16, 12, 0.82);
+    background: rgba(18, 14, 10, 0.84);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 1000001;
@@ -35,8 +35,8 @@
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
-    padding: clamp(8px, 2.5vw, 18px);
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.28s ease;
+    padding: clamp(10px, 3vw, 20px);
     box-sizing: border-box;
 }
 .account-modal-backdrop.active {
@@ -44,21 +44,21 @@
     visibility: visible;
 }
 
-/* ── Account Dialog (Smart Auto Size & Fluid Mobile) ── */
+/* ── Account Dialog (Smart Auto Size & Fluid Responsive) ── */
 .account-dialog {
     background: #FFFFFF;
     width: 100%;
-    max-width: 480px;
-    max-height: 94vh;
-    border-radius: 16px;
+    max-width: 460px;
+    max-height: 92vh;
+    border-radius: 18px;
     border: 2px solid var(--ac-gold-primary);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.15) inset;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transform: translateY(20px) scale(0.96);
-    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
-    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+    transform: translateY(18px) scale(0.97);
+    transition: transform 0.30s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: var(--font-sans, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
     color: var(--ac-dark-text);
 }
 .account-modal-backdrop.active .account-dialog {
@@ -69,7 +69,7 @@
 .ac-header {
     background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
     border-bottom: 1.5px solid var(--ac-gold-border);
-    padding: 12px 18px;
+    padding: 13px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,7 +90,7 @@
 }
 .ac-title-wrap h3 {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: clamp(0.95rem, 3vw, 1.10rem);
+    font-size: clamp(0.98rem, 3.2vw, 1.15rem);
     font-weight: 800;
     color: var(--ac-gold-primary);
     margin: 0;
@@ -107,8 +107,8 @@
     margin-top: 2px;
 }
 .ac-close-btn {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     border: 1.5px solid var(--ac-gold-primary);
     background: #FAF8F4;
@@ -117,7 +117,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 700;
     transition: all 0.2s ease;
     flex-shrink: 0;
@@ -139,12 +139,12 @@
 }
 .ac-nav-tab {
     width: 100%;
-    padding: 11px 8px;
+    padding: 12px 8px;
     background: transparent;
     border: none;
     border-bottom: 3.5px solid transparent;
     font-family: var(--font-sans);
-    font-size: 0.84rem;
+    font-size: 0.85rem;
     font-weight: 800;
     color: var(--ac-mid-text);
     text-transform: uppercase;
@@ -166,7 +166,7 @@
 
 /* ── Content Panes & Scrollable Body ── */
 .ac-body {
-    padding: 16px 18px 20px;
+    padding: 18px 20px 22px;
     overflow-y: auto;
     flex: 1;
     scrollbar-width: thin;
@@ -186,7 +186,7 @@
 .ac-pane {
     display: none;
     flex-direction: column;
-    gap: 11px;
+    gap: 12px;
     animation: acPaneFade 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ac-pane.active {
@@ -201,14 +201,14 @@
 .ac-form-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
     position: relative;
 }
 .ac-label {
-    font-size: 0.72rem;
+    font-size: 0.73rem;
     font-weight: 800;
     color: var(--ac-dark-text);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -217,10 +217,10 @@
 .ac-label .req { color: #C62828; font-weight: 900; font-size: 0.85rem; margin-left: 2px; }
 .ac-input {
     width: 100%;
-    height: 42px;
+    height: 44px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 8px;
-    padding: 0 12px;
+    border-radius: 9px;
+    padding: 0 13px;
     font-family: var(--font-sans);
     font-size: 0.88rem;
     font-weight: 600;
@@ -236,7 +236,54 @@
 }
 .ac-input:focus {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.18);
+}
+
+/* Chrome Autofill Background Fix */
+.ac-input:-webkit-autofill,
+.ac-input:-webkit-autofill:hover,
+.ac-input:-webkit-autofill:focus,
+.ac-wa-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #FAF8F4 inset !important;
+    -webkit-text-fill-color: var(--ac-dark-text) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Password Field with Eye Toggle Button */
+.ac-pass-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.ac-pass-input {
+    padding-right: 42px !important;
+}
+.ac-eye-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ac-gold-primary);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: opacity 0.2s ease;
+}
+.ac-eye-btn:hover {
+    opacity: 0.8;
+}
+.ac-eye-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
 }
 
 /* Side-by-Side Grid for City & State */
@@ -258,10 +305,10 @@
 }
 .ac-custom-select-trigger {
     width: 100%;
-    height: 42px;
+    height: 44px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 8px;
-    padding: 0 12px;
+    border-radius: 9px;
+    padding: 0 13px;
     background: #FFFFFF;
     color: var(--ac-dark-text);
     font-size: 0.86rem;
@@ -277,7 +324,7 @@
 .ac-custom-select-trigger:hover,
 .ac-custom-select-box.active .ac-custom-select-trigger {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.18);
 }
 .ac-custom-select-val {
     display: flex;
@@ -455,18 +502,18 @@
 .ac-wa-group {
     display: flex;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 8px;
+    border-radius: 9px;
     background: #FFFFFF;
     overflow: hidden;
     transition: all 0.2s ease;
 }
 .ac-wa-group:focus-within {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.18);
 }
 .ac-wa-group.is-invalid {
     border-color: #C62828 !important;
-    box-shadow: 0 0 0 3px rgba(198,40,40,0.18) !important;
+    box-shadow: 0 0 0 3.5px rgba(198,40,40,0.18) !important;
 }
 .ac-wa-prefix {
     display: flex;
@@ -490,11 +537,11 @@
 }
 .ac-wa-input {
     flex: 1;
-    height: 42px;
+    height: 44px;
     border: none;
     outline: none;
     background: transparent;
-    padding: 0 10px;
+    padding: 0 11px;
     font-family: var(--font-sans);
     font-size: 0.88rem;
     font-weight: 600;
@@ -513,19 +560,19 @@
 /* ── Primary Action Buttons ── */
 .ac-btn-primary {
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
+    height: 46px;
+    border-radius: 9px;
     border: none;
-    background: linear-gradient(135deg, var(--ac-gold-primary) 0%, var(--ac-gold-deep) 100%);
+    background: linear-gradient(135deg, #A8832A 0%, var(--ac-gold-primary) 50%, var(--ac-gold-deep) 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: clamp(0.80rem, 2.2vw, 0.88rem);
+    font-size: clamp(0.82rem, 2.2vw, 0.90rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(138,104,31,0.26);
+    transition: all 0.22s ease;
+    box-shadow: 0 5px 18px rgba(138,104,31,0.30);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -534,7 +581,10 @@
 }
 .ac-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(138,104,31,0.38);
+    box-shadow: 0 7px 24px rgba(138,104,31,0.42);
+}
+.ac-btn-primary:active {
+    transform: translateY(0);
 }
 .ac-btn-link {
     background: none;
@@ -583,7 +633,7 @@
             <div class="ac-pane active" id="acPaneLogin">
                 <div class="ac-form-group">
                     <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email <span class="req">*</span></label>
-                    <input type="text" id="acLoginEmail" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                    <input type="text" id="acLoginEmail" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" autocomplete="username" required>
                 </div>
 
                 <div class="ac-form-group">
@@ -591,7 +641,13 @@
                         <span>Password <span class="req">*</span></span>
                         <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('forgot')">Forgot Password?</button>
                     </label>
-                    <input type="password" id="acLoginPass" class="ac-input" placeholder="Enter your password" required>
+                    <div class="ac-pass-wrap">
+                        <input type="password" id="acLoginPass" class="ac-input ac-pass-input" placeholder="Enter your password" autocomplete="current-password" required>
+                        <button type="button" class="ac-eye-btn" onclick="window.toggleAcPassVisibility('acLoginPass', this)" aria-label="Toggle password visibility">
+                            <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-closed" style="display:none;" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
@@ -727,7 +783,13 @@
                 <!-- Password -->
                 <div class="ac-form-group">
                     <label class="ac-label" for="acRegPass">Password <span class="req">*</span></label>
-                    <input type="password" id="acRegPass" class="ac-input" placeholder="Minimum 6 characters" required>
+                    <div class="ac-pass-wrap">
+                        <input type="password" id="acRegPass" class="ac-input ac-pass-input" placeholder="Minimum 6 characters" required>
+                        <button type="button" class="ac-eye-btn" onclick="window.toggleAcPassVisibility('acRegPass', this)" aria-label="Toggle password visibility">
+                            <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-closed" style="display:none;" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Submit Button -->
@@ -817,6 +879,24 @@
     var modalSelectedRole = 'Retailer';
     var modalSelectedCountry = ALL_WORLD_COUNTRIES[0]; // India (+91)
     var modalSelectedState = 'Maharashtra';
+
+    /* Show / Hide Password Helper */
+    window.toggleAcPassVisibility = function(inputId, btnEl) {
+        var input = document.getElementById(inputId);
+        if (!input || !btnEl) return;
+        var openIcon = btnEl.querySelector('.eye-open');
+        var closedIcon = btnEl.querySelector('.eye-closed');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            if (openIcon) openIcon.style.display = 'none';
+            if (closedIcon) closedIcon.style.display = 'block';
+        } else {
+            input.type = 'password';
+            if (openIcon) openIcon.style.display = 'block';
+            if (closedIcon) closedIcon.style.display = 'none';
+        }
+    };
 
     /* Toggle Dropdown Menu */
     window.toggleAcDropdown = function(boxId) {
