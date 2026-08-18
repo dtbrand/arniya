@@ -5833,3 +5833,54 @@ scrollbar-width: none;
         display: block !important;
     }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   SPECIAL LEFT BORDER ACCENT ON SELECTED / ACTIVE BOXES
+   ══════════════════════════════════════════════════════════════════ */
+
+/* 1. Active / Selected Menu Item in Left Sidebar */
+.ws-nav-item.active {
+    background: linear-gradient(90deg, #FAF5E8 0%, #FDFBF7 100%) !important;
+    color: #785912 !important;
+    border: 1.2px solid #EADBBE !important;
+    border-left: 4.5px solid #8A681F !important; /* Prominent special left border */
+    border-radius: 4px 9px 9px 4px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 3px 10px rgba(138, 104, 31, 0.12) !important;
+    transform: translateX(3px) !important;
+}
+
+.ws-nav-item.active svg {
+    stroke: #8A681F !important;
+    transform: scale(1.1) !important;
+}
+
+.ws-nav-item:hover:not(.active) {
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.10) 0%, rgba(212, 175, 55, 0.02) 100%) !important;
+    color: #8A681F !important;
+    border-left: 3px solid rgba(138, 104, 31, 0.4) !important;
+    transform: translateX(2px) !important;
+}
+
+/* 2. Selected Table Rows (When Checkbox is Checked) */
+.ws-table tbody tr:has(input[type="checkbox"]:checked),
+.ws-orders-table tbody tr:has(input[type="checkbox"]:checked),
+.ws-table tbody tr.selected,
+.ws-orders-table tbody tr.selected {
+    background: #FAF6ED !important;
+}
+
+.ws-table tbody tr:has(input[type="checkbox"]:checked) td:first-child,
+.ws-orders-table tbody tr:has(input[type="checkbox"]:checked) td:first-child,
+.ws-table tbody tr.selected td:first-child,
+.ws-orders-table tbody tr.selected td:first-child {
+    border-left: 4.5px solid #8A681F !important;
+}
+
+/* 3. Mobile Selected & Active Cards */
+.ws-mobile-order-card,
+.ws-mob-report-card {
+    border-left: 4.5px solid #8A681F !important;
+    border-radius: 4px 12px 12px 4px !important;
+}
