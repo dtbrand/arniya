@@ -1,7 +1,7 @@
 <?php
 /**
  * quickview.php — PARTIAL INCLUDE
- * Self-Contained Fully Styled & Dynamic Quick View & Product Details Component for Kalaniketan
+ * Self-Contained Fully Styled & Dynamic Quick View & Product Details Component for DT Brand's
  * Features Interactive Colour Swatches, Size Selection, and Full Garment Specifications
  */
 ?>
@@ -463,7 +463,7 @@
             <div class="pd-desc-box">
                 <h4 class="pd-section-title">✨ Full Product Description</h4>
                 <p class="pd-full-desc" id="pdFullDesc">
-                    Handcrafted luxury ethnic wear from Kalaniketan Heritage Collection. Features premium fabric draping, authentic hand-finished weave, and timeless royal elegance.
+                    Handcrafted luxury ethnic wear from DT Brand's Heritage Collection. Features premium fabric draping, authentic hand-finished weave, and timeless royal elegance.
                 </p>
             </div>
 
@@ -585,7 +585,7 @@
             // Fallback product if not in array
             p = {
                 id: id,
-                name: 'Kalaniketan Ethnic Saree',
+                name: 'DT Brand's Ethnic Saree',
                 price: 4999,
                 old_price: 6999,
                 image: '/Shared/Asset/images/product1.png',
@@ -658,7 +658,7 @@
 
             // Right Column: Details & Actions
             '<div class="modal-details">' +
-                '<div class="modal-brand-name">KALANIKETAN ETHNIC LUXURY</div>' +
+                '<div class="modal-brand-name">DT BRAND'S ETHNIC LUXURY</div>' +
                 '<h2 class="modal-name">' + p.name + '</h2>' +
 
                 '<div class="modal-price-block">' +
@@ -929,7 +929,7 @@
         if (!p) return;
 
         document.getElementById('pdTitle').textContent = p.name;
-        document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; Kalaniketan Luxury';
+        document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; DT Brand's Luxury';
         document.getElementById('pdImg').src = p.image || '/Shared/Asset/images/product1.png';
         document.getElementById('pdPrice').textContent = '₹' + Number(p.price).toLocaleString('en-IN');
         

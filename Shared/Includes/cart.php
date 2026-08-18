@@ -172,7 +172,7 @@
     <div class="cart-drawer-content">
         <div class="cd-header">
     <div style="display:flex; align-items:center; gap:10px;">
-        <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+        <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
         <div>
             <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
             <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
@@ -206,7 +206,7 @@
 (function() {
     function loadCart() {
         try {
-            var raw = localStorage.getItem('kalaniketan_cart');
+            var raw = localStorage.getItem('dtbrands_cart');
             if (raw !== null) return JSON.parse(raw);
         } catch(e) {}
         return [
@@ -235,7 +235,7 @@
 
     function saveCart(cart) {
         try {
-            localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+            localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
         } catch(e) {}
     }
 
@@ -579,7 +579,7 @@
                     window.openCheckout();
                 } else {
                     var total = document.getElementById('cartTotalVal').textContent;
-                    alert('✨ Thank you for choosing Kalaniketan Luxury Ethnic Wear!\n\nYour order total is ' + total + '.\nProceeding to secure checkout...');
+                    alert('✨ Thank you for choosing DT Brand\'s Luxury Ethnic Wear!\n\nYour order total is ' + total + '.\nProceeding to secure checkout...');
                 }
             });
         }

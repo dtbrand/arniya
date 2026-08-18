@@ -2,7 +2,7 @@
 /**
  * shop.php — MAIN PAGE (single complete HTML document)
  * Includes shophader.php and shopbottomfotoer.php as partials.
- * Premium Ethnic-Wear Shop — Kalaniketan
+ * Premium Ethnic-Wear Shop — DT Brand's
  */
 
 $products = [
@@ -145,8 +145,8 @@ $total_products = count($products);
     
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="description" content="Shop premium Indian ethnic wear — silk sarees, kurtis, lehengas and designer gowns at Kalaniketan." />
-<title>Shop — Kalaniketan | Ethnic Luxury</title>
+<meta name="description" content="Shop premium Indian ethnic wear — silk sarees, kurtis, lehengas and designer gowns at DT Brand's." />
+<title>Shop — DT Brand's | Ethnic Luxury</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

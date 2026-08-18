@@ -267,7 +267,7 @@
         } else {
             // Local fallback
             try {
-                var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+                var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
                 cart.push({
                     id: currentProduct.id,
                     name: currentProduct.name,
@@ -277,7 +277,7 @@
                     color: selColor,
                     qty: currentQty
                 });
-                localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+                localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
             } catch(e) {}
         }
 
@@ -371,8 +371,8 @@
         var stateField = document.getElementById('pdpWaState');
         var pinField = document.getElementById('pdpWaPincode');
 
-        var savedAddrRaw = localStorage.getItem('kalaniketan_saved_address');
-        var userRaw = localStorage.getItem('kalaniketan_user');
+        var savedAddrRaw = localStorage.getItem('dtbrands_saved_address');
+        var userRaw = localStorage.getItem('dtbrands_user');
 
         var savedAddr = null;
         var user = null;
@@ -515,7 +515,7 @@
         // Save address locally if entered
         if (address || city) {
             try {
-                localStorage.setItem('kalaniketan_saved_address', JSON.stringify({
+                localStorage.setItem('dtbrands_saved_address', JSON.stringify({
                     name: name,
                     phone: cleanPhone,
                     address: address,
@@ -537,7 +537,7 @@
         var fullLoc = city ? (city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "")) : '';
 
         // Build WhatsApp Message
-        var waMessage = "🛍️ *NEW INSTANT ORDER — KALANIKETAN LUXURY ETHNIC*\n" +
+        var waMessage = "🛍️ *NEW INSTANT ORDER — DT BRAND'S LUXURY ETHNIC*\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "👗 *Product:* " + currentProduct.name + "\n" +
             "🏷️ *SKU:* " + (currentProduct.sku || 'KLN-ETH-01') + "\n" +

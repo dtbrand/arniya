@@ -1,7 +1,7 @@
 <?php
 /**
  * shophader.php  —  PARTIAL INCLUDE
- * Premium Shop Header component for Kalaniketan
+ * Premium Shop Header component for DT Brand's
  * Features Amazon-Style Always-Open Desktop Search Bar & Clean Full-Width Mobile Search Bar with Right Close Button
  */
 ?>
@@ -820,7 +820,7 @@
             </button>
 
             <a href="/Frontend/Shop/shop.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
             </a>
         </div>
 
@@ -900,7 +900,7 @@
                         <span>Forgot Password</span>
                     </a>
                     <div class="ac-drop-divider" id="acDropDivider" style="display:none;"></div>
-                    <a href="javascript:void(0)" class="ac-drop-item" id="acDropLogout" style="display:none; color:#D32F2F;" onclick="localStorage.removeItem('kalaniketan_user'); window.location.href='shop.php';">
+                    <a href="javascript:void(0)" class="ac-drop-item" id="acDropLogout" style="display:none; color:#D32F2F;" onclick="localStorage.removeItem('dtbrands_user'); window.location.href='shop.php';">
                         <svg viewBox="0 0 24 24" style="stroke:#D32F2F;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                         <span>Log Out</span>
                     </a>
@@ -1151,7 +1151,7 @@ window.closeWishlistDrawer = function() {
 
     /* Sync Desktop Account Button with Logged In User State */
     function syncHeaderAccountState() {
-        var userRaw = localStorage.getItem('kalaniketan_user');
+        var userRaw = localStorage.getItem('dtbrands_user');
         var label = document.getElementById('headerAccountLabel');
         var dropLogin = document.getElementById('acDropLogin');
         var dropRegister = document.getElementById('acDropRegister');

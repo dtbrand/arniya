@@ -480,8 +480,8 @@
                 <span>Shop</span>
             </a>
 
-                    <a href="/Frontend/Shop/shop.php" class="pdp-brand-seal" title="Return to Kalaniketan Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Single-Product/Asset/images/logo.png';" alt="Kalaniketan" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
+                    <a href="/Frontend/Shop/shop.php" class="pdp-brand-seal" title="Return to DT Brand's Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Single-Product/Asset/images/logo.png';" alt="DT Brand's" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
         </a>
         </div>
 
@@ -615,7 +615,7 @@
     window.syncPdpHeaderState = function() {
         // 1. Sync Cart Badge
         try {
-            var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+            var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
             var totalQty = cart.reduce(function(sum, item) { return sum + (item.qty || 1); }, 0);
             var cartBadge = document.getElementById('pdpCartCount');
             if (cartBadge) {
@@ -626,7 +626,7 @@
 
         // 2. Sync Wishlist Badge
         try {
-            var wish = JSON.parse(localStorage.getItem('kalaniketan_wishlist') || '[]');
+            var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
             var wishBadge = document.getElementById('pdpWishlistCount');
             if (wishBadge) {
                 wishBadge.textContent = wish.length;
@@ -636,7 +636,7 @@
 
         // 3. Sync User Profile State
         try {
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var userLabel = document.getElementById('pdpUserLabel');
             var userAvatar = document.getElementById('pdpUserAvatar');
             var acBtn = document.getElementById('pdpAccountBtn');

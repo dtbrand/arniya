@@ -1,6 +1,6 @@
 <?php
 /**
- * reseller.php — Luxury Kalaniketan B2B Reseller Dashboard
+ * reseller.php — Luxury DT Brand's B2B Reseller Dashboard
  * Clean Modern TailAdmin Sizing & Layout + 100% Signature Heritage Gold Brand Colors
  * 
  * Brand Color System:
@@ -397,7 +397,7 @@ $catalogProducts = [
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reseller B2B Dashboard — Kalaniketan Couture</title>
+    <title>Reseller B2B Dashboard — DT Brand's Couture</title>
     
     <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -505,7 +505,7 @@ $catalogProducts = [
 
                 <!-- Mobile Brand Title (Center/Left) -->
                 <div class="ws-mobile-header-brand">
-                    <span class="ws-mob-logo-text">KALANIKETAN B2B</span>
+                    <span class="ws-mob-logo-text">DT BRAND'S B2B</span>
                 </div>
             </div>
 
@@ -585,7 +585,7 @@ $catalogProducts = [
         <aside class="ws-sidebar" id="wsSidebar">
             <div class="ws-sidebar-brand-box">
                 <a href="#" style="display:flex; align-items:center; text-decoration:none;">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Reseller/Asset/images/logo.png';" alt="Kalaniketan" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
+                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Reseller/Asset/images/logo.png';" alt="DT Brand's" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
                 </a>
                 <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
             </div>
@@ -1855,7 +1855,7 @@ $catalogProducts = [
                         <div class="ws-card-title-group">
                             <h3 style="margin:0; font-size:1.05rem;">Reseller Concierge & Support</h3>
                         </div>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20am%20a%20registered%20Wholesaler%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm" style="display:inline-flex; align-items:center; gap:6px; font-weight:700;">
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20am%20a%20registered%20Wholesaler%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm" style="display:inline-flex; align-items:center; gap:6px; font-weight:700;">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
                             <span>WhatsApp Concierge</span>
                         </a>
@@ -2946,8 +2946,8 @@ $catalogProducts = [
                 <div class="ws-invoice-sheet">
                     <div class="ws-inv-header">
                         <div class="ws-inv-brand">
-                            <h2>KALANIKETAN B2B</h2>
-                            <p><strong>Kalaniketan Reseller Procurement & Logistics Ledger</strong><br>
+                            <h2>DT BRAND'S B2B</h2>
+                            <p><strong>DT Brand's Reseller Procurement & Logistics Ledger</strong><br>
                             Surat Silk Cluster, Ring Road, Surat, Gujarat - 395002<br>
                             GSTIN: 24AABCK4820P1Z8 | Input Tax Credit (ITC) Reconciled</p>
                         </div>
@@ -3011,7 +3011,7 @@ $catalogProducts = [
                         <div style="text-align:center;">
                             <div style="width:120px; border-bottom:1.5px solid var(--ws-gold-primary); margin-bottom:4px;"></div>
                             <strong>Chief Logistics Officer</strong><br>
-                            Kalaniketan B2B Hub
+                            DT Brand's B2B Hub
                         </div>
                     </div>
                 </div>

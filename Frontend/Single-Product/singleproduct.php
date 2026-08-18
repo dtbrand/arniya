@@ -439,7 +439,7 @@ $customerReviews = [
         'rating' => 5,
         'date' => '1 week ago',
         'occasion' => 'Temple Inauguration',
-        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend Kalaniketan!',
+        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend DT Brand's!',
         'photo' => null,
         'helpful' => 21
     ],
@@ -483,7 +483,7 @@ $customerReviews = [
         'rating' => 5,
         'date' => '1 month ago',
         'occasion' => 'Sister’s Haldi',
-        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about Kalaniketan.',
+        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about DT Brand's.',
         'photo' => '/Frontend/Single-Product/Asset/images/product1.png',
         'helpful' => 31
     ]
@@ -506,7 +506,7 @@ $colorHex = [
     
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title><?= htmlspecialchars($product['name']) ?> — Kalaniketan | Ethnic Luxury</title>
+<title><?= htmlspecialchars($product['name']) ?> — DT Brand's | Ethnic Luxury</title>
 <meta name="description" content="<?= htmlspecialchars(substr($product['desc'], 0, 160)) ?>" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -584,7 +584,7 @@ $colorHex = [
         <!-- ── Right: Product Details & Conversion Actions ── -->
         <div class="pdp-details-column">
             <div>
-                <span class="pdp-brand-tag">KALANIKETAN ETHNIC LUXURY</span>
+                <span class="pdp-brand-tag">DT BRAND'S ETHNIC LUXURY</span>
                 <h1 class="pdp-title"><?= htmlspecialchars($product['name']) ?></h1>
             </div>
 
@@ -810,7 +810,7 @@ $colorHex = [
                                 </div>
                                 <div class="pdp-trust-mini-text">
                                     <h5>100% Original Certified Handloom</h5>
-                                    <p>Authentic ethnic couture directly sourced from Kalaniketan master weavers with silk authenticity guarantee.</p>
+                                    <p>Authentic ethnic couture directly sourced from DT Brand's master weavers with silk authenticity guarantee.</p>
                                 </div>
                             </div>
                             <div class="pdp-trust-mini-card green">
@@ -1058,7 +1058,7 @@ $colorHex = [
                     <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 </div>
                 <div class="pdp-wa-co-title-group">
-                    <h3>KALANIKETAN</h3>
+                    <h3>DT BRAND'S</h3>
                     <span>Luxury Ethnic • WhatsApp Checkout</span>
                 </div>
             </div>

@@ -512,7 +512,7 @@
         <!-- Header -->
         <div class="ac-header" style="display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1.5px solid var(--ac-gold-primary); background:#FFFFFF;">
             <div class="ac-brand-group" style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="ac-title-wrap">
                     <h3 id="acModalHeading" style="margin:0; font-size:0.96rem;">Luxury Member Access</h3>
                     <span style="font-size:0.56rem;">Ethnic Luxury Couture</span>
@@ -699,7 +699,7 @@
 
                 <div class="ac-orders-title">
                     <span>Recent Orders</span>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20track%20my%20Kalaniketan%20order" target="_blank" class="ac-btn-link">WhatsApp Support</a>
+                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20track%20my%20DT Brand's%20order" target="_blank" class="ac-btn-link">WhatsApp Support</a>
                 </div>
 
                 <div class="ac-order-card">
@@ -839,7 +839,7 @@
         if (!modal) return;
 
         var tab = initialTab || 'login';
-        var user = localStorage.getItem('kalaniketan_user');
+        var user = localStorage.getItem('dtbrands_user');
         if (user && tab === 'login') {
             tab = 'profile';
         }
@@ -871,7 +871,7 @@
 
         var heading = document.getElementById('acModalHeading');
         if (heading) {
-            if (tabName === 'login') heading.textContent = 'Sign In to Kalaniketan';
+            if (tabName === 'login') heading.textContent = 'Sign In to DT Brand\'s';
             else if (tabName === 'register') {
                 heading.textContent = 'Create Luxury Account';
                 renderModalCountrySlider();
@@ -882,9 +882,9 @@
 
         /* Update Profile Counts */
         if (tabName === 'profile') {
-            var cart = window.cartState || JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
-            var wish = JSON.parse(localStorage.getItem('kalaniketan_wishlist') || '[]');
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
+            var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
+            var userRaw = localStorage.getItem('dtbrands_user');
 
             if (userRaw) {
                 var user = JSON.parse(userRaw);
@@ -942,13 +942,13 @@
         var userData = {
             name: name,
             phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-            email: input.includes('@') ? input : 'member@kalaniketan.com',
+            email: input.includes('@') ? input : 'member@dtbrands.com',
             role: 'Retailer',
             country: 'India',
             state: 'Maharashtra',
             city: 'Mumbai'
         };
-        localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
         if (typeof window.showToast === 'function') {
             window.showToast('✨ Welcome back, ' + name + '!');
@@ -972,13 +972,13 @@
         var userData = {
             name: name,
             phone: modalSelectedCountry.dial + ' ' + phone,
-            email: email || 'member@kalaniketan.com',
+            email: email || 'member@dtbrands.com',
             role: modalSelectedRole,
             country: modalSelectedCountry.name,
             state: modalSelectedState,
             city: city || modalSelectedState
         };
-        localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
         if (typeof window.showToast === 'function') {
             window.showToast('🎉 Luxury Account created successfully!');
@@ -990,7 +990,7 @@
         var input = document.getElementById('acForgotInput').value.trim();
         if (!input) return;
 
-        var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20Kalaniketan%20account%20(${encodeURIComponent(input)})`;
+        var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {
@@ -999,7 +999,7 @@
     };
 
     window.handleAccountLogout = function() {
-        localStorage.removeItem('kalaniketan_user');
+        localStorage.removeItem('dtbrands_user');
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }

@@ -168,7 +168,7 @@
 
         /* ── Role & Authentication Security Gate ── */
         function checkWholesalerSecurity() {
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var gateModal = document.getElementById('wsRoleGateModal');
 
             if (!userRaw) {
@@ -186,7 +186,7 @@
                     state: 'Gujarat',
                     pincode: '395002'
                 };
-                localStorage.setItem('kalaniketan_user', JSON.stringify(demoWholesaler));
+                localStorage.setItem('dtbrands_user', JSON.stringify(demoWholesaler));
                 if (gateModal) gateModal.classList.remove('active');
                 return true;
             }
@@ -199,7 +199,7 @@
                     user.role = 'Wholesaler';
                     if (!user.companyName) user.companyName = 'Shree Krishna Silks Pvt Ltd';
                     if (!user.gst_number) user.gst_number = '24AABCU9603R1ZM';
-                    localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+                    localStorage.setItem('dtbrands_user', JSON.stringify(user));
                 }
 
                 if (gateModal) gateModal.classList.remove('active');
@@ -225,7 +225,7 @@
                 state: 'Gujarat',
                 pincode: '395002'
             };
-            localStorage.setItem('kalaniketan_user', JSON.stringify(demoWholesaler));
+            localStorage.setItem('dtbrands_user', JSON.stringify(demoWholesaler));
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
             initWholesalerApp();
@@ -334,7 +334,7 @@
 
         /* ── Load Wholesaler Profile & State ── */
         window.loadSavedWholesalerData = function() {
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
             var name = user.name || 'Rajesh Kumar';
@@ -598,7 +598,7 @@
 
         window.handleSaveAddress = function(e) {
             if (e) e.preventDefault();
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
             // Save Section 1: Main Address (if entered/updated)
@@ -640,7 +640,7 @@
                 };
             }
 
-            localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+            localStorage.setItem('dtbrands_user', JSON.stringify(user));
             closeEditAddressDrawer();
             renderAddressBookData(user);
             loadSavedWholesalerData();
@@ -1656,7 +1656,7 @@
         window.printWholesaleReport = function() {
             var modal = document.getElementById('wsPrintableAuditReportModal');
             if (modal) {
-                var userRaw = localStorage.getItem('kalaniketan_user');
+                var userRaw = localStorage.getItem('dtbrands_user');
                 var user = userRaw ? JSON.parse(userRaw) : {};
                 var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
                 var gst = user.gst_number || '24AABCU9603R1ZM';
@@ -1741,7 +1741,7 @@
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `Kalaniketan_Wholesale_Report_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `DT Brand\'s_Wholesale_Report_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -1902,7 +1902,7 @@
         window.repeatWholesaleOrder = function(o) {
             closeOrderDetailsModal();
             try {
-                var raw = localStorage.getItem('kalaniketan_cart');
+                var raw = localStorage.getItem('dtbrands_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var exists = cart.find(function(item){ return item.id === o.id || item.name === o.productName; });
                 if (exists) {
@@ -1919,7 +1919,7 @@
                         moq: 12
                     });
                 }
-                localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+                localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
                 window.updateWholesaleCartBadge();
                 if (typeof window.openCartDrawer === 'function') {
                     window.openCartDrawer();
@@ -1990,7 +1990,7 @@
             var modal = document.getElementById('wsBillInvoiceModal');
             if (!modal) return;
 
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
 
             // 1. Invoice Meta
@@ -2601,7 +2601,7 @@
             try {
                 var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
                     ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', price: 2199, moq: 12 });
-                var raw = localStorage.getItem('kalaniketan_cart');
+                var raw = localStorage.getItem('dtbrands_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
                 var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
@@ -2622,7 +2622,7 @@
                         category: prod.category || 'Wholesale'
                     });
                 }
-                localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+                localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
                 window.updateWholesaleCartBadge();
 
                 // Button Ripple & Check Animation
@@ -2645,12 +2645,12 @@
         window.openQuickOrderModal = function(prodOrId) {
             var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
                 ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Wholesale Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
             var company = user.companyName || 'Wholesale Buyer';
             var gst = user.gst_number || 'Non-GST';
 
-            var text = `👑 *WHOLESALE BULK LOT INQUIRY — KALANIKETAN B2B*\n\n` +
+            var text = `👑 *WHOLESALE BULK LOT INQUIRY — DT BRAND'S B2B*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
                        `*HSN Code:* ${prod.hsn || '5007'}\n` +
                        `*Wholesale Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
@@ -2682,7 +2682,7 @@
                 return;
             }
 
-            var raw = localStorage.getItem('kalaniketan_wishlist');
+            var raw = localStorage.getItem('dtbrands_wishlist');
             var wish = raw ? JSON.parse(raw) : [];
             var idx = wish.findIndex(function(i){ return Number(i.id) === Number(productId); });
             if (idx > -1) {
@@ -2694,7 +2694,7 @@
                 if (btn) btn.classList.add('active');
                 if (typeof window.showWsToast === 'function') window.showWsToast('Saved to B2B Procurement Wishlist');
             }
-            localStorage.setItem('kalaniketan_wishlist', JSON.stringify(wish));
+            localStorage.setItem('dtbrands_wishlist', JSON.stringify(wish));
         };
 
         /* ── Share Wholesale Lot (Triggers Smart Share or WhatsApp) ── */
@@ -2703,7 +2703,7 @@
                 window.shareProductCard(prod.id);
                 return;
             }
-            var text = `*KALANIKETAN B2B WHOLESALE LOT*\n\n` +
+            var text = `*DT BRAND'S B2B WHOLESALE LOT*\n\n` +
                        `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
                        `*Wholesale Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
                        `*MOQ:* ${prod.moq} Pcs Pack\n` +
@@ -2733,7 +2733,7 @@
                 };
                 window.openSmartShareModal(itemData);
             } else if (p) {
-                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at Kalaniketan: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
+                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at DT Brand\'s: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
                 window.open(waUrl, '_blank');
             }
         };
@@ -2820,7 +2820,7 @@
         /* ── Wholesaler Logout ── */
         window.handleWholesalerLogout = function() {
             if (confirm('Are you sure you want to log out of the Wholesaler Portal?')) {
-                localStorage.removeItem('kalaniketan_user');
+                localStorage.removeItem('dtbrands_user');
                 window.location.href = '../Shop/shop.php';
             }
         };
@@ -2912,7 +2912,7 @@
                     <div class="ws-timeline-step completed">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                         <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
-                        <div class="ws-timeline-date">Kalaniketan Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
+                        <div class="ws-timeline-date">DT Brand\'s Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
                     </div>
                     <div class="ws-timeline-step ${isProcessing ? 'active' : 'completed'}">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
@@ -3105,7 +3105,7 @@
             if (!modal) return;
             // Pre-fill existing data from localStorage
             try {
-                var user = JSON.parse(localStorage.getItem('kalaniketan_user') || '{}');
+                var user = JSON.parse(localStorage.getItem('dtbrands_user') || '{}');
                 var billing = user.billing_address || {};
                 var el = function(id) { return document.getElementById(id); };
                 if (el('wsMainEditCompName'))    el('wsMainEditCompName').value    = billing.company || user.company_name || '';
@@ -3126,7 +3126,7 @@
         window.handleSaveMainAddressForm = function(e) {
             if (e) e.preventDefault();
             try {
-                var user = JSON.parse(localStorage.getItem('kalaniketan_user') || '{}');
+                var user = JSON.parse(localStorage.getItem('dtbrands_user') || '{}');
                 var el = function(id) { return document.getElementById(id); };
                 user.billing_address = {
                     company: el('wsMainEditCompName')    ? el('wsMainEditCompName').value.trim()    : '',
@@ -3137,7 +3137,7 @@
                     pincode: el('wsMainEditPincode')    ? el('wsMainEditPincode').value.trim()     : '',
                     phone:   el('wsMainEditContactPhone') ? el('wsMainEditContactPhone').value.trim() : ''
                 };
-                localStorage.setItem('kalaniketan_user', JSON.stringify(user));
+                localStorage.setItem('dtbrands_user', JSON.stringify(user));
                 closeEditMainAddressModal();
                 loadSavedWholesalerData();
                 renderAddressBookData(user);
@@ -3175,11 +3175,11 @@
             closeWalletTopupModal();
             var current = 45280;
             try {
-                var saved = localStorage.getItem('kalaniketan_wallet_cash');
+                var saved = localStorage.getItem('dtbrands_wallet_cash');
                 if (saved) current = Number(saved);
             } catch(e) {}
             var newBal = current + amount;
-            localStorage.setItem('kalaniketan_wallet_cash', newBal);
+            localStorage.setItem('dtbrands_wallet_cash', newBal);
             
             var cashEl = document.getElementById('walletCashBalance');
             var availEl = document.getElementById('walletAvailableBalance');
@@ -3192,7 +3192,7 @@
         };
 
         window.requestCreditLimitBoost = function() {
-            window.showWsToast('⚡ Credit Limit Boost Request submitted to Kalaniketan Credit Desk!');
+            window.showWsToast('⚡ Credit Limit Boost Request submitted to DT Brand\'s Credit Desk!');
         };
 
         window.requestWalletWithdrawal = function() {
@@ -3202,7 +3202,7 @@
         /* ── Wholesale Cart Badge Synchronization ── */
         window.updateWholesaleCartBadge = function() {
             try {
-                var raw = localStorage.getItem('kalaniketan_cart');
+                var raw = localStorage.getItem('dtbrands_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var totalCount = 0;
                 if (Array.isArray(cart)) {
@@ -3226,7 +3226,7 @@
         /* ── Wholesale Wishlist Badge Synchronization ── */
         window.updateWholesaleWishlistBadge = function() {
             try {
-                var raw = localStorage.getItem('kalaniketan_wishlist');
+                var raw = localStorage.getItem('dtbrands_wishlist');
                 var wishlist = raw ? JSON.parse(raw) : [];
                 var count = Array.isArray(wishlist) ? wishlist.length : 0;
                 var badge = document.getElementById('headerWishlistBadge');
@@ -3247,13 +3247,13 @@
             window.updateWholesaleWishlistBadge();
         });
         window.addEventListener('storage', function(e) {
-            if (e.key === 'kalaniketan_user') {
+            if (e.key === 'dtbrands_user') {
                 initWholesalerApp();
             }
-            if (e.key === 'kalaniketan_cart') {
+            if (e.key === 'dtbrands_cart') {
                 window.updateWholesaleCartBadge();
             }
-            if (e.key === 'kalaniketan_wishlist') {
+            if (e.key === 'dtbrands_wishlist') {
                 window.updateWholesaleWishlistBadge();
             }
         });
@@ -3266,7 +3266,7 @@ function directAddWholesaleToCart(prodOrId, btn) {
     try {
         var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
             ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199, moq: 12 });
-        var raw = localStorage.getItem('kalaniketan_cart');
+        var raw = localStorage.getItem('dtbrands_cart');
         var cart = raw ? JSON.parse(raw) : [];
         var prodId = prod.id;
         var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
@@ -3287,7 +3287,7 @@ function directAddWholesaleToCart(prodOrId, btn) {
                 category: prod.category || 'Catalog'
             });
         }
-        localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+        localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
         window.cartState = cart;
         if (typeof window.renderCart === 'function') window.renderCart();
         if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
@@ -3301,7 +3301,7 @@ function toggleWholesaleWishlist(prodOrId, btn) {
     try {
         var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
             ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199 });
-        var raw = localStorage.getItem('kalaniketan_wishlist');
+        var raw = localStorage.getItem('dtbrands_wishlist');
         var list = raw ? JSON.parse(raw) : [];
         var prodId = prod.id;
         var idx = list.findIndex(function(x) { return Number(x.id) === Number(prodId); });
@@ -3320,7 +3320,7 @@ function toggleWholesaleWishlist(prodOrId, btn) {
             });
             isAdded = true;
         }
-        localStorage.setItem('kalaniketan_wishlist', JSON.stringify(list));
+        localStorage.setItem('dtbrands_wishlist', JSON.stringify(list));
         window.wishlistState = list;
         if (btn) btn.classList.toggle('active', isAdded);
         if (typeof window.renderWishlist === 'function') window.renderWishlist();

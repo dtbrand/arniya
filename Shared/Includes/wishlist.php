@@ -179,7 +179,7 @@
 (function() {
     function loadWishlist() {
         try {
-            var raw = localStorage.getItem('kalaniketan_wishlist');
+            var raw = localStorage.getItem('dtbrands_wishlist');
             if (raw !== null) return JSON.parse(raw);
         } catch(e) {}
         return [
@@ -208,7 +208,7 @@
 
     function saveWishlist(list) {
         try {
-            localStorage.setItem('kalaniketan_wishlist', JSON.stringify(list));
+            localStorage.setItem('dtbrands_wishlist', JSON.stringify(list));
         } catch(e) {}
     }
 

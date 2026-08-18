@@ -1,7 +1,7 @@
 <?php
 /**
  * reels.php — PARTIAL INCLUDE
- * Instagram Reels / TikTok Style Shoppable Full-Screen Video Feed for Kalaniketan
+ * Instagram Reels / TikTok Style Shoppable Full-Screen Video Feed for DT Brand's
  * Features Vertical Snap Video Scrolling, Right Action Bar (Wishlist, Cart, Quick View, Share),
  * Bottom Product Overlay with Instant Size Selection, and Double-Tap Heart Animation.
  */
@@ -424,14 +424,14 @@
 </style>
 
 <!-- ════════════ REELS MODAL OVERLAY ════════════ -->
-<div class="reels-overlay" id="reelsModalOverlay" role="dialog" aria-modal="true" aria-label="Kalaniketan Video Reels" aria-hidden="true">
+<div class="reels-overlay" id="reelsModalOverlay" role="dialog" aria-modal="true" aria-label="DT Brand's Video Reels" aria-hidden="true">
     <div class="reels-wrapper" id="reelsWrapper">
         
         <!-- Top Bar Header -->
         <div class="reels-top-bar">
             <div class="reels-brand-tag">
                 <span class="reels-live-dot"></span>
-                <span>Kalaniketan Reels</span>
+                <span>DT Brand's Reels</span>
             </div>
             <div class="reels-top-actions">
                 <button class="reels-icon-btn" id="reelsMuteBtn" aria-label="Toggle sound">
@@ -452,7 +452,7 @@
 </div>
 
 <script>
-/* ── Kalaniketan Instagram Reels Controller Engine ── */
+/* ── DT Brand's Instagram Reels Controller Engine ── */
 (function() {
     var reelsVideos = [
         'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-41312-large.mp4',
@@ -700,11 +700,11 @@
                 shareBtn.addEventListener('click', function() {
                     var pName = shareBtn.dataset.name;
                     var pPrice = shareBtn.dataset.price;
-                    var shareText = '✨ Check out ' + pName + ' at ₹' + Number(pPrice).toLocaleString('en-IN') + ' on Kalaniketan Ethnic Luxury!\n' + window.location.href;
+                    var shareText = '✨ Check out ' + pName + ' at ₹' + Number(pPrice).toLocaleString('en-IN') + ' on DT Brand\'s Ethnic Luxury!\n' + window.location.href;
 
                     if (navigator.share) {
                         navigator.share({
-                            title: pName + ' - Kalaniketan',
+                            title: pName + ' - DT Brand\'s',
                             text: shareText,
                             url: window.location.href
                         }).catch(function() {});

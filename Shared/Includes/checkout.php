@@ -787,10 +787,10 @@
         <!-- Header -->
                 <div class="co-header">
             <div class="co-header-brand" style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="co-title-group">
                     <h2>Secure Luxury Checkout</h2>
-                    <span>Kalaniketan Ethnic Couture</span>
+                    <span>DT Brand's Ethnic Couture</span>
                 </div>
             </div>
             <button class="co-close-btn" id="closeCheckoutBtn" aria-label="Close Checkout">✕</button>
@@ -992,7 +992,7 @@
             <h2 class="co-success-title">Order Placed Successfully!</h2>
             <div class="co-order-id-pill" id="coSuccessOrderId">#KLN-847291</div>
             <p class="co-success-desc" id="coSuccessDesc">
-                Thank you for choosing Kalaniketan Ethnic Luxury. We have forwarded your order invoice directly to our WhatsApp concierge team.
+                Thank you for choosing DT Brand's Ethnic Luxury. We have forwarded your order invoice directly to our WhatsApp concierge team.
             </p>
             <div class="co-success-actions">
                 <a href="#" class="co-wa-chat-btn" id="coSuccessWhatsAppLink" target="_blank">
@@ -1031,7 +1031,7 @@
         }
 
         /* Check if cart is empty */
-        var cart = window.cartState || JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+        var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         if (!cart || cart.length === 0) {
             if (typeof window.showToast === 'function') {
                 window.showToast('Your shopping bag is empty! Add items to checkout.');
@@ -1080,7 +1080,7 @@
         var countEl = document.getElementById('coItemCount');
         if (!listContainer) return;
 
-        var cart = window.cartState || JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+        var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         var totalQty = cart.reduce(function(sum, item) { return sum + (item.qty || 1); }, 0);
         if (countEl) countEl.textContent = totalQty;
 
@@ -1141,7 +1141,7 @@
         if (!input) return;
 
         var code = input.value.trim().toUpperCase();
-        var cart = window.cartState || JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+        var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         var subtotal = cart.reduce(function(sum, item) {
             var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
             return sum + (priceNum * (item.qty || 1));
@@ -1218,7 +1218,7 @@
             return;
         }
 
-        var cart = window.cartState || JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
+        var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
         if (cart.length === 0) {
             alert('Your bag is empty.');
             return;
@@ -1242,7 +1242,7 @@
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
 
         /* Craft Luxury WhatsApp Invoice Message */
-        var waMessage = `👑 *KALANIKETAN ETHNIC LUXURY — NEW ORDER*\n\n` +
+        var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
                         `🔖 *Order ID:* #${orderId}\n` +
                         `📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}\n` +
                         `───────────────\n` +
@@ -1273,7 +1273,7 @@
         if (successOverlay) successOverlay.classList.add('active');
 
         /* Clear Cart upon successful order placement */
-        localStorage.removeItem('kalaniketan_cart');
+        localStorage.removeItem('dtbrands_cart');
         window.cartState = [];
         if (typeof window.syncBadges === 'function') window.syncBadges();
         if (typeof window.renderCart === 'function') window.renderCart();

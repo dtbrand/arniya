@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Account — Kalaniketan | Ethnic Luxury</title>
+    <title>My Account — DT Brand's | Ethnic Luxury</title>
     
     <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1004,7 +1004,7 @@
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
         <a href="../../Frontend/Shop/shop.php" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
+            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
         <a href="../../Frontend/Shop/shop.php" class="return-shop-btn">
@@ -1021,7 +1021,7 @@
             <div class="auth-card-header">
                 <!-- Royal Brand Real Logo -->
                 <div class="auth-brand-seal-wrap" style="display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
+                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
                 </div>
 
                 <h2 id="authHeading">Sign In</h2>
@@ -1277,7 +1277,7 @@
                             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                             <span>Recent Orders</span>
                         </h3>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
                             WhatsApp Support
                         </a>
                     </div>
@@ -1345,7 +1345,7 @@
                     <div class="concierge-card">
                         <h4>Royal Concierge Desk</h4>
                         <p>Need custom blouse stitching, bulk wholesale pricing, or reseller catalog? Our fashion stylists are available.</p>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20Kalaniketan%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
                             <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
                             <span>WhatsApp Stylist</span>
                         </a>
@@ -1622,7 +1622,7 @@
         var initialTab = urlParams.get('tab') || 'login';
 
         function checkUserAuth() {
-            var userRaw = localStorage.getItem('kalaniketan_user');
+            var userRaw = localStorage.getItem('dtbrands_user');
             var authCard = document.getElementById('authCardWrap');
             var dashWrap = document.getElementById('dashboardWrap');
 
@@ -1705,8 +1705,8 @@
                     initEl.textContent = initials.toUpperCase();
                 }
 
-                var cart = JSON.parse(localStorage.getItem('kalaniketan_cart') || '[]');
-                var wish = JSON.parse(localStorage.getItem('kalaniketan_wishlist') || '[]');
+                var cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
+                var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
                 var cEl = document.getElementById('dashCartCount');
                 var wEl = document.getElementById('dashWishCount');
                 if (cEl) cEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
@@ -1742,7 +1742,7 @@
                 sub.textContent = 'Access your account to track orders & explore collections';
             } else if (tab === 'register') {
                 heading.textContent = 'Create Account';
-                sub.textContent = 'Join Kalaniketan & enjoy personalized shopping';
+                sub.textContent = 'Join DT Brand\'s & enjoy personalized shopping';
                 renderCountryDropdown();
             } else if (tab === 'forgot') {
                 heading.textContent = 'Reset Password';
@@ -1760,13 +1760,13 @@
             var userData = {
                 name: name,
                 phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-                email: input.includes('@') ? input : 'member@kalaniketan.com',
+                email: input.includes('@') ? input : 'member@dtbrands.com',
                 role: 'Retailer',
                 country: 'India',
                 state: 'Gujarat',
                 city: 'Surat'
             };
-            localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+            localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
             checkUserAuth();
         };
@@ -1799,7 +1799,7 @@
                 state: selectedState,
                 city: city || 'Surat'
             };
-            localStorage.setItem('kalaniketan_user', JSON.stringify(userData));
+            localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
             checkUserAuth();
         };
@@ -1808,13 +1808,13 @@
             var input = document.getElementById('forgotInput').value.trim();
             if (!input) return;
 
-            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20Kalaniketan%20account%20(${encodeURIComponent(input)})`;
+            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
             window.open(waUrl, '_blank');
             alert('📩 Password reset request sent to WhatsApp Concierge!');
         };
 
         window.handleLogoutClick = function() {
-            localStorage.removeItem('kalaniketan_user');
+            localStorage.removeItem('dtbrands_user');
             window.location.href = '../../Frontend/Shop/shop.php';
         };
 
