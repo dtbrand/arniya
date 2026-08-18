@@ -493,14 +493,6 @@ $total_products = count($products);
                     <article class="home-cat-card" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= $cat['name'] ?>');" role="button" tabindex="0">
                         <div class="home-cat-card-img-wrap">
                             <img src="<?= $cat['img'] ?>" alt="<?= $cat['name'] ?>" loading="lazy" class="home-cat-card-img" />
-                            <div class="home-cat-overlay-gradient"></div>
-                            
-                            <!-- Top Floating Badge -->
-                            <?php if (!empty($cat['badge'])): ?>
-                            <span class="home-cat-floating-badge"><?= $cat['badge'] ?></span>
-                            <?php endif; ?>
-                            
-                            <span class="home-cat-icon-badge" title="<?= $cat['name'] ?>"><?= $cat['icon'] ?></span>
                         </div>
                         <div class="home-cat-card-body">
                             <h3 class="home-cat-card-name"><?= $cat['name'] ?></h3>
