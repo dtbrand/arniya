@@ -5426,7 +5426,6 @@ Rajesh Kumar (Reseller Partner)`;
                 var cost = p.wholesale_price || p.price || 2199;
                 var mrp = p.retail_price || 3499;
                 var estProfit = mrp - cost;
-                var marginPct = Math.round((estProfit / mrp) * 100);
                 var matchTag = matchScores[idx % matchScores.length];
                 var catName = p.category || 'Pure Silk';
                 var imgUrl = p.image || '/Frontend/Reseller/Asset/images/product1.png';
@@ -5436,7 +5435,7 @@ Rajesh Kumar (Reseller Partner)`;
                         <div class="ws-rec-img-wrap">
                             <img src="${imgUrl}" alt="${p.name}" class="ws-rec-img" loading="lazy">
                             <span class="ws-rec-badge-match">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 ${matchTag}
                             </span>
                             <span class="ws-rec-badge-cat">${catName}</span>
@@ -5445,32 +5444,32 @@ Rajesh Kumar (Reseller Partner)`;
                             <div>
                                 <h3 class="ws-rec-card-title" title="${p.name}">${p.name}</h3>
                                 <div class="ws-rec-card-craft">
-                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
-                                    Handloom Pure Zari &bull; Silk Mark Assured
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
+                                    <span>Handloom Silk &bull; Mark Assured</span>
                                 </div>
                             </div>
                             
                             <div>
                                 <div class="ws-rec-pricing-box">
                                     <div>
-                                        <div class="ws-rec-cost-label">Reseller Cost: ₹${cost.toLocaleString('en-IN')}</div>
+                                        <div class="ws-rec-cost-label">Cost: ₹${cost.toLocaleString('en-IN')}</div>
                                         <div class="ws-rec-mrp-val">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
                                     </div>
                                     <div class="ws-rec-margin-box">
-                                        <div style="font-size:0.66rem; color:#047857; font-weight:800; margin-bottom:2px;">Est. Reseller Profit</div>
+                                        <div class="ws-rec-profit-label">Margin</div>
                                         <span class="ws-rec-margin-pill">
-                                            +₹${estProfit.toLocaleString('en-IN')} (${marginPct}%)
+                                            +₹${estProfit.toLocaleString('en-IN')}
                                         </span>
                                     </div>
                                 </div>
 
                                 <div class="ws-rec-actions-row">
-                                    <button class="ws-rec-btn-create-order" onclick="openResellerQuickOrderDrawer(${c.id}, ${p.id})" title="Create Direct Order for ${c.name}">
-                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                                        <span>Create Order</span>
+                                    <button class="ws-rec-btn-create-order" onclick="openResellerQuickOrderDrawer(${c.id}, ${p.id})" title="Create Order for ${c.name}">
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                        <span>Order</span>
                                     </button>
-                                    <button class="ws-rec-btn-wa-pitch" onclick="pitchProductToCustomerWhatsApp(${c.id}, ${p.id})" title="Pitch ${p.name} to ${c.name} on WhatsApp" aria-label="Pitch to Customer on WhatsApp">
-                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                                    <button class="ws-rec-btn-wa-pitch" onclick="pitchProductToCustomerWhatsApp(${c.id}, ${p.id})" title="Pitch ${p.name} to ${c.name} on WhatsApp" aria-label="Pitch on WhatsApp">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
                                     </button>
                                 </div>
                             </div>
