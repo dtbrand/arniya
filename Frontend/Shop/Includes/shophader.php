@@ -965,6 +965,7 @@
     </div>
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
+    <?php if (empty($hideHeaderSubnav) && strpos($_SERVER['PHP_SELF'] ?? '', 'home.php') === false): ?>
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
         <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
             <a href="/Frontend/Home/home.php" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
@@ -989,6 +990,7 @@
             </button>
         </div>
     </nav>
+    <?php endif; ?>
 
 </header>
 

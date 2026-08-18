@@ -292,7 +292,7 @@ $total_products = count($products);
 <body>
 
 <!-- ════════════ SECTION 1: EXISTING HEADER PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
+<?php $hideHeaderSubnav = true; include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
 
 <div class="page-wrapper">
 
