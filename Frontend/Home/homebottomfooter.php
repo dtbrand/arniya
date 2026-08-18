@@ -532,7 +532,7 @@
         <!-- Scrollable Navigation Area -->
         <div class="home-menu-scroll">
             <!-- VIP User Card (Reseller Desktop Menu Inspired) -->
-            <div class="home-menu-user-card" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}">
+            <div class="home-menu-user-card" onclick="toggleHomeMobileMenu(false); if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='/Shared/Auth/myaccount.php';}">
                 <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" alt="Member" class="home-menu-user-avatar">
                 <div class="home-menu-user-info">
                     <div class="home-menu-user-name" id="homeMenuUserName">VIP Member / Reseller</div>
@@ -624,7 +624,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}" class="home-menu-link">
+                    <a href="javascript:void(0)" onclick="toggleHomeMobileMenu(false); if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='/Shared/Auth/myaccount.php';}" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span>My Account & Orders</span>
                     </a>
@@ -766,27 +766,13 @@
             return;
         }
 
-        // 4. MY ACCOUNT ACTION (Role-Based Direct Dashboard Navigation)
+        // 4. MY ACCOUNT ACTION (Always Open My Luxury Profile Popup)
         if (actionKey === 'account') {
             if (e) e.preventDefault();
-            if (typeof window.handleUserWiseAccountNavigation === 'function') {
-                window.handleUserWiseAccountNavigation();
+            if (typeof window.openAccountModal === 'function') {
+                window.openAccountModal('profile');
             } else {
-                var userRaw = localStorage.getItem('dtbrands_user');
-                if (userRaw) {
-                    try {
-                        var user = JSON.parse(userRaw);
-                        var role = (user.role || '').toLowerCase();
-                        if (role === 'reseller') { window.location.href = '/Frontend/Reseller/reseller.php'; return; }
-                        if (role === 'wholesaler' || role === 'wholesale') { window.location.href = '/Frontend/Wholesale/wholesale.php'; return; }
-                        if (role === 'retailer') { window.location.href = '/Frontend/Retailer/retailer.php'; return; }
-                    } catch(err) {}
-                }
-                if (typeof window.openAccountModal === 'function') {
-                    window.openAccountModal('login');
-                } else {
-                    window.location.href = '/Shared/Auth/myaccount.php?tab=login';
-                }
+                window.location.href = '/Shared/Auth/myaccount.php';
             }
             return;
         }

@@ -514,8 +514,8 @@
             <div class="ac-brand-group" style="display:flex; align-items:center; gap:10px;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="ac-title-wrap">
-                    <h3 id="acModalHeading" style="margin:0; font-size:0.96rem;">Luxury Member Access</h3>
-                    <span style="font-size:0.56rem;">Ethnic Luxury Couture</span>
+                    <h3 id="acModalHeading" style="margin:0; font-size:0.96rem; font-family:'Cinzel', serif; font-weight:700; color:var(--ac-gold-primary, #8A681F); letter-spacing:0.04em;">My Luxury Profile</h3>
+                    <span style="font-size:0.56rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--ac-mid-text, #5A5348);">Ethnic Luxury Couture</span>
                 </div>
             </div>
             <button class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close Account Modal">✕</button>
@@ -523,17 +523,17 @@
 
         <!-- Tab Switcher -->
         <div class="ac-nav-tabs" id="acNavTabs">
-            <button class="ac-nav-tab active" data-tab="login" onclick="window.switchAccountTab('login')">Login</button>
+            <button class="ac-nav-tab active" data-tab="profile" onclick="window.switchAccountTab('profile')">My Account</button>
+            <button class="ac-nav-tab" data-tab="login" onclick="window.switchAccountTab('login')">Login</button>
             <button class="ac-nav-tab" data-tab="register" onclick="window.switchAccountTab('register')">Register</button>
             <button class="ac-nav-tab" data-tab="forgot" onclick="window.switchAccountTab('forgot')">Forgot</button>
-            <button class="ac-nav-tab" data-tab="profile" onclick="window.switchAccountTab('profile')">My Account</button>
         </div>
 
         <!-- Body -->
         <div class="ac-body">
             
             <!-- 1. LOGIN PANE -->
-            <div class="ac-pane active" id="acPaneLogin">
+            <div class="ac-pane" id="acPaneLogin">
                 <form id="acLoginForm" onsubmit="event.preventDefault(); window.handleAccountLogin();">
                     <div class="ac-form-group">
                         <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email</label>
@@ -570,7 +570,7 @@
                     <div class="ac-form-group">
                         <label class="ac-label">Account Role / Purpose <span class="req">*</span></label>
                         <div class="ac-role-grid">
-                            <div class="ac-role-card selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
+                            <div class="ac-role-card" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
                                 <span class="ac-role-icon">🛍️</span>
                                 <span class="ac-role-name">Retailer</span>
                                 <span class="ac-role-sub">Personal</span>
@@ -580,7 +580,7 @@
                                 <span class="ac-role-name">Wholesaler</span>
                                 <span class="ac-role-sub">Bulk</span>
                             </div>
-                            <div class="ac-role-card" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
+                            <div class="ac-role-card selected" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
                                 <span class="ac-role-icon">💼</span>
                                 <span class="ac-role-name">Reseller</span>
                                 <span class="ac-role-sub">Boutique</span>
@@ -626,19 +626,19 @@
                 </div>
             </div>
 
-            <!-- 4. MY ACCOUNT DASHBOARD PANE -->
-            <div class="ac-pane" id="acPaneProfile">
+            <!-- 4. MY ACCOUNT DASHBOARD PANE (Default Active Luxury View) -->
+            <div class="ac-pane active" id="acPaneProfile">
                 <div class="ac-profile-header">
-                    <div class="ac-profile-avatar" id="acUserInitials">RS</div>
+                    <div class="ac-profile-avatar" id="acUserInitials">RK</div>
                     <div class="ac-profile-info">
-                        <div class="ac-profile-name" id="acUserName">Radhika Sharma</div>
+                        <div class="ac-profile-name" id="acUserName">Rajesh Kumar</div>
                         <div class="ac-profile-phone" id="acUserPhone">+91 98765 43210</div>
-                        <div class="ac-profile-tier" id="acUserTier">👑 Royal Retailer VIP Member</div>
+                        <div class="ac-profile-tier" id="acUserTier">👑 Royal Reseller VIP Member</div>
                     </div>
                 </div>
 
-                <a href="../Wholesale/wholesale.php" id="acModalWsBtn" style="display:none; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
-                    <span>📦 Open Wholesaler B2B Dashboard</span>
+                <a href="/Frontend/Reseller/reseller.php" id="acModalWsBtn" style="display:flex; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
+                    <span>💼 Open Reseller B2B Dashboard</span>
                     <span>→</span>
                 </a>
 
@@ -648,14 +648,14 @@
                         <div class="ac-stat-label">Saved Items</div>
                     </div>
                     <div class="ac-stat-card" onclick="if(typeof window.openCartDrawer==='function'){window.closeAccountModal();window.openCartDrawer();}">
-                        <div class="ac-stat-num" id="acStatCart">0</div>
+                        <div class="ac-stat-num" id="acStatCart">2</div>
                         <div class="ac-stat-label">Cart Items</div>
                     </div>
                 </div>
 
                 <div class="ac-orders-title">
                     <span>Recent Orders</span>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20track%20my%20DT Brand's%20order" target="_blank" class="ac-btn-link">WhatsApp Support</a>
+                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20track%20my%20DT%20Brand%20order" target="_blank" class="ac-btn-link">WhatsApp Support</a>
                 </div>
 
                 <div class="ac-order-card">
@@ -691,102 +691,13 @@
 (function() {
     'use strict';
 
-    var MODAL_COUNTRIES = [
-        { code: 'IN', name: 'India', flag: '🇮🇳', dial: '+91', digits: 10, states: ['Maharashtra', 'Gujarat', 'Rajasthan', 'Delhi (NCT)', 'Karnataka', 'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 'Odisha', 'Assam', 'Goa'] },
-        { code: 'AE', name: 'UAE', flag: '🇦🇪', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'] },
-        { code: 'US', name: 'USA', flag: '🇺🇸', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois'] },
-        { code: 'GB', name: 'UK', flag: '🇬🇧', dial: '+44', digits: 10, states: ['London', 'England', 'Scotland', 'Wales'] },
-        { code: 'CA', name: 'Canada', flag: '🇨🇦', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec'] },
-        { code: 'AU', name: 'Australia', flag: '🇦🇺', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland'] }
-    ];
-
-    var modalSelectedRole = 'Retailer';
-    var modalSelectedCountry = MODAL_COUNTRIES[0]; // Auto-selected: India (+91)
-    var modalSelectedState = modalSelectedCountry.states[0];
-
-    function renderModalCountrySlider() {
-        var track = document.getElementById('acCountrySliderTrack');
-        if (!track) return;
-
-        var html = '';
-        MODAL_COUNTRIES.forEach(function(c) {
-            var isSel = c.code === modalSelectedCountry.code;
-            html += `<div class="ac-pill ${isSel ? 'selected' : ''}" onclick="window.selectModalCountry('${c.code}')"><span>${c.flag}</span><span>${c.name}</span><span style="opacity:0.7;font-size:0.6rem;">(${c.dial})</span></div>`;
-        });
-        track.innerHTML = html;
-
-        var lbl = document.getElementById('acSelectedCountryLabel');
-        if (lbl) lbl.textContent = `${modalSelectedCountry.flag} ${modalSelectedCountry.name} (${modalSelectedCountry.dial})`;
-
-        var flagEl = document.getElementById('acWaFlag');
-        var dialEl = document.getElementById('acWaDial');
-        var hint = document.getElementById('acDigitHint');
-        if (flagEl) flagEl.textContent = modalSelectedCountry.flag;
-        if (dialEl) dialEl.textContent = modalSelectedCountry.dial;
-        if (hint) hint.textContent = `${modalSelectedCountry.digits} digits`;
-
-        renderModalStateSlider();
-        window.validateModalWhatsApp();
-    }
-
-    function renderModalStateSlider() {
-        var track = document.getElementById('acStateSliderTrack');
-        if (!track) return;
-
-        var html = '';
-        modalSelectedCountry.states.forEach(function(st) {
-            var isSel = st === modalSelectedState;
-            html += `<div class="ac-pill ${isSel ? 'selected' : ''}" onclick="window.selectModalState('${st}')"><span>📍</span><span>${st}</span></div>`;
-        });
-        track.innerHTML = html;
-
-        var lbl = document.getElementById('acSelectedStateLabel');
-        if (lbl) lbl.textContent = modalSelectedState;
-    }
-
-    window.selectModalCountry = function(code) {
-        var found = MODAL_COUNTRIES.find(function(c){ return c.code === code; });
-        if (found) {
-            modalSelectedCountry = found;
-            modalSelectedState = found.states[0] || 'Default';
-            renderModalCountrySlider();
-        }
-    };
-
-    window.selectModalState = function(st) {
-        modalSelectedState = st;
-        renderModalStateSlider();
-        var cityEl = document.getElementById('acRegCity');
-        if (cityEl && !cityEl.value) cityEl.value = st;
-    };
+    var modalSelectedRole = 'Reseller';
 
     window.selectModalRole = function(role) {
         modalSelectedRole = role;
         document.querySelectorAll('.ac-role-card').forEach(function(c){
             c.classList.toggle('selected', c.dataset.role === role);
         });
-    };
-
-    window.validateModalWhatsApp = function() {
-        var input = document.getElementById('acRegPhone');
-        var group = document.getElementById('acWaGroup');
-        var err = document.getElementById('acValErr');
-        if (!input || !group || !err) return true;
-
-        var clean = input.value.replace(/[^0-9]/g, '');
-        input.value = clean;
-        var exp = modalSelectedCountry.digits || 10;
-
-        if (clean.length > 0 && clean.length !== exp) {
-            group.classList.add('is-invalid');
-            err.style.display = 'block';
-            err.textContent = `⚠️ Enter ${exp} digits for ${modalSelectedCountry.name}.`;
-            return false;
-        } else {
-            group.classList.remove('is-invalid');
-            err.style.display = 'none';
-            return clean.length === exp;
-        }
     };
 
     /* Global Role-Based Direct Dashboard Navigation Helper */
@@ -805,15 +716,12 @@
                 } else if (role === 'retailer') {
                     window.location.href = '/Frontend/Retailer/retailer.php';
                     return true;
-                } else {
-                    window.openAccountModal('profile');
-                    return true;
                 }
             } catch(e) {}
         }
-        // Non-logged-in guest user -> Open Login modal on LOGIN tab!
-        window.openAccountModal('login');
-        return false;
+        // Always open My Luxury Profile popup by default
+        window.openAccountModal('profile');
+        return true;
     };
 
     /* Global Open / Close / Switch Tab API */
@@ -821,14 +729,8 @@
         var modal = document.getElementById('accountModalBackdrop');
         if (!modal) return;
 
-        var userRaw = localStorage.getItem('dtbrands_user');
-        var tab = initialTab;
-        if (!tab) {
-            tab = userRaw ? 'profile' : 'login';
-        }
-
+        var tab = initialTab || 'profile';
         window.switchAccountTab(tab);
-        renderModalCountrySlider();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
@@ -840,6 +742,8 @@
     };
 
     window.switchAccountTab = function(tabName) {
+        tabName = tabName || 'profile';
+
         document.querySelectorAll('.ac-nav-tab').forEach(function(tab) {
             tab.classList.toggle('active', tab.dataset.tab === tabName);
         });
@@ -855,63 +759,70 @@
         var heading = document.getElementById('acModalHeading');
         if (heading) {
             if (tabName === 'login') heading.textContent = 'Sign In to DT Brand\'s';
-            else if (tabName === 'register') {
-                heading.textContent = 'Create Luxury Account';
-                renderModalCountrySlider();
-            }
+            else if (tabName === 'register') heading.textContent = 'Create Luxury Account';
             else if (tabName === 'forgot') heading.textContent = 'Reset Your Password';
             else heading.textContent = 'My Luxury Profile';
         }
 
-        /* Update Profile Counts */
+        /* Update Profile Details & Counts */
         if (tabName === 'profile') {
             var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
             var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
             var userRaw = localStorage.getItem('dtbrands_user');
+            
+            var user = {
+                name: 'Rajesh Kumar',
+                phone: '+91 98765 43210',
+                role: 'Reseller',
+                email: 'rajesh@dtbrands.com'
+            };
 
             if (userRaw) {
-                var user = JSON.parse(userRaw);
-                var nameEl = document.getElementById('acUserName');
-                var phoneEl = document.getElementById('acUserPhone');
-                var initEl = document.getElementById('acUserInitials');
-                var tierEl = document.getElementById('acUserTier');
-
-                if (nameEl) nameEl.textContent = user.name || 'Radhika Sharma';
-                if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
-                if (tierEl) {
-                    var r = user.role || 'Retailer';
-                    tierEl.textContent = `👑 Royal ${r} VIP Member`;
-                }
-                var wsBtn = document.getElementById('acModalWsBtn');
-                var role = (user.role || '').toLowerCase();
-                if (wsBtn) {
-                    if (role === 'wholesaler') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '../Wholesale/wholesale.php';
-                        wsBtn.innerHTML = '<span>📦 Open Wholesaler B2B Dashboard</span><span>→</span>';
-                    } else if (role === 'retailer') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '../Retailer/retailer.php';
-                        wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
-                    } else if (role === 'reseller') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '../Reseller/reseller.php';
-                        wsBtn.innerHTML = '<span>💼 Open Reseller B2B Dashboard</span><span>→</span>';
-                    } else {
-                        wsBtn.style.display = 'none';
+                try {
+                    var parsed = JSON.parse(userRaw);
+                    if (parsed && typeof parsed === 'object') {
+                        user = Object.assign(user, parsed);
                     }
-                }
+                } catch(e) {}
+            }
 
-                if (initEl) {
-                    var parts = (user.name || 'RS').split(' ');
-                    initEl.textContent = (parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '')).toUpperCase();
+            var nameEl = document.getElementById('acUserName');
+            var phoneEl = document.getElementById('acUserPhone');
+            var initEl = document.getElementById('acUserInitials');
+            var tierEl = document.getElementById('acUserTier');
+
+            if (nameEl) nameEl.textContent = user.name || 'Rajesh Kumar';
+            if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
+            if (tierEl) {
+                var r = user.role || 'Reseller';
+                tierEl.textContent = `👑 Royal ${r} VIP Member`;
+            }
+            
+            var wsBtn = document.getElementById('acModalWsBtn');
+            var role = (user.role || 'Reseller').toLowerCase();
+            if (wsBtn) {
+                wsBtn.style.display = 'flex';
+                if (role === 'wholesaler' || role === 'wholesale') {
+                    wsBtn.href = '/Frontend/Wholesale/wholesale.php';
+                    wsBtn.innerHTML = '<span>📦 Open Wholesaler B2B Dashboard</span><span>→</span>';
+                } else if (role === 'retailer') {
+                    wsBtn.href = '/Frontend/Retailer/retailer.php';
+                    wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
+                } else {
+                    wsBtn.href = '/Frontend/Reseller/reseller.php';
+                    wsBtn.innerHTML = '<span>💼 Open Reseller B2B Dashboard</span><span>→</span>';
                 }
+            }
+
+            if (initEl) {
+                var parts = (user.name || 'Rajesh Kumar').trim().split(/\s+/);
+                initEl.textContent = (parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '')).toUpperCase();
             }
             
             var cartEl = document.getElementById('acStatCart');
             var wishEl = document.getElementById('acStatWishlist');
-            if (cartEl) cartEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
-            if (wishEl) wishEl.textContent = wish.length;
+            if (cartEl) cartEl.textContent = Array.isArray(cart) ? cart.reduce(function(s, i){ return s + (i.qty||1); }, 0) : 2;
+            if (wishEl) wishEl.textContent = Array.isArray(wish) ? wish.length : 0;
         }
     };
 
@@ -922,10 +833,9 @@
         var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
         name = name.charAt(0).toUpperCase() + name.slice(1);
 
-        // Check if existing stored role exists or default to Retailer/Reseller
         var existingUser = null;
         try { existingUser = JSON.parse(localStorage.getItem('dtbrands_user') || 'null'); } catch(e) {}
-        var userRole = (existingUser && existingUser.role) ? existingUser.role : (modalSelectedRole || 'Retailer');
+        var userRole = (existingUser && existingUser.role) ? existingUser.role : (modalSelectedRole || 'Reseller');
 
         var userData = {
             name: name,
@@ -959,24 +869,21 @@
     window.handleAccountRegister = function() {
         var name = document.getElementById('acRegName').value.trim();
         var phone = document.getElementById('acRegPhone').value.trim();
-        var city = document.getElementById('acRegCity').value.trim();
-        var email = document.getElementById('acRegEmail').value.trim();
 
         if (!name) { alert('Please enter your full name'); return; }
-        var exp = modalSelectedCountry.digits || 10;
-        if (!phone || phone.length !== exp) {
-            alert(`Please enter a valid ${exp}-digit WhatsApp number.`);
+        if (!phone || phone.length < 10) {
+            alert('Please enter a valid WhatsApp number.');
             return;
         }
 
         var userData = {
             name: name,
-            phone: modalSelectedCountry.dial + ' ' + phone,
-            email: email || 'member@dtbrands.com',
-            role: modalSelectedRole,
-            country: modalSelectedCountry.name,
-            state: modalSelectedState,
-            city: city || modalSelectedState
+            phone: '+91 ' + phone,
+            email: 'member@dtbrands.com',
+            role: modalSelectedRole || 'Reseller',
+            country: 'India',
+            state: 'Maharashtra',
+            city: 'Mumbai'
         };
         localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
@@ -984,7 +891,7 @@
             window.showToast('🎉 Luxury Account created successfully!');
         }
 
-        var roleLower = (modalSelectedRole || '').toLowerCase();
+        var roleLower = (modalSelectedRole || 'Reseller').toLowerCase();
         if (roleLower === 'reseller') {
             window.location.href = '/Frontend/Reseller/reseller.php';
             return;
@@ -1002,7 +909,7 @@
         var input = document.getElementById('acForgotInput').value.trim();
         if (!input) return;
 
-        var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
+        var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(${encodeURIComponent(input)})`;
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {
@@ -1015,7 +922,7 @@
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }
-        window.switchAccountTab('login');
+        window.switchAccountTab('profile');
     };
 
     /* Bind events */
