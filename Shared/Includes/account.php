@@ -556,7 +556,7 @@
                 </div>
             </div>
 
-            <!-- 2. REGISTER PANE -->
+            <!-- 2. REGISTER PANE (Clean, Streamlined Luxury Design) -->
             <div class="ac-pane" id="acPaneRegister">
                 <form id="acRegisterForm" onsubmit="event.preventDefault(); window.handleAccountRegister();">
                     
@@ -588,54 +588,10 @@
                         </div>
                     </div>
 
-                    <!-- Country Option Slider (First Auto-Selected: India 🇮🇳 +91) -->
+                    <!-- WhatsApp / Mobile Number -->
                     <div class="ac-form-group">
-                        <label class="ac-label">
-                            <span>Country <span class="req">*</span></span>
-                            <span id="acSelectedCountryLabel" style="color:var(--ac-gold-primary); font-weight:700;">🇮🇳 India (+91)</span>
-                        </label>
-                        <div class="ac-slider-track" id="acCountrySliderTrack">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- State Option Slider -->
-                    <div class="ac-form-group">
-                        <label class="ac-label">
-                            <span>State <span class="req">*</span></span>
-                            <span id="acSelectedStateLabel" style="color:var(--ac-gold-primary); font-weight:700;">Maharashtra</span>
-                        </label>
-                        <div class="ac-slider-track" id="acStateSliderTrack">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- City Input -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegCity">City <span class="req">*</span></label>
-                        <input type="text" id="acRegCity" class="ac-input" placeholder="e.g. Mumbai" required value="Mumbai">
-                    </div>
-
-                    <!-- WhatsApp Number with Flag Prefix & Validation -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegPhone">
-                            <span>WhatsApp Number <span class="req">*</span></span>
-                            <span id="acDigitHint" style="font-size:0.65rem; color:var(--ac-light-text);">10 digits</span>
-                        </label>
-                        <div class="ac-wa-group" id="acWaGroup">
-                            <div class="ac-wa-prefix">
-                                <span id="acWaFlag">🇮🇳</span>
-                                <span id="acWaDial">+91</span>
-                            </div>
-                            <input type="tel" id="acRegPhone" class="ac-wa-input" placeholder="9876543210" maxlength="12" required oninput="window.validateModalWhatsApp()">
-                        </div>
-                        <div class="ac-val-err" id="acValErr">⚠️ Please enter a valid 10-digit number.</div>
-                    </div>
-
-                    <!-- Email Address -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegEmail">Email Address (Optional)</label>
-                        <input type="email" id="acRegEmail" class="ac-input" placeholder="radhika@example.com">
+                        <label class="ac-label" for="acRegPhone">WhatsApp / Mobile Number <span class="req">*</span></label>
+                        <input type="tel" id="acRegPhone" class="ac-input" placeholder="e.g. 9876543210" maxlength="12" required>
                     </div>
 
                     <!-- Password -->
