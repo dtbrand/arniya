@@ -1072,7 +1072,7 @@ input[type=range].mf-range::-moz-range-thumb {
         document.body.style.overflow='hidden'; 
     }
 
-    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php'; });
+    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); if (typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='../../Shared/Auth/myaccount.php';} });
     if (logoutItem) logoutItem.addEventListener('click', function(){ 
         closeMore(); 
         localStorage.removeItem('dtbrands_user');
@@ -1080,8 +1080,8 @@ input[type=range].mf-range::-moz-range-thumb {
         syncMobileMoreAccountState();
         if (typeof window.syncHeaderAccountState === 'function') window.syncHeaderAccountState();
     });
-    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php?tab=login'; });
-    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); window.location.href = '../../Shared/Auth/myaccount.php?tab=register'; });
+    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='../../Shared/Auth/myaccount.php?tab=login';} });
+    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('register');}else{window.location.href='../../Shared/Auth/myaccount.php?tab=register';} });
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });

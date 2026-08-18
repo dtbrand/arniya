@@ -520,7 +520,7 @@
             </button>
 
             <!-- Member Account Button -->
-            <a href="../../Shared/Auth/myaccount.php" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
+            <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='../../Shared/Auth/myaccount.php?tab=login';}" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
                 <div class="pdp-account-avatar" id="pdpUserAvatar">👤</div>
                 <span id="pdpUserLabel">Account</span>
             </a>
