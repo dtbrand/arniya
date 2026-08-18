@@ -965,42 +965,42 @@
         var ANALYTICS_DATA = {
             'overview': {
                 'today': {
-                    sub: "Today's Live Retail Snapshot & Dispatch Activity",
+                    sub: "Today's Live Retail Store Sales, Inventory & Dispatch Activity",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1", pill: "Active", isGold: true },
-                        { label: "Today's Orders", val: "1 Lot", pill: "Dispatched", isGold: false },
-                        { label: "Today's Quantity", val: "6 Pcs", pill: "100% Packed", isGold: false },
-                        { label: "Today's B2B Turnover", val: "₹18,200", pill: "↑ 100%", isGold: true }
+                        { label: "Retail Account Tier", val: "Tier 1", pill: "Active", isGold: true },
+                        { label: "Today's Orders", val: "1 Restock Lot", pill: "Dispatched", isGold: false },
+                        { label: "Store Units", val: "6 Pcs", pill: "100% Packed", isGold: false },
+                        { label: "Today's Retail Value", val: "₹18,200", pill: "↑ 100%", isGold: true }
                     ],
-                    chartTitle: "Today's Hourly Procurement (Units)",
+                    chartTitle: "Today's Hourly Store Restocking (Units)",
                     barActive: 7,
-                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in retail procurement today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
-                    catTitle: WS_ICONS.dress + " Today's Category Breakdown",
+                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹18,200</strong> in retail store restock value today.", target: "₹50K", rev: "₹18.2K", today: "₹18.2K" },
+                    catTitle: WS_ICONS.dress + " Today's Store Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees (HSN 5007)", val: "₹18,200 (100%)", fill: 100 }
                     ],
                     kpis: [
-                        { label: "Today's Order Value", num: "₹18,200", sub: WS_ICONS.lightning + " 1 Consignment" },
+                        { label: "Today's Restock Value", num: "₹18,200", sub: WS_ICONS.lightning + " 1 Store Consignment" },
                         { label: "Dispatch Status", num: "In Transit", sub: "AWB: 884729104" },
-                        { label: "Today's GST Credit", num: "₹910", sub: "5% GST" },
-                        { label: "Delivery ETA", num: "Tomorrow", sub: "Priority Air" }
+                        { label: "Today's GST Credit", num: "₹910", sub: "5% GSTR-2B Claimed" },
+                        { label: "Store Delivery ETA", num: "Tomorrow", sub: "Surat Priority Air" }
                     ],
-                    milestoneBadge: "Tier 1: Non-VIP (Active)",
-                    milestoneVal: "Tier 1: Non-VIP Member",
-                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
+                    milestoneBadge: "Tier 1: Active Retailer",
+                    milestoneVal: "Tier 1: Active Retailer",
+                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver Retailer</strong> with an extra +3% margin rebate!"
                 },
                 'week': {
-                    sub: "Weekly Procurement Targets, Category Mix & Logistics Performance",
+                    sub: "Weekly Retail Sales, Store Inventory Mix & Dispatch Reliability",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
-                        { label: "Total Orders", val: "6", pill: "↑ 14.20%", isGold: false },
-                        { label: "Total Quantity (Units)", val: "48 Pcs", pill: "↑ 8.50%", isGold: false },
-                        { label: "Total B2B Turnover", val: "₹2,05,062", pill: "↑ 18.40%", isGold: true }
+                        { label: "Retail Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
+                        { label: "Total Store Orders", val: "6", pill: "↑ 14.20%", isGold: false },
+                        { label: "Restocked Quantity", val: "48 Pcs", pill: "↑ 8.50%", isGold: false },
+                        { label: "Total Retail Turnover", val: "₹2,05,062", pill: "↑ 18.40%", isGold: true }
                     ],
-                    chartTitle: "Monthly Sales",
+                    chartTitle: "Weekly Retail Sales",
                     barActive: 7,
-                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You earned <strong>₹32,870</strong> today, it's higher than last month. Keep up your retail business growth!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
-                    catTitle: WS_ICONS.dress + " Category Procurement Breakdown",
+                    gauge: { pct: "75.55%", offset: 58, badge: "+10%", desc: "You achieved <strong>₹32,870</strong> turnover today, higher than last week. Keep growing your boutique retail showroom!", target: "₹50K ↓", rev: "₹48.5K ↑", today: "₹18.2K ↑" },
+                    catTitle: WS_ICONS.dress + " Category Retail Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹1,14,500 (56%)", fill: 88 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹49,147 (24%)", fill: 72 },
@@ -1008,27 +1008,27 @@
                         { name: "Georgette & Chanderi Fabrics", val: "₹15,590 (7%)", fill: 60 }
                     ],
                     kpis: [
-                        { label: "Avg. Turnaround Time", num: "1.8 Days", sub: WS_ICONS.lightning + " Fast Dispatch" },
-                        { label: "Weekly Dispatch Reliability", num: "99.2%", sub: WS_ICONS.target + " Target Achieved" },
-                        { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% Verified" },
-                        { label: "Active Consignments", num: "2 Orders", sub: WS_ICONS.repeat + " In Transit" }
+                        { label: "Avg. Retail Margin", num: "36.8%", sub: "↑ 4.2% Boutique Markup" },
+                        { label: "Store Restock TAT", num: "1.8 Days", sub: WS_ICONS.lightning + " Priority Surat Express" },
+                        { label: "GST Input Tax Credit", num: "₹10,253", sub: WS_ICONS.shield + " 100% GSTR-2B Claimed" },
+                        { label: "Store Sell-Through", num: "89.4%", sub: WS_ICONS.repeat + " Fast Selling Collections" }
                     ],
-                    milestoneBadge: "Tier 1: Non-VIP (Active)",
-                    milestoneVal: "Tier 1: Non-VIP Member",
-                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
+                    milestoneBadge: "Tier 1: Active Retailer",
+                    milestoneVal: "Tier 1: Active Retailer",
+                    milestoneDesc: "Complete <strong>44 more orders</strong> to automatically unlock <strong>Tier 2: Silver Retailer</strong> with an extra +3% margin rebate!"
                 },
                 'month': {
-                    sub: "Monthly Procurement Targets, Category Mix & Logistics Performance",
+                    sub: "Monthly Retail Quota, Store Assortment & Logistics Performance",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
-                        { label: "Total Orders", val: "14", pill: "↑ 21.00%", isGold: false },
-                        { label: "Total Quantity (Units)", val: "112 Pcs", pill: "↑ 16.80%", isGold: false },
-                        { label: "Total B2B Turnover", val: "₹4,86,500", pill: "↑ 24.10%", isGold: true }
+                        { label: "Retail Account Tier", val: "Tier 1", pill: "1–50 Orders", isGold: true },
+                        { label: "Monthly Orders", val: "14", pill: "↑ 21.00%", isGold: false },
+                        { label: "Total Units Sold", val: "112 Pcs", pill: "↑ 16.80%", isGold: false },
+                        { label: "Monthly Retail Turnover", val: "₹4,86,500", pill: "↑ 24.10%", isGold: true }
                     ],
-                    chartTitle: "August 2026 Procurement Volume",
+                    chartTitle: "August 2026 Store Volume",
                     barActive: 7,
-                    gauge: { pct: "97.30%", offset: 7, badge: "+18.2%", desc: "Monthly volume tracking ahead of schedule by <strong>+18.2%</strong>!", target: "₹500K", rev: "₹486.5K ↑", today: "₹32.8K ↑" },
-                    catTitle: WS_ICONS.dress + " August Category Procurement Breakdown",
+                    gauge: { pct: "97.30%", offset: 7, badge: "+18.2%", desc: "Monthly store restocking pace tracking ahead of schedule by <strong>+18.2%</strong>!", target: "₹500K", rev: "₹486.5K ↑", today: "₹32.8K ↑" },
+                    catTitle: WS_ICONS.dress + " August Category Retail Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,72,000 (56%)", fill: 92 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹1,18,500 (24%)", fill: 84 },
@@ -1037,25 +1037,25 @@
                     ],
                     kpis: [
                         { label: "Avg. Order Value", num: "₹34,750", sub: "↑ 15.1% growth" },
-                        { label: "Avg. Turnaround Time", num: "1.6 Days", sub: WS_ICONS.lightning + " VIP Express" },
-                        { label: "Monthly GST ITC", num: "₹24,325", sub: WS_ICONS.shield + " 100% Claimed" },
-                        { label: "Repeat Order Index", num: "87.5%", sub: WS_ICONS.repeat + " 12 of 14 Lots Reordered" }
+                        { label: "Store Restock Speed", num: "1.6 Days", sub: WS_ICONS.lightning + " VIP Air Dispatch" },
+                        { label: "Monthly GST ITC", num: "₹24,325", sub: WS_ICONS.shield + " 100% Claimed in 3B" },
+                        { label: "Store Repeat Index", num: "87.5%", sub: WS_ICONS.repeat + " 12 of 14 Lots Restocked" }
                     ],
-                    milestoneBadge: "Tier 1: Non-VIP (Active)",
-                    milestoneVal: "Tier 1: Non-VIP Member",
-                    milestoneDesc: "Complete <strong>36 more orders</strong> to automatically unlock <strong>Tier 2: Silver</strong> with a extra margin rebate!"
+                    milestoneBadge: "Tier 1: Active Retailer",
+                    milestoneVal: "Tier 1: Active Retailer",
+                    milestoneDesc: "Complete <strong>36 more orders</strong> to automatically unlock <strong>Tier 2: Silver Retailer</strong> with an extra +3% margin rebate!"
                 },
                 'last_month': {
-                    sub: "July 2026 Reconciled Performance & Procurements",
+                    sub: "July 2026 Reconciled Retail Performance & Showroom Sales",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 1", pill: "Reconciled", isGold: true },
+                        { label: "Retail Account Tier", val: "Tier 1", pill: "Reconciled", isGold: true },
                         { label: "July Orders", val: "11", pill: "Delivered", isGold: false },
                         { label: "July Quantity", val: "88 Pcs", pill: "100% Received", isGold: false },
-                        { label: "July Turnover", val: "₹3,92,400", pill: "Settled", isGold: true }
+                        { label: "July Retail Turnover", val: "₹3,92,400", pill: "Settled", isGold: true }
                     ],
                     chartTitle: "July 2026 Final Settlement",
                     barActive: 6,
-                    gauge: { pct: "100%", offset: 0, badge: "100% Done", desc: "July target fully achieved and 100% GST reconciled!", target: "₹350K", rev: "₹392.4K", today: "Closed" },
+                    gauge: { pct: "100%", offset: 0, badge: "100% Done", desc: "July store sales target fully achieved and 100% GST reconciled!", target: "₹350K", rev: "₹392.4K", today: "Closed" },
                     catTitle: WS_ICONS.dress + " July 2026 Category Breakdown",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹2,19,000 (56%)", fill: 100 },
@@ -1065,31 +1065,31 @@
                     ],
                     kpis: [
                         { label: "Avg. Order Value", num: "₹35,672", sub: "Final Settled" },
-                        { label: "Total Transit TAT", num: "2.1 Days", sub: "100% Delivered" },
+                        { label: "Store Delivery TAT", num: "2.1 Days", sub: "100% Delivered" },
                         { label: "Total GST ITC", num: "₹19,620", sub: "Filed in GSTR-3B" },
-                        { label: "Reorder Loyalty", num: "90.9%", sub: WS_ICONS.repeat + " 10 of 11 Lots Repeated" }
+                        { label: "Showroom Loyalty", num: "90.9%", sub: WS_ICONS.repeat + " 10 of 11 Lots Repeated" }
                     ],
-                    milestoneBadge: "Tier 1: Non-VIP (Reconciled)",
-                    milestoneVal: "Tier 1: Non-VIP Member",
-                    milestoneDesc: "July 2026 orders settled. Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver</strong>!"
+                    milestoneBadge: "Tier 1: Active Retailer",
+                    milestoneVal: "Tier 1: Active Retailer",
+                    milestoneDesc: "July 2026 orders settled. Complete <strong>44 more orders</strong> to unlock <strong>Tier 2: Silver Retailer</strong>!"
                 },
                 'year': {
-                    sub: "Financial Year 2026-27 Comprehensive B2B Turnover",
+                    sub: "Financial Year 2026-27 Comprehensive Retail Turnover & Growth",
                     cards: [
-                        { label: "B2B Account Tier", val: "Tier 2", pill: "FY26-27", isGold: true },
-                        { label: "Annual Orders", val: "58 Lots", pill: "↑ 34.5%", isGold: false },
+                        { label: "Retail Account Tier", val: "Tier 2 (Silver)", pill: "FY26-27", isGold: true },
+                        { label: "Annual Store Orders", val: "58 Lots", pill: "↑ 34.5%", isGold: false },
                         { label: "Annual Quantity", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
                         { label: "Annual Turnover", val: "₹19,84,300", pill: "↑ 31.8%", isGold: true }
                     ],
-                    chartTitle: "FY 2026-27 Monthly Revenue Peak",
+                    chartTitle: "FY 2026-27 Monthly Retail Revenue Peak",
                     barActive: 9,
-                    gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "Annual procurement pace on track to exceed ₹25 Lakhs milestone!", target: "₹2.5M", rev: "₹1.98M ↑", today: "Live" },
-                    catTitle: WS_ICONS.dress + " FY 2026-27 Cumulative Category Volume",
+                    gauge: { pct: "79.37%", offset: 48, badge: "+31.8%", desc: "Annual store sales on track to exceed ₹25 Lakhs milestone!", target: "₹2.5M", rev: "₹1.98M ↑", today: "Live" },
+                    catTitle: WS_ICONS.dress + " FY 2026-27 Cumulative Retail Category Volume",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "₹11,10,000 (56%)", fill: 82 },
                         { name: "Bridal Velvet & Zardosi Lehengas", val: "₹4,76,000 (24%)", fill: 76 },
                         { name: "Royal Anarkali Kurti Sets", val: "₹2,58,000 (13%)", fill: 90 },
-                        { name: "Georgette & Chanderi Fabrics", val: "₹1,40,300 (7%)", fill: 68 }
+                        { name: "Georgette & Chanderi Fabrics", val: "₹140,300 (7%)", fill: 68 }
                     ],
                     kpis: [
                         { label: "Annual Avg. Order", num: "₹34,212", sub: "58 Consignments" },
@@ -1099,19 +1099,19 @@
                     ],
                     milestoneBadge: "Tier 2: Silver (Active)",
                     milestoneVal: "Tier 2: Silver Member",
-                    milestoneDesc: "Complete <strong>192 more orders</strong> to automatically unlock <strong>Tier 3: Gold (250+ Orders)</strong>!"
+                    milestoneDesc: "Complete <strong>192 more orders</strong> to automatically unlock <strong>Tier 3: Gold Retailer (250+ Orders)</strong>!"
                 }
             },
             'sales': {
                 'today': {
-                    sub: "Today's Retail Volume & Unit Procurement (Pcs)",
+                    sub: "Today's Retail Volume & Boutique Inventory Restocking (Pcs)",
                     cards: [
-                        { label: "Active SKUs Today", val: "1 SKU", pill: "Kanjivaram", isGold: true },
+                        { label: "Active Boutique SKUs", val: "1 SKU", pill: "Kanjivaram", isGold: true },
                         { label: "Units Dispatched", val: "6 Pcs", pill: "100% QC Passed", isGold: false },
                         { label: "Pending Packaging", val: "0 Pcs", pill: "Cleared", isGold: false },
                         { label: "Delivery Mode", val: "Air Express", pill: "BlueDart", isGold: true }
                     ],
-                    chartTitle: "Today's Unit Dispatch (Pcs)",
+                    chartTitle: "Today's Store Unit Dispatch (Pcs)",
                     barActive: 7,
                     gauge: { pct: "100%", offset: 0, badge: "100%", desc: "Today's unit dispatch completed with 100% QC stamp.", target: "6 Pcs", rev: "6 Pcs", today: "6 Pcs" },
                     catTitle: WS_ICONS.dress + " Unit Distribution by Craft (Pcs)",
@@ -1121,22 +1121,22 @@
                     kpis: [
                         { label: "Units Dispatched", num: "6 Pcs", sub: "BlueDart Air" },
                         { label: "QC Inspection", num: "100% Passed", sub: "Zari Hallmarked" },
-                        { label: "Lot Packaging", num: "Waterproof Bale", sub: "Tamper Evident" },
+                        { label: "Store Packaging", num: "Waterproof Box", sub: "Tamper Evident" },
                         { label: "Consignment Weight", num: "8.4 Kg", sub: "Air Cargo" }
                     ],
-                    milestoneBadge: WS_ICONS.package + " Daily Lot Target",
+                    milestoneBadge: WS_ICONS.package + " Daily Store Target",
                     milestoneVal: "6 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 10 Pcs</span>",
-                    milestoneDesc: "<strong>60%</strong> of daily packaging capacity fulfilled."
+                    milestoneDesc: "<strong>60%</strong> of daily store fulfillment capacity completed."
                 },
                 'week': {
-                    sub: "Sales Volume & Procurement Lot Distribution (Units / Pcs)",
+                    sub: "Weekly Sales Volume & Boutique Lot Distribution (Units / Pcs)",
                     cards: [
                         { label: "Active Catalog SKUs", val: "6 Live Lots", pill: "Top Trending", isGold: true },
                         { label: "Dispatched Volume", val: "48 Pcs", pill: "↑ 22.5%", isGold: false },
                         { label: "Units In Transit", val: "10 Pcs", pill: "Surat Atelier", isGold: false },
-                        { label: "Delivered to Warehouse", val: "38 Pcs", pill: "↑ 18.0%", isGold: true }
+                        { label: "Delivered to Store", val: "38 Pcs", pill: "↑ 18.0%", isGold: true }
                     ],
-                    chartTitle: "Weekly Unit Sales (Pcs)",
+                    chartTitle: "Weekly Retail Unit Sales (Pcs)",
                     barActive: 7,
                     gauge: { pct: "80.00%", offset: 47, badge: "+15%", desc: "48 retail units dispatched across 6 distinct craft lots this week.", target: "60 Pcs", rev: "48 Pcs", today: "6 Pcs" },
                     catTitle: WS_ICONS.dress + " Unit Volume Distribution by Category (Pcs)",
@@ -1148,7 +1148,7 @@
                     ],
                     kpis: [
                         { label: "Total Units Dispatched", num: "48 Pcs", sub: "6 Consignments" },
-                        { label: "Bale Packaging", num: "100% Sealed", sub: "Moisture Protected" },
+                        { label: "Showroom Packaging", num: "100% Sealed", sub: "Moisture Protected" },
                         { label: "Defect Return Rate", num: "0.0%", sub: "Zero Returns" },
                         { label: "Fastest Moving SKU", num: "KLN-SR-003", sub: "Kanjivaram Temple Silk" }
                     ],
@@ -1157,16 +1157,16 @@
                     milestoneDesc: "<strong>80.0%</strong> of weekly lot volume fulfilled. 12 pcs remaining for weekly bonus lot!"
                 },
                 'month': {
-                    sub: "Monthly Volume & Retail Lot Distribution (Units / Pcs)",
+                    sub: "Monthly Volume & Retail Showroom Distribution (Units / Pcs)",
                     cards: [
-                        { label: "Procured Lots", val: "14 Lots", pill: "↑ 28.0%", isGold: true },
+                        { label: "Procured Store Lots", val: "14 Lots", pill: "↑ 28.0%", isGold: true },
                         { label: "Monthly Units Sold", val: "112 Pcs", pill: "↑ 24.5%", isGold: false },
                         { label: "Units In Transit", val: "14 Pcs", pill: "En Route", isGold: false },
-                        { label: "Delivered Quantity", val: "98 Pcs", pill: "↑ 26.0%", isGold: true }
+                        { label: "Delivered to Store", val: "98 Pcs", pill: "↑ 26.0%", isGold: true }
                     ],
                     chartTitle: "August Monthly Unit Volume (Pcs)",
                     barActive: 7,
-                    gauge: { pct: "93.33%", offset: 16, badge: "+24.5%", desc: "112 total pieces procured in August, setting a new monthly high.", target: "120 Pcs", rev: "112 Pcs", today: "6 Pcs" },
+                    gauge: { pct: "93.33%", offset: 16, badge: "+24.5%", desc: "112 total pieces restocked in August, setting a new monthly high.", target: "120 Pcs", rev: "112 Pcs", today: "6 Pcs" },
                     catTitle: WS_ICONS.dress + " August Category Units Breakdown (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "62 Pcs (55%)", fill: 94 },
@@ -1176,7 +1176,7 @@
                     ],
                     kpis: [
                         { label: "Monthly Units Sold", num: "112 Pcs", sub: "↑ 24.5% MoM" },
-                        { label: "Avg Lot Size", num: "8 Pcs / Lot", sub: "Optimal MOQ" },
+                        { label: "Avg Lot Size", num: "8 Pcs / Lot", sub: "Optimal Store Stock" },
                         { label: "QC Pass Rate", num: "100%", sub: "Surat Atelier" },
                         { label: "Top Fabric", num: "Mulberry Silk", sub: "62 Units" }
                     ],
@@ -1189,12 +1189,12 @@
                     cards: [
                         { label: "July Lots Closed", val: "11 Lots", pill: "Delivered", isGold: true },
                         { label: "Units Fulfilled", val: "88 Pcs", pill: "100% Verified", isGold: false },
-                        { label: "Transit Dispatches", val: "11 Bales", pill: "Air Cargo", isGold: false },
+                        { label: "Transit Dispatches", val: "11 Parcels", pill: "Air Cargo", isGold: false },
                         { label: "Defect Incident", val: "0 Units", pill: "Zero Defect", isGold: true }
                     ],
                     chartTitle: "July Unit Fulfillment (Pcs)",
                     barActive: 6,
-                    gauge: { pct: "100%", offset: 0, badge: "100%", desc: "88 pieces delivered with 100% customer acceptance and zero defects.", target: "80 Pcs", rev: "88 Pcs", today: "Done" },
+                    gauge: { pct: "100%", offset: 0, badge: "100%", desc: "88 pieces delivered with 100% store acceptance and zero defects.", target: "80 Pcs", rev: "88 Pcs", today: "Done" },
                     catTitle: WS_ICONS.dress + " July Category Units Breakdown (Pcs)",
                     cats: [
                         { name: "Pure Silk & Zari Sarees", val: "50 Pcs (57%)", fill: 100 },
@@ -1205,14 +1205,69 @@
                     kpis: [
                         { label: "July Total Delivered", num: "88 Pcs", sub: "11 Consignments" },
                         { label: "Return Rate", num: "0.0%", sub: "Zero Defects" },
-                                                { label: "Payment Settlement", num: "₹18,200", sub: "NEFT Verified" }
+                        { label: "Payment Settlement", num: "₹18,200", sub: "NEFT Verified" }
                     ],
                     milestoneBadge: WS_ICONS.card + " Daily Revenue Target",
                     milestoneVal: "₹18,200 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
                     milestoneDesc: "<strong>36.4%</strong> of daily financial turnover goal achieved."
                 },
+                'year': {
+                    sub: "FY 2026-27 Cumulative Retail Units Sold & Restocking",
+                    cards: [
+                        { label: "Annual Store Orders", val: "58 Lots", pill: "FY26-27", isGold: true },
+                        { label: "Total Units Restocked", val: "464 Pcs", pill: "↑ 28.2%", isGold: false },
+                        { label: "Showroom Sell-Through", val: "91.8%", pill: "Top Tier", isGold: false },
+                        { label: "QC Quality Stamp", val: "100%", pill: "Zero Defect", isGold: true }
+                    ],
+                    chartTitle: "FY 2026-27 Annual Retail Units Sold (Pcs)",
+                    barActive: 9,
+                    gauge: { pct: "79.37%", offset: 48, badge: "+28.2%", desc: "464 boutique pieces restocked for retail showroom in FY26-27.", target: "600 Pcs", rev: "464 Pcs", today: "Live" },
+                    catTitle: WS_ICONS.dress + " FY 2026-27 Category Mix (Pcs)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "260 Pcs (56%)", fill: 82 },
+                        { name: "Bridal Velvet & Zardosi Lehengas", val: "110 Pcs (24%)", fill: 76 },
+                        { name: "Royal Anarkali Kurti Sets", val: "62 Pcs (13%)", fill: 90 },
+                        { name: "Georgette & Chanderi Fabrics", val: "32 Pcs (7%)", fill: 68 }
+                    ],
+                    kpis: [
+                        { label: "Total Units Delivered", num: "464 Pcs", sub: "58 Consignments" },
+                        { label: "Restock Velocity", num: "1.8 Days", sub: "Surat Air Express" },
+                        { label: "Zero Defect Rate", num: "100%", sub: "Silk Mark Hallmarked" },
+                        { label: "Showroom Reorder Rate", num: "92.4%", sub: "High Footfall" }
+                    ],
+                    milestoneBadge: WS_ICONS.package + " Annual Retail Goal",
+                    milestoneVal: "464 Pcs <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ 600 Pcs</span>",
+                    milestoneDesc: "<strong>77.3%</strong> of Annual unit target achieved. Restock 136 more pcs to unlock Gold Retailer Tier!"
+                }
+            },
+            'revenue': {
+                'today': {
+                    sub: "Today's Gross Retail Revenue, Tax Invoices & ITC Credit",
+                    cards: [
+                        { label: "Gross Taxable Value", val: "₹18,200", pill: "5% GST Tier", isGold: true },
+                        { label: "Input Tax Credit (ITC)", val: "₹910", pill: "GSTR-2B Claimed", isGold: false },
+                        { label: "VIP Margin Saved", val: "₹1,250", pill: "Tier 1 Rate", isGold: false },
+                        { label: "Total Settled Turnover", val: "₹19,110", pill: "Paid In Full", isGold: true }
+                    ],
+                    chartTitle: "Today's Hourly Retail Turnover (₹)",
+                    barActive: 7,
+                    gauge: { pct: "36.4%", offset: 150, badge: "Today", desc: "You generated <strong>₹19,110</strong> gross retail turnover today with ₹910 claimable GST ITC.", target: "₹50K", rev: "₹19.1K", today: "₹19.1K" },
+                    catTitle: WS_ICONS.dress + " Today's Invoiced Category Turnover (₹)",
+                    cats: [
+                        { name: "Pure Silk & Zari Sarees", val: "₹18,200 (GST: ₹910)", fill: 100 }
+                    ],
+                    kpis: [
+                        { label: "Gross Taxable Value", num: "₹18,200", sub: "5% GST Saree/Fabrics" },
+                        { label: "Total GST ITC Accrued", num: "₹910", sub: WS_ICONS.shield + " 100% GSTR-1 Verified" },
+                        { label: "Retail Margin Saved", num: "₹1,250", sub: WS_ICONS.crown + " VIP Tier 1 Discount" },
+                        { label: "Settlement Status", num: "100% Cleared", sub: "Zero Pending Dues" }
+                    ],
+                    milestoneBadge: WS_ICONS.card + " Daily Revenue Goal",
+                    milestoneVal: "₹19,110 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹50,000</span>",
+                    milestoneDesc: "<strong>38.2%</strong> of daily financial turnover goal achieved."
+                },
                 'week': {
-                    sub: "Gross B2B Revenue, Tax Invoices & ITC Credit Accrual",
+                    sub: "Gross Retail Revenue, Tax Invoices & ITC Credit Accrual",
                     cards: [
                         { label: "Gross Taxable Value", val: "₹1,95,297", pill: "5% GST Tier", isGold: true },
                         { label: "Input Tax Credit (ITC)", val: "₹10,253", pill: "100% Matched", isGold: false },
@@ -1237,14 +1292,14 @@
                     ],
                     milestoneBadge: WS_ICONS.crown + " Financial Target",
                     milestoneVal: "₹2,05,062 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹2,50,000</span>",
-                    milestoneDesc: "<strong>82.02%</strong> of your target achieved. Procure <strong>₹44,938</strong> more to unlock <strong>Tier 2 Platinum VIP</strong> with extra 3% margin!"
+                    milestoneDesc: "<strong>82.02%</strong> of your target achieved. Restock <strong>₹44,938</strong> more to unlock <strong>Tier 2 Silver VIP</strong> with extra +3% margin!"
                 },
                 'month': {
                     sub: "August 2026 Tax Invoicing & Input Credit Breakdown",
                     cards: [
                         { label: "Monthly Taxable Base", val: "₹4,63,333", pill: "5% GST Base", isGold: true },
                         { label: "Claimable GST ITC", val: "₹23,167", pill: "GSTR-2B Ready", isGold: false },
-                        { label: "B2B Margin Saved", val: "₹32,400", pill: "Volume Rebate", isGold: false },
+                        { label: "Retail Margin Saved", val: "₹32,400", pill: "Volume Rebate", isGold: false },
                         { label: "August Settled Total", val: "₹4,86,500", pill: "100% Invoiced", isGold: true }
                     ],
                     chartTitle: "August Gross Invoiced Revenue (₹)",
@@ -1260,7 +1315,7 @@
                     kpis: [
                         { label: "Monthly Taxable Value", num: "₹4,63,333", sub: "5% GST Base" },
                         { label: "Monthly GST ITC", num: "₹23,167", sub: WS_ICONS.shield + " Auto E-Way Matched" },
-                        { label: "B2B Discount Margin", num: "₹32,400", sub: "VIP Volume Rebate" },
+                        { label: "Retail Discount Margin", num: "₹32,400", sub: "VIP Volume Rebate" },
                         { label: "Net Bank Inflow", num: "₹4,86,500", sub: "NEFT & RTGS" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Monthly Target",
@@ -1296,11 +1351,11 @@
                     milestoneDesc: "<strong>112.1%</strong> of financial target accomplished in July 2026."
                 },
                 'year': {
-                    sub: "Financial Year 2026-27 B2B Revenue & Tax Compliance",
+                    sub: "Financial Year 2026-27 Retail Revenue & Tax Compliance",
                     cards: [
                         { label: "Annual Taxable Base", val: "₹18,89,810", pill: "58 Tax Invoices", isGold: true },
                         { label: "Total FY ITC Claimed", val: "₹99,215", pill: "100% GSTR-2B", isGold: false },
-                        { label: "Volume Discounts", val: "₹1,45,000", pill: "Saved on B2B", isGold: false },
+                        { label: "Volume Discounts", val: "₹1,45,000", pill: "Saved on Retail", isGold: false },
                         { label: "Annual Gross Total", val: "₹19,84,300", pill: "100% Cleared", isGold: true }
                     ],
                     chartTitle: "FY 2026-27 Revenue Growth (₹)",
@@ -1316,12 +1371,12 @@
                     kpis: [
                         { label: "Total Taxable Sales", num: "₹18,89,810", sub: "58 Tax Invoices" },
                         { label: "Total FY ITC Claimed", num: "₹99,215", sub: WS_ICONS.shield + " 100% GSTR-2B Verified" },
-                        { label: "Annual Margin Savings", num: "₹1,45,000", sub: "B2B Volume Rates" },
+                        { label: "Annual Margin Savings", num: "₹1,45,000", sub: "Retail Volume Rates" },
                         { label: "Payment Discipline", num: "100% On-Time", sub: "Zero Penalty" }
                     ],
                     milestoneBadge: WS_ICONS.crown + " Annual VIP Milestone",
                     milestoneVal: "₹19,84,300 <span style='font-size:0.75rem; font-weight:600; color:var(--ws-text-muted);'>/ ₹25,00,000</span>",
-                    milestoneDesc: "<strong>79.37%</strong> of Annual Target achieved. Procure ₹5,15,700 more to unlock ₹50L Super Wholesaler Tier!"
+                    milestoneDesc: "<strong>79.37%</strong> of Annual Target achieved. Restock ₹5,15,700 more to unlock ₹50L Super Retailer Gold Tier!"
                 }
             }
         };
