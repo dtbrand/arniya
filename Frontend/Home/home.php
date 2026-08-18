@@ -301,43 +301,59 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="quick-access-grid">
                 <a href="#section-trending" class="quick-card card-shop" onclick="document.getElementById('section-trending').scrollIntoView({behavior:'smooth'}); return false;">
-                    <div class="quick-card-icon">🛍️</div>
+                    <div class="quick-card-icon-wrap icon-shop">
+                        <svg viewBox="0 0 24 24" class="quick-card-svg"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    </div>
                     <div class="quick-card-info">
-                        <span class="quick-card-badge">Storefront</span>
+                        <span class="quick-card-badge badge-shop">Storefront</span>
                         <h3 class="quick-card-title">Shop Collection</h3>
                         <p class="quick-card-sub">Latest 2026 Ethnic Wear</p>
                     </div>
-                    <span class="quick-card-arrow">&rarr;</span>
+                    <span class="quick-card-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </a>
 
                 <a href="/Frontend/Reseller/reseller.php" class="quick-card card-reseller">
-                    <div class="quick-card-icon">⚡</div>
+                    <div class="quick-card-icon-wrap icon-reseller">
+                        <svg viewBox="0 0 24 24" class="quick-card-svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    </div>
                     <div class="quick-card-info">
-                        <span class="quick-card-badge">Zero Investment</span>
+                        <span class="quick-card-badge badge-reseller">Zero Investment</span>
                         <h3 class="quick-card-title">Start Reselling</h3>
                         <p class="quick-card-sub">Earn Margins on WhatsApp</p>
                     </div>
-                    <span class="quick-card-arrow">&rarr;</span>
+                    <span class="quick-card-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </a>
 
                 <a href="/Frontend/Wholesale/wholesale.php" class="quick-card card-wholesale">
-                    <div class="quick-card-icon">🏭</div>
+                    <div class="quick-card-icon-wrap icon-wholesale">
+                        <svg viewBox="0 0 24 24" class="quick-card-svg"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
                     <div class="quick-card-info">
-                        <span class="quick-card-badge">Factory Rates</span>
+                        <span class="quick-card-badge badge-wholesale">Factory Rates</span>
                         <h3 class="quick-card-title">Buy Wholesale</h3>
                         <p class="quick-card-sub">Bulk Lots & Quantity Slabs</p>
                     </div>
-                    <span class="quick-card-arrow">&rarr;</span>
+                    <span class="quick-card-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </a>
 
                 <a href="#section-offers" class="quick-card card-offers" onclick="document.getElementById('section-offers').scrollIntoView({behavior:'smooth'}); return false;">
-                    <div class="quick-card-icon">🏷️</div>
+                    <div class="quick-card-icon-wrap icon-offers">
+                        <svg viewBox="0 0 24 24" class="quick-card-svg"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
                     <div class="quick-card-info">
-                        <span class="quick-card-badge">Save Up to 35%</span>
+                        <span class="quick-card-badge badge-offers">Save Up to 35%</span>
                         <h3 class="quick-card-title">Special Offers</h3>
                         <p class="quick-card-sub">Festive & Clearance Codes</p>
                     </div>
-                    <span class="quick-card-arrow">&rarr;</span>
+                    <span class="quick-card-arrow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </a>
             </div>
         </div>
