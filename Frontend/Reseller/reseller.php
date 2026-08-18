@@ -2346,44 +2346,114 @@ $catalogProducts = [
                  TAB 12: CUSTOMER FOLLOW-UPS & ENGAGEMENT
             ═══════════════════════════════════════════ -->
             <section class="ws-tab-pane" id="tabPaneFollowups">
-                <div class="ws-card">
-                    <div class="ws-card-header">
+                <div class="ws-card ws-followup-card-container">
+                    <!-- Top Title Header Bar -->
+                    <div class="ws-card-header ws-followup-header">
                         <div class="ws-card-title-group">
-                            <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" style="display:inline-block; vertical-align:middle; margin-right:6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Customer Follow-ups & Reminders
-                            </h2>
-                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
-                                Scheduled calls, WhatsApp follow-ups, and repeat order check-ins
-                            </p>
+                            <div class="ws-followup-title-wrap">
+                                <div class="ws-followup-badge-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:22px!important;height:22px!important;max-width:22px!important;max-height:22px!important;display:inline-block!important;flex-shrink:0!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                </div>
+                                <div>
+                                    <h2 class="ws-card-title ws-followup-main-title">
+                                        Customer Follow-ups & Reminders
+                                    </h2>
+                                    <p class="ws-card-subtitle ws-followup-main-subtitle">
+                                        Scheduled buyer touchpoints, WhatsApp catalog alerts & repeat order check-ins
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="openScheduleFollowupModal()">
-                                + Schedule New Follow-up
+                        <div class="ws-followup-header-actions">
+                            <button class="ws-btn-luxury-save" onclick="openScheduleFollowupModal()" style="height:42px; padding:0 20px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;display:inline-block!important;flex-shrink:0!important;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Schedule Follow-up</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Filter Status Pills -->
-                    <div class="ws-filter-controls-row" style="margin-bottom:14px;">
-                        <div class="ws-filter-pills" id="followupFilterPills">
-                            <button class="ws-filter-pill active" onclick="filterFollowups('all', this)">All Follow-ups</button>
-                            <button class="ws-filter-pill" onclick="filterFollowups('pending', this)">⏳ Pending</button>
-                            <button class="ws-filter-pill" onclick="filterFollowups('today', this)">🚨 Due Today</button>
-                            <button class="ws-filter-pill" onclick="filterFollowups('completed', this)">✅ Completed</button>
+                    <!-- 4-Card Follow-up KPI Stats Strip -->
+                    <div class="ws-followup-kpi-grid">
+                        <div class="ws-followup-kpi-card active-filter" id="kpiCardAll" onclick="filterFollowups('all')">
+                            <div class="ws-followup-kpi-icon gold">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;display:inline-block!important;flex-shrink:0!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </div>
+                            <div class="ws-followup-kpi-info">
+                                <span class="ws-followup-kpi-num" id="statFollowupsTotal">0</span>
+                                <span class="ws-followup-kpi-label">All Follow-ups</span>
+                            </div>
+                        </div>
+                        <div class="ws-followup-kpi-card" id="kpiCardPending" onclick="filterFollowups('pending')">
+                            <div class="ws-followup-kpi-icon amber">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;display:inline-block!important;flex-shrink:0!important;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <div class="ws-followup-kpi-info">
+                                <span class="ws-followup-kpi-num" id="statFollowupsPending">0</span>
+                                <span class="ws-followup-kpi-label">Pending</span>
+                            </div>
+                        </div>
+                        <div class="ws-followup-kpi-card" id="kpiCardToday" onclick="filterFollowups('today')">
+                            <div class="ws-followup-kpi-icon rose">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                            </div>
+                            <div class="ws-followup-kpi-info">
+                                <span class="ws-followup-kpi-num" id="statFollowupsToday">0</span>
+                                <span class="ws-followup-kpi-label">Due Today</span>
+                            </div>
+                        </div>
+                        <div class="ws-followup-kpi-card" id="kpiCardCompleted" onclick="filterFollowups('completed')">
+                            <div class="ws-followup-kpi-icon emerald">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                            <div class="ws-followup-kpi-info">
+                                <span class="ws-followup-kpi-num" id="statFollowupsCompleted">0</span>
+                                <span class="ws-followup-kpi-label">Completed</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Follow-ups Table -->
-                    <div class="ws-table-container">
+                    <!-- Search and Filter Controls -->
+                    <div class="ws-followup-controls-bar">
+                        <div class="ws-smart-search-wrap">
+                            <svg class="ws-smart-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:12px!important;top:50%!important;transform:translateY(-50%)!important;pointer-events:none!important;display:inline-block!important;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="followupSearchInput" class="ws-smart-search-input" placeholder="Search follow-ups by customer name, note, mobile..." oninput="handleFollowupSearch(this.value)">
+                            <button type="button" class="ws-input-clear-btn" id="followupSearchClear" onclick="clearFollowupSearch()" title="Clear">✕</button>
+                        </div>
+                        <div class="ws-filter-pills" id="followupFilterPills">
+                            <button class="ws-filter-pill active" onclick="filterFollowups('all', this)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:13px!important;height:13px!important;display:inline-block!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                                <span>All</span>
+                                <span class="ws-pill-count" id="badgeCountAll">0</span>
+                            </button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('pending', this)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:13px!important;height:13px!important;display:inline-block!important;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Pending</span>
+                                <span class="ws-pill-count" id="badgeCountPending">0</span>
+                            </button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('today', this)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:13px!important;height:13px!important;display:inline-block!important;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>Due Today</span>
+                                <span class="ws-pill-count danger" id="badgeCountToday">0</span>
+                            </button>
+                            <button class="ws-filter-pill" onclick="filterFollowups('completed', this)">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:13px!important;height:13px!important;display:inline-block!important;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Completed</span>
+                                <span class="ws-pill-count success" id="badgeCountCompleted">0</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Follow-ups Desktop Table -->
+                    <div class="ws-table-container ws-followup-table-wrap">
                         <table class="ws-orders-table" id="crmFollowupsTable">
                             <thead>
                                 <tr>
-                                    <th>Scheduled Date & Time</th>
-                                    <th>Customer Name</th>
-                                    <th>Mobile / WhatsApp</th>
-                                    <th>Note / Task</th>
-                                    <th style="text-align:center;">Status</th>
-                                    <th style="text-align:center;">Actions</th>
+                                    <th style="min-width:140px;">Scheduled Date</th>
+                                    <th style="min-width:180px;">Customer Profile</th>
+                                    <th style="min-width:140px;">Mobile / WhatsApp</th>
+                                    <th style="min-width:240px;">Follow-up Note & Task</th>
+                                    <th style="text-align:center; min-width:100px;">Status</th>
+                                    <th style="text-align:center; min-width:170px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="crmFollowupsTbody">
@@ -2391,7 +2461,11 @@ $catalogProducts = [
                             </tbody>
                         </table>
                     </div>
-                    <div class="ws-mobile-orders-list" id="crmProfitMobileList"></div>
+
+                    <!-- Follow-ups Mobile VIP Cards List -->
+                    <div class="ws-mobile-followups-list" id="crmFollowupsMobileList">
+                        <!-- Injected dynamically on Mobile -->
+                    </div>
                 </div>
             </section>
 
@@ -3885,7 +3959,7 @@ $catalogProducts = [
          MODAL CRM 6: SCHEDULE FOLLOW-UP MODAL
     ═══════════════════════════════════════════ -->
     <div class="ws-modal-overlay" id="resellerScheduleFollowupModal" role="dialog" aria-modal="true" onclick="if(event.target===this) closeScheduleFollowupModal();">
-        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 480px;">
+        <div class="ws-modal-box ws-modal-luxury-box" style="max-width: 490px;">
             <div class="ws-modal-luxury-header">
                 <div class="ws-modal-luxury-title-wrap">
                     <div class="ws-modal-luxury-icon-badge">
@@ -3893,9 +3967,9 @@ $catalogProducts = [
                     </div>
                     <div>
                         <h3 class="ws-modal-luxury-title">
-                            <span>⏰ Schedule Follow-up</span>
+                            <span>Schedule Follow-up</span>
                         </h3>
-                        <div class="ws-modal-luxury-subtitle">Set timely reminders to reconnect with buyers</div>
+                        <div class="ws-modal-luxury-subtitle">Set timely reminder touchpoints to reconnect with buyers</div>
                     </div>
                 </div>
                 <button type="button" class="ws-modal-luxury-close" onclick="closeScheduleFollowupModal()" title="Close">&times;</button>
@@ -3903,57 +3977,106 @@ $catalogProducts = [
             <form onsubmit="event.preventDefault(); handleSaveFollowupSubmit();" style="display:flex; flex-direction:column; height:100%;">
                 <input type="hidden" id="followupFormId">
                 <div class="ws-modal-luxury-body">
+                    
+                    <!-- Section 1: Customer Selection -->
                     <div class="ws-smart-form-section">
-                        <label class="ws-smart-label">Customer <span style="color:#EF4444;">*</span></label>
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                1. Select Customer
+                            </span>
+                        </div>
                         <div class="ws-smart-input-wrap">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             <select id="followupFormCustomer" class="ws-smart-input" required>
-                                <option value="">-- Choose Customer --</option>
+                                <option value="">-- Choose Buyer Profile --</option>
                             </select>
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;" class="ws-smart-grid-2">
-                        <div class="ws-smart-form-section">
-                            <label class="ws-smart-label">Follow-up Date <span style="color:#EF4444;">*</span></label>
-                            <div class="ws-smart-input-wrap">
-                                <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                <input type="date" id="followupFormDate" class="ws-smart-input" required>
-                            </div>
+
+                    <!-- Section 2: Date & Time with Quick 1-Tap Presets -->
+                    <div class="ws-smart-form-section">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                2. Date & Time
+                            </span>
+                            <span style="font-size:0.65rem; color:#8C8072; font-weight:700;">1-Tap Presets</span>
                         </div>
-                        <div class="ws-smart-form-section">
-                            <label class="ws-smart-label">Time</label>
-                            <div class="ws-smart-input-wrap">
-                                <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <input type="time" id="followupFormTime" class="ws-smart-input" value="11:00">
+
+                        <div class="ws-note-prompts-wrap" style="margin-bottom:10px; margin-top:0;">
+                            <span class="ws-note-prompt-pill" onclick="setFollowupDatePreset('today')">📅 Today</span>
+                            <span class="ws-note-prompt-pill" onclick="setFollowupDatePreset('tomorrow')">⚡ Tomorrow</span>
+                            <span class="ws-note-prompt-pill" onclick="setFollowupDatePreset('3days')">📆 +3 Days</span>
+                            <span class="ws-note-prompt-pill" onclick="setFollowupDatePreset('nextweek')">✨ Next Week</span>
+                        </div>
+
+                        <div class="ws-smart-grid-2">
+                            <div>
+                                <label class="ws-smart-label">Date <span style="color:#EF4444;">*</span></label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <input type="date" id="followupFormDate" class="ws-smart-input" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ws-smart-label">Time</label>
+                                <div class="ws-smart-input-wrap">
+                                    <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    <input type="time" id="followupFormTime" class="ws-smart-input" value="11:00">
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Section 3: Follow-up Task & Action Note -->
                     <div class="ws-smart-form-section">
-                        <label class="ws-smart-label">Follow-up Task / Note</label>
-                        <div class="ws-smart-input-wrap">
+                        <div class="ws-smart-section-header">
+                            <span class="ws-smart-section-title">
+                                <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                                3. Follow-up Task & Notes
+                            </span>
+                        </div>
+
+                        <div class="ws-smart-input-wrap" style="margin-bottom:8px;">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
-                            <input type="text" id="followupFormNote" class="ws-smart-input" placeholder="e.g. Send Diwali catalog, ask for repeat order..." required>
+                            <input type="text" id="followupFormNote" class="ws-smart-input" placeholder="e.g. Send Diwali catalog, call for reorder..." required oninput="handleSmartInputChange(this)">
+                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('followupFormNote')" title="Clear">✕</button>
+                        </div>
+
+                        <div class="ws-note-prompts-wrap">
+                            <span class="ws-note-prompt-pill" onclick="insertFollowupTaskPrompt('Send festive Paithani catalog collection on WhatsApp')">+ Paithani Catalog</span>
+                            <span class="ws-note-prompt-pill" onclick="insertFollowupTaskPrompt('Follow-up for Rakhi & bridal reorders')">+ Bridal Reorder</span>
+                            <span class="ws-note-prompt-pill" onclick="insertFollowupTaskPrompt('Confirm parcel dispatch & share tracking AWB')">+ Dispatch Alert</span>
+                            <span class="ws-note-prompt-pill" onclick="insertFollowupTaskPrompt('Share 10% VIP festive promo voucher code')">+ 10% Promo Code</span>
                         </div>
                     </div>
+
+                    <!-- Section 4: Status -->
                     <div class="ws-smart-form-section">
-                        <label class="ws-smart-label">Status</label>
+                        <label class="ws-smart-label">Initial Status</label>
                         <div class="ws-smart-input-wrap">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                             <select id="followupFormStatus" class="ws-smart-input">
-                                <option value="Pending">Pending</option>
+                                <option value="Pending">Pending (Scheduled)</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Rescheduled">Rescheduled</option>
                                 <option value="Cancelled">Cancelled</option>
                             </select>
                         </div>
                     </div>
+
                 </div>
                 <div class="ws-modal-luxury-footer">
                     <button type="button" class="ws-btn-luxury-cancel" onclick="closeScheduleFollowupModal()">Cancel</button>
-                    <button type="submit" class="ws-btn-luxury-save">⏰ Save Task</button>
+                    <button type="submit" class="ws-btn-luxury-save">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;display:inline-block!important;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Save Follow-up</span>
+                    </button>
                 </div>
             </form>
         </div>
+    </div>
     </div>
 
     <!-- ═══════════════════════════════════════════

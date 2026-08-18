@@ -4400,17 +4400,19 @@ window.animateTargetGauge = animateTargetGauge;
             showWsToast('📝 Note saved successfully!');
         };
 
-        // 13. Follow-ups Engine & Dashboard Widget
+        // 13. Schedule Follow-up Modal & Actions
         function openScheduleFollowupModal(prefillCustId) {
             var modal = document.getElementById('resellerScheduleFollowupModal');
             var custSelect = document.getElementById('followupFormCustomer');
             var dateEl = document.getElementById('followupFormDate');
+            var timeEl = document.getElementById('followupFormTime');
             var noteEl = document.getElementById('followupFormNote');
+            var statusEl = document.getElementById('followupFormStatus');
 
             var customers = getResellerCustomers();
             if (custSelect) {
-                custSelect.innerHTML = '<option value="">-- Choose Customer --</option>' + customers.map(function(c) {
-                    return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ')</option>';
+                custSelect.innerHTML = '<option value="">-- Choose Buyer Profile --</option>' + customers.map(function(c) {
+                    return '<option value="' + c.id + '" ' + (c.id === prefillCustId ? 'selected' : '') + '>' + c.name + ' (' + c.mobile + ' &bull; ' + (c.city || 'Surat') + ')</option>';
                 }).join('');
             }
 
@@ -4419,7 +4421,12 @@ window.animateTargetGauge = animateTargetGauge;
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 dateEl.value = tomorrow.toISOString().split('T')[0];
             }
-            if (noteEl) noteEl.value = '';
+            if (timeEl) timeEl.value = '11:00';
+            if (noteEl) {
+                noteEl.value = '';
+                if (typeof handleSmartInputChange === 'function') handleSmartInputChange(noteEl);
+            }
+            if (statusEl) statusEl.value = 'Pending';
 
             if (modal) modal.classList.add('active');
         };
@@ -4429,12 +4436,50 @@ window.animateTargetGauge = animateTargetGauge;
             if (modal) modal.classList.remove('active');
         };
 
+        function setFollowupDatePreset(presetKey) {
+            var dateEl = document.getElementById('followupFormDate');
+            if (!dateEl) return;
+            var target = new Date();
+            if (presetKey === 'today') {
+                // today
+            } else if (presetKey === 'tomorrow') {
+                target.setDate(target.getDate() + 1);
+            } else if (presetKey === '3days') {
+                target.setDate(target.getDate() + 3);
+            } else if (presetKey === 'nextweek') {
+                target.setDate(target.getDate() + 7);
+            }
+            dateEl.value = target.toISOString().split('T')[0];
+            showWsToast('📅 Set follow-up date: ' + target.toLocaleDateString('en-IN', { day:'numeric', month:'short' }));
+        };
+
+        function insertFollowupTaskPrompt(promptText) {
+            var noteEl = document.getElementById('followupFormNote');
+            if (!noteEl) return;
+            noteEl.value = promptText;
+            if (typeof handleSmartInputChange === 'function') handleSmartInputChange(noteEl);
+            noteEl.focus();
+        };
+
         function handleSaveFollowupSubmit() {
             var custId = Number(document.getElementById('followupFormCustomer').value);
             var date = document.getElementById('followupFormDate').value;
-            var time = document.getElementById('followupFormTime').value;
+            var time = document.getElementById('followupFormTime').value || '11:00';
             var note = document.getElementById('followupFormNote').value.trim();
-            var status = document.getElementById('followupFormStatus').value;
+            var status = document.getElementById('followupFormStatus').value || 'Pending';
+
+            if (!custId) {
+                alert('Please select a customer.');
+                return;
+            }
+            if (!date) {
+                alert('Please choose a follow-up date.');
+                return;
+            }
+            if (!note) {
+                alert('Please describe the follow-up task note.');
+                return;
+            }
 
             var customers = getResellerCustomers();
             var c = customers.find(function(x) { return x.id === custId; });
@@ -4451,7 +4496,8 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             closeScheduleFollowupModal();
-            showWsToast('⏰ Follow-up task scheduled!');
+            renderFollowupsTable();
+            showWsToast('⏰ Follow-up task scheduled for ' + (c ? c.name : 'Customer') + '!');
         };
 
         function markFollowupCompleted(custId, fId) {
@@ -4461,8 +4507,44 @@ window.animateTargetGauge = animateTargetGauge;
                 var f = c.followups.find(function(x) { return x.id === fId; });
                 if (f) f.status = 'Completed';
                 saveResellerCustomers(customers);
+                renderFollowupsTable();
                 showWsToast('✅ Follow-up marked as completed!');
             }
+        };
+
+        function deleteFollowupTask(custId, fId) {
+            if (!confirm('Are you sure you want to remove this follow-up reminder?')) return;
+            var customers = getResellerCustomers();
+            var c = customers.find(function(x) { return x.id === custId; });
+            if (c && c.followups) {
+                c.followups = c.followups.filter(function(x) { return x.id !== fId; });
+                saveResellerCustomers(customers);
+                renderFollowupsTable();
+                showWsToast('🗑️ Follow-up reminder removed.');
+            }
+        };
+
+        function sendCustomerWhatsAppFollowup(custId, customTaskNote) {
+            var customers = getResellerCustomers();
+            var c = customers.find(function(x) { return x.id === custId; });
+            if (!c) return;
+
+            var phone = (c.whatsapp || c.mobile || '').replace(/[^0-9]/g, '');
+            if (!phone) {
+                alert('WhatsApp number not found for ' + c.name);
+                return;
+            }
+
+            var text = 'Namaste ' + c.name + '! 🙏\n\nHope you are doing well.';
+            if (customTaskNote) {
+                text += '\nRegarding our scheduled follow-up: ' + customTaskNote;
+            } else {
+                text += '\nFollowing up to share our latest festive Paithani & pure silk saree arrivals for your boutique!';
+            }
+            text += '\n\nFeel free to explore and let me know if you would like me to book your order today!\n— Rajesh Kumar (Kalaniketan Reseller)';
+
+            var url = 'https://wa.me/91' + phone + '?text=' + encodeURIComponent(text);
+            window.open(url, '_blank');
         };
 
         // 14. Render Dashboard CRM Widgets
@@ -4781,70 +4863,311 @@ Rajesh Kumar (Reseller Partner)`;
             }
         };
 
-        /* ── Follow-ups Table Renderer ── */
+        /* ── Follow-ups Table & Mobile Card Renderer ── */
         var currentFollowupFilter = 'all';
+        var currentFollowupSearchQuery = '';
+
         function filterFollowups(filter, btn) {
-            currentFollowupFilter = filter;
+            currentFollowupFilter = filter || 'all';
+
+            // 1. Update active filter pills
             var pills = document.querySelectorAll('#followupFilterPills .ws-filter-pill');
-            pills.forEach(function(p) { p.classList.remove('active'); });
-            if (btn) btn.classList.add('active');
+            pills.forEach(function(p) {
+                p.classList.remove('active');
+            });
+            if (btn && btn.classList) {
+                btn.classList.add('active');
+            } else {
+                // Find matching pill by filter
+                var targetIdx = { 'all': 0, 'pending': 1, 'today': 2, 'completed': 3 }[filter] || 0;
+                if (pills[targetIdx]) pills[targetIdx].classList.add('active');
+            }
+
+            // 2. Update active KPI Card highlights
+            var kpiCards = {
+                'all': document.getElementById('kpiCardAll'),
+                'pending': document.getElementById('kpiCardPending'),
+                'today': document.getElementById('kpiCardToday'),
+                'completed': document.getElementById('kpiCardCompleted')
+            };
+            Object.keys(kpiCards).forEach(function(k) {
+                if (kpiCards[k]) {
+                    if (k === filter) {
+                        kpiCards[k].classList.add('active-filter');
+                    } else {
+                        kpiCards[k].classList.remove('active-filter');
+                    }
+                }
+            });
+
+            renderFollowupsTable();
+        };
+
+        function handleFollowupSearch(val) {
+            currentFollowupSearchQuery = (val || '').trim();
+            var clearBtn = document.getElementById('followupSearchClear');
+            if (clearBtn) clearBtn.style.display = currentFollowupSearchQuery ? 'block' : 'none';
+            renderFollowupsTable();
+        };
+
+        function clearFollowupSearch() {
+            var input = document.getElementById('followupSearchInput');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+            var clearBtn = document.getElementById('followupSearchClear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            currentFollowupSearchQuery = '';
             renderFollowupsTable();
         };
 
         function renderFollowupsTable() {
             var tbody = document.getElementById('crmFollowupsTbody');
-            if (!tbody) return;
+            var mobList = document.getElementById('crmFollowupsMobileList');
+            if (!tbody && !mobList) return;
 
             var customers = getResellerCustomers();
             var allFollowups = [];
+            var todayStr = new Date().toISOString().split('T')[0];
+
+            var countTotal = 0;
+            var countPending = 0;
+            var countToday = 0;
+            var countCompleted = 0;
+
             customers.forEach(function(c) {
                 (c.followups || []).forEach(function(f) {
                     allFollowups.push({ customer: c, task: f });
+                    countTotal++;
+                    if (f.status === 'Completed') {
+                        countCompleted++;
+                    } else {
+                        countPending++;
+                        if (f.date === todayStr) {
+                            countToday++;
+                        }
+                    }
                 });
             });
 
+            // 1. Sync KPI Count Badges
+            var elStatTot = document.getElementById('statFollowupsTotal');
+            var elStatPend = document.getElementById('statFollowupsPending');
+            var elStatTod = document.getElementById('statFollowupsToday');
+            var elStatComp = document.getElementById('statFollowupsCompleted');
+            if (elStatTot) elStatTot.textContent = countTotal;
+            if (elStatPend) elStatPend.textContent = countPending;
+            if (elStatTod) elStatTod.textContent = countToday;
+            if (elStatComp) elStatComp.textContent = countCompleted;
+
+            // 2. Sync Filter Pill Count Badges
+            var elPillAll = document.getElementById('badgeCountAll');
+            var elPillPend = document.getElementById('badgeCountPending');
+            var elPillTod = document.getElementById('badgeCountToday');
+            var elPillComp = document.getElementById('badgeCountCompleted');
+            if (elPillAll) elPillAll.textContent = countTotal;
+            if (elPillPend) elPillPend.textContent = countPending;
+            if (elPillTod) elPillTod.textContent = countToday;
+            if (elPillComp) elPillComp.textContent = countCompleted;
+
+            // 3. Sync Sidebar Nav Due Badge
+            var navDueBadge = document.getElementById('navFollowupsDueBadge');
+            if (navDueBadge) {
+                if (countToday > 0) {
+                    navDueBadge.textContent = countToday;
+                    navDueBadge.style.display = 'inline-flex';
+                } else {
+                    navDueBadge.style.display = 'none';
+                }
+            }
+
+            // 4. Apply Status & Search Filtering
             var filtered = allFollowups.filter(function(item) {
-                if (currentFollowupFilter === 'pending') return item.task.status === 'Pending';
-                if (currentFollowupFilter === 'completed') return item.task.status === 'Completed';
-                if (currentFollowupFilter === 'today') return item.task.date === new Date().toISOString().split('T')[0];
+                // Status filter
+                if (currentFollowupFilter === 'pending' && item.task.status === 'Completed') return false;
+                if (currentFollowupFilter === 'completed' && item.task.status !== 'Completed') return false;
+                if (currentFollowupFilter === 'today' && (item.task.date !== todayStr || item.task.status === 'Completed')) return false;
+
+                // Search query filter
+                if (currentFollowupSearchQuery) {
+                    var q = currentFollowupSearchQuery.toLowerCase();
+                    var matchName = (item.customer.name || '').toLowerCase().indexOf(q) !== -1;
+                    var matchPhone = (item.customer.mobile || '').indexOf(q) !== -1 || (item.customer.whatsapp || '').indexOf(q) !== -1;
+                    var matchNote = (item.task.note || '').toLowerCase().indexOf(q) !== -1;
+                    var matchCity = (item.customer.city || '').toLowerCase().indexOf(q) !== -1;
+                    if (!matchName && !matchPhone && !matchNote && !matchCity) return false;
+                }
+
                 return true;
             });
 
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--ws-text-muted);">No follow-ups found for this filter.</td></tr>';
-                return;
+            // Sort: Today and Pending first, then by date
+            filtered.sort(function(a, b) {
+                if (a.task.status === 'Completed' && b.task.status !== 'Completed') return 1;
+                if (a.task.status !== 'Completed' && b.task.status === 'Completed') return -1;
+                return (a.task.date || '').localeCompare(b.task.date || '');
+            });
+
+            // 5. Render Desktop Table
+            if (tbody) {
+                if (filtered.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align:center; padding:38px 20px; color:#8C8072;">
+                                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" style="margin-bottom:8px; display:inline-block;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <div style="font-weight:800; font-size:0.92rem; color:#1E293B;">No follow-up reminders found</div>
+                                <div style="font-size:0.76rem; color:#7D7162; margin-top:2px;">Try selecting another filter or schedule a new reminder.</div>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tbody.innerHTML = filtered.map(function(item) {
+                        var isCompleted = item.task.status === 'Completed';
+                        var isDueToday = item.task.date === todayStr && !isCompleted;
+                        var isOverdue = item.task.date < todayStr && !isCompleted;
+
+                        var statusBadgeHtml = '';
+                        if (isCompleted) {
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; font-weight:800; font-size:0.70rem;">✓ Completed</span>';
+                        } else if (isDueToday) {
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FFE4E6; color:#E11D48; border:1px solid #FDA4AF; font-weight:800; font-size:0.70rem;">🚨 Due Today</span>';
+                        } else if (isOverdue) {
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA; font-weight:800; font-size:0.70rem;">⏳ Overdue</span>';
+                        } else {
+                            statusBadgeHtml = '<span class="crm-tag" style="background:#FEF3C7; color:#B45309; border:1px solid #FDE68A; font-weight:800; font-size:0.70rem;">⏳ Pending</span>';
+                        }
+
+                        var formattedDate = item.task.date;
+                        try {
+                            var d = new Date(item.task.date);
+                            formattedDate = d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+                        } catch(e) {}
+
+                        return `
+                            <tr>
+                                <td>
+                                    <div class="ws-followup-date-box">
+                                        <div class="ws-followup-date-main">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" style="display:inline-block;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                            <span>${formattedDate}</span>
+                                        </div>
+                                        <div class="ws-followup-time-tag">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                            <span>${item.task.time || '11:00 AM'}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ws-followup-cust-name" onclick="openCustomerProfileModal(${item.customer.id})" title="View Customer Profile">
+                                        <div class="ws-followup-avatar-initial">${(item.customer.name || 'C').charAt(0)}</div>
+                                        <div>
+                                            <div style="font-weight:800; color:#1E293B;">${item.customer.name}</div>
+                                            <div style="font-size:0.68rem; color:#7D7162; font-weight:600;">📍 ${item.customer.city || 'Surat'}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-size:0.78rem; font-weight:700; color:#1E293B; display:flex; align-items:center; gap:5px;">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        <span>${item.customer.mobile}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ws-followup-note-card">
+                                        ${item.task.note}
+                                    </div>
+                                </td>
+                                <td style="text-align:center;">${statusBadgeHtml}</td>
+                                <td style="text-align:center;">
+                                    <div style="display:flex; gap:6px; justify-content:center; align-items:center; flex-wrap:wrap;">
+                                        <button type="button" class="ws-btn-followup-wa" onclick="sendCustomerWhatsAppFollowup(${item.customer.id}, '${(item.task.note || '').replace(/'/g, "\\'")}')" title="Send WhatsApp Message">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                            <span>WhatsApp</span>
+                                        </button>
+                                        ${!isCompleted ? `
+                                            <button type="button" class="ws-btn-followup-done" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})" title="Mark as Done">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span>Done</span>
+                                            </button>
+                                        ` : ''}
+                                        <button type="button" class="ws-btn-action-icon danger" onclick="deleteFollowupTask(${item.customer.id}, ${item.task.id})" title="Delete Reminder" style="background:transparent; border:none; color:#DC2626; cursor:pointer; padding:4px; border-radius:6px; display:inline-flex; align-items:center; justify-content:center;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
             }
 
-            tbody.innerHTML = filtered.map(function(item) {
-                var isCompleted = item.task.status === 'Completed';
-                var statusTag = isCompleted ? '<span class="crm-tag crm-tag-repeat">Completed</span>' : '<span class="crm-tag crm-tag-followup">Pending</span>';
-                return `
-                    <tr>
-                        <td>
-                            <div style="font-weight:800; font-size:0.82rem;">📅 ${item.task.date}</div>
-                            <div style="font-size:0.70rem; color:var(--ws-text-muted);">Time: ${item.task.time || '11:00 AM'}</div>
-                        </td>
-                        <td>
-                            <div style="font-weight:800; font-size:0.84rem; cursor:pointer;" onclick="openCustomerProfileModal(${item.customer.id})">
-                                ${item.customer.name}
+            // 6. Render Mobile Responsive Cards
+            if (mobList) {
+                if (filtered.length === 0) {
+                    mobList.innerHTML = `
+                        <div style="text-align:center; padding:30px 16px; background:#FFFFFF; border:1.5px solid #EFE6D5; border-radius:14px; color:#8C8072;">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" style="margin-bottom:8px; display:inline-block;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <div style="font-weight:800; font-size:0.92rem; color:#1E293B;">No follow-ups found</div>
+                            <div style="font-size:0.76rem; color:#7D7162; margin-top:2px;">Try another filter or schedule a new reminder.</div>
+                        </div>
+                    `;
+                } else {
+                    mobList.innerHTML = filtered.map(function(item) {
+                        var isCompleted = item.task.status === 'Completed';
+                        var isDueToday = item.task.date === todayStr && !isCompleted;
+                        var cardClass = isCompleted ? 'completed' : (isDueToday ? 'today' : 'pending');
+
+                        var formattedDate = item.task.date;
+                        try {
+                            var d = new Date(item.task.date);
+                            formattedDate = d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
+                        } catch(e) {}
+
+                        var dueBadge = isDueToday ? '🚨 Due Today' : (isCompleted ? '✓ Completed' : '📅 ' + formattedDate);
+
+                        return `
+                            <div class="ws-mobile-followup-card ${cardClass}">
+                                <div class="ws-mobile-followup-top">
+                                    <span class="ws-mobile-followup-due">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <span>${dueBadge} &bull; ${item.task.time || '11:00 AM'}</span>
+                                    </span>
+                                    <span style="font-size:0.68rem; font-weight:800; padding:2px 8px; border-radius:6px; ${isCompleted ? 'background:#DCFCE7; color:#15803D;' : (isDueToday ? 'background:#FFE4E6; color:#E11D48;' : 'background:#FEF3C7; color:#B45309;')}">
+                                        ${item.task.status}
+                                    </span>
+                                </div>
+                                <div class="ws-mobile-followup-cust" onclick="openCustomerProfileModal(${item.customer.id})">
+                                    <div class="ws-followup-avatar-initial">${(item.customer.name || 'C').charAt(0)}</div>
+                                    <div>
+                                        <div style="font-weight:800; font-size:0.90rem; color:#1E293B;">${item.customer.name}</div>
+                                        <div style="font-size:0.72rem; color:#7D7162; font-weight:600;">📞 ${item.customer.mobile} &bull; 📍 ${item.customer.city || 'Surat'}</div>
+                                    </div>
+                                </div>
+                                <div class="ws-mobile-followup-note">
+                                    ${item.task.note}
+                                </div>
+                                <div class="ws-mobile-followup-actions">
+                                    <button type="button" class="ws-btn-followup-wa" onclick="sendCustomerWhatsAppFollowup(${item.customer.id}, '${(item.task.note || '').replace(/'/g, "\\'")}')">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                        <span>WhatsApp Chat</span>
+                                    </button>
+                                    ${!isCompleted ? `
+                                        <button type="button" class="ws-btn-followup-done" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            <span>Mark Done</span>
+                                        </button>
+                                    ` : `
+                                        <button type="button" class="ws-btn-followup-done" style="background:#F1F5F9; border-color:#CBD5E1; color:#64748B !important; cursor:default;">
+                                            <span>✓ Done</span>
+                                        </button>
+                                    `}
+                                </div>
                             </div>
-                        </td>
-                        <td>
-                            <div style="font-size:0.76rem;">📞 ${item.customer.mobile}</div>
-                        </td>
-                        <td>
-                            <div style="font-size:0.80rem; font-weight:600; color:var(--ws-text-main);">${item.task.note}</div>
-                        </td>
-                        <td style="text-align:center;">${statusTag}</td>
-                        <td style="text-align:center;">
-                            <div style="display:flex; gap:6px; justify-content:center;">
-                                <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${item.customer.id})" style="background:#25D366; color:#FFF; padding:3px 8px; font-size:0.70rem;">💬 Chat</button>
-                                ${!isCompleted ? `<button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="markFollowupCompleted(${item.customer.id}, ${item.task.id})" style="padding:3px 8px; font-size:0.70rem;">✅ Done</button>` : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+                        `;
+                    }).join('');
+                }
+            }
         };
 
         /* ── Recommendations Center Renderer ── */
@@ -5106,7 +5429,9 @@ Rajesh Kumar (Reseller Partner)`;
         'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
         'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
         'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
-        'handleSaveFollowupSubmit', 'markFollowupCompleted', 'renderDashboardCrmWidgets', 'renderTopCustomersList',
+        'handleSaveFollowupSubmit', 'markFollowupCompleted', 'deleteFollowupTask', 'sendCustomerWhatsAppFollowup',
+        'setFollowupDatePreset', 'insertFollowupTaskPrompt', 'filterFollowups', 'handleFollowupSearch', 'clearFollowupSearch',
+        'renderDashboardCrmWidgets', 'renderTopCustomersList',
         'switchTopCustomersPeriod', 'handleGlobalSearch', 'sendCustomerWhatsAppMessage', 'exportCustomersCSV',
         'exportProfitLedgerCSV', 'openResellerNotificationsModal', 'closeResellerNotificationsModal',
         'renderProfitLedger', 'renderFollowupsTable', 'populateRecommendationSelect',

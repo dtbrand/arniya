@@ -6711,4 +6711,471 @@ svg.ws-smart-input-icon,
         height: 44px !important;
         padding: 0 14px !important;
     }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   CUSTOMER FOLLOW-UPS & REMINDERS SUITE (DESKTOP + MOBILE)
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-followup-card-container {
+    background: #FFFFFF !important;
+    border: 1.5px solid #EFE6D5 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    padding: 20px !important;
+}
+
+.ws-followup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px !important;
+    border-bottom: 1.5px solid #F1E8D8 !important;
+    margin-bottom: 18px !important;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ws-followup-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.ws-followup-badge-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #8A681F 0%, #B45309 100%);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.28);
+    flex-shrink: 0;
+}
+
+.ws-followup-main-title {
+    font-family: var(--ws-font-serif, 'Cinzel', 'Playfair Display', Georgia, serif) !important;
+    font-size: 1.22rem !important;
+    font-weight: 900 !important;
+    color: #2C2213 !important;
+    margin: 0 !important;
+    letter-spacing: 0.3px;
+}
+
+.ws-followup-main-subtitle {
+    font-size: 0.76rem !important;
+    color: #7D7162 !important;
+    margin-top: 3px !important;
+    font-weight: 500;
+}
+
+/* 4-Card Follow-up KPI Stats Strip */
+.ws-followup-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.ws-followup-kpi-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EFE6D5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    user-select: none;
+}
+
+.ws-followup-kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: #D4AF37;
+    box-shadow: 0 6px 16px rgba(138, 104, 31, 0.1);
+}
+
+.ws-followup-kpi-card.active-filter {
+    border-color: #8A681F !important;
+    background: linear-gradient(135deg, #FFFDF8 0%, #FAF5E8 100%) !important;
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.18) !important;
+}
+
+.ws-followup-kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ws-followup-kpi-icon.gold {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #E5DCB8;
+}
+
+.ws-followup-kpi-icon.amber {
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+}
+
+.ws-followup-kpi-icon.rose {
+    background: #FFE4E6;
+    color: #E11D48;
+    border: 1px solid #FDA4AF;
+}
+
+.ws-followup-kpi-icon.emerald {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.ws-followup-kpi-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ws-followup-kpi-num {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #1E293B;
+    line-height: 1.1;
+    font-family: var(--ws-font-serif, serif);
+}
+
+.ws-followup-kpi-label {
+    font-size: 0.70rem;
+    font-weight: 700;
+    color: #7D7162;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 2px;
+}
+
+/* Follow-up Controls Bar */
+.ws-followup-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.ws-smart-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 260px;
+    max-width: 440px;
+}
+
+.ws-smart-search-input {
+    width: 100%;
+    height: 42px;
+    padding-left: 38px !important;
+    padding-right: 32px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #E5DCB8 !important;
+    border-radius: 10px !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease !important;
+}
+
+.ws-smart-search-input:focus {
+    border-color: #8A681F !important;
+    box-shadow: 0 0 0 3.5px rgba(212, 175, 55, 0.18) !important;
+    background: #FFFDF9 !important;
+}
+
+.ws-smart-search-input::placeholder {
+    color: #A89D8F !important;
+    font-weight: 500 !important;
+    font-size: 0.82rem !important;
+}
+
+.ws-pill-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    background: #EFE6D5;
+    color: #5A4210;
+    margin-left: 4px;
+}
+
+.ws-pill-count.danger {
+    background: #FFE4E6;
+    color: #E11D48;
+}
+
+.ws-pill-count.success {
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.ws-filter-pill.active .ws-pill-count {
+    background: #FFFFFF !important;
+    color: #8A681F !important;
+}
+
+/* Desktop Follow-up Table Specifics */
+.ws-followup-date-box {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ws-followup-date-main {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: #1E293B;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ws-followup-time-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #8A681F;
+    background: #FAF5E8;
+    border: 1px solid #EADBBE;
+    padding: 1px 6px;
+    border-radius: 6px;
+    width: fit-content;
+}
+
+.ws-followup-cust-name {
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #1E293B;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ws-followup-cust-name:hover {
+    color: #8A681F;
+    text-decoration: underline;
+}
+
+.ws-followup-avatar-initial {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8A681F 0%, #B45309 100%);
+    color: #FFFFFF;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ws-followup-note-card {
+    background: #FAF8F4;
+    border: 1px solid #EFE6D5;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.80rem;
+    font-weight: 600;
+    color: #334155;
+    line-height: 1.35;
+}
+
+/* Actions in Table */
+.ws-btn-followup-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #25D366;
+    color: #FFFFFF !important;
+    border: 1px solid #1EBE5D;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.25);
+}
+
+.ws-btn-followup-wa:hover {
+    background: #1EBE5D;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.35);
+}
+
+.ws-btn-followup-done {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #FFFFFF;
+    color: #047857 !important;
+    border: 1.2px solid #86EFAC;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.ws-btn-followup-done:hover {
+    background: #DCFCE7;
+    border-color: #10B981;
+    transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE VIP REMINDER CARDS
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-mobile-followups-list {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ws-mobile-followup-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EFE6D5;
+    border-left: 4px solid #8A681F;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+}
+
+.ws-mobile-followup-card.pending {
+    border-left-color: #B45309;
+}
+
+.ws-mobile-followup-card.today {
+    border-left-color: #E11D48;
+    background: linear-gradient(180deg, #FFFDFD 0%, #FFFFFF 100%);
+}
+
+.ws-mobile-followup-card.completed {
+    border-left-color: #10B981;
+    opacity: 0.88;
+}
+
+.ws-mobile-followup-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 8px;
+}
+
+.ws-mobile-followup-due {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #1E293B;
+}
+
+.ws-mobile-followup-cust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.ws-mobile-followup-note {
+    background: #FAF8F4;
+    border: 1px solid #EFE6D5;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #2C251E;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.ws-mobile-followup-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.ws-mobile-followup-actions .ws-btn-followup-wa {
+    flex: 1.4;
+    height: 40px;
+    justify-content: center;
+    font-size: 0.78rem;
+}
+
+.ws-mobile-followup-actions .ws-btn-followup-done {
+    flex: 1;
+    height: 40px;
+    justify-content: center;
+    font-size: 0.78rem;
+}
+
+@media (max-width: 768px) {
+    .ws-followup-card-container {
+        padding: 12px !important;
+        border-radius: 14px !important;
+    }
+
+    .ws-followup-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .ws-followup-kpi-card {
+        padding: 10px 12px;
+    }
+
+    .ws-followup-kpi-num {
+        font-size: 1.1rem;
+    }
+
+    .ws-followup-controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .ws-smart-search-wrap {
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    .ws-followup-table-wrap {
+        display: none !important;
+    }
+
+    .ws-mobile-followups-list {
+        display: flex !important;
+    }
 }
