@@ -403,8 +403,8 @@ scrollbar-width: none;
     position: sticky;
     top: 0;
     background: rgba(248,246,240,0.96);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+backdrop-filter: blur(8px);
     z-index: 5;
 }
 .sf-title {
@@ -791,8 +791,8 @@ input[type=range].sf-range::-moz-range-thumb {
     padding: 3px 8px; border-radius: 12px;
     font-size: 0.52rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
     z-index: 2; background: rgba(138, 104, 31, 0.85); color: #FFFFFF;
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     width: auto; max-width: calc(100% - 40px);
@@ -827,8 +827,8 @@ input[type=range].sf-range::-moz-range-thumb {
     justify-content: center;
     z-index: 3;
     transition: all var(--transition);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
 .card-wishlist-btn:hover { background: var(--gold-pale); border-color: var(--dark-gold); transform: scale(1.08); }
@@ -864,8 +864,8 @@ input[type=range].sf-range::-moz-range-thumb {
     justify-content: center;
     z-index: 3;
     transition: all var(--transition);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     cursor: pointer;
 }
@@ -906,8 +906,8 @@ input[type=range].sf-range::-moz-range-thumb {
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--dark-text); padding: 7px 18px; border-radius: 20px;
     border: 1px solid rgba(138,104,31,0.3);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+backdrop-filter: blur(8px);
     transition: all var(--transition); cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
@@ -967,8 +967,8 @@ input[type=range].sf-range::-moz-range-thumb {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     line-height: 1.1;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+backdrop-filter: blur(8px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     z-index: 2;
     pointer-events: none;
@@ -991,8 +991,8 @@ input[type=range].sf-range::-moz-range-thumb {
     cursor: pointer;
     z-index: 3;
     transition: all var(--transition);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
+backdrop-filter: blur(6px);
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
 .card-share-btn:hover, .card-share-btn:active {
@@ -1073,8 +1073,8 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex; align-items: flex-end; justify-content: center;
     opacity: 0; pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+backdrop-filter: blur(8px);
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 
@@ -1201,11 +1201,11 @@ input[type=range].sf-range::-moz-range-thumb {
     align-items: center;
     gap: 4px;
     -moz--webkit-user-select: none;
-    user-select: none;
+user-select: none;
     -ms--webkit-user-select: none;
-    user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
+user-select: none;
+-webkit-user-select: none;
+user-select: none;
 }
 .modal-product-details-btn::after {
     content: '';
@@ -1276,8 +1276,8 @@ input[type=range].sf-range::-moz-range-thumb {
 /* ── Luxury Product Details Modal (Gold Theme & Line Accents) ── */
 .product-details-backdrop {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: center;
     z-index: 10000; opacity: 0; visibility: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); padding: 16px;
@@ -1334,8 +1334,8 @@ input[type=range].sf-range::-moz-range-thumb {
 /* ── Cart Drawer & Wishlist Drawer Modals ── */
 .cart-drawer-backdrop, .wishlist-drawer-backdrop {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: flex-end;
     z-index: 999999 !important; opacity: 0; visibility: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);

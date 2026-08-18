@@ -1,10 +1,20 @@
 {
-  "extends": [
-    "webhint"
-  ],
-  "hints": {
-    "compat-api/css": "off",
-    "compat-api/html": "off",
-    "compat-api/js": "off"
-  }
+    "extends": [
+        "development"
+    ],
+    "hints": {
+        "compat-api/css": [
+            "default",
+            {
+                "ignore": [
+                    "-webkit-overflow-scrolling",
+                    "-webkit-user-drag",
+                    "scrollbar-width",
+                    "scrollbar-color",
+                    "backdrop-filter",
+                    "user-select"
+                ]
+            }
+        ]
+    }
 }
