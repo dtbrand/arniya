@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787013091">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787013432">
 
 </head>
 <body>
@@ -2178,8 +2178,9 @@ $catalogProducts = [
                             <h2 class="ws-card-title" style="font-family:var(--ws-font-serif); font-size:1.15rem; font-weight:900; margin:0; color:var(--ws-gold-primary);">
                                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2.2" style="display:inline-block; vertical-align:middle; margin-right:6px;"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Reseller Profit Center & Margin Ledger
                             </h2>
-                            <p class="ws-card-subtitle" style="font-size:0.75rem; color:var(--ws-text-muted); margin-top:2px;">
-                                Track net earnings, margins, paid vs pending profits, and customer margin ledger
+                            <p class="ws-card-subtitle" style="font-size:0.76rem; font-weight:600; color:#78716C; margin-top:3px; display:inline-flex; align-items:center; gap:6px;">
+                                <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#10B981; box-shadow:0 0 6px rgba(16,185,129,0.5);"></span>
+                                <span>Track net earnings</span>
                             </p>
                         </div>
                         <div style="display:flex; gap:8px;">
@@ -3235,7 +3236,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787013091"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787013432"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
