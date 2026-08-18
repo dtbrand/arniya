@@ -5345,3 +5345,49 @@ padding-bottom: 4px !important;
         transform: translateY(-2px);
     }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════
+   HIGH-DEFINITION CRYSTAL CLEAR ANIMATED PROFIT SVG BADGE
+   ══════════════════════════════════════════════════════════════════ */
+
+.ws-anim-profit-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: #FFFFFF !important;
+    border: 1.8px solid #DFC994 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.ws-anim-profit-badge:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(138, 104, 31, 0.22) !important;
+}
+
+.ws-anim-profit-svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+.ws-anim-tip-pulse {
+    animation: tipBeaconPulse 1.8s ease-in-out infinite;
+    transform-origin: 22px 6px;
+}
+
+@keyframes tipBeaconPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.4));
+    }
+    50% {
+        transform: scale(1.35);
+        filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.9));
+    }
+}
