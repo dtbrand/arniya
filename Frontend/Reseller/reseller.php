@@ -509,22 +509,6 @@ $catalogProducts = [
                 </div>
             </div>
 
-            <!-- Global Header Live Search (Desktop) -->
-            <div class="ws-hdr-search-box" id="wsHdrDesktopSearchBox">
-                <svg class="ws-hdr-search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" class="ws-hdr-search-input" id="wsGlobalSearchInput" placeholder="Search customers, orders, SKU, phone..." oninput="handleGlobalSearch(this.value)" autocomplete="off">
-                <button type="button" class="ws-input-clear-btn" id="wsGlobalSearchClear" onclick="clearGlobalSearch()" title="Clear">✕</button>
-                <button type="button" class="ws-search-action-btn" aria-label="Search" title="Search">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-                <div class="ws-hdr-search-results" id="wsGlobalSearchResults">
-                    <!-- Populated dynamically by live search engine -->
-                </div>
-            </div>
-
             <div class="ws-header-right">
                 <!-- Mobile Search Icon Trigger Button (Shown on mobile only, like Shop Page Header) -->
                 <button class="ws-hdr-icon-btn mobile-search-trigger-btn" id="wsMobileSearchTriggerBtn" onclick="openMobileSearchOverlay()" aria-label="Open Search" title="Search">
