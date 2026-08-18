@@ -517,6 +517,9 @@ $catalogProducts = [
                 </svg>
                 <input type="text" class="ws-hdr-search-input" id="wsGlobalSearchInput" placeholder="Search customers, orders, SKU, phone..." oninput="handleGlobalSearch(this.value)" autocomplete="off">
                 <button type="button" class="ws-input-clear-btn" id="wsGlobalSearchClear" onclick="clearGlobalSearch()" title="Clear">✕</button>
+                <button type="button" class="ws-search-action-btn" aria-label="Search" title="Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
                 <div class="ws-hdr-search-results" id="wsGlobalSearchResults">
                     <!-- Populated dynamically by live search engine -->
                 </div>
@@ -578,6 +581,9 @@ $catalogProducts = [
                 >
                 <button type="button" class="mobile-search-clear-btn" id="wsMobileSearchClearBtn" onclick="clearMobileGlobalSearch()" aria-label="Clear search">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button type="button" class="mobile-search-submit-icon-btn ws-search-action-btn" id="wsMobileSearchSubmitIconBtn" aria-label="Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
 
@@ -1689,6 +1695,9 @@ $catalogProducts = [
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="wsOrdersSearchInput" class="ws-luxury-search-input" placeholder="Search Order ID, Product, Courier, AWB..." oninput="filterOrdersTable()">
                             <button type="button" class="ws-luxury-search-clear" id="wsOrdersSearchClear" onclick="clearOrdersSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-search-action-btn" aria-label="Search">
+                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </button>
                         </div>
                     </div>
 
@@ -1776,6 +1785,9 @@ $catalogProducts = [
                             <svg class="ws-luxury-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <input type="text" id="reportSearchInput" class="ws-luxury-search-input" placeholder="Search consignment, HSN, SKU, lot..." oninput="handleReportSearch(this.value)">
                             <button type="button" class="ws-luxury-search-clear" id="reportSearchClear" onclick="clearReportSearch()" aria-label="Clear Search">✕</button>
+                            <button type="button" class="ws-search-action-btn" aria-label="Search">
+                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </button>
                         </div>
                     </div>
 

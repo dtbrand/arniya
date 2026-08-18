@@ -3329,3 +3329,130 @@ function toggleWholesaleWishlist(prodOrId, btn) {
     } catch(e) { console.error('toggleWholesaleWishlist error:', e); }
 }
 window.toggleWholesaleWishlist = toggleWholesaleWishlist;
+
+// ═══════════════════════════════════════════
+// GLOBAL LIVE SEARCH & MOBILE OVERLAY CONTROLLER
+// ═══════════════════════════════════════════
+function openMobileSearchOverlay() {
+    var header = document.getElementById('wsMainHeader');
+    if (header) header.classList.add('mobile-search-active');
+    var mobileInp = document.getElementById('wsMobileSearchInput');
+    if (mobileInp) {
+        setTimeout(function() {
+            mobileInp.focus();
+        }, 100);
+    }
+}
+window.openMobileSearchOverlay = openMobileSearchOverlay;
+
+function closeMobileSearchOverlay() {
+    var header = document.getElementById('wsMainHeader');
+    if (header) header.classList.remove('mobile-search-active');
+    var mobileInp = document.getElementById('wsMobileSearchInput');
+    if (mobileInp) mobileInp.value = '';
+    var desktopInp = document.getElementById('wsGlobalSearchInput');
+    if (desktopInp) desktopInp.value = '';
+    var clearBtn = document.getElementById('wsMobileSearchClearBtn');
+    if (clearBtn) clearBtn.style.display = 'none';
+    var resultsBox = document.getElementById('wsGlobalSearchResults');
+    if (resultsBox) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+    }
+}
+window.closeMobileSearchOverlay = closeMobileSearchOverlay;
+
+function handleMobileSearchInput(val) {
+    var clearBtn = document.getElementById('wsMobileSearchClearBtn');
+    if (clearBtn) {
+        clearBtn.style.display = (val && val.trim()) ? 'flex' : 'none';
+    }
+}
+window.handleMobileSearchInput = handleMobileSearchInput;
+
+function clearMobileGlobalSearch() {
+    var mobileInp = document.getElementById('wsMobileSearchInput');
+    if (mobileInp) {
+        mobileInp.value = '';
+        mobileInp.focus();
+    }
+    handleMobileSearchInput('');
+    handleGlobalSearch('');
+}
+window.clearMobileGlobalSearch = clearMobileGlobalSearch;
+
+function clearGlobalSearch() {
+    var inp = document.getElementById('wsGlobalSearchInput');
+    if (inp) {
+        inp.value = '';
+        inp.focus();
+    }
+    var clearBtn = document.getElementById('wsGlobalSearchClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    handleGlobalSearch('');
+}
+window.clearGlobalSearch = clearGlobalSearch;
+
+function handleGlobalSearch(query) {
+    var q = (query || '').trim().toLowerCase();
+    var resultsBox = document.getElementById('wsGlobalSearchResults');
+    var desktopClearBtn = document.getElementById('wsGlobalSearchClear');
+    if (desktopClearBtn) desktopClearBtn.style.display = q ? 'block' : 'none';
+
+    if (!resultsBox) return;
+
+    if (!q) {
+        resultsBox.style.display = 'none';
+        resultsBox.innerHTML = '';
+        return;
+    }
+
+    var orders = (window.allOrders || []).filter(function(o) {
+        return (o.id || o.orderId || '').toLowerCase().indexOf(q) !== -1 || (o.productName || '').toLowerCase().indexOf(q) !== -1 || (o.courier || '').toLowerCase().indexOf(q) !== -1 || (o.awb || '').toLowerCase().indexOf(q) !== -1;
+    });
+
+    var prods = (window.allProducts || []).filter(function(p) {
+        return (p.name || '').toLowerCase().indexOf(q) !== -1 || (p.category || '').toLowerCase().indexOf(q) !== -1 || (p.sku || '').toLowerCase().indexOf(q) !== -1;
+    });
+
+    var html = '';
+
+    if (orders.length > 0) {
+        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:var(--ws-gold-primary); background:#FAF5E8;">📦 Orders & Consignments (' + orders.length + ')</div>';
+        orders.slice(0, 4).forEach(function(o) {
+            var oId = o.id || o.orderId;
+            html += `
+                <div class="ws-search-item" style="padding:8px 12px; border-bottom:1px solid #F4EFE6; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="if(typeof openWsOrderModal==='function') openWsOrderModal('${oId}'); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
+                    <div>
+                        <div style="font-weight:700; font-size:0.80rem; color:#1C1917;">${oId} - ${o.productName}</div>
+                        <div style="font-size:0.70rem; color:#6B6358;">Status: <strong>${o.status}</strong> &bull; Total: ₹${o.total || o.amount || 0}</div>
+                    </div>
+                    <span style="font-size:0.70rem; font-weight:800; color:var(--ws-gold-primary);">View →</span>
+                </div>
+            `;
+        });
+    }
+
+    if (prods.length > 0) {
+        html += '<div class="ws-search-group-title" style="padding:6px 12px; font-size:0.72rem; font-weight:800; color:#047857; background:#F0FDF4;">👗 Catalog Lots (' + prods.length + ')</div>';
+        prods.slice(0, 4).forEach(function(p) {
+            html += `
+                <div class="ws-search-item" style="padding:8px 12px; border-bottom:1px solid #F4EFE6; display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="if(typeof openQuickOrderModal==='function') openQuickOrderModal(${p.id}); closeMobileSearchOverlay(); if(document.getElementById('wsGlobalSearchResults')) document.getElementById('wsGlobalSearchResults').style.display='none';">
+                    <div>
+                        <div style="font-weight:700; font-size:0.80rem; color:#1C1917;">${p.name}</div>
+                        <div style="font-size:0.70rem; color:#6B6358;">₹${p.wholesale_price || p.price} &bull; ${p.category} &bull; MOQ: ${p.moq || 8} Pcs</div>
+                    </div>
+                    <span style="font-size:0.70rem; font-weight:800; color:#047857;">Order →</span>
+                </div>
+            `;
+        });
+    }
+
+    if (!html) {
+        html = '<div style="padding:14px; font-size:0.78rem; color:var(--ws-text-muted); text-align:center;">No matching orders or products found for "<strong>' + q + '</strong>".</div>';
+    }
+
+    resultsBox.innerHTML = html;
+    resultsBox.style.display = 'block';
+}
+window.handleGlobalSearch = handleGlobalSearch;
