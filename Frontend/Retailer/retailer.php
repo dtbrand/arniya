@@ -2907,5 +2907,61 @@ $catalogProducts = [
 
     <!-- ════════════ WISHLIST PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/wishlist.php'; ?>
+
+    <!-- ════════════ RETAILER DRAWER GLOBAL BRIDGE ════════════ -->
+    <script>
+    (function() {
+        var attempts = 0;
+        function wireDrawers() {
+            attempts++;
+            var allOk = true;
+
+            // openWishlistDrawer bridge
+            if (typeof window.openWishlistDrawer !== 'function') {
+                var wdBackdrop = document.getElementById('wishlistDrawerBackdrop');
+                if (wdBackdrop) {
+                    window.openWishlistDrawer = function() { wdBackdrop.classList.add('active'); };
+                } else { allOk = false; }
+            }
+
+            // openCartDrawer bridge
+            if (typeof window.openCartDrawer !== 'function') {
+                var cdBackdrop = document.getElementById('cartDrawerBackdrop');
+                if (cdBackdrop) {
+                    window.openCartDrawer = function() { cdBackdrop.classList.add('active'); };
+                } else { allOk = false; }
+            }
+
+            // openQV bridge — if quickview.php didn't define it yet, retry
+            if (typeof window.openQV !== 'function') {
+                var qvEl = document.getElementById('quickViewOverlay');
+                if (qvEl) { allOk = false; }
+            }
+
+            // Safety re-export for any missed scoped functions
+            ['directAddWholesaleToCart','toggleWholesaleWishlist','openQuickOrderModal',
+             'shareWholesaleProduct','shareProductCard'].forEach(function(name) {
+                try {
+                    if (typeof window[name] !== 'function') {
+                        var fn = eval('typeof ' + name + ' !== "undefined" ? ' + name + ' : null');
+                        if (typeof fn === 'function') window[name] = fn;
+                    }
+                } catch(e) {}
+            });
+
+            // Badge sync on load
+            if (typeof window.updateWholesaleWishlistBadge === 'function') window.updateWholesaleWishlistBadge();
+            if (typeof window.updateWholesaleCartBadge === 'function') window.updateWholesaleCartBadge();
+            if (typeof window.syncWishlistButtonStates === 'function') window.syncWishlistButtonStates();
+
+            if (!allOk && attempts < 20) { setTimeout(wireDrawers, 150); }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', wireDrawers);
+        } else {
+            wireDrawers();
+        }
+    })();
+    </script>
 </body>
 </html>
