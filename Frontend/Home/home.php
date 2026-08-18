@@ -1184,8 +1184,8 @@ $total_products = count($products);
 
 </div><!-- /.page-wrapper -->
 
-<!-- ════════════ SECTION 31: EXISTING FOOTER PARTIAL ════════════ -->
-<?php include_once __DIR__ . '/../Shop/Includes/shopbottomfotoer.php'; ?>
+<!-- ════════════ SECTION 31: SMART ANIMATED MOBILE BOTTOM FOOTER ════════════ -->
+<?php include_once __DIR__ . '/homebottomfooter.php'; ?>
 
 <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/quickview.php'; ?>
