@@ -917,6 +917,94 @@
         }
     });
 
+    /* ═════════════════════════════════════════════════════════════════════
+       SMART SHOP BY CATEGORY CAROUSEL RAIL & FILTER CONTROLLER
+    ═════════════════════════════════════════════════════════════════════ */
+    var catTrack = document.getElementById('homeCatScrollTrack');
+    var catPrevBtn = document.getElementById('catScrollPrevBtn');
+    var catNextBtn = document.getElementById('catScrollNextBtn');
+    var catThumb = document.getElementById('homeCatScrollbarThumb');
+
+    function syncCatScrollState() {
+        if (!catTrack) return;
+        var scrollLeft = catTrack.scrollLeft;
+        var maxScroll = catTrack.scrollWidth - catTrack.clientWidth;
+
+        if (catPrevBtn) {
+            catPrevBtn.disabled = (scrollLeft <= 5);
+        }
+        if (catNextBtn) {
+            catNextBtn.disabled = (scrollLeft >= maxScroll - 5);
+        }
+
+        if (catThumb && maxScroll > 0) {
+            var progress = (scrollLeft / maxScroll) * 100;
+            catThumb.style.transform = 'translateX(' + (progress * 3) + '%)';
+        }
+    }
+
+    window.scrollCatRail = function(direction) {
+        if (!catTrack) return;
+        var scrollAmount = Math.max(220, Math.floor(catTrack.clientWidth * 0.7));
+        catTrack.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    if (catTrack) {
+        catTrack.addEventListener('scroll', syncCatScrollState, { passive: true });
+        setTimeout(syncCatScrollState, 150);
+        window.addEventListener('resize', syncCatScrollState, { passive: true });
+    }
+
+    /* Smart Category Click Filter Bridge */
+    window.filterHomeCategory = function(catName) {
+        if (!catName) return;
+
+        // Update master filter state
+        window.masterFilterState.category = catName;
+        window.masterFilterState.fabrics = [];
+
+        // Sync header attached subnav tabs
+        document.querySelectorAll('.main-cat-tab').forEach(function(t) {
+            var isMatch = (t.dataset.cat === catName);
+            t.classList.toggle('active', isMatch);
+            t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+            if (isMatch) {
+                t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        });
+
+        // Sync top nav pills if present
+        document.querySelectorAll('.home-cat-pill').forEach(function(pill) {
+            var pillText = (pill.querySelector('span:last-child') ? pill.querySelector('span:last-child').textContent.trim() : '');
+            var isPillMatch = (pillText === catName || (catName === 'All' && pillText === 'All Products'));
+            pill.classList.toggle('active', isPillMatch);
+        });
+
+        // Highlight selected category card in rail
+        document.querySelectorAll('.home-cat-card').forEach(function(card) {
+            var nameEl = card.querySelector('.home-cat-card-name');
+            var isCardMatch = nameEl && (nameEl.textContent.trim() === catName);
+            card.classList.toggle('active-cat-selected', isCardMatch);
+        });
+
+        // Re-render sub-categories & apply filters to grid
+        window.renderSubCategories(catName);
+        window.applyMasterFilters();
+
+        // Smoothly scroll down to the product showcase
+        var trendingSec = document.getElementById('section-trending');
+        if (trendingSec) {
+            trendingSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        if (typeof window.showToast === 'function') {
+            window.showToast('✨ Filtered to ' + catName + ' Collection', 'filter');
+        }
+    };
+
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
     window.applyMasterFilters();

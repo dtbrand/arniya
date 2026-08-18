@@ -189,14 +189,78 @@ $products = [
 ];
 
 $categoriesList = [
-    ['name' => 'Sarees', 'count' => '450+ Designs', 'icon' => '🥻', 'img' => '/Frontend/Shop/Asset/images/product1.png'],
-    ['name' => 'Kurtis', 'count' => '320+ Styles', 'icon' => '👗', 'img' => '/Frontend/Shop/Asset/images/product5.png'],
-    ['name' => 'Gowns', 'count' => '180+ Couture', 'icon' => '✨', 'img' => '/Frontend/Shop/Asset/images/product8.png'],
-    ['name' => 'Lehengas', 'count' => '140+ Bridal', 'icon' => '👑', 'img' => '/Frontend/Shop/Asset/images/product6.png'],
-    ['name' => 'Suits', 'count' => '210+ Sets', 'icon' => '🌟', 'img' => '/Frontend/Shop/Asset/images/product7.png'],
-    ['name' => 'Dress Material', 'count' => '290+ Unstitched', 'icon' => '🧵', 'img' => '/Frontend/Shop/Asset/images/product4.png'],
-    ['name' => 'Dupatta', 'count' => '160+ Silk Lots', 'icon' => '🧣', 'img' => '/Frontend/Shop/Asset/images/product2.png'],
-    ['name' => 'Jewellery', 'count' => '120+ Kundan', 'icon' => '💍', 'img' => '/Frontend/Shop/Asset/images/product3.png'],
+    [
+        'name'        => 'Sarees',
+        'count'       => '450+ Designs',
+        'icon'        => '🥻',
+        'img'         => '/Frontend/Shop/Asset/images/product1.png',
+        'price_from'  => 'From ₹1,299',
+        'badge'       => '🔥 Bestseller',
+        'tagline'     => 'Banarasi & Kanjivaram'
+    ],
+    [
+        'name'        => 'Kurtis',
+        'count'       => '320+ Styles',
+        'icon'        => '👗',
+        'img'         => '/Frontend/Shop/Asset/images/product5.png',
+        'price_from'  => 'From ₹549',
+        'badge'       => '⚡ Trending',
+        'tagline'     => 'Anarkali & Straight Sets'
+    ],
+    [
+        'name'        => 'Gowns',
+        'count'       => '180+ Couture',
+        'icon'        => '✨',
+        'img'         => '/Frontend/Shop/Asset/images/product8.png',
+        'price_from'  => 'From ₹2,199',
+        'badge'       => '👑 Designer',
+        'tagline'     => 'Party Mirror Work'
+    ],
+    [
+        'name'        => 'Lehengas',
+        'count'       => '140+ Bridal',
+        'icon'        => '👑',
+        'img'         => '/Frontend/Shop/Asset/images/product6.png',
+        'price_from'  => 'From ₹6,999',
+        'badge'       => '💎 Bridal Pick',
+        'tagline'     => 'Heavy Velvet & Flare'
+    ],
+    [
+        'name'        => 'Suits',
+        'count'       => '210+ Sets',
+        'icon'        => '🌟',
+        'img'         => '/Frontend/Shop/Asset/images/product7.png',
+        'price_from'  => 'From ₹899',
+        'badge'       => '🏷️ Flat 25% Off',
+        'tagline'     => 'Sharara & Pant Sets'
+    ],
+    [
+        'name'        => 'Dress Material',
+        'count'       => '290+ Lots',
+        'icon'        => '🧵',
+        'img'         => '/Frontend/Shop/Asset/images/product4.png',
+        'price_from'  => 'From ₹649',
+        'badge'       => '🏭 Factory Price',
+        'tagline'     => 'Unstitched Pure Cotton'
+    ],
+    [
+        'name'        => 'Dupatta',
+        'count'       => '160+ Silk Lots',
+        'icon'        => '🧣',
+        'img'         => '/Frontend/Shop/Asset/images/product2.png',
+        'price_from'  => 'From ₹299',
+        'badge'       => '✨ Silk Edit',
+        'tagline'     => 'Banarasi Zari Border'
+    ],
+    [
+        'name'        => 'Jewellery',
+        'count'       => '120+ Kundan',
+        'icon'        => '💍',
+        'img'         => '/Frontend/Shop/Asset/images/product3.png',
+        'price_from'  => 'From ₹499',
+        'badge'       => '👑 Royal Kundan',
+        'tagline'     => 'Choker & Bridal Sets'
+    ],
 ];
 
 $total_products = count($products);
@@ -401,30 +465,66 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 5: SHOP BY CATEGORY ════════════ -->
-    <section class="home-section" id="section-categories">
+    <!-- ════════════ SECTION 5: SHOP BY CATEGORY (SMART LUXURY SCROLL RAIL) ════════════ -->
+    <section class="home-section home-category-section" id="section-categories">
         <div class="home-section-container">
-            <div class="home-section-header">
+            <div class="home-section-header home-cat-section-header">
                 <div>
                     <span class="home-section-tag">✨ CURATED ETHNIC COLLECTIONS</span>
                     <h2 class="home-section-title">Shop By Category</h2>
+                    <p class="home-section-subtitle">Direct from Surat master artisans & weavers • Handpicked couture at factory prices</p>
                 </div>
-                <span class="home-section-sub-link" onclick="document.getElementById('section-trending').scrollIntoView({behavior:'smooth'});">View All (450+) &rarr;</span>
+                <div class="home-cat-header-actions">
+                    <!-- Carousel Navigation Controls -->
+                    <div class="home-cat-arrows-group">
+                        <button type="button" class="home-cat-scroll-arrow prev" id="catScrollPrevBtn" onclick="if(typeof scrollCatRail==='function') scrollCatRail(-1);" aria-label="Previous categories">
+                            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button type="button" class="home-cat-scroll-arrow next" id="catScrollNextBtn" onclick="if(typeof scrollCatRail==='function') scrollCatRail(1);" aria-label="Next categories">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                    <span class="home-section-sub-link" onclick="document.getElementById('section-trending').scrollIntoView({behavior:'smooth'});">View All (450+) &rarr;</span>
+                </div>
             </div>
 
-            <div class="home-cat-grid">
-                <?php foreach ($categoriesList as $cat): ?>
-                <div class="home-cat-card" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= $cat['name'] ?>');">
-                    <div class="home-cat-card-img-wrap">
-                        <img src="<?= $cat['img'] ?>" alt="<?= $cat['name'] ?>" loading="lazy" class="home-cat-card-img" />
-                        <span class="home-cat-icon-tag"><?= $cat['icon'] ?></span>
-                    </div>
-                    <div class="home-cat-card-body">
-                        <h3 class="home-cat-card-name"><?= $cat['name'] ?></h3>
-                        <span class="home-cat-card-count"><?= $cat['count'] ?></span>
-                    </div>
+            <!-- Smart Horizontal Scroll Rail -->
+            <div class="home-cat-carousel-wrap">
+                <div class="home-cat-scroll-track" id="homeCatScrollTrack">
+                    <?php foreach ($categoriesList as $cat): ?>
+                    <article class="home-cat-card" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= $cat['name'] ?>');" role="button" tabindex="0">
+                        <div class="home-cat-card-img-wrap">
+                            <img src="<?= $cat['img'] ?>" alt="<?= $cat['name'] ?>" loading="lazy" class="home-cat-card-img" />
+                            <div class="home-cat-overlay-gradient"></div>
+                            
+                            <!-- Top Floating Badge -->
+                            <?php if (!empty($cat['badge'])): ?>
+                            <span class="home-cat-floating-badge"><?= $cat['badge'] ?></span>
+                            <?php endif; ?>
+                            
+                            <span class="home-cat-icon-badge" title="<?= $cat['name'] ?>"><?= $cat['icon'] ?></span>
+
+                            <!-- Bottom Starting Price Tag -->
+                            <div class="home-cat-price-chip">
+                                <span><?= $cat['price_from'] ?? 'From ₹549' ?></span>
+                            </div>
+                        </div>
+                        <div class="home-cat-card-body">
+                            <h3 class="home-cat-card-name"><?= $cat['name'] ?></h3>
+                            <p class="home-cat-card-tagline"><?= $cat['tagline'] ?? 'Exclusive Collection' ?></p>
+                            <div class="home-cat-card-footer">
+                                <span class="home-cat-card-count"><?= $cat['count'] ?></span>
+                                <span class="home-cat-explore-btn">Explore &rsaquo;</span>
+                            </div>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
+
+                <!-- Custom Scroll Progress Bar -->
+                <div class="home-cat-scrollbar-track" id="homeCatScrollbarTrack">
+                    <div class="home-cat-scrollbar-thumb" id="homeCatScrollbarThumb"></div>
+                </div>
             </div>
         </div>
     </section>

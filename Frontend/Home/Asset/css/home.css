@@ -1957,80 +1957,344 @@ input[type=range].sf-range::-moz-range-thumb {
     transform: translateX(3px);
 }
 
-/* ── Section 5: Shop By Category Grid ── */
-.home-cat-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 12px;
+/* ═════════════════════════════════════════════════════════════════════
+   SECTION 5: SHOP BY CATEGORY (SMART LUXURY SCROLL RAIL & CAROUSEL)
+═════════════════════════════════════════════════════════════════════ */
+.home-category-section {
+    position: relative;
+    padding: clamp(20px, 3.5vw, 36px) 0 clamp(16px, 2.5vw, 26px);
+    background: #FAF8F4;
+    border-top: 1px solid rgba(138, 104, 31, 0.12);
+    border-bottom: 1px solid rgba(138, 104, 31, 0.12);
 }
 
-.home-cat-card {
+.home-cat-section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: clamp(14px, 2vw, 22px);
+    flex-wrap: wrap;
+}
+
+.home-section-subtitle {
+    font-size: clamp(0.72rem, 1.8vw, 0.84rem);
+    color: var(--mid-text, #5A5348);
+    font-weight: 500;
+    margin-top: 4px;
+    max-width: 620px;
+    line-height: 1.4;
+}
+
+.home-cat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.home-cat-arrows-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.home-cat-scroll-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     background: #FFFFFF;
-    border: 1px solid rgba(138, 104, 31, 0.18);
-    border-radius: 12px;
+    border: 1.5px solid var(--soft-platinum, #E5E3DE);
+    color: var(--dark-gold, #8A681F);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(138, 104, 31, 0.08);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    flex-shrink: 0;
+}
+
+.home-cat-scroll-arrow:hover:not(:disabled) {
+    background: linear-gradient(135deg, #8A681F 0%, #6F5218 100%);
+    color: #FFFFFF;
+    border-color: #8A681F;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(138, 104, 31, 0.25);
+}
+
+.home-cat-scroll-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.home-cat-scroll-arrow svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    fill: none;
+}
+
+/* ── Smart Carousel Track ── */
+.home-cat-carousel-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.home-cat-scroll-track {
+    display: flex;
+    gap: clamp(12px, 1.8vw, 18px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 6px 4px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.home-cat-scroll-track::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Category Card Styling ── */
+.home-cat-card {
+    flex: 0 0 clamp(155px, 22vw, 195px);
+    max-width: 210px;
+    background: #FFFFFF;
+    border: 1.5px solid rgba(138, 104, 31, 0.2);
+    border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    scroll-snap-align: start;
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.07);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    user-select: none;
 }
 
-.home-cat-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(138, 104, 31, 0.14);
-    border-color: #8A681F;
+.home-cat-card:hover,
+.home-cat-card:focus-visible {
+    transform: translateY(-6px);
+    border-color: var(--dark-gold, #8A681F);
+    box-shadow: 0 14px 32px rgba(138, 104, 31, 0.18);
 }
 
+.home-cat-card:active {
+    transform: scale(0.97);
+}
+
+/* Card Image & Vignette */
 .home-cat-card-img-wrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 4.8;
     overflow: hidden;
-    background: #FAF8F4;
+    background: #F4EFE6;
 }
 
 .home-cat-card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    object-position: top center;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .home-cat-card:hover .home-cat-card-img {
-    transform: scale(1.06);
+    transform: scale(1.09);
 }
 
-.home-cat-icon-tag {
+.home-cat-overlay-gradient {
     position: absolute;
-    bottom: 6px;
-    right: 6px;
-    background: rgba(255, 255, 255, 0.92);
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 40%, rgba(20, 16, 12, 0.62) 100%);
+    pointer-events: none;
+}
+
+/* Floating Badges */
+.home-cat-floating-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(24, 20, 16, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #F8D67A;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 2px 7px;
+    border-radius: 20px;
+    border: 1px solid rgba(248, 214, 122, 0.35);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.home-cat-icon-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(4px);
+    border: 1.5px solid rgba(138, 104, 31, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.78rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.88rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+    transition: transform 0.25s ease;
 }
 
+.home-cat-card:hover .home-cat-icon-badge {
+    transform: rotate(12deg) scale(1.1);
+}
+
+/* Starting Price Pill */
+.home-cat-price-chip {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
+    border: 1px solid rgba(138, 104, 31, 0.4);
+    color: #6F5218;
+    font-size: 0.64rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* Card Body */
 .home-cat-card-body {
-    padding: 8px 6px 10px;
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    background: #FFFFFF;
 }
 
 .home-cat-card-name {
-    font-size: 0.78rem;
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: 0.92rem;
     font-weight: 800;
-    color: var(--dark-text, #1E1B18);
+    color: #1E1B18;
+    margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.2s ease;
+}
+
+.home-cat-card:hover .home-cat-card-name {
+    color: var(--dark-gold, #8A681F);
+}
+
+.home-cat-card-tagline {
+    font-size: 0.65rem;
+    color: var(--light-text, #8C827A);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.home-cat-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(138, 104, 31, 0.18);
 }
 
 .home-cat-card-count {
-    font-size: 0.64rem;
-    color: var(--dark-gold, #8A681F);
+    font-size: 0.66rem;
     font-weight: 700;
+    color: var(--dark-gold, #8A681F);
+    background: #FAF5E8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(138, 104, 31, 0.18);
+}
+
+.home-cat-explore-btn {
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: var(--mid-text, #5A5348);
+    transition: all 0.2s ease;
+}
+
+.home-cat-card:hover .home-cat-explore-btn {
+    color: var(--dark-gold, #8A681F);
+    transform: translateX(2px);
+}
+
+/* Custom Thin Gold Scrollbar Track */
+.home-cat-scrollbar-track {
+    width: min(320px, 60%);
+    height: 3px;
+    background: rgba(138, 104, 31, 0.15);
+    border-radius: 3px;
+    margin: 4px auto 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.home-cat-scrollbar-thumb {
+    width: 25%;
+    height: 100%;
+    background: linear-gradient(90deg, #8A681F, #D4AF37);
+    border-radius: 3px;
+    transition: transform 0.1s ease-out;
+}
+
+@media (max-width: 767px) {
+    .home-category-section {
+        padding: 16px 0 12px;
+    }
+    .home-cat-card {
+        flex: 0 0 135px;
+        max-width: 140px;
+        border-radius: 12px;
+    }
+    .home-cat-card-body {
+        padding: 6px 8px 8px;
+    }
+    .home-cat-card-name {
+        font-size: 0.78rem;
+    }
+    .home-cat-card-tagline {
+        display: none;
+    }
+    .home-cat-card-footer {
+        margin-top: 2px;
+        padding-top: 4px;
+    }
+    .home-cat-card-count {
+        font-size: 0.58rem;
+        padding: 1px 4px;
+    }
+    .home-cat-explore-btn {
+        font-size: 0.58rem;
+    }
+    .home-cat-arrows-group {
+        display: none;
+    }
+    .home-cat-scrollbar-track {
+        width: 140px;
+    }
 }
 
 /* ── Section 6: Main Product Card Rating & Actions ── */
