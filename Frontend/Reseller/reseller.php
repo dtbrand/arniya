@@ -3842,20 +3842,63 @@ $catalogProducts = [
             </div>
             <form onsubmit="event.preventDefault(); handleQuickOrderSubmit();" style="display:flex; flex-direction:column; height:100%;">
                 <div class="ws-modal-luxury-body">
-                    <!-- Step 1: Customer Selection -->
+                    <!-- Step 1: Customer Selection with Smart Search & + New Customer Button -->
                     <div class="ws-smart-form-section">
-                        <div class="ws-smart-section-header">
+                        <div class="ws-smart-section-header" style="display:flex; justify-content:space-between; align-items:center;">
                             <span class="ws-smart-section-title">
                                 <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 1. Select Customer
                             </span>
+                            <span class="ws-qo-hint" style="font-size:0.70rem; color:var(--ws-text-muted);">Search by Name or Mobile</span>
                         </div>
-                        <div class="ws-smart-input-wrap">
-                            <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <select id="qoCustomerSelect" class="ws-smart-input" required onchange="handleQoCustomerChange(this.value)">
-                                <option value="">-- Choose Customer --</option>
-                            </select>
+
+                        <!-- Customer Search Row + Add New Button -->
+                        <div class="ws-qo-cust-search-row" id="qoCustSearchRow">
+                            <div class="ws-qo-search-wrap">
+                                <svg class="ws-qo-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="qoCustomerSearchInput" class="ws-qo-search-input" placeholder="Search customer by name, mobile..." autocomplete="off" oninput="handleQoCustomerSearchInput(this.value)" onfocus="handleQoCustomerSearchFocus()">
+                                <button type="button" id="qoCustomerSearchClearBtn" class="ws-qo-search-clear" onclick="clearQoCustomerSearch()" title="Clear search" style="display:none;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                <!-- Live Autocomplete Dropdown List -->
+                                <div class="ws-qo-autocomplete-list" id="qoCustomerSearchResults" style="display:none;">
+                                    <!-- Injected dynamically by JS -->
+                                </div>
+                            </div>
+                            <button type="button" class="ws-qo-btn-add-cust" onclick="openAddCustomerModal()" title="Add New Customer">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                <span>New</span>
+                            </button>
                         </div>
+
+                        <!-- Selected Customer Active Card (Shown when a customer is chosen) -->
+                        <div class="ws-qo-selected-cust-card" id="qoSelectedCustCard" style="display:none;">
+                            <div class="ws-qo-selected-cust-left">
+                                <div class="ws-qo-cust-avatar" id="qoSelectedCustAvatar">RK</div>
+                                <div>
+                                    <div class="ws-qo-cust-name-row">
+                                        <span class="ws-qo-cust-name" id="qoSelectedCustName">Customer Name</span>
+                                        <span class="ws-qo-cust-phone" id="qoSelectedCustPhone">9876543210</span>
+                                    </div>
+                                    <div class="ws-qo-cust-city" id="qoSelectedCustCity">Surat, Gujarat</div>
+                                </div>
+                            </div>
+                            <button type="button" class="ws-qo-btn-change-cust" onclick="resetQoCustomerSelection()" title="Change Customer">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <span>Change</span>
+                            </button>
+                        </div>
+
+                        <!-- Underlying Select (Synchronized for validation and submit) -->
+                        <select id="qoCustomerSelect" style="display:none;" required onchange="handleQoCustomerChange(this.value)">
+                            <option value="">-- Choose Customer --</option>
+                        </select>
                     </div>
 
                     <!-- Step 2: Product & Quantity -->

@@ -4338,10 +4338,15 @@ window.animateTargetGauge = animateTargetGauge;
                 }).join('');
             }
 
+            // Customer selection state
             if (prefillCustId) {
-                handleQoCustomerChange(prefillCustId);
+                selectQoCustomer(prefillCustId);
+            } else {
+                resetQoCustomerSelection();
             }
+
             if (prefillProdId) {
+                if (prodSelect) prodSelect.value = prefillProdId;
                 handleQoProductChange(prefillProdId);
             }
 
@@ -4351,7 +4356,117 @@ window.animateTargetGauge = animateTargetGauge;
         function closeResellerQuickOrderDrawer() {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             if (modal) modal.classList.remove('active');
+            var results = document.getElementById('qoCustomerSearchResults');
+            if (results) results.style.display = 'none';
         };
+
+        function handleQoCustomerSearchInput(query) {
+            var input = document.getElementById('qoCustomerSearchInput');
+            var clearBtn = document.getElementById('qoCustomerSearchClearBtn');
+            var resultsBox = document.getElementById('qoCustomerSearchResults');
+            if (!resultsBox) return;
+
+            var q = (query || '').trim().toLowerCase();
+            if (clearBtn) clearBtn.style.display = q.length > 0 ? 'flex' : 'none';
+
+            var customers = getResellerCustomers();
+            var matches = customers.filter(function(c) {
+                var name = (c.name || '').toLowerCase();
+                var phone = (c.mobile || c.whatsapp || '').toLowerCase();
+                var city = (c.city || '').toLowerCase();
+                return name.indexOf(q) !== -1 || phone.indexOf(q) !== -1 || city.indexOf(q) !== -1;
+            });
+
+            if (matches.length === 0) {
+                resultsBox.innerHTML = `
+                    <div style="padding:12px; text-align:center; color:var(--ws-text-muted); font-size:0.78rem;">
+                        No customer found for "<strong>${q}</strong>"<br>
+                        <button type="button" class="ws-btn ws-btn-primary ws-btn-xs" style="margin-top:6px; font-size:0.72rem; padding:4px 10px;" onclick="openAddCustomerModal()">+ Add New Customer</button>
+                    </div>
+                `;
+            } else {
+                resultsBox.innerHTML = matches.map(function(c) {
+                    var initials = (c.name || 'C').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+                    var tagHtml = (c.tags && c.tags.length > 0) ? '<span class="ws-qo-item-tag">' + c.tags[0] + '</span>' : '';
+                    return `
+                        <div class="ws-qo-autocomplete-item" onclick="selectQoCustomer(${c.id})">
+                            <div class="ws-qo-item-left">
+                                <div class="ws-qo-item-avatar">${initials}</div>
+                                <div>
+                                    <div class="ws-qo-item-name">${c.name}</div>
+                                    <div class="ws-qo-item-sub">📞 ${c.mobile || c.whatsapp || 'N/A'} &bull; 📍 ${c.city || 'Surat'}</div>
+                                </div>
+                            </div>
+                            <div>${tagHtml}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            resultsBox.style.display = 'block';
+        }
+
+        function handleQoCustomerSearchFocus() {
+            var input = document.getElementById('qoCustomerSearchInput');
+            handleQoCustomerSearchInput(input ? input.value : '');
+        }
+
+        function clearQoCustomerSearch() {
+            var input = document.getElementById('qoCustomerSearchInput');
+            var clearBtn = document.getElementById('qoCustomerSearchClearBtn');
+            var resultsBox = document.getElementById('qoCustomerSearchResults');
+            if (input) {
+                input.value = '';
+                input.focus();
+            }
+            if (clearBtn) clearBtn.style.display = 'none';
+            if (resultsBox) resultsBox.style.display = 'none';
+        }
+
+        function selectQoCustomer(custId) {
+            var customers = getResellerCustomers();
+            var c = customers.find(function(x) { return Number(x.id) === Number(custId); });
+            if (!c) return;
+
+            var select = document.getElementById('qoCustomerSelect');
+            if (select) select.value = c.id;
+
+            handleQoCustomerChange(c.id);
+
+            // Populate selected card preview
+            var searchRow = document.getElementById('qoCustSearchRow');
+            var card = document.getElementById('qoSelectedCustCard');
+            var avatar = document.getElementById('qoSelectedCustAvatar');
+            var name = document.getElementById('qoSelectedCustName');
+            var phone = document.getElementById('qoSelectedCustPhone');
+            var city = document.getElementById('qoSelectedCustCity');
+            var resultsBox = document.getElementById('qoCustomerSearchResults');
+
+            if (resultsBox) resultsBox.style.display = 'none';
+
+            if (avatar) avatar.textContent = (c.name || 'C').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+            if (name) name.textContent = c.name;
+            if (phone) phone.textContent = (c.mobile || c.whatsapp || '');
+            if (city) city.textContent = '📍 ' + (c.city || 'Surat') + ', ' + (c.state || 'Gujarat');
+
+            if (searchRow) searchRow.style.display = 'none';
+            if (card) card.style.display = 'flex';
+        }
+
+        function resetQoCustomerSelection() {
+            var select = document.getElementById('qoCustomerSelect');
+            if (select) select.value = '';
+
+            var searchRow = document.getElementById('qoCustSearchRow');
+            var card = document.getElementById('qoSelectedCustCard');
+            var input = document.getElementById('qoCustomerSearchInput');
+
+            if (card) card.style.display = 'none';
+            if (searchRow) searchRow.style.display = 'flex';
+            if (input) {
+                input.value = '';
+            }
+            clearQoCustomerSearch();
+        }
 
         function handleQoCustomerChange(custId) {
             var customers = getResellerCustomers();
@@ -5683,7 +5798,9 @@ Rajesh Kumar (Reseller Partner)`;
         'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
         'setCustWhatsappSame', 'toggleCustTagChip', 'syncCustTagChips', 'insertCustNotePrompt', 'handleSmartPinAutoFill',
         'handleSmartInputChange', 'clearSmartInput',
-        'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
+        'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerSearchInput',
+        'handleQoCustomerSearchFocus', 'clearQoCustomerSearch', 'selectQoCustomer', 'resetQoCustomerSelection',
+        'handleQoCustomerChange',
         'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
         'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
         'closeAddNoteModal', 'handleSaveNoteSubmit', 'openScheduleFollowupModal', 'closeScheduleFollowupModal',
@@ -5709,6 +5826,14 @@ Rajesh Kumar (Reseller Partner)`;
                 window[name] = fn;
             }
         } catch(e) {}
+    });
+
+    document.addEventListener('click', function(e) {
+        var searchWrap = document.querySelector('.ws-qo-search-wrap');
+        var resultsBox = document.getElementById('qoCustomerSearchResults');
+        if (resultsBox && searchWrap && !searchWrap.contains(e.target)) {
+            resultsBox.style.display = 'none';
+        }
     });
 })();
 
