@@ -770,62 +770,6 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 22: SPECIAL OFFERS & COUPONS ════════════ -->
-    <section class="home-section" id="section-offers">
-        <div class="home-section-container">
-            <div class="home-section-header">
-                <div>
-                    <span class="home-section-tag">🏷️ ACTIVE PROMO CODES</span>
-                    <h2 class="home-section-title">Special Offers & Discount Coupons</h2>
-                </div>
-            </div>
-
-            <div class="offers-grid">
-                <div class="offer-coupon-card">
-                    <div class="coupon-left">
-                        <span class="coupon-discount">FLAT 25% OFF</span>
-                        <h4 class="coupon-title">Festive Silk Utsav</h4>
-                        <p class="coupon-terms">Min order ₹3,999 • All Sarees</p>
-                    </div>
-                    <div class="coupon-right">
-                        <button type="button" class="coupon-code-btn" onclick="navigator.clipboard.writeText('FESTIVE25'); showToast('Coupon code FESTIVE25 copied!');">
-                            <code>FESTIVE25</code>
-                            <span>Tap to Copy</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="offer-coupon-card">
-                    <div class="coupon-left">
-                        <span class="coupon-discount">FLAT ₹500 OFF</span>
-                        <h4 class="coupon-title">First Reseller Order</h4>
-                        <p class="coupon-terms">On your first reseller dispatch order</p>
-                    </div>
-                    <div class="coupon-right">
-                        <button type="button" class="coupon-code-btn" onclick="navigator.clipboard.writeText('RESELLER500'); showToast('Coupon code RESELLER500 copied!');">
-                            <code>RESELLER500</code>
-                            <span>Tap to Copy</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="offer-coupon-card">
-                    <div class="coupon-left">
-                        <span class="coupon-discount">EXTRA 10% OFF</span>
-                        <h4 class="coupon-title">Bulk Wholesale Discount</h4>
-                        <p class="coupon-terms">On orders above 25 pieces</p>
-                    </div>
-                    <div class="coupon-right">
-                        <button type="button" class="coupon-code-btn" onclick="navigator.clipboard.writeText('BULK10'); showToast('Coupon code BULK10 copied!');">
-                            <code>BULK10</code>
-                            <span>Tap to Copy</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ════════════ SECTION 23: HOW RESELLING WORKS ════════════ -->
     <section class="home-section home-section-soft-bg" id="section-how-reselling-works">
         <div class="home-section-container">
