@@ -171,12 +171,15 @@
 <div class="cart-drawer-backdrop" id="cartDrawerModal" aria-hidden="true" role="dialog" aria-label="Shopping Cart Drawer">
     <div class="cart-drawer-content">
         <div class="cd-header">
-            <div class="cd-title-wrap">
-                <h3 class="cd-title">Shopping Bag</h3>
-                <span class="cd-subtitle" id="cartBadgeSub">0 Luxury Items</span>
-            </div>
-            <button class="cd-close-btn" id="closeCartDrawerBtn" aria-label="Close Cart">&times;</button>
+    <div style="display:flex; align-items:center; gap:10px;">
+        <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+        <div>
+            <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
+            <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
         </div>
+    </div>
+    <button class="cd-close-btn" id="closeCartDrawerBtn" onclick="if(typeof window.closeCartDrawer==='function') window.closeCartDrawer();" aria-label="Close Cart">✕</button>
+</div>
 
         <div class="cd-body" id="cartDrawerItemsWrap">
             <!-- Dynamic Items or Animated Empty State rendered via JS -->

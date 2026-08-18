@@ -785,11 +785,9 @@
     <div class="checkout-wrapper">
         
         <!-- Header -->
-        <div class="co-header">
-            <div class="co-header-brand">
-                <div class="co-brand-icon">
-                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                </div>
+                <div class="co-header">
+            <div class="co-header-brand" style="display:flex; align-items:center; gap:10px;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="co-title-group">
                     <h2>Secure Luxury Checkout</h2>
                     <span>Kalaniketan Ethnic Couture</span>
