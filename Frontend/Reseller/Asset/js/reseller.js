@@ -4990,7 +4990,9 @@ Rajesh Kumar (Reseller Partner)`;
         'generateCustomerRecommendations', 'convertNumberToIndianWords', 'applyAdvancedOrderFilters',
         'resetAdvancedOrderFilters', 'openSaveFilterModal', 'openSavedFiltersModal', 'closeSavedFiltersModal',
         'saveCurrentFilterPreset', 'renderOrdersView', 'renderReportsView', 'renderTrackingTab',
-        'renderTicketsView', 'renderAddressBookData'
+        'renderTicketsView', 'renderAddressBookData',
+        'directAddWholesaleToCart', 'toggleWholesaleWishlist', 'openQuickOrderModal',
+        'shareWholesaleProduct', 'shareProductCard', 'openWishlistDrawer'
     ];
 
     exposedList.forEach(function(name) {

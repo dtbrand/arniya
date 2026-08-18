@@ -3274,6 +3274,78 @@ $catalogProducts = [
     <!-- ════════════ WISHLIST PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/wishlist.php'; ?>
 
+    <!-- ════════════ RESELLER DRAWER GLOBAL BRIDGE ════════════ -->
+    <script>
+    (function() {
+        // Make sure all drawer functions are globally accessible from product card buttons
+        var attempts = 0;
+        function wireDrawers() {
+            attempts++;
+            var allOk = true;
+
+            // openWishlistDrawer bridge
+            if (typeof window.openWishlistDrawer !== 'function') {
+                var wdBackdrop = document.getElementById('wishlistDrawerBackdrop');
+                if (wdBackdrop) {
+                    window.openWishlistDrawer = function() { wdBackdrop.classList.add('active'); };
+                } else { allOk = false; }
+            }
+
+            // openCartDrawer bridge
+            if (typeof window.openCartDrawer !== 'function') {
+                var cdBackdrop = document.getElementById('cartDrawerBackdrop');
+                if (cdBackdrop) {
+                    window.openCartDrawer = function() { cdBackdrop.classList.add('active'); };
+                } else { allOk = false; }
+            }
+
+            // openQV / openQuickView bridge
+            if (typeof window.openQV !== 'function') {
+                var qvOverlay = document.getElementById('quickViewOverlay');
+                if (qvOverlay) {
+                    // openQV should already be defined by quickview.php; retry
+                    allOk = false;
+                }
+            }
+
+            // Expose directAddWholesaleToCart if missed by IIFE export
+            if (typeof window.directAddWholesaleToCart !== 'function' && typeof directAddWholesaleToCart === 'function') {
+                window.directAddWholesaleToCart = directAddWholesaleToCart;
+            }
+
+            // Expose toggleWholesaleWishlist if missed
+            if (typeof window.toggleWholesaleWishlist !== 'function' && typeof toggleWholesaleWishlist === 'function') {
+                window.toggleWholesaleWishlist = toggleWholesaleWishlist;
+            }
+
+            // Expose openQuickOrderModal if missed
+            if (typeof window.openQuickOrderModal !== 'function' && typeof openQuickOrderModal === 'function') {
+                window.openQuickOrderModal = openQuickOrderModal;
+            }
+
+            // Expose shareWholesaleProduct if missed
+            if (typeof window.shareWholesaleProduct !== 'function' && typeof shareWholesaleProduct === 'function') {
+                window.shareWholesaleProduct = shareWholesaleProduct;
+            }
+
+            // Wishlist: badge sync
+            if (typeof window.updateWholesaleWishlistBadge === 'function') window.updateWholesaleWishlistBadge();
+            if (typeof window.updateWholesaleCartBadge === 'function') window.updateWholesaleCartBadge();
+
+            if (!allOk && attempts < 20) {
+                setTimeout(wireDrawers, 150);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', wireDrawers);
+        } else {
+            wireDrawers();
+        }
+    })();
+    </script>
+
+
     <!-- ═══════════════════════════════════════════
          MODAL CRM 1: COMPREHENSIVE CUSTOMER PROFILE
     ═══════════════════════════════════════════ -->
