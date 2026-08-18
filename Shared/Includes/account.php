@@ -1,8 +1,9 @@
 <?php
 /**
  * account.php — Luxury Account & Authentication Modal Component
- * Styled 100% Identical to the High-End Dedicated Register Page (myaccount.php)
- * Features World Country Dropdown with Search, State Dropdown with Search, SVG Role Cards, and WhatsApp Validation
+ * Styled 100% Identical to High-End Dedicated Register Page (myaccount.php)
+ * Features Smart 2-Tab Bar (LOGIN | REGISTER), Searchable World Countries & States Dropdowns,
+ * Animated Vector SVG Role Cards, Real-time WhatsApp Validation, and Auto-Redirect to Role Dashboard
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -13,11 +14,11 @@
     --ac-gold-deep: #5F4512;
     --ac-gold-light: #C5A859;
     --ac-gold-pale: #FAF5E8;
-    --ac-gold-border: rgba(138, 104, 31, 0.35);
+    --ac-gold-border: rgba(138, 104, 31, 0.30);
     --ac-dark-text: #181512;
     --ac-mid-text: #423C34;
     --ac-light-text: #6E675D;
-    --ac-soft-platinum: #DCD7CD;
+    --ac-soft-platinum: #DDD8CD;
     --ac-cream-bg: #FFFFFF;
 }
 
@@ -35,7 +36,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s ease;
-    padding: clamp(10px, 3vw, 20px);
+    padding: clamp(8px, 2.5vw, 18px);
     box-sizing: border-box;
 }
 .account-modal-backdrop.active {
@@ -43,15 +44,15 @@
     visibility: visible;
 }
 
-/* ── Account Dialog (Styled like auth-card-wrap) ── */
+/* ── Account Dialog (Smart Auto Size & Fluid Mobile) ── */
 .account-dialog {
     background: #FFFFFF;
     width: 100%;
-    max-width: 530px;
-    max-height: 92vh;
-    border-radius: 18px;
+    max-width: 480px;
+    max-height: 94vh;
+    border-radius: 16px;
     border: 2px solid var(--ac-gold-primary);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -67,8 +68,8 @@
 /* ── Dialog Header ── */
 .ac-header {
     background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
-    border-bottom: 2px solid var(--ac-gold-border);
-    padding: 14px 20px;
+    border-bottom: 1.5px solid var(--ac-gold-border);
+    padding: 12px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -85,28 +86,29 @@
 .ac-brand-group {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 .ac-title-wrap h3 {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: clamp(0.95rem, 3vw, 1.15rem);
+    font-size: clamp(0.95rem, 3vw, 1.10rem);
     font-weight: 800;
     color: var(--ac-gold-primary);
     margin: 0;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
 }
 .ac-title-wrap span {
-    font-size: 0.62rem;
+    font-size: 0.60rem;
     color: var(--ac-mid-text);
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     display: block;
     margin-top: 2px;
 }
 .ac-close-btn {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     border: 1.5px solid var(--ac-gold-primary);
     background: #FAF8F4;
@@ -115,9 +117,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 .ac-close-btn:hover {
     background: var(--ac-gold-primary);
@@ -125,21 +128,23 @@
     transform: rotate(90deg);
 }
 
-/* ── Tab Switcher Bar ── */
+/* ── Smart 2-Tab Switcher Bar (Only LOGIN & REGISTER) ── */
 .ac-nav-tabs {
-    display: flex;
-    background: #EFE7D5;
-    border-bottom: 1.5px solid var(--ac-gold-border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #F4EEDF;
+    border-bottom: 2px solid var(--ac-gold-border);
     flex-shrink: 0;
+    padding: 0;
 }
 .ac-nav-tab {
-    flex: 1;
-    padding: 11px 6px;
+    width: 100%;
+    padding: 11px 8px;
     background: transparent;
     border: none;
     border-bottom: 3.5px solid transparent;
     font-family: var(--font-sans);
-    font-size: clamp(0.72rem, 2vw, 0.82rem);
+    font-size: 0.84rem;
     font-weight: 800;
     color: var(--ac-mid-text);
     text-transform: uppercase;
@@ -147,9 +152,11 @@
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
+    box-sizing: border-box;
 }
 .ac-nav-tab:hover {
     color: var(--ac-gold-primary);
+    background: rgba(255,255,255,0.4);
 }
 .ac-nav-tab.active {
     background: #FFFFFF;
@@ -157,52 +164,65 @@
     border-bottom-color: var(--ac-gold-primary);
 }
 
-/* ── Content Panes ── */
+/* ── Content Panes & Scrollable Body ── */
 .ac-body {
-    padding: clamp(16px, 3.5vw, 24px);
+    padding: 16px 18px 20px;
     overflow-y: auto;
     flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ac-gold-light) #FAF6EE;
 }
+.ac-body::-webkit-scrollbar {
+    width: 5px;
+}
+.ac-body::-webkit-scrollbar-track {
+    background: #FAF6EE;
+}
+.ac-body::-webkit-scrollbar-thumb {
+    background: var(--ac-gold-light);
+    border-radius: 4px;
+}
+
 .ac-pane {
     display: none;
     flex-direction: column;
-    gap: 13px;
-    animation: acPaneFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 11px;
+    animation: acPaneFade 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ac-pane.active {
     display: flex;
 }
 @keyframes acPaneFade {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Input Controls (Matching myaccount.php) ── */
+/* ── Form Controls & Labels ── */
 .ac-form-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     position: relative;
 }
 .ac-label {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 800;
     color: var(--ac-dark-text);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.ac-label .req { color: #C62828; font-weight: 900; font-size: 0.88rem; margin-left: 2px; }
+.ac-label .req { color: #C62828; font-weight: 900; font-size: 0.85rem; margin-left: 2px; }
 .ac-input {
     width: 100%;
-    height: 44px;
+    height: 42px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
-    padding: 0 14px;
+    border-radius: 8px;
+    padding: 0 12px;
     font-family: var(--font-sans);
-    font-size: 0.90rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--ac-dark-text);
     background: #FFFFFF;
@@ -216,14 +236,14 @@
 }
 .ac-input:focus {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
+    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
 }
 
 /* Side-by-Side Grid for City & State */
 .ac-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
 }
 @media (max-width: 480px) {
     .ac-grid-2 {
@@ -238,13 +258,13 @@
 }
 .ac-custom-select-trigger {
     width: 100%;
-    height: 44px;
+    height: 42px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
-    padding: 0 14px;
+    border-radius: 8px;
+    padding: 0 12px;
     background: #FFFFFF;
     color: var(--ac-dark-text);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -257,7 +277,7 @@
 .ac-custom-select-trigger:hover,
 .ac-custom-select-box.active .ac-custom-select-trigger {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
+    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
 }
 .ac-custom-select-val {
     display: flex;
@@ -268,16 +288,16 @@
     text-overflow: ellipsis;
 }
 .ac-select-flag-img {
-    width: 24px;
-    height: 16px;
+    width: 22px;
+    height: 15px;
     object-fit: cover;
     border-radius: 3px;
     border: 1px solid rgba(0,0,0,0.12);
     flex-shrink: 0;
 }
 .ac-custom-select-arrow {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     stroke: var(--ac-gold-primary);
     stroke-width: 2.5;
     fill: none;
@@ -296,9 +316,9 @@
     right: 0;
     background: #FFFFFF;
     border: 2px solid var(--ac-gold-primary);
-    border-radius: 12px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.2);
-    max-height: 220px;
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    max-height: 200px;
     z-index: 1000005;
     display: none;
     flex-direction: column;
@@ -309,23 +329,23 @@
     display: flex;
 }
 @keyframes acDropFade {
-    from { opacity: 0; transform: translateY(-6px); }
+    from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 .ac-dropdown-search-box {
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: #FAF6EE;
     border-bottom: 1.5px solid var(--ac-soft-platinum);
     flex-shrink: 0;
 }
 .ac-dropdown-search-input {
     width: 100%;
-    height: 34px;
+    height: 32px;
     border: 1.5px solid var(--ac-soft-platinum);
     border-radius: 6px;
-    padding: 0 10px;
+    padding: 0 8px;
     font-family: var(--font-sans);
-    font-size: 0.82rem;
+    font-size: 0.80rem;
     font-weight: 600;
     color: var(--ac-dark-text);
     outline: none;
@@ -341,21 +361,21 @@
     padding: 4px 0;
 }
 .ac-custom-select-option {
-    padding: 10px 14px;
-    font-size: 0.84rem;
+    padding: 8px 12px;
+    font-size: 0.82rem;
     color: var(--ac-dark-text);
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     transition: all 0.15s ease;
 }
 .ac-custom-select-option:hover {
     background: #FAF3E0;
     color: var(--ac-gold-primary);
     font-weight: 700;
-    padding-left: 18px;
+    padding-left: 15px;
 }
 .ac-custom-select-option.selected {
     background: var(--ac-gold-primary);
@@ -363,64 +383,64 @@
     font-weight: 700;
 }
 
-/* ── Role Pill Buttons with Real Vector SVGs (Exact myaccount.php Design) ── */
+/* ── Role Pill Buttons with Real Vector SVGs ── */
 .ac-role-pill-group {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 7px;
     margin-top: 2px;
 }
 .ac-role-pill-btn {
     position: relative;
-    padding: 10px 6px;
-    border-radius: 10px;
+    padding: 9px 4px;
+    border-radius: 9px;
     border: 1.8px solid var(--ac-soft-platinum);
     background: #FFFFFF;
     color: var(--ac-dark-text);
     font-family: var(--font-sans);
-    font-size: 0.80rem;
+    font-size: 0.78rem;
     font-weight: 800;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    gap: 4px;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }
 .ac-role-pill-btn:hover {
     border-color: var(--ac-gold-primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(138,104,31,0.18);
+    box-shadow: 0 4px 12px rgba(138,104,31,0.16);
 }
 .ac-role-pill-btn.selected {
     border-color: var(--ac-gold-primary);
     background: linear-gradient(135deg, #FAF4E5 0%, #F5E8C8 100%);
     color: var(--ac-gold-deep);
-    box-shadow: 0 3px 14px rgba(138,104,31,0.25);
+    box-shadow: 0 3px 12px rgba(138,104,31,0.22);
     transform: translateY(-1px);
 }
 .ac-role-pill-btn.selected::after {
     content: '✓';
     position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 14px;
-    height: 14px;
+    top: 3px;
+    right: 3px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: var(--ac-gold-primary);
     color: #FFFFFF;
-    font-size: 0.55rem;
+    font-size: 0.50rem;
     font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .ac-role-svg-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -435,86 +455,86 @@
 .ac-wa-group {
     display: flex;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
+    border-radius: 8px;
     background: #FFFFFF;
     overflow: hidden;
     transition: all 0.2s ease;
 }
 .ac-wa-group:focus-within {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
+    box-shadow: 0 0 0 3px rgba(138,104,31,0.18);
 }
 .ac-wa-group.is-invalid {
     border-color: #C62828 !important;
-    box-shadow: 0 0 0 3.5px rgba(198,40,40,0.2) !important;
+    box-shadow: 0 0 0 3px rgba(198,40,40,0.18) !important;
 }
 .ac-wa-prefix {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 0 10px;
+    gap: 5px;
+    padding: 0 9px;
     background: #EFE8D6;
     border-right: 1.8px solid var(--ac-soft-platinum);
-    font-size: 0.82rem;
+    font-size: 0.80rem;
     font-weight: 800;
     color: var(--ac-gold-primary);
     flex-shrink: 0;
     user-select: none;
 }
 .ac-wa-flag-img-preview {
-    width: 22px;
-    height: 15px;
+    width: 20px;
+    height: 14px;
     object-fit: cover;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 1px solid rgba(0,0,0,0.12);
 }
 .ac-wa-input {
     flex: 1;
-    height: 44px;
+    height: 42px;
     border: none;
     outline: none;
     background: transparent;
-    padding: 0 12px;
+    padding: 0 10px;
     font-family: var(--font-sans);
-    font-size: 0.90rem;
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--ac-dark-text);
     width: 100%;
     box-sizing: border-box;
 }
 .ac-val-err {
-    font-size: 0.70rem;
+    font-size: 0.68rem;
     color: #C62828;
     font-weight: 700;
     display: none;
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 /* ── Primary Action Buttons ── */
 .ac-btn-primary {
     width: 100%;
-    padding: 13px;
-    border-radius: 9px;
+    padding: 12px;
+    border-radius: 8px;
     border: none;
     background: linear-gradient(135deg, var(--ac-gold-primary) 0%, var(--ac-gold-deep) 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: clamp(0.82rem, 2.2vw, 0.90rem);
+    font-size: clamp(0.80rem, 2.2vw, 0.88rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(138,104,31,0.28);
+    box-shadow: 0 4px 14px rgba(138,104,31,0.26);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 6px;
+    margin-top: 4px;
 }
 .ac-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(138,104,31,0.40);
+    box-shadow: 0 6px 20px rgba(138,104,31,0.38);
 }
 .ac-btn-link {
     background: none;
@@ -530,140 +550,6 @@
 .ac-btn-link:hover {
     color: var(--ac-gold-deep);
 }
-
-.ac-divider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--ac-light-text);
-    font-size: 0.68rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin: 6px 0;
-}
-.ac-divider::before, .ac-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--ac-gold-border);
-}
-
-/* ── My Account Dashboard View ── */
-.ac-profile-header {
-    background: linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%);
-    border: 1.5px solid var(--ac-gold-border);
-    border-radius: 12px;
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.ac-profile-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--ac-gold-primary);
-    color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(138,104,31,0.3);
-}
-.ac-profile-info {
-    flex: 1;
-}
-.ac-profile-name {
-    font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--ac-gold-primary);
-}
-.ac-profile-phone {
-    font-size: 0.72rem;
-    color: var(--ac-mid-text);
-    font-weight: 600;
-    margin-top: 2px;
-}
-.ac-profile-tier {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: var(--ac-gold-primary);
-    color: #FFFFFF;
-    font-size: 0.55rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 4px;
-}
-.ac-stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-.ac-stat-card {
-    background: #FFFFFF;
-    border: 1.5px solid var(--ac-gold-border);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.ac-stat-card:hover {
-    border-color: var(--ac-gold-primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(138,104,31,0.1);
-}
-.ac-stat-num {
-    font-size: 1.25rem;
-    font-weight: 900;
-    color: var(--ac-gold-primary);
-}
-.ac-stat-label {
-    font-size: 0.68rem;
-    color: var(--ac-mid-text);
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 2px;
-}
-.ac-orders-title {
-    font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.88rem;
-    font-weight: 800;
-    color: var(--ac-gold-primary);
-    letter-spacing: 0.05em;
-    margin-top: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.ac-order-card {
-    background: #FFFFFF;
-    border: 1px solid var(--ac-gold-border);
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-.ac-order-id {
-    font-weight: 700;
-    font-size: 0.78rem;
-    color: var(--ac-dark-text);
-}
-.ac-order-status {
-    padding: 2px 6px;
-    border-radius: 6px;
-    background: #E8F5E9;
-    color: #2E7D32;
-    font-size: 0.6rem;
-    font-weight: 700;
-}
 </style>
 
 <!-- ════════════════════════════════════════════════════
@@ -675,21 +561,19 @@
         <!-- Header -->
         <div class="ac-header">
             <div class="ac-brand-group">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:130px; object-fit:contain;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:34px; width:auto; max-width:125px; object-fit:contain;">
                 <div class="ac-title-wrap">
-                    <h3 id="acModalHeading">Sign In to DT Brand's</h3>
+                    <h3 id="acModalHeading">Sign In</h3>
                     <span>Ethnic Luxury Couture</span>
                 </div>
             </div>
             <button type="button" class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close modal">✕</button>
         </div>
 
-        <!-- Tab Bar -->
+        <!-- Smart 2-Tab Bar (LOGIN | REGISTER) -->
         <div class="ac-nav-tabs" id="acNavTabs">
-            <button type="button" class="ac-nav-tab active" data-tab="login" onclick="window.switchAccountTab('login')">Login</button>
-            <button type="button" class="ac-nav-tab" data-tab="register" onclick="window.switchAccountTab('register')">Register</button>
-            <button type="button" class="ac-nav-tab" data-tab="forgot" onclick="window.switchAccountTab('forgot')">Forgot</button>
-            <button type="button" class="ac-nav-tab" data-tab="profile" onclick="window.switchAccountTab('profile')">My Account</button>
+            <button type="button" class="ac-nav-tab active" id="acTabBtnLogin" data-tab="login" onclick="window.switchAccountTab('login')">LOGIN</button>
+            <button type="button" class="ac-nav-tab" id="acTabBtnRegister" data-tab="register" onclick="window.switchAccountTab('register')">REGISTER</button>
         </div>
 
         <!-- Body -->
@@ -715,7 +599,7 @@
                     <span>Sign In to My Account</span>
                 </button>
 
-                <div style="text-align:center; font-size:0.78rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
+                <div style="text-align:center; font-size:0.78rem; margin-top:8px; color:var(--ac-mid-text); font-weight:600;">
                     Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now</button>
                 </div>
             </div>
@@ -880,59 +764,6 @@
                 </div>
             </div>
 
-            <!-- ════════ PANE 4: MY ACCOUNT PROFILE ════════ -->
-            <div class="ac-pane" id="acPaneProfile">
-                <div class="ac-profile-header">
-                    <div class="ac-profile-avatar" id="acUserInitials">RS</div>
-                    <div class="ac-profile-info">
-                        <div class="ac-profile-name" id="acUserName">Radhika Sharma</div>
-                        <div class="ac-profile-phone" id="acUserPhone">+91 98765 43210</div>
-                        <div class="ac-profile-tier" id="acUserTier">👑 Royal Retailer VIP Member</div>
-                    </div>
-                </div>
-
-                <a href="/Frontend/Wholesale/wholesale.php" id="acModalWsBtn" class="ac-btn-primary" style="display:none; justify-content:space-between; text-decoration:none;">
-                    <span>📦 Open Wholesaler B2B Hub</span>
-                    <span>→</span>
-                </a>
-
-                <div class="ac-stat-grid">
-                    <div class="ac-stat-card" onclick="window.closeAccountModal(); if(typeof window.openCartDrawer==='function') window.openCartDrawer();">
-                        <div class="ac-stat-num" id="acStatCart">0</div>
-                        <div class="ac-stat-label">Cart Items</div>
-                    </div>
-                    <div class="ac-stat-card" onclick="window.closeAccountModal(); if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();">
-                        <div class="ac-stat-num" id="acStatWishlist">0</div>
-                        <div class="ac-stat-label">Wishlist</div>
-                    </div>
-                </div>
-
-                <div class="ac-orders-title">
-                    <span>Recent Orders</span>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20track%20my%20DT Brand's%20order" target="_blank" class="ac-btn-link">WhatsApp Support</a>
-                </div>
-
-                <div class="ac-order-card">
-                    <div>
-                        <div class="ac-order-id">Order #KLN-847291</div>
-                        <div style="font-size:0.68rem; color:var(--ac-mid-text);">Bridal Zardozi Lehenga • 1 Item</div>
-                    </div>
-                    <span class="ac-order-status">Processing</span>
-                </div>
-
-                <div class="ac-order-card">
-                    <div>
-                        <div class="ac-order-id">Order #KLN-312984</div>
-                        <div style="font-size:0.68rem; color:var(--ac-mid-text);">Kanjivaram Silk Saree • 1 Item</div>
-                    </div>
-                    <span class="ac-order-status" style="background:#E3F2FD; color:#1565C0;">Delivered</span>
-                </div>
-
-                <button class="ac-btn-primary" style="background:#FAF8F4; color:#D32F2F; border:1.5px solid #FFCDD2; margin-top:8px;" onclick="window.handleAccountLogout()">
-                    Log Out of Account
-                </button>
-            </div>
-
         </div>
 
     </div>
@@ -1038,7 +869,7 @@
 
         var html = '';
         if (filtered.length === 0) {
-            html = '<div style="padding:12px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching country found</div>';
+            html = '<div style="padding:10px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching country found</div>';
         } else {
             filtered.forEach(function(c) {
                 var isSel = c.code === modalSelectedCountry.code;
@@ -1064,7 +895,7 @@
 
         var html = '';
         if (filtered.length === 0) {
-            html = '<div style="padding:12px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching state found</div>';
+            html = '<div style="padding:10px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching state found</div>';
         } else {
             filtered.forEach(function(st) {
                 var isSel = st === modalSelectedState;
@@ -1165,11 +996,8 @@
                 } else if (role === 'wholesaler' || role === 'wholesale') {
                     window.location.href = '/Frontend/Wholesale/wholesale.php';
                     return true;
-                } else if (role === 'retailer') {
-                    window.location.href = '/Frontend/Retailer/retailer.php';
-                    return true;
                 } else {
-                    window.openAccountModal('profile');
+                    window.location.href = '/Frontend/Retailer/retailer.php';
                     return true;
                 }
             } catch(e) {}
@@ -1181,15 +1009,16 @@
 
     /* Global Open / Close / Switch Tab API */
     window.openAccountModal = function(initialTab) {
+        var user = localStorage.getItem('dtbrands_user');
+        if (user) {
+            window.handleUserWiseAccountNavigation();
+            return;
+        }
+
         var modal = document.getElementById('accountModalBackdrop');
         if (!modal) return;
 
         var tab = initialTab || 'login';
-        var user = localStorage.getItem('dtbrands_user');
-        if (user && tab === 'login') {
-            tab = 'profile';
-        }
-
         window.switchAccountTab(tab);
         renderCountryDropdown();
         modal.classList.add('active');
@@ -1203,9 +1032,16 @@
     };
 
     window.switchAccountTab = function(tabName) {
-        document.querySelectorAll('.ac-nav-tab').forEach(function(tab) {
-            tab.classList.toggle('active', tab.dataset.tab === tabName);
-        });
+        var tabBtnLogin = document.getElementById('acTabBtnLogin');
+        var tabBtnRegister = document.getElementById('acTabBtnRegister');
+
+        if (tabName === 'login' || tabName === 'forgot') {
+            if (tabBtnLogin) tabBtnLogin.classList.add('active');
+            if (tabBtnRegister) tabBtnRegister.classList.remove('active');
+        } else if (tabName === 'register') {
+            if (tabBtnLogin) tabBtnLogin.classList.remove('active');
+            if (tabBtnRegister) tabBtnRegister.classList.add('active');
+        }
 
         document.querySelectorAll('.ac-pane').forEach(function(pane) {
             pane.classList.remove('active');
@@ -1223,86 +1059,56 @@
                 renderCountryDropdown();
             }
             else if (tabName === 'forgot') heading.textContent = 'Reset Password';
-            else heading.textContent = 'My Luxury Profile';
-        }
-
-        /* Update Profile Counts */
-        if (tabName === 'profile') {
-            var cart = window.cartState || JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
-            var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
-            var userRaw = localStorage.getItem('dtbrands_user');
-
-            if (userRaw) {
-                var user = JSON.parse(userRaw);
-                var nameEl = document.getElementById('acUserName');
-                var phoneEl = document.getElementById('acUserPhone');
-                var initEl = document.getElementById('acUserInitials');
-                var tierEl = document.getElementById('acUserTier');
-
-                if (nameEl) nameEl.textContent = user.name || 'Radhika Sharma';
-                if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
-                if (tierEl) {
-                    var r = user.role || 'Retailer';
-                    tierEl.textContent = '👑 Royal ' + r + ' VIP Member';
-                }
-                var wsBtn = document.getElementById('acModalWsBtn');
-                var role = (user.role || '').toLowerCase();
-                if (wsBtn) {
-                    if (role === 'wholesaler' || role === 'wholesale') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '/Frontend/Wholesale/wholesale.php';
-                        wsBtn.innerHTML = '<span>📦 Open Wholesaler B2B Dashboard</span><span>→</span>';
-                    } else if (role === 'retailer') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '/Frontend/Retailer/retailer.php';
-                        wsBtn.innerHTML = '<span>🛍️ Open Retailer B2B Dashboard</span><span>→</span>';
-                    } else if (role === 'reseller') {
-                        wsBtn.style.display = 'flex';
-                        wsBtn.href = '/Frontend/Reseller/reseller.php';
-                        wsBtn.innerHTML = '<span>💼 Open Reseller B2B Dashboard</span><span>→</span>';
-                    } else {
-                        wsBtn.style.display = 'none';
-                    }
-                }
-
-                if (initEl) {
-                    var parts = (user.name || 'RS').split(' ');
-                    initEl.textContent = (parts[0].charAt(0) + (parts[1] ? parts[1].charAt(0) : '')).toUpperCase();
-                }
-            }
-            
-            var cartEl = document.getElementById('acStatCart');
-            var wishEl = document.getElementById('acStatWishlist');
-            if (cartEl) cartEl.textContent = cart.reduce(function(s, i){ return s + (i.qty||1); }, 0);
-            if (wishEl) wishEl.textContent = wish.length;
         }
     };
 
     window.handleAccountLogin = function() {
         var input = document.getElementById('acLoginEmail').value.trim();
+        var pass = document.getElementById('acLoginPass').value.trim();
         if (!input) {
             alert('Please enter your WhatsApp number or Email');
             return;
         }
+        if (!pass) {
+            alert('Please enter your password');
+            return;
+        }
 
-        var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
+        var existingUser = null;
+        try {
+            existingUser = JSON.parse(localStorage.getItem('dtbrands_user') || 'null');
+        } catch(e) {}
+
+        var role = (existingUser && existingUser.role) ? existingUser.role : (modalSelectedRole || 'Retailer');
+        var name = (existingUser && existingUser.name) ? existingUser.name : (input.includes('@') ? input.split('@')[0] : 'Member');
         name = name.charAt(0).toUpperCase() + name.slice(1);
 
         var userData = {
             name: name,
-            phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-            email: input.includes('@') ? input : 'member@dtbrands.com',
-            role: 'Retailer',
-            country: 'India',
-            state: 'Maharashtra',
-            city: 'Mumbai'
+            phone: input.includes('@') ? (existingUser ? existingUser.phone : '+91 9876543210') : '+91 ' + input,
+            email: input.includes('@') ? input : (existingUser ? existingUser.email : 'member@dtbrands.com'),
+            role: role,
+            country: existingUser ? (existingUser.country || 'India') : modalSelectedCountry.name,
+            state: existingUser ? (existingUser.state || 'Maharashtra') : modalSelectedState,
+            city: existingUser ? (existingUser.city || 'Surat') : 'Surat'
         };
         localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
         if (typeof window.showToast === 'function') {
             window.showToast('✨ Welcome back, ' + name + '!');
         }
-        window.switchAccountTab('profile');
+
+        window.closeAccountModal();
+
+        // Direct Dashboard Redirect according to Role
+        var roleLower = role.toLowerCase();
+        if (roleLower === 'reseller') {
+            window.location.href = '/Frontend/Reseller/reseller.php';
+        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
+            window.location.href = '/Frontend/Wholesale/wholesale.php';
+        } else {
+            window.location.href = '/Frontend/Retailer/retailer.php';
+        }
     };
 
     window.handleAccountRegister = function() {
@@ -1337,16 +1143,16 @@
             window.showToast('🎉 Welcome to DT Brand\'s, ' + name + '!');
         }
 
+        window.closeAccountModal();
+
         // Direct Dashboard Redirect according to Role
         var roleLower = (modalSelectedRole || '').toLowerCase();
         if (roleLower === 'reseller') {
             window.location.href = '/Frontend/Reseller/reseller.php';
         } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
             window.location.href = '/Frontend/Wholesale/wholesale.php';
-        } else if (roleLower === 'retailer') {
-            window.location.href = '/Frontend/Retailer/retailer.php';
         } else {
-            window.switchAccountTab('profile');
+            window.location.href = '/Frontend/Retailer/retailer.php';
         }
     };
 
