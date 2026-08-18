@@ -16,9 +16,9 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
-    padding: 0 12px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+    z-index: 9990;
+    padding: 0 10px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
     pointer-events: none;
 }
 
@@ -27,7 +27,7 @@
         display: block;
     }
     body {
-        padding-bottom: clamp(70px, 16vw, 85px) !important;
+        padding-bottom: clamp(75px, 18vw, 90px) !important;
     }
 }
 
@@ -36,10 +36,10 @@
     max-width: 440px;
     margin: 0 auto;
     background: #181512;
-    background: linear-gradient(180deg, #221D18 0%, #15120F 100%);
-    border: 1.5px solid rgba(212, 175, 55, 0.35);
+    background: linear-gradient(180deg, #221D18 0%, #14110E 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.38);
     border-radius: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48), 0 2px 10px rgba(212, 175, 55, 0.18);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     pointer-events: auto;
@@ -80,10 +80,10 @@
 }
 
 .smart-nav-svg {
-    width: 21px;
-    height: 21px;
+    width: 22px;
+    height: 22px;
     stroke: currentColor;
-    stroke-width: 2.1;
+    stroke-width: 2;
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -91,13 +91,14 @@
 }
 
 .smart-nav-label {
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin-top: 2px;
     transition: opacity 0.22s ease, transform 0.28s ease, color 0.25s ease;
     opacity: 0.85;
+    white-space: nowrap;
 }
 
 /* ── Active Floating Bubble (Animated Notch Pill) ── */
@@ -109,14 +110,14 @@
     height: 52px;
     border-radius: 50%;
     background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 40%, #8A681F 100%);
-    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.45);
     border: 3.5px solid #181512;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
     pointer-events: none;
-    transition: transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
+    transition: transform 0.42s cubic-bezier(0.34, 1.45, 0.64, 1);
     transform: translateX(0);
 }
 
@@ -124,8 +125,10 @@
     width: 24px;
     height: 24px;
     stroke: #FFFFFF;
-    stroke-width: 2.3;
+    stroke-width: 2.2;
     fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     animation: smartPulse 2.5s infinite ease-in-out;
 }
@@ -133,19 +136,6 @@
 @keyframes smartPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.08); }
-}
-
-/* ── Cutout Curve Notch Glow ── */
-.smart-nav-notch-curve {
-    position: absolute;
-    top: -10px;
-    left: 0;
-    width: 74px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 2;
-    transition: transform 0.45s cubic-bezier(0.34, 1.45, 0.64, 1);
-    transform: translateX(0);
 }
 
 /* Active Item State */
@@ -214,7 +204,7 @@
         </div>
 
         <!-- 1: HOME -->
-        <a href="/Frontend/Home/home.php" class="smart-nav-item active" data-index="0" data-icon="home" onclick="handleSmartNavClick(event, 0, '/Frontend/Home/home.php')">
+        <a href="/Frontend/Home/home.php" class="smart-nav-item active" data-index="0" data-icon="home" onclick="handleSmartNavClick(event, 0, '/Frontend/Home/home.php', 'home')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -224,20 +214,21 @@
             <span class="smart-nav-label">Home</span>
         </a>
 
-        <!-- 2: SHOP / CATEGORIES -->
-        <a href="/Frontend/Shop/shop.php" class="smart-nav-item" data-index="1" data-icon="shop" onclick="handleSmartNavClick(event, 1, '/Frontend/Shop/shop.php')">
+        <!-- 2: SHOP / BOUTIQUE STORE (Real Storefront Canopy SVG) -->
+        <a href="/Frontend/Shop/shop.php" class="smart-nav-item" data-index="1" data-icon="shop" onclick="handleSmartNavClick(event, 1, '/Frontend/Shop/shop.php', 'shop')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                    <line x1="8" y1="21" x2="16" y2="21"></line>
-                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <path d="M3 9l1-5h16l1 5"></path>
+                    <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path>
+                    <path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path>
+                    <path d="M10 22v-6h4v6"></path>
                 </svg>
             </div>
             <span class="smart-nav-label">Shop</span>
         </a>
 
         <!-- 3: RESELLER / B2B -->
-        <a href="/Frontend/Reseller/reseller.php" class="smart-nav-item" data-index="2" data-icon="reseller" onclick="handleSmartNavClick(event, 2, '/Frontend/Reseller/reseller.php')">
+        <a href="/Frontend/Reseller/reseller.php" class="smart-nav-item" data-index="2" data-icon="reseller" onclick="handleSmartNavClick(event, 2, '/Frontend/Reseller/reseller.php', 'reseller')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -247,19 +238,19 @@
             <span class="smart-nav-label">Resell</span>
         </a>
 
-        <!-- 4: WISHLIST -->
-        <a href="/Frontend/Shop/wishlist.php" class="smart-nav-item" data-index="3" data-icon="wishlist" onclick="handleSmartNavClick(event, 3, '/Frontend/Shop/wishlist.php')">
+        <!-- 4: WISHLIST (Smooth Slide-over Drawer / Modal) -->
+        <a href="javascript:void(0)" class="smart-nav-item" data-index="3" data-icon="wishlist" onclick="handleSmartNavClick(event, 3, '', 'wishlist')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                <span class="smart-nav-badge" id="smartWishlistBadge">2</span>
+                <span class="smart-nav-badge" id="smartWishlistBadge">0</span>
             </div>
             <span class="smart-nav-label">Wishlist</span>
         </a>
 
-        <!-- 5: MY ACCOUNT / ORDERS -->
-        <a href="/Frontend/User/profile.php" class="smart-nav-item" data-index="4" data-icon="account" onclick="handleSmartNavClick(event, 4, '/Frontend/User/profile.php')">
+        <!-- 5: MY ACCOUNT / ORDERS (Interactive Profile & Order Modal) -->
+        <a href="javascript:void(0)" class="smart-nav-item" data-index="4" data-icon="account" onclick="handleSmartNavClick(event, 4, '', 'account')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -276,7 +267,7 @@
     // SVGs mapping for floating active bubble
     var iconSvgs = {
         'home': '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>',
-        'shop': '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
+        'shop': '<path d="M3 9l1-5h16l1 5"></path><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path><path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path><path d="M10 22v-6h4v6"></path>',
         'reseller': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
         'wishlist': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>',
         'account': '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>'
@@ -310,38 +301,75 @@
         });
     }
 
-    window.handleSmartNavClick = function(e, index, targetUrl) {
-        // Update visual bubble state instantly
+    window.handleSmartNavClick = function(e, index, targetUrl, actionKey) {
+        // Update active bubble visual state instantly
         updateActiveBubblePosition(index);
 
-        // If on same page, smooth scroll to top instead of reloading
+        // 1. WISHLIST ACTION
+        if (actionKey === 'wishlist') {
+            if (e) e.preventDefault();
+            if (typeof window.openWishlistDrawer === 'function') {
+                window.openWishlistDrawer();
+            } else if (typeof window.openWishlistModal === 'function') {
+                window.openWishlistModal();
+            } else if (typeof window.openWishlist === 'function') {
+                window.openWishlist();
+            } else {
+                window.location.href = '/Frontend/Shop/wishlist.php';
+            }
+            return;
+        }
+
+        // 2. MY ACCOUNT ACTION
+        if (actionKey === 'account') {
+            if (e) e.preventDefault();
+            if (typeof window.openAccountModal === 'function') {
+                window.openAccountModal();
+            } else if (typeof window.openAccountDrawer === 'function') {
+                window.openAccountDrawer();
+            } else if (typeof window.openAccount === 'function') {
+                window.openAccount();
+            } else {
+                window.location.href = '/Shared/Auth/myaccount.php';
+            }
+            return;
+        }
+
+        // 3. PAGE NAVIGATION
         var currentPath = window.location.pathname;
         if (targetUrl && (currentPath.endsWith(targetUrl) || (index === 0 && currentPath.indexOf('home.php') !== -1))) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
-        // Otherwise allow default navigation
+        // Let standard link navigation proceed if different page
     };
 
-    // Initialize on load and resize
+    // Live Wishlist Counter Synchronizer
+    function syncSmartWishlistCounter() {
+        try {
+            var wishlist = JSON.parse(localStorage.getItem('dt_wishlist') || '[]');
+            var count = Array.isArray(wishlist) ? wishlist.length : 0;
+            var badge = document.getElementById('smartWishlistBadge');
+            if (badge) {
+                badge.textContent = count;
+                badge.style.display = count > 0 ? 'flex' : 'none';
+            }
+        } catch(err) {}
+    }
+
+    // Initialize on load
     function initSmartFooter() {
         var currentPath = window.location.pathname;
         var activeIndex = 0; // Default to Home
         if (currentPath.indexOf('shop.php') !== -1) activeIndex = 1;
         else if (currentPath.indexOf('reseller.php') !== -1) activeIndex = 2;
-        else if (currentPath.indexOf('wishlist.php') !== -1) activeIndex = 3;
-        else if (currentPath.indexOf('profile.php') !== -1 || currentPath.indexOf('account.php') !== -1) activeIndex = 4;
 
         updateActiveBubblePosition(activeIndex);
+        syncSmartWishlistCounter();
 
-        // Sync Wishlist live counter
-        try {
-            var wishlist = JSON.parse(localStorage.getItem('dt_wishlist') || '[]');
-            var count = Array.isArray(wishlist) ? wishlist.length : 2;
-            var badge = document.getElementById('smartWishlistBadge');
-            if (badge) badge.textContent = count;
-        } catch(err) {}
+        // Listen for storage updates
+        window.addEventListener('storage', syncSmartWishlistCounter);
     }
 
     if (document.readyState === 'loading') {
