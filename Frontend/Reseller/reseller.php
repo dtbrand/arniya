@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014872">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787015531">
 
 </head>
 <body>
@@ -473,8 +473,9 @@ $catalogProducts = [
         <!-- ── Left Sidebar Navigation (TailAdmin Style with Gold Theme) ── -->
         <aside class="ws-sidebar" id="wsSidebar">
             <div class="ws-sidebar-brand-box">
-                <div class="ws-side-logo-icon">K</div>
-                <div class="ws-side-brand-title">KALANIKETAN</div>
+                <a href="#" style="display:flex; align-items:center; text-decoration:none;">
+                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Reseller/Asset/images/logo.png';" alt="Kalaniketan" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
+                </a>
                 <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
             </div>
 
@@ -3248,7 +3249,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014872"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787015531"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

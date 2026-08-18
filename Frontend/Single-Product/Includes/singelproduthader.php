@@ -480,15 +480,9 @@
                 <span>Shop</span>
             </a>
 
-            <a href="../Shop/shop.php" class="pdp-brand-seal" aria-label="Kalaniketan Home">
-                <div class="pdp-logo-badge">
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-                <div class="pdp-brand-text">
-                    <h1>KALANIKETAN</h1>
-                    <span>Ethnic Luxury Couture</span>
-                </div>
-            </a>
+                    <a href="/Frontend/Shop/shop.php" class="pdp-brand-seal" title="Return to Kalaniketan Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Single-Product/Asset/images/logo.png';" alt="Kalaniketan" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
+        </a>
         </div>
 
         <!-- Center: Breadcrumbs -->

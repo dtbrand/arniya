@@ -512,7 +512,7 @@ $colorHex = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css?v=1787010000">
+<link rel="stylesheet" href="/Frontend/Single-Product/Asset/css/singleproduct.css?v=1787015531">
 
 </head>
 <body>
@@ -1214,7 +1214,7 @@ $colorHex = [
         window.currentProductData = <?= json_encode($product) ?>;
         window.totalSlidesCount = <?= isset($galleryImages) ? count($galleryImages) : 4 ?>;
     </script>
-    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=1787010000"></script>
+    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=1787015531"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/smartshare.php'; ?>

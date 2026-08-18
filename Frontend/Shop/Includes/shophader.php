@@ -819,10 +819,9 @@
                 </svg>
             </button>
 
-            <div class="header-brand">
-                <h1 class="header-brand-name">Kalaniketan</h1>
-                <span class="header-brand-tagline">Ethnic Luxury</span>
-            </div>
+            <a href="/Frontend/Shop/shop.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="Kalaniketan Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
+            </a>
         </div>
 
         <!-- Center: Amazon-Style Always-Open Search Bar (Visible on Desktop) -->
