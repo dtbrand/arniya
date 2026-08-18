@@ -871,7 +871,7 @@
 
             <!-- Desktop Account Dropdown Button -->
             <div class="header-account-wrap" id="headerAccountWrap">
-                <a href="javascript:void(0)" onclick="if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='/Shared/Auth/myaccount.php';}" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
+                <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
@@ -887,7 +887,7 @@
                         <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         <span>🛍️ Shop All Catalog</span>
                     </a>
-                    <a href="javascript:void(0)" onclick="if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='/Shared/Auth/myaccount.php';}" class="ac-drop-item" id="acDropMyAccount">
+                    <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else{window.openAccountModal('profile');}" class="ac-drop-item" id="acDropMyAccount">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
                     </a>
