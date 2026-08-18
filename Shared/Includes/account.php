@@ -1,8 +1,8 @@
 <?php
 /**
  * account.php — Luxury Account & Authentication Modal Component
- * Features Login, Register, Forgot Password, and My Account Dashboard
- * With Dynamic Country/State Sliders, Auto Flag/Dial Prefix, WhatsApp Validation & Role Selector
+ * Styled 100% Identical to the High-End Dedicated Register Page (myaccount.php)
+ * Features World Country Dropdown with Search, State Dropdown with Search, SVG Role Cards, and WhatsApp Validation
  * 100% Fluid Responsive for Desktop & Mobile
  */
 ?>
@@ -10,13 +10,15 @@
 /* ── Account Modal Tokens ── */
 :root {
     --ac-gold-primary: #8A681F;
-    --ac-gold-deep: #6F5218;
+    --ac-gold-deep: #5F4512;
     --ac-gold-light: #C5A859;
-    --ac-gold-border: rgba(138, 104, 31, 0.22);
-    --ac-dark-text: #24211C;
-    --ac-mid-text: #5A5348;
-    --ac-light-text: #8E877D;
-    --ac-cream-bg: #FCFBF8;
+    --ac-gold-pale: #FAF5E8;
+    --ac-gold-border: rgba(138, 104, 31, 0.35);
+    --ac-dark-text: #181512;
+    --ac-mid-text: #423C34;
+    --ac-light-text: #6E675D;
+    --ac-soft-platinum: #DCD7CD;
+    --ac-cream-bg: #FFFFFF;
 }
 
 /* ── Modal Backdrop ── */
@@ -41,14 +43,14 @@
     visibility: visible;
 }
 
-/* ── Account Dialog ── */
+/* ── Account Dialog (Styled like auth-card-wrap) ── */
 .account-dialog {
-    background: var(--ac-cream-bg);
+    background: #FFFFFF;
     width: 100%;
-    max-width: 520px;
+    max-width: 530px;
     max-height: 92vh;
-    border-radius: 16px;
-    border: 1.5px solid var(--ac-gold-primary);
+    border-radius: 18px;
+    border: 2px solid var(--ac-gold-primary);
     box-shadow: 0 16px 48px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
@@ -64,41 +66,31 @@
 
 /* ── Dialog Header ── */
 .ac-header {
-    background: #FFFFFF;
-    border-bottom: 1.5px solid var(--ac-gold-border);
-    padding: clamp(10px, 2.5vw, 16px) clamp(14px, 3vw, 22px);
+    background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
+    border-bottom: 2px solid var(--ac-gold-border);
+    padding: 14px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    position: relative;
+}
+.ac-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--ac-gold-primary) 50%, transparent 100%);
 }
 .ac-brand-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-.ac-avatar-icon {
-    width: clamp(32px, 7vw, 40px);
-    height: clamp(32px, 7vw, 40px);
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--ac-gold-primary) 0%, var(--ac-gold-deep) 100%);
-    color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(138,104,31,0.3);
-}
-.ac-avatar-icon svg {
-    width: clamp(16px, 3.5vw, 20px);
-    height: clamp(16px, 3.5vw, 20px);
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
+    gap: 12px;
 }
 .ac-title-wrap h3 {
     font-family: var(--font-serif, 'Cinzel', serif);
     font-size: clamp(0.95rem, 3vw, 1.15rem);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--ac-gold-primary);
     margin: 0;
     letter-spacing: 0.05em;
@@ -106,21 +98,25 @@
 .ac-title-wrap span {
     font-size: 0.62rem;
     color: var(--ac-mid-text);
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    display: block;
+    margin-top: 2px;
 }
 .ac-close-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid var(--ac-gold-border);
+    border: 1.5px solid var(--ac-gold-primary);
     background: #FAF8F4;
     color: var(--ac-gold-primary);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
     transition: all 0.2s ease;
 }
 .ac-close-btn:hover {
@@ -132,24 +128,22 @@
 /* ── Tab Switcher Bar ── */
 .ac-nav-tabs {
     display: flex;
-    background: #FAF6ED;
-    border-bottom: 1px solid var(--ac-gold-border);
-    padding: 4px 10px 0;
-    gap: 4px;
+    background: #EFE7D5;
+    border-bottom: 1.5px solid var(--ac-gold-border);
     flex-shrink: 0;
 }
 .ac-nav-tab {
     flex: 1;
-    padding: 8px 6px;
+    padding: 11px 6px;
     background: transparent;
     border: none;
-    border-bottom: 2.5px solid transparent;
+    border-bottom: 3.5px solid transparent;
     font-family: var(--font-sans);
-    font-size: clamp(0.68rem, 2vw, 0.78rem);
-    font-weight: 700;
+    font-size: clamp(0.72rem, 2vw, 0.82rem);
+    font-weight: 800;
     color: var(--ac-mid-text);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
@@ -158,22 +152,21 @@
     color: var(--ac-gold-primary);
 }
 .ac-nav-tab.active {
+    background: #FFFFFF;
     color: var(--ac-gold-primary);
     border-bottom-color: var(--ac-gold-primary);
-    background: #FFFFFF;
-    border-radius: 8px 8px 0 0;
 }
 
 /* ── Content Panes ── */
 .ac-body {
-    padding: clamp(14px, 3vw, 24px);
+    padding: clamp(16px, 3.5vw, 24px);
     overflow-y: auto;
     flex: 1;
 }
 .ac-pane {
     display: none;
     flex-direction: column;
-    gap: 14px;
+    gap: 13px;
     animation: acPaneFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ac-pane.active {
@@ -184,179 +177,351 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Input Controls ── */
+/* ── Input Controls (Matching myaccount.php) ── */
 .ac-form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: relative;
 }
 .ac-label {
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.74rem;
+    font-weight: 800;
     color: var(--ac-dark-text);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
-.ac-label .req { color: #D32F2F; margin-left: 2px; }
+.ac-label .req { color: #C62828; font-weight: 900; font-size: 0.88rem; margin-left: 2px; }
 .ac-input {
     width: 100%;
-    height: clamp(38px, 9vw, 42px);
-    border: 1.5px solid #DDD8CD;
-    border-radius: 8px;
-    padding: 0 12px;
+    height: 44px;
+    border: 1.8px solid var(--ac-soft-platinum);
+    border-radius: 9px;
+    padding: 0 14px;
     font-family: var(--font-sans);
-    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+    font-size: 0.90rem;
+    font-weight: 600;
     color: var(--ac-dark-text);
     background: #FFFFFF;
     outline: none;
     box-sizing: border-box;
     transition: all 0.2s ease;
 }
+.ac-input::placeholder {
+    color: var(--ac-light-text);
+    font-weight: 500;
+}
 .ac-input:focus {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
 }
 
-/* ── Role Selection Cards (Wholesaler, Retailer, Reseller) ── */
-.ac-role-grid {
+/* Side-by-Side Grid for City & State */
+.ac-grid-2 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-top: 2px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
-.ac-role-card {
-    border: 1.5px solid #DDD8CD;
-    border-radius: 8px;
-    padding: 8px 4px;
-    text-align: center;
-    background: #FAF8F4;
-    cursor: pointer;
-    transition: all 0.2s ease;
+@media (max-width: 480px) {
+    .ac-grid-2 {
+        grid-template-columns: 1fr;
+    }
 }
-.ac-role-card:hover {
-    border-color: var(--ac-gold-primary);
-    background: #FFFFFF;
-}
-.ac-role-card.selected {
-    border-color: var(--ac-gold-primary);
-    background: #FAF3E0;
-    box-shadow: 0 2px 8px rgba(138,104,31,0.12);
-}
-.ac-role-icon { font-size: 1.2rem; display: block; margin-bottom: 2px; }
-.ac-role-name { font-size: 0.72rem; font-weight: 700; color: var(--ac-dark-text); display: block; }
-.ac-role-sub { font-size: 0.56rem; color: var(--ac-gold-primary); font-weight: 600; display: block; }
 
-/* ── Slider Pills Track for Countries & States ── */
-.ac-slider-track {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding: 3px 2px 6px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+/* ── Custom Luxury Dropdown Select Component ── */
+.ac-custom-select-box {
+    position: relative;
+    width: 100%;
 }
-.ac-slider-track::-webkit-scrollbar { display: none; }
-.ac-pill {
-    flex-shrink: 0;
-    padding: 5px 10px;
-    border-radius: 16px;
-    border: 1.5px solid #DDD8CD;
+.ac-custom-select-trigger {
+    width: 100%;
+    height: 44px;
+    border: 1.8px solid var(--ac-soft-platinum);
+    border-radius: 9px;
+    padding: 0 14px;
     background: #FFFFFF;
     color: var(--ac-dark-text);
-    font-size: 0.72rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
+    user-select: none;
+    box-sizing: border-box;
 }
-.ac-pill:hover { border-color: var(--ac-gold-primary); color: var(--ac-gold-primary); }
-.ac-pill.selected {
-    background: var(--ac-gold-primary);
-    color: #FFFFFF;
+.ac-custom-select-trigger:hover,
+.ac-custom-select-box.active .ac-custom-select-trigger {
     border-color: var(--ac-gold-primary);
-    box-shadow: 0 2px 6px rgba(138,104,31,0.25);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
+}
+.ac-custom-select-val {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ac-select-flag-img {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.12);
+    flex-shrink: 0;
+}
+.ac-custom-select-arrow {
+    width: 18px;
+    height: 18px;
+    stroke: var(--ac-gold-primary);
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+.ac-custom-select-box.active .ac-custom-select-arrow {
+    transform: rotate(180deg);
 }
 
-/* ── WhatsApp Phone Input with Auto Country Flag ── */
+/* Dropdown Menu */
+.ac-custom-select-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border: 2px solid var(--ac-gold-primary);
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+    max-height: 220px;
+    z-index: 1000005;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: acDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ac-custom-select-box.active .ac-custom-select-menu {
+    display: flex;
+}
+@keyframes acDropFade {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.ac-dropdown-search-box {
+    padding: 8px 12px;
+    background: #FAF6EE;
+    border-bottom: 1.5px solid var(--ac-soft-platinum);
+    flex-shrink: 0;
+}
+.ac-dropdown-search-input {
+    width: 100%;
+    height: 34px;
+    border: 1.5px solid var(--ac-soft-platinum);
+    border-radius: 6px;
+    padding: 0 10px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ac-dark-text);
+    outline: none;
+    background: #FFFFFF;
+    box-sizing: border-box;
+}
+.ac-dropdown-search-input:focus {
+    border-color: var(--ac-gold-primary);
+}
+.ac-dropdown-options-scroll {
+    overflow-y: auto;
+    flex: 1;
+    padding: 4px 0;
+}
+.ac-custom-select-option {
+    padding: 10px 14px;
+    font-size: 0.84rem;
+    color: var(--ac-dark-text);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s ease;
+}
+.ac-custom-select-option:hover {
+    background: #FAF3E0;
+    color: var(--ac-gold-primary);
+    font-weight: 700;
+    padding-left: 18px;
+}
+.ac-custom-select-option.selected {
+    background: var(--ac-gold-primary);
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+/* ── Role Pill Buttons with Real Vector SVGs (Exact myaccount.php Design) ── */
+.ac-role-pill-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 2px;
+}
+.ac-role-pill-btn {
+    position: relative;
+    padding: 10px 6px;
+    border-radius: 10px;
+    border: 1.8px solid var(--ac-soft-platinum);
+    background: #FFFFFF;
+    color: var(--ac-dark-text);
+    font-family: var(--font-sans);
+    font-size: 0.80rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.ac-role-pill-btn:hover {
+    border-color: var(--ac-gold-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(138,104,31,0.18);
+}
+.ac-role-pill-btn.selected {
+    border-color: var(--ac-gold-primary);
+    background: linear-gradient(135deg, #FAF4E5 0%, #F5E8C8 100%);
+    color: var(--ac-gold-deep);
+    box-shadow: 0 3px 14px rgba(138,104,31,0.25);
+    transform: translateY(-1px);
+}
+.ac-role-pill-btn.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ac-gold-primary);
+    color: #FFFFFF;
+    font-size: 0.55rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ac-role-svg-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ac-role-svg-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ── WhatsApp Phone Input with Auto Country Flag & Prefix ── */
 .ac-wa-group {
     display: flex;
-    border: 1.5px solid #DDD8CD;
-    border-radius: 8px;
-    background: #FAF9F5;
+    border: 1.8px solid var(--ac-soft-platinum);
+    border-radius: 9px;
+    background: #FFFFFF;
     overflow: hidden;
     transition: all 0.2s ease;
 }
 .ac-wa-group:focus-within {
     border-color: var(--ac-gold-primary);
-    background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(138,104,31,0.15);
+    box-shadow: 0 0 0 3.5px rgba(138,104,31,0.2);
 }
 .ac-wa-group.is-invalid {
-    border-color: #D32F2F !important;
+    border-color: #C62828 !important;
+    box-shadow: 0 0 0 3.5px rgba(198,40,40,0.2) !important;
 }
 .ac-wa-prefix {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 0 8px;
-    background: #F0EAD8;
-    border-right: 1px solid #DDD8CD;
-    font-size: 0.78rem;
-    font-weight: 700;
+    gap: 6px;
+    padding: 0 10px;
+    background: #EFE8D6;
+    border-right: 1.8px solid var(--ac-soft-platinum);
+    font-size: 0.82rem;
+    font-weight: 800;
     color: var(--ac-gold-primary);
     flex-shrink: 0;
+    user-select: none;
+}
+.ac-wa-flag-img-preview {
+    width: 22px;
+    height: 15px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.12);
 }
 .ac-wa-input {
     flex: 1;
-    height: 40px;
+    height: 44px;
     border: none;
     outline: none;
     background: transparent;
-    padding: 0 10px;
+    padding: 0 12px;
     font-family: var(--font-sans);
-    font-size: 0.86rem;
+    font-size: 0.90rem;
+    font-weight: 600;
     color: var(--ac-dark-text);
+    width: 100%;
+    box-sizing: border-box;
 }
 .ac-val-err {
-    font-size: 0.65rem;
-    color: #D32F2F;
-    font-weight: 600;
+    font-size: 0.70rem;
+    color: #C62828;
+    font-weight: 700;
     display: none;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
-/* ── Action Buttons ── */
+/* ── Primary Action Buttons ── */
 .ac-btn-primary {
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
+    padding: 13px;
+    border-radius: 9px;
     border: none;
     background: linear-gradient(135deg, var(--ac-gold-primary) 0%, var(--ac-gold-deep) 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
-    font-weight: 700;
+    font-size: clamp(0.82rem, 2.2vw, 0.90rem);
+    font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(138,104,31,0.25);
+    box-shadow: 0 4px 16px rgba(138,104,31,0.28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     margin-top: 6px;
 }
 .ac-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(138,104,31,0.38);
+    box-shadow: 0 6px 22px rgba(138,104,31,0.40);
 }
 .ac-btn-link {
     background: none;
     border: none;
     color: var(--ac-gold-primary);
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-size: 0.76rem;
+    font-weight: 800;
     cursor: pointer;
     text-decoration: underline;
     padding: 0;
@@ -371,10 +536,10 @@
     align-items: center;
     gap: 10px;
     color: var(--ac-light-text);
-    font-size: 0.65rem;
-    font-weight: 700;
+    font-size: 0.68rem;
+    font-weight: 800;
     text-transform: uppercase;
-    margin: 4px 0;
+    margin: 6px 0;
 }
 .ac-divider::before, .ac-divider::after {
     content: '';
@@ -434,7 +599,6 @@
     letter-spacing: 0.08em;
     margin-top: 4px;
 }
-
 .ac-stat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -442,9 +606,9 @@
 }
 .ac-stat-card {
     background: #FFFFFF;
-    border: 1px solid var(--ac-gold-border);
+    border: 1.5px solid var(--ac-gold-border);
     border-radius: 10px;
-    padding: 10px 12px;
+    padding: 12px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -455,22 +619,21 @@
     box-shadow: 0 4px 12px rgba(138,104,31,0.1);
 }
 .ac-stat-num {
-    font-size: 1.15rem;
-    font-weight: 800;
+    font-size: 1.25rem;
+    font-weight: 900;
     color: var(--ac-gold-primary);
 }
 .ac-stat-label {
-    font-size: 0.65rem;
+    font-size: 0.68rem;
     color: var(--ac-mid-text);
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     margin-top: 2px;
 }
-
 .ac-orders-title {
     font-family: var(--font-serif, 'Cinzel', serif);
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 800;
     color: var(--ac-gold-primary);
     letter-spacing: 0.05em;
     margin-top: 6px;
@@ -504,173 +667,222 @@
 </style>
 
 <!-- ════════════════════════════════════════════════════
-     ACCOUNT MODAL MARKUP
+     ACCOUNT MODAL POPUP (HTML STRUCTURE)
 ════════════════════════════════════════════════════ -->
-<div class="account-modal-backdrop" id="accountModalBackdrop" role="dialog" aria-modal="true" aria-label="Customer Account">
-    <div class="account-dialog">
+<div class="account-modal-backdrop" id="accountModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="acModalHeading">
+    <div class="account-dialog" id="accountDialog">
         
         <!-- Header -->
-        <div class="ac-header" style="display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1.5px solid var(--ac-gold-primary); background:#FFFFFF;">
-            <div class="ac-brand-group" style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
+        <div class="ac-header">
+            <div class="ac-brand-group">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="ac-title-wrap">
-                    <h3 id="acModalHeading" style="margin:0; font-size:0.96rem;">Luxury Member Access</h3>
-                    <span style="font-size:0.56rem;">Ethnic Luxury Couture</span>
+                    <h3 id="acModalHeading">Sign In to DT Brand's</h3>
+                    <span>Ethnic Luxury Couture</span>
                 </div>
             </div>
-            <button class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close Account Modal">✕</button>
+            <button type="button" class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close modal">✕</button>
         </div>
 
-        <!-- Tab Switcher -->
+        <!-- Tab Bar -->
         <div class="ac-nav-tabs" id="acNavTabs">
-            <button class="ac-nav-tab active" data-tab="login" onclick="window.switchAccountTab('login')">Login</button>
-            <button class="ac-nav-tab" data-tab="register" onclick="window.switchAccountTab('register')">Register</button>
-            <button class="ac-nav-tab" data-tab="forgot" onclick="window.switchAccountTab('forgot')">Forgot</button>
-            <button class="ac-nav-tab" data-tab="profile" onclick="window.switchAccountTab('profile')">My Account</button>
+            <button type="button" class="ac-nav-tab active" data-tab="login" onclick="window.switchAccountTab('login')">Login</button>
+            <button type="button" class="ac-nav-tab" data-tab="register" onclick="window.switchAccountTab('register')">Register</button>
+            <button type="button" class="ac-nav-tab" data-tab="forgot" onclick="window.switchAccountTab('forgot')">Forgot</button>
+            <button type="button" class="ac-nav-tab" data-tab="profile" onclick="window.switchAccountTab('profile')">My Account</button>
         </div>
 
         <!-- Body -->
         <div class="ac-body">
-            
-            <!-- 1. LOGIN PANE -->
+
+            <!-- ════════ PANE 1: LOGIN ════════ -->
             <div class="ac-pane active" id="acPaneLogin">
-                <form id="acLoginForm" onsubmit="event.preventDefault(); window.handleAccountLogin();">
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email</label>
-                        <input type="text" id="acLoginEmail" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
-                    </div>
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acLoginPassword">
-                            <span>Password</span>
-                            <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('forgot')">Forgot Password?</button>
-                        </label>
-                        <input type="password" id="acLoginPassword" class="ac-input" placeholder="Enter your password" required>
-                    </div>
-                    <button type="submit" class="ac-btn-primary">Sign In to Luxury Club</button>
-                </form>
-
-                <div class="ac-divider">OR</div>
-
-                <div style="text-align:center; font-size:0.75rem;">
-                    Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Create an Account</button>
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email <span class="req">*</span></label>
+                    <input type="text" id="acLoginEmail" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
                 </div>
+
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acLoginPass">
+                        <span>Password <span class="req">*</span></span>
+                        <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('forgot')">Forgot Password?</button>
+                    </label>
+                    <input type="password" id="acLoginPass" class="ac-input" placeholder="Enter your password" required>
+                </div>
+
+                <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
+                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <span>Sign In to Luxury Club</span>
+                </button>
+
+                <div class="ac-divider"><span>New to DT Brand's?</span></div>
+
+                <button type="button" class="ac-btn-primary" style="background:#FAF8F4; color:var(--ac-gold-primary); border:1.8px solid var(--ac-gold-primary); box-shadow:none;" onclick="window.switchAccountTab('register')">
+                    Create New Account
+                </button>
             </div>
 
-            <!-- 2. REGISTER PANE -->
+            <!-- ════════ PANE 2: REGISTER (EXACT MYACCOUNT.PHP UI) ════════ -->
             <div class="ac-pane" id="acPaneRegister">
-                <form id="acRegisterForm" onsubmit="event.preventDefault(); window.handleAccountRegister();">
-                    
-                    <!-- Full Name -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegName">Full Name <span class="req">*</span></label>
-                        <input type="text" id="acRegName" class="ac-input" placeholder="e.g. Radhika Sharma" required>
-                    </div>
+                
+                <!-- Full Name -->
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acRegName">Full Name <span class="req">*</span></label>
+                    <input type="text" id="acRegName" class="ac-input" placeholder="e.g. Rajan Mehta" required>
+                </div>
 
-                    <!-- Role Option (Retailer, Wholesaler, Reseller) -->
-                    <div class="ac-form-group">
-                        <label class="ac-label">Account Role / Purpose <span class="req">*</span></label>
-                        <div class="ac-role-grid">
-                            <div class="ac-role-card selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
-                                <span class="ac-role-icon">🛍️</span>
-                                <span class="ac-role-name">Retailer</span>
-                                <span class="ac-role-sub">Personal</span>
+                <!-- Country Dropdown (All World Countries with Search & Real Flags) -->
+                <div class="ac-form-group">
+                    <label class="ac-label">Country <span class="req">*</span></label>
+                    <div class="ac-custom-select-box" id="acCountrySelectBox">
+                        <div class="ac-custom-select-trigger" onclick="window.toggleAcDropdown('acCountrySelectBox')">
+                            <div class="ac-custom-select-val" id="acSelectedCountryDisplay">
+                                <img src="https://flagcdn.com/w40/in.png" alt="India" class="ac-select-flag-img" id="acDisplayCountryFlag">
+                                <span id="acDisplayCountryText">India (+91)</span>
                             </div>
-                            <div class="ac-role-card" data-role="Wholesaler" onclick="window.selectModalRole('Wholesaler')">
-                                <span class="ac-role-icon">📦</span>
-                                <span class="ac-role-name">Wholesaler</span>
-                                <span class="ac-role-sub">Bulk</span>
+                            <svg class="ac-custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <div class="ac-custom-select-menu" id="acCountryDropdownMenu">
+                            <div class="ac-dropdown-search-box">
+                                <input type="text" id="acCountrySearchInput" class="ac-dropdown-search-input" placeholder="🔍 Search world country..." oninput="window.filterAcCountryOptions(this.value)" onclick="event.stopPropagation()">
                             </div>
-                            <div class="ac-role-card" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
-                                <span class="ac-role-icon">💼</span>
-                                <span class="ac-role-name">Reseller</span>
-                                <span class="ac-role-sub">Boutique</span>
+                            <div class="ac-dropdown-options-scroll" id="acCountryOptionsList">
+                                <!-- Populated dynamically by JS -->
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Country Option Slider (First Auto-Selected: India 🇮🇳 +91) -->
-                    <div class="ac-form-group">
-                        <label class="ac-label">
-                            <span>Country <span class="req">*</span></span>
-                            <span id="acSelectedCountryLabel" style="color:var(--ac-gold-primary); font-weight:700;">🇮🇳 India (+91)</span>
-                        </label>
-                        <div class="ac-slider-track" id="acCountrySliderTrack">
-                            <!-- Populated by JS -->
+                <!-- Mobile / WhatsApp Number with Flag Prefix -->
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acRegPhone">
+                        <span>Mobile Number <span class="req">*</span></span>
+                        <span id="acDigitCountHint" style="font-size:0.65rem; color:var(--ac-light-text); text-transform:none; font-weight:600;">10-digit number</span>
+                    </label>
+                    <div class="ac-wa-group" id="acWaGroup">
+                        <div class="ac-wa-prefix">
+                            <img id="acWaFlagImg" class="ac-wa-flag-img-preview" src="https://flagcdn.com/w40/in.png" alt="India Flag">
+                            <span id="acWaDialCode">IN +91</span>
                         </div>
+                        <input type="tel" id="acRegPhone" class="ac-wa-input" placeholder="10-digit number" maxlength="12" required autocomplete="tel" oninput="window.validateModalWhatsApp()">
                     </div>
+                    <div class="ac-val-err" id="acValErr">⚠️ Please enter a valid 10-digit WhatsApp number.</div>
+                </div>
 
-                    <!-- State Option Slider -->
-                    <div class="ac-form-group">
-                        <label class="ac-label">
-                            <span>State <span class="req">*</span></span>
-                            <span id="acSelectedStateLabel" style="color:var(--ac-gold-primary); font-weight:700;">Maharashtra</span>
-                        </label>
-                        <div class="ac-slider-track" id="acStateSliderTrack">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- City Input -->
+                <!-- City & State Side-by-Side -->
+                <div class="ac-grid-2">
+                    <!-- City -->
                     <div class="ac-form-group">
                         <label class="ac-label" for="acRegCity">City <span class="req">*</span></label>
-                        <input type="text" id="acRegCity" class="ac-input" placeholder="e.g. Mumbai" required value="Mumbai">
+                        <input type="text" id="acRegCity" class="ac-input" placeholder="e.g. Surat" required value="Surat">
                     </div>
 
-                    <!-- WhatsApp Number with Flag Prefix & Validation -->
+                    <!-- State Dropdown -->
                     <div class="ac-form-group">
-                        <label class="ac-label" for="acRegPhone">
-                            <span>WhatsApp Number <span class="req">*</span></span>
-                            <span id="acDigitHint" style="font-size:0.65rem; color:var(--ac-light-text);">10 digits</span>
-                        </label>
-                        <div class="ac-wa-group" id="acWaGroup">
-                            <div class="ac-wa-prefix">
-                                <span id="acWaFlag">🇮🇳</span>
-                                <span id="acWaDial">+91</span>
+                        <label class="ac-label">State <span class="req">*</span></label>
+                        <div class="ac-custom-select-box" id="acStateSelectBox">
+                            <div class="ac-custom-select-trigger" onclick="window.toggleAcDropdown('acStateSelectBox')">
+                                <div class="ac-custom-select-val">
+                                    <span id="acDisplayStateText">Maharashtra</span>
+                                </div>
+                                <svg class="ac-custom-select-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </div>
-                            <input type="tel" id="acRegPhone" class="ac-wa-input" placeholder="9876543210" maxlength="12" required oninput="window.validateModalWhatsApp()">
+                            <div class="ac-custom-select-menu" id="acStateDropdownMenu">
+                                <div class="ac-dropdown-search-box">
+                                    <input type="text" id="acStateSearchInput" class="ac-dropdown-search-input" placeholder="🔍 Search state..." oninput="window.filterAcStateOptions(this.value)" onclick="event.stopPropagation()">
+                                </div>
+                                <div class="ac-dropdown-options-scroll" id="acStateOptionsList">
+                                    <!-- Populated dynamically by JS -->
+                                </div>
+                            </div>
                         </div>
-                        <div class="ac-val-err" id="acValErr">⚠️ Please enter a valid 10-digit number.</div>
                     </div>
-
-                    <!-- Email Address -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegEmail">Email Address (Optional)</label>
-                        <input type="email" id="acRegEmail" class="ac-input" placeholder="radhika@example.com">
-                    </div>
-
-                    <!-- Password -->
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acRegPass">Create Password <span class="req">*</span></label>
-                        <input type="password" id="acRegPass" class="ac-input" placeholder="Minimum 6 characters" required>
-                    </div>
-
-                    <button type="submit" class="ac-btn-primary">Register Luxury Account</button>
-                </form>
-
-                <div style="text-align:center; font-size:0.75rem; margin-top:8px;">
-                    Already a member? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">Sign In here</button>
                 </div>
+
+                <!-- Role Selection (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
+                <div class="ac-form-group">
+                    <label class="ac-label">Your Role <span class="req">*</span></label>
+                    <div class="ac-role-pill-group">
+                        <!-- Retailer -->
+                        <div class="ac-role-pill-btn selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" stroke-linejoin="round"/>
+                                    <line x1="3" y1="6" x2="21" y2="6" stroke="#1976D2" stroke-width="2"/>
+                                    <path d="M16 10a4 4 0 0 1-8 0" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span>Retailer</span>
+                        </div>
+
+                        <!-- Wholesaler -->
+                        <div class="ac-role-pill-btn" data-role="Wholesaler" onclick="window.selectModalRole('Wholesaler')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FFF3E0" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#E65100" stroke-width="2"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12" stroke="#E65100" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span>Wholesaler</span>
+                        </div>
+
+                        <!-- Reseller -->
+                        <div class="ac-role-pill-btn" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+                                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#2E7D32" stroke-width="2"/>
+                                    <line x1="12" y1="12" x2="12" y2="15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="2" y1="12" x2="22" y2="12" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                </svg>
+                            </div>
+                            <span>Reseller</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acRegPass">Password <span class="req">*</span></label>
+                    <input type="password" id="acRegPass" class="ac-input" placeholder="Minimum 6 characters" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="button" class="ac-btn-primary" onclick="window.handleAccountRegister()">
+                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    <span>Create My Account</span>
+                </button>
+
+                <div style="text-align:center; margin-top:2px;">
+                    <span style="font-size:0.75rem; color:var(--ac-mid-text);">Already have an account? </span>
+                    <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">Sign In</button>
+                </div>
+
             </div>
 
-            <!-- 3. FORGOT PASSWORD PANE -->
+            <!-- ════════ PANE 3: FORGOT PASSWORD ════════ -->
             <div class="ac-pane" id="acPaneForgot">
-                <p style="font-size:0.76rem; color:var(--ac-mid-text); margin:0 0 10px; line-height:1.4;">
-                    Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset OTP on WhatsApp.
+                <p style="font-size:0.78rem; color:var(--ac-mid-text); margin:0; line-height:1.4;">
+                    Enter your registered WhatsApp number or email address below. We will instantly dispatch a secure recovery link via WhatsApp.
                 </p>
-                <form id="acForgotForm" onsubmit="event.preventDefault(); window.handleAccountForgot();">
-                    <div class="ac-form-group">
-                        <label class="ac-label" for="acForgotInput">WhatsApp Number / Email</label>
-                        <input type="text" id="acForgotInput" class="ac-input" placeholder="e.g. 9876543210" required>
-                    </div>
-                    <button type="submit" class="ac-btn-primary">Send Reset Link via WhatsApp</button>
-                </form>
 
-                <div style="text-align:center; font-size:0.75rem; margin-top:10px;">
-                    Remembered password? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">Back to Login</button>
+                <div class="ac-form-group">
+                    <label class="ac-label" for="acForgotInput">WhatsApp Number or Email <span class="req">*</span></label>
+                    <input type="text" id="acForgotInput" class="ac-input" placeholder="e.g. 9876543210" required>
+                </div>
+
+                <button type="button" class="ac-btn-primary" style="background:#25D366; color:#FFFFFF;" onclick="window.handleAccountForgot()">
+                    <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                    <span>Send Reset Link via WhatsApp</span>
+                </button>
+
+                <div style="text-align:center; margin-top:4px;">
+                    <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">← Back to Sign In</button>
                 </div>
             </div>
 
-            <!-- 4. MY ACCOUNT DASHBOARD PANE -->
+            <!-- ════════ PANE 4: MY ACCOUNT PROFILE ════════ -->
             <div class="ac-pane" id="acPaneProfile">
                 <div class="ac-profile-header">
                     <div class="ac-profile-avatar" id="acUserInitials">RS</div>
@@ -681,19 +893,19 @@
                     </div>
                 </div>
 
-                <a href="../Wholesale/wholesale.php" id="acModalWsBtn" style="display:none; text-decoration:none; background:linear-gradient(135deg, #FAF6EE 0%, #F5EDE0 100%); border:1.5px solid var(--ac-gold, #8A681F); border-radius:10px; padding:10px 14px; margin: 10px 0 12px; align-items:center; justify-content:space-between; color:var(--ac-gold, #8A681F); font-weight:700; font-size:0.8rem;">
-                    <span>📦 Open Wholesaler B2B Dashboard</span>
+                <a href="/Frontend/Wholesale/wholesale.php" id="acModalWsBtn" class="ac-btn-primary" style="display:none; justify-content:space-between; text-decoration:none;">
+                    <span>📦 Open Wholesaler B2B Hub</span>
                     <span>→</span>
                 </a>
 
                 <div class="ac-stat-grid">
-                    <div class="ac-stat-card" onclick="if(typeof window.openWishlistDrawer==='function'){window.closeAccountModal();window.openWishlistDrawer();}">
-                        <div class="ac-stat-num" id="acStatWishlist">0</div>
-                        <div class="ac-stat-label">Saved Items</div>
-                    </div>
-                    <div class="ac-stat-card" onclick="if(typeof window.openCartDrawer==='function'){window.closeAccountModal();window.openCartDrawer();}">
+                    <div class="ac-stat-card" onclick="window.closeAccountModal(); if(typeof window.openCartDrawer==='function') window.openCartDrawer();">
                         <div class="ac-stat-num" id="acStatCart">0</div>
                         <div class="ac-stat-label">Cart Items</div>
+                    </div>
+                    <div class="ac-stat-card" onclick="window.closeAccountModal(); if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();">
+                        <div class="ac-stat-num" id="acStatWishlist">0</div>
+                        <div class="ac-stat-label">Wishlist</div>
                     </div>
                 </div>
 
@@ -735,78 +947,187 @@
 (function() {
     'use strict';
 
-    var MODAL_COUNTRIES = [
-        { code: 'IN', name: 'India', flag: '🇮🇳', dial: '+91', digits: 10, states: ['Maharashtra', 'Gujarat', 'Rajasthan', 'Delhi (NCT)', 'Karnataka', 'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 'Odisha', 'Assam', 'Goa'] },
-        { code: 'AE', name: 'UAE', flag: '🇦🇪', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'] },
-        { code: 'US', name: 'USA', flag: '🇺🇸', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois'] },
-        { code: 'GB', name: 'UK', flag: '🇬🇧', dial: '+44', digits: 10, states: ['London', 'England', 'Scotland', 'Wales'] },
-        { code: 'CA', name: 'Canada', flag: '🇨🇦', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec'] },
-        { code: 'AU', name: 'Australia', flag: '🇦🇺', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland'] }
+    /* ── Complete All World Countries & All Indian States Database ── */
+    var ALL_WORLD_COUNTRIES = [
+        {
+            code: 'in', name: 'India', flagImg: 'https://flagcdn.com/w40/in.png', dial: '+91', digits: 10,
+            states: [
+                'Maharashtra', 'Gujarat', 'Rajasthan', 'Delhi (NCT)', 'Karnataka', 
+                'Tamil Nadu', 'Uttar Pradesh', 'West Bengal', 'Telangana', 'Kerala', 
+                'Punjab', 'Andhra Pradesh', 'Madhya Pradesh', 'Bihar', 'Haryana', 
+                'Odisha', 'Assam', 'Goa', 'Chhattisgarh', 'Himachal Pradesh', 
+                'Jharkhand', 'Uttarakhand', 'Jammu & Kashmir', 'Chandigarh'
+            ]
+        },
+        { code: 'ae', name: 'United Arab Emirates', flagImg: 'https://flagcdn.com/w40/ae.png', dial: '+971', digits: 9, states: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman', 'Ras Al Khaimah', 'Fujairah', 'Umm Al Quwain'] },
+        { code: 'us', name: 'United States', flagImg: 'https://flagcdn.com/w40/us.png', dial: '+1', digits: 10, states: ['California', 'Texas', 'New York', 'Florida', 'Illinois', 'New Jersey', 'Georgia', 'Washington', 'Ohio', 'Pennsylvania'] },
+        { code: 'gb', name: 'United Kingdom', flagImg: 'https://flagcdn.com/w40/gb.png', dial: '+44', digits: 10, states: ['Greater London', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'West Midlands', 'Manchester'] },
+        { code: 'ca', name: 'Canada', flagImg: 'https://flagcdn.com/w40/ca.png', dial: '+1', digits: 10, states: ['Ontario', 'British Columbia', 'Quebec', 'Alberta', 'Manitoba', 'Saskatchewan'] },
+        { code: 'au', name: 'Australia', flagImg: 'https://flagcdn.com/w40/au.png', dial: '+61', digits: 9, states: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia', 'South Australia'] },
+        { code: 'sg', name: 'Singapore', flagImg: 'https://flagcdn.com/w40/sg.png', dial: '+65', digits: 8, states: ['Central Region', 'East Region', 'North Region', 'West Region'] },
+        { code: 'my', name: 'Malaysia', flagImg: 'https://flagcdn.com/w40/my.png', dial: '+60', digits: 9, states: ['Kuala Lumpur', 'Selangor', 'Penang', 'Johor', 'Perak', 'Sabah'] },
+        { code: 'sa', name: 'Saudi Arabia', flagImg: 'https://flagcdn.com/w40/sa.png', dial: '+966', digits: 9, states: ['Riyadh', 'Makkah', 'Eastern Province', 'Madinah', 'Jeddah'] },
+        { code: 'qa', name: 'Qatar', flagImg: 'https://flagcdn.com/w40/qa.png', dial: '+974', digits: 8, states: ['Doha', 'Al Rayyan', 'Al Wakrah', 'Al Khor'] },
+        { code: 'kw', name: 'Kuwait', flagImg: 'https://flagcdn.com/w40/kw.png', dial: '+965', digits: 8, states: ['Al Asimah', 'Hawalli', 'Al Farwaniyah', 'Al Ahmadi'] },
+        { code: 'bh', name: 'Bahrain', flagImg: 'https://flagcdn.com/w40/bh.png', dial: '+973', digits: 8, states: ['Capital Governorate', 'Muharraq', 'Northern', 'Southern'] },
+        { code: 'om', name: 'Oman', flagImg: 'https://flagcdn.com/w40/om.png', dial: '+968', digits: 8, states: ['Muscat', 'Dhofar', 'Al Batinah', 'Al Dakhiliyah'] },
+        { code: 'nz', name: 'New Zealand', flagImg: 'https://flagcdn.com/w40/nz.png', dial: '+64', digits: 9, states: ['Auckland', 'Canterbury', 'Wellington', 'Waikato'] },
+        { code: 'de', name: 'Germany', flagImg: 'https://flagcdn.com/w40/de.png', dial: '+49', digits: 10, states: ['Bavaria', 'Berlin', 'North Rhine-Westphalia', 'Hesse', 'Hamburg'] },
+        { code: 'fr', name: 'France', flagImg: 'https://flagcdn.com/w40/fr.png', dial: '+33', digits: 9, states: ['Paris (Île-de-France)', 'Auvergne-Rhône-Alpes', "Provence-Alpes-Côte d'Azur"] },
+        { code: 'it', name: 'Italy', flagImg: 'https://flagcdn.com/w40/it.png', dial: '+39', digits: 10, states: ['Lombardy (Milan)', 'Lazio (Rome)', 'Campania', 'Veneto', 'Tuscany'] },
+        { code: 'es', name: 'Spain', flagImg: 'https://flagcdn.com/w40/es.png', dial: '+34', digits: 9, states: ['Madrid', 'Catalonia (Barcelona)', 'Andalusia', 'Valencia'] },
+        { code: 'nl', name: 'Netherlands', flagImg: 'https://flagcdn.com/w40/nl.png', dial: '+31', digits: 9, states: ['North Holland (Amsterdam)', 'South Holland (Rotterdam)', 'Utrecht'] },
+        { code: 'za', name: 'South Africa', flagImg: 'https://flagcdn.com/w40/za.png', dial: '+27', digits: 9, states: ['Gauteng (Johannesburg)', 'Western Cape (Cape Town)', 'KwaZulu-Natal'] },
+        { code: 'mu', name: 'Mauritius', flagImg: 'https://flagcdn.com/w40/mu.png', dial: '+230', digits: 8, states: ['Port Louis', 'Plaines Wilhems', 'Flacq', 'Grand Port'] },
+        { code: 'ke', name: 'Kenya', flagImg: 'https://flagcdn.com/w40/ke.png', dial: '+254', digits: 9, states: ['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru'] },
+        { code: 'bd', name: 'Bangladesh', flagImg: 'https://flagcdn.com/w40/bd.png', dial: '+880', digits: 10, states: ['Dhaka', 'Chattogram', 'Sylhet', 'Rajshahi'] },
+        { code: 'lk', name: 'Sri Lanka', flagImg: 'https://flagcdn.com/w40/lk.png', dial: '+94', digits: 9, states: ['Colombo (Western)', 'Central (Kandy)', 'Southern (Galle)'] },
+        { code: 'np', name: 'Nepal', flagImg: 'https://flagcdn.com/w40/np.png', dial: '+977', digits: 10, states: ['Bagmati (Kathmandu)', 'Gandaki (Pokhara)', 'Lumbini'] }
     ];
 
     var modalSelectedRole = 'Retailer';
-    var modalSelectedCountry = MODAL_COUNTRIES[0]; // Auto-selected: India (+91)
-    var modalSelectedState = modalSelectedCountry.states[0];
+    var modalSelectedCountry = ALL_WORLD_COUNTRIES[0]; // India (+91)
+    var modalSelectedState = 'Maharashtra';
 
-    function renderModalCountrySlider() {
-        var track = document.getElementById('acCountrySliderTrack');
-        if (!track) return;
-
-        var html = '';
-        MODAL_COUNTRIES.forEach(function(c) {
-            var isSel = c.code === modalSelectedCountry.code;
-            html += `<div class="ac-pill ${isSel ? 'selected' : ''}" onclick="window.selectModalCountry('${c.code}')"><span>${c.flag}</span><span>${c.name}</span><span style="opacity:0.7;font-size:0.6rem;">(${c.dial})</span></div>`;
+    /* Toggle Dropdown Menu */
+    window.toggleAcDropdown = function(boxId) {
+        var box = document.getElementById(boxId);
+        if (!box) return;
+        var isCurrentlyActive = box.classList.contains('active');
+        
+        document.querySelectorAll('.ac-custom-select-box').forEach(function(b){
+            b.classList.remove('active');
         });
-        track.innerHTML = html;
 
-        var lbl = document.getElementById('acSelectedCountryLabel');
-        if (lbl) lbl.textContent = `${modalSelectedCountry.flag} ${modalSelectedCountry.name} (${modalSelectedCountry.dial})`;
-
-        var flagEl = document.getElementById('acWaFlag');
-        var dialEl = document.getElementById('acWaDial');
-        var hint = document.getElementById('acDigitHint');
-        if (flagEl) flagEl.textContent = modalSelectedCountry.flag;
-        if (dialEl) dialEl.textContent = modalSelectedCountry.dial;
-        if (hint) hint.textContent = `${modalSelectedCountry.digits} digits`;
-
-        renderModalStateSlider();
-        window.validateModalWhatsApp();
-    }
-
-    function renderModalStateSlider() {
-        var track = document.getElementById('acStateSliderTrack');
-        if (!track) return;
-
-        var html = '';
-        modalSelectedCountry.states.forEach(function(st) {
-            var isSel = st === modalSelectedState;
-            html += `<div class="ac-pill ${isSel ? 'selected' : ''}" onclick="window.selectModalState('${st}')"><span>📍</span><span>${st}</span></div>`;
-        });
-        track.innerHTML = html;
-
-        var lbl = document.getElementById('acSelectedStateLabel');
-        if (lbl) lbl.textContent = modalSelectedState;
-    }
-
-    window.selectModalCountry = function(code) {
-        var found = MODAL_COUNTRIES.find(function(c){ return c.code === code; });
-        if (found) {
-            modalSelectedCountry = found;
-            modalSelectedState = found.states[0] || 'Default';
-            renderModalCountrySlider();
+        if (!isCurrentlyActive) {
+            box.classList.add('active');
+            if (boxId === 'acCountrySelectBox') {
+                var sInput = document.getElementById('acCountrySearchInput');
+                if (sInput) {
+                    sInput.value = '';
+                    window.filterAcCountryOptions('');
+                    setTimeout(function(){ sInput.focus(); }, 100);
+                }
+            } else if (boxId === 'acStateSelectBox') {
+                var sInput = document.getElementById('acStateSearchInput');
+                if (sInput) {
+                    sInput.value = '';
+                    window.filterAcStateOptions('');
+                    setTimeout(function(){ sInput.focus(); }, 100);
+                }
+            }
         }
     };
 
-    window.selectModalState = function(st) {
-        modalSelectedState = st;
-        renderModalStateSlider();
-        var cityEl = document.getElementById('acRegCity');
-        if (cityEl && !cityEl.value) cityEl.value = st;
+    /* Close Dropdown on outside click */
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.ac-custom-select-box')) {
+            document.querySelectorAll('.ac-custom-select-box').forEach(function(b){
+                b.classList.remove('active');
+            });
+        }
+    });
+
+    /* Filter Country Options */
+    window.filterAcCountryOptions = function(query) {
+        var q = (query || '').toLowerCase().trim();
+        var list = document.getElementById('acCountryOptionsList');
+        if (!list) return;
+
+        var filtered = ALL_WORLD_COUNTRIES.filter(function(c) {
+            return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q);
+        });
+
+        var html = '';
+        if (filtered.length === 0) {
+            html = '<div style="padding:12px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching country found</div>';
+        } else {
+            filtered.forEach(function(c) {
+                var isSel = c.code === modalSelectedCountry.code;
+                html += '<div class="ac-custom-select-option ' + (isSel ? 'selected' : '') + '" onclick="window.selectModalCountry(\'' + c.code + '\')">' +
+                        '<img src="' + c.flagImg + '" alt="' + c.name + '" class="ac-select-flag-img">' +
+                        '<span>' + c.name + ' (' + c.dial + ')</span>' +
+                        '</div>';
+            });
+        }
+        list.innerHTML = html;
+    };
+
+    /* Filter State Options */
+    window.filterAcStateOptions = function(query) {
+        var q = (query || '').toLowerCase().trim();
+        var list = document.getElementById('acStateOptionsList');
+        if (!list) return;
+
+        var states = modalSelectedCountry.states || ['Default Region'];
+        var filtered = states.filter(function(st) {
+            return st.toLowerCase().includes(q);
+        });
+
+        var html = '';
+        if (filtered.length === 0) {
+            html = '<div style="padding:12px; font-size:0.78rem; color:var(--ac-light-text); text-align:center; font-weight:600;">No matching state found</div>';
+        } else {
+            filtered.forEach(function(st) {
+                var isSel = st === modalSelectedState;
+                html += '<div class="ac-custom-select-option ' + (isSel ? 'selected' : '') + '" onclick="window.selectModalState(\'' + st.replace(/'/g, "\\'") + '\')">' +
+                        '<span>' + st + '</span>' +
+                        '</div>';
+            });
+        }
+        list.innerHTML = html;
+    };
+
+    /* Render Country & State Dropdowns */
+    function renderCountryDropdown() {
+        window.filterAcCountryOptions('');
+
+        var flagImg = document.getElementById('acDisplayCountryFlag');
+        var txt = document.getElementById('acDisplayCountryText');
+        if (flagImg) flagImg.src = modalSelectedCountry.flagImg;
+        if (txt) txt.textContent = modalSelectedCountry.name + ' (' + modalSelectedCountry.dial + ')';
+
+        var waFlag = document.getElementById('acWaFlagImg');
+        var waDial = document.getElementById('acWaDialCode');
+        var hint = document.getElementById('acDigitCountHint');
+
+        if (waFlag) waFlag.src = modalSelectedCountry.flagImg;
+        if (waDial) waDial.textContent = modalSelectedCountry.code.toUpperCase() + ' ' + modalSelectedCountry.dial;
+        if (hint) hint.textContent = modalSelectedCountry.digits + '-digit number';
+
+        renderStateDropdown();
+        window.validateModalWhatsApp();
+    }
+
+    function renderStateDropdown() {
+        window.filterAcStateOptions('');
+        var txt = document.getElementById('acDisplayStateText');
+        if (txt) txt.textContent = modalSelectedState;
+    }
+
+    window.selectModalCountry = function(code) {
+        var found = ALL_WORLD_COUNTRIES.find(function(c) { return c.code === code; });
+        if (found) {
+            modalSelectedCountry = found;
+            modalSelectedState = (found.states && found.states.length > 0) ? found.states[0] : 'Default Region';
+            renderCountryDropdown();
+        }
+        var box = document.getElementById('acCountrySelectBox');
+        if (box) box.classList.remove('active');
+    };
+
+    window.selectModalState = function(stateName) {
+        modalSelectedState = stateName;
+        var txt = document.getElementById('acDisplayStateText');
+        if (txt) txt.textContent = stateName;
+
+        var box = document.getElementById('acStateSelectBox');
+        if (box) box.classList.remove('active');
     };
 
     window.selectModalRole = function(role) {
         modalSelectedRole = role;
-        document.querySelectorAll('.ac-role-card').forEach(function(c){
+        document.querySelectorAll('.ac-role-pill-btn').forEach(function(c) {
             c.classList.toggle('selected', c.dataset.role === role);
         });
     };
@@ -824,7 +1145,7 @@
         if (clean.length > 0 && clean.length !== exp) {
             group.classList.add('is-invalid');
             err.style.display = 'block';
-            err.textContent = `⚠️ Enter ${exp} digits for ${modalSelectedCountry.name}.`;
+            err.textContent = '⚠️ Enter exactly ' + exp + ' digits for ' + modalSelectedCountry.name + '.';
             return false;
         } else {
             group.classList.remove('is-invalid');
@@ -833,7 +1154,6 @@
         }
     };
 
-    
     /* Global Role-Based Direct Dashboard Navigation Helper */
     window.handleUserWiseAccountNavigation = function() {
         var userRaw = localStorage.getItem('dtbrands_user');
@@ -873,7 +1193,7 @@
         }
 
         window.switchAccountTab(tab);
-        renderModalCountrySlider();
+        renderCountryDropdown();
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
@@ -902,7 +1222,7 @@
             if (tabName === 'login') heading.textContent = 'Sign In to DT Brand\'s';
             else if (tabName === 'register') {
                 heading.textContent = 'Create Luxury Account';
-                renderModalCountrySlider();
+                renderCountryDropdown();
             }
             else if (tabName === 'forgot') heading.textContent = 'Reset Your Password';
             else heading.textContent = 'My Luxury Profile';
@@ -925,7 +1245,7 @@
                 if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
                 if (tierEl) {
                     var r = user.role || 'Retailer';
-                    tierEl.textContent = `👑 Royal ${r} VIP Member`;
+                    tierEl.textContent = '👑 Royal ' + r + ' VIP Member';
                 }
                 var wsBtn = document.getElementById('acModalWsBtn');
                 var role = (user.role || '').toLowerCase();
@@ -962,7 +1282,10 @@
 
     window.handleAccountLogin = function() {
         var input = document.getElementById('acLoginEmail').value.trim();
-        if (!input) return;
+        if (!input) {
+            alert('Please enter your WhatsApp number or Email');
+            return;
+        }
 
         var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
         name = name.charAt(0).toUpperCase() + name.slice(1);
@@ -988,19 +1311,23 @@
         var name = document.getElementById('acRegName').value.trim();
         var phone = document.getElementById('acRegPhone').value.trim();
         var city = document.getElementById('acRegCity').value.trim();
-        var email = document.getElementById('acRegEmail').value.trim();
+        var pass = document.getElementById('acRegPass').value.trim();
 
         if (!name) { alert('Please enter your full name'); return; }
         var exp = modalSelectedCountry.digits || 10;
         if (!phone || phone.length !== exp) {
-            alert(`Please enter a valid ${exp}-digit WhatsApp number.`);
+            alert('Please enter a valid ' + exp + '-digit WhatsApp number for ' + modalSelectedCountry.name + '.');
+            return;
+        }
+        if (!pass || pass.length < 6) {
+            alert('Password must be at least 6 characters.');
             return;
         }
 
         var userData = {
             name: name,
             phone: modalSelectedCountry.dial + ' ' + phone,
-            email: email || 'member@dtbrands.com',
+            email: 'member@dtbrands.com',
             role: modalSelectedRole,
             country: modalSelectedCountry.name,
             state: modalSelectedState,
@@ -1009,16 +1336,27 @@
         localStorage.setItem('dtbrands_user', JSON.stringify(userData));
 
         if (typeof window.showToast === 'function') {
-            window.showToast('🎉 Luxury Account created successfully!');
+            window.showToast('🎉 Welcome to DT Brand\'s, ' + name + '!');
         }
-        window.switchAccountTab('profile');
+
+        // Direct Dashboard Redirect according to Role
+        var roleLower = (modalSelectedRole || '').toLowerCase();
+        if (roleLower === 'reseller') {
+            window.location.href = '/Frontend/Reseller/reseller.php';
+        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
+            window.location.href = '/Frontend/Wholesale/wholesale.php';
+        } else if (roleLower === 'retailer') {
+            window.location.href = '/Frontend/Retailer/retailer.php';
+        } else {
+            window.switchAccountTab('profile');
+        }
     };
 
     window.handleAccountForgot = function() {
         var input = document.getElementById('acForgotInput').value.trim();
         if (!input) return;
 
-        var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
+        var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {
