@@ -1040,6 +1040,41 @@
         window.addEventListener('resize', syncTrendingScrollState, { passive: true });
     }
 
+    /* ═════════════════════════════════════════════════════════════════════
+       SMART DEALS OF THE DAY 1-LINE HORIZONTAL RAIL CONTROLLER
+    ═════════════════════════════════════════════════════════════════════ */
+    var dealsTrack = document.getElementById('homeDealsGrid');
+    var dealsPrevBtn = document.getElementById('dealScrollPrevBtn');
+    var dealsNextBtn = document.getElementById('dealScrollNextBtn');
+
+    function syncDealsScrollState() {
+        if (!dealsTrack) return;
+        var scrollLeft = dealsTrack.scrollLeft;
+        var maxScroll = dealsTrack.scrollWidth - dealsTrack.clientWidth;
+
+        if (dealsPrevBtn) {
+            dealsPrevBtn.disabled = (scrollLeft <= 6);
+        }
+        if (dealsNextBtn) {
+            dealsNextBtn.disabled = (scrollLeft >= maxScroll - 6);
+        }
+    }
+
+    window.scrollDealsRail = function(direction) {
+        if (!dealsTrack) return;
+        var scrollAmount = Math.max(240, Math.floor(dealsTrack.clientWidth * 0.75));
+        dealsTrack.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    if (dealsTrack) {
+        dealsTrack.addEventListener('scroll', syncDealsScrollState, { passive: true });
+        setTimeout(syncDealsScrollState, 200);
+        window.addEventListener('resize', syncDealsScrollState, { passive: true });
+    }
+
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
     window.applyMasterFilters();

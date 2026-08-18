@@ -3152,7 +3152,7 @@ input[type=range].sf-range::-moz-range-thumb {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 14px;
     margin-bottom: clamp(14px, 2vw, 22px);
     flex-wrap: wrap;
 }
@@ -3162,6 +3162,12 @@ input[type=range].sf-range::-moz-range-thumb {
     color: #DC2626;
     border: 1px solid #FECACA;
     font-weight: 800;
+}
+
+.deal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .deal-countdown-box {
@@ -3214,16 +3220,69 @@ input[type=range].sf-range::-moz-range-thumb {
     margin-left: 2px;
 }
 
-/* 5 Columns Desktop / 2 Lines Grid */
+.deal-slider-arrows {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.deal-nav-arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(138, 104, 31, 0.3);
+    background: #FFFFFF;
+    color: var(--dark-gold, #8A681F);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.deal-nav-arrow:hover:not(:disabled) {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
+    transform: scale(1.06);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.25);
+}
+
+.deal-nav-arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #9CA3AF;
+}
+
+/* Desktop: 1-Line Continuous Horizontal Scroll Rail */
 .home-deals-grid,
 .home-deals-scroll {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    width: 100%;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    width: 100% !important;
+    padding: 4px 2px 14px 2px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.home-deals-grid::-webkit-scrollbar,
+.home-deals-scroll::-webkit-scrollbar {
+    display: none !important;
 }
 
 .home-deal-card {
+    flex: 0 0 calc((100% - (4 * 14px)) / 5) !important;
+    min-width: 0 !important;
     background: #FFFFFF;
     border: 1.5px solid rgba(138, 104, 31, 0.16);
     border-radius: 12px;
@@ -3233,6 +3292,7 @@ input[type=range].sf-range::-moz-range-thumb {
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     display: flex;
     flex-direction: column;
+    scroll-snap-align: start !important;
 }
 
 .home-deal-card:hover {
@@ -3419,23 +3479,34 @@ input[type=range].sf-range::-moz-range-thumb {
     box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
 }
 
-/* Tablet: 4 columns */
+/* Tablet: 4 visible cards in rail */
 @media (max-width: 1100px) and (min-width: 768px) {
-    .home-deals-grid,
-    .home-deals-scroll {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 10px;
+    .home-deal-card {
+        flex: 0 0 calc((100% - (3 * 12px)) / 4) !important;
     }
 }
 
-/* Mobile: Exactly 3 items per line across 2+ lines with auto clean sizes */
+/* Mobile: Exactly 2 Lines (Rows) Synchronized Horizontal Scrolling */
 @media (max-width: 767px) {
+    .deal-slider-arrows {
+        display: none !important;
+    }
     .home-deals-grid,
     .home-deals-scroll {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 6px !important;
+        display: grid !important;
+        grid-template-rows: repeat(2, 1fr) !important;
+        grid-auto-flow: column !important;
+        grid-auto-columns: calc((100% - 10px) / 2.35) !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 8px !important;
+        padding: 2px 2px 10px 2px !important;
     }
     .home-deal-card {
+        flex: initial !important;
+        width: 100% !important;
         border-radius: 8px;
     }
     .deal-card-img-wrap {

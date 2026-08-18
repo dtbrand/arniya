@@ -586,18 +586,24 @@ $total_products = count($products);
                     <span class="home-section-tag deal-tag">⚡ LIMITED TIME FLASH SALE</span>
                     <h2 class="home-section-title">Deal of the Day — Up to 30% OFF</h2>
                 </div>
-                <div class="deal-countdown-box" id="dealCountdownBox">
-                    <span class="countdown-label">Ends in:</span>
-                    <div class="countdown-digits">
-                        <span class="cd-box"><strong id="cdHours">08</strong><small>hrs</small></span> :
-                        <span class="cd-box"><strong id="cdMins">45</strong><small>mins</small></span> :
-                        <span class="cd-box"><strong id="cdSecs">20</strong><small>secs</small></span>
+                <div class="deal-header-actions">
+                    <div class="deal-countdown-box" id="dealCountdownBox">
+                        <span class="countdown-label">Ends in:</span>
+                        <div class="countdown-digits">
+                            <span class="cd-box"><strong id="cdHours">08</strong><small>hrs</small></span> :
+                            <span class="cd-box"><strong id="cdMins">45</strong><small>mins</small></span> :
+                            <span class="cd-box"><strong id="cdSecs">20</strong><small>secs</small></span>
+                        </div>
+                    </div>
+                    <div class="deal-slider-arrows">
+                        <button type="button" class="deal-nav-arrow deal-nav-prev" id="dealScrollPrevBtn" onclick="scrollDealsRail(-1)" aria-label="Previous deals">‹</button>
+                        <button type="button" class="deal-nav-arrow deal-nav-next" id="dealScrollNextBtn" onclick="scrollDealsRail(1)" aria-label="Next deals">›</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 5 Columns Desktop / 3 Columns Mobile Deal Grid (2 Rows) -->
-            <div class="home-deals-grid">
+            <!-- 1 Line Continuous Scroll on Desktop / 2 Lines Synchronized Scroll on Mobile -->
+            <div class="home-deals-grid" id="homeDealsGrid">
                 <?php foreach (array_slice($products, 0, 10) as $p): ?>
                 <div class="home-deal-card">
                     <div class="deal-card-img-wrap">
