@@ -332,7 +332,7 @@
             var sliderCardsHtml = fullList.map(function(p) {
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
+                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" />' +
                     '</div>' +
                     '<h5 class="cd-rec-title">' + p.name + '</h5>' +
                     '<div class="cd-price-row">' +
@@ -384,7 +384,7 @@
                 var imgUrl = item.image || '/Shared/Asset/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
+                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" />' +
                     '<div class="cd-item-info">' +
                         '<h4 class="cd-item-title">' + item.name + '</h4>' +
                         '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +

@@ -630,12 +630,12 @@
         imagesList.forEach(function(imgUrl, idx) {
             slidesHtml += 
                 '<div class="qv-slide-img-wrap">' +
-                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
+                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" />' +
                 '</div>';
             dotsHtml += '<div class="qv-dot ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '"></div>';
             thumbsHtml += 
                 '<div class="qv-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" onError="this.src=\'/Shared/Asset/images/product1.png'" />' +
+                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" />' +
                 '</div>';
         });
 
