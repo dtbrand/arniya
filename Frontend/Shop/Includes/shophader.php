@@ -908,7 +908,7 @@
             </div>
 
             <!-- Wishlist -->
-            <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
+            <a href="javascript:void(0)" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" class="header-icon-btn" id="wishlistBtn" aria-label="Wishlist">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
@@ -916,7 +916,7 @@
             </a>
 
             <!-- Cart -->
-            <a href="javascript:void(0)" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer();" class="header-icon-btn" id="cartBtn" aria-label="Shopping cart">
+            <a href="javascript:void(0)" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}" class="header-icon-btn" id="cartBtn" aria-label="Shopping cart">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                     <line x1="3" y1="6" x2="21" y2="6"></line>

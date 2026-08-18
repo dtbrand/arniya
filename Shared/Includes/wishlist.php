@@ -393,18 +393,25 @@
         window.closeWishlistDrawer();
     };
 
-    window.toggleWishlistProduct = function(product) {
-        var idx = window.wishlistState.findIndex(function(item) { return item.id == product.id; });
+        window.toggleWishlistProduct = function(productOrId) {
+        if (!productOrId) return false;
+        var p = (typeof productOrId === 'object' && productOrId !== null) ? productOrId :
+            ((window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return x.id == productOrId || String(x.id) === String(productOrId); }) || { id: productOrId, name: 'Saved Item', price: 2999, image: '/Shared/Asset/images/product1.png' });
+        
+        var idx = (window.wishlistState || []).findIndex(function(item) { return item && (item.id == p.id || String(item.id) === String(p.id)); });
         var added = false;
+        if (!Array.isArray(window.wishlistState)) window.wishlistState = [];
+
         if (idx > -1) {
             window.wishlistState.splice(idx, 1);
             added = false;
         } else {
-            window.wishlistState.push(product);
+            window.wishlistState.push(p);
             added = true;
         }
         saveWishlist(window.wishlistState);
-        window.renderWishlist();
+        if (typeof window.renderWishlist === 'function') window.renderWishlist();
+        if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
         return added;
     };
 

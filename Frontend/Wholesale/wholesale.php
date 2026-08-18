@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Wholesale/Asset/css/wholesale.css?v=1787017812">
+    <link rel="stylesheet" href="/Frontend/Wholesale/Asset/css/wholesale.css?v=1787018623">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -435,13 +435,13 @@ $catalogProducts = [
 
         <div class="ws-header-right">
             <!-- Wishlist Button -->
-            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Wholesale Wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); else window.location.href='wishlist.php';" aria-label="Wholesale Wishlist">
+            <button class="ws-hdr-icon-btn" id="headerWishlistBtn" title="Wholesale Wishlist" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();}else if(typeof window.openWishlist==='function'){window.openWishlist();}" aria-label="Wholesale Wishlist">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 <span class="ws-hdr-badge" id="headerWishlistBadge" style="display:none;">0</span>
             </button>
 
             <!-- Cart Button -->
-            <button class="ws-hdr-icon-btn" id="headerCartBtn" title="Wholesale Cart" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer(); else window.location.href='cart.php';" aria-label="Wholesale Cart">
+            <button class="ws-hdr-icon-btn" id="headerCartBtn" title="Wholesale Cart" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}" aria-label="Wholesale Cart">
                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 <span class="ws-hdr-badge gold" id="headerCartBadge" style="display:none;">0</span>
             </button>
@@ -2007,7 +2007,7 @@ $catalogProducts = [
             <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             <span>Reports</span>
         </button>
-        <button class="ws-dock-btn" id="dockBtnCart" onclick="if(typeof window.openCartDrawer==='function') window.openCartDrawer(); else window.location.href='cart.php';" aria-label="Shopping Cart">
+        <button class="ws-dock-btn" id="dockBtnCart" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();}else if(typeof window.openCart==='function'){window.openCart();}" aria-label="Shopping Cart">
             <div style="position:relative; display:inline-flex;">
                 <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="ws-dock-cart-badge" id="wsDockCartBadge" style="display:none;">0</span>
@@ -2891,7 +2891,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Wholesale/Asset/js/wholesale.js?v=1787017812"></script>
+    <script src="/Frontend/Wholesale/Asset/js/wholesale.js?v=1787018623"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

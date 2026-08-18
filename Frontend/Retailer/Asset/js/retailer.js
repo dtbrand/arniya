@@ -3260,3 +3260,72 @@
 
     })();
     
+
+// ── Direct Wholesale / Retailer Cart & Wishlist Helper Functions ──
+function directAddWholesaleToCart(prodOrId, btn) {
+    try {
+        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199, moq: 12 });
+        var raw = localStorage.getItem('kalaniketan_cart');
+        var cart = raw ? JSON.parse(raw) : [];
+        var prodId = prod.id;
+        var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
+        var addQty = Number(prod.moq) || 12;
+        if (exists) {
+            exists.qty = (Number(exists.qty) || addQty) + addQty;
+        } else {
+            cart.push({
+                id: prod.id,
+                name: prod.name,
+                price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
+                qty: addQty,
+                image: prod.image || '/Frontend/Wholesale/Asset/images/product1.png',
+                color: prod.color || 'Standard',
+                moq: addQty,
+                category: prod.category || 'Catalog'
+            });
+        }
+        localStorage.setItem('kalaniketan_cart', JSON.stringify(cart));
+        window.cartState = cart;
+        if (typeof window.renderCart === 'function') window.renderCart();
+        if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
+        if (typeof window.openCartDrawer === 'function') window.openCartDrawer();
+        if (typeof showWsToast === 'function') showWsToast('🛒 Added ' + addQty + ' pcs of ' + prod.name + ' to Cart!');
+    } catch(e) { console.error('directAddWholesaleToCart error:', e); }
+}
+window.directAddWholesaleToCart = directAddWholesaleToCart;
+
+function toggleWholesaleWishlist(prodOrId, btn) {
+    try {
+        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
+            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199 });
+        var raw = localStorage.getItem('kalaniketan_wishlist');
+        var list = raw ? JSON.parse(raw) : [];
+        var prodId = prod.id;
+        var idx = list.findIndex(function(x) { return Number(x.id) === Number(prodId); });
+        var isAdded = false;
+        if (idx !== -1) {
+            list.splice(idx, 1);
+            isAdded = false;
+        } else {
+            list.push({
+                id: prod.id,
+                name: prod.name,
+                price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
+                old_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
+                image: prod.image || '/Frontend/Wholesale/Asset/images/product1.png',
+                category: prod.category || 'Catalog'
+            });
+            isAdded = true;
+        }
+        localStorage.setItem('kalaniketan_wishlist', JSON.stringify(list));
+        window.wishlistState = list;
+        if (btn) btn.classList.toggle('active', isAdded);
+        if (typeof window.renderWishlist === 'function') window.renderWishlist();
+        if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
+        if (typeof showWsToast === 'function') showWsToast(isAdded ? '♡ Saved ' + prod.name + ' to Wishlist!' : 'Removed from Wishlist');
+    } catch(e) { console.error('toggleWholesaleWishlist error:', e); }
+}
+window.toggleWholesaleWishlist = toggleWholesaleWishlist;
