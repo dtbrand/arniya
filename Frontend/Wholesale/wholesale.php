@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Wholesale/Asset/css/wholesale.css?v=1787014113">
+    <link rel="stylesheet" href="/Frontend/Wholesale/Asset/css/wholesale.css?v=1787014318">
 
 </head>
 <body>
@@ -2882,7 +2882,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Wholesale/Asset/js/wholesale.js?v=1787014113"></script>
+    <script src="/Frontend/Wholesale/Asset/js/wholesale.js?v=1787014318"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

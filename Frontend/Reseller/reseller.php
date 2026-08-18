@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014113">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787014318">
 
 </head>
 <body>
@@ -2174,12 +2174,11 @@ $catalogProducts = [
             <section class="ws-tab-pane" id="tabPaneProfit">
                 <div class="ws-card">
                     <div class="ws-card-header">
-                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:12px;">
-                            <div class="ws-anim-profit-badge">
-                                <svg class="ws-anim-profit-svg" viewBox="0 0 24 24" width="22" height="22" fill="none">
-                                    <polyline points="22 6 13.5 14.5 8.5 9.5 2 16" stroke="#8A681F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                                    <polyline points="16 6 22 6 22 12" stroke="#8A681F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                                    <circle cx="22" cy="6" r="3.2" fill="#10B981" stroke="#FFFFFF" stroke-width="1.8" class="ws-anim-tip-pulse"></circle>
+                        <div class="ws-card-title-group" style="display:flex; align-items:center; gap:10px;">
+                            <div class="crm-kpi-icon" style="width:36px; height:36px; border-radius:10px; flex-shrink:0;">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
                             </div>
                             <div>
@@ -2201,22 +2200,14 @@ $catalogProducts = [
 
                     <!-- Profit Summary Cards -->
                     <div class="crm-kpi-grid">
-                        <div class="crm-kpi-card ws-anim-rupee-card">
+                        <div class="crm-kpi-card">
                             <div>
                                 <div class="crm-kpi-val gold" id="profitTotalRealized">₹58,490</div>
                                 <div class="crm-kpi-label">Total Realized Profit</div>
                             </div>
-                            <div class="crm-kpi-icon ws-anim-rupee-icon">
-                                <svg class="ws-anim-rupee-svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-                                    <circle cx="12" cy="12" r="9.5" stroke="#B45309" stroke-width="1.8" fill="url(#kpiRupeeGoldGrad)"></circle>
-                                    <path d="M8 6h8M8 9.5h6.5M8 6v8c2 0 4.5-0.5 4.5-3.5S10 6 8 6zm3.5 8L16 19" stroke="#78350F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <defs>
-                                        <linearGradient id="kpiRupeeGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#FEF08A"/>
-                                            <stop offset="50%" stop-color="#F59E0B"/>
-                                            <stop offset="100%" stop-color="#D97706"/>
-                                        </linearGradient>
-                                    </defs>
+                            <div class="crm-kpi-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 3h12M6 8h9M6 3v9.5c3 0 5.5-0.8 5.5-4.5S9 3 6 3zm4.5 9.5L16.5 21"></path>
                                 </svg>
                             </div>
                         </div>
@@ -3257,7 +3248,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014113"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787014318"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
