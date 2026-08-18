@@ -231,15 +231,20 @@
             <span class="smart-nav-label">Shop</span>
         </a>
 
-        <!-- 3: RESELLER / B2B -->
-        <a href="/Frontend/Reseller/reseller.php" class="smart-nav-item" data-index="2" data-icon="reseller" onclick="handleSmartNavClick(event, 2, '/Frontend/Reseller/reseller.php', 'reseller')">
+        <!-- 3: REELS / VIDEO FEED (Real Clapperboard Video Reel SVG) -->
+        <a href="javascript:void(0)" class="smart-nav-item" data-index="2" data-icon="reels" onclick="handleSmartNavClick(event, 2, '', 'reels')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    <rect x="2" y="3" width="20" height="18" rx="4"></rect>
+                    <line x1="2" y1="8" x2="22" y2="8"></line>
+                    <line x1="7" y1="3" x2="5" y2="8"></line>
+                    <line x1="13" y1="3" x2="11" y2="8"></line>
+                    <line x1="19" y1="3" x2="17" y2="8"></line>
+                    <polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>
                 </svg>
                 <span class="smart-nav-badge badge-gold">HOT</span>
             </div>
-            <span class="smart-nav-label">Resell</span>
+            <span class="smart-nav-label">Reels</span>
         </a>
 
         <!-- 4: WISHLIST (Smooth Slide-over Drawer / Modal) -->
@@ -272,7 +277,7 @@
     var iconSvgs = {
         'home': '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>',
         'shop': '<path d="M3 9l1-5h16l1 5"></path><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path><path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path><path d="M10 22v-6h4v6"></path>',
-        'reseller': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+        'reels': '<rect x="2" y="3" width="20" height="18" rx="4"></rect><line x1="2" y1="8" x2="22" y2="8"></line><line x1="7" y1="3" x2="5" y2="8"></line><line x1="13" y1="3" x2="11" y2="8"></line><line x1="19" y1="3" x2="17" y2="8"></line><polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>',
         'wishlist': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>',
         'account': '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>'
     };
@@ -309,7 +314,19 @@
         // Update active bubble visual state instantly
         updateActiveBubblePosition(index);
 
-        // 1. WISHLIST ACTION
+        // 1. REELS ACTION
+        if (actionKey === 'reels') {
+            if (e) e.preventDefault();
+            if (typeof window.openReelsModal === 'function') {
+                window.openReelsModal(0);
+            } else {
+                var reelSec = document.getElementById('section-reels');
+                if (reelSec) reelSec.scrollIntoView({ behavior: 'smooth' });
+            }
+            return;
+        }
+
+        // 2. WISHLIST ACTION
         if (actionKey === 'wishlist') {
             if (e) e.preventDefault();
             if (typeof window.openWishlistDrawer === 'function') {
@@ -324,7 +341,7 @@
             return;
         }
 
-        // 2. MY ACCOUNT ACTION
+        // 3. MY ACCOUNT ACTION
         if (actionKey === 'account') {
             if (e) e.preventDefault();
             if (typeof window.openAccountModal === 'function') {
