@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css">
+    <link rel="stylesheet" href="/Frontend/Retailer/Asset/css/retailer.css?v=1787010000">
 
 </head>
 <body>
@@ -1584,10 +1584,10 @@ $catalogProducts = [
                         </div>
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick="exportReportsToCsv()">
-                                📥 Export CSV
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Export CSV</span>
                             </button>
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printWholesaleReport()">
-                                🖨️ Print Report
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> <span>Print Report</span>
                             </button>
                         </div>
                     </div>
@@ -2882,7 +2882,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Retailer/Asset/js/retailer.js"></script>
+    <script src="/Frontend/Retailer/Asset/js/retailer.js?v=1787010000"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>

@@ -772,7 +772,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 Details
                             </button>
                             <button class="ws-btn ws-btn-primary ws-btn-sm" style="font-weight:700;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                                📄 Invoice
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Invoice</span>
                             </button>
                         </div>
                     </td>
@@ -1571,7 +1571,7 @@ window.animateTargetGauge = animateTargetGauge;
                     <td>
                         <div style="display:flex; gap:6px;">
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick='openBillInvoiceModal(${JSON.stringify(o)})' title="Download GST Tax Invoice PDF">
-                                📄 Bill
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Bill</span>
                             </button>
                             <button class="ws-btn ws-btn-secondary ws-btn-sm" onclick='viewOrderDetails(${JSON.stringify(o)})' title="View Details">
                                 👁️
@@ -1627,10 +1627,10 @@ window.animateTargetGauge = animateTargetGauge;
 
                     <div class="ws-mob-rep-actions">
                         <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; justify-content:center;" onclick='openBillInvoiceModal(${JSON.stringify(o)})'>
-                            📄 Download GST Bill PDF
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> <span>Download GST Bill PDF</span>
                         </button>
                         <button class="ws-btn ws-btn-secondary ws-btn-sm" style="width:100%; justify-content:center;" onclick='viewOrderDetails(${JSON.stringify(o)})'>
-                            👁️ View Details
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span>View Details</span>
                         </button>
                     </div>
                 `;
@@ -3636,7 +3636,7 @@ window.animateTargetGauge = animateTargetGauge;
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">${c.mobile} &bull; ${c.city}</div>
                             </div>
                         </div>
-                        <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${c.id})" style="background:#25D366; color:#FFF; padding:4px 8px; border-radius:6px;">💬 WhatsApp</button>
+                        <button class="ws-btn ws-btn-sm" onclick="sendCustomerWhatsAppMessage(${c.id})" style="background:#25D366; color:#FFF; padding:5px 10px; border-radius:6px; display:inline-flex; align-items:center; gap:5px;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="display:inline-block; vertical-align:middle;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg><span>WhatsApp</span></button>
                     </div>
                     <div style="margin-bottom:8px;">${tagsHtml}</div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; background:#FAF8F4; padding:8px; border-radius:8px; text-align:center; margin-bottom:10px;">

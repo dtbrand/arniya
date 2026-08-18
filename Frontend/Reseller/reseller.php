@@ -404,7 +404,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css">
+    <link rel="stylesheet" href="/Frontend/Reseller/Asset/css/reseller.css?v=1787010920">
 
 </head>
 <body>
@@ -1636,7 +1636,7 @@ $catalogProducts = [
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Export CSV
                             </button>
                             <button class="ws-btn ws-btn-primary ws-btn-sm" onclick="printWholesaleReport()">
-                                🖨️ Print Report
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:middle;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> <span>Print Report</span>
                             </button>
                         </div>
                     </div>
@@ -3233,7 +3233,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/Frontend/Reseller/Asset/js/reseller.js"></script>
+    <script src="/Frontend/Reseller/Asset/js/reseller.js?v=1787010920"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/../../Shared/Includes/cart.php'; ?>
