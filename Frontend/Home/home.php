@@ -348,77 +348,7 @@ $total_products = count($products);
         </div>
     </nav>
 
-    <!-- ════════════ SECTION 3: HERO BANNER SLIDER ════════════ -->
-    <section class="hero-banner-section" aria-label="Featured Collections">
-        <div class="hero-banner-container" id="heroBannerContainer">
-            <div class="hero-banner-track" id="heroBannerTrack">
-                
-                <!-- Slide 1: Festive Sarees Edit -->
-                <div class="hero-banner-slide hero-slide-1" onclick="document.getElementById('section-trending').scrollIntoView({behavior:'smooth'});">
-                    <div class="hero-slide-content">
-                        <span class="hero-slide-tag">✨ FESTIVE SILK UTSAV • FLAT 25% OFF</span>
-                        <h1 class="hero-slide-title">Royal Banarasi & Kanjeevaram Saree Edit</h1>
-                        <p class="hero-slide-desc">Direct Surat Master Weavers • Pure Zari Heritage Craftsmanship</p>
-                        <div class="hero-slide-btn-row">
-                            <button class="hero-slide-btn" onclick="event.stopPropagation(); document.getElementById('section-trending').scrollIntoView({behavior:'smooth'});">Shop Collection &rarr;</button>
-                            <a href="/Frontend/Reseller/reseller.php" class="hero-slide-btn-alt" onclick="event.stopPropagation();">⚡ Start Reselling</a>
-                        </div>
-                    </div>
-                    <div class="hero-slide-img-wrap">
-                        <img src="/Frontend/Shop/Asset/images/product1.png" alt="Royal Silk Sarees" loading="lazy" />
-                    </div>
-                </div>
-
-                <!-- Slide 2: Reseller Zero Investment -->
-                <div class="hero-banner-slide hero-slide-2" onclick="window.location.href='/Frontend/Reseller/reseller.php';">
-                    <div class="hero-slide-content">
-                        <span class="hero-slide-tag">⚡ RESELLER PARTNER PROGRAM</span>
-                        <h2 class="hero-slide-title">Earn ₹30,000–₹50,000 / Month From Home</h2>
-                        <p class="hero-slide-desc">Zero Investment • Add Your Margin • 1-Tap WhatsApp Pitch • Direct Dispatch</p>
-                        <div class="hero-slide-btn-row">
-                            <a href="/Frontend/Reseller/reseller.php" class="hero-slide-btn" onclick="event.stopPropagation();">Join As Reseller &rarr;</a>
-                            <a href="/Frontend/Wholesale/wholesale.php" class="hero-slide-btn-alt" onclick="event.stopPropagation();">🏭 Buy Wholesale</a>
-                        </div>
-                    </div>
-                    <div class="hero-slide-img-wrap">
-                        <img src="/Frontend/Shop/Asset/images/product5.png" alt="Reseller Program" loading="lazy" />
-                    </div>
-                </div>
-
-                <!-- Slide 3: Factory Wholesale Supply -->
-                <div class="hero-banner-slide hero-slide-3" onclick="window.location.href='/Frontend/Wholesale/wholesale.php';">
-                    <div class="hero-slide-content">
-                        <span class="hero-slide-tag">🏭 FACTORY DIRECT B2B WHOLESALE</span>
-                        <h2 class="hero-slide-title">Surat Manufacturing Saree & Kurti Lots</h2>
-                        <p class="hero-slide-desc">MOQ from 6 Pcs • Volume Slabs • GST Invoices & Fast Transport Dispatch</p>
-                        <div class="hero-slide-btn-row">
-                            <a href="/Frontend/Wholesale/wholesale.php" class="hero-slide-btn" onclick="event.stopPropagation();">Explore Wholesale Lots &rarr;</a>
-                            <button class="hero-slide-btn-alt" onclick="event.stopPropagation(); document.getElementById('section-deals').scrollIntoView({behavior:'smooth'});">🔥 View Deals</button>
-                        </div>
-                    </div>
-                    <div class="hero-slide-img-wrap">
-                        <img src="/Frontend/Shop/Asset/images/product6.png" alt="Wholesale B2B Lots" loading="lazy" />
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Arrows & Dots -->
-            <button class="hero-banner-arrow prev" id="heroBannerPrevBtn" aria-label="Previous Slide">
-                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-            </button>
-            <button class="hero-banner-arrow next" id="heroBannerNextBtn" aria-label="Next Slide">
-                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
-            <div class="hero-banner-dots" id="heroBannerDots">
-                <span class="hero-banner-dot active" data-slide="0"></span>
-                <span class="hero-banner-dot" data-slide="1"></span>
-                <span class="hero-banner-dot" data-slide="2"></span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ════════════ SECTION 4: QUICK ACCESS BAR ════════════ -->
+    <!-- ════════════ SECTION 3: QUICK ACCESS BAR ════════════ -->
     <section class="home-quick-access-section" aria-label="Quick Access">
         <div class="home-section-container">
             <div class="quick-access-grid">
