@@ -472,14 +472,10 @@ display: flex;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
-            -moz--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
-            -ms--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
--webkit-user-select: none;
-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         .ws-nav-item:hover {
             background: linear-gradient(90deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%);
@@ -594,8 +590,8 @@ user-select: none;
         /* Glassmorphic 3D KPI Stat Box */
         .ws-stat-box {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(254, 250, 238, 0.88) 50%, rgba(248, 238, 210, 0.92) 100%);
--webkit-backdrop-filter: blur(20px) saturate(180%);
-backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
             border: 1.5px solid rgba(212, 175, 55, 0.45);
             border-radius: 14px;
             padding: 12px 14px;
@@ -1619,8 +1615,8 @@ backdrop-filter: blur(20px) saturate(180%);
             display: flex;
             align-items: center;
             justify-content: center;
--webkit-backdrop-filter: blur(4px);
-backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
         }
         .ws-anim-plus-bounce {
             width: 12px;
@@ -1650,14 +1646,10 @@ backdrop-filter: blur(4px);
             align-items: center;
             gap: 12px;
             transition: var(--ws-transition);
-            -moz--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
-            -ms--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
--webkit-user-select: none;
-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         .ws-gst-option-card:hover {
             border-color: var(--ws-gold-primary);
@@ -1904,14 +1896,10 @@ scrollbar-width: none;
             gap: 3px;
             line-height: 1;
             height: 28px;
-            -moz--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
-            -ms--webkit-user-select: none;
--webkit-user-select: none;
-user-select: none;
--webkit-user-select: none;
-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
             scroll-snap-align: start;
         }
         .ws-rep-filter-btn:hover {
@@ -2499,8 +2487,8 @@ padding: 4px 2px 6px;
             z-index: 2;
             background: rgba(138, 104, 31, 0.85);
             color: #FFFFFF;
--webkit-backdrop-filter: blur(6px);
-backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 2px 8px rgba(0,0,0,0.18);
             width: auto;
@@ -2543,8 +2531,8 @@ backdrop-filter: blur(6px);
             justify-content: center;
             z-index: 3;
             transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
--webkit-backdrop-filter: blur(6px);
-backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             cursor: pointer;
         }
@@ -2581,8 +2569,8 @@ backdrop-filter: blur(6px);
             justify-content: center;
             z-index: 3;
             transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
--webkit-backdrop-filter: blur(6px);
-backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             cursor: pointer;
         }
@@ -2624,8 +2612,8 @@ backdrop-filter: blur(6px);
             letter-spacing: 0.12em; text-transform: uppercase;
             color: #24211C; padding: 7px 18px; border-radius: 20px;
             border: 1px solid rgba(138,104,31,0.3);
--webkit-backdrop-filter: blur(8px);
-backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
             transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
@@ -2686,8 +2674,8 @@ backdrop-filter: blur(8px);
             letter-spacing: 0.06em;
             text-transform: uppercase;
             line-height: 1.1;
--webkit-backdrop-filter: blur(8px);
-backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             z-index: 2;
             pointer-events: none;
@@ -2710,8 +2698,8 @@ backdrop-filter: blur(8px);
             cursor: pointer;
             z-index: 3;
             transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
--webkit-backdrop-filter: blur(6px);
-backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
             box-shadow: 0 2px 6px rgba(0,0,0,0.12);
         }
         .card-share-btn:hover, .card-share-btn:active {
@@ -2787,8 +2775,8 @@ backdrop-filter: blur(6px);
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(20, 17, 14, 0.7);
--webkit-backdrop-filter: blur(8px);
-backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
             z-index: 2000000;
             display: flex;
             align-items: center;
@@ -3078,8 +3066,8 @@ backdrop-filter: blur(8px);
         /* ── Modern Frosted Gold Glassy Animated B2B Wallet & Coins Strip ── */
         .ws-wallet-strip {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(254, 250, 238, 0.88) 50%, rgba(248, 238, 210, 0.92) 100%);
--webkit-backdrop-filter: blur(20px) saturate(180%);
-backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
             border: 1.5px solid rgba(212, 175, 55, 0.55);
             border-radius: 12px;
             padding: 8px 12px 8px 16px;
@@ -4144,8 +4132,8 @@ padding: 10px 12px !important;
                 width: 100vw;
                 height: 100vh;
                 background: rgba(20, 17, 14, 0.65);
--webkit-backdrop-filter: blur(5px);
-backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                backdrop-filter: blur(5px);
                 z-index: 1999;
                 display: none;
                 pointer-events: none;
