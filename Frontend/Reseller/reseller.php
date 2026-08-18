@@ -443,6 +443,41 @@ $catalogProducts = [
         .ws-modal-luxury-box svg {
             box-sizing: content-box !important;
         }
+        .ws-input-clear-btn {
+            position: absolute !important;
+            right: 9px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 20px !important;
+            height: 20px !important;
+            border-radius: 50% !important;
+            background: #E8E0D0 !important;
+            color: #69562A !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            cursor: pointer !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transition: all 0.18s ease !important;
+            z-index: 3 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+        }
+        .ws-smart-input-wrap.has-value .ws-input-clear-btn,
+        .ws-input-clear-btn.visible {
+            opacity: 0.8 !important;
+            pointer-events: auto !important;
+        }
+        .ws-input-clear-btn:hover {
+            opacity: 1 !important;
+            background: #8A681F !important;
+            color: #FFFFFF !important;
+            transform: translateY(-50%) scale(1.1) !important;
+        }
     </style>
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
@@ -3467,11 +3502,11 @@ $catalogProducts = [
             <div class="ws-modal-luxury-header">
                 <div class="ws-modal-luxury-title-wrap">
                     <div class="ws-modal-luxury-icon-badge">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;max-width:20px!important;max-height:20px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:20px!important;height:20px!important;max-width:20px!important;max-height:20px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                     </div>
                     <div>
                         <h3 class="ws-modal-luxury-title" id="addCustomerModalTitle">
-                            <span>👤 Add New Customer</span>
+                            <span>Add New Customer</span>
                         </h3>
                         <div class="ws-modal-luxury-subtitle">Customer profile for 1-tap WhatsApp sharing & orders</div>
                     </div>
@@ -3491,39 +3526,43 @@ $catalogProducts = [
                             </span>
                         </div>
                         
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;" class="ws-smart-grid-2">
+                        <div class="ws-smart-grid-2" style="margin-bottom:10px;">
                             <div>
                                 <label class="ws-smart-label">Full Name <span style="color:#EF4444;">*</span></label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    <input type="text" id="custFormName" class="ws-smart-input" placeholder="e.g. Rahul Sharma" required>
+                                    <input type="text" id="custFormName" class="ws-smart-input" placeholder="e.g. Rahul Sharma" required oninput="handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormName')" title="Clear">✕</button>
                                 </div>
                             </div>
                             <div>
                                 <label class="ws-smart-label">Mobile Number <span style="color:#EF4444;">*</span></label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    <input type="tel" id="custFormMobile" class="ws-smart-input" placeholder="10-digit mobile" required>
+                                    <input type="tel" id="custFormMobile" class="ws-smart-input" placeholder="10-digit mobile" required maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormMobile')" title="Clear">✕</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;" class="ws-smart-grid-2">
+                        <div class="ws-smart-grid-2">
                             <div>
                                 <label class="ws-smart-label">
                                     <span>WhatsApp Number</span>
-                                    <button type="button" class="ws-quick-action-link" onclick="setCustWhatsappSame()" title="Auto-copy Mobile Number">⚡ Same as Mobile</button>
+                                    <button type="button" id="btnCustSyncWhatsapp" class="ws-quick-action-link" onclick="setCustWhatsappSame()" title="Auto-copy Mobile Number">⚡ Same as Mobile</button>
                                 </label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                    <input type="tel" id="custFormWhatsapp" class="ws-smart-input" placeholder="WhatsApp number">
+                                    <input type="tel" id="custFormWhatsapp" class="ws-smart-input" placeholder="WhatsApp number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormWhatsapp')" title="Clear">✕</button>
                                 </div>
                             </div>
                             <div>
-                                <label class="ws-smart-label">Email Address <span style="font-size:0.65rem; color:#94A3B8; text-transform:none;">(Optional)</span></label>
+                                <label class="ws-smart-label">Email Address <span style="font-size:0.65rem; color:#94A3B8; text-transform:none; font-weight:600;">(Optional)</span></label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                    <input type="email" id="custFormEmail" class="ws-smart-input" placeholder="customer@example.com">
+                                    <input type="email" id="custFormEmail" class="ws-smart-input" placeholder="customer@example.com" oninput="handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormEmail')" title="Clear">✕</button>
                                 </div>
                             </div>
                         </div>
@@ -3542,30 +3581,34 @@ $catalogProducts = [
                             <label class="ws-smart-label">Flat, Building, Street Area</label>
                             <div class="ws-smart-input-wrap">
                                 <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                <input type="text" id="custFormAddress" class="ws-smart-input" placeholder="Flat / Shop No., Building, Road, Landmark...">
+                                <input type="text" id="custFormAddress" class="ws-smart-input" placeholder="Flat / Shop No., Building, Road, Landmark..." oninput="handleSmartInputChange(this)">
+                                <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormAddress')" title="Clear">✕</button>
                             </div>
                         </div>
 
-                        <div style="display:grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap:8px;" class="ws-smart-grid-3">
+                        <div class="ws-smart-grid-3">
                             <div>
                                 <label class="ws-smart-label">City</label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line></svg>
-                                    <input type="text" id="custFormCity" class="ws-smart-input" placeholder="e.g. Surat">
+                                    <input type="text" id="custFormCity" class="ws-smart-input" placeholder="e.g. Surat" oninput="handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormCity')" title="Clear">✕</button>
                                 </div>
                             </div>
                             <div>
                                 <label class="ws-smart-label">State</label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                                    <input type="text" id="custFormState" class="ws-smart-input" placeholder="e.g. Gujarat">
+                                    <input type="text" id="custFormState" class="ws-smart-input" placeholder="e.g. Gujarat" oninput="handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormState')" title="Clear">✕</button>
                                 </div>
                             </div>
                             <div>
                                 <label class="ws-smart-label">Pincode</label>
                                 <div class="ws-smart-input-wrap">
                                     <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
-                                    <input type="text" id="custFormPincode" class="ws-smart-input" placeholder="395002" maxlength="6" oninput="handleSmartPinAutoFill(this.value)">
+                                    <input type="text" id="custFormPincode" class="ws-smart-input" placeholder="395002" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,''); handleSmartPinAutoFill(this.value); handleSmartInputChange(this)">
+                                    <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormPincode')" title="Clear">✕</button>
                                 </div>
                             </div>
                         </div>
@@ -3578,12 +3621,13 @@ $catalogProducts = [
                                 <svg width="13" height="13" viewBox="0 0 24 24" stroke="#8A681F" fill="none" stroke-width="2.5" style="width:13px!important;height:13px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                                 3. Customer Tags & Segmentation
                             </span>
-                            <span style="font-size:0.65rem; color:#8C8072; font-weight:600;">Tap chips to add/remove</span>
+                            <span style="font-size:0.65rem; color:#8C8072; font-weight:700;">Tap chips to toggle</span>
                         </div>
 
                         <div class="ws-smart-input-wrap">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:50%!important;transform:translateY(-50%)!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                            <input type="text" id="custFormTags" class="ws-smart-input" placeholder="e.g. VIP, REPEAT, BRIDAL" oninput="syncCustTagChips()">
+                            <input type="text" id="custFormTags" class="ws-smart-input" placeholder="e.g. VIP, REPEAT, BRIDAL" oninput="syncCustTagChips(); handleSmartInputChange(this)">
+                            <button type="button" class="ws-input-clear-btn" onclick="clearSmartInput('custFormTags'); syncCustTagChips();" title="Clear">✕</button>
                         </div>
 
                         <div class="ws-smart-chips-wrap" id="custSmartTagChips">
@@ -3608,7 +3652,7 @@ $catalogProducts = [
 
                         <div class="ws-smart-input-wrap">
                             <svg class="ws-smart-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;max-width:16px!important;max-height:16px!important;position:absolute!important;left:11px!important;top:12px!important;display:inline-block!important;pointer-events:none!important;flex-shrink:0!important;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            <textarea id="custFormNotes" class="ws-smart-textarea" style="height:60px;" placeholder="Customer fabric preference, favorite colors, order frequency..."></textarea>
+                            <textarea id="custFormNotes" class="ws-smart-textarea" style="height:62px;" placeholder="Customer fabric preference, favorite colors, order frequency..."></textarea>
                         </div>
 
                         <div class="ws-note-prompts-wrap">
@@ -3625,8 +3669,8 @@ $catalogProducts = [
                 <div class="ws-modal-luxury-footer">
                     <button type="button" class="ws-btn-luxury-cancel" onclick="closeAddCustomerModal()">Cancel</button>
                     <button type="submit" class="ws-btn-luxury-save">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:15px!important;height:15px!important;display:inline-block!important;flex-shrink:0!important;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                        Save Customer
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px!important;height:16px!important;display:inline-block!important;flex-shrink:0!important;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Save Customer</span>
                     </button>
                 </div>
             </form>

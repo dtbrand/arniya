@@ -4019,14 +4019,44 @@ window.animateTargetGauge = animateTargetGauge;
                 if (formNotes) formNotes.value = '';
             }
 
+            // Sync clear button states for all inputs
+            ['custFormName', 'custFormMobile', 'custFormWhatsapp', 'custFormEmail', 'custFormAddress', 'custFormCity', 'custFormState', 'custFormPincode', 'custFormTags'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) handleSmartInputChange(el);
+            });
+
             syncCustTagChips();
 
             if (modal) modal.classList.add('active');
         };
 
+        function handleSmartInputChange(inputEl) {
+            if (!inputEl) return;
+            var wrap = inputEl.closest ? inputEl.closest('.ws-smart-input-wrap') : null;
+            if (!wrap) return;
+            var clearBtn = wrap.querySelector('.ws-input-clear-btn');
+            if (inputEl.value && inputEl.value.trim().length > 0) {
+                wrap.classList.add('has-value');
+                if (clearBtn) clearBtn.classList.add('visible');
+            } else {
+                wrap.classList.remove('has-value');
+                if (clearBtn) clearBtn.classList.remove('visible');
+            }
+        };
+
+        function clearSmartInput(inputId) {
+            var input = document.getElementById(inputId);
+            if (input) {
+                input.value = '';
+                handleSmartInputChange(input);
+                input.focus();
+            }
+        };
+
         function setCustWhatsappSame() {
             var mobile = document.getElementById('custFormMobile');
             var whatsapp = document.getElementById('custFormWhatsapp');
+            var btn = document.getElementById('btnCustSyncWhatsapp');
             if (mobile && whatsapp) {
                 if (!mobile.value.trim()) {
                     showWsToast('⚠️ Please enter Mobile Number first');
@@ -4034,6 +4064,20 @@ window.animateTargetGauge = animateTargetGauge;
                     return;
                 }
                 whatsapp.value = mobile.value.trim();
+                handleSmartInputChange(whatsapp);
+                if (btn) {
+                    var origHtml = btn.innerHTML;
+                    btn.innerHTML = '<span>✓ Synced!</span>';
+                    btn.style.background = '#10B981';
+                    btn.style.color = '#FFFFFF';
+                    btn.style.borderColor = '#10B981';
+                    setTimeout(function() {
+                        btn.innerHTML = origHtml;
+                        btn.style.background = '';
+                        btn.style.color = '';
+                        btn.style.borderColor = '';
+                    }, 1800);
+                }
                 showWsToast('⚡ WhatsApp number synced with Mobile!');
             }
         };
@@ -5057,6 +5101,7 @@ Rajesh Kumar (Reseller Partner)`;
         'handleCustomerSearch', 'clearCustomerSearch', 'openCustomerProfileModal', 'closeCustomerProfileModal',
         'switchProfileTab', 'openAddCustomerModal', 'closeAddCustomerModal', 'handleSaveCustomerSubmit',
         'setCustWhatsappSame', 'toggleCustTagChip', 'syncCustTagChips', 'insertCustNotePrompt', 'handleSmartPinAutoFill',
+        'handleSmartInputChange', 'clearSmartInput',
         'openResellerQuickOrderDrawer', 'closeResellerQuickOrderDrawer', 'handleQoCustomerChange',
         'handleQoProductChange', 'calculateQoProfit', 'handleQuickOrderSubmit', 'openRepeatOrderModal',
         'closeRepeatOrderModal', 'recalcRepeatOrderTotal', 'handleRepeatOrderConfirm', 'openAddNoteModal',
