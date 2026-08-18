@@ -296,59 +296,7 @@ $total_products = count($products);
 
 <div class="page-wrapper">
 
-    <!-- ════════════ SECTION 2: CATEGORY NAVIGATION STRIP ════════════ -->
-    <nav class="home-cat-nav-bar" aria-label="Main Categories">
-        <div class="home-cat-nav-container">
-            <div class="home-cat-nav-scroll" id="homeCatNavScroll">
-                <a href="#section-trending" class="home-cat-pill active" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('All'); return false;">
-                    <span class="home-cat-pill-icon">✨</span>
-                    <span>All Products</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Sarees'); return false;">
-                    <span class="home-cat-pill-icon">🥻</span>
-                    <span>Sarees</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Kurtis'); return false;">
-                    <span class="home-cat-pill-icon">👗</span>
-                    <span>Kurtis</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Gowns'); return false;">
-                    <span class="home-cat-pill-icon">✨</span>
-                    <span>Gowns</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Lehengas'); return false;">
-                    <span class="home-cat-pill-icon">👑</span>
-                    <span>Lehengas</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Suits'); return false;">
-                    <span class="home-cat-pill-icon">🌟</span>
-                    <span>Suits & Sets</span>
-                </a>
-                <a href="#section-deals" class="home-cat-pill hot-pill">
-                    <span class="home-cat-pill-icon">🔥</span>
-                    <span>New Arrivals</span>
-                </a>
-                <a href="#section-bestsellers" class="home-cat-pill">
-                    <span class="home-cat-pill-icon">💎</span>
-                    <span>Best Sellers</span>
-                </a>
-                <a href="#section-offers" class="home-cat-pill offer-pill">
-                    <span class="home-cat-pill-icon">🏷️</span>
-                    <span>Special Offers</span>
-                </a>
-                <a href="#section-reseller" class="home-cat-pill reseller-pill">
-                    <span class="home-cat-pill-icon">⚡</span>
-                    <span>Reseller Hub</span>
-                </a>
-                <a href="#section-wholesale" class="home-cat-pill wholesale-pill">
-                    <span class="home-cat-pill-icon">🏭</span>
-                    <span>Wholesale Zone</span>
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ════════════ SECTION 3: QUICK ACCESS BAR ════════════ -->
+    <!-- ════════════ SECTION 2: QUICK ACCESS BAR ════════════ -->
     <section class="home-quick-access-section" aria-label="Quick Access">
         <div class="home-section-container">
             <div class="quick-access-grid">

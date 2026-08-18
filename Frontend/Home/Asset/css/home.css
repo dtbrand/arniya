@@ -1989,14 +1989,13 @@ input[type=range].sf-range::-moz-range-thumb {
     transform: translateY(-1px);
 }
 
-/* ── Section 2: Category Navigation Strip ── */
+/* ── Section 2: Category Navigation Strip (Integrated Inside Sticky Header) ── */
 .home-cat-nav-bar {
     background: #FFFFFF;
+    border-top: 1px solid rgba(138, 104, 31, 0.12);
     border-bottom: 1.5px solid var(--soft-platinum, #E5E3DE);
-    padding: 8px 0;
-    position: sticky;
-    top: var(--header-h, 60px);
-    z-index: 950;
+    padding: 6px 0;
+    width: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
