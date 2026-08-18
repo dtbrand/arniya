@@ -186,6 +186,50 @@ $products = [
         'in_stock'        => 80,
         'tier_prices'     => '6-11 pcs: ₹2,199 | 12-23 pcs: ₹2,049 | 24+ pcs: ₹1,899'
     ],
+    [
+        'id'              => 9,
+        'sku'             => 'KLN-SU-115',
+        'name'            => 'Kashmiri Embroidered Georgette Suit Set',
+        'category'        => 'Suits',
+        'price'           => 3499,
+        'old_price'       => 4800,
+        'discount'        => 27,
+        'wholesale_price' => 1199,
+        'reseller_profit' => 1500,
+        'moq'             => 8,
+        'image'           => '/Frontend/Shop/Asset/images/product7.png',
+        'badge'           => 'Special Pick',
+        'rating'          => 4.9,
+        'reviews_count'   => 89,
+        'color'           => 'Dusty Rose',
+        'colors'          => ['Dusty Rose', 'Plum', 'Wine'],
+        'size'            => ['S', 'M', 'L', 'XL'],
+        'fabric'          => 'Pure Georgette',
+        'in_stock'        => 65,
+        'tier_prices'     => '8-15 pcs: ₹1,199 | 16-31 pcs: ₹1,099 | 32+ pcs: ₹999'
+    ],
+    [
+        'id'              => 10,
+        'sku'             => 'KLN-SR-105',
+        'name'            => 'Kanjeevaram Temple Border Pattu Saree',
+        'category'        => 'Sarees',
+        'price'           => 5299,
+        'old_price'       => 7200,
+        'discount'        => 26,
+        'wholesale_price' => 1699,
+        'reseller_profit' => 2400,
+        'moq'             => 6,
+        'image'           => '/Frontend/Shop/Asset/images/product3.png',
+        'badge'           => 'Hot Deal',
+        'rating'          => 5.0,
+        'reviews_count'   => 124,
+        'color'           => 'Golden Ochre',
+        'colors'          => ['Golden Ochre', 'Rani Pink', 'Royal Purple'],
+        'size'            => ['Free Size', 'M', 'L'],
+        'fabric'          => 'Pure Silk Pattu',
+        'in_stock'        => 75,
+        'tier_prices'     => '6-11 pcs: ₹1,699 | 12-23 pcs: ₹1,549 | 24+ pcs: ₹1,399'
+    ],
 ];
 
 $categoriesList = [
@@ -535,11 +579,11 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 11: DEAL OF THE DAY (WITH COUNTDOWN) ════════════ -->
-    <section class="home-section" id="section-deals">
+    <section class="home-section home-deals-section" id="section-deals">
         <div class="home-section-container">
             <div class="home-deal-header">
                 <div class="deal-header-left">
-                    <span class="home-section-tag deal-tag">⚡ LIMITED TIME OFFER</span>
+                    <span class="home-section-tag deal-tag">⚡ LIMITED TIME FLASH SALE</span>
                     <h2 class="home-section-title">Deal of the Day — Up to 30% OFF</h2>
                 </div>
                 <div class="deal-countdown-box" id="dealCountdownBox">
@@ -552,23 +596,39 @@ $total_products = count($products);
                 </div>
             </div>
 
-            <!-- Horizontal / Grid Deal Cards -->
-            <div class="home-deals-scroll">
-                <?php foreach (array_slice($products, 0, 4) as $p): ?>
+            <!-- 5 Columns Desktop / 3 Columns Mobile Deal Grid (2 Rows) -->
+            <div class="home-deals-grid">
+                <?php foreach (array_slice($products, 0, 10) as $p): ?>
                 <div class="home-deal-card">
-                    <div class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</div>
-                    <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" />
+                    <div class="deal-card-img-wrap">
+                        <span class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</span>
+                        <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
+                            <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" loading="lazy" />
+                        </a>
+                        <button type="button" class="deal-card-wish-btn" onclick="toggleWishlistProduct(<?= $p['id'] ?>)" aria-label="Add to wishlist">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </div>
                     <div class="deal-card-body">
-                        <h4 class="deal-card-title"><?= htmlspecialchars($p['name']) ?></h4>
+                        <div class="deal-sku-row">
+                            <span class="deal-sku-text"><?= $p['sku'] ?></span>
+                            <span class="deal-rating-badge">★ <?= $p['rating'] ?></span>
+                        </div>
+                        <h4 class="deal-card-title">
+                            <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
+                        </h4>
                         <div class="deal-card-prices">
                             <span class="deal-sale-price">₹<?= number_format($p['price']) ?></span>
                             <span class="deal-mrp">₹<?= number_format($p['old_price']) ?></span>
                         </div>
                         <div class="deal-stock-bar-wrap">
-                            <div class="deal-stock-bar" style="width: 72%;"></div>
-                            <span class="deal-stock-text">🔥 Only 8 sets remaining</span>
+                            <div class="deal-stock-bar" style="width: <?= min(90, max(30, ($p['in_stock'] % 70) + 25)) ?>%;"></div>
+                            <span class="deal-stock-text">🔥 Only <?= max(3, $p['in_stock'] % 12) ?> sets left</span>
                         </div>
-                        <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); }">Claim Deal &rarr;</button>
+                        <button type="button" class="deal-btn-claim" onclick="if(typeof window.addToCart==='function'){ window.addToCart(<?= $p['id'] ?>, 1); }">
+                            <span>Claim Deal</span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
                     </div>
                 </div>
                 <?php endforeach; ?>
