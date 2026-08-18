@@ -712,14 +712,12 @@
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
                     <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <span>Sign In to Luxury Club</span>
+                    <span>Sign In to My Account</span>
                 </button>
 
-                <div class="ac-divider"><span>New to DT Brand's?</span></div>
-
-                <button type="button" class="ac-btn-primary" style="background:#FAF8F4; color:var(--ac-gold-primary); border:1.8px solid var(--ac-gold-primary); box-shadow:none;" onclick="window.switchAccountTab('register')">
-                    Create New Account
-                </button>
+                <div style="text-align:center; font-size:0.78rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
+                    Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now</button>
+                </div>
             </div>
 
             <!-- ════════ PANE 2: REGISTER (EXACT MYACCOUNT.PHP UI) ════════ -->
@@ -863,22 +861,22 @@
 
             <!-- ════════ PANE 3: FORGOT PASSWORD ════════ -->
             <div class="ac-pane" id="acPaneForgot">
-                <p style="font-size:0.78rem; color:var(--ac-mid-text); margin:0; line-height:1.4;">
-                    Enter your registered WhatsApp number or email address below. We will instantly dispatch a secure recovery link via WhatsApp.
+                <p style="font-size:0.80rem; color:var(--ac-mid-text); margin:0 0 6px 0; line-height:1.4; font-weight:500;">
+                    Enter your registered WhatsApp Number or Email and we'll instantly send you a password reset link on WhatsApp.
                 </p>
 
                 <div class="ac-form-group">
-                    <label class="ac-label" for="acForgotInput">WhatsApp Number or Email <span class="req">*</span></label>
-                    <input type="text" id="acForgotInput" class="ac-input" placeholder="e.g. 9876543210" required>
+                    <label class="ac-label" for="acForgotInput">WhatsApp Number / Email <span class="req">*</span></label>
+                    <input type="text" id="acForgotInput" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
                 </div>
 
-                <button type="button" class="ac-btn-primary" style="background:#25D366; color:#FFFFFF;" onclick="window.handleAccountForgot()">
-                    <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                <button type="button" class="ac-btn-primary" onclick="window.handleAccountForgot()">
+                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     <span>Send Reset Link via WhatsApp</span>
                 </button>
 
-                <div style="text-align:center; margin-top:4px;">
-                    <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">← Back to Sign In</button>
+                <div style="text-align:center; font-size:0.78rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
+                    Remembered your password? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">← Back to Login</button>
                 </div>
             </div>
 
@@ -1219,12 +1217,12 @@
 
         var heading = document.getElementById('acModalHeading');
         if (heading) {
-            if (tabName === 'login') heading.textContent = 'Sign In to DT Brand\'s';
+            if (tabName === 'login') heading.textContent = 'Sign In';
             else if (tabName === 'register') {
                 heading.textContent = 'Create Luxury Account';
                 renderCountryDropdown();
             }
-            else if (tabName === 'forgot') heading.textContent = 'Reset Your Password';
+            else if (tabName === 'forgot') heading.textContent = 'Reset Password';
             else heading.textContent = 'My Luxury Profile';
         }
 
