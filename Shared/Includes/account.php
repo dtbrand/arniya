@@ -833,15 +833,42 @@
         }
     };
 
+    /* Global Role-Based Direct Dashboard Navigation Helper */
+    window.handleUserWiseAccountNavigation = function() {
+        var userRaw = localStorage.getItem('dtbrands_user');
+        if (userRaw) {
+            try {
+                var user = JSON.parse(userRaw);
+                var role = (user.role || '').toLowerCase();
+                if (role === 'reseller') {
+                    window.location.href = '/Frontend/Reseller/reseller.php';
+                    return true;
+                } else if (role === 'wholesaler' || role === 'wholesale') {
+                    window.location.href = '/Frontend/Wholesale/wholesale.php';
+                    return true;
+                } else if (role === 'retailer') {
+                    window.location.href = '/Frontend/Retailer/retailer.php';
+                    return true;
+                } else {
+                    window.openAccountModal('profile');
+                    return true;
+                }
+            } catch(e) {}
+        }
+        // Non-logged-in guest user -> Open Login modal on LOGIN tab!
+        window.openAccountModal('login');
+        return false;
+    };
+
     /* Global Open / Close / Switch Tab API */
     window.openAccountModal = function(initialTab) {
         var modal = document.getElementById('accountModalBackdrop');
         if (!modal) return;
 
-        var tab = initialTab || 'login';
-        var user = localStorage.getItem('dtbrands_user');
-        if (user && tab === 'login') {
-            tab = 'profile';
+        var userRaw = localStorage.getItem('dtbrands_user');
+        var tab = initialTab;
+        if (!tab) {
+            tab = userRaw ? 'profile' : 'login';
         }
 
         window.switchAccountTab(tab);
@@ -939,11 +966,16 @@
         var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
         name = name.charAt(0).toUpperCase() + name.slice(1);
 
+        // Check if existing stored role exists or default to Retailer/Reseller
+        var existingUser = null;
+        try { existingUser = JSON.parse(localStorage.getItem('dtbrands_user') || 'null'); } catch(e) {}
+        var userRole = (existingUser && existingUser.role) ? existingUser.role : (modalSelectedRole || 'Retailer');
+
         var userData = {
             name: name,
             phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
             email: input.includes('@') ? input : 'member@dtbrands.com',
-            role: 'Retailer',
+            role: userRole,
             country: 'India',
             state: 'Maharashtra',
             city: 'Mumbai'
@@ -952,6 +984,18 @@
 
         if (typeof window.showToast === 'function') {
             window.showToast('✨ Welcome back, ' + name + '!');
+        }
+
+        var roleLower = (userRole || '').toLowerCase();
+        if (roleLower === 'reseller') {
+            window.location.href = '/Frontend/Reseller/reseller.php';
+            return;
+        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
+            window.location.href = '/Frontend/Wholesale/wholesale.php';
+            return;
+        } else if (roleLower === 'retailer') {
+            window.location.href = '/Frontend/Retailer/retailer.php';
+            return;
         }
         window.switchAccountTab('profile');
     };
@@ -982,6 +1026,18 @@
 
         if (typeof window.showToast === 'function') {
             window.showToast('🎉 Luxury Account created successfully!');
+        }
+
+        var roleLower = (modalSelectedRole || '').toLowerCase();
+        if (roleLower === 'reseller') {
+            window.location.href = '/Frontend/Reseller/reseller.php';
+            return;
+        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
+            window.location.href = '/Frontend/Wholesale/wholesale.php';
+            return;
+        } else if (roleLower === 'retailer') {
+            window.location.href = '/Frontend/Retailer/retailer.php';
+            return;
         }
         window.switchAccountTab('profile');
     };

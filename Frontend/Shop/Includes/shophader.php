@@ -871,7 +871,7 @@
 
             <!-- Desktop Account Dropdown Button -->
             <div class="header-account-wrap" id="headerAccountWrap">
-                <a href="../../Shared/Auth/myaccount.php" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
+                <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}" class="header-account-btn" id="headerAccountBtn" aria-label="Account Access">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
