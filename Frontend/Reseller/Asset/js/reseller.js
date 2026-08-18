@@ -4593,19 +4593,19 @@ Rajesh Kumar (Reseller Partner)`;
         });
 
     
-                /* ── Profit Ledger Renderer ── */
+                        /* ── Profit Ledger Renderer (Qty Only, Product Name Removed) ── */
         function renderProfitLedger() {
             var tbody = document.getElementById('crmProfitTbody');
             var mobList = document.getElementById('crmProfitMobileList');
             if (!tbody) return;
 
             var profitData = [
-                { id: '#ORD-77492', cust: 'Ananya Deshmukh', prod: 'Paithani Silk Saree (Qty: 1)', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
-                { id: '#ORD-77450', cust: 'Pooja Varma', prod: 'Bridal Velvet Lehenga (Qty: 1)', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
-                { id: '#ORD-77412', cust: 'Kavita Singhania', prod: 'Banarasi Zari Saree (Qty: 2)', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
-                { id: '#ORD-77388', cust: 'Priyanka Reddy', prod: 'Kanjivaram Temple Silk (Qty: 1)', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
-                { id: '#ORD-77350', cust: 'Sneha Patel', prod: 'Royal Anarkali Kurti (Qty: 3)', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
-                { id: '#ORD-77510', cust: 'Ritu Aggarwal', prod: 'Georgette Bloom Saree (Qty: 1)', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
+                { id: '#ORD-77492', cust: 'Ananya Deshmukh', qty: '1 Pc', sell: 18200, cost: 14000, profit: 4200, margin: '23.08%', status: 'Delivered', date: '2026-08-12' },
+                { id: '#ORD-77450', cust: 'Pooja Varma', qty: '1 Pc', sell: 24800, cost: 19000, profit: 5800, margin: '23.38%', status: 'Delivered', date: '2026-08-05' },
+                { id: '#ORD-77412', cust: 'Kavita Singhania', qty: '2 Pcs', sell: 16998, cost: 12998, profit: 4000, margin: '23.53%', status: 'Delivered', date: '2026-08-01' },
+                { id: '#ORD-77388', cust: 'Priyanka Reddy', qty: '1 Pc', sell: 14999, cost: 11499, profit: 3500, margin: '23.33%', status: 'Delivered', date: '2026-07-28' },
+                { id: '#ORD-77350', cust: 'Sneha Patel', qty: '3 Pcs', sell: 9900, cost: 7500, profit: 2400, margin: '24.24%', status: 'Delivered', date: '2026-07-20' },
+                { id: '#ORD-77510', cust: 'Ritu Aggarwal', qty: '1 Pc', sell: 4200, cost: 3200, profit: 1000, margin: '23.81%', status: 'In Transit', date: '2026-08-15' }
             ];
 
             // 1. Desktop Table
@@ -4616,7 +4616,7 @@ Rajesh Kumar (Reseller Partner)`;
                     <tr>
                         <td style="white-space:nowrap; font-weight:800; color:var(--ws-gold-primary);">${item.id}</td>
                         <td style="white-space:nowrap; font-weight:700; color:var(--ws-text-main);">${item.cust}</td>
-                        <td style="font-weight:600;">${item.prod}</td>
+                        <td style="text-align:center; white-space:nowrap;"><span style="background:#FAF5E8; color:#8A681F; font-weight:800; font-size:0.78rem; padding:3px 8px; border-radius:6px; border:1px solid #DFC994;">${item.qty}</span></td>
                         <td style="text-align:right; font-weight:800; white-space:nowrap;">₹${item.sell.toLocaleString('en-IN')}</td>
                         <td style="text-align:right; color:var(--ws-text-muted); white-space:nowrap;">₹${item.cost.toLocaleString('en-IN')}</td>
                         <td style="text-align:right; font-weight:900; color:#047857; white-space:nowrap;">+₹${item.profit.toLocaleString('en-IN')}</td>
@@ -4639,7 +4639,7 @@ Rajesh Kumar (Reseller Partner)`;
                                 <span class="crm-tag" style="${statusCls}">${item.status}</span>
                             </div>
                             <div style="font-weight:800; font-size:0.86rem; color:var(--ws-text-main);">${item.cust}</div>
-                            <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:8px;">${item.prod} &bull; 📅 ${item.date}</div>
+                            <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:8px;">Quantity: <strong>${item.qty}</strong> &bull; 📅 ${item.date}</div>
                             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; background:#FAF8F4; border:1px solid #EADBBE; border-radius:8px; padding:8px; text-align:center;">
                                 <div>
                                     <div style="font-size:0.65rem; color:var(--ws-text-muted);">Selling Price</div>
