@@ -5,20 +5,75 @@
     var products = window.shopProductsData || [];
     window.allProducts = products;
 
-    /* Global Toast helper */
-    window.showToast = function (msg) {
-        var c = document.getElementById('toastContainer');
+    /* ── Global Luxury Designer Toast Helper ── */
+    window.showToast = function (msg, explicitType) {
+        var container = document.getElementById('toastContainer') || document.getElementById('wsToastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        var raw = String(msg || '').trim();
+        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        if (!cleanText) cleanText = raw;
+
+        var lower = raw.toLowerCase();
+        var badgeType = explicitType || 'success';
+        var iconSvg = '';
+
+        if (explicitType === 'cart' || lower.indexOf('cart') !== -1 || lower.indexOf('bag') !== -1 || lower.indexOf('lot') !== -1 || lower.indexOf('pcs') !== -1) {
+            badgeType = 'cart';
+            iconSvg = '<svg class="toast-svg-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
+        } else if (explicitType === 'wishlist' || lower.indexOf('wishlist') !== -1 || lower.indexOf('saved') !== -1 || lower.indexOf('♡') !== -1 || lower.indexOf('❤️') !== -1 || lower.indexOf('heart') !== -1) {
+            badgeType = 'wishlist';
+            iconSvg = '<svg class="toast-svg-heart" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+        } else if (explicitType === 'filter' || lower.indexOf('filter') !== -1 || lower.indexOf('lots') !== -1 || lower.indexOf('category') !== -1 || lower.indexOf('saree') !== -1 || lower.indexOf('lehenga') !== -1 || lower.indexOf('kurti') !== -1 || lower.indexOf('available') !== -1) {
+            badgeType = 'filter';
+            iconSvg = '<svg class="toast-svg-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path><circle cx="12" cy="12" r="3" fill="#FAF5E8"></circle></svg>';
+        } else if (explicitType === 'order' || lower.indexOf('order') !== -1 || lower.indexOf('tracking') !== -1 || lower.indexOf('awb') !== -1 || lower.indexOf('pdf') !== -1 || lower.indexOf('csv') !== -1 || lower.indexOf('statement') !== -1) {
+            badgeType = 'order';
+            iconSvg = '<svg class="toast-svg-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>';
+        } else {
+            badgeType = 'success';
+            iconSvg = '<svg class="toast-svg-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+        }
+
         var t = document.createElement('div');
-        t.className = 'toast';
-        t.textContent = msg;
-        c.appendChild(t);
-        requestAnimationFrame(function () {
-            requestAnimationFrame(function () { t.classList.add('show'); });
-        });
-        setTimeout(function () {
-            t.classList.remove('show');
-            setTimeout(function () { t.remove(); }, 400);
-        }, 2200);
+        t.className = 'ws-toast toast';
+        t.style.setProperty('--toast-duration', '3.2s');
+
+        t.innerHTML = '<div class="ws-toast-icon-badge toast-icon-badge badge-' + badgeType + '">' +
+            iconSvg +
+            '</div>' +
+            '<div class="ws-toast-msg toast-msg">' + cleanText + '</div>' +
+            '<button type="button" class="ws-toast-close-btn toast-close-btn" aria-label="Close">✕</button>' +
+            '<div class="ws-toast-progress toast-progress"></div>';
+
+        var closeBtn = t.querySelector('.ws-toast-close-btn');
+        if (closeBtn) {
+            closeBtn.onclick = function(e) {
+                e.stopPropagation();
+                t.classList.add('hide');
+                setTimeout(function() { t.remove(); }, 250);
+            };
+        }
+
+        container.appendChild(t);
+
+        var timer = setTimeout(function() {
+            t.classList.add('hide');
+            setTimeout(function() { t.remove(); }, 250);
+        }, 3200);
+
+        t.onmouseenter = function() { clearTimeout(timer); };
+        t.onmouseleave = function() {
+            timer = setTimeout(function() {
+                t.classList.add('hide');
+                setTimeout(function() { t.remove(); }, 250);
+            }, 1600);
+        };
     };
 
     /* Global Product Card Share Function (Triggers Meesho Smart Share) */

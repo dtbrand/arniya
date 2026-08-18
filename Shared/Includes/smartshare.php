@@ -11,43 +11,48 @@
 /* ── Floating Smart Share Quick Notification ── */
 .smart-share-toast-banner {
     position: fixed;
-    top: 20px;
+    top: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(-100px);
-    background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
-    color: #FFFFFF;
-    padding: 12px 20px;
-    border-radius: 30px;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.35), 0 0 0 1.5px rgba(37, 211, 102, 0.6);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(250, 245, 235, 0.98) 100%);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    color: #1C1917;
+    padding: 10px 18px 10px 14px;
+    border-radius: 24px;
+    box-shadow: 0 12px 36px rgba(138, 104, 31, 0.18), 0 4px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     z-index: 100000;
-    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
     font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     opacity: 0;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    max-width: 90vw;
-    text-align: center;
+    max-width: min(92vw, 440px);
+    text-align: left;
 }
 .smart-share-toast-banner.active {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
 }
 .smart-share-toast-icon {
-    width: 22px;
-    height: 22px;
-    background: #25D366;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5ECCE 100%);
+    border: 1.2px solid rgba(212, 175, 55, 0.6);
+    color: #8A681F;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFFFFF;
-    font-size: 0.72rem;
+    font-size: 14px;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.15);
 }
 
 /* ── Smart Share Modal Overlay ── */
@@ -288,9 +293,11 @@
 }
 </style>
 
-<!-- Floating Toast Banner for 1-Click Execution -->
+<!-- Floating Luxury Toast Banner for 1-Click Execution -->
 <div class="smart-share-toast-banner" id="smartShareToastBanner" role="status" aria-live="polite">
-    <div class="smart-share-toast-icon">⚡</div>
+    <div class="smart-share-toast-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation: toastSparkleSpin 3s infinite linear;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+    </div>
     <span id="smartShareToastMsg">All HD Photos Downloaded! Details Copied! Opening WhatsApp...</span>
 </div>
 
