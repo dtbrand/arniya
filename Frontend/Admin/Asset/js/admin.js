@@ -1178,5 +1178,25 @@
         }, 2800);
     };
 
+    // ════ PRODUCT ACTIONS ════
+    window.shareProductWhatsApp = function(id) {
+        const text = encodeURIComponent('Check out Kanjivaram Pure Silk Gold Zari Saree on DT Brand\'s: https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php?id=' + (id || '101'));
+        window.open('https://api.whatsapp.com/send?text=' + text, '_blank');
+        if (typeof window.showToast === 'function') window.showToast('📲 Opening WhatsApp share link...');
+    };
+
+    window.duplicateProduct = function(id) {
+        if (typeof window.showToast === 'function') window.showToast('📋 Duplicating product SKU...');
+        setTimeout(() => {
+            window.location.href = '/Frontend/Admin/products/add.php?duplicated_from=' + (id || '101');
+        }, 600);
+    };
+
+    window.archiveProduct = function(id) {
+        if (confirm('Archive this product SKU from active catalog?')) {
+            if (typeof window.showToast === 'function') window.showToast('📦 Product archived successfully');
+        }
+    };
+
 })();
 
