@@ -4,6 +4,8 @@
  * Premium Shop Header component for DT Brand's
  * Features Amazon-Style Always-Open Desktop Search Bar & Clean Full-Width Mobile Search Bar with Right Close Button
  */
+$currentPage = basename($_SERVER['PHP_SELF'] ?? '');
+$isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hideHeaderSubnav === true) || (isset($isHome) && $isHome === true));
 ?>
 <style>
 /* ── Shop Header ─────────────────────────────────────────── */
@@ -212,37 +214,35 @@
     flex-shrink: 0;
 }
 
-.header-plus-btn {
-    display: flex;
+.shop-back-btn {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
     border: 1.5px solid var(--soft-platinum, #E5E3DE);
     background: #FAF8F4;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-    color: var(--dark-gold, #8A681F);
+    color: var(--dark-text, #24211C);
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 700;
     text-decoration: none;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
-.header-plus-btn:hover {
-    background: var(--dark-gold, #8A681F);
+.shop-back-btn:hover {
     border-color: var(--dark-gold, #8A681F);
-    color: #FFFFFF;
-    transform: rotate(90deg) scale(1.08);
-    box-shadow: 0 4px 14px rgba(138,104,31,0.28);
+    background: #FFFFFF;
+    color: var(--dark-gold, #8A681F);
+    transform: translateX(-2px);
+    box-shadow: 0 2px 8px rgba(138,104,31,0.15);
 }
-.header-plus-btn:active {
-    transform: rotate(90deg) scale(0.92);
-}
-.header-plus-btn svg {
-    width: 19px; height: 19px;
+.shop-back-btn svg {
+    width: 14px;
+    height: 14px;
     stroke: currentColor;
     stroke-width: 2.4;
     fill: none;
-    transition: stroke 0.2s ease;
 }
 
 .header-brand {
@@ -692,13 +692,16 @@
     .header-left-group {
         gap: 8px;
     }
-    .header-plus-btn {
-        width: 28px;
-        height: 28px;
+    .shop-back-btn {
+        padding: 4px 9px;
+        font-size: 0.70rem;
+        gap: 4px;
+        border-radius: 14px;
+        z-index: 2;
     }
-    .header-plus-btn svg {
-        width: 13px;
-        height: 13px;
+    .shop-back-btn svg {
+        width: 12px;
+        height: 12px;
     }
     .header-brand-name {
         font-size: 0.92rem;
@@ -810,14 +813,14 @@
 
     <!-- ═══ Normal Header Bar (shown on desktop, and mobile default) ═══ -->
     <div class="header-normal-view" id="headerNormalView">
-        <!-- Left: Stylish Plus Button & Brand Logo -->
+        <!-- Left: Back to Home Button (Shop page only) & Brand Logo -->
         <div class="header-left-group">
-            <button class="header-plus-btn" id="headerPlusBtn" aria-label="Watch Video Reels" onclick="if(typeof window.openReelsModal==='function'){window.openReelsModal(0);}">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-            </button>
+            <?php if (!$isHomePage): ?>
+            <a href="/Frontend/Home/home.php" class="shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
+                <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>Home</span>
+            </a>
+            <?php endif; ?>
 
             <a href="/Frontend/Home/home.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
