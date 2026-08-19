@@ -1,28 +1,24 @@
 <?php
 /**
- * product-table.php — 16-Column Desktop Data Table with Vector SVG Action Buttons
+ * product-table.php — High-Density Desktop Data Table with Clean Text & Actions
  */
 ?>
 <div class="dt-table-wrap">
     <table class="dt-data-table" id="dtProductMasterTable">
         <thead>
             <tr>
-                <th style="width:36px; text-align:center;">
+                <th style="width:30px; text-align:center;">
                     <input type="checkbox" onchange="window.toggleBulkSelectAll(this)" style="cursor:pointer;" title="Select All">
                 </th>
-                <th>Image</th>
+                <th style="width:44px;">Image</th>
                 <th>Product Name &amp; SKU</th>
                 <th>Category</th>
                 <th>Brand</th>
-                <th>Variants</th>
-                <th>MRP</th>
-                <th>Retail Price</th>
-                <th>Reseller Price</th>
+                <th>Price</th>
                 <th>Wholesale (B2B)</th>
                 <th>Stock</th>
                 <th>Rating</th>
                 <th>Status</th>
-                <th>Updated</th>
                 <th style="text-align:right;">Actions</th>
             </tr>
         </thead>
@@ -41,15 +37,14 @@
                 </td>
                 <td><strong>Silk Sarees</strong></td>
                 <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">DT Signature</span></td>
-                <td><span style="background:#FAF5E8; padding:2px 6px; border-radius:4px; font-size:0.72rem; font-weight:700; color:#5A4210;">3 Colors</span></td>
-                <td><del style="color:#7A7266; font-size:0.75rem;">₹5,990</del></td>
-                <td><strong style="color:#181512;">₹4,490</strong></td>
-                <td><strong style="color:#7E22CE;">₹3,450</strong></td>
+                <td>
+                    <strong style="color:#181512;">₹4,490</strong>
+                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹5,990</del>
+                </td>
                 <td><strong style="color:#8A681F;">₹2,850/pc</strong><br><small style="color:#7A7266;">MOQ: 8 pcs</small></td>
-                <td><strong>45 units</strong></td>
+                <td><strong style="color:#15803D;">45 in stock</strong></td>
                 <td><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(128)</small></td>
                 <td><span class="adm-badge success">Active</span></td>
-                <td><small style="color:#7A7266;">Today, 11:20 AM</small></td>
                 <td style="text-align:right;">
                     <div class="adm-action-btn-group" style="justify-content:flex-end;">
                         <a href="/Frontend/Admin/products/view.php?id=101" class="adm-action-btn" title="View Details">
@@ -82,15 +77,14 @@
                 </td>
                 <td><strong>Banarasi</strong></td>
                 <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">Arniya Heritage</span></td>
-                <td><span style="background:#FAF5E8; padding:2px 6px; border-radius:4px; font-size:0.72rem; font-weight:700; color:#5A4210;">4 Colors</span></td>
-                <td><del style="color:#7A7266; font-size:0.75rem;">₹6,490</del></td>
-                <td><strong style="color:#181512;">₹4,990</strong></td>
-                <td><strong style="color:#7E22CE;">₹3,850</strong></td>
+                <td>
+                    <strong style="color:#181512;">₹4,990</strong>
+                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹6,490</del>
+                </td>
                 <td><strong style="color:#8A681F;">₹3,200/pc</strong><br><small style="color:#7A7266;">MOQ: 8 pcs</small></td>
-                <td><strong>28 units</strong></td>
+                <td><strong style="color:#15803D;">28 in stock</strong></td>
                 <td><span style="color:#F59E0B; font-weight:800;">4.9 ★</span> <small style="color:#7A7266;">(94)</small></td>
                 <td><span class="adm-badge success">Active</span></td>
-                <td><small style="color:#7A7266;">Yesterday</small></td>
                 <td style="text-align:right;">
                     <div class="adm-action-btn-group" style="justify-content:flex-end;">
                         <a href="/Frontend/Admin/products/view.php?id=102" class="adm-action-btn" title="View Details">
@@ -123,15 +117,14 @@
                 </td>
                 <td><strong>Bridal Lehengas</strong></td>
                 <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">DT Couture</span></td>
-                <td><span style="background:#FAF5E8; padding:2px 6px; border-radius:4px; font-size:0.72rem; font-weight:700; color:#5A4210;">Free Size</span></td>
-                <td><del style="color:#7A7266; font-size:0.75rem;">₹21,990</del></td>
-                <td><strong style="color:#181512;">₹16,490</strong></td>
-                <td><strong style="color:#7E22CE;">₹13,200</strong></td>
+                <td>
+                    <strong style="color:#181512;">₹16,490</strong>
+                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹21,990</del>
+                </td>
                 <td><strong style="color:#8A681F;">₹11,500/pc</strong><br><small style="color:#7A7266;">MOQ: 2 pcs</small></td>
-                <td><strong style="color:#DC2626;">4 units</strong></td>
+                <td><strong style="color:#DC2626;">4 in stock (Low)</strong></td>
                 <td><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(42)</small></td>
                 <td><span class="adm-badge warning">Low Stock</span></td>
-                <td><small style="color:#7A7266;">2 days ago</small></td>
                 <td style="text-align:right;">
                     <div class="adm-action-btn-group" style="justify-content:flex-end;">
                         <a href="/Frontend/Admin/products/view.php?id=103" class="adm-action-btn" title="View Details">
