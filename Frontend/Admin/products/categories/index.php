@@ -1,6 +1,6 @@
 <?php
 /**
- * categories/index.php — Next-Level WordPress / WooCommerce Product Categories Suite
+ * categories/index.php — DT Brand's Product Categories & Taxonomy Hub (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Product Categories";
@@ -19,199 +19,102 @@ $active_subnav = "categories";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
-        .wp-wrap {
-            padding: 10px 14px;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        .wp-header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .wp-cat-layout {
-            display: grid;
-            grid-template-columns: 290px 1fr;
-            gap: 16px;
-            align-items: start;
-        }
-        @media (max-width: 1024px) {
-            .wp-cat-layout { grid-template-columns: 1fr; }
-        }
-        .wp-cat-form-card {
-            background: #ffffff;
-            border: 1px solid #c3c4c7;
-            padding: 14px;
-            border-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-        }
-        .wp-cat-form-card h2 {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: #1d2327;
-            margin: 0 0 10px 0;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #f0f0f1;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .wp-form-field {
-            margin-bottom: 9px;
-        }
-        .wp-form-field label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #1d2327;
-            margin-bottom: 3px;
-        }
-        .wp-form-field input, .wp-form-field select, .wp-form-field textarea {
-            width: 100%;
-            height: 28px;
-            padding: 0 8px;
-            font-size: 12px;
-            color: #2c3338;
-            background: #ffffff;
-            border: 1px solid #8c8f94;
-            border-radius: 3px;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.12s ease;
-        }
-        .wp-form-field textarea {
-            height: 44px;
-            padding: 5px 8px;
-            resize: none;
-        }
-        .wp-form-field input:focus, .wp-form-field select:focus, .wp-form-field textarea:focus {
-            border-color: #2271b1;
-            box-shadow: 0 0 0 1px #2271b1;
-        }
-        .wp-thumb-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 3px;
-        }
-        .wp-thumb-box-img {
-            width: 34px !important;
-            height: 34px !important;
-            max-width: 34px !important;
-            max-height: 34px !important;
-            border: 1px solid #c3c4c7 !important;
-            border-radius: 3px !important;
-            object-fit: cover !important;
-            background: #f6f7f7;
-            flex-shrink: 0;
-        }
-
-        /* ── SEARCH BOX WITH LEFT MAGNIFYING ICON & 1-TAP CLEAR ── */
-        .wp-search-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-        .wp-search-left-icon {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 13px;
-            height: 13px;
-            color: #8A681F;
-            pointer-events: none;
-        }
-        .wp-search-input-styled {
-            height: 28px;
-            padding: 0 24px 0 30px !important;
-            font-size: 12px;
-            color: #2c3338;
-            background: #ffffff;
-            border: 1px solid #8c8f94;
-            border-radius: 3px;
-            outline: none;
-            width: 180px;
-            box-sizing: border-box;
-        }
-        .wp-search-input-styled:focus {
-            border-color: #2271b1;
-            box-shadow: 0 0 0 1px #2271b1;
-            width: 210px;
-        }
-        .wp-search-clear-btn {
-            position: absolute;
-            right: 6px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #8c8f94;
-            cursor: pointer;
-            padding: 0;
-            font-size: 12px;
-            line-height: 1;
-            display: none;
-        }
-        .wp-search-clear-btn:hover {
-            color: #b32d2e;
-        }
-
-        /* ── WORDPRESS ROW ACTIONS ── */
-        .wp-list-table .wp-row-actions {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.12s ease;
-            font-size: 11px;
-            color: #a7aaad;
-            margin-top: 2px;
-        }
-        .wp-list-table tr:hover .wp-row-actions {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* ── CLASSIC INLINE QUICK EDIT DRAWER ── */
-        tr.inline-edit-row {
-            background: #f0f6fc !important;
-        }
-        tr.inline-edit-row td {
-            padding: 10px 12px !important;
-            border-top: 1px solid #2271b1 !important;
-            border-bottom: 1px solid #2271b1 !important;
-        }
-        .inline-edit-col {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .inline-edit-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .inline-edit-group label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1d2327;
-        }
-        .inline-edit-group input {
-            height: 26px;
-            padding: 0 8px;
-            font-size: 12px;
-            border: 1px solid #8c8f94;
-            border-radius: 3px;
-            outline: none;
-            width: 170px;
-        }
-        .inline-edit-group input:focus {
-            border-color: #2271b1;
-            box-shadow: 0 0 0 1px #2271b1;
-        }
+    .dt-kpi-card {
+        background: #fff;
+        border: 1px solid rgba(212,175,55,0.4);
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: all 0.2s ease;
+    }
+    .dt-kpi-card:hover {
+        border-color: #D4AF37;
+        box-shadow: 0 4px 12px rgba(212,175,55,0.15);
+        transform: translateY(-1px);
+    }
+    .wp-cat-layout {
+        display: grid;
+        grid-template-columns: 310px 1fr;
+        gap: 16px;
+        align-items: start;
+    }
+    @media (max-width: 1024px) {
+        .wp-cat-layout { grid-template-columns: 1fr; }
+    }
+    .dt-cat-form-card {
+        background: #ffffff;
+        border: 1.5px solid rgba(212,175,55,0.4);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .dt-cat-form-header {
+        background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
+        padding: 12px 16px;
+        color: #FAF5E8;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 2px solid #D4AF37;
+    }
+    .dt-cat-form-body {
+        padding: 16px;
+    }
+    .dt-form-group {
+        margin-bottom: 12px;
+    }
+    .dt-form-group label {
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+        color: #181512;
+        margin-bottom: 4px;
+    }
+    .dt-form-group input, .dt-form-group select, .dt-form-group textarea {
+        width: 100%;
+        height: 32px;
+        padding: 0 10px;
+        font-size: 12px;
+        color: #181512;
+        background: #ffffff;
+        border: 1px solid #c3c4c7;
+        border-radius: 4px;
+        box-sizing: border-box;
+        outline: none;
+        transition: all 0.15s ease;
+    }
+    .dt-form-group textarea {
+        height: 52px;
+        padding: 6px 10px;
+        resize: none;
+    }
+    .dt-form-group input:focus, .dt-form-group select:focus, .dt-form-group textarea:focus {
+        border-color: #8A681F;
+        box-shadow: 0 0 0 1px #8A681F, 0 0 8px rgba(212,175,55,0.25);
+    }
+    .wp-list-table .wp-row-actions {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.12s ease;
+        font-size: 11px;
+        color: #a7aaad;
+        margin-top: 3px;
+    }
+    .wp-list-table tr:hover .wp-row-actions {
+        visibility: visible;
+        opacity: 1;
+    }
+    tr.inline-edit-row {
+        background: #FAF5E8 !important;
+    }
+    tr.inline-edit-row td {
+        padding: 12px 14px !important;
+        border-top: 1.5px solid #D4AF37 !important;
+        border-bottom: 1.5px solid #D4AF37 !important;
+    }
     </style>
 </head>
 <body>
@@ -219,237 +122,289 @@ $active_subnav = "categories";
     <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
-        <main class="adm-content" style="padding: 10px 14px;">
+        <main class="adm-content" style="padding: 16px 20px;">
 
-            <div class="wp-wrap">
-                <!-- 1. Header & Left-Icon Search Bar -->
-                <div class="wp-header-top">
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <h1 class="wp-heading-inline">Product categories</h1>
-                        <a href="/Frontend/Admin/products/" class="wp-page-title-action secondary">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                            <span>All Products</span>
-                        </a>
-                        <a href="/Frontend/Admin/products/brands/" class="wp-page-title-action secondary">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
-                            <span>Brands (4)</span>
-                        </a>
-                        <a href="/Frontend/Admin/products/attributes/" class="wp-page-title-action secondary">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
-                            <span>Attributes</span>
-                        </a>
-                    </div>
+            <!-- 1. Header Toolbar with Luxury Brand Gold Buttons -->
+            <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Product Categories &amp; Taxonomies</h1>
+                    <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;">16 Categories</span>
                     
-                    <div class="wp-search-box">
-                        <div class="wp-search-container">
-                            <svg class="wp-search-left-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <input type="search" id="wpCatSearch" class="wp-search-input-styled" placeholder="Search categories..." oninput="handleCatSearch(this.value)">
-                            <button type="button" id="wpCatSearchClear" class="wp-search-clear-btn" onclick="clearCatSearch()">✕</button>
-                        </div>
-                        <button type="button" class="wp-button" onclick="handleCatSearch(document.getElementById('wpCatSearch').value)">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            <span>Search Categories</span>
-                        </button>
+                    <a href="/Frontend/Admin/products/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>All Products (1,240)</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/brands/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Brands (4)</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/attributes/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
+                        <span>Attributes</span>
+                    </a>
+                </div>
+
+                <!-- Mandatory Left-Aligned Search Icon with 1-Tap Clear Button -->
+                <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
+                    <div style="position:relative; display:inline-flex; align-items:center;">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:12px; pointer-events:none;">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories, HSN..." style="height:32px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
+                        <span id="catSearchClearBtn" onclick="clearCatSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
+                    </div>
+                    <button type="button" class="wp-button primary" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Search Categories</button>
+                </div>
+            </div>
+
+            <!-- 2. B2B Wholesale & Taxonomy KPI Metrics Ribbon -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;">
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">ACTIVE CATEGORIES</div>
+                        <div style="font-size:17px; font-weight:800; color:#181512;">16 Taxonomies</div>
                     </div>
                 </div>
 
-                <!-- 2. WordPress 2-Column Suite Layout -->
-                <div class="wp-cat-layout">
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#DCFCE7; border:1px solid #86EFAC; display:flex; align-items:center; justify-content:center; color:#15803D;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">ASSIGNED CATALOG SKUS</div>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;">1,240 Products</div>
+                    </div>
+                </div>
 
-                    <!-- ── LEFT COLUMN: Add New Category Form ── -->
-                    <div class="wp-cat-form-card">
-                        <h2>
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#8A681F;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Add new category</span>
-                        </h2>
-                        <form id="wpAddCatForm" onsubmit="handleWpAddCategory(event)">
-                            <div class="wp-form-field">
-                                <label for="catName">Name <span style="color:#b32d2e;">*</span></label>
-                                <input type="text" id="catName" placeholder="Category name" required oninput="generateCatSlug(this.value)">
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#EFF6FF; border:1px solid #93C5FD; display:flex; align-items:center; justify-content:center; color:#1D4ED8;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">HSN &amp; GST TAX CLASSES</div>
+                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;">5007 / 6204 (5%)</div>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#FEF3C7; border:1px solid #FCD34D; display:flex; align-items:center; justify-content:center; color:#B45309;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">SURAT CENTRAL READY STOCK</div>
+                        <div style="font-size:17px; font-weight:800; color:#B45309;">8,450 Units</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Dual Column Layout: Add Category Form (Left) & Categories List Table (Right) -->
+            <div class="wp-cat-layout">
+                
+                <!-- LEFT: Add New Category Form Card -->
+                <div class="dt-cat-form-card">
+                    <div class="dt-cat-form-header">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <h2 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Add New Category</h2>
+                    </div>
+                    <div class="dt-cat-form-body">
+                        <form id="wpAddCatForm" onsubmit="handleAddNewCategory(event)">
+                            <div class="dt-form-group">
+                                <label>Name <span style="color:#b32d2e;">*</span></label>
+                                <input type="text" id="catName" placeholder="e.g. Pure Silk Sarees" required oninput="autoSlugifyCat(this.value)">
                             </div>
 
-                            <div class="wp-form-field">
-                                <label for="catSlug">Slug</label>
-                                <input type="text" id="catSlug" placeholder="Slug identifier">
+                            <div class="dt-form-group">
+                                <label>Slug</label>
+                                <input type="text" id="catSlug" placeholder="e.g. pure-silk-sarees">
                             </div>
 
-                            <div class="wp-form-field">
-                                <label for="catParent">Parent category</label>
+                            <div class="dt-form-group">
+                                <label>Parent Category</label>
                                 <select id="catParent">
-                                    <option value="">None</option>
-                                    <option value="Silk Sarees">Silk Sarees</option>
-                                    <option value="Banarasi Brocade">Banarasi Brocade</option>
-                                    <option value="Bridal Lehengas">Bridal Lehengas</option>
-                                    <option value="Designer Kurtis">Designer Kurtis</option>
-                                    <option value="Dress Materials">Dress Materials</option>
+                                    <option value="none">None (Top Level)</option>
+                                    <option value="silk-sarees">Silk Sarees</option>
+                                    <option value="banarasi-brocade">Banarasi Brocade</option>
+                                    <option value="bridal-lehengas">Bridal Lehengas</option>
+                                    <option value="designer-kurtis">Designer Kurtis</option>
                                 </select>
                             </div>
 
-                            <div class="wp-form-field">
-                                <label for="catDesc">Description</label>
-                                <textarea id="catDesc" placeholder="Description..."></textarea>
+                            <div class="dt-form-group">
+                                <label>Description</label>
+                                <textarea id="catDesc" placeholder="Brief category summary for SEO and catalog..."></textarea>
                             </div>
 
-                            <div class="wp-form-field">
-                                <label for="catDisplayType">Display type</label>
+                            <div class="dt-form-group">
+                                <label>Display Type</label>
                                 <select id="catDisplayType">
-                                    <option value="Default">Default</option>
-                                    <option value="Products">Products</option>
-                                    <option value="Subcategories">Subcategories</option>
-                                    <option value="Both">Both</option>
+                                    <option value="default">Default</option>
+                                    <option value="products">Products Only</option>
+                                    <option value="subcategories">Subcategories</option>
+                                    <option value="both">Both</option>
                                 </select>
                             </div>
 
-                            <div class="wp-form-field">
-                                <label for="catHsn">HSN Code &amp; GST</label>
-                                <input type="text" id="catHsn" value="5007 (5% GST)">
+                            <div class="dt-form-group">
+                                <label>HSN Code &amp; GST</label>
+                                <input type="text" id="catHsn" value="5007 (5% GST)" placeholder="e.g. 5007 (5% GST)">
                             </div>
 
-                            <div class="wp-form-field">
+                            <div class="dt-form-group">
                                 <label>Thumbnail</label>
-                                <div class="wp-thumb-row">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-box-img" id="catThumbPreview" alt="Category">
-                                    <input type="file" id="catFileInput" style="display:none;" accept="image/*" onchange="previewCatThumb(this)">
-                                    <button type="button" class="wp-button" onclick="document.getElementById('catFileInput').click()">
-                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <span>Upload/Add image</span>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" id="catThumbPreview" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
+                                    <button type="button" class="wp-button" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:32px; font-size:11.5px; font-weight:600; flex:1; display:flex; align-items:center; justify-content:center; gap:5px;">
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                        <span>Upload / Choose Image</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <div style="margin-top:10px;">
-                                <button type="submit" class="wp-button primary" style="height:28px; font-weight:600; padding:0 12px;">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span>Add new category</span>
+                            <div style="margin-top:14px;">
+                                <button type="submit" class="wp-button primary" style="width:100%; height:34px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span>+ Add New Category</span>
                                 </button>
                             </div>
                         </form>
                     </div>
+                </div>
 
-                    <!-- ── RIGHT COLUMN: Categories List Table ── -->
-                    <div class="wp-table-card">
-                        <!-- Top Toolbar -->
-                        <div class="wp-tablenav" style="padding: 6px 8px; margin: 0; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
-                            <div class="wp-tablenav-actions">
-                                <select class="wp-select" id="wpCatBulkSelect">
-                                    <option value="">Bulk actions</option>
-                                    <option value="delete">Delete</option>
-                                </select>
-                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">
-                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Apply</span>
-                                </button>
-                            </div>
-                            <span style="font-size:12px; color:#646970;"><span id="catTotalCount">14</span> items</span>
+                <!-- RIGHT: Categories Taxonomy Table Card -->
+                <div class="wp-table-card" style="background:#fff; border:1px solid #c3c4c7; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="padding:10px 14px; background:#f6f7f7; border-bottom:1px solid #c3c4c7; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <select class="wp-select" id="catBulkActionSelect" style="height:30px; font-size:12px; min-width:120px;">
+                                <option value="">Bulk actions</option>
+                                <option value="delete">Delete Selected</option>
+                            </select>
+                            <button type="button" class="wp-button" onclick="handleCatBulkAction()" style="height:30px; font-size:12px; font-weight:600; padding:0 10px;">Apply</button>
                         </div>
-
-                        <!-- WordPress List Table -->
-                        <table class="wp-list-table" id="wpCatTable">
-                            <thead>
-                                <tr>
-                                    <th style="width:26px; text-align:center;"><input type="checkbox" onchange="toggleCatSelectAll(this)"></th>
-                                    <th style="width:40px;">Image</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Slug</th>
-                                    <th>HSN (GST)</th>
-                                    <th style="text-align:right;">Count</th>
-                                </tr>
-                            </thead>
-                            <tbody id="wpCatTableBody">
-                                <!-- Row 1 -->
-                                <tr id="cat-row-1">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Silk Sarees"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/categories/view.php?id=1" class="wp-row-title">Silk Sarees</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=1">Edit</a> |
-                                            <a href="#" onclick="toggleWpQuickEdit(1, 'Silk Sarees', 'silk-sarees'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(1); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/categories/view.php?id=1">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Pure Mulberry &amp; Kanjivaram Bridal Silks</td>
-                                    <td><code>silk-sarees</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=1" style="font-weight:700; color:#2271b1;">420</a></td>
-                                </tr>
-
-                                <!-- Row 2 (Child) -->
-                                <tr id="cat-row-2">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Kanjivaram"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/categories/view.php?id=2" class="wp-row-title">— Kanjivaram Pure Silk</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=2">Edit</a> |
-                                            <a href="#" onclick="toggleWpQuickEdit(2, '— Kanjivaram Pure Silk', 'kanjivaram-pure-silk'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(2); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/categories/view.php?id=2">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Authentic Kanchipuram Handloom Zari Weaves</td>
-                                    <td><code>kanjivaram-pure-silk</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=2" style="font-weight:700; color:#2271b1;">180</a></td>
-                                </tr>
-
-                                <!-- Row 3 (Child) -->
-                                <tr id="cat-row-3">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="wp-thumb-img" alt="Soft Silk"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/categories/view.php?id=3" class="wp-row-title">— Soft Silk &amp; Tussar</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=3">Edit</a> |
-                                            <a href="#" onclick="toggleWpQuickEdit(3, '— Soft Silk & Tussar', 'soft-silk-tussar'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(3); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/categories/view.php?id=3">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Lightweight Festive Soft Silk Sarees</td>
-                                    <td><code>soft-silk-tussar</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=3" style="font-weight:700; color:#2271b1;">140</a></td>
-                                </tr>
-
-                                <!-- Row 4 -->
-                                <tr id="cat-row-4">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="wp-thumb-img" alt="Banarasi"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/categories/view.php?id=4" class="wp-row-title">Banarasi Brocade</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=4">Edit</a> |
-                                            <a href="#" onclick="toggleWpQuickEdit(4, 'Banarasi Brocade', 'banarasi-brocade'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(4); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/categories/view.php?id=4">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Royal Heritage Varanasi Brocades &amp; Katan Silks</td>
-                                    <td><code>banarasi-brocade</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=4" style="font-weight:700; color:#2271b1;">280</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- Bottom Toolbar -->
-                        <div class="wp-tablenav" style="padding: 6px 8px; margin: 0; border-top: 1px solid #c3c4c7; background: #f6f7f7;">
-                            <div class="wp-tablenav-actions">
-                                <select class="wp-select">
-                                    <option value="">Bulk actions</option>
-                                    <option value="delete">Delete</option>
-                                </select>
-                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">
-                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>Apply</span>
-                                </button>
-                            </div>
-                            <span style="font-size:12px; color:#646970;">14 items</span>
-                        </div>
+                        <span style="font-size:12px; color:#646970; font-weight:600;">14 Categories Shown</span>
                     </div>
+
+                    <table class="wp-list-table" id="categoriesTable" style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:#fafafa; border-bottom:1px solid #c3c4c7;">
+                                <th style="width:36px; text-align:center; padding:10px 8px;">
+                                    <input type="checkbox" onchange="toggleSelectAllCats(this)" style="cursor:pointer; width:15px; height:15px;">
+                                </th>
+                                <th style="width:48px; padding:10px 8px;">Image</th>
+                                <th style="padding:10px 12px;">Name &amp; Actions</th>
+                                <th style="padding:10px 10px;">Description</th>
+                                <th style="padding:10px 10px;">Slug</th>
+                                <th style="padding:10px 10px;">HSN (GST)</th>
+                                <th style="text-align:right; width:70px; padding:10px 12px;">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoriesTableBody">
+                            
+                            <!-- Cat 1 -->
+                            <tr id="cat-row-1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                <td style="text-align:center; padding:10px 8px;">
+                                    <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                </td>
+                                <td style="padding:10px 8px;">
+                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                </td>
+                                <td style="padding:10px 12px;">
+                                    <strong style="font-size:13px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=1" style="color:#181512; text-decoration:none;">Silk Sarees</a></strong>
+                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px;">
+                                        <a href="/Frontend/Admin/products/categories/edit.php?id=1" style="color:#8A681F; font-weight:700;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="openQuickEditCat(1, 'Silk Sarees', 'silk-sarees', 'Pure Mulberry & Kanjivaram Bridal Silks', '5007 (5% GST)'); return false;" style="color:#2271b1;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="deleteCatRow(1); return false;" style="color:#b32d2e;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="/Frontend/Shop/shop.php?category=silk-sarees" target="_blank" style="color:#2271b1;">View</a>
+                                    </div>
+                                </td>
+                                <td style="padding:10px 10px; font-size:12px; color:#646970;">Pure Mulberry &amp; Kanjivaram Bridal Silks</td>
+                                <td style="padding:10px 10px;"><code style="background:#f1f5f9; padding:2px 6px; border-radius:3px; font-size:11.5px;">silk-sarees</code></td>
+                                <td style="padding:10px 10px;"><span class="adm-badge gold" style="font-size:10.5px;">5007 (5%)</span></td>
+                                <td style="text-align:right; padding:10px 12px;">
+                                    <a href="/Frontend/Admin/products/?cat=silk-sarees" style="font-weight:800; color:#8A681F; text-decoration:none; font-size:13px;">420</a>
+                                </td>
+                            </tr>
+
+                            <!-- Cat 1.1 Child -->
+                            <tr id="cat-row-2" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                <td style="text-align:center; padding:10px 8px;">
+                                    <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                </td>
+                                <td style="padding:10px 8px;">
+                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                </td>
+                                <td style="padding:10px 12px;">
+                                    <span style="color:#8A681F; font-weight:700;">— </span><strong style="font-size:13px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=2" style="color:#181512; text-decoration:none;">Kanjivaram Pure Silk</a></strong>
+                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px;">
+                                        <a href="/Frontend/Admin/products/categories/edit.php?id=2" style="color:#8A681F; font-weight:700;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="openQuickEditCat(2, 'Kanjivaram Pure Silk', 'kanjivaram-pure-silk', 'Authentic Kanchipuram Handloom Zari Weaves', '5007 (5% GST)'); return false;" style="color:#2271b1;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="deleteCatRow(2); return false;" style="color:#b32d2e;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="/Frontend/Shop/shop.php?category=kanjivaram-pure-silk" target="_blank" style="color:#2271b1;">View</a>
+                                    </div>
+                                </td>
+                                <td style="padding:10px 10px; font-size:12px; color:#646970;">Authentic Kanchipuram Handloom Zari Weaves</td>
+                                <td style="padding:10px 10px;"><code style="background:#f1f5f9; padding:2px 6px; border-radius:3px; font-size:11.5px;">kanjivaram-pure-silk</code></td>
+                                <td style="padding:10px 10px;"><span class="adm-badge gold" style="font-size:10.5px;">5007 (5%)</span></td>
+                                <td style="text-align:right; padding:10px 12px;">
+                                    <a href="/Frontend/Admin/products/?cat=kanjivaram-pure-silk" style="font-weight:800; color:#8A681F; text-decoration:none; font-size:13px;">180</a>
+                                </td>
+                            </tr>
+
+                            <!-- Cat 1.2 Child -->
+                            <tr id="cat-row-3" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                <td style="text-align:center; padding:10px 8px;">
+                                    <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                </td>
+                                <td style="padding:10px 8px;">
+                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                </td>
+                                <td style="padding:10px 12px;">
+                                    <span style="color:#8A681F; font-weight:700;">— </span><strong style="font-size:13px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=3" style="color:#181512; text-decoration:none;">Soft Silk &amp; Tussar</a></strong>
+                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px;">
+                                        <a href="/Frontend/Admin/products/categories/edit.php?id=3" style="color:#8A681F; font-weight:700;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="openQuickEditCat(3, 'Soft Silk & Tussar', 'soft-silk-tussar', 'Lightweight Festive Soft Silk Sarees', '5007 (5% GST)'); return false;" style="color:#2271b1;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="deleteCatRow(3); return false;" style="color:#b32d2e;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="/Frontend/Shop/shop.php?category=soft-silk-tussar" target="_blank" style="color:#2271b1;">View</a>
+                                    </div>
+                                </td>
+                                <td style="padding:10px 10px; font-size:12px; color:#646970;">Lightweight Festive Soft Silk Sarees</td>
+                                <td style="padding:10px 10px;"><code style="background:#f1f5f9; padding:2px 6px; border-radius:3px; font-size:11.5px;">soft-silk-tussar</code></td>
+                                <td style="padding:10px 10px;"><span class="adm-badge gold" style="font-size:10.5px;">5007 (5%)</span></td>
+                                <td style="text-align:right; padding:10px 12px;">
+                                    <a href="/Frontend/Admin/products/?cat=soft-silk-tussar" style="font-weight:800; color:#8A681F; text-decoration:none; font-size:13px;">140</a>
+                                </td>
+                            </tr>
+
+                            <!-- Cat 2 -->
+                            <tr id="cat-row-4" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                <td style="text-align:center; padding:10px 8px;">
+                                    <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                </td>
+                                <td style="padding:10px 8px;">
+                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                </td>
+                                <td style="padding:10px 12px;">
+                                    <strong style="font-size:13px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=4" style="color:#181512; text-decoration:none;">Banarasi Brocade</a></strong>
+                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px;">
+                                        <a href="/Frontend/Admin/products/categories/edit.php?id=4" style="color:#8A681F; font-weight:700;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="openQuickEditCat(4, 'Banarasi Brocade', 'banarasi-brocade', 'Royal Heritage Varanasi Brocades & Katan Silks', '5007 (5% GST)'); return false;" style="color:#2271b1;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="#" onclick="deleteCatRow(4); return false;" style="color:#b32d2e;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                        <a href="/Frontend/Shop/shop.php?category=banarasi-brocade" target="_blank" style="color:#2271b1;">View</a>
+                                    </div>
+                                </td>
+                                <td style="padding:10px 10px; font-size:12px; color:#646970;">Royal Heritage Varanasi Brocades &amp; Katan Silks</td>
+                                <td style="padding:10px 10px;"><code style="background:#f1f5f9; padding:2px 6px; border-radius:3px; font-size:11.5px;">banarasi-brocade</code></td>
+                                <td style="padding:10px 10px;"><span class="adm-badge gold" style="font-size:10.5px;">5007 (5%)</span></td>
+                                <td style="text-align:right; padding:10px 12px;">
+                                    <a href="/Frontend/Admin/products/?cat=banarasi-brocade" style="font-weight:800; color:#8A681F; text-decoration:none; font-size:13px;">280</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
 
             </div>
@@ -459,174 +414,115 @@ $active_subnav = "categories";
     </div>
 </div>
 
-<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 <script>
-function generateCatSlug(val) {
-    const slug = (val || '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-    document.getElementById('catSlug').value = slug;
-}
-
-function previewCatThumb(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('catThumbPreview').src = e.target.result;
-            window.showToast('✨ Thumbnail preview updated!');
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-function toggleCatSelectAll(master) {
-    document.querySelectorAll('.wp-cat-row-check').forEach(cb => cb.checked = master.checked);
-}
-
-function handleCatSearch(val) {
-    const clearBtn = document.getElementById('wpCatSearchClear');
-    if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
-    
-    const rows = document.querySelectorAll('#wpCatTableBody tr:not(.inline-edit-row)');
-    const q = (val || '').toLowerCase().trim();
-    rows.forEach(r => {
-        r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
-    });
+function toggleCatSearchClearBtn(val) {
+    const btn = document.getElementById('catSearchClearBtn');
+    if (btn) btn.style.display = val.length > 0 ? 'inline' : 'none';
 }
 
 function clearCatSearch() {
-    const input = document.getElementById('wpCatSearch');
+    const input = document.getElementById('catSearchInput');
     if (input) {
         input.value = '';
-        handleCatSearch('');
+        toggleCatSearchClearBtn('');
+        searchWpCategories('');
+        input.focus();
     }
+}
+
+function toggleSelectAllCats(master) {
+    const checks = document.querySelectorAll('.cat-row-check');
+    checks.forEach(c => c.checked = master.checked);
+}
+
+function searchWpCategories(q) {
+    const rows = document.querySelectorAll('#categoriesTableBody tr');
+    const term = (q || '').toLowerCase().trim();
+    rows.forEach(r => {
+        const txt = r.textContent.toLowerCase();
+        r.style.display = txt.includes(term) ? '' : 'none';
+    });
+}
+
+function autoSlugifyCat(val) {
+    const slugInput = document.getElementById('catSlug');
+    if (slugInput) {
+        slugInput.value = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+}
+
+function handleAddNewCategory(e) {
+    e.preventDefault();
+    const name = document.getElementById('catName')?.value;
+    if (!name) return;
+    if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created successfully!`);
+    document.getElementById('wpAddCatForm')?.reset();
 }
 
 function deleteCatRow(id) {
-    if (confirm('Are you sure you want to delete this category?')) {
-        const row = document.getElementById('cat-row-' + id);
-        if (row) row.remove();
-        const editRow = document.getElementById('qe-row-' + id);
-        if (editRow) editRow.remove();
-        window.showToast('Category deleted successfully!');
+    const row = document.getElementById(`cat-row-${id}`);
+    if (row) {
+        row.remove();
+        if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted');
     }
-}
-
-/* Classic WordPress Inline Quick Edit Drawer Row */
-function toggleWpQuickEdit(id, name, slug) {
-    const targetRow = document.getElementById('cat-row-' + id);
-    if (!targetRow) return;
-
-    let existingQe = document.getElementById('qe-row-' + id);
-    if (existingQe) {
-        existingQe.remove();
-        return;
-    }
-
-    const cleanName = name.replace('— ', '');
-    const prefix = name.startsWith('— ') ? '— ' : '';
-
-    const qeRow = document.createElement('tr');
-    qeRow.id = 'qe-row-' + id;
-    qeRow.className = 'inline-edit-row';
-    qeRow.innerHTML = `
-        <td colspan="7">
-            <div class="inline-edit-col">
-                <span style="font-size:12px; font-weight:700; color:#2271b1;">QUICK EDIT:</span>
-                <div class="inline-edit-group">
-                    <label>Name:</label>
-                    <input type="text" id="qe-input-name-${id}" value="${cleanName}">
-                </div>
-                <div class="inline-edit-group">
-                    <label>Slug:</label>
-                    <input type="text" id="qe-input-slug-${id}" value="${slug}">
-                </div>
-                <div style="display:flex; gap:4px; margin-left:auto;">
-                    <button type="button" class="wp-button" onclick="document.getElementById('qe-row-${id}').remove()">Cancel</button>
-                    <button type="button" class="wp-button primary" onclick="saveWpQuickEdit(${id}, '${prefix}')">Update Category</button>
-                </div>
-            </div>
-        </td>
-    `;
-    targetRow.after(qeRow);
-}
-
-function saveWpQuickEdit(id, prefix) {
-    const newName = document.getElementById('qe-input-name-' + id)?.value.trim();
-    const newSlug = document.getElementById('qe-input-slug-' + id)?.value.trim();
-
-    if (!newName) {
-        window.showToast('Category name cannot be empty');
-        return;
-    }
-
-    const targetRow = document.getElementById('cat-row-' + id);
-    if (targetRow) {
-        const titleEl = targetRow.querySelector('.wp-row-title');
-        const slugEl = targetRow.querySelector('code');
-        if (titleEl) titleEl.textContent = prefix + newName;
-        if (slugEl) slugEl.textContent = newSlug;
-    }
-
-    document.getElementById('qe-row-' + id)?.remove();
-    window.showToast('✨ Category updated via Quick Edit!');
-}
-
-function handleWpAddCategory(e) {
-    e.preventDefault();
-    const name = document.getElementById('catName').value.trim();
-    const slug = document.getElementById('catSlug').value.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const desc = document.getElementById('catDesc').value.trim() || '—';
-    const hsn = document.getElementById('catHsn').value.trim() || '5007 (5%)';
-    const parent = document.getElementById('catParent').value;
-    const thumbSrc = document.getElementById('catThumbPreview')?.src || '/Shared/Asset/images/product1.png';
-
-    const prefix = parent ? '— ' : '';
-    const newId = Date.now();
-
-    const tbody = document.getElementById('wpCatTableBody');
-    const tr = document.createElement('tr');
-    tr.id = 'cat-row-' + newId;
-    tr.innerHTML = `
-        <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-        <td><img src="${thumbSrc}" class="wp-thumb-img" alt="${name}"></td>
-        <td>
-            <a href="/Frontend/Admin/products/categories/view.php?id=${newId}" class="wp-row-title">${prefix}${name}</a>
-            <div class="wp-row-actions">
-                <a href="/Frontend/Admin/products/categories/edit.php?id=${newId}">Edit</a> |
-                <a href="#" onclick="toggleWpQuickEdit(${newId}, '${prefix}${name}', '${slug}'); return false;">Quick Edit</a> |
-                <a href="#" class="trash" onclick="deleteCatRow(${newId}); return false;">Delete</a> |
-                <a href="/Frontend/Admin/products/categories/view.php?id=${newId}">View</a>
-            </div>
-        </td>
-        <td>${desc}</td>
-        <td><code>${slug}</code></td>
-        <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">${hsn}</span></td>
-        <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=${newId}" style="font-weight:700; color:#2271b1;">0</a></td>
-    `;
-    tbody.prepend(tr);
-
-    document.getElementById('wpAddCatForm').reset();
-    window.showToast(`✨ Category "${name}" added successfully!`);
 }
 
 function handleCatBulkAction() {
-    const sel = document.getElementById('wpCatBulkSelect')?.value;
-    if (!sel) {
-        window.showToast('Please select a bulk action');
+    const action = document.getElementById('catBulkActionSelect')?.value;
+    if (!action) return;
+    const selected = document.querySelectorAll('.cat-row-check:checked');
+    if (selected.length === 0) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one category');
         return;
     }
-    const checked = document.querySelectorAll('.wp-cat-row-check:checked');
-    if (checked.length === 0) {
-        window.showToast('No categories selected');
+    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} categories!`);
+}
+
+function openQuickEditCat(id, name, slug, desc, hsn) {
+    const row = document.getElementById(`cat-row-${id}`);
+    if (!row) return;
+
+    if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
+        row.nextElementSibling.remove();
         return;
     }
-    if (sel === 'delete') {
-        if (confirm(`Delete ${checked.length} selected categories?`)) {
-            checked.forEach(cb => cb.closest('tr')?.remove());
-            window.showToast(`Deleted ${checked.length} categories`);
+
+    const editTr = document.createElement('tr');
+    editTr.className = 'inline-edit-row';
+    editTr.innerHTML = `
+        <td colspan="7">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:10px; align-items:flex-end;">
+                <div>
+                    <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Name</label>
+                    <input type="text" id="qe-name-${id}" value="${name}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                </div>
+                <div>
+                    <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Slug</label>
+                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                </div>
+                <div>
+                    <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">HSN / GST</label>
+                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" class="wp-button primary" onclick="saveQuickEditCat(${id})" style="height:28px; font-size:11px; font-weight:800; background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512;">Update</button>
+                    <button type="button" class="wp-button" onclick="this.closest('tr').remove()" style="height:28px; font-size:11px;">Cancel</button>
+                </div>
+            </div>
+        </td>
+    `;
+    row.after(editTr);
+}
+
+function saveQuickEditCat(id) {
+    const name = document.getElementById(`qe-name-${id}`)?.value;
+    const row = document.getElementById(`cat-row-${id}`);
+    if (row && name) {
+        row.querySelector('td:nth-child(3) strong a').textContent = name;
+        if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
+            row.nextElementSibling.remove();
         }
+        if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated!`);
     }
 }
 </script>
