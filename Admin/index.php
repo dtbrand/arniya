@@ -1,6 +1,6 @@
 <?php
 /**
- * admin.php — Root Entry Router for ARNIYA Modular Executive Admin Dashboard
+ * index.php — ARNIYA Admin Master Entry Router
  * DT Brand's & Jai Hanuman Tex
  */
 header("Location: /Admin/dashboard/");

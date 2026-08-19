@@ -1,0 +1,127 @@
+/**
+ * admin.css — ARNIYA Admin Master Design Tokens & Core Rules
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+:root {
+    /* ── Luxury Gold Palette ── */
+    --adm-gold: #8A681F;
+    --adm-gold-deep: #5A4210;
+    --adm-gold-light: #D4AF37;
+    --adm-gold-pale: #FAF5E8;
+    --adm-gold-subtle: #F5EDD6;
+    --adm-gold-border: rgba(138, 104, 31, 0.28);
+    --adm-gold-glow: rgba(212, 175, 55, 0.22);
+
+    /* ── Dark Obsidian & Neutrals ── */
+    --adm-obsidian: #14110E;
+    --adm-dark-900: #1C1917;
+    --adm-dark-800: #292524;
+    --adm-dark-700: #44403C;
+    --adm-text-main: #1C1917;
+    --adm-text-sub: #57534E;
+    --adm-text-muted: #78716C;
+    --adm-text-light: #A8A29E;
+
+    /* ── Background Canvas & Surfaces ── */
+    --adm-bg-canvas: #F8F6F0;
+    --adm-bg-surface: #FFFFFF;
+    --adm-bg-card: #FFFFFF;
+    --adm-bg-elevated: #FAF8F4;
+    --adm-border-soft: #E8E2D5;
+    --adm-border-card: #EFE9DC;
+
+    /* ── Semantic Status Colors ── */
+    --adm-emerald: #16A34A;
+    --adm-emerald-bg: #DCFCE7;
+    --adm-emerald-border: #BBF7D0;
+    
+    --adm-amber: #D97706;
+    --adm-amber-bg: #FEF3C7;
+    --adm-amber-border: #FDE68A;
+
+    --adm-rose: #DC2626;
+    --adm-rose-bg: #FEE2E2;
+    --adm-rose-border: #FECACA;
+
+    --adm-sky: #0284C7;
+    --adm-sky-bg: #E0F2FE;
+    --adm-sky-border: #BAE6FD;
+
+    --adm-violet: #7C3AED;
+    --adm-violet-bg: #EDE9FE;
+    --adm-violet-border: #DDD6FE;
+
+    /* ── Typography Fonts ── */
+    --adm-font-serif: 'Cinzel', Georgia, serif;
+    --adm-font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* ── Layout Dimensions ── */
+    --adm-sidebar-w: 250px;
+    --adm-sidebar-collapsed-w: 72px;
+    --adm-topbar-h: 64px;
+    --adm-footer-h: 44px;
+
+    /* ── Elevations & Transitions ── */
+    --adm-radius-sm: 8px;
+    --adm-radius-md: 12px;
+    --adm-radius-lg: 16px;
+    --adm-radius-xl: 20px;
+    --adm-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+    --adm-shadow-md: 0 4px 14px rgba(138, 104, 31, 0.06);
+    --adm-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --adm-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ════ RESET & GLOBAL BASE ════ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--adm-bg-canvas);
+    font-family: var(--adm-font-sans);
+    color: var(--adm-text-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--adm-transition);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+input, select, textarea {
+    font-family: inherit;
+    outline: none;
+}
+
+/* Luxury Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(138, 104, 31, 0.22);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--adm-gold);
+}
