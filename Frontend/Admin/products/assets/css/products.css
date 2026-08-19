@@ -220,6 +220,17 @@
     max-width: 100%;
 }
 
+.dt-prod-img {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--adm-border-soft, #E5E1D7) !important;
+    display: block !important;
+}
+
 .dt-toolbar {
     display: flex;
     align-items: center;
