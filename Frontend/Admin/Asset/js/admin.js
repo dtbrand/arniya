@@ -318,6 +318,17 @@
             });
         }
 
+        const sealMini = document.querySelector('.adm-brand-seal-mini');
+        if (sealMini && sidebar) {
+            sealMini.addEventListener('click', function(e) {
+                if (sidebar.classList.contains('collapsed')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    sidebar.classList.remove('collapsed');
+                }
+            });
+        }
+
         if (mobileToggle && sidebar) {
             mobileToggle.addEventListener('click', function() {
                 sidebar.classList.toggle('mobile-open');
