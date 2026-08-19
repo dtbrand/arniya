@@ -1,34 +1,34 @@
 /**
  * wordpress-style.css — WordPress & WooCommerce Admin Products UI Replica
- * Clean High-Density Layout with Signature DT Brand's Gold Accent
+ * Precision Compact Sizing to Fit 100% Within Laptop & Desktop Viewports (Zero Overflow)
  */
 
 /* ── 1. WORDPRESS PAGE HEADING ── */
 .wp-heading-wrap {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
 }
 
 .wp-heading-inline {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    font-size: 23px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 600;
     color: #1d2327;
     margin: 0;
-    line-height: 1.3;
+    line-height: 1.2;
 }
 
 .wp-page-title-action {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 10px;
-    font-size: 13px;
+    padding: 3px 8px;
+    font-size: 12px;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.3;
     color: #2271b1;
     background: #f6f7f7;
     border: 1px solid #2271b1;
@@ -70,20 +70,21 @@
 /* ── 2. WORDPRESS STATUS TABS (.subsubsub) ── */
 .wp-subsubsub {
     list-style: none;
-    margin: 8px 0 12px 0;
+    margin: 4px 0 8px 0;
     padding: 0;
-    font-size: 13px;
+    font-size: 12px;
     color: #646970;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
+    line-height: 1.4;
 }
 
 .wp-subsubsub li {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     margin: 0;
     padding: 0;
     white-space: nowrap;
@@ -100,7 +101,7 @@
 }
 
 .wp-subsubsub li a.current {
-    font-weight: 600;
+    font-weight: 700;
     color: #1d2327;
 }
 
@@ -111,42 +112,42 @@
 
 .wp-subsubsub .sep {
     color: #c3c4c7;
-    margin-left: 6px;
+    margin-left: 4px;
 }
 
 /* ── 3. WORDPRESS TABLENAV TOOLBAR (.tablenav) ── */
 .wp-tablenav {
     clear: both;
-    height: auto;
-    margin: 6px 0 10px 0;
-    padding-top: 4px;
+    margin: 4px 0 8px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .wp-tablenav-actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
 }
 
 .wp-select {
-    height: 30px;
-    line-height: 28px;
-    padding: 0 24px 0 8px;
-    font-size: 13px;
+    height: 28px;
+    line-height: 26px;
+    padding: 0 16px 0 6px;
+    font-size: 12px;
     color: #2c3338;
     background: #ffffff;
     border: 1px solid #8c8f94;
     border-radius: 3px;
     outline: none;
     cursor: pointer;
-    box-shadow: 0 0 0 transparent;
-    transition: all 0.1s ease;
+    max-width: 140px;
+    box-sizing: border-box;
 }
 
 .wp-select:focus, .wp-select:hover {
@@ -155,10 +156,10 @@
 }
 
 .wp-button {
-    height: 30px;
-    line-height: 28px;
-    padding: 0 10px;
-    font-size: 13px;
+    height: 28px;
+    line-height: 26px;
+    padding: 0 8px;
+    font-size: 12px;
     font-weight: 500;
     color: #2271b1;
     background: #f6f7f7;
@@ -167,7 +168,7 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     white-space: nowrap;
     transition: all 0.1s ease;
 }
@@ -193,20 +194,19 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-left: auto;
 }
 
 .wp-search-input {
-    height: 30px;
-    padding: 0 8px;
-    font-size: 13px;
+    height: 28px;
+    padding: 0 6px;
+    font-size: 12px;
     color: #2c3338;
     background: #ffffff;
     border: 1px solid #8c8f94;
     border-radius: 3px;
     outline: none;
-    min-width: 220px;
-    transition: all 0.1s ease;
+    width: 150px;
+    box-sizing: border-box;
 }
 
 .wp-search-input:focus {
@@ -219,27 +219,30 @@
     background: #ffffff;
     border: 1px solid #c3c4c7;
     box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-    margin-bottom: 20px;
+    margin-bottom: 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     overflow-x: auto;
 }
 
 .wp-list-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 12px;
     color: #2c3338;
     text-align: left;
-    white-space: nowrap;
 }
 
 .wp-list-table thead th {
     background: #f6f7f7;
     color: #2c3338;
     font-weight: 600;
-    font-size: 13px;
-    padding: 8px 10px;
+    font-size: 12px;
+    padding: 6px 8px;
     border-bottom: 1px solid #c3c4c7;
     vertical-align: middle;
+    white-space: nowrap;
 }
 
 .wp-list-table thead th a {
@@ -248,10 +251,10 @@
 }
 
 .wp-list-table tbody td {
-    padding: 8px 10px;
+    padding: 6px 8px;
     border-top: 1px solid #f0f0f1;
     vertical-align: middle;
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
 .wp-list-table tbody tr:nth-child(odd) {
@@ -263,8 +266,8 @@
 }
 
 .wp-thumb-img {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     object-fit: cover;
     border-radius: 2px;
     border: 1px solid #dcdcde;
@@ -276,8 +279,10 @@
     font-weight: 600;
     color: #2271b1;
     text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
+    display: block;
+    font-size: 12.5px;
+    max-width: 210px;
+    line-height: 1.25;
 }
 
 .wp-row-title:hover {
@@ -285,16 +290,16 @@
 }
 
 .wp-row-sku {
-    font-size: 12px;
+    font-size: 11px;
     color: #646970;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .wp-row-actions {
-    font-size: 12px;
+    font-size: 11px;
     color: #a7aaad;
     padding-top: 2px;
-    visibility: visible;
+    white-space: nowrap;
 }
 
 .wp-row-actions a {
@@ -318,19 +323,22 @@
 .wp-stock-in {
     color: #007017;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
 }
 
 .wp-stock-low {
     color: #b45309;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
 }
 
 .wp-stock-out {
     color: #b32d2e;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11.5px;
+    white-space: nowrap;
 }
 
 /* Star Toggle */
@@ -339,7 +347,7 @@
     border: none;
     color: #c3c4c7;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
     padding: 0;
     line-height: 1;
 }
@@ -353,27 +361,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
-    font-size: 13px;
+    padding: 6px 8px;
+    font-size: 12px;
     color: #50575e;
     border-top: 1px solid #c3c4c7;
     background: #f6f7f7;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
 .wp-pagination-links {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 2px;
 }
 
 .wp-tablenav-pages-navspan, .wp-page-number {
     display: inline-block;
-    min-width: 24px;
-    height: 24px;
-    line-height: 22px;
+    min-width: 22px;
+    height: 22px;
+    line-height: 20px;
     text-align: center;
-    padding: 0 4px;
-    font-size: 13px;
+    padding: 0 3px;
+    font-size: 12px;
     border: 1px solid #c3c4c7;
     border-radius: 3px;
     background: #f6f7f7;
