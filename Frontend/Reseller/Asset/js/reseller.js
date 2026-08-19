@@ -275,64 +275,50 @@ window.animateTargetGauge = animateTargetGauge;
             var gateModal = document.getElementById('wsRoleGateModal');
 
             if (!userRaw) {
-                var demoWholesaler = {
-                    name: 'Rajesh Kumar',
-                    companyName: 'Shree Krishna Silks Pvt Ltd',
-                    phone: '+91 98765 43210',
-                    rawPhone: '9876543210',
-                    email: 'rajesh@shreekrishnasilks.com',
-                    role: 'Reseller',
-                    gst_type: 'gst',
-                    gst_number: '24AABCU9603R1ZM',
-                    address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
-                    city: 'Surat',
-                    state: 'Gujarat',
-                    pincode: '395002'
-                };
-                localStorage.setItem('dtbrands_user', JSON.stringify(demoWholesaler));
-                if (gateModal) gateModal.classList.remove('active');
-                return true;
+                if (gateModal) gateModal.classList.add('active');
+                return false;
             }
 
             try {
                 var user = JSON.parse(userRaw);
-                var role = (user.role || '').toLowerCase();
-                
-                if (role !== 'reseller') {
-                    user.role = 'Reseller';
-                    if (!user.companyName) user.companyName = 'Shree Krishna Silks Pvt Ltd';
-                    if (!user.gst_number) user.gst_number = '24AABCU9603R1ZM';
-                    localStorage.setItem('dtbrands_user', JSON.stringify(user));
-                }
-
                 if (gateModal) gateModal.classList.remove('active');
                 return true;
             } catch(e) {
-                if (gateModal) gateModal.classList.remove('active');
-                return true;
+                if (gateModal) gateModal.classList.add('active');
+                return false;
             }
         }
 
+        function initResellerApp() {
+            var isAuth = checkResellerSecurity();
+            if (!isAuth) return;
+            if (typeof loadSavedResellerData === 'function') {
+                loadSavedResellerData();
+            }
+        }
+        window.initResellerApp = initResellerApp;
+
         function loginAsDemoReseller() {
-            var demoWholesaler = {
-                name: 'Rajesh Kumar',
-                companyName: 'Shree Krishna Silks Pvt Ltd',
-                phone: '+91 98765 43210',
-                rawPhone: '9876543210',
-                email: 'rajesh@shreekrishnasilks.com',
+            var demoReseller = {
+                name: 'Pooja Sharma',
+                companyName: 'Pooja Boutique & Ethnic Hub',
+                phone: '+91 98765 12345',
+                rawPhone: '9876512345',
+                email: 'pooja.reseller@gmail.com',
                 role: 'Reseller',
-                gst_type: 'gst',
-                gst_number: '24AABCU9603R1ZM',
-                address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
-                city: 'Surat',
-                state: 'Gujarat',
-                pincode: '395002'
+                gst_type: 'none',
+                gst_number: '',
+                address: 'Flat 302, Palm Heights, Link Road',
+                city: 'Jaipur',
+                state: 'Rajasthan',
+                pincode: '302001'
             };
-            localStorage.setItem('dtbrands_user', JSON.stringify(demoWholesaler));
+            localStorage.setItem('dtbrands_user', JSON.stringify(demoReseller));
+            try { window.dispatchEvent(new Event('storage')); } catch(e) {}
             var gateModal = document.getElementById('wsRoleGateModal');
             if (gateModal) gateModal.classList.remove('active');
             initResellerApp();
-            showWsToast('👑 Logged in as Verified Reseller (Rajesh Kumar)!');
+            showWsToast('👑 Logged in as Verified Reseller (Pooja Sharma)!');
         };
 
         /* ── Universal Modal Show & Hide Engine ── */

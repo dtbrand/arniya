@@ -673,8 +673,49 @@
         <!-- Body -->
         <div class="ac-body">
 
-            <!-- ════════ PANE 1: LOGIN ════════ -->
-            <div class="ac-pane active" id="acPaneLogin">
+                <!-- Role Selection for Login Portal -->
+                <div class="ac-form-group" style="margin-bottom: 12px;">
+                    <label class="ac-label">Select Business Portal <span class="req">*</span></label>
+                    <div class="ac-role-pill-group" id="acLoginRoleGroup">
+                        <!-- Retailer -->
+                        <div class="ac-role-pill-btn selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" stroke-linejoin="round"/>
+                                    <line x1="3" y1="6" x2="21" y2="6" stroke="#1976D2" stroke-width="2"/>
+                                    <path d="M16 10a4 4 0 0 1-8 0" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <span>Retailer (Shop)</span>
+                        </div>
+
+                        <!-- Reseller -->
+                        <div class="ac-role-pill-btn" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
+                                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#2E7D32" stroke-width="2"/>
+                                    <line x1="12" y1="12" x2="12" y2="15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                    <line x1="2" y1="12" x2="22" y2="12" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                </svg>
+                            </div>
+                            <span>Reseller (Home)</span>
+                        </div>
+
+                        <!-- Wholesaler -->
+                        <div class="ac-role-pill-btn" data-role="Wholesaler" onclick="window.selectModalRole('Wholesaler')">
+                            <div class="ac-role-svg-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FFF3E0" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#E65100" stroke-width="2"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12" stroke="#E65100" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span>Wholesaler</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="ac-form-group">
                     <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email <span class="req">*</span></label>
                     <div class="ac-input-wrap">
@@ -700,10 +741,28 @@
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
                     <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <span>Sign In to My Account</span>
+                    <span>Sign In & Open Dashboard</span>
                 </button>
 
-                <div style="text-align:center; font-size:0.80rem; margin-top:8px; color:var(--ac-mid-text); font-weight:600;">
+                <!-- 1-Tap Quick Demo Logins for Instant Testing -->
+                <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--ac-gold-border, rgba(138,104,31,0.3));">
+                    <div style="font-size: 0.70rem; font-weight: 800; color: var(--ac-gold-primary); text-transform: uppercase; letter-spacing: 0.08em; text-align: center; margin-bottom: 8px;">
+                        ⚡ 1-Tap Quick Demo Access
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Retailer')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #1976D2; background: #F0F7FF; color: #1565C0; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                            🏪 Retailer
+                        </button>
+                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Reseller')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #2E7D32; background: #F1F8F1; color: #1B5E20; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                            💼 Reseller
+                        </button>
+                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Wholesaler')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #E65100; background: #FFF8E1; color: #BF360C; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                            🏭 Wholesale
+                        </button>
+                    </div>
+                </div>
+
+                <div style="text-align:center; font-size:0.80rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
                     Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now →</button>
                 </div>
             </div>
@@ -1117,35 +1176,105 @@
         }
     };
 
-    /* Global Role-Based Direct Dashboard Navigation Helper */
-    window.handleUserWiseAccountNavigation = function() {
-        var userRaw = localStorage.getItem('dtbrands_user');
-        if (userRaw) {
-            try {
-                var user = JSON.parse(userRaw);
-                var role = (user.role || '').toLowerCase();
-                if (role === 'reseller') {
-                    window.location.href = '/Frontend/Reseller/reseller.php';
-                    return true;
-                } else if (role === 'wholesaler' || role === 'wholesale') {
-                    window.location.href = '/Frontend/Wholesale/wholesale.php';
-                    return true;
-                } else {
-                    window.location.href = '/Frontend/Retailer/retailer.php';
-                    return true;
-                }
-            } catch(e) {}
+    /* ── Current User Helper ── */
+    window.getCurrentUser = function() {
+        try {
+            var raw = localStorage.getItem('dtbrands_user');
+            return raw ? JSON.parse(raw) : null;
+        } catch(e) { return null; }
+    };
+
+    /* ── Role Dashboard URL Mapper ── */
+    window.getUserDashboardUrl = function(role) {
+        var r = (role || '').toLowerCase();
+        if (r === 'reseller') return '/Frontend/Reseller/reseller.php';
+        if (r === 'wholesaler' || r === 'wholesale') return '/Frontend/Wholesale/wholesale.php';
+        return '/Frontend/Retailer/retailer.php';
+    };
+
+    /* ── 1-Tap Quick Demo Logins for Instant Testing ── */
+    window.quickDemoLogin = function(role) {
+        var targetRole = role || 'Retailer';
+        var rLower = targetRole.toLowerCase();
+        var userData = {};
+
+        if (rLower === 'reseller') {
+            userData = {
+                name: 'Pooja Sharma',
+                companyName: 'Pooja Boutique & Ethnic Hub',
+                phone: '+91 98765 12345',
+                rawPhone: '9876512345',
+                email: 'pooja.reseller@gmail.com',
+                role: 'Reseller',
+                gst_type: 'none',
+                gst_number: '',
+                address: 'Flat 302, Palm Heights, Link Road',
+                city: 'Jaipur',
+                state: 'Rajasthan',
+                pincode: '302001'
+            };
+        } else if (rLower === 'wholesaler' || rLower === 'wholesale') {
+            userData = {
+                name: 'Ramesh Patel',
+                companyName: 'Surat Loomcraft Mega Traders',
+                phone: '+91 98765 88990',
+                rawPhone: '9876588990',
+                email: 'ramesh@suratloomcraft.com',
+                role: 'Wholesaler',
+                gst_type: 'gst',
+                gst_number: '24AABCU9603R1ZM',
+                address: 'Plot No. 108, Phase 2, GIDC Textile Market',
+                city: 'Surat',
+                state: 'Gujarat',
+                pincode: '395002'
+            };
+        } else {
+            userData = {
+                name: 'Rajesh Kumar',
+                companyName: 'Shree Krishna Silks Pvt Ltd',
+                phone: '+91 98765 43210',
+                rawPhone: '9876543210',
+                email: 'rajesh@shreekrishnasilks.com',
+                role: 'Retailer',
+                gst_type: 'gst',
+                gst_number: '24AABCU9603R1ZM',
+                address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
+                city: 'Surat',
+                state: 'Gujarat',
+                pincode: '395002'
+            };
         }
-        // Non-logged-in guest -> Open original Login modal!
-        window.openAccountModal('login');
+
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+
+        if (typeof window.showToast === 'function') {
+            window.showToast('👑 Logged in as Verified ' + userData.role + ' (' + userData.name + ')!');
+        }
+
+        window.closeAccountModal();
+        window.location.href = window.getUserDashboardUrl(userData.role);
+    };
+
+    /* ── Global Role-Based Direct Dashboard Navigation Helper ── */
+    window.handleUserWiseAccountNavigation = function(targetRole) {
+        var user = window.getCurrentUser();
+        if (user && user.role) {
+            // If user is already logged in, navigate to their dashboard
+            var url = targetRole ? window.getUserDashboardUrl(targetRole) : window.getUserDashboardUrl(user.role);
+            window.location.href = url;
+            return true;
+        }
+        // Non-logged-in guest -> Open original Login modal with smart target role
+        window.openAccountModal('login', targetRole);
         return false;
     };
 
-    /* Global Open / Close / Switch Tab API */
-    window.openAccountModal = function(initialTab) {
-        var user = localStorage.getItem('dtbrands_user');
-        if (user) {
-            window.handleUserWiseAccountNavigation();
+    /* ── Global Open / Close / Switch Tab API ── */
+    window.openAccountModal = function(initialTab, targetRole) {
+        var user = window.getCurrentUser();
+        if (user && user.role && !initialTab) {
+            window.handleUserWiseAccountNavigation(targetRole);
             return;
         }
 
@@ -1153,6 +1282,10 @@
         if (!modal) return;
 
         var tab = initialTab || 'login';
+        if (targetRole) {
+            window.selectModalRole(targetRole);
+        }
+
         window.switchAccountTab(tab);
         renderCountryDropdown();
         modal.classList.add('active');
@@ -1197,8 +1330,11 @@
     };
 
     window.handleAccountLogin = function() {
-        var input = document.getElementById('acLoginEmail').value.trim();
-        var pass = document.getElementById('acLoginPass').value.trim();
+        var emailInput = document.getElementById('acLoginEmail');
+        var passInput = document.getElementById('acLoginPass');
+        var input = emailInput ? emailInput.value.trim() : '';
+        var pass = passInput ? passInput.value.trim() : '';
+
         if (!input) {
             alert('Please enter your WhatsApp number or Email');
             return;
@@ -1208,48 +1344,43 @@
             return;
         }
 
-        var existingUser = null;
-        try {
-            existingUser = JSON.parse(localStorage.getItem('dtbrands_user') || 'null');
-        } catch(e) {}
-
-        var role = (existingUser && existingUser.role) ? existingUser.role : (modalSelectedRole || 'Retailer');
-        var name = (existingUser && existingUser.name) ? existingUser.name : (input.includes('@') ? input.split('@')[0] : 'Member');
+        var existingUser = window.getCurrentUser();
+        var chosenRole = modalSelectedRole || (existingUser && existingUser.role) || 'Retailer';
+        var name = (existingUser && existingUser.name) ? existingUser.name : (input.includes('@') ? input.split('@')[0] : 'B2B Member');
         name = name.charAt(0).toUpperCase() + name.slice(1);
 
         var userData = {
             name: name,
-            phone: input.includes('@') ? (existingUser ? existingUser.phone : '+91 9876543210') : '+91 ' + input,
+            companyName: (existingUser && existingUser.companyName) ? existingUser.companyName : (name + ' Boutique'),
+            phone: input.includes('@') ? (existingUser ? existingUser.phone : '+91 98765 43210') : '+91 ' + input,
+            rawPhone: input.replace(/[^0-9]/g, '').slice(-10),
             email: input.includes('@') ? input : (existingUser ? existingUser.email : 'member@dtbrands.com'),
-            role: role,
+            role: chosenRole,
             country: existingUser ? (existingUser.country || 'India') : modalSelectedCountry.name,
             state: existingUser ? (existingUser.state || 'Maharashtra') : modalSelectedState,
             city: existingUser ? (existingUser.city || 'Surat') : 'Surat'
         };
         localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
 
         if (typeof window.showToast === 'function') {
-            window.showToast('✨ Welcome back, ' + name + '!');
+            window.showToast('✨ Welcome back, ' + name + ' (' + chosenRole + ')!');
         }
 
         window.closeAccountModal();
-
-        // Direct Dashboard Redirect according to Role
-        var roleLower = role.toLowerCase();
-        if (roleLower === 'reseller') {
-            window.location.href = '/Frontend/Reseller/reseller.php';
-        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
-            window.location.href = '/Frontend/Wholesale/wholesale.php';
-        } else {
-            window.location.href = '/Frontend/Retailer/retailer.php';
-        }
+        window.location.href = window.getUserDashboardUrl(chosenRole);
     };
 
     window.handleAccountRegister = function() {
-        var name = document.getElementById('acRegName').value.trim();
-        var phone = document.getElementById('acRegPhone').value.trim();
-        var city = document.getElementById('acRegCity').value.trim();
-        var pass = document.getElementById('acRegPass').value.trim();
+        var nameEl = document.getElementById('acRegName');
+        var phoneEl = document.getElementById('acRegPhone');
+        var cityEl = document.getElementById('acRegCity');
+        var passEl = document.getElementById('acRegPass');
+
+        var name = nameEl ? nameEl.value.trim() : '';
+        var phone = phoneEl ? phoneEl.value.trim() : '';
+        var city = cityEl ? cityEl.value.trim() : '';
+        var pass = passEl ? passEl.value.trim() : '';
 
         if (!name) { alert('Please enter your full name'); return; }
         var exp = modalSelectedCountry.digits || 10;
@@ -1262,36 +1393,32 @@
             return;
         }
 
+        var chosenRole = modalSelectedRole || 'Retailer';
         var userData = {
             name: name,
+            companyName: name + (chosenRole === 'Retailer' ? ' Boutique' : ' Enterprise'),
             phone: modalSelectedCountry.dial + ' ' + phone,
+            rawPhone: phone,
             email: 'member@dtbrands.com',
-            role: modalSelectedRole,
+            role: chosenRole,
             country: modalSelectedCountry.name,
             state: modalSelectedState,
             city: city || modalSelectedState
         };
         localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
 
         if (typeof window.showToast === 'function') {
             window.showToast('🎉 Welcome to DT Brand\'s, ' + name + '!');
         }
 
         window.closeAccountModal();
-
-        // Direct Dashboard Redirect according to Role
-        var roleLower = (modalSelectedRole || '').toLowerCase();
-        if (roleLower === 'reseller') {
-            window.location.href = '/Frontend/Reseller/reseller.php';
-        } else if (roleLower === 'wholesaler' || roleLower === 'wholesale') {
-            window.location.href = '/Frontend/Wholesale/wholesale.php';
-        } else {
-            window.location.href = '/Frontend/Retailer/retailer.php';
-        }
+        window.location.href = window.getUserDashboardUrl(chosenRole);
     };
 
     window.handleAccountForgot = function() {
-        var input = document.getElementById('acForgotInput').value.trim();
+        var inputEl = document.getElementById('acForgotInput');
+        var input = inputEl ? inputEl.value.trim() : '';
         if (!input) return;
 
         var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
@@ -1304,10 +1431,11 @@
 
     window.handleAccountLogout = function() {
         localStorage.removeItem('dtbrands_user');
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }
-        window.switchAccountTab('login');
+        window.location.href = '/Frontend/Shop/shop.php';
     };
 
     /* Bind events */
