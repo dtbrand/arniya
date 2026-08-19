@@ -493,15 +493,6 @@ input[type=range].mf-range::-moz-range-thumb {
         </svg>
         Sort By
     </button>
-    <div class="bottom-bar-divider" aria-hidden="true"></div>
-    <button class="bottom-bar-btn" id="addBtn" aria-label="More options" aria-expanded="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"></circle>
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"></circle>
-            <circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"></circle>
-        </svg>
-        More
-    </button>
 </nav>
 
 <!-- ════ MYNTRA MOBILE FILTER OVERLAY ════ -->
