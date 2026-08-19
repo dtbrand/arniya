@@ -1047,6 +1047,95 @@
         window.showToast(`Exported ${filename} successfully!`);
     };
 
+    // ════ UNIVERSAL MODULE TABLE FILTER & SEARCH ════
+    window.filterModuleTable = function(query, type) {
+        const table = document.querySelector('.adm-table') || document.getElementById('moduleDataTable');
+        if (!table) return;
+        const rows = table.querySelectorAll('tbody tr');
+        const q = (query || '').toLowerCase().trim();
+
+        rows.forEach(row => {
+            if (q === 'all' || !q) {
+                row.style.display = '';
+                return;
+            }
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(q) ? '' : 'none';
+        });
+    };
+
+    window.exportCurrentTable = function(customName) {
+        const table = document.querySelector('.adm-table');
+        if (!table) {
+            window.showToast('No table data available to export.');
+            return;
+        }
+        let csv = [];
+        const rows = table.querySelectorAll('tr');
+        rows.forEach(r => {
+            let rowData = [];
+            const cols = r.querySelectorAll('th, td');
+            cols.forEach(c => {
+                let text = c.innerText.replace(/"/g, '""').replace(/\n/g, ' ').trim();
+                rowData.push(`"${text}"`);
+            });
+            csv.push(rowData.join(','));
+        });
+
+        const csvContent = csv.join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const filename = (customName || 'dt_brand_admin_export') + '_' + Date.now() + '.csv';
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        window.showToast(`📥 Exported ${filename} successfully!`);
+    };
+
+    // ════ COMMAND PALETTE (CTRL+K / CMD+K) ════
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.getElementById('admGlobalSearch');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+                window.showToast('🔍 Global search focused. Type to navigate...');
+            }
+        }
+    });
+
+    // ════ GLOBAL QUICK MODAL HELPER ════
+    window.openUniversalModal = function(title, bodyHtml) {
+        let modal = document.getElementById('admUniversalModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'admUniversalModal';
+            modal.className = 'adm-modal-overlay';
+            modal.innerHTML = `
+                <div class="adm-modal-card" style="max-width:600px; animation:admScaleIn 0.2s cubic-bezier(0.16,1,0.3,1);">
+                    <div class="adm-modal-header">
+                        <h3 class="adm-modal-title" id="admUniversalModalTitle"></h3>
+                        <button type="button" class="adm-modal-close" onclick="window.closeUniversalModal()">✕</button>
+                    </div>
+                    <div class="adm-modal-body" id="admUniversalModalBody" style="padding:20px;"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) window.closeUniversalModal();
+            });
+        }
+        document.getElementById('admUniversalModalTitle').innerHTML = title;
+        document.getElementById('admUniversalModalBody').innerHTML = bodyHtml;
+        modal.classList.add('open');
+    };
+
+    window.closeUniversalModal = function() {
+        const modal = document.getElementById('admUniversalModal');
+        if (modal) modal.classList.remove('open');
+    };
+
     // ════ TOAST SYSTEM ════
     window.showToast = function(msg) {
         let box = document.getElementById('admToastBox');
@@ -1065,9 +1154,10 @@
         setTimeout(() => {
             toast.style.opacity = '0';
             toast.style.transform = 'translateY(10px)';
-            toast.style.transition = 'all 0.3s ease';
-            setTimeout(() => toast.remove(), 300);
-        }, 3200);
+            toast.style.transition = 'all 0.25s ease';
+            setTimeout(() => toast.remove(), 250);
+        }, 2800);
     };
 
 })();
+
