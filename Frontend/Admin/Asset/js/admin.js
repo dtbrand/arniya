@@ -337,15 +337,19 @@
     window.switchAdmTab = function(tabId) {
         const tabs = document.querySelectorAll('.adm-tab-panel');
         const navItems = document.querySelectorAll('.adm-nav-item');
+        const subnavItems = document.querySelectorAll('.adm-subnav-item');
 
         tabs.forEach(tab => tab.classList.remove('active'));
         navItems.forEach(item => item.classList.remove('active'));
+        subnavItems.forEach(item => item.classList.remove('active'));
 
         const targetTab = document.getElementById('tab-' + tabId);
         const targetNav = document.getElementById('navItem-' + tabId);
+        const targetSubnav = document.getElementById('subnav-' + tabId);
 
         if (targetTab) targetTab.classList.add('active');
         if (targetNav) targetNav.classList.add('active');
+        if (targetSubnav) targetSubnav.classList.add('active');
 
         // Close mobile sidebar if open
         const sidebar = document.getElementById('admSidebar');

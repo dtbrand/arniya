@@ -37,6 +37,63 @@ if (session_status() === PHP_SESSION_NONE) {
         <!-- ══ TOP HEADER ══ -->
         <?php include_once __DIR__ . '/Includes/adminheader.php'; ?>
 
+        <!-- ══ WHOLESALER-STYLE DESKTOP SUBNAV QUICK TABS STRIP ══ -->
+        <nav class="adm-subnav-strip" id="admSubnavStrip">
+            <ul class="adm-subnav-pills">
+                <li>
+                    <button class="adm-subnav-item active" id="subnav-overview" onclick="switchAdmTab('overview')">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Dashboard</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-orders" onclick="switchAdmTab('orders')">
+                        <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                        <span>Orders</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-products" onclick="switchAdmTab('products')">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <span>Catalog</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-reports" onclick="switchAdmTab('reports')">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <span>Reports</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-whatsapp" onclick="switchAdmTab('whatsapp')">
+                        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>WhatsApp CRM</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-partners" onclick="switchAdmTab('partners')">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        <span>Partners</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-customers" onclick="switchAdmTab('customers')">
+                        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Customers</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-settings" onclick="switchAdmTab('settings')">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>Settings</span>
+                    </button>
+                </li>
+            </ul>
+            <div style="font-size:0.75rem; color:#8A681F; font-weight:700; white-space:nowrap; display:flex; align-items:center; gap:6px;">
+                <span>★ Master Admin Console</span>
+            </div>
+        </nav>
+
         <!-- ══ TAB PANELS CONTENT CONTAINER ══ -->
         <main class="adm-content">
 

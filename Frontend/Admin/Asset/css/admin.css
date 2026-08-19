@@ -227,61 +227,151 @@ input, select, textarea {
     gap: 20px;
 }
 
-/* User mini profile card in sidebar */
-.adm-sidebar-user {
-    padding: 10px 12px;
-    background: var(--adm-dark-800);
-    border: 1px solid rgba(212, 175, 55, 0.22);
-    border-radius: var(--adm-radius-sm);
+/* ════ WHOLESALER-STYLE VIP USER CARD IN SIDEBAR ════ */
+.adm-side-user-card {
+    margin: 8px 8px 12px;
+    padding: 9px 12px;
+    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
+    border: 1.2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.08);
+    transition: var(--adm-transition);
 }
 
-.adm-sidebar-user-avatar {
-    width: 36px;
-    height: 36px;
+.adm-side-user-card:hover {
+    border-color: var(--adm-gold);
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.18);
+    transform: translateY(-1px);
+}
+
+.adm-side-user-avatar {
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    border: 1.5px solid var(--adm-gold-bright);
+    border: 1.8px solid var(--adm-gold);
     object-fit: cover;
     flex-shrink: 0;
 }
 
-.adm-sidebar-user-info {
+.adm-side-user-details {
     flex: 1;
     min-width: 0;
 }
 
-.adm-sidebar.collapsed .adm-sidebar-user-info {
+.adm-sidebar.collapsed .adm-side-user-details {
     display: none;
 }
 
-.adm-sidebar-user-name {
+.adm-side-user-name {
     font-size: 0.82rem;
-    font-weight: 700;
-    color: #FFFFFF;
+    font-weight: 800;
+    color: #181512;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.2;
 }
 
-.adm-sidebar-user-role {
-    font-size: 0.65rem;
+.adm-side-user-tag {
+    font-size: 0.62rem;
     font-weight: 700;
-    color: var(--adm-gold-bright);
+    color: var(--adm-gold);
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 
-.adm-sidebar-user-role::before {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--adm-wa-green);
-    box-shadow: 0 0 6px var(--adm-wa-green);
+.adm-side-user-tier {
+    font-size: 0.60rem;
+    font-weight: 800;
+    background: #DCFCE7;
+    color: #15803D;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid #BBF7D0;
+    flex-shrink: 0;
+}
+
+.adm-sidebar.collapsed .adm-side-user-tier {
+    display: none;
+}
+
+/* ════ WHOLESALER-STYLE DESKTOP SUBNAV QUICK TABS STRIP ════ */
+.adm-subnav-strip {
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--adm-border-soft);
+    padding: 8px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    overflow-x: auto;
+    position: sticky;
+    top: var(--adm-header-h);
+    z-index: 850;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.adm-subnav-pills {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+    flex-wrap: nowrap;
+}
+
+.adm-subnav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--adm-text-muted);
+    background: var(--adm-bg-canvas);
+    border: 1.2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--adm-transition);
+    user-select: none;
+}
+
+.adm-subnav-item:hover {
+    background: var(--adm-gold-pale);
+    color: var(--adm-gold-deep);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.adm-subnav-item.active {
+    background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.28);
+    border-color: transparent;
+}
+
+.adm-subnav-item svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2.2;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Command Search (⌘K) styling */
+.adm-cmd-badge {
+    padding: 2px 6px;
+    background: #FFFFFF;
+    border: 1px solid var(--adm-border-soft);
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--adm-gold);
+    margin-left: 6px;
 }
 
 /* Nav Section Groups */

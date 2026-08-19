@@ -1,6 +1,6 @@
 <?php
 /**
- * adminheader.php — Luxury Top Header with Left-Aligned Search Standard
+ * adminheader.php — Luxury Top Header with Left-Aligned Search Standard & Wholesaler UI Elements
  * DT Brand's & Jai Hanuman Tex
  */
 ?>
@@ -11,13 +11,14 @@
             <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
 
-        <!-- Global Search Bar (Icon strictly on the LEFT, Clear button on the RIGHT) -->
+        <!-- Command Search Bar (Icon strictly on the LEFT, Clear button on the RIGHT, ⌘K badge) -->
         <div class="adm-search-box">
             <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input type="text" id="admGlobalSearch" class="adm-search-input" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off">
+            <span class="adm-cmd-badge" style="position:absolute; right:32px; top:50%; transform:translateY(-50%); pointer-events:none;">⌘K</span>
             <button type="button" id="admGlobalSearchClear" class="adm-search-clear" title="Clear Search">✕</button>
         </div>
     </div>
