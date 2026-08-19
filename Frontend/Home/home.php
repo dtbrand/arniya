@@ -553,26 +553,128 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 10: RESELLER BUSINESS BANNER ════════════ -->
-    <section class="home-banner-strip-section">
+    <!-- ════════════ SECTION 10: RESELLER BUSINESS BANNER (LUXURY GLASSMORPHIC) ════════════ -->
+    <section class="home-banner-strip-section" aria-label="Reseller Opportunity Banner">
         <div class="home-section-container">
             <div class="reseller-promo-banner">
-                <div class="rpb-left">
-                    <span class="rpb-tag">⚡ START YOUR OWN BOUTIQUE</span>
-                    <h2 class="rpb-title">Start Your Online Ethnic Wear Business Today</h2>
-                    <div class="rpb-steps-row">
-                        <div class="rpb-step"><span>01</span> Choose Products</div>
-                        <div class="rpb-arrow">&rarr;</div>
-                        <div class="rpb-step"><span>02</span> Add Your Margin</div>
-                        <div class="rpb-arrow">&rarr;</div>
-                        <div class="rpb-step"><span>03</span> Share With Clients</div>
-                        <div class="rpb-arrow">&rarr;</div>
-                        <div class="rpb-step"><span>04</span> Earn Direct Profit</div>
+                <!-- Ambient Decorative Glow Orbs -->
+                <div class="rpb-glow-orb rpb-glow-1" aria-hidden="true"></div>
+                <div class="rpb-glow-orb rpb-glow-2" aria-hidden="true"></div>
+
+                <div class="rpb-main-content">
+                    <div class="rpb-left">
+                        <!-- Top Badges Row -->
+                        <div class="rpb-tag-row">
+                            <span class="rpb-tag">
+                                <svg viewBox="0 0 24 24" class="rpb-tag-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                <span>START YOUR OWN BOUTIQUE</span>
+                            </span>
+                            <span class="rpb-pill-badge">✨ ₹0 INVESTMENT</span>
+                            <span class="rpb-pill-badge hide-mobile">💎 100% SURAT FACTORY DIRECT</span>
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <h2 class="rpb-title">Start Your Online Ethnic Wear Business Today</h2>
+                        <p class="rpb-subtitle">Resell Surat’s finest silk sarees, designer kurtis & bridal lehengas on WhatsApp. Set your own profit margin & get doorstep delivery across India.</p>
+
+                        <!-- 4 Interactive Steps with Real Vector SVG Icons -->
+                        <div class="rpb-steps-grid">
+                            <!-- Step 1 -->
+                            <div class="rpb-step-card">
+                                <div class="rpb-step-icon-box step-icon-1">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                    </svg>
+                                    <span class="rpb-step-num">01</span>
+                                </div>
+                                <div class="rpb-step-info">
+                                    <span class="rpb-step-heading">Choose Products</span>
+                                    <span class="rpb-step-desc">Pick from 500+ designs</span>
+                                </div>
+                            </div>
+
+                            <div class="rpb-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="rpb-step-card">
+                                <div class="rpb-step-icon-box step-icon-2">
+                                    <svg viewBox="0 0 24 24">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    <span class="rpb-step-num">02</span>
+                                </div>
+                                <div class="rpb-step-info">
+                                    <span class="rpb-step-heading">Add Your Margin</span>
+                                    <span class="rpb-step-desc">Earn ₹500–₹2,500/pc</span>
+                                </div>
+                            </div>
+
+                            <div class="rpb-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="rpb-step-card">
+                                <div class="rpb-step-icon-box step-icon-3">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="18" cy="5" r="3"></circle>
+                                        <circle cx="6" cy="12" r="3"></circle>
+                                        <circle cx="18" cy="19" r="3"></circle>
+                                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                    </svg>
+                                    <span class="rpb-step-num">03</span>
+                                </div>
+                                <div class="rpb-step-info">
+                                    <span class="rpb-step-heading">Share On WhatsApp</span>
+                                    <span class="rpb-step-desc">1-Tap Smart Share</span>
+                                </div>
+                            </div>
+
+                            <div class="rpb-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="rpb-step-card">
+                                <div class="rpb-step-icon-box step-icon-4">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                    <span class="rpb-step-num">04</span>
+                                </div>
+                                <div class="rpb-step-info">
+                                    <span class="rpb-step-heading">Direct Bank Profit</span>
+                                    <span class="rpb-step-desc">Instant weekly payout</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="rpb-right">
-                    <a href="/Frontend/Reseller/reseller.php" class="rpb-btn-primary">Start Reselling Free &rarr;</a>
-                    <a href="#section-how-reselling-works" class="rpb-btn-secondary" onclick="document.getElementById('section-how-reselling-works').scrollIntoView({behavior:'smooth'}); return false;">How It Works</a>
+
+                    <!-- Right CTAs -->
+                    <div class="rpb-right">
+                        <div class="rpb-cta-box">
+                            <a href="/Frontend/Reseller/reseller.php" class="rpb-btn-primary">
+                                <span>Start Reselling Free</span>
+                                <svg viewBox="0 0 24 24" class="rpb-btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                            <a href="#section-how-reselling-works" class="rpb-btn-secondary" onclick="document.getElementById('section-how-reselling-works').scrollIntoView({behavior:'smooth'}); return false;">
+                                <svg viewBox="0 0 24 24" class="rpb-info-icon"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon></svg>
+                                <span>How It Works</span>
+                            </a>
+                            <div class="rpb-trust-pill">
+                                <span class="rpb-trust-dot"></span>
+                                <span>10,000+ Active Indian Resellers</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
