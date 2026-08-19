@@ -1011,7 +1011,7 @@ $total_products = count($products);
                         <div class="rec-card-body">
                             <div class="rec-card-meta">
                                 <span class="rec-card-category"><?= strtoupper(htmlspecialchars($p['category'])) ?></span>
-                                <span class="rec-card-rating">★ <?= $rating ?> (<?= $reviews ?>)</span>
+                                <span class="rec-card-rating">★ <?= $rating ?></span>
                             </div>
                             
                             <h3 class="rec-card-name">
@@ -1023,20 +1023,13 @@ $total_products = count($products);
                             <div class="rec-price-row">
                                 <span class="rec-price-current">₹<?= number_format($p['price']) ?></span>
                                 <span class="rec-price-mrp">₹<?= number_format($oldP) ?></span>
-                            </div>
-
-                            <div class="rec-margin-tag">
-                                <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                <span>Resell Profit: <strong>₹<?= number_format($profit) ?></strong></span>
+                                <span class="rec-badge-disc-inline"><?= $disc ?>% OFF</span>
                             </div>
 
                             <div class="rec-card-footer-btns">
                                 <button type="button" class="rec-cart-btn" onclick="directAddToCart(<?= $p['id'] ?>); event.stopPropagation();">
                                     <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                    <span>Add</span>
-                                </button>
-                                <button type="button" class="rec-share-btn" onclick="if(typeof shareProductOnWhatsApp==='function'){shareProductOnWhatsApp(<?= $p['id'] ?>);}else if(typeof window.openSmartShareModal==='function'){window.openSmartShareModal(<?= $p['id'] ?>);}else{window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('Check out <?= addslashes($p['name']) ?> at ₹<?= number_format($p['price']) ?>: https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>'), '_blank');} event.stopPropagation();" aria-label="Share on WhatsApp" title="1-Tap WhatsApp Share">
-                                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                                    <span>Add to Cart</span>
                                 </button>
                             </div>
                         </div>
