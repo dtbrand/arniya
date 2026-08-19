@@ -319,15 +319,35 @@ window.parseAndAutoFillProductData = function() {
         if (sizeInput) sizeInput.value = sizeName;
     }
 
+    // Auto-Fill ALL SEO Fields
+    const seoTitle = document.getElementById('pFormSeoTitle');
+    const seoDesc = document.getElementById('pFormSeoDesc');
+    const seoSlug = document.getElementById('pFormSlug');
+    const seoKeywords = document.getElementById('pFormKeywords');
+
+    if (seoTitle) {
+        seoTitle.value = productTitle + " | DT Brand's Luxury Ethnic";
+    }
+    if (seoDesc) {
+        seoDesc.value = "Shop authentic " + productTitle + ". Handcrafted in Surat with pure zari weave, certified fabrics & factory direct prices.";
+    }
+    if (seoSlug) {
+        const slug = productTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        seoSlug.value = slug;
+    }
+    if (seoKeywords) {
+        seoKeywords.value = fabric.toLowerCase() + ", " + border.toLowerCase() + ", " + code.toLowerCase() + ", pure silk saree, surat sarees, bridal collection";
+    }
+
     // Sync SEO Preview
-    if (typeof updateGoogleSeoPreview === 'function') {
-        updateGoogleSeoPreview();
+    if (typeof window.updateGoogleSeoPreview === 'function') {
+        window.updateGoogleSeoPreview();
     }
 
     window.closeAiImporterModal();
 
     if (typeof window.showToast === 'function') {
-        window.showToast('✨ AI successfully parsed & filled all details for ' + code + '!');
+        window.showToast('✨ AI successfully parsed & filled all details including SEO for ' + code + '!');
     }
 };
 </script>
