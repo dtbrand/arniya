@@ -1,6 +1,6 @@
 <?php
 /**
- * categories/index.php — 100% Exact WordPress / WooCommerce Product Categories Replica
+ * categories/index.php — 100% WordPress Categories with Classic Inline Quick Edit Row
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Product Categories";
@@ -77,7 +77,6 @@ $active_subnav = "categories";
             border-radius: 3px;
             box-sizing: border-box;
             outline: none;
-            transition: all 0.1s ease;
         }
         .wp-form-field textarea {
             height: 42px;
@@ -102,7 +101,6 @@ $active_subnav = "categories";
             object-fit: cover;
             background: #f6f7f7;
         }
-        /* WordPress Standard Hover-Only Row Actions */
         .wp-list-table .wp-row-actions {
             visibility: hidden;
             opacity: 0;
@@ -114,6 +112,44 @@ $active_subnav = "categories";
         .wp-list-table tr:hover .wp-row-actions {
             visibility: visible;
             opacity: 1;
+        }
+        /* Classic WordPress Inline Quick Edit Drawer Row */
+        tr.inline-edit-row {
+            background: #f0f6fc !important;
+        }
+        tr.inline-edit-row td {
+            padding: 10px 12px !important;
+            border-top: 1px solid #2271b1 !important;
+            border-bottom: 1px solid #2271b1 !important;
+        }
+        .inline-edit-col {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .inline-edit-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .inline-edit-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1d2327;
+        }
+        .inline-edit-group input {
+            height: 26px;
+            padding: 0 6px;
+            font-size: 12px;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            outline: none;
+            width: 180px;
+        }
+        .inline-edit-group input:focus {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
         }
     </style>
 </head>
@@ -142,7 +178,7 @@ $active_subnav = "categories";
                 <!-- 2. WordPress 2-Column Suite Layout -->
                 <div class="wp-cat-layout">
 
-                    <!-- ── LEFT COLUMN: Add New Category Form (Zero Extra Text) ── -->
+                    <!-- ── LEFT COLUMN: Add New Category Form ── -->
                     <div class="wp-cat-form-card">
                         <h2>Add new category</h2>
                         <form id="wpAddCatForm" onsubmit="handleWpAddCategory(event)">
@@ -204,7 +240,6 @@ $active_subnav = "categories";
 
                     <!-- ── RIGHT COLUMN: Categories List Table ── -->
                     <div class="wp-table-card">
-                        <!-- Top Toolbar -->
                         <div class="wp-tablenav" style="padding: 6px 8px; margin: 0; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
                             <div class="wp-tablenav-actions">
                                 <select class="wp-select" id="wpCatBulkSelect">
@@ -220,9 +255,7 @@ $active_subnav = "categories";
                         <table class="wp-list-table" id="wpCatTable">
                             <thead>
                                 <tr>
-                                    <th style="width:26px; text-align:center;">
-                                        <input type="checkbox" onchange="toggleCatSelectAll(this)">
-                                    </th>
+                                    <th style="width:26px; text-align:center;"><input type="checkbox" onchange="toggleCatSelectAll(this)"></th>
                                     <th style="width:40px;">Image</th>
                                     <th>Name</th>
                                     <th>Description</th>
@@ -237,18 +270,18 @@ $active_subnav = "categories";
                                     <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
                                     <td><img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Silk Sarees"></td>
                                     <td>
-                                        <a href="/Frontend/Admin/products/?category=silk-sarees" class="wp-row-title">Silk Sarees</a>
+                                        <a href="/Frontend/Admin/products/categories/view.php?id=1" class="wp-row-title">Silk Sarees</a>
                                         <div class="wp-row-actions">
                                             <a href="/Frontend/Admin/products/categories/edit.php?id=1">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(1, 'Silk Sarees', 'silk-sarees'); return false;">Quick Edit</a> |
+                                            <a href="#" onclick="toggleWpQuickEdit(1, 'Silk Sarees', 'silk-sarees'); return false;">Quick Edit</a> |
                                             <a href="#" class="trash" onclick="deleteCatRow(1); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=silk-sarees">View</a>
+                                            <a href="/Frontend/Admin/products/categories/view.php?id=1">View</a>
                                         </div>
                                     </td>
                                     <td>Pure Mulberry &amp; Kanjivaram Bridal Silks</td>
                                     <td><code>silk-sarees</code></td>
                                     <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=silk-sarees" style="font-weight:700; color:#2271b1;">420</a></td>
+                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=1" style="font-weight:700; color:#2271b1;">420</a></td>
                                 </tr>
 
                                 <!-- Row 2 (Child) -->
@@ -256,18 +289,18 @@ $active_subnav = "categories";
                                     <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
                                     <td><img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Kanjivaram"></td>
                                     <td>
-                                        <a href="/Frontend/Admin/products/?category=kanjivaram" class="wp-row-title">— Kanjivaram Pure Silk</a>
+                                        <a href="/Frontend/Admin/products/categories/view.php?id=2" class="wp-row-title">— Kanjivaram Pure Silk</a>
                                         <div class="wp-row-actions">
                                             <a href="/Frontend/Admin/products/categories/edit.php?id=2">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(2, '— Kanjivaram Pure Silk', 'kanjivaram-pure-silk'); return false;">Quick Edit</a> |
+                                            <a href="#" onclick="toggleWpQuickEdit(2, '— Kanjivaram Pure Silk', 'kanjivaram-pure-silk'); return false;">Quick Edit</a> |
                                             <a href="#" class="trash" onclick="deleteCatRow(2); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=kanjivaram">View</a>
+                                            <a href="/Frontend/Admin/products/categories/view.php?id=2">View</a>
                                         </div>
                                     </td>
                                     <td>Authentic Kanchipuram Handloom Zari Weaves</td>
                                     <td><code>kanjivaram-pure-silk</code></td>
                                     <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=kanjivaram" style="font-weight:700; color:#2271b1;">180</a></td>
+                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=2" style="font-weight:700; color:#2271b1;">180</a></td>
                                 </tr>
 
                                 <!-- Row 3 (Child) -->
@@ -275,94 +308,37 @@ $active_subnav = "categories";
                                     <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
                                     <td><img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="wp-thumb-img" alt="Soft Silk"></td>
                                     <td>
-                                        <a href="/Frontend/Admin/products/?category=soft-silk" class="wp-row-title">— Soft Silk &amp; Tussar</a>
+                                        <a href="/Frontend/Admin/products/categories/view.php?id=3" class="wp-row-title">— Soft Silk &amp; Tussar</a>
                                         <div class="wp-row-actions">
                                             <a href="/Frontend/Admin/products/categories/edit.php?id=3">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(3, '— Soft Silk & Tussar', 'soft-silk-tussar'); return false;">Quick Edit</a> |
+                                            <a href="#" onclick="toggleWpQuickEdit(3, '— Soft Silk & Tussar', 'soft-silk-tussar'); return false;">Quick Edit</a> |
                                             <a href="#" class="trash" onclick="deleteCatRow(3); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=soft-silk">View</a>
+                                            <a href="/Frontend/Admin/products/categories/view.php?id=3">View</a>
                                         </div>
                                     </td>
                                     <td>Lightweight Festive Soft Silk Sarees</td>
                                     <td><code>soft-silk-tussar</code></td>
                                     <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=soft-silk" style="font-weight:700; color:#2271b1;">140</a></td>
+                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=3" style="font-weight:700; color:#2271b1;">140</a></td>
                                 </tr>
 
-                                <!-- Row 4 (Parent) -->
+                                <!-- Row 4 -->
                                 <tr id="cat-row-4">
                                     <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
                                     <td><img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="wp-thumb-img" alt="Banarasi"></td>
                                     <td>
-                                        <a href="/Frontend/Admin/products/?category=banarasi" class="wp-row-title">Banarasi Brocade</a>
+                                        <a href="/Frontend/Admin/products/categories/view.php?id=4" class="wp-row-title">Banarasi Brocade</a>
                                         <div class="wp-row-actions">
                                             <a href="/Frontend/Admin/products/categories/edit.php?id=4">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(4, 'Banarasi Brocade', 'banarasi-brocade'); return false;">Quick Edit</a> |
+                                            <a href="#" onclick="toggleWpQuickEdit(4, 'Banarasi Brocade', 'banarasi-brocade'); return false;">Quick Edit</a> |
                                             <a href="#" class="trash" onclick="deleteCatRow(4); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=banarasi">View</a>
+                                            <a href="/Frontend/Admin/products/categories/view.php?id=4">View</a>
                                         </div>
                                     </td>
                                     <td>Royal Heritage Varanasi Brocades &amp; Katan Silks</td>
                                     <td><code>banarasi-brocade</code></td>
                                     <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5007 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=banarasi" style="font-weight:700; color:#2271b1;">280</a></td>
-                                </tr>
-
-                                <!-- Row 5 (Parent) -->
-                                <tr id="cat-row-5">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="wp-thumb-img" alt="Lehengas"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/?category=lehengas" class="wp-row-title">Bridal Lehengas</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=5">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(5, 'Bridal Lehengas', 'bridal-lehengas'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(5); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=lehengas">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Handcrafted Velvet, Raw Silk &amp; Zardosi Sets</td>
-                                    <td><code>bridal-lehengas</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">6204 (12%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=lehengas" style="font-weight:700; color:#2271b1;">160</a></td>
-                                </tr>
-
-                                <!-- Row 6 (Parent) -->
-                                <tr id="cat-row-6">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product4.png';" class="wp-thumb-img" alt="Kurtis"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/?category=kurtis" class="wp-row-title">Designer Kurtis</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=6">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(6, 'Designer Kurtis', 'designer-kurtis'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(6); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=kurtis">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Chanderi, Rayon, and Cotton Foil Kurtis</td>
-                                    <td><code>designer-kurtis</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">6204 (12%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=kurtis" style="font-weight:700; color:#2271b1;">240</a></td>
-                                </tr>
-
-                                <!-- Row 7 (Parent) -->
-                                <tr id="cat-row-7">
-                                    <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-                                    <td><img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Dress Materials"></td>
-                                    <td>
-                                        <a href="/Frontend/Admin/products/?category=dress-materials" class="wp-row-title">Dress Materials</a>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=7">Edit</a> |
-                                            <a href="#" onclick="showQuickEdit(7, 'Dress Materials', 'dress-materials'); return false;">Quick Edit</a> |
-                                            <a href="#" class="trash" onclick="deleteCatRow(7); return false;">Delete</a> |
-                                            <a href="/Frontend/Admin/products/?category=dress-materials">View</a>
-                                        </div>
-                                    </td>
-                                    <td>Unstitched Salwar Suits with Dupatta</td>
-                                    <td><code>dress-materials</code></td>
-                                    <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">5208 (5%)</span></td>
-                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=dress-materials" style="font-weight:700; color:#2271b1;">140</a></td>
+                                    <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=4" style="font-weight:700; color:#2271b1;">280</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -403,7 +379,7 @@ function toggleCatSelectAll(master) {
 }
 
 function searchWpCategories(term) {
-    const rows = document.querySelectorAll('#wpCatTableBody tr');
+    const rows = document.querySelectorAll('#wpCatTableBody tr:not(.inline-edit-row)');
     const q = (term || '').toLowerCase().trim();
     rows.forEach(r => {
         r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
@@ -414,21 +390,70 @@ function deleteCatRow(id) {
     if (confirm('Are you sure you want to delete this category?')) {
         const row = document.getElementById('cat-row-' + id);
         if (row) row.remove();
+        const editRow = document.getElementById('qe-row-' + id);
+        if (editRow) editRow.remove();
         window.showToast('Category deleted successfully!');
     }
 }
 
-function showQuickEdit(id, name, slug) {
-    const newName = prompt('Quick Edit Category Name:', name.replace('— ', ''));
-    if (newName && newName.trim()) {
-        const row = document.getElementById('cat-row-' + id);
-        if (row) {
-            const titleEl = row.querySelector('.wp-row-title');
-            const prefix = name.startsWith('— ') ? '— ' : '';
-            if (titleEl) titleEl.textContent = prefix + newName.trim();
-        }
-        window.showToast('Category updated!');
+/* Classic WordPress Inline Quick Edit Drawer Row */
+function toggleWpQuickEdit(id, name, slug) {
+    const targetRow = document.getElementById('cat-row-' + id);
+    if (!targetRow) return;
+
+    let existingQe = document.getElementById('qe-row-' + id);
+    if (existingQe) {
+        existingQe.remove();
+        return;
     }
+
+    const cleanName = name.replace('— ', '');
+    const prefix = name.startsWith('— ') ? '— ' : '';
+
+    const qeRow = document.createElement('tr');
+    qeRow.id = 'qe-row-' + id;
+    qeRow.className = 'inline-edit-row';
+    qeRow.innerHTML = `
+        <td colspan="7">
+            <div class="inline-edit-col">
+                <span style="font-size:12px; font-weight:700; color:#2271b1;">QUICK EDIT:</span>
+                <div class="inline-edit-group">
+                    <label>Name:</label>
+                    <input type="text" id="qe-input-name-${id}" value="${cleanName}">
+                </div>
+                <div class="inline-edit-group">
+                    <label>Slug:</label>
+                    <input type="text" id="qe-input-slug-${id}" value="${slug}">
+                </div>
+                <div style="display:flex; gap:4px; margin-left:auto;">
+                    <button type="button" class="wp-button" onclick="document.getElementById('qe-row-${id}').remove()">Cancel</button>
+                    <button type="button" class="wp-button primary" onclick="saveWpQuickEdit(${id}, '${prefix}')">Update Category</button>
+                </div>
+            </div>
+        </td>
+    `;
+    targetRow.after(qeRow);
+}
+
+function saveWpQuickEdit(id, prefix) {
+    const newName = document.getElementById('qe-input-name-' + id)?.value.trim();
+    const newSlug = document.getElementById('qe-input-slug-' + id)?.value.trim();
+
+    if (!newName) {
+        window.showToast('Category name cannot be empty');
+        return;
+    }
+
+    const targetRow = document.getElementById('cat-row-' + id);
+    if (targetRow) {
+        const titleEl = targetRow.querySelector('.wp-row-title');
+        const slugEl = targetRow.querySelector('code');
+        if (titleEl) titleEl.textContent = prefix + newName;
+        if (slugEl) slugEl.textContent = newSlug;
+    }
+
+    document.getElementById('qe-row-' + id)?.remove();
+    window.showToast('✨ Category updated via Quick Edit!');
 }
 
 function handleWpAddCategory(e) {
@@ -449,18 +474,18 @@ function handleWpAddCategory(e) {
         <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
         <td><img src="/Shared/Asset/images/product1.png" class="wp-thumb-img" alt="${name}"></td>
         <td>
-            <a href="/Frontend/Admin/products/?category=${slug}" class="wp-row-title">${prefix}${name}</a>
+            <a href="/Frontend/Admin/products/categories/view.php?id=${newId}" class="wp-row-title">${prefix}${name}</a>
             <div class="wp-row-actions">
-                <a href="#">Edit</a> |
-                <a href="#" onclick="showQuickEdit(${newId}, '${prefix}${name}', '${slug}'); return false;">Quick Edit</a> |
+                <a href="/Frontend/Admin/products/categories/edit.php?id=${newId}">Edit</a> |
+                <a href="#" onclick="toggleWpQuickEdit(${newId}, '${prefix}${name}', '${slug}'); return false;">Quick Edit</a> |
                 <a href="#" class="trash" onclick="deleteCatRow(${newId}); return false;">Delete</a> |
-                <a href="/Frontend/Admin/products/?category=${slug}">View</a>
+                <a href="/Frontend/Admin/products/categories/view.php?id=${newId}">View</a>
             </div>
         </td>
         <td>${desc}</td>
         <td><code>${slug}</code></td>
         <td><span style="background:#FAF5E8; color:#8A681F; font-weight:700; padding:1px 5px; border-radius:3px;">${hsn}</span></td>
-        <td style="text-align:right;"><a href="/Frontend/Admin/products/?category=${slug}" style="font-weight:700; color:#2271b1;">0</a></td>
+        <td style="text-align:right;"><a href="/Frontend/Admin/products/categories/view.php?id=${newId}" style="font-weight:700; color:#2271b1;">0</a></td>
     `;
     tbody.prepend(tr);
 
