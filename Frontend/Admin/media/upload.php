@@ -1,17 +1,17 @@
 <?php
 /**
- * upload.php - DT Brand's Admin Media Module
+ * upload.php - DT Brand's Admin Media Asset Batch Uploader
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = 'Media - Upload';
-$active_nav = 'media';
+$page_title = "Media Asset Batch Uploader";
+$active_nav = "media";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media - Upload - DT Brand's Admin</title>
+    <title>Media Asset Batch Uploader - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,34 +26,31 @@ $active_nav = 'media';
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Media - Upload</span>
-                        <span class="adm-badge gold">MEDIA</span>
+                        <span>Media Asset Batch Uploader</span>
+                        <span class="adm-badge gold">Uploader</span>
                     </h1>
-                    <p class="adm-page-subtitle">Separate modular management for DT Brand's media.</p>
+                    <p class="adm-page-subtitle">Drag and drop high-resolution saree photos and catalog banners.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Back to Main Dashboard</a>
-                    <button type="button" class="adm-btn-primary" onclick="window.showToast('Action saved successfully!')">+ New Action</button>
+                    <a href="/Frontend/Admin/media/" class="adm-btn-secondary">← Back to Media Suite</a>
+                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 
-            <div class="adm-card">
-                <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Media - Upload Suite</span></h3>
-                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Exporting data...')">Export</button>
-                </div>
-                <div style="padding:36px 20px; text-align:center; background:#FAF8F4; border-radius:8px; border:1px dashed #E5E1D7;">
-                    <div style="font-size:2.2rem; margin-bottom:10px;">📦</div>
-                    <h3 style="font-size:1.15rem; font-weight:800; color:#181512;">Media - Upload</h3>
-                    <p style="font-size:0.82rem; color:#7A7266; max-width:540px; margin:6px auto 18px;">
-                        Dedicated modular view for <strong>Media</strong>. Ready to connect to MySQL backend and live CRM endpoints.
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:10px;">
-                        <a href="/Frontend/Admin/admin.php" class="adm-btn-primary">Go to Main Dashboard</a>
-                        <button type="button" class="adm-btn-secondary" onclick="window.showToast('Module synced!')">Refresh Data</button>
-                    </div>
-                </div>
+            <!-- Page Specific Content -->
+            
+        <div class="adm-card">
+            <div class="adm-card-head">
+                <h3 class="adm-card-title"><span>📤 Drag & Drop Asset Uploader</span></h3>
             </div>
+            <div style="padding:40px; border:2px dashed #D5A021; border-radius:8px; text-align:center; background:#FAF8F4;">
+                <div style="font-size:2.5rem; margin-bottom:10px;">📁</div>
+                <h4>Drag high-res WebP / PNG / JPG images here</h4>
+                <p style="color:#7A7266; font-size:0.8rem; margin:8px 0 16px;">Files are automatically optimized to WebP format for high-speed page loads.</p>
+                <button class="adm-btn-primary" onclick="window.showToast('Choose Files...')">Browse Files</button>
+            </div>
+        </div>
+        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>

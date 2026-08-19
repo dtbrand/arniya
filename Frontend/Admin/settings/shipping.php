@@ -1,17 +1,17 @@
 <?php
 /**
- * shipping.php - DT Brand's Admin Settings Module
+ * shipping.php - DT Brand's Admin Shipping Rules & Depot Settings
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = 'Settings - Shipping';
-$active_nav = 'settings';
+$page_title = "Shipping Rules & Depot Settings";
+$active_nav = "settings";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Shipping - DT Brand's Admin</title>
+    <title>Shipping Rules & Depot Settings - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,34 +26,32 @@ $active_nav = 'settings';
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Settings - Shipping</span>
-                        <span class="adm-badge gold">SETTINGS</span>
+                        <span>Shipping Rules & Depot Settings</span>
+                        <span class="adm-badge gold">Logistics Config</span>
                     </h1>
-                    <p class="adm-page-subtitle">Separate modular management for DT Brand's settings.</p>
+                    <p class="adm-page-subtitle">Surat pickup depot address, courier API keys, and default dispatch cutoffs.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Back to Main Dashboard</a>
-                    <button type="button" class="adm-btn-primary" onclick="window.showToast('Action saved successfully!')">+ New Action</button>
+                    <a href="/Frontend/Admin/settings/" class="adm-btn-secondary">← Back to Settings Suite</a>
+                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 
-            <div class="adm-card">
-                <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Settings - Shipping Suite</span></h3>
-                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Exporting data...')">Export</button>
-                </div>
-                <div style="padding:36px 20px; text-align:center; background:#FAF8F4; border-radius:8px; border:1px dashed #E5E1D7;">
-                    <div style="font-size:2.2rem; margin-bottom:10px;">📦</div>
-                    <h3 style="font-size:1.15rem; font-weight:800; color:#181512;">Settings - Shipping</h3>
-                    <p style="font-size:0.82rem; color:#7A7266; max-width:540px; margin:6px auto 18px;">
-                        Dedicated modular view for <strong>Settings</strong>. Ready to connect to MySQL backend and live CRM endpoints.
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:10px;">
-                        <a href="/Frontend/Admin/admin.php" class="adm-btn-primary">Go to Main Dashboard</a>
-                        <button type="button" class="adm-btn-secondary" onclick="window.showToast('Module synced!')">Refresh Data</button>
-                    </div>
+            <!-- Page Specific Content -->
+            
+        <div class="adm-card">
+            <div class="adm-card-head">
+                <h3 class="adm-card-title"><span>🚚 Shipping Logistics Rules</span></h3>
+                <button class="adm-btn-primary" onclick="window.showToast('Shipping Rules Saved!')">Save Rules</button>
+            </div>
+            <div class="adm-form-grid">
+                <div class="adm-form-group full">
+                    <label class="adm-form-label">Warehouse Depot Address</label>
+                    <input type="text" class="adm-form-input" value="Ring Road Textile Market, Surat, Gujarat - 395002">
                 </div>
             </div>
+        </div>
+        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>

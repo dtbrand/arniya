@@ -1,17 +1,17 @@
 <?php
 /**
- * sales.php - DT Brand's Admin Reports Module
+ * sales.php - DT Brand's Admin Sales Breakdown & Channel Analytics
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = 'Reports - Sales';
-$active_nav = 'reports';
+$page_title = "Sales Breakdown & Channel Analytics";
+$active_nav = "reports";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports - Sales - DT Brand's Admin</title>
+    <title>Sales Breakdown & Channel Analytics - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,34 +26,27 @@ $active_nav = 'reports';
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Reports - Sales</span>
-                        <span class="adm-badge gold">REPORTS</span>
+                        <span>Sales Breakdown & Channel Analytics</span>
+                        <span class="adm-badge gold">Sales Analytics</span>
                     </h1>
-                    <p class="adm-page-subtitle">Separate modular management for DT Brand's reports.</p>
+                    <p class="adm-page-subtitle">Detailed order-level sales reports split across Wholesale, Reseller, and Retail.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Back to Main Dashboard</a>
-                    <button type="button" class="adm-btn-primary" onclick="window.showToast('Action saved successfully!')">+ New Action</button>
+                    <a href="/Frontend/Admin/reports/" class="adm-btn-secondary">← Back to Reports Suite</a>
+                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 
-            <div class="adm-card">
-                <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Reports - Sales Suite</span></h3>
-                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Exporting data...')">Export</button>
-                </div>
-                <div style="padding:36px 20px; text-align:center; background:#FAF8F4; border-radius:8px; border:1px dashed #E5E1D7;">
-                    <div style="font-size:2.2rem; margin-bottom:10px;">📦</div>
-                    <h3 style="font-size:1.15rem; font-weight:800; color:#181512;">Reports - Sales</h3>
-                    <p style="font-size:0.82rem; color:#7A7266; max-width:540px; margin:6px auto 18px;">
-                        Dedicated modular view for <strong>Reports</strong>. Ready to connect to MySQL backend and live CRM endpoints.
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:10px;">
-                        <a href="/Frontend/Admin/admin.php" class="adm-btn-primary">Go to Main Dashboard</a>
-                        <button type="button" class="adm-btn-secondary" onclick="window.showToast('Module synced!')">Refresh Data</button>
-                    </div>
-                </div>
+            <!-- Page Specific Content -->
+            
+        <div class="adm-card">
+            <div class="adm-card-head">
+                <h3 class="adm-card-title"><span>📊 Sales Analytics</span></h3>
+                <button class="adm-btn-secondary" onclick="window.showToast('Exporting Sales CSV...')">📥 Export CSV</button>
             </div>
+            <p>Total Revenue MTD: <strong>₹42,85,900</strong> across 1,624 orders.</p>
+        </div>
+        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
