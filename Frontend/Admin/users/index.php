@@ -3,15 +3,15 @@
  * index.php - DT Brand's Admin Users Module
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = 'Users - Index';
-$active_nav = 'users';
+$page_title = "Admin Users & Role Permissions";
+$active_nav = "users";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users - Index - DT Brand's Admin</title>
+    <title>Admin Users & Role Permissions - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,34 +26,106 @@ $active_nav = 'users';
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Users - Index</span>
-                        <span class="adm-badge gold">USERS</span>
+                        <span>Admin Users & Role Permissions</span>
+                        <span class="adm-badge gold">Super Admin</span>
                     </h1>
-                    <p class="adm-page-subtitle">Separate modular management for DT Brand's users.</p>
+                    <p class="adm-page-subtitle">Manage administrator credentials, warehouse manager logins, and staff permissions.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Back to Main Dashboard</a>
-                    <button type="button" class="adm-btn-primary" onclick="window.showToast('Action saved successfully!')">+ New Action</button>
+                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 
-            <div class="adm-card">
-                <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Users - Index Suite</span></h3>
-                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Exporting data...')">Export</button>
-                </div>
-                <div style="padding:36px 20px; text-align:center; background:#FAF8F4; border-radius:8px; border:1px dashed #E5E1D7;">
-                    <div style="font-size:2.2rem; margin-bottom:10px;">📦</div>
-                    <h3 style="font-size:1.15rem; font-weight:800; color:#181512;">Users - Index</h3>
-                    <p style="font-size:0.82rem; color:#7A7266; max-width:540px; margin:6px auto 18px;">
-                        Dedicated modular view for <strong>Users</strong>. Ready to connect to MySQL backend and live CRM endpoints.
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:10px;">
-                        <a href="/Frontend/Admin/admin.php" class="adm-btn-primary">Go to Main Dashboard</a>
-                        <button type="button" class="adm-btn-secondary" onclick="window.showToast('Module synced!')">Refresh Data</button>
-                    </div>
-                </div>
+            <!-- KPI Metric Cards -->
+            <div class="adm-kpi-grid">
+                
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Super Admins</span>
+                <div class="adm-kpi-icon-box">👑</div>
             </div>
+            <div class="adm-kpi-val">2 Accounts</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Full Unrestricted Access</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Staff / Managers</span>
+                <div class="adm-kpi-icon-box">👤</div>
+            </div>
+            <div class="adm-kpi-val">4 Accounts</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Warehouse & Dispatch Roles</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Active Sessions</span>
+                <div class="adm-kpi-icon-box">💻</div>
+            </div>
+            <div class="adm-kpi-val">1 Active</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Current Admin Gautam</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Security Status</span>
+                <div class="adm-kpi-icon-box">🛡️</div>
+            </div>
+            <div class="adm-kpi-val">2FA Active</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Encrypted Auth Tokens</span>
+            </div>
+        </div>
+        
+            </div>
+
+            <!-- Module Specific Interactive Content -->
+            
+        <div class="adm-card">
+            <div class="adm-card-head">
+                <h3 class="adm-card-title"><span>👥 Administrator & Staff Roster</span></h3>
+                <button class="adm-btn-primary" onclick="window.showToast('Opening User Invite Modal...')">+ Add Admin User</button>
+            </div>
+            <div class="adm-table-responsive">
+                <table class="adm-table">
+                    <thead>
+                        <tr>
+                            <th>Admin Name</th>
+                            <th>Email Address</th>
+                            <th>Role & Permissions</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gautam Sethi</strong><br><small style="color:#8A681F;">Primary Owner</small></td>
+                            <td>gautam@jaihanumantex.in</td>
+                            <td><span class="adm-badge gold">Super Admin (All Modules)</span></td>
+                            <td>Just Now</td>
+                            <td><span class="adm-badge success">Active</span></td>
+                            <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing Permissions...')">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Surat Dispatch Manager</strong></td>
+                            <td>dispatch@jaihanumantex.in</td>
+                            <td><span class="adm-badge info">Orders & Logistics Only</span></td>
+                            <td>2 hours ago</td>
+                            <td><span class="adm-badge success">Active</span></td>
+                            <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing Permissions...')">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
