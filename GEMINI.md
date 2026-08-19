@@ -3,7 +3,7 @@
 ## 👑 DT BRAND'S & JAI HANUMAN TEX — MASTER UI DESIGN SYSTEM & WORKSPACE RULES
 
 > **MANDATORY INSTRUCTION FOR ALL AI AGENTS & DEVELOPERS:**
-> This document defines the **Master Design Language, UI Components, Color System, and Architectural Standards** for DT Brand's & Jai Hanuman Tex across all platforms (Admin Suite, Wholesale Dashboard, Shop, Single Product, Checkout, and Customer Portals).
+> This document defines the **Master Design Language, UI Components, Color System, Screenshot-Driven Execution, and Architectural Standards** for DT Brand's & Jai Hanuman Tex across all platforms (Admin Suite, Wholesale Dashboard, Shop, Single Product, Checkout, and Customer Portals).
 > **EVERY AI AGENT MUST STRICTLY FOLLOW THESE RULES ON EVERY CHANGE, FEATURE ADDITION, OR UI REFACTOR WITHOUT ASKING OR REVERTING TO GENERIC STYLES.**
 
 ---
@@ -28,6 +28,32 @@
 - **Repository URL**: `https://github.com/dtbrand/arniya.git`
 - **Branch**: `main`
 - **Remote Config**: Authenticated with dtbrand Personal Access Token (PAT)
+
+---
+
+## 📸 Screenshot-Driven Autonomous Execution Protocol
+
+Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*, *"make it like wholesale"*):
+
+1. **Deep Visual & Component Inspection**:
+   - Analyze every visible UI element: Header, Breadcrumbs, Input fields, Select dropdowns, Checkboxes, Buttons, Tabs, Icons, Spacing, Padding, and Alignment.
+   - Detect visual flaws: Clipped labels (e.g. truncated select options), misaligned search bars, emoji placeholders, poor color contrast, awkward line breaks, or lack of DT Brand luxury gold aesthetics.
+
+2. **Completeness & Missing Features Audit ("Adhura Na Rahe")**:
+   - Identify missing options or features that belong to the screen (e.g. Search inputs with 1-tap clear, Bulk Actions, Quick Edit drawers, KPI metrics ribbon, SEO fields, Media upload previews, WhatsApp enquiry buttons, Resale profit margin % indicators).
+   - If ANY option is missing or incomplete, the agent MUST autonomously build and integrate it with 100% working functionality.
+
+3. **End-to-End Functional Verification ("Last Tak Working Ho")**:
+   - Ensure every button, modal popup, filter dropdown, search input, clear button, and status toggle has functional, working JavaScript and backend logic.
+   - Zero non-functional or dead buttons allowed.
+
+4. **Design System & Auto-Sizing Enforcement**:
+   - Apply DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`, `#15803D`).
+   - Use 100% real vector SVG icons (`stroke-width: 2 - 2.8`).
+   - Enforce fluid auto-sizing, unclipped dropdowns (`min-width: 160px - 180px`), and mobile responsive single-column layouts (`@media (max-width: 768px)`).
+
+5. **Validation, Git Push & Live Hostinger FTP Deployment**:
+   - Lint PHP files (`php -l`), commit & push to GitHub `origin main`, and upload directly via FTP to live production.
 
 ---
 

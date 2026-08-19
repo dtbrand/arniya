@@ -1,7 +1,7 @@
 # 👑 DT BRAND'S & JAI HANUMAN TEX — MASTER UI DESIGN SYSTEM & WORKSPACE INSTRUCTIONS
 
 > **MANDATORY INSTRUCTION FOR ALL AI AGENTS & DEVELOPERS:**
-> This document defines the **Master Design Language, UI Components, Color System, and Architectural Standards** for DT Brand's & Jai Hanuman Tex across all platforms (Admin Suite, Wholesale Dashboard, Shop, Single Product, Checkout, and Customer Portals).
+> This document defines the **Master Design Language, UI Components, Color System, Screenshot-Driven Execution, and Architectural Standards** for DT Brand's & Jai Hanuman Tex across all platforms (Admin Suite, Wholesale Dashboard, Shop, Single Product, Checkout, and Customer Portals).
 > **EVERY AI AGENT MUST STRICTLY FOLLOW THESE RULES ON EVERY CHANGE, FEATURE ADDITION, OR UI REFACTOR WITHOUT ASKING OR REVERTING TO GENERIC STYLES.**
 
 ---
@@ -57,21 +57,6 @@ DT Brand's visual identity represents **Heritage Indian Luxury & Enterprise B2B 
 - **1-Tap Clear Button (`✕`)**: Include a clickable clear button on the **RIGHT side** (`position: absolute; right: 8px;`) that appears dynamically when text is entered and clears the search in 1 click.
 - **Search Button**: Primary Gold Gradient button next to input for instant submission.
 
-```html
-<!-- Master Search Bar HTML Pattern -->
-<div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
-    <div style="position:relative; display:inline-flex; align-items:center;">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:12px; pointer-events:none;">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="searchInput" class="wp-search-input" placeholder="Search products, SKUs, customers..." style="height:34px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="handleSearch(this.value); toggleClearBtn(this.value)">
-        <span id="searchClearBtn" onclick="clearSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
-    </div>
-    <button type="button" class="wp-button primary" onclick="handleSearch(document.getElementById('searchInput').value)" style="height:34px; font-size:12px; font-weight:700; padding:0 12px; background:var(--dt-gradient-gold); color:#181512; border:1px solid #8A681F;">Search</button>
-</div>
-```
-
 ---
 
 ## 🔲 3. Wholesaler Dashboard & Shop Product Card Architecture
@@ -117,7 +102,33 @@ Every main module (Products, Categories, Reviews, Featured, Best Sellers, New Ar
 
 ---
 
-## 📋 6. Checkout & Form Fields Architecture
+## 📸 6. Screenshot-Driven Autonomous Execution Protocol
+
+Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*, *"make it like wholesale"*):
+
+1. **Deep Visual & Component Inspection**:
+   - Analyze every visible UI element: Header, Breadcrumbs, Input fields, Select dropdowns, Checkboxes, Buttons, Tabs, Icons, Spacing, Padding, and Alignment.
+   - Detect visual flaws: Clipped labels (e.g. truncated select options), misaligned search bars, emoji placeholders, poor color contrast, awkward line breaks, or lack of DT Brand luxury gold aesthetics.
+
+2. **Completeness & Missing Features Audit ("Adhura Na Rahe")**:
+   - Identify missing options or features that belong to the screen (e.g. Search inputs with 1-tap clear, Bulk Actions, Quick Edit drawers, KPI metrics ribbon, SEO fields, Media upload previews, WhatsApp enquiry buttons, Resale profit margin % indicators).
+   - If ANY option is missing or incomplete, the agent MUST autonomously build and integrate it with 100% working functionality.
+
+3. **End-to-End Functional Verification ("Last Tak Working Ho")**:
+   - Ensure every button, modal popup, filter dropdown, search input, clear button, and status toggle has functional, working JavaScript and backend logic.
+   - Zero non-functional or dead buttons allowed.
+
+4. **Design System & Auto-Sizing Enforcement**:
+   - Apply DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`, `#15803D`).
+   - Use 100% real vector SVG icons (`stroke-width: 2 - 2.8`).
+   - Enforce fluid auto-sizing, unclipped dropdowns (`min-width: 160px - 180px`), and mobile responsive single-column layouts (`@media (max-width: 768px)`).
+
+5. **Validation, Git Push & Live Hostinger FTP Deployment**:
+   - Lint PHP files (`php -l`), commit & push to GitHub `origin main`, and upload directly via FTP to live production.
+
+---
+
+## 📋 7. Checkout & Form Fields Architecture
 
 1. **Card Headers**: Signature Velvet Dark gradient (`linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%)`) with radiant gold trim (`#D4AF37`) and crisp vector SVGs.
 2. **Dropdowns & Selects**:
@@ -130,14 +141,14 @@ Every main module (Products, Categories, Reviews, Featured, Best Sellers, New Ar
 
 ---
 
-## ⚡ 7. Vector SVG Icons & Animated Sparkle Standard
+## ⚡ 8. Vector SVG Icons & Animated Sparkle Standard
 
 - **Zero Emojis in Core Buttons**: Use clean, crisp inline vector SVGs with `stroke-width: 2 - 2.8` and `stroke-linecap: round; stroke-linejoin: round;`.
 - **AI Features**: Use multi-sparkle animated SVG icons (`@keyframes dtSparkleFloat`) with signature gold gradients (`#D4AF37` / `#FAF5E8`).
 
 ---
 
-## 📱 8. Mobile Auto-Sizing & Responsive Layouts
+## 📱 9. Mobile Auto-Sizing & Responsive Layouts
 
 - **Breakpoints**:
   - Desktop: `1024px+` (Multi-column grids, Dual column side-by-side builder).
@@ -147,7 +158,7 @@ Every main module (Products, Categories, Reviews, Featured, Best Sellers, New Ar
 
 ---
 
-## 🔄 9. Triple-Sync Deployment Workflow (Local + Git + FTP)
+## 🔄 10. Triple-Sync Deployment Workflow (Local + Git + FTP)
 
 - **ALWAYS** perform a complete 3-step synchronization for every code change:
   1. **Local**: Edit and validate all files cleanly in `c:\Users\sai\Desktop\WhatsApp CRM`.
@@ -163,7 +174,7 @@ Every main module (Products, Categories, Reviews, Featured, Best Sellers, New Ar
 
 ---
 
-## 🛡️ 10. Agent Operating Constraints
+## 🛡️ 11. Agent Operating Constraints
 
 1. **Browser Preview**: **NEVER** automatically open the agent browser preview (`browser_subagent`) unless the user explicitly asks for it (e.g. *"preview check karo"*, *"browser open karo"*).
 2. **File Cleanup**: **ALWAYS** delete temporary scripts and test files (`temp_*.js`, `*.tmp`, scratch files) immediately after completing tasks.
