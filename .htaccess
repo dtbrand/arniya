@@ -19,6 +19,7 @@ RewriteRule ^retailer(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301]
 RewriteRule ^reseller(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301]
 
 RewriteRule ^admin(\.php)?$ /Frontend/Admin/admin.php [L,R=301]
+RewriteRule ^adminlogin(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
 
 # Auth & Shared Rewrites
 RewriteRule ^myaccount(\.php)?$ /Shared/Auth/myaccount.php [L,R=301]

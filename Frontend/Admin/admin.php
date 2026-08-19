@@ -5,6 +5,9 @@
  * 
  * Signature Heritage Gold Theme + Full CRM, Multi-Channel Commerce & Logistics
  */
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
