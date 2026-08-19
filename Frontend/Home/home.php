@@ -878,10 +878,6 @@ $total_products = count($products);
     <section class="home-banner-strip-section" id="section-wholesale-banner">
         <div class="home-section-container">
             <div class="wholesale-promo-banner">
-                <!-- Luxury Ambient Gold Glow Elements -->
-                <div class="wpb-ambient-glow"></div>
-                <div class="wpb-ambient-mesh"></div>
-
                 <div class="wpb-main-layout">
                     <!-- Left Content -->
                     <div class="wpb-left">
@@ -893,7 +889,7 @@ $total_products = count($products);
                             <span class="wpb-tag-gold">SURAT LOOM DIRECT</span>
                         </div>
 
-                        <h2 class="wpb-title">Grow Your Wholesale Business With Surat Manufacturer Pricing</h2>
+                        <h2 class="wpb-title">Grow Your Wholesale Business <span class="wpb-title-gold">With Surat Manufacturer Pricing</span></h2>
                         <p class="wpb-desc">Unlock direct Surat textile mill rates, premium zero-defect QC, and express door logistics designed for volume wholesalers, mega stockists, and enterprise retailers.</p>
 
                         <!-- 4 High-Impact Luxury Value Pillars with Vector SVGs -->
