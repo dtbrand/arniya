@@ -984,9 +984,9 @@ $total_products = count($products);
                         $reviews = !empty($p['reviews_count']) ? $p['reviews_count'] : 84;
                     ?>
                     <article class="rec-card" data-category="<?= htmlspecialchars($p['category']) ?>" data-product-id="<?= $p['id'] ?>">
-                        <!-- Image Wrap with Badges & Action Overlays -->
+                        <!-- Pure Luxury Image Showcase with Badges & Action Overlays -->
                         <div class="rec-img-wrap">
-                            <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" class="rec-img-link">
+                            <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" class="rec-img-link" title="<?= htmlspecialchars($p['name']) ?>">
                                 <img src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="rec-card-img" loading="lazy" />
                             </a>
                             
@@ -998,38 +998,11 @@ $total_products = count($products);
 
                             <!-- Quick Action Buttons Overlay -->
                             <div class="rec-overlay-actions">
-                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist">
+                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist" title="Add to Wishlist">
                                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                                 </button>
-                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='../Single-Product/singleproduct.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View">
+                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='../Single-Product/singleproduct.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Card Body Info -->
-                        <div class="rec-card-body">
-                            <div class="rec-card-meta">
-                                <span class="rec-card-category"><?= strtoupper(htmlspecialchars($p['category'])) ?></span>
-                                <span class="rec-card-rating">★ <?= $rating ?></span>
-                            </div>
-                            
-                            <h3 class="rec-card-name">
-                                <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" title="<?= htmlspecialchars($p['name']) ?>">
-                                    <?= htmlspecialchars($p['name']) ?>
-                                </a>
-                            </h3>
-
-                            <div class="rec-price-row">
-                                <span class="rec-price-current">₹<?= number_format($p['price']) ?></span>
-                                <span class="rec-price-mrp">₹<?= number_format($oldP) ?></span>
-                                <span class="rec-badge-disc-inline"><?= $disc ?>% OFF</span>
-                            </div>
-
-                            <div class="rec-card-footer-btns">
-                                <button type="button" class="rec-cart-btn" onclick="directAddToCart(<?= $p['id'] ?>); event.stopPropagation();">
-                                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                    <span>Add to Cart</span>
                                 </button>
                             </div>
                         </div>
