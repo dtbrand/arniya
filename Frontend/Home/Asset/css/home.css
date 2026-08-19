@@ -4920,4 +4920,607 @@ input[type=range].sf-range::-moz-range-thumb {
     .hide-mobile {
         display: none !important;
     }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SECTION 17: LUXURY GLASSMORPHIC RETAILER BOUTIQUE PROMO BANNER
+══════════════════════════════════════════════════════════════════════════ */
+.retailer-promo-banner {
+    position: relative;
+    border-radius: 24px;
+    background: #FFFDF9;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(246, 250, 254, 0.92) 45%, rgba(238, 245, 255, 0.85) 100%);
+    border: 1.5px solid rgba(59, 130, 246, 0.35);
+    box-shadow: 0 20px 48px rgba(30, 58, 138, 0.10), 0 4px 16px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding: clamp(20px, 3.5vw, 36px) clamp(16px, 3.5vw, 40px);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.retailer-promo-banner:hover {
+    box-shadow: 0 24px 56px rgba(30, 58, 138, 0.15), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.ret-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+}
+.ret-glow-1 {
+    width: 220px;
+    height: 220px;
+    top: -60px;
+    right: -40px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0) 70%);
+}
+.ret-glow-2 {
+    width: 180px;
+    height: 180px;
+    bottom: -40px;
+    left: -30px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0) 70%);
+}
+
+.ret-main-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(20px, 4vw, 40px);
+}
+
+.ret-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.ret-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.ret-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid rgba(59, 130, 246, 0.45);
+    color: #1E40AF;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+}
+
+.ret-tag-icon {
+    width: 12px;
+    height: 12px;
+    stroke: #1D4ED8;
+    fill: none;
+    stroke-width: 2.2;
+}
+
+.ret-pill-badge {
+    font-size: 0.60rem;
+    font-weight: 700;
+    color: #854D0E;
+    background: #FEF9C3;
+    border: 1px solid #FDE047;
+    padding: 3.5px 8.5px;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+}
+
+.ret-title {
+    font-family: var(--font-serif, 'Cinzel', serif);
+    font-size: clamp(1.25rem, 2.8vw, 1.85rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    color: #1E1B18;
+    background: linear-gradient(135deg, #1E1B18 0%, #1E3A8A 60%, #8A681F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+}
+
+.ret-subtitle {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: clamp(0.74rem, 1.6vw, 0.85rem);
+    color: #475569;
+    line-height: 1.5;
+    margin: 0 0 18px 0;
+    max-width: 620px;
+}
+
+/* ── 4 Retailer Benefit Cards ── */
+.ret-steps-grid {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin-top: 12px;
+}
+
+.ret-step-card {
+    flex: 1;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.90);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 14px;
+    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    box-shadow: 0 3px 10px rgba(30, 58, 138, 0.05);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ret-step-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.55);
+    box-shadow: 0 6px 16px rgba(30, 58, 138, 0.12);
+    background: #FFFFFF;
+}
+
+.ret-step-icon-box {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ret-step-icon-box svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 2.2;
+    fill: none;
+    transition: transform 0.2s ease;
+}
+
+.ret-step-card:hover .ret-step-icon-box svg {
+    transform: scale(1.12);
+}
+
+.ret-icon-1 {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    color: #1E40AF;
+}
+.ret-icon-1 svg { stroke: #1D4ED8; }
+
+.ret-icon-2 {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid #FCD34D;
+    color: #92400E;
+}
+.ret-icon-2 svg { stroke: #B45309; }
+
+.ret-icon-3 {
+    background: linear-gradient(135deg, #ECFDF5 0%, #A7F3D0 100%);
+    border: 1px solid #6EE7B7;
+    color: #065F46;
+}
+.ret-icon-3 svg { stroke: #047857; }
+
+.ret-icon-4 {
+    background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%);
+    border: 1px solid #D8B4FE;
+    color: #6B21A8;
+}
+.ret-icon-4 svg { stroke: #7E22CE; }
+
+.ret-step-num {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #0F172A;
+    color: #93C5FD;
+    font-size: 0.46rem;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    line-height: 1.2;
+}
+
+.ret-step-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ret-step-heading {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.73rem;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ret-step-desc {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: #64748B;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ret-connector {
+    color: #3B82F6;
+    opacity: 0.6;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+.ret-connector svg {
+    width: 14px;
+    height: 14px;
+    stroke: #2563EB;
+    stroke-width: 2.5;
+    fill: none;
+}
+
+/* ── Retailer Banner Right Actions ── */
+.ret-right {
+    flex-shrink: 0;
+}
+
+.ret-cta-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    min-width: 190px;
+}
+
+.ret-btn-primary {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 50%, #172554 100%);
+    color: #FFFFFF;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 22px rgba(29, 78, 216, 0.35), 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ret-btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(29, 78, 216, 0.48), 0 4px 10px rgba(0, 0, 0, 0.12);
+    color: #FFFFFF;
+}
+
+.ret-btn-arrow {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform 0.2s ease;
+}
+.ret-btn-primary:hover .ret-btn-arrow {
+    transform: translateX(3px);
+}
+
+.ret-btn-secondary {
+    width: 100%;
+    padding: 9px 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.90);
+    border: 1.5px solid rgba(37, 211, 102, 0.5);
+    color: #065F46;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.ret-btn-secondary:hover {
+    background: #25D366;
+    border-color: #25D366;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.ret-chat-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+.ret-trust-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.60rem;
+    font-weight: 700;
+    color: #64748B;
+    margin-top: 2px;
+}
+
+.ret-trust-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3B82F6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    animation: rpbDotPulse 1.8s infinite;
+}
+
+@media (max-width: 991px) {
+    .ret-main-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+    .ret-steps-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .ret-connector {
+        display: none;
+    }
+    .ret-cta-box {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .ret-btn-primary, .ret-btn-secondary {
+        flex: 1;
+        min-width: 140px;
+    }
+    .ret-trust-pill {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 540px) {
+    .retailer-promo-banner {
+        border-radius: 18px;
+        padding: 16px 14px;
+    }
+    .ret-title {
+        font-size: 1.12rem;
+    }
+    .ret-subtitle {
+        font-size: 0.72rem;
+        margin-bottom: 12px;
+    }
+    .ret-steps-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .ret-step-card {
+        padding: 7px 8px;
+        gap: 7px;
+        border-radius: 12px;
+    }
+    .ret-step-icon-box {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+    }
+    .ret-step-icon-box svg {
+        width: 14px;
+        height: 14px;
+    }
+    .ret-step-heading {
+        font-size: 0.66rem;
+    }
+    .ret-step-desc {
+        font-size: 0.54rem;
+    }
+    .ret-cta-box {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .ret-btn-primary {
+        width: 100%;
+        padding: 11px 16px;
+        font-size: 0.78rem;
+    }
+    .ret-btn-secondary {
+        width: 100%;
+        padding: 8px 14px;
+        font-size: 0.74rem;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ROADMAP WORKFLOW CARDS (Reseller, Retailer & Wholesale)
+══════════════════════════════════════════════════════════════════════════ */
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.roadmap-step-card {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(138, 104, 31, 0.18);
+    border-radius: 18px;
+    padding: 24px 18px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.roadmap-step-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(138, 104, 31, 0.5);
+    box-shadow: 0 12px 28px rgba(138, 104, 31, 0.12);
+}
+
+.roadmap-num {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #D4AF37;
+    background: #FAF8F4;
+    padding: 2px 7px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.roadmap-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.roadmap-step-card:hover .roadmap-icon-wrap {
+    transform: scale(1.1);
+}
+
+.roadmap-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+    fill: none;
+}
+
+.rm-icon-reseller-1 { background: #FEF3C7; border: 1px solid #FCD34D; color: #92400E; }
+.rm-icon-reseller-1 svg { stroke: #B45309; }
+.rm-icon-reseller-2 { background: #D1FAE5; border: 1px solid #6EE7B7; color: #065F46; }
+.rm-icon-reseller-2 svg { stroke: #047857; }
+.rm-icon-reseller-3 { background: #E0E7FF; border: 1px solid #A5B4FC; color: #3730A3; }
+.rm-icon-reseller-3 svg { stroke: #4338CA; }
+.rm-icon-reseller-4 { background: #FDF2F8; border: 1px solid #F472B6; color: #9D174D; }
+.rm-icon-reseller-4 svg { stroke: #BE185D; }
+
+.rm-icon-retailer-1 { background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; }
+.rm-icon-retailer-1 svg { stroke: #1D4ED8; }
+.rm-icon-retailer-2 { background: #FEF3C7; border: 1px solid #FCD34D; color: #92400E; }
+.rm-icon-retailer-2 svg { stroke: #B45309; }
+.rm-icon-retailer-3 { background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; }
+.rm-icon-retailer-3 svg { stroke: #047857; }
+.rm-icon-retailer-4 { background: #F3E8FF; border: 1px solid #D8B4FE; color: #6B21A8; }
+.rm-icon-retailer-4 svg { stroke: #7E22CE; }
+
+.rm-icon-wholesale-1 { background: #FFF7ED; border: 1px solid #FED7AA; color: #C2410C; }
+.rm-icon-wholesale-1 svg { stroke: #EA580C; }
+.rm-icon-wholesale-2 { background: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; }
+.rm-icon-wholesale-2 svg { stroke: #059669; }
+.rm-icon-wholesale-3 { background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; }
+.rm-icon-wholesale-3 svg { stroke: #1D4ED8; }
+.rm-icon-wholesale-4 { background: #FAF5FF; border: 1px solid #E9D5FF; color: #7E22CE; }
+.rm-icon-wholesale-4 svg { stroke: #9333EA; }
+
+.roadmap-title {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: #1E1B18;
+    margin: 0 0 6px 0;
+}
+
+.roadmap-desc {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.74rem;
+    color: #6B6359;
+    line-height: 1.45;
+    margin: 0;
+}
+
+@media (max-width: 991px) {
+    .roadmap-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+    .roadmap-step-card {
+        padding: 18px 14px;
+    }
+}
+
+@media (max-width: 540px) {
+    .roadmap-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    .roadmap-step-card {
+        padding: 14px 10px;
+        border-radius: 14px;
+    }
+    .roadmap-icon-wrap {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+    .roadmap-icon-wrap svg {
+        width: 16px;
+        height: 16px;
+    }
+    .roadmap-title {
+        font-size: 0.80rem;
+        margin-bottom: 4px;
+    }
+    .roadmap-desc {
+        font-size: 0.62rem;
+        line-height: 1.35;
+    }
+    .roadmap-num {
+        font-size: 0.58rem;
+        top: 8px;
+        right: 8px;
+        padding: 1px 5px;
+    }
 }

@@ -746,6 +746,134 @@ $total_products = count($products);
 
 
 
+    <!-- ════════════ SECTION 17: RETAILER BOUTIQUE & SMALL SHOP OWNER BANNER ════════════ -->
+    <section class="home-banner-strip-section" id="section-retailer-promo" aria-label="Retailer Boutique Sourcing Banner">
+        <div class="home-section-container">
+            <div class="retailer-promo-banner">
+                <!-- Ambient Decorative Glow Orbs -->
+                <div class="ret-glow-orb ret-glow-1" aria-hidden="true"></div>
+                <div class="ret-glow-orb ret-glow-2" aria-hidden="true"></div>
+
+                <div class="ret-main-content">
+                    <div class="ret-left">
+                        <!-- Top Badges Row -->
+                        <div class="ret-tag-row">
+                            <span class="ret-tag">
+                                <svg viewBox="0 0 24 24" class="ret-tag-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <span>FOR SMALL SHOPS & HOME BOUTIQUES</span>
+                            </span>
+                            <span class="ret-pill-badge">📦 LOW MOQ (4–8 PCS)</span>
+                            <span class="ret-pill-badge hide-mobile">💎 60%+ RETAIL MARGINS</span>
+                        </div>
+
+                        <!-- Title & Subtitle -->
+                        <h2 class="ret-title">Stock Your Boutique Directly From Surat Looms</h2>
+                        <p class="ret-subtitle">Tailored for small shopkeepers & home boutique owners. Order small trial lots, mix & match designs/colors, get full GST input tax credit, and enjoy express doorstep counter delivery.</p>
+
+                        <!-- 4 Interactive Retailer Benefits with Real Vector SVG Icons -->
+                        <div class="ret-steps-grid">
+                            <!-- Benefit 1 -->
+                            <div class="ret-step-card">
+                                <div class="ret-step-icon-box ret-icon-1">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                    </svg>
+                                    <span class="ret-step-num">01</span>
+                                </div>
+                                <div class="ret-step-info">
+                                    <span class="ret-step-heading">Low MOQ 4–8 Pcs</span>
+                                    <span class="ret-step-desc">Zero dead stock risk</span>
+                                </div>
+                            </div>
+
+                            <div class="ret-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Benefit 2 -->
+                            <div class="ret-step-card">
+                                <div class="ret-step-icon-box ret-icon-2">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                                    </svg>
+                                    <span class="ret-step-num">02</span>
+                                </div>
+                                <div class="ret-step-info">
+                                    <span class="ret-step-heading">Mix & Match Sets</span>
+                                    <span class="ret-step-desc">Assorted colors & sizes</span>
+                                </div>
+                            </div>
+
+                            <div class="ret-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Benefit 3 -->
+                            <div class="ret-step-card">
+                                <div class="ret-step-icon-box ret-icon-3">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    </svg>
+                                    <span class="ret-step-num">03</span>
+                                </div>
+                                <div class="ret-step-info">
+                                    <span class="ret-step-heading">Full GST & ITC Bill</span>
+                                    <span class="ret-step-desc">100% Tax compliant billing</span>
+                                </div>
+                            </div>
+
+                            <div class="ret-connector" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
+
+                            <!-- Benefit 4 -->
+                            <div class="ret-step-card">
+                                <div class="ret-step-icon-box ret-icon-4">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="1" y="3" width="15" height="13"></rect>
+                                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                    </svg>
+                                    <span class="ret-step-num">04</span>
+                                </div>
+                                <div class="ret-step-info">
+                                    <span class="ret-step-heading">Counter Delivery</span>
+                                    <span class="ret-step-desc">48-hr insured dispatch</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right CTAs -->
+                    <div class="ret-right">
+                        <div class="ret-cta-box">
+                            <a href="/Frontend/Retailer/retailer.php" class="ret-btn-primary">
+                                <span>Open Retailer Hub</span>
+                                <svg viewBox="0 0 24 24" class="ret-btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20have%20a%20Boutique%20%2F%20Retail%20Shop.%20I%20want%20to%20buy%20small%20batch%20catalogs." target="_blank" class="ret-btn-secondary">
+                                <svg viewBox="0 0 24 24" class="ret-chat-icon"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>WhatsApp Boutique Desk</span>
+                            </a>
+                            <div class="ret-trust-pill">
+                                <span class="ret-trust-dot"></span>
+                                <span>15,000+ Boutique & Shop Owners</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ════════════ SECTION 18: WHOLESALE CTA BANNER ════════════ -->
     <section class="home-banner-strip-section">
         <div class="home-section-container">
@@ -860,7 +988,7 @@ $total_products = count($products);
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">⚡ 4 EASY STEPS</span>
+                    <span class="home-section-tag">⚡ ZERO INVESTMENT RESELLING</span>
                     <h2 class="home-section-title">How Ethnic Wear Reselling Works</h2>
                     <p class="home-section-desc">Start earning without spending a single rupee on inventory or warehousing.</p>
                 </div>
@@ -869,30 +997,38 @@ $total_products = count($products);
             <div class="roadmap-grid">
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">01</div>
-                    <div class="roadmap-icon">👗</div>
+                    <div class="roadmap-icon-wrap rm-icon-reseller-1">
+                        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    </div>
                     <h3 class="roadmap-title">Choose Products</h3>
-                    <p class="roadmap-desc">Browse 1000+ ready factory catalog sarees, kurtis & lehengas.</p>
+                    <p class="roadmap-desc">Browse 1,000+ ready factory catalog sarees, kurtis & lehengas with HD media.</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">02</div>
-                    <div class="roadmap-icon">💰</div>
+                    <div class="roadmap-icon-wrap rm-icon-reseller-2">
+                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
                     <h3 class="roadmap-title">Add Your Margin</h3>
-                    <p class="roadmap-desc">Set your own selling price. For example: Buy at ₹1,399, sell at ₹3,499 (₹2,100 profit).</p>
+                    <p class="roadmap-desc">Set your selling price. For example: Buy at ₹1,399, sell at ₹3,499 (₹2,100 profit).</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">03</div>
-                    <div class="roadmap-icon">📲</div>
+                    <div class="roadmap-icon-wrap rm-icon-reseller-3">
+                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </div>
                     <h3 class="roadmap-title">Share With Clients</h3>
-                    <p class="roadmap-desc">1-tap share high-res photos and descriptions on WhatsApp & Instagram.</p>
+                    <p class="roadmap-desc">1-tap share high-res photos and catalogs on WhatsApp, Instagram & Facebook.</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">04</div>
-                    <div class="roadmap-icon">🏦</div>
+                    <div class="roadmap-icon-wrap rm-icon-reseller-4">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
                     <h3 class="roadmap-title">Earn Direct Profit</h3>
-                    <p class="roadmap-desc">We dispatch under your name; your profit is credited directly to your bank account.</p>
+                    <p class="roadmap-desc">We dispatch under your boutique name; profit is credited directly to your bank account.</p>
                 </div>
             </div>
 
@@ -902,44 +1038,107 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 24: HOW WHOLESALE WORKS ════════════ -->
-    <section class="home-section" id="section-how-wholesale-works">
+    <!-- ════════════ SECTION 23B: HOW RETAILER BOUTIQUE SOURCING WORKS ════════════ -->
+    <section class="home-section" id="section-how-retailer-works">
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">🏭 B2B BULK WORKFLOW</span>
-                    <h2 class="home-section-title">How Wholesale Purchasing Works</h2>
-                    <p class="home-section-desc">Streamlined factory supply for retail shop owners across India.</p>
+                    <span class="home-section-tag">🏪 FOR SMALL SHOPS & HOME BOUTIQUES</span>
+                    <h2 class="home-section-title">How Retail Boutique Sourcing Works</h2>
+                    <p class="home-section-desc">Low MOQ, mix & match designs, and Surat factory direct pricing for boutique owners.</p>
                 </div>
             </div>
 
             <div class="roadmap-grid">
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">01</div>
-                    <div class="roadmap-icon">📦</div>
-                    <h3 class="roadmap-title">Select Products</h3>
-                    <p class="roadmap-desc">Explore B2B lots with clear MOQ from 6 to 24 pieces.</p>
+                    <div class="roadmap-icon-wrap rm-icon-retailer-1">
+                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">Small Batch Lots</h3>
+                    <p class="roadmap-desc">Order trial packs with low MOQ (4–8 pieces) to test trending styles with zero risk.</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">02</div>
-                    <div class="roadmap-icon">📊</div>
-                    <h3 class="roadmap-title">Choose Quantity</h3>
-                    <p class="roadmap-desc">Select higher quantities to unlock deeper volume tier slabs.</p>
+                    <div class="roadmap-icon-wrap rm-icon-retailer-2">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">Mix & Match Styles</h3>
+                    <p class="roadmap-desc">Pick assorted colors, blouse sizes & embroidery variations within the same catalog.</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">03</div>
-                    <div class="roadmap-icon">🧾</div>
-                    <h3 class="roadmap-title">Get Factory Price</h3>
-                    <p class="roadmap-desc">Automatic slab discounts and GST input credit breakdown applied.</p>
+                    <div class="roadmap-icon-wrap rm-icon-retailer-3">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">GST ITC Invoices</h3>
+                    <p class="roadmap-desc">Get complete B2B tax invoices with full Input Tax Credit (ITC) for your business.</p>
                 </div>
 
                 <div class="roadmap-step-card">
                     <div class="roadmap-num">04</div>
-                    <div class="roadmap-icon">🚚</div>
-                    <h3 class="roadmap-title">Express Dispatch</h3>
-                    <p class="roadmap-desc">Fast transport logistics with real-time tracking to your shop doorstep.</p>
+                    <div class="roadmap-icon-wrap rm-icon-retailer-4">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <h3 class="roadmap-title">Shop Counter Delivery</h3>
+                    <p class="roadmap-desc">Insured door-to-door express parcel delivery directly to your boutique counter.</p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:24px;">
+                <a href="/Frontend/Retailer/retailer.php" class="home-btn-gold">Explore Retailer Boutique Hub &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ SECTION 24: HOW WHOLESALE WORKS ════════════ -->
+    <section class="home-section home-section-soft-bg" id="section-how-wholesale-works">
+        <div class="home-section-container">
+            <div class="home-section-header" style="text-align:center; justify-content:center;">
+                <div>
+                    <span class="home-section-tag">🏭 B2B BULK WORKFLOW</span>
+                    <h2 class="home-section-title">How Wholesale Purchasing Works</h2>
+                    <p class="home-section-desc">Streamlined factory supply for large retail showrooms & traders across India.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-grid">
+                <div class="roadmap-step-card">
+                    <div class="roadmap-num">01</div>
+                    <div class="roadmap-icon-wrap rm-icon-wholesale-1">
+                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">Select Full Sets</h3>
+                    <p class="roadmap-desc">Explore full catalog set lots with clear MOQ slabs from 12 to 48 pieces.</p>
+                </div>
+
+                <div class="roadmap-step-card">
+                    <div class="roadmap-num">02</div>
+                    <div class="roadmap-icon-wrap rm-icon-wholesale-2">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">Volume Tier Slabs</h3>
+                    <p class="roadmap-desc">Select higher quantities to unlock maximum tier discounts straight from the loom.</p>
+                </div>
+
+                <div class="roadmap-step-card">
+                    <div class="roadmap-num">03</div>
+                    <div class="roadmap-icon-wrap rm-icon-wholesale-3">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                    </div>
+                    <h3 class="roadmap-title">Factory Net Pricing</h3>
+                    <p class="roadmap-desc">Automatic wholesale tier discounts and GST input credit breakdown applied.</p>
+                </div>
+
+                <div class="roadmap-step-card">
+                    <div class="roadmap-num">04</div>
+                    <div class="roadmap-icon-wrap rm-icon-wholesale-4">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    </div>
+                    <h3 class="roadmap-title">Transport Logistics</h3>
+                    <p class="roadmap-desc">Express transport parcel booking with door-to-door tracking across India.</p>
                 </div>
             </div>
 
