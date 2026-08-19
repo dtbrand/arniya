@@ -47,21 +47,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                 </li>
                 <li>
-                    <button class="adm-subnav-item" id="subnav-orders" onclick="switchAdmTab('orders')">
-                        <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                        <span>Orders</span>
-                    </button>
-                </li>
-                <li>
                     <button class="adm-subnav-item" id="subnav-products" onclick="switchAdmTab('products')">
                         <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span>Catalog</span>
                     </button>
                 </li>
                 <li>
-                    <button class="adm-subnav-item" id="subnav-reports" onclick="switchAdmTab('reports')">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        <span>Reports</span>
+                    <button class="adm-subnav-item" id="subnav-orders" onclick="switchAdmTab('orders')">
+                        <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                        <span>Orders</span>
                     </button>
                 </li>
                 <li>
@@ -83,9 +77,63 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                 </li>
                 <li>
+                    <button class="adm-subnav-item" id="subnav-inventory" onclick="switchAdmTab('inventory')">
+                        <svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path></svg>
+                        <span>Inventory</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-pricing" onclick="switchAdmTab('pricing')">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path></svg>
+                        <span>Pricing</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-shipping" onclick="switchAdmTab('shipping')">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
+                        <span>Shipping</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-payments" onclick="switchAdmTab('payments')">
+                        <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        <span>Payments</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-marketing" onclick="switchAdmTab('marketing')">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Marketing</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-reviews" onclick="switchAdmTab('reviews')">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Reviews</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-reports" onclick="switchAdmTab('reports')">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <span>Reports</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-cms" onclick="switchAdmTab('cms')">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                        <span>CMS</span>
+                    </button>
+                </li>
+                <li>
                     <button class="adm-subnav-item" id="subnav-settings" onclick="switchAdmTab('settings')">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                         <span>Settings</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="adm-subnav-item" id="subnav-system" onclick="switchAdmTab('system')">
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>System</span>
                     </button>
                 </li>
             </ul>
@@ -1313,6 +1361,695 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 <p style="font-size:0.75rem; color:#166534; margin-top:2px;">256-bit Encrypted • Hourly Automated Cloud Sync</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+        
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 9: PRICING & DISCOUNTS MATRIX
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-pricing">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Multi-Tier Pricing &amp; Discount Schedule</span>
+                            <span class="adm-badge gold">Live B2B &amp; B2C</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Configure wholesale MOQ volume tiers, reseller commission margins, and festive discount coupons.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/pricing/discounts.php" class="adm-btn-secondary">🏷️ Manage Coupons</a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('pricing_matrix')">📤 Export Pricing CSV</button>
+                        <button class="adm-btn-primary" onclick="window.showToast('Add Price Tier Rule...')">+ Add Tier Rule</button>
+                    </div>
+                </div>
+
+                <!-- Product Options Subnav Pills -->
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/pricing/" class="adm-prod-pill active"><span>🏷️ All Pricing Rules</span></a>
+                    <a href="/Frontend/Admin/pricing/retail.php" class="adm-prod-pill"><span>🛍️ Retail B2C Rates</span></a>
+                    <a href="/Frontend/Admin/pricing/wholesale.php" class="adm-prod-pill"><span>🏭 Wholesale MOQ Rates</span></a>
+                    <a href="/Frontend/Admin/pricing/reseller.php" class="adm-prod-pill"><span>🤝 Reseller Margins</span></a>
+                    <a href="/Frontend/Admin/pricing/discounts.php" class="adm-prod-pill"><span>🎁 Festive Discounts</span></a>
+                </div>
+
+                <!-- 4 Pricing Summary Cards -->
+                <div class="adm-kpi-grid" style="margin-bottom:20px;">
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Price Tiers</span><div class="adm-kpi-icon-box gold">🏷️</div></div>
+                        <div class="adm-kpi-val">4 Tiers</div>
+                        <div class="adm-kpi-bottom"><span class="adm-badge gold">B2C, Reseller, Wholesale, Bulk</span></div>
+                    </div>
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Average Wholesale Margin</span><div class="adm-kpi-icon-box green">📈</div></div>
+                        <div class="adm-kpi-val">34.8%</div>
+                        <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Healthy B2B Spread</span></div>
+                    </div>
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Active Coupons</span><div class="adm-kpi-icon-box purple">🎁</div></div>
+                        <div class="adm-kpi-val">6 Codes</div>
+                        <div class="adm-kpi-bottom"><span class="adm-badge success">FESTIVE2026 Live</span></div>
+                    </div>
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">GST Tax Slabs</span><div class="adm-kpi-icon-box blue">🏛️</div></div>
+                        <div class="adm-kpi-val">5% &amp; 12%</div>
+                        <div class="adm-kpi-bottom"><span class="adm-badge info">HSN 5007 &amp; 6204</span></div>
+                    </div>
+                </div>
+
+                <!-- Pricing Table -->
+                <div class="adm-table-card">
+                    <div class="adm-table-toolbar">
+                        <div class="adm-search-box" style="max-width:320px;">
+                            <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" class="adm-search-input" placeholder="Filter category or tier..." oninput="window.filterModuleTable(this.value, 'pricing')">
+                        </div>
+                    </div>
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Tier Name</th>
+                                    <th>Target Channel</th>
+                                    <th>MOQ Requirement</th>
+                                    <th>Discount on MRP</th>
+                                    <th>Payment Terms</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Retail Standard</strong></td>
+                                    <td>Direct Consumers (B2C)</td>
+                                    <td>1 Piece</td>
+                                    <td>0% – 15% (MRP Base)</td>
+                                    <td>Prepaid / COD</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Edit Tier...')">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Registered Reseller</strong></td>
+                                    <td>WhatsApp &amp; Instagram Resellers</td>
+                                    <td>1+ Pieces (Zero MOQ)</td>
+                                    <td>20% – 25% Off Retail</td>
+                                    <td>Instant UPI Payout</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Edit Tier...')">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Wholesale Tier 1</strong></td>
+                                    <td>Verified B2B Retailers / Shops</td>
+                                    <td>8+ Pieces per Design</td>
+                                    <td>55% – 62% Off Retail</td>
+                                    <td>Bank RTGS / Net 15</td>
+                                    <td><span class="adm-badge gold">Primary B2B</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Edit Tier...')">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bulk Mill Lots</strong></td>
+                                    <td>Master Wholesalers / Distributors</td>
+                                    <td>30+ Pieces (Full Bale)</td>
+                                    <td>65% – 70% Off Retail</td>
+                                    <td>Advance Wire Transfer</td>
+                                    <td><span class="adm-badge info">VIP Only</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Edit Tier...')">Edit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 10: REVIEWS & RATINGS MODERATION
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-reviews">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Customer Reviews &amp; Social Proof</span>
+                            <span class="adm-badge gold">4.9 ★ Rating</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Moderate customer reviews, pin verified photo reviews to product pages, and respond to inquiries.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/reviews/pending.php" class="adm-btn-secondary">⏳ Pending Moderation (2)</a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('customer_reviews')">📤 Export Reviews</button>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/reviews/" class="adm-prod-pill active"><span>⭐️ All Reviews (342)</span></a>
+                    <a href="/Frontend/Admin/reviews/pending.php" class="adm-prod-pill"><span>⏳ Pending (2)</span></a>
+                    <a href="/Frontend/Admin/reviews/approved.php" class="adm-prod-pill"><span>✅ Approved (338)</span></a>
+                    <a href="/Frontend/Admin/reviews/rejected.php" class="adm-prod-pill"><span>🛑 Rejected (2)</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Product Details</th>
+                                    <th>Star Rating</th>
+                                    <th>Review Feedback</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Sunita Rao</strong><br><small style="color:#7A7266;">Hyderabad • Verified Buyer</small></td>
+                                    <td><strong>Kanjivaram Pure Silk Gold Zari Saree</strong><br><small style="color:#8A681F;">SKU: KLN-SR-111</small></td>
+                                    <td><span style="color:#F59E0B; font-weight:800;">★★★★★ 5.0</span></td>
+                                    <td>"Authentic Kanjivaram pure silk fabric and the gold zari border has royal luster. Fast 2-day delivery!"</td>
+                                    <td>Today, 11:20 AM</td>
+                                    <td><span class="adm-badge success">Approved</span></td>
+                                    <td>
+                                        <div class="adm-action-btn-group">
+                                            <button class="adm-action-btn" title="Pin to Homepage" onclick="window.showToast('📌 Pinned to Homepage showcase!')">📌</button>
+                                            <button class="adm-action-btn wa" title="WhatsApp Thank You" onclick="window.showToast('WhatsApp appreciation message sent!')">💬</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Vardhman Textiles (Rajesh K.)</strong><br><small style="color:#8A681F;">Surat • Wholesale Partner</small></td>
+                                    <td><strong>Pure Dola Silk Lot (24 pcs)</strong><br><small style="color:#8A681F;">SKU: KLN-SR-111-LOT</small></td>
+                                    <td><span style="color:#F59E0B; font-weight:800;">★★★★★ 5.0</span></td>
+                                    <td>"Our retail boutique customers loved every color. Excellent packaging and GST invoice provided promptly."</td>
+                                    <td>Yesterday</td>
+                                    <td><span class="adm-badge gold">B2B Verified</span></td>
+                                    <td>
+                                        <div class="adm-action-btn-group">
+                                            <button class="adm-action-btn" title="Pin to B2B Testimonials" onclick="window.showToast('📌 Pinned to B2B page!')">📌</button>
+                                            <button class="adm-action-btn wa" title="WhatsApp Thank You" onclick="window.showToast('WhatsApp message sent!')">💬</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 11: INVENTORY & WAREHOUSE HUBS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-inventory">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Warehouse Inventory &amp; Stock Hubs</span>
+                            <span class="adm-badge gold">14,850 Total Units</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Track stock allocations across Surat Central Mill Depot and Bhiwandi Logistics Hub.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/inventory/stock-in.php" class="adm-btn-primary">+ Stock In (Procurement)</a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('inventory_stock')">📤 Export Stock</button>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/inventory/" class="adm-prod-pill active"><span>📦 All Inventory</span></a>
+                    <a href="/Frontend/Admin/inventory/stock-in.php" class="adm-prod-pill"><span>📥 Stock In</span></a>
+                    <a href="/Frontend/Admin/inventory/stock-out.php" class="adm-prod-pill"><span>📤 Stock Out</span></a>
+                    <a href="/Frontend/Admin/inventory/low-stock.php" class="adm-prod-pill"><span>⚠️ Low Stock (14)</span></a>
+                    <a href="/Frontend/Admin/inventory/adjustment.php" class="adm-prod-pill"><span>⚖️ Stock Adjustment</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>SKU &amp; Product</th>
+                                    <th>Primary Hub</th>
+                                    <th>In Stock</th>
+                                    <th>Reserved</th>
+                                    <th>Available to Sell</th>
+                                    <th>Stock Health</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>KLN-SR-111</strong><br><small>Kanjivaram Silk Saree</small></td>
+                                    <td>Surat Central Depot</td>
+                                    <td><strong>110 units</strong></td>
+                                    <td>15 units (Order #ORD-9841)</td>
+                                    <td><strong style="color:#15803D;">95 units</strong></td>
+                                    <td><span class="adm-badge success">Optimal</span></td>
+                                    <td><a href="/Frontend/Admin/inventory/adjustment.php" class="adm-btn-secondary adm-btn-sm">Adjust</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>BRD-LH-902</strong><br><small>Bridal Zardosi Lehenga</small></td>
+                                    <td>Surat Central Depot</td>
+                                    <td><strong>4 units</strong></td>
+                                    <td>1 unit</td>
+                                    <td><strong style="color:#DC2626;">3 units</strong></td>
+                                    <td><span class="adm-badge warning">Low Stock</span></td>
+                                    <td><a href="/Frontend/Admin/inventory/stock-in.php" class="adm-btn-secondary adm-btn-sm">Restock</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 12: SHIPPING & LOGISTICS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-shipping">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Shipping Logistics &amp; Courier Manifests</span>
+                            <span class="adm-badge gold">19,000+ Pincodes</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Manage Delhivery, BlueDart &amp; TCI Freight logistics integrations and dispatch manifests.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/shipping/tracking.php" class="adm-btn-secondary">🔍 Live Tracking</a>
+                        <button class="adm-btn-primary" onclick="window.showToast('Generate Shipping Manifest...')">+ Create Manifest</button>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/shipping/" class="adm-prod-pill active"><span>🚚 Active Shipments</span></a>
+                    <a href="/Frontend/Admin/shipping/methods.php" class="adm-prod-pill"><span>📦 Courier Partners</span></a>
+                    <a href="/Frontend/Admin/shipping/rates.php" class="adm-prod-pill"><span>💰 Shipping Rates</span></a>
+                    <a href="/Frontend/Admin/shipping/tracking.php" class="adm-prod-pill"><span>📍 AWB Tracking</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>AWB Tracking #</th>
+                                    <th>Order ID</th>
+                                    <th>Courier Partner</th>
+                                    <th>Destination</th>
+                                    <th>Weight</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>DELHIVERY: DL789234901</code></td>
+                                    <td><strong>ORD-9842</strong></td>
+                                    <td>Delhivery Express (Air)</td>
+                                    <td>Mumbai, MH (400001)</td>
+                                    <td>0.85 kg</td>
+                                    <td><span class="adm-badge info">In Transit</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.sendOrderWhatsApp('ORD-9842')">Track</button></td>
+                                </tr>
+                                <tr>
+                                    <td><code>TCI FREIGHT: TCI-66291</code></td>
+                                    <td><strong>ORD-9841</strong></td>
+                                    <td>TCI B2B Surface Heavy</td>
+                                    <td>Surat, GJ (395002)</td>
+                                    <td>18.50 kg (Lot)</td>
+                                    <td><span class="adm-badge gold">Packed &amp; Manifested</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.sendOrderWhatsApp('ORD-9841')">Track</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 13: PAYMENTS & FINANCIAL SETTLEMENTS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-payments">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Payments &amp; Financial Ledger</span>
+                            <span class="adm-badge green">● Gateway Active</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Track incoming UPI, NetBanking, RTGS transfers, COD remittances, and reseller commission payouts.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('payment_transactions')">📤 Export Ledger</button>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/payments/" class="adm-prod-pill active"><span>💳 All Transactions</span></a>
+                    <a href="/Frontend/Admin/payments/successful.php" class="adm-prod-pill"><span>✅ Successful</span></a>
+                    <a href="/Frontend/Admin/payments/pending.php" class="adm-prod-pill"><span>⏳ Pending Verification</span></a>
+                    <a href="/Frontend/Admin/payments/refunds.php" class="adm-prod-pill"><span>🔄 Refunds</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Order Reference</th>
+                                    <th>Customer / Business</th>
+                                    <th>Payment Mode</th>
+                                    <th>Amount (₹)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>TXN-90218273</code></td>
+                                    <td>ORD-9842</td>
+                                    <td>Ananya Sharma</td>
+                                    <td>UPI (Razorpay)</td>
+                                    <td><strong>₹4,899</strong></td>
+                                    <td><span class="adm-badge success">Captured</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code>RTGS-SURAT-8910</code></td>
+                                    <td>ORD-9841</td>
+                                    <td>Vardhman Textiles</td>
+                                    <td>Bank RTGS Direct</td>
+                                    <td><strong style="color:#8A681F;">₹33,576</strong></td>
+                                    <td><span class="adm-badge success">Settled</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 14: MARKETING & CAMPAIGNS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-marketing">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Marketing &amp; Promotional Campaigns</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Run flash sales, configure festive banner sliders, and distribute WhatsApp promo codes.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/marketing/banners.php" class="adm-btn-secondary">🖼️ Homepage Banners</a>
+                        <a href="/Frontend/Admin/marketing/coupons.php" class="adm-btn-primary">+ Create Coupon</a>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/marketing/" class="adm-prod-pill active"><span>📢 All Campaigns</span></a>
+                    <a href="/Frontend/Admin/marketing/banners.php" class="adm-prod-pill"><span>🖼️ Banners</span></a>
+                    <a href="/Frontend/Admin/marketing/coupons.php" class="adm-prod-pill"><span>🎟️ Coupons</span></a>
+                    <a href="/Frontend/Admin/marketing/campaigns.php" class="adm-prod-pill"><span>⚡ Flash Sales</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Coupon Code</th>
+                                    <th>Discount Value</th>
+                                    <th>Min Order Value</th>
+                                    <th>Applicable Category</th>
+                                    <th>Usage Count</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code style="font-weight:800; color:#8A681F; font-size:0.9rem;">FESTIVE2026</code></td>
+                                    <td>15% Off (Max ₹1,500)</td>
+                                    <td>₹2,999</td>
+                                    <td>Silk Sarees &amp; Kurtis</td>
+                                    <td>148 times</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td><code style="font-weight:800; color:#8A681F; font-size:0.9rem;">B2BVIPBULK</code></td>
+                                    <td>Flat ₹3,000 Off</td>
+                                    <td>₹25,000</td>
+                                    <td>Wholesale Catalog Lots</td>
+                                    <td>42 times</td>
+                                    <td><span class="adm-badge gold">VIP B2B</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 15: CMS & STOREFRONT PAGES
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-cms">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>CMS &amp; Storefront Content Manager</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Manage homepage hero announcements, brand story, contact address, and legal policies.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/cms/homepage.php" class="adm-btn-primary">✏️ Edit Homepage Content</a>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/cms/" class="adm-prod-pill active"><span>📄 All Pages</span></a>
+                    <a href="/Frontend/Admin/cms/homepage.php" class="adm-prod-pill"><span>🏠 Homepage</span></a>
+                    <a href="/Frontend/Admin/cms/about.php" class="adm-prod-pill"><span>📖 About DT Brand's</span></a>
+                    <a href="/Frontend/Admin/cms/contact.php" class="adm-prod-pill"><span>📞 Contact &amp; Mills</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Page Title</th>
+                                    <th>URL Route</th>
+                                    <th>Last Updated</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Homepage &amp; Hero Sliders</strong></td>
+                                    <td><code>/Frontend/Home/home.php</code></td>
+                                    <td>Today, 02:00 PM</td>
+                                    <td><span class="adm-badge success">Live</span></td>
+                                    <td><a href="/Frontend/Admin/cms/homepage.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>About Heritage &amp; Weaving Mills</strong></td>
+                                    <td><code>/Frontend/Home/about.php</code></td>
+                                    <td>12 Aug 2026</td>
+                                    <td><span class="adm-badge success">Live</span></td>
+                                    <td><a href="/Frontend/Admin/cms/about.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 16: MEDIA LIBRARY & ASSET ASSETS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-media">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Media Library &amp; High-Res Assets</span>
+                            <span class="adm-badge gold">480 Photos</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Centralized media asset vault with WebP compression and instant CDN delivery.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/media/upload.php" class="adm-btn-primary">📤 Upload New Media</a>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/media/" class="adm-prod-pill active"><span>🖼️ All Media</span></a>
+                    <a href="/Frontend/Admin/media/upload.php" class="adm-prod-pill"><span>📤 Upload Media</span></a>
+                    <a href="/Frontend/Admin/media/gallery.php" class="adm-prod-pill"><span>📸 Gallery Folders</span></a>
+                </div>
+
+                <div class="dt-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:14px;">
+                    <div class="adm-card" style="padding:8px; text-align:center;">
+                        <img src="/Frontend/Shop/Asset/images/product1.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product1.png</div>
+                    </div>
+                    <div class="adm-card" style="padding:8px; text-align:center;">
+                        <img src="/Frontend/Shop/Asset/images/product2.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product2.png</div>
+                    </div>
+                    <div class="adm-card" style="padding:8px; text-align:center;">
+                        <img src="/Frontend/Shop/Asset/images/product3.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product3.png</div>
+                    </div>
+                    <div class="adm-card" style="padding:8px; text-align:center;">
+                        <img src="/Frontend/Shop/Asset/images/product4.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product4.png</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 17: NOTIFICATIONS & BROADCAST ALERTS
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-notifications">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Notifications &amp; Alerts Dispatch</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Configure automated WhatsApp alerts, email receipts, and admin system triggers.</p>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/notifications/" class="adm-prod-pill active"><span>🔔 All Alerts</span></a>
+                    <a href="/Frontend/Admin/notifications/templates.php" class="adm-prod-pill"><span>📝 Message Templates</span></a>
+                    <a href="/Frontend/Admin/notifications/push.php" class="adm-prod-pill"><span>📲 Push Notifications</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Trigger Event</th>
+                                    <th>Notification Channel</th>
+                                    <th>Recipients</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>New Order Received</strong></td>
+                                    <td>WhatsApp + Admin Audio Chime</td>
+                                    <td>Admin &amp; Customer</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Template editor...')">Edit</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Consignment Dispatched (AWB)</strong></td>
+                                    <td>WhatsApp Automated Tracking Link</td>
+                                    <td>Buyer Phone</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                    <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Template editor...')">Edit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 18: USERS & PERMISSION ROLES
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-users">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>Admin Users &amp; Role-Based Access</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Manage staff access permissions for catalog management, order processing, and accounting.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <a href="/Frontend/Admin/users/admins.php" class="adm-btn-primary">+ Add Staff Member</a>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/users/" class="adm-prod-pill active"><span>👥 Staff Users</span></a>
+                    <a href="/Frontend/Admin/users/roles.php" class="adm-prod-pill"><span>🛡️ Permission Roles</span></a>
+                    <a href="/Frontend/Admin/users/activity-logs.php" class="adm-prod-pill"><span>📜 Audit Logs</span></a>
+                </div>
+
+                <div class="adm-table-card">
+                    <div class="adm-table-responsive">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Staff Name</th>
+                                    <th>Email / Phone</th>
+                                    <th>Role</th>
+                                    <th>Last Login</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Gautam Sethi</strong></td>
+                                    <td>gautam@jaihanumantex.in</td>
+                                    <td><span class="adm-badge gold">Super Admin</span></td>
+                                    <td>Active Now</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Surat Catalog Team</strong></td>
+                                    <td>catalog@jaihanumantex.in</td>
+                                    <td><span class="adm-badge info">Catalog Manager</span></td>
+                                    <td>Today, 11:15 AM</td>
+                                    <td><span class="adm-badge success">Active</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════
+                 TAB 19: SYSTEM HEALTH & DATABASE
+            ════════════════════════════════════════════════════════════ -->
+            <section class="adm-tab-panel" id="tab-system">
+                <div class="adm-page-head">
+                    <div class="adm-page-title-group">
+                        <h1 class="adm-page-title">
+                            <span>System Health, Database &amp; APIs</span>
+                            <span class="adm-badge green">● All Systems Nominal</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Monitor server response time, MySQL database connections, and create instant backup snapshots.</p>
+                    </div>
+                    <div class="adm-page-actions">
+                        <button class="adm-btn-primary" onclick="window.showToast('⚡ Database Backup Snapshot Created (backup_2026.sql)!')">💾 Backup Database Now</button>
+                    </div>
+                </div>
+
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/system/" class="adm-prod-pill active"><span>🖥️ Server Status</span></a>
+                    <a href="/Frontend/Admin/system/health.php" class="adm-prod-pill"><span>❤️ Health Check</span></a>
+                    <a href="/Frontend/Admin/system/database.php" class="adm-prod-pill"><span>🗄️ MySQL Database</span></a>
+                    <a href="/Frontend/Admin/system/backups.php" class="adm-prod-pill"><span>💾 Backups &amp; Snapshots</span></a>
+                </div>
+
+                <div class="adm-kpi-grid">
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">PHP Engine</span><div class="adm-kpi-icon-box purple">🐘</div></div>
+                        <div class="adm-kpi-val">PHP 8.2+</div>
+                        <div class="adm-kpi-bottom"><span class="adm-badge success">OPcache Enabled</span></div>
+                    </div>
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Database Storage</span><div class="adm-kpi-icon-box blue">🗄️</div></div>
+                        <div class="adm-kpi-val">24.5 MB</div>
+                        <div class="adm-kpi-bottom"><span class="adm-badge gold">MySQL InnoDB</span></div>
+                    </div>
+                    <div class="adm-kpi-card">
+                        <div class="adm-kpi-top"><span class="adm-kpi-label">Server Uptime</span><div class="adm-kpi-icon-box green">⚡</div></div>
+                        <div class="adm-kpi-val">99.98%</div>
+                        <div class="adm-kpi-bottom"><span class="adm-kpi-delta up">Hostinger Cloud</span></div>
                     </div>
                 </div>
             </section>
