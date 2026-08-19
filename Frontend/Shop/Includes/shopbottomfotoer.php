@@ -7,119 +7,241 @@
 ?>
 <style>
 /* ════════════════════════════════════════════════════
-   FIXED BOTTOM BAR (compact & animated mobile only)
+   LUXURY SMART MOBILE BOTTOM FOOTER (ROUNDED HOME STYLE)
 ════════════════════════════════════════════════════ */
-.bottom-filter-bar {
+.shop-smart-bottom-footer {
+    display: none;
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: clamp(38px, 10vw, 44px);
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1.5px solid rgba(138, 104, 31, 0.22);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08), 0 -1px 4px rgba(138, 104, 31, 0.1);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9990;
+    padding: 0 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+    .shop-smart-bottom-footer {
+        display: block;
+    }
+    body {
+        padding-bottom: clamp(75px, 18vw, 90px) !important;
+    }
+}
+@media (min-width: 1024px) {
+    .shop-smart-bottom-footer {
+        display: none !important;
+    }
+}
+
+.shop-smart-nav-wrapper {
+    position: relative;
+    max-width: 440px;
+    margin: 0 auto;
+    background: #181512;
+    background: linear-gradient(180deg, #221D18 0%, #14110E 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.38);
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48), 0 2px 10px rgba(212, 175, 55, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    pointer-events: auto;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    z-index: 900;
-    padding: 0 clamp(4px, 1.5vw, 10px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    padding: 0 4px;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-.bottom-bar-btn {
+.shop-smart-nav-item {
+    position: relative;
     flex: 1;
+    height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 9px;
+    text-decoration: none;
+    color: #A89F91;
+    z-index: 5;
+    transition: color 0.25s ease, transform 0.2s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    border: none;
+    background: transparent;
+}
+
+.shop-smart-nav-icon-box {
+    position: relative;
+    width: 32px;
+    height: 26px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(4px, 1.5vw, 7px);
-    height: clamp(30px, 8vw, 36px);
-    margin: 0 2px;
-    border-radius: 20px;
-    background: transparent;
-    border: 1px solid transparent;
-    cursor: pointer;
-    font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: clamp(0.56rem, 2vw, 0.66rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--dark-gold, #8A681F);
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    overflow: hidden;
+    margin-bottom: 3px;
+    transition: transform 0.25s ease, color 0.25s ease;
 }
 
-/* Subtle Shimmer Ripple on Button */
-.bottom-bar-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(138,104,31,0.08) 0%, rgba(245,230,195,0.25) 100%);
-    opacity: 0;
-    transition: opacity 0.2s ease;
+.shop-smart-nav-svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.25s ease;
 }
-.bottom-bar-btn:hover::before,
-.bottom-bar-btn:active::before {
+
+.shop-smart-nav-label {
+    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+    transition: color 0.25s ease, font-weight 0.25s ease;
+    opacity: 0.9;
+    white-space: nowrap;
+    color: inherit;
+}
+
+.shop-smart-nav-item:hover,
+.shop-smart-nav-item:active,
+.shop-smart-nav-item.active {
+    color: #F5D77F;
+}
+
+.shop-smart-nav-item:hover .shop-smart-nav-svg,
+.shop-smart-nav-item:active .shop-smart-nav-svg,
+.shop-smart-nav-item.active .shop-smart-nav-svg {
+    stroke: #F5D77F;
+    transform: translateY(-2px) scale(1.08);
+}
+
+.shop-smart-nav-item.active .shop-smart-nav-label {
+    color: #F5D77F;
+    font-weight: 800;
     opacity: 1;
 }
 
-.bottom-bar-btn:hover {
-    border-color: rgba(138,104,31,0.28);
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(138,104,31,0.12);
-}
-.bottom-bar-btn:active {
-    transform: scale(0.93);
+/* ── PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated 🔥 HOT Badge) ── */
+.shop-smart-nav-hero-reels {
+    position: relative;
+    flex: 1.15;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 7px;
+    text-decoration: none;
+    color: #F5D77F;
+    z-index: 10;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Animated SVG Icons */
-.bottom-bar-btn svg {
-    width: clamp(12px, 3.5vw, 15px);
-    height: clamp(12px, 3.5vw, 15px);
-    stroke: currentColor;
+.shop-smart-hero-bubble {
+    position: absolute;
+    top: -20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F5D77F 0%, #D4AF37 40%, #8A681F 100%);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+    border: 3.5px solid #181512;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+}
+
+.shop-smart-hero-bubble svg {
+    width: 24px;
+    height: 24px;
+    stroke: #FFFFFF;
     stroke-width: 2.2;
     fill: none;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.2s ease;
-    flex-shrink: 0;
-}
-.bottom-bar-btn:hover svg {
-    transform: scale(1.18) rotate(-6deg);
-    color: var(--deep-gold, #6F5218);
-}
-.bottom-bar-btn:active svg {
-    transform: scale(0.95);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+    animation: shopReelsPulse 2.4s infinite ease-in-out;
 }
 
-/* Animated Gold Divider */
-.bottom-bar-divider {
-    width: 1px;
-    height: 20px;
-    background: linear-gradient(180deg, transparent 0%, rgba(138,104,31,0.35) 50%, transparent 100%);
-    flex-shrink: 0;
+.shop-smart-nav-hero-reels:hover .shop-smart-hero-bubble,
+.shop-smart-nav-hero-reels:active .shop-smart-hero-bubble {
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 12px 28px rgba(212, 175, 55, 0.7), 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Active Pulsing Indicator Badge */
-.bottom-bar-btn.has-active::after {
-    content: '';
+@keyframes shopReelsPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.shop-smart-hero-hot-badge {
     position: absolute;
-    top: 6px; right: 12px;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--dark-gold, #8A681F);
-    box-shadow: 0 0 0 rgba(138,104,31,0.6);
-    animation: pulseGoldDot 1.6s infinite;
+    top: -5px;
+    right: -6px;
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #991B1B 100%);
+    color: #FFFFFF;
+    font-size: 0.48rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    padding: 1.5px 5.5px;
+    border-radius: 12px;
+    border: 1.5px solid #181512;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.6), 0 0 8px rgba(239, 68, 68, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    z-index: 12;
+    animation: shopHotBadgePulse 1.8s infinite ease-in-out;
+    text-transform: uppercase;
 }
 
-@keyframes pulseGoldDot {
-    0% { box-shadow: 0 0 0 0 rgba(138, 104, 31, 0.7); }
-    70% { box-shadow: 0 0 0 6px rgba(138, 104, 31, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(138, 104, 31, 0); }
+@keyframes shopHotBadgePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 2px 8px rgba(239, 68, 68, 0.6); }
+    50% { transform: scale(1.14); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.85); }
 }
 
-@media (min-width: 1024px) { .bottom-filter-bar { display: none !important; } }
+.shop-smart-nav-hero-label {
+    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+    color: #F5D77F;
+    white-space: nowrap;
+}
+
+.shop-smart-nav-badge {
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+    color: #FFFFFF;
+    font-size: 0.50rem;
+    font-weight: 900;
+    min-width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    border: 1.5px solid #181512;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
+    z-index: 6;
+}
 
 /* ════════════════════════════════════════════════════
    MYNTRA MOBILE FILTER (full-screen overlay)
@@ -476,23 +598,72 @@ input[type=range].mf-range::-moz-range-thumb {
 .add-action-sub { font-size: 0.68rem; color: var(--light-text); margin-top: 1px; }
 </style>
 
-<!-- ════ FIXED BOTTOM BAR ════ -->
-<nav class="bottom-filter-bar" id="bottomFilterBar" aria-label="Shop controls">
-    <button class="bottom-bar-btn" id="filterBtn" aria-label="Open filters" aria-expanded="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-        </svg>
-        Filter
-    </button>
-    <div class="bottom-bar-divider" aria-hidden="true"></div>
-    <button class="bottom-bar-btn" id="sortBtn" aria-label="Sort products" aria-expanded="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="15" y2="12"></line>
-            <line x1="3" y1="18" x2="9" y2="18"></line>
-        </svg>
-        Sort By
-    </button>
+<!-- ════ LUXURY SMART MOBILE BOTTOM FOOTER (ROUNDED HOME STYLE WITH REELS) ════ -->
+<nav class="shop-smart-bottom-footer" id="shopSmartBottomFooter" aria-label="Shop Mobile Controls">
+    <div class="shop-smart-nav-wrapper">
+        
+        <!-- 1: FILTER -->
+        <a href="javascript:void(0)" class="shop-smart-nav-item" id="filterBtn" data-tab="filter" onclick="if(typeof openMobileFilter==='function'){openMobileFilter();}else{var mf=document.getElementById('mfOverlay');if(mf)mf.classList.add('open');}" aria-label="Open Filters">
+            <div class="shop-smart-nav-icon-box">
+                <svg viewBox="0 0 24 24" class="shop-smart-nav-svg">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+            </div>
+            <span class="shop-smart-nav-label">Filter</span>
+        </a>
+
+        <!-- 2: SORT BY -->
+        <a href="javascript:void(0)" class="shop-smart-nav-item" id="sortBtn" data-tab="sort" onclick="if(typeof openSort==='function'){openSort();}else{var ss=document.getElementById('sortSheet');if(ss)ss.classList.add('open');}" aria-label="Sort Products">
+            <div class="shop-smart-nav-icon-box">
+                <svg viewBox="0 0 24 24" class="shop-smart-nav-svg">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="15" y2="12"></line>
+                    <line x1="3" y1="18" x2="9" y2="18"></line>
+                </svg>
+            </div>
+            <span class="shop-smart-nav-label">Sort By</span>
+        </a>
+
+        <!-- 3: PERMANENT HERO REELS (Elevated Center Floating Bubble with Animated 🔥 HOT Badge) -->
+        <a href="javascript:void(0)" class="shop-smart-nav-hero-reels" id="smartNavReels" data-tab="reels" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
+            <div class="shop-smart-hero-bubble">
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="18" rx="4"></rect>
+                    <line x1="2" y1="8" x2="22" y2="8"></line>
+                    <line x1="7" y1="3" x2="5" y2="8"></line>
+                    <line x1="13" y1="3" x2="11" y2="8"></line>
+                    <line x1="19" y1="3" x2="17" y2="8"></line>
+                    <polygon points="10 12 15 15 10 18" fill="currentColor"></polygon>
+                </svg>
+                <!-- Animated Glowing 🔥 HOT Badge -->
+                <span class="shop-smart-hero-hot-badge">🔥 HOT</span>
+            </div>
+            <span class="shop-smart-nav-hero-label">Reels</span>
+        </a>
+
+        <!-- 4: WISHLIST -->
+        <a href="javascript:void(0)" class="shop-smart-nav-item" id="smartNavWishlist" data-tab="wishlist" onclick="if(typeof window.openWishlistDrawer==='function') window.openWishlistDrawer();" aria-label="Open Wishlist">
+            <div class="shop-smart-nav-icon-box">
+                <svg viewBox="0 0 24 24" class="shop-smart-nav-svg">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <span class="shop-smart-nav-badge" id="shopSmartWishlistBadge">0</span>
+            </div>
+            <span class="shop-smart-nav-label">Wishlist</span>
+        </a>
+
+        <!-- 5: MY ACCOUNT -->
+        <a href="javascript:void(0)" class="shop-smart-nav-item" id="smartNavAccount" data-tab="account" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}" aria-label="My Account">
+            <div class="shop-smart-nav-icon-box">
+                <svg viewBox="0 0 24 24" class="shop-smart-nav-svg">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <span class="shop-smart-nav-label">Account</span>
+        </a>
+
+    </div>
 </nav>
 
 <!-- ════ MYNTRA MOBILE FILTER OVERLAY ════ -->
@@ -1078,6 +1249,22 @@ input[type=range].mf-range::-moz-range-thumb {
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
     if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('🔗 Page link copied to clipboard'); });
     if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
+
+    function syncShopBottomFooterBadges() {
+        try {
+            var wish = JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]');
+            var wBadge = document.getElementById('shopSmartWishlistBadge');
+            if (wBadge) {
+                var count = Array.isArray(wish) ? wish.length : 0;
+                wBadge.textContent = count;
+                wBadge.style.display = count > 0 ? 'flex' : 'none';
+            }
+        } catch(e) {}
+    }
+
+    syncShopBottomFooterBadges();
+    window.addEventListener('storage', syncShopBottomFooterBadges);
+    document.addEventListener('DOMContentLoaded', syncShopBottomFooterBadges);
 
     syncMobileMoreAccountState();
     window.addEventListener('storage', syncMobileMoreAccountState);
