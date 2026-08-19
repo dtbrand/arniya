@@ -1,0 +1,389 @@
+/**
+ * wordpress-style.css — WordPress & WooCommerce Admin Products UI Replica
+ * Clean High-Density Layout with Signature DT Brand's Gold Accent
+ */
+
+/* ── 1. WORDPRESS PAGE HEADING ── */
+.wp-heading-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.wp-heading-inline {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 23px;
+    font-weight: 400;
+    color: #1d2327;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.wp-page-title-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #2271b1;
+    background: #f6f7f7;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.wp-page-title-action:hover {
+    background: #2271b1;
+    color: #ffffff;
+    border-color: #0a4b78;
+}
+
+.wp-page-title-action.gold {
+    color: #8A681F;
+    border-color: #8A681F;
+    background: #FAF5E8;
+}
+
+.wp-page-title-action.gold:hover {
+    background: #8A681F;
+    color: #ffffff;
+}
+
+.wp-page-title-action.secondary {
+    color: #2c3338;
+    border-color: #8c8f94;
+    background: #f6f7f7;
+}
+
+.wp-page-title-action.secondary:hover {
+    background: #f0f0f1;
+    border-color: #1d2327;
+    color: #135e96;
+}
+
+/* ── 2. WORDPRESS STATUS TABS (.subsubsub) ── */
+.wp-subsubsub {
+    list-style: none;
+    margin: 8px 0 12px 0;
+    padding: 0;
+    font-size: 13px;
+    color: #646970;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.wp-subsubsub li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.wp-subsubsub li a {
+    color: #2271b1;
+    text-decoration: none;
+    transition: color 0.1s ease;
+}
+
+.wp-subsubsub li a:hover {
+    color: #135e96;
+}
+
+.wp-subsubsub li a.current {
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.wp-subsubsub .count {
+    color: #50575e;
+    font-weight: 400;
+}
+
+.wp-subsubsub .sep {
+    color: #c3c4c7;
+    margin-left: 6px;
+}
+
+/* ── 3. WORDPRESS TABLENAV TOOLBAR (.tablenav) ── */
+.wp-tablenav {
+    clear: both;
+    height: auto;
+    margin: 6px 0 10px 0;
+    padding-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wp-tablenav-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.wp-select {
+    height: 30px;
+    line-height: 28px;
+    padding: 0 24px 0 8px;
+    font-size: 13px;
+    color: #2c3338;
+    background: #ffffff;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 0 transparent;
+    transition: all 0.1s ease;
+}
+
+.wp-select:focus, .wp-select:hover {
+    border-color: #2271b1;
+    color: #0a4b78;
+}
+
+.wp-button {
+    height: 30px;
+    line-height: 28px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2271b1;
+    background: #f6f7f7;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    transition: all 0.1s ease;
+}
+
+.wp-button:hover {
+    background: #f0f0f1;
+    border-color: #0a4b78;
+    color: #0a4b78;
+}
+
+.wp-button.primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #ffffff;
+}
+
+.wp-button.primary:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+.wp-search-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.wp-search-input {
+    height: 30px;
+    padding: 0 8px;
+    font-size: 13px;
+    color: #2c3338;
+    background: #ffffff;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    outline: none;
+    min-width: 220px;
+    transition: all 0.1s ease;
+}
+
+.wp-search-input:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* ── 4. WORDPRESS LIST TABLE (.wp-list-table) ── */
+.wp-table-card {
+    background: #ffffff;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.wp-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #2c3338;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.wp-list-table thead th {
+    background: #f6f7f7;
+    color: #2c3338;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-bottom: 1px solid #c3c4c7;
+    vertical-align: middle;
+}
+
+.wp-list-table thead th a {
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.wp-list-table tbody td {
+    padding: 8px 10px;
+    border-top: 1px solid #f0f0f1;
+    vertical-align: middle;
+    line-height: 1.4;
+}
+
+.wp-list-table tbody tr:nth-child(odd) {
+    background-color: #fbfbfb;
+}
+
+.wp-list-table tbody tr:hover {
+    background-color: #f0f6fc;
+}
+
+.wp-thumb-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 2px;
+    border: 1px solid #dcdcde;
+    display: block;
+}
+
+/* WordPress Title & Hover Row Actions */
+.wp-row-title {
+    font-weight: 600;
+    color: #2271b1;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+}
+
+.wp-row-title:hover {
+    color: #135e96;
+}
+
+.wp-row-sku {
+    font-size: 12px;
+    color: #646970;
+    margin-top: 2px;
+}
+
+.wp-row-actions {
+    font-size: 12px;
+    color: #a7aaad;
+    padding-top: 2px;
+    visibility: visible;
+}
+
+.wp-row-actions a {
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.wp-row-actions a:hover {
+    color: #135e96;
+}
+
+.wp-row-actions a.trash {
+    color: #b32d2e;
+}
+
+.wp-row-actions a.trash:hover {
+    color: #a00;
+}
+
+/* Stock Badges */
+.wp-stock-in {
+    color: #007017;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.wp-stock-low {
+    color: #b45309;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.wp-stock-out {
+    color: #b32d2e;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+/* Star Toggle */
+.wp-star-btn {
+    background: none;
+    border: none;
+    color: #c3c4c7;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    line-height: 1;
+}
+
+.wp-star-btn.active {
+    color: #dba617;
+}
+
+/* ── 5. WORDPRESS BOTTOM TABLENAV PAGINATION ── */
+.wp-tablenav-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #50575e;
+    border-top: 1px solid #c3c4c7;
+    background: #f6f7f7;
+}
+
+.wp-pagination-links {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.wp-tablenav-pages-navspan, .wp-page-number {
+    display: inline-block;
+    min-width: 24px;
+    height: 24px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 4px;
+    font-size: 13px;
+    border: 1px solid #c3c4c7;
+    border-radius: 3px;
+    background: #f6f7f7;
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.wp-page-number.current {
+    background: #2271b1;
+    color: #ffffff;
+    border-color: #2271b1;
+    font-weight: 600;
+}
