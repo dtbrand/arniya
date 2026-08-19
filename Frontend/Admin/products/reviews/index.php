@@ -1,6 +1,6 @@
 <?php
 /**
- * index.php — DT Brand's Product Reviews & Customer Moderation Suite
+ * index.php — DT Brand's Product Reviews & Customer Moderation Suite (Wholesale & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Product Reviews Moderation";
@@ -41,26 +41,43 @@ $active_subnav = "reviews";
         border-radius: 50%;
         background: linear-gradient(135deg, #181512, #3D342A);
         color: #D4AF37;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 13px;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 1.5px solid #D4AF37;
+        box-shadow: 0 2px 6px rgba(212,175,55,0.25);
         flex-shrink: 0;
     }
     .dt-user-img-thumb {
         width: 44px;
         height: 44px;
         object-fit: cover;
-        border-radius: 4px;
-        border: 1px solid #c3c4c7;
+        border-radius: 6px;
+        border: 1.5px solid #D4AF37;
         cursor: pointer;
-        transition: transform 0.2s;
+        transition: all 0.2s ease;
     }
     .dt-user-img-thumb:hover {
         transform: scale(1.15);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+    }
+    .dt-btn-action-pill {
+        height: 26px;
+        padding: 0 8px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s ease;
+    }
+    .dt-btn-action-pill:hover {
+        transform: translateY(-1px);
     }
     </style>
 </head>
@@ -71,7 +88,7 @@ $active_subnav = "reviews";
         <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
-            <!-- 1. Header Toolbar -->
+            <!-- 1. Header Toolbar with Luxury Brand Gold Styling -->
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Product Reviews &amp; Ratings</h1>
@@ -149,29 +166,30 @@ $active_subnav = "reviews";
                 <li><a href="#" onclick="filterReviews('Photo'); return false;">With Photos 📸 <span class="count">(340)</span></a></li>
             </ul>
 
-            <!-- 4. Top Toolbar: Bulk Actions, Filter Dropdowns & Rule-Compliant Search Input -->
+            <!-- 4. Top Toolbar: Bulk Actions, Unclipped Filter Dropdowns & Rule-Compliant Search Input -->
             <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
                 <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <select class="wp-select" id="bulkReviewActionSelect" style="height:32px; font-size:12px;">
+                    <select class="wp-select" id="bulkReviewActionSelect" style="height:34px; font-size:12px; min-width:130px;">
                         <option value="">Bulk actions</option>
                         <option value="approve">Approve Selected</option>
                         <option value="unapprove">Unapprove (Pending)</option>
                         <option value="pin">Pin to Featured</option>
                         <option value="trash">Move to Trash</option>
                     </select>
-                    <button type="button" class="wp-button" onclick="handleBulkReviewAction()" style="height:32px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:4px;">
+                    <button type="button" class="wp-button" onclick="handleBulkReviewAction()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:4px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Apply</span>
                     </button>
 
-                    <select class="wp-select" id="filterRatingSelect" onchange="filterReviewsByRating(this.value)" style="height:32px; font-size:12px;">
+                    <!-- Unclipped Dropdowns with proper min-width -->
+                    <select class="wp-select" id="filterRatingSelect" onchange="filterReviewsByRating(this.value)" style="height:34px; font-size:12px; min-width:170px;">
                         <option value="">Filter by star rating</option>
                         <option value="5.0">5 Stars (★★★★★)</option>
                         <option value="4.0">4 Stars (★★★★☆)</option>
                         <option value="3.0">3 Stars (★★★☆☆)</option>
                     </select>
 
-                    <select class="wp-select" id="filterProductSelect" onchange="filterReviewsByProduct(this.value)" style="height:32px; font-size:12px;">
+                    <select class="wp-select" id="filterProductSelect" onchange="filterReviewsByProduct(this.value)" style="height:34px; font-size:12px; min-width:180px;">
                         <option value="">Filter by product</option>
                         <option value="Kanjivaram">Kanjivaram Pure Silk Saree</option>
                         <option value="Banarasi">Banarasi Brocade Saree</option>
@@ -179,7 +197,7 @@ $active_subnav = "reviews";
                         <option value="Kurti">Chanderi Kurti Set</option>
                     </select>
 
-                    <button type="button" class="wp-button" onclick="applyReviewFilters()" style="height:32px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:5px;">
+                    <button type="button" class="wp-button" onclick="applyReviewFilters()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
                         <span>Filter</span>
                     </button>
@@ -192,10 +210,10 @@ $active_subnav = "reviews";
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="reviewSearchInput" class="wp-search-input" placeholder="Search customer, reviews..." style="height:32px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchReviews(this.value); toggleReviewSearchClearBtn(this.value)">
+                        <input type="text" id="reviewSearchInput" class="wp-search-input" placeholder="Search customer, reviews..." style="height:34px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchReviews(this.value); toggleReviewSearchClearBtn(this.value)">
                         <span id="reviewSearchClearBtn" onclick="clearReviewSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchReviews(document.getElementById('reviewSearchInput').value)" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Search Reviews</button>
+                    <button type="button" class="wp-button primary" onclick="searchReviews(document.getElementById('reviewSearchInput').value)" style="height:34px; font-size:12px; font-weight:600; padding:0 12px;">Search Reviews</button>
                 </div>
             </div>
 
@@ -207,12 +225,12 @@ $active_subnav = "reviews";
                             <th style="width: 36px; text-align: center; padding:10px 8px;">
                                 <input type="checkbox" onchange="toggleSelectAllReviews(this)" style="cursor:pointer; width:15px; height:15px;">
                             </th>
-                            <th style="width: 180px; padding:10px 12px;">Customer</th>
-                            <th style="width: 140px; padding:10px 10px;">Rating &amp; Photos</th>
+                            <th style="width: 190px; padding:10px 12px;">Customer</th>
+                            <th style="width: 150px; padding:10px 10px;">Rating &amp; Photos</th>
                             <th style="padding:10px 12px;">Review Content &amp; Admin Reply</th>
-                            <th style="width: 180px; padding:10px 10px;">Product &amp; SKU</th>
-                            <th style="width: 100px; padding:10px 10px;">Status</th>
-                            <th style="width: 120px; text-align: right; padding:10px 12px;">Actions</th>
+                            <th style="width: 190px; padding:10px 10px;">Product &amp; SKU</th>
+                            <th style="width: 110px; padding:10px 10px;">Status</th>
+                            <th style="width: 140px; text-align: right; padding:10px 12px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="reviewsTableBody">
@@ -250,7 +268,7 @@ $active_subnav = "reviews";
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
+                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
                                     <div>
                                         <a href="/Frontend/Admin/products/edit.php?id=101" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Kanjivaram Pure Silk Saree</a>
                                         <code style="display:block; font-size:10.5px; color:#646970;">KLN-SR-111</code>
@@ -265,10 +283,10 @@ $active_subnav = "reviews";
                                 <span class="adm-badge gold" style="display:inline-block; margin-top:4px; font-size:10px; padding:1px 5px;">📌 Featured</span>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top; text-align:right;">
-                                <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
-                                    <button type="button" class="wp-button" onclick="openReplyModal('Sunita Rao', 'Kanjivaram Pure Silk Saree')" style="height:26px; font-size:11px; padding:0 8px; font-weight:600;">💬 Reply</button>
-                                    <button type="button" class="wp-button" onclick="window.shareProductWhatsApp(101)" style="height:26px; font-size:11px; padding:0 8px; color:#15803D; font-weight:700;">WhatsApp</button>
-                                    <button type="button" style="background:none; border:none; color:#b32d2e; font-size:11px; cursor:pointer; font-weight:600;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">✕ Trash</button>
+                                <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
+                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Sunita Rao', 'Kanjivaram Pure Silk Saree')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
+                                    <button type="button" class="dt-btn-action-pill" onclick="window.shareProductWhatsApp(101)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">💬 WhatsApp</button>
+                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
                                 </div>
                             </td>
                         </tr>
@@ -303,7 +321,7 @@ $active_subnav = "reviews";
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
+                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
                                     <div>
                                         <a href="/Frontend/Admin/products/edit.php?id=102" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Banarasi Royal Brocade Saree</a>
                                         <code style="display:block; font-size:10.5px; color:#646970;">BNR-SR-204</code>
@@ -317,10 +335,10 @@ $active_subnav = "reviews";
                                 </span>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top; text-align:right;">
-                                <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
-                                    <button type="button" class="wp-button" onclick="openReplyModal('Ananya Kulkarni', 'Banarasi Royal Brocade Saree')" style="height:26px; font-size:11px; padding:0 8px; font-weight:600;">💬 Reply</button>
-                                    <button type="button" class="wp-button" onclick="window.shareProductWhatsApp(102)" style="height:26px; font-size:11px; padding:0 8px; color:#15803D; font-weight:700;">WhatsApp</button>
-                                    <button type="button" style="background:none; border:none; color:#b32d2e; font-size:11px; cursor:pointer; font-weight:600;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">✕ Trash</button>
+                                <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
+                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Ananya Kulkarni', 'Banarasi Royal Brocade Saree')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
+                                    <button type="button" class="dt-btn-action-pill" onclick="window.shareProductWhatsApp(102)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">💬 WhatsApp</button>
+                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
                                 </div>
                             </td>
                         </tr>
@@ -352,7 +370,7 @@ $active_subnav = "reviews";
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
+                                    <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
                                     <div>
                                         <a href="/Frontend/Admin/products/edit.php?id=103" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Crimson Bridal Lehenga</a>
                                         <code style="display:block; font-size:10.5px; color:#646970;">BRD-LH-902</code>
@@ -366,10 +384,10 @@ $active_subnav = "reviews";
                                 </span>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top; text-align:right;">
-                                <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
-                                    <button type="button" class="wp-button primary" onclick="approveSingleReview(this)" style="height:26px; font-size:11px; padding:0 8px; font-weight:700;">✓ Approve</button>
-                                    <button type="button" class="wp-button" onclick="openReplyModal('Pooja Sharma', 'Crimson Bridal Lehenga')" style="height:26px; font-size:11px; padding:0 8px; font-weight:600;">💬 Reply</button>
-                                    <button type="button" style="background:none; border:none; color:#b32d2e; font-size:11px; cursor:pointer; font-weight:600;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">✕ Trash</button>
+                                <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
+                                    <button type="button" class="dt-btn-action-pill" onclick="approveSingleReview(this)" style="background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512; border:1px solid #8A681F; font-weight:800;">✓ Approve</button>
+                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Pooja Sharma', 'Crimson Bridal Lehenga')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
+                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
                                 </div>
                             </td>
                         </tr>
@@ -381,12 +399,12 @@ $active_subnav = "reviews";
             <!-- 6. Bottom Toolbar & Pagination -->
             <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px;">
                 <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:8px;">
-                    <select class="wp-select" id="bulkReviewActionSelectBottom" style="height:32px; font-size:12px;">
+                    <select class="wp-select" id="bulkReviewActionSelectBottom" style="height:34px; font-size:12px; min-width:130px;">
                         <option value="">Bulk actions</option>
                         <option value="approve">Approve Selected</option>
                         <option value="trash">Move to Trash</option>
                     </select>
-                    <button type="button" class="wp-button" onclick="handleBulkReviewActionBottom()" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Apply</button>
+                    <button type="button" class="wp-button" onclick="handleBulkReviewActionBottom()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px;">Apply</button>
                 </div>
 
                 <div class="wp-pagination" style="display:flex; align-items:center; gap:6px; font-size:12px;">
