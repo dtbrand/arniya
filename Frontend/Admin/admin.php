@@ -122,70 +122,414 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </div>
 
-                <!-- 4 KPI Metric Cards -->
+                <!-- ════ LIVE BUSINESS STATUS TICKER ════ -->
+                <section class="adm-live-ticker-strip">
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon" style="background:#DCFCE7; color:#15803D;"><span class="adm-pulse-dot"></span></div>
+                        <div>
+                            <div class="adm-live-ticker-val" id="liveUsersCount">142</div>
+                            <div class="adm-live-ticker-lbl">Live Users Online</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon">🛍️</div>
+                        <div>
+                            <div class="adm-live-ticker-val">18</div>
+                            <div class="adm-live-ticker-lbl">Live Orders Today</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon">💳</div>
+                        <div>
+                            <div class="adm-live-ticker-val">9</div>
+                            <div class="adm-live-ticker-lbl">Active Checkouts</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon">⏳</div>
+                        <div>
+                            <div class="adm-live-ticker-val">₹48,200</div>
+                            <div class="adm-live-ticker-lbl">Pending Payments</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon">🛒</div>
+                        <div>
+                            <div class="adm-live-ticker-val">34</div>
+                            <div class="adm-live-ticker-lbl">Active Cart Sessions</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon">👤</div>
+                        <div>
+                            <div class="adm-live-ticker-val">+12</div>
+                            <div class="adm-live-ticker-lbl">New Registrations</div>
+                        </div>
+                    </div>
+                    <div class="adm-live-ticker-item">
+                        <div class="adm-live-ticker-icon" style="background:#FEE2E2; color:#DC2626;">⚠️</div>
+                        <div>
+                            <div class="adm-live-ticker-val">3 Items</div>
+                            <div class="adm-live-ticker-lbl">Stock Alert</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ════ 22 MAIN KPI METRIC CARDS ════ -->
                 <div class="adm-kpi-grid">
-                    <!-- Card 1: Total Gross Revenue -->
-                    <div class="adm-kpi-card">
+                    <!-- 1. Total Revenue -->
+                    <div class="adm-kpi-card primary" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
-                            <span class="adm-kpi-label">Gross Revenue (MTD)</span>
-                            <div class="adm-kpi-icon-box">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                            </div>
+                            <span class="adm-kpi-label">Total Revenue</span>
+                            <div class="adm-kpi-icon-box">💰</div>
                         </div>
                         <div class="adm-kpi-val">₹42,85,900</div>
                         <div class="adm-kpi-bottom">
                             <span class="adm-kpi-delta up">↑ +18.4%</span>
-                            <span class="adm-kpi-subtext">vs last month</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
-                    <!-- Card 2: B2B Wholesale Volume -->
-                    <div class="adm-kpi-card">
+                    <!-- 2. Today's Revenue -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
-                            <span class="adm-kpi-label">Wholesale Dispatch</span>
-                            <div class="adm-kpi-icon-box blue">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                            </div>
+                            <span class="adm-kpi-label">Today's Revenue</span>
+                            <div class="adm-kpi-icon-box blue">💵</div>
                         </div>
-                        <div class="adm-kpi-val">1,240 <small style="font-size:0.95rem; font-weight:600; color:#7A7266;">pcs</small></div>
+                        <div class="adm-kpi-val">₹1,84,500</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-kpi-delta up">↑ +24.1%</span>
-                            <span class="adm-kpi-subtext">68 Wholesale Consignments</span>
+                            <span class="adm-kpi-delta up">↑ +12.1%</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
-                    <!-- Card 3: Active Resellers -->
-                    <div class="adm-kpi-card">
+                    <!-- 3. Monthly Revenue -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
-                            <span class="adm-kpi-label">Reseller Orders</span>
-                            <div class="adm-kpi-icon-box purple">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                            </div>
+                            <span class="adm-kpi-label">Monthly Revenue</span>
+                            <div class="adm-kpi-icon-box">📈</div>
                         </div>
-                        <div class="adm-kpi-val">348 <small style="font-size:0.95rem; font-weight:600; color:#7A7266;">orders</small></div>
+                        <div class="adm-kpi-val">₹38,20,000</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-kpi-delta up">↑ +12.6%</span>
-                            <span class="adm-kpi-subtext">₹4.8L Reseller Payouts</span>
+                            <span class="adm-kpi-delta up">↑ +24.8%</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
-                    <!-- Card 4: WhatsApp CRM Leads -->
-                    <div class="adm-kpi-card">
+                    <!-- 4. Gross Profit -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
-                            <span class="adm-kpi-label">WhatsApp Inquiries</span>
-                            <div class="adm-kpi-icon-box green">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            </div>
+                            <span class="adm-kpi-label">Gross Profit</span>
+                            <div class="adm-kpi-icon-box green">📊</div>
                         </div>
-                        <div class="adm-kpi-val">842 <small style="font-size:0.95rem; font-weight:600; color:#7A7266;">leads</small></div>
+                        <div class="adm-kpi-val">₹14,92,400</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-kpi-delta up">↑ 68% Conv.</span>
-                            <span class="adm-kpi-subtext">1-Click Fast Connect</span>
+                            <span class="adm-kpi-delta up">↑ +15.2% (34.8%)</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Net Profit -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Net Profit</span>
+                            <div class="adm-kpi-icon-box">💎</div>
+                        </div>
+                        <div class="adm-kpi-val">₹11,45,200</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +11.8%</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Total Orders -->
+                    <div class="adm-kpi-card primary" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Orders</span>
+                            <div class="adm-kpi-icon-box blue">📦</div>
+                        </div>
+                        <div class="adm-kpi-val">1,624</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +14.6%</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 7. Today's Orders -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Today's Orders</span>
+                            <div class="adm-kpi-icon-box blue">⚡</div>
+                        </div>
+                        <div class="adm-kpi-val">38</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +8 vs Yest.</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 8. Pending Orders -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Pending Orders</span>
+                            <div class="adm-kpi-icon-box purple">⏳</div>
+                        </div>
+                        <div class="adm-kpi-val" style="color:#DC2626;">18</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-badge rose">Action Needed</span>
+                        </div>
+                    </div>
+
+                    <!-- 9. Completed Orders -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Completed Orders</span>
+                            <div class="adm-kpi-icon-box green">✅</div>
+                        </div>
+                        <div class="adm-kpi-val">1,542</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">94.9% Success</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Cancelled Orders -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Cancelled Orders</span>
+                            <div class="adm-kpi-icon-box purple">❌</div>
+                        </div>
+                        <div class="adm-kpi-val">64</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta down">↓ 3.9% Rate</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Total Customers -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('customers')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Customers</span>
+                            <div class="adm-kpi-icon-box purple">👥</div>
+                        </div>
+                        <div class="adm-kpi-val">4,820</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +210 This Mo</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 12. New Customers -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('customers')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">New Customers (30D)</span>
+                            <div class="adm-kpi-icon-box purple">✨</div>
+                        </div>
+                        <div class="adm-kpi-val">348</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +18.2%</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 13. Total Resellers -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('partners')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Resellers</span>
+                            <div class="adm-kpi-icon-box purple">🤝</div>
+                        </div>
+                        <div class="adm-kpi-val">348</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">₹4.8L Payouts</span>
+                            <span class="adm-badge gold">Active Hub</span>
+                        </div>
+                    </div>
+
+                    <!-- 14. Total Retailers -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('partners')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Retailers</span>
+                            <div class="adm-kpi-icon-box blue">🏬</div>
+                        </div>
+                        <div class="adm-kpi-val">124</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">↑ +12% Growth</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 15. Total Wholesalers -->
+                    <div class="adm-kpi-card primary" onclick="switchAdmTab('partners')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Wholesalers</span>
+                            <div class="adm-kpi-icon-box">🏢</div>
+                        </div>
+                        <div class="adm-kpi-val">46</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">68 Consignments</span>
+                            <span class="adm-badge emerald">Tier 1 VIP</span>
+                        </div>
+                    </div>
+
+                    <!-- 16. Total Products -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('products')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Total Products</span>
+                            <div class="adm-kpi-icon-box">👗</div>
+                        </div>
+                        <div class="adm-kpi-val">1,240</div>
+                        <div class="adm-kpi-bottom">
+                            <span>16 Categories</span>
+                            <span class="adm-badge gold">Surat Catalog</span>
+                        </div>
+                    </div>
+
+                    <!-- 17. Active In Stock -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('products')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Active In Stock</span>
+                            <div class="adm-kpi-icon-box green">🟢</div>
+                        </div>
+                        <div class="adm-kpi-val">1,185</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-kpi-delta up">95.5% In Stock</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
+                        </div>
+                    </div>
+
+                    <!-- 18. Low Stock -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('products')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Low Stock</span>
+                            <div class="adm-kpi-icon-box" style="background:#FEF3C7; color:#D97706;">⚠️</div>
+                        </div>
+                        <div class="adm-kpi-val" style="color:#D97706;">14</div>
+                        <div class="adm-kpi-bottom">
+                            <span>Threshold &lt; 5 pcs</span>
+                            <span class="adm-badge amber">Re-order</span>
+                        </div>
+                    </div>
+
+                    <!-- 19. Out of Stock -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('products')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Out of Stock</span>
+                            <div class="adm-kpi-icon-box purple">🛑</div>
+                        </div>
+                        <div class="adm-kpi-val" style="color:#DC2626;">41</div>
+                        <div class="adm-kpi-bottom">
+                            <span class="adm-badge rose">Restock Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 20. Pending Payments -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Pending Payments</span>
+                            <div class="adm-kpi-icon-box">💳</div>
+                        </div>
+                        <div class="adm-kpi-val">₹48,200</div>
+                        <div class="adm-kpi-bottom">
+                            <span>14 Invoices</span>
+                            <span class="adm-badge gold">Net 15</span>
+                        </div>
+                    </div>
+
+                    <!-- 21. Refund Requests -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Refund Requests</span>
+                            <div class="adm-kpi-icon-box purple">🔄</div>
+                        </div>
+                        <div class="adm-kpi-val">3</div>
+                        <div class="adm-kpi-bottom">
+                            <span>₹6,400 Value</span>
+                            <span class="adm-badge rose">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 22. Return Requests -->
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
+                        <div class="adm-kpi-top">
+                            <span class="adm-kpi-label">Return Requests</span>
+                            <div class="adm-kpi-icon-box purple">↩️</div>
+                        </div>
+                        <div class="adm-kpi-val">5</div>
+                        <div class="adm-kpi-bottom">
+                            <span>Quality Inspection</span>
+                            <span class="adm-badge rose">Pending</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Charts Section -->
+                <!-- ════ ORDER STATUS PIPELINE FLOW ════ -->
+                <div class="adm-card" style="margin-bottom:24px;">
+                    <div class="adm-card-head">
+                        <h3 class="adm-card-title">
+                            <span>📦 Order Status Fulfillment Pipeline</span>
+                        </h3>
+                        <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="switchAdmTab('orders')">All Orders ↗</button>
+                    </div>
+                    <div class="adm-pipeline-wrap">
+                        <div class="adm-pipeline-step active" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">New</span>
+                            <span class="adm-pipe-count">18</span>
+                            <span class="adm-pipe-meta">Today</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Pending</span>
+                            <span class="adm-pipe-count">12</span>
+                            <span class="adm-pipe-meta">Payment Conf.</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Confirmed</span>
+                            <span class="adm-pipe-count">42</span>
+                            <span class="adm-pipe-meta">Warehouse</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Processing</span>
+                            <span class="adm-pipe-count">29</span>
+                            <span class="adm-pipe-meta">Picking</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Packed</span>
+                            <span class="adm-pipe-count">35</span>
+                            <span class="adm-pipe-meta">Label Generated</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Shipped</span>
+                            <span class="adm-pipe-count">84</span>
+                            <span class="adm-pipe-meta">In Transit</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Out for Delivery</span>
+                            <span class="adm-pipe-count">21</span>
+                            <span class="adm-pipe-meta">Courier Hub</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Delivered</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-emerald);">1,542</span>
+                            <span class="adm-pipe-meta">94.9% Success</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Cancelled</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-rose);">64</span>
+                            <span class="adm-pipe-meta">3.9% Rate</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Returned</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-amber);">5</span>
+                            <span class="adm-pipe-meta">RTO Return</span>
+                        </div>
+                        <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
+                            <span class="adm-pipe-name">Refunded</span>
+                            <span class="adm-pipe-count">3</span>
+                            <span class="adm-pipe-meta">Settled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ════ CHARTS SECTION ════ -->
                 <div class="adm-charts-grid">
                     <!-- Revenue Analytics Chart -->
                     <div class="adm-card">

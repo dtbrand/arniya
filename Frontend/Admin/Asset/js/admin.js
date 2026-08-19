@@ -303,7 +303,36 @@
         renderWhatsAppLeads();
         initSearchInputs();
         initBroadcaster();
+        renderKPISparklines();
+        initLiveTickers();
     });
+
+    function renderKPISparklines() {
+        const sparkContainers = document.querySelectorAll('.adm-kpi-sparkline');
+        sparkContainers.forEach(function(el) {
+            const isUp = el.getAttribute('data-trend') === 'up';
+            const color = isUp ? '#16A34A' : '#DC2626';
+            const points = isUp 
+                ? '0,18 10,14 20,16 30,10 40,12 50,6 60,4' 
+                : '0,4 10,8 20,6 30,12 40,10 50,16 60,18';
+
+            el.innerHTML = '<svg viewBox="0 0 60 22" width="60" height="22">' +
+                '<polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                '</svg>';
+        });
+    }
+
+    function initLiveTickers() {
+        const liveUsersEl = document.getElementById('liveUsersCount');
+        if (liveUsersEl) {
+            setInterval(function() {
+                const current = parseInt(liveUsersEl.innerText.replace(/,/g, ''), 10) || 142;
+                const change = Math.floor(Math.random() * 5) - 2;
+                const updated = Math.max(90, current + change);
+                liveUsersEl.innerText = updated.toLocaleString();
+            }, 4000);
+        }
+    }
 
     // ════ SIDEBAR TOGGLE ════
     function initSidebar() {
