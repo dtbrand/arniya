@@ -3,15 +3,15 @@
  * index.php - DT Brand's Admin Whatsapp Module
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = 'Whatsapp - Index';
-$active_nav = 'whatsapp';
+$page_title = "WhatsApp CRM & Broadcast Studio";
+$active_nav = "whatsapp";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whatsapp - Index - DT Brand's Admin</title>
+    <title>WhatsApp CRM & Broadcast Studio - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,34 +26,122 @@ $active_nav = 'whatsapp';
             <div class="adm-page-head">
                 <div class="adm-page-title-group">
                     <h1 class="adm-page-title">
-                        <span>Whatsapp - Index</span>
-                        <span class="adm-badge gold">WHATSAPP</span>
+                        <span>WhatsApp CRM & Broadcast Studio</span>
+                        <span class="adm-badge gold">Live Stream</span>
                     </h1>
-                    <p class="adm-page-subtitle">Separate modular management for DT Brand's whatsapp.</p>
+                    <p class="adm-page-subtitle">Engage B2B buyers and retail customers via official WhatsApp Cloud API.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Back to Main Dashboard</a>
-                    <button type="button" class="adm-btn-primary" onclick="window.showToast('Action saved successfully!')">+ New Action</button>
+                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 
+            <!-- KPI Metric Cards -->
+            <div class="adm-kpi-grid">
+                
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Total Inquiries</span>
+                <div class="adm-kpi-icon-box">💬</div>
+            </div>
+            <div class="adm-kpi-val">842</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">1-Click Connect</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">Broadcast Audience</span>
+                <div class="adm-kpi-icon-box">📢</div>
+            </div>
+            <div class="adm-kpi-val">4,820</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Opted-in Buyers</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">CRM Conversion</span>
+                <div class="adm-kpi-icon-box">📈</div>
+            </div>
+            <div class="adm-kpi-val">68%</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">High Intent Leads</span>
+            </div>
+        </div>
+        
+        <div class="adm-kpi-card">
+            <div class="adm-kpi-top">
+                <span class="adm-kpi-label">API Status</span>
+                <div class="adm-kpi-icon-box">⚡</div>
+            </div>
+            <div class="adm-kpi-val">99.98%</div>
+            <div class="adm-kpi-bottom">
+                <span class="adm-kpi-delta up">Meta Cloud Connected</span>
+            </div>
+        </div>
+        
+            </div>
+
+            <!-- Module Specific Interactive Content -->
+            
+        <div class="adm-wa-grid">
+            <!-- Left: Leads Stream -->
             <div class="adm-card">
                 <div class="adm-card-head">
-                    <h3 class="adm-card-title"><span>Whatsapp - Index Suite</span></h3>
-                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Exporting data...')">Export</button>
+                    <h3 class="adm-card-title"><span>📥 Live WhatsApp CRM Inquiry Stream</span></h3>
+                    <span class="adm-badge green">Real-Time</span>
                 </div>
-                <div style="padding:36px 20px; text-align:center; background:#FAF8F4; border-radius:8px; border:1px dashed #E5E1D7;">
-                    <div style="font-size:2.2rem; margin-bottom:10px;">📦</div>
-                    <h3 style="font-size:1.15rem; font-weight:800; color:#181512;">Whatsapp - Index</h3>
-                    <p style="font-size:0.82rem; color:#7A7266; max-width:540px; margin:6px auto 18px;">
-                        Dedicated modular view for <strong>Whatsapp</strong>. Ready to connect to MySQL backend and live CRM endpoints.
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:10px;">
-                        <a href="/Frontend/Admin/admin.php" class="adm-btn-primary">Go to Main Dashboard</a>
-                        <button type="button" class="adm-btn-secondary" onclick="window.showToast('Module synced!')">Refresh Data</button>
+                <div class="adm-wa-lead-list">
+                    <div class="adm-wa-lead-item" onclick="window.showToast('Connecting WhatsApp...')">
+                        <div class="adm-wa-lead-left">
+                            <div class="adm-wa-avatar">R</div>
+                            <div class="adm-wa-lead-meta">
+                                <span class="adm-wa-lead-name">Rajesh Kumar <small style="color:#8A681F;">+91 98220 19283</small></span>
+                                <span class="adm-wa-lead-inquiry">Inquiry for 50 pcs Kanjivaram Silk lot...</span>
+                            </div>
+                        </div>
+                        <span class="adm-badge gold">Wholesale B2B</span>
+                    </div>
+                    <div class="adm-wa-lead-item" onclick="window.showToast('Connecting WhatsApp...')">
+                        <div class="adm-wa-lead-left">
+                            <div class="adm-wa-avatar">P</div>
+                            <div class="adm-wa-lead-meta">
+                                <span class="adm-wa-lead-name">Pooja Sharma <small style="color:#8A681F;">+91 98110 29381</small></span>
+                                <span class="adm-wa-lead-inquiry">Asked for tracking link on Order #ORD-9841</span>
+                            </div>
+                        </div>
+                        <span class="adm-badge info">B2C Retail</span>
                     </div>
                 </div>
             </div>
+            <!-- Right: Fast Broadcaster -->
+            <div class="adm-card">
+                <div class="adm-card-head">
+                    <h3 class="adm-card-title"><span>📢 WhatsApp Broadcast Launcher</span></h3>
+                </div>
+                <div class="adm-form-group">
+                    <label class="adm-form-label">Target Audience</label>
+                    <select class="adm-form-select">
+                        <option>All Wholesalers & B2B Partners (46 VIP)</option>
+                        <option>All Registered Resellers (348)</option>
+                        <option>All Retail Customers (4,820)</option>
+                    </select>
+                </div>
+                <div class="adm-form-group">
+                    <label class="adm-form-label">Message Template</label>
+                    <div class="adm-wa-preview-bubble">
+                        ✨ <strong>DT BRAND'S FRESH CATALOGUE ALERT</strong> ✨<br>
+                        Namaste {Name}, explore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for festive collections.<br>
+                        👉 <strong>View:</strong> https://jaihanumantex.in/Frontend/Shop/shop.php
+                    </div>
+                </div>
+                <button class="adm-btn-primary" style="width:100%; justify-content:center;" onclick="window.showToast('🚀 Broadcast sent to 46 VIP partners!')">🚀 Launch Instant Broadcast</button>
+            </div>
+        </div>
+        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
