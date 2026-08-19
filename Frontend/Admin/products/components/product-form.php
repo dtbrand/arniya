@@ -1,6 +1,6 @@
 <?php
 /**
- * product-form.php — Basic Product Information Form with Smart AI Importer Modal
+ * product-form.php — Basic Product Information Form with DT Brand's AI Importer Modal
  * DT Brand's & Jai Hanuman Tex
  */
 ?>
@@ -11,15 +11,14 @@
             <span>Basic Information &amp; Taxonomy</span>
         </h3>
 
-        <!-- Animated Real AI Magic Button in Right Corner -->
-        <button type="button" id="btnAiMagicGenerate" class="dt-ai-magic-btn" onclick="openAiImporterModal()" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4f46e5 100%); color:#fff; border:1px solid rgba(165,180,252,0.4); padding:4px 12px; border-radius:20px; font-size:11.5px; font-weight:700; cursor:pointer; box-shadow:0 2px 10px rgba(79,70,229,0.35); transition:all 0.25s ease; position:relative; overflow:hidden;">
-            <!-- Real Animated Multi-Sparkle SVG Icon -->
-            <svg class="dt-ai-anim-sparkle" viewBox="0 0 24 24" width="15" height="15" fill="none" style="filter:drop-shadow(0 0 4px #a5b4fc);">
-                <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#F59E0B" stroke-width="1.2" stroke-linejoin="round"/>
-                <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#60A5FA" stroke="#3B82F6" stroke-width="1" stroke-linejoin="round"/>
-                <path d="M5 2L5.8 4L7.8 4.8L5.8 5.6L5 7.6L4.2 5.6L2.2 4.8L4.2 4L5 2Z" fill="#F472B6" stroke="#EC4899" stroke-width="0.8" stroke-linejoin="round"/>
+        <!-- DT Brand's Gold Animated AI Magic Button in Right Corner -->
+        <button type="button" id="btnAiMagicGenerate" class="dt-ai-magic-btn" onclick="openAiImporterModal()" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); color:#FDE047; border:1px solid #D4AF37; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 10px rgba(212,175,55,0.3); transition:all 0.25s ease; position:relative; overflow:hidden;">
+            <!-- Real Multi-Sparkle Vector SVG Icon -->
+            <svg class="dt-ai-anim-sparkle" viewBox="0 0 24 24" width="15" height="15" fill="none" style="filter:drop-shadow(0 0 3px #FCD34D);">
+                <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#D97706" stroke-width="1.2"/>
+                <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#F59E0B"/>
             </svg>
-            <span style="letter-spacing:0.2px; background:linear-gradient(90deg, #FFFFFF, #E0E7FF); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">AI Auto-Fill</span>
+            <span style="letter-spacing:0.3px; color:#FAF5E8;">AI Auto-Fill</span>
             <span class="dt-ai-live-pulse"></span>
         </button>
     </div>
@@ -81,38 +80,47 @@
 </div>
 
 <!-- ======================================================== -->
-<!-- SMART AI FAST PRODUCT IMPORTER & AUTO-FILL MODAL POPUP  -->
+<!-- DT BRAND'S SIGNATURE AI PRODUCT IMPORTER MODAL POPUP     -->
 <!-- ======================================================== -->
-<div id="aiImporterModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.7); backdrop-filter:blur(4px); z-index:9999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:680px; border-radius:10px; box-shadow:0 20px 40px rgba(0,0,0,0.35); overflow:hidden; border:1px solid rgba(212,175,55,0.4); animation:dtModalFadeIn 0.25s ease-out;">
+<div id="aiImporterModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
+    <div style="background:#fff; width:95%; max-width:680px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37; animation:dtModalFadeIn 0.25s ease-out;">
         
-        <!-- Modal Header -->
-        <div style="background:linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding:14px 18px; color:#fff; display:flex; align-items:center; justify-content:space-between;">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#F59E0B" stroke-width="1.2"/>
-                    <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#60A5FA"/>
-                </svg>
+        <!-- Modal Header in DT Brand's Signature Luxury Gold & Dark Velvet Theme -->
+        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:32px; height:32px; border-radius:50%; background:rgba(212,175,55,0.15); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                        <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#D97706" stroke-width="1.2"/>
+                        <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#F59E0B"/>
+                    </svg>
+                </div>
                 <div>
-                    <h3 style="margin:0; font-size:15px; font-weight:700; letter-spacing:0.3px; color:#FFFFFF;">AI Fast Product Details Importer</h3>
-                    <small style="color:#C7D2FE; font-size:11px;">Paste WhatsApp message, supplier catalog text, or product specs</small>
+                    <h3 style="margin:0; font-size:15px; font-weight:800; letter-spacing:0.3px; color:#FAF5E8;">DT Brand's AI Product Details Importer</h3>
+                    <small style="color:#D4AF37; font-size:11px; font-weight:600;">Paste WhatsApp message, supplier catalog text, or product specs</small>
                 </div>
             </div>
-            <button type="button" onclick="closeAiImporterModal()" style="background:none; border:none; color:#C7D2FE; font-size:22px; cursor:pointer; line-height:1; font-weight:700;">&times;</button>
+            <button type="button" onclick="closeAiImporterModal()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(212,175,55,0.3); border-radius:50%; width:28px; height:28px; color:#FAF5E8; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;" onmouseover="this.style.background='rgba(179,45,46,0.3)';this.style.color='#f87171';" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='#FAF5E8';">&times;</button>
         </div>
 
         <!-- Modal Body -->
-        <div style="padding:16px 18px;">
+        <div style="padding:16px 18px; background:#fff;">
             <!-- Paste Options Bar -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-                <span style="font-size:12px; font-weight:700; color:#1d2327;">Paste Raw Text / WhatsApp Catalog:</span>
+                <span style="font-size:12px; font-weight:700; color:#181512;">Paste Raw Text / WhatsApp Catalog:</span>
                 <div style="display:flex; gap:6px;">
-                    <button type="button" class="wp-button" style="font-size:11px; height:24px; padding:0 8px;" onclick="loadSampleAiText()">📋 Load Sample Text</button>
-                    <button type="button" class="wp-button" style="font-size:11px; height:24px; padding:0 8px; color:#b32d2e;" onclick="document.getElementById('aiRawTextInput').value='';">✕ Clear</button>
+                    <button type="button" class="wp-button" style="font-size:11.5px; height:26px; padding:0 10px; display:inline-flex; align-items:center; gap:5px; border-color:#D4AF37; color:#8A681F; font-weight:600;" onclick="loadSampleAiText()">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                        <span>Load Sample Text</span>
+                    </button>
+                    <button type="button" class="wp-button" style="font-size:11.5px; height:26px; padding:0 8px; color:#b32d2e; display:inline-flex; align-items:center; gap:4px;" onclick="document.getElementById('aiRawTextInput').value='';">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        <span>Clear</span>
+                    </button>
                 </div>
             </div>
 
-            <textarea id="aiRawTextInput" rows="8" style="width:100%; border:1px solid #c3c4c7; border-radius:6px; padding:10px 12px; font-size:12px; font-family:monospace; line-height:1.5; outline:none; resize:vertical; background:#F8FAFC;" placeholder="Example:
+            <!-- Monospaced Raw Input with Gold Border Focus -->
+            <textarea id="aiRawTextInput" rows="8" style="width:100%; border:1.5px solid #D4AF37; border-radius:6px; padding:10px 12px; font-size:12px; font-family:Consolas, Monaco, monospace; line-height:1.5; outline:none; resize:vertical; background:#FDFBF7; color:#181512;" placeholder="Example:
 Code: KLN-902
 Fabric: Pure Handloom Kanjivaram Silk
 Border: Heavy Gold Zari Traditional Kaddi Border
@@ -123,18 +131,18 @@ Price: 1200
 Description: Handcrafted pure silk bridal collection with rich pallu and embossed motifs."></textarea>
 
             <!-- Auto-Fill Preview Indicators -->
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:8px 12px; margin-top:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; font-size:11.5px;">
+            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.6); border-radius:6px; padding:8px 12px; margin-top:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; font-size:11.5px;">
                 <span style="color:#5A4210;">⚡ Auto-Fills: <strong>Title, SKU, Fabric, Border, Blouse, Purchase/Sale Price, SEO &amp; Color</strong></span>
-                <span class="adm-badge gold" style="font-size:10.5px;">Auto Markup Rule Applied</span>
+                <span class="adm-badge gold" style="font-size:11px; padding:2px 8px;">⚡ Auto Markup Active (&lt;500:+200 | 500-1200:+300 | 1200-2000:+400 | 2000+:+500)</span>
             </div>
         </div>
 
-        <!-- Modal Footer -->
+        <!-- Modal Footer in DT Brand's Luxury Gold Action Button Style -->
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; align-items:center; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAiImporterModal()" style="height:32px; font-size:12px;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:32px; font-size:12px; font-weight:700; background:linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); display:inline-flex; align-items:center; gap:6px; border:none; color:#fff; box-shadow:0 2px 8px rgba(67,56,202,0.4); cursor:pointer;">
+            <button type="button" class="wp-button" onclick="closeAiImporterModal()" style="height:34px; font-size:12px; padding:0 14px;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:34px; font-size:12.5px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); display:inline-flex; align-items:center; gap:6px; border:1px solid #8A681F; color:#181512; box-shadow:0 3px 12px rgba(212,175,55,0.4); cursor:pointer; padding:0 16px;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
-                    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D"/>
+                    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#181512"/>
                 </svg>
                 <span>⚡ AI Parse &amp; Auto-Fill All Fields</span>
             </button>
@@ -146,8 +154,8 @@ Description: Handcrafted pure silk bridal collection with rich pallu and embosse
 /* Animated Real AI Magic Button Styles */
 .dt-ai-magic-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.55) !important;
-    border-color: #a5b4fc !important;
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.55) !important;
+    border-color: #FDE047 !important;
 }
 .dt-ai-anim-sparkle {
     animation: dtAiSparkleRotate 3.5s ease-in-out infinite alternate;
@@ -161,8 +169,8 @@ Description: Handcrafted pure silk bridal collection with rich pallu and embosse
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 6px #34d399;
+    background: #FCD34D;
+    box-shadow: 0 0 6px #FCD34D;
     animation: dtAiDotPulse 1.8s infinite;
     display: inline-block;
     margin-left: 2px;
