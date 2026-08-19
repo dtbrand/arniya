@@ -1,52 +1,56 @@
 <?php
 /**
- * product-table.php — High-Density Desktop Data Table with Clean Text & Actions
+ * product-table.php — High-Density Desktop Data Table with Zero Overflow
+ * DT Brand's & Jai Hanuman Tex
  */
 ?>
-<div class="dt-table-wrap">
-    <table class="dt-data-table" id="dtProductMasterTable">
+<div class="dt-table-wrap" style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+    <table class="dt-data-table" id="dtProductMasterTable" style="width: 100%; border-collapse: collapse; font-size: 12px;">
         <thead>
             <tr>
-                <th style="width:30px; text-align:center;">
+                <th style="width:26px; text-align:center; padding: 6px 4px;">
                     <input type="checkbox" onchange="window.toggleBulkSelectAll(this)" style="cursor:pointer;" title="Select All">
                 </th>
-                <th style="width:44px;">Image</th>
-                <th>Product Name &amp; SKU</th>
-                <th>Category</th>
-                <th>Brand</th>
-                <th>Price</th>
-                <th>Wholesale (B2B)</th>
-                <th>Stock</th>
-                <th>Rating</th>
-                <th>Status</th>
-                <th style="text-align:right;">Actions</th>
+                <th style="width:38px; padding: 6px 4px;">Image</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Product Name &amp; SKU</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Category</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Brand</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Price</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Wholesale</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Stock</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Rating</th>
+                <th style="padding: 6px 6px; white-space: nowrap;">Status</th>
+                <th style="padding: 6px 6px; text-align:right; white-space: nowrap;">Actions</th>
             </tr>
         </thead>
         <tbody id="dtProductTableBody">
             <!-- Row 1 -->
             <tr>
-                <td style="text-align:center;">
+                <td style="text-align:center; padding: 6px 4px;">
                     <input type="checkbox" class="dt-prod-row-check" onchange="window.handleRowSelect()" style="cursor:pointer;">
                 </td>
-                <td>
+                <td style="padding: 6px 4px;">
                     <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-prod-img" alt="Saree">
                 </td>
-                <td>
-                    <a href="/Frontend/Admin/products/view.php?id=101" class="dt-prod-info-name">Kanjivaram Pure Silk Gold Zari Saree</a>
-                    <span class="dt-prod-info-sku">SKU: KLN-SR-111 • Barcode: 8901234500111</span>
+                <td style="padding: 6px 6px;">
+                    <a href="/Frontend/Admin/products/view.php?id=101" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;">Kanjivaram Pure Silk Gold Zari Saree</a>
+                    <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: KLN-SR-111</span>
                 </td>
-                <td><strong>Silk Sarees</strong></td>
-                <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">DT Signature</span></td>
-                <td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong>Silk Sarees</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="font-size:11.5px; color:#8A681F; font-weight:700;">DT Signature</span></td>
+                <td style="padding: 6px 6px; white-space:nowrap;">
                     <strong style="color:#181512;">₹4,490</strong>
-                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹5,990</del>
+                    <del style="color:#7A7266; font-size:11px; margin-left:2px;">₹5,990</del>
                 </td>
-                <td><strong style="color:#8A681F;">₹2,850/pc</strong><br><small style="color:#7A7266;">MOQ: 8 pcs</small></td>
-                <td><strong style="color:#15803D;">45 in stock</strong></td>
-                <td><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(128)</small></td>
-                <td><span class="adm-badge success">Active</span></td>
-                <td style="text-align:right;">
-                    <div class="adm-action-btn-group" style="justify-content:flex-end;">
+                <td style="padding: 6px 6px; white-space:nowrap;">
+                    <strong style="color:#8A681F;">₹2,850/pc</strong><br>
+                    <small style="color:#7A7266; font-size:10.5px;">MOQ: 8 pcs</small>
+                </td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:#15803D;">45 in stock</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(128)</small></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span class="adm-badge success">Active</span></td>
+                <td style="text-align:right; padding: 6px 6px; white-space:nowrap;">
+                    <div class="adm-action-btn-group" style="display:inline-flex; align-items:center; gap:3px;">
                         <a href="/Frontend/Admin/products/view.php?id=101" class="adm-action-btn" title="View Details">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </a>
@@ -65,28 +69,31 @@
 
             <!-- Row 2 -->
             <tr>
-                <td style="text-align:center;">
+                <td style="text-align:center; padding: 6px 4px;">
                     <input type="checkbox" class="dt-prod-row-check" onchange="window.handleRowSelect()" style="cursor:pointer;">
                 </td>
-                <td>
-                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="dt-prod-img" alt="Saree">
+                <td style="padding: 6px 4px;">
+                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="dt-prod-img" alt="Banarasi">
                 </td>
-                <td>
-                    <a href="/Frontend/Admin/products/view.php?id=102" class="dt-prod-info-name">Banarasi Royal Brocade Weave Saree</a>
-                    <span class="dt-prod-info-sku">SKU: BNR-SR-204 • Barcode: 8901234500204</span>
+                <td style="padding: 6px 6px;">
+                    <a href="/Frontend/Admin/products/view.php?id=102" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;">Banarasi Royal Brocade Weave Saree</a>
+                    <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: BNR-SR-204</span>
                 </td>
-                <td><strong>Banarasi</strong></td>
-                <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">Arniya Heritage</span></td>
-                <td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong>Banarasi</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="font-size:11.5px; color:#8A681F; font-weight:700;">Arniya Heritage</span></td>
+                <td style="padding: 6px 6px; white-space:nowrap;">
                     <strong style="color:#181512;">₹4,990</strong>
-                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹6,490</del>
+                    <del style="color:#7A7266; font-size:11px; margin-left:2px;">₹6,490</del>
                 </td>
-                <td><strong style="color:#8A681F;">₹3,200/pc</strong><br><small style="color:#7A7266;">MOQ: 8 pcs</small></td>
-                <td><strong style="color:#15803D;">28 in stock</strong></td>
-                <td><span style="color:#F59E0B; font-weight:800;">4.9 ★</span> <small style="color:#7A7266;">(94)</small></td>
-                <td><span class="adm-badge success">Active</span></td>
-                <td style="text-align:right;">
-                    <div class="adm-action-btn-group" style="justify-content:flex-end;">
+                <td style="padding: 6px 6px; white-space:nowrap;">
+                    <strong style="color:#8A681F;">₹3,200/pc</strong><br>
+                    <small style="color:#7A7266; font-size:10.5px;">MOQ: 8 pcs</small>
+                </td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:#15803D;">28 in stock</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="color:#F59E0B; font-weight:800;">4.9 ★</span> <small style="color:#7A7266;">(94)</small></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span class="adm-badge success">Active</span></td>
+                <td style="text-align:right; padding: 6px 6px; white-space:nowrap;">
+                    <div class="adm-action-btn-group" style="display:inline-flex; align-items:center; gap:3px;">
                         <a href="/Frontend/Admin/products/view.php?id=102" class="adm-action-btn" title="View Details">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </a>
@@ -105,28 +112,31 @@
 
             <!-- Row 3 -->
             <tr>
-                <td style="text-align:center;">
+                <td style="text-align:center; padding: 6px 4px;">
                     <input type="checkbox" class="dt-prod-row-check" onchange="window.handleRowSelect()" style="cursor:pointer;">
                 </td>
-                <td>
+                <td style="padding: 6px 4px;">
                     <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="dt-prod-img" alt="Lehenga">
                 </td>
-                <td>
-                    <a href="/Frontend/Admin/products/view.php?id=103" class="dt-prod-info-name">Crimson Bridal Handcrafted Zardosi Lehenga</a>
-                    <span class="dt-prod-info-sku">SKU: BRD-LH-902 • Barcode: 8901234500902</span>
+                <td style="padding: 6px 6px;">
+                    <a href="/Frontend/Admin/products/view.php?id=103" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;">Crimson Bridal Handcrafted Zardosi Lehenga</a>
+                    <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: BRD-LH-902</span>
                 </td>
-                <td><strong>Bridal Lehengas</strong></td>
-                <td><span style="font-size:0.75rem; color:#8A681F; font-weight:700;">DT Couture</span></td>
-                <td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong>Bridal Lehengas</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="font-size:11.5px; color:#8A681F; font-weight:700;">DT Couture</span></td>
+                <td style="padding: 6px 6px; white-space:nowrap;">
                     <strong style="color:#181512;">₹16,490</strong>
-                    <del style="color:#7A7266; font-size:0.7rem; margin-left:3px;">₹21,990</del>
+                    <del style="color:#7A7266; font-size:11px; margin-left:2px;">₹21,990</del>
                 </td>
-                <td><strong style="color:#8A681F;">₹11,500/pc</strong><br><small style="color:#7A7266;">MOQ: 2 pcs</small></td>
-                <td><strong style="color:#DC2626;">4 in stock (Low)</strong></td>
-                <td><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(42)</small></td>
-                <td><span class="adm-badge warning">Low Stock</span></td>
-                <td style="text-align:right;">
-                    <div class="adm-action-btn-group" style="justify-content:flex-end;">
+                <td style="padding: 6px 6px; white-space:nowrap;">
+                    <strong style="color:#8A681F;">₹11,500/pc</strong><br>
+                    <small style="color:#7A7266; font-size:10.5px;">MOQ: 2 pcs</small>
+                </td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:#b32d2e;">4 in stock (Low)</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span style="color:#F59E0B; font-weight:800;">5.0 ★</span> <small style="color:#7A7266;">(42)</small></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><span class="adm-badge success">Active</span></td>
+                <td style="text-align:right; padding: 6px 6px; white-space:nowrap;">
+                    <div class="adm-action-btn-group" style="display:inline-flex; align-items:center; gap:3px;">
                         <a href="/Frontend/Admin/products/view.php?id=103" class="adm-action-btn" title="View Details">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </a>
