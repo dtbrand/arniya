@@ -686,11 +686,38 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
     }
 
     .header-normal-view {
+        position: relative;
         padding: 0 10px;
         gap: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .header-left-group {
+        position: static;
+        display: flex;
+        align-items: center;
         gap: 8px;
+        z-index: 2;
+    }
+    .header-brand-link {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
+        z-index: 1;
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .header-brand-real-logo {
+        height: 28px !important;
+        max-height: 28px !important;
+        width: auto !important;
+        max-width: 135px !important;
+        object-fit: contain;
     }
     .shop-back-btn {
         padding: 4px 9px;
@@ -712,6 +739,8 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
         margin-top: 1px;
     }
     .header-actions {
+        position: relative;
+        z-index: 2;
         gap: 6px;
     }
     .header-icon-btn {
