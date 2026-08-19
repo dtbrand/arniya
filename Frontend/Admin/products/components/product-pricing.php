@@ -1,6 +1,6 @@
 <?php
 /**
- * product-pricing.php — Ultra-Clean Pricing Studio (Price, Sale Price, Purchase Price)
+ * product-pricing.php — Ultra-Clean Minimalist Pricing Studio
  * DT Brand's & Jai Hanuman Tex
  */
 ?>
@@ -16,35 +16,19 @@
             <!-- 1. Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Price ₹ <span style="color:#b32d2e;">*</span></label>
-                <input type="number" id="pFormMrp" class="adm-form-input" placeholder="e.g. 1490" value="1490">
+                <input type="number" id="pFormMrp" class="adm-form-input" placeholder="e.g. 1000" value="1000">
             </div>
 
             <!-- 2. Sale Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Sale Price ₹ <span style="color:#b32d2e;">*</span></label>
-                <input type="number" id="pFormRetail" class="adm-form-input" style="font-weight:700; color:#181512;" placeholder="e.g. 1100" value="1100">
+                <input type="number" id="pFormRetail" class="adm-form-input" style="font-weight:700; color:#181512;" placeholder="e.g. 900" value="900">
             </div>
 
             <!-- 3. Purchase Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Purchase Price ₹ <span style="color:#b32d2e;">*</span></label>
                 <input type="number" id="pFormCost" class="adm-form-input" placeholder="e.g. 800" value="800" oninput="calculateCustomerSalePrice(this.value)">
-            </div>
-        </div>
-
-        <!-- Margin Summary Card -->
-        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:4px; padding:10px 14px; margin-top:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <div style="font-size:12px;">
-                <span style="color:#7A7266;">Estimated Gross Profit:</span>
-                <strong id="marginGrossText" style="color:#15803D; margin-left:4px;">₹300 / pc (27.3% Margin)</strong>
-            </div>
-            <div style="font-size:12px;">
-                <span style="color:#7A7266;">Customer Discount:</span>
-                <strong id="marginDiscountText" style="color:#8A681F; margin-left:4px;">26.2% Off (₹390 saved)</strong>
-            </div>
-            <div style="font-size:12px;">
-                <span style="color:#7A7266;">GST Slab:</span>
-                <strong>5% Included (HSN 5007)</strong>
             </div>
         </div>
     </div>
@@ -64,17 +48,9 @@ function calculateCustomerSalePrice(costVal) {
 
     const markup = getCustomerMarkup(cost);
     const salePrice = cost + markup;
-    const price = Math.round((salePrice * 1.35) / 10) * 10;
+    const price = Math.round((salePrice * 1.25) / 10) * 10;
 
     document.getElementById('pFormRetail').value = salePrice;
     document.getElementById('pFormMrp').value = price;
-
-    const profit = salePrice - cost;
-    const profitPct = ((profit / salePrice) * 100).toFixed(1);
-    document.getElementById('marginGrossText').textContent = `₹${profit} / pc (${profitPct}% Margin)`;
-
-    const discount = price - salePrice;
-    const discountPct = ((discount / price) * 100).toFixed(1);
-    document.getElementById('marginDiscountText').textContent = `${discountPct}% Off (₹${discount} saved)`;
 }
 </script>
