@@ -89,17 +89,23 @@ $active_subnav = "categories";
 
             <!-- Header -->
             <div class="wp-heading-wrap" style="justify-content: space-between;">
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline">Edit category</h1>
-                    <a href="/Frontend/Admin/products/categories/" class="wp-page-title-action secondary">← Product categories</a>
+                    <a href="/Frontend/Admin/products/categories/" class="wp-page-title-action secondary">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>Product categories</span>
+                    </a>
                 </div>
                 <div>
-                    <a href="/Frontend/Admin/products/categories/view.php?id=1" class="wp-button">View Category</a>
+                    <a href="/Frontend/Admin/products/categories/view.php?id=1" class="wp-button">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <span>View Category</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Form Table -->
-            <form onsubmit="event.preventDefault(); window.showToast('✨ Category saved successfully!');">
+            <form onsubmit="event.preventDefault(); window.showToast('✨ Category updated successfully!');">
                 <table class="wp-edit-form-table">
                     <tr>
                         <th><label for="editName">Name <span style="color:#b32d2e;">*</span></label></th>
@@ -153,16 +159,23 @@ $active_subnav = "categories";
                         <th>Thumbnail</th>
                         <td>
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:60px; height:60px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" alt="Category Thumbnail">
-                                <button type="button" class="wp-button" onclick="window.showToast('Select image from media library')">Upload/Add image</button>
+                                <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:60px; height:60px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" id="editThumbPreview" alt="Category Thumbnail">
+                                <input type="file" id="editFileInput" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader(); r.onload=e=>document.getElementById('editThumbPreview').src=e.target.result; r.readAsDataURL(this.files[0]); window.showToast('Thumbnail updated!');}">
+                                <button type="button" class="wp-button" onclick="document.getElementById('editFileInput').click()">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    <span>Upload/Add image</span>
+                                </button>
                             </div>
                         </td>
                     </tr>
                 </table>
 
-                <div style="margin-top:14px;">
-                    <button type="submit" class="wp-button primary" style="height:32px; padding:0 16px; font-weight:600;">Update</button>
-                    <a href="/Frontend/Admin/products/categories/" class="wp-button" style="height:32px; line-height:30px; margin-left:6px;">Cancel</a>
+                <div style="margin-top:14px; display:flex; align-items:center; gap:8px;">
+                    <button type="submit" class="wp-button primary" style="height:30px; padding:0 14px; font-weight:600;">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Update</span>
+                    </button>
+                    <a href="/Frontend/Admin/products/categories/" class="wp-button" style="height:30px; line-height:28px;">Cancel</a>
                 </div>
             </form>
 

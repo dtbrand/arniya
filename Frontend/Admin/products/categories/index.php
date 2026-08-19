@@ -1,6 +1,6 @@
 <?php
 /**
- * categories/index.php — 100% WordPress Categories with Classic Inline Quick Edit Row
+ * categories/index.php — Next-Level WordPress / WooCommerce Product Categories Suite
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Product Categories";
@@ -30,7 +30,7 @@ $active_subnav = "categories";
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         .wp-cat-layout {
             display: grid;
@@ -44,32 +44,35 @@ $active_subnav = "categories";
         .wp-cat-form-card {
             background: #ffffff;
             border: 1px solid #c3c4c7;
-            padding: 12px 14px;
-            border-radius: 3px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+            padding: 14px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
         }
         .wp-cat-form-card h2 {
             font-size: 13.5px;
             font-weight: 700;
             color: #1d2327;
             margin: 0 0 10px 0;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
             border-bottom: 1px solid #f0f0f1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .wp-form-field {
-            margin-bottom: 8px;
+            margin-bottom: 9px;
         }
         .wp-form-field label {
             display: block;
             font-size: 12px;
             font-weight: 600;
             color: #1d2327;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
         .wp-form-field input, .wp-form-field select, .wp-form-field textarea {
             width: 100%;
             height: 28px;
-            padding: 0 6px;
+            padding: 0 8px;
             font-size: 12px;
             color: #2c3338;
             background: #ffffff;
@@ -77,10 +80,11 @@ $active_subnav = "categories";
             border-radius: 3px;
             box-sizing: border-box;
             outline: none;
+            transition: all 0.12s ease;
         }
         .wp-form-field textarea {
-            height: 42px;
-            padding: 4px 6px;
+            height: 44px;
+            padding: 5px 8px;
             resize: none;
         }
         .wp-form-field input:focus, .wp-form-field select:focus, .wp-form-field textarea:focus {
@@ -91,16 +95,72 @@ $active_subnav = "categories";
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-top: 2px;
+            margin-top: 3px;
         }
         .wp-thumb-box-img {
-            width: 32px;
-            height: 32px;
-            border: 1px solid #c3c4c7;
-            border-radius: 2px;
-            object-fit: cover;
+            width: 34px !important;
+            height: 34px !important;
+            max-width: 34px !important;
+            max-height: 34px !important;
+            border: 1px solid #c3c4c7 !important;
+            border-radius: 3px !important;
+            object-fit: cover !important;
             background: #f6f7f7;
+            flex-shrink: 0;
         }
+
+        /* ── SEARCH BOX WITH LEFT MAGNIFYING ICON & 1-TAP CLEAR ── */
+        .wp-search-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .wp-search-left-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 13px;
+            height: 13px;
+            color: #8A681F;
+            pointer-events: none;
+        }
+        .wp-search-input-styled {
+            height: 28px;
+            padding: 0 24px 0 30px !important;
+            font-size: 12px;
+            color: #2c3338;
+            background: #ffffff;
+            border: 1px solid #8c8f94;
+            border-radius: 3px;
+            outline: none;
+            width: 180px;
+            box-sizing: border-box;
+        }
+        .wp-search-input-styled:focus {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
+            width: 210px;
+        }
+        .wp-search-clear-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8c8f94;
+            cursor: pointer;
+            padding: 0;
+            font-size: 12px;
+            line-height: 1;
+            display: none;
+        }
+        .wp-search-clear-btn:hover {
+            color: #b32d2e;
+        }
+
+        /* ── WORDPRESS ROW ACTIONS ── */
         .wp-list-table .wp-row-actions {
             visibility: hidden;
             opacity: 0;
@@ -113,7 +173,8 @@ $active_subnav = "categories";
             visibility: visible;
             opacity: 1;
         }
-        /* Classic WordPress Inline Quick Edit Drawer Row */
+
+        /* ── CLASSIC INLINE QUICK EDIT DRAWER ── */
         tr.inline-edit-row {
             background: #f0f6fc !important;
         }
@@ -125,7 +186,7 @@ $active_subnav = "categories";
         .inline-edit-col {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
         }
         .inline-edit-group {
@@ -140,12 +201,12 @@ $active_subnav = "categories";
         }
         .inline-edit-group input {
             height: 26px;
-            padding: 0 6px;
+            padding: 0 8px;
             font-size: 12px;
             border: 1px solid #8c8f94;
             border-radius: 3px;
             outline: none;
-            width: 180px;
+            width: 170px;
         }
         .inline-edit-group input:focus {
             border-color: #2271b1;
@@ -161,17 +222,34 @@ $active_subnav = "categories";
         <main class="adm-content" style="padding: 10px 14px;">
 
             <div class="wp-wrap">
-                <!-- 1. Header & Search Bar -->
+                <!-- 1. Header & Left-Icon Search Bar -->
                 <div class="wp-header-top">
-                    <div style="display:flex; align-items:center; gap:8px;">
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                         <h1 class="wp-heading-inline">Product categories</h1>
-                        <a href="/Frontend/Admin/products/" class="wp-page-title-action secondary">← All Products</a>
-                        <a href="/Frontend/Admin/products/brands/" class="wp-page-title-action secondary">Brands (4)</a>
-                        <a href="/Frontend/Admin/products/attributes/" class="wp-page-title-action secondary">Attributes</a>
+                        <a href="/Frontend/Admin/products/" class="wp-page-title-action secondary">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>All Products</span>
+                        </a>
+                        <a href="/Frontend/Admin/products/brands/" class="wp-page-title-action secondary">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+                            <span>Brands (4)</span>
+                        </a>
+                        <a href="/Frontend/Admin/products/attributes/" class="wp-page-title-action secondary">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
+                            <span>Attributes</span>
+                        </a>
                     </div>
+                    
                     <div class="wp-search-box">
-                        <input type="search" id="wpCatSearch" class="wp-search-input" placeholder="Search categories..." oninput="searchWpCategories(this.value)">
-                        <button type="button" class="wp-button" onclick="searchWpCategories(document.getElementById('wpCatSearch').value)">Search Categories</button>
+                        <div class="wp-search-container">
+                            <svg class="wp-search-left-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="search" id="wpCatSearch" class="wp-search-input-styled" placeholder="Search categories..." oninput="handleCatSearch(this.value)">
+                            <button type="button" id="wpCatSearchClear" class="wp-search-clear-btn" onclick="clearCatSearch()">✕</button>
+                        </div>
+                        <button type="button" class="wp-button" onclick="handleCatSearch(document.getElementById('wpCatSearch').value)">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <span>Search Categories</span>
+                        </button>
                     </div>
                 </div>
 
@@ -180,7 +258,10 @@ $active_subnav = "categories";
 
                     <!-- ── LEFT COLUMN: Add New Category Form ── -->
                     <div class="wp-cat-form-card">
-                        <h2>Add new category</h2>
+                        <h2>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#8A681F;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add new category</span>
+                        </h2>
                         <form id="wpAddCatForm" onsubmit="handleWpAddCategory(event)">
                             <div class="wp-form-field">
                                 <label for="catName">Name <span style="color:#b32d2e;">*</span></label>
@@ -228,25 +309,36 @@ $active_subnav = "categories";
                                 <label>Thumbnail</label>
                                 <div class="wp-thumb-row">
                                     <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-box-img" id="catThumbPreview" alt="Category">
-                                    <button type="button" class="wp-button" onclick="window.showToast('Select image from media library')">Upload/Add image</button>
+                                    <input type="file" id="catFileInput" style="display:none;" accept="image/*" onchange="previewCatThumb(this)">
+                                    <button type="button" class="wp-button" onclick="document.getElementById('catFileInput').click()">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                        <span>Upload/Add image</span>
+                                    </button>
                                 </div>
                             </div>
 
                             <div style="margin-top:10px;">
-                                <button type="submit" class="wp-button primary" style="height:28px; font-weight:600; padding:0 12px;">Add new category</button>
+                                <button type="submit" class="wp-button primary" style="height:28px; font-weight:600; padding:0 12px;">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span>Add new category</span>
+                                </button>
                             </div>
                         </form>
                     </div>
 
                     <!-- ── RIGHT COLUMN: Categories List Table ── -->
                     <div class="wp-table-card">
+                        <!-- Top Toolbar -->
                         <div class="wp-tablenav" style="padding: 6px 8px; margin: 0; border-bottom: 1px solid #c3c4c7; background: #f6f7f7;">
                             <div class="wp-tablenav-actions">
                                 <select class="wp-select" id="wpCatBulkSelect">
                                     <option value="">Bulk actions</option>
                                     <option value="delete">Delete</option>
                                 </select>
-                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">Apply</button>
+                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Apply</span>
+                                </button>
                             </div>
                             <span style="font-size:12px; color:#646970;"><span id="catTotalCount">14</span> items</span>
                         </div>
@@ -350,7 +442,10 @@ $active_subnav = "categories";
                                     <option value="">Bulk actions</option>
                                     <option value="delete">Delete</option>
                                 </select>
-                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">Apply</button>
+                                <button type="button" class="wp-button" onclick="handleCatBulkAction()">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Apply</span>
+                                </button>
                             </div>
                             <span style="font-size:12px; color:#646970;">14 items</span>
                         </div>
@@ -374,16 +469,38 @@ function generateCatSlug(val) {
     document.getElementById('catSlug').value = slug;
 }
 
+function previewCatThumb(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('catThumbPreview').src = e.target.result;
+            window.showToast('✨ Thumbnail preview updated!');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 function toggleCatSelectAll(master) {
     document.querySelectorAll('.wp-cat-row-check').forEach(cb => cb.checked = master.checked);
 }
 
-function searchWpCategories(term) {
+function handleCatSearch(val) {
+    const clearBtn = document.getElementById('wpCatSearchClear');
+    if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+    
     const rows = document.querySelectorAll('#wpCatTableBody tr:not(.inline-edit-row)');
-    const q = (term || '').toLowerCase().trim();
+    const q = (val || '').toLowerCase().trim();
     rows.forEach(r => {
         r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
     });
+}
+
+function clearCatSearch() {
+    const input = document.getElementById('wpCatSearch');
+    if (input) {
+        input.value = '';
+        handleCatSearch('');
+    }
 }
 
 function deleteCatRow(id) {
@@ -463,6 +580,7 @@ function handleWpAddCategory(e) {
     const desc = document.getElementById('catDesc').value.trim() || '—';
     const hsn = document.getElementById('catHsn').value.trim() || '5007 (5%)';
     const parent = document.getElementById('catParent').value;
+    const thumbSrc = document.getElementById('catThumbPreview')?.src || '/Shared/Asset/images/product1.png';
 
     const prefix = parent ? '— ' : '';
     const newId = Date.now();
@@ -472,7 +590,7 @@ function handleWpAddCategory(e) {
     tr.id = 'cat-row-' + newId;
     tr.innerHTML = `
         <td style="text-align:center;"><input type="checkbox" class="wp-cat-row-check"></td>
-        <td><img src="/Shared/Asset/images/product1.png" class="wp-thumb-img" alt="${name}"></td>
+        <td><img src="${thumbSrc}" class="wp-thumb-img" alt="${name}"></td>
         <td>
             <a href="/Frontend/Admin/products/categories/view.php?id=${newId}" class="wp-row-title">${prefix}${name}</a>
             <div class="wp-row-actions">

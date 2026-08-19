@@ -29,13 +29,19 @@ $active_subnav = "categories";
 
             <!-- Header -->
             <div class="wp-heading-wrap" style="justify-content: space-between;">
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline">Category: Silk Sarees</h1>
                     <span class="wp-page-title-action gold" style="font-weight:700;">420 Products</span>
-                    <a href="/Frontend/Admin/products/categories/" class="wp-page-title-action secondary">← Back to Categories</a>
+                    <a href="/Frontend/Admin/products/categories/" class="wp-page-title-action secondary">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>Back to Categories</span>
+                    </a>
                 </div>
                 <div>
-                    <a href="/Frontend/Admin/products/categories/edit.php?id=1" class="wp-button primary">Edit Category</a>
+                    <a href="/Frontend/Admin/products/categories/edit.php?id=1" class="wp-button primary">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        <span>Edit Category</span>
+                    </a>
                 </div>
             </div>
 
