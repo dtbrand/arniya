@@ -373,6 +373,14 @@
         }
     }
 
+    // ════ SIDEBAR SUBMENU ACCORDION ════
+    window.toggleSidebarSubmenu = function(el) {
+        const parentLi = el.closest('.adm-nav-has-sub');
+        if (parentLi) {
+            parentLi.classList.toggle('open');
+        }
+    };
+
     // ════ TAB ROUTING ════
     window.switchAdmTab = function(tabId) {
         const tabs = document.querySelectorAll('.adm-tab-panel');

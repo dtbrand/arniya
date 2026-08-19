@@ -1,9 +1,10 @@
 <?php
 /**
- * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation
+ * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation with Products Submenu
  * DT Brand's & Jai Hanuman Tex
  */
 $current_nav = isset($active_nav) ? $active_nav : 'dashboard';
+$current_subnav = isset($active_subnav) ? $active_subnav : '';
 ?>
 <!-- ══ Mobile Sidebar Backdrop ══ -->
 <div class="adm-sidebar-backdrop" id="admSidebarBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:999; backdrop-filter:blur(3px);"></div>
@@ -51,13 +52,96 @@ $current_nav = isset($active_nav) ? $active_nav : 'dashboard';
         <div class="adm-nav-group">
             <div class="adm-nav-heading">COMMERCE</div>
             <ul class="adm-nav-list">
-                <li>
-                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-products')) { switchAdmTab('products'); return false; }" data-title="Products Catalog">
+                <!-- PRODUCTS WITH SUBMENU ACCORDION -->
+                <li class="adm-nav-has-sub open">
+                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" onclick="if(typeof toggleSidebarSubmenu==='function') { toggleSidebarSubmenu(this); } if(typeof switchAdmTab==='function' && document.getElementById('tab-products')) { switchAdmTab('products'); return false; }" data-title="Products Catalog">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
                         <span class="adm-nav-badge">1,240</span>
+                        <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </a>
+                    <!-- SUBMENU ITEMS LIST -->
+                    <ul class="adm-nav-submenu open" id="admSubmenu-products">
+                        <li>
+                            <a href="/Frontend/Admin/products/" class="adm-nav-subitem <?php echo ($current_nav === 'products' && empty($current_subnav)) ? 'active' : ''; ?>">
+                                <span>👗 All Products</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,240</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/add.php" class="adm-nav-subitem <?php echo $current_subnav === 'add' ? 'active' : ''; ?>">
+                                <span>➕ Add Product</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/categories/" class="adm-nav-subitem <?php echo $current_subnav === 'categories' ? 'active' : ''; ?>">
+                                <span>📁 Categories</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">16</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/subcategories/" class="adm-nav-subitem <?php echo $current_subnav === 'subcategories' ? 'active' : ''; ?>">
+                                <span>📂 Subcategories</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">34</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/brands/" class="adm-nav-subitem <?php echo $current_subnav === 'brands' ? 'active' : ''; ?>">
+                                <span>🏷️ Brands</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">4</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/attributes/" class="adm-nav-subitem <?php echo $current_subnav === 'attributes' ? 'active' : ''; ?>">
+                                <span>🎨 Attributes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/variants/" class="adm-nav-subitem <?php echo $current_subnav === 'variants' ? 'active' : ''; ?>">
+                                <span>🔀 Variants Matrix</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/media/" class="adm-nav-subitem <?php echo $current_subnav === 'media' ? 'active' : ''; ?>">
+                                <span>🖼️ Media Gallery</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/featured/" class="adm-nav-subitem <?php echo $current_subnav === 'featured' ? 'active' : ''; ?>">
+                                <span>⭐️ Featured</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">48</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/best-sellers/" class="adm-nav-subitem <?php echo $current_subnav === 'best-sellers' ? 'active' : ''; ?>">
+                                <span>🔥 Best Sellers</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">32</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/new-arrivals/" class="adm-nav-subitem <?php echo $current_subnav === 'new-arrivals' ? 'active' : ''; ?>">
+                                <span>✨ New Arrivals</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">64</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/reviews/" class="adm-nav-subitem <?php echo $current_subnav === 'reviews' ? 'active' : ''; ?>">
+                                <span>💬 Reviews Moderation</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/imports/" class="adm-nav-subitem <?php echo $current_subnav === 'imports' ? 'active' : ''; ?>">
+                                <span>📥 Import Wizard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/products/exports/" class="adm-nav-subitem <?php echo $current_subnav === 'exports' ? 'active' : ''; ?>">
+                                <span>📤 Export Studio</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li>
                     <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-orders')) { switchAdmTab('orders'); return false; }" data-title="Orders & Shipments">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -124,7 +208,7 @@ $current_nav = isset($active_nav) ? $active_nav : 'dashboard';
                 </li>
                 <li>
                     <a href="/Frontend/Admin/shipping/" class="adm-nav-item <?php echo $current_nav === 'shipping' ? 'active' : ''; ?>" id="navItem-shipping" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-shipping')) { switchAdmTab('shipping'); return false; }" data-title="Shipping & Courier">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span class="adm-nav-label">Shipping Logistics</span>
                     </a>
                 </li>

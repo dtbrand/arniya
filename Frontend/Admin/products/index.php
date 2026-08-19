@@ -5,6 +5,7 @@
  */
 $page_title = "Products Management";
 $active_nav = "products";
+$active_subnav = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,24 +36,77 @@ $active_nav = "products";
                     <p>Manage your DT Brand's product catalogue, stock levels, and multi-tier pricing.</p>
                 </div>
                 <div class="dt-prod-actions">
-                    <a href="/Frontend/Admin/products/imports/" class="adm-btn-secondary">📥 Import Products</a>
-                    <a href="/Frontend/Admin/products/exports/" class="adm-btn-secondary" onclick="window.exportCurrentTable('dt_products_catalog'); return false;">📤 Export CSV</a>
+                    <a href="/Frontend/Admin/products/imports/" class="adm-btn-secondary">📥 Import</a>
+                    <a href="/Frontend/Admin/products/exports/" class="adm-btn-secondary" onclick="window.exportCurrentTable('dt_products_catalog'); return false;">📤 Export</a>
                     <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary">+ Add Product</a>
                 </div>
             </div>
 
-            <!-- 2. Product Summary Metric Cards (9 Cards) -->
+            <!-- 2. Sub-Navigation Quick Access Strip (All 14 Sub-Suites) -->
+            <div class="dt-prod-subnav-strip">
+                <a href="/Frontend/Admin/products/" class="dt-prod-pill active">
+                    <span>👗 All Products</span>
+                    <span class="dt-prod-pill-badge">1,240</span>
+                </a>
+                <a href="/Frontend/Admin/products/add.php" class="dt-prod-pill">
+                    <span>➕ Add Product</span>
+                </a>
+                <a href="/Frontend/Admin/products/categories/" class="dt-prod-pill">
+                    <span>📁 Categories</span>
+                    <span class="dt-prod-pill-badge">16</span>
+                </a>
+                <a href="/Frontend/Admin/products/subcategories/" class="dt-prod-pill">
+                    <span>📂 Subcategories</span>
+                    <span class="dt-prod-pill-badge">34</span>
+                </a>
+                <a href="/Frontend/Admin/products/brands/" class="dt-prod-pill">
+                    <span>🏷️ Brands</span>
+                    <span class="dt-prod-pill-badge">4</span>
+                </a>
+                <a href="/Frontend/Admin/products/attributes/" class="dt-prod-pill">
+                    <span>🎨 Attributes</span>
+                </a>
+                <a href="/Frontend/Admin/products/variants/" class="dt-prod-pill">
+                    <span>🔀 Variants Matrix</span>
+                </a>
+                <a href="/Frontend/Admin/products/media/" class="dt-prod-pill">
+                    <span>🖼️ Media Gallery</span>
+                </a>
+                <a href="/Frontend/Admin/products/featured/" class="dt-prod-pill">
+                    <span>⭐️ Featured</span>
+                    <span class="dt-prod-pill-badge">48</span>
+                </a>
+                <a href="/Frontend/Admin/products/best-sellers/" class="dt-prod-pill">
+                    <span>🔥 Best Sellers</span>
+                    <span class="dt-prod-pill-badge">32</span>
+                </a>
+                <a href="/Frontend/Admin/products/new-arrivals/" class="dt-prod-pill">
+                    <span>✨ New Arrivals</span>
+                    <span class="dt-prod-pill-badge">64</span>
+                </a>
+                <a href="/Frontend/Admin/products/reviews/" class="dt-prod-pill">
+                    <span>💬 Reviews</span>
+                </a>
+                <a href="/Frontend/Admin/products/imports/" class="dt-prod-pill">
+                    <span>📥 Import Wizard</span>
+                </a>
+                <a href="/Frontend/Admin/products/exports/" class="dt-prod-pill">
+                    <span>📤 Export Studio</span>
+                </a>
+            </div>
+
+            <!-- 3. Product Summary Metric Cards (9 KPI Cards) -->
             <?php include_once __DIR__ . '/components/product-stats.php'; ?>
 
-            <!-- 3. Master Product Table Card -->
+            <!-- 4. Master Product Table Card -->
             <div class="dt-table-card">
                 <!-- Toolbar: Search & Action Buttons -->
                 <div class="dt-toolbar">
                     <?php include_once __DIR__ . '/components/product-search.php'; ?>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <a href="/Frontend/Admin/products/categories/" class="adm-btn-secondary" style="font-size:0.75rem;">📁 Categories</a>
-                        <a href="/Frontend/Admin/products/attributes/" class="adm-btn-secondary" style="font-size:0.75rem;">🎨 Attributes</a>
-                        <button type="button" class="adm-btn-secondary" style="font-size:0.75rem;" onclick="window.showToast('Column customizer opened!')">⚙️ Columns</button>
+                        <a href="/Frontend/Admin/products/categories/" class="adm-btn-secondary" style="font-size:0.75rem; height:34px;">📁 Categories</a>
+                        <a href="/Frontend/Admin/products/attributes/" class="adm-btn-secondary" style="font-size:0.75rem; height:34px;">🎨 Attributes</a>
+                        <button type="button" class="adm-btn-secondary" style="font-size:0.75rem; height:34px;" onclick="window.showToast('Column customizer ready!')">⚙️ Columns</button>
                     </div>
                 </div>
 
