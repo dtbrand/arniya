@@ -130,7 +130,8 @@ $active_subnav = "categories";
                     <div style="display:flex; align-items:center; gap:8px;">
                         <h1 class="wp-heading-inline">Product categories</h1>
                         <a href="/Frontend/Admin/products/" class="wp-page-title-action secondary">← All Products</a>
-                        <a href="/Frontend/Admin/products/subcategories/" class="wp-page-title-action secondary">Subcategories (34)</a>
+                        <a href="/Frontend/Admin/products/brands/" class="wp-page-title-action secondary">Brands (4)</a>
+                        <a href="/Frontend/Admin/products/attributes/" class="wp-page-title-action secondary">Attributes</a>
                     </div>
                     <div class="wp-search-box">
                         <input type="search" id="wpCatSearch" class="wp-search-input" placeholder="Search categories..." oninput="searchWpCategories(this.value)">
