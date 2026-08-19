@@ -1,6 +1,6 @@
 <?php
 /**
- * index.php — DT Brand's Products Management Suite (WordPress / WooCommerce Luxury Gold Edition)
+ * index.php — DT Brand's Products Management Suite (Wholesale Desktop & WooCommerce Hybrid)
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Products";
@@ -12,12 +12,77 @@ $active_subnav = "";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products ‹ DT Brand's Admin — WooCommerce Style</title>
+    <title>Products ‹ DT Brand's Wholesale & Admin Suite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <style>
+    /* Wholesale Desktop Specific Styling */
+    .dt-kpi-card {
+        background: #fff;
+        border: 1px solid rgba(212,175,55,0.4);
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: all 0.2s ease;
+    }
+    .dt-kpi-card:hover {
+        border-color: #D4AF37;
+        box-shadow: 0 4px 12px rgba(212,175,55,0.15);
+        transform: translateY(-1px);
+    }
+    .dt-view-toggle-btn {
+        background: #fff;
+        border: 1px solid #c3c4c7;
+        color: #50575e;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.15s ease;
+    }
+    .dt-view-toggle-btn.active {
+        background: #FAF5E8;
+        border-color: #D4AF37;
+        color: #8A681F;
+        font-weight: 700;
+    }
+    .dt-ws-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+        margin-top: 14px;
+    }
+    .dt-ws-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    .dt-ws-card:hover {
+        border-color: #D4AF37;
+        box-shadow: 0 6px 18px rgba(212,175,55,0.18);
+        transform: translateY(-2px);
+    }
+    .dt-ws-card-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: #f8fafc;
+    }
+    </style>
 </head>
 <body>
 <div class="adm-layout">
@@ -26,10 +91,10 @@ $active_subnav = "";
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
-            <!-- 1. Header Toolbar with Luxury Brand Gold Buttons & SVG Icons -->
-            <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+            <!-- 1. Header Toolbar with Luxury Brand Gold Buttons & Real Vector SVGs -->
+            <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Products</h1>
+                    <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Products &amp; Wholesale Hub</h1>
                     <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;">1,240 Total</span>
                     
                     <!-- + Add Product Primary Gold Button -->
@@ -56,9 +121,64 @@ $active_subnav = "";
                         <span>Attributes</span>
                     </a>
                 </div>
+
+                <!-- Dual View Mode Switcher: Table List vs Wholesale Desktop Grid -->
+                <div style="display:flex; align-items:center; border:1px solid #c3c4c7; border-radius:4px; overflow:hidden;">
+                    <button type="button" class="dt-view-toggle-btn active" id="btnViewTable" onclick="switchProductView('table')">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        <span>Table List</span>
+                    </button>
+                    <button type="button" class="dt-view-toggle-btn" id="btnViewGrid" onclick="switchProductView('grid')">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Wholesale Desktop Grid</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- 2. Status Views Filter Links (.subsubsub) with Active Highlights -->
+            <!-- 2. B2B Wholesale KPI Metrics Ribbon -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;">
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">ACTIVE B2B DESIGNS</div>
+                        <div style="font-size:17px; font-weight:800; color:#181512;">1,240 SKUs</div>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#DCFCE7; border:1px solid #86EFAC; display:flex; align-items:center; justify-content:center; color:#15803D;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;">₹48.60 Lakhs</div>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#EFF6FF; border:1px solid #93C5FD; display:flex; align-items:center; justify-content:center; color:#1D4ED8;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">SURAT CENTRAL DEPOT</div>
+                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;">8,450 Units</div>
+                    </div>
+                </div>
+
+                <div class="dt-kpi-card">
+                    <div style="width:36px; height:36px; border-radius:6px; background:#FEF3C7; border:1px solid #FCD34D; display:flex; align-items:center; justify-content:center; color:#B45309;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#646970; font-weight:600;">LOW STOCK REORDERS</div>
+                        <div style="font-size:17px; font-weight:800; color:#B45309;">14 Lots</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Status Filter Links (.subsubsub) -->
             <ul class="wp-subsubsub" style="margin-bottom:12px;">
                 <li><a href="#" class="current" onclick="filterWpProducts(''); return false;">All <span class="count">(1,240)</span></a> <span class="sep">|</span></li>
                 <li><a href="#" onclick="filterWpProducts('Active'); return false;">Published <span class="count">(1,185)</span></a> <span class="sep">|</span></li>
@@ -70,7 +190,7 @@ $active_subnav = "";
                 <li><a href="#" onclick="filterWpProducts('New Arrival'); return false;">New Arrivals <span class="count">(64)</span></a></li>
             </ul>
 
-            <!-- 3. Top Toolbar: Bulk Actions, Filter Dropdowns & Rule-Compliant Search Input -->
+            <!-- 4. Top Toolbar: Bulk Actions, Filter Dropdowns & Rule-Compliant Search Input -->
             <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
                 <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <select class="wp-select" id="wpBulkActionSelect" style="height:32px; font-size:12px;">
@@ -124,12 +244,14 @@ $active_subnav = "";
                         <input type="text" id="wpSearchInput" class="wp-search-input" placeholder="Search products, SKUs..." style="height:32px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpProducts(this.value); toggleSearchClearBtn(this.value)">
                         <span id="wpSearchClearBtn" onclick="clearWpSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchWpProducts(document.getElementById('wpSearchInput').value)" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Search Products</button>
+                    <button type="button" class="wp-button primary" onclick="searchWpProducts(document.getElementById('wpSearchInput').value)" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Search</button>
                 </div>
             </div>
 
-            <!-- 4. WooCommerce Style High-Craft Products Table -->
-            <div class="wp-table-card" style="background:#fff; border:1px solid #c3c4c7; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <!-- ======================================================== -->
+            <!-- 5A. VIEW MODE: WORDPRESS / WOOCOMMERCE TABLE LIST        -->
+            <!-- ======================================================== -->
+            <div id="productTableView" class="wp-table-card" style="background:#fff; border:1px solid #c3c4c7; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
                 <table class="wp-list-table" id="wpProductsTable" style="width:100%; border-collapse:collapse;">
                     <thead>
                         <tr style="background:#f6f7f7; border-bottom:1px solid #c3c4c7;">
@@ -150,7 +272,7 @@ $active_subnav = "";
                     </thead>
                     <tbody id="wpProductsTableBody">
                         
-                        <!-- Row 1: Kanjivaram Silk -->
+                        <!-- Row 1 -->
                         <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:10px 8px;">
                                 <input type="checkbox" class="wp-row-check" style="cursor:pointer; width:15px; height:15px;">
@@ -164,10 +286,7 @@ $active_subnav = "";
                                     <a href="/Frontend/Admin/products/edit.php?id=101" style="color:#8A681F; font-weight:600;">Edit</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/duplicate.php?id=101" style="color:#2271b1;">Duplicate</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/view.php?id=101" style="color:#2271b1;">View</a> <span style="color:#c3c4c7;">|</span>
-                                    <a href="#" onclick="window.shareProductWhatsApp(101); return false;" style="color:#15803D; font-weight:700; display:inline-flex; align-items:center; gap:2px;">
-                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-1.802-.387-1.42-.589-2.339-2.029-2.41-2.124-.071-.095-.572-.761-.572-1.45 0-.69.362-1.03.49-.172.129-.143.282-.179.376-.179.094 0 .188.001.27.005.087.004.204-.033.319.244.12.289.41 1.002.446 1.075.036.073.06.159.012.255-.048.096-.072.155-.144.239-.072.084-.152.188-.217.253-.072.072-.147.15-.063.294.084.144.373.616.8 1.002.55.496 1.013.65 1.157.722.144.072.228.06.313-.036.084-.096.362-.42.459-.564.096-.144.193-.12.325-.072.133.048.844.398.989.47.144.072.24.108.276.169.036.06.036.353-.108.758z"/></svg>
-                                        <span>WhatsApp</span>
-                                    </a> <span style="color:#c3c4c7;">|</span>
+                                    <a href="#" onclick="window.shareProductWhatsApp(101); return false;" style="color:#15803D; font-weight:700;">WhatsApp</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="#" class="trash" onclick="if(window.showToast) window.showToast('Moved to Trash'); return false;" style="color:#b32d2e;">Trash</a>
                                 </div>
                             </td>
@@ -194,7 +313,7 @@ $active_subnav = "";
                             </td>
                         </tr>
 
-                        <!-- Row 2: Banarasi Brocade -->
+                        <!-- Row 2 -->
                         <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:10px 8px;">
                                 <input type="checkbox" class="wp-row-check" style="cursor:pointer; width:15px; height:15px;">
@@ -208,10 +327,7 @@ $active_subnav = "";
                                     <a href="/Frontend/Admin/products/edit.php?id=102" style="color:#8A681F; font-weight:600;">Edit</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/duplicate.php?id=102" style="color:#2271b1;">Duplicate</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/view.php?id=102" style="color:#2271b1;">View</a> <span style="color:#c3c4c7;">|</span>
-                                    <a href="#" onclick="window.shareProductWhatsApp(102); return false;" style="color:#15803D; font-weight:700; display:inline-flex; align-items:center; gap:2px;">
-                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-1.802-.387-1.42-.589-2.339-2.029-2.41-2.124-.071-.095-.572-.761-.572-1.45 0-.69.362-1.03.49-.172.129-.143.282-.179.376-.179.094 0 .188.001.27.005.087.004.204-.033.319.244.12.289.41 1.002.446 1.075.036.073.06.159.012.255-.048.096-.072.155-.144.239-.072.084-.152.188-.217.253-.072.072-.147.15-.063.294.084.144.373.616.8 1.002.55.496 1.013.65 1.157.722.144.072.228.06.313-.036.084-.096.362-.42.459-.564.096-.144.193-.12.325-.072.133.048.844.398.989.47.144.072.24.108.276.169.036.06.036.353-.108.758z"/></svg>
-                                        <span>WhatsApp</span>
-                                    </a> <span style="color:#c3c4c7;">|</span>
+                                    <a href="#" onclick="window.shareProductWhatsApp(102); return false;" style="color:#15803D; font-weight:700;">WhatsApp</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="#" class="trash" onclick="if(window.showToast) window.showToast('Moved to Trash'); return false;" style="color:#b32d2e;">Trash</a>
                                 </div>
                             </td>
@@ -238,7 +354,7 @@ $active_subnav = "";
                             </td>
                         </tr>
 
-                        <!-- Row 3: Bridal Lehenga -->
+                        <!-- Row 3 -->
                         <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:10px 8px;">
                                 <input type="checkbox" class="wp-row-check" style="cursor:pointer; width:15px; height:15px;">
@@ -252,10 +368,7 @@ $active_subnav = "";
                                     <a href="/Frontend/Admin/products/edit.php?id=103" style="color:#8A681F; font-weight:600;">Edit</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/duplicate.php?id=103" style="color:#2271b1;">Duplicate</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/view.php?id=103" style="color:#2271b1;">View</a> <span style="color:#c3c4c7;">|</span>
-                                    <a href="#" onclick="window.shareProductWhatsApp(103); return false;" style="color:#15803D; font-weight:700; display:inline-flex; align-items:center; gap:2px;">
-                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-1.802-.387-1.42-.589-2.339-2.029-2.41-2.124-.071-.095-.572-.761-.572-1.45 0-.69.362-1.03.49-.172.129-.143.282-.179.376-.179.094 0 .188.001.27.005.087.004.204-.033.319.244.12.289.41 1.002.446 1.075.036.073.06.159.012.255-.048.096-.072.155-.144.239-.072.084-.152.188-.217.253-.072.072-.147.15-.063.294.084.144.373.616.8 1.002.55.496 1.013.65 1.157.722.144.072.228.06.313-.036.084-.096.362-.42.459-.564.096-.144.193-.12.325-.072.133.048.844.398.989.47.144.072.24.108.276.169.036.06.036.353-.108.758z"/></svg>
-                                        <span>WhatsApp</span>
-                                    </a> <span style="color:#c3c4c7;">|</span>
+                                    <a href="#" onclick="window.shareProductWhatsApp(103); return false;" style="color:#15803D; font-weight:700;">WhatsApp</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="#" class="trash" onclick="if(window.showToast) window.showToast('Moved to Trash'); return false;" style="color:#b32d2e;">Trash</a>
                                 </div>
                             </td>
@@ -282,7 +395,7 @@ $active_subnav = "";
                             </td>
                         </tr>
 
-                        <!-- Row 4: Designer Kurti -->
+                        <!-- Row 4 -->
                         <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:10px 8px;">
                                 <input type="checkbox" class="wp-row-check" style="cursor:pointer; width:15px; height:15px;">
@@ -296,10 +409,7 @@ $active_subnav = "";
                                     <a href="/Frontend/Admin/products/edit.php?id=104" style="color:#8A681F; font-weight:600;">Edit</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/duplicate.php?id=104" style="color:#2271b1;">Duplicate</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="/Frontend/Admin/products/view.php?id=104" style="color:#2271b1;">View</a> <span style="color:#c3c4c7;">|</span>
-                                    <a href="#" onclick="window.shareProductWhatsApp(104); return false;" style="color:#15803D; font-weight:700; display:inline-flex; align-items:center; gap:2px;">
-                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.072-1.802-.387-1.42-.589-2.339-2.029-2.41-2.124-.071-.095-.572-.761-.572-1.45 0-.69.362-1.03.49-.172.129-.143.282-.179.376-.179.094 0 .188.001.27.005.087.004.204-.033.319.244.12.289.41 1.002.446 1.075.036.073.06.159.012.255-.048.096-.072.155-.144.239-.072.084-.152.188-.217.253-.072.072-.147.15-.063.294.084.144.373.616.8 1.002.55.496 1.013.65 1.157.722.144.072.228.06.313-.036.084-.096.362-.42.459-.564.096-.144.193-.12.325-.072.133.048.844.398.989.47.144.072.24.108.276.169.036.06.036.353-.108.758z"/></svg>
-                                        <span>WhatsApp</span>
-                                    </a> <span style="color:#c3c4c7;">|</span>
+                                    <a href="#" onclick="window.shareProductWhatsApp(104); return false;" style="color:#15803D; font-weight:700;">WhatsApp</a> <span style="color:#c3c4c7;">|</span>
                                     <a href="#" class="trash" onclick="if(window.showToast) window.showToast('Moved to Trash'); return false;" style="color:#b32d2e;">Trash</a>
                                 </div>
                             </td>
@@ -330,8 +440,155 @@ $active_subnav = "";
                 </table>
             </div>
 
-            <!-- 5. Bottom Toolbar: Bulk Actions & Pagination -->
-            <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:12px;">
+            <!-- ======================================================== -->
+            <!-- 5B. VIEW MODE: WHOLESALE DESKTOP GRID CARDS              -->
+            <!-- ======================================================== -->
+            <div id="productGridView" class="dt-ws-grid" style="display:none;">
+                
+                <!-- WS Card 1 -->
+                <div class="dt-ws-card">
+                    <div style="position:relative;">
+                        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-ws-card-img" alt="Kanjivaram Saree">
+                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#8A681F; color:#fff; font-weight:700; font-size:10px;">✨ Best Seller</span>
+                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 6 Pcs</span>
+                    </div>
+                    <div style="padding:12px 14px; flex:1; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                            <span style="font-size:11px; font-weight:700; color:#8A681F;">SILK SAREES</span>
+                            <code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">KLN-SR-111</code>
+                        </div>
+                        <h4 style="margin:4px 0 8px 0; font-size:14px; font-weight:700; color:#181512; line-height:1.3;">Kanjivaram Pure Silk Gold Zari Saree</h4>
+                        
+                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:8px 10px; margin-bottom:10px;">
+                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                <div>
+                                    <small style="color:#5A4210; font-size:10px; font-weight:700;">WHOLESALE RATE</small>
+                                    <div style="font-size:16px; font-weight:800; color:#181512;">₹2,850 <small style="font-size:11px; font-weight:600; color:#646970;">/ pc</small></div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <small style="color:#646970; font-size:10px;">Retail MRP</small>
+                                    <div style="font-size:13px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹4,490</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:4px; font-size:10.5px; color:#15803D; font-weight:700;">⚡ 36% Resale Margin (+₹1,640/pc)</div>
+                        </div>
+
+                        <div style="margin-top:auto; display:flex; gap:6px;">
+                            <a href="/Frontend/Admin/products/edit.php?id=101" class="wp-button" style="flex:1; height:30px; font-size:11.5px; font-weight:600; justify-content:center; text-decoration:none;">✏️ Edit</a>
+                            <button type="button" class="wp-button primary" onclick="window.shareProductWhatsApp(101)" style="flex:1; height:30px; font-size:11.5px; font-weight:700; background:#15803D; border-color:#15803D; color:#fff; justify-content:center;">💬 WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WS Card 2 -->
+                <div class="dt-ws-card">
+                    <div style="position:relative;">
+                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="dt-ws-card-img" alt="Banarasi Saree">
+                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#D4AF37; color:#181512; font-weight:800; font-size:10px;">🔥 New Arrival</span>
+                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 8 Pcs</span>
+                    </div>
+                    <div style="padding:12px 14px; flex:1; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                            <span style="font-size:11px; font-weight:700; color:#8A681F;">BANARASI BROCADE</span>
+                            <code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">BNR-SR-204</code>
+                        </div>
+                        <h4 style="margin:4px 0 8px 0; font-size:14px; font-weight:700; color:#181512; line-height:1.3;">Banarasi Royal Brocade Weave Saree</h4>
+                        
+                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:8px 10px; margin-bottom:10px;">
+                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                <div>
+                                    <small style="color:#5A4210; font-size:10px; font-weight:700;">WHOLESALE RATE</small>
+                                    <div style="font-size:16px; font-weight:800; color:#181512;">₹3,200 <small style="font-size:11px; font-weight:600; color:#646970;">/ pc</small></div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <small style="color:#646970; font-size:10px;">Retail MRP</small>
+                                    <div style="font-size:13px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹4,990</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:4px; font-size:10.5px; color:#15803D; font-weight:700;">⚡ 35% Resale Margin (+₹1,790/pc)</div>
+                        </div>
+
+                        <div style="margin-top:auto; display:flex; gap:6px;">
+                            <a href="/Frontend/Admin/products/edit.php?id=102" class="wp-button" style="flex:1; height:30px; font-size:11.5px; font-weight:600; justify-content:center; text-decoration:none;">✏️ Edit</a>
+                            <button type="button" class="wp-button primary" onclick="window.shareProductWhatsApp(102)" style="flex:1; height:30px; font-size:11.5px; font-weight:700; background:#15803D; border-color:#15803D; color:#fff; justify-content:center;">💬 WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WS Card 3 -->
+                <div class="dt-ws-card">
+                    <div style="position:relative;">
+                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="dt-ws-card-img" alt="Bridal Lehenga">
+                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#B91C1C; color:#fff; font-weight:700; font-size:10px;">👑 Luxury Bridal</span>
+                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#B45309; font-weight:800; font-size:10.5px;">MOQ: 2 Pcs</span>
+                    </div>
+                    <div style="padding:12px 14px; flex:1; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                            <span style="font-size:11px; font-weight:700; color:#8A681F;">BRIDAL LEHENGAS</span>
+                            <code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">BRD-LH-902</code>
+                        </div>
+                        <h4 style="margin:4px 0 8px 0; font-size:14px; font-weight:700; color:#181512; line-height:1.3;">Crimson Bridal Handcrafted Zardosi Lehenga</h4>
+                        
+                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:8px 10px; margin-bottom:10px;">
+                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                <div>
+                                    <small style="color:#5A4210; font-size:10px; font-weight:700;">WHOLESALE RATE</small>
+                                    <div style="font-size:16px; font-weight:800; color:#181512;">₹11,500 <small style="font-size:11px; font-weight:600; color:#646970;">/ pc</small></div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <small style="color:#646970; font-size:10px;">Retail MRP</small>
+                                    <div style="font-size:13px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹16,490</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:4px; font-size:10.5px; color:#15803D; font-weight:700;">⚡ 30% Resale Margin (+₹4,990/pc)</div>
+                        </div>
+
+                        <div style="margin-top:auto; display:flex; gap:6px;">
+                            <a href="/Frontend/Admin/products/edit.php?id=103" class="wp-button" style="flex:1; height:30px; font-size:11.5px; font-weight:600; justify-content:center; text-decoration:none;">✏️ Edit</a>
+                            <button type="button" class="wp-button primary" onclick="window.shareProductWhatsApp(103)" style="flex:1; height:30px; font-size:11.5px; font-weight:700; background:#15803D; border-color:#15803D; color:#fff; justify-content:center;">💬 WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WS Card 4 -->
+                <div class="dt-ws-card">
+                    <div style="position:relative;">
+                        <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product4.png';" class="dt-ws-card-img" alt="Festive Kurti">
+                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#0F766E; color:#fff; font-weight:700; font-size:10px;">⚡ Super Value</span>
+                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 12 Pcs</span>
+                    </div>
+                    <div style="padding:12px 14px; flex:1; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                            <span style="font-size:11px; font-weight:700; color:#8A681F;">DESIGNER KURTIS</span>
+                            <code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">KRT-CH-401</code>
+                        </div>
+                        <h4 style="margin:4px 0 8px 0; font-size:14px; font-weight:700; color:#181512; line-height:1.3;">Chanderi Foil Printed Festive Kurti Set</h4>
+                        
+                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:8px 10px; margin-bottom:10px;">
+                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                <div>
+                                    <small style="color:#5A4210; font-size:10px; font-weight:700;">WHOLESALE RATE</small>
+                                    <div style="font-size:16px; font-weight:800; color:#181512;">₹1,450 <small style="font-size:11px; font-weight:600; color:#646970;">/ pc</small></div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <small style="color:#646970; font-size:10px;">Retail MRP</small>
+                                    <div style="font-size:13px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹2,290</div>
+                                </div>
+                            </div>
+                            <div style="margin-top:4px; font-size:10.5px; color:#15803D; font-weight:700;">⚡ 37% Resale Margin (+₹840/pc)</div>
+                        </div>
+
+                        <div style="margin-top:auto; display:flex; gap:6px;">
+                            <a href="/Frontend/Admin/products/edit.php?id=104" class="wp-button" style="flex:1; height:30px; font-size:11.5px; font-weight:600; justify-content:center; text-decoration:none;">✏️ Edit</a>
+                            <button type="button" class="wp-button primary" onclick="window.shareProductWhatsApp(104)" style="flex:1; height:30px; font-size:11.5px; font-weight:700; background:#15803D; border-color:#15803D; color:#fff; justify-content:center;">💬 WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 6. Bottom Toolbar: Bulk Actions & Pagination -->
+            <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px;">
                 <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:8px;">
                     <select class="wp-select" id="wpBulkActionSelectBottom" style="height:32px; font-size:12px;">
                         <option value="">Bulk actions</option>
@@ -361,6 +618,27 @@ $active_subnav = "";
 </div>
 
 <script>
+function switchProductView(mode) {
+    const table = document.getElementById('productTableView');
+    const grid = document.getElementById('productGridView');
+    const btnTable = document.getElementById('btnViewTable');
+    const btnGrid = document.getElementById('btnViewGrid');
+
+    if (mode === 'grid') {
+        if (table) table.style.display = 'none';
+        if (grid) grid.style.display = 'grid';
+        if (btnTable) btnTable.classList.remove('active');
+        if (btnGrid) btnGrid.classList.add('active');
+        if (typeof window.showToast === 'function') window.showToast('🔲 Switched to Wholesale Desktop Grid View');
+    } else {
+        if (table) table.style.display = 'block';
+        if (grid) grid.style.display = 'none';
+        if (btnTable) btnTable.classList.add('active');
+        if (btnGrid) btnGrid.classList.remove('active');
+        if (typeof window.showToast === 'function') window.showToast('📋 Switched to Table List View');
+    }
+}
+
 function toggleSearchClearBtn(val) {
     const btn = document.getElementById('wpSearchClearBtn');
     if (btn) btn.style.display = val.length > 0 ? 'inline' : 'none';
@@ -383,10 +661,17 @@ function toggleWpSelectAll(master) {
 
 function searchWpProducts(q) {
     const rows = document.querySelectorAll('#wpProductsTableBody tr');
+    const cards = document.querySelectorAll('.dt-ws-card');
     const term = (q || '').toLowerCase().trim();
+
     rows.forEach(r => {
         const txt = r.textContent.toLowerCase();
         r.style.display = txt.includes(term) ? '' : 'none';
+    });
+
+    cards.forEach(c => {
+        const txt = c.textContent.toLowerCase();
+        c.style.display = txt.includes(term) ? 'flex' : 'none';
     });
 }
 
@@ -399,6 +684,8 @@ function filterWpProducts(status) {
     }
 
     const rows = document.querySelectorAll('#wpProductsTableBody tr');
+    const cards = document.querySelectorAll('.dt-ws-card');
+
     rows.forEach(r => {
         if (!status) {
             r.style.display = '';
@@ -407,16 +694,36 @@ function filterWpProducts(status) {
             r.style.display = txt.includes(status.toLowerCase()) ? '' : 'none';
         }
     });
+
+    cards.forEach(c => {
+        if (!status) {
+            c.style.display = 'flex';
+        } else {
+            const txt = c.textContent.toLowerCase();
+            c.style.display = txt.includes(status.toLowerCase()) ? 'flex' : 'none';
+        }
+    });
 }
 
 function filterWpCategory(cat) {
     const rows = document.querySelectorAll('#wpProductsTableBody tr');
+    const cards = document.querySelectorAll('.dt-ws-card');
+
     rows.forEach(r => {
         if (!cat) {
             r.style.display = '';
         } else {
             const txt = r.textContent.toLowerCase();
             r.style.display = txt.includes(cat.toLowerCase()) ? '' : 'none';
+        }
+    });
+
+    cards.forEach(c => {
+        if (!cat) {
+            c.style.display = 'flex';
+        } else {
+            const txt = c.textContent.toLowerCase();
+            c.style.display = txt.includes(cat.toLowerCase()) ? 'flex' : 'none';
         }
     });
 }
@@ -485,7 +792,7 @@ function handleWpBulkActionBottom() {
 }
 
 window.shareProductWhatsApp = function(id) {
-    const text = encodeURIComponent(`Hello DT Brand's! I would like to inquire about Product ID: #${id}. https://jaihanumantex.in/Frontend/Admin/products/view.php?id=${id}`);
+    const text = encodeURIComponent(`Hello DT Brand's! I would like to inquire about Wholesale Lot for Product ID: #${id}. https://jaihanumantex.in/Frontend/Admin/products/view.php?id=${id}`);
     window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
 };
 </script>
