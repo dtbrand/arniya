@@ -26,17 +26,30 @@ $active_nav = "products";
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 12px 16px;">
             
-            <!-- WordPress Heading & Action Bar -->
+            <!-- WordPress Heading & Real SVG Action Bar -->
             <div class="wp-heading-wrap" style="justify-content: space-between; border-bottom: 1px solid #c3c4c7; padding-bottom: 10px; margin-bottom: 14px;">
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline">Kanjivaram Pure Silk Gold Zari Saree</h1>
-                    <span class="adm-badge success">Active in Shop</span>
+                    <span class="adm-badge success">Active in Catalog</span>
                     <a href="/Frontend/Admin/products/" class="wp-page-title-action secondary">← Back to Catalog</a>
                 </div>
-                <div style="display:flex; align-items:center; gap:6px;">
-                    <button type="button" class="wp-button" onclick="window.shareProductWhatsApp(101)">WhatsApp Share</button>
-                    <a href="/Frontend/Admin/products/duplicate.php?id=101" class="wp-button">Duplicate</a>
-                    <a href="/Frontend/Admin/products/edit.php?id=101" class="wp-button primary">Edit Product</a>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <button type="button" class="wp-button" onclick="window.shareProductWhatsApp(101)" title="Share on WhatsApp">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="color:#25D366;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        <span>WhatsApp Share</span>
+                    </button>
+                    <a href="/Frontend/Admin/products/duplicate.php?id=101" class="wp-button">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        <span>Duplicate</span>
+                    </a>
+                    <button type="button" class="wp-button" onclick="window.showToast('Product archived');">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                        <span>Archive</span>
+                    </button>
+                    <a href="/Frontend/Admin/products/edit.php?id=101" class="wp-button primary">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        <span>Edit Product</span>
+                    </a>
                 </div>
             </div>
 
@@ -81,7 +94,7 @@ $active_nav = "products";
                     <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; height:260px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;" alt="Product">
                     
                     <div style="margin-top:14px;">
-                        <h4 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 6px 0;">Multi-Tier Pricing</h4>
+                        <h4 style="font-size:13.5px; font-weight:700; color:#1d2327; margin:0 0 6px 0;">Multi-Tier Pricing</h4>
                         <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:4px; padding:10px;">
                             <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
                                 <span>Retail Price:</span>
@@ -131,7 +144,10 @@ $active_nav = "products";
 
                     <!-- Audit Timeline Card -->
                     <div style="background:#fff; border:1px solid #c3c4c7; border-radius:4px; padding:16px;">
-                        <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 12px 0; border-bottom:1px solid #f0f0f1; padding-bottom:6px;">Audit Trail &amp; Activity Log</h3>
+                        <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 12px 0; border-bottom:1px solid #f0f0f1; padding-bottom:6px; display:flex; align-items:center; gap:6px;">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" style="color:#8A681F;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Audit Trail &amp; Activity Log</span>
+                        </h3>
                         <div class="dt-timeline">
                             <div class="dt-timeline-item">
                                 <div class="dt-timeline-dot"></div>
