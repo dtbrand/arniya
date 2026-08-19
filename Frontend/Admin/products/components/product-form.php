@@ -1,6 +1,6 @@
 <?php
 /**
- * product-form.php — Basic Product Information Form with DT Brand's AI Importer Modal
+ * product-form.php — Basic Product Information Form with Clean DT Brand's AI Importer Modal
  * DT Brand's & Jai Hanuman Tex
  */
 ?>
@@ -130,10 +130,10 @@ Size: Free Size (6.3m)
 Price: 1200
 Description: Handcrafted pure silk bridal collection with rich pallu and embossed motifs."></textarea>
 
-            <!-- Auto-Fill Preview Indicators -->
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.6); border-radius:6px; padding:8px 12px; margin-top:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; font-size:11.5px;">
-                <span style="color:#5A4210;">⚡ Auto-Fills: <strong>Title, SKU, Fabric, Border, Blouse, Purchase/Sale Price, SEO &amp; Color</strong></span>
-                <span class="adm-badge gold" style="font-size:11px; padding:2px 8px;">⚡ Auto Markup Active (&lt;500:+200 | 500-1200:+300 | 1200-2000:+400 | 2000+:+500)</span>
+            <!-- Clean Auto-Fill Indicator without Formula Text -->
+            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.6); border-radius:6px; padding:8px 12px; margin-top:10px; display:flex; align-items:center; gap:8px; font-size:11.5px; color:#5A4210;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>⚡ Auto-Fills: <strong>Title, SKU, Fabric, Border, Blouse, Purchase/Sale Price, SEO &amp; Color</strong></span>
             </div>
         </div>
 
