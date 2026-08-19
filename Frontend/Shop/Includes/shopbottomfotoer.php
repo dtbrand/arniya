@@ -15,10 +15,36 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9990;
+    z-index: 1000;
     padding: 0 12px;
     padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
     pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.28s ease, visibility 0.28s ease;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.shop-smart-bottom-footer.is-hidden {
+    transform: translateY(140%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Auto-hide via body classes when any overlay, drawer, sheet, or modal is active */
+body.mf-open .shop-smart-bottom-footer,
+body.sort-open .shop-smart-bottom-footer,
+body.more-open .shop-smart-bottom-footer,
+body.cart-open .shop-smart-bottom-footer,
+body.wishlist-open .shop-smart-bottom-footer,
+body.modal-open .shop-smart-bottom-footer,
+body.reels-open .shop-smart-bottom-footer,
+body.drawer-open .shop-smart-bottom-footer {
+    transform: translateY(140%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 @media (max-width: 1023px) {
@@ -950,22 +976,28 @@ input[type=range].mf-range::-moz-range-thumb {
     var mfApplyBtn = document.getElementById('mfApplyBtn');
     var mfClearBtn = document.getElementById('mfClearBtn');
 
-    function openMobileFilter() {
-        window.syncMobileFilterUI();
+    window.openMobileFilter = function() {
+        if (typeof window.syncMobileFilterUI === 'function') window.syncMobileFilterUI();
         mfOverlay.classList.add('open');
         mfOverlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        filterBtn.setAttribute('aria-expanded', 'true');
-    }
-    function closeMobileFilter() {
+        document.body.classList.add('mf-open');
+        if (filterBtn) filterBtn.setAttribute('aria-expanded', 'true');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.add('is-hidden');
+    };
+    window.closeMobileFilter = function() {
         mfOverlay.classList.remove('open');
         mfOverlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-        filterBtn.setAttribute('aria-expanded', 'false');
-    }
+        document.body.classList.remove('mf-open');
+        if (filterBtn) filterBtn.setAttribute('aria-expanded', 'false');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.remove('is-hidden');
+    };
 
-    if (filterBtn) filterBtn.addEventListener('click', openMobileFilter);
-    if (mfCloseBtn) mfCloseBtn.addEventListener('click', closeMobileFilter);
+    if (filterBtn) filterBtn.addEventListener('click', window.openMobileFilter);
+    if (mfCloseBtn) mfCloseBtn.addEventListener('click', window.closeMobileFilter);
 
     if (mfApplyBtn) {
         mfApplyBtn.addEventListener('click', function () {
@@ -1156,12 +1188,34 @@ input[type=range].mf-range::-moz-range-thumb {
     var sortBtn      = document.getElementById('sortBtn');
     var sortCloseBtn = document.getElementById('sortCloseBtn');
 
-    function openSort()  { sortSheet.classList.add('open'); sortOverlay.classList.add('open'); sortOverlay.setAttribute('aria-hidden','false'); sortSheet.setAttribute('aria-hidden','false'); sortBtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
-    function closeSort() { sortSheet.classList.remove('open'); sortOverlay.classList.remove('open'); sortOverlay.setAttribute('aria-hidden','true'); sortSheet.setAttribute('aria-hidden','true'); sortBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+    window.openSort = function() {
+        if (!sortSheet || !sortOverlay) return;
+        sortSheet.classList.add('open');
+        sortOverlay.classList.add('open');
+        sortOverlay.setAttribute('aria-hidden','false');
+        sortSheet.setAttribute('aria-hidden','false');
+        if (sortBtn) sortBtn.setAttribute('aria-expanded','true');
+        document.body.style.overflow='hidden';
+        document.body.classList.add('sort-open');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.add('is-hidden');
+    };
+    window.closeSort = function() {
+        if (!sortSheet || !sortOverlay) return;
+        sortSheet.classList.remove('open');
+        sortOverlay.classList.remove('open');
+        sortOverlay.setAttribute('aria-hidden','true');
+        sortSheet.setAttribute('aria-hidden','true');
+        if (sortBtn) sortBtn.setAttribute('aria-expanded','false');
+        document.body.style.overflow='';
+        document.body.classList.remove('sort-open');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.remove('is-hidden');
+    };
 
-    if (sortBtn) sortBtn.addEventListener('click', openSort);
-    if (sortCloseBtn) sortCloseBtn.addEventListener('click', closeSort);
-    if (sortOverlay) sortOverlay.addEventListener('click', closeSort);
+    if (sortBtn) sortBtn.addEventListener('click', window.openSort);
+    if (sortCloseBtn) sortCloseBtn.addEventListener('click', window.closeSort);
+    if (sortOverlay) sortOverlay.addEventListener('click', window.closeSort);
 
     var sortOptions = document.querySelectorAll('.sort-option');
     sortOptions.forEach(function(opt) {
@@ -1174,7 +1228,7 @@ input[type=range].mf-range::-moz-range-thumb {
                 if (ptbSort) ptbSort.value = opt.dataset.sort;
                 if (typeof window.applyMasterFilters === 'function') window.applyMasterFilters();
             }
-            setTimeout(closeSort, 240);
+            setTimeout(window.closeSort, 240);
         }
         opt.addEventListener('click', pick);
         opt.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); }});
@@ -1186,12 +1240,35 @@ input[type=range].mf-range::-moz-range-thumb {
     var addBtn       = document.getElementById('addBtn');
     var addCloseBtn  = document.getElementById('addCloseBtn');
 
-    function openMore()  { addSheet.classList.add('open'); moreOverlay.classList.add('open'); moreOverlay.setAttribute('aria-hidden','false'); addSheet.setAttribute('aria-hidden','false'); addBtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
-    function closeMore() { addSheet.classList.remove('open'); moreOverlay.classList.remove('open'); moreOverlay.setAttribute('aria-hidden','true'); addSheet.setAttribute('aria-hidden','true'); addBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+    window.openMore = function() {
+        if (!addSheet || !moreOverlay) return;
+        if (typeof syncMobileMoreAccountState === 'function') syncMobileMoreAccountState();
+        addSheet.classList.add('open');
+        moreOverlay.classList.add('open');
+        moreOverlay.setAttribute('aria-hidden','false');
+        addSheet.setAttribute('aria-hidden','false');
+        if (addBtn) addBtn.setAttribute('aria-expanded','true');
+        document.body.style.overflow='hidden';
+        document.body.classList.add('more-open');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.add('is-hidden');
+    };
+    window.closeMore = function() {
+        if (!addSheet || !moreOverlay) return;
+        addSheet.classList.remove('open');
+        moreOverlay.classList.remove('open');
+        moreOverlay.setAttribute('aria-hidden','true');
+        addSheet.setAttribute('aria-hidden','true');
+        if (addBtn) addBtn.setAttribute('aria-expanded','false');
+        document.body.style.overflow='';
+        document.body.classList.remove('more-open');
+        var bFoot = document.getElementById('shopSmartBottomFooter');
+        if (bFoot) bFoot.classList.remove('is-hidden');
+    };
 
-    if (addBtn) addBtn.addEventListener('click', openMore);
-    if (addCloseBtn) addCloseBtn.addEventListener('click', closeMore);
-    if (moreOverlay) moreOverlay.addEventListener('click', closeMore);
+    if (addBtn) addBtn.addEventListener('click', window.openMore);
+    if (addCloseBtn) addCloseBtn.addEventListener('click', window.closeMore);
+    if (moreOverlay) moreOverlay.addEventListener('click', window.closeMore);
 
     var accountItem  = document.getElementById('moreAccountAction');
     var logoutItem   = document.getElementById('moreLogoutAction');
