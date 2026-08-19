@@ -25,18 +25,6 @@
 
     <!-- Scrollable Navigation Area -->
     <div class="adm-sidebar-scroll">
-        <!-- Wholesaler-Style VIP Super Admin User Card -->
-        <div class="adm-side-user-card" onclick="switchAdmTab('settings')" title="Super Admin Profile">
-            <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Super Admin" class="adm-side-user-avatar">
-            <div class="adm-side-user-details">
-                <div class="adm-side-user-name">Gautam Sethi</div>
-                <div class="adm-side-user-tag">
-                    <span>★ Master Admin</span>
-                </div>
-            </div>
-            <span class="adm-side-user-tier">Tier 1</span>
-        </div>
-
         <!-- Section 1: MENU -->
         <div class="adm-nav-group">
             <div class="adm-nav-heading">MENU</div>
