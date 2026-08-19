@@ -1,0 +1,25 @@
+/**
+ * variants.css — Variant Generator Matrix & Stock Matrix
+ */
+
+.dt-variant-generator-box {
+    background: #FAF8F4;
+    border: 1px solid #E5E1D7;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.dt-attr-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid rgba(212,175,55,0.3);
+    padding: 3px 10px;
+    border-radius: 16px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin: 4px;
+}

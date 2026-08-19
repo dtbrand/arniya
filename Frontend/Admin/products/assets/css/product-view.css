@@ -1,0 +1,89 @@
+/**
+ * product-view.css — Product Inspection, Analytics & Audit Trail
+ */
+
+.dt-view-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .dt-view-grid { grid-template-columns: 1fr; }
+}
+
+.dt-view-sticky-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: var(--adm-radius-md, 12px);
+    padding: 20px;
+    position: sticky;
+    top: 80px;
+}
+
+.dt-analytics-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.dt-ana-card {
+    background: #FAF8F4;
+    border: 1px solid #E5E1D7;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.dt-ana-val {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--adm-text-main, #181512);
+    margin: 4px 0;
+}
+
+.dt-ana-lbl {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--adm-text-muted, #7A7266);
+    text-transform: uppercase;
+}
+
+/* Activity Timeline */
+.dt-timeline {
+    position: relative;
+    padding-left: 24px;
+}
+
+.dt-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: #E5E1D7;
+}
+
+.dt-timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.dt-timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--adm-gold, #8A681F);
+    border: 2px solid #FFFFFF;
+}
+
+.dt-timeline-meta {
+    font-size: 0.72rem;
+    color: #7A7266;
+    margin-top: 2px;
+}

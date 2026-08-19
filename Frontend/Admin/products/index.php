@@ -1,9 +1,9 @@
 <?php
 /**
- * index.php - DT Brand's Admin Products Module
+ * index.php — DT Brand's Products Management Master Suite
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = "Product Catalog Management";
+$page_title = "Products Management";
 $active_nav = "products";
 ?>
 <!DOCTYPE html>
@@ -11,11 +11,13 @@ $active_nav = "products";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog Management - DT Brand's Admin</title>
+    <title>Products Management — DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/products.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/product-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -23,182 +25,74 @@ $active_nav = "products";
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content">
-            <div class="adm-page-head">
-                <div class="adm-page-title-group">
-                    <h1 class="adm-page-title">
-                        <span>Product Catalog Management</span>
+            <!-- 1. Header Section -->
+            <div class="dt-prod-header">
+                <div class="dt-prod-title-group">
+                    <h1>
+                        <span>Products</span>
                         <span class="adm-badge gold">1,240 SKUs</span>
                     </h1>
-                    <p class="adm-page-subtitle">Manage Surat Pure Silk Sarees, Banarasi Brocades, Lehengas & Kurtis catalog.</p>
+                    <p>Manage your DT Brand's product catalogue, stock levels, and multi-tier pricing.</p>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                <div class="dt-prod-actions">
+                    <a href="/Frontend/Admin/products/imports/" class="adm-btn-secondary">📥 Import Products</a>
+                    <a href="/Frontend/Admin/products/exports/" class="adm-btn-secondary" onclick="window.exportCurrentTable('dt_products_catalog'); return false;">📤 Export CSV</a>
+                    <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary">+ Add Product</a>
                 </div>
             </div>
 
-            <!-- KPI Metric Cards -->
-            <div class="adm-kpi-grid">
-                
-        <div class="adm-kpi-card">
-            <div class="adm-kpi-top">
-                <span class="adm-kpi-label">Total Products</span>
-                <div class="adm-kpi-icon-box">👗</div>
-            </div>
-            <div class="adm-kpi-val">1,240</div>
-            <div class="adm-kpi-bottom">
-                <span class="adm-kpi-delta up">16 Categories</span>
-            </div>
-        </div>
-        
-        <div class="adm-kpi-card">
-            <div class="adm-kpi-top">
-                <span class="adm-kpi-label">Active in Stock</span>
-                <div class="adm-kpi-icon-box">🟢</div>
-            </div>
-            <div class="adm-kpi-val">1,185</div>
-            <div class="adm-kpi-bottom">
-                <span class="adm-kpi-delta up">95.5% In Stock</span>
-            </div>
-        </div>
-        
-        <div class="adm-kpi-card">
-            <div class="adm-kpi-top">
-                <span class="adm-kpi-label">Low Stock Alert</span>
-                <div class="adm-kpi-icon-box">⚠️</div>
-            </div>
-            <div class="adm-kpi-val">14</div>
-            <div class="adm-kpi-bottom">
-                <span class="adm-kpi-delta down">< 5 pcs remaining</span>
-            </div>
-        </div>
-        
-        <div class="adm-kpi-card">
-            <div class="adm-kpi-top">
-                <span class="adm-kpi-label">Out of Stock</span>
-                <div class="adm-kpi-icon-box">🛑</div>
-            </div>
-            <div class="adm-kpi-val">41</div>
-            <div class="adm-kpi-bottom">
-                <span class="adm-kpi-delta down">Restock Pending</span>
-            </div>
-        </div>
-        
-            </div>
+            <!-- 2. Product Summary Metric Cards (9 Cards) -->
+            <?php include_once __DIR__ . '/components/product-stats.php'; ?>
 
-            <!-- Module Specific Interactive Content -->
-            
-        <div class="adm-table-card">
-            <div class="adm-table-toolbar">
-                <div class="adm-table-filters">
-                    <select class="adm-filter-select" id="prodCatFilter" onchange="filterModuleTable(this.value, 'cat')">
-                        <option value="all">All Categories</option>
-                        <option value="Sarees">Silk Sarees</option>
-                        <option value="Banarasi">Banarasi Brocade</option>
-                        <option value="Lehengas">Bridal Lehengas</option>
-                        <option value="Kurtis">Designer Kurtis</option>
-                        <option value="Dress Materials">Dress Materials</option>
-                    </select>
-                    <select class="adm-filter-select" id="prodStockFilter" onchange="filterModuleTable(this.value, 'status')">
-                        <option value="all">All Stock Status</option>
-                        <option value="In Stock">In Stock</option>
-                        <option value="Low Stock">Low Stock</option>
-                        <option value="Out of Stock">Out of Stock</option>
-                    </select>
+            <!-- 3. Master Product Table Card -->
+            <div class="dt-table-card">
+                <!-- Toolbar: Search & Action Buttons -->
+                <div class="dt-toolbar">
+                    <?php include_once __DIR__ . '/components/product-search.php'; ?>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <a href="/Frontend/Admin/products/categories/" class="adm-btn-secondary" style="font-size:0.75rem;">📁 Categories</a>
+                        <a href="/Frontend/Admin/products/attributes/" class="adm-btn-secondary" style="font-size:0.75rem;">🎨 Attributes</a>
+                        <button type="button" class="adm-btn-secondary" style="font-size:0.75rem;" onclick="window.showToast('Column customizer opened!')">⚙️ Columns</button>
+                    </div>
                 </div>
-                <div class="adm-page-actions">
-                    <button class="adm-btn-secondary" onclick="window.showToast('Exporting catalog CSV...')">📥 Export CSV</button>
-                    <button class="adm-btn-primary" onclick="openAddProductModal()">+ Add New Product</button>
+
+                <!-- Advanced Filters -->
+                <?php include_once __DIR__ . '/components/product-filters.php'; ?>
+
+                <!-- Bulk Actions Sticky Strip -->
+                <?php include_once __DIR__ . '/components/bulk-actions.php'; ?>
+
+                <!-- Product Data Table -->
+                <?php include_once __DIR__ . '/components/product-table.php'; ?>
+
+                <!-- Pagination -->
+                <div class="dt-pagination">
+                    <div class="dt-page-info">
+                        Showing <strong>1 – 5</strong> of <strong>1,240</strong> products • Per page:
+                        <select class="dt-filter-pill-select" style="height:28px; padding:0 8px; margin-left:6px;">
+                            <option>10</option>
+                            <option selected>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                    </div>
+                    <div class="dt-page-nav">
+                        <button type="button" class="dt-page-btn" disabled>«</button>
+                        <button type="button" class="dt-page-btn active">1</button>
+                        <button type="button" class="dt-page-btn">2</button>
+                        <button type="button" class="dt-page-btn">3</button>
+                        <button type="button" class="dt-page-btn">»</button>
+                    </div>
                 </div>
             </div>
-            <div class="adm-table-responsive">
-                <table class="adm-table" id="moduleDataTable">
-                    <thead>
-                        <tr>
-                            <th>Product & SKU</th>
-                            <th>Category</th>
-                            <th>Pricing (Retail / B2B)</th>
-                            <th>MOQ</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="adm-table-prod-cell">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="adm-prod-thumb" alt="Saree">
-                                    <div class="adm-prod-meta">
-                                        <span class="adm-prod-title">Kanjivaram Pure Silk Gold Zari Saree</span>
-                                        <span class="adm-prod-sub">SKU: KLN-SR-111 • HSN: 5007 • Pure Silk</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><strong>Silk Sarees</strong></td>
-                            <td><strong>₹4,490</strong> (Retail)<br><span style="font-size:0.72rem; color:#8A681F; font-weight:700;">₹2,850/pc (Wholesale)</span></td>
-                            <td><span style="background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:6px; font-weight:700;">8 pcs</span></td>
-                            <td><strong>45 units</strong></td>
-                            <td><span class="adm-badge success">In Stock</span></td>
-                            <td>
-                                <div class="adm-action-btn-group">
-                                    <button class="adm-action-btn" title="Edit" onclick="openAddProductModal()">✏️</button>
-                                    <button class="adm-action-btn wa" title="Share WA" onclick="window.showToast('Shared to WhatsApp!')">💬</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="adm-table-prod-cell">
-                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="adm-prod-thumb" alt="Saree">
-                                    <div class="adm-prod-meta">
-                                        <span class="adm-prod-title">Banarasi Royal Brocade Weave Saree</span>
-                                        <span class="adm-prod-sub">SKU: BNR-SR-204 • HSN: 5007 • Katan Silk</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><strong>Banarasi</strong></td>
-                            <td><strong>₹4,990</strong> (Retail)<br><span style="font-size:0.72rem; color:#8A681F; font-weight:700;">₹3,200/pc (Wholesale)</span></td>
-                            <td><span style="background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:6px; font-weight:700;">8 pcs</span></td>
-                            <td><strong>28 units</strong></td>
-                            <td><span class="adm-badge success">In Stock</span></td>
-                            <td>
-                                <div class="adm-action-btn-group">
-                                    <button class="adm-action-btn" title="Edit" onclick="openAddProductModal()">✏️</button>
-                                    <button class="adm-action-btn wa" title="Share WA" onclick="window.showToast('Shared to WhatsApp!')">💬</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="adm-table-prod-cell">
-                                    <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="adm-prod-thumb" alt="Lehenga">
-                                    <div class="adm-prod-meta">
-                                        <span class="adm-prod-title">Crimson Bridal Handcrafted Zardosi Lehenga</span>
-                                        <span class="adm-prod-sub">SKU: BRD-LH-902 • HSN: 6204 • Velvet Silk</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><strong>Bridal Lehengas</strong></td>
-                            <td><strong>₹16,490</strong> (Retail)<br><span style="font-size:0.72rem; color:#8A681F; font-weight:700;">₹11,500/pc (Wholesale)</span></td>
-                            <td><span style="background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:6px; font-weight:700;">2 pcs</span></td>
-                            <td><strong style="color:#D97706;">4 units</strong></td>
-                            <td><span class="adm-badge warning">Low Stock</span></td>
-                            <td>
-                                <div class="adm-action-btn-group">
-                                    <button class="adm-action-btn" title="Edit" onclick="openAddProductModal()">✏️</button>
-                                    <button class="adm-action-btn wa" title="Share WA" onclick="window.showToast('Shared to WhatsApp!')">💬</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
 <script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/products.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/product-list.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/filters.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

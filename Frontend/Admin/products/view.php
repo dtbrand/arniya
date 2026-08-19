@@ -1,9 +1,8 @@
 <?php
 /**
- * view.php - DT Brand's Admin Product Catalog Inspector
- * DT Brand's & Jai Hanuman Tex
+ * view.php — Comprehensive Product Overview, Analytics & Audit Trail
  */
-$page_title = "Product Catalog Inspector";
+$page_title = "Product Overview";
 $active_nav = "products";
 ?>
 <!DOCTYPE html>
@@ -11,11 +10,13 @@ $active_nav = "products";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog Inspector - DT Brand's Admin</title>
+    <title>Product Overview — DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/products.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/product-view.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -23,56 +24,72 @@ $active_nav = "products";
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content">
-            <div class="adm-page-head">
-                <div class="adm-page-title-group">
-                    <h1 class="adm-page-title">
-                        <span>Product Catalog Inspector</span>
-                        <span class="adm-badge gold">Live SKU</span>
+            <div class="dt-prod-header">
+                <div class="dt-prod-title-group">
+                    <h1>
+                        <span>Kanjivaram Pure Silk Gold Zari Saree</span>
+                        <span class="adm-badge success">Active in Catalog</span>
                     </h1>
-                    <p class="adm-page-subtitle">Detailed preview of product specifications, stock locations, and tiered pricing.</p>
+                    <p>SKU: <strong>KLN-SR-111</strong> • Category: <strong>Silk Sarees</strong> • Fabric: <strong>Pure Mulberry Silk</strong></p>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Products Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+                <div class="dt-prod-actions">
+                    <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Catalog</a>
+                    <a href="/Frontend/Admin/products/duplicate.php?id=101" class="adm-btn-secondary">📋 Duplicate</a>
+                    <a href="/Frontend/Admin/products/edit.php?id=101" class="adm-btn-primary">✏️ Edit Product</a>
                 </div>
             </div>
 
-            <!-- Page Specific Content -->
-            
-        <div class="adm-card">
-            <div class="adm-card-head">
-                <h3 class="adm-card-title"><span>👗 Kanjivaram Pure Silk Gold Zari Saree (KLN-SR-111)</span></h3>
-                <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Products</a>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 2fr; gap:24px;">
-                <div>
-                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; border-radius:8px; border:1px solid #E5E1D7;">
+            <!-- Product Analytics KPIs (Views, Cart, Orders, Revenue) -->
+            <div class="dt-analytics-kpi-grid">
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Total Views</div>
+                    <div class="dt-ana-val">4,820</div>
+                    <small style="color:#15803D; font-weight:700;">↑ +18.4%</small>
                 </div>
-                <div>
-                    <h2 style="font-family:var(--adm-font-serif); font-size:1.3rem; margin-bottom:8px;">Kanjivaram Pure Silk Gold Zari Saree</h2>
-                    <p style="color:#7A7266; font-size:0.85rem; margin-bottom:16px;">SKU: <strong>KLN-SR-111</strong> • HSN: <strong>5007</strong> • Fabric: <strong>Pure Silk</strong> • Warehouse: <strong>Surat Hub</strong></p>
-                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:18px;">
-                        <div style="padding:12px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:6px; text-align:center;">
-                            <small style="color:#7A7266;">Retail MRP</small>
-                            <div style="font-size:1.15rem; font-weight:800; color:#181512;">₹4,490</div>
-                        </div>
-                        <div style="padding:12px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:6px; text-align:center;">
-                            <small style="color:#7A7266;">Reseller Margin</small>
-                            <div style="font-size:1.15rem; font-weight:800; color:#7E22CE;">₹3,450</div>
-                        </div>
-                        <div style="padding:12px; background:#FAF5E8; border:1px solid #E5D5A8; border-radius:6px; text-align:center;">
-                            <small style="color:#8A681F; font-weight:700;">Wholesale MOQ 8+</small>
-                            <div style="font-size:1.15rem; font-weight:800; color:#8A681F;">₹2,850</div>
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:10px;">
-                        <button class="adm-btn-primary" onclick="window.showToast('Opening Edit Screen...')">✏️ Edit Product</button>
-                        <button class="adm-btn-secondary" onclick="window.showToast('WhatsApp share link copied!')">💬 Share on WhatsApp</button>
-                    </div>
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Cart Adds</div>
+                    <div class="dt-ana-val">842</div>
+                    <small style="color:#15803D; font-weight:700;">17.4% Rate</small>
+                </div>
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Units Sold</div>
+                    <div class="dt-ana-val">142 pcs</div>
+                    <small style="color:#15803D; font-weight:700;">High Volume</small>
+                </div>
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Total Revenue</div>
+                    <div class="dt-ana-val">₹4,04,700</div>
+                    <small style="color:#8A681F; font-weight:700;">B2B + B2C</small>
+                </div>
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Gross Profit</div>
+                    <div class="dt-ana-val">₹1,42,000</div>
+                    <small style="color:#15803D; font-weight:700;">35.1% Margin</small>
+                </div>
+                <div class="dt-ana-card">
+                    <div class="dt-ana-lbl">Wishlists</div>
+                    <div class="dt-ana-val">380</div>
+                    <small style="color:#8A681F; font-weight:700;">High Intent</small>
                 </div>
             </div>
-        </div>
-        
+
+            <!-- Main Layout Grid -->
+            <div class="dt-view-grid">
+                <!-- Sticky Product Profile Card -->
+                <div class="dt-view-sticky-card">
+                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; border-radius:8px; margin-bottom:14px;">
+                    <div style="font-size:1.2rem; font-weight:800; color:#181512; margin-bottom:4px;">₹4,490 <small style="color:#7A7266; font-size:0.8rem;">(Retail)</small></div>
+                    <div style="font-size:0.95rem; font-weight:800; color:#8A681F; margin-bottom:12px;">₹2,850/pc <small style="color:#7A7266; font-size:0.75rem;">(Wholesale MOQ 8)</small></div>
+                    <p style="font-size:0.82rem; color:#7A7266; margin-bottom:14px;">Stock: <strong>45 units</strong> in Surat Central Hub</p>
+                    <button type="button" class="adm-btn-primary" style="width:100%; justify-content:center;" onclick="window.shareProductWhatsApp(101)">💬 Share via WhatsApp</button>
+                </div>
+
+                <!-- Product Deep Breakdown -->
+                <div>
+                    <!-- Activity Timeline -->
+                    <?php include_once __DIR__ . '/components/product-activity.php'; ?>
+                </div>
+            </div>
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>

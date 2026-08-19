@@ -1,0 +1,151 @@
+/**
+ * product-form.css — Add / Edit Product Studio Multi-Section Form
+ */
+
+.dt-form-grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 1100px) {
+    .dt-form-grid-layout { grid-template-columns: 1fr; }
+}
+
+.dt-form-section {
+    background: #FFFFFF;
+    border: 1.2px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: var(--adm-radius-md, 12px);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.dt-form-sec-head {
+    padding: 16px 20px;
+    background: #FAF8F4;
+    border-bottom: 1px solid var(--adm-border-soft, #E5E1D7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dt-form-sec-title {
+    font-family: var(--adm-font-serif, 'Cinzel', serif);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--adm-text-main, #181512);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-form-sec-body {
+    padding: 20px;
+}
+
+/* Media Dropzone */
+.dt-dropzone {
+    border: 2px dashed var(--adm-gold-border, rgba(138,104,31,0.3));
+    background: #FAF8F4;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dt-dropzone:hover {
+    border-color: var(--adm-gold, #8A681F);
+    background: var(--adm-gold-pale, #FAF5E8);
+}
+
+.dt-gallery-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.dt-gallery-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    border: 1px solid #E5E1D7;
+    position: relative;
+    overflow: hidden;
+}
+
+.dt-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dt-gallery-main-tag {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(138, 104, 31, 0.85);
+    color: #FFFFFF;
+    font-size: 0.6rem;
+    text-align: center;
+    font-weight: 700;
+    padding: 2px 0;
+}
+
+/* Live Pricing Preview Matrix */
+.dt-calc-price-card {
+    background: #FAF5E8;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.dt-calc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    padding: 4px 0;
+}
+
+.dt-calc-row.highlight {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #8A681F;
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+/* Google Search SEO Snippet Preview */
+.dt-google-snippet {
+    background: #FFFFFF;
+    border: 1px solid #DFE1E5;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: Arial, sans-serif;
+}
+
+.dt-google-url {
+    font-size: 0.72rem;
+    color: #202124;
+    margin-bottom: 2px;
+}
+
+.dt-google-title {
+    font-size: 1rem;
+    color: #1A0DAB;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.dt-google-desc {
+    font-size: 0.78rem;
+    color: #4D5156;
+    line-height: 1.4;
+}

@@ -18,6 +18,8 @@ RewriteRule ^wholesaler(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
 RewriteRule ^retailer(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301]
 RewriteRule ^reseller(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301]
 
+RewriteRule ^admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
+RewriteRule ^Admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
 RewriteRule ^admin(\.php)?$ /Frontend/Admin/admin.php [L,R=301]
 RewriteRule ^adminlogin(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
 
