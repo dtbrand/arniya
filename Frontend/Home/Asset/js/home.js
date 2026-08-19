@@ -1257,8 +1257,42 @@
     document.querySelectorAll('.reviews-track').forEach(function(track) {
         track.addEventListener('scroll', window.syncReviewsScrollbar, { passive: true });
     });
-    setTimeout(window.syncReviewsScrollbar, 250);
-    window.addEventListener('resize', window.syncReviewsScrollbar, { passive: true });
+    /* ═════════════════════════════════════════════════════════════════════
+       REAL PRODUCT VIDEOS (1-LINE HORIZONTAL RAIL CONTROLLER)
+    ═════════════════════════════════════════════════════════════════════ */
+    var reelsTrack = document.getElementById('homeReelsTrack');
+    var reelsThumb = document.getElementById('reelsScrollbarThumb');
+
+    window.scrollReelsRail = function(direction) {
+        if (!reelsTrack) return;
+        var scrollAmount = Math.max(220, Math.floor(reelsTrack.clientWidth * 0.75));
+        reelsTrack.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    window.syncReelsScrollbar = function() {
+        if (!reelsTrack || !reelsThumb) return;
+        var scrollLeft = reelsTrack.scrollLeft;
+        var maxScroll = reelsTrack.scrollWidth - reelsTrack.clientWidth;
+        if (maxScroll <= 0) {
+            reelsThumb.style.width = '100%';
+            reelsThumb.style.transform = 'translateX(0%)';
+            return;
+        }
+        var visibleRatio = Math.max(0.15, Math.min(1, reelsTrack.clientWidth / reelsTrack.scrollWidth));
+        reelsThumb.style.width = (visibleRatio * 100) + '%';
+        var scrollPercent = scrollLeft / maxScroll;
+        var maxTranslatePercent = (1 - visibleRatio) / visibleRatio * 100;
+        reelsThumb.style.transform = 'translateX(' + (scrollPercent * maxTranslatePercent) + '%)';
+    };
+
+    if (reelsTrack) {
+        reelsTrack.addEventListener('scroll', window.syncReelsScrollbar, { passive: true });
+        setTimeout(window.syncReelsScrollbar, 250);
+        window.addEventListener('resize', window.syncReelsScrollbar, { passive: true });
+    }
 
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
