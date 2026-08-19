@@ -1,8 +1,8 @@
 <?php
 /**
  * account.php — Luxury Account & Authentication Modal Component
- * Ultra-Clean, High-Fashion Styling Matching myaccount.php
- * Features Smart 2-Tab Bar (LOGIN | REGISTER), Autofill CSS Fix, Show/Hide Password Eye Toggle,
+ * Ultra-Luxury High-Fashion Styling with Curved Segmented Tab Pill Bar,
+ * Enhanced Typography, Vector Input Icons, Autofill CSS Fix, Show/Hide Password Eye Toggle,
  * Searchable World Countries & States Dropdowns, Animated Vector SVG Role Cards, and Auto Role Dashboard Redirect
  * 100% Fluid Responsive for Desktop & Mobile
  */
@@ -11,14 +11,15 @@
 /* ── Account Modal Tokens ── */
 :root {
     --ac-gold-primary: #8A681F;
-    --ac-gold-deep: #5F4512;
+    --ac-gold-hover: #A8832A;
+    --ac-gold-deep: #583F0F;
     --ac-gold-light: #C5A859;
     --ac-gold-pale: #FAF5E8;
     --ac-gold-border: rgba(138, 104, 31, 0.28);
     --ac-dark-text: #181512;
-    --ac-mid-text: #423C34;
-    --ac-light-text: #6E675D;
-    --ac-soft-platinum: #DCD6CA;
+    --ac-mid-text: #484136;
+    --ac-light-text: #736C61;
+    --ac-soft-platinum: #DDD7CB;
     --ac-cream-bg: #FFFFFF;
 }
 
@@ -26,9 +27,9 @@
 .account-modal-backdrop {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(18, 14, 10, 0.84);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(16, 12, 8, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     z-index: 1000001;
     display: flex;
     align-items: center;
@@ -44,15 +45,15 @@
     visibility: visible;
 }
 
-/* ── Account Dialog (Smart Auto Size & Fluid Responsive) ── */
+/* ── Account Dialog (Curved Luxury Card & Smart Auto Sizing) ── */
 .account-dialog {
-    background: #FFFFFF;
+    background: #FAFDFC;
     width: 100%;
     max-width: 460px;
-    max-height: 92vh;
-    border-radius: 18px;
+    max-height: 94vh;
+    border-radius: 20px;
     border: 2px solid var(--ac-gold-primary);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.4) inset;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -67,7 +68,7 @@
 
 /* ── Dialog Header ── */
 .ac-header {
-    background: linear-gradient(135deg, #FAF4E6 0%, #F5EAD4 50%, #FAF6ED 100%);
+    background: linear-gradient(135deg, #FAF4E6 0%, #F6EBCE 50%, #FAF5EA 100%);
     border-bottom: 1.5px solid var(--ac-gold-border);
     padding: 13px 18px;
     display: flex;
@@ -81,7 +82,7 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, transparent 0%, var(--ac-gold-primary) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #C5A859 30%, var(--ac-gold-primary) 50%, #C5A859 70%, transparent 100%);
 }
 .ac-brand-group {
     display: flex;
@@ -128,45 +129,55 @@
     transform: rotate(90deg);
 }
 
-/* ── Smart 2-Tab Switcher Bar (Only LOGIN & REGISTER) ── */
+/* ── Modern Curved Segmented Pill Tabs (LOGIN | REGISTER) ── */
+.ac-tabs-wrapper {
+    padding: 12px 18px 0;
+    background: #FAF8F4;
+    flex-shrink: 0;
+}
 .ac-nav-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: #F4EEDF;
-    border-bottom: 2px solid var(--ac-gold-border);
-    flex-shrink: 0;
-    padding: 0;
+    background: #EFE7D5;
+    border-radius: 30px;
+    padding: 4px;
+    border: 1.2px solid var(--ac-gold-border);
+    position: relative;
 }
 .ac-nav-tab {
     width: 100%;
-    padding: 12px 8px;
+    padding: 9px 12px;
     background: transparent;
     border: none;
-    border-bottom: 3.5px solid transparent;
+    border-radius: 26px;
     font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    color: var(--ac-mid-text);
+    color: #635A4D;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 .ac-nav-tab:hover {
     color: var(--ac-gold-primary);
-    background: rgba(255,255,255,0.4);
 }
 .ac-nav-tab.active {
-    background: #FFFFFF;
-    color: var(--ac-gold-primary);
-    border-bottom-color: var(--ac-gold-primary);
+    background: linear-gradient(135deg, #B8973E 0%, #8A681F 50%, #634912 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.32);
+    transform: scale(1.01);
 }
 
 /* ── Content Panes & Scrollable Body ── */
 .ac-body {
-    padding: 18px 20px 22px;
+    padding: 16px 18px 20px;
     overflow-y: auto;
     flex: 1;
     scrollbar-width: thin;
@@ -197,7 +208,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Form Controls & Labels ── */
+/* ── Form Controls & Typography ── */
 .ac-form-group {
     display: flex;
     flex-direction: column;
@@ -205,21 +216,40 @@
     position: relative;
 }
 .ac-label {
-    font-size: 0.73rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    color: var(--ac-dark-text);
-    letter-spacing: 0.04em;
+    color: #383025;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .ac-label .req { color: #C62828; font-weight: 900; font-size: 0.85rem; margin-left: 2px; }
+
+/* Input Container with Vector Icon Support */
+.ac-input-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.ac-input-icon {
+    position: absolute;
+    left: 12px;
+    width: 17px;
+    height: 17px;
+    stroke: var(--ac-gold-primary);
+    fill: none;
+    stroke-width: 2;
+    pointer-events: none;
+    opacity: 0.85;
+}
 .ac-input {
     width: 100%;
     height: 44px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
+    border-radius: 10px;
     padding: 0 13px;
     font-family: var(--font-sans);
     font-size: 0.88rem;
@@ -230,6 +260,9 @@
     box-sizing: border-box;
     transition: all 0.2s ease;
 }
+.ac-input.has-icon {
+    padding-left: 38px !important;
+}
 .ac-input::placeholder {
     color: var(--ac-light-text);
     font-weight: 500;
@@ -237,6 +270,7 @@
 .ac-input:focus {
     border-color: var(--ac-gold-primary);
     box-shadow: 0 0 0 3.5px rgba(138,104,31,0.18);
+    background: #FCFAF6;
 }
 
 /* Chrome Autofill Background Fix */
@@ -307,7 +341,7 @@
     width: 100%;
     height: 44px;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
+    border-radius: 10px;
     padding: 0 13px;
     background: #FFFFFF;
     color: var(--ac-dark-text);
@@ -325,6 +359,7 @@
 .ac-custom-select-box.active .ac-custom-select-trigger {
     border-color: var(--ac-gold-primary);
     box-shadow: 0 0 0 3.5px rgba(138,104,31,0.18);
+    background: #FCFAF6;
 }
 .ac-custom-select-val {
     display: flex;
@@ -363,8 +398,8 @@
     right: 0;
     background: #FFFFFF;
     border: 2px solid var(--ac-gold-primary);
-    border-radius: 10px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.22);
     max-height: 200px;
     z-index: 1000005;
     display: none;
@@ -440,7 +475,7 @@
 .ac-role-pill-btn {
     position: relative;
     padding: 9px 4px;
-    border-radius: 9px;
+    border-radius: 10px;
     border: 1.8px solid var(--ac-soft-platinum);
     background: #FFFFFF;
     color: var(--ac-dark-text);
@@ -502,7 +537,7 @@
 .ac-wa-group {
     display: flex;
     border: 1.8px solid var(--ac-soft-platinum);
-    border-radius: 9px;
+    border-radius: 10px;
     background: #FFFFFF;
     overflow: hidden;
     transition: all 0.2s ease;
@@ -557,31 +592,32 @@
     margin-top: 2px;
 }
 
-/* ── Primary Action Buttons ── */
+/* ── Primary Action Buttons (Luxury Gradient & Elevation) ── */
 .ac-btn-primary {
     width: 100%;
-    height: 46px;
-    border-radius: 9px;
+    height: 48px;
+    border-radius: 12px;
     border: none;
-    background: linear-gradient(135deg, #A8832A 0%, var(--ac-gold-primary) 50%, var(--ac-gold-deep) 100%);
+    background: linear-gradient(135deg, #B8973E 0%, #8A681F 50%, #634912 100%);
     color: #FFFFFF;
     font-family: var(--font-sans);
-    font-size: clamp(0.82rem, 2.2vw, 0.90rem);
+    font-size: clamp(0.84rem, 2.2vw, 0.90rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.22s ease;
-    box-shadow: 0 5px 18px rgba(138,104,31,0.30);
+    box-shadow: 0 6px 20px rgba(138, 104, 31, 0.32);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-top: 4px;
+    gap: 9px;
+    margin-top: 6px;
 }
 .ac-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 7px 24px rgba(138,104,31,0.42);
+    box-shadow: 0 8px 26px rgba(138, 104, 31, 0.46);
+    background: linear-gradient(135deg, #C5A859 0%, #9B7523 50%, #755616 100%);
 }
 .ac-btn-primary:active {
     transform: translateY(0);
@@ -620,10 +656,18 @@
             <button type="button" class="ac-close-btn" id="closeAccountModalBtn" aria-label="Close modal">✕</button>
         </div>
 
-        <!-- Smart 2-Tab Bar (LOGIN | REGISTER) -->
-        <div class="ac-nav-tabs" id="acNavTabs">
-            <button type="button" class="ac-nav-tab active" id="acTabBtnLogin" data-tab="login" onclick="window.switchAccountTab('login')">LOGIN</button>
-            <button type="button" class="ac-nav-tab" id="acTabBtnRegister" data-tab="register" onclick="window.switchAccountTab('register')">REGISTER</button>
+        <!-- Curved Segmented Tabs Wrapper (LOGIN | REGISTER) -->
+        <div class="ac-tabs-wrapper">
+            <div class="ac-nav-tabs" id="acNavTabs">
+                <button type="button" class="ac-nav-tab active" id="acTabBtnLogin" data-tab="login" onclick="window.switchAccountTab('login')">
+                    <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <span>LOGIN</span>
+                </button>
+                <button type="button" class="ac-nav-tab" id="acTabBtnRegister" data-tab="register" onclick="window.switchAccountTab('register')">
+                    <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    <span>REGISTER</span>
+                </button>
+            </div>
         </div>
 
         <!-- Body -->
@@ -633,7 +677,10 @@
             <div class="ac-pane active" id="acPaneLogin">
                 <div class="ac-form-group">
                     <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email <span class="req">*</span></label>
-                    <input type="text" id="acLoginEmail" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" autocomplete="username" required>
+                    <div class="ac-input-wrap">
+                        <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <input type="text" id="acLoginEmail" class="ac-input has-icon" placeholder="e.g. 9876543210 or radhika@example.com" autocomplete="username" required>
+                    </div>
                 </div>
 
                 <div class="ac-form-group">
@@ -642,7 +689,8 @@
                         <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('forgot')">Forgot Password?</button>
                     </label>
                     <div class="ac-pass-wrap">
-                        <input type="password" id="acLoginPass" class="ac-input ac-pass-input" placeholder="Enter your password" autocomplete="current-password" required>
+                        <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="acLoginPass" class="ac-input has-icon ac-pass-input" placeholder="Enter your password" autocomplete="current-password" required>
                         <button type="button" class="ac-eye-btn" onclick="window.toggleAcPassVisibility('acLoginPass', this)" aria-label="Toggle password visibility">
                             <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             <svg class="eye-closed" style="display:none;" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -651,12 +699,12 @@
                 </div>
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
-                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                     <span>Sign In to My Account</span>
                 </button>
 
-                <div style="text-align:center; font-size:0.78rem; margin-top:8px; color:var(--ac-mid-text); font-weight:600;">
-                    Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now</button>
+                <div style="text-align:center; font-size:0.80rem; margin-top:8px; color:var(--ac-mid-text); font-weight:600;">
+                    Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now →</button>
                 </div>
             </div>
 
@@ -666,7 +714,10 @@
                 <!-- Full Name -->
                 <div class="ac-form-group">
                     <label class="ac-label" for="acRegName">Full Name <span class="req">*</span></label>
-                    <input type="text" id="acRegName" class="ac-input" placeholder="e.g. Rajan Mehta" required>
+                    <div class="ac-input-wrap">
+                        <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <input type="text" id="acRegName" class="ac-input has-icon" placeholder="e.g. Rajan Mehta" required>
+                    </div>
                 </div>
 
                 <!-- Country Dropdown (All World Countries with Search & Real Flags) -->
@@ -784,7 +835,8 @@
                 <div class="ac-form-group">
                     <label class="ac-label" for="acRegPass">Password <span class="req">*</span></label>
                     <div class="ac-pass-wrap">
-                        <input type="password" id="acRegPass" class="ac-input ac-pass-input" placeholder="Minimum 6 characters" required>
+                        <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <input type="password" id="acRegPass" class="ac-input has-icon ac-pass-input" placeholder="Minimum 6 characters" required>
                         <button type="button" class="ac-eye-btn" onclick="window.toggleAcPassVisibility('acRegPass', this)" aria-label="Toggle password visibility">
                             <svg class="eye-open" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                             <svg class="eye-closed" style="display:none;" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -794,13 +846,12 @@
 
                 <!-- Submit Button -->
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountRegister()">
-                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
                     <span>Create My Account</span>
                 </button>
 
-                <div style="text-align:center; margin-top:2px;">
-                    <span style="font-size:0.75rem; color:var(--ac-mid-text);">Already have an account? </span>
-                    <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">Sign In</button>
+                <div style="text-align:center; font-size:0.80rem; margin-top:6px; color:var(--ac-mid-text); font-weight:600;">
+                    Already have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">Sign In →</button>
                 </div>
 
             </div>
@@ -813,15 +864,18 @@
 
                 <div class="ac-form-group">
                     <label class="ac-label" for="acForgotInput">WhatsApp Number / Email <span class="req">*</span></label>
-                    <input type="text" id="acForgotInput" class="ac-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                    <div class="ac-input-wrap">
+                        <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <input type="text" id="acForgotInput" class="ac-input has-icon" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                    </div>
                 </div>
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountForgot()">
-                    <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                     <span>Send Reset Link via WhatsApp</span>
                 </button>
 
-                <div style="text-align:center; font-size:0.78rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
+                <div style="text-align:center; font-size:0.80rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
                     Remembered your password? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('login')">← Back to Login</button>
                 </div>
             </div>
