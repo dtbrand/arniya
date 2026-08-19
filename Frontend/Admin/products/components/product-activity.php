@@ -4,9 +4,7 @@
  */
 ?>
 <div class="dt-form-section">
-    <div class="dt-form-sec-head">
-        <h3 class="dt-form-sec-title"><span>🕒 Product Activity & Audit Trail</span></h3>
-    </div>
+    <div class="dt-form-sec-head"><h3 class="dt-form-sec-title"><span>🕒 Product Activity &amp; Audit Trail</span></h3></div>
     <div class="dt-form-sec-body">
         <div class="dt-timeline">
             <div class="dt-timeline-item">
@@ -21,7 +19,7 @@
             </div>
             <div class="dt-timeline-item">
                 <div class="dt-timeline-dot"></div>
-                <strong>Product Created & Published</strong> to Online Catalog
+                <strong>Product Created &amp; Published</strong> to Online Catalog
                 <div class="dt-timeline-meta">By Surat Catalog Team • 10 Aug 2026</div>
             </div>
         </div>

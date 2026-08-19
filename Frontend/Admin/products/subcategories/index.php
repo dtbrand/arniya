@@ -1,5 +1,5 @@
 <?php
-$page_title = "Subcategories";
+$page_title = "Subcategories Hierarchy";
 $active_nav = "products";
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $active_nav = "products";
         <main class="adm-content">
             <div class="dt-prod-header">
                 <div class="dt-prod-title-group">
-                    <h1><span>Subcategories</span><span class="adm-badge gold">34 Subcategories</span></h1>
+                    <h1><span>Subcategories Hierarchy</span><span class="adm-badge gold">34 Subcategories</span></h1>
                 </div>
                 <div class="dt-prod-actions">
                     <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Products</a>
@@ -30,9 +30,9 @@ $active_nav = "products";
                     <table class="adm-table">
                         <thead>
                             <tr>
-                                <th>Subcategory</th>
+                                <th>Subcategory Name</th>
                                 <th>Parent Category</th>
-                                <th>Products</th>
+                                <th>Active SKUs</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -44,6 +44,20 @@ $active_nav = "products";
                                 <td>142 SKUs</td>
                                 <td><span class="adm-badge success">Active</span></td>
                                 <td><a href="/Frontend/Admin/products/subcategories/edit.php?id=1" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Paithani Zari</strong></td>
+                                <td>Silk Sarees</td>
+                                <td>98 SKUs</td>
+                                <td><span class="adm-badge success">Active</span></td>
+                                <td><a href="/Frontend/Admin/products/subcategories/edit.php?id=2" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Zardosi Bridal</strong></td>
+                                <td>Bridal Lehengas</td>
+                                <td>84 SKUs</td>
+                                <td><span class="adm-badge success">Active</span></td>
+                                <td><a href="/Frontend/Admin/products/subcategories/edit.php?id=3" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
                             </tr>
                         </tbody>
                     </table>

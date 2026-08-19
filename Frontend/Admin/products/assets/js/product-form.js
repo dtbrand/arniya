@@ -20,15 +20,15 @@
     };
 
     window.updateGoogleSeoPreview = function() {
-        const title = document.getElementById('pFormSeoTitle')?.value || document.getElementById('pFormName')?.value || 'Product Title — DT Brand's';
-        const desc = document.getElementById('pFormSeoDesc')?.value || 'Explore authentic Pure Silk Sarees, Banarasi Brocades & Lehengas handcrafted in Surat at DT Brand's.';
+        const title = document.getElementById('pFormSeoTitle')?.value || document.getElementById('pFormName')?.value || "Product Title — DT Brand's";
+        const desc = document.getElementById('pFormSeoDesc')?.value || "Explore authentic Pure Silk Sarees, Banarasi Brocades & Lehengas handcrafted in Surat at DT Brand's.";
         const slug = document.getElementById('pFormSlug')?.value || 'product-url-slug';
 
         const gTitle = document.getElementById('dtGoogleTitlePreview');
         const gUrl = document.getElementById('dtGoogleUrlPreview');
         const gDesc = document.getElementById('dtGoogleDescPreview');
 
-        if (gTitle) gTitle.textContent = title + ' | DT Brand's Luxury Ethnic';
+        if (gTitle) gTitle.textContent = title + " | DT Brand's Luxury Ethnic";
         if (gUrl) gUrl.textContent = 'https://jaihanumantex.in/product/' + slug;
         if (gDesc) gDesc.textContent = desc;
     };

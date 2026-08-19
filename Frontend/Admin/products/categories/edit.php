@@ -18,7 +18,7 @@ $active_nav = "products";
         <main class="adm-content">
             <div class="dt-prod-header">
                 <div class="dt-prod-title-group">
-                    <h1><span>Edit Silk Sarees Category</span></h1>
+                    <h1><span>Edit Category: Silk Sarees</span></h1>
                 </div>
                 <div class="dt-prod-actions">
                     <a href="/Frontend/Admin/products/categories/" class="adm-btn-secondary">Cancel</a>
@@ -30,6 +30,10 @@ $active_nav = "products";
                     <div class="adm-form-group">
                         <label class="adm-form-label">Category Name</label>
                         <input type="text" class="adm-form-input" value="Silk Sarees">
+                    </div>
+                    <div class="adm-form-group">
+                        <label class="adm-form-label">Slug</label>
+                        <input type="text" class="adm-form-input" value="silk-sarees">
                     </div>
                 </div>
             </div>

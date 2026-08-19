@@ -28,30 +28,58 @@ $active_nav = "products";
                 </div>
             </div>
 
+            <!-- Categories Grid -->
             <div class="dt-cat-grid">
                 <div class="dt-cat-card">
                     <div class="dt-cat-icon">👗</div>
                     <div style="flex:1;">
-                        <h4 style="font-weight:800; font-size:1rem;">Silk Sarees</h4>
+                        <h4 style="font-weight:800; font-size:1rem; color:#181512;">Silk Sarees</h4>
                         <p style="font-size:0.75rem; color:#7A7266;">420 SKUs • HSN: 5007 (5% GST)</p>
+                        <span class="adm-badge success" style="margin-top:4px;">Active in Shop</span>
                     </div>
-                    <a href="/Frontend/Admin/products/categories/edit.php?id=1" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <a href="/Frontend/Admin/products/categories/edit.php?id=1" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                        <a href="/Frontend/Admin/products/categories/view.php?id=1" class="adm-btn-secondary adm-btn-sm">View</a>
+                    </div>
                 </div>
+
                 <div class="dt-cat-card">
                     <div class="dt-cat-icon">✨</div>
                     <div style="flex:1;">
-                        <h4 style="font-weight:800; font-size:1rem;">Banarasi Brocade</h4>
+                        <h4 style="font-weight:800; font-size:1rem; color:#181512;">Banarasi Brocade</h4>
                         <p style="font-size:0.75rem; color:#7A7266;">280 SKUs • HSN: 5007 (5% GST)</p>
+                        <span class="adm-badge success" style="margin-top:4px;">Active in Shop</span>
                     </div>
-                    <a href="/Frontend/Admin/products/categories/edit.php?id=2" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <a href="/Frontend/Admin/products/categories/edit.php?id=2" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                        <a href="/Frontend/Admin/products/categories/view.php?id=2" class="adm-btn-secondary adm-btn-sm">View</a>
+                    </div>
                 </div>
+
                 <div class="dt-cat-card">
                     <div class="dt-cat-icon">👑</div>
                     <div style="flex:1;">
-                        <h4 style="font-weight:800; font-size:1rem;">Bridal Lehengas</h4>
+                        <h4 style="font-weight:800; font-size:1rem; color:#181512;">Bridal Lehengas</h4>
                         <p style="font-size:0.75rem; color:#7A7266;">160 SKUs • HSN: 6204 (12% GST)</p>
+                        <span class="adm-badge success" style="margin-top:4px;">Active in Shop</span>
                     </div>
-                    <a href="/Frontend/Admin/products/categories/edit.php?id=3" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <a href="/Frontend/Admin/products/categories/edit.php?id=3" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                        <a href="/Frontend/Admin/products/categories/view.php?id=3" class="adm-btn-secondary adm-btn-sm">View</a>
+                    </div>
+                </div>
+
+                <div class="dt-cat-card">
+                    <div class="dt-cat-icon">🌸</div>
+                    <div style="flex:1;">
+                        <h4 style="font-weight:800; font-size:1rem; color:#181512;">Designer Kurtis</h4>
+                        <p style="font-size:0.75rem; color:#7A7266;">240 SKUs • HSN: 6204 (12% GST)</p>
+                        <span class="adm-badge success" style="margin-top:4px;">Active in Shop</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <a href="/Frontend/Admin/products/categories/edit.php?id=4" class="adm-btn-secondary adm-btn-sm">Edit</a>
+                        <a href="/Frontend/Admin/products/categories/view.php?id=4" class="adm-btn-secondary adm-btn-sm">View</a>
+                    </div>
                 </div>
             </div>
         </main>

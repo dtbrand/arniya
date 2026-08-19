@@ -18,11 +18,11 @@ $active_nav = "products";
         <main class="adm-content">
             <div class="dt-prod-header">
                 <div class="dt-prod-title-group">
-                    <h1><span>Brands Management</span></h1>
+                    <h1><span>Brands &amp; House Labels</span><span class="adm-badge gold">4 Brands</span></h1>
                 </div>
                 <div class="dt-prod-actions">
                     <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Products</a>
-                    <button class="adm-btn-primary" onclick="window.showToast('Add Brand Dialog...')">+ Add Brand</button>
+                    <a href="/Frontend/Admin/products/brands/add.php" class="adm-btn-primary">+ Add Brand</a>
                 </div>
             </div>
             <div class="adm-table-card">
@@ -32,8 +32,10 @@ $active_nav = "products";
                             <tr>
                                 <th>Brand Logo</th>
                                 <th>Brand Name</th>
-                                <th>Total SKUs</th>
+                                <th>Catalog SKUs</th>
+                                <th>Tier</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,13 +43,25 @@ $active_nav = "products";
                                 <td><div class="adm-wa-avatar" style="background:#FAF5E8; color:#8A681F; font-weight:800;">DT</div></td>
                                 <td><strong>DT Signature</strong></td>
                                 <td>680 SKUs</td>
-                                <td><span class="adm-badge gold">Primary Brand</span></td>
+                                <td><span class="adm-badge gold">Primary Flagship</span></td>
+                                <td><span class="adm-badge success">Active</span></td>
+                                <td><a href="/Frontend/Admin/products/brands/edit.php?id=1" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
                             </tr>
                             <tr>
                                 <td><div class="adm-wa-avatar" style="background:#FAF5E8; color:#8A681F; font-weight:800;">AH</div></td>
                                 <td><strong>Arniya Heritage</strong></td>
                                 <td>420 SKUs</td>
+                                <td><span class="adm-badge">Heritage Brocade</span></td>
                                 <td><span class="adm-badge success">Active</span></td>
+                                <td><a href="/Frontend/Admin/products/brands/edit.php?id=2" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                            </tr>
+                            <tr>
+                                <td><div class="adm-wa-avatar" style="background:#FAF5E8; color:#8A681F; font-weight:800;">DC</div></td>
+                                <td><strong>DT Couture</strong></td>
+                                <td>140 SKUs</td>
+                                <td><span class="adm-badge purple">Bridal Luxury</span></td>
+                                <td><span class="adm-badge success">Active</span></td>
+                                <td><a href="/Frontend/Admin/products/brands/edit.php?id=3" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
                             </tr>
                         </tbody>
                     </table>

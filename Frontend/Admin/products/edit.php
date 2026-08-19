@@ -4,6 +4,8 @@
  */
 $page_title = "Edit Product";
 $active_nav = "products";
+$edit_product_name = "Kanjivaram Pure Silk Gold Zari Saree";
+$edit_sku = "KLN-SR-111";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +38,7 @@ $active_nav = "products";
                 <div class="dt-prod-actions">
                     <a href="/Frontend/Admin/products/view.php?id=101" class="adm-btn-secondary">👁️ View Product</a>
                     <a href="/Frontend/Admin/products/" class="adm-btn-secondary">Cancel</a>
+                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Previewing in new tab...'); window.open('/Frontend/Single-Product/singleproduct.php?id=101', '_blank');">👁️ Preview Shop</button>
                     <button type="button" class="adm-btn-primary" onclick="window.showToast('Product changes saved successfully!')">Save Changes</button>
                 </div>
             </div>
@@ -43,31 +46,17 @@ $active_nav = "products";
             <!-- Form Content -->
             <div class="dt-form-grid-layout">
                 <div>
-                    <div class="dt-form-section">
-                        <div class="dt-form-sec-head"><h3 class="dt-form-sec-title"><span>👗 Product Specifications</span></h3></div>
-                        <div class="dt-form-sec-body">
-                            <div class="adm-form-grid">
-                                <div class="adm-form-group full">
-                                    <label class="adm-form-label">Product Name</label>
-                                    <input type="text" class="adm-form-input" value="Kanjivaram Pure Silk Gold Zari Saree">
-                                </div>
-                                <div class="adm-form-group">
-                                    <label class="adm-form-label">Retail Price (₹)</label>
-                                    <input type="number" class="adm-form-input" value="4490">
-                                </div>
-                                <div class="adm-form-group">
-                                    <label class="adm-form-label">Wholesale Price (₹)</label>
-                                    <input type="number" class="adm-form-input" value="2850">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php include_once __DIR__ . '/components/variant-table.php'; ?>
-                    <?php include_once __DIR__ . '/components/seo-section.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-form.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-gallery.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-pricing.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-variants.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-seo.php'; ?>
                 </div>
                 <div>
-                    <?php include_once __DIR__ . '/components/inventory-section.php'; ?>
-                    <?php include_once __DIR__ . '/components/shipping-section.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-status.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-inventory.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-shipping.php'; ?>
+                    <?php include_once __DIR__ . '/components/product-permissions.php'; ?>
                 </div>
             </div>
         </main>
@@ -76,5 +65,7 @@ $active_nav = "products";
 </div>
 <script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/variants.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

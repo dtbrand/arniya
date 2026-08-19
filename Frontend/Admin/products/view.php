@@ -35,6 +35,7 @@ $active_nav = "products";
                 <div class="dt-prod-actions">
                     <a href="/Frontend/Admin/products/" class="adm-btn-secondary">← Back to Catalog</a>
                     <a href="/Frontend/Admin/products/duplicate.php?id=101" class="adm-btn-secondary">📋 Duplicate</a>
+                    <button type="button" class="adm-btn-secondary" onclick="window.showToast('Archived SKU');">📦 Archive</button>
                     <a href="/Frontend/Admin/products/edit.php?id=101" class="adm-btn-primary">✏️ Edit Product</a>
                 </div>
             </div>
@@ -77,7 +78,7 @@ $active_nav = "products";
             <div class="dt-view-grid">
                 <!-- Sticky Product Profile Card -->
                 <div class="dt-view-sticky-card">
-                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; border-radius:8px; margin-bottom:14px;">
+                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; border-radius:8px; margin-bottom:14px;" alt="Product">
                     <div style="font-size:1.2rem; font-weight:800; color:#181512; margin-bottom:4px;">₹4,490 <small style="color:#7A7266; font-size:0.8rem;">(Retail)</small></div>
                     <div style="font-size:0.95rem; font-weight:800; color:#8A681F; margin-bottom:12px;">₹2,850/pc <small style="color:#7A7266; font-size:0.75rem;">(Wholesale MOQ 8)</small></div>
                     <p style="font-size:0.82rem; color:#7A7266; margin-bottom:14px;">Stock: <strong>45 units</strong> in Surat Central Hub</p>
