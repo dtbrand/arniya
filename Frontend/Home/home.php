@@ -1664,118 +1664,416 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 26, 27, 28: REVIEWS (CUSTOMERS, RESELLERS, WHOLESALE) ════════════ -->
-    <section class="home-section" id="section-reviews">
+    <!-- ════════════ SECTION 26: VERIFIED BUYER FEEDBACK (1-LINE HORIZONTAL SCROLL) ════════════ -->
+    <section class="home-section section-reviews-luxury" id="section-reviews">
         <div class="home-section-container">
-            <div class="home-section-header">
+            <div class="home-section-header rev-header-flex">
                 <div>
-                    <span class="home-section-tag">⭐ VERIFIED BUYER FEEDBACK</span>
+                    <span class="home-section-tag rev-section-tag">
+                        <svg viewBox="0 0 24 24" class="tag-live-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        VERIFIED BUYER FEEDBACK
+                    </span>
                     <h2 class="home-section-title">What Our Customers, Resellers & Wholesalers Say</h2>
+                    <p class="home-section-desc">Over 50,000+ verified buyers across India rate us 4.9/5 stars for authenticity, margin & express speed.</p>
                 </div>
-                <div class="reviews-tab-nav">
-                    <button type="button" class="rev-tab-btn active" onclick="if(typeof window.switchReviewTab==='function') window.switchReviewTab('customers');">Retail Buyers</button>
-                    <button type="button" class="rev-tab-btn" onclick="if(typeof window.switchReviewTab==='function') window.switchReviewTab('resellers');">Reseller Partners</button>
-                    <button type="button" class="rev-tab-btn" onclick="if(typeof window.switchReviewTab==='function') window.switchReviewTab('wholesale');">Wholesale Boutiques</button>
+                
+                <div class="rev-header-controls">
+                    <!-- Tab Filter Navigation -->
+                    <div class="reviews-tab-nav">
+                        <button type="button" class="rev-tab-pill active" onclick="switchReviewTab('customers', this)">
+                            <span>🛍️ Retail Buyers</span>
+                        </button>
+                        <button type="button" class="rev-tab-pill" onclick="switchReviewTab('resellers', this)">
+                            <span>⚡ Reseller Partners</span>
+                        </button>
+                        <button type="button" class="rev-tab-pill" onclick="switchReviewTab('wholesale', this)">
+                            <span>🏭 Wholesale Boutiques</span>
+                        </button>
+                    </div>
+
+                    <!-- 1-Tap Navigation Arrows -->
+                    <div class="rev-nav-arrows">
+                        <button type="button" class="rev-arrow-btn" onclick="slideReviews('left')" aria-label="Previous Reviews">‹</button>
+                        <button type="button" class="rev-arrow-btn" onclick="slideReviews('right')" aria-label="Next Reviews">›</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Customer Reviews Tab -->
-            <div class="reviews-tab-content active" id="tab-reviews-customers">
-                <div class="reviews-grid">
+            <!-- 1-Line Scrolling Tracks Container -->
+            <div class="reviews-track-wrap">
+                <!-- Customer Reviews Track (1-Line) -->
+                <div class="reviews-track active" id="tab-reviews-customers">
+                    <!-- Card 1 -->
                     <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Nilambari Silk Saree with Rich Zari Pallu</span>
+                        </div>
+
                         <p class="rev-text">"Ordered the Nilambari Silk Saree for my cousin's wedding. The zari work and richness of pure silk exceeded my expectations. Delivered in 3 days!"</p>
+
                         <div class="rev-author-row">
-                            <div class="rev-avatar">PS</div>
-                            <div>
+                            <div class="rev-avatar rev-av-gold">PS</div>
+                            <div class="rev-author-meta">
                                 <h5 class="rev-name">Pooja Sharma</h5>
-                                <span class="rev-location">📍 Mumbai • Verified Buyer</span>
+                                <span class="rev-location">📍 Mumbai, Maharashtra • 2 days ago</span>
                             </div>
+                            <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
+                    <!-- Card 2 -->
                     <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"The Bridal Velvet Lehenga is stunning. The zardozi embroidery is heavy and authentic. Exactly as shown in the photos!"</p>
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Royal Bridal Velvet Lehenga Set</span>
+                        </div>
+
+                        <p class="rev-text">"The Bridal Velvet Lehenga is stunning. The zardozi embroidery is heavy and authentic. Exactly as shown in the photos and live videos!"</p>
+
                         <div class="rev-author-row">
-                            <div class="rev-avatar">AP</div>
-                            <div>
+                            <div class="rev-avatar rev-av-amber">AP</div>
+                            <div class="rev-author-meta">
                                 <h5 class="rev-name">Ananya Patel</h5>
-                                <span class="rev-location">📍 Ahmedabad • Verified Buyer</span>
+                                <span class="rev-location">📍 Ahmedabad, Gujarat • 5 days ago</span>
                             </div>
+                            <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
+                    <!-- Card 3 -->
                     <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"Superb quality cotton kurti set. Very soft fabric and elegant gotapatti lace. Highly recommended for festive wear."</p>
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Jaipuri Block Printed Cotton Kurti</span>
+                        </div>
+
+                        <p class="rev-text">"Superb quality cotton kurti set. Very soft fabric and elegant gotapatti lace. Highly recommended for festive & daily wear."</p>
+
                         <div class="rev-author-row">
-                            <div class="rev-avatar">RK</div>
-                            <div>
+                            <div class="rev-avatar rev-av-emerald">RK</div>
+                            <div class="rev-author-meta">
                                 <h5 class="rev-name">Ritu Kapoor</h5>
-                                <span class="rev-location">📍 Delhi • Verified Buyer</span>
+                                <span class="rev-location">📍 New Delhi • 1 week ago</span>
                             </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Kanjivaram Temple Silk Saree</span>
+                        </div>
+
+                        <p class="rev-text">"Pure authentic gold zari border with rich contrast blouse. The weight and drape are magnificent. Best online ethnic store."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-indigo">MS</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Meenakshi Sundaram</h5>
+                                <span class="rev-location">📍 Chennai, Tamil Nadu • 2 weeks ago</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge">
+                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                Verified Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill">
+                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            <span>Kashmiri Embroidered Georgette Suit</span>
+                        </div>
+
+                        <p class="rev-text">"The needle embroidery and thread luster are beyond comparison. Perfect fit and fast courier dispatch. Will order again!"</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-purple">SM</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Shreya Mukherjee</h5>
+                                <span class="rev-location">📍 Kolkata, West Bengal • 2 weeks ago</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Reseller Reviews Tab -->
-            <div class="reviews-tab-content" id="tab-reviews-resellers" style="display:none;">
-                <div class="reviews-grid">
+                <!-- Reseller Reviews Track (1-Line) -->
+                <div class="reviews-track" id="tab-reviews-resellers" style="display:none;">
+                    <!-- Reseller 1 -->
                     <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"I started reselling DT Brand's sarees on WhatsApp 4 months ago. Last month I earned ₹48,200 pure margin! Customers love the packaging."</p>
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-reseller">
+                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Top Reseller
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-profit">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span>Monthly Margin: ₹48,200 Pure Profit</span>
+                        </div>
+
+                        <p class="rev-text">"I started reselling DT Brand's sarees on WhatsApp 4 months ago. Last month I earned ₹48,200 pure margin! Customers love the unbranded white-label packaging."</p>
+
                         <div class="rev-author-row">
-                            <div class="rev-avatar" style="background:#059669;">SM</div>
-                            <div>
+                            <div class="rev-avatar rev-av-emerald">SM</div>
+                            <div class="rev-author-meta">
                                 <h5 class="rev-name">Sunita Mehta</h5>
-                                <span class="rev-location">📍 Pune • Reseller Partner (₹48k/mo)</span>
+                                <span class="rev-location">📍 Pune • WhatsApp Reseller (₹48k/mo)</span>
                             </div>
+                            <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
+                    <!-- Reseller 2 -->
                     <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"1-tap WhatsApp sharing makes it effortless. The photos have no watermarks, so my clients think I stock everything myself."</p>
-                        <div class="rev-author-row">
-                            <div class="rev-avatar" style="background:#059669;">KG</div>
-                            <div>
-                                <h5 class="rev-name">Kavita Gupta</h5>
-                                <span class="rev-location">📍 Jaipur • Reseller Partner</span>
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
                             </div>
+                            <span class="rev-verified-badge rev-badge-reseller">
+                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Top Reseller
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-profit">
+                            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            <span>1-Tap Social Smart Share</span>
+                        </div>
+
+                        <p class="rev-text">"1-tap WhatsApp sharing makes it effortless. The photos have zero watermarks, so my clients believe I stock everything in my own boutique."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-rose">KG</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Kavita Gupta</h5>
+                                <span class="rev-location">📍 Jaipur • Instagram Boutique Owner</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Reseller 3 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-reseller">
+                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Top Reseller
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-profit">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                            <span>Weekly Direct Bank Payouts</span>
+                        </div>
+
+                        <p class="rev-text">"Payouts are credited directly to my bank account every Monday without fail. I have made over ₹1.4 Lakh total profit in 6 months."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-cyan">DN</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Deepa Nair</h5>
+                                <span class="rev-location">📍 Kochi • Verified Reseller</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Reseller 4 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-reseller">
+                                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                Top Reseller
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-profit">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>HD Live Video Reels Media</span>
+                        </div>
+
+                        <p class="rev-text">"High-definition video reels and model draping clips help me close 8-10 saree orders every single day on Facebook Marketplace."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-gold">PV</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Preeti Verma</h5>
+                                <span class="rev-location">📍 Lucknow • Social Seller</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wholesale Reviews Track (1-Line) -->
+                <div class="reviews-track" id="tab-reviews-wholesale" style="display:none;">
+                    <!-- Wholesale 1 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-wholesale">
+                                <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                Wholesale Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-b2b">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>Monthly 100+ Pieces Lot • GST Invoices</span>
+                        </div>
+
+                        <p class="rev-text">"We order 50–100 pieces monthly for our 3 retail boutiques in Hyderabad. The tiered volume slabs save us over 20% compared to local middleman traders."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-indigo">VR</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Venkatesh Rao</h5>
+                                <span class="rev-location">📍 Hyderabad • Retail Showroom Chain</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Wholesale 2 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-wholesale">
+                                <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                Wholesale Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-b2b">
+                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+                            <span>Pan-India Transport Parcel Delivery</span>
+                        </div>
+
+                        <p class="rev-text">"Best factory pricing straight from the Surat loom. GST billing is prompt, and transit parcel delivery to Kolkata is 100% insured and reliable."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-amber">MS</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Mukesh Shah</h5>
+                                <span class="rev-location">📍 Surat & Kolkata • Textile Trader</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
+                        </div>
+                    </div>
+
+                    <!-- Wholesale 3 -->
+                    <div class="review-card">
+                        <div class="rev-card-top">
+                            <div class="rev-stars-box">
+                                <span class="rev-stars">★★★★★</span>
+                                <span class="rev-score-badge">5.0</span>
+                            </div>
+                            <span class="rev-verified-badge rev-badge-wholesale">
+                                <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                Wholesale Buyer
+                            </span>
+                        </div>
+                        
+                        <div class="rev-product-pill rev-pill-b2b">
+                            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            <span>Low MOQ Trial Packs (4-8 Pcs)</span>
+                        </div>
+
+                        <p class="rev-text">"Mix & match catalog trial lots allow us to test trending bridal colors with zero inventory risk. Our boutique sales doubled within 90 days."</p>
+
+                        <div class="rev-author-row">
+                            <div class="rev-avatar rev-av-purple">SD</div>
+                            <div class="rev-author-meta">
+                                <h5 class="rev-name">Sangeeta Deshmukh</h5>
+                                <span class="rev-location">📍 Nagpur, Maharashtra • Boutique Owner</span>
+                            </div>
+                            <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Wholesale Reviews Tab -->
-            <div class="reviews-tab-content" id="tab-reviews-wholesale" style="display:none;">
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"We order 50–100 pieces monthly for our 3 retail boutiques in Hyderabad. The tiered volume slabs save us over 20% compared to local traders."</p>
-                        <div class="rev-author-row">
-                            <div class="rev-avatar" style="background:#8A681F;">VR</div>
-                            <div>
-                                <h5 class="rev-name">Venkatesh Rao</h5>
-                                <span class="rev-location">📍 Hyderabad • Boutique Owner</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="rev-stars">★★★★★</div>
-                        <p class="rev-text">"Best factory pricing in Surat. GST billing is prompt, and transit delivery by transport is reliable. Great team support."</p>
-                        <div class="rev-author-row">
-                            <div class="rev-avatar" style="background:#8A681F;">MS</div>
-                            <div>
-                                <h5 class="rev-name">Mukesh Shah</h5>
-                                <span class="rev-location">📍 Surat / Kolkata • Wholesaler</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Real-Time Progress Scrollbar -->
+            <div class="rev-scrollbar-track" id="revScrollbarTrack">
+                <div class="rev-scrollbar-thumb" id="revScrollbarThumb"></div>
             </div>
         </div>
     </section>

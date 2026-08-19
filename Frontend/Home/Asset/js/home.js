@@ -1198,6 +1198,68 @@
         window.addEventListener('resize', syncDealsScrollState, { passive: true });
     }
 
+    /* ═════════════════════════════════════════════════════════════════════
+       VERIFIED BUYER FEEDBACK (1-LINE HORIZONTAL SCROLL & TABS)
+    ═════════════════════════════════════════════════════════════════════ */
+    window.switchReviewTab = function(tabKey, btnElement) {
+        // Update Active Pill
+        document.querySelectorAll('.rev-tab-pill').forEach(function(pill) {
+            pill.classList.remove('active');
+        });
+        if (btnElement) {
+            btnElement.classList.add('active');
+        }
+
+        // Hide all tracks and show selected track
+        var targetId = 'tab-reviews-' + tabKey;
+        document.querySelectorAll('.reviews-track').forEach(function(track) {
+            if (track.id === targetId) {
+                track.style.display = 'flex';
+                track.classList.add('active');
+                track.scrollLeft = 0;
+            } else {
+                track.style.display = 'none';
+                track.classList.remove('active');
+            }
+        });
+
+        window.syncReviewsScrollbar();
+    };
+
+    window.slideReviews = function(direction) {
+        var activeTrack = document.querySelector('.reviews-track.active') || document.querySelector('.reviews-track');
+        if (!activeTrack) return;
+        var amount = Math.max(300, Math.floor(activeTrack.clientWidth * 0.75));
+        var scrollDelta = (direction === 'left' ? -amount : amount);
+        activeTrack.scrollBy({ left: scrollDelta, behavior: 'smooth' });
+    };
+
+    window.syncReviewsScrollbar = function() {
+        var activeTrack = document.querySelector('.reviews-track.active') || document.querySelector('.reviews-track');
+        var thumb = document.getElementById('revScrollbarThumb');
+        if (!activeTrack || !thumb) return;
+
+        var scrollLeft = activeTrack.scrollLeft;
+        var maxScroll = activeTrack.scrollWidth - activeTrack.clientWidth;
+        if (maxScroll <= 0) {
+            thumb.style.width = '100%';
+            thumb.style.transform = 'translateX(0%)';
+            return;
+        }
+
+        var visibleRatio = Math.max(0.15, Math.min(1, activeTrack.clientWidth / activeTrack.scrollWidth));
+        thumb.style.width = (visibleRatio * 100) + '%';
+        var scrollPercent = scrollLeft / maxScroll;
+        var maxTranslatePercent = (1 - visibleRatio) / visibleRatio * 100;
+        thumb.style.transform = 'translateX(' + (scrollPercent * maxTranslatePercent) + '%)';
+    };
+
+    document.querySelectorAll('.reviews-track').forEach(function(track) {
+        track.addEventListener('scroll', window.syncReviewsScrollbar, { passive: true });
+    });
+    setTimeout(window.syncReviewsScrollbar, 250);
+    window.addEventListener('resize', window.syncReviewsScrollbar, { passive: true });
+
     /* Initial Sub-Categories and Master Filter Execution */
     window.renderSubCategories('All');
     window.applyMasterFilters();
