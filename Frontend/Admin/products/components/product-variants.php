@@ -1,6 +1,6 @@
 <?php
 /**
- * product-variants.php — Modern Color & Style Variations Studio
+ * product-variants.php — Smart Color & Style Variations Studio with Auto Color Name Detection
  * DT Brand's & Jai Hanuman Tex
  */
 ?>
@@ -27,15 +27,15 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span style="font-size:12px; font-weight:700; color:#5A4210;">Available Colors:</span>
                     <div id="quickSwatchList" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                        <span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
+                        <span class="adm-badge gold" id="chip-cvar-1" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
                             <span style="width:10px; height:10px; border-radius:50%; background:#991b1b; display:inline-block; border:1px solid #fff;"></span>
                             <span>Crimson Red</span>
                         </span>
-                        <span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
+                        <span class="adm-badge gold" id="chip-cvar-2" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
                             <span style="width:10px; height:10px; border-radius:50%; background:#166534; display:inline-block; border:1px solid #fff;"></span>
                             <span>Bottle Green</span>
                         </span>
-                        <span class="adm-badge gold" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
+                        <span class="adm-badge gold" id="chip-cvar-3" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
                             <span style="width:10px; height:10px; border-radius:50%; background:#1e40af; display:inline-block; border:1px solid #fff;"></span>
                             <span>Royal Blue</span>
                         </span>
@@ -48,17 +48,20 @@
                 </button>
             </div>
 
-            <!-- Smart Color Picker Dropdown Box (Opens on click) -->
+            <!-- Smart Color Picker Dropdown Box with Auto Name Detection -->
             <div id="colorPickerBox" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(212,175,55,0.5);">
-                <div style="font-size:12px; font-weight:700; color:#1d2327; margin-bottom:8px;">Pick a Color &amp; Add Variation:</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <div style="font-size:12px; font-weight:700; color:#1d2327;">Pick a Color &amp; Auto-Detect Original Name:</div>
+                    <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10px; padding:2px 6px;">⚡ Auto Name Detection Active</span>
+                </div>
                 <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
                     <!-- Color input -->
                     <div style="display:flex; align-items:center; gap:6px;">
-                        <input type="color" id="varColorPicker" value="#db2777" style="width:34px; height:32px; padding:0; border:1px solid #c3c4c7; border-radius:4px; cursor:pointer;" onchange="document.getElementById('varColorHex').value=this.value;">
-                        <input type="text" id="varColorHex" value="#db2777" style="width:75px; height:30px; font-size:12px; padding:0 6px; border:1px solid #8c8f94; border-radius:3px; font-family:monospace;" oninput="document.getElementById('varColorPicker').value=this.value;">
+                        <input type="color" id="varColorPicker" value="#db2777" style="width:34px; height:32px; padding:0; border:1px solid #c3c4c7; border-radius:4px; cursor:pointer;" onchange="handleColorPickerChange(this.value)">
+                        <input type="text" id="varColorHex" value="#db2777" style="width:75px; height:30px; font-size:12px; padding:0 6px; border:1px solid #8c8f94; border-radius:3px; font-family:monospace;" oninput="handleHexInputChange(this.value)">
                     </div>
 
-                    <!-- Preset Color Swatch Circles -->
+                    <!-- Preset Color Swatches -->
                     <div style="display:flex; gap:6px; align-items:center;">
                         <span title="Crimson Red" onclick="selectPresetColor('#991b1b', 'Crimson Red')" style="width:20px; height:20px; border-radius:50%; background:#991b1b; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
                         <span title="Bottle Green" onclick="selectPresetColor('#166534', 'Bottle Green')" style="width:20px; height:20px; border-radius:50%; background:#166534; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
@@ -66,17 +69,19 @@
                         <span title="Mustard Yellow" onclick="selectPresetColor('#d97706', 'Mustard Yellow')" style="width:20px; height:20px; border-radius:50%; background:#d97706; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
                         <span title="Rani Pink" onclick="selectPresetColor('#db2777', 'Rani Pink')" style="width:20px; height:20px; border-radius:50%; background:#db2777; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
                         <span title="Peacock Teal" onclick="selectPresetColor('#0f766e', 'Peacock Teal')" style="width:20px; height:20px; border-radius:50%; background:#0f766e; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
-                        <span title="Maroon" onclick="selectPresetColor('#831843', 'Maroon')" style="width:20px; height:20px; border-radius:50%; background:#831843; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
+                        <span title="Deep Maroon" onclick="selectPresetColor('#831843', 'Deep Maroon')" style="width:20px; height:20px; border-radius:50%; background:#831843; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
                         <span title="Jet Black" onclick="selectPresetColor('#18181b', 'Jet Black')" style="width:20px; height:20px; border-radius:50%; background:#18181b; cursor:pointer; border:2px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
                     </div>
 
-                    <!-- Color Name Input -->
-                    <input type="text" id="varColorName" placeholder="Color Name (e.g. Rani Pink)" style="height:30px; font-size:12.5px; padding:0 8px; border:1px solid #8c8f94; border-radius:3px; width:180px; outline:none;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewColorVariation();}">
+                    <!-- Auto-Saved / Detected Color Name Input -->
+                    <div style="position:relative;">
+                        <input type="text" id="varColorName" value="Rani Pink" placeholder="Original Color Name" style="height:30px; font-size:12.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:190px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewColorVariation();}">
+                    </div>
 
-                    <!-- Confirm Button -->
-                    <button type="button" class="wp-button" onclick="submitNewColorVariation()" style="height:30px; font-size:12px; font-weight:600;">
+                    <!-- Confirm Add Button -->
+                    <button type="button" class="wp-button primary" onclick="submitNewColorVariation()" style="height:30px; font-size:12px; font-weight:600;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Create Color Variation</span>
+                        <span>+ Save &amp; Add Color</span>
                     </button>
                 </div>
             </div>
@@ -204,7 +209,7 @@
                 <div style="padding:12px 14px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
                     <!-- Photo Uploader -->
                     <div style="width:80px; text-align:center;">
-                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" style="width:70px; height:70px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
+                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:70px; height:70px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
                         <input type="file" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader();r.onload=e=>this.previousElementSibling.src=e.target.result;r.readAsDataURL(this.files[0]);window.showToast('Royal Blue photo updated');}">
                         <small style="font-size:10px; color:#2271b1; cursor:pointer; display:block; margin-top:3px;" onclick="this.previousElementSibling.click()">+ Add Photo</small>
                     </div>
@@ -246,6 +251,101 @@
 </div>
 
 <script>
+// Authentic Color Palette Dictionary for Textile & Garments
+const DT_COLOR_PALETTE = [
+    { name: "Crimson Red", hex: "#991b1b" },
+    { name: "Ruby Red", hex: "#dc2626" },
+    { name: "Cherry Red", hex: "#b91c1c" },
+    { name: "Deep Maroon", hex: "#831843" },
+    { name: "Wine / Burgundy", hex: "#701a75" },
+    { name: "Rani Pink", hex: "#db2777" },
+    { name: "Rose Pink", hex: "#f43f5e" },
+    { name: "Baby Pink", hex: "#f472b6" },
+    { name: "Magenta", hex: "#c026d3" },
+    { name: "Peach Coral", hex: "#fb7185" },
+    { name: "Rust Orange", hex: "#c2410c" },
+    { name: "Tangerine", hex: "#ea580c" },
+    { name: "Mustard Yellow", hex: "#d97706" },
+    { name: "Golden Yellow", hex: "#eab308" },
+    { name: "Lemon Yellow", hex: "#facc15" },
+    { name: "Bottle Green", hex: "#166534" },
+    { name: "Emerald Green", hex: "#15803d" },
+    { name: "Parrot Green", hex: "#22c55e" },
+    { name: "Mint Green", hex: "#86efac" },
+    { name: "Mehendi Olive", hex: "#65a30d" },
+    { name: "Peacock Teal", hex: "#0f766e" },
+    { name: "Sea Green", hex: "#14b8a6" },
+    { name: "Cyan Aqua", hex: "#06b6d4" },
+    { name: "Royal Blue", hex: "#1e40af" },
+    { name: "Navy Blue", hex: "#1e3a8a" },
+    { name: "Sky Blue", hex: "#38bdf8" },
+    { name: "Indigo Blue", hex: "#3730a3" },
+    { name: "Lavender Purple", hex: "#9333ea" },
+    { name: "Violet / Plum", hex: "#581c87" },
+    { name: "Lilac", hex: "#c084fc" },
+    { name: "Jet Black", hex: "#18181b" },
+    { name: "Charcoal Grey", hex: "#3f3f46" },
+    { name: "Silver Grey", hex: "#9ca3af" },
+    { name: "Pearl White", hex: "#ffffff" },
+    { name: "Off White / Cream", hex: "#fef08a" },
+    { name: "Beige / Biscuit", hex: "#d6d3d1" },
+    { name: "Chocolate Brown", hex: "#78350f" },
+    { name: "Coffee Brown", hex: "#451a03" }
+];
+
+function hexToRgb(hex) {
+    hex = hex.replace(/^#/, '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    const num = parseInt(hex, 16);
+    return {
+        r: (num >> 16) & 255,
+        g: (num >> 8) & 255,
+        b: num & 255
+    };
+}
+
+function detectOriginalColorName(hex) {
+    if (!hex) return "Custom Color";
+    const target = hexToRgb(hex);
+    let minDistance = Infinity;
+    let closestName = "Custom Color";
+
+    for (const c of DT_COLOR_PALETTE) {
+        const rgb = hexToRgb(c.hex);
+        // Euclidean RGB distance
+        const dist = Math.sqrt(
+            Math.pow(target.r - rgb.r, 2) +
+            Math.pow(target.g - rgb.g, 2) +
+            Math.pow(target.b - rgb.b, 2)
+        );
+        if (dist < minDistance) {
+            minDistance = dist;
+            closestName = c.name;
+        }
+    }
+    return closestName;
+}
+
+function handleColorPickerChange(hex) {
+    document.getElementById('varColorHex').value = hex;
+    const detectedName = detectOriginalColorName(hex);
+    document.getElementById('varColorName').value = detectedName;
+}
+
+function handleHexInputChange(hex) {
+    if (hex.startsWith('#') && (hex.length === 4 || hex.length === 7)) {
+        document.getElementById('varColorPicker').value = hex;
+        const detectedName = detectOriginalColorName(hex);
+        document.getElementById('varColorName').value = detectedName;
+    }
+}
+
+function selectPresetColor(hex, name) {
+    document.getElementById('varColorPicker').value = hex;
+    document.getElementById('varColorHex').value = hex;
+    document.getElementById('varColorName').value = name;
+}
+
 function toggleColorVariationsSection(enabled) {
     const container = document.getElementById('colorVariationsContainer');
     if (container) {
@@ -266,20 +366,14 @@ function toggleColorPickerDrawer() {
     }
 }
 
-function selectPresetColor(hex, name) {
-    document.getElementById('varColorPicker').value = hex;
-    document.getElementById('varColorHex').value = hex;
-    document.getElementById('varColorName').value = name;
-}
-
 function submitNewColorVariation() {
     const nameInput = document.getElementById('varColorName');
-    const colorName = nameInput.value.trim();
-    if (!colorName) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter a color name (e.g. Rani Pink)');
-        return;
-    }
     const colorHex = document.getElementById('varColorHex').value || '#db2777';
+    let colorName = nameInput.value.trim();
+    if (!colorName) {
+        colorName = detectOriginalColorName(colorHex);
+    }
+
     const list = document.getElementById('colorVariationsList');
     const swatchList = document.getElementById('quickSwatchList');
     const newId = 'cvar-' + Date.now();
@@ -351,11 +445,10 @@ function submitNewColorVariation() {
         </div>
     `;
     list.appendChild(card);
-    nameInput.value = '';
     toggleColorPickerDrawer();
 
     if (typeof window.showToast === 'function') {
-        window.showToast(`✨ Color variation "${colorName}" created!`);
+        window.showToast(`✨ Color variation "${colorName}" auto-saved!`);
     }
 }
 
