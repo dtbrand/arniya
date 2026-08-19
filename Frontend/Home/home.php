@@ -1051,166 +1051,397 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 23: HOW RESELLING WORKS ════════════ -->
-    <section class="home-section home-section-soft-bg" id="section-how-reselling-works">
+    <section class="home-section workflow-section-reseller" id="section-how-reselling-works">
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">⚡ ZERO INVESTMENT RESELLING</span>
+                    <span class="home-section-tag workflow-tag-reseller">
+                        <svg viewBox="0 0 24 24" class="tag-live-icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        ZERO INVESTMENT RESELLING
+                    </span>
                     <h2 class="home-section-title">How Ethnic Wear Reselling Works</h2>
                     <p class="home-section-desc">Start earning without spending a single rupee on inventory or warehousing.</p>
                 </div>
             </div>
 
             <div class="roadmap-grid">
+                <!-- Step 01 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">01</div>
+                    <span class="roadmap-num">01</span>
                     <div class="roadmap-icon-wrap rm-icon-reseller-1">
-                        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="resGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#F59E0B" />
+                                    <stop offset="100%" stop-color="#D97706" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Shopping Bag -->
+                            <rect x="14" y="22" width="36" height="34" rx="8" fill="url(#resGrad1)" opacity="0.15" />
+                            <rect x="14" y="22" width="36" height="34" rx="8" stroke="#D97706" stroke-width="3" fill="none" />
+                            <!-- Bag Handle -->
+                            <path d="M24 22V15a8 8 0 0 1 16 0v7" stroke="#B45309" stroke-width="3" stroke-linecap="round" fill="none" />
+                            <!-- Clothes Hanger & Saree -->
+                            <path d="M32 28l-8 7h16z" fill="#F59E0B" />
+                            <circle cx="32" cy="27" r="2" fill="#B45309" />
+                            <!-- Sparkling Star -->
+                            <path d="M46 12l1.5 3.5L51 17l-3.5 1.5L46 22l-1.5-3.5L41 17l3.5-1.5z" fill="#F59E0B" class="svg-anim-sparkle" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Choose Products</h3>
                     <p class="roadmap-desc">Browse 1,000+ ready factory catalog sarees, kurtis & lehengas with HD media.</p>
                 </div>
 
+                <!-- Step 02 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">02</div>
+                    <span class="roadmap-num">02</span>
                     <div class="roadmap-icon-wrap rm-icon-reseller-2">
-                        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-bounce">
+                            <defs>
+                                <linearGradient id="resGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10B981" />
+                                    <stop offset="100%" stop-color="#047857" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Gold Coin Backing -->
+                            <circle cx="28" cy="34" r="16" fill="url(#resGrad2)" opacity="0.15" />
+                            <circle cx="28" cy="34" r="16" stroke="#059669" stroke-width="3" fill="none" />
+                            <!-- Rupee Symbol -->
+                            <path d="M22 28h12M22 32h10M27 28v12M27 32a5 5 0 0 0 5-5M26 35l6 7" stroke="#047857" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+                            <!-- Profit Surge Badge -->
+                            <rect x="36" y="14" width="22" height="14" rx="4" fill="#10B981" />
+                            <path d="M41 22l3-3 3 2 5-5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            <polyline points="48 16 52 16 52 20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" fill="none" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Add Your Margin</h3>
                     <p class="roadmap-desc">Set your selling price. For example: Buy at ₹1,399, sell at ₹3,499 (₹2,100 profit).</p>
                 </div>
 
+                <!-- Step 03 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">03</div>
+                    <span class="roadmap-num">03</span>
                     <div class="roadmap-icon-wrap rm-icon-reseller-3">
-                        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-pulse">
+                            <defs>
+                                <linearGradient id="resGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#6366F1" />
+                                    <stop offset="100%" stop-color="#4338CA" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Central Node -->
+                            <circle cx="20" cy="32" r="8" fill="url(#resGrad3)" opacity="0.2" />
+                            <circle cx="20" cy="32" r="8" stroke="#4F46E5" stroke-width="3" fill="#FFFFFF" />
+                            <circle cx="20" cy="32" r="3" fill="#4338CA" />
+                            <!-- Outer Client Nodes -->
+                            <circle cx="46" cy="18" r="6" stroke="#4F46E5" stroke-width="2.5" fill="#EEF2FF" />
+                            <circle cx="46" cy="46" r="6" stroke="#4F46E5" stroke-width="2.5" fill="#EEF2FF" />
+                            <!-- Share Signal Beams -->
+                            <line x1="27" y1="28" x2="40" y2="21" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 2" />
+                            <line x1="27" y1="36" x2="40" y2="43" stroke="#6366F1" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 2" />
+                            <!-- WhatsApp / Chat Cloud -->
+                            <path d="M43 16h6v4h-6z" fill="#4338CA" />
+                            <path d="M43 44h6v4h-6z" fill="#4338CA" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Share With Clients</h3>
                     <p class="roadmap-desc">1-tap share high-res photos and catalogs on WhatsApp, Instagram & Facebook.</p>
                 </div>
 
+                <!-- Step 04 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">04</div>
+                    <span class="roadmap-num">04</span>
                     <div class="roadmap-icon-wrap rm-icon-reseller-4">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="resGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#EC4899" />
+                                    <stop offset="100%" stop-color="#BE185D" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Bank Shield & Vault -->
+                            <path d="M32 10L14 18v16c0 12 18 20 18 20s18-8 18-20V18L32 10z" fill="url(#resGrad4)" opacity="0.15" />
+                            <path d="M32 10L14 18v16c0 12 18 20 18 20s18-8 18-20V18L32 10z" stroke="#DB2777" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Verified Green Direct Credit Checkmark -->
+                            <circle cx="32" cy="32" r="10" fill="#10B981" />
+                            <path d="M28 32l3 3 6-6" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Earn Direct Profit</h3>
                     <p class="roadmap-desc">We dispatch under your boutique name; profit is credited directly to your bank account.</p>
                 </div>
             </div>
 
-            <div style="text-align:center; margin-top:24px;">
-                <a href="/Frontend/Reseller/reseller.php" class="home-btn-gold">Start Reselling Today (Zero Cost) &rarr;</a>
+            <div style="text-align:center; margin-top:32px;">
+                <a href="/Frontend/Reseller/reseller.php" class="workflow-cta-btn">
+                    <span>Start Reselling Today (Zero Cost)</span>
+                    <span class="btn-arrow-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- ════════════ SECTION 23B: HOW RETAILER BOUTIQUE SOURCING WORKS ════════════ -->
-    <section class="home-section" id="section-how-retailer-works">
+    <section class="home-section workflow-section-retailer" id="section-how-retailer-works">
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">🏪 FOR SMALL SHOPS & HOME BOUTIQUES</span>
+                    <span class="home-section-tag workflow-tag-retailer">
+                        <svg viewBox="0 0 24 24" class="tag-live-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                        FOR SMALL SHOPS & HOME BOUTIQUES
+                    </span>
                     <h2 class="home-section-title">How Retail Boutique Sourcing Works</h2>
                     <p class="home-section-desc">Low MOQ, mix & match designs, and Surat factory direct pricing for boutique owners.</p>
                 </div>
             </div>
 
             <div class="roadmap-grid">
+                <!-- Step 01 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">01</div>
+                    <span class="roadmap-num">01</span>
                     <div class="roadmap-icon-wrap rm-icon-retailer-1">
-                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="retGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3B82F6" />
+                                    <stop offset="100%" stop-color="#1D4ED8" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 3D Parcel Box -->
+                            <path d="M32 12L14 22l18 10 18-10L32 12z" fill="url(#retGrad1)" opacity="0.2" />
+                            <path d="M14 22v20l18 10V32L14 22z" fill="#93C5FD" opacity="0.4" />
+                            <path d="M50 22v20L32 52V32l18-10z" fill="#60A5FA" opacity="0.4" />
+                            <path d="M32 12L14 22l18 10 18-10L32 12zm0 40V32m-18-10v20l18 10 18-10V22" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Low MOQ Badge -->
+                            <circle cx="48" cy="18" r="8" fill="#F59E0B" />
+                            <text x="48" y="21" font-size="8" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="sans-serif">4pc</text>
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Small Batch Lots</h3>
                     <p class="roadmap-desc">Order trial packs with low MOQ (4–8 pieces) to test trending styles with zero risk.</p>
                 </div>
 
+                <!-- Step 02 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">02</div>
+                    <span class="roadmap-num">02</span>
                     <div class="roadmap-icon-wrap rm-icon-retailer-2">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-sparkle">
+                            <defs>
+                                <linearGradient id="retGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#F59E0B" />
+                                    <stop offset="100%" stop-color="#B45309" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Swatches Palette Fan -->
+                            <path d="M16 48L32 18l16 30H16z" fill="url(#retGrad2)" opacity="0.15" />
+                            <!-- Color circles -->
+                            <circle cx="24" cy="40" r="5" fill="#EF4444" />
+                            <circle cx="32" cy="28" r="5" fill="#10B981" />
+                            <circle cx="40" cy="40" r="5" fill="#3B82F6" />
+                            <!-- Needle & Tailor Tape -->
+                            <path d="M20 18l24 28" stroke="#D97706" stroke-width="3" stroke-linecap="round" />
+                            <circle cx="20" cy="18" r="2" fill="#B45309" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Mix & Match Styles</h3>
                     <p class="roadmap-desc">Pick assorted colors, blouse sizes & embroidery variations within the same catalog.</p>
                 </div>
 
+                <!-- Step 03 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">03</div>
+                    <span class="roadmap-num">03</span>
                     <div class="roadmap-icon-wrap rm-icon-retailer-3">
-                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-bounce">
+                            <defs>
+                                <linearGradient id="retGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10B981" />
+                                    <stop offset="100%" stop-color="#047857" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Official Invoice Paper -->
+                            <path d="M18 12h20l12 12v28a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z" fill="url(#retGrad3)" opacity="0.15" />
+                            <path d="M18 12h20l12 12v28a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z" stroke="#059669" stroke-width="3" fill="none" />
+                            <polyline points="38 12 38 24 50 24" stroke="#059669" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Lines -->
+                            <line x1="22" y1="32" x2="34" y2="32" stroke="#047857" stroke-width="2.5" stroke-linecap="round" />
+                            <line x1="22" y1="38" x2="42" y2="38" stroke="#047857" stroke-width="2.5" stroke-linecap="round" />
+                            <!-- ITC 100% Stamp -->
+                            <rect x="28" y="42" width="18" height="8" rx="2" fill="#10B981" />
+                            <text x="37" y="48" font-size="5" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="sans-serif">GST ITC</text>
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">GST ITC Invoices</h3>
                     <p class="roadmap-desc">Get complete B2B tax invoices with full Input Tax Credit (ITC) for your business.</p>
                 </div>
 
+                <!-- Step 04 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">04</div>
+                    <span class="roadmap-num">04</span>
                     <div class="roadmap-icon-wrap rm-icon-retailer-4">
-                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-pulse">
+                            <defs>
+                                <linearGradient id="retGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8B5CF6" />
+                                    <stop offset="100%" stop-color="#6D28D9" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Delivery Van -->
+                            <rect x="12" y="24" width="26" height="20" rx="3" fill="url(#retGrad4)" opacity="0.2" />
+                            <rect x="12" y="24" width="26" height="20" rx="3" stroke="#7C3AED" stroke-width="3" fill="none" />
+                            <path d="M38 30h10l6 6v8h-16V30z" fill="url(#retGrad4)" opacity="0.2" />
+                            <path d="M38 30h10l6 6v8h-16V30z" stroke="#7C3AED" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Wheels -->
+                            <circle cx="22" cy="48" r="5" fill="#1F2937" stroke="#7C3AED" stroke-width="2" />
+                            <circle cx="46" cy="48" r="5" fill="#1F2937" stroke="#7C3AED" stroke-width="2" />
+                            <!-- Speed Wind Lines -->
+                            <line x1="4" y1="28" x2="8" y2="28" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" />
+                            <line x1="2" y1="34" x2="7" y2="34" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Shop Counter Delivery</h3>
                     <p class="roadmap-desc">Insured door-to-door express parcel delivery directly to your boutique counter.</p>
                 </div>
             </div>
 
-            <div style="text-align:center; margin-top:24px;">
-                <a href="/Frontend/Retailer/retailer.php" class="home-btn-gold">Explore Retailer Boutique Hub &rarr;</a>
+            <div style="text-align:center; margin-top:32px;">
+                <a href="/Frontend/Retailer/retailer.php" class="workflow-cta-btn">
+                    <span>Explore Retailer Boutique Hub</span>
+                    <span class="btn-arrow-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- ════════════ SECTION 24: HOW WHOLESALE WORKS ════════════ -->
-    <section class="home-section home-section-soft-bg" id="section-how-wholesale-works">
+    <section class="home-section workflow-section-wholesale" id="section-how-wholesale-works">
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">🏭 B2B BULK WORKFLOW</span>
+                    <span class="home-section-tag workflow-tag-wholesale">
+                        <svg viewBox="0 0 24 24" class="tag-live-icon"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        B2B BULK WORKFLOW
+                    </span>
                     <h2 class="home-section-title">How Wholesale Purchasing Works</h2>
                     <p class="home-section-desc">Streamlined factory supply for large retail showrooms & traders across India.</p>
                 </div>
             </div>
 
             <div class="roadmap-grid">
+                <!-- Step 01 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">01</div>
+                    <span class="roadmap-num">01</span>
                     <div class="roadmap-icon-wrap rm-icon-wholesale-1">
-                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="whGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#EA580C" />
+                                    <stop offset="100%" stop-color="#C2410C" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Factory Master Roll -->
+                            <rect x="16" y="24" width="32" height="24" rx="4" fill="url(#whGrad1)" opacity="0.2" />
+                            <rect x="16" y="24" width="32" height="24" rx="4" stroke="#EA580C" stroke-width="3" fill="none" />
+                            <ellipse cx="48" cy="36" rx="4" ry="12" fill="#FED7AA" stroke="#EA580C" stroke-width="2" />
+                            <!-- Loom Thread Lines -->
+                            <line x1="20" y1="30" x2="44" y2="30" stroke="#C2410C" stroke-width="2" stroke-linecap="round" />
+                            <line x1="20" y1="36" x2="44" y2="36" stroke="#C2410C" stroke-width="2" stroke-linecap="round" />
+                            <line x1="20" y1="42" x2="44" y2="42" stroke="#C2410C" stroke-width="2" stroke-linecap="round" />
+                            <!-- Set Lot Crown -->
+                            <path d="M26 16l3 4 3-4 3 4 3-4v5H26z" fill="#EA580C" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Select Full Sets</h3>
                     <p class="roadmap-desc">Explore full catalog set lots with clear MOQ slabs from 12 to 48 pieces.</p>
                 </div>
 
+                <!-- Step 02 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">02</div>
+                    <span class="roadmap-num">02</span>
                     <div class="roadmap-icon-wrap rm-icon-wholesale-2">
-                        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-bounce">
+                            <defs>
+                                <linearGradient id="whGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#059669" />
+                                    <stop offset="100%" stop-color="#047857" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Volume Tier Stair Bars -->
+                            <rect x="14" y="38" width="8" height="14" rx="2" fill="#A7F3D0" stroke="#059669" stroke-width="2" />
+                            <rect x="26" y="28" width="8" height="24" rx="2" fill="#6EE7B7" stroke="#059669" stroke-width="2" />
+                            <rect x="38" y="18" width="8" height="34" rx="2" fill="url(#whGrad2)" stroke="#047857" stroke-width="2" />
+                            <!-- Discount Up-Arrow Wave -->
+                            <path d="M16 34l12-10 14-8" stroke="#047857" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                            <polygon points="46 16 42 16 45 19" fill="#047857" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Volume Tier Slabs</h3>
                     <p class="roadmap-desc">Select higher quantities to unlock maximum tier discounts straight from the loom.</p>
                 </div>
 
+                <!-- Step 03 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">03</div>
+                    <span class="roadmap-num">03</span>
                     <div class="roadmap-icon-wrap rm-icon-wholesale-3">
-                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-sparkle">
+                            <defs>
+                                <linearGradient id="whGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2563EB" />
+                                    <stop offset="100%" stop-color="#1D4ED8" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Factory Tag & Mill Calculator -->
+                            <path d="M18 16l18-6 16 16-18 18-16-16V16z" fill="url(#whGrad3)" opacity="0.15" />
+                            <path d="M18 16l18-6 16 16-18 18-16-16V16z" stroke="#2563EB" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <circle cx="26" cy="22" r="3" fill="#1D4ED8" />
+                            <!-- Factory Direct Price Symbol -->
+                            <text x="34" y="36" font-size="9" font-weight="900" fill="#1E40AF" font-family="sans-serif">₹NET</text>
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Factory Net Pricing</h3>
                     <p class="roadmap-desc">Automatic wholesale tier discounts and GST input credit breakdown applied.</p>
                 </div>
 
+                <!-- Step 04 -->
                 <div class="roadmap-step-card">
-                    <div class="roadmap-num">04</div>
+                    <span class="roadmap-num">04</span>
                     <div class="roadmap-icon-wrap rm-icon-wholesale-4">
-                        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <svg viewBox="0 0 64 64" class="workflow-svg svg-anim-pulse">
+                            <defs>
+                                <linearGradient id="whGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#9333EA" />
+                                    <stop offset="100%" stop-color="#6B21A8" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Pan India Logistics Container Truck -->
+                            <rect x="10" y="22" width="30" height="22" rx="3" fill="url(#whGrad4)" opacity="0.2" />
+                            <rect x="10" y="22" width="30" height="22" rx="3" stroke="#9333EA" stroke-width="3" fill="none" />
+                            <path d="M40 28h10l6 6v10H40V28z" fill="url(#whGrad4)" opacity="0.2" />
+                            <path d="M40 28h10l6 6v10H40V28z" stroke="#9333EA" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Heavy Wheels -->
+                            <circle cx="20" cy="48" r="5" fill="#1F2937" stroke="#9333EA" stroke-width="2" />
+                            <circle cx="32" cy="48" r="5" fill="#1F2937" stroke="#9333EA" stroke-width="2" />
+                            <circle cx="48" cy="48" r="5" fill="#1F2937" stroke="#9333EA" stroke-width="2" />
+                            <!-- GPS Location Beacon -->
+                            <circle cx="25" cy="14" r="4" fill="#EF4444" />
+                            <path d="M25 18v3" stroke="#EF4444" stroke-width="2" stroke-linecap="round" />
+                        </svg>
                     </div>
                     <h3 class="roadmap-title">Transport Logistics</h3>
                     <p class="roadmap-desc">Express transport parcel booking with door-to-door tracking across India.</p>
                 </div>
             </div>
 
-            <div style="text-align:center; margin-top:24px;">
-                <a href="/Frontend/Wholesale/wholesale.php" class="home-btn-gold">Browse Wholesale Lots &rarr;</a>
+            <div style="text-align:center; margin-top:32px;">
+                <a href="/Frontend/Wholesale/wholesale.php" class="workflow-cta-btn">
+                    <span>Browse Wholesale Lots</span>
+                    <span class="btn-arrow-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                </a>
             </div>
         </div>
     </section>
