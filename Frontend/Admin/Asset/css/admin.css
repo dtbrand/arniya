@@ -1821,3 +1821,73 @@ input, select, textarea {
     color: #DC2626;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   NEXT-LEVEL PRODUCT OPTIONS SUBNAV PILLS & CONTROLS
+════════════════════════════════════════════════════════════ */
+.adm-prod-subnav-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 6px 0 16px;
+    margin-bottom: 18px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--adm-gold-border) transparent;
+}
+
+.adm-prod-subnav-strip::-webkit-scrollbar {
+    height: 4px;
+}
+
+.adm-prod-subnav-strip::-webkit-scrollbar-thumb {
+    background: var(--adm-gold-border);
+    border-radius: 4px;
+}
+
+.adm-prod-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    border: 1.2px solid var(--adm-border-soft);
+    color: var(--adm-text-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.adm-prod-pill:hover {
+    background: var(--adm-gold-pale);
+    border-color: var(--adm-gold);
+    color: var(--adm-gold-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(138, 104, 31, 0.12);
+}
+
+.adm-prod-pill.active {
+    background: var(--adm-gold);
+    border-color: var(--adm-gold);
+    color: #FFFFFF;
+    box-shadow: 0 3px 12px rgba(138, 104, 31, 0.25);
+}
+
+.adm-prod-pill-badge {
+    background: #FAF5E8;
+    color: var(--adm-gold);
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.adm-prod-pill.active .adm-prod-pill-badge {
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    border-color: transparent;
+}

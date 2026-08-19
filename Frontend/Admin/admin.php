@@ -656,21 +656,156 @@ if (session_status() === PHP_SESSION_NONE) {
             <section class="adm-tab-panel" id="tab-products">
                 <div class="adm-page-head">
                     <div class="adm-page-title-group">
-                        <h1 class="adm-page-title">Products & Inventory Catalog</h1>
-                        <p class="adm-page-subtitle">Manage B2C Retail & B2B Wholesale pricing, MOQ rules, stock alerts, and fabric specs.</p>
+                        <h1 class="adm-page-title">
+                            <span>Products &amp; Inventory Catalog</span>
+                            <span class="adm-badge gold">1,240 SKUs</span>
+                        </h1>
+                        <p class="adm-page-subtitle">Manage B2C Retail &amp; B2B Wholesale pricing, MOQ rules, stock alerts, and fabric specs.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <button class="adm-btn-secondary" onclick="window.exportTableToCSV('products')">
+                        <a href="/Frontend/Admin/products/imports/" class="adm-btn-secondary">
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            <span>Export Catalog CSV</span>
+                            <span>📥 Import Wizard</span>
+                        </a>
+                        <button class="adm-btn-secondary" onclick="window.exportCurrentTable('products_catalog')">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span>📤 Export CSV</span>
                         </button>
-                        <button class="adm-btn-primary" onclick="openAddProductModal()">
+                        <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary">
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add New Product</span>
-                        </button>
+                            <span>+ Add Product</span>
+                        </a>
                     </div>
                 </div>
 
+                <!-- ══ PRODUCT SUB-OPTION QUICK PILLS ══ -->
+                <div class="adm-prod-subnav-strip">
+                    <a href="/Frontend/Admin/products/" class="adm-prod-pill active">
+                        <span>👗 All Products</span>
+                        <span class="adm-prod-pill-badge">1,240</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/add.php" class="adm-prod-pill">
+                        <span>➕ Add Product</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/categories/" class="adm-prod-pill">
+                        <span>📁 Categories</span>
+                        <span class="adm-prod-pill-badge">16</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/subcategories/" class="adm-prod-pill">
+                        <span>🏷️ Subcategories</span>
+                        <span class="adm-prod-pill-badge">34</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/brands/" class="adm-prod-pill">
+                        <span>🏢 Brands</span>
+                        <span class="adm-prod-pill-badge">4</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/attributes/" class="adm-prod-pill">
+                        <span>🎨 Attributes &amp; Matrix</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/media/" class="adm-prod-pill">
+                        <span>📸 Media Gallery</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/featured/" class="adm-prod-pill">
+                        <span>⭐️ Featured</span>
+                        <span class="adm-prod-pill-badge">48</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/best-sellers/" class="adm-prod-pill">
+                        <span>🔥 Best Sellers</span>
+                        <span class="adm-prod-pill-badge">32</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/new-arrivals/" class="adm-prod-pill">
+                        <span>✨ New Arrivals</span>
+                        <span class="adm-prod-pill-badge">64</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/reviews/" class="adm-prod-pill">
+                        <span>💬 Reviews</span>
+                        <span class="adm-prod-pill-badge">4.9 ★</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/imports/" class="adm-prod-pill">
+                        <span>📥 Import Wizard</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/exports/" class="adm-prod-pill">
+                        <span>📤 Export Studio</span>
+                    </a>
+                </div>
+
+                <!-- ══ 9 SUMMARY KPI METRIC CARDS ══ -->
+                <div class="dt-summary-grid" style="margin-bottom:20px;">
+                    <div class="dt-summary-card active" onclick="window.showToast('Filtering: All Products')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">👗</span>
+                            <span class="dt-sum-trend up">1,240 Total</span>
+                        </div>
+                        <div class="dt-sum-val">1,240</div>
+                        <div class="dt-sum-lbl">Total Products</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Active Products')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">🟢</span>
+                            <span class="dt-sum-trend up">95.5%</span>
+                        </div>
+                        <div class="dt-sum-val">1,185</div>
+                        <div class="dt-sum-lbl">Active Products</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Draft Products')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">📝</span>
+                            <span class="dt-sum-trend">Pending</span>
+                        </div>
+                        <div class="dt-sum-val">14</div>
+                        <div class="dt-sum-lbl">Draft Products</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Inactive Products')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">⏸️</span>
+                            <span class="dt-sum-trend down">Paused</span>
+                        </div>
+                        <div class="dt-sum-val">0</div>
+                        <div class="dt-sum-lbl">Inactive</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Low Stock')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">⚠️</span>
+                            <span class="dt-sum-trend down">&lt; 5 pcs</span>
+                        </div>
+                        <div class="dt-sum-val">14</div>
+                        <div class="dt-sum-lbl">Low Stock</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Out of Stock')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">🛑</span>
+                            <span class="dt-sum-trend down">Restock</span>
+                        </div>
+                        <div class="dt-sum-val">41</div>
+                        <div class="dt-sum-lbl">Out of Stock</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Featured Products')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">⭐️</span>
+                            <span class="dt-sum-trend up">Top Pick</span>
+                        </div>
+                        <div class="dt-sum-val">48</div>
+                        <div class="dt-sum-lbl">Featured</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Best Sellers')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">🔥</span>
+                            <span class="dt-sum-trend up">High Vol</span>
+                        </div>
+                        <div class="dt-sum-val">32</div>
+                        <div class="dt-sum-lbl">Best Sellers</div>
+                    </div>
+                    <div class="dt-summary-card" onclick="window.showToast('Filtering: New Arrivals')">
+                        <div class="dt-sum-top">
+                            <span class="dt-sum-icon">✨</span>
+                            <span class="dt-sum-trend up">2026 Drop</span>
+                        </div>
+                        <div class="dt-sum-val">64</div>
+                        <div class="dt-sum-lbl">New Arrivals</div>
+                    </div>
+                </div>
+
+                <!-- ══ MASTER PRODUCT TABLE CARD ══ -->
                 <div class="adm-table-card">
                     <!-- Table Search & Filters Toolbar -->
                     <div class="adm-table-toolbar">
@@ -680,26 +815,35 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                            <input type="text" id="admProdSearch" class="adm-search-input" placeholder="Search product name, SKU, fabric...">
-                            <button type="button" id="admProdSearchClear" class="adm-search-clear">✕</button>
+                            <input type="text" id="admProdSearch" class="adm-search-input" placeholder="Search product name, SKU, fabric..." oninput="if(typeof filterProducts==='function') filterProducts();">
+                            <button type="button" id="admProdSearchClear" class="adm-search-clear" onclick="document.getElementById('admProdSearch').value=''; if(typeof filterProducts==='function') filterProducts();">✕</button>
                         </div>
 
                         <div class="adm-table-filters">
                             <select id="admProdCatFilter" class="adm-filter-select" onchange="filterProducts()">
                                 <option value="all">All Categories</option>
-                                <option value="Sarees">Sarees</option>
-                                <option value="Kurtis">Kurtis</option>
-                                <option value="Lehengas">Lehengas</option>
-                                <option value="Gowns">Gowns</option>
+                                <option value="Sarees">Silk &amp; Zari Sarees</option>
+                                <option value="Banarasi">Banarasi Brocade</option>
+                                <option value="Kurtis">Kurtis &amp; Sets</option>
+                                <option value="Lehengas">Bridal Lehengas</option>
                                 <option value="Dress Materials">Dress Materials</option>
+                            </select>
+
+                            <select id="admProdBrandFilter" class="adm-filter-select" onchange="filterProducts()">
+                                <option value="all">All Brands</option>
+                                <option value="DT Signature">DT Signature</option>
+                                <option value="Arniya Heritage">Arniya Heritage</option>
+                                <option value="DT Couture">DT Couture</option>
                             </select>
 
                             <select id="admProdStockFilter" class="adm-filter-select" onchange="filterProducts()">
                                 <option value="all">All Stock Status</option>
-                                <option value="In Stock">In Stock</option>
-                                <option value="Low Stock">Low Stock</option>
+                                <option value="In Stock">In Stock (&gt; 10 pcs)</option>
+                                <option value="Low Stock">Low Stock (&lt; 5 pcs)</option>
                                 <option value="Out of Stock">Out of Stock</option>
                             </select>
+
+                            <button type="button" class="adm-btn-secondary" style="height:34px; padding:0 10px; font-size:0.75rem;" onclick="document.getElementById('admProdSearch').value=''; document.getElementById('admProdCatFilter').value='all'; document.getElementById('admProdBrandFilter').value='all'; document.getElementById('admProdStockFilter').value='all'; filterProducts();">↺ Reset</button>
                         </div>
                     </div>
 
@@ -708,11 +852,17 @@ if (session_status() === PHP_SESSION_NONE) {
                         <table class="adm-table">
                             <thead>
                                 <tr>
+                                    <th style="width:36px; text-align:center;">
+                                        <input type="checkbox" onchange="window.toggleBulkSelectAll(this)" style="cursor:pointer;">
+                                    </th>
                                     <th>Product Details</th>
                                     <th>Category</th>
-                                    <th>Pricing (Retail / Wholesale)</th>
+                                    <th>Brand</th>
+                                    <th>Variants</th>
+                                    <th>Pricing (Retail / Reseller / Wholesale)</th>
                                     <th>Wholesale MOQ</th>
                                     <th>Stock Units</th>
+                                    <th>Rating</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -721,6 +871,20 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <!-- Rendered dynamically by admin.js -->
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="dt-pagination">
+                        <div class="dt-page-info">
+                            Showing <strong>1 – 6</strong> of <strong>1,240</strong> products • Per page: <strong>25</strong>
+                        </div>
+                        <div class="dt-page-nav">
+                            <button type="button" class="dt-page-btn" disabled>«</button>
+                            <button type="button" class="dt-page-btn active">1</button>
+                            <button type="button" class="dt-page-btn">2</button>
+                            <button type="button" class="dt-page-btn">3</button>
+                            <button type="button" class="dt-page-btn">»</button>
+                        </div>
                     </div>
                 </div>
             </section>
