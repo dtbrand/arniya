@@ -6077,6 +6077,16 @@ input[type=range].sf-range::-moz-range-thumb {
     fill: #059669;
 }
 
+.rev-badge-retailer {
+    background: #ECFDF5;
+    color: #047857;
+    border-color: #A7F3D0;
+}
+
+.rev-badge-retailer svg {
+    fill: #059669;
+}
+
 .rev-badge-reseller {
     background: #FEF3C7;
     color: #92400E;

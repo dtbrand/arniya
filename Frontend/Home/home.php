@@ -1681,7 +1681,7 @@ $total_products = count($products);
                     <!-- Tab Filter Navigation -->
                     <div class="reviews-tab-nav">
                         <button type="button" class="rev-tab-pill active" onclick="switchReviewTab('customers', this)">
-                            <span>🛍️ Retail Buyers</span>
+                            <span>🏪 Retail Boutiques & Shops</span>
                         </button>
                         <button type="button" class="rev-tab-pill" onclick="switchReviewTab('resellers', this)">
                             <span>⚡ Reseller Partners</span>
@@ -1701,153 +1701,153 @@ $total_products = count($products);
 
             <!-- 1-Line Scrolling Tracks Container -->
             <div class="reviews-track-wrap">
-                <!-- Customer Reviews Track (1-Line) -->
+                <!-- Retailer & Boutique Reviews Track (1-Line) -->
                 <div class="reviews-track active" id="tab-reviews-customers">
-                    <!-- Card 1 -->
+                    <!-- Retailer 1: Home Boutique -->
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
                                 <span class="rev-stars">★★★★★</span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
-                            <span class="rev-verified-badge">
-                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                                Verified Buyer
+                            <span class="rev-verified-badge rev-badge-retailer">
+                                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Home Boutique
                             </span>
                         </div>
                         
                         <div class="rev-product-pill">
                             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Nilambari Silk Saree with Rich Zari Pallu</span>
+                            <span>Small Batch 4pc Trial Lot • Silk Sarees</span>
                         </div>
 
-                        <p class="rev-text">"Ordered the Nilambari Silk Saree for my cousin's wedding. The zari work and richness of pure silk exceeded my expectations. Delivered in 3 days!"</p>
+                        <p class="rev-text">"I run a home boutique in Mumbai. DT Brand's 4-piece low MOQ lots let me curate fresh Surat silk sarees every 10 days without blocking huge capital. My boutique clients are thrilled with the rich zari finish!"</p>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-gold">PS</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Pooja Sharma</h5>
-                                <span class="rev-location">📍 Mumbai, Maharashtra • 2 days ago</span>
+                                <span class="rev-location">📍 Mumbai • Owner, Pooja Designer Home Boutique</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
+                    <!-- Retailer 2: Small Shop Owner -->
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
                                 <span class="rev-stars">★★★★★</span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
-                            <span class="rev-verified-badge">
-                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                                Verified Buyer
+                            <span class="rev-verified-badge rev-badge-retailer">
+                                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Small Shop Owner
                             </span>
                         </div>
                         
                         <div class="rev-product-pill">
-                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Royal Bridal Velvet Lehenga Set</span>
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>100% GST ITC Invoices • Direct Surat Rates</span>
                         </div>
 
-                        <p class="rev-text">"The Bridal Velvet Lehenga is stunning. The zardozi embroidery is heavy and authentic. Exactly as shown in the photos and live videos!"</p>
+                        <p class="rev-text">"Opening our small saree shop in Ahmedabad was made completely hassle-free with DT Brand. Authentic manufacturer pricing, fast 48-hour door delivery, and genuine GST ITC bills for full input tax credit."</p>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-amber">AP</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Ananya Patel</h5>
-                                <span class="rev-location">📍 Ahmedabad, Gujarat • 5 days ago</span>
+                                <span class="rev-location">📍 Ahmedabad • Owner, Ananya Ethnic Wear Shop</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
+                    <!-- Retailer 3: Boutique Designer -->
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
                                 <span class="rev-stars">★★★★★</span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
-                            <span class="rev-verified-badge">
-                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                                Verified Buyer
+                            <span class="rev-verified-badge rev-badge-retailer">
+                                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Boutique Designer
                             </span>
                         </div>
                         
                         <div class="rev-product-pill">
                             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Jaipuri Block Printed Cotton Kurti</span>
+                            <span>Mix & Match Lots • Bridal Velvet Lehengas</span>
                         </div>
 
-                        <p class="rev-text">"Superb quality cotton kurti set. Very soft fabric and elegant gotapatti lace. Highly recommended for festive & daily wear."</p>
+                        <p class="rev-text">"We stock bridal lehengas and festive kurti sets for our boutique clients. The craftsmanship and heavy zardozi embroidery are flawless. 9 out of 10 walk-in customers buy on their first visit!"</p>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-emerald">RK</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Ritu Kapoor</h5>
-                                <span class="rev-location">📍 New Delhi • 1 week ago</span>
+                                <span class="rev-location">📍 Delhi • Founder, Ritu Bridal Studio & Boutique</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
-                    <!-- Card 4 -->
+                    <!-- Retailer 4: Town Retail Shop -->
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
                                 <span class="rev-stars">★★★★★</span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
-                            <span class="rev-verified-badge">
-                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                                Verified Buyer
+                            <span class="rev-verified-badge rev-badge-retailer">
+                                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Town Retail Shop
                             </span>
                         </div>
                         
                         <div class="rev-product-pill">
-                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Kanjivaram Temple Silk Saree</span>
+                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+                            <span>Express Courier • Door Counter Delivery</span>
                         </div>
 
-                        <p class="rev-text">"Pure authentic gold zari border with rich contrast blouse. The weight and drape are magnificent. Best online ethnic store."</p>
+                        <p class="rev-text">"For our town retail counter, ordering 8 to 16 sarees weekly has doubled our profit margins. The packaging is sturdy with zero damage, and the margin gives us a huge edge over local traders."</p>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-indigo">MS</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Meenakshi Sundaram</h5>
-                                <span class="rev-location">📍 Chennai, Tamil Nadu • 2 weeks ago</span>
+                                <span class="rev-location">📍 Chennai • Owner, Sri Meenakshi Retail Silks</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
                     </div>
 
-                    <!-- Card 5 -->
+                    <!-- Retailer 5: Home Studio Seller -->
                     <div class="review-card">
                         <div class="rev-card-top">
                             <div class="rev-stars-box">
                                 <span class="rev-stars">★★★★★</span>
                                 <span class="rev-score-badge">5.0</span>
                             </div>
-                            <span class="rev-verified-badge">
-                                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                                Verified Buyer
+                            <span class="rev-verified-badge rev-badge-retailer">
+                                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                Home Studio Seller
                             </span>
                         </div>
                         
                         <div class="rev-product-pill">
-                            <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            <span>Kashmiri Embroidered Georgette Suit</span>
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>HD Draping Videos • Advance Client Bookings</span>
                         </div>
 
-                        <p class="rev-text">"The needle embroidery and thread luster are beyond comparison. Perfect fit and fast courier dispatch. Will order again!"</p>
+                        <p class="rev-text">"As a home boutique seller, having HD model draping videos and zero-watermark photos lets me take advance pre-orders effortlessly. DT Brand is our most reliable sourcing partner."</p>
 
                         <div class="rev-author-row">
                             <div class="rev-avatar rev-av-purple">SM</div>
                             <div class="rev-author-meta">
                                 <h5 class="rev-name">Shreya Mukherjee</h5>
-                                <span class="rev-location">📍 Kolkata, West Bengal • 2 weeks ago</span>
+                                <span class="rev-location">📍 Kolkata • Owner, Shreya Boutique & Studio</span>
                             </div>
                             <div class="rev-quote-watermark">❝</div>
                         </div>
