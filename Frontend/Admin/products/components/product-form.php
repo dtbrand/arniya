@@ -83,8 +83,8 @@
 <!-- ======================================================== -->
 <!-- SMART AI FAST PRODUCT IMPORTER & AUTO-FILL MODAL POPUP  -->
 <!-- ======================================================== -->
-<div id="aiImporterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.65); backdrop-filter:blur(4px); z-index:999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:680px; border-radius:10px; box-shadow:0 20px 40px rgba(0,0,0,0.3); overflow:hidden; border:1px solid rgba(212,175,55,0.4); animation:dtModalFadeIn 0.25s ease-out;">
+<div id="aiImporterModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.7); backdrop-filter:blur(4px); z-index:9999999; align-items:center; justify-content:center;">
+    <div style="background:#fff; width:95%; max-width:680px; border-radius:10px; box-shadow:0 20px 40px rgba(0,0,0,0.35); overflow:hidden; border:1px solid rgba(212,175,55,0.4); animation:dtModalFadeIn 0.25s ease-out;">
         
         <!-- Modal Header -->
         <div style="background:linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%); padding:14px 18px; color:#fff; display:flex; align-items:center; justify-content:space-between;">
@@ -98,7 +98,7 @@
                     <small style="color:#C7D2FE; font-size:11px;">Paste WhatsApp message, supplier catalog text, or product specs</small>
                 </div>
             </div>
-            <button type="button" onclick="closeAiImporterModal()" style="background:none; border:none; color:#C7D2FE; font-size:20px; cursor:pointer; line-height:1; font-weight:700;">&times;</button>
+            <button type="button" onclick="closeAiImporterModal()" style="background:none; border:none; color:#C7D2FE; font-size:22px; cursor:pointer; line-height:1; font-weight:700;">&times;</button>
         </div>
 
         <!-- Modal Body -->
@@ -119,7 +119,7 @@ Border: Heavy Gold Zari Traditional Kaddi Border
 Blouse: Unstitched Matching Contrast Blouse (0.8m)
 Color: Rani Pink
 Size: Free Size (6.3m)
-Purchase Price: 1200
+Price: 1200
 Description: Handcrafted pure silk bridal collection with rich pallu and embossed motifs."></textarea>
 
             <!-- Auto-Fill Preview Indicators -->
@@ -132,7 +132,7 @@ Description: Handcrafted pure silk bridal collection with rich pallu and embosse
         <!-- Modal Footer -->
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; align-items:center; gap:10px;">
             <button type="button" class="wp-button" onclick="closeAiImporterModal()" style="height:32px; font-size:12px;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:32px; font-size:12px; font-weight:700; background:linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); display:inline-flex; align-items:center; gap:6px; border:none; color:#fff; box-shadow:0 2px 8px rgba(67,56,202,0.4);">
+            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:32px; font-size:12px; font-weight:700; background:linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%); display:inline-flex; align-items:center; gap:6px; border:none; color:#fff; box-shadow:0 2px 8px rgba(67,56,202,0.4); cursor:pointer;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
                     <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D"/>
                 </svg>
@@ -178,33 +178,30 @@ Description: Handcrafted pure silk bridal collection with rich pallu and embosse
 </style>
 
 <script>
-function openAiImporterModal() {
+window.openAiImporterModal = function() {
     const modal = document.getElementById('aiImporterModal');
     if (modal) {
         modal.style.display = 'flex';
-        document.getElementById('aiRawTextInput').focus();
+        const txt = document.getElementById('aiRawTextInput');
+        if (txt) txt.focus();
     }
-}
+};
 
-function closeAiImporterModal() {
+window.closeAiImporterModal = function() {
     const modal = document.getElementById('aiImporterModal');
     if (modal) {
         modal.style.display = 'none';
     }
-}
+};
 
-function loadSampleAiText() {
-    document.getElementById('aiRawTextInput').value = `Code: KLN-902
-Fabric: Pure Handloom Kanjivaram Silk
-Border: Heavy Gold Zari Traditional Kaddi Border
-Blouse: Unstitched Matching Contrast Blouse (0.8m)
-Color: Rani Pink
-Size: Free Size (6.3m)
-Price: 1200
-Description: Handcrafted pure silk bridal collection with rich pallu and embossed motifs. Silk Mark Certified.`;
-}
+window.loadSampleAiText = function() {
+    const txt = document.getElementById('aiRawTextInput');
+    if (txt) {
+        txt.value = "Code: KLN-902\nFabric: Pure Handloom Kanjivaram Silk\nBorder: Heavy Gold Zari Traditional Kaddi Border\nBlouse: Unstitched Matching Contrast Blouse (0.8m)\nColor: Rani Pink\nSize: Free Size (6.3m)\nPrice: 1200\nDescription: Handcrafted pure silk bridal collection with rich pallu and embossed motifs. Silk Mark Certified.";
+    }
+};
 
-function parseAndAutoFillProductData() {
+window.parseAndAutoFillProductData = function() {
     const raw = document.getElementById('aiRawTextInput')?.value || '';
     if (!raw.trim()) {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Please paste product text first');
@@ -222,8 +219,7 @@ function parseAndAutoFillProductData() {
 
     // 2. Extract Fabric
     let fabric = '';
-    const fabricMatch = raw.match(/(?:Fabric|Material|Cloth|Weave)[\s:]*([^
-,]+)/i);
+    const fabricMatch = raw.match(/(?:Fabric|Material|Cloth|Weave)[\s:]*([^\r\n,]+)/i);
     if (fabricMatch && fabricMatch[1]) {
         fabric = fabricMatch[1].trim();
     } else {
@@ -232,8 +228,7 @@ function parseAndAutoFillProductData() {
 
     // 3. Extract Border
     let border = '';
-    const borderMatch = raw.match(/(?:Border|Zari|Pallu)[\s:]*([^
-,]+)/i);
+    const borderMatch = raw.match(/(?:Border|Zari|Pallu)[\s:]*([^\r\n,]+)/i);
     if (borderMatch && borderMatch[1]) {
         border = borderMatch[1].trim();
     } else {
@@ -242,8 +237,7 @@ function parseAndAutoFillProductData() {
 
     // 4. Extract Blouse
     let blouse = '';
-    const blouseMatch = raw.match(/(?:Blouse|Blouse\s*Piece)[\s:]*([^
-,]+)/i);
+    const blouseMatch = raw.match(/(?:Blouse|Blouse\s*Piece)[\s:]*([^\r\n,]+)/i);
     if (blouseMatch && blouseMatch[1]) {
         blouse = blouseMatch[1].trim();
     } else {
@@ -261,16 +255,14 @@ function parseAndAutoFillProductData() {
 
     // 6. Extract Color
     let colorName = '';
-    const colorMatch = raw.match(/(?:Color|Colour|Shade)[\s:]*([^
-,]+)/i);
+    const colorMatch = raw.match(/(?:Color|Colour|Shade)[\s:]*([^\r\n,]+)/i);
     if (colorMatch && colorMatch[1]) {
         colorName = colorMatch[1].trim();
     }
 
     // 7. Extract Size
     let sizeName = '';
-    const sizeMatch = raw.match(/(?:Size|Length)[\s:]*([^
-,]+)/i);
+    const sizeMatch = raw.match(/(?:Size|Length)[\s:]*([^\r\n,]+)/i);
     if (sizeMatch && sizeMatch[1]) {
         sizeName = sizeMatch[1].trim();
     }
@@ -281,15 +273,11 @@ function parseAndAutoFillProductData() {
     if (descMatch && descMatch[1]) {
         desc = descMatch[1].trim();
     } else {
-        desc = `Handcrafted ${fabric} saree featuring opulent ${border} and rich contrast pallu design. Includes ${blouse}. Perfect for weddings, festivals, and royal functions.`;
+        desc = 'Handcrafted ' + fabric + ' saree featuring opulent ' + border + ' and rich contrast pallu design. Includes ' + blouse + '. Perfect for weddings, festivals, and royal functions.';
     }
 
-    // ============================================
-    // AUTO-FILL INTO DOM FORM FIELDS
-    // ============================================
-
-    // Title & SKU
-    const productTitle = `${fabric} Saree with ${border} (${code})`;
+    // Auto-fill Title, SKU, Fabric, Description
+    const productTitle = fabric + ' Saree with ' + border + ' (' + code + ')';
     const titleInput = document.getElementById('pFormName');
     const skuInput = document.getElementById('pFormSku');
     const fabricInput = document.getElementById('pFormFabric');
@@ -297,19 +285,12 @@ function parseAndAutoFillProductData() {
 
     if (titleInput) titleInput.value = productTitle;
     if (skuInput) skuInput.value = code;
-    if (fabricInput) fabricInput.value = `${fabric} | ${border} | Silk Mark Certified`;
+    if (fabricInput) fabricInput.value = fabric + ' | ' + border + ' | Silk Mark Certified';
     if (descInput) {
-        descInput.value = `${desc}
-
-• Fabric: ${fabric}
-• Border & Pallu: ${border}
-• Blouse Piece: ${blouse}
-• Saree Length: 5.5 Meters + 0.8 Meter Blouse
-• Occasion: Bridal, Festive, Royal Ceremonies & Weddings
-• Care: Professional Dry Clean Only`;
+        descInput.value = desc + '\n\n• Fabric: ' + fabric + '\n• Border & Pallu: ' + border + '\n• Blouse Piece: ' + blouse + '\n• Saree Length: 5.5 Meters + 0.8 Meter Blouse\n• Occasion: Bridal, Festive, Royal Ceremonies & Weddings\n• Care: Professional Dry Clean Only';
     }
 
-    // Purchase Price & Auto-Calculated Customer Sale Price
+    // Auto-fill Purchase Price & Calculate Sale Price
     const costInput = document.getElementById('pFormCost');
     if (costInput && priceVal > 0) {
         costInput.value = priceVal;
@@ -318,13 +299,13 @@ function parseAndAutoFillProductData() {
         }
     }
 
-    // Auto-update Color Studio if color detected
+    // Auto-update Color if detected
     if (colorName) {
         const colorInput = document.getElementById('varColorName');
         if (colorInput) colorInput.value = colorName;
     }
 
-    // Auto-update Size Studio if size detected
+    // Auto-update Size if detected
     if (sizeName) {
         const sizeInput = document.getElementById('varSizeName');
         if (sizeInput) sizeInput.value = sizeName;
@@ -335,10 +316,10 @@ function parseAndAutoFillProductData() {
         updateGoogleSeoPreview();
     }
 
-    closeAiImporterModal();
+    window.closeAiImporterModal();
 
     if (typeof window.showToast === 'function') {
-        window.showToast(`✨ AI successfully parsed & filled all details for "${code}"!`);
+        window.showToast('✨ AI successfully parsed & filled all details for ' + code + '!');
     }
-}
+};
 </script>
