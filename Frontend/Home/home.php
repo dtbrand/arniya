@@ -1447,60 +1447,216 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 25: WHY CHOOSE US (8 VALUE PILLARS) ════════════ -->
-    <section class="home-section home-section-soft-bg" id="section-why-choose-us">
+    <section class="home-section section-why-us-luxury" id="section-why-choose-us">
         <div class="home-section-container">
             <div class="home-section-header" style="text-align:center; justify-content:center;">
                 <div>
-                    <span class="home-section-tag">💎 THE DT BRAND PROMISE</span>
+                    <span class="home-section-tag why-section-tag">
+                        <svg viewBox="0 0 24 24" class="tag-live-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        THE DT BRAND PROMISE
+                    </span>
                     <h2 class="home-section-title">Why 50,000+ Buyers Trust DT Brand's</h2>
+                    <p class="home-section-desc">Direct factory transparency, artisan craftsmanship, and zero-compromise quality assurance.</p>
                 </div>
             </div>
 
             <div class="why-us-grid">
-                <div class="why-card">
-                    <div class="why-icon">💎</div>
+                <!-- Pillar 1: 100% Heritage Quality -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-gold">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-sparkle">
+                            <defs>
+                                <linearGradient id="whyGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#F59E0B" />
+                                    <stop offset="100%" stop-color="#B45309" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 3D Luxury Diamond -->
+                            <polygon points="32 10 50 24 32 54 14 24" fill="url(#whyGrad1)" opacity="0.2" />
+                            <polygon points="32 10 50 24 32 54 14 24" stroke="#D97706" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <line x1="14" y1="24" x2="50" y2="24" stroke="#D97706" stroke-width="2.5" />
+                            <line x1="32" y1="10" x2="24" y2="24" stroke="#D97706" stroke-width="2" />
+                            <line x1="32" y1="10" x2="40" y2="24" stroke="#D97706" stroke-width="2" />
+                            <line x1="32" y1="54" x2="24" y2="24" stroke="#D97706" stroke-width="2" />
+                            <line x1="32" y1="54" x2="40" y2="24" stroke="#D97706" stroke-width="2" />
+                            <!-- Sparkle Star -->
+                            <path d="M48 10l1 2.5L52 14l-3 1.5L48 18l-1-2.5L44 14l3-1.5z" fill="#F59E0B" />
+                        </svg>
+                    </div>
                     <h4 class="why-title">100% Heritage Quality</h4>
                     <p class="why-desc">Authentic silk and artisan zari craft tested for colorfastness and durability.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">🏭</div>
+                <!-- Pillar 2: Surat Factory Pricing -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-amber">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="whyGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#EA580C" />
+                                    <stop offset="100%" stop-color="#C2410C" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Factory Roof & Chimneys -->
+                            <path d="M14 48V28l12 8V24l12 8V20l12 8v20H14z" fill="url(#whyGrad2)" opacity="0.2" />
+                            <path d="M14 48V28l12 8V24l12 8V20l12 8v20H14z" stroke="#EA580C" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Mill Windows -->
+                            <rect x="20" y="38" width="6" height="6" rx="1" fill="#EA580C" />
+                            <rect x="32" y="38" width="6" height="6" rx="1" fill="#EA580C" />
+                            <rect x="44" y="38" width="6" height="6" rx="1" fill="#EA580C" />
+                            <!-- Direct Rupee Coin -->
+                            <circle cx="48" cy="14" r="8" fill="#F59E0B" />
+                            <text x="48" y="17" font-size="9" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="sans-serif">₹</text>
+                        </svg>
+                    </div>
                     <h4 class="why-title">Surat Factory Pricing</h4>
                     <p class="why-desc">Zero middlemen commissions. Direct manufacturer pricing for best margins.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">🚚</div>
+                <!-- Pillar 3: Express Dispatch -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-emerald">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-pulse">
+                            <defs>
+                                <linearGradient id="whyGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10B981" />
+                                    <stop offset="100%" stop-color="#047857" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Express Van -->
+                            <rect x="12" y="24" width="24" height="18" rx="3" fill="url(#whyGrad3)" opacity="0.2" />
+                            <rect x="12" y="24" width="24" height="18" rx="3" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M36 30h10l6 6v6h-16V30z" fill="url(#whyGrad3)" opacity="0.2" />
+                            <path d="M36 30h10l6 6v6h-16V30z" stroke="#059669" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Wheels -->
+                            <circle cx="20" cy="46" r="4.5" fill="#1F2937" stroke="#059669" stroke-width="2" />
+                            <circle cx="44" cy="46" r="4.5" fill="#1F2937" stroke="#059669" stroke-width="2" />
+                            <!-- Speed Lightning -->
+                            <polygon points="26 10 18 20 25 20 22 28 30 18 23 18 26 10" fill="#F59E0B" />
+                        </svg>
+                    </div>
                     <h4 class="why-title">Express Dispatch</h4>
                     <p class="why-desc">98% of orders dispatched within 24 to 48 hours with door-to-door tracking.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">🔒</div>
+                <!-- Pillar 4: 100% Secure Payments -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-indigo">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-bounce">
+                            <defs>
+                                <linearGradient id="whyGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#6366F1" />
+                                    <stop offset="100%" stop-color="#4338CA" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Security Shield -->
+                            <path d="M32 10L14 18v16c0 12 18 20 18 20s18-8 18-20V18L32 10z" fill="url(#whyGrad4)" opacity="0.2" />
+                            <path d="M32 10L14 18v16c0 12 18 20 18 20s18-8 18-20V18L32 10z" stroke="#4F46E5" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Padlock in Shield -->
+                            <rect x="25" y="30" width="14" height="11" rx="2" fill="#4F46E5" />
+                            <path d="M28 30v-4a4 4 0 0 1 8 0v4" stroke="#4F46E5" stroke-width="2.5" fill="none" />
+                            <circle cx="32" cy="35" r="1.5" fill="#FFFFFF" />
+                        </svg>
+                    </div>
                     <h4 class="why-title">100% Secure Payments</h4>
                     <p class="why-desc">UPI, Cards, Netbanking, COD and NEFT/RTGS bank transfers supported.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">⚡</div>
+                <!-- Pillar 5: Reseller Friendly -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-rose">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-float">
+                            <defs>
+                                <linearGradient id="whyGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#EC4899" />
+                                    <stop offset="100%" stop-color="#BE185D" />
+                                </linearGradient>
+                            </defs>
+                            <!-- White-label Parcel Box -->
+                            <rect x="14" y="24" width="36" height="26" rx="4" fill="url(#whyGrad5)" opacity="0.2" />
+                            <rect x="14" y="24" width="36" height="26" rx="4" stroke="#DB2777" stroke-width="3" fill="none" />
+                            <line x1="14" y1="36" x2="50" y2="36" stroke="#DB2777" stroke-width="2.5" />
+                            <line x1="32" y1="24" x2="32" y2="50" stroke="#DB2777" stroke-width="2.5" />
+                            <!-- Ribbon Bow -->
+                            <path d="M26 18c-4 0-6 3-4 6l10 0c2-3 0-6-4-6-2 0-2 2-2 2s0-2-2-2z" fill="#DB2777" />
+                            <!-- Boutique Name Tag -->
+                            <circle cx="46" cy="18" r="6" fill="#F43F5E" />
+                            <path d="M44 18l1.5 1.5 3-3" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                        </svg>
+                    </div>
                     <h4 class="why-title">Reseller Friendly</h4>
                     <p class="why-desc">White-label shipping under your boutique name with unbranded packaging.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">📦</div>
+                <!-- Pillar 6: Wholesale Volume Slabs -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-cyan">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-bounce">
+                            <defs>
+                                <linearGradient id="whyGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#06B6D4" />
+                                    <stop offset="100%" stop-color="#0E7490" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 3D Crate Master Stacks -->
+                            <rect x="12" y="32" width="18" height="18" rx="2" fill="url(#whyGrad6)" opacity="0.25" stroke="#0891B2" stroke-width="2.5" />
+                            <rect x="34" y="22" width="18" height="28" rx="2" fill="url(#whyGrad6)" opacity="0.35" stroke="#0891B2" stroke-width="2.5" />
+                            <!-- Tier Discount Up Arrow -->
+                            <path d="M16 26l12-8 12-4" stroke="#0891B2" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                            <polygon points="44 14 38 15 41 18" fill="#0891B2" />
+                            <!-- Discount Tag % -->
+                            <circle cx="21" cy="41" r="5" fill="#0891B2" />
+                            <text x="21" y="44" font-size="6" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="sans-serif">%</text>
+                        </svg>
+                    </div>
                     <h4 class="why-title">Wholesale Volume Slabs</h4>
                     <p class="why-desc">Transparent tier discounts from 10 to 100+ pieces with GST invoices.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">💬</div>
+                <!-- Pillar 7: 24/7 WhatsApp Support -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-green">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-pulse">
+                            <defs>
+                                <linearGradient id="whyGrad7" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#22C55E" />
+                                    <stop offset="100%" stop-color="#15803D" />
+                                </linearGradient>
+                            </defs>
+                            <!-- WhatsApp Speech Cloud -->
+                            <path d="M32 12c-12 0-22 9-22 20 0 4 1 8 3 11l-3 9 10-3c3 2 7 3 12 3 12 0 22-9 22-20s-10-20-22-20z" fill="url(#whyGrad7)" opacity="0.2" />
+                            <path d="M32 12c-12 0-22 9-22 20 0 4 1 8 3 11l-3 9 10-3c3 2 7 3 12 3 12 0 22-9 22-20s-10-20-22-20z" stroke="#16A34A" stroke-width="3" stroke-linejoin="round" fill="none" />
+                            <!-- Support Headset inside -->
+                            <path d="M24 32a8 8 0 0 1 16 0v6" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                            <rect x="22" y="30" width="4" height="6" rx="2" fill="#16A34A" />
+                            <rect x="38" y="30" width="4" height="6" rx="2" fill="#16A34A" />
+                            <path d="M38 38h-4" stroke="#16A34A" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
                     <h4 class="why-title">24/7 WhatsApp Support</h4>
                     <p class="why-desc">Instant human support on WhatsApp for orders, tracking, and styling.</p>
                 </div>
 
-                <div class="why-card">
-                    <div class="why-icon">🔄</div>
+                <!-- Pillar 8: 7-Day Easy Returns -->
+                <div class="why-us-card">
+                    <div class="why-icon-wrap why-icon-purple">
+                        <svg viewBox="0 0 64 64" class="why-us-svg svg-anim-sparkle">
+                            <defs>
+                                <linearGradient id="whyGrad8" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#A855F7" />
+                                    <stop offset="100%" stop-color="#7E22CE" />
+                                </linearGradient>
+                            </defs>
+                            <!-- 360 Cycle Exchange Arrows -->
+                            <path d="M46 24A16 16 0 0 0 18 28" stroke="#9333EA" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                            <polygon points="42 18 48 24 42 30" fill="#9333EA" />
+                            <path d="M18 40a16 16 0 0 0 28-4" stroke="#9333EA" stroke-width="3.5" stroke-linecap="round" fill="none" />
+                            <polygon points="22 46 16 40 22 34" fill="#9333EA" />
+                            <!-- 7D Guarantee Badge -->
+                            <circle cx="32" cy="32" r="8" fill="#9333EA" />
+                            <text x="32" y="35" font-size="7" font-weight="900" fill="#FFFFFF" text-anchor="middle" font-family="sans-serif">7D</text>
+                        </svg>
+                    </div>
                     <h4 class="why-title">7-Day Easy Returns</h4>
                     <p class="why-desc">Hassle-free replacement policy in case of any manufacturing defects.</p>
                 </div>
