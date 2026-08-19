@@ -901,10 +901,12 @@ input, select, textarea {
 /* ════ MAIN CONTENT CONTAINER ════ */
 .adm-content {
     flex: 1;
-    padding: 28px;
+    padding: 18px 22px;
     display: flex;
     flex-direction: column;
-    gap: 26px;
+    gap: 18px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 /* Page Title & Breadcrumb Banner */
