@@ -976,11 +976,107 @@
 
     /* Track clicks on product cards */
     document.addEventListener('click', function(e) {
-        var card = e.target.closest('.product-card, .home-reseller-card, .home-ws-card, .recently-viewed-card');
+        var card = e.target.closest('.product-card, .home-reseller-card, .home-ws-card, .recently-viewed-card, .rec-card');
         if (card && card.dataset.productId) {
             window.trackRecentlyViewed(card.dataset.productId);
         }
     });
+
+    /* ═════════════════════════════════════════════════════════════════════
+       SECTION 20: RECOMMENDED FOR YOU (2-LINE HORIZONTAL SCROLL & AUTO-TICKER)
+    ═════════════════════════════════════════════════════════════════════ */
+    var recTrack = document.getElementById('recommendedGrid');
+    var recThumb = document.getElementById('recScrollbarThumb');
+    var recScrollbar = document.getElementById('recScrollbarTrack');
+    var recAutoScrollEnabled = true;
+    var recAutoScrollPaused = false;
+    var recAutoScrollTimer = null;
+
+    function syncRecScrollbar() {
+        if (!recTrack || !recThumb || !recScrollbar) return;
+        var maxScroll = recTrack.scrollWidth - recTrack.clientWidth;
+        if (maxScroll <= 5) {
+            recScrollbar.style.display = 'none';
+            return;
+        }
+        recScrollbar.style.display = 'block';
+
+        var percent = recTrack.scrollLeft / maxScroll;
+        var thumbWidth = Math.max(28, (recTrack.clientWidth / recTrack.scrollWidth) * recScrollbar.clientWidth);
+        var maxMove = recScrollbar.clientWidth - thumbWidth;
+        recThumb.style.width = thumbWidth + 'px';
+        recThumb.style.transform = 'translateX(' + (percent * maxMove) + 'px)';
+    }
+
+    if (recTrack) {
+        recTrack.addEventListener('scroll', syncRecScrollbar, { passive: true });
+        
+        // Pause auto-scroll on hover / touch
+        recTrack.addEventListener('mouseenter', function() { recAutoScrollPaused = true; });
+        recTrack.addEventListener('mouseleave', function() { recAutoScrollPaused = false; });
+        recTrack.addEventListener('touchstart', function() { recAutoScrollPaused = true; }, { passive: true });
+        recTrack.addEventListener('touchend', function() { 
+            setTimeout(function() { recAutoScrollPaused = false; }, 2000); 
+        }, { passive: true });
+
+        // Auto-Scroll Ticker Engine
+        function runRecommendedAutoScroll() {
+            if (recAutoScrollEnabled && !recAutoScrollPaused && recTrack) {
+                var maxScroll = recTrack.scrollWidth - recTrack.clientWidth;
+                if (maxScroll > 10) {
+                    if (recTrack.scrollLeft >= maxScroll - 2) {
+                        recTrack.scrollLeft = 0;
+                    } else {
+                        recTrack.scrollLeft += 1;
+                    }
+                }
+            }
+        }
+        recAutoScrollTimer = setInterval(runRecommendedAutoScroll, 35);
+        syncRecScrollbar();
+    }
+
+    window.slideRecommended = function(direction) {
+        if (!recTrack) return;
+        var step = recTrack.clientWidth * 0.75;
+        recTrack.scrollBy({ left: direction * step, behavior: 'smooth' });
+    };
+
+    window.toggleRecommendedAutoScroll = function() {
+        recAutoScrollEnabled = !recAutoScrollEnabled;
+        var pill = document.getElementById('recAutoScrollPill');
+        var text = document.getElementById('recAutoScrollText');
+        var dot = pill ? pill.querySelector('.rec-pulse-dot') : null;
+        if (text) text.textContent = recAutoScrollEnabled ? 'Auto-Scroll ON' : 'Auto-Scroll OFF';
+        if (dot) {
+            dot.style.background = recAutoScrollEnabled ? '#10B981' : '#EF4444';
+            dot.style.animation = recAutoScrollEnabled ? 'recPulse 1.6s infinite' : 'none';
+        }
+    };
+
+    window.filterRecommendedCategory = function(cat, btn) {
+        // Update active filter pill
+        var pills = document.querySelectorAll('.rec-filter-pill');
+        pills.forEach(function(p) { p.classList.remove('active'); });
+        if (btn) btn.classList.add('active');
+
+        // Filter cards
+        var cards = document.querySelectorAll('#recommendedGrid .rec-card');
+        var selectedCat = (cat || 'All').toLowerCase();
+        cards.forEach(function(card) {
+            var itemCat = (card.getAttribute('data-category') || '').toLowerCase();
+            if (selectedCat === 'all' || itemCat.indexOf(selectedCat) !== -1 || selectedCat.indexOf(itemCat) !== -1) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        if (recTrack) {
+            recTrack.scrollTo({ left: 0, behavior: 'smooth' });
+            setTimeout(syncRecScrollbar, 200);
+        }
+    };
 
     /* ═════════════════════════════════════════════════════════════════════
        SMART SHOP BY CATEGORY CAROUSEL RAIL & FILTER CONTROLLER

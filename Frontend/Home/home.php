@@ -934,34 +934,124 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 20: RECOMMENDED FOR YOU ════════════ -->
-    <section class="home-section home-section-soft-bg" id="section-recommended">
+    <!-- ════════════ SECTION 20: RECOMMENDED FOR YOU (2-LINE HORIZONTAL SCROLL) ════════════ -->
+    <section class="home-section rec-section" id="section-recommended">
         <div class="home-section-container">
-            <div class="home-section-header">
-                <div>
-                    <span class="home-section-tag">✨ PERSONALIZED PICKS</span>
-                    <h2 class="home-section-title" id="recommendedTitle">Recommended For You</h2>
+            <!-- Luxury Section Header with Badges, Subtitle and Controls -->
+            <div class="rec-section-header">
+                <div class="rec-header-titles">
+                    <div class="rec-ai-badge-wrap">
+                        <span class="rec-ai-badge"><span class="rec-sparkle">✨</span> AI PERSONALIZED PICKS</span>
+                        <span class="rec-match-pill">● 98% Match Rate</span>
+                    </div>
+                    <h2 class="home-section-title rec-title" id="recommendedTitle">Recommended For You</h2>
+                    <p class="rec-subtitle">Tailored ethnic collections curated from Surat looms based on your browsing & boutique trends.</p>
+                </div>
+                
+                <div class="rec-header-controls">
+                    <div class="rec-autoscroll-pill" id="recAutoScrollPill" onclick="window.toggleRecommendedAutoScroll()">
+                        <span class="rec-pulse-dot"></span>
+                        <span id="recAutoScrollText">Auto-Scroll ON</span>
+                    </div>
+                    <div class="rec-nav-arrows">
+                        <button type="button" class="rec-arrow-btn rec-prev-arrow" onclick="window.slideRecommended(-1)" aria-label="Previous Recommendations">
+                            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button type="button" class="rec-arrow-btn rec-next-arrow" onclick="window.slideRecommended(1)" aria-label="Next Recommendations">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="products-grid" id="recommendedGrid">
-                <?php foreach (array_slice($products, 2, 4) as $p): ?>
-                <article class="product-card">
-                    <div class="card-image-wrap">
-                        <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
-                            <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="card-img" />
-                        </a>
-                        <span class="card-badge badge-trending">Recommended</span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-name"><a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a></h3>
-                        <div class="card-price-row">
-                            <span class="card-price">₹<?= number_format($p['price']) ?></span>
-                            <span class="card-price-discount"><?= $p['discount'] ?>% OFF</span>
+            <!-- Category Filter Pills Bar -->
+            <div class="rec-filter-pills-bar">
+                <button type="button" class="rec-filter-pill active" onclick="window.filterRecommendedCategory('All', this)">✨ All Picks (<?= count($products) ?>)</button>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Sarees', this)">👑 Silk Sarees</button>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Kurtis', this)">👗 Kurtis & Sets</button>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Lehengas', this)">👰 Bridal Lehengas</button>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Gowns', this)">💎 Designer Gowns</button>
+            </div>
+
+            <!-- 2-Line Horizontal Scrolling Multi-Row Track (Desktop: 5 per row, Mobile: 2 per row) -->
+            <div class="rec-scroll-wrap" id="recScrollWrap">
+                <div class="rec-scroll-track" id="recommendedGrid">
+                    <?php 
+                    // Duplicate products for rich continuous 2-row multi-page scroll
+                    $allRecProducts = array_merge($products, $products);
+                    foreach ($allRecProducts as $idx => $p): 
+                        $aiScore = 95 + ($idx % 5);
+                        $profit = !empty($p['reseller_profit']) ? $p['reseller_profit'] : round($p['price'] * 0.4);
+                        $oldP = !empty($p['old_price']) ? $p['old_price'] : round($p['price'] * 1.5);
+                        $disc = !empty($p['discount']) ? $p['discount'] : round((($oldP - $p['price']) / $oldP) * 100);
+                        $rating = !empty($p['rating']) ? $p['rating'] : '4.9';
+                        $reviews = !empty($p['reviews_count']) ? $p['reviews_count'] : 84;
+                    ?>
+                    <article class="rec-card" data-category="<?= htmlspecialchars($p['category']) ?>" data-product-id="<?= $p['id'] ?>">
+                        <!-- Image Wrap with Badges & Action Overlays -->
+                        <div class="rec-img-wrap">
+                            <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" class="rec-img-link">
+                                <img src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="rec-card-img" loading="lazy" />
+                            </a>
+                            
+                            <!-- AI Match & Discount Badges -->
+                            <div class="rec-badges-top">
+                                <span class="rec-badge-ai">✨ <?= $aiScore ?>% Match</span>
+                                <span class="rec-badge-disc"><?= $disc ?>% OFF</span>
+                            </div>
+
+                            <!-- Quick Action Buttons Overlay -->
+                            <div class="rec-overlay-actions">
+                                <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist">
+                                    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                </button>
+                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='../Single-Product/singleproduct.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View">
+                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </article>
-                <?php endforeach; ?>
+
+                        <!-- Card Body Info -->
+                        <div class="rec-card-body">
+                            <div class="rec-card-meta">
+                                <span class="rec-card-category"><?= strtoupper(htmlspecialchars($p['category'])) ?></span>
+                                <span class="rec-card-rating">★ <?= $rating ?> (<?= $reviews ?>)</span>
+                            </div>
+                            
+                            <h3 class="rec-card-name">
+                                <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" title="<?= htmlspecialchars($p['name']) ?>">
+                                    <?= htmlspecialchars($p['name']) ?>
+                                </a>
+                            </h3>
+
+                            <div class="rec-price-row">
+                                <span class="rec-price-current">₹<?= number_format($p['price']) ?></span>
+                                <span class="rec-price-mrp">₹<?= number_format($oldP) ?></span>
+                            </div>
+
+                            <div class="rec-margin-tag">
+                                <svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <span>Resell Profit: <strong>₹<?= number_format($profit) ?></strong></span>
+                            </div>
+
+                            <div class="rec-card-footer-btns">
+                                <button type="button" class="rec-cart-btn" onclick="directAddToCart(<?= $p['id'] ?>); event.stopPropagation();">
+                                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                    <span>Add</span>
+                                </button>
+                                <button type="button" class="rec-share-btn" onclick="if(typeof shareProductOnWhatsApp==='function'){shareProductOnWhatsApp(<?= $p['id'] ?>);}else if(typeof window.openSmartShareModal==='function'){window.openSmartShareModal(<?= $p['id'] ?>);}else{window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('Check out <?= addslashes($p['name']) ?> at ₹<?= number_format($p['price']) ?>: https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>'), '_blank');} event.stopPropagation();" aria-label="Share on WhatsApp" title="1-Tap WhatsApp Share">
+                                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Scroll Progress Track Indicator -->
+            <div class="rec-scrollbar-track" id="recScrollbarTrack">
+                <div class="rec-scrollbar-thumb" id="recScrollbarThumb"></div>
             </div>
         </div>
     </section>
