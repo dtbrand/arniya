@@ -673,54 +673,14 @@
         <!-- Body -->
         <div class="ac-body">
 
-                <!-- Role Selection for Login Portal -->
-                <div class="ac-form-group" style="margin-bottom: 12px;">
-                    <label class="ac-label">Select Business Portal <span class="req">*</span></label>
-                    <div class="ac-role-pill-group" id="acLoginRoleGroup">
-                        <!-- Retailer -->
-                        <div class="ac-role-pill-btn selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
-                            <div class="ac-role-svg-icon">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" fill="#E3F2FD" stroke="#1976D2" stroke-width="2" stroke-linejoin="round"/>
-                                    <line x1="3" y1="6" x2="21" y2="6" stroke="#1976D2" stroke-width="2"/>
-                                    <path d="M16 10a4 4 0 0 1-8 0" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <span>Retailer (Shop)</span>
-                        </div>
-
-                        <!-- Reseller -->
-                        <div class="ac-role-pill-btn" data-role="Reseller" onclick="window.selectModalRole('Reseller')">
-                            <div class="ac-role-svg-icon">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="7" width="20" height="14" rx="2" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2"/>
-                                    <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#2E7D32" stroke-width="2"/>
-                                    <line x1="12" y1="12" x2="12" y2="15" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
-                                    <line x1="2" y1="12" x2="22" y2="12" stroke="#2E7D32" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                </svg>
-                            </div>
-                            <span>Reseller (Home)</span>
-                        </div>
-
-                        <!-- Wholesaler -->
-                        <div class="ac-role-pill-btn" data-role="Wholesaler" onclick="window.selectModalRole('Wholesaler')">
-                            <div class="ac-role-svg-icon">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" fill="#FFF3E0" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
-                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" stroke="#E65100" stroke-width="2"/>
-                                    <line x1="12" y1="22.08" x2="12" y2="12" stroke="#E65100" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span>Wholesaler</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- ════════ PANE 1: LOGIN (AUTHENTIC CLEAN B2B SIGN IN) ════════ -->
+            <div class="ac-pane active" id="acPaneLogin">
 
                 <div class="ac-form-group">
                     <label class="ac-label" for="acLoginEmail">WhatsApp Number or Email <span class="req">*</span></label>
                     <div class="ac-input-wrap">
                         <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        <input type="text" id="acLoginEmail" class="ac-input has-icon" placeholder="e.g. 9876543210 or radhika@example.com" autocomplete="username" required>
+                        <input type="text" id="acLoginEmail" class="ac-input has-icon" placeholder="Enter your WhatsApp number or email" autocomplete="username" required>
                     </div>
                 </div>
 
@@ -741,28 +701,10 @@
 
                 <button type="button" class="ac-btn-primary" onclick="window.handleAccountLogin()">
                     <svg style="width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-                    <span>Sign In & Open Dashboard</span>
+                    <span>Sign In to Account</span>
                 </button>
 
-                <!-- 1-Tap Quick Demo Logins for Instant Testing -->
-                <div style="margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--ac-gold-border, rgba(138,104,31,0.3));">
-                    <div style="font-size: 0.70rem; font-weight: 800; color: var(--ac-gold-primary); text-transform: uppercase; letter-spacing: 0.08em; text-align: center; margin-bottom: 8px;">
-                        ⚡ 1-Tap Quick Demo Access
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
-                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Retailer')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #1976D2; background: #F0F7FF; color: #1565C0; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
-                            🏪 Retailer
-                        </button>
-                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Reseller')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #2E7D32; background: #F1F8F1; color: #1B5E20; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
-                            💼 Reseller
-                        </button>
-                        <button type="button" class="ac-demo-btn" onclick="window.quickDemoLogin('Wholesaler')" style="padding: 7px 4px; font-size: 0.72rem; font-weight: 800; border: 1.5px solid #E65100; background: #FFF8E1; color: #BF360C; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
-                            🏭 Wholesale
-                        </button>
-                    </div>
-                </div>
-
-                <div style="text-align:center; font-size:0.80rem; margin-top:10px; color:var(--ac-mid-text); font-weight:600;">
+                <div style="text-align:center; font-size:0.80rem; margin-top:14px; color:var(--ac-mid-text); font-weight:600;">
                     Don't have an account? <button type="button" class="ac-btn-link" onclick="window.switchAccountTab('register')">Register Now →</button>
                 </div>
             </div>
@@ -822,7 +764,7 @@
                     <!-- City -->
                     <div class="ac-form-group">
                         <label class="ac-label" for="acRegCity">City <span class="req">*</span></label>
-                        <input type="text" id="acRegCity" class="ac-input" placeholder="e.g. Surat" required value="Surat">
+                        <input type="text" id="acRegCity" class="ac-input" placeholder="e.g. Surat, Mumbai, Delhi" required>
                     </div>
 
                     <!-- State Dropdown -->
