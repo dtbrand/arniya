@@ -1,6 +1,6 @@
 /**
  * products.css — DT Brand's Products Module Master Stylesheet
- * Luxury Gold Theme + Precision Ergonomics for High-Density Desktop
+ * Luxury Gold Theme + Balanced Responsive Layout (No Overflow / No Oversized Cards)
  */
 
 /* ── 1. MODULE HEADER & ACTION BAR ── */
@@ -42,11 +42,8 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 6px;
+    flex-wrap: wrap;
     margin-bottom: 14px;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
 }
 
 .dt-prod-pill {
@@ -64,7 +61,6 @@
     white-space: nowrap;
     transition: all 0.18s ease;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-    flex-shrink: 0;
 }
 
 .dt-prod-pill:hover {
@@ -95,23 +91,27 @@
     color: #FFFFFF;
 }
 
-/* ── 3. 9 SUMMARY METRIC CARDS (UNIFORM PROPORTIONS — NO OVERSIZED CARDS) ── */
+/* ── 3. 9 SUMMARY METRIC CARDS (BALANCED RESPONSIVE GRID — ZERO HORIZONTAL OVERFLOW) ── */
 .dt-summary-grid {
     display: grid;
-    grid-template-columns: repeat(9, minmax(105px, 1fr));
-    gap: 8px;
-    margin-bottom: 14px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (min-width: 1680px) {
+    .dt-summary-grid {
+        grid-template-columns: repeat(9, minmax(0, 1fr));
+    }
 }
 
 .dt-summary-card {
     background: #FFFFFF;
     border: 1.2px solid var(--adm-border-soft, #E5E1D7);
-    border-radius: 8px;
-    padding: 8px 10px;
+    border-radius: 10px;
+    padding: 10px 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -119,15 +119,14 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    min-height: 80px;
-    min-width: 105px;
+    min-height: 84px;
     box-sizing: border-box;
 }
 
 .dt-summary-card:hover {
     border-color: var(--adm-gold, #8A681F);
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(138, 104, 31, 0.12);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.12);
 }
 
 .dt-summary-card.active {
@@ -141,7 +140,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 3px;
+    width: 3.5px;
     height: 100%;
     background: transparent;
     transition: background 0.2s ease;
@@ -156,13 +155,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .dt-kpi-icon-box {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -179,10 +178,10 @@
 .dt-kpi-icon-box.slate { background: #F1F5F9; color: #475569; border: 1px solid rgba(148, 163, 184, 0.3); }
 
 .dt-sum-trend {
-    font-size: 0.58rem;
+    font-size: 0.62rem;
     font-weight: 700;
-    padding: 1px 3px;
-    border-radius: 3px;
+    padding: 1px 4px;
+    border-radius: 4px;
     white-space: nowrap;
 }
 
@@ -191,15 +190,15 @@
 
 .dt-sum-val {
     font-family: var(--adm-font-serif, 'Cinzel', serif);
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--adm-text-main, #181512);
     line-height: 1.1;
-    margin: 1px 0;
+    margin: 2px 0;
 }
 
 .dt-sum-lbl {
-    font-size: 0.65rem;
+    font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -355,12 +354,14 @@
     background: #FFFFFF;
 }
 
-/* ── 7. DATA TABLE ERGONOMICS ── */
+/* ── 7. DATA TABLE ERGONOMICS (STICKY ACTIONS COLUMN) ── */
 .dt-table-wrap {
     overflow-x: auto;
     margin-bottom: 12px;
     scrollbar-width: thin;
     max-width: 100%;
+    border: 1px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: 8px;
 }
 
 .dt-data-table {
@@ -420,6 +421,24 @@
     color: var(--adm-text-muted, #7A7266);
     display: block;
     margin-top: 1px;
+}
+
+/* Sticky Actions Column */
+.dt-data-table th:last-child,
+.dt-data-table td:last-child {
+    position: sticky;
+    right: 0;
+    background: #FFFFFF;
+    box-shadow: -3px 0 6px rgba(0,0,0,0.03);
+    z-index: 10;
+}
+
+.dt-data-table th:last-child {
+    background: var(--adm-bg-canvas, #FAF8F4);
+}
+
+.dt-data-table tr:hover td:last-child {
+    background: #FAF8F4;
 }
 
 /* ── 8. BULK ACTIONS STRIP ── */
