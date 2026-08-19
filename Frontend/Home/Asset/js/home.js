@@ -849,8 +849,22 @@
     startDealCountdown();
 
     /* 5. Recently Viewed Tracking System */
+    var DEFAULT_RECENT_PRODUCTS = [
+        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product1.png', category: 'PAITHANI SAREE' },
+        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/Frontend/Shop/Asset/images/product2.png', category: 'BANARASI SILK' },
+        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product3.png', category: 'KURTIS & SUITS' },
+        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product4.png', category: 'BRIDAL LEHENGA' },
+        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product5.png', category: 'KANJEEVARAM' },
+        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product6.png', category: 'CHANDERI SILK' },
+        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product7.png', category: 'ORGANZA SILK' },
+        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product8.png', category: 'GEORGETTE' }
+    ];
+
     window.trackRecentlyViewed = function(productId) {
         var p = (window.allProducts || []).find(function(x) { return Number(x.id) === Number(productId); });
+        if (!p) {
+            p = DEFAULT_RECENT_PRODUCTS.find(function(x) { return Number(x.id) === Number(productId); });
+        }
         if (!p) return;
 
         try {
@@ -860,12 +874,12 @@
                 id: p.id,
                 name: p.name,
                 price: p.price,
-                old_price: p.old_price,
-                discount: p.discount,
+                old_price: p.old_price || Math.round(Number(p.price) * 1.5),
+                discount: p.discount || '40% OFF',
                 image: p.image,
-                category: p.category
+                category: (p.category || 'ETHNIC WEAR').toUpperCase()
             });
-            if (stored.length > 8) stored = stored.slice(0, 8);
+            if (stored.length > 12) stored = stored.slice(0, 12);
             localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
             renderRecentlyViewed();
         } catch (e) {}
@@ -877,27 +891,78 @@
         if (!sec || !track) return;
 
         try {
-            var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
+            var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || 'null');
+            // If empty, seed with curated 6 default trending products for immediate rich view
             if (!items || items.length === 0) {
-                sec.style.display = 'none';
-                return;
+                items = DEFAULT_RECENT_PRODUCTS.slice(0, 6);
+                localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(items));
             }
 
             sec.style.display = 'block';
             track.innerHTML = items.map(function(item) {
-                return '<div class="home-deal-card" style="min-width:180px;">' +
-                    '<a href="../Single-Product/singleproduct.php?id=' + item.id + '">' +
-                    '<img src="' + item.image + '" alt="' + item.name + '" class="deal-card-img" />' +
-                    '</a>' +
-                    '<div class="deal-card-body">' +
-                    '<h4 class="deal-card-title">' + item.name + '</h4>' +
-                    '<div class="deal-card-prices">' +
-                    '<span class="deal-sale-price">₹' + (Number(item.price)).toLocaleString('en-IN') + '</span>' +
+                var disc = item.discount || '40% OFF';
+                var oldP = item.old_price ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
+                return '<div class="recently-viewed-card" data-product-id="' + item.id + '">' +
+                    '<div class="rv-img-box">' +
+                        '<a href="../Single-Product/singleproduct.php?id=' + item.id + '" class="rv-img-link">' +
+                            '<img src="' + item.image + '" alt="' + item.name + '" class="rv-card-img" loading="lazy" />' +
+                        '</a>' +
+                        '<span class="rv-discount-badge">' + disc + '</span>' +
+                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + item.id + ');}else{window.location.href=\'../Single-Product/singleproduct.php?id=' + item.id + '\';}" aria-label="Quick View">' +
+                            '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+                        '</button>' +
                     '</div>' +
+                    '<div class="rv-card-body">' +
+                        '<span class="rv-card-cat">' + (item.category || 'SAREES') + '</span>' +
+                        '<h4 class="rv-card-title">' +
+                            '<a href="../Single-Product/singleproduct.php?id=' + item.id + '">' + item.name + '</a>' +
+                        '</h4>' +
+                        '<div class="rv-price-wrap">' +
+                            '<span class="rv-price-curr">₹' + Number(item.price).toLocaleString('en-IN') + '</span>' +
+                            (oldP ? '<span class="rv-price-old">' + oldP + '</span>' : '') +
+                        '</div>' +
+                        '<button type="button" class="rv-add-btn" onclick="directAddToCart(' + item.id + '); event.stopPropagation();">' +
+                            '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
+                            '<span>Add</span>' +
+                        '</button>' +
                     '</div>' +
-                    '</div>';
+                '</div>';
             }).join('');
+
+            syncRvScrollbar();
         } catch (e) {}
+    }
+
+    window.slideRecentlyViewed = function(dir) {
+        var track = document.getElementById('recentlyViewedTrack');
+        if (!track) return;
+        var step = track.clientWidth * 0.75;
+        track.scrollBy({ left: dir * step, behavior: 'smooth' });
+    };
+
+    function syncRvScrollbar() {
+        var track = document.getElementById('recentlyViewedTrack');
+        var thumb = document.getElementById('rvScrollbarThumb');
+        var scrollbar = document.getElementById('rvScrollbarTrack');
+        if (!track || !thumb || !scrollbar) return;
+
+        var scrollWidth = track.scrollWidth - track.clientWidth;
+        if (scrollWidth <= 5) {
+            scrollbar.style.display = 'none';
+            return;
+        }
+        scrollbar.style.display = 'block';
+
+        var percent = track.scrollLeft / scrollWidth;
+        var thumbWidth = Math.max(24, (track.clientWidth / track.scrollWidth) * scrollbar.clientWidth);
+        var maxMove = scrollbar.clientWidth - thumbWidth;
+        thumb.style.width = thumbWidth + 'px';
+        thumb.style.transform = 'translateX(' + (percent * maxMove) + 'px)';
+    }
+
+    var rvTrackEl = document.getElementById('recentlyViewedTrack');
+    if (rvTrackEl) {
+        rvTrackEl.addEventListener('scroll', syncRvScrollbar, { passive: true });
     }
 
     window.clearRecentlyViewed = function() {
@@ -911,7 +976,7 @@
 
     /* Track clicks on product cards */
     document.addEventListener('click', function(e) {
-        var card = e.target.closest('.product-card, .home-reseller-card, .home-ws-card');
+        var card = e.target.closest('.product-card, .home-reseller-card, .home-ws-card, .recently-viewed-card');
         if (card && card.dataset.productId) {
             window.trackRecentlyViewed(card.dataset.productId);
         }

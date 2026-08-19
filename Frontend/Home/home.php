@@ -974,11 +974,26 @@ $total_products = count($products);
                     <span class="home-section-tag">🕒 BROWSING HISTORY</span>
                     <h2 class="home-section-title">Recently Viewed Products</h2>
                 </div>
-                <button type="button" class="home-section-sub-link" onclick="if(typeof window.clearRecentlyViewed==='function') window.clearRecentlyViewed();">Clear History</button>
+                <div class="home-section-actions" style="display:flex; align-items:center; gap:12px;">
+                    <button type="button" class="home-section-sub-link" onclick="if(typeof window.clearRecentlyViewed==='function') window.clearRecentlyViewed();" style="background:none; border:none; color:var(--dark-gold, #8A681F); font-size:0.80rem; font-weight:700; cursor:pointer; text-decoration:underline;">Clear History ✕</button>
+                    <div class="rv-scroll-nav-btns" style="display:flex; gap:6px;">
+                        <button type="button" class="rv-nav-btn rv-prev-btn" onclick="window.slideRecentlyViewed(-1)" aria-label="Previous Recently Viewed">
+                            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button type="button" class="rv-nav-btn rv-next-btn" onclick="window.slideRecentlyViewed(1)" aria-label="Next Recently Viewed">
+                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div class="recently-viewed-track" id="recentlyViewedTrack">
-                <!-- Dynamically populated from localStorage via JS -->
+            <div class="recently-viewed-rail-wrap">
+                <div class="recently-viewed-track" id="recentlyViewedTrack">
+                    <!-- Dynamically populated from localStorage via JS -->
+                </div>
+            </div>
+            <div class="rv-scrollbar-track" id="rvScrollbarTrack">
+                <div class="rv-scrollbar-thumb" id="rvScrollbarThumb"></div>
             </div>
         </div>
     </section>
