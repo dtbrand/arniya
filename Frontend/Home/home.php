@@ -875,22 +875,86 @@ $total_products = count($products);
     </section>
 
     <!-- ════════════ SECTION 18: WHOLESALE CTA BANNER ════════════ -->
-    <section class="home-banner-strip-section">
+    <section class="home-banner-strip-section" id="section-wholesale-banner">
         <div class="home-section-container">
             <div class="wholesale-promo-banner">
-                <div class="wpb-left">
-                    <span class="wpb-tag">🏭 DIRECT FACTORY CONTRACTS</span>
-                    <h2 class="wpb-title">Grow Your Retail Boutique With Surat Manufacturer Pricing</h2>
-                    <ul class="wpb-perks-list">
-                        <li>✓ 100% Factory Direct Rates — No Middlemen</li>
-                        <li>✓ Full GST Invoices & ITC Credit Supported</li>
-                        <li>✓ Doorstep Transport & Courier Delivery Across India</li>
-                        <li>✓ Dedicated B2B Relationship Manager</li>
-                    </ul>
-                </div>
-                <div class="wpb-right">
-                    <a href="/Frontend/Wholesale/wholesale.php" class="wpb-btn-primary">Explore Wholesale Catalog &rarr;</a>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20want%20wholesale%20catalog%20and%20rates" target="_blank" class="wpb-btn-secondary">💬 Chat With B2B Manager</a>
+                <!-- Luxury Ambient Gold Glow Elements -->
+                <div class="wpb-ambient-glow"></div>
+                <div class="wpb-ambient-mesh"></div>
+
+                <div class="wpb-main-layout">
+                    <!-- Left Content -->
+                    <div class="wpb-left">
+                        <div class="wpb-tag-row">
+                            <span class="wpb-tag">
+                                <span class="wpb-tag-pulse"></span>
+                                🏭 DIRECT FACTORY CONTRACTS • B2B SOURCING
+                            </span>
+                            <span class="wpb-tag-gold">SURAT LOOM DIRECT</span>
+                        </div>
+
+                        <h2 class="wpb-title">Grow Your Wholesale Business With Surat Manufacturer Pricing</h2>
+                        <p class="wpb-desc">Unlock direct Surat textile mill rates, premium zero-defect QC, and express door logistics designed for volume wholesalers, mega stockists, and enterprise retailers.</p>
+
+                        <!-- 4 High-Impact Luxury Value Pillars with Vector SVGs -->
+                        <div class="wpb-pillars-grid">
+                            <div class="wpb-pillar-card">
+                                <div class="wpb-pillar-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                </div>
+                                <div class="wpb-pillar-text">
+                                    <strong>100% Factory Direct Rates</strong>
+                                    <span>Zero Middlemen Margin Cut</span>
+                                </div>
+                            </div>
+
+                            <div class="wpb-pillar-card">
+                                <div class="wpb-pillar-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                </div>
+                                <div class="wpb-pillar-text">
+                                    <strong>Full GST Invoices</strong>
+                                    <span>100% Tax ITC Credit Eligible</span>
+                                </div>
+                            </div>
+
+                            <div class="wpb-pillar-card">
+                                <div class="wpb-pillar-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                                </div>
+                                <div class="wpb-pillar-text">
+                                    <strong>Doorstep Transport</strong>
+                                    <span>Safe Pan-India Express Delivery</span>
+                                </div>
+                            </div>
+
+                            <div class="wpb-pillar-card">
+                                <div class="wpb-pillar-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <div class="wpb-pillar-text">
+                                    <strong>Dedicated B2B Manager</strong>
+                                    <span>Instant WhatsApp Sourcing Desk</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right CTAs -->
+                    <div class="wpb-right">
+                        <div class="wpb-cta-badge">
+                            <span class="wpb-cta-badge-dot"></span>
+                            <span>Bulk Sourcing & Catalog Ready</span>
+                        </div>
+                        <a href="/Frontend/Wholesale/wholesale.php" class="wpb-btn-primary">
+                            <span>Explore Wholesale Catalog</span>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT%20Brand%27s%2C%20I%20want%20to%20source%20wholesale%20sarees%2C%20lehengas%20and%20kurtis%20at%20direct%20Surat%20manufacturer%20pricing." target="_blank" class="wpb-btn-secondary">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                            <span>Chat With B2B Manager</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
