@@ -37,7 +37,7 @@ $active_subnav = "categories";
     }
     .wp-cat-layout {
         display: grid;
-        grid-template-columns: 310px 1fr;
+        grid-template-columns: 320px 1fr;
         gap: 16px;
         align-items: start;
     }
@@ -75,7 +75,7 @@ $active_subnav = "categories";
     }
     .dt-form-group input, .dt-form-group select, .dt-form-group textarea {
         width: 100%;
-        height: 32px;
+        height: 34px;
         padding: 0 10px;
         font-size: 12px;
         color: #181512;
@@ -124,12 +124,14 @@ $active_subnav = "categories";
         <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
-            <!-- 1. Header Toolbar with Luxury Brand Gold Buttons -->
+            <!-- 1. Top Header Toolbar with Luxury Brand Gold Buttons -->
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Product Categories &amp; Taxonomies</h1>
-                    <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;">16 Categories</span>
-                    
+                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px;">16 Taxonomies</span>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <a href="/Frontend/Admin/products/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (1,240)</span>
@@ -142,19 +144,10 @@ $active_subnav = "categories";
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
                         <span>Attributes</span>
                     </a>
-                </div>
-
-                <!-- Mandatory Left-Aligned Search Icon with 1-Tap Clear Button -->
-                <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
-                    <div style="position:relative; display:inline-flex; align-items:center;">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:12px; pointer-events:none;">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories, HSN..." style="height:32px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
-                        <span id="catSearchClearBtn" onclick="clearCatSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
-                    </div>
-                    <button type="button" class="wp-button primary" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:32px; font-size:12px; font-weight:600; padding:0 12px;">Search Categories</button>
+                    <a href="/Frontend/Admin/products/add.php" class="wp-button primary" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35); text-decoration:none;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>+ Add Product</span>
+                    </a>
                 </div>
             </div>
 
@@ -257,7 +250,7 @@ $active_subnav = "categories";
                                 <label>Thumbnail</label>
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" id="catThumbPreview" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
-                                    <button type="button" class="wp-button" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:32px; font-size:11.5px; font-weight:600; flex:1; display:flex; align-items:center; justify-content:center; gap:5px;">
+                                    <button type="button" class="wp-button" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:34px; font-size:11.5px; font-weight:600; flex:1; display:flex; align-items:center; justify-content:center; gap:5px;">
                                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                         <span>Upload / Choose Image</span>
                                     </button>
@@ -265,7 +258,7 @@ $active_subnav = "categories";
                             </div>
 
                             <div style="margin-top:14px;">
-                                <button type="submit" class="wp-button primary" style="width:100%; height:34px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     <span>+ Add New Category</span>
                                 </button>
@@ -276,15 +269,37 @@ $active_subnav = "categories";
 
                 <!-- RIGHT: Categories Taxonomy Table Card -->
                 <div class="wp-table-card" style="background:#fff; border:1px solid #c3c4c7; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                    <div style="padding:10px 14px; background:#f6f7f7; border-bottom:1px solid #c3c4c7; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <select class="wp-select" id="catBulkActionSelect" style="height:30px; font-size:12px; min-width:120px;">
+                    
+                    <!-- Table Top Toolbar with Clean Search & Filter -->
+                    <div style="padding:10px 14px; background:#f6f7f7; border-bottom:1px solid #c3c4c7; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <select class="wp-select" id="catBulkActionSelect" style="height:32px; font-size:12px; min-width:130px;">
                                 <option value="">Bulk actions</option>
                                 <option value="delete">Delete Selected</option>
                             </select>
-                            <button type="button" class="wp-button" onclick="handleCatBulkAction()" style="height:30px; font-size:12px; font-weight:600; padding:0 10px;">Apply</button>
+                            <button type="button" class="wp-button" onclick="handleCatBulkAction()" style="height:32px; font-size:12px; font-weight:600; padding:0 10px;">Apply</button>
+
+                            <select class="wp-select" id="catParentFilter" onchange="filterCatByParent(this.value)" style="height:32px; font-size:12px; min-width:140px;">
+                                <option value="">All Categories</option>
+                                <option value="Silk Sarees">Silk Sarees</option>
+                                <option value="Banarasi Brocade">Banarasi Brocade</option>
+                                <option value="Bridal Lehengas">Bridal Lehengas</option>
+                                <option value="Designer Kurtis">Designer Kurtis</option>
+                            </select>
                         </div>
-                        <span style="font-size:12px; color:#646970; font-weight:600;">14 Categories Shown</span>
+
+                        <!-- Rule-Compliant Search Input with Left Icon & 1-Tap Clear -->
+                        <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
+                            <div style="position:relative; display:inline-flex; align-items:center;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:10px; pointer-events:none;">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories, HSN..." style="height:32px; padding-left:32px; padding-right:24px; width:180px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
+                                <span id="catSearchClearBtn" onclick="clearCatSearch()" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
+                            </div>
+                            <button type="button" class="wp-button primary" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:32px; font-size:12px; font-weight:700; padding:0 10px;">Search</button>
+                        </div>
                     </div>
 
                     <table class="wp-list-table" id="categoriesTable" style="width:100%; border-collapse:collapse;">
@@ -436,11 +451,23 @@ function toggleSelectAllCats(master) {
 }
 
 function searchWpCategories(q) {
-    const rows = document.querySelectorAll('#categoriesTableBody tr');
+    const rows = document.querySelectorAll('#categoriesTableBody tr:not(.inline-edit-row)');
     const term = (q || '').toLowerCase().trim();
     rows.forEach(r => {
         const txt = r.textContent.toLowerCase();
         r.style.display = txt.includes(term) ? '' : 'none';
+    });
+}
+
+function filterCatByParent(parent) {
+    const rows = document.querySelectorAll('#categoriesTableBody tr:not(.inline-edit-row)');
+    rows.forEach(r => {
+        if (!parent) {
+            r.style.display = '';
+        } else {
+            const txt = r.textContent.toLowerCase();
+            r.style.display = txt.includes(parent.toLowerCase()) ? '' : 'none';
+        }
     });
 }
 
@@ -494,19 +521,19 @@ function openQuickEditCat(id, name, slug, desc, hsn) {
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:10px; align-items:flex-end;">
                 <div>
                     <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Name</label>
-                    <input type="text" id="qe-name-${id}" value="${name}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <input type="text" id="qe-name-${id}" value="${name}" style="height:30px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
                 </div>
                 <div>
                     <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Slug</label>
-                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:30px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
                 </div>
                 <div>
                     <label style="font-size:11px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">HSN / GST</label>
-                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:28px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:30px; width:100%; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <button type="button" class="wp-button primary" onclick="saveQuickEditCat(${id})" style="height:28px; font-size:11px; font-weight:800; background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512;">Update</button>
-                    <button type="button" class="wp-button" onclick="this.closest('tr').remove()" style="height:28px; font-size:11px;">Cancel</button>
+                    <button type="button" class="wp-button primary" onclick="saveQuickEditCat(${id})" style="height:30px; font-size:11px; font-weight:800; background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512;">Update</button>
+                    <button type="button" class="wp-button" onclick="this.closest('tr').remove()" style="height:30px; font-size:11px;">Cancel</button>
                 </div>
             </div>
         </td>
