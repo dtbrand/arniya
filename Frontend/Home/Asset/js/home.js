@@ -983,14 +983,11 @@
     });
 
     /* ═════════════════════════════════════════════════════════════════════
-       SECTION 20: RECOMMENDED FOR YOU (2-LINE HORIZONTAL SCROLL & AUTO-TICKER)
+       SECTION 20: RECOMMENDED FOR YOU (2-LINE HORIZONTAL SCROLL)
     ═════════════════════════════════════════════════════════════════════ */
     var recTrack = document.getElementById('recommendedGrid');
     var recThumb = document.getElementById('recScrollbarThumb');
     var recScrollbar = document.getElementById('recScrollbarTrack');
-    var recAutoScrollEnabled = true;
-    var recAutoScrollPaused = false;
-    var recAutoScrollTimer = null;
 
     function syncRecScrollbar() {
         if (!recTrack || !recThumb || !recScrollbar) return;
@@ -1010,29 +1007,6 @@
 
     if (recTrack) {
         recTrack.addEventListener('scroll', syncRecScrollbar, { passive: true });
-        
-        // Pause auto-scroll on hover / touch
-        recTrack.addEventListener('mouseenter', function() { recAutoScrollPaused = true; });
-        recTrack.addEventListener('mouseleave', function() { recAutoScrollPaused = false; });
-        recTrack.addEventListener('touchstart', function() { recAutoScrollPaused = true; }, { passive: true });
-        recTrack.addEventListener('touchend', function() { 
-            setTimeout(function() { recAutoScrollPaused = false; }, 2000); 
-        }, { passive: true });
-
-        // Auto-Scroll Ticker Engine
-        function runRecommendedAutoScroll() {
-            if (recAutoScrollEnabled && !recAutoScrollPaused && recTrack) {
-                var maxScroll = recTrack.scrollWidth - recTrack.clientWidth;
-                if (maxScroll > 10) {
-                    if (recTrack.scrollLeft >= maxScroll - 2) {
-                        recTrack.scrollLeft = 0;
-                    } else {
-                        recTrack.scrollLeft += 1;
-                    }
-                }
-            }
-        }
-        recAutoScrollTimer = setInterval(runRecommendedAutoScroll, 35);
         syncRecScrollbar();
     }
 
@@ -1040,18 +1014,6 @@
         if (!recTrack) return;
         var step = recTrack.clientWidth * 0.75;
         recTrack.scrollBy({ left: direction * step, behavior: 'smooth' });
-    };
-
-    window.toggleRecommendedAutoScroll = function() {
-        recAutoScrollEnabled = !recAutoScrollEnabled;
-        var pill = document.getElementById('recAutoScrollPill');
-        var text = document.getElementById('recAutoScrollText');
-        var dot = pill ? pill.querySelector('.rec-pulse-dot') : null;
-        if (text) text.textContent = recAutoScrollEnabled ? 'Auto-Scroll ON' : 'Auto-Scroll OFF';
-        if (dot) {
-            dot.style.background = recAutoScrollEnabled ? '#10B981' : '#EF4444';
-            dot.style.animation = recAutoScrollEnabled ? 'recPulse 1.6s infinite' : 'none';
-        }
     };
 
     window.filterRecommendedCategory = function(cat, btn) {

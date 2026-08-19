@@ -949,10 +949,6 @@ $total_products = count($products);
                 </div>
                 
                 <div class="rec-header-controls">
-                    <div class="rec-autoscroll-pill" id="recAutoScrollPill" onclick="window.toggleRecommendedAutoScroll()">
-                        <span class="rec-pulse-dot"></span>
-                        <span id="recAutoScrollText">Auto-Scroll ON</span>
-                    </div>
                     <div class="rec-nav-arrows">
                         <button type="button" class="rec-arrow-btn rec-prev-arrow" onclick="window.slideRecommended(-1)" aria-label="Previous Recommendations">
                             <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
