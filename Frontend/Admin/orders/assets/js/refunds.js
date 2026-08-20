@@ -11,27 +11,33 @@
             const drawer = document.getElementById('refundDrawer');
             if (!drawer) return;
 
-            document.getElementById('refundOrderIdText').textContent = orderId || 'DTB-001624';
-            document.getElementById('refundMaxAmountDisplay').textContent = '₹' + (maxAmount || '4,990');
-            document.getElementById('refundAmountInput').value = maxAmount || '4990';
+            const orderIdEl = document.getElementById('refundOrderIdText');
+            if (orderIdEl) orderIdEl.textContent = orderId || 'DTB-001624';
 
-            drawer.classList.add('open');
+            const maxDisplay = document.getElementById('refundMaxAmountDisplay');
+            if (maxDisplay) maxDisplay.textContent = '₹' + Number(maxAmount || 112250).toLocaleString('en-IN');
+
+            const amountInput = document.getElementById('refundAmountInput');
+            if (amountInput) amountInput.value = maxAmount || 112250;
+
+            drawer.style.display = 'flex';
         },
 
         closeRefundDrawer: function() {
             const drawer = document.getElementById('refundDrawer');
-            if (drawer) drawer.classList.remove('open');
+            if (drawer) drawer.style.display = 'none';
         },
 
         confirmRefund: function() {
-            const orderId = document.getElementById('refundOrderIdText').textContent;
-            const amount = document.getElementById('refundAmountInput').value;
-            const method = document.getElementById('refundMethodSelect')?.value || 'Original Payment Method';
+            const orderId = document.getElementById('refundOrderIdText')?.textContent || 'DTB-001624';
+            const amount = document.getElementById('refundAmountInput')?.value || '112250';
+            const method = document.getElementById('refundMethodSelect')?.value || 'Original Payment Gateway';
 
             this.closeRefundDrawer();
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`💸 Refund of ₹${amount} initiated via ${method} for ${orderId}`);
+                window.DT_ORDERS.showToast('Refund of ₹' + Number(amount).toLocaleString('en-IN') + ' authorized via ' + method + ' for ' + orderId);
             }
         }
     };
-})();
+})(window);
+

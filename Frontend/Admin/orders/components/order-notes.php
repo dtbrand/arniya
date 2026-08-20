@@ -19,17 +19,23 @@ $existing_notes = isset($order['notes']) ? [
             <?php foreach ($existing_notes as $n): ?>
             <div class="dt-note-item">
                 <div class="dt-note-header">
-                    <span>👤 <?php echo htmlspecialchars($n['author']); ?></span>
-                    <span><?php echo htmlspecialchars($n['time']); ?></span>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span style="font-weight:700; color:#181512;"><?php echo htmlspecialchars($n['author']); ?></span>
+                    </div>
+                    <span style="color:#64748B; font-size:10.5px;"><?php echo htmlspecialchars($n['time']); ?></span>
                 </div>
                 <div class="dt-note-text"><?php echo nl2br(htmlspecialchars($n['text'])); ?></div>
             </div>
             <?php endforeach; ?>
         </div>
 
-        <div style="display:flex; gap:6px;">
-            <input type="text" id="newAdminNoteInput" placeholder="Add confidential internal note..." class="dt-order-search-input" style="height:32px; font-size:11.5px;">
-            <button type="button" class="dt-btn dt-btn-gold" style="height:32px; padding:0 12px; font-size:11px;" onclick="window.DT_ORDER_VIEW.addNote()">Add Note</button>
+        <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="newAdminNoteInput" placeholder="Add confidential internal dispatch or warehouse note..." class="dt-order-search-input" style="height:32px; font-size:11.5px; flex:1; width:100%;">
+            <button type="button" class="dt-btn dt-btn-gold" style="height:32px; padding:0 14px; font-size:11px; white-space:nowrap;" onclick="window.DT_ORDER_VIEW.addNote()">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add Note</span>
+            </button>
         </div>
     </div>
 </div>
