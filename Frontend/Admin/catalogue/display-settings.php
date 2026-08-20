@@ -18,6 +18,7 @@ $active_subnav = "display-settings";
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Shop/Asset/css/shop.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
 </head>
