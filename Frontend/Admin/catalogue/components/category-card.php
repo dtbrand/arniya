@@ -52,4 +52,20 @@
             </div>
         </div>
     </div>
+
+    <!-- Card 4 -->
+    <div class="dt-coll-card">
+        <img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" class="dt-coll-banner" alt="Banarasi Brocades">
+        <div class="dt-coll-body">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <h4 style="margin:0 0 4px 0; font-size:13.5px; font-weight:800; color:#181512;">Banarasi Brocades</h4>
+                <span class="dt-badge gold">Featured</span>
+            </div>
+            <p style="font-size:11px; color:#64748b; margin:0 0 10px 0;">185 Active SKUs • 3 Subcategories</p>
+            <div style="margin-top:auto; display:flex; gap:6px;">
+                <a href="/Frontend/Admin/catalogue/categories/view.php?id=5" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
+                <a href="/Frontend/Admin/catalogue/categories/edit.php?id=5" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
+            </div>
+        </div>
+    </div>
 </div>
