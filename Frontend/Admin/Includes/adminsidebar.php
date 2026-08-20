@@ -4,9 +4,60 @@
  * DT Brand's & Jai Hanuman Tex
  */
 $req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-$current_nav = isset($active_nav) ? $active_nav : (strpos($req_uri, '/catalogue/') !== false ? 'catalogue' : (strpos($req_uri, '/products/') !== false ? 'products' : (strpos($req_uri, '/whatsapp/') !== false ? 'whatsapp' : (strpos($req_uri, '/orders/') !== false ? 'orders' : (strpos($req_uri, '/pricing/') !== false ? 'pricing' : 'dashboard')))));
 
-$current_subnav = isset($active_subnav) ? $active_subnav : (strpos($req_uri, '/seo/') !== false ? 'seo' : (strpos($req_uri, '/collections/') !== false || strpos($req_uri, 'collections.php') !== false ? 'collections' : (strpos($req_uri, '/categories/') !== false || strpos($req_uri, 'categories.php') !== false ? 'categories' : (strpos($req_uri, '/subcategories/') !== false || strpos($req_uri, 'subcategories.php') !== false ? 'subcategories' : (strpos($req_uri, '/banners/') !== false ? 'banners' : (strpos($req_uri, '/navigation.php') !== false ? 'navigation' : (strpos($req_uri, '/merchandising.php') !== false ? 'merchandising' : (strpos($req_uri, '/hierarchy.php') !== false ? 'hierarchy' : 'overview'))))))));
+if (isset($active_nav) && !empty($active_nav)) {
+    $current_nav = $active_nav;
+} elseif (strpos($req_uri, '/catalogue/') !== false) {
+    $current_nav = 'catalogue';
+} elseif (strpos($req_uri, '/products/') !== false) {
+    $current_nav = 'products';
+} elseif (strpos($req_uri, '/orders/') !== false) {
+    $current_nav = 'orders';
+} elseif (strpos($req_uri, '/pricing/') !== false) {
+    $current_nav = 'pricing';
+} elseif (strpos($req_uri, '/reviews/') !== false) {
+    $current_nav = 'reviews';
+} elseif (strpos($req_uri, '/wholesalers/') !== false) {
+    $current_nav = 'wholesalers';
+} elseif (strpos($req_uri, '/resellers/') !== false) {
+    $current_nav = 'resellers';
+} elseif (strpos($req_uri, '/retailers/') !== false) {
+    $current_nav = 'retailers';
+} elseif (strpos($req_uri, '/customers/') !== false) {
+    $current_nav = 'customers';
+} elseif (strpos($req_uri, '/inventory/') !== false) {
+    $current_nav = 'inventory';
+} elseif (strpos($req_uri, '/shipping/') !== false) {
+    $current_nav = 'shipping';
+} elseif (strpos($req_uri, '/payments/') !== false) {
+    $current_nav = 'payments';
+} elseif (strpos($req_uri, '/marketing/') !== false) {
+    $current_nav = 'marketing';
+} elseif (strpos($req_uri, '/cms/') !== false) {
+    $current_nav = 'cms';
+} elseif (strpos($req_uri, '/media/') !== false) {
+    $current_nav = 'media';
+} elseif (strpos($req_uri, '/notifications/') !== false) {
+    $current_nav = 'notifications';
+} elseif (strpos($req_uri, '/reports/') !== false) {
+    $current_nav = 'reports';
+} elseif (strpos($req_uri, '/users/') !== false) {
+    $current_nav = 'users';
+} elseif (strpos($req_uri, '/settings/') !== false) {
+    $current_nav = 'settings';
+} elseif (strpos($req_uri, '/system/') !== false) {
+    $current_nav = 'system';
+} elseif (strpos($req_uri, '/whatsapp/') !== false) {
+    $current_nav = 'whatsapp';
+} else {
+    $current_nav = 'dashboard';
+}
+
+if (isset($active_subnav) && !empty($active_subnav)) {
+    $current_subnav = $active_subnav;
+} else {
+    $current_subnav = '';
+}
 ?>
 <!-- ══ Mobile Sidebar Backdrop ══ -->
 <div class="adm-sidebar-backdrop" id="admSidebarBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:99998; backdrop-filter:blur(3px);"></div>
