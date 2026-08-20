@@ -265,30 +265,53 @@
 
 /* ════ PRINT STYLES FOR FINANCIAL LEDGER ════ */
 @media print {
-    .dt-printing-ledger {
-        display: block !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: auto !important;
+    body.is-printing-ledger .adm-layout > *:not(.adm-main),
+    body.is-printing-ledger .adm-sidebar,
+    body.is-printing-ledger .adm-header,
+    body.is-printing-ledger .adm-footer,
+    body.is-printing-ledger .dt-order-header,
+    body.is-printing-ledger .dt-stepper-wrap,
+    body.is-printing-ledger .dt-view-grid,
+    body.is-printing-ledger .dt-doc-actions-bar,
+    body.is-printing-ledger #orderActionsDrawer,
+    body.is-printing-ledger #refundDrawer,
+    body.is-printing-ledger .dt-ledger-modal-footer,
+    body.is-printing-ledger button {
+        display: none !important;
+    }
+
+    body.is-printing-ledger {
         background: #FFFFFF !important;
         padding: 0 !important;
-        z-index: 9999999 !important;
+        margin: 0 !important;
     }
-    .dt-printing-ledger > div {
-        max-width: 100% !important;
-        max-height: none !important;
+
+    body.is-printing-ledger #customerLedgerModal {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        z-index: 99999999 !important;
         box-shadow: none !important;
-        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
     }
-    .dt-printing-ledger .dt-ledger-table-scroll {
+
+    body.is-printing-ledger #customerLedgerModal > div {
+        border: 1.5px solid #8A681F !important;
+        border-radius: 6px !important;
+        box-shadow: none !important;
+        max-width: 100% !important;
+        width: 100% !important;
         max-height: none !important;
         overflow: visible !important;
     }
-    .dt-printing-ledger .dt-ledger-modal-footer,
-    .dt-printing-ledger button {
-        display: none !important;
+
+    body.is-printing-ledger .dt-ledger-table-scroll {
+        max-height: none !important;
+        overflow: visible !important;
     }
 }
 </style>

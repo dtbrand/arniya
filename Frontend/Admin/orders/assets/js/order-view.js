@@ -279,11 +279,11 @@
                 window.print();
                 return;
             }
-            modal.classList.add('dt-printing-ledger');
+            document.body.classList.add('is-printing-ledger');
             window.print();
             setTimeout(() => {
-                modal.classList.remove('dt-printing-ledger');
-            }, 1000);
+                document.body.classList.remove('is-printing-ledger');
+            }, 2000);
         },
 
         exportLedgerCSV: function() {
