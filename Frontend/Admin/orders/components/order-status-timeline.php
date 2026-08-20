@@ -25,9 +25,9 @@ $current_rank = isset($order_status_order[$current_order_status]) ? $order_statu
             <span>Live Order Fulfillment Lifecycle</span>
         </h3>
         <div style="display:flex; align-items:center; gap:6px;">
-            <button type="button" class="dt-btn dt-btn-gold" style="height:28px; padding:0 10px; font-size:11px;" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>', '<?php echo htmlspecialchars($current_order_status); ?>')">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                <span>Update Status</span>
+            <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 10px; font-size:10.5px;" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>', '<?php echo htmlspecialchars($current_order_status); ?>')">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span>Change Stage</span>
             </button>
         </div>
     </div>
@@ -40,10 +40,10 @@ $current_rank = isset($order_status_order[$current_order_status]) ? $order_statu
                 $is_current = $current_rank === $step_rank;
                 $cls = $is_completed ? 'completed' : ($is_current ? 'current' : '');
             ?>
-            <div class="dt-step-node <?php echo $cls; ?>">
+            <div class="dt-step-node <?php echo $cls; ?>" style="cursor:pointer;" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>', '<?php echo $s['key']; ?>')" title="Click to transition to <?php echo $s['label']; ?>">
                 <div class="dt-step-icon">
                     <?php if ($is_completed): ?>
-                    ✓
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#FFFFFF" stroke-width="3" style="margin:auto;"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <?php else: ?>
                     <?php echo ($idx + 1); ?>
                     <?php endif; ?>
