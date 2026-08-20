@@ -271,6 +271,76 @@
         closeLedgerModal: function() {
             const modal = document.getElementById('customerLedgerModal');
             if (modal) modal.style.display = 'none';
+        },
+
+        printLedger: function() {
+            const modal = document.getElementById('customerLedgerModal');
+            if (!modal) {
+                window.print();
+                return;
+            }
+            modal.classList.add('dt-printing-ledger');
+            window.print();
+            setTimeout(() => {
+                modal.classList.remove('dt-printing-ledger');
+            }, 1000);
+        },
+
+        exportLedgerCSV: function() {
+            const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Customer');
+            const safeName = name.replace(/[^a-zA-Z0-9]/g, '_');
+            
+            const csvRows = [
+                ['DT BRAND\'S & JAI HANUMAN TEX — B2B FINANCIAL LEDGER STATEMENT'],
+                ['Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002'],
+                ['GSTIN: 24AAECJ1928K1Z5 | Phone: +91 98251 00000'],
+                [''],
+                ['CUSTOMER INFORMATION'],
+                ['Customer Name', name],
+                ['GSTIN', '24AAECJ1928K1Z5'],
+                ['Contact Phone', document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : ''],
+                ['Email', document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : ''],
+                ['Account Tier', 'Verified B2B Reseller (Gold Wholesale)'],
+                ['Credit Limit', 'Rs. 15,00,000 (Net 15 Days)'],
+                [''],
+                ['FINANCIAL SUMMARY'],
+                ['Lifetime Gross Valuation', 'Rs. 8,42,500'],
+                ['Total Settled Payments', 'Rs. 8,42,500'],
+                ['Outstanding Balance Due', 'Rs. 0.00 (All Invoices Settled)'],
+                [''],
+                ['TRANSACTION STATEMENT LOG'],
+                ['Date', 'Reference / Order ID', 'Transaction Type', 'Debit (INR)', 'Credit (INR)', 'Balance (INR)', 'Status'],
+                ['21 Aug 2026', 'DTB-001624', 'Consignment Invoice (Kanjivaram Silk 25pcs)', '112250', '', '112250', 'Billed'],
+                ['21 Aug 2026', 'UTR-9821039812', 'Bank Wire / RTGS Full Settlement', '', '112250', '0.00', 'PAID'],
+                ['10 Aug 2026', 'DTB-001605', 'Banarasi Silk Lot Consignment (40pcs)', '245000', '', '245000', 'Delivered'],
+                ['11 Aug 2026', 'UTR-882910398', 'RTGS ICICI Bank Full Settlement', '', '245000', '0.00', 'PAID'],
+                ['25 Jul 2026', 'DTB-001582', 'Chanderi & Tussar Festive Catalog (35pcs)', '185250', '', '185250', 'Delivered'],
+                ['26 Jul 2026', 'UTR-771829301', 'HDFC NetBanking Direct Settlement', '', '185250', '0.00', 'PAID'],
+                ['08 Jul 2026', 'DTB-001550', 'Paithani Heritage Zari Collection (20pcs)', '142000', '', '142000', 'Delivered'],
+                ['09 Jul 2026', 'UTR-662918274', 'SBI Corporate Direct Wire Transfer', '', '142000', '0.00', 'PAID'],
+                [''],
+                ['Total Debits', '', '', 'Rs. 6,84,500', '', '', ''],
+                ['Total Credits', '', '', '', 'Rs. 6,84,500', '', ''],
+                ['Net Balance Due', '', '', '', '', 'Rs. 0.00', 'All Clear'],
+                [''],
+                ['Generated On', new Date().toLocaleString()],
+                ['Authorized Signatory', 'DT Brand\'s Central Accounting Dept (Surat)']
+            ];
+
+            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + 
+                csvRows.map(row => row.map(cell => '"' + (cell || '').toString().replace(/"/g, '""') + '"').join(',')).join('\n');
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', `DT_Brands_Ledger_${safeName}_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            if (window.DT_ORDERS) {
+                window.DT_ORDERS.showToast('📥 Customer ledger exported successfully as Excel/CSV statement');
+            }
         }
     };
 })(window);

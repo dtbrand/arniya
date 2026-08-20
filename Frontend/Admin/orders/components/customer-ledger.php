@@ -217,15 +217,15 @@
         </div>
 
         <!-- Modal Footer -->
-        <div style="padding:12px 20px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+        <div class="dt-ledger-modal-footer" style="padding:12px 20px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
             <div style="display:flex; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.print()" style="height:32px; font-size:11px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.printLedger()" style="height:32px; font-size:11px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     <span>Print Ledger Statement</span>
                 </button>
-                <button type="button" class="dt-btn dt-btn-pale" onclick="if(window.DT_ORDERS)window.DT_ORDERS.showToast('📥 Customer ledger downloaded as CSV statement');" style="height:32px; font-size:11px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.exportLedgerCSV()" style="height:32px; font-size:11px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span>Export CSV</span>
+                    <span>Export CSV / Excel</span>
                 </button>
             </div>
             <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.closeLedgerModal()" style="height:32px; font-size:11px; padding:0 20px;">
@@ -261,5 +261,34 @@
 }
 .dt-ledger-table-scroll::-webkit-scrollbar-thumb:hover {
     background: #8A681F;
+}
+
+/* ════ PRINT STYLES FOR FINANCIAL LEDGER ════ */
+@media print {
+    .dt-printing-ledger {
+        display: block !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: auto !important;
+        background: #FFFFFF !important;
+        padding: 0 !important;
+        z-index: 9999999 !important;
+    }
+    .dt-printing-ledger > div {
+        max-width: 100% !important;
+        max-height: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .dt-printing-ledger .dt-ledger-table-scroll {
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    .dt-printing-ledger .dt-ledger-modal-footer,
+    .dt-printing-ledger button {
+        display: none !important;
+    }
 }
 </style>
