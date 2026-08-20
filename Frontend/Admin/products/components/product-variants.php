@@ -37,37 +37,26 @@
         <!-- 1. COLOR VARIATIONS SECTION -->
         <!-- ========================================== -->
         <div id="colorVariationsContainer" style="margin-bottom:20px;">
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:12px;">
+            <div style="background:#FAF8F2; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span style="font-size:12px; font-weight:700; color:#5A4210;">Available Colors:</span>
                         <div id="quickSwatchList" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                            <span class="adm-badge gold" id="chip-cvar-1" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
-                                <span style="width:10px; height:10px; border-radius:50%; background:#991b1b; display:inline-block; border:1px solid #fff;"></span>
-                                <span>Crimson Red</span>
-                            </span>
-                            <span class="adm-badge gold" id="chip-cvar-2" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
-                                <span style="width:10px; height:10px; border-radius:50%; background:#166534; display:inline-block; border:1px solid #fff;"></span>
-                                <span>Bottle Green</span>
-                            </span>
-                            <span class="adm-badge gold" id="chip-cvar-3" style="display:inline-flex; align-items:center; gap:5px; font-size:11px; padding:3px 8px;">
-                                <span style="width:10px; height:10px; border-radius:50%; background:#1e40af; display:inline-block; border:1px solid #fff;"></span>
-                                <span>Royal Blue</span>
-                            </span>
+                            <!-- Swatches populated dynamically -->
                         </div>
                     </div>
                     
-                    <button type="button" class="wp-button primary" onclick="toggleColorPickerDrawer()" style="height:30px; padding:0 12px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>+ Add Color</span>
+                    <button type="button" class="dt-btn-action-sm gold" onclick="toggleColorPickerDrawer()">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Add Color</span>
                     </button>
                 </div>
 
                 <!-- Smart Color Picker Dropdown Box with Auto Name Detection -->
                 <div id="colorPickerBox" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(212,175,55,0.5);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <div style="font-size:12px; font-weight:700; color:#1d2327;">Pick a Color &amp; Auto-Detect Original Name:</div>
-                        <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10px; padding:2px 6px;">⚡ Auto Name Detection Active</span>
+                        <div style="font-size:12px; font-weight:700; color:#181512;">Pick Color Swatch or Preset:</div>
+                        <span class="adm-badge" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-size:10px; padding:2px 6px;">⚡ Auto Name Detection Active</span>
                     </div>
                     <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
                         <!-- Color input -->
@@ -90,383 +79,164 @@
 
                         <!-- Auto-Saved / Detected Color Name Input -->
                         <div style="position:relative;">
-                            <input type="text" id="varColorName" value="Rani Pink" placeholder="Original Color Name" style="height:30px; font-size:12.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:190px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewColorVariation();}">
+                            <input type="text" id="varColorName" value="Rani Pink" placeholder="Color Name (e.g. Royal Blue)" style="height:30px; font-size:12px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:190px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewColorVariation();}">
                         </div>
 
                         <!-- Confirm Add Button -->
-                        <button type="button" class="wp-button primary" onclick="submitNewColorVariation()" style="height:30px; font-size:12px; font-weight:600;">
+                        <button type="button" class="dt-btn-action-sm gold" onclick="submitNewColorVariation()">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>+ Save &amp; Add Color</span>
+                            <span>Save Color</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- List of Color Variation Cards -->
-            <div id="colorVariationsList" style="display:flex; flex-direction:column; gap:10px;">
-                
-                <!-- Color Variation 1: Crimson Red -->
-                <div class="color-var-card" id="cvar-1" style="border:1px solid #c3c4c7; border-radius:4px; background:#fff; overflow:hidden;">
-                    <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="width:16px; height:16px; border-radius:50%; background:#991b1b; display:inline-block; border:1px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
-                            <strong style="font-size:13px; color:#1d2327;">Crimson Red</strong>
-                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹900</span>
-                        </div>
-                        <div>
-                            <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeColorVariationCard('cvar-1', 'Crimson Red')">✕ Remove</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 14px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-                        <div style="width:80px; text-align:center;">
-                            <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:70px; height:70px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
-                            <input type="file" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader();r.onload=e=>this.previousElementSibling.src=e.target.result;r.readAsDataURL(this.files[0]);window.showToast('Crimson Red photo updated');}">
-                            <small style="font-size:10px; color:#2271b1; cursor:pointer; display:block; margin-top:3px;" onclick="this.previousElementSibling.click()">+ Add Photo</small>
-                        </div>
-
-                        <div style="flex:1; min-width:260px;">
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px;">
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Variant SKU:</label>
-                                    <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="KLN-SR-111-RED">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="1000">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="900">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="18">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                                    <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
-                                        <option selected>In Stock</option>
-                                        <option>Low Stock</option>
-                                        <option>Out of Stock</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Color Variation 2: Bottle Green -->
-                <div class="color-var-card" id="cvar-2" style="border:1px solid #c3c4c7; border-radius:4px; background:#fff; overflow:hidden;">
-                    <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="width:16px; height:16px; border-radius:50%; background:#166534; display:inline-block; border:1px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
-                            <strong style="font-size:13px; color:#1d2327;">Bottle Green</strong>
-                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹900</span>
-                        </div>
-                        <div>
-                            <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeColorVariationCard('cvar-2', 'Bottle Green')">✕ Remove</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 14px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-                        <div style="width:80px; text-align:center;">
-                            <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:70px; height:70px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
-                            <input type="file" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader();r.onload=e=>this.previousElementSibling.src=e.target.result;r.readAsDataURL(this.files[0]);window.showToast('Bottle Green photo updated');}">
-                            <small style="font-size:10px; color:#2271b1; cursor:pointer; display:block; margin-top:3px;" onclick="this.previousElementSibling.click()">+ Add Photo</small>
-                        </div>
-
-                        <div style="flex:1; min-width:260px;">
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px;">
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Variant SKU:</label>
-                                    <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="KLN-SR-111-GRN">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="1000">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="900">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="15">
-                                </div>
-                                <div>
-                                    <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                                    <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
-                                        <option selected>In Stock</option>
-                                        <option>Low Stock</option>
-                                        <option>Out of Stock</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="colorVariationsList" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
         <!-- ========================================== -->
         <!-- 2. SIZE VARIATIONS SECTION -->
         <!-- ========================================== -->
-        <div id="sizeVariationsContainer" style="margin-bottom:20px; border-top:1px dashed rgba(212,175,55,0.6); padding-top:14px;">
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:12px;">
+        <div id="sizeVariationsContainer" style="margin-bottom:20px; border-top:1px dashed rgba(212,175,55,0.6); padding-top:12px;">
+            <div style="background:#FAF8F2; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span style="font-size:12px; font-weight:700; color:#5A4210;">Available Sizes:</span>
                         <div id="quickSizeList" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                            <span class="adm-badge gold" id="chip-svar-1" style="font-size:11px; padding:3px 8px;">Free Size (6.3m)</span>
-                            <span class="adm-badge gold" id="chip-svar-2" style="font-size:11px; padding:3px 8px;">XL (42)</span>
+                            <!-- Sizes populated dynamically -->
                         </div>
                     </div>
                     
-                    <button type="button" class="wp-button primary" onclick="toggleSizePickerDrawer()" style="height:30px; padding:0 12px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>+ Add Size</span>
+                    <button type="button" class="dt-btn-action-sm gold" onclick="toggleSizePickerDrawer()">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Add Size</span>
                     </button>
                 </div>
 
                 <!-- Size Picker Dropdown Box with Quick Preset Pills -->
                 <div id="sizePickerBox" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(212,175,55,0.5);">
-                    <div style="font-size:12px; font-weight:700; color:#1d2327; margin-bottom:8px;">Select Size Preset or Enter Custom Size:</div>
+                    <div style="font-size:12px; font-weight:700; color:#181512; margin-bottom:8px;">Select Size Preset or Enter Custom Size:</div>
                     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                        <span class="wp-button" onclick="selectPresetSize('Free Size (6.3m)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Free Size (6.3m)</span>
-                        <span class="wp-button" onclick="selectPresetSize('Standard (5.5m + Blouse)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Standard (5.5m)</span>
-                        <span class="wp-button" onclick="selectPresetSize('Semi-Stitched')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Semi-Stitched</span>
-                        <span class="wp-button" onclick="selectPresetSize('Unstitched 2.5m')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Unstitched</span>
-                        <span class="wp-button" onclick="selectPresetSize('S (36)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">S (36)</span>
-                        <span class="wp-button" onclick="selectPresetSize('M (38)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">M (38)</span>
-                        <span class="wp-button" onclick="selectPresetSize('L (40)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">L (40)</span>
-                        <span class="wp-button" onclick="selectPresetSize('XL (42)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">XL (42)</span>
-                        <span class="wp-button" onclick="selectPresetSize('XXL (44)')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">XXL (44)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('Free Size (6.3m)')" style="cursor:pointer;">Free Size (6.3m)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('Standard (5.5m + Blouse)')" style="cursor:pointer;">Standard (5.5m)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('Semi-Stitched')" style="cursor:pointer;">Semi-Stitched</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('Unstitched 2.5m')" style="cursor:pointer;">Unstitched</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('S (36)')" style="cursor:pointer;">S (36)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('M (38)')" style="cursor:pointer;">M (38)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('L (40)')" style="cursor:pointer;">L (40)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('XL (42)')" style="cursor:pointer;">XL (42)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetSize('XXL (44)')" style="cursor:pointer;">XXL (44)</span>
                     </div>
 
                     <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <input type="text" id="varSizeName" value="Free Size (6.3m)" placeholder="e.g. Free Size / XL / 42" style="height:30px; font-size:12.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:210px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewSizeVariation();}">
-                        <button type="button" class="wp-button primary" onclick="submitNewSizeVariation()" style="height:30px; font-size:12px; font-weight:600;">
+                        <input type="text" id="varSizeName" value="Free Size (6.3m)" placeholder="e.g. Free Size / XL / 42" style="height:30px; font-size:12px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:210px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewSizeVariation();}">
+                        <button type="button" class="dt-btn-action-sm gold" onclick="submitNewSizeVariation()">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>+ Save &amp; Add Size</span>
+                            <span>Save Size</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- List of Size Variation Cards -->
-            <div id="sizeVariationsList" style="display:flex; flex-direction:column; gap:10px;">
-                <div class="size-var-card" id="svar-1" style="border:1px solid #c3c4c7; border-radius:4px; background:#fff; overflow:hidden;">
-                    <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span class="adm-badge" style="background:#8A681F; color:#fff; font-size:11px; font-weight:700;">SIZE</span>
-                            <strong style="font-size:13px; color:#1d2327;">Free Size (6.3m)</strong>
-                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹900</span>
-                        </div>
-                        <div>
-                            <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeSizeVariationCard('svar-1')">✕ Remove</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 14px;">
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Size SKU:</label>
-                                <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="KLN-SR-111-FS">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="1000">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="900">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="25">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                                <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
-                                    <option selected>In Stock</option>
-                                    <option>Low Stock</option>
-                                    <option>Out of Stock</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="sizeVariationsList" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
         <!-- ========================================== -->
         <!-- 3. BLOUSE OPTIONS SECTION -->
         <!-- ========================================== -->
-        <div id="blouseVariationsContainer" style="margin-bottom:20px; border-top:1px dashed rgba(212,175,55,0.6); padding-top:14px;">
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:12px;">
+        <div id="blouseVariationsContainer" style="margin-bottom:20px; border-top:1px dashed rgba(212,175,55,0.6); padding-top:12px;">
+            <div style="background:#FAF8F2; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span style="font-size:12px; font-weight:700; color:#5A4210;">Blouse Stitching &amp; Fabric Options:</span>
                         <div id="quickBlouseList" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                            <span class="adm-badge gold" id="chip-bvar-1" style="font-size:11px; padding:3px 8px;">Unstitched (0.8m)</span>
-                            <span class="adm-badge gold" id="chip-bvar-2" style="font-size:11px; padding:3px 8px;">Stitched Ready Made (+₹400)</span>
+                            <!-- Blouse options populated dynamically -->
                         </div>
                     </div>
                     
-                    <button type="button" class="wp-button primary" onclick="toggleBlousePickerDrawer()" style="height:30px; padding:0 12px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>+ Add Blouse Option</span>
+                    <button type="button" class="dt-btn-action-sm gold" onclick="toggleBlousePickerDrawer()">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Add Blouse Option</span>
                     </button>
                 </div>
 
                 <!-- Blouse Picker Dropdown Box with Quick Preset Pills -->
                 <div id="blousePickerBox" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(212,175,55,0.5);">
-                    <div style="font-size:12px; font-weight:700; color:#1d2327; margin-bottom:8px;">Select Blouse Preset or Enter Custom Option:</div>
+                    <div style="font-size:12px; font-weight:700; color:#181512; margin-bottom:8px;">Select Blouse Preset or Enter Custom Option:</div>
                     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                        <span class="wp-button" onclick="selectPresetBlouse('Unstitched Blouse Piece (0.8m)', 0)" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Unstitched (0.8m)</span>
-                        <span class="wp-button" onclick="selectPresetBlouse('Stitched Blouse (Ready Made)', 400)" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Stitched (+₹400)</span>
-                        <span class="wp-button" onclick="selectPresetBlouse('Heavy Embroidered / Maggam Work', 850)" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Heavy Maggam Work (+₹850)</span>
-                        <span class="wp-button" onclick="selectPresetBlouse('Running Contrast Blouse', 150)" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Running Contrast</span>
-                        <span class="wp-button" onclick="selectPresetBlouse('Without Blouse Piece', -100)" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Without Blouse</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBlouse('Unstitched Blouse Piece (0.8m)', 0)" style="cursor:pointer;">Unstitched (0.8m)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBlouse('Stitched Blouse (Ready Made)', 400)" style="cursor:pointer;">Stitched (+₹400)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBlouse('Heavy Embroidered / Maggam Work', 850)" style="cursor:pointer;">Heavy Maggam Work (+₹850)</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBlouse('Running Contrast Blouse', 150)" style="cursor:pointer;">Running Contrast</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBlouse('Without Blouse Piece', -100)" style="cursor:pointer;">Without Blouse</span>
                     </div>
 
                     <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <input type="text" id="varBlouseName" value="Heavy Embroidered / Maggam Work" placeholder="e.g. Heavy Maggam Work Blouse" style="height:30px; font-size:12.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:250px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewBlouseVariation();}">
-                        <button type="button" class="wp-button primary" onclick="submitNewBlouseVariation()" style="height:30px; font-size:12px; font-weight:600;">
+                        <input type="text" id="varBlouseName" value="Heavy Embroidered / Maggam Work" placeholder="e.g. Heavy Maggam Work Blouse" style="height:30px; font-size:12px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:250px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewBlouseVariation();}">
+                        <button type="button" class="dt-btn-action-sm gold" onclick="submitNewBlouseVariation()">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>+ Save &amp; Add Blouse</span>
+                            <span>Save Blouse</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- List of Blouse Variation Cards -->
-            <div id="blouseVariationsList" style="display:flex; flex-direction:column; gap:10px;">
-                <div class="blouse-var-card" id="bvar-1" style="border:1px solid #c3c4c7; border-radius:4px; background:#fff; overflow:hidden;">
-                    <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span class="adm-badge" style="background:#7E22CE; color:#fff; font-size:11px; font-weight:700;">BLOUSE</span>
-                            <strong style="font-size:13px; color:#1d2327;">Stitched Ready Made (+₹400)</strong>
-                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹1300</span>
-                        </div>
-                        <div>
-                            <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeBlouseVariationCard('bvar-1')">✕ Remove</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 14px;">
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Blouse SKU:</label>
-                                <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="KLN-SR-111-BLS-STCH">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="1500">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="1300">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="20">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                                <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
-                                    <option selected>In Stock</option>
-                                    <option>Low Stock</option>
-                                    <option>Out of Stock</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="blouseVariationsList" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
         <!-- ========================================== -->
         <!-- 4. BORDER / PALLU DESIGN OPTIONS SECTION -->
         <!-- ========================================== -->
-        <div id="borderVariationsContainer" style="border-top:1px dashed rgba(212,175,55,0.6); padding-top:14px;">
-            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:12px;">
+        <div id="borderVariationsContainer" style="border-top:1px dashed rgba(212,175,55,0.6); padding-top:12px;">
+            <div style="background:#FAF8F2; border:1px solid rgba(212,175,55,0.45); border-radius:6px; padding:10px 14px; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span style="font-size:12px; font-weight:700; color:#5A4210;">Border &amp; Zari Weave Options:</span>
                         <div id="quickBorderList" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                            <span class="adm-badge gold" id="chip-brdvar-1" style="font-size:11px; padding:3px 8px;">Pure Gold Zari Border</span>
-                            <span class="adm-badge gold" id="chip-brdvar-2" style="font-size:11px; padding:3px 8px;">Broad Kaddi Border</span>
+                            <!-- Border options populated dynamically -->
                         </div>
                     </div>
                     
-                    <button type="button" class="wp-button primary" onclick="toggleBorderPickerDrawer()" style="height:30px; padding:0 12px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>+ Add Border Option</span>
+                    <button type="button" class="dt-btn-action-sm gold" onclick="toggleBorderPickerDrawer()">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Add Border Option</span>
                     </button>
                 </div>
 
                 <!-- Border Picker Dropdown Box with Quick Preset Pills -->
                 <div id="borderPickerBox" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(212,175,55,0.5);">
-                    <div style="font-size:12px; font-weight:700; color:#1d2327; margin-bottom:8px;">Select Border Preset or Enter Custom Border:</div>
+                    <div style="font-size:12px; font-weight:700; color:#181512; margin-bottom:8px;">Select Border Preset or Enter Custom Border:</div>
                     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                        <span class="wp-button" onclick="selectPresetBorder('Pure Gold Zari Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Pure Gold Zari</span>
-                        <span class="wp-button" onclick="selectPresetBorder('Silver Temple Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Silver Temple</span>
-                        <span class="wp-button" onclick="selectPresetBorder('Broad Kaddi Big Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Broad Kaddi Border</span>
-                        <span class="wp-button" onclick="selectPresetBorder('Ganga Jamuna Contrast Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Ganga Jamuna Border</span>
-                        <span class="wp-button" onclick="selectPresetBorder('Cutwork Scallop Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Cutwork Scallop</span>
-                        <span class="wp-button" onclick="selectPresetBorder('Small Meena Work Border')" style="height:24px; font-size:11px; padding:0 8px; cursor:pointer;">Small Meena Border</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Pure Gold Zari Border')" style="cursor:pointer;">Pure Gold Zari</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Silver Temple Border')" style="cursor:pointer;">Silver Temple</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Broad Kaddi Big Border')" style="cursor:pointer;">Broad Kaddi Border</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Ganga Jamuna Contrast Border')" style="cursor:pointer;">Ganga Jamuna Border</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Cutwork Scallop Border')" style="cursor:pointer;">Cutwork Scallop</span>
+                        <span class="dt-btn-action-sm pale-gold" onclick="selectPresetBorder('Small Meena Work Border')" style="cursor:pointer;">Small Meena Border</span>
                     </div>
 
                     <div style="display:flex; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <input type="text" id="varBorderName" value="Broad Kaddi Big Border" placeholder="e.g. Broad Kaddi Big Border" style="height:30px; font-size:12.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:250px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewBorderVariation();}">
-                        <button type="button" class="wp-button primary" onclick="submitNewBorderVariation()" style="height:30px; font-size:12px; font-weight:600;">
+                        <input type="text" id="varBorderName" value="Broad Kaddi Big Border" placeholder="e.g. Broad Kaddi Big Border" style="height:30px; font-size:12px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:3px; width:250px; outline:none; background:#fff;" onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewBorderVariation();}">
+                        <button type="button" class="dt-btn-action-sm gold" onclick="submitNewBorderVariation()">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            <span>+ Save &amp; Add Border</span>
+                            <span>Save Border</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- List of Border Variation Cards -->
-            <div id="borderVariationsList" style="display:flex; flex-direction:column; gap:10px;">
-                <div class="border-var-card" id="brdvar-1" style="border:1px solid #c3c4c7; border-radius:4px; background:#fff; overflow:hidden;">
-                    <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span class="adm-badge" style="background:#0F766E; color:#fff; font-size:11px; font-weight:700;">BORDER</span>
-                            <strong style="font-size:13px; color:#1d2327;">Pure Gold Zari Border</strong>
-                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹900</span>
-                        </div>
-                        <div>
-                            <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeBorderVariationCard('brdvar-1')">✕ Remove</button>
-                        </div>
-                    </div>
-                    <div style="padding:12px 14px;">
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Border SKU:</label>
-                                <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="KLN-SR-111-BRD-GLD">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="1000">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="900">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                                <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="30">
-                            </div>
-                            <div>
-                                <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                                <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
-                                    <option selected>In Stock</option>
-                                    <option>Low Stock</option>
-                                    <option>Out of Stock</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="borderVariationsList" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
@@ -662,41 +432,46 @@ function submitNewColorVariation() {
     card.innerHTML = `
         <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="width:16px; height:16px; border-radius:50%; background:${colorHex}; display:inline-block; border:1px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
-                <strong style="font-size:13px; color:#1d2327;">${colorName}</strong>
-                <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹${baseSale}</span>
+                <span style="width:14px; height:14px; border-radius:50%; background:${colorHex}; display:inline-block; border:1px solid #fff; box-shadow:0 0 2px rgba(0,0,0,0.3);"></span>
+                <strong style="font-size:12.5px; color:#181512;">${colorName}</strong>
+                <span class="dt-primary-tag" style="background:#EFF6FF; color:#1D4ED8; font-size:9.5px; border:1px solid #93C5FD;">Sale: ₹${baseSale}</span>
             </div>
             <div>
-                <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeColorVariationCard('${newId}', '${colorName}')">✕ Remove</button>
+                <button type="button" class="dt-btn-action-sm danger" style="padding:2px 8px; font-size:10.5px;" onclick="removeColorVariationCard('${newId}', '${colorName}')">
+                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span>Remove</span>
+                </button>
             </div>
         </div>
-        <div style="padding:12px 14px; display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
-            <div style="width:80px; text-align:center;">
-                <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:70px; height:70px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
+        <div style="padding:10px 12px; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;">
+            <div style="width:75px; text-align:center;">
+                <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:68px; height:68px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
                 <input type="file" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader();r.onload=e=>this.previousElementSibling.src=e.target.result;r.readAsDataURL(this.files[0]);window.showToast('${colorName} photo updated');}">
-                <small style="font-size:10px; color:#2271b1; cursor:pointer; display:block; margin-top:3px;" onclick="this.previousElementSibling.click()">+ Add Photo</small>
+                <button type="button" class="dt-btn-action-sm pale-gold" style="font-size:9.5px; padding:2px 6px; margin-top:4px; width:100%; justify-content:center;" onclick="this.previousElementSibling.click()">
+                    <span>Upload</span>
+                </button>
             </div>
             <div style="flex:1; min-width:260px;">
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px;">
                     <div>
                         <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Variant SKU:</label>
-                        <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="${skuCode}">
+                        <input type="text" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${skuCode}">
                     </div>
                     <div>
                         <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                        <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="${basePrice}">
+                        <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${basePrice}">
                     </div>
                     <div>
                         <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                        <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="${baseSale}">
+                        <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px; font-weight:700; color:#181512;" value="${baseSale}">
                     </div>
                     <div>
                         <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                        <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="15">
+                        <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="15">
                     </div>
                     <div>
                         <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                        <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
+                        <select class="adm-form-select" style="height:28px; font-size:11px; padding:0 6px;">
                             <option selected>In Stock</option>
                             <option>Low Stock</option>
                             <option>Out of Stock</option>
@@ -708,7 +483,7 @@ function submitNewColorVariation() {
     `;
     list.appendChild(card);
     toggleColorPickerDrawer();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Color variation "${colorName}" auto-saved!`);
+    if (typeof window.showToast === 'function') window.showToast(`✨ Color variation "${colorName}" added!`);
 }
 
 function submitNewSizeVariation() {
@@ -737,35 +512,38 @@ function submitNewSizeVariation() {
     card.innerHTML = `
         <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span class="adm-badge" style="background:#8A681F; color:#fff; font-size:11px; font-weight:700;">SIZE</span>
-                <strong style="font-size:13px; color:#1d2327;">${sizeName}</strong>
-                <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹${baseSale}</span>
+                <span class="adm-badge" style="background:#8A681F; color:#fff; font-size:10px; font-weight:700;">SIZE</span>
+                <strong style="font-size:12.5px; color:#181512;">${sizeName}</strong>
+                <span class="dt-primary-tag" style="background:#EFF6FF; color:#1D4ED8; font-size:9.5px; border:1px solid #93C5FD;">Sale: ₹${baseSale}</span>
             </div>
             <div>
-                <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeSizeVariationCard('${newId}')">✕ Remove</button>
+                <button type="button" class="dt-btn-action-sm danger" style="padding:2px 8px; font-size:10.5px;" onclick="removeSizeVariationCard('${newId}')">
+                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span>Remove</span>
+                </button>
             </div>
         </div>
-        <div style="padding:12px 14px;">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+        <div style="padding:10px 12px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px;">
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Size SKU:</label>
-                    <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="${skuCode}">
+                    <input type="text" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${skuCode}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="${basePrice}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${basePrice}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="${baseSale}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px; font-weight:700; color:#181512;" value="${baseSale}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="20">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="20">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                    <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
+                    <select class="adm-form-select" style="height:28px; font-size:11px; padding:0 6px;">
                         <option selected>In Stock</option>
                         <option>Low Stock</option>
                         <option>Out of Stock</option>
@@ -805,35 +583,38 @@ function submitNewBlouseVariation() {
     card.innerHTML = `
         <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span class="adm-badge" style="background:#7E22CE; color:#fff; font-size:11px; font-weight:700;">BLOUSE</span>
-                <strong style="font-size:13px; color:#1d2327;">${blouseName}</strong>
-                <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹${baseSale}</span>
+                <span class="adm-badge" style="background:#7E22CE; color:#fff; font-size:10px; font-weight:700;">BLOUSE</span>
+                <strong style="font-size:12.5px; color:#181512;">${blouseName}</strong>
+                <span class="dt-primary-tag" style="background:#EFF6FF; color:#1D4ED8; font-size:9.5px; border:1px solid #93C5FD;">Sale: ₹${baseSale}</span>
             </div>
             <div>
-                <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeBlouseVariationCard('${newId}')">✕ Remove</button>
+                <button type="button" class="dt-btn-action-sm danger" style="padding:2px 8px; font-size:10.5px;" onclick="removeBlouseVariationCard('${newId}')">
+                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span>Remove</span>
+                </button>
             </div>
         </div>
-        <div style="padding:12px 14px;">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+        <div style="padding:10px 12px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px;">
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Blouse SKU:</label>
-                    <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="${skuCode}">
+                    <input type="text" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${skuCode}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="${basePrice}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${basePrice}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="${baseSale}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px; font-weight:700; color:#181512;" value="${baseSale}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="15">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="15">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                    <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
+                    <select class="adm-form-select" style="height:28px; font-size:11px; padding:0 6px;">
                         <option selected>In Stock</option>
                         <option>Low Stock</option>
                         <option>Out of Stock</option>
@@ -873,35 +654,38 @@ function submitNewBorderVariation() {
     card.innerHTML = `
         <div style="background:#f6f7f7; padding:8px 12px; border-bottom:1px solid #c3c4c7; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span class="adm-badge" style="background:#0F766E; color:#fff; font-size:11px; font-weight:700;">BORDER</span>
-                <strong style="font-size:13px; color:#1d2327;">${borderName}</strong>
-                <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:10.5px;">Sale: ₹${baseSale}</span>
+                <span class="adm-badge" style="background:#0F766E; color:#fff; font-size:10px; font-weight:700;">BORDER</span>
+                <strong style="font-size:12.5px; color:#181512;">${borderName}</strong>
+                <span class="dt-primary-tag" style="background:#EFF6FF; color:#1D4ED8; font-size:9.5px; border:1px solid #93C5FD;">Sale: ₹${baseSale}</span>
             </div>
             <div>
-                <button type="button" style="background:none; border:none; color:#b32d2e; cursor:pointer; font-size:11.5px; font-weight:600;" onclick="removeBorderVariationCard('${newId}')">✕ Remove</button>
+                <button type="button" class="dt-btn-action-sm danger" style="padding:2px 8px; font-size:10.5px;" onclick="removeBorderVariationCard('${newId}')">
+                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    <span>Remove</span>
+                </button>
             </div>
         </div>
-        <div style="padding:12px 14px;">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+        <div style="padding:10px 12px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px;">
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Border SKU:</label>
-                    <input type="text" class="adm-form-input" style="height:28px; font-size:12px;" value="${skuCode}">
+                    <input type="text" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${skuCode}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Price ₹:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="${basePrice}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="${basePrice}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Sale Price ₹ <span style="color:#b32d2e;">*</span>:</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px; font-weight:700; color:#181512;" value="${baseSale}">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px; font-weight:700; color:#181512;" value="${baseSale}">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Stock (Units):</label>
-                    <input type="number" class="adm-form-input" style="height:28px; font-size:12px;" value="25">
+                    <input type="number" class="adm-form-input" style="height:28px; font-size:11.5px;" value="25">
                 </div>
                 <div>
                     <label class="adm-form-label" style="font-size:11px; margin-bottom:2px;">Status:</label>
-                    <select class="adm-form-select" style="height:28px; font-size:11.5px; padding:0 6px;">
+                    <select class="adm-form-select" style="height:28px; font-size:11px; padding:0 6px;">
                         <option selected>In Stock</option>
                         <option>Low Stock</option>
                         <option>Out of Stock</option>
