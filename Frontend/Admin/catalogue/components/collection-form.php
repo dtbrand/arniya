@@ -3,14 +3,15 @@
  * collection-form.php — Collection Create/Edit & Product Assignment Form
  * DT Brand's & Jai Hanuman Tex
  */
-$is_edit = isset($collection) && !empty($collection);
-$c_title = $is_edit ? $collection['title'] : '';
-$c_slug = $is_edit ? $collection['slug'] : '';
-$c_desc = $is_edit ? $collection['desc'] : '';
-$c_start = $is_edit ? ($collection['start_date'] ?: '2026-08-01') : date('Y-m-d');
-$c_end = $is_edit ? $collection['end_date'] : '';
-$c_active = $is_edit ? (!empty($collection['active'])) : true;
-$c_featured = $is_edit ? (!empty($collection['featured'])) : false;
+$collection = (isset($collection) && is_array($collection)) ? $collection : [];
+$is_edit = !empty($collection);
+$c_title = isset($collection['title']) ? $collection['title'] : '';
+$c_slug = isset($collection['slug']) ? $collection['slug'] : '';
+$c_desc = isset($collection['desc']) ? $collection['desc'] : '';
+$c_start = (isset($collection['start_date']) && !empty($collection['start_date'])) ? $collection['start_date'] : date('Y-m-d');
+$c_end = isset($collection['end_date']) ? $collection['end_date'] : '';
+$c_active = isset($collection['active']) ? (!empty($collection['active'])) : true;
+$c_featured = isset($collection['featured']) ? (!empty($collection['featured'])) : false;
 ?>
 <form onsubmit="return window.DT_CATEGORIES.saveCategoryForm(event)" class="dt-form-grid">
     <div>

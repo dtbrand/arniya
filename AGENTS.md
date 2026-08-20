@@ -137,6 +137,9 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 - **Real-Time Live Search**: Every search bar must instantly filter table rows or grid cards in real-time as the user types, with a functional 1-tap clear button (`✕`).
 - **Dropdown Filters**: Dropdown filters (e.g. Filter by Tier, Filter by Category, Filter by Rating) must filter table rows dynamically without requiring a page reload.
 - **Image & Logo Uploaders**: File input changes (`onchange`) must read the selected image via `FileReader` and update the live preview image/avatar instantly.
+- **Dynamic Form Prefilling & Parameter Binding**: All Edit/View pages (`edit.php?id=X`, `view.php?id=X`) must resolve `$_GET['id']` and prefill the exact entity data into title, slug, inputs, and descriptions.
+- **Native Direct Mouse Drag & Drop**: Every tree, category reorder, banner reorder, and list ordering UI must support native HTML5 direct mouse drag & drop with live ghost hover indicators (`.is-dragging`, `.drag-over-top`, `.drag-over-bottom`).
+- **Zero Undefined PHP Variables & Clean Problem Panel**: All component partials must safely default incoming variables (e.g. `$collection = (isset($collection) && is_array($collection)) ? $collection : [];`) to ensure zero IDE errors and zero runtime notices.
 
 ---
 
@@ -150,8 +153,10 @@ Before marking ANY task complete, every agent must verify:
 - [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and documentation with zero typos.
 - [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
 - [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.
+- [ ] **Direct Mouse Drag & Drop**: All reorder screens feature working mouse drag & drop reordering.
+- [ ] **Dynamic Data Prefilling**: Edit forms load real data from query parameters.
+- [ ] **Zero IDE & PHP Errors**: PHP linted cleanly (`php -l`), 0 undefined variables, 0 IDE problems.
 - [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links, stubs, or placeholder text.
-- [ ] **Syntax & Logic**: PHP linted cleanly with zero syntax errors (`php -l`), JS error-free.
 - [ ] **Sanitation**: All temporary scratch files cleaned up; workspace is clean.
 - [ ] **Git Synced**: Committed and pushed to GitHub `origin main`.
 - [ ] **Live Deployed**: Uploaded to Hostinger FTP server `/public_html/` and verified.

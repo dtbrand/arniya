@@ -64,3 +64,12 @@
 - **Amber Warning**: `#B45309` & `#FEF3C7` (Low Stock, Pending Badges)
 - **Crimson Danger**: `#DC2626` & `#FEF2F2` (Out of Stock, Trash Actions)
 - **Soft Blue Info**: `#1D4ED8` & `#EFF6FF` (Reply Action Pills, Dispatch Info)
+
+---
+
+## 🎯 Strict Quality & Zero-Regression Standards
+
+1. **Zero Undefined PHP Variables**: Always default component incoming variables safely (e.g. `$collection = (isset($collection) && is_array($collection)) ? $collection : [];`) to guarantee clean execution without warnings.
+2. **Dynamic Edit Form Data Prefilling**: All `edit.php?id=X` pages must resolve `$_GET['id']` and populate title, slug, description, and settings matching the target record.
+3. **HTML5 Native Direct Mouse Drag & Drop**: Category trees, banner reordering, and item ranking must support native mouse dragging (`draggable="true"`) alongside arrow stepper buttons.
+4. **Clean Linter Standard**: Keep `cspell.json` updated with textile and framework terminology; maintain 0 syntax errors across PHP and JS files.
