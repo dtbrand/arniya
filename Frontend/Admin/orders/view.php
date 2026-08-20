@@ -224,6 +224,7 @@ $active_subnav = "";
             <!-- Modals -->
             <?php include __DIR__ . '/components/order-actions.php'; ?>
             <?php include __DIR__ . '/components/refund-panel.php'; ?>
+            <?php include __DIR__ . '/components/customer-ledger.php'; ?>
 
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>

@@ -238,7 +238,38 @@
             if (el && window.DT_ORDERS) {
                 window.DT_ORDERS.copyText(el.innerText, label);
             }
+        },
+
+        openLedgerModal: function(name, phone, email) {
+            const modal = document.getElementById('customerLedgerModal');
+            if (!modal) return;
+
+            const nameEl = document.getElementById('ledgerCustomerName');
+            if (nameEl && name) nameEl.textContent = name;
+
+            const avatarEl = document.getElementById('ledgerAvatarInitials');
+            if (avatarEl && name) avatarEl.textContent = name.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+
+            const phoneEl = document.getElementById('ledgerPhone');
+            if (phoneEl && phone) phoneEl.textContent = '📞 ' + phone;
+
+            const emailEl = document.getElementById('ledgerEmail');
+            if (emailEl && email) emailEl.textContent = '✉️ ' + email;
+
+            const waBtn = document.getElementById('ledgerWhatsAppBtn');
+            if (waBtn && phone) {
+                const clean = phone.replace(/\D/g, '');
+                waBtn.href = 'https://wa.me/' + clean + '?text=' + encodeURIComponent('Namaste ' + (name || 'Client') + ', sharing your latest DT Brand\'s account ledger statement:');
+            }
+
+            modal.style.display = 'flex';
+        },
+
+        closeLedgerModal: function() {
+            const modal = document.getElementById('customerLedgerModal');
+            if (modal) modal.style.display = 'none';
         }
     };
 })(window);
+
 
