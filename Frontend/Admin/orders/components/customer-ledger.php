@@ -11,8 +11,8 @@
         <!-- Modal Header -->
         <div style="padding:12px 20px; background:#FAF8F4; border-bottom:1px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:36px; height:36px; border-radius:8px; background:linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; box-shadow:0 2px 6px rgba(212,175,55,0.25); flex-shrink:0;">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <div style="width:38px; height:38px; border-radius:8px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; padding:2px; flex-shrink:0;">
+                    <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="max-width:100%; max-height:100%; object-fit:contain;">
                 </div>
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">

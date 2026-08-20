@@ -105,12 +105,17 @@ $page_title = "Financial Ledger — " . $customer_name;
 <div class="dt-doc-container dt-ledger-doc">
     
     <!-- Letterhead Header -->
-    <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #8A681F; padding-bottom:14px; margin-bottom:16px;">
-        <div>
-            <h1 style="margin:0; font-size:20px; font-weight:800; color:#181512; letter-spacing:-0.02em;">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
-            <div style="font-size:11px; color:#64748B; margin-top:3px; line-height:1.4;">
-                Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002<br>
-                GSTIN: <strong>24AAECJ1928K1Z5</strong> • Silk Mark Certified Wholesale Handlooms
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div style="width:52px; height:52px; border-radius:8px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #8A681F; display:flex; align-items:center; justify-content:center; padding:3px; box-shadow:0 2px 8px rgba(0,0,0,0.12); flex-shrink:0;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="max-width:100%; max-height:100%; object-fit:contain;">
+            </div>
+            <div>
+                <h1 style="margin:0; font-size:19px; font-weight:800; color:#181512; letter-spacing:-0.02em; line-height:1.2;">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
+                <div style="font-size:11px; color:#64748B; margin-top:3px; line-height:1.35;">
+                    Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002<br>
+                    GSTIN: <strong>24AAECJ1928K1Z5</strong> • Silk Mark Certified Wholesale Handlooms
+                </div>
             </div>
         </div>
         <div style="text-align:right;">
