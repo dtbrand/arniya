@@ -367,7 +367,7 @@ window.DT_DISPLAY = {
 
     setUserType: function(type) {
         this.currentUserType = type;
-        document.querySelectorAll('.dt-user-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.dt-user-card-item, .dt-user-tab-btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById('user-' + type);
         if (activeBtn) activeBtn.classList.add('active');
 

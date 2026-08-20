@@ -199,6 +199,7 @@ $real_products = [
 ];
 ?>
 <div class="dt-cat-card">
+    <!-- Header Ribbon -->
     <div class="dt-cat-card-header">
         <h3 class="dt-cat-card-title">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -213,28 +214,54 @@ $real_products = [
 
     <div style="padding:16px;">
         
-        <!-- ════ LEVEL 1: USER-WISE TARGET AUDIENCE TABS ════ -->
-        <div style="margin-bottom:6px;">
-            <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Step 1: Select User Audience Type</div>
-            <div class="dt-user-type-nav">
-                <button type="button" class="dt-user-tab-btn active" id="user-customer" onclick="window.DT_DISPLAY.setUserType('customer')">
-                    <span>🛍️</span> <span>Retail Customer (B2C)</span>
-                </button>
-                <button type="button" class="dt-user-tab-btn" id="user-reseller" onclick="window.DT_DISPLAY.setUserType('reseller')">
-                    <span>💬</span> <span>WhatsApp Reseller</span>
-                </button>
-                <button type="button" class="dt-user-tab-btn" id="user-retailer" onclick="window.DT_DISPLAY.setUserType('retailer')">
-                    <span>🏪</span> <span>Retailer / Boutique</span>
-                </button>
-                <button type="button" class="dt-user-tab-btn" id="user-wholesaler" onclick="window.DT_DISPLAY.setUserType('wholesaler')">
-                    <span>🏢</span> <span>Wholesale B2B Buyer</span>
-                </button>
+        <!-- ════ STEP 1: USER-WISE TARGET AUDIENCE PROFILES ════ -->
+        <div style="margin-bottom:14px;">
+            <div style="font-size:12px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <span>Step 1: Select Target Audience Profile (User-Wise)</span>
+            </div>
+            
+            <div class="dt-user-card-grid">
+                <!-- 1. Retail Customer (B2C) -->
+                <div class="dt-user-card-item active" id="user-customer" onclick="window.DT_DISPLAY.setUserType('customer')">
+                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#181512;">
+                        <span style="font-size:16px;">🛍️</span> <span>Retail Customer (B2C)</span>
+                    </div>
+                    <div style="font-size:10px; color:#64748b; line-height:1.3;">Individual Sarees • Silk Mark Badges • Consumer MRP Discounts</div>
+                </div>
+
+                <!-- 2. WhatsApp Reseller -->
+                <div class="dt-user-card-item" id="user-reseller" onclick="window.DT_DISPLAY.setUserType('reseller')">
+                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#1D4ED8;">
+                        <span style="font-size:16px;">💬</span> <span>WhatsApp Reseller</span>
+                    </div>
+                    <div style="font-size:10px; color:#64748b; line-height:1.3;">Profit Margins (+₹2,149/Pc) • Zero Stock • 1-Click WhatsApp Share</div>
+                </div>
+
+                <!-- 3. Retailer / Boutique -->
+                <div class="dt-user-card-item" id="user-retailer" onclick="window.DT_DISPLAY.setUserType('retailer')">
+                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#8A681F;">
+                        <span style="font-size:16px;">🏪</span> <span>Retailer / Boutique</span>
+                    </div>
+                    <div style="font-size:10px; color:#64748b; line-height:1.3;">Curated 2–4 Pc Bundles • Boutique Assortment • GST Invoice Included</div>
+                </div>
+
+                <!-- 4. Wholesale B2B Buyer -->
+                <div class="dt-user-card-item" id="user-wholesaler" onclick="window.DT_DISPLAY.setUserType('wholesaler')">
+                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#7C2D12;">
+                        <span style="font-size:16px;">🏢</span> <span>Wholesale B2B Buyer</span>
+                    </div>
+                    <div style="font-size:10px; color:#64748b; line-height:1.3;">Tiered Bulk Lots (12+ Pcs) • Surat Depot Ready Stock • Master PO</div>
+                </div>
             </div>
         </div>
 
-        <!-- ════ LEVEL 2: PAGE / PLACEMENT SUB-NAVIGATION PILLS ════ -->
-        <div style="margin-bottom:14px;">
-            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Step 2: Select Storefront Page Placement</div>
+        <!-- ════ STEP 2: STOREFRONT PAGE PLACEMENT SUB-TABS ════ -->
+        <div style="margin-bottom:16px;">
+            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#64748b" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                <span>Step 2: Select Storefront Page Placement</span>
+            </div>
             <div class="dt-page-subnav">
                 <button type="button" class="dt-subnav-pill active" id="sub-shop" onclick="window.DT_DISPLAY.setPlacement('shop')">🛒 Shop &amp; Catalog Grid</button>
                 <button type="button" class="dt-subnav-pill" id="sub-collection" onclick="window.DT_DISPLAY.setPlacement('collection')">👑 Collection Page</button>
@@ -247,13 +274,15 @@ $real_products = [
             </div>
         </div>
 
-        <!-- 1. Multi-Device Columns & Sizing -->
-        <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
+        <hr style="border:none; border-top:1px solid #f1f5f9; margin:14px 0;">
+
+        <!-- ════ STEP 3: MULTI-DEVICE GRID COLUMNS & DIMENSIONS ════ -->
+        <h4 style="font-size:12.5px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span>1. Multi-Device Grid Columns &amp; Card Dimensions</span>
+            <span>Step 3: Multi-Device Grid Columns &amp; Dimensions (For Selected Profile)</span>
         </h4>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:18px;">
             <div class="dt-form-group">
                 <label class="dt-form-label">🖥️ Desktop Columns</label>
                 <select class="dt-form-select" id="dspDeskCols" onchange="window.DT_DISPLAY.updatePreview()">
@@ -311,15 +340,15 @@ $real_products = [
             </div>
         </div>
 
-        <hr style="border:none; border-top:1px solid #f1f5f9; margin:16px 0;">
+        <hr style="border:none; border-top:1px solid #f1f5f9; margin:14px 0;">
 
-        <!-- 2. Product Card Themes, Button Styles & Radii -->
-        <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
+        <!-- ════ STEP 4: CARD THEMES, BUTTON STYLES & RADII ════ -->
+        <h4 style="font-size:12.5px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            <span>2. Product Card Themes, Button Styles &amp; Corner Radii</span>
+            <span>Step 4: Product Card Themes, Button Styles &amp; Corner Radii</span>
         </h4>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:18px;">
             <div class="dt-form-group">
                 <label class="dt-form-label">🎨 Card Border &amp; Shadow Theme</label>
                 <select class="dt-form-select" id="dspCardTheme" onchange="window.DT_DISPLAY.updateCardStyles()">
@@ -359,16 +388,16 @@ $real_products = [
             </div>
         </div>
 
-        <hr style="border:none; border-top:1px solid #f1f5f9; margin:16px 0;">
+        <hr style="border:none; border-top:1px solid #f1f5f9; margin:14px 0;">
 
-        <!-- 3. All Product Card Badges, Wholesale Elements & Storefront Action Toggles -->
-        <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
+        <!-- ════ STEP 5: ALL REAL BADGES & STOREFRONT ELEMENTS ════ -->
+        <h4 style="font-size:12.5px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-            <span>3. Product Card Badges, Wholesale Elements &amp; Storefront Actions</span>
+            <span>Step 5: Real Product Card Badges, Wholesale Elements &amp; Storefront Actions</span>
         </h4>
 
         <!-- Group A: Trust & Photo Badges -->
-        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px; margin-bottom:12px;">
+        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px; margin-bottom:10px;">
             <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">🏷️ A. Trust &amp; Product Badges</div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
                 <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
@@ -403,7 +432,7 @@ $real_products = [
         </div>
 
         <!-- Group B: Wholesale & Commercial B2B Elements -->
-        <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:6px; padding:12px; margin-bottom:12px;">
+        <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:6px; padding:12px; margin-bottom:10px;">
             <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">💼 B. Wholesale &amp; Commercial B2B Elements</div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
                 <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
@@ -464,14 +493,14 @@ $real_products = [
             </div>
         </div>
 
-        <!-- 4. Next-Level Multi-Portal Storefront Simulator & Real-Time Sync Bar -->
+        <!-- ════ STEP 6: LIVE STOREFRONT SIMULATOR CANVAS ════ -->
         <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px; box-shadow:0 4px 16px rgba(212,175,55,0.12);">
             
             <!-- Real-Time Sync Header Bar -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px;">
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A;"></span>
-                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Storefront Synced (0ms)</strong>
+                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Storefront Simulator Synced (0ms)</strong>
                     <span id="liveContextBadge" class="dt-badge gold" style="font-size:10px; font-weight:800;">🛍️ Customer ➔ 🛒 Shop Grid</span>
                     <span id="liveParamPills" style="font-size:10.5px; color:#64748b;">4 Cols Desk • 2 Cols Mob • 3:4 Aspect</span>
                 </div>
