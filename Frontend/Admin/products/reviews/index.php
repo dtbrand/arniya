@@ -1,11 +1,87 @@
 <?php
 /**
- * index.php — DT Brand's Product Reviews & Customer Moderation Suite (Wholesale & Luxury Shop Standard)
+ * index.php — DT Brand's Product Reviews & Customer Moderation Suite
+ * Wholesale Dashboard & Luxury Shop Standard
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Product Reviews Moderation";
 $active_nav = "products";
 $active_subnav = "reviews";
+
+$reviews_list = [
+    [
+        'id' => 1,
+        'customer' => 'Sunita Rao',
+        'initials' => 'SR',
+        'city' => 'Surat, Gujarat',
+        'verified' => true,
+        'rating' => '5.0',
+        'stars' => 5,
+        'title' => 'Unmatched pure gold zari weave quality!',
+        'content' => 'The fabric is 100% pure zari silk and color richness is unmatched. I ordered 12 pcs lot for my boutique in Bangalore. Dispatched in 24 hours from Surat depot. Every customer loved it!',
+        'store_reply' => 'Thank you Sunita ji! Delighted to support your boutique with factory-direct Surat silk collections!',
+        'product' => 'Kanjivaram Pure Silk Saree',
+        'sku' => 'KLN-SR-111',
+        'product_id' => 101,
+        'status' => 'Approved',
+        'featured' => true,
+        'user_img' => '/Shared/Asset/images/product1.png'
+    ],
+    [
+        'id' => 2,
+        'customer' => 'Ananya Kulkarni',
+        'initials' => 'AK',
+        'city' => 'Pune, Maharashtra',
+        'verified' => true,
+        'rating' => '5.0',
+        'stars' => 5,
+        'title' => 'Royal Banarasi Brocade Weave!',
+        'content' => 'Looks much more premium in real than photos. The gold zari luster is authentic and soft on skin. Fast packaging and received with authentic Silk Mark tags.',
+        'store_reply' => 'Thank you Ananya! Authentic weaving heritage direct from our master weavers.',
+        'product' => 'Banarasi Royal Brocade Saree',
+        'sku' => 'BNR-SR-204',
+        'product_id' => 204,
+        'status' => 'Approved',
+        'featured' => false,
+        'user_img' => '/Shared/Asset/images/product2.png'
+    ],
+    [
+        'id' => 3,
+        'customer' => 'Meera Patel',
+        'initials' => 'MP',
+        'city' => 'Ahmedabad, Gujarat',
+        'verified' => true,
+        'rating' => '5.0',
+        'stars' => 5,
+        'title' => 'Stunning bridal handcrafted lehenga!',
+        'content' => 'Ordered this for a client bridal order. The micro-velvet zardosi work is dense and exquisite. Wholesale pricing was unbelievable for this heavy quality.',
+        'store_reply' => null,
+        'product' => 'Crimson Bridal Zardosi Lehenga',
+        'sku' => 'BRD-LH-902',
+        'product_id' => 305,
+        'status' => 'Approved',
+        'featured' => true,
+        'user_img' => '/Shared/Asset/images/product3.png'
+    ],
+    [
+        'id' => 4,
+        'customer' => 'Ritu Sharma',
+        'initials' => 'RS',
+        'city' => 'Jaipur, Rajasthan',
+        'verified' => false,
+        'rating' => '4.0',
+        'stars' => 4,
+        'title' => 'Great fabric, fast delivery to Jaipur',
+        'content' => 'Beautiful Paithani border weave. Delivered in 2 days. Will order more color combinations in next wholesale lot.',
+        'store_reply' => null,
+        'product' => 'Authentic Yeola Paithani Silk Saree',
+        'sku' => 'PTH-EMR-408',
+        'product_id' => 408,
+        'status' => 'Pending',
+        'featured' => false,
+        'user_img' => null
+    ]
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,10 +139,10 @@ $active_subnav = "reviews";
         transform: scale(1.15);
         box-shadow: 0 4px 12px rgba(212,175,55,0.3);
     }
-    .dt-btn-action-pill {
-        height: 26px;
-        padding: 0 8px;
-        font-size: 11px;
+    .dt-action-pill {
+        height: 28px;
+        padding: 0 9px;
+        font-size: 11.5px;
         font-weight: 700;
         border-radius: 4px;
         display: inline-flex;
@@ -76,7 +152,7 @@ $active_subnav = "reviews";
         text-decoration: none;
         transition: all 0.15s ease;
     }
-    .dt-btn-action-pill:hover {
+    .dt-action-pill:hover {
         transform: translateY(-1px);
     }
     </style>
@@ -97,16 +173,16 @@ $active_subnav = "reviews";
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <a href="/Frontend/Admin/products/" class="wp-button" style="height:32px; font-size:12px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <a href="/Frontend/Admin/products/" class="wp-button" style="height:32px; font-size:12px; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to Products</span>
                     </a>
                     <button type="button" class="wp-button primary" onclick="openAddReviewModal()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>+ Add Manual Review</span>
                     </button>
-                    <button type="button" class="wp-button" onclick="if(window.exportCurrentTable) window.exportCurrentTable('dt_product_reviews'); return false;" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <button type="button" class="wp-button" onclick="if(window.exportCurrentTable) window.exportCurrentTable('dt_product_reviews'); else if(window.showToast) window.showToast('📊 Exporting verified reviews CSV...'); return false;" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                         <span>Export CSV</span>
                     </button>
                 </div>
@@ -163,7 +239,7 @@ $active_subnav = "reviews";
                 <li><a href="#" onclick="filterReviews('Featured'); return false;">Featured on Home <span class="count">(48)</span></a> <span class="sep">|</span></li>
                 <li><a href="#" onclick="filterReviews('5.0'); return false;">5 Stars ★★★★★ <span class="count">(1,150)</span></a> <span class="sep">|</span></li>
                 <li><a href="#" onclick="filterReviews('4.0'); return false;">4 Stars ★★★★☆ <span class="count">(210)</span></a> <span class="sep">|</span></li>
-                <li><a href="#" onclick="filterReviews('Photo'); return false;">With Photos 📸 <span class="count">(340)</span></a></li>
+                <li><a href="#" onclick="filterReviews('Photo'); return false;">With Photos <span class="count">(340)</span></a></li>
             </ul>
 
             <!-- 4. Top Toolbar: Bulk Actions, Unclipped Filter Dropdowns & Rule-Compliant Search Input -->
@@ -176,8 +252,8 @@ $active_subnav = "reviews";
                         <option value="pin">Pin to Featured</option>
                         <option value="trash">Move to Trash</option>
                     </select>
-                    <button type="button" class="wp-button" onclick="handleBulkReviewAction()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:4px;">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <button type="button" class="wp-button" onclick="handleBulkReviewAction()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px; display:inline-flex; align-items:center; gap:4px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Apply</span>
                     </button>
 
@@ -194,11 +270,11 @@ $active_subnav = "reviews";
                         <option value="Kanjivaram">Kanjivaram Pure Silk Saree</option>
                         <option value="Banarasi">Banarasi Brocade Saree</option>
                         <option value="Lehenga">Crimson Bridal Lehenga</option>
-                        <option value="Kurti">Chanderi Kurti Set</option>
+                        <option value="Paithani">Paithani Silk Saree</option>
                     </select>
 
-                    <button type="button" class="wp-button" onclick="applyReviewFilters()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px; display:inline-flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    <button type="button" class="wp-button" onclick="applyReviewFilters()" style="height:34px; font-size:12px; font-weight:700; padding:0 12px; display:inline-flex; align-items:center; gap:5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
                         <span>Filter</span>
                     </button>
                 </div>
@@ -213,7 +289,7 @@ $active_subnav = "reviews";
                         <input type="text" id="reviewSearchInput" class="wp-search-input" placeholder="Search customer, reviews..." style="height:34px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchReviews(this.value); toggleReviewSearchClearBtn(this.value)">
                         <span id="reviewSearchClearBtn" onclick="clearReviewSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchReviews(document.getElementById('reviewSearchInput').value)" style="height:34px; font-size:12px; font-weight:600; padding:0 12px;">Search Reviews</button>
+                    <button type="button" class="wp-button primary" onclick="searchReviews(document.getElementById('reviewSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search Reviews</button>
                 </div>
             </div>
 
@@ -234,191 +310,92 @@ $active_subnav = "reviews";
                         </tr>
                     </thead>
                     <tbody id="reviewsTableBody">
-
-                        <!-- Review 1 -->
+                        <?php foreach($reviews_list as $rev): ?>
                         <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:12px 8px; vertical-align:top;">
                                 <input type="checkbox" class="review-row-check" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:12px 12px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div class="dt-review-avatar">SR</div>
+                                    <div class="dt-review-avatar"><?php echo htmlspecialchars($rev['initials']); ?></div>
                                     <div>
-                                        <strong style="font-size:13px; color:#181512; display:block;">Sunita Rao</strong>
+                                        <strong style="font-size:13px; color:#181512; display:block;"><?php echo htmlspecialchars($rev['customer']); ?></strong>
+                                        <?php if($rev['verified']): ?>
                                         <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:1px 5px; font-weight:700;">✓ Verified Buyer</span>
-                                        <small style="display:block; color:#646970; font-size:11px; margin-top:2px;">Surat, Gujarat</small>
+                                        <?php endif; ?>
+                                        <small style="display:block; color:#646970; font-size:11px; margin-top:2px;"><?php echo htmlspecialchars($rev['city']); ?></small>
                                     </div>
                                 </div>
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="color:#D4AF37; font-size:15px; letter-spacing:1px; font-weight:700;">★★★★★</div>
-                                <span style="font-size:11.5px; font-weight:700; color:#181512;">5.0 Rating</span>
-                                <div style="margin-top:6px; display:flex; gap:4px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-user-img-thumb" alt="Customer Photo" title="Click to view full photo">
+                                <div style="color:#D4AF37; font-size:15px; letter-spacing:1px; font-weight:700;">
+                                    <?php echo str_repeat('★', $rev['stars']) . str_repeat('☆', 5 - $rev['stars']); ?>
                                 </div>
+                                <span style="font-size:11.5px; font-weight:700; color:#181512;"><?php echo $rev['rating']; ?> Rating</span>
+                                <?php if($rev['user_img']): ?>
+                                <div style="margin-top:6px; display:flex; gap:4px;">
+                                    <img src="<?php echo htmlspecialchars($rev['user_img']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" class="dt-user-img-thumb" alt="Customer Photo" title="Click to view full photo">
+                                </div>
+                                <?php endif; ?>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top;">
-                                <strong style="font-size:13px; color:#181512; display:block; margin-bottom:4px;">"Unmatched pure gold zari weave quality!"</strong>
+                                <strong style="font-size:13px; color:#181512; display:block; margin-bottom:4px;">"<?php echo htmlspecialchars($rev['title']); ?>"</strong>
                                 <p style="font-size:12.5px; color:#2c3338; line-height:1.45; margin:0 0 8px 0;">
-                                    The fabric is 100% pure zari silk and color richness is unmatched. I ordered 12 pcs lot for my boutique in Bangalore. Dispatched in 24 hours from Surat depot. Every customer loved it!
+                                    <?php echo htmlspecialchars($rev['content']); ?>
                                 </p>
+                                <?php if($rev['store_reply']): ?>
                                 <div style="background:#FAF5E8; border-left:3px solid #D4AF37; padding:6px 10px; border-radius:0 4px 4px 0; font-size:11.5px;">
-                                    <strong style="color:#8A681F;">Store Reply:</strong> <span style="color:#5A4210;">Thank you Sunita ji! Delighted to support your boutique with factory-direct Surat silk collections!</span>
+                                    <strong style="color:#8A681F;">Store Reply:</strong> <span style="color:#5A4210;"><?php echo htmlspecialchars($rev['store_reply']); ?></span>
                                 </div>
+                                <?php endif; ?>
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
+                                    <img src="/Shared/Asset/images/product<?php echo ($rev['id'] % 5) + 1; ?>.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37;">
                                     <div>
-                                        <a href="/Frontend/Admin/products/edit.php?id=101" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Kanjivaram Pure Silk Saree</a>
-                                        <code style="display:block; font-size:10.5px; color:#646970;">KLN-SR-111</code>
+                                        <a href="/Frontend/Admin/products/edit.php?id=<?php echo $rev['product_id']; ?>" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">
+                                            <?php echo htmlspecialchars($rev['product']); ?>
+                                        </a>
+                                        <code style="display:block; font-size:10.5px; color:#8A681F; font-weight:700;"><?php echo htmlspecialchars($rev['sku']); ?></code>
                                     </div>
                                 </div>
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
+                                <?php if($rev['status'] == 'Approved'): ?>
                                 <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px; padding:3px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
                                     <span style="width:6px; height:6px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
                                     <span>Approved</span>
                                 </span>
-                                <span class="adm-badge gold" style="display:inline-block; margin-top:4px; font-size:10px; padding:1px 5px;">📌 Featured</span>
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top; text-align:right;">
-                                <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Sunita Rao', 'Kanjivaram Pure Silk Saree')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
-                                    <button type="button" class="dt-btn-action-pill" onclick="window.shareProductWhatsApp(101)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">💬 WhatsApp</button>
-                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Review 2 -->
-                        <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                            <td style="text-align: center; padding:12px 8px; vertical-align:top;">
-                                <input type="checkbox" class="review-row-check" style="cursor:pointer; width:15px; height:15px;">
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <div class="dt-review-avatar" style="background:#1e3a8a; color:#93c5fd; border-color:#60a5fa;">AK</div>
-                                    <div>
-                                        <strong style="font-size:13px; color:#181512; display:block;">Ananya Kulkarni</strong>
-                                        <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:1px 5px; font-weight:700;">✓ Verified Buyer</span>
-                                        <small style="display:block; color:#646970; font-size:11px; margin-top:2px;">Pune, Maharashtra</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="color:#D4AF37; font-size:15px; letter-spacing:1px; font-weight:700;">★★★★★</div>
-                                <span style="font-size:11.5px; font-weight:700; color:#181512;">5.0 Rating</span>
-                                <div style="margin-top:6px; display:flex; gap:4px;">
-                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="dt-user-img-thumb" alt="Customer Photo">
-                                </div>
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top;">
-                                <strong style="font-size:13px; color:#181512; display:block; margin-bottom:4px;">"Royal Banarasi Brocade Weave!"</strong>
-                                <p style="font-size:12.5px; color:#2c3338; line-height:1.45; margin:0;">
-                                    Looks much more premium in real than photos. The gold zari luster is authentic and soft on skin. Fast packaging and received with authentic Silk Mark tags.
-                                </p>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
-                                    <div>
-                                        <a href="/Frontend/Admin/products/edit.php?id=102" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Banarasi Royal Brocade Saree</a>
-                                        <code style="display:block; font-size:10.5px; color:#646970;">BNR-SR-204</code>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
-                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px; padding:3px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                    <span>Approved</span>
-                                </span>
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top; text-align:right;">
-                                <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Ananya Kulkarni', 'Banarasi Royal Brocade Saree')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
-                                    <button type="button" class="dt-btn-action-pill" onclick="window.shareProductWhatsApp(102)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">💬 WhatsApp</button>
-                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Review 3 -->
-                        <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                            <td style="text-align: center; padding:12px 8px; vertical-align:top;">
-                                <input type="checkbox" class="review-row-check" style="cursor:pointer; width:15px; height:15px;">
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <div class="dt-review-avatar" style="background:#831843; color:#fbcfe8; border-color:#f472b6;">PS</div>
-                                    <div>
-                                        <strong style="font-size:13px; color:#181512; display:block;">Pooja Sharma</strong>
-                                        <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-size:10px; padding:1px 5px; font-weight:700;">New Customer</span>
-                                        <small style="display:block; color:#646970; font-size:11px; margin-top:2px;">Jaipur, Rajasthan</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="color:#D4AF37; font-size:15px; letter-spacing:1px; font-weight:700;">★★★★★</div>
-                                <span style="font-size:11.5px; font-weight:700; color:#181512;">5.0 Rating</span>
-                            </td>
-                            <td style="padding:12px 12px; vertical-align:top;">
-                                <strong style="font-size:13px; color:#181512; display:block; margin-bottom:4px;">"Heavy Zardosi Bridal Masterpiece!"</strong>
-                                <p style="font-size:12.5px; color:#2c3338; line-height:1.45; margin:0;">
-                                    Ordered for my wedding reception. The flare and cancan layering is great. Heavy handcrafted zardosi embroidery looks royal. Worth every rupee!
-                                </p>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;">
-                                    <div>
-                                        <a href="/Frontend/Admin/products/edit.php?id=103" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">Crimson Bridal Lehenga</a>
-                                        <code style="display:block; font-size:10.5px; color:#646970;">BRD-LH-902</code>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="padding:12px 10px; vertical-align:top;">
+                                <?php else: ?>
                                 <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:11px; padding:3px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#d97706; display:inline-block;"></span>
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#b45309; display:inline-block;"></span>
                                     <span>Pending</span>
                                 </span>
+                                <?php endif; ?>
+                                <?php if($rev['featured']): ?>
+                                <span class="adm-badge gold" style="display:inline-block; margin-top:4px; font-size:10px; padding:1px 5px;">★ Featured</span>
+                                <?php endif; ?>
                             </td>
                             <td style="padding:12px 12px; vertical-align:top; text-align:right;">
                                 <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="approveSingleReview(this)" style="background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512; border:1px solid #8A681F; font-weight:800;">✓ Approve</button>
-                                    <button type="button" class="dt-btn-action-pill" onclick="openReplyModal('Pooja Sharma', 'Crimson Bridal Lehenga')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">💬 Reply</button>
-                                    <button type="button" class="dt-btn-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">🗑️ Trash</button>
+                                    <button type="button" class="dt-action-pill" onclick="openReplyModal('<?php echo htmlspecialchars($rev['customer']); ?>', '<?php echo htmlspecialchars($rev['product']); ?>')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                        <span>Reply</span>
+                                    </button>
+                                    <button type="button" class="dt-action-pill" onclick="window.shareProductWhatsApp(<?php echo $rev['product_id']; ?>)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                        <span>WhatsApp</span>
+                                    </button>
+                                    <button type="button" class="dt-action-pill" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" onclick="if(window.showToast) window.showToast('Review moved to trash'); this.closest('tr').remove();">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        <span>Trash</span>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
-
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
-            </div>
-
-            <!-- 6. Bottom Toolbar & Pagination -->
-            <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px;">
-                <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:8px;">
-                    <select class="wp-select" id="bulkReviewActionSelectBottom" style="height:34px; font-size:12px; min-width:130px;">
-                        <option value="">Bulk actions</option>
-                        <option value="approve">Approve Selected</option>
-                        <option value="trash">Move to Trash</option>
-                    </select>
-                    <button type="button" class="wp-button" onclick="handleBulkReviewActionBottom()" style="height:34px; font-size:12px; font-weight:600; padding:0 12px;">Apply</button>
-                </div>
-
-                <div class="wp-pagination" style="display:flex; align-items:center; gap:6px; font-size:12px;">
-                    <span style="color:#646970; font-weight:600; margin-right:6px;">1,420 items</span>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;" disabled>&laquo;</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;" disabled>&lsaquo;</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center; background:#8A681F; color:#fff; border-color:#8A681F; font-weight:700;">1</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;">2</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;">3</button>
-                    <span style="color:#8c8f94; padding:0 2px;">…</span>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;">58</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;">&rsaquo;</button>
-                    <button type="button" class="wp-button" style="height:28px; width:28px; padding:0; display:flex; align-items:center; justify-content:center;">&raquo;</button>
-                </div>
             </div>
 
         </main>
@@ -430,74 +407,86 @@ $active_subnav = "reviews";
 <!-- MODAL: ADD MANUAL REVIEW                                 -->
 <!-- ======================================================== -->
 <div id="addReviewModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:600px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37; animation:dtModalFadeIn 0.25s ease-out;">
+    <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Add Customer Review</h3>
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Add Verified Customer Review</h3>
             </div>
-            <button type="button" onclick="closeAddReviewModal()" style="background:none; border:none; color:#FAF5E8; font-size:20px; cursor:pointer;">&times;</button>
+            <button type="button" onclick="closeAddReviewModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:16px 18px;">
-            <div class="adm-form-grid">
-                <div class="adm-form-group">
-                    <label class="adm-form-label">Customer Name <span style="color:#b32d2e;">*</span></label>
-                    <input type="text" id="newRevName" class="adm-form-input" placeholder="e.g. Meenakshi Sundaram">
+        <div style="padding:18px 20px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Customer Name <span style="color:#b32d2e;">*</span></label>
+                    <input type="text" id="revCustName" placeholder="e.g. Pooja Sharma" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
-                <div class="adm-form-group">
-                    <label class="adm-form-label">City / Location</label>
-                    <input type="text" id="newRevCity" class="adm-form-input" placeholder="e.g. Chennai, Tamil Nadu">
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">City / State</label>
+                    <input type="text" id="revCustCity" placeholder="e.g. Jaipur, Rajasthan" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
-                <div class="adm-form-group">
-                    <label class="adm-form-label">Product</label>
-                    <select class="adm-form-select" id="newRevProduct">
-                        <option>Kanjivaram Pure Silk Saree (KLN-SR-111)</option>
-                        <option>Banarasi Royal Brocade Saree (BNR-SR-204)</option>
-                        <option>Crimson Bridal Lehenga (BRD-LH-902)</option>
-                        <option>Chanderi Kurti Set (KRT-CH-401)</option>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Select Product</label>
+                <select id="revProductSelect" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <option value="Kanjivaram Pure Silk Saree">Kanjivaram Pure Silk Saree (KLN-SR-111)</option>
+                    <option value="Banarasi Royal Brocade Saree">Banarasi Royal Brocade Saree (BNR-SR-204)</option>
+                    <option value="Crimson Bridal Zardosi Lehenga">Crimson Bridal Zardosi Lehenga (BRD-LH-902)</option>
+                    <option value="Authentic Yeola Paithani Silk Saree">Authentic Yeola Paithani Silk Saree (PTH-EMR-408)</option>
+                </select>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Rating Stars</label>
+                    <select id="revStars" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                        <option value="5">★★★★★ 5.0 (Excellent)</option>
+                        <option value="4">★★★★☆ 4.0 (Very Good)</option>
+                        <option value="3">★★★☆☆ 3.0 (Average)</option>
                     </select>
                 </div>
-                <div class="adm-form-group">
-                    <label class="adm-form-label">Rating</label>
-                    <select class="adm-form-select" id="newRevRating">
-                        <option value="5.0">★★★★★ (5 Stars)</option>
-                        <option value="4.0">★★★★☆ (4 Stars)</option>
-                        <option value="3.0">★★★☆☆ (3 Stars)</option>
+                <div>
+                    <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Buyer Status</label>
+                    <select id="revVerified" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                        <option value="1">Verified Wholesale Buyer</option>
+                        <option value="0">General Customer</option>
                     </select>
                 </div>
-                <div class="adm-form-group full">
-                    <label class="adm-form-label">Review Headline</label>
-                    <input type="text" id="newRevHeadline" class="adm-form-input" placeholder="e.g. Pure authentic silk weave!">
-                </div>
-                <div class="adm-form-group full">
-                    <label class="adm-form-label">Review Text</label>
-                    <textarea id="newRevText" class="adm-form-textarea" rows="3" placeholder="Write the customer's detailed feedback..."></textarea>
-                </div>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Review Headline</label>
+                <input type="text" id="revHeadline" placeholder="e.g. Master craftsmanship and rich gold luster" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Review Detailed Feedback</label>
+                <textarea id="revComment" rows="3" placeholder="Write the customer's detailed experience..." style="width:100%; padding:8px 10px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;"></textarea>
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddReviewModal()">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewReview()" style="background:linear-gradient(135deg, #8A681F 0%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F;">+ Save &amp; Publish Review</button>
+            <button type="button" class="wp-button" onclick="closeAddReviewModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="submitNewReview()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">+ Save Review</button>
         </div>
     </div>
 </div>
 
 <!-- ======================================================== -->
-<!-- MODAL: STORE OFFICIAL REPLY                              -->
+<!-- MODAL: REPLY TO CUSTOMER                                 -->
 <!-- ======================================================== -->
 <div id="replyReviewModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:520px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
+    <div style="background:#fff; width:95%; max-width:500px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
-            <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Official Store Reply</h3>
-            <button type="button" onclick="closeReplyModal()" style="background:none; border:none; color:#FAF5E8; font-size:20px; cursor:pointer;">&times;</button>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;" id="replyModalTitle">Store Official Reply</h3>
+            </div>
+            <button type="button" onclick="closeReplyModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:16px 18px;">
-            <div style="font-size:12px; margin-bottom:8px; color:#646970;">Replying to <strong id="replyCustomerName" style="color:#181512;">Sunita Rao</strong> for <strong id="replyProductName" style="color:#8A681F;">Kanjivaram Pure Silk Saree</strong>:</div>
-            <textarea id="replyTextarea" class="adm-form-textarea" rows="4" placeholder="Type store reply here..."></textarea>
+        <div style="padding:18px 20px;">
+            <p style="font-size:12.5px; color:#646970; margin-top:0; margin-bottom:10px;" id="replyTargetText">Replying to customer review...</p>
+            <textarea id="replyContent" rows="4" placeholder="Write store's official response to display on product page..." style="width:100%; padding:8px 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;"></textarea>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeReplyModal()">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitReply()" style="background:linear-gradient(135deg, #8A681F 0%, #D4AF37 100%); color:#181512; font-weight:800;">Publish Reply</button>
+            <button type="button" class="wp-button" onclick="closeReplyModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="submitReply()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Publish Store Reply</button>
         </div>
     </div>
 </div>
@@ -518,11 +507,6 @@ function clearReviewSearch() {
     }
 }
 
-function toggleSelectAllReviews(master) {
-    const checks = document.querySelectorAll('.review-row-check');
-    checks.forEach(c => c.checked = master.checked);
-}
-
 function searchReviews(q) {
     const rows = document.querySelectorAll('#reviewsTableBody tr');
     const term = (q || '').toLowerCase().trim();
@@ -535,30 +519,27 @@ function searchReviews(q) {
 function filterReviews(status) {
     const links = document.querySelectorAll('.wp-subsubsub a');
     links.forEach(l => l.classList.remove('current'));
-    if (event && event.target) {
-        const targetA = event.target.closest('a');
-        if (targetA) targetA.classList.add('current');
-    }
+    event.target.classList.add('current');
 
     const rows = document.querySelectorAll('#reviewsTableBody tr');
     rows.forEach(r => {
         if (!status) {
             r.style.display = '';
         } else {
-            const txt = r.textContent.toLowerCase();
-            r.style.display = txt.includes(status.toLowerCase()) ? '' : 'none';
+            const txt = r.textContent;
+            r.style.display = txt.includes(status) ? '' : 'none';
         }
     });
 }
 
-function filterReviewsByRating(rating) {
+function filterReviewsByRating(star) {
     const rows = document.querySelectorAll('#reviewsTableBody tr');
     rows.forEach(r => {
-        if (!rating) {
+        if (!star) {
             r.style.display = '';
         } else {
-            const txt = r.textContent.toLowerCase();
-            r.style.display = txt.includes(rating) ? '' : 'none';
+            const txt = r.textContent;
+            r.style.display = txt.includes(star) ? '' : 'none';
         }
     });
 }
@@ -576,30 +557,21 @@ function filterReviewsByProduct(prod) {
 }
 
 function applyReviewFilters() {
-    const rating = document.getElementById('filterRatingSelect')?.value || '';
-    const prod = document.getElementById('filterProductSelect')?.value || '';
+    const rating = document.getElementById('filterRatingSelect')?.value;
+    const prod = document.getElementById('filterProductSelect')?.value;
     const rows = document.querySelectorAll('#reviewsTableBody tr');
     rows.forEach(r => {
-        const txt = r.textContent.toLowerCase();
-        const matchesRating = !rating || txt.includes(rating);
-        const matchesProd = !prod || txt.includes(prod.toLowerCase());
-        r.style.display = (matchesRating && matchesProd) ? '' : 'none';
+        const txt = r.textContent;
+        const matchRating = !rating || txt.includes(rating);
+        const matchProd = !prod || txt.toLowerCase().includes(prod.toLowerCase());
+        r.style.display = (matchRating && matchProd) ? '' : 'none';
     });
-    if (typeof window.showToast === 'function') window.showToast('🔍 Review filters applied');
+    if (typeof window.showToast === 'function') window.showToast('✨ Review filters applied!');
 }
 
-function approveSingleReview(btn) {
-    const td = btn.closest('tr').querySelector('td:nth-child(6)');
-    if (td) {
-        td.innerHTML = `
-            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px; padding:3px 8px; border-radius:12px; display:inline-flex; align-items:center; gap:4px;">
-                <span style="width:6px; height:6px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                <span>Approved</span>
-            </span>
-        `;
-    }
-    btn.remove();
-    if (typeof window.showToast === 'function') window.showToast('✨ Review approved & published live!');
+function toggleSelectAllReviews(master) {
+    const checks = document.querySelectorAll('.review-row-check');
+    checks.forEach(c => c.checked = master.checked);
 }
 
 function handleBulkReviewAction() {
@@ -610,18 +582,7 @@ function handleBulkReviewAction() {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one review');
         return;
     }
-    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} reviews!`);
-}
-
-function handleBulkReviewActionBottom() {
-    const action = document.getElementById('bulkReviewActionSelectBottom')?.value;
-    if (!action) return;
-    const selected = document.querySelectorAll('.review-row-check:checked');
-    if (selected.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one review');
-        return;
-    }
-    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} reviews!`);
+    if (typeof window.showToast === 'function') window.showToast(`✨ Bulk action "${action}" applied to ${selected.length} reviews!`);
 }
 
 function openAddReviewModal() {
@@ -634,11 +595,16 @@ function closeAddReviewModal() {
     if (m) m.style.display = 'none';
 }
 
-function openReplyModal(name, product) {
-    document.getElementById('replyCustomerName').textContent = name;
-    document.getElementById('replyProductName').textContent = product;
-    document.getElementById('replyTextarea').value = `Thank you ${name}! We take pride in delivering pure Surat handcrafted textiles directly to your doorstep.`;
+function submitNewReview() {
+    const name = document.getElementById('revCustName')?.value || 'Customer';
+    closeAddReviewModal();
+    if (typeof window.showToast === 'function') window.showToast(`✨ Verified review for "${name}" published!`);
+}
+
+function openReplyModal(cust, prod) {
     const m = document.getElementById('replyReviewModal');
+    const t = document.getElementById('replyTargetText');
+    if (t) t.textContent = `Replying to review by ${cust} on "${prod}"`;
     if (m) m.style.display = 'flex';
 }
 
@@ -649,14 +615,14 @@ function closeReplyModal() {
 
 function submitReply() {
     closeReplyModal();
-    if (typeof window.showToast === 'function') window.showToast('✨ Official store reply published!');
+    if (typeof window.showToast === 'function') window.showToast('✨ Store official response published live!');
 }
 
-function submitNewReview() {
-    const name = document.getElementById('newRevName')?.value || 'Customer';
-    closeAddReviewModal();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Review for "${name}" published successfully!`);
-}
+window.shareProductWhatsApp = function(id) {
+    if (typeof window.showToast === 'function') {
+        window.showToast('💬 Opening WhatsApp Customer Connect for product #' + id);
+    }
+};
 </script>
 </body>
 </html>
