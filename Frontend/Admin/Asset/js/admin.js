@@ -1198,5 +1198,38 @@
         }
     };
 
+
+    // ════ MOBILE SIDEBAR DRAWER TOGGLE ════
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('admMobileMenuBtn');
+        const sidebar = document.getElementById('admSidebar');
+        const backdrop = document.getElementById('admSidebarBackdrop');
+        const toggleBtn = document.getElementById('admSidebarToggleBtn');
+
+        if (mobileBtn && sidebar) {
+            mobileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                sidebar.classList.toggle('mobile-open');
+                if (backdrop) {
+                    backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+                }
+            });
+        }
+
+        if (backdrop && sidebar) {
+            backdrop.addEventListener('click', function() {
+                sidebar.classList.remove('mobile-open');
+                backdrop.style.display = 'none';
+            });
+        }
+
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                sidebar.classList.toggle('collapsed');
+            });
+        }
+    });
+
 })();
 

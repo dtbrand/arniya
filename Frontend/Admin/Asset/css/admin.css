@@ -2070,3 +2070,61 @@ input, select, textarea {
     border-left: 2.5px solid #C5A859;
 }
 
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   👑 MASTER RESPONSIVE MOBILE/TABLET SIDEBAR DRAWER & AUTO-SIZING ENGINE
+   ══════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .adm-mobile-menu-btn {
+        display: flex !important;
+    }
+    
+    .adm-sidebar {
+        transform: translateX(-100%) !important;
+        width: 280px !important;
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        z-index: 100000 !important;
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.4) !important;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .adm-sidebar.mobile-open {
+        transform: translateX(0) !important;
+    }
+    
+    .adm-main {
+        margin-left: 0 !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+    
+    .adm-sidebar.collapsed ~ .adm-main {
+        margin-left: 0 !important;
+        max-width: 100vw !important;
+    }
+    
+    .adm-header {
+        padding: 0 12px !important;
+        gap: 8px !important;
+    }
+    
+    .adm-header-right {
+        gap: 6px !important;
+    }
+    
+    .adm-btn-secondary {
+        display: none !important;
+    }
+    
+    .adm-hdr-user-text {
+        display: none !important;
+    }
+    
+    .adm-content {
+        padding: 12px 14px !important;
+    }
+}

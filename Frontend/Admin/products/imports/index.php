@@ -43,10 +43,12 @@ $active_subnav = "imports";
         background: #fff;
         border: 1px solid #c3c4c7;
         border-radius: 8px;
-        padding: 14px 20px;
-        margin-bottom: 16px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
         position: relative;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 10px;
     }
     .dt-step-item {
         display: flex;
@@ -55,6 +57,7 @@ $active_subnav = "imports";
         position: relative;
         z-index: 2;
         min-width: 75px;
+        flex-shrink: 0;
         cursor: pointer;
     }
     .dt-step-circle {
