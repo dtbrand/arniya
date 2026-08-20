@@ -19,11 +19,23 @@ $active_subnav = "categories";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
+    .dt-kpi-ribbon {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    @media (max-width: 1024px) {
+        .dt-kpi-ribbon { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+        .dt-kpi-ribbon { grid-template-columns: 1fr; }
+    }
     .dt-kpi-card {
         background: #fff;
         border: 1px solid rgba(212,175,55,0.4);
         border-radius: 8px;
-        padding: 10px 14px;
+        padding: 12px 14px;
         display: flex;
         align-items: center;
         gap: 12px;
@@ -257,8 +269,8 @@ $active_subnav = "categories";
                                 </div>
                             </div>
 
-                            <div style="margin-top:10px;">
-                                <button type="submit" class="wp-button primary" style="width:100%; height:32px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                            <div style="margin-top:12px;">
+                                <button type="submit" class="wp-button primary" style="width:100%; height:34px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35); cursor:pointer; border-radius:4px;">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                     <span>+ Add New Category</span>
                                 </button>
@@ -273,13 +285,13 @@ $active_subnav = "categories";
                     <!-- Table Top Toolbar with Clean Search & Filter -->
                     <div style="padding:10px 14px; background:#f6f7f7; border-bottom:1px solid #c3c4c7; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                            <select class="wp-select" id="catBulkActionSelect" style="height:32px; font-size:12px; min-width:130px;">
+                            <select class="wp-select" id="catBulkActionSelect" style="height:32px; font-size:12px; min-width:130px; border-radius:4px; border:1px solid #c3c4c7;">
                                 <option value="">Bulk actions</option>
                                 <option value="delete">Delete Selected</option>
                             </select>
-                            <button type="button" class="wp-button" onclick="handleCatBulkAction()" style="height:32px; font-size:12px; font-weight:700; padding:0 12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Apply</button>
+                            <button type="button" class="wp-button" onclick="handleCatBulkAction()" style="height:32px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; border-radius:4px; cursor:pointer;">Apply</button>
 
-                            <select class="wp-select" id="catParentFilter" onchange="filterCatByParent(this.value)" style="height:32px; font-size:12px; min-width:140px;">
+                            <select class="wp-select" id="catParentFilter" onchange="filterCatByParent(this.value)" style="height:32px; font-size:12px; min-width:140px; border-radius:4px; border:1px solid #c3c4c7;">
                                 <option value="">All Categories</option>
                                 <option value="Silk Sarees">Silk Sarees</option>
                                 <option value="Banarasi Brocade">Banarasi Brocade</option>
@@ -298,7 +310,10 @@ $active_subnav = "categories";
                                 <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories, HSN..." style="height:32px; padding-left:32px; padding-right:24px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
                                 <span id="catSearchClearBtn" onclick="clearCatSearch()" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
                             </div>
-                            <button type="button" class="wp-button primary" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:32px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search</button>
+                            <button type="button" class="wp-button primary" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:32px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; border-radius:4px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <span>Search</span>
+                            </button>
                         </div>
                     </div>
 
