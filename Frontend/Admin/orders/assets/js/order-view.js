@@ -21,7 +21,7 @@
                 customer_type: 'Wholesale B2B',
                 phone: '+91 98000 00000',
                 email: 'client@dtbrands.in',
-                date: '21 Aug 2026, 11:20 AM',
+                date: '21 Aug 2026 • 11:20 AM',
                 items: [{ name: 'Surat Handloom Silk Lot', sku: 'LOT-101', variant: 'Standard', qty: 10, price: 3490, img: '' }],
                 item_count: 10,
                 amount: 34900,
@@ -40,25 +40,28 @@
             // Populate Drawer fields
             const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
             setTxt('drawerOrderId', order.id);
-            setTxt('drawerOrderDate', order.date);
+            setTxt('drawerOrderDate', (order.date || '').replace(' 2026', ' 2026 •'));
             setTxt('drawerCustomerName', order.customer);
             setTxt('drawerCustomerPhone', order.phone);
             setTxt('drawerCustomerEmail', order.email || '—');
             setTxt('drawerCustomerType', order.customer_type || 'Customer');
             setTxt('drawerCarrier', order.carrier || 'Standard Courier');
             setTxt('drawerTracking', order.tracking_id || '—');
-            setTxt('drawerShippingAddress', order.address ? order.address.shipping : 'Surat Central Depot, Gujarat');
+            setTxt('drawerShippingAddress', order.address ? order.address.shipping : 'Surat Central Depot, Ring Road, Surat');
             setTxt('drawerItemsCount', order.item_count || 1);
-            setTxt('drawerItemsTotal', '₹' + Number(order.amount).toLocaleString('en-IN'));
+            setTxt('drawerItemsTotal', Number(order.amount).toLocaleString('en-IN'));
             setTxt('drawerPayMethod', order.payment_method || 'Online');
             setTxt('drawerPayRef', order.payment_ref || '—');
-            setTxt('drawerPayTotal', '₹' + Number(order.amount).toLocaleString('en-IN'));
+            setTxt('drawerPayTotal', Number(order.amount).toLocaleString('en-IN'));
 
             // Status Badge
             const badge = document.getElementById('drawerStatusBadge');
+            const badgeText = document.getElementById('drawerStatusBadgeText');
             if (badge) {
                 badge.className = 'dt-status-badge ' + (order.status || 'pending');
-                badge.textContent = (order.status || 'pending').replace('_', ' ');
+            }
+            if (badgeText) {
+                badgeText.textContent = (order.status || 'pending').replace(/_/g, ' ').toUpperCase();
             }
 
             // Pay Badge
@@ -67,6 +70,9 @@
                 payBadge.className = 'dt-pay-badge ' + (order.payment_status || 'paid');
                 payBadge.textContent = (order.payment_status || 'paid').toUpperCase();
             }
+
+            // Update Fulfillment Stepper
+            this.updateStepper(order.status);
 
             // Links
             const invLink = document.getElementById('drawerInvoiceLink');
@@ -78,7 +84,7 @@
             const waLink = document.getElementById('drawerWhatsAppLink');
             if (waLink) {
                 const cleanPhone = (order.phone || '').replace(/\D/g, '');
-                waLink.href = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent('Hello ' + order.customer + ', regarding your DT Brand\'s Order #' + order.id + ':');
+                waLink.href = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent('Namaste ' + order.customer + ', regarding your DT Brand\'s Order #' + order.id + ' (' + (order.items_summary || 'Consignment') + '):');
             }
 
             const updateBtn = document.getElementById('drawerUpdateStatusBtn');
@@ -88,22 +94,23 @@
                 };
             }
 
-            // Render Items
+            // Render Items with 100% Vector SVG Fabric Icons
             const itemsList = document.getElementById('drawerItemsList');
             if (itemsList) {
                 itemsList.innerHTML = (order.items || []).map(item => `
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px dashed #F1EFE9;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px;">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <div style="width:36px; height:36px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; color:#8A681F; font-size:11px;">
-                                👘
+                            <div style="width:34px; height:34px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; flex-shrink:0;">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                             </div>
                             <div>
-                                <div style="font-weight:700; font-size:11.5px; color:#0F172A;">${item.name}</div>
-                                <div style="font-size:10px; color:#64748B;">SKU: ${item.sku} • ${item.variant} • Qty: ${item.qty}</div>
+                                <div style="font-weight:800; font-size:11.5px; color:#0F172A; line-height:1.3;">${item.name}</div>
+                                <div style="font-size:10px; color:#64748B; margin-top:2px;">SKU: <strong style="color:#181512;">${item.sku}</strong> • ${item.variant} • Qty: <strong>${item.qty}</strong></div>
                             </div>
                         </div>
-                        <div style="font-weight:800; font-size:11.5px; color:#181512; white-space:nowrap;">
-                            ₹${Number(item.price * item.qty).toLocaleString('en-IN')}
+                        <div style="display:flex; align-items:center; gap:2px; font-weight:800; font-size:12px; color:#181512; white-space:nowrap;">
+                            <svg class="dt-rupee-svg" viewBox="0 0 24 24" width="10" height="10"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                            <span>${Number(item.price * item.qty).toLocaleString('en-IN')}</span>
                         </div>
                     </div>
                 `).join('');
@@ -115,6 +122,78 @@
         closeDrawer: function() {
             const drawer = document.getElementById('orderQuickViewDrawer');
             if (drawer) drawer.style.display = 'none';
+        },
+
+        updateStepper: function(status) {
+            const stepper = document.getElementById('drawerStepper');
+            if (!stepper) return;
+
+            const stages = [
+                { id: 'placed', label: 'Placed' },
+                { id: 'confirmed', label: 'Confirmed' },
+                { id: 'packed', label: 'Packed' },
+                { id: 'transit', label: 'In Transit' },
+                { id: 'delivered', label: 'Delivered' }
+            ];
+
+            const statusLevel = {
+                'pending': 1,
+                'confirmed': 2,
+                'processing': 2,
+                'packed': 3,
+                'shipped': 4,
+                'out_for_delivery': 4,
+                'delivered': 5,
+                'cancelled': -1,
+                'returned': -1,
+                'refunded': -1,
+                'failed': -1
+            };
+
+            const level = statusLevel[status] !== undefined ? statusLevel[status] : 1;
+
+            if (level === -1) {
+                stepper.innerHTML = `
+                    <div style="width:100%; text-align:center; padding:4px 0; color:#DC2626; font-weight:800; font-size:11px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        <span>Lifecycle Status: ${status.replace(/_/g, ' ').toUpperCase()}</span>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            stages.forEach((stage, idx) => {
+                const stageNum = idx + 1;
+                const isPassed = stageNum <= level;
+                const isCurrent = stageNum === level;
+
+                const color = isCurrent ? '#8A681F' : (isPassed ? '#15803D' : '#94A3B8');
+                const dot = isPassed ? '●' : '○';
+
+                html += `<div style="text-align:center; color:${color}; font-weight:800;">${dot} ${stage.label}</div>`;
+
+                if (idx < stages.length - 1) {
+                    const lineColor = (stageNum < level) ? '#16A34A' : (stageNum === level ? '#D4AF37' : '#E2E8F0');
+                    html += `<div style="flex:1; height:2px; background:${lineColor}; margin:0 4px;"></div>`;
+                }
+            });
+
+            stepper.innerHTML = html;
+        },
+
+        addDrawerNote: function() {
+            const input = document.getElementById('drawerQuickNoteInput');
+            if (!input || !input.value.trim()) {
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please enter dispatch note text');
+                return;
+            }
+
+            const noteVal = input.value.trim();
+            input.value = '';
+            if (window.DT_ORDERS) {
+                window.DT_ORDERS.showToast('✅ Note saved: "' + noteVal + '"');
+            }
         },
 
         toggleRowDetails: function(orderId, btn) {
@@ -132,7 +211,7 @@
         addNote: function() {
             const input = document.getElementById('newAdminNoteInput');
             if (!input || !input.value.trim()) {
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast('⚠️ Please enter note text first');
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Please enter note text first');
                 return;
             }
 
@@ -143,14 +222,14 @@
                 noteEl.className = 'dt-note-item';
                 noteEl.innerHTML = `
                     <div class="dt-note-header">
-                        <span>👤 Admin (You)</span>
+                        <span>Admin (Surat Central HQ)</span>
                         <span>${now} • Just Now</span>
                     </div>
                     <div class="dt-note-text">${input.value.trim()}</div>
                 `;
                 noteList.prepend(noteEl);
                 input.value = '';
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ Internal note added successfully');
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Internal note saved successfully');
             }
         },
 
@@ -161,4 +240,5 @@
             }
         }
     };
-})();
+})(window);
+
