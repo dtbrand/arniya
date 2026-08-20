@@ -493,18 +493,21 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = 120 * dpr;
-        canvas.height = 120 * dpr;
+        const size = 110;
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        canvas.style.width = size + 'px';
+        canvas.style.height = size + 'px';
         ctx.scale(dpr, dpr);
 
-        const cx = 60, cy = 60, r = 48;
-        ctx.clearRect(0, 0, 120, 120);
+        const cx = size / 2, cy = size / 2, r = (size / 2) - 10;
+        ctx.clearRect(0, 0, size, size);
 
         // Background track arc
         ctx.beginPath();
         ctx.arc(cx, cy, r, -Math.PI * 0.8, Math.PI * 0.8, false);
         ctx.strokeStyle = '#FAF5E8';
-        ctx.lineWidth = 9;
+        ctx.lineWidth = 7.5;
         ctx.lineCap = 'round';
         ctx.stroke();
 
@@ -513,7 +516,7 @@
         const totalAngle = Math.PI * 1.6;
         const endAngle = (-Math.PI * 0.8) + (totalAngle * progress);
 
-        const grad = ctx.createLinearGradient(0, 0, 120, 120);
+        const grad = ctx.createLinearGradient(0, 0, size, size);
         grad.addColorStop(0, '#8A681F');
         grad.addColorStop(0.5, '#D4AF37');
         grad.addColorStop(1, '#16A34A');
@@ -521,7 +524,7 @@
         ctx.beginPath();
         ctx.arc(cx, cy, r, -Math.PI * 0.8, endAngle, false);
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 9;
+        ctx.lineWidth = 7.5;
         ctx.lineCap = 'round';
         ctx.stroke();
     }

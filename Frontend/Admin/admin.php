@@ -189,7 +189,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-app-gauge-body">
                             <div class="adm-app-gauge-canvas-wrap">
-                                <canvas id="admAppCircularGauge" width="120" height="120"></canvas>
+                                <canvas id="admAppCircularGauge" width="110" height="110" style="width:110px; height:110px; display:block;"></canvas>
                                 <div class="adm-app-gauge-text">
                                     <div class="adm-app-gauge-val">8,450</div>
                                     <div class="adm-app-gauge-sub">/ 10,000 Pcs</div>

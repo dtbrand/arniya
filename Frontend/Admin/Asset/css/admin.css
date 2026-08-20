@@ -2759,12 +2759,24 @@ input, select, textarea {
     }
 
     .adm-app-gauge-canvas-wrap {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: relative !important;
+        width: 110px !important;
+        height: 110px !important;
+        min-width: 110px !important;
+        max-width: 110px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
+    }
+
+    #admAppCircularGauge {
+        width: 110px !important;
+        height: 110px !important;
+        max-width: 110px !important;
+        max-height: 110px !important;
+        display: block !important;
     }
 
     .adm-app-gauge-text {
@@ -3093,5 +3105,20 @@ input, select, textarea {
         margin: -8px -14px 14px -14px !important;
         border-bottom: 1.2px solid rgba(212, 175, 55, 0.25) !important;
         box-shadow: 0 2px 8px rgba(138, 104, 31, 0.05) !important;
+    }
+}
+
+
+/* STRICT RULE: Hide top subnav on mobile & tablet across all pages */
+@media (max-width: 1024px) {
+    #admSubnavStrip,
+    .adm-subnav-strip,
+    nav#admSubnavStrip {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
     }
 }
