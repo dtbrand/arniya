@@ -92,6 +92,7 @@ $cat = isset($categories_db[$cat_id]) ? $categories_db[$cat_id] : $categories_db
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
