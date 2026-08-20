@@ -152,19 +152,20 @@
         visibility: hidden;
     }
     .dt-doc-container, .dt-doc-container *, 
-    .dt-shipping-label-card, .dt-shipping-label-card * {
-        visibility: visible;
+    .dt-shipping-label-card, .dt-shipping-label-card *,
+    .dt-ledger-doc, .dt-ledger-doc * {
+        visibility: visible !important;
     }
-    .dt-doc-container, .dt-shipping-label-card {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 10px;
-        border: 2px solid #000;
-        box-shadow: none;
+    .dt-doc-container, .dt-shipping-label-card, .dt-ledger-doc {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 16px !important;
+        border: 1.5px solid #000000 !important;
+        box-shadow: none !important;
     }
     .adm-sidebar, .adm-header, .adm-footer, .dt-doc-actions-bar {
         display: none !important;

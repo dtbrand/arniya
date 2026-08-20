@@ -39,6 +39,8 @@ $page_title = "Financial Ledger — " . $customer_name;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: #181512;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
         .dt-rupee-svg {
             display: inline-block;
@@ -53,17 +55,28 @@ $page_title = "Financial Ledger — " . $customer_name;
                 padding: 0 !important;
                 margin: 0 !important;
             }
+            body * {
+                visibility: hidden;
+            }
+            .dt-ledger-doc, .dt-ledger-doc * {
+                visibility: visible !important;
+            }
             .dt-doc-actions-bar {
                 display: none !important;
             }
             .dt-ledger-doc {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
                 border: 1.5px solid #000000 !important;
                 box-shadow: none !important;
-                max-width: 100% !important;
-                width: 100% !important;
                 padding: 16px !important;
                 margin: 0 !important;
                 border-radius: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
         }
     </style>
@@ -89,7 +102,7 @@ $page_title = "Financial Ledger — " . $customer_name;
 </div>
 
 <!-- Ledger Document Container -->
-<div class="dt-ledger-doc">
+<div class="dt-doc-container dt-ledger-doc">
     
     <!-- Letterhead Header -->
     <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #8A681F; padding-bottom:14px; margin-bottom:16px;">
