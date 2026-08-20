@@ -236,5 +236,85 @@ window.DT_CATALOGUE = {
         const selected = aiDescs[Math.floor(Math.random() * aiDescs.length)];
         textarea.value = selected;
         this.showToast(`✨ AI Generated Description for "${cleanName}"!`);
+    },
+
+    // ════ Interactive Device Preview Switcher (Desktop vs Mobile) ════
+    switchDevicePreview: function(device) {
+        const btnDesk = document.getElementById('btnPrevDesk');
+        const btnMob = document.getElementById('btnPrevMob');
+        const boxDesk = document.getElementById('prevBoxDesk');
+        const boxMob = document.getElementById('prevBoxMob');
+
+        if (device === 'mob') {
+            if (btnDesk) btnDesk.classList.remove('active');
+            if (btnMob) btnMob.classList.add('active');
+            if (boxDesk) boxDesk.style.display = 'none';
+            if (boxMob) boxMob.style.display = 'block';
+        } else {
+            if (btnMob) btnMob.classList.remove('active');
+            if (btnDesk) btnDesk.classList.add('active');
+            if (boxMob) boxMob.style.display = 'none';
+            if (boxDesk) boxDesk.style.display = 'block';
+        }
+    },
+
+    // ════ Banner Ratio Change Handler ════
+    updateBannerRatio: function(type, ratio) {
+        if (type === 'desk') {
+            const deskImg = document.getElementById('deskBannerPreview');
+            const liveDeskImg = document.getElementById('liveDeskImg');
+            if (deskImg) {
+                if (ratio === '1-1') deskImg.style.height = '180px';
+                else if (ratio === '4-1') deskImg.style.height = '70px';
+                else deskImg.style.height = '90px';
+            }
+            if (liveDeskImg) {
+                if (ratio === '1-1') liveDeskImg.style.height = '180px';
+                else if (ratio === '4-1') liveDeskImg.style.height = '70px';
+                else liveDeskImg.style.height = '90px';
+            }
+            this.showToast(`🖥️ Desktop banner aspect ratio set to ${ratio}!`);
+        } else {
+            const mobImg = document.getElementById('mobileBannerPreview');
+            if (mobImg) {
+                if (ratio === '1-1') { mobImg.style.width = '140px'; mobImg.style.height = '140px'; }
+                else if (ratio === '9-16') { mobImg.style.width = '110px'; mobImg.style.height = '190px'; }
+                else if (ratio === '2-1') { mobImg.style.width = '180px'; mobImg.style.height = '80px'; }
+                else { mobImg.style.width = '120px'; mobImg.style.height = '150px'; }
+            }
+            this.showToast(`📱 Mobile banner aspect ratio set to ${ratio}!`);
+        }
+    },
+
+    // ════ AI Banner Copy Auto-Generator ════
+    generateAiBannerCopy: function() {
+        const titleInput = document.getElementById('bannerTitle');
+        const subInput = document.getElementById('bannerSubtitle');
+        const ctaInput = document.getElementById('bannerCta');
+
+        const headlines = [
+            {
+                title: "Surat Central Depot Mega Festival 2026",
+                sub: "Authentic Pure Silk & Handloom Sarees • Direct Weaver Wholesale Pricing",
+                cta: "Explore Wholesale Catalogues"
+            },
+            {
+                title: "Royal Bridal & Velvet Heritage Edit",
+                sub: "Heavy Hand Embroidered Zardosi Lehengas for Boutique Collections",
+                cta: "View Bridal Assortment"
+            },
+            {
+                title: "Reseller Low MOQ Deals (MOQ 4)",
+                sub: "High Profit Resale Bundles • 24-Hour Express Depot Dispatch Across India",
+                cta: "Order Wholesale Lots"
+            }
+        ];
+
+        const chosen = headlines[Math.floor(Math.random() * headlines.length)];
+        if (titleInput) titleInput.value = chosen.title;
+        if (subInput) subInput.value = chosen.sub;
+        if (ctaInput) ctaInput.value = chosen.cta;
+
+        this.showToast(`✨ AI Generated Banner Headlines & CTA!`);
     }
 };
