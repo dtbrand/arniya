@@ -20,14 +20,10 @@ $items = isset($order['items']) ? $order['items'] : [
 ];
 ?>
 <div class="dt-doc-container">
-    <!-- Header with Clean Real Brand Logo -->
+    <!-- Header with Clean Real Brand Logo (No Company Text) -->
     <div class="dt-doc-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:16px; margin-bottom:20px;">
-        <div style="display:flex; align-items:center; gap:16px;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:54px; width:auto; max-width:180px; object-fit:contain; display:block; flex-shrink:0;">
-            <div>
-                <h2 class="dt-doc-brand-title" style="margin:0; font-size:22px; font-weight:800; color:#181512; letter-spacing:-0.02em; line-height:1.2;">DT BRAND'S WAREHOUSE</h2>
-                <div style="font-size:11.5px; color:#8A681F; font-weight:700; margin-top:2px;">Surat Central Depot Dispatch Floor</div>
-            </div>
+        <div>
+            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:58px; width:auto; max-width:180px; object-fit:contain; display:block;">
         </div>
         <div class="dt-doc-meta-box">
             <span class="dt-doc-meta-title" style="font-size:17px; font-weight:800; color:#8A681F; letter-spacing:0.5px;">PACKING SLIP</span>
@@ -94,14 +90,12 @@ $items = isset($order['items']) ? $order['items'] : [
     </table>
 
     <!-- Footer Verification -->
-    <div class="dt-doc-footer" style="border-top:1px solid #E2DFD7; padding-top:12px; font-size:10px; color:#64748B; display:flex; justify-content:space-between; align-items:center;">
+    <div class="dt-doc-footer" style="border-top:1px solid #E2DFD7; padding-top:12px; font-size:10.5px; color:#64748B; display:flex; justify-content:space-between; align-items:center;">
         <div>
-            Packer Operator: <strong>SURAT-WH-04</strong> • QC Inspected: <strong>PASS (Silk Mark Verified)</strong><br>
-            Depot Dispatch Deck: Central Cargo Express • Manifest Security Sealed
+            QC Verification: <strong style="color:#15803D;">PASS (Silk Mark Certified)</strong> • Sealed Manifest
         </div>
         <div style="text-align:right; font-weight:700; color:#181512;">
-            Warehouse Dispatch Officer<br>
-            <span style="font-weight:400; font-size:9px; color:#8A681F;">Surat Central Depot Floor</span>
+            Warehouse Dispatch Officer
         </div>
     </div>
 </div>
