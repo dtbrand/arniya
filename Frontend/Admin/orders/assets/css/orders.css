@@ -382,14 +382,26 @@
     border-radius: 4px;
 }
 
+.dt-flow-scroll-btn {
+    transition: all 0.15s ease;
+    opacity: 0.85;
+}
+
+.dt-flow-scroll-btn:hover {
+    opacity: 1;
+    background: #FAF5E8;
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.35);
+}
+
 .dt-flow-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
     border-radius: 20px;
-    background: #FAF8F4;
-    border: 1px solid #E2DFD7;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
     color: #475569;
     font-size: 11.5px;
     font-weight: 700;
@@ -397,6 +409,7 @@
     white-space: nowrap;
     transition: all 0.18s ease;
     flex-shrink: 0;
+    cursor: pointer;
 }
 
 .dt-flow-pill svg {
@@ -405,39 +418,46 @@
 }
 
 .dt-flow-pill:hover {
-    background: #F1ECE1;
-    border-color: var(--dt-gold);
-    color: var(--dt-obsidian);
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #181512;
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
 }
 
 .dt-flow-pill:hover svg {
-    color: var(--dt-gold);
+    color: #8A681F;
 }
 
 .dt-flow-pill.active {
     background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
     border-color: #8A681F;
     color: #FAF5E8;
-    box-shadow: 0 2px 8px rgba(24, 21, 18, 0.25);
+    box-shadow: 0 3px 10px rgba(24, 21, 18, 0.3);
 }
 
 .dt-flow-pill.active svg {
-    color: var(--dt-gold-radiant);
+    color: #D4AF37;
 }
 
 .dt-flow-count {
-    background: #E2E8F0;
-    color: #334155;
+    background: #F1F5F9;
+    color: #475569;
     font-size: 10px;
     font-weight: 800;
     padding: 1px 6px;
     border-radius: 10px;
+    transition: all 0.18s ease;
 }
 
 .dt-flow-pill.active .dt-flow-count {
     background: #8A681F;
-    color: #FFFFFF;
+    color: #FAF5E8;
+}
+
+.dt-flow-pill:hover .dt-flow-count {
+    background: #FAF5E8;
+    color: #8A681F;
 }
 
 /* ════ INDIAN RUPEE ICON HELPER ════ */

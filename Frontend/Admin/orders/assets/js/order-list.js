@@ -47,6 +47,50 @@
             }
         },
 
+        selectStatusPill: function(statusKey, element, event) {
+            if (event && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+                event.preventDefault();
+            } else {
+                return;
+            }
+
+            // Update active pill styling
+            document.querySelectorAll('.dt-flow-pill').forEach(pill => pill.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+                element.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+
+            // Sync with status dropdown filter
+            const select = document.getElementById('statusFilterSelect');
+            if (select) {
+                select.value = statusKey;
+            }
+
+            // Filter table instantly in real-time
+            this.filterTable();
+
+            // Update URL in browser history silently
+            const targetUrl = element ? element.getAttribute('href') : '/Frontend/Admin/orders/index.php';
+            if (window.history && window.history.pushState) {
+                window.history.pushState({ status: statusKey }, '', targetUrl);
+            }
+
+            // Toast notification feedback
+            if (window.DT_ORDERS) {
+                const count = element?.querySelector('.dt-flow-count')?.textContent || '';
+                const label = element?.querySelector('.dt-flow-label')?.textContent || statusKey;
+                window.DT_ORDERS.showToast(`📊 Filtered: ${label} (${count} orders)`);
+            }
+        },
+
+        scrollStatusFlow: function(direction) {
+            const scrollContainer = document.querySelector('.dt-status-flow-scroll');
+            if (!scrollContainer) return;
+            const scrollAmount = 240 * direction;
+            scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        },
+
         clearSearch: function() {
             const input = document.getElementById('orderSearchInput');
             if (input) {

@@ -109,14 +109,25 @@ $status_pills = [
 </div>
 
 <!-- ══ TIER 2: INTERACTIVE FULFILLMENT STATUS FLOW BAR ══ -->
-<div class="dt-status-flow-container">
-    <div class="dt-status-flow-scroll">
+<div class="dt-status-flow-container" style="position:relative; display:flex; align-items:center; background:#FFFFFF; border:1px solid #E2DFD7; border-radius:10px; padding:8px 12px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+    <!-- Left Scroll Stepper Button -->
+    <button type="button" class="dt-flow-scroll-btn left" onclick="window.DT_ORDER_LIST.scrollStatusFlow(-1)" title="Scroll Left" style="position:absolute; left:6px; z-index:10; width:24px; height:24px; border-radius:50%; background:#FFFFFF; border:1px solid #D4AF37; box-shadow:0 2px 6px rgba(0,0,0,0.12); color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+
+    <!-- Horizontal Smooth Flow Stream -->
+    <div class="dt-status-flow-scroll" style="width:100%; padding:0 24px; display:flex; align-items:center; gap:8px; overflow-x:auto; scroll-behavior:smooth; -webkit-overflow-scrolling:touch;">
         <?php foreach ($status_pills as $sp): ?>
-        <a href="<?php echo $sp['url']; ?>" class="dt-flow-pill <?php echo ($active_status_key === $sp['key']) ? 'active' : ''; ?>">
+        <a href="<?php echo $sp['url']; ?>" class="dt-flow-pill <?php echo ($active_status_key === $sp['key']) ? 'active' : ''; ?> dt-pill-<?php echo $sp['key']; ?>" data-status="<?php echo $sp['key']; ?>" onclick="window.DT_ORDER_LIST.selectStatusPill('<?php echo $sp['key']; ?>', this, event)">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><?php echo $sp['icon']; ?></svg>
             <span class="dt-flow-label"><?php echo $sp['label']; ?></span>
             <span class="dt-flow-count"><?php echo $sp['count']; ?></span>
         </a>
         <?php endforeach; ?>
     </div>
+
+    <!-- Right Scroll Stepper Button -->
+    <button type="button" class="dt-flow-scroll-btn right" onclick="window.DT_ORDER_LIST.scrollStatusFlow(1)" title="Scroll Right" style="position:absolute; right:6px; z-index:10; width:24px; height:24px; border-radius:50%; background:#FFFFFF; border:1px solid #D4AF37; box-shadow:0 2px 6px rgba(0,0,0,0.12); color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
 </div>
