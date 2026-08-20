@@ -204,7 +204,7 @@
                 </div>
                 <button type="button" class="dt-btn-action-sm pale-gold" onclick="document.getElementById('dtGalleryFileInput').click();">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>+ Add More Photos</span>
+                    <span>Add More Photos</span>
                 </button>
             </div>
 
@@ -212,7 +212,7 @@
             <div class="dt-dropzone dt-gallery-dropzone" id="galleryDropzone" onclick="document.getElementById('dtGalleryFileInput').click();">
                 <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#8A681F" stroke-width="1.8" style="margin-bottom:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                 <h4 style="font-weight:700; font-size:12.5px; color:#1d2327; margin:0 0 3px 0;">Drag &amp; Drop Additional Photos or Click to Browse</h4>
-                <p style="font-size:11px; color:#646970; margin:0;">Supports multiple WebP, PNG, JPG files • Click "Set as Main Photo" on any photo to switch.</p>
+                <p style="font-size:11px; color:#646970; margin:0;">Supports multiple WebP, PNG, JPG files • Click "Set Main" on any photo to switch.</p>
                 <input type="file" id="dtGalleryFileInput" style="display:none;" multiple accept="image/*" onchange="handleGalleryUpload(this.files)">
             </div>
 
@@ -253,10 +253,10 @@
                     <div class="dt-gallery-card-caption">Angle 3 (Detail)</div>
                 </div>
 
-                <!-- Quick "+ Add Photo" Drop Slot -->
+                <!-- Quick "Add Photo" Drop Slot -->
                 <div class="dt-gallery-add-slot" onclick="document.getElementById('dtGalleryFileInput').click();" title="Click to upload more photos">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>+ Add Photo</span>
+                    <span>Add Photo</span>
                 </div>
 
             </div>

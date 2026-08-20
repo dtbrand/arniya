@@ -335,7 +335,8 @@
 
         const videoPlayer = document.getElementById('productVideoPlayer');
         const videoWrap = document.getElementById('videoPlayerWrap');
-        const hasVideo = (videoWrap && videoWrap.style.display !== 'none' && videoPlayer && videoPlayer.src) 
+        const videoSrc = videoPlayer ? (videoPlayer.currentSrc || videoPlayer.src || videoPlayer.querySelector('source')?.src || '') : '';
+        const hasVideo = (videoWrap && videoWrap.style.display !== 'none' && videoSrc.length > 5) 
                       || (document.getElementById('dtVideoEmbedHolder')?.style.display === 'block');
 
         const textEl = document.getElementById('dtMediaCountText');
