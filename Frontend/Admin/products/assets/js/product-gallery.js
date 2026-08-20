@@ -68,7 +68,7 @@
     };
 
     // ══════════════════════════════════════════════════════════════
-    // 2. PRODUCT VIDEO STUDIO HANDLERS
+    // 2. MULTI-VIDEO PRODUCT STUDIO HANDLERS
     // ══════════════════════════════════════════════════════════════
     window.switchVideoTab = function(tab) {
         const uploadBtn = document.getElementById('vTabUploadBtn');
@@ -91,66 +91,81 @@
 
     window.handleProductVideoUpload = function(files) {
         if (!files || !files.length) return;
-        const file = files[0];
 
-        if (!file.type.startsWith('video/')) {
-            if (typeof window.showToast === 'function') {
-                window.showToast('⚠️ Please upload a valid MP4, WebM, or MOV video file.');
+        const container = document.getElementById('dtVideoItemsContainer');
+        let addedCount = 0;
+
+        Array.from(files).forEach((file) => {
+            if (!file.type.startsWith('video/')) return;
+
+            if (file.size > 60 * 1024 * 1024) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast(`⚠️ ${file.name} exceeds 50MB limit.`);
+                }
+                return;
             }
-            return;
-        }
 
-        if (file.size > 60 * 1024 * 1024) {
-            if (typeof window.showToast === 'function') {
-                window.showToast('⚠️ Video file size exceeds 50MB limit.');
+            const videoUrl = URL.createObjectURL(file);
+            const sizeStr = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+            const totalVideos = document.querySelectorAll('.dt-video-item-card').length + 1;
+
+            const card = document.createElement('div');
+            card.className = 'dt-video-item-card';
+            card.innerHTML = `
+                <div class="dt-video-card-thumb">
+                    <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+                        <source src="${videoUrl}" type="${file.type || 'video/mp4'}">
+                    </video>
+                    <span class="dt-video-hd-badge">
+                        <svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        VIDEO ${totalVideos}
+                    </span>
+                </div>
+                <div class="dt-video-card-meta">
+                    <div style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="dt-v-title">${file.name}</div>
+                    <div style="font-size:10.5px; color:#646970; margin-bottom:4px;" class="dt-v-sub">${sizeStr} • Ready for WhatsApp &amp; PDP</div>
+                    <div style="display:flex; gap:6px;">
+                        <button type="button" class="dt-btn-action-sm danger" onclick="removeVideoItem(this);">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <span>Remove</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            if (container) {
+                container.appendChild(card);
             }
-            return;
+            addedCount++;
+        });
+
+        if (addedCount > 0) {
+            if (typeof window.showToast === 'function') {
+                window.showToast(`🎬 ${addedCount} product video(s) added successfully!`);
+            }
+            updateMediaCounts();
         }
-
-        const videoUrl = URL.createObjectURL(file);
-        const player = document.getElementById('productVideoPlayer');
-        const playerWrap = document.getElementById('videoPlayerWrap');
-        const dropzone = document.getElementById('videoDropzone');
-        const fileNameLabel = document.getElementById('dtVideoFileName');
-
-        if (player) {
-            player.src = videoUrl;
-            player.load();
-        }
-
-        const sizeStr = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
-        if (fileNameLabel) {
-            fileNameLabel.textContent = `${file.name} (${sizeStr})`;
-        }
-
-        if (playerWrap) playerWrap.style.display = 'flex';
-        if (dropzone) dropzone.style.display = 'none';
-
-        if (typeof window.showToast === 'function') {
-            window.showToast('🎬 HD Product Video attached & ready for playback!');
-        }
-        updateMediaCounts();
     };
 
-    window.removeProductVideo = function() {
-        const player = document.getElementById('productVideoPlayer');
-        const playerWrap = document.getElementById('videoPlayerWrap');
-        const dropzone = document.getElementById('videoDropzone');
-        const fileInput = document.getElementById('productVideoFileInput');
-
-        if (player) {
-            player.pause();
-            player.removeAttribute('src');
-            player.load();
+    window.removeVideoItem = function(btn) {
+        const card = btn.closest('.dt-video-item-card');
+        if (card) {
+            const player = card.querySelector('video');
+            if (player) {
+                player.pause();
+                player.removeAttribute('src');
+            }
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.85)';
+            card.style.transition = 'all 0.2s ease';
+            setTimeout(() => {
+                card.remove();
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Video removed from product.');
+                }
+                updateMediaCounts();
+            }, 200);
         }
-        if (fileInput) fileInput.value = '';
-        if (playerWrap) playerWrap.style.display = 'none';
-        if (dropzone) dropzone.style.display = 'block';
-
-        if (typeof window.showToast === 'function') {
-            window.showToast('Product video removed.');
-        }
-        updateMediaCounts();
     };
 
     window.handleVideoUrlEmbed = function() {
@@ -165,61 +180,71 @@
             return;
         }
 
-        const embedHolder = document.getElementById('dtVideoEmbedHolder');
-        const embedFrame = document.getElementById('dtVideoEmbedFrame');
+        const container = document.getElementById('dtVideoItemsContainer');
+        const totalVideos = document.querySelectorAll('.dt-video-item-card').length + 1;
 
-        let embedHtml = '';
+        let playerHtml = '';
+        let title = 'Linked Video';
 
-        // Check for YouTube Shorts or Watch URL
         if (rawUrl.includes('youtube.com/shorts/') || rawUrl.includes('youtu.be/') || rawUrl.includes('youtube.com/watch')) {
             let ytId = '';
             if (rawUrl.includes('/shorts/')) {
                 ytId = rawUrl.split('/shorts/')[1].split('?')[0].split('/')[0];
+                title = 'YouTube Shorts Reel';
             } else if (rawUrl.includes('youtu.be/')) {
                 ytId = rawUrl.split('youtu.be/')[1].split('?')[0].split('/')[0];
+                title = 'YouTube Walkthrough';
             } else if (rawUrl.includes('v=')) {
                 ytId = rawUrl.split('v=')[1].split('&')[0];
+                title = 'YouTube Video';
             }
 
             if (ytId) {
-                embedHtml = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${ytId}?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:none;"></iframe>`;
+                playerHtml = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${ytId}?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:none;"></iframe>`;
             }
-        } 
-        // Check for Direct MP4 / WebM URL
-        else if (rawUrl.endsWith('.mp4') || rawUrl.endsWith('.webm') || rawUrl.endsWith('.mov')) {
-            embedHtml = `<video controls playsinline style="width:100%; height:100%; object-fit:cover; background:#000;"><source src="${rawUrl}" type="video/mp4"></video>`;
-        }
-        // Instagram Reel / Generic Embed
-        else {
-            embedHtml = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#FAF5E8; text-align:center; padding:12px;">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                <div style="font-size:12px; font-weight:700; margin-top:4px; color:#FDE047;">Live Stream Reel URL Linked</div>
-                <div style="font-size:11px; color:#c3c4c7; max-width:85%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${rawUrl}</div>
+        } else if (rawUrl.endsWith('.mp4') || rawUrl.endsWith('.webm') || rawUrl.endsWith('.mov')) {
+            playerHtml = `<video controls playsinline style="width:100%; height:100%; object-fit:cover; background:#000;"><source src="${rawUrl}" type="video/mp4"></video>`;
+            title = 'Cloud MP4 Video';
+        } else {
+            playerHtml = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#FAF5E8; text-align:center; padding:8px; background:#181512;">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#D4AF37" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                <div style="font-size:10px; font-weight:700; color:#FDE047; margin-top:2px;">Reel Link</div>
             </div>`;
+            title = 'Instagram Reel Video';
         }
 
-        if (embedFrame && embedHtml) {
-            embedFrame.innerHTML = embedHtml;
-            if (embedHolder) embedHolder.style.display = 'block';
-            if (typeof window.showToast === 'function') {
-                window.showToast('🎬 Video link embedded successfully!');
-            }
-            updateMediaCounts();
+        const card = document.createElement('div');
+        card.className = 'dt-video-item-card';
+        card.innerHTML = `
+            <div class="dt-video-card-thumb">
+                ${playerHtml}
+                <span class="dt-video-hd-badge">
+                    <svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    URL VIDEO
+                </span>
+            </div>
+            <div class="dt-video-card-meta">
+                <div style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="dt-v-title">${title} (${totalVideos})</div>
+                <div style="font-size:10px; color:#646970; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" class="dt-v-sub">${rawUrl}</div>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" class="dt-btn-action-sm danger" onclick="removeVideoItem(this);">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        <span>Remove</span>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        if (container) {
+            container.appendChild(card);
         }
-    };
 
-    window.removeVideoUrlEmbed = function() {
-        const input = document.getElementById('dtVideoUrlInput');
-        const embedHolder = document.getElementById('dtVideoEmbedHolder');
-        const embedFrame = document.getElementById('dtVideoEmbedFrame');
-
-        if (input) input.value = '';
-        if (embedFrame) embedFrame.innerHTML = '';
-        if (embedHolder) embedHolder.style.display = 'none';
-
+        input.value = '';
         if (typeof window.showToast === 'function') {
-            window.showToast('Video URL cleared.');
+            window.showToast('🎬 Video link added successfully!');
         }
+        // Switch back to upload tab to see list
+        switchVideoTab('upload');
         updateMediaCounts();
     };
 
@@ -333,15 +358,12 @@
         const galleryCards = document.querySelectorAll('.dt-gallery-card').length;
         const totalPhotos = (hasMain ? 1 : 0) + galleryCards;
 
-        const videoPlayer = document.getElementById('productVideoPlayer');
-        const videoWrap = document.getElementById('videoPlayerWrap');
-        const videoSrc = videoPlayer ? (videoPlayer.currentSrc || videoPlayer.src || videoPlayer.querySelector('source')?.src || '') : '';
-        const hasVideo = (videoWrap && videoWrap.style.display !== 'none' && videoSrc.length > 5) 
-                      || (document.getElementById('dtVideoEmbedHolder')?.style.display === 'block');
+        const videoCards = document.querySelectorAll('.dt-video-item-card').length;
 
         const textEl = document.getElementById('dtMediaCountText');
         if (textEl) {
-            textEl.textContent = `${totalPhotos} Photo${totalPhotos === 1 ? '' : 's'} • ${hasVideo ? '1 Video Ready' : 'No Video'}`;
+            const videoText = videoCards === 0 ? 'No Video' : `${videoCards} Video${videoCards === 1 ? '' : 's'} Ready`;
+            textEl.textContent = `${totalPhotos} Photo${totalPhotos === 1 ? '' : 's'} • ${videoText}`;
         }
     }
 
