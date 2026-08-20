@@ -64,15 +64,16 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **👑 Primary Gold** | `linear-gradient(135deg, #8A681F, #B8860B, #D4AF37)` | `1px solid #8A681F` | `#181512` (Bold 800) | `#181512` (2.8) |
 | **💬 WhatsApp B2B** | `linear-gradient(135deg, #15803D, #16A34A)` | `1px solid #15803D` | `#ffffff` (Bold 700) | `#ffffff` (2.2) |
-| **⚪ Secondary Pill**| `#FAF5E8` | `1px solid #D4AF37` | `#8A681F` (Bold 700) | `#8A681F` (2.2) |
-| **👁️ Info Pill**    | `#EFF6FF` | `1px solid #93C5FD` | `#1D4ED8` (Bold 700) | `#1D4ED8` (2.2) |
-| **🗑️ Danger Pill**  | `#FEF2F2` | `1px solid #FECACA` | `#DC2626` (Weight 600)| `#DC2626` (2.0) |
+| **⚪ Secondary Pill** | `#FAF5E8` | `1px solid #D4AF37` | `#8A681F` (Bold 700) | `#8A681F` (2.2) |
+| **👁️ Info Pill** | `#EFF6FF` | `1px solid #93C5FD` | `#1D4ED8` (Bold 700) | `#1D4ED8` (2.2) |
+| **🗑️ Danger Pill** | `#FEF2F2` | `1px solid #FECACA` | `#DC2626` (Weight 600) | `#DC2626` (2.0) |
 
 ---
 
 ## ⚡ 3. 100% Vector SVG Icon Standard (Zero Emojis in Buttons)
 
 All buttons and interactive pills MUST use clean inline vector SVGs:
+
 - **Edit**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
 - **View**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
 - **Delete**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`
@@ -94,6 +95,7 @@ All buttons and interactive pills MUST use clean inline vector SVGs:
 ## 🔲 5. Wholesaler Dashboard & Shop Product Card Architecture
 
 Every Product Card must deliver high-density B2B wholesale intelligence:
+
 1. **Aspect Ratio & Hover**: `1:1` or `4:3` containment images with `object-fit: cover`, rounded `8px`, with hover elevation (`transform: translateY(-2px); box-shadow: 0 6px 18px rgba(212,175,55,0.18)`).
 2. **Badges**:
    - Top-Left: `✨ Best Seller` (`#8A681F`), `🔥 New Arrival` (`#D4AF37`), `👑 Luxury Bridal` (`#B91C1C`), `⚡ Super Value` (`#0F766E`).
@@ -112,6 +114,7 @@ Every Product Card must deliver high-density B2B wholesale intelligence:
 ## 📊 6. Wholesale KPI Summary Metrics Ribbon
 
 Every main module (Products, Categories, Brands, Reviews, Featured, Best Sellers, New Arrivals) must open with a **4-Card KPI Ribbon**:
+
 - **Card 1 (Gold Accent)**: Primary Count / Designs (`📦 ACTIVE B2B DESIGNS: 1,240 SKUs`).
 - **Card 2 (Emerald Accent)**: Valuation / Approval Rate (`💰 B2B CATALOG VALUATION: ₹48.60 Lakhs` or `APPROVED: 1,380`).
 - **Card 3 (Blue Accent)**: Surat Central Depot Inventory (`🏭 SURAT CENTRAL DEPOT: 8,450 Units Ready`).
@@ -121,7 +124,7 @@ Every main module (Products, Categories, Brands, Reviews, Featured, Best Sellers
 
 ## 📸 7. Screenshot-Driven Autonomous Execution Protocol
 
-Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*, *"make it like wholesale"*):
+Whenever the user provides ANY screenshot:
 
 1. **Deep Visual & Component Inspection**:
    - Analyze every visible UI element: Header, Breadcrumbs, Input fields, Select dropdowns, Checkboxes, Buttons, Tabs, Icons, Spacing, Padding, and Alignment.
@@ -153,6 +156,7 @@ Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*
   3. **Live FTP Server**: Auto-upload and deploy all modified files via Python `ftplib` directly to Hostinger live server.
 
 ### 🌐 Live Server & FTP Details
+
 - **FTP Host / IP**: `147.93.99.134` (Port `21`)
 - **FTP Username**: `u602484543.jaihanumantex.in`
 - **FTP Password**: `Gautam@9006`

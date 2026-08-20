@@ -62,9 +62,9 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **👑 Primary Gold** | `linear-gradient(135deg, #8A681F, #B8860B, #D4AF37)` | `1px solid #8A681F` | `#181512` (Bold 800) | `#181512` (2.8) |
 | **💬 WhatsApp B2B** | `linear-gradient(135deg, #15803D, #16A34A)` | `1px solid #15803D` | `#ffffff` (Bold 700) | `#ffffff` (2.2) |
-| **⚪ Secondary Pill**| `#FAF5E8` | `1px solid #D4AF37` | `#8A681F` (Bold 700) | `#8A681F` (2.2) |
-| **👁️ Info Pill**    | `#EFF6FF` | `1px solid #93C5FD` | `#1D4ED8` (Bold 700) | `#1D4ED8` (2.2) |
-| **🗑️ Danger Pill**  | `#FEF2F2` | `1px solid #FECACA` | `#DC2626` (Weight 600)| `#DC2626` (2.0) |
+| **⚪ Secondary Pill** | `#FAF5E8` | `1px solid #D4AF37` | `#8A681F` (Bold 700) | `#8A681F` (2.2) |
+| **👁️ Info Pill** | `#EFF6FF` | `1px solid #93C5FD` | `#1D4ED8` (Bold 700) | `#1D4ED8` (2.2) |
+| **🗑️ Danger Pill** | `#FEF2F2` | `1px solid #FECACA` | `#DC2626` (Weight 600) | `#DC2626` (2.0) |
 
 ---
 
