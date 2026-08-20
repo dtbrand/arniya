@@ -733,6 +733,62 @@ window.DT_DISPLAY = {
         });
     },
 
+    toggleSection: function(bodyId, headerEl) {
+        const body = document.getElementById(bodyId);
+        if (!body) return;
+
+        const isCollapsed = body.classList.toggle('collapsed');
+        if (headerEl) {
+            headerEl.classList.toggle('active', !isCollapsed);
+            const sign = headerEl.querySelector('.dt-collapse-sign');
+            const text = headerEl.querySelector('.dt-collapse-text');
+            if (sign) sign.textContent = isCollapsed ? '➕' : '➖';
+            if (text) text.textContent = isCollapsed ? 'Expand' : 'Collapse';
+        }
+    },
+
+    expandAll: function() {
+        for (let i = 1; i <= 6; i++) {
+            const body = document.getElementById('sec-body-' + i);
+            if (body) body.classList.remove('collapsed');
+        }
+        document.querySelectorAll('.dt-accordion-header').forEach(header => {
+            header.classList.add('active');
+            const sign = header.querySelector('.dt-collapse-sign');
+            const text = header.querySelector('.dt-collapse-text');
+            if (sign) sign.textContent = '➖';
+            if (text) text.textContent = 'Collapse';
+        });
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('➕ Expanded all Display Setting sections!');
+    },
+
+    collapseAll: function() {
+        for (let i = 1; i <= 6; i++) {
+            const body = document.getElementById('sec-body-' + i);
+            if (body) body.classList.add('collapsed');
+        }
+        document.querySelectorAll('.dt-accordion-header').forEach(header => {
+            header.classList.remove('active');
+            const sign = header.querySelector('.dt-collapse-sign');
+            const text = header.querySelector('.dt-collapse-text');
+            if (sign) sign.textContent = '➕';
+            if (text) text.textContent = 'Expand';
+        });
+        if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('➖ Collapsed all Display Setting sections!');
+    },
+
+    toggleSubGroup: function(grpId, btn) {
+        const grp = document.getElementById(grpId);
+        if (!grp) return;
+        if (grp.style.display === 'none') {
+            grp.style.display = 'grid';
+            if (btn) btn.textContent = '− Minimize';
+        } else {
+            grp.style.display = 'none';
+            if (btn) btn.textContent = '+ Expand';
+        }
+    },
+
     applyPreset: function(preset) {
         if (preset === 'b2b') {
             const chkRating = document.getElementById('chkRating'); if (chkRating) chkRating.checked = true;
