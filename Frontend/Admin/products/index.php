@@ -108,6 +108,91 @@ $active_subnav = "";
     .wp-row-actions a:hover {
         text-decoration: underline;
     }
+    .wp-star-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #c3c4c7;
+        padding: 0;
+        line-height: 1;
+        transition: all 0.15s ease;
+    }
+    .wp-star-btn.active {
+        color: #D4AF37;
+        text-shadow: 0 0 3px rgba(212,175,55,0.5);
+    }
+    .wp-star-btn:hover {
+        transform: scale(1.2);
+    }
+
+    /* Modal Backdrop & Container */
+    .dt-modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(24, 21, 18, 0.6);
+        backdrop-filter: blur(3px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    .dt-modal-dialog {
+        background: #fff;
+        border-radius: 8px;
+        width: 95%;
+        max-width: 500px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        border: 1px solid #D4AF37;
+        overflow: hidden;
+        animation: dtModalIn 0.2s ease-out;
+    }
+    @keyframes dtModalIn {
+        from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .dt-modal-header {
+        background: #181512;
+        color: #fff;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #D4AF37;
+    }
+    .dt-modal-title {
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .dt-modal-close {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        opacity: 0.8;
+    }
+    .dt-modal-close:hover { opacity: 1; }
+    .dt-modal-body {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .dt-modal-footer {
+        background: #FAF5E8;
+        padding: 10px 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        border-top: 1px solid #D4AF37;
+    }
     </style>
 </head>
 <body>
@@ -123,10 +208,10 @@ $active_subnav = "";
                     <h1 class="wp-heading-inline" style="font-size:18px; font-weight:800; color:#181512; margin:0;">Products &amp; Wholesale Hub</h1>
                     <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;">1,240 Total</span>
                     
-                    <!-- + Add Product Primary Gold Button -->
+                    <!-- Add Product Primary Gold Button -->
                     <a href="/Frontend/Admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        <span>+ Add Product</span>
+                        <span>Add Product</span>
                     </a>
 
                     <!-- Secondary Action Buttons with Real SVG Icons -->
@@ -302,7 +387,7 @@ $active_subnav = "";
                         <tbody id="wpProductsTableBody">
                             
                             <!-- Row 1 -->
-                            <tr id="row-prod-101" data-cat="Silk Sarees" data-brand="DT Signature" data-stock="In stock" data-status="Published" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                            <tr id="row-prod-101" data-cat="Silk Sarees" data-brand="DT Signature" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                 <td style="text-align: center; padding:8px 6px;">
                                     <input type="checkbox" class="wp-row-check" value="101" style="cursor:pointer; width:14px; height:14px;">
                                 </td>
@@ -323,31 +408,31 @@ $active_subnav = "";
                                         <a href="javascript:void(0)" onclick="trashProductRow('row-prod-101', 'Kanjivaram Pure Silk Gold Zari Saree')" style="color:#DC2626; font-weight:600;">Trash</a>
                                     </div>
                                 </td>
-                                <td style="padding:8px 8px;"><code style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KLN-SR-111</code></td>
+                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KLN-SR-111</code></td>
                                 <td style="padding:8px 8px;">
-                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
+                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
                                         <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span>In stock (45)</span>
+                                        <span class="stock-text">In stock (45)</span>
                                     </span>
                                 </td>
                                 <td style="padding:8px 8px;">
-                                    <strong style="font-size:12.5px; color:#181512;">₹4,490</strong><br>
-                                    <small style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹2,850</small>
+                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹4,490</strong><br>
+                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹2,850</small>
                                 </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Silk Sarees</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong>DT Signature</strong></td>
+                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Silk Sarees</a></td>
+                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
                                 <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">5.0 ★</span> <span style="color:#646970; font-size:10.5px;">(128)</span></td>
                                 <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="this.classList.toggle('active')" style="background:none; border:none; cursor:pointer; font-size:15px; color:#D4AF37;">★</button>
+                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-101', 'Kanjivaram Pure Silk Gold Zari Saree')">★</button>
                                 </td>
                                 <td style="padding:8px 10px; font-size:11px;">
-                                    <span style="color:#15803D; font-weight:700;">Published</span><br>
+                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
                                     <small style="color:#646970;">2026/08/20</small>
                                 </td>
                             </tr>
 
                             <!-- Row 2 -->
-                            <tr id="row-prod-102" data-cat="Banarasi Brocade" data-brand="Arniya Heritage" data-stock="In stock" data-status="Published" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                            <tr id="row-prod-102" data-cat="Banarasi Brocade" data-brand="Arniya Heritage" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                 <td style="text-align: center; padding:8px 6px;">
                                     <input type="checkbox" class="wp-row-check" value="102" style="cursor:pointer; width:14px; height:14px;">
                                 </td>
@@ -368,31 +453,31 @@ $active_subnav = "";
                                         <a href="javascript:void(0)" onclick="trashProductRow('row-prod-102', 'Banarasi Royal Brocade Weave Saree')" style="color:#DC2626; font-weight:600;">Trash</a>
                                     </div>
                                 </td>
-                                <td style="padding:8px 8px;"><code style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BNR-SR-204</code></td>
+                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BNR-SR-204</code></td>
                                 <td style="padding:8px 8px;">
-                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
+                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
                                         <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span>In stock (28)</span>
+                                        <span class="stock-text">In stock (28)</span>
                                     </span>
                                 </td>
                                 <td style="padding:8px 8px;">
-                                    <strong style="font-size:12.5px; color:#181512;">₹4,990</strong><br>
-                                    <small style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹3,200</small>
+                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹4,990</strong><br>
+                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹3,200</small>
                                 </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Banarasi Brocade</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong>Arniya Heritage</strong></td>
+                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Banarasi Brocade</a></td>
+                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">Arniya Heritage</strong></td>
                                 <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">4.9 ★</span> <span style="color:#646970; font-size:10.5px;">(94)</span></td>
                                 <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="this.classList.toggle('active')" style="background:none; border:none; cursor:pointer; font-size:15px; color:#D4AF37;">★</button>
+                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-102', 'Banarasi Royal Brocade Weave Saree')">★</button>
                                 </td>
                                 <td style="padding:8px 10px; font-size:11px;">
-                                    <span style="color:#15803D; font-weight:700;">Published</span><br>
+                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
                                     <small style="color:#646970;">2026/08/19</small>
                                 </td>
                             </tr>
 
                             <!-- Row 3 -->
-                            <tr id="row-prod-103" data-cat="Bridal Lehengas" data-brand="DT Couture" data-stock="Low stock" data-status="Published" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                            <tr id="row-prod-103" data-cat="Bridal Lehengas" data-brand="DT Couture" data-stock="Low stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                 <td style="text-align: center; padding:8px 6px;">
                                     <input type="checkbox" class="wp-row-check" value="103" style="cursor:pointer; width:14px; height:14px;">
                                 </td>
@@ -413,31 +498,31 @@ $active_subnav = "";
                                         <a href="javascript:void(0)" onclick="trashProductRow('row-prod-103', 'Crimson Bridal Handcrafted Zardosi Lehenga')" style="color:#DC2626; font-weight:600;">Trash</a>
                                     </div>
                                 </td>
-                                <td style="padding:8px 8px;"><code style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BRD-LH-902</code></td>
+                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BRD-LH-902</code></td>
                                 <td style="padding:8px 8px;">
-                                    <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
+                                    <span class="adm-badge prod-stock-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
                                         <span style="width:5px; height:5px; border-radius:50%; background:#d97706; display:inline-block;"></span>
-                                        <span>Low stock (4)</span>
+                                        <span class="stock-text">Low stock (4)</span>
                                     </span>
                                 </td>
                                 <td style="padding:8px 8px;">
-                                    <strong style="font-size:12.5px; color:#181512;">₹16,490</strong><br>
-                                    <small style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹11,500</small>
+                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹16,490</strong><br>
+                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹11,500</small>
                                 </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Bridal Lehengas</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong>DT Couture</strong></td>
+                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Bridal Lehengas</a></td>
+                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Couture</strong></td>
                                 <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">5.0 ★</span> <span style="color:#646970; font-size:10.5px;">(42)</span></td>
                                 <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="this.classList.toggle('active')" style="background:none; border:none; cursor:pointer; font-size:15px; color:#D4AF37;">★</button>
+                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-103', 'Crimson Bridal Handcrafted Zardosi Lehenga')">★</button>
                                 </td>
                                 <td style="padding:8px 10px; font-size:11px;">
-                                    <span style="color:#15803D; font-weight:700;">Published</span><br>
+                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
                                     <small style="color:#646970;">2026/08/18</small>
                                 </td>
                             </tr>
 
                             <!-- Row 4 -->
-                            <tr id="row-prod-104" data-cat="Designer Kurtis" data-brand="DT Signature" data-stock="In stock" data-status="Published" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                            <tr id="row-prod-104" data-cat="Designer Kurtis" data-brand="DT Signature" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                 <td style="text-align: center; padding:8px 6px;">
                                     <input type="checkbox" class="wp-row-check" value="104" style="cursor:pointer; width:14px; height:14px;">
                                 </td>
@@ -458,25 +543,25 @@ $active_subnav = "";
                                         <a href="javascript:void(0)" onclick="trashProductRow('row-prod-104', 'Chanderi Foil Printed Festive Kurti Set')" style="color:#DC2626; font-weight:600;">Trash</a>
                                     </div>
                                 </td>
-                                <td style="padding:8px 8px;"><code style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KRT-CH-401</code></td>
+                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KRT-CH-401</code></td>
                                 <td style="padding:8px 8px;">
-                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
+                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
                                         <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span>In stock (62)</span>
+                                        <span class="stock-text">In stock (62)</span>
                                     </span>
                                 </td>
                                 <td style="padding:8px 8px;">
-                                    <strong style="font-size:12.5px; color:#181512;">₹2,290</strong><br>
-                                    <small style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹1,450</small>
+                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹2,290</strong><br>
+                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹1,450</small>
                                 </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Designer Kurtis</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong>DT Signature</strong></td>
+                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Designer Kurtis</a></td>
+                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
                                 <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">4.8 ★</span> <span style="color:#646970; font-size:10.5px;">(68)</span></td>
                                 <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="this.classList.toggle('active')" style="background:none; border:none; cursor:pointer; font-size:15px; color:#D4AF37;">★</button>
+                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-104', 'Chanderi Foil Printed Festive Kurti Set')">★</button>
                                 </td>
                                 <td style="padding:8px 10px; font-size:11px;">
-                                    <span style="color:#15803D; font-weight:700;">Published</span><br>
+                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
                                     <small style="color:#646970;">2026/08/17</small>
                                 </td>
                             </tr>
@@ -663,6 +748,8 @@ $active_subnav = "";
                     <select class="wp-select" id="wpBulkActionSelectBottom" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7;">
                         <option value="">Bulk actions</option>
                         <option value="edit">Edit Selected</option>
+                        <option value="featured">Mark as featured</option>
+                        <option value="unfeatured">Remove from featured</option>
                         <option value="trash">Move to Trash</option>
                     </select>
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="handleWpBulkActionBottom()" style="height:28px; font-size:11px; padding:0 10px;">
@@ -686,6 +773,70 @@ $active_subnav = "";
 
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
+    </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- BULK QUICK EDIT MODAL                                    -->
+<!-- ======================================================== -->
+<div id="bulkEditModal" class="dt-modal-backdrop">
+    <div class="dt-modal-dialog">
+        <div class="dt-modal-header">
+            <div class="dt-modal-title">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span id="bulkEditModalTitle">Bulk Quick Edit</span>
+            </div>
+            <button type="button" class="dt-modal-close" onclick="closeBulkEditModal()">✕</button>
+        </div>
+        <div class="dt-modal-body">
+            <div style="font-size:12px; color:#50575e; background:#FAF5E8; padding:8px 10px; border-radius:4px; border:1px solid #D4AF37;">
+                Changes will be applied to all <strong id="bulkEditCount" style="color:#8A681F;">0</strong> selected products.
+            </div>
+
+            <div>
+                <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Product Category</label>
+                <select id="bulkEditCategory" class="wp-select" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <option value="">— Keep Current Category —</option>
+                    <option value="Silk Sarees">Silk Sarees</option>
+                    <option value="Banarasi Brocade">Banarasi Brocade</option>
+                    <option value="Bridal Lehengas">Bridal Lehengas</option>
+                    <option value="Designer Kurtis">Designer Kurtis</option>
+                    <option value="Dress Materials">Dress Materials</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Brand</label>
+                <select id="bulkEditBrand" class="wp-select" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <option value="">— Keep Current Brand —</option>
+                    <option value="DT Signature">DT Signature</option>
+                    <option value="Arniya Heritage">Arniya Heritage</option>
+                    <option value="DT Couture">DT Couture</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Stock Status</label>
+                <select id="bulkEditStock" class="wp-select" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+                    <option value="">— Keep Current Stock —</option>
+                    <option value="In stock">In stock</option>
+                    <option value="Low stock">Low stock</option>
+                    <option value="Out of stock">Out of stock</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Wholesale Price Adjustment (₹)</label>
+                <input type="text" id="bulkEditPrice" placeholder="e.g. Set Wholesale Rate (e.g. ₹2,950)" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+            </div>
+        </div>
+        <div class="dt-modal-footer">
+            <button type="button" class="dt-btn-action-sm pale-gold" onclick="closeBulkEditModal()" style="height:30px; padding:0 12px;">Cancel</button>
+            <button type="button" class="dt-btn-action-sm gold" onclick="saveBulkEdit()" style="height:30px; padding:0 16px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Update All Selected</span>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -764,7 +915,15 @@ function filterWpProducts(status, linkElem) {
             const txt = r.textContent.toLowerCase();
             const dataStatus = (r.getAttribute('data-status') || '').toLowerCase();
             const dataStock = (r.getAttribute('data-stock') || '').toLowerCase();
-            const match = txt.includes(status.toLowerCase()) || dataStatus.includes(status.toLowerCase()) || dataStock.includes(status.toLowerCase());
+            const isFeatured = r.getAttribute('data-featured') === '1';
+
+            let match = false;
+            if (status.toLowerCase() === 'featured') {
+                match = isFeatured || dataStatus.includes('featured');
+            } else {
+                match = txt.includes(status.toLowerCase()) || dataStatus.includes(status.toLowerCase()) || dataStock.includes(status.toLowerCase());
+            }
+
             r.style.display = match ? '' : 'none';
         }
     });
@@ -813,9 +972,48 @@ function applyWpFilters() {
     }
 }
 
+/* ── INDIVIDUAL STAR TOGGLE FOR FEATURED ── */
+function toggleFeaturedProduct(btn, rowId, productName) {
+    const row = document.getElementById(rowId);
+    const isCurrentlyActive = btn.classList.contains('active');
+
+    if (isCurrentlyActive) {
+        btn.classList.remove('active');
+        btn.textContent = '★';
+        btn.style.color = '#c3c4c7';
+        if (row) {
+            row.setAttribute('data-featured', '0');
+            row.setAttribute('data-status', 'Published');
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast(`"${productName}" removed from Featured`);
+        }
+    } else {
+        btn.classList.add('active');
+        btn.textContent = '★';
+        btn.style.color = '#D4AF37';
+        if (row) {
+            row.setAttribute('data-featured', '1');
+            row.setAttribute('data-status', 'Featured');
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast(`🌟 "${productName}" marked as Featured!`);
+        }
+    }
+}
+
+/* ── BULK ACTIONS (TOP & BOTTOM) ── */
 function handleWpBulkAction() {
     const select = document.getElementById('wpBulkActionSelect');
-    const action = select?.value;
+    processBulkAction(select?.value);
+}
+
+function handleWpBulkActionBottom() {
+    const select = document.getElementById('wpBulkActionSelectBottom');
+    processBulkAction(select?.value);
+}
+
+function processBulkAction(action) {
     if (!action) {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Please select a bulk action');
         return;
@@ -826,7 +1024,41 @@ function handleWpBulkAction() {
         return;
     }
 
-    if (action === 'trash') {
+    if (action === 'featured') {
+        selected.forEach(chk => {
+            const row = chk.closest('tr');
+            if (row) {
+                row.setAttribute('data-featured', '1');
+                row.setAttribute('data-status', 'Featured');
+                const starBtn = row.querySelector('.wp-star-btn');
+                if (starBtn) {
+                    starBtn.classList.add('active');
+                    starBtn.style.color = '#D4AF37';
+                }
+            }
+        });
+        if (typeof window.showToast === 'function') {
+            window.showToast(`🌟 Marked ${selected.length} product(s) as Featured!`);
+        }
+    } 
+    else if (action === 'unfeatured') {
+        selected.forEach(chk => {
+            const row = chk.closest('tr');
+            if (row) {
+                row.setAttribute('data-featured', '0');
+                row.setAttribute('data-status', 'Published');
+                const starBtn = row.querySelector('.wp-star-btn');
+                if (starBtn) {
+                    starBtn.classList.remove('active');
+                    starBtn.style.color = '#c3c4c7';
+                }
+            }
+        });
+        if (typeof window.showToast === 'function') {
+            window.showToast(`Removed ${selected.length} product(s) from Featured`);
+        }
+    } 
+    else if (action === 'trash') {
         selected.forEach(chk => {
             const row = chk.closest('tr');
             if (row) {
@@ -836,37 +1068,83 @@ function handleWpBulkAction() {
                 setTimeout(() => row.remove(), 300);
             }
         });
-        if (typeof window.showToast === 'function') window.showToast(`🗑️ Moved ${selected.length} products to Trash`);
-    } else {
-        if (typeof window.showToast === 'function') window.showToast(`✅ Bulk action "${action}" applied to ${selected.length} products`);
+        if (typeof window.showToast === 'function') {
+            window.showToast(`🗑️ Moved ${selected.length} product(s) to Trash`);
+        }
+    } 
+    else if (action === 'edit') {
+        openBulkEditModal(selected.length);
     }
 }
 
-function handleWpBulkActionBottom() {
-    const select = document.getElementById('wpBulkActionSelectBottom');
-    const action = select?.value;
-    if (!action) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please select a bulk action');
-        return;
-    }
-    const selected = document.querySelectorAll('.wp-row-check:checked');
-    if (selected.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one product row');
-        return;
-    }
+/* ── BULK QUICK EDIT MODAL LOGIC ── */
+function openBulkEditModal(count) {
+    const modal = document.getElementById('bulkEditModal');
+    const countElem = document.getElementById('bulkEditCount');
+    if (countElem) countElem.textContent = count;
+    if (modal) modal.style.display = 'flex';
+}
 
-    if (action === 'trash') {
-        selected.forEach(chk => {
-            const row = chk.closest('tr');
-            if (row) {
-                row.style.transition = 'all 0.3s ease';
-                row.style.opacity = '0';
-                setTimeout(() => row.remove(), 300);
+function closeBulkEditModal() {
+    const modal = document.getElementById('bulkEditModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function saveBulkEdit() {
+    const selected = document.querySelectorAll('.wp-row-check:checked');
+    if (selected.length === 0) return;
+
+    const newCat = document.getElementById('bulkEditCategory')?.value;
+    const newBrand = document.getElementById('bulkEditBrand')?.value;
+    const newStock = document.getElementById('bulkEditStock')?.value;
+    const newPrice = document.getElementById('bulkEditPrice')?.value;
+
+    selected.forEach(chk => {
+        const row = chk.closest('tr');
+        if (!row) return;
+
+        if (newCat) {
+            row.setAttribute('data-cat', newCat);
+            const catLink = row.querySelector('.prod-cat-link');
+            if (catLink) catLink.textContent = newCat;
+        }
+
+        if (newBrand) {
+            row.setAttribute('data-brand', newBrand);
+            const brandVal = row.querySelector('.prod-brand-val');
+            if (brandVal) brandVal.textContent = newBrand;
+        }
+
+        if (newStock) {
+            row.setAttribute('data-stock', newStock);
+            const stockBadge = row.querySelector('.prod-stock-badge');
+            const stockText = row.querySelector('.stock-text');
+            if (stockBadge && stockText) {
+                if (newStock === 'In stock') {
+                    stockBadge.style.background = '#DCFCE7';
+                    stockBadge.style.color = '#15803D';
+                    stockText.textContent = 'In stock (Ready)';
+                } else if (newStock === 'Low stock') {
+                    stockBadge.style.background = '#FEF3C7';
+                    stockBadge.style.color = '#B45309';
+                    stockText.textContent = 'Low stock (5)';
+                } else if (newStock === 'Out of stock') {
+                    stockBadge.style.background = '#FEE2E2';
+                    stockBadge.style.color = '#DC2626';
+                    stockText.textContent = 'Out of stock';
+                }
             }
-        });
-        if (typeof window.showToast === 'function') window.showToast(`🗑️ Moved ${selected.length} products to Trash`);
-    } else {
-        if (typeof window.showToast === 'function') window.showToast(`✅ Bulk action "${action}" applied to ${selected.length} products`);
+        }
+
+        if (newPrice) {
+            const wholesaleElem = row.querySelector('.prod-wholesale-price');
+            if (wholesaleElem) wholesaleElem.textContent = 'Wholesale: ' + newPrice;
+        }
+    });
+
+    closeBulkEditModal();
+    if (typeof window.showToast === 'function') {
+        window.showToast(`✨ Bulk updated ${selected.length} products successfully!`);
     }
 }
 
@@ -883,7 +1161,7 @@ function duplicateProductRow(rowId) {
         titleElem.textContent = titleElem.textContent + ' (Copy)';
     }
 
-    const skuElem = clone.querySelector('code');
+    const skuElem = clone.querySelector('.prod-sku-val');
     if (skuElem) {
         skuElem.textContent = skuElem.textContent + '-COPY';
     }
@@ -898,7 +1176,10 @@ function duplicateProductRow(rowId) {
     const trashLink = clone.querySelector('a[onclick*="trashProductRow"]');
     if (trashLink) trashLink.setAttribute('onclick', `trashProductRow('${newId}', '${titleElem ? titleElem.textContent : 'Product'}')`);
 
-    clone.style.animation = 'fadeIn 0.3s ease';
+    const starBtn = clone.querySelector('.wp-star-btn');
+    if (starBtn) starBtn.setAttribute('onclick', `toggleFeaturedProduct(this, '${newId}', '${titleElem ? titleElem.textContent : 'Product'}')`);
+
+    clone.style.animation = 'dtModalIn 0.3s ease';
     row.parentNode.insertBefore(clone, row.nextSibling);
 
     if (typeof window.showToast === 'function') {

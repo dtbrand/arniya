@@ -45,7 +45,7 @@
         <!-- Fast Action: + Add Product -->
         <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary" title="Add Product">
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span class="adm-btn-text">+ Add Product</span>
+            <span class="adm-btn-text">Add Product</span>
         </a>
 
         <!-- Fast Action: + Broadcast (Desktop) -->
