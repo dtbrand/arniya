@@ -114,6 +114,12 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
         justify-content: center;
         border: 2px solid #D4AF37;
         box-shadow: 0 2px 10px rgba(212,175,55,0.3);
+        overflow: hidden;
+    }
+    .dt-brand-avatar-lg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     </style>
 </head>
@@ -124,7 +130,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
         <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 16px 20px;">
 
-            <!-- 1. Header Toolbar -->
+            <!-- 1. Header Toolbar with Luxury Brand Gold Buttons -->
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Edit Brand</h1>
@@ -134,15 +140,15 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/Frontend/Admin/products/brands/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <a href="/Frontend/Admin/products/brands/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to Brands</span>
                     </a>
-                    <a href="/Frontend/Shop/shop.php?brand=<?php echo urlencode($cur_brand['name']); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <a href="/Frontend/Shop/shop.php?brand=<?php echo urlencode($cur_brand['name']); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>View on Shop</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="handleSaveBrand()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                    <button type="button" class="wp-button primary" onclick="handleSaveBrand()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Save &amp; Update Brand</span>
                     </button>
@@ -168,7 +174,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                             <div class="dt-card-body">
                                 <div class="dt-form-group">
                                     <label>Brand Name <span style="color:#b32d2e;">*</span></label>
-                                    <input type="text" id="editBrandName" class="dt-form-input" value="<?php echo htmlspecialchars($cur_brand['name']); ?>" required>
+                                    <input type="text" id="editBrandName" class="dt-form-input" value="<?php echo htmlspecialchars($cur_brand['name']); ?>" required oninput="updateBrandSlugLive(this.value)">
                                 </div>
 
                                 <div class="dt-form-group">
@@ -226,10 +232,12 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                             </div>
                             <div class="dt-card-body" style="text-align:center;">
                                 <div style="display:flex; justify-content:center; margin-bottom:12px;">
-                                    <div class="dt-brand-avatar-lg">DT</div>
+                                    <div class="dt-brand-avatar-lg" id="editPageAvatarPreview">DT</div>
                                 </div>
-                                <button type="button" class="wp-button" onclick="if(window.showToast) window.showToast('Upload emblem modal opened');" style="height:32px; font-size:11.5px; font-weight:600; width:100%; justify-content:center;">
-                                    Upload New Emblem Logo
+                                <input type="file" id="editPageEmblemInput" style="display:none;" accept="image/*" onchange="handleEditPageLogoUpload(this)">
+                                <button type="button" class="wp-button" onclick="document.getElementById('editPageEmblemInput').click()" style="height:32px; font-size:11.5px; font-weight:700; width:100%; justify-content:center; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:flex; align-items:center; gap:6px;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    <span>Upload New Emblem Logo</span>
                                 </button>
                             </div>
                         </div>
@@ -269,14 +277,17 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                                     <span style="font-size:12px; color:#646970;">Status:</span>
                                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;">🟢 Active &amp; Live</span>
                                 </div>
-                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; margin-bottom:8px;">
-                                    Save Changes
+                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Save Changes</span>
                                 </button>
-                                <a href="/Frontend/Admin/products/?brand=<?php echo urlencode($cur_brand['name']); ?>" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
-                                    📦 View Products in Label
+                                <a href="/Frontend/Admin/products/?brand=<?php echo urlencode($cur_brand['name']); ?>" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; display:flex; align-items:center; gap:6px;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                    <span>View Products in Label (<?php echo htmlspecialchars($cur_brand['skus']); ?>)</span>
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this brand?')) { if(window.showToast) window.showToast('Brand moved to trash'); window.location.href='/Frontend/Admin/products/brands/'; }">
-                                    🗑️ Move to Trash
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand?')) { if(window.showToast) window.showToast('Brand moved to trash'); window.location.href='/Frontend/Admin/products/brands/'; }">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <span>Move Brand to Trash</span>
                                 </button>
                             </div>
                         </div>
@@ -292,10 +303,32 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
 </div>
 
 <script>
+function handleEditPageLogoUpload(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('editPageAvatarPreview');
+            if (preview) {
+                preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+            }
+            if (typeof window.showToast === 'function') window.showToast('📷 Brand emblem updated successfully!');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function updateBrandSlugLive(name) {
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const titleEl = document.getElementById('brandSeoTitle');
+    if (titleEl && !titleEl.dataset.customized) {
+        titleEl.value = `${name} Online Collection | DT Brand's Factory Surat`;
+    }
+}
+
 function autoGenerateBrandSeo() {
     const name = document.getElementById('editBrandName')?.value || 'Brand';
     document.getElementById('brandSeoTitle').value = `${name} Online Collection | DT Brand's Factory Surat`;
-    document.getElementById('brandSeoDesc').value = `Explore authentic ${name} catalog at factory wholesale prices from DT Brand's & Jai Hanuman Tex Surat. High quality craftsmanship with fast dispatch.`;
+    document.getElementById('brandSeoDesc').value = `Explore official ${name} catalog at factory wholesale prices from DT Brand's & Jai Hanuman Tex Surat. High quality craftsmanship with fast dispatch.`;
     if (typeof window.showToast === 'function') window.showToast('✨ Auto SEO tags generated!');
 }
 
