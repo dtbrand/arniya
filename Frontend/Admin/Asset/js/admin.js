@@ -552,147 +552,125 @@
         // Crisp Retina scaling
         const dpr = window.devicePixelRatio || 1;
         const w = containerWidth;
-        const h = 240;
+        const h = 150;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
         ctx.scale(dpr, dpr);
 
-        const padL = w < 480 ? 36 : 46;
-        const padR = w < 480 ? 12 : 20;
-        const padT = 24;
-        const padB = 34;
-
         ctx.clearRect(0, 0, w, h);
 
-        const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const b2bData = [45000, 58000, 72000, 68000, 94000, 115000, 142000];
-        const b2cData = [24000, 31000, 28000, 39000, 48000, 62000, 78000];
+        const labels = ['01', '02', '03', '04', '05', '06', '07'];
+        const b2bBars = [65, 80, 50, 95, 70, 110, 85];
+        const b2cBars = [40, 55, 35, 60, 45, 75, 55];
+        const maxVal = 120;
 
-        const maxVal = 160000;
+        const padL = 20, padR = 20, padT = 15, padB = 25;
+        const chartW = w - padL - padR;
+        const chartH = h - padT - padB;
 
-        // Draw horizontal grid lines
-        ctx.strokeStyle = '#EBE7DE';
+        // Draw light horizontal dashed grid lines
+        ctx.strokeStyle = '#F0ECE1';
         ctx.lineWidth = 1;
-        ctx.fillStyle = '#8C8478';
-        ctx.font = '10px Plus Jakarta Sans, sans-serif';
-        ctx.textAlign = 'right';
+        ctx.setLineDash([4, 4]);
 
-        for (let i = 0; i <= 4; i++) {
-            const yVal = (maxVal / 4) * i;
-            const yPos = h - padB - ((h - padT - padB) * (yVal / maxVal));
+        for (let i = 1; i <= 3; i++) {
+            const y = padT + (chartH / 3) * i;
             ctx.beginPath();
-            ctx.moveTo(padL, yPos);
-            ctx.lineTo(w - padR, yPos);
+            ctx.moveTo(padL, y);
+            ctx.lineTo(w - padR, y);
             ctx.stroke();
-            ctx.fillText('₹' + (yVal / 1000) + 'k', padL - 6, yPos + 3);
         }
+        ctx.setLineDash([]); // reset
 
-        // Draw labels on X axis
-        ctx.textAlign = 'center';
-        const stepX = (w - padL - padR) / (labels.length - 1);
+        // Draw rounded dual bars for each day
+        const slotW = chartW / labels.length;
+        const barW = Math.min(10, slotW * 0.22);
+        const gap = 3;
+
         labels.forEach((lbl, i) => {
-            const x = padL + (i * stepX);
-            ctx.fillText(lbl, x, h - padB + 16);
-        });
+            const centerX = padL + (i * slotW) + (slotW / 2);
+            const x1 = centerX - barW - (gap / 2);
+            const x2 = centerX + (gap / 2);
 
-        // Function to draw smooth line curve with area fill
-        function drawCurve(data, strokeColor, fillGradient, dotColor) {
+            // B2B Gold Bar
+            const barH1 = (b2bBars[i] / maxVal) * chartH;
+            const y1 = h - padB - barH1;
+
+            ctx.fillStyle = '#8A681F';
             ctx.beginPath();
-            const points = data.map((val, i) => {
-                const x = padL + (i * stepX);
-                const y = h - padB - ((h - padT - padB) * (val / maxVal));
-                return { x, y };
-            });
-
-            ctx.moveTo(points[0].x, points[0].y);
-            for (let i = 0; i < points.length - 1; i++) {
-                const xc = (points[i].x + points[i + 1].x) / 2;
-                const yc = (points[i].y + points[i + 1].y) / 2;
-                ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-            }
-            ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-
-            // Stroke
-            ctx.strokeStyle = strokeColor;
-            ctx.lineWidth = 2.8;
-            ctx.stroke();
-
-            // Fill area
-            ctx.lineTo(points[points.length - 1].x, h - padB);
-            ctx.lineTo(points[0].x, h - padB);
-            ctx.closePath();
-            ctx.fillStyle = fillGradient;
+            ctx.roundRect ? ctx.roundRect(x1, y1, barW, barH1, [4, 4, 0, 0]) : ctx.rect(x1, y1, barW, barH1);
             ctx.fill();
 
-            // Draw points
-            points.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 3.8, 0, Math.PI * 2);
-                ctx.fillStyle = dotColor;
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#FFFFFF';
-                ctx.stroke();
-            });
-        }
+            // B2C Green Bar
+            const barH2 = (b2cBars[i] / maxVal) * chartH;
+            const y2 = h - padB - barH2;
 
-        // B2B Gold Curve
-        const gradGold = ctx.createLinearGradient(0, padT, 0, h - padB);
-        gradGold.addColorStop(0, 'rgba(138, 104, 31, 0.28)');
-        gradGold.addColorStop(1, 'rgba(138, 104, 31, 0.01)');
-        drawCurve(b2bData, '#8A681F', gradGold, '#8A681F');
+            ctx.fillStyle = '#15803D';
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(x2, y2, barW, barH2, [4, 4, 0, 0]) : ctx.rect(x2, y2, barW, barH2);
+            ctx.fill();
 
-        // B2C Green Curve
-        const gradGreen = ctx.createLinearGradient(0, padT, 0, h - padB);
-        gradGreen.addColorStop(0, 'rgba(37, 211, 102, 0.22)');
-        gradGreen.addColorStop(1, 'rgba(37, 211, 102, 0.01)');
-        drawCurve(b2cData, '#15803D', gradGreen, '#15803D');
+            // X-axis day label
+            ctx.fillStyle = '#8C8478';
+            ctx.font = '10px Plus Jakarta Sans, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(lbl, centerX, h - padB + 16);
+        });
     }
 
     function renderCategoryDoughnut() {
         const canvas = document.getElementById('admCategoryChart');
         if (!canvas) return;
+        const parent = canvas.parentElement;
+        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 260;
         const ctx = canvas.getContext('2d');
         const dpr = window.devicePixelRatio || 1;
-        const size = 180;
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-        canvas.style.width = size + 'px';
-        canvas.style.height = size + 'px';
+
+        const w = containerWidth;
+        const h = 170;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
         ctx.scale(dpr, dpr);
 
-        const cx = size / 2, cy = size / 2, outerR = (size / 2) - 8, innerR = outerR - 26;
-        const catData = [
-            { label: 'Sarees', share: 0.45, color: '#8A681F' },
-            { label: 'Kurtis', share: 0.25, color: '#C5A859' },
-            { label: 'Lehengas', share: 0.18, color: '#100E0C' },
-            { label: 'Dress Mat.', share: 0.12, color: '#15803D' }
-        ];
+        ctx.clearRect(0, 0, w, h);
 
-        let startAngle = -Math.PI / 2;
+        // Modern Bubble Breakdown visual matching reference image
+        const cx = w / 2;
+        const cy = h / 2;
 
-        catData.forEach(seg => {
-            const endAngle = startAngle + (seg.share * Math.PI * 2);
+        // Bubble 1: Sarees (48%) - Main Large Bubble
+        const b1 = { x: cx - 40, y: cy - 5, r: 52, color: 'rgba(138, 104, 31, 0.16)', borderColor: '#8A681F', text: '48%', label: 'Sarees', textColor: '#5A4210' };
+        // Bubble 2: Kurtis (32%) - Medium Bubble
+        const b2 = { x: cx + 42, y: cy - 25, r: 38, color: 'rgba(22, 163, 74, 0.16)', borderColor: '#16A34A', text: '32%', label: 'Kurtis', textColor: '#15803D' };
+        // Bubble 3: Lehengas (13%) - Smaller Bubble
+        const b3 = { x: cx + 32, y: cy + 38, r: 26, color: 'rgba(217, 119, 6, 0.16)', borderColor: '#D97706', text: '13%', label: 'Lehengas', textColor: '#B45309' };
+        // Bubble 4: Dress Mat. (7%) - Tiny Bubble
+        const b4 = { x: cx + 72, y: cy + 32, r: 17, color: 'rgba(126, 34, 206, 0.16)', borderColor: '#7E22CE', text: '7%', label: 'Dress', textColor: '#6B21A8' };
+
+        const bubbles = [b1, b2, b3, b4];
+
+        bubbles.forEach(b => {
+            // Fill
             ctx.beginPath();
-            ctx.arc(cx, cy, outerR, startAngle, endAngle);
-            ctx.arc(cx, cy, innerR, endAngle, startAngle, true);
-            ctx.closePath();
-            ctx.fillStyle = seg.color;
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+            ctx.fillStyle = b.color;
             ctx.fill();
-            startAngle = endAngle;
-        });
+            // Border
+            ctx.lineWidth = 1.8;
+            ctx.strokeStyle = b.borderColor;
+            ctx.stroke();
 
-        // Center total text
-        ctx.fillStyle = '#181512';
-        ctx.font = 'bold 15px Cinzel, serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('100%', cx, cy - 5);
-        ctx.font = '9.5px Plus Jakarta Sans, sans-serif';
-        ctx.fillStyle = '#7A7266';
-        ctx.fillText('Product Share', cx, cy + 11);
+            // Centered Percentage Text
+            ctx.fillStyle = b.textColor;
+            ctx.font = 'bold ' + (b.r > 40 ? '16px' : (b.r > 25 ? '13px' : '10px')) + ' Plus Jakarta Sans, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(b.text, b.x, b.y);
+        });
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════

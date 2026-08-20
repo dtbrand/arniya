@@ -788,65 +788,86 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </div>
 
-                <!-- ════ CHARTS SECTION ════ -->
+                <!-- ════ MODERN SAAS/FINTECH CHARTS SECTION (2 LUXURY CARDS) ════ -->
                 <div class="adm-charts-grid">
-                    <!-- Revenue Analytics Chart -->
-                    <div class="adm-card">
-                        <div class="adm-card-head">
-                            <h3 class="adm-card-title">
-                                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                                <span>Multi-Channel Revenue Flow (₹)</span>
-                            </h3>
-                            <div class="adm-card-controls">
-                                <div class="adm-pill-btn-group">
-                                    <button class="adm-pill-btn active">7D</button>
-                                    <button class="adm-pill-btn">30D</button>
-                                    <button class="adm-pill-btn">90D</button>
-                                </div>
+                    <!-- 1. Modern Revenue Analytics Card -->
+                    <div class="adm-saas-chart-card">
+                        <div class="adm-saas-card-head">
+                            <div>
+                                <h3 class="adm-saas-card-title">Revenue Analytics</h3>
+                                <p class="adm-saas-card-sub">Multi-channel sales from 1-7 Apr, 2026</p>
+                            </div>
+                            <button type="button" class="adm-saas-pill-btn" onclick="switchAdmTab('reports')">View Report</button>
+                        </div>
+
+                        <div class="adm-saas-kpi-row">
+                            <div class="adm-saas-kpi-val">₹42,85,900</div>
+                            <div class="adm-saas-delta-badge">
+                                <span>↑ 18.4%</span>
+                                <small>vs last week</small>
                             </div>
                         </div>
-                        <div class="adm-chart-container">
+
+                        <div class="adm-saas-canvas-wrap">
                             <canvas id="admRevenueChart"></canvas>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px; font-size:0.78rem; font-weight:600; margin-top:8px;">
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:12px; height:4px; background:#8A681F; border-radius:2px;"></span>
-                                <span>B2B Wholesale (₹28.4L)</span>
+
+                        <div class="adm-saas-legend-row">
+                            <div class="adm-saas-leg-item">
+                                <span class="adm-saas-leg-dot" style="background:#8A681F;"></span>
+                                <span class="adm-saas-leg-lbl">B2B Wholesale</span>
+                                <span class="adm-saas-leg-val">₹28.4L</span>
                             </div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:12px; height:4px; background:#15803D; border-radius:2px;"></span>
-                                <span>B2C Shop & Resellers (₹14.4L)</span>
+                            <div class="adm-saas-leg-item">
+                                <span class="adm-saas-leg-dot" style="background:#15803D;"></span>
+                                <span class="adm-saas-leg-lbl">B2C & Resellers</span>
+                                <span class="adm-saas-leg-val">₹14.4L</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Category Share Doughnut -->
-                    <div class="adm-card">
-                        <div class="adm-card-head">
-                            <h3 class="adm-card-title">
-                                <span>Category Sales</span>
-                            </h3>
-                            <span class="adm-badge gold">Top Sarees</span>
+                    <!-- 2. Modern Category Sales & Expense Breakdown Card -->
+                    <div class="adm-saas-chart-card">
+                        <div class="adm-saas-card-head">
+                            <div>
+                                <h3 class="adm-saas-card-title">Category Breakdown</h3>
+                                <p class="adm-saas-card-sub">Catalog share from 1-7 Apr, 2026</p>
+                            </div>
+                            <button type="button" class="adm-saas-pill-btn" onclick="switchAdmTab('products')">View Report</button>
                         </div>
-                        <div class="adm-chart-container" style="display:flex; align-items:center; justify-content:center;">
+
+                        <div class="adm-saas-canvas-wrap" style="height:170px; display:flex; align-items:center; justify-content:center;">
                             <canvas id="admCategoryChart"></canvas>
                         </div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.74rem;">
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:8px; height:8px; border-radius:50%; background:#8A681F;"></span>
-                                <span>Sarees (45%)</span>
+
+                        <div class="adm-saas-category-grid">
+                            <div class="adm-saas-cat-pod">
+                                <div class="adm-saas-cat-header">
+                                    <span class="adm-saas-leg-dot" style="background:#8A681F;"></span>
+                                    <span class="adm-saas-cat-name">Sarees (48%)</span>
+                                </div>
+                                <div class="adm-saas-cat-amt">₹20,57,200</div>
                             </div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:8px; height:8px; border-radius:50%; background:#C5A859;"></span>
-                                <span>Kurtis (25%)</span>
+                            <div class="adm-saas-cat-pod">
+                                <div class="adm-saas-cat-header">
+                                    <span class="adm-saas-leg-dot" style="background:#15803D;"></span>
+                                    <span class="adm-saas-cat-name">Kurtis (32%)</span>
+                                </div>
+                                <div class="adm-saas-cat-amt">₹13,71,400</div>
                             </div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:8px; height:8px; border-radius:50%; background:#100E0C;"></span>
-                                <span>Lehengas (18%)</span>
+                            <div class="adm-saas-cat-pod">
+                                <div class="adm-saas-cat-header">
+                                    <span class="adm-saas-leg-dot" style="background:#D97706;"></span>
+                                    <span class="adm-saas-cat-name">Lehengas (13%)</span>
+                                </div>
+                                <div class="adm-saas-cat-amt">₹5,57,100</div>
                             </div>
-                            <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="width:8px; height:8px; border-radius:50%; background:#15803D;"></span>
-                                <span>Dress Mat. (12%)</span>
+                            <div class="adm-saas-cat-pod">
+                                <div class="adm-saas-cat-header">
+                                    <span class="adm-saas-leg-dot" style="background:#7E22CE;"></span>
+                                    <span class="adm-saas-cat-name">Dress Mat. (7%)</span>
+                                </div>
+                                <div class="adm-saas-cat-amt">₹3,00,200</div>
                             </div>
                         </div>
                     </div>
