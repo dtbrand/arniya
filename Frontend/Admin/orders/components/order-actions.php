@@ -90,13 +90,12 @@
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
         <span id="invoiceModalOrderId" style="display:none;">DTB-001624</span>
         
-        <!-- Top Action Controls (Clean Floating Top-Right) -->
-        <div style="position:absolute; top:12px; right:14px; z-index:20; display:flex; align-items:center; gap:6px;">
-            <a id="invoiceModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:10.5px; background:#FAF5E8;" title="Open in Full Tab">
-                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <!-- Top Action Controls (Fixed Luxury Full Page Box) -->
+        <div style="position:absolute; top:16px; right:18px; z-index:20;">
+            <a id="invoiceModalFullPageLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 10px; font-size:11px; font-weight:700; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; box-shadow:0 1px 4px rgba(212,175,55,0.18); transition:all 0.15s ease;" title="Open Tax Invoice in Full Tab">
+                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 <span>Full Page ↗</span>
             </a>
-            <button type="button" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="width:26px; height:26px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
 
         <!-- Modal Scrollable Content -->
@@ -123,13 +122,12 @@
     <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
         <span id="packingModalOrderId" style="display:none;">DTB-001624</span>
         
-        <!-- Top Action Controls (Clean Floating Top-Right) -->
-        <div style="position:absolute; top:12px; right:14px; z-index:20; display:flex; align-items:center; gap:6px;">
-            <a id="packingModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:10.5px; background:#FAF5E8;" title="Open in Full Tab">
-                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        <!-- Top Action Controls (Fixed Luxury Full Page Box) -->
+        <div style="position:absolute; top:16px; right:18px; z-index:20;">
+            <a id="packingModalFullPageLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 10px; font-size:11px; font-weight:700; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; box-shadow:0 1px 4px rgba(212,175,55,0.18); transition:all 0.15s ease;" title="Open Packing Manifest in Full Tab">
+                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 <span>Full Page ↗</span>
             </a>
-            <button type="button" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="width:26px; height:26px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
 
         <!-- Modal Scrollable Content -->
