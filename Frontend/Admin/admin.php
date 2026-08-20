@@ -49,7 +49,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <li>
                     <button class="adm-subnav-item" id="subnav-products" onclick="switchAdmTab('products')">
                         <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        <span>Catalog</span>
+                        <span>Products</span>
                     </button>
                 </li>
                 <li>
@@ -428,7 +428,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="adm-kpi-val">1,240</div>
                         <div class="adm-kpi-bottom">
                             <span>16 Categories</span>
-                            <span class="adm-badge gold">Surat Catalog</span>
+                            <span class="adm-badge gold">Surat Products</span>
                         </div>
                     </div>
 
@@ -705,7 +705,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="adm-page-head">
                     <div class="adm-page-title-group">
                         <h1 class="adm-page-title">
-                            <span>Products &amp; Inventory Catalog</span>
+                            <span>Products &amp; Inventory</span>
                             <span class="adm-badge gold">1,240 SKUs</span>
                         </h1>
                         <p class="adm-page-subtitle">Manage B2C Retail &amp; B2B Wholesale pricing, MOQ rules, stock alerts, and fabric specs.</p>
@@ -795,7 +795,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
                         <div class="dt-kpi-content">
-                            <div class="dt-kpi-lbl">TOTAL CATALOG SKUS</div>
+                            <div class="dt-kpi-lbl">TOTAL PRODUCTS (SKUS)</div>
                             <div class="dt-kpi-val" style="color:#181512;">1,240 Products</div>
                         </div>
                     </div>
@@ -815,7 +815,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                         </div>
                         <div class="dt-kpi-content">
-                            <div class="dt-kpi-lbl">CATALOG VALUATION</div>
+                            <div class="dt-kpi-lbl">INVENTORY VALUATION</div>
                             <div class="dt-kpi-val" style="color:#1D4ED8;">₹84.6 Lakhs</div>
                         </div>
                     </div>

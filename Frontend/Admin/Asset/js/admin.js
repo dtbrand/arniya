@@ -638,7 +638,7 @@
         ctx.fillText('100%', cx, cy - 5);
         ctx.font = '9.5px Plus Jakarta Sans, sans-serif';
         ctx.fillStyle = '#7A7266';
-        ctx.fillText('Catalog Share', cx, cy + 11);
+        ctx.fillText('Product Share', cx, cy + 11);
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════
