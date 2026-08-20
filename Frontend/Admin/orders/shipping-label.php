@@ -5,12 +5,53 @@
  */
 $order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
 
-$order = [
+$all_labels = [
+    'DTB-001624' => [
+        'id' => 'DTB-001624',
+        'carrier' => 'VRL Logistics Depot',
+        'tracking_id' => 'VRL-99821',
+        'customer' => 'Rajesh Kumar (Vardhman Tex)',
+        'phone' => '+91 98220 19283',
+        'items_count' => 25,
+        'weight' => '18.5 Kg (2 Master Cartons)',
+        'address' => [
+            'shipping' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002"
+        ]
+    ],
+    'DTB-001623' => [
+        'id' => 'DTB-001623',
+        'carrier' => 'BlueDart Express Air',
+        'tracking_id' => 'BD-88291',
+        'customer' => 'Pooja Sharma',
+        'phone' => '+91 98765 43210',
+        'items_count' => 1,
+        'weight' => '0.8 Kg (Pouch Pack)',
+        'address' => [
+            'shipping' => "Flat 402, Lotus Heights, Andheri West, Mumbai, Maharashtra - 400053"
+        ]
+    ],
+    'DTB-001622' => [
+        'id' => 'DTB-001622',
+        'carrier' => 'DTDC Priority Cargo',
+        'tracking_id' => 'DTDC-4491',
+        'customer' => 'Surat Central Saree Depot (Direct Consignment)',
+        'phone' => '+91 98250 88771',
+        'items_count' => 10,
+        'weight' => '7.5 Kg (1 Heavy Carton)',
+        'address' => [
+            'shipping' => "Godown B, Transport Nagar, Ring Road, Surat, Gujarat - 395010"
+        ]
+    ]
+];
+
+$order = isset($all_labels[$order_id]) ? $all_labels[$order_id] : [
     'id' => $order_id,
-    'carrier' => 'VRL Logistics',
-    'tracking_id' => 'VRL-SURAT-99821',
-    'customer' => 'Rajesh Kumar (Vardhman Tex)',
+    'carrier' => 'Surat Central Depot Express',
+    'tracking_id' => 'SCT-' . substr($order_id, -5),
+    'customer' => 'Wholesale Consignee (Surat Depot)',
     'phone' => '+91 98220 19283',
+    'items_count' => 15,
+    'weight' => '12.0 Kg',
     'address' => [
         'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
     ]
