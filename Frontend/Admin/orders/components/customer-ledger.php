@@ -6,7 +6,7 @@
 ?>
 <!-- ══ Customer Financial Ledger Modal ══ -->
 <div id="customerLedgerModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:16px;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeLedgerModal()">
-    <div style="background:#FFFFFF; border:1px solid #D4AF37; border-radius:12px; width:95%; max-width:920px; max-height:92vh; height:auto; display:flex; flex-direction:column; box-shadow:0 16px 48px rgba(0,0,0,0.35); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; animation:dtModalFadeIn 0.2s ease-out;">
+    <div style="background:#FFFFFF; border:1px solid #D4AF37; border-radius:12px; width:95%; max-width:920px; max-height:92vh; display:flex; flex-direction:column; box-shadow:0 16px 48px rgba(0,0,0,0.35); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; animation:dtModalFadeIn 0.2s ease-out;">
         
         <!-- Modal Header -->
         <div style="padding:12px 20px; background:#FAF8F4; border-bottom:1px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
@@ -27,11 +27,11 @@
             </button>
         </div>
 
-        <!-- Scrollable Modal Content Body -->
-        <div class="dt-ledger-scroll-body" style="flex:1; overflow-y:auto; padding:14px 20px; display:flex; flex-direction:column; gap:12px; min-height:0;">
+        <!-- Modal Content Body -->
+        <div style="padding:14px 20px; display:flex; flex-direction:column; gap:12px; overflow:hidden;">
             
             <!-- Customer Profile Strip -->
-            <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; padding:10px 14px; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.02);">
+            <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; padding:10px 14px; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.02); flex-shrink:0;">
                 <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(0,0,0,0.15); flex-shrink:0;">
                     <span id="ledgerAvatarInitials">RA</span>
                 </div>
@@ -64,7 +64,7 @@
             </div>
 
             <!-- 4-Card Financial Metrics Ribbon -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px; flex-shrink:0;">
                 <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:10px 12px;">
                     <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.5px;">Lifetime Business</div>
                     <div style="display:flex; align-items:center; gap:2px; font-size:16px; font-weight:800; color:#181512; margin-top:2px;">
@@ -102,80 +102,112 @@
                 </div>
             </div>
 
-            <!-- Transaction Ledger Table -->
-            <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.02);">
-                <div style="padding:9px 14px; background:#FAF8F4; border-bottom:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-size:11.5px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.5px;">Transaction Statement Log</div>
-                    <div style="font-size:10.5px; color:#64748B;">Fiscal Year 2026-27 • Live Accounting Sync</div>
+            <!-- Transaction Ledger Table Container with Dedicated Styled Scrollbar -->
+            <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.02); display:flex; flex-direction:column;">
+                
+                <!-- Table Card Header -->
+                <div style="padding:10px 16px; background:#FAF8F4; border-bottom:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span>
+                        <span style="font-size:12px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.5px;">Transaction Statement Log</span>
+                    </div>
+                    <div style="font-size:10.5px; color:#64748B; font-weight:600;">Fiscal Year 2026-27 • Live Accounting Sync</div>
                 </div>
 
-                <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
-                    <table style="width:100%; border-collapse:collapse; font-size:11.5px; min-width:680px;">
-                        <thead>
-                            <tr style="background:#FAF8F4; border-bottom:1px solid #E2DFD7; color:#475569; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">
-                                <th style="padding:8px 12px; text-align:left;">Date</th>
-                                <th style="padding:8px 12px; text-align:left;">Reference / Order ID</th>
-                                <th style="padding:8px 12px; text-align:left;">Transaction Type</th>
-                                <th style="padding:8px 12px; text-align:right;">Debit (₹)</th>
-                                <th style="padding:8px 12px; text-align:right;">Credit (₹)</th>
-                                <th style="padding:8px 12px; text-align:right;">Balance (₹)</th>
-                                <th style="padding:8px 12px; text-align:center;">Status</th>
+                <!-- Scrollable Table Body with Fixed Sticky Header -->
+                <div class="dt-ledger-table-scroll" style="max-height:220px; overflow-y:auto; overflow-x:auto; -webkit-overflow-scrolling:touch;">
+                    <table style="width:100%; border-collapse:collapse; font-size:11.5px; min-width:720px;">
+                        <thead style="position:sticky; top:0; z-index:10; background:#FAF8F4; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                            <tr style="border-bottom:1px solid #E2DFD7; color:#475569; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">
+                                <th style="padding:9px 12px; text-align:left; background:#FAF8F4;">Date</th>
+                                <th style="padding:9px 12px; text-align:left; background:#FAF8F4;">Reference / Order ID</th>
+                                <th style="padding:9px 12px; text-align:left; background:#FAF8F4;">Transaction Type</th>
+                                <th style="padding:9px 12px; text-align:right; background:#FAF8F4;">Debit (₹)</th>
+                                <th style="padding:9px 12px; text-align:right; background:#FAF8F4;">Credit (₹)</th>
+                                <th style="padding:9px 12px; text-align:right; background:#FAF8F4;">Balance (₹)</th>
+                                <th style="padding:9px 12px; text-align:center; background:#FAF8F4;">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="border-bottom:1px solid #F1EFE9;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">21 Aug 2026</td>
-                                <td style="padding:8px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001624" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001624</a></td>
-                                <td style="padding:8px 12px; color:#181512; font-weight:600;">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">1,12,250</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">1,12,250</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-status-badge pending" style="font-size:9.5px; padding:2px 7px;">Billed</span></td>
+                            <!-- Row 1 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">21 Aug 2026</td>
+                                <td style="padding:9px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001624" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001624</a></td>
+                                <td style="padding:9px 12px; color:#181512; font-weight:600;">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,12,250</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,12,250</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-status-badge pending" style="font-size:9.5px; padding:2px 7px;">Billed</span></td>
                             </tr>
-                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">21 Aug 2026</td>
-                                <td style="padding:8px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-9821039812</td>
-                                <td style="padding:8px 12px; color:#15803D; font-weight:600;">Bank Wire / RTGS Settlement</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">1,12,250</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
+                            <!-- Row 2 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">21 Aug 2026</td>
+                                <td style="padding:9px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-9821039812</td>
+                                <td style="padding:9px 12px; color:#15803D; font-weight:600;">Bank Wire / RTGS Full Settlement</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">1,12,250</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
                             </tr>
-                            <tr style="border-bottom:1px solid #F1EFE9;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">10 Aug 2026</td>
-                                <td style="padding:8px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001605" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001605</a></td>
-                                <td style="padding:8px 12px; color:#181512; font-weight:600;">Banarasi Silk Lot Consignment (40pcs)</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">2,45,000</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">2,45,000</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-status-badge delivered" style="font-size:9.5px; padding:2px 7px;">Delivered</span></td>
+                            <!-- Row 3 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">10 Aug 2026</td>
+                                <td style="padding:9px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001605" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001605</a></td>
+                                <td style="padding:9px 12px; color:#181512; font-weight:600;">Banarasi Silk Lot Consignment (40pcs)</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">2,45,000</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">2,45,000</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-status-badge delivered" style="font-size:9.5px; padding:2px 7px;">Delivered</span></td>
                             </tr>
-                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">11 Aug 2026</td>
-                                <td style="padding:8px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-882910398</td>
-                                <td style="padding:8px 12px; color:#15803D; font-weight:600;">RTGS ICICI Bank Full Settlement</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">2,45,000</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
+                            <!-- Row 4 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">11 Aug 2026</td>
+                                <td style="padding:9px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-882910398</td>
+                                <td style="padding:9px 12px; color:#15803D; font-weight:600;">RTGS ICICI Bank Full Settlement</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">2,45,000</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
                             </tr>
-                            <tr style="border-bottom:1px solid #F1EFE9;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">25 Jul 2026</td>
-                                <td style="padding:8px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001582" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001582</a></td>
-                                <td style="padding:8px 12px; color:#181512; font-weight:600;">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">1,85,250</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#181512;">1,85,250</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-status-badge delivered" style="font-size:9.5px; padding:2px 7px;">Delivered</span></td>
+                            <!-- Row 5 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">25 Jul 2026</td>
+                                <td style="padding:9px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001582" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001582</a></td>
+                                <td style="padding:9px 12px; color:#181512; font-weight:600;">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,85,250</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,85,250</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-status-badge delivered" style="font-size:9.5px; padding:2px 7px;">Delivered</span></td>
                             </tr>
-                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8;">
-                                <td style="padding:8px 12px; color:#64748B; font-size:11px;">26 Jul 2026</td>
-                                <td style="padding:8px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-771829301</td>
-                                <td style="padding:8px 12px; color:#15803D; font-weight:600;">HDFC NetBanking Direct Settlement</td>
-                                <td style="padding:8px 12px; text-align:right; color:#94A3B8;">—</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">1,85,250</td>
-                                <td style="padding:8px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
-                                <td style="padding:8px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
+                            <!-- Row 6 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; background:#FAFBF8; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">26 Jul 2026</td>
+                                <td style="padding:9px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-771829301</td>
+                                <td style="padding:9px 12px; color:#15803D; font-weight:600;">HDFC NetBanking Direct Settlement</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">1,85,250</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
+                            </tr>
+                            <!-- Row 7 -->
+                            <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">08 Jul 2026</td>
+                                <td style="padding:9px 12px;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001550" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001550</a></td>
+                                <td style="padding:9px 12px; color:#181512; font-weight:600;">Paithani Heritage Zari Collection (20pcs)</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,42,000</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,42,000</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-status-badge delivered" style="font-size:9.5px; padding:2px 7px;">Delivered</span></td>
+                            </tr>
+                            <!-- Row 8 -->
+                            <tr style="background:#FAFBF8; transition:background 0.15s ease;">
+                                <td style="padding:9px 12px; color:#64748B; font-size:11px;">09 Jul 2026</td>
+                                <td style="padding:9px 12px; font-family:monospace; color:#0F172A; font-weight:700;">UTR-662918274</td>
+                                <td style="padding:9px 12px; color:#15803D; font-weight:600;">SBI Corporate Direct Wire Transfer</td>
+                                <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">1,42,000</td>
+                                <td style="padding:9px 12px; text-align:right; font-weight:800; color:#15803D;">0.00</td>
+                                <td style="padding:9px 12px; text-align:center;"><span class="dt-pay-badge paid" style="font-size:9.5px; padding:2px 7px;">PAID</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -209,17 +241,25 @@
     from { opacity: 0; transform: scale(0.96); }
     to { opacity: 1; transform: scale(1); }
 }
-.dt-ledger-scroll-body::-webkit-scrollbar {
+
+/* ════ DEDICATED LUXURY TABLE SCROLLBAR ════ */
+.dt-ledger-table-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #D4AF37 #FAF8F4;
+}
+.dt-ledger-table-scroll::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
-.dt-ledger-scroll-body::-webkit-scrollbar-track {
+.dt-ledger-table-scroll::-webkit-scrollbar-track {
     background: #FAF8F4;
+    border-radius: 4px;
 }
-.dt-ledger-scroll-body::-webkit-scrollbar-thumb {
+.dt-ledger-table-scroll::-webkit-scrollbar-thumb {
     background: #D4AF37;
     border-radius: 4px;
 }
-.dt-ledger-scroll-body::-webkit-scrollbar-thumb:hover {
+.dt-ledger-table-scroll::-webkit-scrollbar-thumb:hover {
     background: #8A681F;
 }
 </style>
