@@ -408,3 +408,105 @@
     border-color: #2271b1;
     font-weight: 600;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   👑 DT BRAND'S MASTER RESPONSIVE AUTO-SIZING ENGINE (DESKTOP / TABLET / MOBILE)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive Table Card & Containers */
+.wp-table-card,
+.adm-table-card,
+.dt-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
+    border-radius: 6px !important;
+}
+
+.wp-list-table,
+.adm-table {
+    width: 100% !important;
+    min-width: 780px !important;
+    border-collapse: collapse !important;
+}
+
+/* Fluid KPI Ribbon */
+.dt-kpi-grid,
+div[style*="grid-template-columns:repeat(auto-fit"] {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+/* Tablet Breakpoints */
+@media (max-width: 1024px) {
+    div[style*="grid-template-columns:repeat(auto-fit"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .wp-heading-wrap {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+}
+
+/* Mobile Breakpoints */
+@media (max-width: 650px) {
+    div[style*="grid-template-columns:repeat(auto-fit"] {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    .wp-tablenav {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    .wp-tablenav-actions {
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .wp-tablenav-actions select,
+    .wp-tablenav-actions button {
+        width: 100% !important;
+        height: 38px !important;
+    }
+
+    .wp-search-box {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .wp-search-box > div {
+        width: 100% !important;
+    }
+
+    .wp-search-box input {
+        width: 100% !important;
+        height: 38px !important;
+    }
+
+    .wp-search-box button {
+        width: 100% !important;
+        height: 38px !important;
+    }
+
+    /* Modal Mobile Auto-Sizing */
+    [id*="Modal"] > div {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 10px auto !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+}
