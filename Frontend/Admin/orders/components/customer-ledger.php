@@ -221,12 +221,16 @@
             <div style="display:flex; gap:8px;">
                 <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.printLedger()" style="height:32px; font-size:11px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    <span>Print Ledger Statement</span>
+                    <span>Print Ledger</span>
                 </button>
                 <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.exportLedgerCSV()" style="height:32px; font-size:11px;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span>Export CSV / Excel</span>
+                    <span>Export Excel (.xls)</span>
                 </button>
+                <a href="/Frontend/Admin/orders/ledger.php?id=<?php echo urlencode($order['id'] ?? 'DTB-001624'); ?>" target="_blank" class="dt-btn dt-btn-pale" style="height:32px; font-size:11px; text-decoration:none;">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>Full Ledger Page</span>
+                </a>
             </div>
             <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.closeLedgerModal()" style="height:32px; font-size:11px; padding:0 20px;">
                 <span>Close Ledger</span>
