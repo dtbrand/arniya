@@ -1,0 +1,384 @@
+/**
+ * orders.css — DT Brand's & Jai Hanuman Tex Order Management Core Styles
+ * Master Luxury Wholesaler Design System
+ */
+
+:root {
+    --dt-gold: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-bronze: #5A4210;
+    --dt-gold-pale: #FAF5E8;
+    --dt-gold-cream: #FDFBF7;
+    --dt-obsidian: #181512;
+    --dt-obsidian-card: #2A241E;
+    --dt-emerald: #15803D;
+    --dt-emerald-bg: #DCFCE7;
+    --dt-amber: #B45309;
+    --dt-amber-bg: #FEF3C7;
+    --dt-crimson: #DC2626;
+    --dt-crimson-bg: #FEF2F2;
+    --dt-blue: #1D4ED8;
+    --dt-blue-bg: #EFF6FF;
+    --dt-border: #E2DFD7;
+}
+
+/* ════ ORDER MODULE CONTAINER & WRAPPERS ════ */
+.dt-orders-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ════ HEADINGS & TOOLBAR ════ */
+.dt-orders-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.dt-orders-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.dt-orders-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--dt-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.01em;
+}
+
+.dt-orders-subtitle {
+    font-size: 12px;
+    color: #64748B;
+    margin: 0;
+    font-weight: 500;
+}
+
+.dt-orders-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ════ BUTTON SYSTEM (STRICT GOLD, EMERALD & PALE GOLD HIERARCHY) ════ */
+.dt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+    white-space: nowrap;
+    user-select: none;
+    border: 1px solid transparent;
+}
+
+.dt-btn svg {
+    flex-shrink: 0;
+}
+
+/* Primary Gold Master Button */
+.dt-btn-gold {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
+    color: #181512;
+    border: 1px solid #8A681F;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+}
+
+.dt-btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
+    color: #181512;
+}
+
+/* WhatsApp / Emerald Success Button */
+.dt-btn-emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    color: #FFFFFF;
+    border: 1px solid #15803D;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
+}
+
+.dt-btn-emerald:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+    color: #FFFFFF;
+}
+
+/* Pale Gold Secondary Pill */
+.dt-btn-pale {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+    font-weight: 700;
+}
+
+.dt-btn-pale:hover {
+    background: #F5EDD6;
+    color: #5A4210;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+/* Dark Obsidian Pill */
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: #FAF5E8;
+    border: 1px solid #3D342A;
+    font-weight: 700;
+}
+
+.dt-btn-dark:hover {
+    background: #2A241E;
+    color: #D4AF37;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+/* Soft Blue Pill */
+.dt-btn-blue {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #93C5FD;
+    font-weight: 700;
+}
+
+.dt-btn-blue:hover {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+/* Crimson Danger Pill */
+.dt-btn-danger {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
+    font-weight: 700;
+}
+
+.dt-btn-danger:hover {
+    background: #FEE2E2;
+    color: #B91C1C;
+}
+
+/* ════ KPI METRICS RIBBON (FLUID RESPONSIVE AUTO-SIZING) ════ */
+.dt-orders-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .dt-orders-kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dt-orders-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dt-orders-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+
+.dt-kpi-card {
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-decoration: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.dt-kpi-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--dt-gold-radiant);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.15);
+}
+
+.dt-kpi-card.active {
+    background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
+    border: 1.5px solid var(--dt-gold);
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.15);
+}
+
+.dt-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dt-kpi-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-kpi-card.active .dt-kpi-label {
+    color: var(--dt-gold-bronze);
+}
+
+.dt-kpi-icon-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FAF8F4;
+    border: 1px solid #EAE7E0;
+    color: var(--dt-gold);
+    flex-shrink: 0;
+}
+
+.dt-kpi-card.active .dt-kpi-icon-wrap {
+    background: #FFFFFF;
+    border-color: var(--dt-gold-radiant);
+}
+
+.dt-kpi-val {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--dt-obsidian);
+    line-height: 1.1;
+    font-feature-settings: "tnum";
+}
+
+.dt-kpi-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: #64748B;
+}
+
+.dt-kpi-badge {
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 9.5px;
+}
+
+.dt-kpi-badge.up {
+    background: var(--dt-emerald-bg);
+    color: var(--dt-emerald);
+}
+
+.dt-kpi-badge.pending {
+    background: var(--dt-amber-bg);
+    color: var(--dt-amber);
+}
+
+.dt-kpi-badge.danger {
+    background: var(--dt-crimson-bg);
+    color: var(--dt-crimson);
+}
+
+/* ════ INDIAN RUPEE ICON HELPER ════ */
+.dt-rupee-svg {
+    display: inline-block;
+    vertical-align: -0.12em;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ════ SUBNAV PILL BAR ════ */
+.dt-orders-subnav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.dt-orders-subnav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+    text-decoration: none;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    transition: all 0.18s ease;
+}
+
+.dt-orders-subnav-pill:hover {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold);
+    border-color: var(--dt-gold-radiant);
+}
+
+.dt-orders-subnav-pill.active {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: var(--dt-gold-radiant);
+    border-color: var(--dt-gold);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.dt-orders-subnav-pill small {
+    background: #E2E8F0;
+    color: #475569;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 10px;
+}
+
+.dt-orders-subnav-pill.active small {
+    background: #3D342A;
+    color: var(--dt-gold-radiant);
+}

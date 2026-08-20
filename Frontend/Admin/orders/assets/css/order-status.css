@@ -1,0 +1,207 @@
+/**
+ * order-status.css — Order Status Badges, Workflow Timeline & Progression Steppers
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+/* ════ STATUS BADGES SYSTEM ════ */
+.dt-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-transform: capitalize;
+    border: 1px solid transparent;
+}
+
+.dt-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Status Variations */
+.dt-status-badge.pending {
+    background: #FEF3C7;
+    color: #B45309;
+    border-color: #FDE68A;
+}
+
+.dt-status-badge.confirmed {
+    background: #E0E7FF;
+    color: #4338CA;
+    border-color: #C7D2FE;
+}
+
+.dt-status-badge.processing {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border-color: #BFDBFE;
+}
+
+.dt-status-badge.packed {
+    background: #FAF5E8;
+    color: #8A681F;
+    border-color: #D4AF37;
+}
+
+.dt-status-badge.shipped {
+    background: #E0F2FE;
+    color: #0369A1;
+    border-color: #BAE6FD;
+}
+
+.dt-status-badge.out_for_delivery {
+    background: #F3E8FF;
+    color: #7E22CE;
+    border-color: #E9D5FF;
+}
+
+.dt-status-badge.delivered {
+    background: #DCFCE7;
+    color: #15803D;
+    border-color: #86EFAC;
+}
+
+.dt-status-badge.cancelled {
+    background: #FEF2F2;
+    color: #DC2626;
+    border-color: #FECACA;
+}
+
+.dt-status-badge.failed {
+    background: #FEE2E2;
+    color: #991B1B;
+    border-color: #FCA5A5;
+}
+
+.dt-status-badge.returned {
+    background: #FFF7ED;
+    color: #C2410C;
+    border-color: #FFEDD5;
+}
+
+.dt-status-badge.refunded {
+    background: #F1F5F9;
+    color: #475569;
+    border-color: #CBD5E1;
+}
+
+/* Payment Status Badges */
+.dt-pay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dt-pay-badge.paid {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.dt-pay-badge.pending {
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+}
+
+.dt-pay-badge.failed {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
+}
+
+.dt-pay-badge.refunded {
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #CBD5E1;
+}
+
+/* ════ VISUAL STATUS TIMELINE STEPPER ════ */
+.dt-status-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 18px 10px;
+    margin: 8px 0 16px 0;
+    overflow-x: auto;
+}
+
+.dt-status-stepper::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 30px;
+    right: 30px;
+    height: 3px;
+    background: #E2E8F0;
+    z-index: 1;
+}
+
+.dt-step-node {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 70px;
+    text-align: center;
+}
+
+.dt-step-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2.5px solid #CBD5E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #64748B;
+    font-weight: 800;
+    transition: all 0.25s ease;
+}
+
+.dt-step-node.completed .dt-step-icon {
+    background: #15803D;
+    border-color: #15803D;
+    color: #FFFFFF;
+}
+
+.dt-step-node.current .dt-step-icon {
+    background: var(--dt-gold);
+    border-color: var(--dt-gold-radiant);
+    color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+}
+
+.dt-step-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748B;
+    white-space: nowrap;
+}
+
+.dt-step-node.completed .dt-step-label,
+.dt-step-node.current .dt-step-label {
+    font-weight: 800;
+    color: var(--dt-obsidian);
+}
+
+.dt-step-time {
+    font-size: 9.5px;
+    color: #94A3B8;
+}

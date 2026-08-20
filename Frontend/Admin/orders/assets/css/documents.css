@@ -1,0 +1,170 @@
+/**
+ * documents.css — Printable B2B GST Invoice, Packing Slip & Shipping Label
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+.dt-doc-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1E293B;
+}
+
+.dt-doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #8A681F;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.dt-doc-brand-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #181512;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.dt-doc-brand-subtitle {
+    font-size: 11px;
+    color: #64748B;
+    margin-top: 2px;
+}
+
+.dt-doc-meta-box {
+    text-align: right;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.dt-doc-meta-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #8A681F;
+    text-transform: uppercase;
+}
+
+.dt-doc-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.dt-doc-address-card {
+    background: #FAF8F4;
+    border: 1px solid #E2DFD7;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 11.5px;
+    line-height: 1.5;
+}
+
+.dt-doc-address-title {
+    font-weight: 800;
+    color: #181512;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.dt-doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+.dt-doc-table th {
+    background: #181512;
+    color: #FAF5E8;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.dt-doc-table td {
+    padding: 10px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.dt-doc-totals-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.dt-doc-totals {
+    width: 280px;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.dt-doc-totals td {
+    padding: 5px 8px;
+}
+
+.dt-doc-totals .total-row {
+    border-top: 1.5px solid #8A681F;
+    font-size: 15px;
+    font-weight: 800;
+    color: #181512;
+}
+
+.dt-doc-footer {
+    border-top: 1px solid #E2DFD7;
+    padding-top: 14px;
+    font-size: 10.5px;
+    color: #64748B;
+    text-align: center;
+}
+
+/* ════ SHIPPING LABEL BARCODE / QR LAYOUT ════ */
+.dt-shipping-label-card {
+    max-width: 440px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 2px solid #181512;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.dt-label-barcode {
+    height: 48px;
+    background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px);
+    margin: 12px 0 4px 0;
+}
+
+/* ════ PRINT STYLES ════ */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .dt-doc-container, .dt-doc-container * {
+        visibility: visible;
+    }
+    .dt-doc-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    .adm-sidebar, .adm-header, .adm-footer, .dt-doc-actions-bar {
+        display: none !important;
+    }
+}

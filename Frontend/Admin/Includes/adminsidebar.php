@@ -281,12 +281,73 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                     </ul>
                 </li>
 
-                <li>
-                    <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-orders')) { switchAdmTab('orders'); return false; }" data-title="Orders & Shipments">
+                <!-- ORDERS WITH REAL SVG SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'orders' ? 'open' : ''; ?>">
+                    <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" data-title="Orders & Shipments">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span class="adm-nav-label">Orders</span>
-                        <span class="adm-nav-badge gold" id="admNavOrdersBadge">5 New</span>
+                        <span class="adm-nav-badge gold" id="admNavOrdersBadge">1,624</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'orders' ? 'open' : ''; ?>" id="admSubmenu-orders">
+                        <li>
+                            <a href="/Frontend/Admin/orders/index.php" class="adm-nav-subitem <?php echo ($current_nav === 'orders' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>All Orders</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,624</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>Pending</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">18</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/processing.php" class="adm-nav-subitem <?php echo $current_subnav === 'processing' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                                <span>Processing</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">24</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/shipped.php" class="adm-nav-subitem <?php echo $current_subnav === 'shipped' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                <span>In Transit / Shipped</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">84</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/delivered.php" class="adm-nav-subitem <?php echo $current_subnav === 'delivered' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"></path></svg>
+                                <span>Delivered</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,542</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/returns.php" class="adm-nav-subitem <?php echo $current_subnav === 'returns' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                                <span>RMA Returns</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">8</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/refunds.php" class="adm-nav-subitem <?php echo $current_subnav === 'refunds' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>Refunds Ledger</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">6</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/orders/export.php" class="adm-nav-subitem <?php echo $current_subnav === 'export' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export Studio</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/Frontend/Admin/pricing/" class="adm-nav-item <?php echo $current_nav === 'pricing' ? 'active' : ''; ?>" id="navItem-pricing" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-pricing')) { switchAdmTab('pricing'); return false; }" data-title="Multi-Tier Pricing">

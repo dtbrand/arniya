@@ -1,13 +1,13 @@
 <?php
 /**
- * cancelled.php — Cancelled Orders Filtered View
+ * failed.php — Failed Orders Filtered View
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = "Cancelled Orders";
+$page_title = "Failed Orders";
 $active_nav = "orders";
-$active_subnav = "cancelled";
-$active_status_key = "cancelled";
-$filter_status = "cancelled";
+$active_subnav = "failed";
+$active_status_key = "failed";
+$filter_status = "failed";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,10 +34,10 @@ $filter_status = "cancelled";
                 <div class="dt-orders-head">
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
-                            <span>Cancelled Orders</span>
-                            <span class="dt-status-badge cancelled"><span class="dt-status-dot"></span><span>14 Cancelled (0.8%)</span></span>
+                            <span>Failed Transactions &amp; Orders</span>
+                            <span class="dt-status-badge failed"><span class="dt-status-dot"></span><span>3 Failed</span></span>
                         </h1>
-                        <p class="dt-orders-subtitle">Orders voided by buyer request, inventory shortage, or undeliverable pin codes.</p>
+                        <p class="dt-orders-subtitle">Orders with gateway timeouts, card authorization drops, or bank declines.</p>
                     </div>
                     <div class="dt-orders-actions">
                         <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← View All Orders</a>

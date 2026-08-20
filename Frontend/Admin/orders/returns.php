@@ -1,76 +1,67 @@
 <?php
 /**
- * returns.php - DT Brand's Admin Returns & Replacement Center
+ * returns.php — Return Merchandise Authorization (RMA) Management
  * DT Brand's & Jai Hanuman Tex
  */
-$page_title = "Returns & Replacement Center";
+$page_title = "Return Requests & RMA Management";
 $active_nav = "orders";
+$active_subnav = "returns";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Returns & Replacement Center - DT Brand's Admin</title>
+    <title><?php echo $page_title; ?> ‹ DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/orders/assets/css/returns.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
     <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
-        <main class="adm-content">
-            <div class="adm-page-head">
-                <div class="adm-page-title-group">
-                    <h1 class="adm-page-title">
-                        <span>Returns & Replacement Center</span>
-                        <span class="adm-badge gold">3 Active RTOs</span>
-                    </h1>
-                    <p class="adm-page-subtitle">Manage return consignments, quality inspection, and exchange shipments.</p>
+        <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
+            
+            <div class="dt-orders-container">
+                <div class="dt-orders-head">
+                    <div class="dt-orders-title-group">
+                        <h1 class="dt-orders-title">
+                            <span>Return Merchandise Authorizations (RMA)</span>
+                            <span class="dt-status-badge pending"><span class="dt-status-dot"></span><span>8 Active RMAs</span></span>
+                        </h1>
+                        <p class="dt-orders-subtitle">Manage customer returns, defect reviews, Surat depot dock inspections, and reverse pickups.</p>
+                    </div>
+                    <div class="dt-orders-actions">
+                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← Back to Orders</a>
+                    </div>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/orders/" class="adm-btn-secondary">← Back to Orders Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+
+                <!-- Returns Subnav -->
+                <div class="dt-orders-subnav">
+                    <a href="/Frontend/Admin/orders/returns.php" class="dt-orders-subnav-pill active">All Returns <small>8</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=requested" class="dt-orders-subnav-pill">Requested <small>2</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=approved" class="dt-orders-subnav-pill">Approved for Pickup <small>3</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=received" class="dt-orders-subnav-pill">Depot Inspection <small>2</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=completed" class="dt-orders-subnav-pill">Completed <small>1</small></a>
                 </div>
+
+                <!-- Return Table Panel -->
+                <?php include __DIR__ . '/components/return-panel.php'; ?>
             </div>
 
-            <!-- Page Specific Content -->
-            
-        <div class="adm-table-card">
-            <div class="adm-table-toolbar">
-                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Return Requests & QC Inspection</h3></div>
-            </div>
-            <div class="adm-table-responsive">
-                <table class="adm-table">
-                    <thead>
-                        <tr>
-                            <th>Return ID</th>
-                            <th>Original Order</th>
-                            <th>Item Returned</th>
-                            <th>QC Status</th>
-                            <th>Resolution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>#RET-401</strong></td>
-                            <td>#ORD-9780</td>
-                            <td>Banarasi Brocade (Red)</td>
-                            <td><span class="adm-badge warning">Inspecting at Surat Hub</span></td>
-                            <td><button class="adm-btn-primary adm-btn-sm" onclick="window.showToast('Replacement Saree Dispatched!')">Dispatch Exchange</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+
+<script src="/Frontend/Admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/orders/assets/js/returns.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

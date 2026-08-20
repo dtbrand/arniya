@@ -1,0 +1,29 @@
+/**
+ * refunds.css — Refund Management & Credit Notes
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+.dt-refund-breakdown {
+    background: #FAF8F4;
+    border: 1px solid #E2DFD7;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dt-refund-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.dt-refund-row.highlight {
+    border-top: 1px dashed #CBD5E1;
+    padding-top: 8px;
+    font-weight: 800;
+    color: var(--dt-crimson);
+    font-size: 14px;
+}
