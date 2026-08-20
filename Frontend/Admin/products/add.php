@@ -95,6 +95,7 @@ $active_subnav = "add";
     </div>
 </div>
 <script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
