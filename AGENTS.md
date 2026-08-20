@@ -1,36 +1,53 @@
 # 🤖 DT BRAND'S & JAI HANUMAN TEX — ULTRA-POWERFUL AUTONOMOUS MULTI-AGENT EXECUTION PROTOCOL
 
 > **MANDATORY INSTRUCTION FOR ALL AI AGENTS & DEVELOPERS:**
-> This document defines the **Enterprise Multi-Agent Workflow, 100% Real Vector SVG Icon Standard, Luxury Button Styling Mandate, Zero-Half-Baked Guarantee, Complete Functional Verification, and Triple-Sync Quality Control Standards** for the DT Brand's & Jai Hanuman Tex workspace (`c:\Users\sai\Desktop\WhatsApp CRM`).
+> This document defines the **Enterprise Multi-Agent Workflow, Bilingual Intent Understanding & Typo Tolerance, Professional English UI Standard, 100% Real Vector SVG Icon Standard, Luxury Button Styling Mandate, Zero-Half-Baked Guarantee, Complete Functional Verification, and Triple-Sync Quality Control Standards** for the DT Brand's & Jai Hanuman Tex workspace (`c:\Users\sai\Desktop\WhatsApp CRM`).
 > **EVERY AI AGENT MUST OPERATE UNDER THIS PROTOCOL WITH ZERO SHORTCUTS AND ZERO COMPROMISES.**
 
 ---
 
-## 👑 The 5 Golden Rules of DT Brand's Autonomous Development
+## 👑 The 6 Golden Rules of DT Brand's Autonomous Development
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │              👑 DT BRAND'S ZERO-COMPROMISE QUALITY PILLARS                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 1. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
+│ 1. 🧠 HINDI / TYPO TOLERANCE & PRO ENGLISH: Understand Hinglish/typos       │
+│    seamlessly, auto-translate to clear intent, and write 100% professional │
+│    English in all UI, code, comments, labels, and git commits.              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
 │    Every button must use DT Brand's gold gradient, emerald, or pale gold.   │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 2. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
+│ 3. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
 │    All icons must be crisp inline SVG vectors (stroke-width: 2 - 2.8).      │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 3. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
+│ 4. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
 │    Every button, modal, drawer, and input must have working JS and backend. │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 4. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
+│ 5. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
 │    clipped dropdowns, and unstyled UI, then build missing parts end-to-end. │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 5. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
+│ 6. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 1. The 4 Autonomous Agent Personas & Workstreams
+## 🧠 1. Bilingual Hindi / Hinglish Understanding & Professional English Mandate
+
+1. **Seamless Hindi & Hinglish Comprehension**:
+   - The user communicates in Hindi, Hinglish, and colloquial typing (e.g. *"kham fast kere"*, *"projuct me dalna hai"*, *"adhura na rahe"*, *"button filed box sizes styles degine"*).
+   - **Rule**: The agent must effortlessly understand the deep business and technical intent behind every Hindi/Hinglish instruction without asking for clarification.
+2. **Automatic Typo Correction**:
+   - If user input contains spelling typos (e.g. `scren short` ➔ Screenshot, `improment` ➔ Improvement, `apolad` ➔ Upload, `dasttop` ➔ Desktop, `projuct` ➔ Product, `buttn` ➔ Button), the agent must silently normalize and execute the intended goal accurately.
+3. **100% Professional English in Production Code & UI**:
+   - **NEVER** use romanized Hindi or slang inside code, UI labels, buttons, placeholders, variable names, or git commit messages.
+   - **ALWAYS** use standard, pristine, professional English terms (e.g. `Catalog SKUs`, `Wholesale Pricing & Resale Margin`, `Surat Central Depot Ready Stock`, `Silk Mark Certified Handloom`, `Minimum Order Quantity (MOQ)`).
+
+---
+
+## 🎯 2. The 4 Autonomous Agent Personas & Workstreams
 
 When fulfilling any task, the AI Agent must seamlessly execute across 4 specialized roles:
 
@@ -50,7 +67,7 @@ When fulfilling any task, the AI Agent must seamlessly execute across 4 speciali
 
 ---
 
-## 🎨 2. Button & UI Component Styling Standards (MANDATORY)
+## 🎨 3. Button & UI Component Styling Standards (MANDATORY)
 
 Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
 
@@ -94,7 +111,7 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ---
 
-## ⚡ 3. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS)
+## ⚡ 4. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS)
 
 - **NEVER** use emojis (such as ✏️, 👁️, 🗑️, 💾, 📦, 📁, ✕) inside buttons, action links, table rows, or modal headers.
 - **ALWAYS** use clean, lightweight, inline vector SVGs with:
@@ -118,7 +135,7 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ---
 
-## 🎯 4. Complete End-to-End Functional Guarantee ("Sab Last Tak Working Ho")
+## 🎯 5. Complete End-to-End Functional Guarantee ("Sab Last Tak Working Ho")
 
 - **Zero Dead Buttons**: Every button (`onClick`, form `submit`, anchor link) must have working JS logic attached.
 - **Form Actions**: Every form submit must capture field values, validate inputs, update the UI table dynamically, close the modal, and show an emerald/gold toast notification (`window.showToast(...)`).
@@ -128,7 +145,7 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ---
 
-## 📸 5. Screenshot-Driven Autonomous Execution Protocol
+## 📸 6. Screenshot-Driven Autonomous Execution Protocol
 
 Whenever the user provides ANY screenshot:
 
@@ -153,11 +170,12 @@ Whenever the user provides ANY screenshot:
 
 ---
 
-## 📋 6. Master Quality Control Checklist (Run on Every Task)
+## 📋 7. Master Quality Control Checklist (Run on Every Task)
 
 Before marking ANY task complete, every agent must verify:
 
 - [ ] **Design System Compliance**: Uses DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`), real vector SVGs, and left-aligned search icon.
+- [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and documentation with zero typos.
 - [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
 - [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.
 - [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links, stubs, or placeholder text.
