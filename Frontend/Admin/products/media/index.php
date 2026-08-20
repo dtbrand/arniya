@@ -824,5 +824,6 @@ function closeLightbox() {
     if (m) m.style.display = 'none';
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

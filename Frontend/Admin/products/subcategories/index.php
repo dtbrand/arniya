@@ -340,5 +340,6 @@ function handleSubcatBulkAction() {
     if (typeof window.showToast === 'function') window.showToast(`✨ Bulk action "${action}" applied!`);
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

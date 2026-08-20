@@ -509,5 +509,6 @@ function executeImportNow() {
     }, 600);
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

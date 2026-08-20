@@ -222,5 +222,6 @@ function updateTermsBadge() {
     if (badge) badge.textContent = `${count} Active Swatches`;
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

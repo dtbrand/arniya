@@ -208,5 +208,6 @@ function triggerExport(scope, format) {
     }
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

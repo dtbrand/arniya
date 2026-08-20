@@ -607,5 +607,6 @@ function handleBrandBulkAction() {
     if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} brands!`);
 }
 </script>
+<script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

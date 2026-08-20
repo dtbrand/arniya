@@ -7,7 +7,7 @@ $current_nav = isset($active_nav) ? $active_nav : 'dashboard';
 $current_subnav = isset($active_subnav) ? $active_subnav : '';
 ?>
 <!-- ══ Mobile Sidebar Backdrop ══ -->
-<div class="adm-sidebar-backdrop" id="admSidebarBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:999; backdrop-filter:blur(3px);"></div>
+<div class="adm-sidebar-backdrop" id="admSidebarBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:99998; backdrop-filter:blur(3px);"></div>
 
 <!-- ══ Left Sidebar Component ══ -->
 <aside class="adm-sidebar" id="admSidebar">
@@ -292,3 +292,57 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
         </div>
     </div>
 </aside>
+
+<!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
+<script>
+(function() {
+    function initAdmSidebar() {
+        const mobileBtn = document.getElementById('admMobileMenuBtn');
+        const sidebar = document.getElementById('admSidebar');
+        const backdrop = document.getElementById('admSidebarBackdrop');
+        const toggleBtn = document.getElementById('admSidebarToggleBtn');
+
+        if (mobileBtn && sidebar) {
+            mobileBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                sidebar.classList.toggle('mobile-open');
+                if (backdrop) {
+                    backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+                }
+            };
+        }
+
+        if (backdrop && sidebar) {
+            backdrop.onclick = function(e) {
+                e.preventDefault();
+                sidebar.classList.remove('mobile-open');
+                backdrop.style.display = 'none';
+            };
+        }
+
+        if (toggleBtn && sidebar) {
+            toggleBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                sidebar.classList.toggle('collapsed');
+            };
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAdmSidebar);
+    } else {
+        initAdmSidebar();
+    }
+})();
+
+function toggleSidebarSubmenu(item) {
+    const parent = item.closest('.adm-nav-has-sub');
+    if (parent) {
+        parent.classList.toggle('open');
+        const sub = parent.querySelector('.adm-nav-submenu');
+        if (sub) sub.classList.toggle('open');
+    }
+}
+</script>
