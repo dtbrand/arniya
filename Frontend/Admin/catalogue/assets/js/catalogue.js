@@ -770,7 +770,7 @@ window.DT_DISPLAY = {
     },
 
     expandAll: function() {
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= 4; i++) {
             const body = document.getElementById('sec-body-' + i);
             if (body) body.classList.remove('collapsed');
         }
@@ -785,7 +785,7 @@ window.DT_DISPLAY = {
     },
 
     collapseAll: function() {
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= 4; i++) {
             const body = document.getElementById('sec-body-' + i);
             if (body) body.classList.add('collapsed');
         }

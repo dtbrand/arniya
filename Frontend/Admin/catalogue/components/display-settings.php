@@ -399,72 +399,17 @@ $real_products = [
             </div>
         </div>
 
-        <!-- ════ STEP 4: REAL PRODUCT BADGES & STOREFRONT ACTION TOGGLES ════ -->
-        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-4', this)">
-            <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                <span>Step 4: Real Storefront Badges &amp; Visibility Toggles</span>
-                <span class="dt-badge gold" style="font-size:9.5px;">Active Elements</span>
-            </div>
-            <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
-        </div>
-
-        <div class="dt-accordion-body" id="sec-body-4">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkSilkMark" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show "Silk Mark Certified" Badge</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkDepotStock" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show "Surat Depot Stock" Tag</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkUrgency" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Fast Selling / Trending Badge</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkNewBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show New Arrival 2026 Badge</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkBridalBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Bridal Edition Badge</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkCatTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Category Photo Tag (Bottom-Right)</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkWishlist" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Wishlist Heart Button</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkPhotoShare" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Photo WhatsApp Share Button</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkRating" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show 5-Star Rating &amp; Review Count</span>
-                </label>
-                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" id="chkColorsSizes" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                    <span>Show Colours Count &amp; Available Sizes Row</span>
-                </label>
-            </div>
-        </div>
-
-        <!-- ════ STEP 5: LIVE STOREFRONT SIMULATOR CANVAS ════ -->
-        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-5', this)" style="margin-top:14px;">
+        <!-- ════ STEP 4: LIVE STOREFRONT SIMULATOR CANVAS ════ -->
+        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-4', this)" style="margin-top:14px;">
             <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#16A34A" stroke-width="2.2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
-                <span>Step 5: Live Storefront Simulator Canvas (0ms Reactive)</span>
+                <span>Step 4: Live Storefront Simulator Canvas (0ms Reactive)</span>
                 <span class="dt-badge green" style="font-size:9.5px;">Live Preview Synced</span>
             </div>
             <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
         </div>
 
-        <div class="dt-accordion-body" id="sec-body-5">
+        <div class="dt-accordion-body" id="sec-body-4">
             <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px; box-shadow:0 4px 16px rgba(212,175,55,0.12);">
                 
                 <!-- Enhanced Real-Time Sync & Live Filter Toolbar -->
