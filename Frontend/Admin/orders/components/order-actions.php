@@ -107,19 +107,11 @@
         <!-- Modal Footer -->
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="height:32px; padding:0 10px; font-size:11px;">✕ Close</button>
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.downloadInvoiceExcel()" style="height:32px; padding:0 10px; font-size:11px; color:#15803D; border-color:#86EFAC; background:#DCFCE7;" title="Download Formatted Excel Invoice">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
-                    <span>Excel (.xls)</span>
-                </button>
-                <button type="button" class="dt-btn dt-btn-emerald" onclick="window.DT_ORDER_VIEW.downloadInvoicePDF()" style="height:32px; padding:0 12px; font-size:11px;" title="Download PDF Tax Invoice">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="height:32px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.downloadInvoicePDF()" style="height:32px; padding:0 14px; font-size:11.5px;" title="Download PDF Tax Invoice">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download PDF</span>
-                </button>
-                <button type="button" class="dt-btn dt-btn-gold" onclick="window.print()" style="height:32px; padding:0 12px; font-size:11px;" title="Direct Print">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    <span>Print Invoice</span>
                 </button>
             </div>
         </div>
@@ -148,19 +140,11 @@
         <!-- Modal Footer -->
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Internal Depot Manifest • QC Pass Verified</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="height:32px; padding:0 10px; font-size:11px;">✕ Close</button>
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.downloadPackingSlipExcel()" style="height:32px; padding:0 10px; font-size:11px; color:#B45309; border-color:#FCD34D; background:#FEF3C7;" title="Download Formatted Excel Manifest">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
-                    <span>Excel (.xls)</span>
-                </button>
-                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.downloadPackingSlipPDF()" style="height:32px; padding:0 12px; font-size:11px;" title="Download PDF Manifest">
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="height:32px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.downloadPackingSlipPDF()" style="height:32px; padding:0 14px; font-size:11.5px;" title="Download PDF Manifest">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Download PDF</span>
-                </button>
-                <button type="button" class="dt-btn dt-btn-emerald" onclick="window.print()" style="height:32px; padding:0 12px; font-size:11px;" title="Direct Print">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    <span>Print Manifest</span>
                 </button>
             </div>
         </div>
