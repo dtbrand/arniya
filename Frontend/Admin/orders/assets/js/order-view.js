@@ -753,15 +753,32 @@
             const sgst = taxable * 0.025;
             const total = Number(order.amount || 112250);
 
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            // Hidden iframe for direct download without opening new tabs/windows
+            let iframe = document.getElementById('dt-direct-pdf-iframe');
+            if (iframe) iframe.remove();
+            
+            iframe = document.createElement('iframe');
+            iframe.id = 'dt-direct-pdf-iframe';
+            iframe.style.position = 'fixed';
+            iframe.style.top = '-9999px';
+            iframe.style.left = '-9999px';
+            iframe.style.width = '1px';
+            iframe.style.height = '1px';
+            iframe.style.opacity = '0';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
                 <!DOCTYPE html>
                 <html>
                 <head>
                     <title>Tax Invoice #${order.id} ‹ DT Brand's</title>
                     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
                     <style>
-                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:30px; color:#181512; }
+                        @page { size: A4; margin: 15mm; }
+                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:0; padding:20px; color:#181512; }
                         table { width:100%; border-collapse:collapse; margin:16px 0; font-size:12px; }
                         th { background:#181512; color:#FAF5E8; padding:8px 10px; text-align:left; }
                         td { padding:8px 10px; border-bottom:1px solid #E2E8F0; }
@@ -770,14 +787,14 @@
                 <body>
                     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:50px; width:auto;">
+                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:48px; width:auto;">
                             <div>
-                                <h2 style="margin:0; font-size:20px; font-weight:800;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
+                                <h2 style="margin:0; font-size:18px; font-weight:800;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
                                 <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</p>
                             </div>
                         </div>
                         <div style="text-align:right;">
-                            <span style="font-size:11px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">ORIGINAL TAX INVOICE</span>
+                            <span style="font-size:11px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">TAX INVOICE</span>
                             <div style="font-size:13px; font-weight:800; color:#181512; margin-top:4px;">INV-${order.id.replace('DTB-', '2026-')}</div>
                             <div style="font-size:11px; color:#64748B;">Date: ${order.date}</div>
                         </div>
@@ -844,11 +861,21 @@
                         <div>Computer Generated Tax Invoice • Surat Central Wholesale Depot</div>
                         <div style="font-weight:700; color:#181512;">Authorised Signatory</div>
                     </div>
-                    <script>window.onload = function() { window.print(); };<\/script>
                 </body>
                 </html>
             `);
-            printWindow.document.close();
+            doc.close();
+
+            setTimeout(() => {
+                try {
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 250);
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Tax Invoice PDF initiated directly!');
         },
 
         downloadPackingSlipExcel: function(orderId) {
@@ -908,15 +935,32 @@
                 date: '21 Aug 2026'
             };
 
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
+            // Hidden iframe for direct download without opening new tabs/windows
+            let iframe = document.getElementById('dt-direct-pdf-iframe');
+            if (iframe) iframe.remove();
+            
+            iframe = document.createElement('iframe');
+            iframe.id = 'dt-direct-pdf-iframe';
+            iframe.style.position = 'fixed';
+            iframe.style.top = '-9999px';
+            iframe.style.left = '-9999px';
+            iframe.style.width = '1px';
+            iframe.style.height = '1px';
+            iframe.style.opacity = '0';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
                 <!DOCTYPE html>
                 <html>
                 <head>
                     <title>Packing Slip #${order.id} ‹ DT Brand's</title>
                     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
                     <style>
-                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:30px; color:#181512; }
+                        @page { size: A4; margin: 15mm; }
+                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:0; padding:20px; color:#181512; }
                         table { width:100%; border-collapse:collapse; margin:16px 0; font-size:12px; }
                         th { background:#181512; color:#FAF5E8; padding:8px 10px; text-align:left; }
                         td { padding:8px 10px; border-bottom:1px solid #E2E8F0; }
@@ -926,7 +970,7 @@
                     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
                         <div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <h2 style="margin:0; font-size:20px; font-weight:800;">PACKING SLIP</h2>
+                                <h2 style="margin:0; font-size:18px; font-weight:800;">PACKING SLIP</h2>
                                 <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">DEPOT DISPATCH MANIFEST</span>
                             </div>
                             <p style="margin:3px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Internal Wholesale Logistics Manifest</p>
@@ -981,11 +1025,21 @@
                         <div>Confidential Warehouse Dispatch Record • Surat Central Depot</div>
                         <div style="font-weight:700; color:#181512;">Warehouse Dispatch Officer</div>
                     </div>
-                    <script>window.onload = function() { window.print(); };<\/script>
                 </body>
                 </html>
             `);
-            printWindow.document.close();
+            doc.close();
+
+            setTimeout(() => {
+                try {
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 250);
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Warehouse Packing Slip PDF initiated directly!');
         }
     };
 })(window);
