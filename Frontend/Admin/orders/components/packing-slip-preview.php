@@ -51,6 +51,9 @@ $items = isset($order['items']) ? $order['items'] : [
             <div class="dt-doc-address-title" style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:4px; letter-spacing:0.5px;">Shipping Destination (Godown):</div>
             <strong style="font-size:14px; color:#181512; display:block;"><?php echo htmlspecialchars($customer); ?></strong>
             <span style="color:#475569; font-size:12px; line-height:1.4; display:block; margin-top:2px;"><?php echo htmlspecialchars($shipping_addr); ?></span>
+            <div style="font-size:11.5px; color:#181512; margin-top:4px; font-weight:700;">
+                <span style="color:#8A681F; font-size:10px; font-weight:800; text-transform:uppercase;">Contact No:</span> <?php echo htmlspecialchars($order['phone'] ?? '+91 98220 19283'); ?>
+            </div>
         </div>
     </div>
 
