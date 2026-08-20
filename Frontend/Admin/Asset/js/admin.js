@@ -624,12 +624,12 @@
         const canvas = document.getElementById('admCategoryChart');
         if (!canvas) return;
         const parent = canvas.parentElement;
-        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 260;
+        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 280;
         const ctx = canvas.getContext('2d');
         const dpr = window.devicePixelRatio || 1;
 
-        const w = containerWidth;
-        const h = 170;
+        const w = Math.min(340, containerWidth);
+        const h = 180;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         canvas.style.width = w + 'px';
@@ -638,39 +638,68 @@
 
         ctx.clearRect(0, 0, w, h);
 
-        // Modern Bubble Breakdown visual matching reference image
         const cx = w / 2;
         const cy = h / 2;
 
-        // Bubble 1: Sarees (48%) - Main Large Bubble
-        const b1 = { x: cx - 40, y: cy - 5, r: 52, color: 'rgba(138, 104, 31, 0.16)', borderColor: '#8A681F', text: '48%', label: 'Sarees', textColor: '#5A4210' };
-        // Bubble 2: Kurtis (32%) - Medium Bubble
-        const b2 = { x: cx + 42, y: cy - 25, r: 38, color: 'rgba(22, 163, 74, 0.16)', borderColor: '#16A34A', text: '32%', label: 'Kurtis', textColor: '#15803D' };
-        // Bubble 3: Lehengas (13%) - Smaller Bubble
-        const b3 = { x: cx + 32, y: cy + 38, r: 26, color: 'rgba(217, 119, 6, 0.16)', borderColor: '#D97706', text: '13%', label: 'Lehengas', textColor: '#B45309' };
-        // Bubble 4: Dress Mat. (7%) - Tiny Bubble
-        const b4 = { x: cx + 72, y: cy + 32, r: 17, color: 'rgba(126, 34, 206, 0.16)', borderColor: '#7E22CE', text: '7%', label: 'Dress', textColor: '#6B21A8' };
+        // Helper to draw a luxury glowing bubble
+        function drawLuxuryBubble(x, y, r, fillGrad, strokeColor, pctText, labelText, pctColor, lblColor) {
+            ctx.save();
+            ctx.shadowColor = 'rgba(138, 104, 31, 0.15)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 4;
 
-        const bubbles = [b1, b2, b3, b4];
-
-        bubbles.forEach(b => {
-            // Fill
             ctx.beginPath();
-            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-            ctx.fillStyle = b.color;
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fillStyle = fillGrad;
             ctx.fill();
-            // Border
-            ctx.lineWidth = 1.8;
-            ctx.strokeStyle = b.borderColor;
-            ctx.stroke();
 
-            // Centered Percentage Text
-            ctx.fillStyle = b.textColor;
-            ctx.font = 'bold ' + (b.r > 40 ? '16px' : (b.r > 25 ? '13px' : '10px')) + ' Plus Jakarta Sans, sans-serif';
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = strokeColor;
+            ctx.stroke();
+            ctx.restore();
+
+            // Main Percentage Number
+            ctx.fillStyle = pctColor;
+            ctx.font = 'bold ' + (r > 42 ? '18px' : (r > 28 ? '14px' : '11px')) + ' Cinzel, serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(b.text, b.x, b.y);
-        });
+            ctx.fillText(pctText, x, y - (r > 30 ? 6 : 0));
+
+            // Sub-label below percentage
+            if (r > 30) {
+                ctx.fillStyle = lblColor;
+                ctx.font = '600 9.5px Plus Jakarta Sans, sans-serif';
+                ctx.fillText(labelText, x, y + 10);
+            }
+        }
+
+        // Bubble 1: Sarees (48%) - Luxury Master Gold Glass Bubble
+        const grad1 = ctx.createRadialGradient(cx - 45, cy - 8, 5, cx - 45, cy - 8, 52);
+        grad1.addColorStop(0, '#FFFFFF');
+        grad1.addColorStop(0.4, '#FAF5E8');
+        grad1.addColorStop(1, '#EBD8A5');
+        drawLuxuryBubble(cx - 45, cy - 5, 50, grad1, '#8A681F', '48%', 'Sarees', '#5A4210', '#8A681F');
+
+        // Bubble 2: Kurtis (32%) - Fresh Emerald Glass Bubble
+        const grad2 = ctx.createRadialGradient(cx + 42, cy - 22, 4, cx + 42, cy - 22, 38);
+        grad2.addColorStop(0, '#FFFFFF');
+        grad2.addColorStop(0.4, '#DCFCE7');
+        grad2.addColorStop(1, '#A7F3D0');
+        drawLuxuryBubble(cx + 42, cy - 20, 36, grad2, '#15803D', '32%', 'Kurtis', '#15803D', '#16A34A');
+
+        // Bubble 3: Lehengas (13%) - Radiant Amber Glass Bubble
+        const grad3 = ctx.createRadialGradient(cx + 30, cy + 40, 3, cx + 30, cy + 40, 26);
+        grad3.addColorStop(0, '#FFFFFF');
+        grad3.addColorStop(0.4, '#FEF3C7');
+        grad3.addColorStop(1, '#FDE68A');
+        drawLuxuryBubble(cx + 30, cy + 38, 25, grad3, '#D97706', '13%', 'Lehengas', '#B45309', '#D97706');
+
+        // Bubble 4: Dress Mat. (7%) - Royal Amethyst Glass Bubble
+        const grad4 = ctx.createRadialGradient(cx + 72, cy + 30, 2, cx + 72, cy + 30, 18);
+        grad4.addColorStop(0, '#FFFFFF');
+        grad4.addColorStop(0.4, '#F3E8FF');
+        grad4.addColorStop(1, '#DDD6FE');
+        drawLuxuryBubble(cx + 74, cy + 32, 17, grad4, '#7E22CE', '7%', '', '#6B21A8', '#7E22CE');
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════
