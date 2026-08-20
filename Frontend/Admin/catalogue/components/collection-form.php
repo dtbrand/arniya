@@ -3,6 +3,14 @@
  * collection-form.php — Collection Create/Edit & Product Assignment Form
  * DT Brand's & Jai Hanuman Tex
  */
+$is_edit = isset($collection) && !empty($collection);
+$c_title = $is_edit ? $collection['title'] : '';
+$c_slug = $is_edit ? $collection['slug'] : '';
+$c_desc = $is_edit ? $collection['desc'] : '';
+$c_start = $is_edit ? ($collection['start_date'] ?: '2026-08-01') : date('Y-m-d');
+$c_end = $is_edit ? $collection['end_date'] : '';
+$c_active = $is_edit ? (!empty($collection['active'])) : true;
+$c_featured = $is_edit ? (!empty($collection['featured'])) : false;
 ?>
 <form onsubmit="return window.DT_CATEGORIES.saveCategoryForm(event)" class="dt-form-grid">
     <div>
@@ -14,17 +22,17 @@
 
             <div class="dt-form-group">
                 <label class="dt-form-label">Collection Title <span style="color:#DC2626;">*</span></label>
-                <input type="text" id="collTitle" class="dt-form-input" required placeholder="e.g. Surat Heritage Silk Festival" oninput="window.DT_CATALOGUE.generateSlug('collTitle', 'collSlug')">
+                <input type="text" id="collTitle" class="dt-form-input" required value="<?php echo htmlspecialchars($c_title); ?>" placeholder="e.g. Surat Heritage Silk Festival" oninput="window.DT_CATALOGUE.generateSlug('collTitle', 'collSlug')">
             </div>
 
             <div class="dt-form-group">
                 <label class="dt-form-label">URL Slug</label>
-                <input type="text" id="collSlug" class="dt-form-input" placeholder="e.g. surat-heritage-silk">
+                <input type="text" id="collSlug" class="dt-form-input" value="<?php echo htmlspecialchars($c_slug); ?>" placeholder="e.g. surat-heritage-silk">
             </div>
 
             <div class="dt-form-group">
                 <label class="dt-form-label">Description &amp; Highlights</label>
-                <textarea class="dt-form-textarea" rows="3" placeholder="Collection narrative and merchandising focus..."></textarea>
+                <textarea class="dt-form-textarea" rows="3" placeholder="Collection narrative and merchandising focus..."><?php echo htmlspecialchars($c_desc); ?></textarea>
             </div>
         </div>
 
@@ -48,7 +56,7 @@
                                     <div style="font-size:10px; color:#64748b;">KLN-SR-111 • ₹2,850</div>
                                 </div>
                             </div>
-                            <span class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</span>
+                            <button type="button" class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</button>
                         </div>
 
                         <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(102, 'Banarasi Brocade Saree', 'BNR-SR-204', '₹3,200', '/Frontend/Shop/Asset/images/product2.png')">
@@ -59,7 +67,7 @@
                                     <div style="font-size:10px; color:#64748b;">BNR-SR-204 • ₹3,200</div>
                                 </div>
                             </div>
-                            <span class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</span>
+                            <button type="button" class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</button>
                         </div>
 
                         <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(103, 'Zardosi Bridal Lehenga', 'BRD-LH-902', '₹11,500', '/Frontend/Shop/Asset/images/product6.png')">
@@ -70,7 +78,7 @@
                                     <div style="font-size:10px; color:#64748b;">BRD-LH-902 • ₹11,500</div>
                                 </div>
                             </div>
-                            <span class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</span>
+                            <button type="button" class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</button>
                         </div>
                     </div>
                 </div>
@@ -87,7 +95,7 @@
                                     <div style="font-size:10px; color:#64748b;">KLN-SR-111 • ₹2,850</div>
                                 </div>
                             </div>
-                            <button type="button" class="dt-btn-action-sm danger" onclick="this.closest('.dt-assign-item').remove()" style="height:22px; padding:0 6px; font-size:10px;">Remove</button>
+                            <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_COLLECTIONS.removeProductFromCollection('assigned-prod-101', 'Kanjivaram Silk Saree')" style="height:22px; padding:0 6px; font-size:10px;">Remove</button>
                         </div>
                     </div>
                 </div>
@@ -105,29 +113,31 @@
 
             <div class="dt-form-group">
                 <label class="dt-form-label">Start Date</label>
-                <input type="date" class="dt-form-input" value="2026-08-01">
+                <input type="date" class="dt-form-input" value="<?php echo htmlspecialchars($c_start); ?>">
             </div>
 
             <div class="dt-form-group">
                 <label class="dt-form-label">End Date (Optional)</label>
-                <input type="date" class="dt-form-input" value="2026-11-30">
+                <input type="date" class="dt-form-input" value="<?php echo htmlspecialchars($c_end); ?>">
             </div>
 
             <div style="display:flex; flex-direction:column; gap:8px; margin:14px 0;">
                 <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" checked style="width:15px; height:15px;">
+                    <input type="checkbox" <?php echo $c_active ? 'checked' : ''; ?> style="width:15px; height:15px;">
                     <span>Active Live</span>
                 </label>
                 <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                    <input type="checkbox" checked style="width:15px; height:15px;">
+                    <input type="checkbox" <?php echo $c_featured ? 'checked' : ''; ?> style="width:15px; height:15px;">
                     <span>Featured in Home Ribbon</span>
                 </label>
             </div>
 
-            <div style="display:flex; flex-direction:column; gap:8px;">
-                <button type="submit" class="dt-btn-action-sm gold" style="height:34px; justify-content:center; font-size:12px;">Save Collection</button>
-                <a href="/Frontend/Admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel</a>
-            </div>
+            <button type="submit" class="dt-btn-action-sm gold" style="width:100%; height:34px; justify-content:center; font-size:12px; margin-bottom:8px;">
+                <span>Save Collection</span>
+            </button>
+            <a href="/Frontend/Admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="width:100%; height:32px; justify-content:center; font-size:11.5px;">
+                <span>Cancel</span>
+            </a>
         </div>
     </div>
 </form>
