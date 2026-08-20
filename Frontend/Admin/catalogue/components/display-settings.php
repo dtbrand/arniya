@@ -550,17 +550,26 @@ $real_products = [
         <div class="dt-accordion-body" id="sec-body-6">
             <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px; box-shadow:0 4px 16px rgba(212,175,55,0.12);">
                 
-                <!-- Real-Time Sync Header Bar -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px;">
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <!-- Enhanced Real-Time Sync & Live Filter Toolbar -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.03);">
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex:1; min-width:260px;">
                         <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A;"></span>
-                        <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Storefront Simulator Synced (0ms)</strong>
+                        <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Storefront Simulator</strong>
                         <span id="liveContextBadge" class="dt-badge gold" style="font-size:10px; font-weight:800;">🛍️ Customer ➔ 🛒 Shop Grid</span>
                         <span id="liveParamPills" style="font-size:10.5px; color:#64748b;">4 Cols Desk • 2 Cols Mob • 3:4 Aspect</span>
                     </div>
-                    <div class="dt-device-switcher">
-                        <button type="button" class="dt-device-btn active" id="btnDspDesk" onclick="window.DT_DISPLAY.switchDevice('desk')">🖥️ Desktop Grid</button>
-                        <button type="button" class="dt-device-btn" id="btnDspMob" onclick="window.DT_DISPLAY.switchDevice('mob')">📱 Mobile App Grid</button>
+
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <!-- Live SKU Search Box -->
+                        <div style="position:relative; min-width:180px;">
+                            <input type="text" id="simSkuSearch" placeholder="🔍 Filter simulated items..." oninput="window.DT_DISPLAY.filterCards(this.value)" style="height:28px; font-size:11px; padding:0 8px; border:1px solid #cbd5e1; border-radius:14px; width:100%; box-sizing:border-box; outline:none; background:#FAF8F4;">
+                        </div>
+
+                        <!-- Device Switcher -->
+                        <div class="dt-device-switcher">
+                            <button type="button" class="dt-device-btn active" id="btnDspDesk" onclick="window.DT_DISPLAY.switchDevice('desk')">🖥️ Desktop</button>
+                            <button type="button" class="dt-device-btn" id="btnDspMob" onclick="window.DT_DISPLAY.switchDevice('mob')">📱 Mobile</button>
+                        </div>
                     </div>
                 </div>
 

@@ -793,6 +793,30 @@ window.DT_DISPLAY = {
         }
     },
 
+    filterCards: function(query) {
+        const grid = document.getElementById('simulatedGrid');
+        if (!grid) return;
+        const q = (query || '').toLowerCase().trim();
+        const cards = grid.querySelectorAll('.dt-sim-card');
+        let matchCount = 0;
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const sku = (card.getAttribute('data-badge') || '').toLowerCase();
+            if (!q || text.includes(q) || sku.includes(q)) {
+                card.style.display = 'flex';
+                matchCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        const pagInfo = document.getElementById('livePaginationInfo');
+        if (pagInfo) {
+            pagInfo.innerHTML = `Showing <strong>${matchCount}</strong> matched simulated products (Filter: "${query}")`;
+        }
+    },
+
     applyPreset: function(preset) {
         if (preset === 'b2b') {
             const chkRating = document.getElementById('chkRating'); if (chkRating) chkRating.checked = true;
