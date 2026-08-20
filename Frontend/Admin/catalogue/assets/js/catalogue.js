@@ -583,23 +583,37 @@ window.DT_DISPLAY = {
             else wrap.style.aspectRatio = '3 / 3.75';
         });
 
-        // Visibility Toggles
+        // Visibility Toggles (All Real Platform Badges & Storefront Elements)
         const chkRating = document.getElementById('chkRating')?.checked;
         const chkB2b = document.getElementById('chkB2bRate')?.checked;
         const chkMargin = document.getElementById('chkMargin')?.checked;
         const chkWhatsApp = document.getElementById('chkWhatsApp')?.checked;
         const chkSilkMark = document.getElementById('chkSilkMark')?.checked;
         const chkDepot = document.getElementById('chkDepotStock')?.checked;
-        const chkMoq = document.getElementById('chkMoq')?.checked;
         const chkUrgency = document.getElementById('chkUrgency')?.checked;
+        const chkNewBadge = document.getElementById('chkNewBadge')?.checked;
+        const chkBridalBadge = document.getElementById('chkBridalBadge')?.checked;
+        const chkCatTag = document.getElementById('chkCatTag')?.checked;
+        const chkWishlist = document.getElementById('chkWishlist')?.checked;
+        const chkPhotoShare = document.getElementById('chkPhotoShare')?.checked;
+        const chkFabricSku = document.getElementById('chkFabricSku')?.checked;
+        const chkColorsSizes = document.getElementById('chkColorsSizes')?.checked;
 
         grid.querySelectorAll('.sim-rating').forEach(el => el.style.display = chkRating ? 'flex' : 'none');
         grid.querySelectorAll('.sim-b2b').forEach(el => el.style.display = chkB2b ? 'inline' : 'none');
         grid.querySelectorAll('.sim-margin').forEach(el => el.style.display = chkMargin ? 'inline-block' : 'none');
         grid.querySelectorAll('.sim-whatsapp').forEach(el => el.style.display = chkWhatsApp ? 'flex' : 'none');
+        grid.querySelectorAll('.sim-wishlist-btn').forEach(el => el.style.display = chkWishlist ? 'flex' : 'none');
+        grid.querySelectorAll('.sim-share-btn').forEach(el => el.style.display = chkPhotoShare ? 'flex' : 'none');
+        grid.querySelectorAll('.sim-cat-tag').forEach(el => el.style.display = chkCatTag ? 'block' : 'none');
+        grid.querySelectorAll('.sim-fabric-tag').forEach(el => el.style.display = chkFabricSku ? 'block' : 'none');
+        grid.querySelectorAll('.sim-colors-sizes').forEach(el => el.style.display = chkColorsSizes ? 'flex' : 'none');
+
         grid.querySelectorAll('.card-badge.badge-heritage').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-trending').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-bridal').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-trending').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-new').forEach(el => el.style.display = chkNewBadge ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-bridal').forEach(el => el.style.display = chkBridalBadge ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-bestseller').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
 
         // Update Live Sync Header Pills
         const pills = document.getElementById('liveParamPills');

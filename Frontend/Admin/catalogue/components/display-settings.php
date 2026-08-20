@@ -250,7 +250,7 @@ $real_products = [
         <!-- 1. Multi-Device Columns & Sizing -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span>Grid Columns &amp; Card Dimensions (For Selected Context)</span>
+            <span>1. Multi-Device Grid Columns &amp; Card Dimensions</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
@@ -316,7 +316,7 @@ $real_products = [
         <!-- 2. Product Card Themes, Button Styles & Radii -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            <span>Product Card Themes, Button Styles &amp; Corner Radii</span>
+            <span>2. Product Card Themes, Button Styles &amp; Corner Radii</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
@@ -361,45 +361,107 @@ $real_products = [
 
         <hr style="border:none; border-top:1px solid #f1f5f9; margin:16px 0;">
 
-        <!-- 3. Product Card Badges & Wholesale Visibility Toggles -->
+        <!-- 3. All Product Card Badges, Wholesale Elements & Storefront Action Toggles -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-            <span>Product Card Badges &amp; Wholesale Elements</span>
+            <span>3. Product Card Badges, Wholesale Elements &amp; Storefront Actions</span>
         </h4>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-bottom:20px;">
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkRating" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show 5-Star Rating &amp; Reviews</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkB2bRate" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show Wholesale B2B Rate &amp; MRP</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkMargin" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show Resale Margin % Pill</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkWhatsApp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show 1-Click WhatsApp Lot Button</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkSilkMark" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show "Silk Mark Certified" Badge</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkDepotStock" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show "Surat Depot Stock" Tag</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkMoq" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show "MOQ / Bundle Size" Badge</span>
-            </label>
-            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                <input type="checkbox" id="chkUrgency" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show "Fast Selling / Low Stock" Alert</span>
-            </label>
+        <!-- Group A: Trust & Photo Badges -->
+        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px; margin-bottom:12px;">
+            <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">🏷️ A. Trust &amp; Product Badges</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkSilkMark" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "Silk Mark Certified" Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkDepotStock" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "Surat Depot Stock" Tag</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkUrgency" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "🔥 Fast Selling / Trending" Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkNewBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "✨ New Arrival 2026" Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkBridalBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "👑 Bridal Edition" Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkCatTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Category Photo Tag (Bottom-Right)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkSuratStamp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "📍 Surat Direct Weaver" Stamp</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Group B: Wholesale & Commercial B2B Elements -->
+        <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:6px; padding:12px; margin-bottom:12px;">
+            <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">💼 B. Wholesale &amp; Commercial B2B Elements</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkB2bRate" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Wholesale B2B Rate &amp; Retail MRP</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkMargin" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Resale Margin % Pill (+43%)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkTieredRates" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Tiered Bulk Lot Rates (1-3, 4-11, 12+ Pcs)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkMoq" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "MOQ / Bundle Size" Badge (MOQ 4)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkStockQty" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Ready Inventory Qty (420 Pcs in Surat)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkGstTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show GST Invoice &amp; Tax Credit Included</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Group C: Buttons, Wishlist, Cart & Photo Tools -->
+        <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; padding:12px; margin-bottom:20px;">
+            <div style="font-size:11.5px; font-weight:800; color:#1D4ED8; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;">🔘 C. Actions, Wishlist, Cart &amp; Details</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkWhatsApp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#16A34A;">
+                    <span>Show 1-Click WhatsApp Lot Enquiry Button</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkWishlist" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show ❤️ Wishlist Heart Button (Top-Right)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkPhotoShare" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show 🔗 Photo Smart WhatsApp Share Button</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkRating" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show 5-Star Rating &amp; Review Count</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkFabricSku" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Fabric &amp; SKU Subtitle Tag</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkColorsSizes" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Colours Count &amp; Available Sizes Row</span>
+                </label>
+            </div>
         </div>
 
         <!-- 4. Next-Level Multi-Portal Storefront Simulator & Real-Time Sync Bar -->
@@ -409,7 +471,7 @@ $real_products = [
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px;">
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A;"></span>
-                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Preview Synced</strong>
+                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Storefront Synced (0ms)</strong>
                     <span id="liveContextBadge" class="dt-badge gold" style="font-size:10px; font-weight:800;">🛍️ Customer ➔ 🛒 Shop Grid</span>
                     <span id="liveParamPills" style="font-size:10.5px; color:#64748b;">4 Cols Desk • 2 Cols Mob • 3:4 Aspect</span>
                 </div>
@@ -434,28 +496,28 @@ $real_products = [
 
                         <!-- Real Shop Badges (Heritage, Bridal, Trending, Best Seller, New) -->
                         <?php if (!empty($p['badge'])): ?>
-                        <span class="card-badge <?php echo $badge_class; ?>"><?php echo htmlspecialchars($p['badge']); ?></span>
+                        <span class="card-badge <?php echo $badge_class; ?> sim-badge-el"><?php echo htmlspecialchars($p['badge']); ?></span>
                         <?php endif; ?>
 
                         <!-- Real Shop Top-Right Wishlist Button -->
-                        <button type="button" class="card-wishlist-btn" onclick="this.classList.toggle('active'); if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('❤️ Wishlist updated!');" title="Add to Wishlist">
+                        <button type="button" class="card-wishlist-btn sim-wishlist-btn" onclick="this.classList.toggle('active'); if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('❤️ Wishlist updated!');" title="Add to Wishlist">
                             <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         </button>
 
                         <!-- Real Shop Share Button on Photo -->
-                        <button type="button" class="card-share-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp sharing link copied for <?php echo addslashes($p['name']); ?>!');" title="Share Product">
+                        <button type="button" class="card-share-btn sim-share-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp sharing link copied for <?php echo addslashes($p['name']); ?>!');" title="Share Product">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                         </button>
 
                         <!-- Real Shop Category Photo Tag -->
-                        <span class="card-cat-photo-tag"><?php echo htmlspecialchars($p['category']); ?></span>
+                        <span class="card-cat-photo-tag sim-cat-tag"><?php echo htmlspecialchars($p['category']); ?></span>
                     </div>
 
                     <!-- 2. Card Body with Exact Real Shop Typography & Colors -->
                     <div class="card-body" style="padding:10px; display:flex; flex-direction:column; gap:3px; flex:1;">
                         
-                        <!-- Fabric Tag -->
-                        <div class="card-fabric-tag" style="font-size:0.58rem; font-weight:700; color:#8A681F; text-transform:uppercase; letter-spacing:0.08em;">
+                        <!-- Fabric & SKU Subtitle Tag -->
+                        <div class="card-fabric-tag sim-fabric-tag" style="font-size:0.58rem; font-weight:700; color:#8A681F; text-transform:uppercase; letter-spacing:0.08em;">
                             <?php echo htmlspecialchars($p['fabric']); ?> • SKU: <?php echo htmlspecialchars($p['sku']); ?>
                         </div>
 
@@ -465,7 +527,7 @@ $real_products = [
                         </h2>
 
                         <!-- Clean Colors & Sizes Info Row -->
-                        <div class="card-info-text-row" style="display:flex; justify-content:space-between; align-items:center; font-size:0.68rem; color:#64748b; margin-bottom:4px;">
+                        <div class="card-info-text-row sim-colors-sizes" style="display:flex; justify-content:space-between; align-items:center; font-size:0.68rem; color:#64748b; margin-bottom:4px;">
                             <span class="card-colors-text" style="font-weight:600; color:#8A681F;"><?php echo count($p['colors']); ?> Colours</span>
                             <span class="card-sizes-text" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px;"><?php echo htmlspecialchars(implode(', ', $p['size'])); ?></span>
                         </div>
@@ -478,17 +540,17 @@ $real_products = [
                         <!-- Dynamic Context Actions & Price Rendering -->
                         <div class="context-card-content">
                             <!-- Price Row -->
-                            <div class="card-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0 6px 0;">
+                            <div class="card-price-row sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0 6px 0;">
                                 <span class="card-price sim-b2b" style="font-size:0.95rem; font-weight:800; color:#15803D;">₹<?php echo number_format($p['price']); ?></span>
-                                <span class="card-old-price" style="font-size:0.75rem; color:#94a3b8; text-decoration:line-through;">₹<?php echo number_format($p['old_price']); ?></span>
+                                <span class="card-old-price sim-mrp" style="font-size:0.75rem; color:#94a3b8; text-decoration:line-through;">₹<?php echo number_format($p['old_price']); ?></span>
                                 <span class="card-price-discount sim-margin" style="font-size:0.65rem; font-weight:800; color:#15803D; background:#DCFCE7; padding:1px 5px; border-radius:10px;"><?php echo $p['discount']; ?>% OFF</span>
                             </div>
 
                             <!-- Context Dynamic Pill Box -->
                             <div class="sim-context-pill" style="font-size:9.5px; margin-bottom:6px; display:none;"></div>
 
-                            <!-- Primary Button -->
-                            <button type="button" class="dt-btn-action-sm emerald sim-whatsapp sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp action triggered for <?php echo addslashes($p['name']); ?>!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
+                            <!-- Primary Action Button -->
+                            <button type="button" class="dt-btn-action-sm emerald sim-whatsapp sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 Action triggered for <?php echo addslashes($p['name']); ?>!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                                 <span class="sim-btn-text">WhatsApp Wholesale Lot</span>
                             </button>
