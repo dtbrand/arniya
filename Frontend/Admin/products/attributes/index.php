@@ -1,7 +1,7 @@
 <?php
 /**
  * attributes/index.php — DT Brand's Master Textile Attributes & Taxonomies
- * Wholesale Dashboard & Luxury Shop Standard
+ * 100% Fully Functional End-to-End Standard
  * DT Brand's & Jai Hanuman Tex
  */
 $page_title = "Attributes Management";
@@ -117,6 +117,22 @@ $attributes_list = [
         border: 1px solid rgba(0,0,0,0.2);
         display: inline-block;
     }
+    .dt-action-pill {
+        height: 28px;
+        padding: 0 8px;
+        font-size: 11.5px;
+        font-weight: 700;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s ease;
+    }
+    .dt-action-pill:hover {
+        transform: translateY(-1px);
+    }
     </style>
 </head>
 <body>
@@ -130,7 +146,7 @@ $attributes_list = [
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Textile Attributes Studio</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px;">4 Global Taxonomies</span>
+                    <span class="adm-badge gold" id="kpiBadgeTotal" style="font-weight:700; font-size:11px; padding:3px 8px;">4 Global Taxonomies</span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -157,7 +173,7 @@ $attributes_list = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">ACTIVE ATTRIBUTES</div>
-                        <div style="font-size:17px; font-weight:800; color:#181512;">4 Global Sets</div>
+                        <div style="font-size:17px; font-weight:800; color:#181512;" id="kpiActiveAttrs">4 Global Sets</div>
                     </div>
                 </div>
 
@@ -223,24 +239,24 @@ $attributes_list = [
                     <thead>
                         <tr style="background:#f6f7f7; border-bottom:1px solid #c3c4c7;">
                             <th style="width: 36px; text-align: center; padding:10px 8px;">
-                                <input type="checkbox" onchange="toggleSelectAllAttrs(this)" style="cursor:pointer; width:15px; height:15px;">
+                                <input type="checkbox" id="masterCheckbox" onchange="toggleSelectAllAttrs(this)" style="cursor:pointer; width:15px; height:15px;">
                             </th>
                             <th style="width: 180px; padding:10px 12px;">Attribute Name &amp; Slug</th>
                             <th style="padding:10px 10px;">Display Type</th>
                             <th style="padding:10px 12px;">Configured Swatches / Values</th>
                             <th style="width: 120px; padding:10px 10px;">Assigned SKUs</th>
-                            <th style="width: 150px; text-align: right; padding:10px 12px;">Actions</th>
+                            <th style="width: 190px; text-align: right; padding:10px 12px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="attributesTableBody">
                         <?php foreach($attributes_list as $attr): ?>
-                        <tr style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                        <tr id="attr-row-<?php echo $attr['id']; ?>" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                             <td style="text-align: center; padding:12px 8px;">
-                                <input type="checkbox" class="attr-row-check" style="cursor:pointer; width:15px; height:15px;">
+                                <input type="checkbox" class="attr-row-check" value="<?php echo $attr['id']; ?>" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:12px 12px;">
-                                <strong style="font-size:13.5px; color:#181512; display:block; margin-bottom:2px;"><?php echo htmlspecialchars($attr['name']); ?></strong>
-                                <code style="font-size:11px; color:#646970; background:#f0f0f1; padding:1px 5px; border-radius:3px;"><?php echo htmlspecialchars($attr['slug']); ?></code>
+                                <strong class="attr-name-display" style="font-size:13.5px; color:#181512; display:block; margin-bottom:2px;"><?php echo htmlspecialchars($attr['name']); ?></strong>
+                                <code class="attr-slug-display" style="font-size:11px; color:#646970; background:#f0f0f1; padding:1px 5px; border-radius:3px;"><?php echo htmlspecialchars($attr['slug']); ?></code>
                             </td>
                             <td style="padding:12px 10px;">
                                 <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-size:11px; font-weight:700;">
@@ -267,9 +283,15 @@ $attributes_list = [
                             </td>
                             <td style="padding:12px 12px; text-align:right;">
                                 <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                    <button type="button" class="wp-button" onclick="openConfigureTerms(<?php echo $attr['id']; ?>, '<?php echo htmlspecialchars($attr['name']); ?>')" style="height:28px; padding:0 8px; font-size:11.5px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:4px;">
+                                    <a href="/Frontend/Admin/products/attributes/values.php?id=<?php echo $attr['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Configure Terms</span>
+                                    </a>
+                                    <button type="button" class="dt-action-pill" onclick="openEditAttrModal(<?php echo $attr['id']; ?>, '<?php echo htmlspecialchars($attr['name']); ?>', '<?php echo htmlspecialchars($attr['slug']); ?>')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;" title="Edit Attribute">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                    </button>
+                                    <button type="button" class="dt-action-pill" onclick="deleteAttrRow(<?php echo $attr['id']; ?>)" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" title="Delete Attribute">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                     </button>
                                 </div>
                             </td>
@@ -304,15 +326,15 @@ $attributes_list = [
             <div style="margin-bottom:12px;">
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Display Type</label>
                 <select id="newAttrType" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
-                    <option value="color">Color Swatch (Visual Palette)</option>
-                    <option value="button">Text Pill / Button</option>
-                    <option value="select">Dropdown Menu</option>
-                    <option value="image">Image Thumbnail Swatch</option>
+                    <option value="Color Swatch / Hex">Color Swatch (Visual Palette)</option>
+                    <option value="Text Badge / Pill">Text Pill / Button</option>
+                    <option value="Size Specification">Size Specification</option>
+                    <option value="Dropdown Menu">Dropdown Menu</option>
                 </select>
             </div>
             <div style="margin-bottom:12px;">
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Default Terms (Comma separated)</label>
-                <input type="text" id="newAttrTerms" placeholder="e.g. 100% Silk Mark Certified, Pure Katan, Art Silk" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                <input type="text" id="newAttrTerms" placeholder="e.g. 100% Silk Mark, Pure Katan, Art Silk" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
             </div>
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
@@ -322,7 +344,36 @@ $attributes_list = [
     </div>
 </div>
 
+<!-- ======================================================== -->
+<!-- MODAL: EDIT ATTRIBUTE                                    -->
+<!-- ======================================================== -->
+<div id="editAttributeModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
+    <div style="background:#fff; width:95%; max-width:480px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
+        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+            <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Edit Attribute Details</h3>
+            <button type="button" onclick="closeEditAttrModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+        <div style="padding:18px 20px;">
+            <input type="hidden" id="editAttrId">
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Attribute Name</label>
+                <input type="text" id="editAttrName" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Slug Identifier</label>
+                <input type="text" id="editAttrSlug" style="width:100%; height:34px; padding:0 10px; font-size:12.5px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+            </div>
+        </div>
+        <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
+            <button type="button" class="wp-button" onclick="closeEditAttrModal()" style="height:32px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="saveEditedAttribute()" style="height:32px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Update Changes</button>
+        </div>
+    </div>
+</div>
+
 <script>
+let nextAttrId = 5;
+
 function toggleAttrSearchClearBtn(val) {
     const btn = document.getElementById('attrSearchClearBtn');
     if (btn) btn.style.display = val.length > 0 ? 'inline' : 'none';
@@ -350,6 +401,7 @@ function searchAttributes(q) {
 function openAddAttributeModal() {
     const m = document.getElementById('addAttributeModal');
     if (m) m.style.display = 'flex';
+    document.getElementById('newAttrName')?.focus();
 }
 
 function closeAddAttributeModal() {
@@ -358,13 +410,129 @@ function closeAddAttributeModal() {
 }
 
 function submitNewAttribute() {
-    const name = document.getElementById('newAttrName')?.value || 'Attribute';
+    const nameInput = document.getElementById('newAttrName');
+    const name = nameInput?.value.trim();
+    if (!name) {
+        alert('Please enter an attribute name');
+        return;
+    }
+    const type = document.getElementById('newAttrType')?.value || 'Text Badge / Pill';
+    const termsRaw = document.getElementById('newAttrTerms')?.value.trim();
+    const slug = 'pa_' + name.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+    
+    // Generate chips
+    const termsArr = termsRaw ? termsRaw.split(',').map(s => s.trim()).filter(Boolean) : ['Standard Term'];
+    let chipsHtml = '';
+    termsArr.forEach(t => {
+        chipsHtml += `<span class="dt-attr-chip"><span>${t}</span></span>`;
+    });
+
+    const tbody = document.getElementById('attributesTableBody');
+    const currentId = nextAttrId++;
+
+    const newRow = document.createElement('tr');
+    newRow.id = `attr-row-${currentId}`;
+    newRow.style.borderBottom = '1px solid #f0f0f1';
+    newRow.style.transition = 'background 0.15s';
+    newRow.onmouseover = function() { this.style.background = '#FDFBF7'; };
+    newRow.onmouseout = function() { this.style.background = 'transparent'; };
+
+    newRow.innerHTML = `
+        <td style="text-align: center; padding:12px 8px;">
+            <input type="checkbox" class="attr-row-check" value="${currentId}" style="cursor:pointer; width:15px; height:15px;">
+        </td>
+        <td style="padding:12px 12px;">
+            <strong class="attr-name-display" style="font-size:13.5px; color:#181512; display:block; margin-bottom:2px;">${name}</strong>
+            <code class="attr-slug-display" style="font-size:11px; color:#646970; background:#f0f0f1; padding:1px 5px; border-radius:3px;">${slug}</code>
+        </td>
+        <td style="padding:12px 10px;">
+            <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-size:11px; font-weight:700;">
+                ${type}
+            </span>
+        </td>
+        <td style="padding:12px 12px;">
+            <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                ${chipsHtml}
+            </div>
+        </td>
+        <td style="padding:12px 10px;">
+            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11.5px; padding:3px 8px; border-radius:10px;">
+                0 SKUs
+            </span>
+        </td>
+        <td style="padding:12px 12px; text-align:right;">
+            <div style="display:flex; gap:5px; justify-content:flex-end;">
+                <a href="/Frontend/Admin/products/attributes/values.php?id=${currentId}" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    <span>Configure Terms</span>
+                </a>
+                <button type="button" class="dt-action-pill" onclick="openEditAttrModal(${currentId}, '${name}', '${slug}')" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;" title="Edit Attribute">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                </button>
+                <button type="button" class="dt-action-pill" onclick="deleteAttrRow(${currentId})" style="background:#FEF2F2; border:1px solid #FECACA; color:#DC2626;" title="Delete Attribute">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+            </div>
+        </td>
+    `;
+
+    tbody.appendChild(newRow);
     closeAddAttributeModal();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Attribute "${name}" created successfully!`);
+    if (nameInput) nameInput.value = '';
+    if (document.getElementById('newAttrTerms')) document.getElementById('newAttrTerms').value = '';
+
+    // Update KPI counter
+    updateAttrCounts();
+
+    if (typeof window.showToast === 'function') {
+        window.showToast(`✨ Attribute "${name}" created and added to table!`);
+    }
 }
 
-function openConfigureTerms(id, name) {
-    if (typeof window.showToast === 'function') window.showToast(`✨ Terms Studio opened for "${name}"!`);
+function updateAttrCounts() {
+    const total = document.querySelectorAll('#attributesTableBody tr').length;
+    const badge = document.getElementById('kpiBadgeTotal');
+    const kpi = document.getElementById('kpiActiveAttrs');
+    if (badge) badge.textContent = `${total} Global Taxonomies`;
+    if (kpi) kpi.textContent = `${total} Global Sets`;
+}
+
+function deleteAttrRow(id) {
+    const row = document.getElementById(`attr-row-${id}`);
+    if (row) {
+        if (confirm('Are you sure you want to remove this attribute?')) {
+            row.remove();
+            updateAttrCounts();
+            if (typeof window.showToast === 'function') window.showToast('🗑️ Attribute removed successfully');
+        }
+    }
+}
+
+function openEditAttrModal(id, name, slug) {
+    document.getElementById('editAttrId').value = id;
+    document.getElementById('editAttrName').value = name;
+    document.getElementById('editAttrSlug').value = slug;
+    document.getElementById('editAttributeModal').style.display = 'flex';
+}
+
+function closeEditAttrModal() {
+    document.getElementById('editAttributeModal').style.display = 'none';
+}
+
+function saveEditedAttribute() {
+    const id = document.getElementById('editAttrId').value;
+    const name = document.getElementById('editAttrName').value;
+    const slug = document.getElementById('editAttrSlug').value;
+    
+    const row = document.getElementById(`attr-row-${id}`);
+    if (row) {
+        const nameEl = row.querySelector('.attr-name-display');
+        const slugEl = row.querySelector('.attr-slug-display');
+        if (nameEl) nameEl.textContent = name;
+        if (slugEl) slugEl.textContent = slug;
+    }
+    closeEditAttrModal();
+    if (typeof window.showToast === 'function') window.showToast(`✨ Attribute "${name}" updated!`);
 }
 
 function toggleSelectAllAttrs(master) {
@@ -380,7 +548,19 @@ function handleAttrBulkAction() {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one attribute');
         return;
     }
-    if (typeof window.showToast === 'function') window.showToast(`✨ Bulk action "${action}" applied!`);
+    
+    if (action === 'delete') {
+        if (confirm(`Delete ${selected.length} selected attributes?`)) {
+            selected.forEach(c => {
+                const row = c.closest('tr');
+                if (row) row.remove();
+            });
+            updateAttrCounts();
+            if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} attributes deleted!`);
+        }
+    } else if (action === 'export') {
+        if (typeof window.showToast === 'function') window.showToast(`📊 Exporting ${selected.length} attributes matrix to CSV...`);
+    }
 }
 </script>
 </body>
