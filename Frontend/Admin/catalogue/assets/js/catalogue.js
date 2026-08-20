@@ -340,3 +340,98 @@ window.DT_CATALOGUE = {
         this.showToast(`✨ AI Generated Banner Headlines & CTA!`);
     }
 };
+
+// ════ Master Display Settings Controller ════
+window.DT_DISPLAY = {
+    currentDevice: 'desk',
+
+    switchDevice: function(device) {
+        this.currentDevice = device;
+        const btnDesk = document.getElementById('btnDspDesk');
+        const btnMob = document.getElementById('btnDspMob');
+        const grid = document.getElementById('simulatedGrid');
+
+        if (device === 'mob') {
+            if (btnDesk) btnDesk.classList.remove('active');
+            if (btnMob) btnMob.classList.add('active');
+            if (grid) {
+                grid.style.maxWidth = '380px';
+                grid.style.margin = '0 auto';
+                const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
+                grid.style.gridTemplateColumns = `repeat(${mobCols}, 1fr)`;
+            }
+        } else {
+            if (btnMob) btnMob.classList.remove('active');
+            if (btnDesk) btnDesk.classList.add('active');
+            if (grid) {
+                grid.style.maxWidth = '100%';
+                grid.style.margin = '0';
+                const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
+                grid.style.gridTemplateColumns = `repeat(${deskCols}, 1fr)`;
+            }
+        }
+        this.updatePreview();
+    },
+
+    updatePreview: function() {
+        const grid = document.getElementById('simulatedGrid');
+        if (!grid) return;
+
+        // Columns
+        if (this.currentDevice === 'desk') {
+            const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
+            grid.style.gridTemplateColumns = `repeat(${deskCols}, 1fr)`;
+        } else {
+            const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
+            grid.style.gridTemplateColumns = `repeat(${mobCols}, 1fr)`;
+        }
+
+        // Image Aspect Ratio
+        const ratio = document.getElementById('dspRatio') ? document.getElementById('dspRatio').value : '3-4';
+        const imgs = grid.querySelectorAll('.sim-card-img');
+        imgs.forEach(img => {
+            if (ratio === '1-1') img.style.height = '120px';
+            else if (ratio === '4-5') img.style.height = '160px';
+            else img.style.height = '140px';
+        });
+
+        // Visibility Toggles
+        const chkRating = document.getElementById('chkRating')?.checked;
+        const chkB2b = document.getElementById('chkB2bRate')?.checked;
+        const chkMargin = document.getElementById('chkMargin')?.checked;
+        const chkWhatsApp = document.getElementById('chkWhatsApp')?.checked;
+        const chkSilkMark = document.getElementById('chkSilkMark')?.checked;
+        const chkDepot = document.getElementById('chkDepotStock')?.checked;
+        const chkMoq = document.getElementById('chkMoq')?.checked;
+        const chkUrgency = document.getElementById('chkUrgency')?.checked;
+
+        grid.querySelectorAll('.sim-rating').forEach(el => el.style.display = chkRating ? 'flex' : 'none');
+        grid.querySelectorAll('.sim-b2b').forEach(el => el.style.display = chkB2b ? 'inline' : 'none');
+        grid.querySelectorAll('.sim-margin').forEach(el => el.style.display = chkMargin ? 'inline-block' : 'none');
+        grid.querySelectorAll('.sim-whatsapp').forEach(el => el.style.display = chkWhatsApp ? 'flex' : 'none');
+        grid.querySelectorAll('.sim-silkmark').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
+        grid.querySelectorAll('.sim-depot').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
+        grid.querySelectorAll('.sim-moq').forEach(el => el.style.display = chkMoq ? 'block' : 'none');
+        grid.querySelectorAll('.sim-urgency').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+    },
+
+    applyPreset: function(preset) {
+        if (preset === 'b2b') {
+            const chkRating = document.getElementById('chkRating'); if (chkRating) chkRating.checked = true;
+            const chkB2b = document.getElementById('chkB2bRate'); if (chkB2b) chkB2b.checked = true;
+            const chkMargin = document.getElementById('chkMargin'); if (chkMargin) chkMargin.checked = true;
+            const chkWhatsApp = document.getElementById('chkWhatsApp'); if (chkWhatsApp) chkWhatsApp.checked = true;
+            const chkSilkMark = document.getElementById('chkSilkMark'); if (chkSilkMark) chkSilkMark.checked = true;
+            const chkDepot = document.getElementById('chkDepotStock'); if (chkDepot) chkDepot.checked = true;
+            const chkMoq = document.getElementById('chkMoq'); if (chkMoq) chkMoq.checked = true;
+            const chkUrgency = document.getElementById('chkUrgency'); if (chkUrgency) chkUrgency.checked = true;
+            
+            const dCols = document.getElementById('dspDeskCols'); if (dCols) dCols.value = '4';
+            const mCols = document.getElementById('dspMobCols'); if (mCols) mCols.value = '2';
+            const ratio = document.getElementById('dspRatio'); if (ratio) ratio.value = '3-4';
+            
+            this.updatePreview();
+            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('⚡ Applied Surat B2B Wholesale Preset!');
+        }
+    }
+};
