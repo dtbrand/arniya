@@ -58,7 +58,9 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
                         <span class="adm-nav-badge">1,240</span>
-                        <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
                     <!-- SUBMENU ITEMS LIST WITH CRISP SVG ICONS -->
                     <ul class="adm-nav-submenu open" id="admSubmenu-products">
@@ -155,7 +157,9 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         <span class="adm-nav-label">Catalogue</span>
                         <span class="adm-nav-badge gold">16 Cats</span>
-                        <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
                     <ul class="adm-nav-submenu <?php echo $current_nav === 'catalogue' ? 'open' : ''; ?>" id="admSubmenu-catalogue">
                         <li>
@@ -421,9 +425,16 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
 function toggleSidebarSubmenu(item) {
     const parent = item.closest('.adm-nav-has-sub');
     if (parent) {
-        parent.classList.toggle('open');
-        const sub = parent.querySelector('.adm-nav-submenu');
-        if (sub) sub.classList.toggle('open');
+        const isOpen = parent.classList.contains('open');
+        if (isOpen) {
+            parent.classList.remove('open');
+            const sub = parent.querySelector('.adm-nav-submenu');
+            if (sub) sub.classList.remove('open');
+        } else {
+            parent.classList.add('open');
+            const sub = parent.querySelector('.adm-nav-submenu');
+            if (sub) sub.classList.add('open');
+        }
     }
 }
 </script>

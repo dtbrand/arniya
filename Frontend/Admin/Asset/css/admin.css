@@ -529,14 +529,36 @@ input, select, textarea {
     position: relative;
 }
 
-.adm-nav-arrow {
-    width: 14px;
-    height: 14px;
-    stroke-width: 2.5;
+.adm-nav-arrow-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
     margin-left: auto;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.18s ease;
+    flex-shrink: 0;
+}
+
+.adm-nav-arrow-wrap:hover {
+    background: rgba(212, 175, 55, 0.2);
+}
+
+.adm-nav-arrow {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
     color: #78716C;
     flex-shrink: 0;
-    transition: transform 0.22s ease, color 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+    cursor: pointer;
+}
+
+.adm-nav-arrow:hover {
+    color: #8A681F;
+    background: rgba(212, 175, 55, 0.15);
 }
 
 .adm-nav-has-sub.open > .adm-nav-item .adm-nav-arrow {
@@ -552,6 +574,18 @@ input, select, textarea {
     display: none;
     flex-direction: column;
     gap: 3px;
+    animation: admSubmenuSlide 0.22s ease-out;
+}
+
+@keyframes admSubmenuSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .adm-nav-submenu.open,
