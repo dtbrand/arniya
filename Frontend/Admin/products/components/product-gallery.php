@@ -197,15 +197,9 @@
 
         <!-- ════════════ 3. ADDITIONAL GALLERY PHOTOS & MULTI-ANGLE SHOTS ════════════ -->
         <div class="dt-gallery-section" style="margin-top:14px; border-top:1px solid #e2e4e7; padding-top:12px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-                <div>
-                    <strong style="font-size:12.5px; color:#181512; font-weight:800;">Additional Product Photos &amp; Angle Shots</strong>
-                    <span style="font-size:11px; color:#646970; margin-left:6px;">(Back angle, Pallu close-up, Blouse embroidery, Model shoot)</span>
-                </div>
-                <button type="button" class="dt-btn-action-sm pale-gold" onclick="document.getElementById('dtGalleryFileInput').click();">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>Add More Photos</span>
-                </button>
+            <div style="margin-bottom:8px;">
+                <strong style="font-size:12.5px; color:#181512; font-weight:800;">Additional Product Photos &amp; Angle Shots</strong>
+                <span style="font-size:11px; color:#646970; margin-left:6px;">(Back angle, Pallu close-up, Blouse embroidery, Model shoot)</span>
             </div>
 
             <!-- Multi-Image Dropzone -->
