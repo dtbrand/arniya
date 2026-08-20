@@ -311,7 +311,7 @@ $active_subnav = "categories";
                                     <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" id="catThumbPreview" style="width:28px; height:28px; object-fit:cover; border-radius:3px; border:1px solid #c3c4c7; flex-shrink:0;">
                                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:26px; font-size:10.5px; flex:1; justify-content:center;">
                                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <span>Upload</span>
+                                        <span>Upload Image</span>
                                     </button>
                                 </div>
                             </div>
@@ -319,7 +319,7 @@ $active_subnav = "categories";
                             <div style="margin-top:10px;">
                                 <button type="submit" class="dt-btn-action-sm gold" style="width:100%; height:30px; justify-content:center; font-size:11.5px;">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span>+ Add New Category</span>
+                                    <span>Add New Category</span>
                                 </button>
                             </div>
                         </form>
