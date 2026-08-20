@@ -19,20 +19,32 @@ $active_subnav = "brands";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
+    .dt-kpi-ribbon {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    @media (max-width: 1024px) {
+        .dt-kpi-ribbon { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+        .dt-kpi-ribbon { grid-template-columns: 1fr; }
+    }
     .dt-kpi-card {
         background: #fff;
         border: 1px solid rgba(212,175,55,0.4);
-        border-radius: 8px;
-        padding: 12px 16px;
+        border-radius: 6px;
+        padding: 8px 10px;
         display: flex;
         align-items: center;
-        gap: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        gap: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         transition: all 0.2s ease;
     }
     .dt-kpi-card:hover {
         border-color: #D4AF37;
-        box-shadow: 0 4px 12px rgba(212,175,55,0.15);
+        box-shadow: 0 3px 10px rgba(212,175,55,0.15);
         transform: translateY(-1px);
     }
     .dt-brand-avatar {
