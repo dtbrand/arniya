@@ -219,19 +219,19 @@ $orders_list = [
         <table class="dt-order-table">
             <thead>
                 <tr>
-                    <th style="width:30px; text-align:center;">
+                    <th style="width:36px; text-align:center;">
                         <input type="checkbox" class="dt-checkbox" onchange="window.DT_BULK_ACTIONS.toggleSelectAll(this)" title="Select all orders">
                     </th>
-                    <th style="width:95px;">Order ID</th>
-                    <th style="width:110px;">Date</th>
-                    <th style="width:160px;">Customer</th>
+                    <th style="width:105px;">Order ID</th>
+                    <th style="width:105px;">Date</th>
+                    <th style="width:155px;">Customer</th>
                     <th class="col-items" style="width:65px;">Items</th>
                     <th style="width:90px;">Amount</th>
                     <th class="col-payment" style="width:105px;">Payment</th>
                     <th class="col-shipping" style="width:105px;">Shipping</th>
                     <th style="width:85px;">Status</th>
                     <th class="col-source" style="width:75px;">Source</th>
-                    <th style="width:115px; text-align:right;">Actions</th>
+                    <th style="width:125px; text-align:right;">Actions</th>
                 </tr>
             </thead>
             <tbody id="ordersTableBody">
@@ -244,10 +244,14 @@ $orders_list = [
                         <input type="checkbox" class="dt-checkbox dt-order-check" onchange="window.DT_BULK_ACTIONS.onRowCheckChange(this)">
                     </td>
                     <td>
-                        <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-order-id-link">
-                            <span><?php echo $o['id']; ?></span>
-                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                        </a>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button type="button" class="dt-expand-btn" onclick="window.DT_ORDER_VIEW.toggleRowDetails('<?php echo $o['id']; ?>', this)" title="Quick Expand Row" style="background:none; border:none; padding:0; cursor:pointer; color:#64748B; display:flex; align-items:center; transition:transform 0.15s ease;">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                            <a href="javascript:void(0)" onclick="window.DT_ORDER_VIEW.openDrawer('<?php echo $o['id']; ?>')" class="dt-order-id-link" title="Open Quick View Drawer">
+                                <span><?php echo $o['id']; ?></span>
+                            </a>
+                        </div>
                     </td>
                     <td style="white-space:nowrap; font-size:11px; color:#64748B;">
                         <?php echo str_replace(' 2026', '', $o['date']); ?>
@@ -293,9 +297,9 @@ $orders_list = [
                     </td>
                     <td style="text-align:right;">
                         <div class="dt-row-actions" style="justify-content:flex-end;">
-                            <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-action-btn view" title="View Order Details">
+                            <button type="button" class="dt-action-btn view" onclick="window.DT_ORDER_VIEW.openDrawer('<?php echo $o['id']; ?>')" title="Quick View Drawer">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            </a>
+                            </button>
                             <button type="button" class="dt-action-btn edit" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo $o['id']; ?>', '<?php echo $o['status']; ?>')" title="Update Status">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </button>
@@ -307,6 +311,33 @@ $orders_list = [
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                             </button>
                             <?php endif; ?>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Expandable Inline Details Row -->
+                <tr id="detailsRow_<?php echo $o['id']; ?>" class="dt-details-row" style="display:none; background:#FAF8F4;">
+                    <td colspan="11" style="padding:10px 14px; border-bottom:1.5px solid #E2DFD7;">
+                        <div style="display:grid; grid-template-columns: 1.5fr 1fr 1fr auto; gap:12px; align-items:center; background:#FFFFFF; border:1px solid #E2DFD7; border-radius:6px; padding:10px 12px;">
+                            <div>
+                                <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Items Summary</div>
+                                <div style="font-size:11.5px; font-weight:700; color:#0F172A; margin-top:2px;"><?php echo htmlspecialchars($o['items_summary']); ?></div>
+                                <div style="font-size:10px; color:#64748B;">Total Qty: <?php echo $o['items_count']; ?> • Valuation: ₹<?php echo number_format($o['amount']); ?></div>
+                            </div>
+                            <div>
+                                <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Carrier &amp; Dispatch</div>
+                                <div style="font-size:11px; font-weight:700; color:#334155; margin-top:2px;"><?php echo $o['shipping']; ?></div>
+                                <div style="font-size:10px; color:#1D4ED8; font-family:monospace;">AWB: <?php echo $o['tracking']; ?></div>
+                            </div>
+                            <div>
+                                <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Customer Contact</div>
+                                <div style="font-size:11px; font-weight:700; color:#334155; margin-top:2px;"><?php echo htmlspecialchars($o['customer_type']); ?></div>
+                                <div style="font-size:10px; color:#64748B;"><?php echo htmlspecialchars($o['phone']); ?></div>
+                            </div>
+                            <div style="display:flex; gap:6px;">
+                                <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-pale" style="height:26px; font-size:10px; padding:0 8px;">Full Details</a>
+                                <a href="/Frontend/Admin/orders/invoice.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-emerald" style="height:26px; font-size:10px; padding:0 8px;">Tax Invoice</a>
+                            </div>
                         </div>
                     </td>
                 </tr>

@@ -63,6 +63,7 @@ $filter_status = "all";
             </div>
 
             <!-- Modals & Drawers -->
+            <?php include __DIR__ . '/components/order-drawer.php'; ?>
             <?php include __DIR__ . '/components/order-filters.php'; ?>
             <?php include __DIR__ . '/components/order-actions.php'; ?>
 
@@ -72,6 +73,7 @@ $filter_status = "all";
 </div>
 
 <script src="/Frontend/Admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/orders/assets/js/order-list.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/orders/assets/js/order-filters.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
