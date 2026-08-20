@@ -38,8 +38,11 @@ $page_title = "Invoice " . $order['id'];
 <body style="background:#F1F5F9; padding:24px 0;">
 
 <!-- Document Actions Bar -->
-<div class="dt-doc-actions-bar" style="max-width:800px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/Frontend/Admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">← Back to Order</a>
+<div class="dt-doc-actions-bar" style="max-width:860px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
+    <a href="/Frontend/Admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Order</span>
+    </a>
     <div style="display:flex; gap:8px;">
         <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_DOCS.downloadPdf('Invoice', '<?php echo $order['id']; ?>')">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>

@@ -33,8 +33,11 @@ $page_title = "Packing Slip " . $order['id'];
 </head>
 <body style="background:#F1F5F9; padding:24px 0;">
 
-<div class="dt-doc-actions-bar" style="max-width:800px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/Frontend/Admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">← Back to Order</a>
+<div class="dt-doc-actions-bar" style="max-width:860px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
+    <a href="/Frontend/Admin/orders/view.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Order</span>
+    </a>
     <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_DOCS.printDoc()">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         <span>Print Packing Slip</span>

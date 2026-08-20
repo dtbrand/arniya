@@ -4,23 +4,31 @@
  */
 
 .dt-doc-container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto;
     background: #FFFFFF;
-    border: 1px solid #E2E8F0;
+    border: 1.5px solid #8A681F;
     border-radius: 8px;
-    padding: 32px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 32px 36px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #1E293B;
+    color: #181512;
+}
+
+.dt-doc-actions-bar {
+    max-width: 860px;
+    margin: 0 auto 16px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dt-doc-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     border-bottom: 2px solid #8A681F;
-    padding-bottom: 18px;
+    padding-bottom: 16px;
     margin-bottom: 20px;
 }
 
