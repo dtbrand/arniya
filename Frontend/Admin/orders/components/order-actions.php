@@ -87,28 +87,23 @@
 
 <!-- ══ GST Tax Invoice Preview Modal ══ -->
 <div id="orderInvoiceModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeInvoiceModal()">
-    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:680px; max-height:90vh; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
-        <!-- Modal Header -->
-        <div style="padding:12px 18px; background:#FAF8F4; border-bottom:2px solid #8A681F; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">
-                    <span>Tax Invoice Preview:</span>
-                    <span id="invoiceModalOrderId" style="color:#8A681F;">DTB-001624</span>
-                </h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-                <a id="invoiceModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:28px; padding:0 10px; font-size:11px;">
-                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    <span>Full Page ↗</span>
-                </a>
-                <button type="button" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:all 0.15s ease;" title="Close Modal">✕</button>
-            </div>
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
+        <span id="invoiceModalOrderId" style="display:none;">DTB-001624</span>
+        
+        <!-- Top Action Controls (Clean Floating Top-Right) -->
+        <div style="position:absolute; top:12px; right:14px; z-index:20; display:flex; align-items:center; gap:6px;">
+            <a id="invoiceModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:10.5px; background:#FAF5E8;" title="Open in Full Tab">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>Full Page ↗</span>
+            </a>
+            <button type="button" onclick="window.DT_ORDER_VIEW.closeInvoiceModal()" style="width:26px; height:26px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
+
         <!-- Modal Scrollable Content -->
-        <div id="invoiceModalBody" style="flex:1; overflow-y:auto; padding:18px; font-size:12px; color:#181512; background:#FFFFFF;">
+        <div id="invoiceModalBody" style="flex:1; overflow-y:auto; padding:20px 22px 14px 22px; font-size:12px; color:#181512; background:#FFFFFF;">
             <!-- Loaded dynamically by JS -->
         </div>
+
         <!-- Modal Footer -->
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</div>
@@ -133,28 +128,23 @@
 
 <!-- ══ Warehouse Packing Slip Preview Modal ══ -->
 <div id="orderPackingSlipModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closePackingSlipModal()">
-    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:680px; max-height:90vh; box-shadow:0 10px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
-        <!-- Modal Header -->
-        <div style="padding:12px 18px; background:#FAF8F4; border-bottom:2px solid #8A681F; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">
-                    <span>Warehouse Manifest Preview:</span>
-                    <span id="packingModalOrderId" style="color:#8A681F;">DTB-001624</span>
-                </h3>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-                <a id="packingModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:28px; padding:0 10px; font-size:11px;">
-                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    <span>Full Page ↗</span>
-                </a>
-                <button type="button" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:all 0.15s ease;" title="Close Modal">✕</button>
-            </div>
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:700px; max-height:90vh; box-shadow:0 12px 40px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
+        <span id="packingModalOrderId" style="display:none;">DTB-001624</span>
+        
+        <!-- Top Action Controls (Clean Floating Top-Right) -->
+        <div style="position:absolute; top:12px; right:14px; z-index:20; display:flex; align-items:center; gap:6px;">
+            <a id="packingModalFullPageLink" href="#" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:10.5px; background:#FAF5E8;" title="Open in Full Tab">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>Full Page ↗</span>
+            </a>
+            <button type="button" onclick="window.DT_ORDER_VIEW.closePackingSlipModal()" style="width:26px; height:26px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
+
         <!-- Modal Scrollable Content -->
-        <div id="packingModalBody" style="flex:1; overflow-y:auto; padding:18px; font-size:12px; color:#181512; background:#FFFFFF;">
+        <div id="packingModalBody" style="flex:1; overflow-y:auto; padding:20px 22px 14px 22px; font-size:12px; color:#181512; background:#FFFFFF;">
             <!-- Loaded dynamically by JS -->
         </div>
+
         <!-- Modal Footer -->
         <div style="padding:10px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
             <div style="font-size:11px; color:#64748B;">Internal Depot Manifest • QC Pass Verified</div>
@@ -172,7 +162,7 @@
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     <span>Print Manifest</span>
                 </button>
+            </div>
         </div>
     </div>
 </div>
-

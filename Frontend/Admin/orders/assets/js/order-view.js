@@ -497,16 +497,16 @@
             const body = document.getElementById('invoiceModalBody');
             if (body) {
                 body.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #8A681F; padding-bottom:12px; margin-bottom:14px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:44px; width:auto;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:12px; margin-bottom:14px; padding-right:110px; gap:12px;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:48px; width:auto; display:block; object-fit:contain;">
                             <div>
-                                <h2 style="margin:0; font-size:16px; font-weight:800; color:#181512;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
-                                <p style="margin:2px 0 0 0; font-size:10.5px; color:#64748B;">Surat Central Depot • Ring Road, Surat • GSTIN: 24AAECJ1928K1Z5</p>
+                                <h2 style="margin:0; font-size:16px; font-weight:800; color:#181512; line-height:1.2;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
+                                <p style="margin:3px 0 0 0; font-size:10.5px; color:#64748B; line-height:1.3;">Surat Central Depot • Ring Road, Surat • GSTIN: 24AAECJ1928K1Z5</p>
                             </div>
                         </div>
-                        <div style="text-align:right;">
-                            <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">TAX INVOICE</span>
+                        <div style="text-align:right; flex-shrink:0;">
+                            <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px; display:inline-block;">TAX INVOICE</span>
                             <div style="font-size:12px; font-weight:800; color:#181512; margin-top:3px;">INV-${order.id.replace('DTB-', '2026-')}</div>
                             <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '21 Aug 2026'}</div>
                         </div>
@@ -612,7 +612,7 @@
             const body = document.getElementById('packingModalBody');
             if (body) {
                 body.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #8A681F; padding-bottom:12px; margin-bottom:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:12px; margin-bottom:14px; padding-right:110px; gap:12px;">
                         <div>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <h2 style="margin:0; font-size:18px; font-weight:800; color:#181512; letter-spacing:0.02em;">PACKING SLIP</h2>
@@ -620,7 +620,7 @@
                             </div>
                             <p style="margin:3px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Internal Wholesale Logistics Manifest</p>
                         </div>
-                        <div style="text-align:right;">
+                        <div style="text-align:right; flex-shrink:0;">
                             <div style="font-size:13px; font-weight:800; color:#8A681F;">ORDER #${order.id}</div>
                             <div style="font-size:10.5px; color:#64748B;">Manifest Box: <strong>1 of 1</strong></div>
                             <div style="font-size:10.5px; color:#64748B;">Date: ${order.date || '21 Aug 2026'}</div>
