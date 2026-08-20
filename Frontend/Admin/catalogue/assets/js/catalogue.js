@@ -371,6 +371,10 @@ window.DT_DISPLAY = {
         const activeBtn = document.getElementById('user-' + type);
         if (activeBtn) activeBtn.classList.add('active');
 
+        document.querySelectorAll('.user-active-tag').forEach(tag => tag.style.display = 'none');
+        const activeTag = document.getElementById('tag-' + type);
+        if (activeTag) activeTag.style.display = 'inline-block';
+
         // Audience Specific Intelligent Presets
         if (type === 'wholesaler') {
             document.getElementById('dspDeskCols').value = '4';

@@ -230,32 +230,44 @@ $real_products = [
             <div class="dt-user-card-grid">
                 <!-- 1. Retail Customer (B2C) -->
                 <div class="dt-user-card-item active" id="user-customer" onclick="window.DT_DISPLAY.setUserType('customer')">
-                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#181512;">
-                        <span style="font-size:16px;">🛍️</span> <span>Retail Customer (B2C)</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                        <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px; color:#181512;">
+                            <span style="font-size:15px;">🛍️</span> <span>Retail Customer (B2C)</span>
+                        </div>
+                        <span class="user-active-tag" id="tag-customer" style="font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:10px; white-space:nowrap;">Active</span>
                     </div>
                     <div style="font-size:10px; color:#64748b; line-height:1.3;">Individual Sarees • Silk Mark Badges • Consumer MRP Discounts</div>
                 </div>
 
                 <!-- 2. WhatsApp Reseller -->
                 <div class="dt-user-card-item" id="user-reseller" onclick="window.DT_DISPLAY.setUserType('reseller')">
-                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#1D4ED8;">
-                        <span style="font-size:16px;">💬</span> <span>WhatsApp Reseller</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                        <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px; color:#1D4ED8;">
+                            <span style="font-size:15px;">💬</span> <span>WhatsApp Reseller</span>
+                        </div>
+                        <span class="user-active-tag" id="tag-reseller" style="display:none; font-size:9px; font-weight:800; color:#1D4ED8; background:#EFF6FF; border:1px solid #93C5FD; padding:1px 6px; border-radius:10px; white-space:nowrap;">Active</span>
                     </div>
                     <div style="font-size:10px; color:#64748b; line-height:1.3;">Profit Margins (+₹2,149/Pc) • Zero Stock • 1-Click WhatsApp Share</div>
                 </div>
 
                 <!-- 3. Retailer / Boutique -->
                 <div class="dt-user-card-item" id="user-retailer" onclick="window.DT_DISPLAY.setUserType('retailer')">
-                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#8A681F;">
-                        <span style="font-size:16px;">🏪</span> <span>Retailer / Boutique</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                        <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px; color:#8A681F;">
+                            <span style="font-size:15px;">🏪</span> <span>Retailer / Boutique</span>
+                        </div>
+                        <span class="user-active-tag" id="tag-retailer" style="display:none; font-size:9px; font-weight:800; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 6px; border-radius:10px; white-space:nowrap;">Active</span>
                     </div>
                     <div style="font-size:10px; color:#64748b; line-height:1.3;">Curated 2–4 Pc Bundles • Boutique Assortment • GST Invoice Included</div>
                 </div>
 
                 <!-- 4. Wholesale B2B Buyer -->
                 <div class="dt-user-card-item" id="user-wholesaler" onclick="window.DT_DISPLAY.setUserType('wholesaler')">
-                    <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12.5px; color:#7C2D12;">
-                        <span style="font-size:16px;">🏢</span> <span>Wholesale B2B Buyer</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+                        <div style="display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px; color:#7C2D12;">
+                            <span style="font-size:15px;">🏢</span> <span>Wholesale B2B Buyer</span>
+                        </div>
+                        <span class="user-active-tag" id="tag-wholesaler" style="display:none; font-size:9px; font-weight:800; color:#7C2D12; background:#FEF2F2; border:1px solid #FECACA; padding:1px 6px; border-radius:10px; white-space:nowrap;">Active</span>
                     </div>
                     <div style="font-size:10px; color:#64748b; line-height:1.3;">Tiered Bulk Lots (12+ Pcs) • Surat Depot Ready Stock • Master PO</div>
                 </div>

@@ -551,9 +551,9 @@
 /* ── 2-Level Audience & Placement Tabs ── */
 .dt-user-card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 6px;
 }
 .dt-user-card-item {
     background: #fff;
@@ -564,7 +564,7 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
     position: relative;
 }
 .dt-user-card-item:hover {
@@ -577,18 +577,50 @@
     background: #FAF5E8;
     box-shadow: 0 4px 14px rgba(212,175,55,0.25);
 }
-.dt-user-card-item.active::after {
-    content: "✓ Active Profile";
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #8A681F;
+
+.dt-page-subnav {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 2px 2px 8px 2px;
+    margin-bottom: 6px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+.dt-page-subnav::-webkit-scrollbar {
+    height: 4px;
+}
+.dt-page-subnav::-webkit-scrollbar-thumb {
+    background: #E2DFD7;
+    border-radius: 4px;
+}
+.dt-subnav-pill {
+    padding: 6px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid #cbd5e1;
     background: #fff;
-    padding: 2px 6px;
-    border-radius: 10px;
-    border: 1px solid #D4AF37;
+    color: #334155;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.dt-subnav-pill:hover {
+    border-color: #D4AF37;
+    color: #8A681F;
+    background: #FAF5E8;
+    transform: translateY(-1px);
+}
+.dt-subnav-pill.active {
+    background: #181512;
+    color: #D4AF37;
+    border-color: #181512;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
 
 /* ── Luxury Accordion & Collapsible Steps ── */
@@ -596,7 +628,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 9px 12px;
+    padding: 9px 14px;
     background: #FAF8F4;
     border: 1px solid #E2DFD7;
     border-radius: 8px;
@@ -617,20 +649,33 @@
 .dt-collapse-pill {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 10.5px;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 14px;
+    font-size: 11px;
     font-weight: 700;
     background: #fff;
-    border: 1px solid #cbd5e1;
-    color: #475569;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    box-shadow: 0 1px 3px rgba(212,175,55,0.12);
     transition: all 0.15s ease;
 }
 .dt-accordion-header:hover .dt-collapse-pill {
-    border-color: #D4AF37;
-    color: #8A681F;
     background: #FAF5E8;
+    border-color: #8A681F;
+}
+.dt-collapse-sign {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #FAF5E8;
+    color: #8A681F;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
 }
 .dt-accordion-body {
     padding: 4px 2px 14px 2px;
@@ -639,6 +684,7 @@
 .dt-accordion-body.collapsed {
     display: none;
 }
+
 
 
 
