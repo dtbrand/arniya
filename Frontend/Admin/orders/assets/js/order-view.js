@@ -287,59 +287,185 @@
         },
 
         exportLedgerCSV: function() {
-            const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Customer');
+            const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Rajesh Kumar (Vardhman Tex)');
             const safeName = name.replace(/[^a-zA-Z0-9]/g, '_');
-            
-            const csvRows = [
-                ['DT BRAND\'S & JAI HANUMAN TEX — B2B FINANCIAL LEDGER STATEMENT'],
-                ['Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002'],
-                ['GSTIN: 24AAECJ1928K1Z5 | Phone: +91 98251 00000'],
-                [''],
-                ['CUSTOMER INFORMATION'],
-                ['Customer Name', name],
-                ['GSTIN', '24AAECJ1928K1Z5'],
-                ['Contact Phone', document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : ''],
-                ['Email', document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : ''],
-                ['Account Tier', 'Verified B2B Reseller (Gold Wholesale)'],
-                ['Credit Limit', 'Rs. 15,00,000 (Net 15 Days)'],
-                [''],
-                ['FINANCIAL SUMMARY'],
-                ['Lifetime Gross Valuation', 'Rs. 8,42,500'],
-                ['Total Settled Payments', 'Rs. 8,42,500'],
-                ['Outstanding Balance Due', 'Rs. 0.00 (All Invoices Settled)'],
-                [''],
-                ['TRANSACTION STATEMENT LOG'],
-                ['Date', 'Reference / Order ID', 'Transaction Type', 'Debit (INR)', 'Credit (INR)', 'Balance (INR)', 'Status'],
-                ['21 Aug 2026', 'DTB-001624', 'Consignment Invoice (Kanjivaram Silk 25pcs)', '112250', '', '112250', 'Billed'],
-                ['21 Aug 2026', 'UTR-9821039812', 'Bank Wire / RTGS Full Settlement', '', '112250', '0.00', 'PAID'],
-                ['10 Aug 2026', 'DTB-001605', 'Banarasi Silk Lot Consignment (40pcs)', '245000', '', '245000', 'Delivered'],
-                ['11 Aug 2026', 'UTR-882910398', 'RTGS ICICI Bank Full Settlement', '', '245000', '0.00', 'PAID'],
-                ['25 Jul 2026', 'DTB-001582', 'Chanderi & Tussar Festive Catalog (35pcs)', '185250', '', '185250', 'Delivered'],
-                ['26 Jul 2026', 'UTR-771829301', 'HDFC NetBanking Direct Settlement', '', '185250', '0.00', 'PAID'],
-                ['08 Jul 2026', 'DTB-001550', 'Paithani Heritage Zari Collection (20pcs)', '142000', '', '142000', 'Delivered'],
-                ['09 Jul 2026', 'UTR-662918274', 'SBI Corporate Direct Wire Transfer', '', '142000', '0.00', 'PAID'],
-                [''],
-                ['Total Debits', '', '', 'Rs. 6,84,500', '', '', ''],
-                ['Total Credits', '', '', '', 'Rs. 6,84,500', '', ''],
-                ['Net Balance Due', '', '', '', '', 'Rs. 0.00', 'All Clear'],
-                [''],
-                ['Generated On', new Date().toLocaleString()],
-                ['Authorized Signatory', 'DT Brand\'s Central Accounting Dept (Surat)']
-            ];
+            const phone = document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : '+91 98220 19283';
+            const email = document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : 'rajesh@vardhmantex.com';
 
-            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + 
-                csvRows.map(row => row.map(cell => '"' + (cell || '').toString().replace(/"/g, '""') + '"').join(',')).join('\n');
+            const excelHtml = `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--[if gte mso 9]>
+<xml>
+ <x:ExcelWorkbook>
+  <x:ExcelWorksheets>
+   <x:ExcelWorksheet>
+    <x:Name>Ledger Statement</x:Name>
+    <x:WorksheetOptions>
+     <x:DisplayGridlines/>
+    </x:WorksheetOptions>
+   </x:ExcelWorksheet>
+  </x:ExcelWorksheets>
+ </x:ExcelWorkbook>
+</xml>
+<![endif]-->
+<style>
+  body { font-family: 'Calibri', 'Segoe UI', sans-serif; font-size: 11pt; color: #181512; }
+  .title-header { background-color: #8A681F; color: #FFFFFF; font-size: 15pt; font-weight: bold; text-align: center; height: 36px; vertical-align: middle; }
+  .sub-header { background-color: #FAF5E8; color: #5A4210; font-size: 10pt; text-align: center; height: 22px; vertical-align: middle; }
+  .section-title { background-color: #181512; color: #FFFFFF; font-size: 11pt; font-weight: bold; height: 26px; vertical-align: middle; padding-left: 8px; }
+  .label-cell { background-color: #FAF8F4; font-weight: bold; color: #475569; border: 0.5pt solid #D4AF37; }
+  .value-cell { background-color: #FFFFFF; color: #181512; border: 0.5pt solid #E2DFD7; }
+  .th-cell { background-color: #8A681F; color: #FFFFFF; font-weight: bold; text-align: center; border: 0.5pt solid #5A4210; height: 26px; vertical-align: middle; }
+  .td-date { text-align: center; border: 0.5pt solid #E2DFD7; vertical-align: middle; }
+  .td-ref { font-weight: bold; color: #8A681F; text-align: center; border: 0.5pt solid #E2DFD7; vertical-align: middle; }
+  .td-desc { border: 0.5pt solid #E2DFD7; vertical-align: middle; padding-left: 6px; }
+  .td-num { text-align: right; font-weight: bold; border: 0.5pt solid #E2DFD7; vertical-align: middle; padding-right: 6px; }
+  .td-status { text-align: center; font-weight: bold; border: 0.5pt solid #E2DFD7; vertical-align: middle; }
+  .total-row { background-color: #FAF5E8; font-weight: bold; border-top: 1.5pt solid #8A681F; border-bottom: 2pt double #8A681F; }
+</style>
+</head>
+<body>
+<table>
+  <tr height="40"><th colspan="7" class="title-header">DT BRAND'S &amp; JAI HANUMAN TEX — B2B FINANCIAL LEDGER STATEMENT</th></tr>
+  <tr height="24"><td colspan="7" class="sub-header">Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002 | GSTIN: 24AAECJ1928K1Z5 | Care: +91 98251 00000</td></tr>
+  <tr><td colspan="7"></td></tr>
+  
+  <tr height="26"><th colspan="7" class="section-title">CUSTOMER ACCOUNT OVERVIEW</th></tr>
+  <tr height="22">
+    <td class="label-cell" width="130">Customer Name:</td>
+    <td class="value-cell" colspan="3" width="320"><b>${name}</b></td>
+    <td class="label-cell" width="140">Account Tier:</td>
+    <td class="value-cell" colspan="2" width="180">Verified Wholesale VIP</td>
+  </tr>
+  <tr height="22">
+    <td class="label-cell">GSTIN:</td>
+    <td class="value-cell" colspan="3">24AAECJ1928K1Z5</td>
+    <td class="label-cell">Credit Limit:</td>
+    <td class="value-cell" colspan="2">₹ 15,00,000 (Net 15 Days)</td>
+  </tr>
+  <tr height="22">
+    <td class="label-cell">Phone / WhatsApp:</td>
+    <td class="value-cell" colspan="3">${phone}</td>
+    <td class="label-cell">Lifetime Business:</td>
+    <td class="value-cell" colspan="2"><b>₹ 8,42,500</b></td>
+  </tr>
+  <tr height="22">
+    <td class="label-cell">Email:</td>
+    <td class="value-cell" colspan="3">${email}</td>
+    <td class="label-cell">Current Balance:</td>
+    <td class="value-cell" colspan="2" style="color:#15803D;"><b>₹ 0.00 (All Invoices Settled)</b></td>
+  </tr>
+  <tr><td colspan="7"></td></tr>
 
-            const encodedUri = encodeURI(csvContent);
+  <tr height="28">
+    <th class="th-cell" width="110">Date</th>
+    <th class="th-cell" width="140">Reference ID</th>
+    <th class="th-cell" width="320">Transaction Description</th>
+    <th class="th-cell" width="120">Debit (₹)</th>
+    <th class="th-cell" width="120">Credit (₹)</th>
+    <th class="th-cell" width="120">Balance (₹)</th>
+    <th class="th-cell" width="100">Status</th>
+  </tr>
+  
+  <tr height="22">
+    <td class="td-date">21-Aug-2026</td>
+    <td class="td-ref">DTB-001624</td>
+    <td class="td-desc">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
+    <td class="td-num">1,12,250.00</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num">1,12,250.00</td>
+    <td class="td-status" style="color:#B45309;">Billed</td>
+  </tr>
+  <tr height="22" style="background-color:#F8FAFC;">
+    <td class="td-date">21-Aug-2026</td>
+    <td class="td-ref" style="color:#0F172A;">UTR-9821039812</td>
+    <td class="td-desc" style="color:#15803D;">Bank Wire / RTGS Full Settlement</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num" style="color:#15803D;">1,12,250.00</td>
+    <td class="td-num" style="color:#15803D;">0.00</td>
+    <td class="td-status" style="color:#15803D;">PAID</td>
+  </tr>
+  <tr height="22">
+    <td class="td-date">10-Aug-2026</td>
+    <td class="td-ref">DTB-001605</td>
+    <td class="td-desc">Banarasi Silk Lot Consignment (40pcs)</td>
+    <td class="td-num">2,45,000.00</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num">2,45,000.00</td>
+    <td class="td-status" style="color:#15803D;">Delivered</td>
+  </tr>
+  <tr height="22" style="background-color:#F8FAFC;">
+    <td class="td-date">11-Aug-2026</td>
+    <td class="td-ref" style="color:#0F172A;">UTR-882910398</td>
+    <td class="td-desc" style="color:#15803D;">RTGS ICICI Bank Full Settlement</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num" style="color:#15803D;">2,45,000.00</td>
+    <td class="td-num" style="color:#15803D;">0.00</td>
+    <td class="td-status" style="color:#15803D;">PAID</td>
+  </tr>
+  <tr height="22">
+    <td class="td-date">25-Jul-2026</td>
+    <td class="td-ref">DTB-001582</td>
+    <td class="td-desc">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
+    <td class="td-num">1,85,250.00</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num">1,85,250.00</td>
+    <td class="td-status" style="color:#15803D;">Delivered</td>
+  </tr>
+  <tr height="22" style="background-color:#F8FAFC;">
+    <td class="td-date">26-Jul-2026</td>
+    <td class="td-ref" style="color:#0F172A;">UTR-771829301</td>
+    <td class="td-desc" style="color:#15803D;">HDFC NetBanking Direct Settlement</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num" style="color:#15803D;">1,85,250.00</td>
+    <td class="td-num" style="color:#15803D;">0.00</td>
+    <td class="td-status" style="color:#15803D;">PAID</td>
+  </tr>
+  <tr height="22">
+    <td class="td-date">08-Jul-2026</td>
+    <td class="td-ref">DTB-001550</td>
+    <td class="td-desc">Paithani Heritage Zari Collection (20pcs)</td>
+    <td class="td-num">1,42,000.00</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num">1,42,000.00</td>
+    <td class="td-status" style="color:#15803D;">Delivered</td>
+  </tr>
+  <tr height="22" style="background-color:#F8FAFC;">
+    <td class="td-date">09-Jul-2026</td>
+    <td class="td-ref" style="color:#0F172A;">UTR-662918274</td>
+    <td class="td-desc" style="color:#15803D;">SBI Corporate Direct Wire Transfer</td>
+    <td class="td-num" style="color:#94A3B8;">—</td>
+    <td class="td-num" style="color:#15803D;">1,42,000.00</td>
+    <td class="td-num" style="color:#15803D;">0.00</td>
+    <td class="td-status" style="color:#15803D;">PAID</td>
+  </tr>
+
+  <tr height="26" class="total-row">
+    <td colspan="3" style="text-align:right; font-weight:bold; padding-right:10px;">RECONCILED TOTALS:</td>
+    <td class="td-num" style="color:#181512;">₹ 6,84,500.00</td>
+    <td class="td-num" style="color:#15803D;">₹ 6,84,500.00</td>
+    <td class="td-num" style="color:#15803D;">₹ 0.00</td>
+    <td class="td-status" style="color:#15803D;">ALL CLEAR</td>
+  </tr>
+</table>
+</body>
+</html>
+`;
+
+            const blob = new Blob(['\ufeff', excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', `DT_Brands_Ledger_${safeName}_${new Date().toISOString().slice(0,10)}.csv`);
+            link.href = url;
+            link.download = `DT_Brands_Ledger_${safeName}_${new Date().toISOString().slice(0,10)}.xls`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast('📥 Customer ledger exported successfully as Excel/CSV statement');
+                window.DT_ORDERS.showToast('📥 Customer ledger exported successfully as formatted Excel statement');
             }
         }
     };
