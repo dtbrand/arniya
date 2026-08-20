@@ -20,17 +20,18 @@ $items = isset($order['items']) ? $order['items'] : [
 ];
 ?>
 <div class="dt-doc-container">
-    <!-- Header with Clean Real Brand Logo (No Company Text) -->
-    <div class="dt-doc-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:16px; margin-bottom:20px;">
+    <!-- Clean Executive Packing Slip Header (Logo Removed) -->
+    <div class="dt-doc-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px; margin-bottom:20px;">
         <div>
-            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:58px; width:auto; max-width:180px; object-fit:contain; display:block;">
+            <h1 style="margin:0; font-size:22px; font-weight:800; color:#8A681F; letter-spacing:0.5px; text-transform:uppercase;">PACKING SLIP</h1>
+            <div style="margin-top:4px;">
+                <span style="font-size:10px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:800; padding:2px 8px; border-radius:4px;">DEPOT DISPATCH MANIFEST</span>
+            </div>
         </div>
-        <div class="dt-doc-meta-box">
-            <span class="dt-doc-meta-title" style="font-size:17px; font-weight:800; color:#8A681F; letter-spacing:0.5px;">PACKING SLIP</span>
-            <div><span style="font-size:9.5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:800; padding:1px 6px; border-radius:4px;">DEPOT DISPATCH MANIFEST</span></div>
-            <span style="margin-top:2px;">Order ID: <strong><?php echo $order_id; ?></strong></span>
-            <span>Manifest Box: <strong>CTN-<?php echo substr($order_id, 4); ?></strong></span>
-            <span>Date: <strong><?php echo $order['date'] ?? '21 Aug 2026'; ?></strong></span>
+        <div class="dt-doc-meta-box" style="text-align:right; font-size:11.5px;">
+            <span>Order ID: <strong style="font-size:13px; color:#181512;"><?php echo $order_id; ?></strong></span>
+            <span>Manifest Box: <strong style="color:#8A681F;">CTN-<?php echo substr($order_id, 4); ?></strong></span>
+            <span>Dispatch Date: <strong style="color:#181512;"><?php echo $order['date'] ?? '21 Aug 2026'; ?></strong></span>
         </div>
     </div>
 
