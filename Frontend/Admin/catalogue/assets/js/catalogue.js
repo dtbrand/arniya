@@ -546,8 +546,6 @@ window.DT_DISPLAY = {
             if (grid) {
                 grid.style.maxWidth = '380px';
                 grid.style.margin = '0 auto';
-                const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
-                grid.style.gridTemplateColumns = `repeat(${mobCols}, 1fr)`;
             }
         } else {
             if (btnMob) btnMob.classList.remove('active');
@@ -555,169 +553,16 @@ window.DT_DISPLAY = {
             if (grid) {
                 grid.style.maxWidth = '100%';
                 grid.style.margin = '0';
-                const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
-                grid.style.gridTemplateColumns = `repeat(${deskCols}, 1fr)`;
             }
         }
-        this.updatePreview();
+        this.updateCustomerStyles();
+        if (window.DT_CATALOGUE) {
+            window.DT_CATALOGUE.showToast(`Switched Live Simulator to ${device === 'mob' ? '📱 Mobile App' : '🖥️ Desktop Grid'} Mode!`);
+        }
     },
 
     updatePreview: function() {
-        const grid = document.getElementById('simulatedGrid');
-        if (!grid) return;
-
-        const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
-        const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
-        const ratio = document.getElementById('dspRatio') ? document.getElementById('dspRatio').value : '3-4';
-        const perPage = document.getElementById('dspPerPage') ? document.getElementById('dspPerPage').value : '24';
-        const theme = document.getElementById('dspCardTheme') ? document.getElementById('dspCardTheme').value : 'gold-border';
-
-        // Columns
-        if (this.currentDevice === 'desk') {
-            grid.style.gridTemplateColumns = `repeat(${deskCols}, 1fr)`;
-        } else {
-            grid.style.gridTemplateColumns = `repeat(${mobCols}, 1fr)`;
-        }
-
-        // Image Aspect Ratio
-        const wraps = grid.querySelectorAll('.card-image-wrap');
-        wraps.forEach(wrap => {
-            if (ratio === '1-1') wrap.style.aspectRatio = '1 / 1';
-            else if (ratio === '4-5') wrap.style.aspectRatio = '4 / 5';
-            else wrap.style.aspectRatio = '3 / 3.75';
-        });
-
-        // Visibility Toggles (All Real Platform Badges & Storefront Elements)
-        const chkRating = document.getElementById('chkRating')?.checked;
-        const chkB2b = document.getElementById('chkB2bRate')?.checked;
-        const chkMargin = document.getElementById('chkMargin')?.checked;
-        const chkWhatsApp = document.getElementById('chkWhatsApp')?.checked;
-        const chkSilkMark = document.getElementById('chkSilkMark')?.checked;
-        const chkDepot = document.getElementById('chkDepotStock')?.checked;
-        const chkUrgency = document.getElementById('chkUrgency')?.checked;
-        const chkNewBadge = document.getElementById('chkNewBadge')?.checked;
-        const chkBridalBadge = document.getElementById('chkBridalBadge')?.checked;
-        const chkCatTag = document.getElementById('chkCatTag')?.checked;
-        const chkWishlist = document.getElementById('chkWishlist')?.checked;
-        const chkPhotoShare = document.getElementById('chkPhotoShare')?.checked;
-        const chkFabricSku = document.getElementById('chkFabricSku')?.checked;
-        const chkColorsSizes = document.getElementById('chkColorsSizes')?.checked;
-
-        grid.querySelectorAll('.sim-rating').forEach(el => el.style.display = chkRating ? 'flex' : 'none');
-        grid.querySelectorAll('.sim-b2b').forEach(el => el.style.display = chkB2b ? 'inline' : 'none');
-        grid.querySelectorAll('.sim-margin').forEach(el => el.style.display = chkMargin ? 'inline-block' : 'none');
-        grid.querySelectorAll('.sim-whatsapp').forEach(el => el.style.display = chkWhatsApp ? 'flex' : 'none');
-        grid.querySelectorAll('.sim-wishlist-btn').forEach(el => el.style.display = chkWishlist ? 'flex' : 'none');
-        grid.querySelectorAll('.sim-share-btn').forEach(el => el.style.display = chkPhotoShare ? 'flex' : 'none');
-        grid.querySelectorAll('.sim-cat-tag').forEach(el => el.style.display = chkCatTag ? 'block' : 'none');
-        grid.querySelectorAll('.sim-fabric-tag').forEach(el => el.style.display = chkFabricSku ? 'block' : 'none');
-        grid.querySelectorAll('.sim-colors-sizes').forEach(el => el.style.display = chkColorsSizes ? 'flex' : 'none');
-
-        grid.querySelectorAll('.card-badge.badge-heritage').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-trending').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-new').forEach(el => el.style.display = chkNewBadge ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-bridal').forEach(el => el.style.display = chkBridalBadge ? 'inline-block' : 'none');
-        grid.querySelectorAll('.card-badge.badge-bestseller').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
-
-        // Update Live Sync Header Pills
-        const pills = document.getElementById('liveParamPills');
-        if (pills) {
-            pills.textContent = `${deskCols} Cols Desk • ${mobCols} Cols Mob • ${ratio.replace('-', ':')} Aspect • ${theme.replace('-', ' ')}`;
-        }
-        const pagInfo = document.getElementById('livePaginationInfo');
-        if (pagInfo) {
-            pagInfo.innerHTML = `Showing <strong>1–8</strong> of <strong>${perPage}</strong> Live SKUs (Page 1 of ${Math.ceil(parseInt(perPage)/8)})`;
-        }
-
-        // Pulse Green Sync Indicator
-        const pulse = document.getElementById('liveSyncPulse');
-        if (pulse) {
-            pulse.style.transform = 'scale(1.4)';
-            setTimeout(() => { pulse.style.transform = 'scale(1)'; }, 200);
-        }
-
-        this.updateCardStyles();
-    },
-
-    updateSorting: function() {
-        const grid = document.getElementById('simulatedGrid');
-        const sortSelect = document.getElementById('dspSorting');
-        if (!grid || !sortSelect) return;
-
-        const val = sortSelect.value;
-        const cards = Array.from(grid.querySelectorAll('.dt-sim-card'));
-
-        cards.sort((a, b) => {
-            const priceA = parseFloat(a.getAttribute('data-price')) || 0;
-            const priceB = parseFloat(b.getAttribute('data-price')) || 0;
-            const revA = parseInt(a.getAttribute('data-reviews')) || 0;
-            const revB = parseInt(b.getAttribute('data-reviews')) || 0;
-            const idA = parseInt(a.getAttribute('data-id')) || 0;
-            const idB = parseInt(b.getAttribute('data-id')) || 0;
-
-            if (val === 'price-asc') return priceA - priceB;
-            if (val === 'price-desc') return priceB - priceA;
-            if (val === 'popular') return revB - revA;
-            if (val === 'newest') return (b.getAttribute('data-badge') === 'New' ? 1 : 0) - (a.getAttribute('data-badge') === 'New' ? 1 : 0);
-            return idA - idB;
-        });
-
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            grid.appendChild(card);
-        });
-
-        setTimeout(() => {
-            cards.forEach(card => { card.style.opacity = '1'; });
-        }, 80);
-
-        const sortNames = {
-            'position': 'Default Merchandising Priority',
-            'price-asc': 'Price: Low to High (Wholesale Rate)',
-            'price-desc': 'Price: High to Low',
-            'popular': 'Best Sellers / Most Popular Lots',
-            'newest': 'Newest First'
-        };
-
-        if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast(`✨ Live Storefront sorted by ${sortNames[val] || val}!`);
-        }
-        this.updatePreview();
-    },
-
-    updateCardStyles: function() {
-        const grid = document.getElementById('simulatedGrid');
-        if (!grid) return;
-
-        const theme = document.getElementById('dspCardTheme')?.value || 'gold-border';
-        const btnStyle = document.getElementById('dspBtnStyle')?.value || 'emerald';
-        const btnSize = document.getElementById('dspBtnSize')?.value || 'normal';
-        const radius = document.getElementById('dspCardRadius')?.value || '8px';
-
-        const cards = grid.querySelectorAll('.dt-sim-card');
-        cards.forEach(card => {
-            card.style.borderRadius = radius;
-            const imgWrap = card.querySelector('.card-image-wrap');
-            if (imgWrap) imgWrap.style.borderRadius = `${radius} ${radius} 0 0`;
-
-            if (theme === 'gold-border') {
-                card.style.border = '1px solid #D4AF37';
-                card.style.boxShadow = '0 4px 12px rgba(212,175,55,0.15)';
-                card.style.background = '#fff';
-            } else if (theme === 'clean-border') {
-                card.style.border = '1px solid #e2e8f0';
-                card.style.boxShadow = '0 2px 6px rgba(0,0,0,0.04)';
-                card.style.background = '#fff';
-            } else if (theme === 'dark-obsidian') {
-                card.style.border = '1px solid #181512';
-                card.style.boxShadow = '0 4px 14px rgba(0,0,0,0.16)';
-                card.style.background = '#fff';
-            } else if (theme === 'borderless') {
-                card.style.border = 'none';
-                card.style.boxShadow = 'none';
-                card.style.background = '#FAF5E8';
-            }
-        });
+        this.updateCustomerStyles();
     },
 
     updateCustomerStyles: function() {
@@ -733,7 +578,7 @@ window.DT_DISPLAY = {
         const radiusOpt = document.getElementById('dspCardRadiusOption')?.value || '8px';
         const gridColsOpt = document.getElementById('dspGridColsOption')?.value || '4-2';
 
-        // 1. Columns
+        // 1. Responsive Columns
         const [dCols, mCols] = gridColsOpt.split('-');
         if (this.currentDevice === 'desk') {
             grid.style.gridTemplateColumns = `repeat(${dCols}, 1fr)`;
@@ -741,10 +586,25 @@ window.DT_DISPLAY = {
             grid.style.gridTemplateColumns = `repeat(${mCols}, 1fr)`;
         }
 
+        // 2. Visibility Checkboxes
+        const chkSilkMark = document.getElementById('chkSilkMark')?.checked ?? true;
+        const chkDepot = document.getElementById('chkDepotStock')?.checked ?? true;
+        const chkUrgency = document.getElementById('chkUrgency')?.checked ?? true;
+        const chkNewBadge = document.getElementById('chkNewBadge')?.checked ?? true;
+        const chkBridalBadge = document.getElementById('chkBridalBadge')?.checked ?? true;
+        const chkCatTag = document.getElementById('chkCatTag')?.checked ?? true;
+        const chkWishlist = document.getElementById('chkWishlist')?.checked ?? true;
+        const chkPhotoShare = document.getElementById('chkPhotoShare')?.checked ?? true;
+        const chkRating = document.getElementById('chkRating')?.checked ?? true;
+        const chkColorsSizes = document.getElementById('chkColorsSizes')?.checked ?? true;
+
         const cards = grid.querySelectorAll('.dt-sim-card');
         cards.forEach(card => {
-            // Corner radius
+            // Card Corner Radius & Theme
             card.style.borderRadius = radiusOpt;
+            card.style.border = '1px solid #D4AF37';
+            card.style.boxShadow = '0 4px 14px rgba(212,175,55,0.12)';
+            
             const imgWrap = card.querySelector('.card-image-wrap');
             if (imgWrap) imgWrap.style.borderRadius = `${radiusOpt} ${radiusOpt} 0 0`;
 
@@ -766,7 +626,7 @@ window.DT_DISPLAY = {
                 }
             }
 
-            // 2. Name Style
+            // 2. Name Typography
             const nameEl = card.querySelector('.sim-product-name');
             if (nameEl) {
                 if (nameStyle === 'bold-2line') {
@@ -825,19 +685,35 @@ window.DT_DISPLAY = {
                 }
             }
 
-            // 4. Icon Styles
+            // 4. Icon Styles & Visibility
             const wishBtn = card.querySelector('.sim-wishlist-btn');
             const shareBtn = card.querySelector('.sim-share-btn');
             const ratingRow = card.querySelector('.sim-rating');
+            const catTagEl = card.querySelector('.sim-cat-tag');
+            const colorsRow = card.querySelector('.sim-colors-sizes');
+
             if (wishBtn) {
-                wishBtn.style.display = (iconStyle === 'stars-only' || iconStyle === 'minimal-clean') ? 'none' : 'flex';
+                wishBtn.style.display = (chkWishlist && iconStyle !== 'stars-only' && iconStyle !== 'minimal-clean') ? 'flex' : 'none';
             }
             if (shareBtn) {
-                shareBtn.style.display = (iconStyle === 'wishlist-only' || iconStyle === 'stars-only' || iconStyle === 'minimal-clean') ? 'none' : 'flex';
+                shareBtn.style.display = (chkPhotoShare && iconStyle !== 'wishlist-only' && iconStyle !== 'stars-only' && iconStyle !== 'minimal-clean') ? 'flex' : 'none';
             }
             if (ratingRow) {
-                ratingRow.style.display = (iconStyle === 'minimal-clean') ? 'none' : 'flex';
+                ratingRow.style.display = (chkRating && iconStyle !== 'minimal-clean') ? 'flex' : 'none';
             }
+            if (catTagEl) {
+                catTagEl.style.display = chkCatTag ? 'block' : 'none';
+            }
+            if (colorsRow) {
+                colorsRow.style.display = chkColorsSizes ? 'flex' : 'none';
+            }
+
+            // Badges
+            card.querySelectorAll('.card-badge.badge-heritage').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
+            card.querySelectorAll('.card-badge.badge-trending').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+            card.querySelectorAll('.card-badge.badge-new').forEach(el => el.style.display = chkNewBadge ? 'inline-block' : 'none');
+            card.querySelectorAll('.card-badge.badge-bridal').forEach(el => el.style.display = chkBridalBadge ? 'inline-block' : 'none');
+            card.querySelectorAll('.card-badge.badge-bestseller').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
 
             // 5. Button Styles
             const actionBtn = card.querySelector('.sim-action-btn');
@@ -864,6 +740,12 @@ window.DT_DISPLAY = {
                 }
             }
         });
+
+        // Update Live Header Parameters
+        const pills = document.getElementById('liveParamPills');
+        if (pills) {
+            pills.textContent = `${dCols} Cols Desk • ${mCols} Cols Mob • ${btnSizeOpt} Button • ${radiusOpt} Radius`;
+        }
 
         // Pulse Green Sync Indicator
         const pulse = document.getElementById('liveSyncPulse');
