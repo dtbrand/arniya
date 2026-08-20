@@ -8,6 +8,25 @@ $seo_cat_slug = isset($cat['slug']) ? $cat['slug'] : 'silk-sarees';
 $seo_title = "Pure {$seo_cat_name} Wholesale | DT Brand's Surat";
 $seo_desc = "Buy authentic pure {$seo_cat_name} at direct Surat factory wholesale rates. Certified handloom and luxury weaves with fast depot dispatch.";
 ?>
+<?php
+$current_seo_tab = basename($_SERVER['SCRIPT_NAME']);
+?>
+<!-- ══ Smart SEO Suite Sub-Navigation Bar ══ -->
+<div class="dt-page-subnav" style="margin-bottom:14px; gap:8px;">
+    <a href="/Frontend/Admin/catalogue/seo/index.php" class="dt-subnav-pill <?php echo ($current_seo_tab === 'index.php') ? 'active' : ''; ?>" style="text-decoration:none;">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>Global &amp; Products SEO</span>
+    </a>
+    <a href="/Frontend/Admin/catalogue/seo/category.php" class="dt-subnav-pill <?php echo ($current_seo_tab === 'category.php') ? 'active' : ''; ?>" style="text-decoration:none;">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        <span>Categories SEO (16)</span>
+    </a>
+    <a href="/Frontend/Admin/catalogue/seo/collections.php" class="dt-subnav-pill <?php echo ($current_seo_tab === 'collections.php') ? 'active' : ''; ?>" style="text-decoration:none;">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Collections SEO (8)</span>
+    </a>
+</div>
+
 <div class="dt-cat-card">
     <div class="dt-cat-card-header">
         <h3 class="dt-cat-card-title">

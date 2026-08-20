@@ -3,8 +3,10 @@
  * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation with Real SVG Icons
  * DT Brand's & Jai Hanuman Tex
  */
-$current_nav = isset($active_nav) ? $active_nav : 'dashboard';
-$current_subnav = isset($active_subnav) ? $active_subnav : '';
+$req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+$current_nav = isset($active_nav) ? $active_nav : (strpos($req_uri, '/catalogue/') !== false ? 'catalogue' : (strpos($req_uri, '/products/') !== false ? 'products' : (strpos($req_uri, '/whatsapp/') !== false ? 'whatsapp' : (strpos($req_uri, '/orders/') !== false ? 'orders' : (strpos($req_uri, '/pricing/') !== false ? 'pricing' : 'dashboard')))));
+
+$current_subnav = isset($active_subnav) ? $active_subnav : (strpos($req_uri, '/seo/') !== false ? 'seo' : (strpos($req_uri, '/collections/') !== false || strpos($req_uri, 'collections.php') !== false ? 'collections' : (strpos($req_uri, '/categories/') !== false || strpos($req_uri, 'categories.php') !== false ? 'categories' : (strpos($req_uri, '/subcategories/') !== false || strpos($req_uri, 'subcategories.php') !== false ? 'subcategories' : (strpos($req_uri, '/banners/') !== false ? 'banners' : (strpos($req_uri, '/navigation.php') !== false ? 'navigation' : (strpos($req_uri, '/merchandising.php') !== false ? 'merchandising' : (strpos($req_uri, '/hierarchy.php') !== false ? 'hierarchy' : 'overview'))))))));
 ?>
 <!-- ══ Mobile Sidebar Backdrop ══ -->
 <div class="adm-sidebar-backdrop" id="admSidebarBackdrop" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:99998; backdrop-filter:blur(3px);"></div>

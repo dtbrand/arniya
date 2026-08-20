@@ -448,49 +448,53 @@ input, select, textarea {
 .adm-nav-item {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 7px 10px;
+    gap: 10px;
+    padding: 8px 12px;
     border-radius: 8px;
-    color: #3B352E;
-    font-weight: 600;
-    font-size: 0.78rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #2D2721;
+    font-weight: 700;
+    font-size: 0.80rem;
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     user-select: none;
     border: 1px solid transparent;
+    text-decoration: none;
 }
 
 .adm-nav-item:hover {
-    background: linear-gradient(90deg, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 100%);
-    color: var(--adm-gold);
-    transform: translateX(2px);
+    background: #FAF8F4;
+    color: #8A681F;
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.12);
 }
 
 .adm-nav-item.active {
     background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
-    color: #785912;
-    border: 1px solid rgba(212, 175, 55, 0.45);
-    border-left: 3.5px solid var(--adm-gold);
+    color: #5A4210;
+    border: 1.5px solid #D4AF37;
+    border-left: 4px solid #8A681F;
     font-weight: 800;
-    box-shadow: 0 2px 6px rgba(138, 104, 31, 0.08);
-    transform: translateX(2px);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.14);
+    transform: translateX(3px);
 }
 
 .adm-nav-icon {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     stroke-width: 2.2;
     stroke: currentColor;
     fill: none;
     flex-shrink: 0;
-    color: #78716C;
-    transition: color 0.2s;
+    color: #645D54;
+    transition: all 0.2s ease;
 }
 
 .adm-nav-item.active .adm-nav-icon,
 .adm-nav-item:hover .adm-nav-icon {
-    color: var(--adm-gold);
+    color: #8A681F;
+    stroke: #8A681F;
 }
 
 .adm-nav-label {
@@ -498,6 +502,7 @@ input, select, textarea {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: -0.01em;
 }
 
 .adm-sidebar.collapsed .adm-nav-label {
@@ -505,23 +510,28 @@ input, select, textarea {
 }
 
 .adm-nav-badge {
-    padding: 1.5px 6px;
-    font-size: 0.60rem;
+    padding: 2px 7px;
+    font-size: 0.62rem;
     font-weight: 800;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.06);
-    color: #3B352E;
+    border-radius: 12px;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+    box-shadow: 0 1px 3px rgba(212,175,55,0.12);
 }
 
 .adm-nav-badge.gold {
-    background: var(--adm-gold);
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 100%);
     color: #FFFFFF;
+    border: none;
+    box-shadow: 0 2px 6px rgba(138,104,31,0.25);
 }
 
 .adm-nav-badge.green {
     background: #DCFCE7;
     color: #15803D;
-    border: 1px solid #BBF7D0;
+    border: 1px solid #86EFAC;
+    font-weight: 800;
 }
 
 /* ════ HIGH-CONTRAST CRYSTAL-CLEAR SIDEBAR SUBMENU ════ */
@@ -547,8 +557,8 @@ input, select, textarea {
 }
 
 .adm-nav-arrow {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     stroke-width: 2.5;
     color: #78716C;
     flex-shrink: 0;
@@ -558,22 +568,21 @@ input, select, textarea {
 
 .adm-nav-arrow:hover {
     color: #8A681F;
-    background: rgba(212, 175, 55, 0.15);
 }
 
 .adm-nav-has-sub.open > .adm-nav-item .adm-nav-arrow {
     transform: rotate(90deg);
-    color: var(--adm-gold, #8A681F);
+    color: #8A681F;
 }
 
 .adm-nav-submenu {
     list-style: none;
-    margin: 2px 0 6px 14px;
-    padding: 4px 0 4px 10px;
-    border-left: 2px solid rgba(212, 175, 55, 0.4);
+    margin: 4px 0 6px 14px;
+    padding: 6px 0 6px 10px;
+    border-left: 2px solid rgba(212, 175, 55, 0.5);
     display: none;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
     animation: admSubmenuSlide 0.22s ease-out;
 }
 
@@ -590,18 +599,18 @@ input, select, textarea {
 
 .adm-nav-submenu.open,
 .adm-nav-has-sub.open > .adm-nav-submenu {
-    display: flex;
+    display: flex !important;
 }
 
 .adm-nav-subitem {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 10px;
+    padding: 7px 12px;
     border-radius: 6px;
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    color: #181512 !important; /* Deep, bold, 100% crystal-clear black/charcoal text */
+    color: #181512 !important;
     text-decoration: none;
     transition: all 0.18s ease;
     border: 1px solid transparent;
@@ -613,7 +622,7 @@ input, select, textarea {
     height: 14px;
     stroke-width: 2.2;
     stroke: currentColor;
-    color: #5A5348 !important; /* Sharp high-contrast dark icon */
+    color: #5A5348 !important;
     flex-shrink: 0;
     transition: color 0.18s ease;
 }
@@ -621,25 +630,28 @@ input, select, textarea {
 .adm-nav-subitem:hover {
     background: #FAF5E8 !important;
     color: #8A681F !important;
-    border-color: rgba(212, 175, 55, 0.35);
-    transform: translateX(2px);
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateX(3px);
+    box-shadow: 0 2px 6px rgba(212,175,55,0.12);
 }
 
 .adm-nav-subitem:hover svg {
     color: #8A681F !important;
+    stroke: #8A681F !important;
 }
 
 .adm-nav-subitem.active {
-    background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%) !important;
-    color: #5A4210 !important;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    color: #D4AF37 !important;
     font-weight: 800;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    border-left: 3px solid #8A681F;
-    box-shadow: 0 1px 4px rgba(138, 104, 31, 0.12);
+    border: 1px solid #8A681F;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    transform: translateX(3px);
 }
 
 .adm-nav-subitem.active svg {
-    color: #8A681F !important;
+    color: #D4AF37 !important;
+    stroke: #D4AF37 !important;
 }
 
 .adm-nav-subitem small {
@@ -648,9 +660,15 @@ input, select, textarea {
     color: #8A681F !important;
     background: #FAF5E8;
     padding: 1px 6px;
-    border-radius: 6px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    border: 1px solid #D4AF37;
     margin-left: auto;
+}
+
+.adm-nav-subitem.active small {
+    background: #2A241E;
+    color: #D4AF37 !important;
+    border-color: #8A681F;
 }
 
 /* ════ COLLAPSED SIDEBAR ITEMS & ICONS (LUXURY BIG STYLED ICONS & TOOLTIPS) ════ */
