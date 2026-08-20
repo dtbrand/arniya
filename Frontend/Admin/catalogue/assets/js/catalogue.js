@@ -344,6 +344,31 @@ window.DT_CATALOGUE = {
 // ════ Master Display Settings Controller ════
 window.DT_DISPLAY = {
     currentDevice: 'desk',
+    currentPortal: 'shop',
+
+    switchPortal: function(portalName) {
+        this.currentPortal = portalName;
+        document.querySelectorAll('.dt-portal-tab').forEach(t => t.classList.remove('active'));
+        const activeTab = document.getElementById('tab-' + portalName);
+        if (activeTab) activeTab.classList.add('active');
+
+        document.querySelectorAll('.portal-view').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.portal-' + portalName).forEach(el => {
+            el.style.display = 'block';
+        });
+
+        const portalTitles = {
+            'shop': '🛍️ Main Customer Shop Grid',
+            'wholesale': '🏢 Wholesale B2B Depot (Tiered Pricing & Master Lots)',
+            'reseller': '💬 WhatsApp Reseller Portal (Profit Margins & 1-Click Share)',
+            'home': '🏠 Homepage Featured Collection Showcase',
+            'single': '🔍 Single Product Related / Cross-Sell Line'
+        };
+
+        if (window.DT_CATALOGUE) {
+            window.DT_CATALOGUE.showToast(`Switched preview to ${portalTitles[portalName] || portalName}!`);
+        }
+    },
 
     switchDevice: function(device) {
         this.currentDevice = device;
