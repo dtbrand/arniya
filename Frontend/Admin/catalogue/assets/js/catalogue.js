@@ -438,6 +438,65 @@ window.DT_DISPLAY = {
         grid.querySelectorAll('.sim-depot').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
         grid.querySelectorAll('.sim-moq').forEach(el => el.style.display = chkMoq ? 'block' : 'none');
         grid.querySelectorAll('.sim-urgency').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+
+        this.updateCardStyles();
+    },
+
+    updateCardStyles: function() {
+        const grid = document.getElementById('simulatedGrid');
+        if (!grid) return;
+
+        const theme = document.getElementById('dspCardTheme')?.value || 'gold-border';
+        const btnStyle = document.getElementById('dspBtnStyle')?.value || 'emerald';
+        const btnSize = document.getElementById('dspBtnSize')?.value || 'normal';
+        const radius = document.getElementById('dspCardRadius')?.value || '8px';
+
+        const cards = grid.querySelectorAll('.dt-sim-card');
+        cards.forEach(card => {
+            // Radius
+            card.style.borderRadius = radius;
+            const img = card.querySelector('.sim-card-img');
+            if (img) img.style.borderRadius = radius;
+
+            // Border & Shadow Theme
+            if (theme === 'gold-border') {
+                card.style.border = '1px solid #D4AF37';
+                card.style.boxShadow = '0 4px 12px rgba(212,175,55,0.15)';
+                card.style.background = '#fff';
+            } else if (theme === 'clean-border') {
+                card.style.border = '1px solid #e2e8f0';
+                card.style.boxShadow = '0 2px 6px rgba(0,0,0,0.04)';
+                card.style.background = '#fff';
+            } else if (theme === 'dark-obsidian') {
+                card.style.border = '1px solid #181512';
+                card.style.boxShadow = '0 4px 14px rgba(0,0,0,0.16)';
+                card.style.background = '#fff';
+            } else if (theme === 'borderless') {
+                card.style.border = 'none';
+                card.style.boxShadow = 'none';
+                card.style.background = '#FAF5E8';
+            }
+
+            // Buttons
+            const btns = card.querySelectorAll('.sim-action-btn');
+            btns.forEach(btn => {
+                // Size
+                if (btnSize === 'large') {
+                    btn.style.height = '34px';
+                    btn.style.fontSize = '11.5px';
+                } else if (btnSize === 'compact') {
+                    btn.style.height = '24px';
+                    btn.style.fontSize = '9.5px';
+                } else {
+                    btn.style.height = '28px';
+                    btn.style.fontSize = '10.5px';
+                }
+
+                // Button Style
+                btn.classList.remove('emerald', 'gold', 'pale-gold');
+                btn.classList.add(btnStyle);
+            });
+        });
     },
 
     applyPreset: function(preset) {
@@ -454,9 +513,35 @@ window.DT_DISPLAY = {
             const dCols = document.getElementById('dspDeskCols'); if (dCols) dCols.value = '4';
             const mCols = document.getElementById('dspMobCols'); if (mCols) mCols.value = '2';
             const ratio = document.getElementById('dspRatio'); if (ratio) ratio.value = '3-4';
+            const theme = document.getElementById('dspCardTheme'); if (theme) theme.value = 'gold-border';
+            const bStyle = document.getElementById('dspBtnStyle'); if (bStyle) bStyle.value = 'emerald';
+            const bSize = document.getElementById('dspBtnSize'); if (bSize) bSize.value = 'normal';
+            const radius = document.getElementById('dspCardRadius'); if (radius) radius.value = '8px';
             
             this.updatePreview();
+            this.switchPortal('shop');
             if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('⚡ Applied Surat B2B Wholesale Preset!');
+        } else if (preset === 'boutique') {
+            const chkRating = document.getElementById('chkRating'); if (chkRating) chkRating.checked = true;
+            const chkB2b = document.getElementById('chkB2bRate'); if (chkB2b) chkB2b.checked = false;
+            const chkMargin = document.getElementById('chkMargin'); if (chkMargin) chkMargin.checked = false;
+            const chkWhatsApp = document.getElementById('chkWhatsApp'); if (chkWhatsApp) chkWhatsApp.checked = true;
+            const chkSilkMark = document.getElementById('chkSilkMark'); if (chkSilkMark) chkSilkMark.checked = true;
+            const chkDepot = document.getElementById('chkDepotStock'); if (chkDepot) chkDepot.checked = false;
+            const chkMoq = document.getElementById('chkMoq'); if (chkMoq) chkMoq.checked = false;
+            const chkUrgency = document.getElementById('chkUrgency'); if (chkUrgency) chkUrgency.checked = true;
+            
+            const dCols = document.getElementById('dspDeskCols'); if (dCols) dCols.value = '3';
+            const mCols = document.getElementById('dspMobCols'); if (mCols) mCols.value = '1';
+            const ratio = document.getElementById('dspRatio'); if (ratio) ratio.value = '4-5';
+            const theme = document.getElementById('dspCardTheme'); if (theme) theme.value = 'gold-border';
+            const bStyle = document.getElementById('dspBtnStyle'); if (bStyle) bStyle.value = 'gold';
+            const bSize = document.getElementById('dspBtnSize'); if (bSize) bSize.value = 'large';
+            const radius = document.getElementById('dspCardRadius'); if (radius) radius.value = '12px';
+            
+            this.updatePreview();
+            this.switchPortal('home');
+            if (window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✨ Applied Luxury Boutique Preset!');
         }
     }
 };

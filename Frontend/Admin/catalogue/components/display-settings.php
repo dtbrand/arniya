@@ -164,8 +164,9 @@ $real_products = [
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <span>Catalogue Storefront Display &amp; Multi-Portal Engine</span>
         </h3>
-        <div style="display:flex; gap:6px; align-items:center;">
-            <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.applyPreset('b2b')" style="height:28px; padding:0 10px; font-size:11px;">⚡ Preset: Surat B2B Wholesale</button>
+        <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+            <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.applyPreset('b2b')" style="height:28px; padding:0 10px; font-size:11px;">⚡ Surat B2B Wholesale</button>
+            <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.applyPreset('boutique')" style="height:28px; padding:0 10px; font-size:11px;">✨ Luxury Boutique</button>
             <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ Display settings saved live!')" style="height:28px; padding:0 12px; font-size:11px;">Save Display Settings</button>
         </div>
     </div>
@@ -174,7 +175,7 @@ $real_products = [
         <!-- 1. Multi-Device Columns & Sizing -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span>Multi-Device Grid Columns &amp; Card Dimensions</span>
+            <span>1. Multi-Device Grid Columns &amp; Card Dimensions</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
@@ -236,10 +237,58 @@ $real_products = [
 
         <hr style="border:none; border-top:1px solid #f1f5f9; margin:16px 0;">
 
-        <!-- 2. Product Card Badges & B2B Visibility Toggles -->
+        <!-- 2. Product Card Styles, Button Sizing & Themes -->
+        <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>2. Product Card Themes, Button Styles &amp; Corner Radii</span>
+        </h4>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
+            <div class="dt-form-group">
+                <label class="dt-form-label">🎨 Card Border &amp; Shadow Theme</label>
+                <select class="dt-form-select" id="dspCardTheme" onchange="window.DT_DISPLAY.updateCardStyles()">
+                    <option value="gold-border" selected>Luxury Gold Border with Soft Shadow (Default)</option>
+                    <option value="clean-border">Clean Subtle Grey Border</option>
+                    <option value="dark-obsidian">Obsidian Dark Luxe Border</option>
+                    <option value="borderless">Flat Modern Borderless</option>
+                </select>
+            </div>
+
+            <div class="dt-form-group">
+                <label class="dt-form-label">🔘 Primary Button Style</label>
+                <select class="dt-form-select" id="dspBtnStyle" onchange="window.DT_DISPLAY.updateCardStyles()">
+                    <option value="emerald" selected>1-Click WhatsApp Lot (Emerald Gradient)</option>
+                    <option value="gold">Primary Gold Master Button</option>
+                    <option value="pale-gold">Pale Gold Subtle Action Pill</option>
+                </select>
+            </div>
+
+            <div class="dt-form-group">
+                <label class="dt-form-label">📏 Button Size / Touch Target</label>
+                <select class="dt-form-select" id="dspBtnSize" onchange="window.DT_DISPLAY.updateCardStyles()">
+                    <option value="normal" selected>Standard 28px (Balanced)</option>
+                    <option value="large">Large 34px (High Conversion Touch)</option>
+                    <option value="compact">Compact 24px (High Density)</option>
+                </select>
+            </div>
+
+            <div class="dt-form-group">
+                <label class="dt-form-label">⭕ Card Corner Radius</label>
+                <select class="dt-form-select" id="dspCardRadius" onchange="window.DT_DISPLAY.updateCardStyles()">
+                    <option value="8px" selected>8px Rounded (Standard)</option>
+                    <option value="12px">12px Modern Pill Curve</option>
+                    <option value="4px">4px Sharp Heritage Classic</option>
+                    <option value="0px">0px Flat Crisp Edge</option>
+                </select>
+            </div>
+        </div>
+
+        <hr style="border:none; border-top:1px solid #f1f5f9; margin:16px 0;">
+
+        <!-- 3. Product Card Badges & Wholesale Visibility Toggles -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-            <span>Product Card Badges &amp; Wholesale Elements</span>
+            <span>3. Product Card Badges &amp; Wholesale Elements</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-bottom:20px;">
@@ -277,7 +326,7 @@ $real_products = [
             </label>
         </div>
 
-        <!-- 3. Multi-Portal Storefront Simulator Tabs & Device Switcher -->
+        <!-- 4. Multi-Portal Storefront Simulator Tabs & Device Switcher -->
         <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
                 <div>
@@ -312,7 +361,7 @@ $real_products = [
             <!-- Simulated Cards Grid -->
             <div id="simulatedGrid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; transition:all 0.2s ease;">
                 <?php foreach ($real_products as $prod): ?>
-                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column;">
+                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column; transition:all 0.2s ease;">
                     
                     <!-- Badges -->
                     <div class="sim-badge-wrap" style="position:absolute; top:6px; left:6px; display:flex; flex-direction:column; gap:3px; z-index:2;">
@@ -328,7 +377,7 @@ $real_products = [
                     </div>
 
                     <!-- Image -->
-                    <img src="<?php echo htmlspecialchars($prod['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
+                    <img src="<?php echo htmlspecialchars($prod['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9; transition:transform 0.2s ease;">
 
                     <!-- Rating -->
                     <div class="sim-rating" style="display:flex; align-items:center; gap:3px; font-size:10px; color:#B8860B; font-weight:700; margin-bottom:3px;">
@@ -347,7 +396,7 @@ $real_products = [
                             <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;"><?php echo htmlspecialchars($prod['margin']); ?> Margin</span>
                         </div>
                         <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong><?php echo htmlspecialchars($prod['moq']); ?></strong></div>
-                        <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp enquiry opened for <?php echo addslashes($prod['title']); ?>!')" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
+                        <button type="button" class="dt-btn-action-sm emerald sim-whatsapp sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp enquiry opened for <?php echo addslashes($prod['title']); ?>!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                             <span>WhatsApp Wholesale Lot</span>
                         </button>
@@ -361,7 +410,7 @@ $real_products = [
                             <div>12+ Master Lot: <strong style="color:#8A681F;"><?php echo htmlspecialchars($prod['tier_12']); ?></strong></div>
                         </div>
                         <div style="font-size:9.5px; color:#15803D; font-weight:700; margin-bottom:4px;">📍 <?php echo htmlspecialchars($prod['depot_stock']); ?></div>
-                        <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛒 Added Master Lot to Wholesale PO!')" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:800;">
+                        <button type="button" class="dt-btn-action-sm gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛒 Added Master Lot to Wholesale PO!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:800;">
                             <span>+ Order Wholesale Lot</span>
                         </button>
                     </div>
@@ -373,10 +422,10 @@ $real_products = [
                             <div style="color:#15803D; font-weight:800;">Your Profit: <?php echo htmlspecialchars($prod['resale_profit']); ?> / Pc</div>
                         </div>
                         <div style="display:flex; gap:4px;">
-                            <button type="button" class="dt-btn-action-sm emerald" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp catalogue package copied with your profit margin!')" style="flex:1; height:26px; font-size:10px; justify-content:center; padding:0 4px;">
+                            <button type="button" class="dt-btn-action-sm emerald sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp catalogue package copied with your profit margin!')" style="flex:1; height:28px; font-size:10px; justify-content:center; padding:0 4px;">
                                 <span>📲 Share on WhatsApp</span>
                             </button>
-                            <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📥 Downloaded high-res photos & specifications!')" style="height:26px; font-size:10px; padding:0 6px;" title="Download HD Images">
+                            <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📥 Downloaded high-res photos & specifications!')" style="height:28px; font-size:10px; padding:0 6px;" title="Download HD Images">
                                 <span>📥</span>
                             </button>
                         </div>
@@ -389,7 +438,7 @@ $real_products = [
                             <span style="font-size:13px; font-weight:800; color:#181512;"><?php echo htmlspecialchars($prod['wholesale_price']); ?></span>
                             <span class="dt-badge gold" style="font-size:9px;">Direct Depot</span>
                         </div>
-                        <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✨ Opened Surat Heritage Collection!')" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
+                        <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✨ Opened Surat Heritage Collection!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700;">
                             <span>Explore Collection ›</span>
                         </button>
                     </div>
@@ -401,7 +450,7 @@ $real_products = [
                             <span style="font-size:12px; font-weight:800; color:#15803D;"><?php echo htmlspecialchars($prod['wholesale_price']); ?></span>
                             <span class="dt-badge green" style="font-size:9px;">Save 10% on Bundle</span>
                         </div>
-                        <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛍️ Bundle added to cart with 10% discount!')" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
+                        <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛍️ Bundle added to cart with 10% discount!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700;">
                             <span>+ Add Matching Saree</span>
                         </button>
                     </div>
