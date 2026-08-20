@@ -47,7 +47,7 @@
                             <div class="dt-main-photo-overlay">
                                 <button type="button" class="dt-media-pill-btn gold" onclick="document.getElementById('mainPhotoFileInput').click();">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                    <span>Change Main Photo</span>
+                                    <span>Change</span>
                                 </button>
                                 <button type="button" class="dt-media-pill-btn danger" onclick="removeMainPhoto();">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
@@ -59,15 +59,19 @@
                         <!-- Main Photo Metadata Info -->
                         <div class="dt-main-photo-info">
                             <div class="dt-meta-row">
-                                <span class="dt-meta-label">Display Mode:</span>
-                                <span class="dt-meta-val" id="mainPhotoDim">Storefront Cover (3:4 High-Res)</span>
+                                <span class="dt-meta-label">Display:</span>
+                                <span class="dt-meta-val" id="mainPhotoDim">Storefront Cover (3:4 HD)</span>
                             </div>
                             <div class="dt-meta-row">
                                 <span class="dt-meta-label">Format:</span>
                                 <span class="dt-meta-val">WebP / JPG Optimized</span>
                             </div>
-                            <div style="display:flex; gap:6px; margin-top:8px;">
-                                <button type="button" class="dt-btn-action-sm gold" onclick="document.getElementById('mainPhotoFileInput').click();">
+                            <div class="dt-meta-row">
+                                <span class="dt-meta-label">Status:</span>
+                                <span class="dt-meta-val" style="color:#15803D;">Catalog Live</span>
+                            </div>
+                            <div style="margin-top:8px;">
+                                <button type="button" class="dt-btn-action-sm gold" onclick="document.getElementById('mainPhotoFileInput').click();" style="width:100%; justify-content:center;">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                     <span>Upload Main Photo</span>
                                 </button>
@@ -94,18 +98,18 @@
                 <div class="dt-media-card-header">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                        <strong style="font-size:12.5px; color:#181512; font-weight:800;">Product Video Studio (Multi-Video)</strong>
+                        <strong style="font-size:12.5px; color:#181512; font-weight:800;">Product Video Studio</strong>
                     </div>
 
-                    <!-- Tab Switcher: Direct Upload vs Video URL -->
+                    <!-- Clean Tab Switcher -->
                     <div class="dt-video-tabs">
                         <button type="button" class="dt-vtab-btn active" id="vTabUploadBtn" onclick="switchVideoTab('upload')">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            <span>+ Upload MP4</span>
+                            <span>Upload MP4</span>
                         </button>
                         <button type="button" class="dt-vtab-btn" id="vTabUrlBtn" onclick="switchVideoTab('url')">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                            <span>+ Add Video URL</span>
+                            <span>Reel / Link</span>
                         </button>
                     </div>
                 </div>
@@ -121,21 +125,21 @@
                             <!-- Video Item 1 (Primary Model Draping Walkthrough) -->
                             <div class="dt-video-item-card" data-video-id="1">
                                 <div class="dt-video-card-thumb">
-                                    <video controls playsinline preload="metadata" poster="/Shared/Asset/images/product1.png" style="width:100%; height:100%; object-fit:cover;">
+                                    <video controls playsinline preload="metadata" poster="/Shared/Asset/images/product1.png">
                                         <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
                                     </video>
                                     <span class="dt-video-hd-badge">
-                                        <svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        PRIMARY VIDEO
+                                        <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        HD 1080P
                                     </span>
                                 </div>
 
                                 <div class="dt-video-card-meta">
-                                    <div style="font-size:11.5px; font-weight:700; color:#181512; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" class="dt-v-title">Video 1: Saree Draping &amp; Pallu Walkthrough</div>
-                                    <div style="font-size:10.5px; color:#646970; margin-bottom:4px;" class="dt-v-sub">1080p HD • Ready for WhatsApp B2B &amp; Storefront</div>
-                                    <div style="display:flex; gap:6px;">
-                                        <button type="button" class="dt-btn-action-sm danger" onclick="removeVideoItem(this);">
-                                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <div class="dt-v-title">Video 1: Saree Draping Walkthrough</div>
+                                    <div class="dt-v-sub">1080p HD • Ready for WhatsApp &amp; PDP</div>
+                                    <div style="display:flex; gap:6px; margin-top:3px;">
+                                        <button type="button" class="dt-btn-action-sm danger" onclick="removeVideoItem(this);" style="padding:2px 8px; font-size:10.5px;">
+                                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                             <span>Remove</span>
                                         </button>
                                     </div>
@@ -145,14 +149,10 @@
                         </div>
 
                         <!-- Dropzone to Add More Videos -->
-                        <div class="dt-video-dropzone" id="videoDropzone" style="margin-top:8px; padding:10px;" onclick="document.getElementById('productVideoFileInput').click();">
-                            <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                                <div style="text-align:left;">
-                                    <strong style="font-size:11.5px; color:#181512; display:block;">+ Upload Another Video (MP4 / WebM)</strong>
-                                    <span style="font-size:10.5px; color:#646970;">Supports multiple videos • Up to 50MB each</span>
-                                </div>
-                            </div>
+                        <div class="dt-video-dropzone" id="videoDropzone" onclick="document.getElementById('productVideoFileInput').click();">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                            <span style="font-size:11.5px; font-weight:700; color:#181512;">+ Upload Another Video</span>
+                            <span style="font-size:10px; color:#646970;">(MP4 / WebM up to 50MB)</span>
                         </div>
 
                         <!-- Hidden Multi-Video File Input -->
@@ -161,16 +161,16 @@
 
                     <!-- TAB 2: Video / Instagram Reels / YouTube URL Embed -->
                     <div id="videoUrlTabPane" class="dt-vtab-pane" style="display:none;">
-                        <div style="padding:6px 0;">
-                            <label class="dt-form-label" style="font-size:11.5px; margin-bottom:4px;">Paste Video Link (YouTube Shorts / Watch, Instagram Reel, or Direct MP4):</label>
+                        <div style="padding:4px 0;">
+                            <label class="dt-form-label" style="font-size:11px; margin-bottom:4px;">Paste Video Link (YouTube Shorts / Watch, Instagram Reel, or Direct MP4):</label>
                             <div style="display:flex; gap:6px;">
-                                <input type="url" id="dtVideoUrlInput" class="dt-form-input" placeholder="e.g. https://www.youtube.com/shorts/xyz123 or https://instagram.com/reel/abc..." style="flex:1;">
+                                <input type="url" id="dtVideoUrlInput" class="dt-form-input" placeholder="e.g. https://www.youtube.com/shorts/... or https://instagram.com/reel/..." style="flex:1; font-size:11.5px;">
                                 <button type="button" class="dt-btn-action-sm gold" onclick="handleVideoUrlEmbed();">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     <span>+ Add Link</span>
                                 </button>
                             </div>
-                            <span style="font-size:10.5px; color:#646970; display:block; margin-top:4px;">You can add multiple video links (Reels, Shorts, Draping walkthroughs).</span>
+                            <span style="font-size:10px; color:#646970; display:block; margin-top:4px;">Add multiple video links (Reels, Shorts, Draping walkthroughs).</span>
                         </div>
                     </div>
 
@@ -188,9 +188,9 @@
 
             <!-- Multi-Image Dropzone -->
             <div class="dt-dropzone dt-gallery-dropzone" id="galleryDropzone" onclick="document.getElementById('dtGalleryFileInput').click();">
-                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#8A681F" stroke-width="1.8" style="margin-bottom:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                <h4 style="font-weight:700; font-size:12.5px; color:#1d2327; margin:0 0 3px 0;">Drag &amp; Drop Additional Photos or Click to Browse</h4>
-                <p style="font-size:11px; color:#646970; margin:0;">Supports multiple WebP, PNG, JPG files • Click "Set Main" on any photo to switch.</p>
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#8A681F" stroke-width="1.8" style="margin-bottom:3px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <h4 style="font-weight:700; font-size:12px; color:#1d2327; margin:0 0 2px 0;">Drag &amp; Drop Additional Photos or Click to Browse</h4>
+                <p style="font-size:10.5px; color:#646970; margin:0;">Supports multiple WebP, PNG, JPG files • Click "Set Main" on any photo to switch.</p>
                 <input type="file" id="dtGalleryFileInput" style="display:none;" multiple accept="image/*" onchange="handleGalleryUpload(this.files)">
             </div>
 
@@ -233,7 +233,7 @@
 
                 <!-- Quick "Add Photo" Drop Slot -->
                 <div class="dt-gallery-add-slot" onclick="document.getElementById('dtGalleryFileInput').click();" title="Click to upload more photos">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     <span>Add Photo</span>
                 </div>
 
@@ -242,3 +242,4 @@
 
     </div>
 </div>
+

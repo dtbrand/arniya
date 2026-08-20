@@ -66,6 +66,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-bottom: 12px;
+    align-items: stretch;
 }
 
 @media (max-width: 768px) {
@@ -81,6 +82,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .dt-main-photo-box {
@@ -90,6 +92,7 @@
 
 .dt-video-studio-box {
     border-color: #c3c4c7;
+    background: #ffffff;
 }
 
 .dt-media-card-header {
@@ -123,19 +126,23 @@
 .dt-media-card-body {
     padding: 10px 12px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Main Photo Preview */
 .dt-main-photo-preview-wrap {
     display: flex;
     gap: 12px;
-    align-items: flex-start;
+    align-items: center;
+    height: 100%;
 }
 
 .dt-main-photo-img-holder {
     position: relative;
-    width: 100px;
-    height: 125px;
+    width: 95px;
+    height: 120px;
     border-radius: 4px;
     overflow: hidden;
     border: 2px solid #8A681F;
@@ -270,7 +277,7 @@
 /* Video Studio Tabs */
 .dt-video-tabs {
     display: flex;
-    gap: 4px;
+    gap: 3px;
     background: #e2e4e7;
     padding: 2px;
     border-radius: 4px;
@@ -280,11 +287,11 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 3px 8px;
+    padding: 3px 7px;
     border: none;
     background: transparent;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 600;
     color: #50575e;
     cursor: pointer;
@@ -302,8 +309,8 @@
 .dt-video-items-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    max-height: 240px;
+    gap: 6px;
+    max-height: 130px;
     overflow-y: auto;
     padding-right: 2px;
 }
@@ -312,31 +319,68 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    background: #ffffff;
-    border: 1px solid #c3c4c7;
+    background: #FAFAF9;
+    border: 1px solid #e2e4e7;
     border-radius: 4px;
-    padding: 6px;
+    padding: 5px 8px;
     transition: all 0.2s ease;
 }
 
 .dt-video-item-card:hover {
     border-color: #8A681F;
+    background: #ffffff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .dt-video-card-thumb {
     position: relative;
-    width: 100px;
-    height: 75px;
+    width: 95px;
+    height: 65px;
     border-radius: 3px;
     overflow: hidden;
     background: #000000;
     flex-shrink: 0;
 }
 
+.dt-video-hd-badge {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background: rgba(24, 21, 18, 0.85);
+    color: #FDE047;
+    font-size: 7.5px;
+    font-weight: 800;
+    padding: 1px 4px;
+    border-radius: 2px;
+    border: 1px solid rgba(212,175,55,0.5);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+}
+
 .dt-video-card-meta {
     flex: 1;
     min-width: 0;
+}
+
+.dt-v-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #181512;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dt-v-sub {
+    font-size: 10px;
+    color: #646970;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dt-video-card-thumb video, .dt-video-card-thumb iframe {
@@ -346,19 +390,39 @@
     display: block;
 }
 
-/* Dropzones */
-.dt-main-photo-dropzone, .dt-video-dropzone, .dt-dropzone {
+/* Video Inline Dropzone */
+.dt-video-dropzone {
+    border: 1.5px dashed #D4AF37;
+    background: #FAF8F2;
+    border-radius: 4px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all 0.15s ease;
+}
+
+.dt-video-dropzone:hover, .dt-video-dropzone.is-dragover {
+    background: #FAF5E8;
+    border-color: #8A681F;
+}
+
+/* Main Photo & Gallery Dropzones */
+.dt-main-photo-dropzone, .dt-dropzone {
     border: 2px dashed #c3c4c7;
     background: #FAF8F4;
     border-radius: 4px;
-    padding: 16px 12px;
+    padding: 14px 12px;
     text-align: center;
     cursor: pointer;
     transition: all 0.15s ease;
 }
 
-.dt-main-photo-dropzone:hover, .dt-video-dropzone:hover, .dt-dropzone:hover,
-.dt-dropzone.is-dragover, .dt-main-photo-dropzone.is-dragover, .dt-video-dropzone.is-dragover {
+.dt-main-photo-dropzone:hover, .dt-dropzone:hover,
+.dt-dropzone.is-dragover, .dt-main-photo-dropzone.is-dragover {
     border-color: #8A681F;
     background: #FAF5E8;
 }
