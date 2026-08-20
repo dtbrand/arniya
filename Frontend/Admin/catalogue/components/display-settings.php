@@ -3,6 +3,120 @@
  * display-settings.php — Catalogue Display Grid & Column Configuration Component
  * DT Brand's & Jai Hanuman Tex
  */
+$real_products = [
+    [
+        'id' => 1,
+        'title' => 'Kanjivaram Pure Silk Zari Saree',
+        'image' => '/Frontend/Shop/Asset/images/product1.png',
+        'wholesale_price' => '₹2,850',
+        'retail_mrp' => '₹4,999',
+        'margin' => '+43%',
+        'rating' => '5.0',
+        'reviews' => 128,
+        'moq' => '4 Pieces Bundle',
+        'silkmark' => true,
+        'depot' => true,
+        'urgency' => false
+    ],
+    [
+        'id' => 2,
+        'title' => 'Royal Velvet Bridal Zardosi Lehenga',
+        'image' => '/Frontend/Shop/Asset/images/product6.png',
+        'wholesale_price' => '₹11,500',
+        'retail_mrp' => '₹18,999',
+        'margin' => '+39%',
+        'rating' => '5.0',
+        'reviews' => 84,
+        'moq' => '2 Sets (Boutique)',
+        'silkmark' => false,
+        'depot' => true,
+        'urgency' => true
+    ],
+    [
+        'id' => 3,
+        'title' => 'Banarasi Kadhwa Brocade Weave',
+        'image' => '/Frontend/Shop/Asset/images/product2.png',
+        'wholesale_price' => '₹3,200',
+        'retail_mrp' => '₹5,500',
+        'margin' => '+41%',
+        'rating' => '4.7',
+        'reviews' => 96,
+        'moq' => '4 Pieces Bundle',
+        'silkmark' => true,
+        'depot' => false,
+        'urgency' => false
+    ],
+    [
+        'id' => 4,
+        'title' => 'Anarkali Festive Designer Kurti Set',
+        'image' => '/Frontend/Shop/Asset/images/product4.png',
+        'wholesale_price' => '₹1,650',
+        'retail_mrp' => '₹2,999',
+        'margin' => '+45%',
+        'rating' => '4.8',
+        'reviews' => 112,
+        'moq' => '6 Sets Pack',
+        'silkmark' => false,
+        'depot' => true,
+        'urgency' => false
+    ],
+    [
+        'id' => 5,
+        'title' => 'Pure Modal Silk Unstitched Material',
+        'image' => '/Frontend/Shop/Asset/images/product5.png',
+        'wholesale_price' => '₹1,420',
+        'retail_mrp' => '₹2,499',
+        'margin' => '+43%',
+        'rating' => '4.6',
+        'reviews' => 68,
+        'moq' => '8 Sets Pack',
+        'silkmark' => false,
+        'depot' => true,
+        'urgency' => false
+    ],
+    [
+        'id' => 6,
+        'title' => 'Bandhani Festive Heritage Dupatta',
+        'image' => '/Frontend/Shop/Asset/images/product3.png',
+        'wholesale_price' => '₹890',
+        'retail_mrp' => '₹1,599',
+        'margin' => '+44%',
+        'rating' => '4.9',
+        'reviews' => 145,
+        'moq' => '10 Pcs Bundle',
+        'silkmark' => true,
+        'depot' => false,
+        'urgency' => false
+    ],
+    [
+        'id' => 7,
+        'title' => 'Chanderi Zari Lightweight Saree',
+        'image' => '/Frontend/Shop/Asset/images/product7.png',
+        'wholesale_price' => '₹2,150',
+        'retail_mrp' => '₹3,800',
+        'margin' => '+43%',
+        'rating' => '4.7',
+        'reviews' => 52,
+        'moq' => '4 Pieces Bundle',
+        'silkmark' => true,
+        'depot' => true,
+        'urgency' => false
+    ],
+    [
+        'id' => 8,
+        'title' => 'Surat Heritage Jacquard Brocade',
+        'image' => '/Frontend/Shop/Asset/images/product8.png',
+        'wholesale_price' => '₹3,750',
+        'retail_mrp' => '₹6,200',
+        'margin' => '+40%',
+        'rating' => '4.8',
+        'reviews' => 78,
+        'moq' => '4 Pieces Bundle',
+        'silkmark' => true,
+        'depot' => true,
+        'urgency' => true
+    ]
+];
 ?>
 <div class="dt-cat-card">
     <div class="dt-cat-card-header">
@@ -99,7 +213,7 @@
             </label>
             <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
                 <input type="checkbox" id="chkMargin" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                <span>Show Resale Margin % Pill (+42%)</span>
+                <span>Show Resale Margin % Pill</span>
             </label>
             <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
                 <input type="checkbox" id="chkWhatsApp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
@@ -123,12 +237,12 @@
             </label>
         </div>
 
-        <!-- 3. Live Interactive Storefront Card Simulator -->
+        <!-- 3. Live Interactive Storefront Card Simulator (All 8 Real Products) -->
         <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
                 <div>
-                    <strong style="font-size:13px; color:#181512;">Live Storefront Product Card Simulator</strong>
-                    <div style="font-size:11px; color:#64748b;">Changes above reflect live on customer store cards below in real time.</div>
+                    <strong style="font-size:13px; color:#181512;">Live Storefront Product Card Simulator (8 Real Catalogue Products)</strong>
+                    <div style="font-size:11px; color:#64748b;">Changes above update real customer shop cards below dynamically.</div>
                 </div>
                 <div class="dt-device-switcher">
                     <button type="button" class="dt-device-btn active" id="btnDspDesk" onclick="window.DT_DISPLAY.switchDevice('desk')">🖥️ Desktop Grid</button>
@@ -138,95 +252,36 @@
 
             <!-- Simulated Cards Grid -->
             <div id="simulatedGrid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; transition:all 0.2s ease;">
-                <!-- Sim Product 1 -->
-                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                <?php foreach ($real_products as $prod): ?>
+                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04); display:flex; flex-direction:column;">
                     <div class="sim-badge-wrap" style="position:absolute; top:6px; left:6px; display:flex; flex-direction:column; gap:3px; z-index:2;">
+                        <?php if ($prod['silkmark']): ?>
                         <span class="dt-badge gold sim-silkmark" style="font-size:9px; padding:1px 5px;">Silk Mark</span>
-                        <span class="dt-badge green sim-depot" style="font-size:9px; padding:1px 5px;">Surat Ready Stock</span>
-                    </div>
-                    <img src="/Frontend/Shop/Asset/images/product1.png" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
-                    <div class="sim-rating" style="display:flex; align-items:center; gap:3px; font-size:10px; color:#B8860B; font-weight:700; margin-bottom:3px;">
-                        <span>★★★★★</span> <span style="color:#64748b; font-weight:500;">(4.9)</span>
-                    </div>
-                    <strong style="font-size:12px; color:#181512; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Kanjivaram Pure Silk Zari</strong>
-                    <div class="sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0;">
-                        <span class="sim-b2b" style="font-size:13px; font-weight:800; color:#15803D;">₹2,850</span>
-                        <span style="font-size:10.5px; color:#94a3b8; text-decoration:line-through;">₹4,999</span>
-                        <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;">+43% Margin</span>
-                    </div>
-                    <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong>4 Pieces Bundle</strong></div>
-                    <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-                        <span>WhatsApp Wholesale Lot</span>
-                    </button>
-                </div>
-
-                <!-- Sim Product 2 -->
-                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
-                    <div class="sim-badge-wrap" style="position:absolute; top:6px; left:6px; display:flex; flex-direction:column; gap:3px; z-index:2;">
+                        <?php endif; ?>
+                        <?php if ($prod['depot']): ?>
+                        <span class="dt-badge green sim-depot" style="font-size:9px; padding:1px 5px;">Surat Depot Stock</span>
+                        <?php endif; ?>
+                        <?php if ($prod['urgency']): ?>
                         <span class="dt-badge red sim-urgency" style="font-size:9px; padding:1px 5px;">🔥 Fast Selling</span>
-                        <span class="dt-badge green sim-depot" style="font-size:9px; padding:1px 5px;">Surat Depot</span>
+                        <?php endif; ?>
                     </div>
-                    <img src="/Frontend/Shop/Asset/images/product6.png" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
+                    <img src="<?php echo htmlspecialchars($prod['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
                     <div class="sim-rating" style="display:flex; align-items:center; gap:3px; font-size:10px; color:#B8860B; font-weight:700; margin-bottom:3px;">
-                        <span>★★★★★</span> <span style="color:#64748b; font-weight:500;">(5.0)</span>
+                        <span>★★★★★</span> <span style="color:#64748b; font-weight:500;">(<?php echo $prod['rating']; ?> • <?php echo $prod['reviews']; ?>)</span>
                     </div>
-                    <strong style="font-size:12px; color:#181512; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Royal Velvet Bridal Lehenga</strong>
+                    <strong style="font-size:12px; color:#181512; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><?php echo htmlspecialchars($prod['title']); ?></strong>
                     <div class="sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0;">
-                        <span class="sim-b2b" style="font-size:13px; font-weight:800; color:#15803D;">₹11,500</span>
-                        <span style="font-size:10.5px; color:#94a3b8; text-decoration:line-through;">₹18,999</span>
-                        <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;">+39% Margin</span>
+                        <span class="sim-b2b" style="font-size:13px; font-weight:800; color:#15803D;"><?php echo htmlspecialchars($prod['wholesale_price']); ?></span>
+                        <span style="font-size:10.5px; color:#94a3b8; text-decoration:line-through;"><?php echo htmlspecialchars($prod['retail_mrp']); ?></span>
+                        <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;"><?php echo htmlspecialchars($prod['margin']); ?> Margin</span>
                     </div>
-                    <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong>2 Sets (Boutique Special)</strong></div>
-                    <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
+                    <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong><?php echo htmlspecialchars($prod['moq']); ?></strong></div>
+                    <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp enquiry opened for <?php echo addslashes($prod['title']); ?>!')" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                         <span>WhatsApp Wholesale Lot</span>
                     </button>
                 </div>
-
-                <!-- Sim Product 3 -->
-                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
-                    <div class="sim-badge-wrap" style="position:absolute; top:6px; left:6px; display:flex; flex-direction:column; gap:3px; z-index:2;">
-                        <span class="dt-badge gold sim-silkmark" style="font-size:9px; padding:1px 5px;">Silk Mark</span>
-                    </div>
-                    <img src="/Frontend/Shop/Asset/images/product2.png" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
-                    <div class="sim-rating" style="display:flex; align-items:center; gap:3px; font-size:10px; color:#B8860B; font-weight:700; margin-bottom:3px;">
-                        <span>★★★★☆</span> <span style="color:#64748b; font-weight:500;">(4.7)</span>
-                    </div>
-                    <strong style="font-size:12px; color:#181512; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Banarasi Kadhwa Brocade</strong>
-                    <div class="sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0;">
-                        <span class="sim-b2b" style="font-size:13px; font-weight:800; color:#15803D;">₹3,200</span>
-                        <span style="font-size:10.5px; color:#94a3b8; text-decoration:line-through;">₹5,500</span>
-                        <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;">+41% Margin</span>
-                    </div>
-                    <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong>4 Pieces Bundle</strong></div>
-                    <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-                        <span>WhatsApp Wholesale Lot</span>
-                    </button>
-                </div>
-
-                <!-- Sim Product 4 -->
-                <div class="dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; position:relative; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
-                    <div class="sim-badge-wrap" style="position:absolute; top:6px; left:6px; display:flex; flex-direction:column; gap:3px; z-index:2;">
-                        <span class="dt-badge green sim-depot" style="font-size:9px; padding:1px 5px;">Surat Ready Stock</span>
-                    </div>
-                    <img src="/Frontend/Shop/Asset/images/product4.png" class="sim-card-img" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:8px; border:1px solid #f1f5f9;">
-                    <div class="sim-rating" style="display:flex; align-items:center; gap:3px; font-size:10px; color:#B8860B; font-weight:700; margin-bottom:3px;">
-                        <span>★★★★★</span> <span style="color:#64748b; font-weight:500;">(4.8)</span>
-                    </div>
-                    <strong style="font-size:12px; color:#181512; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Anarkali Festive Kurti Set</strong>
-                    <div class="sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0;">
-                        <span class="sim-b2b" style="font-size:13px; font-weight:800; color:#15803D;">₹1,650</span>
-                        <span style="font-size:10.5px; color:#94a3b8; text-decoration:line-through;">₹2,999</span>
-                        <span class="dt-badge green sim-margin" style="font-size:9px; padding:1px 4px;">+45% Margin</span>
-                    </div>
-                    <div class="sim-moq" style="font-size:10px; color:#64748b; margin-bottom:6px;">MOQ: <strong>6 Sets Pack</strong></div>
-                    <button type="button" class="dt-btn-action-sm emerald sim-whatsapp" style="width:100%; height:26px; justify-content:center; font-size:10.5px; font-weight:700;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-                        <span>WhatsApp Wholesale Lot</span>
-                    </button>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
