@@ -324,6 +324,17 @@
     border-color: #4ADE80;
 }
 
+.dt-action-btn.packing {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+}
+
+.dt-action-btn.packing:hover {
+    background: #F5EDD6;
+    border-color: #8A681F;
+}
+
 .dt-action-btn.danger {
     background: #FEF2F2;
     border-color: #FECACA;

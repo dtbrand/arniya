@@ -53,13 +53,13 @@
 
         <!-- Hide / Show Columns Options Dropdown -->
         <div class="dt-col-dropdown-wrap" style="position:relative;">
-            <button type="button" class="dt-btn dt-btn-gold" style="height:32px;" onclick="window.DT_ORDER_LIST.toggleColumnMenu(event)" title="Show or Hide Table Columns">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+            <button type="button" class="dt-btn dt-btn-pale" style="height:32px;" onclick="window.DT_ORDER_LIST.toggleColumnMenu(event)" title="Show or Hide Table Columns">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="9" y1="3" x2="9" y2="21"></line>
                     <line x1="15" y1="3" x2="15" y2="21"></line>
                 </svg>
-                <span>Columns Options</span>
+                <span>Columns</span>
                 <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
             
@@ -82,5 +82,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- Master + Create Order Button -->
+        <a href="/Frontend/Admin/orders/create.php" class="dt-btn dt-btn-gold" style="height:32px; font-weight:800; padding:0 12px;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Create Order</span>
+        </a>
     </div>
 </div>
