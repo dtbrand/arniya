@@ -297,257 +297,174 @@ $real_products = [
             </div>
         </div>
 
-        <!-- ════ STEP 3: MULTI-DEVICE GRID COLUMNS & DIMENSIONS ════ -->
+        <!-- ════ STEP 3: CUSTOMER PRODUCT CARD STYLES & OPTIONS ════ -->
         <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-3', this)">
             <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                <span>Step 3: Multi-Device Grid Columns &amp; Card Dimensions</span>
-                <span class="dt-badge gold" style="font-size:9.5px;">Desktop • Tablet • Mobile</span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                <span>Step 3: Customer Card Tag, Name, Price, Icon &amp; Button Options</span>
+                <span class="dt-badge gold" style="font-size:9.5px;">Live Visual Styling</span>
             </div>
             <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
         </div>
 
         <div class="dt-accordion-body" id="sec-body-3">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+                
+                <!-- 1. Tag Styles & Options -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">🖥️ Desktop Columns</label>
-                    <select class="dt-form-select" id="dspDeskCols" onchange="window.DT_DISPLAY.updatePreview()">
-                        <option value="4" selected>4 Columns (Recommended Wholesale)</option>
-                        <option value="3">3 Columns (Luxury Large Cards)</option>
-                        <option value="5">5 Columns (Compact Catalog)</option>
-                        <option value="6">6 Columns (Ultra High-Density)</option>
+                    <label class="dt-form-label">🏷️ Fabric &amp; Category Tag Styles</label>
+                    <select class="dt-form-select" id="dspTagStyle" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="uppercase-gold" selected>Uppercase Heritage Gold (#8A681F)</option>
+                        <option value="uppercase-obsidian">Uppercase Obsidian Dark (#181512)</option>
+                        <option value="uppercase-emerald">Uppercase Emerald Green (#15803D)</option>
+                        <option value="muted-tag">Subtle Muted Grey Tag (#64748b)</option>
                     </select>
                 </div>
 
+                <!-- 2. Product Name Styles & Options -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">💻 Tablet Columns</label>
-                    <select class="dt-form-select" id="dspTabCols" onchange="window.DT_DISPLAY.updatePreview()">
-                        <option value="3" selected>3 Columns (Standard Tablet)</option>
-                        <option value="2">2 Columns (Large Touch Cards)</option>
+                    <label class="dt-form-label">✏️ Product Name Typography &amp; Lines</label>
+                    <select class="dt-form-select" id="dspNameStyle" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="bold-1line" selected>0.82rem Bold 700 (1 Line Truncated with Ellipsis)</option>
+                        <option value="bold-2line">0.82rem Bold 700 (2 Lines Full Title)</option>
+                        <option value="extrabold-1line">0.90rem Extra Bold 800 (Prominent Title)</option>
+                        <option value="compact-1line">0.76rem Compact Title (High Density)</option>
                     </select>
                 </div>
 
+                <!-- 3. Price & Sale Price Styles & Options -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">📱 Mobile Smartphone Columns</label>
-                    <select class="dt-form-select" id="dspMobCols" onchange="window.DT_DISPLAY.updatePreview()">
-                        <option value="2" selected>2 Columns (Meesho &amp; Flipkart App Style)</option>
-                        <option value="1">1 Column (Single Card Full Width)</option>
+                    <label class="dt-form-label">💰 Selling Price &amp; Sale Pill Styles</label>
+                    <select class="dt-form-select" id="dspPriceStyle" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="emerald-price" selected>Emerald Rate (₹2,850) + 43% OFF Pill</option>
+                        <option value="obsidian-price">Obsidian Black Rate (₹2,850) + Emerald Pill</option>
+                        <option value="gold-price">Heritage Gold Rate (₹2,850) + Gold Pill</option>
+                        <option value="large-emerald">Large 1.1rem Emerald Rate + Red Urgent Pill</option>
                     </select>
                 </div>
 
+                <!-- 4. Action Icon Styles & Options -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">📐 Image Aspect Ratio</label>
-                    <select class="dt-form-select" id="dspRatio" onchange="window.DT_DISPLAY.updatePreview()">
-                        <option value="3-4" selected>3:4 Vertical Portrait (Ethnic Standard)</option>
-                        <option value="4-5">4:5 Tall Saree &amp; Lehenga Format</option>
-                        <option value="1-1">1:1 Clean Square</option>
+                    <label class="dt-form-label">❤️ Wishlist, Share &amp; Rating Icons</label>
+                    <select class="dt-form-select" id="dspIconStyle" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="glassmorphic" selected>Frosted Glass Circle (Wishlist + Share + 5★)</option>
+                        <option value="wishlist-only">Wishlist Heart Only (Hide Share Button)</option>
+                        <option value="stars-only">Ratings Only (Hide Photo Action Icons)</option>
+                        <option value="minimal-clean">Clean Minimal (No Overlay Icons)</option>
                     </select>
                 </div>
 
+                <!-- 5. Primary Customer Button Styles & Options -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">🔢 Products Count / Max Cards</label>
-                    <select class="dt-form-select" id="dspPerPage" onchange="window.DT_DISPLAY.updatePreview()">
-                        <option value="8" selected>8 Products (Featured Strip)</option>
-                        <option value="16">16 Products</option>
-                        <option value="24">24 Products / Page</option>
-                        <option value="48">48 Products / Page</option>
+                    <label class="dt-form-label">🔘 Primary Action Button Styles &amp; CTA</label>
+                    <select class="dt-form-select" id="dspBtnStyleOption" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="emerald-whatsapp" selected>Emerald 1-Click WhatsApp Lot (Shop Standard)</option>
+                        <option value="gold-master">Primary Gold Master Button (DT Luxury Gold)</option>
+                        <option value="pale-gold-pill">Pale Gold Subtle Action Pill (#FAF5E8)</option>
+                        <option value="obsidian-btn">Obsidian Dark Velvet Button (#181512)</option>
                     </select>
                 </div>
 
+                <!-- 6. Button Height & Touch Target -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">🔃 Default Catalog Sorting</label>
-                    <select class="dt-form-select" id="dspSorting" onchange="window.DT_DISPLAY.updateSorting()">
-                        <option value="position" selected>Position / Merchandising Priority</option>
-                        <option value="price-asc">Price: Low to High (Wholesale Rate)</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="popular">Best Sellers / Fast Moving Lots</option>
-                        <option value="newest">Latest Catalogues (Newest First)</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- ════ STEP 4: CARD THEMES, BUTTON STYLES & RADII ════ -->
-        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-4', this)">
-            <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                <span>Step 4: Card Themes, Button Styles &amp; Corner Radii</span>
-                <span class="dt-badge gold" style="font-size:9.5px;">Visual Aesthetics</span>
-            </div>
-            <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
-        </div>
-
-        <div class="dt-accordion-body" id="sec-body-4">
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px;">
-                <div class="dt-form-group">
-                    <label class="dt-form-label">🎨 Card Border &amp; Shadow Theme</label>
-                    <select class="dt-form-select" id="dspCardTheme" onchange="window.DT_DISPLAY.updateCardStyles()">
-                        <option value="gold-border" selected>Luxury Gold Border with Soft Shadow (Default)</option>
-                        <option value="clean-border">Clean Subtle Grey Border (Shop Standard)</option>
-                        <option value="dark-obsidian">Obsidian Dark Luxe Border</option>
-                        <option value="borderless">Flat Modern Borderless</option>
+                    <label class="dt-form-label">📏 Button Size &amp; Touch Target</label>
+                    <select class="dt-form-select" id="dspBtnSizeOption" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="28px" selected>Standard 28px (Balanced Retail)</option>
+                        <option value="34px">Large 34px (High Conversion Touch)</option>
+                        <option value="24px">Compact 24px (High Density)</option>
                     </select>
                 </div>
 
+                <!-- 7. Card Corner Radius -->
                 <div class="dt-form-group">
-                    <label class="dt-form-label">🔘 Primary Button Style</label>
-                    <select class="dt-form-select" id="dspBtnStyle" onchange="window.DT_DISPLAY.updateCardStyles()">
-                        <option value="emerald" selected>1-Click WhatsApp Lot (Emerald Gradient)</option>
-                        <option value="gold">Primary Gold Master Button</option>
-                        <option value="pale-gold">Pale Gold Subtle Action Pill</option>
-                    </select>
-                </div>
-
-                <div class="dt-form-group">
-                    <label class="dt-form-label">📏 Button Size / Touch Target</label>
-                    <select class="dt-form-select" id="dspBtnSize" onchange="window.DT_DISPLAY.updateCardStyles()">
-                        <option value="normal" selected>Standard 28px (Balanced)</option>
-                        <option value="large">Large 34px (High Conversion Touch)</option>
-                        <option value="compact">Compact 24px (High Density)</option>
-                    </select>
-                </div>
-
-                <div class="dt-form-group">
-                    <label class="dt-form-label">⭕ Card Corner Radius</label>
-                    <select class="dt-form-select" id="dspCardRadius" onchange="window.DT_DISPLAY.updateCardStyles()">
+                    <label class="dt-form-label">⭕ Card &amp; Image Corner Radius</label>
+                    <select class="dt-form-select" id="dspCardRadiusOption" onchange="window.DT_DISPLAY.updateCustomerStyles()">
                         <option value="8px" selected>8px Rounded (Shop Standard)</option>
                         <option value="12px">12px Modern Pill Curve</option>
                         <option value="4px">4px Sharp Heritage Classic</option>
                         <option value="0px">0px Flat Crisp Edge</option>
                     </select>
                 </div>
+
+                <!-- 8. Multi-Device Columns -->
+                <div class="dt-form-group">
+                    <label class="dt-form-label">🖥️ Desktop &amp; Mobile Columns</label>
+                    <select class="dt-form-select" id="dspGridColsOption" onchange="window.DT_DISPLAY.updateCustomerStyles()">
+                        <option value="4-2" selected>4 Desktop Columns • 2 Mobile Columns</option>
+                        <option value="3-1">3 Desktop Columns • 1 Mobile Column (Large Cards)</option>
+                        <option value="5-2">5 Desktop Columns • 2 Mobile Columns (High Density)</option>
+                    </select>
+                </div>
+
             </div>
         </div>
 
-        <!-- ════ STEP 5: ALL REAL BADGES & STOREFRONT ELEMENTS ════ -->
-        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-5', this)">
+        <!-- ════ STEP 4: REAL PRODUCT BADGES & STOREFRONT ACTION TOGGLES ════ -->
+        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-4', this)">
             <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                <span>Step 5: Badges, Wholesale Elements &amp; Storefront Actions</span>
-                <span class="dt-badge gold" style="font-size:9.5px;">20 Toggles Configured</span>
+                <span>Step 4: Real Storefront Badges &amp; Visibility Toggles</span>
+                <span class="dt-badge gold" style="font-size:9.5px;">Active Elements</span>
             </div>
             <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
         </div>
 
-        <div class="dt-accordion-body" id="sec-body-5">
-            <!-- Group A: Trust & Photo Badges -->
-            <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px; margin-bottom:10px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em;">🏷️ A. Trust &amp; Product Badges</div>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.toggleSubGroup('grp-a', this)" style="height:20px; font-size:9.5px; padding:0 6px;">− Minimize</button>
-                </div>
-                <div id="grp-a" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkSilkMark" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show "Silk Mark Certified" Badge</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkDepotStock" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show "Surat Depot Stock" Tag</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkUrgency" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Fast Selling / Trending Badge</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkNewBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show New Arrival 2026 Badge</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkBridalBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Bridal Edition Badge</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkCatTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Category Photo Tag (Bottom-Right)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkSuratStamp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Surat Direct Weaver Stamp</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Group B: Wholesale & Commercial B2B Elements -->
-            <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:6px; padding:12px; margin-bottom:10px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em;">💼 B. Wholesale &amp; Commercial B2B Elements</div>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.toggleSubGroup('grp-b', this)" style="height:20px; font-size:9.5px; padding:0 6px;">− Minimize</button>
-                </div>
-                <div id="grp-b" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkB2bRate" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Wholesale B2B Rate &amp; Retail MRP</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkMargin" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Resale Margin % Pill (+43%)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkTieredRates" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Tiered Bulk Lot Rates (1-3, 4-11, 12+ Pcs)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkMoq" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show MOQ / Bundle Size Badge (MOQ 4)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkStockQty" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Ready Inventory Qty (420 Pcs in Surat)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkGstTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show GST Invoice &amp; Tax Credit Included</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Group C: Buttons, Wishlist, Cart & Photo Tools -->
-            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; padding:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <div style="font-size:11.5px; font-weight:800; color:#1D4ED8; text-transform:uppercase; letter-spacing:0.06em;">🔘 C. Actions, Wishlist, Cart &amp; Details</div>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.toggleSubGroup('grp-c', this)" style="height:20px; font-size:9.5px; padding:0 6px;">− Minimize</button>
-                </div>
-                <div id="grp-c" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px;">
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkWhatsApp" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#16A34A;">
-                        <span>Show 1-Click WhatsApp Lot Enquiry Button</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkWishlist" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Wishlist Heart Button (Top-Right)</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkPhotoShare" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Photo Smart WhatsApp Share Button</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkRating" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show 5-Star Rating &amp; Review Count</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkFabricSku" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Fabric &amp; SKU Subtitle Tag</span>
-                    </label>
-                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
-                        <input type="checkbox" id="chkColorsSizes" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
-                        <span>Show Colours Count &amp; Available Sizes Row</span>
-                    </label>
-                </div>
+        <div class="dt-accordion-body" id="sec-body-4">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkSilkMark" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "Silk Mark Certified" Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkDepotStock" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show "Surat Depot Stock" Tag</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkUrgency" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Fast Selling / Trending Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkNewBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show New Arrival 2026 Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkBridalBadge" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Bridal Edition Badge</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkCatTag" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Category Photo Tag (Bottom-Right)</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkWishlist" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Wishlist Heart Button</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkPhotoShare" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Photo WhatsApp Share Button</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkRating" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show 5-Star Rating &amp; Review Count</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600; cursor:pointer;">
+                    <input type="checkbox" id="chkColorsSizes" checked onchange="window.DT_DISPLAY.updatePreview()" style="width:15px; height:15px; accent-color:#8A681F;">
+                    <span>Show Colours Count &amp; Available Sizes Row</span>
+                </label>
             </div>
         </div>
 
-        <!-- ════ STEP 6: LIVE STOREFRONT SIMULATOR CANVAS ════ -->
-        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-6', this)" style="margin-top:14px;">
+        <!-- ════ STEP 5: LIVE STOREFRONT SIMULATOR CANVAS ════ -->
+        <div class="dt-accordion-header active" onclick="window.DT_DISPLAY.toggleSection('sec-body-5', this)" style="margin-top:14px;">
             <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800; color:#181512;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#16A34A" stroke-width="2.2"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
-                <span>Step 6: Live Storefront Simulator Canvas (0ms Reactive)</span>
+                <span>Step 5: Live Storefront Simulator Canvas (0ms Reactive)</span>
                 <span class="dt-badge green" style="font-size:9.5px;">Live Preview Synced</span>
             </div>
             <span class="dt-collapse-pill"><span class="dt-collapse-sign">−</span> <span class="dt-collapse-text">Collapse</span></span>
         </div>
 
-        <div class="dt-accordion-body" id="sec-body-6">
+        <div class="dt-accordion-body" id="sec-body-5">
             <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px; box-shadow:0 4px 16px rgba(212,175,55,0.12);">
                 
                 <!-- Enhanced Real-Time Sync & Live Filter Toolbar -->
@@ -614,7 +531,7 @@ $real_products = [
                             </div>
 
                             <!-- Product Name -->
-                            <h2 class="card-name" style="font-family:'Plus Jakarta Sans', sans-serif; font-size:0.82rem; font-weight:700; color:#181512; margin:2px 0 3px 0; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            <h2 class="card-name sim-product-name" style="font-family:'Plus Jakarta Sans', sans-serif; font-size:0.82rem; font-weight:700; color:#181512; margin:2px 0 3px 0; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                 <?php echo htmlspecialchars($p['name']); ?>
                             </h2>
 
@@ -633,9 +550,9 @@ $real_products = [
                             <div class="context-card-content">
                                 <!-- Price Row -->
                                 <div class="card-price-row sim-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0 6px 0;">
-                                    <span class="card-price sim-b2b" style="font-size:0.95rem; font-weight:800; color:#15803D;">₹<?php echo number_format($p['price']); ?></span>
+                                    <span class="card-price sim-b2b sim-price-value" style="font-size:0.95rem; font-weight:800; color:#15803D;">₹<?php echo number_format($p['price']); ?></span>
                                     <span class="card-old-price sim-mrp" style="font-size:0.75rem; color:#94a3b8; text-decoration:line-through;">₹<?php echo number_format($p['old_price']); ?></span>
-                                    <span class="card-price-discount sim-margin" style="font-size:0.65rem; font-weight:800; color:#15803D; background:#DCFCE7; padding:1px 5px; border-radius:10px;"><?php echo $p['discount']; ?>% OFF</span>
+                                    <span class="card-price-discount sim-margin sim-discount-pill" style="font-size:0.65rem; font-weight:800; color:#15803D; background:#DCFCE7; padding:1px 5px; border-radius:10px;"><?php echo $p['discount']; ?>% OFF</span>
                                 </div>
 
                                 <!-- Context Dynamic Pill Box -->

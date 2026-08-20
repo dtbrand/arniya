@@ -717,24 +717,160 @@ window.DT_DISPLAY = {
                 card.style.boxShadow = 'none';
                 card.style.background = '#FAF5E8';
             }
-
-            const btns = card.querySelectorAll('.sim-action-btn');
-            btns.forEach(btn => {
-                if (btnSize === 'large') {
-                    btn.style.height = '34px';
-                    btn.style.fontSize = '11.5px';
-                } else if (btnSize === 'compact') {
-                    btn.style.height = '24px';
-                    btn.style.fontSize = '9.5px';
-                } else {
-                    btn.style.height = '28px';
-                    btn.style.fontSize = '10.5px';
-                }
-
-                btn.classList.remove('emerald', 'gold', 'pale-gold');
-                btn.classList.add(btnStyle);
-            });
         });
+    },
+
+    updateCustomerStyles: function() {
+        const grid = document.getElementById('simulatedGrid');
+        if (!grid) return;
+
+        const tagStyle = document.getElementById('dspTagStyle')?.value || 'uppercase-gold';
+        const nameStyle = document.getElementById('dspNameStyle')?.value || 'bold-1line';
+        const priceStyle = document.getElementById('dspPriceStyle')?.value || 'emerald-price';
+        const iconStyle = document.getElementById('dspIconStyle')?.value || 'glassmorphic';
+        const btnStyleOpt = document.getElementById('dspBtnStyleOption')?.value || 'emerald-whatsapp';
+        const btnSizeOpt = document.getElementById('dspBtnSizeOption')?.value || '28px';
+        const radiusOpt = document.getElementById('dspCardRadiusOption')?.value || '8px';
+        const gridColsOpt = document.getElementById('dspGridColsOption')?.value || '4-2';
+
+        // 1. Columns
+        const [dCols, mCols] = gridColsOpt.split('-');
+        if (this.currentDevice === 'desk') {
+            grid.style.gridTemplateColumns = `repeat(${dCols}, 1fr)`;
+        } else {
+            grid.style.gridTemplateColumns = `repeat(${mCols}, 1fr)`;
+        }
+
+        const cards = grid.querySelectorAll('.dt-sim-card');
+        cards.forEach(card => {
+            // Corner radius
+            card.style.borderRadius = radiusOpt;
+            const imgWrap = card.querySelector('.card-image-wrap');
+            if (imgWrap) imgWrap.style.borderRadius = `${radiusOpt} ${radiusOpt} 0 0`;
+
+            // 1. Tag Style
+            const fabricTag = card.querySelector('.sim-fabric-tag');
+            if (fabricTag) {
+                if (tagStyle === 'uppercase-gold') {
+                    fabricTag.style.color = '#8A681F';
+                    fabricTag.style.textTransform = 'uppercase';
+                } else if (tagStyle === 'uppercase-obsidian') {
+                    fabricTag.style.color = '#181512';
+                    fabricTag.style.textTransform = 'uppercase';
+                } else if (tagStyle === 'uppercase-emerald') {
+                    fabricTag.style.color = '#15803D';
+                    fabricTag.style.textTransform = 'uppercase';
+                } else {
+                    fabricTag.style.color = '#64748b';
+                    fabricTag.style.textTransform = 'capitalize';
+                }
+            }
+
+            // 2. Name Style
+            const nameEl = card.querySelector('.sim-product-name');
+            if (nameEl) {
+                if (nameStyle === 'bold-2line') {
+                    nameEl.style.fontSize = '0.82rem';
+                    nameEl.style.fontWeight = '700';
+                    nameEl.style.whiteSpace = 'normal';
+                    nameEl.style.display = '-webkit-box';
+                    nameEl.style.webkitLineClamp = '2';
+                    nameEl.style.webkitBoxOrient = 'vertical';
+                } else if (nameStyle === 'extrabold-1line') {
+                    nameEl.style.fontSize = '0.90rem';
+                    nameEl.style.fontWeight = '800';
+                    nameEl.style.whiteSpace = 'nowrap';
+                    nameEl.style.display = 'block';
+                } else if (nameStyle === 'compact-1line') {
+                    nameEl.style.fontSize = '0.76rem';
+                    nameEl.style.fontWeight = '700';
+                    nameEl.style.whiteSpace = 'nowrap';
+                    nameEl.style.display = 'block';
+                } else {
+                    nameEl.style.fontSize = '0.82rem';
+                    nameEl.style.fontWeight = '700';
+                    nameEl.style.whiteSpace = 'nowrap';
+                    nameEl.style.display = 'block';
+                }
+            }
+
+            // 3. Price & Sale Pill Style
+            const priceVal = card.querySelector('.sim-price-value');
+            const discountPill = card.querySelector('.sim-discount-pill');
+            if (priceVal) {
+                if (priceStyle === 'emerald-price') {
+                    priceVal.style.color = '#15803D';
+                    priceVal.style.fontSize = '0.95rem';
+                } else if (priceStyle === 'obsidian-price') {
+                    priceVal.style.color = '#181512';
+                    priceVal.style.fontSize = '0.95rem';
+                } else if (priceStyle === 'gold-price') {
+                    priceVal.style.color = '#8A681F';
+                    priceVal.style.fontSize = '0.95rem';
+                } else if (priceStyle === 'large-emerald') {
+                    priceVal.style.color = '#15803D';
+                    priceVal.style.fontSize = '1.10rem';
+                }
+            }
+            if (discountPill) {
+                if (priceStyle === 'large-emerald') {
+                    discountPill.style.background = '#FEE2E2';
+                    discountPill.style.color = '#DC2626';
+                } else if (priceStyle === 'gold-price') {
+                    discountPill.style.background = '#FAF5E8';
+                    discountPill.style.color = '#8A681F';
+                } else {
+                    discountPill.style.background = '#DCFCE7';
+                    discountPill.style.color = '#15803D';
+                }
+            }
+
+            // 4. Icon Styles
+            const wishBtn = card.querySelector('.sim-wishlist-btn');
+            const shareBtn = card.querySelector('.sim-share-btn');
+            const ratingRow = card.querySelector('.sim-rating');
+            if (wishBtn) {
+                wishBtn.style.display = (iconStyle === 'stars-only' || iconStyle === 'minimal-clean') ? 'none' : 'flex';
+            }
+            if (shareBtn) {
+                shareBtn.style.display = (iconStyle === 'wishlist-only' || iconStyle === 'stars-only' || iconStyle === 'minimal-clean') ? 'none' : 'flex';
+            }
+            if (ratingRow) {
+                ratingRow.style.display = (iconStyle === 'minimal-clean') ? 'none' : 'flex';
+            }
+
+            // 5. Button Styles
+            const actionBtn = card.querySelector('.sim-action-btn');
+            const btnText = card.querySelector('.sim-btn-text');
+            if (actionBtn) {
+                actionBtn.style.height = btnSizeOpt;
+                actionBtn.style.borderRadius = (radiusOpt === '0px') ? '0px' : (btnSizeOpt === '34px' ? '8px' : '6px');
+                
+                actionBtn.classList.remove('emerald', 'gold', 'pale-gold');
+                if (btnStyleOpt === 'emerald-whatsapp') {
+                    actionBtn.classList.add('emerald');
+                    if (btnText) btnText.textContent = 'WhatsApp Wholesale Lot';
+                } else if (btnStyleOpt === 'gold-master') {
+                    actionBtn.classList.add('gold');
+                    if (btnText) btnText.textContent = '1-Click WhatsApp Enquiry';
+                } else if (btnStyleOpt === 'pale-gold-pill') {
+                    actionBtn.classList.add('pale-gold');
+                    if (btnText) btnText.textContent = '+ Add to Bag / Cart';
+                } else if (btnStyleOpt === 'obsidian-btn') {
+                    actionBtn.style.background = 'linear-gradient(135deg, #181512 0%, #2A241E 100%)';
+                    actionBtn.style.color = '#D4AF37';
+                    actionBtn.style.border = '1px solid #8A681F';
+                    if (btnText) btnText.textContent = 'View Saree Details ›';
+                }
+            }
+        });
+
+        // Pulse Green Sync Indicator
+        const pulse = document.getElementById('liveSyncPulse');
+        if (pulse) {
+            pulse.style.transform = 'scale(1.4)';
+            setTimeout(() => { pulse.style.transform = 'scale(1)'; }, 200);
+        }
     },
 
     toggleSection: function(bodyId, headerEl) {
