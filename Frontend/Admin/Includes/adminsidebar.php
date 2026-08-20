@@ -54,7 +54,7 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
             <ul class="adm-nav-list">
                 <!-- PRODUCTS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub open">
-                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" onclick="if(typeof toggleSidebarSubmenu==='function') { toggleSidebarSubmenu(this); } if(typeof switchAdmTab==='function' && document.getElementById('tab-products')) { switchAdmTab('products'); return false; }" data-title="Products Catalog">
+                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products & Inventory">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
                         <span class="adm-nav-badge">1,240</span>

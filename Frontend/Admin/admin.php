@@ -23,6 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <!-- Admin CSS Stylesheet -->
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
