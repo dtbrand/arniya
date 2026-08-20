@@ -65,7 +65,7 @@ $active_subnav = "brands";
         border-radius: 4px;
         display: inline-flex;
         align-items: center;
-        gap: 4px;
+        gap: 5px;
         cursor: pointer;
         text-decoration: none;
         transition: all 0.15s ease;
@@ -232,8 +232,14 @@ $active_subnav = "brands";
                             </td>
                             <td style="padding:12px 12px; text-align:right;">
                                 <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(1, 'DT Signature', 'Primary Flagship', 'Primary Flagship Handloom & Pure Silk Sarees Collection', 'DT')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">✏️ Edit</button>
-                                    <a href="/Frontend/Shop/shop.php?brand=DT+Signature" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">👁️ View</a>
+                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(1, 'DT Signature', 'Primary Flagship', 'Primary Flagship Handloom & Pure Silk Sarees Collection', 'DT')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="/Frontend/Shop/shop.php?brand=DT+Signature" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <span>View</span>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -266,8 +272,14 @@ $active_subnav = "brands";
                             </td>
                             <td style="padding:12px 12px; text-align:right;">
                                 <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(2, 'Arniya Heritage', 'Heritage Brocade', 'Authentic Varanasi Brocades & Traditional Katan Silks', 'AH')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">✏️ Edit</button>
-                                    <a href="/Frontend/Shop/shop.php?brand=Arniya+Heritage" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">👁️ View</a>
+                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(2, 'Arniya Heritage', 'Heritage Brocade', 'Authentic Varanasi Brocades & Traditional Katan Silks', 'AH')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="/Frontend/Shop/shop.php?brand=Arniya+Heritage" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <span>View</span>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -300,8 +312,14 @@ $active_subnav = "brands";
                             </td>
                             <td style="padding:12px 12px; text-align:right;">
                                 <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(3, 'DT Couture', 'Bridal Luxury', 'Handcrafted Bridal Zardosi Lehengas & Luxury Reception Wear', 'DC')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">✏️ Edit</button>
-                                    <a href="/Frontend/Shop/shop.php?brand=DT+Couture" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">👁️ View</a>
+                                    <button type="button" class="dt-btn-action-pill" onclick="openEditBrandModal(3, 'DT Couture', 'Bridal Luxury', 'Handcrafted Bridal Zardosi Lehengas & Luxury Reception Wear', 'DC')" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>Edit</span>
+                                    </button>
+                                    <a href="/Frontend/Shop/shop.php?brand=DT+Couture" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <span>View</span>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -319,40 +337,41 @@ $active_subnav = "brands";
 <!-- MODAL: INSTANT EDIT BRAND & LOGO UPLOAD                  -->
 <!-- ======================================================== -->
 <div id="editBrandModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:560px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
+    <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Edit House Label: <span id="modalBrandTitleName" style="color:#D4AF37;">DT Signature</span></h3>
             </div>
-            <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:20px; cursor:pointer;">&times;</button>
+            <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:16px 18px;">
+        <div style="padding:18px 22px;">
             <input type="hidden" id="editModalBrandId" value="1">
             
             <!-- Logo Upload Row -->
-            <div style="display:flex; align-items:center; gap:16px; padding:12px; background:#FAF5E8; border:1px dashed #D4AF37; border-radius:8px; margin-bottom:14px;">
-                <div id="modalLogoPreview" style="width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:16px; padding:12px 14px; background:#FAF5E8; border:1.5px dashed #D4AF37; border-radius:8px; margin-bottom:16px;">
+                <div id="modalLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 8px rgba(212,175,55,0.3);">
                     DT
                 </div>
                 <div style="flex:1;">
                     <div style="font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Brand Logo / Emblem</div>
                     <input type="file" id="modalLogoFileInput" style="display:none;" accept="image/*" onchange="handleLogoUploadPreview(this)">
-                    <button type="button" class="wp-button" onclick="document.getElementById('modalLogoFileInput').click()" style="height:28px; font-size:11px; font-weight:600; background:#fff;">
-                        📁 Upload / Change Logo
+                    <button type="button" class="wp-button" onclick="document.getElementById('modalLogoFileInput').click()" style="height:30px; font-size:11.5px; font-weight:700; background:#ffffff; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <span>Upload / Change Logo</span>
                     </button>
                     <small style="display:block; color:#646970; font-size:10.5px; margin-top:3px;">Supported: PNG, JPG, WebP (1:1 Ratio)</small>
                 </div>
             </div>
 
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Brand Name <span style="color:#b32d2e;">*</span></label>
-                <input type="text" id="modalBrandName" class="dt-form-input" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;" required>
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Name <span style="color:#b32d2e;">*</span></label>
+                <input type="text" id="modalBrandName" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;" required>
             </div>
 
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Brand Tier</label>
-                <select id="modalBrandTier" class="dt-form-select" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Tier</label>
+                <select id="modalBrandTier" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;">
                     <option value="Primary Flagship">Primary Flagship</option>
                     <option value="Heritage Brocade">Heritage Brocade</option>
                     <option value="Bridal Luxury">Bridal Luxury</option>
@@ -360,58 +379,84 @@ $active_subnav = "brands";
                 </select>
             </div>
 
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Tagline / Manifesto</label>
-                <input type="text" id="modalBrandTagline" class="dt-form-input" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+            <div style="margin-bottom:10px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Tagline / Manifesto</label>
+                <input type="text" id="modalBrandTagline" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;">
             </div>
         </div>
-        <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeEditBrandModal()">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitEditBrandModal()" style="background:linear-gradient(135deg, #8A681F 0%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:32px;">💾 Update Brand</button>
+        <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
+            <button type="button" class="wp-button" onclick="closeEditBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="submitEditBrandModal()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Save &amp; Update Brand</span>
+            </button>
         </div>
     </div>
 </div>
 
 <!-- ======================================================== -->
-<!-- MODAL: ADD NEW BRAND                                     -->
+<!-- MODAL: ADD NEW HOUSE LABEL (PERFECT FULL-WIDTH STYLED)    -->
 <!-- ======================================================== -->
 <div id="addBrandModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
-    <div style="background:#fff; width:95%; max-width:560px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
+    <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
         <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Add New House Label</h3>
             </div>
-            <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:20px; cursor:pointer;">&times;</button>
+            <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
-        <div style="padding:16px 18px;">
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Brand Name <span style="color:#b32d2e;">*</span></label>
-                <input type="text" id="newBrandName" class="dt-form-input" placeholder="e.g. Jai Hanuman Fab" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+        <div style="padding:18px 22px;">
+            
+            <!-- Logo Upload Row -->
+            <div style="display:flex; align-items:center; gap:16px; padding:12px 14px; background:#FAF5E8; border:1.5px dashed #D4AF37; border-radius:8px; margin-bottom:16px;">
+                <div id="newBrandLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 8px rgba(212,175,55,0.3);">
+                    JH
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Brand Logo / Emblem</div>
+                    <input type="file" id="newBrandLogoFileInput" style="display:none;" accept="image/*" onchange="handleNewLogoUploadPreview(this)">
+                    <button type="button" class="wp-button" onclick="document.getElementById('newBrandLogoFileInput').click()" style="height:30px; font-size:11.5px; font-weight:700; background:#ffffff; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <span>Upload Logo / Emblem</span>
+                    </button>
+                    <small style="display:block; color:#646970; font-size:10.5px; margin-top:3px;">Supported: PNG, JPG, WebP (1:1 Ratio)</small>
+                </div>
             </div>
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Brand Tier</label>
-                <select id="newBrandTier" class="dt-form-select" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Name <span style="color:#b32d2e;">*</span></label>
+                <input type="text" id="newBrandName" placeholder="e.g. Jai Hanuman Fab" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;" required>
+            </div>
+
+            <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Brand Tier</label>
+                <select id="newBrandTier" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;">
                     <option value="Primary Flagship">Primary Flagship</option>
                     <option value="Heritage Brocade">Heritage Brocade</option>
                     <option value="Bridal Luxury">Bridal Luxury</option>
                     <option value="Mill Volume B2B">Mill Volume B2B</option>
                 </select>
             </div>
-            <div class="dt-form-group" style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:3px;">Tagline / Manifesto</label>
-                <input type="text" id="newBrandTagline" class="dt-form-input" placeholder="e.g. Surat Central Mill Direct Weaves" style="height:32px; width:100%; font-size:12.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
+
+            <div style="margin-bottom:10px;">
+                <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:5px;">Tagline / Manifesto</label>
+                <input type="text" id="newBrandTagline" placeholder="e.g. Surat Central Mill Direct Weaves" style="width:100%; height:36px; padding:0 12px; font-size:13px; color:#181512; background:#ffffff; border:1px solid #c3c4c7; border-radius:6px; box-sizing:border-box; outline:none;">
             </div>
         </div>
-        <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
-            <button type="button" class="wp-button" onclick="closeAddBrandModal()">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewBrand()" style="background:linear-gradient(135deg, #8A681F 0%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F;">+ Save &amp; Create Label</button>
+        <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
+            <button type="button" class="wp-button" onclick="closeAddBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
+            <button type="button" class="wp-button primary" onclick="submitNewBrand()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>+ Save &amp; Create Label</span>
+            </button>
         </div>
     </div>
 </div>
 
 <script>
 let lastUploadedLogoUrl = null;
+let lastNewBrandLogoUrl = null;
 
 function handleLogoUploadPreview(input) {
     if (input.files && input.files[0]) {
@@ -419,6 +464,21 @@ function handleLogoUploadPreview(input) {
         reader.onload = function(e) {
             lastUploadedLogoUrl = e.target.result;
             const preview = document.getElementById('modalLogoPreview');
+            if (preview) {
+                preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+            }
+            if (typeof window.showToast === 'function') window.showToast('📷 Brand logo uploaded successfully!');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function handleNewLogoUploadPreview(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            lastNewBrandLogoUrl = e.target.result;
+            const preview = document.getElementById('newBrandLogoPreview');
             if (preview) {
                 preview.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
             }
