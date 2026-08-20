@@ -140,7 +140,7 @@
 
 .dt-order-table {
     width: 100%;
-    min-width: 960px;
+    min-width: 1080px;
     border-collapse: collapse;
     font-size: 12px;
     text-align: left;
@@ -149,7 +149,7 @@
 .dt-order-table thead th {
     background: #FAF8F4;
     border-bottom: 1.5px solid #E2DFD7;
-    padding: 10px 12px;
+    padding: 12px 14px;
     font-size: 11px;
     font-weight: 800;
     color: #475569;
@@ -161,19 +161,22 @@
 
 .dt-order-table tbody tr {
     border-bottom: 1px solid #F1EFE9;
-    transition: background 0.15s ease;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
 }
 
 .dt-order-table tbody tr:hover {
     background: #FDFBF7;
+    border-left-color: var(--dt-gold-radiant);
 }
 
 .dt-order-table tbody tr.selected {
     background: #FAF5E8;
+    border-left-color: var(--dt-gold);
 }
 
 .dt-order-table td {
-    padding: 12px;
+    padding: 13px 14px;
     vertical-align: middle;
     color: #1E293B;
 }
@@ -185,6 +188,7 @@
     accent-color: var(--dt-gold);
     cursor: pointer;
     margin: 0;
+    vertical-align: middle;
 }
 
 /* Order ID Link */
@@ -195,7 +199,9 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    font-size: 12.5px;
     transition: color 0.18s ease;
+    white-space: nowrap;
 }
 
 .dt-order-id-link:hover {
@@ -207,16 +213,22 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 170px;
 }
 
 .dt-customer-name {
-    font-weight: 700;
+    font-weight: 800;
     color: #0F172A;
+    font-size: 12px;
+    line-height: 1.3;
 }
 
 .dt-customer-phone {
     font-size: 11px;
     color: #64748B;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 /* Items Preview Pill */
@@ -224,13 +236,13 @@
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: #F1F5F9;
-    border: 1px solid #CBD5E1;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
     border-radius: 4px;
-    padding: 3px 7px;
+    padding: 3px 8px;
     font-size: 11px;
-    font-weight: 600;
-    color: #334155;
+    font-weight: 700;
+    color: #8A681F;
     white-space: nowrap;
 }
 
@@ -238,22 +250,26 @@
 .dt-amount-cell {
     font-weight: 800;
     color: var(--dt-obsidian);
-    font-size: 13px;
+    font-size: 13.5px;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-feature-settings: "tnum";
 }
 
 /* Table Row Action Menu */
 .dt-row-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     white-space: nowrap;
 }
 
 .dt-action-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 5px;
+    width: 29px;
+    height: 29px;
+    border-radius: 6px;
     border: 1px solid #E2E8F0;
     background: #FFFFFF;
     color: #475569;
@@ -261,20 +277,58 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.18s ease;
     text-decoration: none;
+    box-sizing: border-box;
 }
 
 .dt-action-btn:hover {
-    background: var(--dt-gold-pale);
-    color: var(--dt-gold);
-    border-color: var(--dt-gold-radiant);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.dt-action-btn.view {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: #1D4ED8;
+}
+
+.dt-action-btn.view:hover {
+    background: #DBEAFE;
+    border-color: #93C5FD;
+}
+
+.dt-action-btn.edit {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+}
+
+.dt-action-btn.edit:hover {
+    background: #F5EDD6;
+    border-color: #8A681F;
+}
+
+.dt-action-btn.invoice {
+    background: #DCFCE7;
+    border-color: #86EFAC;
+    color: #15803D;
+}
+
+.dt-action-btn.invoice:hover {
+    background: #BBF7D0;
+    border-color: #4ADE80;
+}
+
+.dt-action-btn.danger {
+    background: #FEF2F2;
+    border-color: #FECACA;
+    color: #DC2626;
 }
 
 .dt-action-btn.danger:hover {
-    background: var(--dt-crimson-bg);
-    color: var(--dt-crimson);
-    border-color: var(--dt-crimson);
+    background: #FEE2E2;
+    border-color: #F87171;
 }
 
 /* ════ PAGINATION BAR ════ */

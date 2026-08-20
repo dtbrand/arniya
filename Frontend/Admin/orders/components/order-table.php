@@ -293,13 +293,13 @@ $orders_list = [
                     </td>
                     <td style="text-align:right;">
                         <div class="dt-row-actions" style="justify-content:flex-end;">
-                            <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-action-btn" title="View Order Details">
+                            <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-action-btn view" title="View Order Details">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </a>
-                            <button type="button" class="dt-action-btn" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo $o['id']; ?>', '<?php echo $o['status']; ?>')" title="Update Status">
+                            <button type="button" class="dt-action-btn edit" onclick="window.DT_ORDER_STATUS.openStatusModal('<?php echo $o['id']; ?>', '<?php echo $o['status']; ?>')" title="Update Status">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </button>
-                            <a href="/Frontend/Admin/orders/invoice.php?id=<?php echo $o['id']; ?>" class="dt-action-btn" title="Print Invoice">
+                            <a href="/Frontend/Admin/orders/invoice.php?id=<?php echo $o['id']; ?>" class="dt-action-btn invoice" title="Print Invoice">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             </a>
                             <?php if ($o['status'] !== 'cancelled' && $o['status'] !== 'delivered'): ?>
