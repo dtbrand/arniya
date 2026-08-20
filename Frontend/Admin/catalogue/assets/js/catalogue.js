@@ -341,33 +341,193 @@ window.DT_CATALOGUE = {
     }
 };
 
-// ════ Master Display Settings Controller ════
+// ════ Master Display Settings Controller (2-Level User-Wise & Placement Engine) ════
 window.DT_DISPLAY = {
     currentDevice: 'desk',
-    currentPortal: 'shop',
+    currentUserType: 'customer',
+    currentPlacement: 'shop',
 
-    switchPortal: function(portalName) {
-        this.currentPortal = portalName;
-        document.querySelectorAll('.dt-portal-tab').forEach(t => t.classList.remove('active'));
-        const activeTab = document.getElementById('tab-' + portalName);
-        if (activeTab) activeTab.classList.add('active');
+    userNames: {
+        'customer': '🛍️ Retail Customer (B2C)',
+        'reseller': '💬 WhatsApp Reseller',
+        'retailer': '🏪 Retailer / Boutique',
+        'wholesaler': '🏢 Wholesale B2B'
+    },
 
-        document.querySelectorAll('.portal-view').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('.portal-' + portalName).forEach(el => {
-            el.style.display = 'block';
+    placementNames: {
+        'shop': '🛒 Shop Grid',
+        'collection': '👑 Collection Page',
+        'single': '🔍 Single Product Related',
+        'home-trending': '🔥 Home: Trending',
+        'home-new': '✨ Home: New Arrivals',
+        'home-sale': '🏷️ Home: Festive Sale',
+        'home-recent': '👁️ Home: Recently Viewed',
+        'home-rec': '🎯 Home: Recommended For You'
+    },
+
+    setUserType: function(type) {
+        this.currentUserType = type;
+        document.querySelectorAll('.dt-user-tab-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.getElementById('user-' + type);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Audience Specific Intelligent Presets
+        if (type === 'wholesaler') {
+            document.getElementById('dspDeskCols').value = '4';
+            document.getElementById('dspBtnStyle').value = 'gold';
+            document.getElementById('chkB2bRate').checked = true;
+            document.getElementById('chkMoq').checked = true;
+            document.getElementById('chkDepotStock').checked = true;
+        } else if (type === 'reseller') {
+            document.getElementById('dspBtnStyle').value = 'emerald';
+            document.getElementById('chkMargin').checked = true;
+            document.getElementById('chkB2bRate').checked = true;
+        } else if (type === 'retailer') {
+            document.getElementById('dspDeskCols').value = '3';
+            document.getElementById('dspBtnStyle').value = 'pale-gold';
+            document.getElementById('dspCardRadius').value = '12px';
+        } else {
+            document.getElementById('dspDeskCols').value = '4';
+            document.getElementById('dspBtnStyle').value = 'emerald';
+        }
+
+        this.renderContextCards();
+        if (window.DT_CATALOGUE) {
+            window.DT_CATALOGUE.showToast(`Switched Audience to ${this.userNames[type]}!`);
+        }
+    },
+
+    setPlacement: function(place) {
+        this.currentPlacement = place;
+        document.querySelectorAll('.dt-subnav-pill').forEach(pill => pill.classList.remove('active'));
+        const activePill = document.getElementById('sub-' + place);
+        if (activePill) activePill.classList.add('active');
+
+        this.renderContextCards();
+        if (window.DT_CATALOGUE) {
+            window.DT_CATALOGUE.showToast(`Placement: ${this.placementNames[place]}!`);
+        }
+    },
+
+    renderContextCards: function() {
+        const grid = document.getElementById('simulatedGrid');
+        if (!grid) return;
+
+        const badgeEl = document.getElementById('liveContextBadge');
+        if (badgeEl) {
+            badgeEl.textContent = `${this.userNames[this.currentUserType]} ➔ ${this.placementNames[this.currentPlacement]}`;
+        }
+
+        const cards = grid.querySelectorAll('.dt-sim-card');
+        cards.forEach(card => {
+            const pillBox = card.querySelector('.sim-context-pill');
+            const btnText = card.querySelector('.sim-btn-text');
+            const priceVal = card.getAttribute('data-price') || '2,850';
+            const numPrice = parseInt(priceVal);
+
+            if (pillBox) pillBox.style.display = 'block';
+
+            // User-Wise & Placement Content
+            if (this.currentUserType === 'wholesaler') {
+                if (pillBox) {
+                    pillBox.style.background = '#FAF5E8';
+                    pillBox.style.border = '1px solid #D4AF37';
+                    pillBox.style.color = '#181512';
+                    pillBox.style.padding = '4px 6px';
+                    pillBox.style.borderRadius = '4px';
+                    pillBox.innerHTML = `<div>1–3 Pcs: <strong>₹${numPrice.toLocaleString()}</strong> • 4+ Pcs: <strong style="color:#15803D;">₹${Math.round(numPrice*0.9).toLocaleString()}</strong> • 12+ Lot: <strong style="color:#8A681F;">₹${Math.round(numPrice*0.84).toLocaleString()}</strong></div>`;
+                }
+                if (btnText) btnText.textContent = '+ Order Wholesale Master Lot';
+            } else if (this.currentUserType === 'reseller') {
+                if (pillBox) {
+                    pillBox.style.background = '#EFF6FF';
+                    pillBox.style.border = '1px solid #93C5FD';
+                    pillBox.style.color = '#1D4ED8';
+                    pillBox.style.padding = '4px 6px';
+                    pillBox.style.borderRadius = '4px';
+                    pillBox.innerHTML = `<div>Wholesale ₹${numPrice.toLocaleString()} ➔ Resale Profit: <strong style="color:#15803D;">+₹${Math.round(numPrice*0.6).toLocaleString()} / Pc</strong></div>`;
+                }
+                if (btnText) btnText.textContent = '📲 Share on WhatsApp with My Margin';
+            } else if (this.currentUserType === 'retailer') {
+                if (pillBox) {
+                    pillBox.style.background = '#FDFBF7';
+                    pillBox.style.border = '1px solid #D4AF37';
+                    pillBox.style.color = '#8A681F';
+                    pillBox.style.padding = '4px 6px';
+                    pillBox.style.borderRadius = '4px';
+                    pillBox.innerHTML = `<div>📍 Surat Central Depot Ready • Boutique Pack • GST Input</div>`;
+                }
+                if (btnText) btnText.textContent = '🛒 Add Boutique Pack to PO';
+            } else {
+                // Customer Placement Specific Content
+                if (this.currentPlacement === 'home-trending') {
+                    if (pillBox) {
+                        pillBox.style.background = '#FEF3C7';
+                        pillBox.style.border = '1px solid #F59E0B';
+                        pillBox.style.color = '#92400E';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `🔥 Trending #1 in Surat Silk Hub`;
+                    }
+                    if (btnText) btnText.textContent = 'Explore Trending Collection ›';
+                } else if (this.currentPlacement === 'home-new') {
+                    if (pillBox) {
+                        pillBox.style.background = '#FAF5E8';
+                        pillBox.style.border = '1px solid #D4AF37';
+                        pillBox.style.color = '#8A681F';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `✨ Fresh Weaver Stock 2026`;
+                    }
+                    if (btnText) btnText.textContent = 'View New Arrival Details ›';
+                } else if (this.currentPlacement === 'home-sale') {
+                    if (pillBox) {
+                        pillBox.style.background = '#DCFCE7';
+                        pillBox.style.border = '1px solid #16A34A';
+                        pillBox.style.color = '#166534';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `🏷️ Festive Special Deal (Save 43%)`;
+                    }
+                    if (btnText) btnText.textContent = 'Claim Festive Discount Now';
+                } else if (this.currentPlacement === 'home-recent') {
+                    if (pillBox) {
+                        pillBox.style.background = '#F1F5F9';
+                        pillBox.style.border = '1px solid #CBD5E1';
+                        pillBox.style.color = '#475569';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `👁️ Viewed Today • In Stock (Surat Hub)`;
+                    }
+                    if (btnText) btnText.textContent = '⚡ Instant 1-Tap Reorder';
+                } else if (this.currentPlacement === 'home-rec') {
+                    if (pillBox) {
+                        pillBox.style.background = '#FAF5E8';
+                        pillBox.style.border = '1px solid #D4AF37';
+                        pillBox.style.color = '#8A681F';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `🎯 98% AI Match for Your Boutique`;
+                    }
+                    if (btnText) btnText.textContent = '✨ Order Recommended Piece';
+                } else if (this.currentPlacement === 'single') {
+                    if (pillBox) {
+                        pillBox.style.background = '#EFF6FF';
+                        pillBox.style.border = '1px solid #93C5FD';
+                        pillBox.style.color = '#1D4ED8';
+                        pillBox.style.padding = '3px 6px';
+                        pillBox.style.borderRadius = '4px';
+                        pillBox.innerHTML = `✨ Frequently Bundled with Blouse Piece`;
+                    }
+                    if (btnText) btnText.textContent = '+ Add Matching Saree Bundle';
+                } else {
+                    if (pillBox) pillBox.style.display = 'none';
+                    if (btnText) btnText.textContent = 'WhatsApp Wholesale Lot';
+                }
+            }
         });
 
-        const portalTitles = {
-            'shop': '🛍️ Main Customer Shop Grid',
-            'wholesale': '🏢 Wholesale B2B Depot (Tiered Pricing & Master Lots)',
-            'reseller': '💬 WhatsApp Reseller Portal (Profit Margins & 1-Click Share)',
-            'home': '🏠 Homepage Featured Collection Showcase',
-            'single': '🔍 Single Product Related / Cross-Sell Line'
-        };
-
-        if (window.DT_CATALOGUE) {
-            window.DT_CATALOGUE.showToast(`Switched preview to ${portalTitles[portalName] || portalName}!`);
-        }
+        this.updatePreview();
     },
 
     switchDevice: function(device) {

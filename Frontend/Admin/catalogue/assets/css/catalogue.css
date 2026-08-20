@@ -548,3 +548,78 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+/* ── 2-Level Audience & Placement Tabs ── */
+.dt-user-type-nav {
+    display: flex;
+    gap: 8px;
+    background: #FAF8F4;
+    border: 1px solid #E2DFD7;
+    border-radius: 8px;
+    padding: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.dt-user-tab-btn {
+    flex: 1 1 calc(25% - 8px);
+    min-width: 150px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: #fff;
+    color: #181512;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.dt-user-tab-btn:hover {
+    border-color: #D4AF37;
+    color: #8A681F;
+    background: #FAF5E8;
+}
+.dt-user-tab-btn.active {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
+    color: #181512;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.35);
+}
+
+.dt-page-subnav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 16px;
+    scrollbar-width: none;
+}
+.dt-page-subnav::-webkit-scrollbar { display: none; }
+.dt-subnav-pill {
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #475569;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.dt-subnav-pill:hover {
+    border-color: #D4AF37;
+    color: #8A681F;
+    background: #FAF5E8;
+}
+.dt-subnav-pill.active {
+    background: #181512;
+    color: #D4AF37;
+    border-color: #181512;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+

@@ -202,7 +202,7 @@ $real_products = [
     <div class="dt-cat-card-header">
         <h3 class="dt-cat-card-title">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Catalogue Storefront Display &amp; Multi-Portal Engine</span>
+            <span>Catalogue Storefront Display &amp; User-Wise Placement Engine</span>
         </h3>
         <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
             <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_DISPLAY.applyPreset('b2b')" style="height:28px; padding:0 10px; font-size:11px;">⚡ Surat B2B Wholesale</button>
@@ -212,10 +212,45 @@ $real_products = [
     </div>
 
     <div style="padding:16px;">
+        
+        <!-- ════ LEVEL 1: USER-WISE TARGET AUDIENCE TABS ════ -->
+        <div style="margin-bottom:6px;">
+            <div style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Step 1: Select User Audience Type</div>
+            <div class="dt-user-type-nav">
+                <button type="button" class="dt-user-tab-btn active" id="user-customer" onclick="window.DT_DISPLAY.setUserType('customer')">
+                    <span>🛍️</span> <span>Retail Customer (B2C)</span>
+                </button>
+                <button type="button" class="dt-user-tab-btn" id="user-reseller" onclick="window.DT_DISPLAY.setUserType('reseller')">
+                    <span>💬</span> <span>WhatsApp Reseller</span>
+                </button>
+                <button type="button" class="dt-user-tab-btn" id="user-retailer" onclick="window.DT_DISPLAY.setUserType('retailer')">
+                    <span>🏪</span> <span>Retailer / Boutique</span>
+                </button>
+                <button type="button" class="dt-user-tab-btn" id="user-wholesaler" onclick="window.DT_DISPLAY.setUserType('wholesaler')">
+                    <span>🏢</span> <span>Wholesale B2B Buyer</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ════ LEVEL 2: PAGE / PLACEMENT SUB-NAVIGATION PILLS ════ -->
+        <div style="margin-bottom:14px;">
+            <div style="font-size:11px; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">Step 2: Select Storefront Page Placement</div>
+            <div class="dt-page-subnav">
+                <button type="button" class="dt-subnav-pill active" id="sub-shop" onclick="window.DT_DISPLAY.setPlacement('shop')">🛒 Shop &amp; Catalog Grid</button>
+                <button type="button" class="dt-subnav-pill" id="sub-collection" onclick="window.DT_DISPLAY.setPlacement('collection')">👑 Collection Page</button>
+                <button type="button" class="dt-subnav-pill" id="sub-single" onclick="window.DT_DISPLAY.setPlacement('single')">🔍 Single Product Related Line</button>
+                <button type="button" class="dt-subnav-pill" id="sub-home-trending" onclick="window.DT_DISPLAY.setPlacement('home-trending')">🔥 Home: Trending Collection</button>
+                <button type="button" class="dt-subnav-pill" id="sub-home-new" onclick="window.DT_DISPLAY.setPlacement('home-new')">✨ Home: New Arrivals 2026</button>
+                <button type="button" class="dt-subnav-pill" id="sub-home-sale" onclick="window.DT_DISPLAY.setPlacement('home-sale')">🏷️ Home: Festive Sale / Low MOQ</button>
+                <button type="button" class="dt-subnav-pill" id="sub-home-recent" onclick="window.DT_DISPLAY.setPlacement('home-recent')">👁️ Home: Recently Viewed</button>
+                <button type="button" class="dt-subnav-pill" id="sub-home-rec" onclick="window.DT_DISPLAY.setPlacement('home-rec')">🎯 Home: Recommended For You</button>
+            </div>
+        </div>
+
         <!-- 1. Multi-Device Columns & Sizing -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-            <span>1. Multi-Device Grid Columns &amp; Card Dimensions</span>
+            <span>Grid Columns &amp; Card Dimensions (For Selected Context)</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
@@ -255,11 +290,12 @@ $real_products = [
             </div>
 
             <div class="dt-form-group">
-                <label class="dt-form-label">🔢 Products Per Page</label>
+                <label class="dt-form-label">🔢 Products Count / Max Cards</label>
                 <select class="dt-form-select" id="dspPerPage" onchange="window.DT_DISPLAY.updatePreview()">
-                    <option value="24" selected>24 Products / Page</option>
+                    <option value="8" selected>8 Products (Featured Strip)</option>
+                    <option value="16">16 Products</option>
+                    <option value="24">24 Products / Page</option>
                     <option value="48">48 Products / Page</option>
-                    <option value="96">96 Products / Page</option>
                 </select>
             </div>
 
@@ -280,7 +316,7 @@ $real_products = [
         <!-- 2. Product Card Themes, Button Styles & Radii -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            <span>2. Product Card Themes, Button Styles &amp; Corner Radii</span>
+            <span>Product Card Themes, Button Styles &amp; Corner Radii</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px; margin-bottom:18px;">
@@ -328,7 +364,7 @@ $real_products = [
         <!-- 3. Product Card Badges & Wholesale Visibility Toggles -->
         <h4 style="font-size:13px; font-weight:800; color:#181512; margin:0 0 12px 0; display:flex; align-items:center; gap:6px;">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-            <span>3. Product Card Badges &amp; Wholesale Elements</span>
+            <span>Product Card Badges &amp; Wholesale Elements</span>
         </h4>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px; margin-bottom:20px;">
@@ -371,34 +407,16 @@ $real_products = [
             
             <!-- Real-Time Sync Header Bar -->
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A; animation:pulse 1.5s infinite;"></span>
-                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Preview Synced (Blazing Fast 0ms)</strong>
-                    <span id="liveParamPills" class="dt-badge gold" style="font-size:9.5px;">4 Cols Desktop • 2 Cols Mobile • 3:4 Aspect</span>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A;"></span>
+                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Preview Synced</strong>
+                    <span id="liveContextBadge" class="dt-badge gold" style="font-size:10px; font-weight:800;">🛍️ Customer ➔ 🛒 Shop Grid</span>
+                    <span id="liveParamPills" style="font-size:10.5px; color:#64748b;">4 Cols Desk • 2 Cols Mob • 3:4 Aspect</span>
                 </div>
                 <div class="dt-device-switcher">
                     <button type="button" class="dt-device-btn active" id="btnDspDesk" onclick="window.DT_DISPLAY.switchDevice('desk')">🖥️ Desktop Grid</button>
                     <button type="button" class="dt-device-btn" id="btnDspMob" onclick="window.DT_DISPLAY.switchDevice('mob')">📱 Mobile App Grid</button>
                 </div>
-            </div>
-
-            <!-- Portal Context Switcher Tabs -->
-            <div class="dt-portal-tab-wrap">
-                <button type="button" class="dt-portal-tab active" id="tab-shop" onclick="window.DT_DISPLAY.switchPortal('shop')">
-                    <span>🛍️</span> <span>Real Customer Shop Grid</span>
-                </button>
-                <button type="button" class="dt-portal-tab" id="tab-wholesale" onclick="window.DT_DISPLAY.switchPortal('wholesale')">
-                    <span>🏢</span> <span>Wholesale B2B Depot</span>
-                </button>
-                <button type="button" class="dt-portal-tab" id="tab-reseller" onclick="window.DT_DISPLAY.switchPortal('reseller')">
-                    <span>💬</span> <span>WhatsApp Reseller Portal</span>
-                </button>
-                <button type="button" class="dt-portal-tab" id="tab-home" onclick="window.DT_DISPLAY.switchPortal('home')">
-                    <span>🏠</span> <span>Homepage Featured Showcase</span>
-                </button>
-                <button type="button" class="dt-portal-tab" id="tab-single" onclick="window.DT_DISPLAY.switchPortal('single')">
-                    <span>🔍</span> <span>Single Product Cross-Sell</span>
-                </button>
             </div>
 
             <!-- Simulated Cards Grid (100% Real Shop Structure) -->
@@ -457,71 +475,22 @@ $real_products = [
                             <span>★★★★★</span> <span style="color:#64748b; font-weight:500;">(<?php echo $p['rating']; ?> • <?php echo $p['reviews']; ?>)</span>
                         </div>
 
-                        <!-- Portal Specific Views -->
-
-                        <!-- 1. Real Shop View -->
-                        <div class="portal-view portal-shop">
+                        <!-- Dynamic Context Actions & Price Rendering -->
+                        <div class="context-card-content">
+                            <!-- Price Row -->
                             <div class="card-price-row" style="display:flex; align-items:center; gap:6px; margin:4px 0 6px 0;">
                                 <span class="card-price sim-b2b" style="font-size:0.95rem; font-weight:800; color:#15803D;">₹<?php echo number_format($p['price']); ?></span>
                                 <span class="card-old-price" style="font-size:0.75rem; color:#94a3b8; text-decoration:line-through;">₹<?php echo number_format($p['old_price']); ?></span>
                                 <span class="card-price-discount sim-margin" style="font-size:0.65rem; font-weight:800; color:#15803D; background:#DCFCE7; padding:1px 5px; border-radius:10px;"><?php echo $p['discount']; ?>% OFF</span>
                             </div>
-                            <button type="button" class="dt-btn-action-sm emerald sim-whatsapp sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp enquiry opened for <?php echo addslashes($p['name']); ?>!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
+
+                            <!-- Context Dynamic Pill Box -->
+                            <div class="sim-context-pill" style="font-size:9.5px; margin-bottom:6px; display:none;"></div>
+
+                            <!-- Primary Button -->
+                            <button type="button" class="dt-btn-action-sm emerald sim-whatsapp sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp action triggered for <?php echo addslashes($p['name']); ?>!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700; margin-top:auto;">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-                                <span>WhatsApp Wholesale Lot</span>
-                            </button>
-                        </div>
-
-                        <!-- 2. Wholesale B2B Bulk View -->
-                        <div class="portal-view portal-wholesale" style="display:none;">
-                            <div style="background:#FAF5E8; border:1px solid #D4AF37; border-radius:4px; padding:4px 6px; margin:4px 0; font-size:9.5px;">
-                                <div>1–3 Pcs: <strong>₹<?php echo number_format($p['price']); ?></strong></div>
-                                <div>4–11 Pcs: <strong style="color:#15803D;"><?php echo htmlspecialchars($p['tier_4']); ?></strong></div>
-                                <div>12+ Master Lot: <strong style="color:#8A681F;"><?php echo htmlspecialchars($p['tier_12']); ?></strong></div>
-                            </div>
-                            <div style="font-size:9.5px; color:#15803D; font-weight:700; margin-bottom:4px;">📍 <?php echo htmlspecialchars($p['depot_stock']); ?></div>
-                            <button type="button" class="dt-btn-action-sm gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛒 Added Master Lot to Wholesale PO!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:800;">
-                                <span>+ Order Wholesale Lot</span>
-                            </button>
-                        </div>
-
-                        <!-- 3. WhatsApp Reseller View -->
-                        <div class="portal-view portal-reseller" style="display:none;">
-                            <div style="background:#EFF6FF; border:1px solid #93C5FD; border-radius:4px; padding:4px 6px; margin:4px 0; font-size:9.5px;">
-                                <div style="color:#1D4ED8; font-weight:700;">Buy @ ₹<?php echo number_format($p['price']); ?> ➔ Sell @ ₹<?php echo number_format($p['old_price']); ?></div>
-                                <div style="color:#15803D; font-weight:800;">Your Profit: <?php echo htmlspecialchars($p['resale_profit']); ?> / Pc</div>
-                            </div>
-                            <div style="display:flex; gap:4px;">
-                                <button type="button" class="dt-btn-action-sm emerald sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📲 WhatsApp catalogue package copied with your profit margin!')" style="flex:1; height:28px; font-size:10px; justify-content:center; padding:0 4px;">
-                                    <span>📲 Share on WhatsApp</span>
-                                </button>
-                                <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('📥 Downloaded high-res photos & specifications!')" style="height:28px; font-size:10px; padding:0 6px;" title="Download HD Images">
-                                    <span>📥</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- 4. Homepage Featured Showcase View -->
-                        <div class="portal-view portal-home" style="display:none;">
-                            <div style="font-size:10px; color:#8A681F; font-weight:700; margin:4px 0;">👑 Surat Heritage Master Weave</div>
-                            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
-                                <span style="font-size:13px; font-weight:800; color:#181512;">₹<?php echo number_format($p['price']); ?></span>
-                                <span class="dt-badge gold" style="font-size:9px;">Direct Depot</span>
-                            </div>
-                            <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✨ Opened Surat Heritage Collection!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700;">
-                                <span>Explore Collection ›</span>
-                            </button>
-                        </div>
-
-                        <!-- 5. Single Product Related Cross-Sell View -->
-                        <div class="portal-view portal-single" style="display:none;">
-                            <div style="font-size:9.5px; color:#64748b; margin:4px 0;">✨ Frequently Bundled Together:</div>
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                                <span style="font-size:12px; font-weight:800; color:#15803D;">₹<?php echo number_format($p['price']); ?></span>
-                                <span class="dt-badge green" style="font-size:9px;">Save 10% on Bundle</span>
-                            </div>
-                            <button type="button" class="dt-btn-action-sm pale-gold sim-action-btn" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('🛍️ Bundle added to cart with 10% discount!')" style="width:100%; height:28px; justify-content:center; font-size:10.5px; font-weight:700;">
-                                <span>+ Add Matching Saree</span>
+                                <span class="sim-btn-text">WhatsApp Wholesale Lot</span>
                             </button>
                         </div>
 
