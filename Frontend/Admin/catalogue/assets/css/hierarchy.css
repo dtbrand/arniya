@@ -1,5 +1,6 @@
 /* ==========================================================================
-   hierarchy.css — Category Hierarchy & Tree Structure Styles
+   hierarchy.css — Category Hierarchy & Tree Structure Styles with Live Drag & Drop
+   DT Brand's & Jai Hanuman Tex
    ========================================================================== */
 
 .dt-tree-container {
@@ -17,7 +18,25 @@
     position: relative;
     margin: 6px 0;
     list-style: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
 }
+.dt-tree-node.is-dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+}
+.dt-tree-node.is-dragging .dt-tree-item {
+    border: 2px dashed #8A681F !important;
+    background: #FAF5E8 !important;
+}
+.dt-tree-node.drag-over-top > .dt-tree-item {
+    border-top: 3px solid #8A681F !important;
+    transform: translateY(2px);
+}
+.dt-tree-node.drag-over-bottom > .dt-tree-item {
+    border-bottom: 3px solid #8A681F !important;
+    transform: translateY(-2px);
+}
+
 .dt-tree-item {
     display: flex;
     align-items: center;
@@ -28,6 +47,8 @@
     border-radius: 6px;
     transition: all 0.15s ease;
     gap: 10px;
+    cursor: default;
+    user-select: none;
 }
 .dt-tree-item:hover {
     border-color: #D4AF37;
@@ -61,7 +82,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
     color: #475569;
     transition: all 0.15s ease;
@@ -75,9 +96,18 @@
 .dt-tree-drag-handle {
     cursor: grab;
     color: #94a3b8;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    transition: all 0.15s ease;
 }
 .dt-tree-drag-handle:hover {
     color: #8A681F;
+    background: rgba(212, 175, 55, 0.15);
+}
+.dt-tree-drag-handle:active {
+    cursor: grabbing;
 }
