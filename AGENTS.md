@@ -1,8 +1,32 @@
-# 🤖 DT BRAND'S & JAI HANUMAN TEX — AUTONOMOUS MULTI-AGENT EXECUTION PROTOCOL
+# 🤖 DT BRAND'S & JAI HANUMAN TEX — ULTRA-POWERFUL AUTONOMOUS MULTI-AGENT EXECUTION PROTOCOL
 
 > **MANDATORY INSTRUCTION FOR ALL AI AGENTS & DEVELOPERS:**
-> This document defines the **Autonomous Multi-Agent Workflow, Task Specialization, Zero-Half-Baked Guarantee, Screenshot-Driven Execution, Code Sanitation, and Triple-Sync Quality Control Standards** for the DT Brand's & Jai Hanuman Tex workspace (`c:\Users\sai\Desktop\WhatsApp CRM`).
-> **EVERY AI AGENT MUST OPERATE UNDER THIS PROTOCOL WITHOUT REQUIRING USER PROMPTING OR REPETITIVE EXPLANATIONS.**
+> This document defines the **Enterprise Multi-Agent Workflow, 100% Real Vector SVG Icon Standard, Luxury Button Styling Mandate, Zero-Half-Baked Guarantee, Complete Functional Verification, and Triple-Sync Quality Control Standards** for the DT Brand's & Jai Hanuman Tex workspace (`c:\Users\sai\Desktop\WhatsApp CRM`).
+> **EVERY AI AGENT MUST OPERATE UNDER THIS PROTOCOL WITH ZERO SHORTCUTS AND ZERO COMPROMISES.**
+
+---
+
+## 👑 The 5 Golden Rules of DT Brand's Autonomous Development
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              👑 DT BRAND'S ZERO-COMPROMISE QUALITY PILLARS                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 1. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
+│    Every button must use DT Brand's gold gradient, emerald, or pale gold.   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 2. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
+│    All icons must be crisp inline SVG vectors (stroke-width: 2 - 2.8).      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
+│    Every button, modal, drawer, and input must have working JS and backend. │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 4. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
+│    clipped dropdowns, and unstyled UI, then build missing parts end-to-end. │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 5. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -26,82 +50,92 @@ When fulfilling any task, the AI Agent must seamlessly execute across 4 speciali
 
 ---
 
-## 🏗️ 2. Persona 1: Product Architect & Domain Lead
+## 🎨 2. Button & UI Component Styling Standards (MANDATORY)
 
-### 💡 Core Mission: Complete, End-to-End Features ("Koi Kaam Adhura Na Rahe")
-1. **Textile & B2B Domain Mastery**:
-   - Understand Indian Luxury & B2B Textile operations: Sarees (Kanjivaram, Banarasi, Dola, Paithani), Kurtis, Lehengas, Dress Materials.
-   - Master parameters: Wholesale Rate vs Retail MRP, Resale Margin %, Lot/Set sizes, MOQ (Minimum Order Quantity), HSN Codes (`5007` for Silk 5% GST, `6204` for Kurti/Suit 5% GST), Fabric specifications (Pure Zari, Brocade, Gotapatti, Zardosi), Surat central mill ready inventory.
-2. **Zero Half-Baked Guarantee**:
-   - **NEVER** leave a file half-written, stubbed with `// TODO`, or with missing UI tabs/buttons.
-   - Every view must have realistic sample data, complete SEO fields, working interactive states, working modals, and responsive layout.
-3. **Product Context Awareness**:
-   - Understand how the current page connects with the whole system:
-     - `Frontend/Admin/` ⇄ `Frontend/Wholesale/` ⇄ `Frontend/Shop/` ⇄ `Frontend/Single-Product/` ⇄ `Frontend/Home/` ⇄ `Shared/`
+Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
 
----
+### 👑 A. Primary Gold Master Button
+- **Gradient**: `linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%)`
+- **Border**: `1px solid #8A681F`
+- **Text Color**: Dark Obsidian `#181512` (`font-weight: 800;`)
+- **Shadow**: `box-shadow: 0 2px 8px rgba(212,175,55,0.35);`
+- **Hover**: `transform: translateY(-1px); box-shadow: 0 4px 14px rgba(212,175,55,0.5);`
+- **Icon**: Crisp vector SVG with `stroke="#181512"` or `stroke="#8A681F"`
+- **Usage**: `+ Add Product`, `+ Add Brand`, `Save Changes`, `Update`, `Search`, `AI Generate`
 
-## ⚡ 3. Persona 2: QA & Error Hunter
+### 💬 B. WhatsApp B2B Emerald Button
+- **Background**: `linear-gradient(135deg, #15803D 0%, #16A34A 100%)`
+- **Text Color**: `#ffffff` (`font-weight: 700;`)
+- **Icon**: Official vector WhatsApp SVG icon with white fill/stroke
+- **Usage**: 1-Click WhatsApp Lot Enquiry, Instant Customer Connect
 
-### 💡 Core Mission: Deep Code Validation & Zero Bugs
-1. **PHP Syntax & Runtime Check**:
-   - Always validate PHP syntax using `C:\xampp\php\php.exe -l "<filepath>"` before committing.
-2. **JavaScript & Frontend Integrity**:
-   - Check that all DOM element IDs (`document.getElementById`) match exactly between HTML and JavaScript.
-   - Ensure zero unhandled console errors, broken event listeners, or invalid regex patterns.
-3. **Interactive UI Verification**:
-   - Verify that search inputs filter instantly in real-time, modals open and close smoothly, toast notifications trigger on actions, and 1-tap clear buttons work.
-   - Ensure all dropdowns have adequate `min-width` (never clipping labels like *"Filter by star rating"*).
+### ⚪ C. Pale Gold Secondary Action Pill
+- **Background**: `#FAF5E8`
+- **Border**: `1px solid #D4AF37`
+- **Text Color**: `#8A681F` (`font-weight: 700;`)
+- **Usage**: `Edit`, `Apply`, `Filter`, `Upload Image`, `Quick Edit`
 
----
+### 👁️ D. Soft Blue Info Pill
+- **Background**: `#EFF6FF`
+- **Border**: `1px solid #93C5FD`
+- **Text Color**: `#1D4ED8` (`font-weight: 700;`)
+- **Usage**: `View on Shop`, `Customer Reply`, `Catalog SKUs`
 
-## 🧹 4. Persona 3: Workspace Hygiene & Sanitation
-
-### 💡 Core Mission: Clean Architecture & Zero Junk Code
-1. **Dead File Elimination**:
-   - Inspect files and delete unused duplicate files, obsolete draft scripts (`temp_*.py`, `test_*.js`, scratch files) immediately after use.
-2. **Never Deploy Junk to Live Server**:
-   - Only production code belongs in `/public_html/`. Never upload test scratch files or unfinished experiments to the live FTP server.
-3. **Folder Structure Cleanliness**:
-   - Keep folder hierarchies organized and structured:
-     - `Frontend/Admin/products/`: `add.php`, `edit.php`, `view.php`, `duplicate.php`, `index.php`, `components/`, `assets/`
-     - Submodules: `categories/`, `brands/`, `attributes/`, `variants/`, `reviews/`, `featured/`, `best-sellers/`, `new-arrivals/`, `imports/`, `exports/`
+### 🗑️ E. Crimson Danger / Trash Pill
+- **Background**: `#FEF2F2`
+- **Border**: `1px solid #FECACA`
+- **Text Color**: `#DC2626` (`font-weight: 600;`)
+- **Usage**: `Delete`, `Move to Trash`
 
 ---
 
-## 🚀 5. Persona 4: Live Deployment & Triple-Sync Specialist
+## ⚡ 3. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS)
 
-### 💡 Core Mission: Seamless, Flawless Live Deployment
+- **NEVER** use emojis (such as ✏️, 👁️, 🗑️, 💾, 📦, 📁, ✕) inside buttons, action links, table rows, or modal headers.
+- **ALWAYS** use clean, lightweight, inline vector SVGs with:
+  - `viewBox="0 0 24 24"`
+  - `fill="none" stroke="currentColor"` (or brand `#8A681F` / `#D4AF37`)
+  - `stroke-width="2" - "2.8"`
+  - `stroke-linecap="round" stroke-linejoin="round"`
 
-Every change must complete the **Triple-Sync Deployment Workflow**:
-1. **Local Workspace**: Edit and validate all files cleanly in `c:\Users\sai\Desktop\WhatsApp CRM`.
-2. **GitHub**: Auto-commit with clear descriptive messages and auto-push to GitHub `origin main`.
-3. **Hostinger Live FTP**: Auto-upload and deploy all modified files via Python `ftplib` directly to Hostinger live server.
-
-### 🌐 Live FTP Server Credentials
-- **Host / IP**: `147.93.99.134` (Port `21`)
-- **Username**: `u602484543.jaihanumantex.in`
-- **Password**: `Gautam@9006`
-- **Remote Root**: `/public_html`
-- **Live URL**: `https://jaihanumantex.in/`
+### 📌 Approved Standard SVG Vector Icons Library:
+- **Search**: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`
+- **Plus / Add**: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`
+- **Edit / Pen**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`
+- **View / Eye**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+- **Trash / Delete**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`
+- **Save / Check**: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+- **Upload**: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>`
+- **Clear (✕)**: `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`
+- **Star / Featured**: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`
+- **Box / Package**: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`
 
 ---
 
-## 📸 6. Screenshot-Driven Autonomous Execution Protocol
+## 🎯 4. Complete End-to-End Functional Guarantee ("Sab Last Tak Working Ho")
 
-Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*, *"make it like wholesale"*):
+- **Zero Dead Buttons**: Every button (`onClick`, form `submit`, anchor link) must have working JS logic attached.
+- **Form Actions**: Every form submit must capture field values, validate inputs, update the UI table dynamically, close the modal, and show an emerald/gold toast notification (`window.showToast(...)`).
+- **Real-Time Live Search**: Every search bar must instantly filter table rows or grid cards in real-time as the user types, with a functional 1-tap clear button (`✕`).
+- **Dropdown Filters**: Dropdown filters (e.g. Filter by Tier, Filter by Category, Filter by Rating) must filter table rows dynamically without requiring a page reload.
+- **Image & Logo Uploaders**: File input changes (`onchange`) must read the selected image via `FileReader` and update the live preview image/avatar instantly.
 
-1. **Deep Visual & Component Inspection**:
-   - Analyze every visible UI element: Header, Breadcrumbs, Input fields, Select dropdowns, Checkboxes, Buttons, Tabs, Icons, Spacing, Padding, and Alignment.
-   - Detect visual flaws: Clipped labels (e.g. truncated select options), misaligned search bars, emoji placeholders, poor color contrast, awkward line breaks, or lack of DT Brand luxury gold aesthetics.
+---
+
+## 📸 5. Screenshot-Driven Autonomous Execution Protocol
+
+Whenever the user provides ANY screenshot:
+
+1. **Deep Component & Visual Inspection**:
+   - Inspect every pixel: Title, buttons, inputs, dropdowns, badges, icons, tables, cards, spacing, and text clipping.
+   - Detect flaws immediately: Unstyled elements, ugly UI, clipped dropdown labels, emojis instead of real SVGs, or missing gold luxury styling.
 
 2. **Completeness & Missing Features Audit ("Adhura Na Rahe")**:
-   - Identify missing options or features that belong to the screen (e.g. Search inputs with 1-tap clear, Bulk Actions, Quick Edit drawers, KPI metrics ribbon, SEO fields, Media upload previews, WhatsApp enquiry buttons, Resale profit margin % indicators).
-   - If ANY option is missing or incomplete, the agent MUST autonomously build and integrate it with 100% working functionality.
+   - Identify missing sub-options (e.g. search bar with 1-tap clear, bulk actions, quick edit drawer, KPI ribbon, SEO tags, WhatsApp enquiry buttons, resale margin % indicators, and wholesale B2B pricing).
+   - Automatically build all missing features end-to-end.
 
 3. **End-to-End Functional Verification ("Last Tak Working Ho")**:
-   - Ensure every button, modal popup, filter dropdown, search input, clear button, and status toggle has functional, working JavaScript and backend logic.
-   - Zero non-functional or dead buttons allowed.
+   - Ensure every button, modal popup, filter dropdown, and search input has functional, working JavaScript and backend logic. Zero non-functional or dead buttons.
 
 4. **Design System & Auto-Sizing Enforcement**:
    - Apply DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`, `#15803D`).
@@ -113,10 +147,12 @@ Whenever the user provides ANY screenshot (e.g. *"ui improment"*, *"check this"*
 
 ---
 
-## 📋 7. Master Quality Control Checklist (Run on Every Task)
+## 📋 6. Master Quality Control Checklist (Run on Every Task)
 
 Before marking ANY task complete, every agent must verify:
 - [ ] **Design System Compliance**: Uses DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`), real vector SVGs, and left-aligned search icon.
+- [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
+- [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.
 - [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links, stubs, or placeholder text.
 - [ ] **Syntax & Logic**: PHP linted cleanly with zero syntax errors (`php -l`), JS error-free.
 - [ ] **Sanitation**: All temporary scratch files cleaned up; workspace is clean.
