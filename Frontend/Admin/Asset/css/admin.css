@@ -2458,3 +2458,46 @@ input, select, textarea {
         box-shadow: 0 0 6px #16A34A !important;
     }
 }
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   👑 DT BRAND'S FLUID RESPONSIVE CHARTS GRID & HIGH-DEFINITION CONTAINERS
+   ══════════════════════════════════════════════════════════════════════════════ */
+.adm-charts-grid {
+    display: grid !important;
+    grid-template-columns: 2fr 1fr !important;
+    gap: 16px !important;
+    margin-bottom: 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 1024px) {
+    .adm-charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+}
+
+.adm-chart-container {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 220px !important;
+    margin-bottom: 12px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+#admRevenueChart {
+    width: 100% !important;
+    height: 240px !important;
+    display: block !important;
+}
+
+#admCategoryChart {
+    width: 190px !important;
+    height: 190px !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 auto !important;
+}

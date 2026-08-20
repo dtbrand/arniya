@@ -475,27 +475,40 @@
         }
     }
 
-    // ════ HIGH-DEFINITION CANVAS CHARTS ════
+    // ════ HIGH-DEFINITION DYNAMIC RESPONSIVE CANVAS CHARTS ════
     function initCharts() {
         renderRevenueChart();
         renderCategoryDoughnut();
     }
 
+    // Auto resize listener with debouncing
+    let chartResizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(chartResizeTimer);
+        chartResizeTimer = setTimeout(initCharts, 120);
+    });
+
     function renderRevenueChart() {
         const canvas = document.getElementById('admRevenueChart');
         if (!canvas) return;
+        const parent = canvas.parentElement;
+        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 320;
         const ctx = canvas.getContext('2d');
-        const rect = canvas.parentElement.getBoundingClientRect();
         
         // Crisp Retina scaling
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = (rect.width || 600) * dpr;
-        canvas.height = 260 * dpr;
+        const w = containerWidth;
+        const h = 240;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
         ctx.scale(dpr, dpr);
 
-        const w = rect.width || 600;
-        const h = 260;
-        const padL = 50, padR = 20, padT = 30, padB = 40;
+        const padL = w < 480 ? 36 : 46;
+        const padR = w < 480 ? 12 : 20;
+        const padT = 24;
+        const padB = 34;
 
         ctx.clearRect(0, 0, w, h);
 
@@ -519,7 +532,7 @@
             ctx.moveTo(padL, yPos);
             ctx.lineTo(w - padR, yPos);
             ctx.stroke();
-            ctx.fillText('₹' + (yVal / 1000) + 'k', padL - 8, yPos + 3);
+            ctx.fillText('₹' + (yVal / 1000) + 'k', padL - 6, yPos + 3);
         }
 
         // Draw labels on X axis
@@ -527,7 +540,7 @@
         const stepX = (w - padL - padR) / (labels.length - 1);
         labels.forEach((lbl, i) => {
             const x = padL + (i * stepX);
-            ctx.fillText(lbl, x, h - padB + 18);
+            ctx.fillText(lbl, x, h - padB + 16);
         });
 
         // Function to draw smooth line curve with area fill
@@ -549,7 +562,7 @@
 
             // Stroke
             ctx.strokeStyle = strokeColor;
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.8;
             ctx.stroke();
 
             // Fill area
@@ -562,7 +575,7 @@
             // Draw points
             points.forEach(p => {
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, 3.8, 0, Math.PI * 2);
                 ctx.fillStyle = dotColor;
                 ctx.fill();
                 ctx.lineWidth = 2;
@@ -589,11 +602,14 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = 220 * dpr;
-        canvas.height = 220 * dpr;
+        const size = 180;
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        canvas.style.width = size + 'px';
+        canvas.style.height = size + 'px';
         ctx.scale(dpr, dpr);
 
-        const cx = 110, cy = 110, outerR = 90, innerR = 60;
+        const cx = size / 2, cy = size / 2, outerR = (size / 2) - 8, innerR = outerR - 26;
         const catData = [
             { label: 'Sarees', share: 0.45, color: '#8A681F' },
             { label: 'Kurtis', share: 0.25, color: '#C5A859' },
@@ -616,13 +632,13 @@
 
         // Center total text
         ctx.fillStyle = '#181512';
-        ctx.font = 'bold 16px Cinzel, serif';
+        ctx.font = 'bold 15px Cinzel, serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('100%', cx, cy - 6);
-        ctx.font = '10px Plus Jakarta Sans, sans-serif';
+        ctx.fillText('100%', cx, cy - 5);
+        ctx.font = '9.5px Plus Jakarta Sans, sans-serif';
         ctx.fillStyle = '#7A7266';
-        ctx.fillText('Catalog Share', cx, cy + 12);
+        ctx.fillText('Catalog Share', cx, cy + 11);
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════

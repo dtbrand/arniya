@@ -597,7 +597,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="adm-chart-container">
                             <canvas id="admRevenueChart"></canvas>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:center; gap:24px; font-size:0.78rem; font-weight:600;">
+                        <div style="display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px; font-size:0.78rem; font-weight:600; margin-top:8px;">
                             <div style="display:flex; align-items:center; gap:6px;">
                                 <span style="width:12px; height:4px; background:#8A681F; border-radius:2px;"></span>
                                 <span>B2B Wholesale (₹28.4L)</span>
