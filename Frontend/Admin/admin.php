@@ -229,7 +229,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <a href="javascript:void(0)" onclick="switchAdmTab('reports')" class="adm-app-stream-card">
                                 <div class="adm-app-stream-top">
                                     <div class="adm-app-stream-icon-pod" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
-                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                                     </div>
                                     <span style="font-size:9.5px; font-weight:700; color:#15803D; background:#DCFCE7; padding:2px 6px; border-radius:10px;">Tier 1</span>
                                 </div>
@@ -1045,7 +1045,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                     <div class="dt-kpi-card">
                         <div class="dt-kpi-icon-wrap" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
-                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                         </div>
                         <div class="dt-kpi-content">
                             <div class="dt-kpi-lbl">INVENTORY VALUATION</div>

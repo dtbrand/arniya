@@ -12,7 +12,7 @@
 
 1. **🧠 HINDI / TYPO TOLERANCE & PRO ENGLISH**: Understand Hindi/Hinglish queries & typos seamlessly, auto-translate to clear intent, and write 100% professional English in all UI, code, comments, labels, and git commits.
 2. **🎨 100% STYLED BUTTONS MANDATE**: Never leave any plain, unstyled browser button. Every button must use DT Brand's primary gold gradient (`#8A681F` to `#D4AF37`), emerald success, soft blue, or pale gold pill styling.
-3. **⚡ 100% REAL VECTOR SVG ICONS**: Zero emojis in core buttons, navigation, or table headers. All icons must be crisp inline SVG vectors (`stroke-width: 2 - 2.8`).
+3. **⚡ 100% REAL VECTOR SVG ICONS & RUPEE MANDATE**: Zero emojis in core buttons, navigation, or table headers. All icons must be crisp inline SVG vectors (`stroke-width: 2 - 2.8`). **NEVER USE DOLLAR ICONS ($)** — ALWAYS use the 100% Real Indian Rupee (`₹`) Vector SVG (`<path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>`) across all pricing, valuation, and revenue metrics.
 4. **📱 FLUID MOBILE & TABLET AUTO-SIZING**: Wholesale Desktop + Tablet + Mobile responsive layout with auto-fit grids, touch targets, and zero broken/clipped layouts across any device.
 5. **🎯 100% FULLY WORKING GUARANTEE**: Zero dead buttons or broken actions. Every button, modal, drawer, search input, and filter must have attached working JS and backend logic.
 6. **🔍 SCREENSHOT-DRIVEN DEEP AUDIT**: Auto-detect flaws, missing sub-options, clipped dropdowns, and unstyled UI, then build missing parts end-to-end.

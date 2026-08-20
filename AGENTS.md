@@ -116,9 +116,12 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ---
 
-## ⚡ 4. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS)
+## ⚡ 4. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS & ZERO DOLLAR ICONS)
 
 - **NEVER** use emojis (such as ✏️, 👁️, 🗑️, 💾, 📦, 📁, ✕) inside buttons, action links, table rows, or modal headers.
+- **NEVER USE DOLLAR ICONS ($)**: DT Brand's & Jai Hanuman Tex is a Surat, India B2B/B2C textile brand. Never use dollar icons (`$`, dollar SVGs, or `$` symbols).
+- **ALWAYS USE 100% REAL INDIAN RUPEE (`₹`) VECTOR SVG ICONS**:
+  `<path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>` in all pricing, revenue cards, KPI ribbons, financial metrics, and catalogs.
 - **ALWAYS** use clean, lightweight, inline vector SVGs with:
   - `viewBox="0 0 24 24"`
   - `fill="none" stroke="currentColor"` (or brand `#8A681F` / `#D4AF37`)
@@ -143,6 +146,7 @@ Before marking ANY task complete, every agent must verify:
 
 - [ ] **Fluid Mobile & Tablet Auto-Sizing**: Responsive on desktop, tablet, and mobile screens with zero clipping.
 - [ ] **Design System Compliance**: Uses DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`), real vector SVGs, and left-aligned search icon.
+- [ ] **Zero Dollar Icons**: 100% Indian Rupee (`₹`) SVG used for all prices, valuations, and currency icons.
 - [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and documentation with zero typos.
 - [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
 - [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.

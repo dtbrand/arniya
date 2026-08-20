@@ -912,7 +912,7 @@
                         <div class="co-pay-option" data-method="cod" onclick="window.selectPaymentMethod('cod')">
                             <div class="co-pay-radio"></div>
                             <div class="co-pay-icon cod">
-                                <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <svg viewBox="0 0 24 24"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             </div>
                             <div class="co-pay-text">
                                 <div class="co-pay-name">Cash on Delivery (COD)</div>
