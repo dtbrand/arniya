@@ -53,7 +53,7 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
             <div class="adm-nav-heading">COMMERCE</div>
             <ul class="adm-nav-list">
                 <!-- PRODUCTS WITH REAL SVG SUBMENU -->
-                <li class="adm-nav-has-sub open">
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'products' ? 'open' : ''; ?>">
                     <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products & Inventory">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
@@ -63,7 +63,7 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
                         </span>
                     </a>
                     <!-- SUBMENU ITEMS LIST WITH CRISP SVG ICONS -->
-                    <ul class="adm-nav-submenu open" id="admSubmenu-products">
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'products' ? 'open' : ''; ?>" id="admSubmenu-products">
                         <li>
                             <a href="/Frontend/Admin/products/" class="adm-nav-subitem <?php echo ($current_nav === 'products' && empty($current_subnav)) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
@@ -431,6 +431,14 @@ function toggleSidebarSubmenu(item) {
             const sub = parent.querySelector('.adm-nav-submenu');
             if (sub) sub.classList.remove('open');
         } else {
+            // Close any other open submenus first (Smart Luxury Accordion)
+            document.querySelectorAll('.adm-nav-has-sub').forEach(function(li) {
+                if (li !== parent) {
+                    li.classList.remove('open');
+                    const otherSub = li.querySelector('.adm-nav-submenu');
+                    if (otherSub) otherSub.classList.remove('open');
+                }
+            });
             parent.classList.add('open');
             const sub = parent.querySelector('.adm-nav-submenu');
             if (sub) sub.classList.add('open');
