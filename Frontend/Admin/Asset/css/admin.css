@@ -2441,9 +2441,14 @@ input, select, textarea {
     }
 
     .adm-dock-center-label {
-        font-size: 9.5px !important;
+        font-size: 10.5px !important;
         font-weight: 800 !important;
-        color: #8A681F !important;
+        font-family: 'Cinzel', 'Plus Jakarta Sans', serif, sans-serif !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 35%, #E5E7EB 70%, #8A681F 100%) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
         margin-top: 2px !important;
     }
 
@@ -2562,4 +2567,10 @@ input, select, textarea {
 .adm-prod-pill.active .adm-prod-pill-badge {
     background: #181512 !important;
     color: #FAF5E8 !important;
+}
+
+@media (max-width: 1024px) {
+    .adm-header .adm-btn-primary {
+        display: none !important; /* + icon removed from mobile header */
+    }
 }
