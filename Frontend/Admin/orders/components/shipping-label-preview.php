@@ -9,41 +9,42 @@ $tracking_id = isset($order['tracking_id']) ? $order['tracking_id'] : 'VRL-99821
 $customer = isset($order['customer']) ? $order['customer'] : 'Rajesh Kumar (Vardhman Tex)';
 $shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
 $phone = isset($order['phone']) ? $order['phone'] : '+91 98220 19283';
-$weight = isset($order['weight']) ? $order['weight'] : '18.5 Kg';
 $items_count = isset($order['items_count']) ? $order['items_count'] : 25;
 ?>
 <div class="dt-shipping-label-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:8px; margin-bottom:10px;">
+    <!-- Header Block -->
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:12px;">
         <div>
-            <strong style="font-size:16px; letter-spacing:1px; color:#000;"><?php echo strtoupper($carrier); ?></strong><br>
-            <small style="color:#64748B; font-weight:700;">PRIORITY B2B SURFACE CONSIGNMENT</small>
+            <div style="font-size:17px; font-weight:800; letter-spacing:0.5px; color:#181512;"><?php echo strtoupper($carrier); ?></div>
+            <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px;">Priority B2B Surface Logistics</div>
         </div>
         <div style="text-align:right;">
-            <span style="font-size:10px; font-weight:800; border:1.5px solid #000; padding:2px 8px; border-radius:3px; background:#000; color:#FFF;">PREPAID</span>
+            <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px;">PREPAID</span>
         </div>
     </div>
 
-    <!-- Barcode Box -->
-    <div style="text-align:center;">
+    <!-- Barcode Section -->
+    <div style="text-align:center; padding:4px 0;">
         <div class="dt-label-barcode"></div>
-        <span style="font-family:monospace; font-weight:800; font-size:13px; letter-spacing:2px;"><?php echo $tracking_id; ?></span>
+        <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:3px; color:#181512; margin-top:4px;"><?php echo $tracking_id; ?></div>
     </div>
 
-    <!-- Weight & Manifest Specs -->
-    <div style="display:flex; justify-content:space-between; background:#F8FAFC; border:1px solid #E2E8F0; padding:6px 10px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700;">
-        <span>Order: <strong><?php echo $order_id; ?></strong></span>
-        <span>Items: <strong><?php echo $items_count; ?> Pcs</strong></span>
-        <span>Weight: <strong><?php echo $weight; ?></strong></span>
+    <!-- Order Manifest Meta Bar -->
+    <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 12px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700; color:#475569;">
+        <span>Order Reference: <strong style="color:#181512;"><?php echo $order_id; ?></strong></span>
+        <span>Consignment: <strong style="color:#181512;"><?php echo $items_count; ?> Units</strong></span>
     </div>
 
-    <div style="border-top:1.5px solid #000; margin-top:10px; padding-top:8px; font-size:12px; line-height:1.4;">
-        <div style="font-size:10px; font-weight:800; text-transform:uppercase; color:#64748B;">DELIVER TO (CONSIGNEE):</div>
-        <strong style="font-size:13px; color:#000;"><?php echo htmlspecialchars($customer); ?></strong><br>
-        <?php echo nl2br(htmlspecialchars($shipping_addr)); ?><br>
-        <strong>Tel: <?php echo htmlspecialchars($phone); ?></strong>
+    <!-- Consignee Delivery Destination -->
+    <div style="border-top:2px solid #181512; margin-top:12px; padding-top:10px; font-size:12px; line-height:1.45;">
+        <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
+        <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;"><?php echo htmlspecialchars($customer); ?></div>
+        <div style="color:#334155; font-size:11.5px;"><?php echo nl2br(htmlspecialchars($shipping_addr)); ?></div>
+        <div style="font-weight:800; font-size:12px; color:#181512; margin-top:4px;">Tel: <?php echo htmlspecialchars($phone); ?></div>
     </div>
 
-    <div style="border-top:1px dashed #CBD5E1; margin-top:10px; padding-top:6px; font-size:10px; color:#475569;">
-        <strong>FROM (SHIPPER):</strong> DT Brand's &amp; Jai Hanuman Tex, Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002 • Care: +91 98251 00000
+    <!-- Shipper Footer -->
+    <div style="border-top:1px dashed #CBD5E1; margin-top:12px; padding-top:8px; font-size:9.5px; color:#64748B; line-height:1.35;">
+        <strong style="color:#181512;">FROM (SHIPPER):</strong> DT Brand's &amp; Jai Hanuman Tex, Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002 • Helpline: +91 98251 00000
     </div>
 </div>
