@@ -146,7 +146,7 @@ $active_subnav = "imports";
             </div>
 
             <!-- 2. B2B Wholesale KPI Metrics Ribbon -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:14px;">
+            <div class="dt-kpi-ribbon">
                 <div class="dt-kpi-card">
                     <div style="width:36px; height:36px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
@@ -326,7 +326,7 @@ $active_subnav = "imports";
                     <p style="font-size:12.5px; color:#646970; margin:0;">Automated checks passed across all rows.</p>
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:20px;">
+                <div class="dt-kpi-ribbon">
                     <div style="background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; padding:14px;">
                         <span style="font-size:11px; color:#646970; font-weight:700;">TOTAL ROWS DETECTED</span>
                         <div style="font-size:22px; font-weight:800; color:#181512; margin-top:2px;">250 Products</div>
