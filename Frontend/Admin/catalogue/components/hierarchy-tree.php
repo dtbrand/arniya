@@ -32,8 +32,12 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="dt-badge green">420 SKUs</span>
                     <span class="dt-badge blue">Active</span>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-sarees')" title="Move Up" style="height:24px; padding:0 6px;">▲</button>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-sarees')" title="Move Down" style="height:24px; padding:0 6px;">▼</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-sarees')" title="Move Up" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-sarees')" title="Move Down" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
                     <a href="/Frontend/Admin/catalogue/categories/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
@@ -97,8 +101,12 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="dt-badge green">280 SKUs</span>
                     <span class="dt-badge blue">Active</span>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-lehengas')" title="Move Up" style="height:24px; padding:0 6px;">▲</button>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-lehengas')" title="Move Down" style="height:24px; padding:0 6px;">▼</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-lehengas')" title="Move Up" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-lehengas')" title="Move Down" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
                     <a href="/Frontend/Admin/catalogue/categories/edit.php?id=2" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
@@ -144,8 +152,12 @@
                 <div style="display:flex; align-items:center; gap:8px;">
                     <span class="dt-badge green">310 SKUs</span>
                     <span class="dt-badge blue">Active</span>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-kurtis')" title="Move Up" style="height:24px; padding:0 6px;">▲</button>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-kurtis')" title="Move Down" style="height:24px; padding:0 6px;">▼</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveUp('node-kurtis')" title="Move Up" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-kurtis')" title="Move Down" style="height:24px; padding:0 6px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
                     <a href="/Frontend/Admin/catalogue/categories/edit.php?id=3" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
