@@ -149,6 +149,217 @@ if (session_status() === PHP_SESSION_NONE) {
                  TAB 1: EXECUTIVE OVERVIEW DASHBOARD
             ════════════════════════════════════════════════════════════ -->
             <section class="adm-tab-panel active" id="tab-overview">
+                <!-- ══════════════════════════════════════════════════════════════
+                     👑 NEXT-LEVEL MODERN MOBILE APP DASHBOARD UI SUITE
+                ══════════════════════════════════════════════════════════════ -->
+                <div class="adm-mobile-dashboard-suite">
+                    <!-- A. Modern App Hero Greeting Card -->
+                    <div class="adm-app-hero-card">
+                        <div class="adm-app-hero-top">
+                            <div class="adm-app-user-meta">
+                                <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" class="adm-app-avatar">
+                                <div>
+                                    <div class="adm-app-greeting">Hi Gautam Sethi,</div>
+                                    <div class="adm-app-subtext">Executive Super Admin</div>
+                                </div>
+                            </div>
+                            <div class="adm-app-status-chip">
+                                <span class="adm-pulse-dot" style="background:#4ADE80; box-shadow:0 0 6px #4ADE80;"></span>
+                                <span>WhatsApp CRM Live</span>
+                            </div>
+                        </div>
+
+                        <div class="adm-app-balance-box">
+                            <div>
+                                <div class="adm-app-bal-lbl">Today's Wholesale Revenue</div>
+                                <div class="adm-app-bal-val">₹1,84,500 <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;">↑ +12.1%</small></div>
+                            </div>
+                            <a href="/Frontend/Admin/products/add.php" class="adm-app-action-btn">
+                                <svg viewBox="0 0 24 24" width="12" height="12" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>+ Product</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- B. Circular Gauge Usage & Stock Target Widget -->
+                    <div class="adm-app-gauge-card">
+                        <div class="adm-app-gauge-head">
+                            <div class="adm-app-gauge-title">Surat Ready Stock &amp; Dispatches</div>
+                            <div class="adm-app-gauge-badge">Active Drop 2026</div>
+                        </div>
+                        <div class="adm-app-gauge-body">
+                            <div class="adm-app-gauge-canvas-wrap">
+                                <canvas id="admAppCircularGauge" width="120" height="120"></canvas>
+                                <div class="adm-app-gauge-text">
+                                    <div class="adm-app-gauge-val">8,450</div>
+                                    <div class="adm-app-gauge-sub">/ 10,000 Pcs</div>
+                                </div>
+                            </div>
+                            <div class="adm-app-gauge-stats">
+                                <div class="adm-app-stat-pod">
+                                    <div class="adm-app-stat-icon" style="background:#FAF5E8; color:#8A681F;">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                    </div>
+                                    <div class="adm-app-stat-info">
+                                        <span class="adm-app-stat-lbl">SURAT READY STOCK</span>
+                                        <span class="adm-app-stat-val" style="color:#8A681F;">8,450 Units (95.5%)</span>
+                                    </div>
+                                </div>
+                                <div class="adm-app-stat-pod">
+                                    <div class="adm-app-stat-icon" style="background:#DCFCE7; color:#15803D;">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                    </div>
+                                    <div class="adm-app-stat-info">
+                                        <span class="adm-app-stat-lbl">TODAY'S ORDERS</span>
+                                        <span class="adm-app-stat-val" style="color:#15803D;">38 Dispatched</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- C. 2-Column Luxury Operations Streams (Like Popular Plan) -->
+                    <div>
+                        <div class="adm-app-section-head">
+                            <span class="adm-app-section-title">Wholesale Operations Hub</span>
+                            <a href="javascript:void(0)" onclick="switchAdmTab('products')" class="adm-app-section-link">See All ↗</a>
+                        </div>
+                        <div class="adm-app-stream-grid">
+                            <a href="javascript:void(0)" onclick="switchAdmTab('reports')" class="adm-app-stream-card">
+                                <div class="adm-app-stream-top">
+                                    <div class="adm-app-stream-icon-pod" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                    </div>
+                                    <span style="font-size:9.5px; font-weight:700; color:#15803D; background:#DCFCE7; padding:2px 6px; border-radius:10px;">Tier 1</span>
+                                </div>
+                                <div class="adm-app-stream-title">B2B Wholesale</div>
+                                <div class="adm-app-stream-sub">46 Active Wholesalers</div>
+                                <div class="adm-app-stream-bottom">
+                                    <span class="adm-app-stream-price">₹28.4L</span>
+                                    <span class="adm-app-stream-chevron">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('partners')" class="adm-app-stream-card">
+                                <div class="adm-app-stream-top">
+                                    <div class="adm-app-stream-icon-pod" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <span style="font-size:9.5px; font-weight:700; color:#1D4ED8; background:#EFF6FF; padding:2px 6px; border-radius:10px;">+18.4%</span>
+                                </div>
+                                <div class="adm-app-stream-title">Reseller Hub</div>
+                                <div class="adm-app-stream-sub">348 Resellers Active</div>
+                                <div class="adm-app-stream-bottom">
+                                    <span class="adm-app-stream-price">₹14.4L</span>
+                                    <span class="adm-app-stream-chevron">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-stream-card">
+                                <div class="adm-app-stream-top">
+                                    <div class="adm-app-stream-icon-pod" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                    </div>
+                                    <span style="font-size:9.5px; font-weight:700; color:#B45309; background:#FEF3C7; padding:2px 6px; border-radius:10px;">68 Lots</span>
+                                </div>
+                                <div class="adm-app-stream-title">Consignments</div>
+                                <div class="adm-app-stream-sub">Surat Central Depot</div>
+                                <div class="adm-app-stream-bottom">
+                                    <span class="adm-app-stream-price">₹8.2L</span>
+                                    <span class="adm-app-stream-chevron">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-stream-card">
+                                <div class="adm-app-stream-top">
+                                    <div class="adm-app-stream-icon-pod" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    </div>
+                                    <span style="font-size:9.5px; font-weight:700; color:#DC2626; background:#FEE2E2; padding:2px 6px; border-radius:10px;">Pending</span>
+                                </div>
+                                <div class="adm-app-stream-title">Clearance Needed</div>
+                                <div class="adm-app-stream-sub">18 Unsettled Invoices</div>
+                                <div class="adm-app-stream-bottom">
+                                    <span class="adm-app-stream-price">₹48.2k</span>
+                                    <span class="adm-app-stream-chevron">›</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- D. Recent Activity Stream (List View) -->
+                    <div>
+                        <div class="adm-app-section-head">
+                            <span class="adm-app-section-title">Recent Activity Stream</span>
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-section-link">View Orders ↗</a>
+                        </div>
+                        <div class="adm-app-activity-list">
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-activity-item">
+                                <div class="adm-app-act-left">
+                                    <div class="adm-app-act-icon-pod" style="background:#DCFCE7; color:#15803D;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    </div>
+                                    <div class="adm-app-act-meta">
+                                        <span class="adm-app-act-title">Banarasi Silk Zari Saree (50 Pcs)</span>
+                                        <span class="adm-app-act-sub">SKU: KLN-SR-111 • ₹14,500 Wholesale</span>
+                                    </div>
+                                </div>
+                                <div class="adm-app-act-right">
+                                    <span class="adm-app-act-badge" style="background:#DCFCE7; color:#15803D;">Dispatched</span>
+                                    <span style="color:#B8860B; font-weight:800; font-size:13px;">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-activity-item">
+                                <div class="adm-app-act-left">
+                                    <div class="adm-app-act-icon-pod" style="background:#FAF5E8; color:#8A681F;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    </div>
+                                    <div class="adm-app-act-meta">
+                                        <span class="adm-app-act-title">Kanjivaram Bridal Heritage (25 Pcs)</span>
+                                        <span class="adm-app-act-sub">SKU: KNJ-GL-204 • ₹28,000 Wholesale</span>
+                                    </div>
+                                </div>
+                                <div class="adm-app-act-right">
+                                    <span class="adm-app-act-badge" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">Processing</span>
+                                    <span style="color:#B8860B; font-weight:800; font-size:13px;">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-activity-item">
+                                <div class="adm-app-act-left">
+                                    <div class="adm-app-act-icon-pod" style="background:#EFF6FF; color:#1D4ED8;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                    </div>
+                                    <div class="adm-app-act-meta">
+                                        <span class="adm-app-act-title">Chanderi Cotton Daily Wear (100 Pcs)</span>
+                                        <span class="adm-app-act-sub">SKU: CHN-CT-092 • ₹6,200 Wholesale</span>
+                                    </div>
+                                </div>
+                                <div class="adm-app-act-right">
+                                    <span class="adm-app-act-badge" style="background:#EFF6FF; color:#1D4ED8;">Delivered</span>
+                                    <span style="color:#B8860B; font-weight:800; font-size:13px;">›</span>
+                                </div>
+                            </a>
+
+                            <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-app-activity-item">
+                                <div class="adm-app-act-left">
+                                    <div class="adm-app-act-icon-pod" style="background:#FEF3C7; color:#B45309;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
+                                    </div>
+                                    <div class="adm-app-act-meta">
+                                        <span class="adm-app-act-title">Surat Depot Bulk Consignment #882</span>
+                                        <span class="adm-app-act-sub">120 Pcs Assorted • In Transit Hub</span>
+                                    </div>
+                                </div>
+                                <div class="adm-app-act-right">
+                                    <span class="adm-app-act-badge" style="background:#FEF3C7; color:#B45309;">In Transit</span>
+                                    <span style="color:#B8860B; font-weight:800; font-size:13px;">›</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <!-- Page Head -->
                 <div class="adm-page-head">
                     <div class="adm-page-title-group">

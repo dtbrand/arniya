@@ -476,7 +476,47 @@
     }
 
     // ════ HIGH-DEFINITION DYNAMIC RESPONSIVE CANVAS CHARTS ════
+    
+    function renderAppCircularGauge() {
+        const canvas = document.getElementById('admAppCircularGauge');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = 120 * dpr;
+        canvas.height = 120 * dpr;
+        ctx.scale(dpr, dpr);
+
+        const cx = 60, cy = 60, r = 48;
+        ctx.clearRect(0, 0, 120, 120);
+
+        // Background track arc
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, -Math.PI * 0.8, Math.PI * 0.8, false);
+        ctx.strokeStyle = '#FAF5E8';
+        ctx.lineWidth = 9;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        // Active progress arc (84.5% complete)
+        const progress = 0.845;
+        const totalAngle = Math.PI * 1.6;
+        const endAngle = (-Math.PI * 0.8) + (totalAngle * progress);
+
+        const grad = ctx.createLinearGradient(0, 0, 120, 120);
+        grad.addColorStop(0, '#8A681F');
+        grad.addColorStop(0.5, '#D4AF37');
+        grad.addColorStop(1, '#16A34A');
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, -Math.PI * 0.8, endAngle, false);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 9;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+    }
+
     function initCharts() {
+        renderAppCircularGauge();
         renderRevenueChart();
         renderCategoryDoughnut();
     }
