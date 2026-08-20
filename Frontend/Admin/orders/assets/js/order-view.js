@@ -680,6 +680,312 @@
         closePackingSlipModal: function() {
             const modal = document.getElementById('orderPackingSlipModal');
             if (modal) modal.style.display = 'none';
+        },
+
+        downloadInvoiceExcel: function(orderId) {
+            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || 'DTB-001624';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: 'Rajesh Kumar',
+                firm: 'Vardhman Tex',
+                phone: '+91 98220 19283',
+                amount: 112250,
+                date: '21 Aug 2026',
+                payment: 'Bank Wire / RTGS',
+                payment_status: 'PAID'
+            };
+
+            const taxable = (Number(order.amount || 112250) / 1.05);
+            const cgst = taxable * 0.025;
+            const sgst = taxable * 0.025;
+            const total = Number(order.amount || 112250);
+
+            const excelContent = `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Tax Invoice</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>
+<body>
+<table border="1">
+    <tr><th colspan="5" style="background:#8A681F; color:#FFFFFF; font-size:16px; height:36px; text-align:center;">DT BRAND'S &amp; JAI HANUMAN TEX — TAX INVOICE</th></tr>
+    <tr><td colspan="5" style="text-align:center; font-size:11px; color:#64748B;">Surat Central Depot • Ring Road, Surat • GSTIN: 24AAECJ1928K1Z5</td></tr>
+    <tr><td><strong>Invoice No:</strong></td><td colspan="2">INV-${order.id.replace('DTB-', '2026-')}</td><td><strong>Date:</strong></td><td>${order.date}</td></tr>
+    <tr><td><strong>Customer Name:</strong></td><td colspan="2">${order.customer} (${order.firm || 'Vardhman Tex'})</td><td><strong>Phone:</strong></td><td>${order.phone}</td></tr>
+    <tr style="background:#181512; color:#FAF5E8;"><th>#</th><th>Item Description &amp; SKU</th><th>Qty</th><th>Unit Rate (INR)</th><th>Taxable Amount (INR)</th></tr>
+    <tr><td style="text-align:center;">1</td><td>Kanjivaram Silk Saree Pure Zari Weave (KNJ-001)</td><td style="text-align:center;">25 pcs</td><td style="text-align:right;">4,490.00</td><td style="text-align:right;">${taxable.toFixed(2)}</td></tr>
+    <tr><td colspan="4" style="text-align:right; font-weight:bold;">Taxable Subtotal:</td><td style="text-align:right; font-weight:bold;">₹ ${taxable.toFixed(2)}</td></tr>
+    <tr><td colspan="4" style="text-align:right;">Output CGST @ 2.5%:</td><td style="text-align:right;">₹ ${cgst.toFixed(2)}</td></tr>
+    <tr><td colspan="4" style="text-align:right;">Output SGST @ 2.5%:</td><td style="text-align:right;">₹ ${sgst.toFixed(2)}</td></tr>
+    <tr style="background:#FAF5E8;"><td colspan="4" style="text-align:right; font-weight:bold; font-size:14px; color:#8A681F;">GRAND TOTAL (INR):</td><td style="text-align:right; font-weight:bold; font-size:14px; color:#8A681F;">₹ ${total.toFixed(2)}</td></tr>
+    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Payment Status: ${order.payment_status} via ${order.payment} • Silk Mark Certified</td></tr>
+</table>
+</body>
+</html>`;
+
+            const blob = new Blob(['\ufeff', excelContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `DT_Brands_Tax_Invoice_${order.id}_${new Date().toISOString().slice(0,10)}.xls`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Tax Invoice Excel downloaded successfully!');
+        },
+
+        downloadInvoicePDF: function(orderId) {
+            orderId = orderId || document.getElementById('invoiceModalOrderId')?.textContent || 'DTB-001624';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: 'Rajesh Kumar',
+                firm: 'Vardhman Tex',
+                phone: '+91 98220 19283',
+                amount: 112250,
+                date: '21 Aug 2026',
+                payment: 'Bank Wire / RTGS',
+                payment_status: 'PAID'
+            };
+
+            const taxable = (Number(order.amount || 112250) / 1.05);
+            const cgst = taxable * 0.025;
+            const sgst = taxable * 0.025;
+            const total = Number(order.amount || 112250);
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Tax Invoice #${order.id} ‹ DT Brand's</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+                    <style>
+                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:30px; color:#181512; }
+                        table { width:100%; border-collapse:collapse; margin:16px 0; font-size:12px; }
+                        th { background:#181512; color:#FAF5E8; padding:8px 10px; text-align:left; }
+                        td { padding:8px 10px; border-bottom:1px solid #E2E8F0; }
+                    </style>
+                </head>
+                <body>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:50px; width:auto;">
+                            <div>
+                                <h2 style="margin:0; font-size:20px; font-weight:800;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
+                                <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</p>
+                            </div>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="font-size:11px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">ORIGINAL TAX INVOICE</span>
+                            <div style="font-size:13px; font-weight:800; color:#181512; margin-top:4px;">INV-${order.id.replace('DTB-', '2026-')}</div>
+                            <div style="font-size:11px; color:#64748B;">Date: ${order.date}</div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
+                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Billed Consignee</div>
+                            <div style="font-weight:800; font-size:14px; margin-top:2px;">${order.customer}</div>
+                            <div style="font-size:12px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="font-size:11.5px; color:#475569;">Contact: ${order.phone}</div>
+                        </div>
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
+                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Payment &amp; Clearance</div>
+                            <div style="font-weight:800; font-size:13px; color:#15803D; margin-top:2px;">● Status: ${order.payment_status}</div>
+                            <div style="font-size:12px; color:#475569;">Mode: ${order.payment}</div>
+                            <div style="font-size:11.5px; color:#475569;">Bank: ICICI Corporate Direct Wire</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Item &amp; Description</th>
+                                <th style="text-align:center;">Qty</th>
+                                <th style="text-align:right;">Unit Rate (₹)</th>
+                                <th style="text-align:right;">Taxable Total (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br><small style="color:#64748B;">SKU: KNJ-001 • Royal Ruby / 5.5m • Silk Mark Certified</small></td>
+                                <td style="text-align:center; font-weight:800;">25 pcs</td>
+                                <td style="text-align:right;">₹4,490.00</td>
+                                <td style="text-align:right; font-weight:700;">₹${taxable.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="display:flex; justify-content:flex-end;">
+                        <div style="width:260px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; padding:12px; font-size:12px;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span>Taxable Amount:</span>
+                                <strong>₹${taxable.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px; color:#475569;">
+                                <span>Output CGST (2.5%):</span>
+                                <span>₹${cgst.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#475569;">
+                                <span>Output SGST (2.5%):</span>
+                                <span>₹${sgst.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; border-top:1.5px solid #8A681F; padding-top:6px; font-size:14px; font-weight:800; color:#181512;">
+                                <span>Grand Total:</span>
+                                <span style="color:#8A681F;">₹${total.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:24px; border-top:1px solid #E2DFD7; padding-top:12px; font-size:10.5px; color:#64748B; display:flex; justify-content:space-between;">
+                        <div>Computer Generated Tax Invoice • Surat Central Wholesale Depot</div>
+                        <div style="font-weight:700; color:#181512;">Authorised Signatory</div>
+                    </div>
+                    <script>window.onload = function() { window.print(); };<\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        },
+
+        downloadPackingSlipExcel: function(orderId) {
+            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || 'DTB-001624';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: 'Rajesh Kumar',
+                firm: 'Vardhman Tex',
+                phone: '+91 98220 19283',
+                shipping: 'VRL Logistics Depot',
+                tracking: 'VRL-99821',
+                date: '21 Aug 2026'
+            };
+
+            const excelContent = `
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Packing Slip</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>
+<body>
+<table border="1">
+    <tr><th colspan="5" style="background:#8A681F; color:#FFFFFF; font-size:16px; height:36px; text-align:center;">PACKING SLIP — DEPOT DISPATCH MANIFEST</th></tr>
+    <tr><td colspan="5" style="text-align:center; font-size:11px; color:#64748B;">Surat Central Depot Internal Wholesale Logistics Manifest</td></tr>
+    <tr><td><strong>Order ID:</strong></td><td>${order.id}</td><td><strong>Manifest Box:</strong></td><td colspan="2">1 of 1 (Date: ${order.date})</td></tr>
+    <tr><td><strong>1. Billed Customer &amp; Firm:</strong></td><td colspan="2">${order.customer} (${order.firm || 'Vardhman Tex'})</td><td><strong>Account Type:</strong></td><td>Verified B2B Account</td></tr>
+    <tr><td><strong>2. Shipping Destination (Godown):</strong></td><td colspan="2">Godown 12, Transport Nagar, Surat, Gujarat - 395010</td><td><strong>Contact Phone:</strong></td><td>${order.phone}</td></tr>
+    <tr style="background:#181512; color:#FAF5E8;"><th>#</th><th>Item Details &amp; SKU</th><th>Color / Specs</th><th>Packed Qty</th><th>QC Verification</th></tr>
+    <tr><td style="text-align:center;">1</td><td>Kanjivaram Silk Saree Pure Zari Weave (KNJ-001)</td><td>Royal Ruby / 5.5m</td><td style="text-align:center; font-weight:bold;">25 pcs</td><td style="text-align:center; color:#15803D; font-weight:bold;">PASS (Silk Mark)</td></tr>
+    <tr><td colspan="3" style="text-align:right; font-weight:bold;">TOTAL CONSIGNMENT QUANTITY:</td><td colspan="2" style="font-weight:bold; font-size:13px; color:#8A681F;">25 pcs (1 Bale Packed)</td></tr>
+    <tr><td colspan="5" style="font-size:10px; color:#64748B;">Carrier: ${order.shipping || 'VRL Logistics Depot'} (${order.tracking || 'VRL-99821'}) • QC Inspection Officer Verified</td></tr>
+</table>
+</body>
+</html>`;
+
+            const blob = new Blob(['\ufeff', excelContent], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `DT_Brands_Packing_Slip_${order.id}_${new Date().toISOString().slice(0,10)}.xls`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('📥 Warehouse Packing Slip Excel downloaded successfully!');
+        },
+
+        downloadPackingSlipPDF: function(orderId) {
+            orderId = orderId || document.getElementById('packingModalOrderId')?.textContent || 'DTB-001624';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: 'Rajesh Kumar',
+                firm: 'Vardhman Tex',
+                phone: '+91 98220 19283',
+                shipping: 'VRL Logistics Depot',
+                tracking: 'VRL-99821',
+                date: '21 Aug 2026'
+            };
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Packing Slip #${order.id} ‹ DT Brand's</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+                    <style>
+                        body { font-family:'Plus Jakarta Sans',sans-serif; margin:30px; color:#181512; }
+                        table { width:100%; border-collapse:collapse; margin:16px 0; font-size:12px; }
+                        th { background:#181512; color:#FAF5E8; padding:8px 10px; text-align:left; }
+                        td { padding:8px 10px; border-bottom:1px solid #E2E8F0; }
+                    </style>
+                </head>
+                <body>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
+                        <div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <h2 style="margin:0; font-size:20px; font-weight:800;">PACKING SLIP</h2>
+                                <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">DEPOT DISPATCH MANIFEST</span>
+                            </div>
+                            <p style="margin:3px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Internal Wholesale Logistics Manifest</p>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-size:14px; font-weight:800; color:#8A681F;">ORDER #${order.id}</div>
+                            <div style="font-size:11px; color:#64748B;">Manifest Box: <strong>1 of 1</strong></div>
+                            <div style="font-size:11px; color:#64748B;">Date: ${order.date}</div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
+                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">1. Billed Customer &amp; Firm</div>
+                            <div style="font-weight:800; font-size:14px; margin-top:2px;">${order.customer}</div>
+                            <div style="font-size:12px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                            <div style="margin-top:6px;"><span style="font-size:9.5px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:1px 5px; border-radius:3px; font-weight:700;">Verified B2B Account</span></div>
+                        </div>
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px;">
+                            <div style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">2. Shipping Destination (Godown)</div>
+                            <div style="font-weight:800; font-size:13px; margin-top:2px;">Consignee: ${order.customer}</div>
+                            <div style="font-size:12px; color:#475569;">Godown 12, Transport Nagar, Surat, Gujarat - 395010</div>
+                            <div style="font-size:11.5px; font-weight:700; color:#8A681F; margin-top:3px;">Contact No: ${order.phone}</div>
+                        </div>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:30px; text-align:center;">#</th>
+                                <th>Item Details &amp; Color</th>
+                                <th style="text-align:center;">Packed Qty</th>
+                                <th style="text-align:center;">QC Verification</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center;">1</td>
+                                <td><strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br><small style="color:#64748B;">SKU: KNJ-001 • Royal Ruby / 5.5m</small></td>
+                                <td style="text-align:center; font-weight:800; font-size:13px;">25 pcs</td>
+                                <td style="text-align:center;"><span style="font-size:10px; font-weight:800; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; padding:2px 6px; border-radius:4px;">✓ PASS (Silk Mark)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:10px 14px; font-size:11.5px; color:#64748B; display:flex; justify-content:space-between; align-items:center;">
+                        <div>Carrier: <strong>${order.shipping || 'VRL Logistics Depot'}</strong> (${order.tracking || 'VRL-99821'})</div>
+                        <div style="font-weight:700; color:#15803D;">QC Verification: PASS (Silk Mark Certified) • Sealed Manifest</div>
+                    </div>
+
+                    <div style="margin-top:24px; border-top:1px solid #E2DFD7; padding-top:12px; font-size:10.5px; color:#64748B; display:flex; justify-content:space-between;">
+                        <div>Confidential Warehouse Dispatch Record • Surat Central Depot</div>
+                        <div style="font-weight:700; color:#181512;">Warehouse Dispatch Officer</div>
+                    </div>
+                    <script>window.onload = function() { window.print(); };<\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
         }
     };
 })(window);
