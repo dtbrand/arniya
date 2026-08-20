@@ -40,11 +40,5 @@ $items_count = isset($order['items_count']) ? $order['items_count'] : 25;
         <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
         <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;"><?php echo htmlspecialchars($customer); ?></div>
         <div style="color:#334155; font-size:11.5px;"><?php echo nl2br(htmlspecialchars($shipping_addr)); ?></div>
-        <div style="font-weight:800; font-size:12px; color:#181512; margin-top:4px;">Tel: <?php echo htmlspecialchars($phone); ?></div>
-    </div>
-
-    <!-- Shipper Footer -->
-    <div style="border-top:1px dashed #CBD5E1; margin-top:12px; padding-top:8px; font-size:9.5px; color:#64748B; line-height:1.35;">
-        <strong style="color:#181512;">FROM (SHIPPER):</strong> DT Brand's &amp; Jai Hanuman Tex, Surat Central Textile Depot, Ring Road, Surat, Gujarat - 395002 • Helpline: +91 98251 00000
     </div>
 </div>
