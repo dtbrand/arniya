@@ -177,5 +177,64 @@ window.DT_CATALOGUE = {
                 .trim()
                 .replace(/\s+/g, '-');
         }
+    },
+
+    // ════ AI SEO Auto-Generator ════
+    generateAiSeo: function(catName, catSlug) {
+        const titleInput = document.getElementById('seoTitleInput');
+        const descInput = document.getElementById('seoDescInput');
+        const titleDisplay = document.getElementById('serpTitleDisplay');
+        const descDisplay = document.getElementById('serpDescDisplay');
+        const titleCount = document.getElementById('seoTitleCount');
+        const descCount = document.getElementById('seoDescCount');
+
+        const cleanName = catName || 'Silk Sarees & Handlooms';
+        const cleanSlug = catSlug || cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+        const aiTitles = [
+            `Pure ${cleanName} Wholesale | Direct Surat Factory Rates`,
+            `Buy Authentic ${cleanName} Wholesale Catalogues | DT Brand's`,
+            `Surat ${cleanName} Central Depot Wholesale Ready Stock Lots`
+        ];
+
+        const aiDescriptions = [
+            `Buy authentic pure ${cleanName.toLowerCase()} at direct Surat factory wholesale rates. Certified handloom and luxury weaves with fast 24h ready depot dispatch across India.`,
+            `Explore Surat's finest ${cleanName.toLowerCase()} collection. Exclusive wholesale lot deals, GST invoicing, verified Silk Mark quality, and instant WhatsApp support.`,
+            `Premium ${cleanName.toLowerCase()} wholesale assortment from Surat central depot. Best reseller profit margins, low MOQ lot bundles, and express doorstep delivery.`
+        ];
+
+        const selectedTitle = aiTitles[Math.floor(Math.random() * aiTitles.length)];
+        const selectedDesc = aiDescriptions[Math.floor(Math.random() * aiDescriptions.length)];
+
+        if (titleInput) {
+            titleInput.value = selectedTitle;
+            if (titleDisplay) titleDisplay.textContent = selectedTitle;
+            if (titleCount) titleCount.textContent = selectedTitle.length + ' / 60';
+        }
+
+        if (descInput) {
+            descInput.value = selectedDesc;
+            if (descDisplay) descDisplay.textContent = selectedDesc;
+            if (descCount) descCount.textContent = selectedDesc.length + ' / 160';
+        }
+
+        this.showToast(`✨ AI SEO Meta Generated for "${cleanName}"!`);
+    },
+
+    // ════ AI Category Description Auto-Generator ════
+    generateAiCategoryDesc: function(targetTextareaId, catName) {
+        const textarea = document.getElementById(targetTextareaId);
+        if (!textarea) return;
+
+        const cleanName = catName || 'Silk Sarees & Handlooms';
+        const aiDescs = [
+            `Surat central depot master collection of pure ${cleanName.toLowerCase()}. Sourced directly from registered master weavers with certified zari purity, authentic border weaving, and 24-hour priority dispatch for wholesale buyers and boutiques.`,
+            `Handcrafted and premium powerloom ${cleanName.toLowerCase()} manufactured in Surat textile hub. High colorfastness, rich pallu motifs, standard wholesale bundle packaging, and verified reseller price margins.`,
+            `Exclusive festive and bridal ${cleanName.toLowerCase()} assortment featuring heavy zari embroidery, soft drape fabrics, and Silk Mark certified handloom lots tailored for top retail boutiques.`
+        ];
+
+        const selected = aiDescs[Math.floor(Math.random() * aiDescs.length)];
+        textarea.value = selected;
+        this.showToast(`✨ AI Generated Description for "${cleanName}"!`);
     }
 };

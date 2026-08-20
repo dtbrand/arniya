@@ -14,7 +14,13 @@ $seo_desc = "Buy authentic pure {$seo_cat_name} at direct Surat factory wholesal
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             <span>Search Engine Optimization &amp; Google Rich Snippets</span>
         </h3>
-        <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ SEO Meta tags updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save SEO Settings</button>
+        <div style="display:flex; gap:6px; align-items:center;">
+            <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_CATALOGUE.generateAiSeo('<?php echo addslashes($seo_cat_name); ?>', '<?php echo addslashes($seo_cat_slug); ?>')" style="height:28px; padding:0 10px; font-size:11px;" title="AI Auto-Craft High Ranking Meta Tags">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>AI Generate SEO</span>
+            </button>
+            <button type="button" class="dt-btn-action-sm gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('✅ SEO Meta tags updated live!')" style="height:28px; padding:0 12px; font-size:11px;">Save SEO Settings</button>
+        </div>
     </div>
 
     <div style="padding:16px;">

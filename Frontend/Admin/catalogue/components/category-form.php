@@ -52,7 +52,13 @@ $cat = isset($category_data) ? $category_data : [
             </div>
 
             <div class="dt-form-group">
-                <label class="dt-form-label" for="catDesc">Detailed Description</label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <label class="dt-form-label" for="catDesc" style="margin-bottom:0;">Detailed Description</label>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_CATALOGUE.generateAiCategoryDesc('catDesc', document.getElementById('catName').value)" style="height:22px; padding:0 8px; font-size:10.5px;" title="AI Auto-Generate Wholesale Description">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>AI Write Description</span>
+                    </button>
+                </div>
                 <textarea id="catDesc" class="dt-form-textarea" rows="4" placeholder="Rich wholesale catalog description, fabric specifications, Surat depot stock info..."><?php echo htmlspecialchars($cat['desc']); ?></textarea>
             </div>
 

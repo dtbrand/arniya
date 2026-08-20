@@ -32,8 +32,14 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
             </div>
 
             <div class="dt-form-group">
-                <label class="dt-form-label">Description &amp; Highlights</label>
-                <textarea class="dt-form-textarea" rows="3" placeholder="Collection narrative and merchandising focus..."><?php echo htmlspecialchars($c_desc); ?></textarea>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <label class="dt-form-label" for="collDesc" style="margin-bottom:0;">Description &amp; Highlights</label>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_CATALOGUE.generateAiCategoryDesc('collDesc', document.getElementById('collTitle').value)" style="height:22px; padding:0 8px; font-size:10.5px;" title="AI Auto-Generate Collection Narrative">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#8A681F" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>AI Write Narrative</span>
+                    </button>
+                </div>
+                <textarea id="collDesc" class="dt-form-textarea" rows="3" placeholder="Collection narrative and merchandising focus..."><?php echo htmlspecialchars($c_desc); ?></textarea>
             </div>
         </div>
 
