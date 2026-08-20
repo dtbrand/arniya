@@ -169,6 +169,141 @@
                     billing: 'House 14, Civil Lines, Jaipur, Rajasthan - 302006',
                     shipping: 'House 14, Civil Lines, Jaipur, Rajasthan - 302006'
                 }
+            },
+            {
+                id: 'DTB-001618',
+                customer: 'Surat Central Depot (Stock Consignment)',
+                customer_type: 'Internal Stock Transfer',
+                phone: '+91 98980 11223',
+                email: 'depot@jaihanumantex.in',
+                date: '2026-08-19 09:00 AM',
+                updated: '2026-08-19 10:00 AM',
+                items: [
+                    { name: 'Surat Handloom Georgette Festive Lot', sku: 'GEO-088', variant: 'Assorted (x30)', qty: 30, price: 2490, img: '/Shared/Asset/images/product1.png' }
+                ],
+                item_count: 30,
+                amount: 74700,
+                payment_method: 'Internal Transfer',
+                payment_status: 'paid',
+                payment_ref: 'DEPOT-TRF-9982',
+                shipping_method: 'Depot Shifter Van',
+                carrier: 'Surat Central Depot Express',
+                tracking_id: 'SC-9982',
+                status: 'confirmed',
+                source: 'B2B Portal',
+                notes: 'Consignment confirmed for Surat Ring Road central warehouse.',
+                address: {
+                    billing: 'Jai Hanuman Tex HQ, Ring Road, Surat, Gujarat - 395002',
+                    shipping: 'Central Depot 1, Ring Road, Surat, Gujarat - 395002'
+                }
+            },
+            {
+                id: 'DTB-001617',
+                customer: 'Sneha Kulkarni',
+                customer_type: 'Retail Customer (B2C)',
+                phone: '+91 98112 33445',
+                email: 'sneha.k@yahoo.com',
+                date: '2026-08-18 06:40 PM',
+                updated: '2026-08-19 08:30 AM',
+                items: [
+                    { name: 'Pure Mysore Silk Crepe Saree', sku: 'MYS-014', variant: 'Peacock Blue (x8)', qty: 8, price: 3290, img: '/Shared/Asset/images/product2.png' }
+                ],
+                item_count: 8,
+                amount: 26320,
+                payment_method: 'UPI / GooglePay',
+                payment_status: 'paid',
+                payment_ref: 'UPI-889102-GPay',
+                shipping_method: 'BlueDart Air Express',
+                carrier: 'BlueDart Express Air',
+                tracking_id: 'BD-1092',
+                status: 'out_for_delivery',
+                source: 'Online Shop',
+                notes: 'Out for courier delivery today with OTP verification.',
+                address: {
+                    billing: 'B-12 Pune Cantonment, Pune, Maharashtra - 411001',
+                    shipping: 'B-12 Pune Cantonment, Pune, Maharashtra - 411001'
+                }
+            },
+            {
+                id: 'DTB-001616',
+                customer: 'Vandana Silk Emporium',
+                customer_type: 'Wholesale B2B Reseller',
+                phone: '+91 98400 88990',
+                email: 'orders@vandanasale.com',
+                date: '2026-08-18 11:00 AM',
+                updated: '2026-08-19 02:00 PM',
+                items: [
+                    { name: 'Banarasi Katan Handloom Silk Lot', sku: 'BNR-099', variant: 'Royal Zari (x5)', qty: 5, price: 6490, img: '/Shared/Asset/images/product3.png' }
+                ],
+                item_count: 5,
+                amount: 32450,
+                payment_method: 'Bank Wire / RTGS',
+                payment_status: 'paid',
+                payment_ref: 'UTR-882910398',
+                shipping_method: 'VRL Cargo Depot',
+                carrier: 'VRL Logistics Depot',
+                tracking_id: 'VRL-7721',
+                status: 'returned',
+                source: 'B2B Portal',
+                notes: 'Returned by consignee due to transport depot carton mismatch.',
+                address: {
+                    billing: 'Vandana Complex, T. Nagar, Chennai, Tamil Nadu - 600017',
+                    shipping: 'Vandana Complex, T. Nagar, Chennai, Tamil Nadu - 600017'
+                }
+            },
+            {
+                id: 'DTB-001615',
+                customer: 'Kavita Agarwal',
+                customer_type: 'Retail Customer (B2C)',
+                phone: '+91 98210 55443',
+                email: 'kavita.agarwal@gmail.com',
+                date: '2026-08-17 05:20 PM',
+                updated: '2026-08-18 01:00 PM',
+                items: [
+                    { name: 'Paithani Pure Silk Traditional Saree', sku: 'PTH-001', variant: 'Magenta Gold (x1)', qty: 1, price: 4990, img: '/Shared/Asset/images/product4.png' }
+                ],
+                item_count: 1,
+                amount: 4990,
+                payment_method: 'Razorpay / Card',
+                payment_status: 'paid',
+                payment_ref: 'pay_RP9918293',
+                shipping_method: 'Delhivery Air',
+                carrier: 'Delhivery Air',
+                tracking_id: 'DLV-4481',
+                status: 'refunded',
+                source: 'Online Shop',
+                notes: 'Customer returned parcel. 100% refund credited via Razorpay.',
+                address: {
+                    billing: 'Sector 14, Gurugram, Haryana - 122001',
+                    shipping: 'Sector 14, Gurugram, Haryana - 122001'
+                }
+            },
+            {
+                id: 'DTB-001614',
+                customer: 'Ananya Roy',
+                customer_type: 'Retail Customer (B2C)',
+                phone: '+91 98300 77112',
+                email: 'ananya.roy@kolkata.in',
+                date: '2026-08-17 02:15 PM',
+                updated: '2026-08-17 02:30 PM',
+                items: [
+                    { name: 'Tussar Handloom Saree Festive Silk', sku: 'TSR-003', variant: 'Natural Beige (x1)', qty: 1, price: 2990, img: '/Shared/Asset/images/product5.png' }
+                ],
+                item_count: 1,
+                amount: 2990,
+                payment_method: 'Card / Failed Gateway',
+                payment_status: 'failed',
+                payment_ref: 'FAIL-GATEWAY-TIMEOUT',
+                shipping_method: 'Pending Payment Verification',
+                carrier: 'Pending Verification',
+                tracking_id: '—',
+                status: 'failed',
+                source: 'Online Shop',
+                notes: 'Payment failed at bank gateway. Order marked failed.',
+                address: {
+                    billing: 'Salt Lake Sector 5, Kolkata, West Bengal - 700091',
+                    shipping: 'Salt Lake Sector 5, Kolkata, West Bengal - 700091'
+                }
             }
         ],
 
