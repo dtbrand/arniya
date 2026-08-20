@@ -32,7 +32,7 @@
             
             <!-- Customer Profile Strip -->
             <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; padding:14px; display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.02);">
-                <div style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <div style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(0,0,0,0.15); flex-shrink:0;">
                     <span id="ledgerAvatarInitials">RA</span>
                 </div>
                 <div>
@@ -40,10 +40,19 @@
                         <span id="ledgerCustomerName" style="font-size:15px; font-weight:800; color:#181512;">Rajesh Kumar (Vardhman Tex)</span>
                         <span style="font-size:10px; background:#EFF6FF; border:1px solid #BFDBFE; color:#1D4ED8; font-weight:700; padding:1px 6px; border-radius:4px;">GST: 24AAECJ1928K1Z5</span>
                     </div>
-                    <div style="display:flex; align-items:center; gap:14px; font-size:11.5px; color:#64748B; margin-top:4px;">
-                        <span id="ledgerPhone">📞 +91 98220 19283</span>
-                        <span id="ledgerEmail">✉️ rajesh@vardhmantex.com</span>
-                        <span>📍 Ring Road, Surat (GJ)</span>
+                    <div style="display:flex; align-items:center; gap:14px; font-size:11.5px; color:#64748B; margin-top:4px; flex-wrap:wrap;">
+                        <span style="display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span id="ledgerPhoneText">+91 98220 19283</span>
+                        </span>
+                        <span style="display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <span id="ledgerEmailText">rajesh@vardhmantex.com</span>
+                        </span>
+                        <span style="display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Ring Road, Surat (GJ)</span>
+                        </span>
                     </div>
                 </div>
                 <div>

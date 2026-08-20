@@ -248,13 +248,16 @@
             if (nameEl && name) nameEl.textContent = name;
 
             const avatarEl = document.getElementById('ledgerAvatarInitials');
-            if (avatarEl && name) avatarEl.textContent = name.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+            if (avatarEl && name) {
+                const parts = name.trim().split(/\s+/);
+                avatarEl.textContent = (parts.length > 1 ? (parts[0][0] + parts[1][0]) : parts[0].slice(0, 2)).toUpperCase();
+            }
 
-            const phoneEl = document.getElementById('ledgerPhone');
-            if (phoneEl && phone) phoneEl.textContent = '📞 ' + phone;
+            const phoneText = document.getElementById('ledgerPhoneText');
+            if (phoneText && phone) phoneText.textContent = phone;
 
-            const emailEl = document.getElementById('ledgerEmail');
-            if (emailEl && email) emailEl.textContent = '✉️ ' + email;
+            const emailText = document.getElementById('ledgerEmailText');
+            if (emailText && email) emailText.textContent = email;
 
             const waBtn = document.getElementById('ledgerWhatsAppBtn');
             if (waBtn && phone) {
