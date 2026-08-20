@@ -66,15 +66,26 @@ $grand_total = $subtotal + $tax_gst;
         <tbody>
             <?php foreach ($items as $idx => $it): ?>
             <tr style="border-bottom:1px solid #E2E8F0;">
-                <td style="padding:9px 10px; color:#64748B;"><?php echo ($idx + 1); ?></td>
-                <td style="padding:9px 10px;">
-                    <strong style="color:#181512; font-size:12px;"><?php echo htmlspecialchars($it['name']); ?></strong><br>
-                    <span style="font-size:10px; color:#8A681F; font-weight:700;">SKU: <?php echo htmlspecialchars($it['sku']); ?></span> • <span style="font-size:10px; color:#64748B;">Surat Central Depot Stock</span>
+                <td style="padding:10px; color:#64748B; vertical-align:middle;"><?php echo ($idx + 1); ?></td>
+                <td style="padding:10px; vertical-align:middle;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="<?php echo $it['image'] ?? '/Shared/Asset/images/product1.png'; ?>" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Product Photo" style="width:42px; height:42px; border-radius:6px; object-fit:cover; border:1px solid #E2DFD7; background:#FAF8F4; flex-shrink:0;">
+                        <div>
+                            <strong style="color:#181512; font-size:12.5px; line-height:1.3; display:block;"><?php echo htmlspecialchars($it['name']); ?></strong>
+                            <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+                                <span style="font-size:10px; color:#8A681F; font-weight:700; font-family:monospace;">SKU: <?php echo htmlspecialchars($it['sku']); ?></span>
+                                <span style="display:inline-flex; align-items:center; gap:4px; font-size:10px; color:#475569; background:#FAF8F4; padding:1px 6px; border-radius:4px; border:1px solid #E2DFD7;">
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#9B111E; display:inline-block;"></span>
+                                    <span>Royal Ruby</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </td>
-                <td style="padding:9px 10px; text-align:center; font-family:monospace; color:#475569;">5007</td>
-                <td style="padding:9px 10px; text-align:center; font-weight:800; font-size:12px;"><?php echo $it['qty']; ?> pcs</td>
-                <td style="padding:9px 10px; text-align:right; font-weight:600;">₹<?php echo number_format($it['price']); ?></td>
-                <td style="padding:9px 10px; text-align:right; font-weight:800; color:#181512;">₹<?php echo number_format($it['price'] * $it['qty']); ?></td>
+                <td style="padding:10px; text-align:center; font-family:monospace; color:#475569; vertical-align:middle;">5007</td>
+                <td style="padding:10px; text-align:center; font-weight:800; font-size:12px; vertical-align:middle;"><?php echo $it['qty']; ?> pcs</td>
+                <td style="padding:10px; text-align:right; font-weight:600; vertical-align:middle;">₹<?php echo number_format($it['price']); ?></td>
+                <td style="padding:10px; text-align:right; font-weight:800; color:#181512; vertical-align:middle;">₹<?php echo number_format($it['price'] * $it['qty']); ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

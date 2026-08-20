@@ -7,12 +7,24 @@ $order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
 
 $order = [
     'id' => $order_id,
+    'date' => '21 Aug 2026',
     'customer' => 'Rajesh Kumar (Vardhman Tex)',
+    'phone' => '+91 98220 19283',
+    'gstin' => '24AAECJ1928K1Z5',
     'address' => [
-        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
+        'billing' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5 | Phone: +91 98220 19283",
+        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010\nContact: +91 98220 19283"
     ],
     'items' => [
-        ['name' => 'Kanjivaram Silk Saree Pure Zari Weave', 'sku' => 'KNJ-001', 'variant' => 'Royal Ruby / 5.5m', 'qty' => 25]
+        [
+            'name' => 'Kanjivaram Silk Saree Pure Zari Weave',
+            'sku' => 'KNJ-001',
+            'variant' => 'Royal Ruby / 5.5m',
+            'color_name' => 'Royal Ruby',
+            'color_hex' => '#9B111E',
+            'image' => '/Shared/Asset/images/product1.png',
+            'qty' => 25
+        ]
     ]
 ];
 
