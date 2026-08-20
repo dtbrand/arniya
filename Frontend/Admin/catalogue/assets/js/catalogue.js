@@ -402,22 +402,25 @@ window.DT_DISPLAY = {
         const grid = document.getElementById('simulatedGrid');
         if (!grid) return;
 
+        const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
+        const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
+        const ratio = document.getElementById('dspRatio') ? document.getElementById('dspRatio').value : '3-4';
+        const perPage = document.getElementById('dspPerPage') ? document.getElementById('dspPerPage').value : '24';
+        const theme = document.getElementById('dspCardTheme') ? document.getElementById('dspCardTheme').value : 'gold-border';
+
         // Columns
         if (this.currentDevice === 'desk') {
-            const deskCols = document.getElementById('dspDeskCols') ? document.getElementById('dspDeskCols').value : '4';
             grid.style.gridTemplateColumns = `repeat(${deskCols}, 1fr)`;
         } else {
-            const mobCols = document.getElementById('dspMobCols') ? document.getElementById('dspMobCols').value : '2';
             grid.style.gridTemplateColumns = `repeat(${mobCols}, 1fr)`;
         }
 
         // Image Aspect Ratio
-        const ratio = document.getElementById('dspRatio') ? document.getElementById('dspRatio').value : '3-4';
-        const imgs = grid.querySelectorAll('.sim-card-img');
-        imgs.forEach(img => {
-            if (ratio === '1-1') img.style.height = '120px';
-            else if (ratio === '4-5') img.style.height = '160px';
-            else img.style.height = '140px';
+        const wraps = grid.querySelectorAll('.card-image-wrap');
+        wraps.forEach(wrap => {
+            if (ratio === '1-1') wrap.style.aspectRatio = '1 / 1';
+            else if (ratio === '4-5') wrap.style.aspectRatio = '4 / 5';
+            else wrap.style.aspectRatio = '3 / 3.75';
         });
 
         // Visibility Toggles
@@ -434,12 +437,74 @@ window.DT_DISPLAY = {
         grid.querySelectorAll('.sim-b2b').forEach(el => el.style.display = chkB2b ? 'inline' : 'none');
         grid.querySelectorAll('.sim-margin').forEach(el => el.style.display = chkMargin ? 'inline-block' : 'none');
         grid.querySelectorAll('.sim-whatsapp').forEach(el => el.style.display = chkWhatsApp ? 'flex' : 'none');
-        grid.querySelectorAll('.sim-silkmark').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
-        grid.querySelectorAll('.sim-depot').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
-        grid.querySelectorAll('.sim-moq').forEach(el => el.style.display = chkMoq ? 'block' : 'none');
-        grid.querySelectorAll('.sim-urgency').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-heritage').forEach(el => el.style.display = chkSilkMark ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-trending').forEach(el => el.style.display = chkDepot ? 'inline-block' : 'none');
+        grid.querySelectorAll('.card-badge.badge-bridal').forEach(el => el.style.display = chkUrgency ? 'inline-block' : 'none');
+
+        // Update Live Sync Header Pills
+        const pills = document.getElementById('liveParamPills');
+        if (pills) {
+            pills.textContent = `${deskCols} Cols Desk • ${mobCols} Cols Mob • ${ratio.replace('-', ':')} Aspect • ${theme.replace('-', ' ')}`;
+        }
+        const pagInfo = document.getElementById('livePaginationInfo');
+        if (pagInfo) {
+            pagInfo.innerHTML = `Showing <strong>1–8</strong> of <strong>${perPage}</strong> Live SKUs (Page 1 of ${Math.ceil(parseInt(perPage)/8)})`;
+        }
+
+        // Pulse Green Sync Indicator
+        const pulse = document.getElementById('liveSyncPulse');
+        if (pulse) {
+            pulse.style.transform = 'scale(1.4)';
+            setTimeout(() => { pulse.style.transform = 'scale(1)'; }, 200);
+        }
 
         this.updateCardStyles();
+    },
+
+    updateSorting: function() {
+        const grid = document.getElementById('simulatedGrid');
+        const sortSelect = document.getElementById('dspSorting');
+        if (!grid || !sortSelect) return;
+
+        const val = sortSelect.value;
+        const cards = Array.from(grid.querySelectorAll('.dt-sim-card'));
+
+        cards.sort((a, b) => {
+            const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+            const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+            const revA = parseInt(a.getAttribute('data-reviews')) || 0;
+            const revB = parseInt(b.getAttribute('data-reviews')) || 0;
+            const idA = parseInt(a.getAttribute('data-id')) || 0;
+            const idB = parseInt(b.getAttribute('data-id')) || 0;
+
+            if (val === 'price-asc') return priceA - priceB;
+            if (val === 'price-desc') return priceB - priceA;
+            if (val === 'popular') return revB - revA;
+            if (val === 'newest') return (b.getAttribute('data-badge') === 'New' ? 1 : 0) - (a.getAttribute('data-badge') === 'New' ? 1 : 0);
+            return idA - idB;
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            grid.appendChild(card);
+        });
+
+        setTimeout(() => {
+            cards.forEach(card => { card.style.opacity = '1'; });
+        }, 80);
+
+        const sortNames = {
+            'position': 'Default Merchandising Priority',
+            'price-asc': 'Price: Low to High (Wholesale Rate)',
+            'price-desc': 'Price: High to Low',
+            'popular': 'Best Sellers / Most Popular Lots',
+            'newest': 'Newest First'
+        };
+
+        if (window.DT_CATALOGUE) {
+            window.DT_CATALOGUE.showToast(`✨ Live Storefront sorted by ${sortNames[val] || val}!`);
+        }
+        this.updatePreview();
     },
 
     updateCardStyles: function() {
@@ -453,12 +518,10 @@ window.DT_DISPLAY = {
 
         const cards = grid.querySelectorAll('.dt-sim-card');
         cards.forEach(card => {
-            // Radius
             card.style.borderRadius = radius;
-            const img = card.querySelector('.sim-card-img');
-            if (img) img.style.borderRadius = radius;
+            const imgWrap = card.querySelector('.card-image-wrap');
+            if (imgWrap) imgWrap.style.borderRadius = `${radius} ${radius} 0 0`;
 
-            // Border & Shadow Theme
             if (theme === 'gold-border') {
                 card.style.border = '1px solid #D4AF37';
                 card.style.boxShadow = '0 4px 12px rgba(212,175,55,0.15)';
@@ -477,10 +540,8 @@ window.DT_DISPLAY = {
                 card.style.background = '#FAF5E8';
             }
 
-            // Buttons
             const btns = card.querySelectorAll('.sim-action-btn');
             btns.forEach(btn => {
-                // Size
                 if (btnSize === 'large') {
                     btn.style.height = '34px';
                     btn.style.fontSize = '11.5px';
@@ -492,7 +553,6 @@ window.DT_DISPLAY = {
                     btn.style.fontSize = '10.5px';
                 }
 
-                // Button Style
                 btn.classList.remove('emerald', 'gold', 'pale-gold');
                 btn.classList.add(btnStyle);
             });

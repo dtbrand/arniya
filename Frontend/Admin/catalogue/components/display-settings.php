@@ -231,7 +231,7 @@ $real_products = [
 
             <div class="dt-form-group">
                 <label class="dt-form-label">💻 Tablet Columns</label>
-                <select class="dt-form-select" id="dspTabCols">
+                <select class="dt-form-select" id="dspTabCols" onchange="window.DT_DISPLAY.updatePreview()">
                     <option value="3" selected>3 Columns (Standard Tablet)</option>
                     <option value="2">2 Columns (Large Touch Cards)</option>
                 </select>
@@ -256,7 +256,7 @@ $real_products = [
 
             <div class="dt-form-group">
                 <label class="dt-form-label">🔢 Products Per Page</label>
-                <select class="dt-form-select">
+                <select class="dt-form-select" id="dspPerPage" onchange="window.DT_DISPLAY.updatePreview()">
                     <option value="24" selected>24 Products / Page</option>
                     <option value="48">48 Products / Page</option>
                     <option value="96">96 Products / Page</option>
@@ -265,12 +265,12 @@ $real_products = [
 
             <div class="dt-form-group">
                 <label class="dt-form-label">🔃 Default Catalog Sorting</label>
-                <select class="dt-form-select">
+                <select class="dt-form-select" id="dspSorting" onchange="window.DT_DISPLAY.updateSorting()">
                     <option value="position" selected>Position / Merchandising Priority</option>
-                    <option value="newest">Latest Catalogues (Newest First)</option>
                     <option value="price-asc">Price: Low to High (Wholesale Rate)</option>
                     <option value="price-desc">Price: High to Low</option>
                     <option value="popular">Best Sellers / Fast Moving Lots</option>
+                    <option value="newest">Latest Catalogues (Newest First)</option>
                 </select>
             </div>
         </div>
@@ -366,12 +366,15 @@ $real_products = [
             </label>
         </div>
 
-        <!-- 4. Multi-Portal Storefront Simulator Tabs & Device Switcher -->
-        <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
-                <div>
-                    <strong style="font-size:13px; color:#181512;">Live Storefront Product Card Simulator (100% Real Shop Styles &amp; Details)</strong>
-                    <div style="font-size:11px; color:#64748b;">Identical to real shop page card with authentic badges, photo tags, heart wishlist, colors &amp; pricing.</div>
+        <!-- 4. Next-Level Multi-Portal Storefront Simulator & Real-Time Sync Bar -->
+        <div style="background:#FDFBF7; border:1px solid #D4AF37; border-radius:8px; padding:16px; box-shadow:0 4px 16px rgba(212,175,55,0.12);">
+            
+            <!-- Real-Time Sync Header Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px; background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span id="liveSyncPulse" style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#16A34A; box-shadow:0 0 8px #16A34A; animation:pulse 1.5s infinite;"></span>
+                    <strong id="liveSyncStatus" style="font-size:12px; color:#181512;">Live Preview Synced (Blazing Fast 0ms)</strong>
+                    <span id="liveParamPills" class="dt-badge gold" style="font-size:9.5px;">4 Cols Desktop • 2 Cols Mobile • 3:4 Aspect</span>
                 </div>
                 <div class="dt-device-switcher">
                     <button type="button" class="dt-device-btn active" id="btnDspDesk" onclick="window.DT_DISPLAY.switchDevice('desk')">🖥️ Desktop Grid</button>
@@ -399,17 +402,17 @@ $real_products = [
             </div>
 
             <!-- Simulated Cards Grid (100% Real Shop Structure) -->
-            <div id="simulatedGrid" class="products-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; transition:all 0.2s ease;">
+            <div id="simulatedGrid" class="products-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; transition:all 0.25s ease;">
                 <?php foreach ($real_products as $p): ?>
                 <?php
                     $badge_class = !empty($p['badge']) ? 'badge-'.strtolower(str_replace(' ', '', $p['badge'])) : '';
                 ?>
-                <article class="product-card dt-sim-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; position:relative; display:flex; flex-direction:column; overflow:hidden; transition:all 0.3s ease;">
+                <article class="product-card dt-sim-card" data-id="<?php echo $p['id']; ?>" data-price="<?php echo $p['price']; ?>" data-reviews="<?php echo $p['reviews']; ?>" data-badge="<?php echo htmlspecialchars($p['badge']); ?>" style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; position:relative; display:flex; flex-direction:column; overflow:hidden; transition:all 0.25s ease;">
                     
                     <!-- 1. Card Image Wrap with Real Wishlist, Badges, Category Tag & Share -->
                     <div class="card-image-wrap" style="position:relative; overflow:hidden; aspect-ratio:3/3.75; background:#FAF8F4; width:100%;">
                         
-                        <img src="<?php echo htmlspecialchars($p['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" alt="<?php echo htmlspecialchars($p['name']); ?>" class="card-img sim-card-img" style="width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform 0.45s ease;">
+                        <img src="<?php echo htmlspecialchars($p['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" alt="<?php echo htmlspecialchars($p['name']); ?>" class="card-img sim-card-img" style="width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform 0.35s ease;">
 
                         <!-- Real Shop Badges (Heritage, Bridal, Trending, Best Seller, New) -->
                         <?php if (!empty($p['badge'])): ?>
@@ -526,6 +529,18 @@ $real_products = [
                 </article>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Live Simulated Pagination Footer -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:10px; border-top:1px solid #e2e8f0; flex-wrap:wrap; gap:8px;">
+                <span id="livePaginationInfo" style="font-size:11px; color:#64748b;">Showing <strong>1–8</strong> of <strong>24</strong> Live SKUs (Page 1 of 3)</span>
+                <div style="display:flex; gap:4px;">
+                    <button type="button" class="dt-btn-action-sm gold" style="height:22px; padding:0 8px; font-size:10px;">1</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Simulated Page 2 loaded!')" style="height:22px; padding:0 8px; font-size:10px;">2</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Simulated Page 3 loaded!')" style="height:22px; padding:0 8px; font-size:10px;">3</button>
+                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Next page loaded!')" style="height:22px; padding:0 8px; font-size:10px;">Next ›</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
