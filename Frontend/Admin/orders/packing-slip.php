@@ -9,6 +9,8 @@ $order = [
     'id' => $order_id,
     'date' => '21 Aug 2026',
     'customer' => 'Rajesh Kumar (Vardhman Tex)',
+    'customer_name' => 'Rajesh Kumar',
+    'company_name' => 'Vardhman Tex',
     'address' => [
         'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
     ],

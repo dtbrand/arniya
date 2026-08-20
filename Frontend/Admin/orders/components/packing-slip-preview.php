@@ -35,11 +35,23 @@ $items = isset($order['items']) ? $order['items'] : [
         </div>
     </div>
 
-    <!-- Shipping Destination Card (Billing, Phone & GST Removed) -->
-    <div class="dt-doc-address-card" style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:14px 16px; margin-bottom:20px; font-size:12px; line-height:1.5;">
-        <div class="dt-doc-address-title" style="font-size:10.5px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:4px; letter-spacing:0.5px;">Shipping Destination (Godown):</div>
-        <strong style="font-size:14px; color:#181512;"><?php echo htmlspecialchars($customer); ?></strong><br>
-        <span style="color:#475569; font-size:12px;"><?php echo htmlspecialchars($shipping_addr); ?></span>
+    <!-- 2-Column Grid: Billing Name & Company Only | Shipping Destination -->
+    <div class="dt-doc-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
+        <div class="dt-doc-address-card" style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px 14px; font-size:11.5px; line-height:1.5;">
+            <div class="dt-doc-address-title" style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:4px; letter-spacing:0.5px;">Billed Customer &amp; Firm:</div>
+            <strong style="font-size:14px; color:#181512; display:block;"><?php echo htmlspecialchars($order['customer_name'] ?? 'Rajesh Kumar'); ?></strong>
+            <div style="font-size:12px; color:#475569; margin-top:2px;">
+                Firm: <strong style="color:#181512;"><?php echo htmlspecialchars($order['company_name'] ?? 'Vardhman Tex'); ?></strong>
+            </div>
+            <div style="margin-top:5px;">
+                <span style="font-size:9.5px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:800; padding:1px 6px; border-radius:4px; display:inline-block;">Verified B2B Account</span>
+            </div>
+        </div>
+        <div class="dt-doc-address-card" style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:12px 14px; font-size:11.5px; line-height:1.5;">
+            <div class="dt-doc-address-title" style="font-size:10px; font-weight:800; text-transform:uppercase; color:#8A681F; margin-bottom:4px; letter-spacing:0.5px;">Shipping Destination (Godown):</div>
+            <strong style="font-size:14px; color:#181512; display:block;"><?php echo htmlspecialchars($customer); ?></strong>
+            <span style="color:#475569; font-size:12px; line-height:1.4; display:block; margin-top:2px;"><?php echo htmlspecialchars($shipping_addr); ?></span>
+        </div>
     </div>
 
     <!-- Line Items Table with Real Product Thumbnail Photo & Color Swatch -->
