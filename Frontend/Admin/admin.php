@@ -726,130 +726,108 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </div>
 
-                <!-- ══ PRODUCT SUB-OPTION QUICK PILLS ══ -->
+                <!-- ══ PRODUCT SUB-OPTION QUICK PILLS WITH 100% REAL VECTOR SVG ICONS ══ -->
                 <div class="adm-prod-subnav-strip">
                     <a href="/Frontend/Admin/products/" class="adm-prod-pill active">
-                        <span>👗 All Products</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <span>All Products</span>
                         <span class="adm-prod-pill-badge">1,240</span>
                     </a>
                     <a href="/Frontend/Admin/products/add.php" class="adm-prod-pill">
-                        <span>➕ Add Product</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Add Product</span>
                     </a>
                     <a href="/Frontend/Admin/products/categories/" class="adm-prod-pill">
-                        <span>📁 Categories</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Categories</span>
                         <span class="adm-prod-pill-badge">16</span>
                     </a>
-                    <a href="/Frontend/Admin/products/subcategories/" class="adm-prod-pill">
-                        <span>🏷️ Subcategories</span>
-                        <span class="adm-prod-pill-badge">34</span>
-                    </a>
                     <a href="/Frontend/Admin/products/brands/" class="adm-prod-pill">
-                        <span>🏢 Brands</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
+                        <span>Brands</span>
                         <span class="adm-prod-pill-badge">4</span>
                     </a>
                     <a href="/Frontend/Admin/products/attributes/" class="adm-prod-pill">
-                        <span>🎨 Attributes &amp; Matrix</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
+                        <span>Attributes</span>
+                    </a>
+                    <a href="/Frontend/Admin/products/variants/" class="adm-prod-pill">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
+                        <span>Variants</span>
                     </a>
                     <a href="/Frontend/Admin/products/media/" class="adm-prod-pill">
-                        <span>📸 Media Gallery</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        <span>Media</span>
                     </a>
                     <a href="/Frontend/Admin/products/featured/" class="adm-prod-pill">
-                        <span>⭐️ Featured</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <span>Featured</span>
                         <span class="adm-prod-pill-badge">48</span>
                     </a>
                     <a href="/Frontend/Admin/products/best-sellers/" class="adm-prod-pill">
-                        <span>🔥 Best Sellers</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                        <span>Best Sellers</span>
                         <span class="adm-prod-pill-badge">32</span>
                     </a>
                     <a href="/Frontend/Admin/products/new-arrivals/" class="adm-prod-pill">
-                        <span>✨ New Arrivals</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15 8 21 9 17 14 18 20 12 17 6 20 7 14 3 9 9 8 12 2"></polygon></svg>
+                        <span>New Arrivals</span>
                         <span class="adm-prod-pill-badge">64</span>
                     </a>
                     <a href="/Frontend/Admin/products/reviews/" class="adm-prod-pill">
-                        <span>💬 Reviews</span>
-                        <span class="adm-prod-pill-badge">4.9 ★</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>Reviews</span>
                     </a>
                     <a href="/Frontend/Admin/products/imports/" class="adm-prod-pill">
-                        <span>📥 Import Wizard</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Import</span>
                     </a>
                     <a href="/Frontend/Admin/products/exports/" class="adm-prod-pill">
-                        <span>📤 Export Studio</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <span>Export</span>
                     </a>
                 </div>
 
-                <!-- ══ 9 SUMMARY KPI METRIC CARDS ══ -->
-                <div class="dt-summary-grid" style="margin-bottom:20px;">
-                    <div class="dt-summary-card active" onclick="window.showToast('Filtering: All Products')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">👗</span>
-                            <span class="dt-sum-trend up">1,240 Total</span>
+                <!-- ══ 4-CARD MASTER WHOLESALE KPI METRIC RIBBON ══ -->
+                <div class="dt-kpi-ribbon">
+                    <div class="dt-kpi-card">
+                        <div class="dt-kpi-icon-wrap" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         </div>
-                        <div class="dt-sum-val">1,240</div>
-                        <div class="dt-sum-lbl">Total Products</div>
+                        <div class="dt-kpi-content">
+                            <div class="dt-kpi-lbl">TOTAL CATALOG SKUS</div>
+                            <div class="dt-kpi-val" style="color:#181512;">1,240 Products</div>
+                        </div>
                     </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Active Products')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">🟢</span>
-                            <span class="dt-sum-trend up">95.5%</span>
+
+                    <div class="dt-kpi-card">
+                        <div class="dt-kpi-icon-wrap" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D;">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         </div>
-                        <div class="dt-sum-val">1,185</div>
-                        <div class="dt-sum-lbl">Active Products</div>
+                        <div class="dt-kpi-content">
+                            <div class="dt-kpi-lbl">SURAT READY STOCK</div>
+                            <div class="dt-kpi-val" style="color:#15803D;">8,450 Units</div>
+                        </div>
                     </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Draft Products')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">📝</span>
-                            <span class="dt-sum-trend">Pending</span>
+
+                    <div class="dt-kpi-card">
+                        <div class="dt-kpi-icon-wrap" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                         </div>
-                        <div class="dt-sum-val">14</div>
-                        <div class="dt-sum-lbl">Draft Products</div>
+                        <div class="dt-kpi-content">
+                            <div class="dt-kpi-lbl">CATALOG VALUATION</div>
+                            <div class="dt-kpi-val" style="color:#1D4ED8;">₹84.6 Lakhs</div>
+                        </div>
                     </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Inactive Products')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">⏸️</span>
-                            <span class="dt-sum-trend down">Paused</span>
+
+                    <div class="dt-kpi-card">
+                        <div class="dt-kpi-icon-wrap" style="background:#FEF3C7; border:1px solid #FCD34D; color:#B45309;">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         </div>
-                        <div class="dt-sum-val">0</div>
-                        <div class="dt-sum-lbl">Inactive</div>
-                    </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Low Stock')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">⚠️</span>
-                            <span class="dt-sum-trend down">&lt; 5 pcs</span>
+                        <div class="dt-kpi-content">
+                            <div class="dt-kpi-lbl">AVG RESALE MARGIN</div>
+                            <div class="dt-kpi-val" style="color:#B45309;">+38.5% Margin</div>
                         </div>
-                        <div class="dt-sum-val">14</div>
-                        <div class="dt-sum-lbl">Low Stock</div>
-                    </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Out of Stock')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">🛑</span>
-                            <span class="dt-sum-trend down">Restock</span>
-                        </div>
-                        <div class="dt-sum-val">41</div>
-                        <div class="dt-sum-lbl">Out of Stock</div>
-                    </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Featured Products')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">⭐️</span>
-                            <span class="dt-sum-trend up">Top Pick</span>
-                        </div>
-                        <div class="dt-sum-val">48</div>
-                        <div class="dt-sum-lbl">Featured</div>
-                    </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: Best Sellers')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">🔥</span>
-                            <span class="dt-sum-trend up">High Vol</span>
-                        </div>
-                        <div class="dt-sum-val">32</div>
-                        <div class="dt-sum-lbl">Best Sellers</div>
-                    </div>
-                    <div class="dt-summary-card" onclick="window.showToast('Filtering: New Arrivals')">
-                        <div class="dt-sum-top">
-                            <span class="dt-sum-icon">✨</span>
-                            <span class="dt-sum-trend up">2026 Drop</span>
-                        </div>
-                        <div class="dt-sum-val">64</div>
-                        <div class="dt-sum-lbl">New Arrivals</div>
                     </div>
                 </div>
 

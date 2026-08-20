@@ -2501,3 +2501,65 @@ input, select, textarea {
     display: block !important;
     margin: 0 auto !important;
 }
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   👑 DT BRAND'S CATALOG TAB SUMMARY GRID & SUBNAV PILLS ENGINE
+   ══════════════════════════════════════════════════════════════════════════════ */
+.adm-prod-subnav-strip {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 4px 2px 12px !important;
+    margin-bottom: 14px !important;
+    scrollbar-width: thin !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.adm-prod-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    background: #FAF5E8 !important;
+    border: 1.2px solid #D4AF37 !important;
+    color: #8A681F !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    flex-shrink: 0 !important;
+}
+
+.adm-prod-pill:hover {
+    background: #F5EDD6 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 3px 8px rgba(212, 175, 55, 0.2) !important;
+}
+
+.adm-prod-pill.active {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%) !important;
+    border-color: #8A681F !important;
+    color: #181512 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35) !important;
+}
+
+.adm-prod-pill-badge {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #8A681F !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    padding: 1px 6px !important;
+    border-radius: 10px !important;
+}
+
+.adm-prod-pill.active .adm-prod-pill-badge {
+    background: #181512 !important;
+    color: #FAF5E8 !important;
+}
