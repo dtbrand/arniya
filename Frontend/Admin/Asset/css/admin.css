@@ -2073,13 +2073,150 @@ input, select, textarea {
 
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   👑 MASTER RESPONSIVE MOBILE/TABLET SIDEBAR DRAWER & AUTO-SIZING ENGINE
+   👑 DT BRAND'S LUXURY HEADER STYLING (WHOLESALE DASHBOARD DESKTOP & MOBILE)
    ══════════════════════════════════════════════════════════════════════════════ */
+.adm-header {
+    height: var(--adm-header-h);
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1.5px solid rgba(212, 175, 55, 0.25) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    box-shadow: 0 2px 12px rgba(138, 104, 31, 0.05);
+}
+
+.adm-mobile-menu-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    background: #FAF5E8 !important;
+    color: #8A681F !important;
+    border: 1.5px solid #D4AF37 !important;
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.25);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.adm-mobile-menu-btn:hover {
+    background: #8A681F !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+}
+
+.adm-mobile-brand-link {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.adm-mobile-logo-img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+}
+
+.adm-mobile-brand-title {
+    font-family: var(--adm-font-serif);
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #8A681F;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.adm-btn-primary {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%) !important;
+    color: #181512 !important;
+    font-weight: 800 !important;
+    border: 1px solid #8A681F !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35) !important;
+    border-radius: 6px;
+    padding: 0 14px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.adm-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5) !important;
+    color: #181512 !important;
+}
+
+.adm-btn-secondary {
+    background: #FAF5E8 !important;
+    border: 1px solid #D4AF37 !important;
+    color: #8A681F !important;
+    font-weight: 700 !important;
+    border-radius: 6px;
+    padding: 0 12px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.adm-btn-secondary:hover {
+    background: #F5EDD6 !important;
+    transform: translateY(-1px);
+}
+
+.adm-hdr-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    background: #FAF5E8;
+    border: 1.2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.adm-hdr-profile:hover {
+    border-color: #8A681F;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+
+.adm-hdr-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #8A681F;
+    object-fit: cover;
+}
+
+.adm-hdr-caret {
+    color: #8A681F;
+}
+
+/* ════ RESPONSIVE BREAKPOINTS ════ */
 @media (max-width: 1024px) {
     .adm-mobile-menu-btn {
         display: flex !important;
     }
-    
+    .adm-mobile-brand-link {
+        display: flex !important;
+    }
+    .adm-search-box {
+        display: none !important; /* Hide long search box from header on small tablet */
+    }
     .adm-sidebar {
         transform: translateX(-100%) !important;
         width: 280px !important;
@@ -2091,40 +2228,55 @@ input, select, textarea {
         box-shadow: 10px 0 40px rgba(0, 0, 0, 0.4) !important;
         transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
-    
     .adm-sidebar.mobile-open {
         transform: translateX(0) !important;
     }
-    
     .adm-main {
         margin-left: 0 !important;
         max-width: 100vw !important;
         width: 100% !important;
     }
-    
-    .adm-sidebar.collapsed ~ .adm-main {
-        margin-left: 0 !important;
-        max-width: 100vw !important;
-    }
-    
     .adm-header {
         padding: 0 12px !important;
-        gap: 8px !important;
+        height: 52px !important;
     }
-    
     .adm-header-right {
         gap: 6px !important;
     }
-    
     .adm-btn-secondary {
         display: none !important;
     }
-    
     .adm-hdr-user-text {
         display: none !important;
     }
-    
+    .adm-hdr-caret {
+        display: none !important;
+    }
+    .adm-hdr-profile {
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+    }
     .adm-content {
         padding: 12px 14px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .adm-btn-text {
+        display: none !important; /* Icon-only on mobile */
+    }
+    .adm-btn-primary {
+        padding: 0 10px !important;
+        height: 32px !important;
+    }
+    .adm-wa-text {
+        display: none !important;
+    }
+    .adm-live-wa-pill {
+        padding: 6px 8px !important;
+    }
+    .adm-mobile-brand-title {
+        display: none !important;
     }
 }
