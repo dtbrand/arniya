@@ -274,16 +274,9 @@
         },
 
         printLedger: function() {
-            const modal = document.getElementById('customerLedgerModal');
-            if (!modal) {
-                window.print();
-                return;
-            }
-            document.body.classList.add('is-printing-ledger');
-            window.print();
-            setTimeout(() => {
-                document.body.classList.remove('is-printing-ledger');
-            }, 2000);
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id') || 'DTB-001624';
+            window.open('/Frontend/Admin/orders/ledger.php?id=' + encodeURIComponent(orderId) + '&print=1', '_blank');
         },
 
         exportLedgerCSV: function() {
