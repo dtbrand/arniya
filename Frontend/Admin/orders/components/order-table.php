@@ -219,19 +219,19 @@ $orders_list = [
         <table class="dt-order-table">
             <thead>
                 <tr>
-                    <th style="width:34px; text-align:center;">
+                    <th style="width:30px; text-align:center;">
                         <input type="checkbox" class="dt-checkbox" onchange="window.DT_BULK_ACTIONS.toggleSelectAll(this)" title="Select all orders">
                     </th>
-                    <th>Order ID</th>
-                    <th>Date</th>
-                    <th>Customer</th>
-                    <th class="col-items">Items</th>
-                    <th>Amount</th>
-                    <th class="col-payment">Payment</th>
-                    <th class="col-shipping">Shipping</th>
-                    <th>Status</th>
-                    <th class="col-source">Source</th>
-                    <th style="text-align:right;">Actions</th>
+                    <th style="width:95px;">Order ID</th>
+                    <th style="width:110px;">Date</th>
+                    <th style="width:160px;">Customer</th>
+                    <th class="col-items" style="width:65px;">Items</th>
+                    <th style="width:90px;">Amount</th>
+                    <th class="col-payment" style="width:105px;">Payment</th>
+                    <th class="col-shipping" style="width:105px;">Shipping</th>
+                    <th style="width:85px;">Status</th>
+                    <th class="col-source" style="width:75px;">Source</th>
+                    <th style="width:115px; text-align:right;">Actions</th>
                 </tr>
             </thead>
             <tbody id="ordersTableBody">
@@ -246,40 +246,40 @@ $orders_list = [
                     <td>
                         <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-order-id-link">
                             <span><?php echo $o['id']; ?></span>
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                         </a>
                     </td>
                     <td style="white-space:nowrap; font-size:11px; color:#64748B;">
-                        <?php echo $o['date']; ?>
+                        <?php echo str_replace(' 2026', '', $o['date']); ?>
                     </td>
                     <td>
                         <div class="dt-customer-cell">
-                            <span class="dt-customer-name"><?php echo htmlspecialchars($o['customer']); ?></span>
+                            <span class="dt-customer-name" title="<?php echo htmlspecialchars($o['customer']); ?>"><?php echo htmlspecialchars($o['customer']); ?></span>
                             <span class="dt-customer-phone"><?php echo htmlspecialchars($o['phone']); ?></span>
                         </div>
                     </td>
                     <td class="col-items">
                         <span class="dt-items-pill" title="<?php echo htmlspecialchars($o['items_summary']); ?>">
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
                             <span><?php echo $o['items_count']; ?></span>
                         </span>
                     </td>
                     <td>
                         <div class="dt-amount-cell">
-                            <svg class="dt-rupee-svg" viewBox="0 0 24 24" width="11" height="11"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                            <svg class="dt-rupee-svg" viewBox="0 0 24 24" width="10" height="10"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             <span><?php echo number_format($o['amount']); ?></span>
                         </div>
                     </td>
                     <td class="col-payment">
-                        <div style="display:flex; flex-direction:column; gap:2px;">
+                        <div style="display:flex; flex-direction:column; gap:1px;">
                             <span class="dt-pay-badge <?php echo $o['payment_status']; ?>"><?php echo strtoupper($o['payment_status']); ?></span>
-                            <span style="font-size:10px; color:#64748B;"><?php echo $o['payment']; ?></span>
+                            <span style="font-size:9.5px; color:#64748B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:95px;"><?php echo $o['payment']; ?></span>
                         </div>
                     </td>
                     <td class="col-shipping">
-                        <div style="display:flex; flex-direction:column; gap:2px;">
-                            <span style="font-weight:700; font-size:11px; color:#334155;"><?php echo $o['shipping']; ?></span>
-                            <span style="font-size:10px; color:#64748B; font-family:monospace;"><?php echo $o['tracking']; ?></span>
+                        <div style="display:flex; flex-direction:column; gap:1px;">
+                            <span style="font-weight:700; font-size:10.5px; color:#334155; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:95px;"><?php echo $o['shipping']; ?></span>
+                            <span style="font-size:9.5px; color:#64748B; font-family:monospace;"><?php echo $o['tracking']; ?></span>
                         </div>
                     </td>
                     <td>
@@ -289,7 +289,7 @@ $orders_list = [
                         </span>
                     </td>
                     <td class="col-source">
-                        <span class="dt-kpi-badge up" style="font-size:10px; background:#F8FAFC; border:1px solid #E2E8F0; color:#475569;"><?php echo $o['source']; ?></span>
+                        <span class="dt-kpi-badge up" style="font-size:9.5px; padding:1px 5px; background:#F8FAFC; border:1px solid #E2E8F0; color:#475569; white-space:nowrap;"><?php echo $o['source']; ?></span>
                     </td>
                     <td style="text-align:right;">
                         <div class="dt-row-actions" style="justify-content:flex-end;">
