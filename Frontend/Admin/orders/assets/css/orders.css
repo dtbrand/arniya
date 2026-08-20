@@ -188,134 +188,256 @@
     color: #B91C1C;
 }
 
-/* ════ KPI METRICS RIBBON (FLUID RESPONSIVE AUTO-SIZING) ════ */
-.dt-orders-kpi-grid {
+/* ════ 4-CARD MASTER EXECUTIVE KPI RIBBON (DT BRAND'S STANDARD) ════ */
+.dt-master-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
     width: 100%;
 }
 
-@media (max-width: 1024px) {
-    .dt-orders-kpi-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-}
-
-@media (max-width: 768px) {
-    .dt-orders-kpi-grid {
+@media (max-width: 1100px) {
+    .dt-master-kpi-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 12px;
     }
 }
 
-@media (max-width: 480px) {
-    .dt-orders-kpi-grid {
+@media (max-width: 600px) {
+    .dt-master-kpi-grid {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 10px;
     }
 }
 
-.dt-kpi-card {
+.dt-master-kpi-card {
     background: #FFFFFF;
     border: 1px solid var(--dt-border);
-    border-radius: 8px;
-    padding: 12px 14px;
+    border-radius: 10px;
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     text-decoration: none;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
 }
 
-.dt-kpi-card:hover {
+.dt-master-kpi-card:hover {
     transform: translateY(-2px);
     border-color: var(--dt-gold-radiant);
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
 }
 
-.dt-kpi-card.active {
-    background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
+.dt-master-kpi-card.active {
+    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
     border: 1.5px solid var(--dt-gold);
-    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.15);
+    box-shadow: 0 6px 18px rgba(138, 104, 31, 0.16);
 }
 
-.dt-kpi-top {
+.dt-kpi-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.dt-kpi-label {
+.dt-kpi-tag {
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: #64748B;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
 }
 
-.dt-kpi-card.active .dt-kpi-label {
+.dt-master-kpi-card.active .dt-kpi-tag {
     color: var(--dt-gold-bronze);
 }
 
-.dt-kpi-icon-wrap {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+.dt-kpi-icon-pill {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #FAF8F4;
-    border: 1px solid #EAE7E0;
-    color: var(--dt-gold);
     flex-shrink: 0;
 }
 
-.dt-kpi-card.active .dt-kpi-icon-wrap {
-    background: #FFFFFF;
-    border-color: var(--dt-gold-radiant);
+.dt-kpi-icon-pill.gold {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
 }
 
-.dt-kpi-val {
-    font-size: 20px;
+.dt-kpi-icon-pill.amber {
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FCD34D;
+}
+
+.dt-kpi-icon-pill.blue {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #93C5FD;
+}
+
+.dt-kpi-icon-pill.emerald {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+}
+
+.dt-kpi-number-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.dt-kpi-main-number {
+    font-size: 26px;
     font-weight: 800;
     color: var(--dt-obsidian);
-    line-height: 1.1;
+    line-height: 1;
     font-feature-settings: "tnum";
+    letter-spacing: -0.02em;
 }
 
-.dt-kpi-bottom {
+.dt-kpi-trend-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.dt-kpi-trend-pill.up,
+.dt-kpi-trend-pill.emerald {
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #BBF7D0;
+}
+
+.dt-kpi-trend-pill.amber {
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FDE68A;
+}
+
+.dt-kpi-trend-pill.blue {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border: 1px solid #BFDBFE;
+}
+
+.dt-kpi-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: #64748B;
+    border-top: 1px dashed #E2E8F0;
+    padding-top: 8px;
+    margin-top: 2px;
 }
 
-.dt-kpi-badge {
-    font-weight: 700;
+.dt-kpi-arrow {
+    font-weight: 800;
+    color: var(--dt-gold);
+    transition: transform 0.2s ease;
+}
+
+.dt-master-kpi-card:hover .dt-kpi-arrow {
+    transform: translateX(3px);
+}
+
+/* ════ TIER 2: INTERACTIVE FULFILLMENT STATUS FLOW BAR ════ */
+.dt-status-flow-container {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+}
+
+.dt-status-flow-scroll {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+}
+
+.dt-status-flow-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.dt-status-flow-scroll::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
     border-radius: 4px;
-    padding: 1px 5px;
-    font-size: 9.5px;
 }
 
-.dt-kpi-badge.up {
-    background: var(--dt-emerald-bg);
-    color: var(--dt-emerald);
+.dt-flow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #FAF8F4;
+    border: 1px solid #E2DFD7;
+    color: #475569;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    flex-shrink: 0;
 }
 
-.dt-kpi-badge.pending {
-    background: var(--dt-amber-bg);
-    color: var(--dt-amber);
+.dt-flow-pill svg {
+    color: #64748B;
+    transition: color 0.18s ease;
 }
 
-.dt-kpi-badge.danger {
-    background: var(--dt-crimson-bg);
-    color: var(--dt-crimson);
+.dt-flow-pill:hover {
+    background: #F1ECE1;
+    border-color: var(--dt-gold);
+    color: var(--dt-obsidian);
+    transform: translateY(-1px);
+}
+
+.dt-flow-pill:hover svg {
+    color: var(--dt-gold);
+}
+
+.dt-flow-pill.active {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border-color: #8A681F;
+    color: #FAF5E8;
+    box-shadow: 0 2px 8px rgba(24, 21, 18, 0.25);
+}
+
+.dt-flow-pill.active svg {
+    color: var(--dt-gold-radiant);
+}
+
+.dt-flow-count {
+    background: #E2E8F0;
+    color: #334155;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 10px;
+}
+
+.dt-flow-pill.active .dt-flow-count {
+    background: #8A681F;
+    color: #FFFFFF;
 }
 
 /* ════ INDIAN RUPEE ICON HELPER ════ */
