@@ -2342,7 +2342,7 @@ input, select, textarea {
 
 @media (max-width: 1024px) {
     .adm-desktop-footer {
-        padding-bottom: 75px !important; /* Prevent footer text from hiding behind dock */
+        display: none !important; /* Mobile in admin main footer removed completely */
     }
 
     .adm-content {
