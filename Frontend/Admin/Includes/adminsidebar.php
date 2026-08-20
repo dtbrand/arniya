@@ -149,6 +149,87 @@ $current_subnav = isset($active_subnav) ? $active_subnav : '';
                     </ul>
                 </li>
 
+                <!-- CATALOGUE WITH REAL SVG SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'catalogue' ? 'open' : ''; ?>">
+                    <a href="/Frontend/Admin/catalogue/" class="adm-nav-item <?php echo $current_nav === 'catalogue' ? 'active' : ''; ?>" id="navItem-catalogue" data-title="Catalogue & Taxonomy">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <span class="adm-nav-label">Catalogue</span>
+                        <span class="adm-nav-badge gold">16 Cats</span>
+                        <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'catalogue' ? 'open' : ''; ?>" id="admSubmenu-catalogue">
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/" class="adm-nav-subitem <?php echo ($current_nav === 'catalogue' && $current_subnav === 'overview') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Overview Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/hierarchy.php" class="adm-nav-subitem <?php echo $current_subnav === 'hierarchy' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                                <span>Hierarchy Tree</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/categories/" class="adm-nav-subitem <?php echo $current_subnav === 'categories' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                                <span>Categories</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">16</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/subcategories/" class="adm-nav-subitem <?php echo $current_subnav === 'subcategories' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                <span>Subcategories</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">42</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/collections/" class="adm-nav-subitem <?php echo $current_subnav === 'collections' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Collections</span>
+                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">8</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/featured.php" class="adm-nav-subitem <?php echo $current_subnav === 'featured' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15 8 21 9 17 14 18 20 12 17 6 20 7 14 3 9 9 8 12 2"></polygon></svg>
+                                <span>Featured Sections</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/banners/" class="adm-nav-subitem <?php echo $current_subnav === 'banners' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>Banners</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/navigation.php" class="adm-nav-subitem <?php echo $current_subnav === 'navigation' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                                <span>Navigation Builder</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/merchandising.php" class="adm-nav-subitem <?php echo $current_subnav === 'merchandising' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                                <span>Merchandising</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/display-settings.php" class="adm-nav-subitem <?php echo $current_subnav === 'display-settings' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Display Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/catalogue/seo/" class="adm-nav-subitem <?php echo $current_subnav === 'seo' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <span>SEO Suite</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-orders')) { switchAdmTab('orders'); return false; }" data-title="Orders & Shipments">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>

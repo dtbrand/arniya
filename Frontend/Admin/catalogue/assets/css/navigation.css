@@ -1,0 +1,82 @@
+/* ==========================================================================
+   navigation.css — Visual Menu Builder & Mega Menu UI Styles
+   ========================================================================== */
+
+.dt-nav-builder-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 18px;
+}
+@media (max-width: 900px) {
+    .dt-nav-builder-layout {
+        grid-template-columns: 1fr;
+    }
+}
+.dt-nav-avail-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 14px;
+}
+.dt-nav-struct-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 14px;
+}
+.dt-menu-nest-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.dt-menu-nest-item {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.dt-menu-nest-item.is-child {
+    margin-left: 24px;
+    border-left: 3px solid #D4AF37;
+    background: #FAF5E8;
+}
+.dt-mega-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: #181512;
+    color: #fff;
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid #D4AF37;
+}
+@media (max-width: 800px) {
+    .dt-mega-menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+.dt-mega-col-title {
+    color: #D4AF37;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding-bottom: 4px;
+}
+.dt-mega-link {
+    color: #cbd5e1;
+    font-size: 11.5px;
+    display: block;
+    margin-bottom: 4px;
+    text-decoration: none;
+}
+.dt-mega-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}

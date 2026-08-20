@@ -1,0 +1,83 @@
+/* ==========================================================================
+   hierarchy.css — Category Hierarchy & Tree Structure Styles
+   ========================================================================== */
+
+.dt-tree-container {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+}
+.dt-tree-root {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.dt-tree-node {
+    position: relative;
+    margin: 6px 0;
+    list-style: none;
+}
+.dt-tree-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    gap: 10px;
+}
+.dt-tree-item:hover {
+    border-color: #D4AF37;
+    background: #FDFBF7;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.12);
+}
+.dt-tree-item.level-0 {
+    border-left: 4px solid #8A681F;
+    font-weight: 700;
+}
+.dt-tree-item.level-1 {
+    border-left: 4px solid #D4AF37;
+}
+.dt-tree-item.level-2 {
+    border-left: 4px solid #cbd5e1;
+}
+.dt-tree-children {
+    list-style: none;
+    padding-left: 28px;
+    margin: 6px 0 0 0;
+    border-left: 2px dashed #e2e8f0;
+    margin-left: 14px;
+}
+.dt-tree-toggle {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+    color: #475569;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+.dt-tree-toggle:hover {
+    background: #FAF5E8;
+    color: #8A681F;
+    border-color: #D4AF37;
+}
+.dt-tree-drag-handle {
+    cursor: grab;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+}
+.dt-tree-drag-handle:hover {
+    color: #8A681F;
+}
