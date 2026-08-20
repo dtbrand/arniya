@@ -2424,32 +2424,59 @@ input, select, textarea {
     }
 
     .adm-dock-orb {
-        width: 44px !important;
-        height: 44px !important;
+        width: 46px !important;
+        height: 46px !important;
         border-radius: 50% !important;
-        background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%) !important;
-        border: 2px solid #FFFFFF !important;
+        background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%) !important;
+        border: 2.5px solid #FAF5E8 !important;
+        color: #FFFFFF !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5) !important;
-        transition: transform 0.2s ease !important;
+        box-shadow: 0 4px 16px rgba(22, 163, 74, 0.45), 0 0 10px rgba(212, 175, 55, 0.35) !important;
+        animation: admOrbPulse 2.8s infinite ease-in-out !important;
+        transition: transform 0.25s ease !important;
+    }
+
+    .adm-dock-plus-svg {
+        stroke: #FFFFFF !important;
+        animation: admPlusGlow 3.5s infinite ease-in-out !important;
+    }
+
+    @keyframes admOrbPulse {
+        0%, 100% {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45), 0 0 8px rgba(212, 175, 55, 0.35);
+        }
+        50% {
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 8px 22px rgba(22, 163, 74, 0.65), 0 0 16px rgba(212, 175, 55, 0.6);
+        }
+    }
+
+    @keyframes admPlusGlow {
+        0%, 100% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(90deg);
+        }
     }
 
     .adm-dock-orb:hover, .adm-dock-orb:active {
-        transform: scale(1.1) !important;
+        transform: scale(1.14) translateY(-4px) !important;
     }
 
     .adm-dock-center-label {
         font-size: 10.5px !important;
         font-weight: 800 !important;
         font-family: 'Cinzel', 'Plus Jakarta Sans', serif, sans-serif !important;
-        letter-spacing: 0.05em !important;
+        letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
-        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 35%, #E5E7EB 70%, #8A681F 100%) !important;
+        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 35%, #16A34A 70%, #15803D 100%) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
-        margin-top: 2px !important;
+        margin-top: 3px !important;
     }
 
     .adm-dock-live-dot {

@@ -38,10 +38,10 @@ $curr_nav = isset($active_nav) ? $active_nav : 'dashboard';
         <span class="adm-dock-label">Products</span>
     </a>
 
-    <!-- Tab 3: Center Elevated Master Gold Orb (Product) -->
+    <!-- Tab 3: Center Elevated Master Emerald-Gold Animated Orb (Product) -->
     <a href="/Frontend/Admin/products/add.php" class="adm-dock-center-btn" title="Add Product">
         <div class="adm-dock-orb">
-            <svg viewBox="0 0 24 24" width="22" height="22" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <svg class="adm-dock-plus-svg" viewBox="0 0 24 24" width="22" height="22" stroke="#FFFFFF" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </div>
         <span class="adm-dock-center-label">Product</span>
     </a>
