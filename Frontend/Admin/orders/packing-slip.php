@@ -9,11 +9,8 @@ $order = [
     'id' => $order_id,
     'date' => '21 Aug 2026',
     'customer' => 'Rajesh Kumar (Vardhman Tex)',
-    'phone' => '+91 98220 19283',
-    'gstin' => '24AAECJ1928K1Z5',
     'address' => [
-        'billing' => "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5 | Phone: +91 98220 19283",
-        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010\nContact: +91 98220 19283"
+        'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
     ],
     'items' => [
         [
