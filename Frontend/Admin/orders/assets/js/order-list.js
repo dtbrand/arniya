@@ -37,7 +37,7 @@
             // Update visible counts
             const countDisplay = document.getElementById('ordersCountDisplay');
             if (countDisplay) {
-                countDisplay.textContent = visibleCount + ' Orders Displayed';
+                countDisplay.textContent = 'Showing ' + visibleCount + ' of 1,624 Orders';
             }
 
             // Show empty state if 0 rows visible
@@ -58,10 +58,78 @@
             this.filterTable();
         },
 
+        toggleColumnMenu: function(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('columnVisibilityMenu');
+            if (!menu) return;
+            const isVisible = menu.style.display === 'block';
+            menu.style.display = isVisible ? 'none' : 'block';
+        },
+
         toggleColumn: function(colClass, isChecked) {
             const cells = document.querySelectorAll('.' + colClass);
             cells.forEach(c => c.style.display = isChecked ? '' : 'none');
-            if (window.DT_ORDERS) window.DT_ORDERS.showToast('⚙️ Column visibility updated');
+            
+            // Save state in localStorage
+            try {
+                const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_order_cols') || '{}');
+                hiddenCols[colClass] = !isChecked;
+                localStorage.setItem('dt_hidden_order_cols', JSON.stringify(hiddenCols));
+            } catch (e) {}
+
+            if (window.DT_ORDERS) {
+                const cleanName = colClass.replace('col-', '').toUpperCase();
+                window.DT_ORDERS.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+            }
+        },
+
+        resetAllColumns: function() {
+            try {
+                localStorage.removeItem('dt_hidden_order_cols');
+            } catch (e) {}
+
+            const checkboxes = document.querySelectorAll('#columnVisibilityMenu input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = true;
+                const colClass = cb.dataset.col;
+                if (colClass) {
+                    const cells = document.querySelectorAll('.' + colClass);
+                    cells.forEach(c => c.style.display = '');
+                }
+            });
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ All columns restored to default view');
+        },
+
+        initColumnPreferences: function() {
+            try {
+                const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_order_cols') || '{}');
+                Object.keys(hiddenCols).forEach(colClass => {
+                    const isHidden = hiddenCols[colClass];
+                    if (isHidden) {
+                        const cells = document.querySelectorAll('.' + colClass);
+                        cells.forEach(c => c.style.display = 'none');
+                        const cb = document.querySelector(`#columnVisibilityMenu input[data-col="${colClass}"]`);
+                        if (cb) cb.checked = false;
+                    }
+                });
+            } catch (e) {}
         }
     };
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('columnVisibilityMenu');
+        const wrap = document.querySelector('.dt-col-dropdown-wrap');
+        if (menu && wrap && !wrap.contains(e.target)) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Auto-init on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => window.DT_ORDER_LIST.initColumnPreferences());
+    } else {
+        window.DT_ORDER_LIST.initColumnPreferences();
+    }
 })();

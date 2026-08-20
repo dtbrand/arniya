@@ -51,10 +51,36 @@
             <span>Export</span>
         </a>
 
-        <!-- Master Create B2B Order Button -->
-        <button type="button" class="dt-btn dt-btn-gold" style="height:32px;" onclick="window.location.href='/Frontend/Admin/orders/index.php?action=new_order'">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>+ Create Order</span>
-        </button>
+        <!-- Hide / Show Columns Options Dropdown -->
+        <div class="dt-col-dropdown-wrap" style="position:relative;">
+            <button type="button" class="dt-btn dt-btn-gold" style="height:32px;" onclick="window.DT_ORDER_LIST.toggleColumnMenu(event)" title="Show or Hide Table Columns">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                </svg>
+                <span>Columns Options</span>
+                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            
+            <div id="columnVisibilityMenu" class="dt-col-menu" style="display:none; position:absolute; right:0; top:calc(100% + 6px); width:220px; background:#FFFFFF; border:1px solid #D4AF37; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.14); padding:10px 12px; z-index:99999;">
+                <div style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #E2DFD7; padding-bottom:6px;">
+                    <span>Toggle Visible Columns</span>
+                    <button type="button" onclick="window.DT_ORDER_LIST.resetAllColumns()" style="background:none; border:none; font-size:10px; color:#1D4ED8; font-weight:700; cursor:pointer; padding:0;">Reset All</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#1E293B;">
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-id" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-id', this.checked)"> <span>Order ID</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-date" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-date', this.checked)"> <span>Date & Time</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-customer" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-customer', this.checked)"> <span>Customer Name & Phone</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-items" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-items', this.checked)"> <span>Items Summary</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-amount" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-amount', this.checked)"> <span>Amount (₹ Valuation)</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-payment" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-payment', this.checked)"> <span>Payment Status</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-shipping" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-shipping', this.checked)"> <span>Shipping & Carrier</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-status" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-status', this.checked)"> <span>Fulfillment Status</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-source" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-source', this.checked)"> <span>Channel Source</span></label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-actions" checked onchange="window.DT_ORDER_LIST.toggleColumn('col-actions', this.checked)"> <span>Row Actions</span></label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

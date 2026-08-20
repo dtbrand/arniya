@@ -219,19 +219,19 @@ $orders_list = [
         <table class="dt-order-table">
             <thead>
                 <tr>
-                    <th style="width:36px; text-align:center;">
+                    <th class="col-check" style="width:36px; text-align:center;">
                         <input type="checkbox" class="dt-checkbox" onchange="window.DT_BULK_ACTIONS.toggleSelectAll(this)" title="Select all orders">
                     </th>
-                    <th style="width:105px;">Order ID</th>
-                    <th style="width:105px;">Date</th>
-                    <th style="width:155px;">Customer</th>
+                    <th class="col-id" style="width:105px;">Order ID</th>
+                    <th class="col-date" style="width:105px;">Date</th>
+                    <th class="col-customer" style="width:155px;">Customer</th>
                     <th class="col-items" style="width:65px;">Items</th>
-                    <th style="width:90px;">Amount</th>
+                    <th class="col-amount" style="width:90px;">Amount</th>
                     <th class="col-payment" style="width:105px;">Payment</th>
                     <th class="col-shipping" style="width:105px;">Shipping</th>
-                    <th style="width:85px;">Status</th>
+                    <th class="col-status" style="width:85px;">Status</th>
                     <th class="col-source" style="width:75px;">Source</th>
-                    <th style="width:125px; text-align:right;">Actions</th>
+                    <th class="col-actions" style="width:125px; text-align:right;">Actions</th>
                 </tr>
             </thead>
             <tbody id="ordersTableBody">
@@ -240,10 +240,10 @@ $orders_list = [
                     if ($filter_status !== 'all' && $o['status'] !== $filter_status) continue;
                 ?>
                 <tr class="dt-order-row" data-id="<?php echo $o['id']; ?>" data-customer="<?php echo htmlspecialchars($o['customer']); ?>" data-phone="<?php echo htmlspecialchars($o['phone']); ?>" data-status="<?php echo $o['status']; ?>" data-payment="<?php echo $o['payment_status']; ?>">
-                    <td style="text-align:center;">
+                    <td class="col-check" style="text-align:center;">
                         <input type="checkbox" class="dt-checkbox dt-order-check" onchange="window.DT_BULK_ACTIONS.onRowCheckChange(this)">
                     </td>
-                    <td>
+                    <td class="col-id">
                         <div style="display:flex; align-items:center; gap:4px;">
                             <button type="button" class="dt-expand-btn" onclick="window.DT_ORDER_VIEW.toggleRowDetails('<?php echo $o['id']; ?>', this)" title="Quick Expand Row" style="background:none; border:none; padding:0; cursor:pointer; color:#64748B; display:flex; align-items:center; transition:transform 0.15s ease;">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -253,10 +253,10 @@ $orders_list = [
                             </a>
                         </div>
                     </td>
-                    <td style="white-space:nowrap; font-size:11px; color:#64748B;">
+                    <td class="col-date" style="white-space:nowrap; font-size:11px; color:#64748B;">
                         <?php echo str_replace(' 2026', '', $o['date']); ?>
                     </td>
-                    <td>
+                    <td class="col-customer">
                         <div class="dt-customer-cell">
                             <span class="dt-customer-name" title="<?php echo htmlspecialchars($o['customer']); ?>"><?php echo htmlspecialchars($o['customer']); ?></span>
                             <span class="dt-customer-phone"><?php echo htmlspecialchars($o['phone']); ?></span>
@@ -268,7 +268,7 @@ $orders_list = [
                             <span><?php echo $o['items_count']; ?></span>
                         </span>
                     </td>
-                    <td>
+                    <td class="col-amount">
                         <div class="dt-amount-cell">
                             <svg class="dt-rupee-svg" viewBox="0 0 24 24" width="10" height="10"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             <span><?php echo number_format($o['amount']); ?></span>
@@ -286,7 +286,7 @@ $orders_list = [
                             <span style="font-size:9.5px; color:#64748B; font-family:monospace;"><?php echo $o['tracking']; ?></span>
                         </div>
                     </td>
-                    <td>
+                    <td class="col-status">
                         <span id="statusBadge_<?php echo $o['id']; ?>" class="dt-status-badge <?php echo $o['status']; ?>">
                             <span class="dt-status-dot"></span>
                             <span><?php echo str_replace('_', ' ', $o['status']); ?></span>
@@ -295,7 +295,7 @@ $orders_list = [
                     <td class="col-source">
                         <span class="dt-kpi-badge up" style="font-size:9.5px; padding:1px 5px; background:#F8FAFC; border:1px solid #E2E8F0; color:#475569; white-space:nowrap;"><?php echo $o['source']; ?></span>
                     </td>
-                    <td style="text-align:right;">
+                    <td class="col-actions" style="text-align:right;">
                         <div class="dt-row-actions" style="justify-content:flex-end;">
                             <button type="button" class="dt-action-btn view" onclick="window.DT_ORDER_VIEW.openDrawer('<?php echo $o['id']; ?>')" title="Quick View Drawer">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
