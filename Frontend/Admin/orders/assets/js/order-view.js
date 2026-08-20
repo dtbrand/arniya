@@ -334,35 +334,35 @@
   
   <tr height="26"><th colspan="7" class="section-title">CUSTOMER ACCOUNT OVERVIEW</th></tr>
   <tr height="22">
-    <td class="label-cell" width="130">Customer Name:</td>
-    <td class="value-cell" colspan="3" width="320"><b>${name}</b></td>
-    <td class="label-cell" width="140">Account Tier:</td>
-    <td class="value-cell" colspan="2" width="180">Verified Wholesale VIP</td>
+    <td class="label-cell" width="110">Customer Name:</td>
+    <td class="value-cell" colspan="2"><b>${name}</b></td>
+    <td class="label-cell" width="120">Account Tier:</td>
+    <td class="value-cell" colspan="3">Verified Wholesale VIP</td>
   </tr>
   <tr height="22">
     <td class="label-cell">GSTIN:</td>
-    <td class="value-cell" colspan="3">24AAECJ1928K1Z5</td>
+    <td class="value-cell" colspan="2">24AAECJ1928K1Z5</td>
     <td class="label-cell">Credit Limit:</td>
-    <td class="value-cell" colspan="2">₹ 15,00,000 (Net 15 Days)</td>
+    <td class="value-cell" colspan="3">₹ 15,00,000 (Net 15 Days)</td>
   </tr>
   <tr height="22">
     <td class="label-cell">Phone / WhatsApp:</td>
-    <td class="value-cell" colspan="3">${phone}</td>
+    <td class="value-cell" colspan="2">${phone}</td>
     <td class="label-cell">Lifetime Business:</td>
-    <td class="value-cell" colspan="2"><b>₹ 8,42,500</b></td>
+    <td class="value-cell" colspan="3"><b>₹ 8,42,500.00</b></td>
   </tr>
   <tr height="22">
     <td class="label-cell">Email:</td>
-    <td class="value-cell" colspan="3">${email}</td>
+    <td class="value-cell" colspan="2">${email}</td>
     <td class="label-cell">Current Balance:</td>
-    <td class="value-cell" colspan="2" style="color:#15803D;"><b>₹ 0.00 (All Invoices Settled)</b></td>
+    <td class="value-cell" colspan="3" style="color:#15803D;"><b>₹ 0.00 (All Invoices Settled)</b></td>
   </tr>
   <tr><td colspan="7"></td></tr>
 
   <tr height="28">
     <th class="th-cell" width="110">Date</th>
     <th class="th-cell" width="140">Reference ID</th>
-    <th class="th-cell" width="320">Transaction Description</th>
+    <th class="th-cell" width="300">Transaction Description</th>
     <th class="th-cell" width="120">Debit (₹)</th>
     <th class="th-cell" width="120">Credit (₹)</th>
     <th class="th-cell" width="120">Balance (₹)</th>
@@ -442,12 +442,12 @@
     <td class="td-status" style="color:#15803D;">PAID</td>
   </tr>
 
-  <tr height="26" class="total-row">
-    <td colspan="3" style="text-align:right; font-weight:bold; padding-right:10px;">RECONCILED TOTALS:</td>
-    <td class="td-num" style="color:#181512;">₹ 6,84,500.00</td>
-    <td class="td-num" style="color:#15803D;">₹ 6,84,500.00</td>
-    <td class="td-num" style="color:#15803D;">₹ 0.00</td>
-    <td class="td-status" style="color:#15803D;">ALL CLEAR</td>
+  <tr height="28" class="total-row">
+    <td colspan="3" style="text-align:right; font-weight:bold; padding-right:10px; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">RECONCILED TOTALS:</td>
+    <td class="td-num" style="color:#181512; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 6,84,500.00</td>
+    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 6,84,500.00</td>
+    <td class="td-num" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">₹ 0.00</td>
+    <td class="td-status" style="color:#15803D; background-color:#FAF5E8; border-top:1.5pt solid #8A681F; border-bottom:2pt double #8A681F;">ALL CLEAR</td>
   </tr>
 </table>
 </body>
