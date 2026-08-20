@@ -69,6 +69,74 @@ window.DT_CATALOGUE = {
         checks.forEach(c => c.checked = master.checked);
     },
 
+    // Apply Bulk Actions
+    applyBulkAction: function(selectId, checkClass) {
+        const select = document.getElementById(selectId);
+        if (!select || !select.value) {
+            this.showToast('Please select a bulk action from the dropdown.');
+            return;
+        }
+        const action = select.value;
+        const checkedBoxes = Array.from(document.querySelectorAll('.' + checkClass + ':checked'));
+        if (checkedBoxes.length === 0) {
+            this.showToast('Please select at least one item first.');
+            return;
+        }
+
+        const count = checkedBoxes.length;
+        if (action === 'activate') {
+            checkedBoxes.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) {
+                    row.setAttribute('data-status', 'active');
+                    const badge = row.querySelector('.dt-badge.red, .dt-badge.gray');
+                    if (badge) {
+                        badge.className = 'dt-badge green';
+                        badge.textContent = 'Active';
+                    }
+                }
+            });
+            this.showToast(`✅ Activated ${count} selected categories!`);
+        } else if (action === 'deactivate') {
+            checkedBoxes.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) {
+                    row.setAttribute('data-status', 'inactive');
+                    const badge = row.querySelector('.dt-badge.green');
+                    if (badge) {
+                        badge.className = 'dt-badge gray';
+                        badge.textContent = 'Inactive';
+                    }
+                }
+            });
+            this.showToast(`⏸️ Deactivated ${count} selected categories!`);
+        } else if (action === 'feature') {
+            checkedBoxes.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) {
+                    const starBtn = row.querySelector('.wp-star-btn');
+                    if (starBtn) {
+                        starBtn.classList.add('active');
+                        starBtn.style.color = '#D4AF37';
+                    }
+                }
+            });
+            this.showToast(`⭐ Marked ${count} categories as Featured!`);
+        } else if (action === 'delete') {
+            if (!confirm(`Are you sure you want to delete ${count} selected categories?`)) return;
+            checkedBoxes.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) {
+                    row.style.transition = 'all 0.25s ease';
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    setTimeout(() => row.remove(), 250);
+                }
+            });
+            this.showToast(`🗑️ Deleted ${count} selected categories!`);
+        }
+    },
+
     // Delete row with smooth animation
     deleteRow: function(rowId, itemName) {
         if (!confirm(`Are you sure you want to delete "${itemName}"?`)) return;

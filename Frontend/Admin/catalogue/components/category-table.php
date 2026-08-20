@@ -130,6 +130,52 @@
                         </div>
                     </td>
                 </tr>
+
+                <!-- Cat 5 -->
+                <tr id="cat-row-5" data-status="active">
+                    <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="5"></td>
+                    <td><img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td>
+                        <a href="/Frontend/Admin/catalogue/categories/view.php?id=5" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Banarasi Brocades</a>
+                        <div style="font-size:11px; color:#64748b; margin-top:2px;">Kadhwa &amp; Meenakari Zari Borders</div>
+                    </td>
+                    <td><code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">banarasi-brocades</code></td>
+                    <td><span class="dt-badge blue">3 Sub-types</span></td>
+                    <td><strong>185 SKUs</strong></td>
+                    <td><button type="button" class="wp-star-btn active" onclick="window.DT_CATEGORIES.toggleFeatured(this, 5, 'Banarasi Brocades')">★</button></td>
+                    <td><span class="dt-badge gold">Banner + Grid</span></td>
+                    <td><span class="dt-badge green">Active</span></td>
+                    <td style="text-align:right;">
+                        <div style="display:inline-flex; gap:4px;">
+                            <a href="/Frontend/Admin/catalogue/categories/view.php?id=5" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">View</a>
+                            <a href="/Frontend/Admin/catalogue/categories/edit.php?id=5" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
+                            <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_CATALOGUE.deleteRow('cat-row-5', 'Banarasi Brocades')" style="height:24px; padding:0 6px;">✕</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Cat 6 -->
+                <tr id="cat-row-6" data-status="inactive">
+                    <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="6"></td>
+                    <td><img src="/Frontend/Shop/Asset/images/product3.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td>
+                        <a href="/Frontend/Admin/catalogue/categories/view.php?id=6" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Festive Dupattas</a>
+                        <div style="font-size:11px; color:#64748b; margin-top:2px;">Bandhani &amp; Banarasi Rich Stoles</div>
+                    </td>
+                    <td><code style="font-size:11px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">festive-dupattas</code></td>
+                    <td><span class="dt-badge blue">2 Sub-types</span></td>
+                    <td><strong>95 SKUs</strong></td>
+                    <td><button type="button" class="wp-star-btn" onclick="window.DT_CATEGORIES.toggleFeatured(this, 6, 'Festive Dupattas')">★</button></td>
+                    <td><span class="dt-badge gold">Grid</span></td>
+                    <td><span class="dt-badge gray">Inactive</span></td>
+                    <td style="text-align:right;">
+                        <div style="display:inline-flex; gap:4px;">
+                            <a href="/Frontend/Admin/catalogue/categories/view.php?id=6" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">View</a>
+                            <a href="/Frontend/Admin/catalogue/categories/edit.php?id=6" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
+                            <button type="button" class="dt-btn-action-sm danger" onclick="window.DT_CATALOGUE.deleteRow('cat-row-6', 'Festive Dupattas')" style="height:24px; padding:0 6px;">✕</button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

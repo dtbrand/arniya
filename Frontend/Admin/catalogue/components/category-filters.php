@@ -13,7 +13,7 @@
             <option value="feature">Mark as Featured</option>
             <option value="delete">Delete Selected</option>
         </select>
-        <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.DT_CATALOGUE) window.DT_CATALOGUE.showToast('Bulk action applied successfully!')" style="height:28px; font-size:11px; padding:0 10px;">
+        <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_CATALOGUE.applyBulkAction('catBulkActionSelect', 'cat-row-chk')" style="height:28px; font-size:11px; padding:0 10px;">
             <span>Apply</span>
         </button>
 

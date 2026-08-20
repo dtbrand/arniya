@@ -195,7 +195,7 @@
 }
 .dt-cat-table {
     width: 100%;
-    min-width: 800px;
+    min-width: 820px;
     border-collapse: collapse;
     font-size: 12px;
 }
@@ -218,6 +218,33 @@
 }
 .dt-cat-table tr:hover td {
     background: var(--dt-cream-soft);
+}
+
+@media (max-width: 768px) {
+    .wp-tablenav {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .wp-tablenav-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+    }
+    .wp-tablenav-actions select {
+        flex: 1 !important;
+        min-width: 130px !important;
+    }
+    .wp-tablenav > div:last-child {
+        width: 100% !important;
+    }
+    .wp-tablenav > div:last-child > div:first-child {
+        flex: 1 !important;
+        width: 100% !important;
+    }
+    .wp-tablenav input[type="text"] {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
 }
 
 /* ── Action Buttons & Badges ── */
