@@ -15,7 +15,7 @@ $banners_db = [
         'cta' => 'Explore Wholesale Catalogues',
         'link' => '/shop/silk-sarees',
         'desk_ratio' => '16-5',
-        'mobile_ratio' => '4-5',
+        'mobile_ratio' => '1080-520',
         'slot' => 'Homepage Main Top Hero Slider',
         'visibility' => 'All Devices (Responsive Auto-Switch)',
         'priority' => 1,
@@ -29,7 +29,7 @@ $banners_db = [
         'cta' => 'View Bridal Assortment',
         'link' => '/shop/bridal-lehengas',
         'desk_ratio' => '16-5',
-        'mobile_ratio' => '4-5',
+        'mobile_ratio' => '1080-520',
         'slot' => 'Category Page Header Banner',
         'visibility' => 'All Devices (Responsive Auto-Switch)',
         'priority' => 2,
@@ -153,12 +153,14 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                         <div>
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                                 <label class="dt-form-label" style="margin:0;">📱 Mobile Smartphone Banner Asset</label>
-                                <span class="dt-size-pill mobile">Recommended: 1080 × 1350 px (4:5)</span>
+                                <span class="dt-size-pill mobile" id="mobileSizeTag">Selected: 1080 × 520 px (2:1)</span>
                             </div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px;">
                                 <div class="dt-form-group" style="margin-bottom:0;">
                                     <label class="dt-form-label" style="font-size:10.5px; color:#64748b;">Mobile Aspect Ratio</label>
                                     <select class="dt-form-select" id="mobileRatioSelect" onchange="window.DT_CATALOGUE.updateBannerRatio('mobile', this.value)">
+                                        <option value="1080-520" <?php echo $banner['mobile_ratio'] === '1080-520' ? 'selected' : ''; ?>>1080 × 520 px (2:1 — Meesho &amp; Flipkart App Style)</option>
+                                        <option value="1080-600" <?php echo $banner['mobile_ratio'] === '1080-600' ? 'selected' : ''; ?>>1080 × 600 px (16:9 — Standard Mobile Landscape)</option>
                                         <option value="4-5" <?php echo $banner['mobile_ratio'] === '4-5' ? 'selected' : ''; ?>>1080 × 1350 px (4:5 — High-Impact Phone Hero)</option>
                                         <option value="1-1" <?php echo $banner['mobile_ratio'] === '1-1' ? 'selected' : ''; ?>>1080 × 1080 px (1:1 — Clean Square Carousel)</option>
                                         <option value="9-16" <?php echo $banner['mobile_ratio'] === '9-16' ? 'selected' : ''; ?>>1080 × 1920 px (9:16 — Full Screen Mobile Story)</option>
@@ -174,7 +176,7 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                                 </div>
                             </div>
                             <div class="dt-upload-zone" onclick="document.getElementById('mobileBannerUpload').click()" style="padding:12px;">
-                                <img id="mobileBannerPreview" src="<?php echo htmlspecialchars($banner['mobile_img']); ?>" style="width:120px; height:150px; object-fit:cover; border-radius:6px; margin:0 auto 6px auto; display:block; border:1px solid #e2e8f0;">
+                                <img id="mobileBannerPreview" src="<?php echo htmlspecialchars($banner['mobile_img']); ?>" style="width:100%; max-width:240px; height:110px; object-fit:cover; border-radius:6px; margin:0 auto 6px auto; display:block; border:1px solid #e2e8f0;">
                                 <input type="file" id="mobileBannerUpload" style="display:none;" onchange="window.DT_CATALOGUE.previewImage(this, 'mobileBannerPreview')">
                                 <span style="font-size:11px; font-weight:700; color:#8A681F;">Click to Change Dedicated Mobile Banner Image</span>
                             </div>
@@ -237,21 +239,45 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                             <h4 class="dt-form-card-title" style="margin:0; padding:0; border:none;">Live Preview</h4>
                             <div class="dt-device-switcher">
-                                <button type="button" class="dt-device-btn active" id="btnPrevDesk" onclick="window.DT_CATALOGUE.switchDevicePreview('desk')">🖥️ Desk</button>
-                                <button type="button" class="dt-device-btn" id="btnPrevMob" onclick="window.DT_CATALOGUE.switchDevicePreview('mob')">📱 Mobile</button>
+                                <button type="button" class="dt-device-btn" id="btnPrevDesk" onclick="window.DT_CATALOGUE.switchDevicePreview('desk')">🖥️ Desk</button>
+                                <button type="button" class="dt-device-btn active" id="btnPrevMob" onclick="window.DT_CATALOGUE.switchDevicePreview('mob')">📱 Mobile</button>
                             </div>
                         </div>
 
                         <!-- Desktop View Container -->
-                        <div id="prevBoxDesk" style="width:100%; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#181512;">
+                        <div id="prevBoxDesk" style="display:none; width:100%; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#181512;">
                             <img src="<?php echo htmlspecialchars($banner['desk_img']); ?>" id="liveDeskImg" style="width:100%; height:90px; object-fit:cover; display:block;">
                         </div>
 
-                        <!-- Mobile Phone View Container -->
-                        <div id="prevBoxMob" style="display:none; padding:10px 0;">
-                            <div class="dt-mobile-preview-frame">
-                                <div class="dt-mobile-notch"></div>
-                                <img src="<?php echo htmlspecialchars($banner['mobile_img']); ?>" id="liveMobImg" class="dt-mobile-preview-img">
+                        <!-- Authentic Mobile Phone View Container -->
+                        <div id="prevBoxMob" style="padding:6px 0;">
+                            <div class="dt-mobile-phone-device">
+                                <div class="dt-mobile-phone-notch"></div>
+                                <div class="dt-mobile-app-header">
+                                    <span>👑 DT BRAND'S</span>
+                                    <span style="font-size:8px; background:#D4AF37; color:#181512; padding:1px 4px; border-radius:3px;">SURAT B2B</span>
+                                </div>
+                                <div class="dt-mobile-banner-slot" id="mobBannerSlot">
+                                    <img src="<?php echo htmlspecialchars($banner['mobile_img']); ?>" id="liveMobImg" alt="Mobile Banner">
+                                </div>
+                                <div class="dt-mobile-banner-dots">
+                                    <span class="dt-mobile-dot active"></span>
+                                    <span class="dt-mobile-dot"></span>
+                                    <span class="dt-mobile-dot"></span>
+                                </div>
+                                <div class="dt-mobile-mini-body">
+                                    <div style="font-size:9px; font-weight:800; color:#181512; margin-bottom:4px;">🔥 SURAT READY STOCK LOTS</div>
+                                    <div class="dt-mobile-mini-grid">
+                                        <div class="dt-mobile-mini-card">
+                                            <img src="/Frontend/Shop/Asset/images/product1.png">
+                                            <div style="font-size:8px; font-weight:700; color:#15803D;">₹2,850 <small style="color:#64748b;">(Wholesale)</small></div>
+                                        </div>
+                                        <div class="dt-mobile-mini-card">
+                                            <img src="/Frontend/Shop/Asset/images/product3.png">
+                                            <div style="font-size:8px; font-weight:700; color:#15803D;">₹3,200 <small style="color:#64748b;">(Wholesale)</small></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -116,33 +116,100 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
-/* ── Mobile Phone Simulation Frame ── */
-.dt-mobile-preview-frame {
+/* ── Authentic Smartphone Simulator Frame ── */
+.dt-mobile-phone-device {
     width: 220px;
-    height: 380px;
+    height: 400px;
     margin: 0 auto;
-    border: 8px solid #181512;
-    border-radius: 24px;
-    background: #000;
+    border: 7px solid #181512;
+    border-radius: 26px;
+    background: #FDFBF7;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
 }
-.dt-mobile-notch {
-    width: 60px;
-    height: 12px;
+.dt-mobile-phone-notch {
+    width: 55px;
+    height: 10px;
     background: #181512;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    position: absolute;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    position: sticky;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 5;
+    z-index: 10;
+    margin-bottom: 2px;
 }
-.dt-mobile-preview-img {
+.dt-mobile-app-header {
+    background: #181512;
+    color: #D4AF37;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D4AF37;
+    flex-shrink: 0;
+}
+.dt-mobile-banner-slot {
+    width: 100%;
+    height: 105px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: height 0.25s ease;
+}
+.dt-mobile-banner-slot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+}
+.dt-mobile-banner-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 0;
+    background: #fff;
+}
+.dt-mobile-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #cbd5e1;
+}
+.dt-mobile-dot.active {
+    background: #8A681F;
+    width: 12px;
+    border-radius: 4px;
+}
+.dt-mobile-mini-body {
+    padding: 8px;
+    background: #fff;
+    flex: 1;
+}
+.dt-mobile-mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.dt-mobile-mini-card {
+    background: #FDFBF7;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 4px;
+    text-align: center;
+}
+.dt-mobile-mini-card img {
+    width: 100%;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-bottom: 3px;
 }

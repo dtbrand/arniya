@@ -276,13 +276,35 @@ window.DT_CATALOGUE = {
             this.showToast(`🖥️ Desktop banner aspect ratio set to ${ratio}!`);
         } else {
             const mobImg = document.getElementById('mobileBannerPreview');
-            if (mobImg) {
-                if (ratio === '1-1') { mobImg.style.width = '140px'; mobImg.style.height = '140px'; }
-                else if (ratio === '9-16') { mobImg.style.width = '110px'; mobImg.style.height = '190px'; }
-                else if (ratio === '2-1') { mobImg.style.width = '180px'; mobImg.style.height = '80px'; }
-                else { mobImg.style.width = '120px'; mobImg.style.height = '150px'; }
+            const slot = document.getElementById('mobBannerSlot');
+            const sizeTag = document.getElementById('mobileSizeTag');
+
+            if (ratio === '1080-520') {
+                if (mobImg) { mobImg.style.width = '100%'; mobImg.style.maxWidth = '240px'; mobImg.style.height = '115px'; }
+                if (slot) slot.style.height = '105px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 1080 × 520 px (2:1)';
+            } else if (ratio === '1080-600') {
+                if (mobImg) { mobImg.style.width = '100%'; mobImg.style.maxWidth = '240px'; mobImg.style.height = '130px'; }
+                if (slot) slot.style.height = '120px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 1080 × 600 px (16:9)';
+            } else if (ratio === '4-5') {
+                if (mobImg) { mobImg.style.width = '140px'; mobImg.style.height = '175px'; }
+                if (slot) slot.style.height = '220px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 1080 × 1350 px (4:5)';
+            } else if (ratio === '1-1') {
+                if (mobImg) { mobImg.style.width = '140px'; mobImg.style.height = '140px'; }
+                if (slot) slot.style.height = '190px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 1080 × 1080 px (1:1)';
+            } else if (ratio === '9-16') {
+                if (mobImg) { mobImg.style.width = '110px'; mobImg.style.height = '195px'; }
+                if (slot) slot.style.height = '310px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 1080 × 1920 px (9:16)';
+            } else if (ratio === '2-1') {
+                if (mobImg) { mobImg.style.width = '200px'; mobImg.style.height = '85px'; }
+                if (slot) slot.style.height = '85px';
+                if (sizeTag) sizeTag.textContent = 'Selected: 750 × 320 px (2.3:1)';
             }
-            this.showToast(`📱 Mobile banner aspect ratio set to ${ratio}!`);
+            this.showToast(`📱 Mobile banner size set to ${ratio.replace('-', ' × ')} px!`);
         }
     },
 
