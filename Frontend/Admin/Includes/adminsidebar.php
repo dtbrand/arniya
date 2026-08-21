@@ -74,8 +74,9 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 <span class="adm-brand-badge">Admin CRM</span>
             </div>
         </a>
-        <button class="adm-sidebar-toggle-btn" id="admSidebarToggleBtn" title="Toggle Sidebar">
-            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <button type="button" class="adm-sidebar-toggle-btn" id="admSidebarToggleBtn" onclick="if(window.innerWidth <= 1024){ window.closeAdmMobileSidebar(); } else { if(typeof window.toggleSidebarCollapsed==='function') window.toggleSidebarCollapsed(); }" title="Toggle Navigation">
+            <svg class="adm-icon-hamburger" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg class="adm-icon-close" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.4" fill="none" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     </div>
 
@@ -487,7 +488,6 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 </aside>
 
 <!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
-<!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
 <script>
 (function() {
     'use strict';
@@ -506,14 +506,50 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             if (backdrop) {
                 backdrop.style.display = isOpen ? 'block' : 'none';
             }
+            if (isOpen) {
+                document.body.classList.add('adm-mobile-sidebar-active');
+            } else {
+                document.body.classList.remove('adm-mobile-sidebar-active');
+            }
         }
     };
 
-    window.closeAdmMobileSidebar = function() {
+    window.closeAdmMobileSidebar = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         if (sidebar) sidebar.classList.remove('mobile-open');
         if (backdrop) backdrop.style.display = 'none';
+        document.body.classList.remove('adm-mobile-sidebar-active');
+    };
+
+    // Desktop Collapse Toggle Function
+    window.toggleSidebarCollapsed = function() {
+        const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
+        if (!sidebar) return;
+        
+        if (window.innerWidth <= 1024) {
+            window.closeAdmMobileSidebar();
+            return;
+        }
+
+        const willCollapse = !sidebar.classList.contains('collapsed');
+        if (willCollapse) {
+            sidebar.classList.add('collapsed');
+            // Auto-close any open submenus when closing the sidebar!
+            document.querySelectorAll('.adm-nav-has-sub.open').forEach(function(li) {
+                li.classList.remove('open');
+                const sub = li.querySelector('.adm-nav-submenu');
+                if (sub) sub.classList.remove('open');
+            });
+            try { localStorage.setItem('dt_adm_sidebar_collapsed', '1'); } catch(err) {}
+        } else {
+            sidebar.classList.remove('collapsed');
+            try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
+        }
     };
 
     // Submenu Toggle with Auto-Expand on Closed Sidebar
@@ -579,9 +615,16 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             });
         });
 
+        // Close mobile drawer when pressing ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && window.innerWidth <= 1024) {
+                window.closeAdmMobileSidebar();
+            }
+        });
+
         if (backdrop) {
             backdrop.onclick = function(e) {
-                window.closeAdmMobileSidebar();
+                window.closeAdmMobileSidebar(e);
             };
         }
 
@@ -589,26 +632,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             toggleBtn.onclick = function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                if (window.innerWidth <= 1024) {
-                    window.closeAdmMobileSidebar();
-                    return;
-                }
-
-                const willCollapse = !sidebar.classList.contains('collapsed');
-                if (willCollapse) {
-                    sidebar.classList.add('collapsed');
-                    // Auto-close any open submenus when closing the sidebar!
-                    document.querySelectorAll('.adm-nav-has-sub.open').forEach(function(li) {
-                        li.classList.remove('open');
-                        const sub = li.querySelector('.adm-nav-submenu');
-                        if (sub) sub.classList.remove('open');
-                    });
-                    try { localStorage.setItem('dt_adm_sidebar_collapsed', '1'); } catch(err) {}
-                } else {
-                    sidebar.classList.remove('collapsed');
-                    try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
-                }
+                window.toggleSidebarCollapsed();
             };
         }
 

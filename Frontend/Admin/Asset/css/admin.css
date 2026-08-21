@@ -2820,6 +2820,16 @@ svg.adm-search-icon {
         justify-content: space-between !important;
     }
 
+    .adm-sidebar.mobile-open .adm-sidebar-toggle-btn .adm-icon-hamburger,
+    .adm-sidebar.collapsed.mobile-open .adm-sidebar-toggle-btn .adm-icon-hamburger {
+        display: none !important;
+    }
+
+    .adm-sidebar.mobile-open .adm-sidebar-toggle-btn .adm-icon-close,
+    .adm-sidebar.collapsed.mobile-open .adm-sidebar-toggle-btn .adm-icon-close {
+        display: block !important;
+    }
+
     .adm-sidebar.mobile-open .adm-nav-list,
     .adm-sidebar.collapsed.mobile-open .adm-nav-list {
         align-items: stretch !important;
