@@ -753,36 +753,35 @@ input, select, textarea {
         transform: translateY(-50%) scale(1) !important;
     }
 
-    /* 👑 LUXURY UPPER-SIDE MICRO COUNT BADGE IN COLLAPSED MODE */
+    /* 👑 SLEEK MINIMALIST STATUS DOT IN COLLAPSED MODE (ZERO ICON CLUTTER) */
     .adm-sidebar.collapsed .adm-nav-badge {
-        display: inline-flex !important;
+        display: block !important;
         position: absolute !important;
-        top: -2px !important;
-        right: -2px !important;
-        font-size: 0.54rem !important;
-        font-weight: 800 !important;
-        padding: 1px 4px !important;
-        min-width: 14px !important;
-        height: 14px !important;
-        border-radius: 6px !important;
+        top: 5px !important;
+        right: 5px !important;
+        width: 7px !important;
+        height: 7px !important;
+        min-width: 7px !important;
+        max-width: 7px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
+        color: transparent !important;
         background: #8A681F !important;
-        color: #FFFFFF !important;
-        border: 1.2px solid #FFFFFF !important;
-        box-shadow: 0 2px 6px rgba(138, 104, 31, 0.35) !important;
-        align-items: center !important;
-        justify-content: center !important;
-        line-height: 1 !important;
+        border: 1.5px solid #FFFFFF !important;
+        box-shadow: 0 0 0 2px rgba(138, 104, 31, 0.25) !important;
         z-index: 5 !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-badge.green {
         background: #16A34A !important;
-        color: #FFFFFF !important;
+        box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.3) !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-badge.gold {
-        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 100%) !important;
-        color: #181512 !important;
+        background: #D4AF37 !important;
+        box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3) !important;
     }
 
     /* Strictly HIDE all submenus, labels, arrow wrappers, and headers in collapsed state on desktop */

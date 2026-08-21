@@ -108,7 +108,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             <ul class="adm-nav-list">
                 <!-- PRODUCTS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'products' ? 'open' : ''; ?>">
-                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products & Inventory">
+                    <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products (1,240 SKUs)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
                         <span class="adm-nav-badge">1,240</span>
@@ -207,7 +207,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 
                 <!-- CATALOGUE WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'catalogue' ? 'open' : ''; ?>">
-                    <a href="/Frontend/Admin/catalogue/" class="adm-nav-item <?php echo $current_nav === 'catalogue' ? 'active' : ''; ?>" id="navItem-catalogue" data-title="Catalogue & Taxonomy">
+                    <a href="/Frontend/Admin/catalogue/" class="adm-nav-item <?php echo $current_nav === 'catalogue' ? 'active' : ''; ?>" id="navItem-catalogue" data-title="Catalogue (16 Categories)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         <span class="adm-nav-label">Catalogue</span>
                         <span class="adm-nav-badge gold">16 Cats</span>
@@ -284,7 +284,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 
                 <!-- ORDERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'orders' ? 'open' : ''; ?>">
-                    <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" data-title="Orders & Shipments">
+                    <a href="/Frontend/Admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" data-title="Orders (1,624)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span class="adm-nav-label">Orders</span>
                         <span class="adm-nav-badge gold" id="admNavOrdersBadge">1,624</span>
