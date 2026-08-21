@@ -172,6 +172,48 @@ $active_subnav = "new";
                                 </div>
 
                                 <div class="dt-form-group">
+                                    <label class="dt-form-label">Preferred Communication Language</label>
+                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                        <optgroup label="── Primary Commercial Languages ──">
+                                            <option value="Hindi" selected>Hindi (हिंदी)</option>
+                                            <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+                                            <option value="English">English (India)</option>
+                                            <option value="Hinglish">Hinglish (Hindi / English)</option>
+                                            <option value="Marathi">Marathi (मराठी)</option>
+                                            <option value="Marwari">Marwari / Rajasthani (मारवाड़ी)</option>
+                                        </optgroup>
+                                        <optgroup label="── South Indian Languages ──">
+                                            <option value="Tamil">Tamil (தமிழ்)</option>
+                                            <option value="Telugu">Telugu (తెలుగు)</option>
+                                            <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
+                                            <option value="Malayalam">Malayalam (മലയാളം)</option>
+                                        </optgroup>
+                                        <optgroup label="── East & North-East Languages ──">
+                                            <option value="Bengali">Bengali / Bangla (বাংলা)</option>
+                                            <option value="Odia">Odia / Oriya (ଓଡ଼ିଆ)</option>
+                                            <option value="Assamese">Assamese (অসমীয়া)</option>
+                                            <option value="Manipuri">Manipuri (মৈতৈলোন্)</option>
+                                            <option value="Bodo">Bodo (बोडो)</option>
+                                            <option value="Santali">Santali (संथाली)</option>
+                                        </optgroup>
+                                        <optgroup label="── North & West Indian Languages ──">
+                                            <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
+                                            <option value="Bhojpuri">Bhojpuri (भोजपुरी)</option>
+                                            <option value="Maithili">Maithili (मैथिली)</option>
+                                            <option value="Urdu">Urdu (اردو)</option>
+                                            <option value="Sindhi">Sindhi (सिंधी / سنڌي)</option>
+                                            <option value="Konkani">Konkani (कोंकणी)</option>
+                                            <option value="Dogri">Dogri (डोगरी)</option>
+                                            <option value="Kashmiri">Kashmiri (कश्मीरी / کٲشُر)</option>
+                                            <option value="Nepali">Nepali (नेपाली)</option>
+                                            <option value="Sanskrit">Sanskrit (संस्कृतम्)</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="dt-form-grid-1" style="margin-top:14px;">
+                                <div class="dt-form-group">
                                     <label class="dt-form-label">
                                         <span>Email Address (Optional)</span>
                                         <span style="color:#78716C; font-size:0.65rem;">Can be added later</span>

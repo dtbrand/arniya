@@ -378,15 +378,44 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                     </div>
                                 </div>
 
-                                <!-- Preferred Language -->
+                                <!-- Preferred Language (All Official Indian Languages) -->
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Preferred Communication Language</label>
+                                    <label class="dt-form-label">Preferred Communication Language (All Indian Languages)</label>
                                     <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="Hindi" <?php echo $cust['language'] === 'Hindi' ? 'selected' : ''; ?>>Hindi (हिंदी)</option>
-                                        <option value="Gujarati" <?php echo $cust['language'] === 'Gujarati' ? 'selected' : ''; ?>>Gujarati (ગુજરાતી)</option>
-                                        <option value="English" <?php echo $cust['language'] === 'English' ? 'selected' : ''; ?>>English</option>
-                                        <option value="Bengali" <?php echo $cust['language'] === 'Bengali' ? 'selected' : ''; ?>>Bengali (বাংলা)</option>
-                                        <option value="Marathi" <?php echo $cust['language'] === 'Marathi' ? 'selected' : ''; ?>>Marathi (मराठी)</option>
+                                        <optgroup label="── Primary Commercial Languages ──">
+                                            <option value="Hindi" <?php echo ($cust['language'] === 'Hindi') ? 'selected' : ''; ?>>Hindi (हिंदी)</option>
+                                            <option value="Gujarati" <?php echo ($cust['language'] === 'Gujarati') ? 'selected' : ''; ?>>Gujarati (ગુજરાતી)</option>
+                                            <option value="English" <?php echo ($cust['language'] === 'English') ? 'selected' : ''; ?>>English (India)</option>
+                                            <option value="Hinglish" <?php echo ($cust['language'] === 'Hinglish') ? 'selected' : ''; ?>>Hinglish (Hindi / English)</option>
+                                            <option value="Marathi" <?php echo ($cust['language'] === 'Marathi') ? 'selected' : ''; ?>>Marathi (मराठी)</option>
+                                            <option value="Marwari" <?php echo ($cust['language'] === 'Marwari') ? 'selected' : ''; ?>>Marwari / Rajasthani (मारवाड़ी)</option>
+                                        </optgroup>
+                                        <optgroup label="── South Indian Languages ──">
+                                            <option value="Tamil" <?php echo ($cust['language'] === 'Tamil') ? 'selected' : ''; ?>>Tamil (தமிழ்)</option>
+                                            <option value="Telugu" <?php echo ($cust['language'] === 'Telugu') ? 'selected' : ''; ?>>Telugu (తెలుగు)</option>
+                                            <option value="Kannada" <?php echo ($cust['language'] === 'Kannada') ? 'selected' : ''; ?>>Kannada (ಕನ್ನಡ)</option>
+                                            <option value="Malayalam" <?php echo ($cust['language'] === 'Malayalam') ? 'selected' : ''; ?>>Malayalam (മലയാളം)</option>
+                                        </optgroup>
+                                        <optgroup label="── East & North-East Languages ──">
+                                            <option value="Bengali" <?php echo ($cust['language'] === 'Bengali') ? 'selected' : ''; ?>>Bengali / Bangla (বাংলা)</option>
+                                            <option value="Odia" <?php echo ($cust['language'] === 'Odia') ? 'selected' : ''; ?>>Odia / Oriya (ଓଡ଼ିଆ)</option>
+                                            <option value="Assamese" <?php echo ($cust['language'] === 'Assamese') ? 'selected' : ''; ?>>Assamese (অসমীয়া)</option>
+                                            <option value="Manipuri" <?php echo ($cust['language'] === 'Manipuri') ? 'selected' : ''; ?>>Manipuri (মৈতৈলোন্)</option>
+                                            <option value="Bodo" <?php echo ($cust['language'] === 'Bodo') ? 'selected' : ''; ?>>Bodo (बोडो)</option>
+                                            <option value="Santali" <?php echo ($cust['language'] === 'Santali') ? 'selected' : ''; ?>>Santali (संथाली)</option>
+                                        </optgroup>
+                                        <optgroup label="── North & West Indian Languages ──">
+                                            <option value="Punjabi" <?php echo ($cust['language'] === 'Punjabi') ? 'selected' : ''; ?>>Punjabi (ਪੰਜਾਬੀ)</option>
+                                            <option value="Bhojpuri" <?php echo ($cust['language'] === 'Bhojpuri') ? 'selected' : ''; ?>>Bhojpuri (भोजपुरी)</option>
+                                            <option value="Maithili" <?php echo ($cust['language'] === 'Maithili') ? 'selected' : ''; ?>>Maithili (मैथिली)</option>
+                                            <option value="Urdu" <?php echo ($cust['language'] === 'Urdu') ? 'selected' : ''; ?>>Urdu (اردو)</option>
+                                            <option value="Sindhi" <?php echo ($cust['language'] === 'Sindhi') ? 'selected' : ''; ?>>Sindhi (सिंधी / سنڌي)</option>
+                                            <option value="Konkani" <?php echo ($cust['language'] === 'Konkani') ? 'selected' : ''; ?>>Konkani (कोंकणी)</option>
+                                            <option value="Dogri" <?php echo ($cust['language'] === 'Dogri') ? 'selected' : ''; ?>>Dogri (डोगरी)</option>
+                                            <option value="Kashmiri" <?php echo ($cust['language'] === 'Kashmiri') ? 'selected' : ''; ?>>Kashmiri (कश्मीरी / کٲشُر)</option>
+                                            <option value="Nepali" <?php echo ($cust['language'] === 'Nepali') ? 'selected' : ''; ?>>Nepali (नेपाली)</option>
+                                            <option value="Sanskrit" <?php echo ($cust['language'] === 'Sanskrit') ? 'selected' : ''; ?>>Sanskrit (संस्कृतम्)</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                             </div>
