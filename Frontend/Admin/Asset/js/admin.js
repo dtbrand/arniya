@@ -541,6 +541,7 @@
 
         // Re-render chart if switching to overview
         if (tabId === 'overview') {
+            setTimeout(renderRefSalesChart, 50);
             setTimeout(renderRevenueChart, 50);
         }
 
