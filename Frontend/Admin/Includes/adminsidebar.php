@@ -498,6 +498,9 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         if (sidebar) {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('collapsed');
+            }
             const isOpen = sidebar.classList.toggle('mobile-open');
             if (backdrop) {
                 backdrop.style.display = isOpen ? 'block' : 'none';
