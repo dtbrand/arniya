@@ -146,15 +146,36 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 - **Text Color**: `#1D4ED8` (`font-weight: 700;`)
 - **Usage**: `View on Shop`, `Customer Reply`, `Catalog SKUs`
 
-### 🗑️ F. Crimson Danger / Trash Pill (`.dt-btn-danger` / `.adm-btn-danger`)
-- **Background**: `#FEF2F2`
-- **Border**: `1px solid #FECACA`
-- **Text Color**: `#DC2626` (`font-weight: 700;`)
-- **Usage**: `Deactivate Account`, `Delete`, `Move to Trash`
+---
+
+## ✨ 5. Form Field Focus Standard: Animated Gold & Platinum Running Line
+
+Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-input`, `.dt-cust-select`) across the entire Admin Panel **MUST ALWAYS** implement the **Gold & Platinum Mix Animated Running Border Line** on `:focus`:
+
+```css
+@keyframes dtGoldPlatinumRun {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+input:focus, select:focus, textarea:focus, .dt-input-field:focus {
+    outline: none !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                linear-gradient(135deg, #B8860B 0%, #E2E8F0 25%, #D4AF37 50%, #FFFFFF 75%, #C5A859 100%) border-box !important;
+    background-size: 250% 250% !important;
+    border: 1.5px solid transparent !important;
+    animation: dtGoldPlatinumRun 3s linear infinite !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(184, 134, 11, 0.12) !important;
+    color: #111827 !important;
+}
+```
+- **Background**: Solid crisp White `#FFFFFF` inside the input box to ensure 100% crystal-clear text readability.
+- **Border Effect**: Seamless shimmering animated Gold & Platinum line running continuously around the border.
 
 ---
 
-## ⚡ 4. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS & ZERO DOLLAR ICONS)
+## ⚡ 6. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS & ZERO DOLLAR ICONS)
 
 - **NEVER** use emojis (such as ✏️, 👁️, 🗑️, 💾, 📦, 📁, ✕) inside buttons, action links, table rows, or modal headers.
 - **NEVER USE DOLLAR ICONS ($)**: DT Brand's & Jai Hanuman Tex is a Surat, India B2B/B2C textile brand. Never use dollar icons (`$`, dollar SVGs, or `$` symbols).

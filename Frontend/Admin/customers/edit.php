@@ -239,20 +239,31 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
             height: 38px;
             padding: 0 12px 0 36px;
             background: #FAF8F4;
-            border: 1.2px solid #EAE5D9;
+            border: 1.5px solid #EAE5D9;
             border-radius: 8px;
             font-family: inherit;
             font-size: 0.82rem;
             font-weight: 600;
-            color: #181512;
+            color: #111827;
             box-sizing: border-box;
-            transition: all 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
-        .dt-input-field:focus {
-            outline: none;
-            background: #FFFFFF;
-            border-color: var(--dt-gold-primary);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+        @keyframes dtGoldPlatinumRun {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .dt-input-field:focus,
+        .dt-cust-select:focus,
+        textarea.dt-input-field:focus {
+            outline: none !important;
+            background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                        linear-gradient(135deg, #B8860B 0%, #E2E8F0 25%, #D4AF37 50%, #FFFFFF 75%, #C5A859 100%) border-box !important;
+            background-size: 250% 250% !important;
+            border: 1.5px solid transparent !important;
+            animation: dtGoldPlatinumRun 3s linear infinite !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(184, 134, 11, 0.12) !important;
+            color: #111827 !important;
         }
         .dt-input-field.no-icon {
             padding-left: 12px;

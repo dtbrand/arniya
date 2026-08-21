@@ -21,6 +21,31 @@
 
 ---
 
+## ✨ Gold & Platinum Animated Running Focus Line Standard
+
+Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-input`, `.dt-cust-select`) across the Admin Panel **MUST ALWAYS** use the **Gold & Platinum Mix Animated Running Border Line** when focused:
+
+```css
+@keyframes dtGoldPlatinumRun {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+input:focus, select:focus, textarea:focus, .dt-input-field:focus {
+    outline: none !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                linear-gradient(135deg, #B8860B 0%, #E2E8F0 25%, #D4AF37 50%, #FFFFFF 75%, #C5A859 100%) border-box !important;
+    background-size: 250% 250% !important;
+    border: 1.5px solid transparent !important;
+    animation: dtGoldPlatinumRun 3s linear infinite !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(184, 134, 11, 0.12) !important;
+    color: #111827 !important;
+}
+```
+
+---
+
 ## 📱 Mobile & Tablet Responsive Architecture Rules
 
 - **KPI Metrics Ribbon**: Must use `grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))` on desktop, 2-column on tablet (`max-width: 1024px`), and 1-column on phone (`max-width: 600px`).

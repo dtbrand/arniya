@@ -107,6 +107,32 @@ input, select, textarea {
     font-family: var(--adm-font-sans);
     -webkit-font-smoothing: antialiased;
     outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+@keyframes dtUniversalGoldPlatinumRun {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 👑 UNIVERSAL RUNNING GOLD & PLATINUM FOCUS BORDER ON ALL ADMIN INPUTS */
+input:focus,
+select:focus,
+textarea:focus,
+.adm-form-input:focus,
+.adm-search-input-amazon:focus,
+.dt-input-field:focus,
+.dt-cust-select:focus,
+.dt-country-search-input:focus {
+    outline: none !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                linear-gradient(135deg, #B8860B 0%, #E2E8F0 25%, #D4AF37 50%, #FFFFFF 75%, #C5A859 100%) border-box !important;
+    background-size: 250% 250% !important;
+    border: 1.5px solid transparent !important;
+    animation: dtUniversalGoldPlatinumRun 3s linear infinite !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(184, 134, 11, 0.12) !important;
+    color: #111827 !important;
 }
 
 /* Scrollbars */
