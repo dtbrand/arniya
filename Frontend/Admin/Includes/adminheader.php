@@ -3,6 +3,12 @@
  * adminheader.php — Luxury Top Header with Shop-Style Clean Desktop & Full-Width Mobile Search Bar
  * DT Brand's & Jai Hanuman Tex
  */
+if (!headers_sent()) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+    header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+}
 ?>
 <header class="adm-header" id="admHeaderMain">
     <!-- ══ Normal Header View (Desktop & Mobile Default) ══ -->
@@ -53,6 +59,11 @@
                 <span class="adm-pulse-dot"></span>
                 <span class="adm-wa-text">WhatsApp Live</span>
             </div>
+
+            <!-- Fast Action: ⚡ Clear Cache & Purge Asset Memory -->
+            <button type="button" class="adm-hdr-btn" id="admClearCacheBtn" onclick="window.dtAutoClearCache()" title="Purge Cache & Reload Fresh Assets">
+                <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            </button>
 
             <!-- Notification Bell -->
             <button type="button" class="adm-hdr-btn" title="Notifications" onclick="if(typeof window.showToast==='function') window.showToast('🔔 3 new wholesale orders received today!')">
@@ -128,6 +139,43 @@
         { name: 'Shree Balaji Sarees', city: 'Kolkata Central Market', phone: '+91 98450 11223', tier: 'Gold Distributor' },
         { name: 'Radha Krishna Silks', city: 'Ahmedabad Ring Road', phone: '+91 97120 44556', tier: 'VIP Partner' }
     ];
+
+    // ════ ⚡ UNIVERSAL AUTO CLEAR CACHE ENGINE ════
+    window.dtAutoClearCache = function() {
+        try {
+            // 1. Clear Web Application Cache Storage
+            if ('caches' in window) {
+                caches.keys().then(function(cacheNames) {
+                    return Promise.all(cacheNames.map(function(cName) { return caches.delete(cName); }));
+                });
+            }
+            // 2. Clear Session Storage
+            sessionStorage.clear();
+
+            // 3. Clear transient Local Storage while preserving sidebar toggle pref
+            const savedSidebarPref = localStorage.getItem('dt_adm_sidebar_collapsed');
+            localStorage.clear();
+            if (savedSidebarPref !== null) {
+                localStorage.setItem('dt_adm_sidebar_collapsed', savedSidebarPref);
+            }
+            localStorage.setItem('dt_cache_bust', Date.now().toString());
+
+            // 4. Show Instant Feedback Toast
+            if (typeof window.showToast === 'function') {
+                window.showToast('🧹 Cache successfully purged! Reloading fresh assets...');
+            }
+
+            // 5. Force Browser to Request Fresh Uncached Assets with Timestamp
+            setTimeout(() => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('v_fresh', Date.now().toString());
+                window.location.href = url.toString();
+            }, 350);
+        } catch(err) {
+            console.error('Cache purge error:', err);
+            window.location.reload();
+        }
+    };
 
     window.openAdmMobileSearch = function() {
         const header = document.getElementById('admHeaderMain') || document.querySelector('.adm-header');
