@@ -1020,8 +1020,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, #FAF5E8, #F3E8C8); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-                                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                        <circle cx="8" cy="9" r="5"></circle>
+                                        <circle cx="16" cy="15" r="4"></circle>
+                                        <circle cx="17" cy="6" r="2.5"></circle>
                                     </svg>
                                 </div>
                                 <div>

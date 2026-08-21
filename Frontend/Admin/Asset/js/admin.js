@@ -1052,7 +1052,7 @@
         const dpr = window.devicePixelRatio || 1;
 
         const w = Math.min(340, containerWidth);
-        const h = 175;
+        const h = 180;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         canvas.style.width = w + 'px';
@@ -1063,75 +1063,75 @@
 
         const cx = w / 2;
         const cy = h / 2;
-        const outerR = 66;
-        const innerR = 44;
 
-        const data = [
-            { pct: 0.48, colorA: '#8A681F', colorB: '#D4AF37', lbl: 'Sarees', share: '48%' },
-            { pct: 0.32, colorA: '#15803D', colorB: '#22C55E', lbl: 'Kurtis', share: '32%' },
-            { pct: 0.13, colorA: '#7E22CE', colorB: '#A855F7', lbl: 'Lehengas', share: '13%' },
-            { pct: 0.07, colorA: '#D97706', colorB: '#F59E0B', lbl: 'Dress Mat.', share: '7%' }
-        ];
-
-        let startAngle = -Math.PI / 2;
-        const gap = 0.04; // radians gap between segments
-
-        data.forEach(item => {
-            const sweep = item.pct * Math.PI * 2;
-            const segStart = startAngle + gap / 2;
-            const segEnd = startAngle + sweep - gap / 2;
-
-            // Draw donut segment
+        // Helper to draw a luxury 3D glass bubble with specular highlights
+        function drawLuxuryGlassBubble(x, y, r, fillGrad, strokeColor, shadowColor, pctText, labelText, pctColor, lblColor) {
             ctx.save();
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
-            ctx.shadowBlur = 6;
-            ctx.shadowOffsetY = 2;
-
-            const grad = ctx.createLinearGradient(
-                cx + Math.cos(segStart) * outerR,
-                cy + Math.sin(segStart) * outerR,
-                cx + Math.cos(segEnd) * outerR,
-                cy + Math.sin(segEnd) * outerR
-            );
-            grad.addColorStop(0, item.colorA);
-            grad.addColorStop(1, item.colorB);
+            ctx.shadowColor = shadowColor || 'rgba(138, 104, 31, 0.18)';
+            ctx.shadowBlur = 12;
+            ctx.shadowOffsetY = 4;
 
             ctx.beginPath();
-            ctx.arc(cx, cy, outerR, segStart, segEnd, false);
-            ctx.arc(cx, cy, innerR, segEnd, segStart, true);
-            ctx.closePath();
-            ctx.fillStyle = grad;
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fillStyle = fillGrad;
             ctx.fill();
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = strokeColor;
+            ctx.stroke();
             ctx.restore();
 
-            startAngle += sweep;
-        });
+            // Specular glass gloss highlight (top-left arc)
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, r - 3, -Math.PI * 0.85, -Math.PI * 0.25);
+            ctx.lineWidth = Math.max(1.5, r * 0.05);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+            ctx.stroke();
+            ctx.restore();
 
-        // Center circle backing
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, cy, innerR - 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.shadowColor = 'rgba(138, 104, 31, 0.1)';
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.lineWidth = 1.5;
-        ctx.strokeStyle = '#FAF5E8';
-        ctx.stroke();
-        ctx.restore();
+            // Main Percentage Typography
+            ctx.fillStyle = pctColor;
+            ctx.font = '800 ' + (r > 45 ? '19px' : (r > 30 ? '15px' : (r > 22 ? '13px' : '11px'))) + ' Plus Jakarta Sans, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(pctText, x, y - (r > 28 ? 6 : 0));
 
-        // Center KPI Text
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+            // Sub-label below percentage
+            if (r > 24 && labelText) {
+                ctx.fillStyle = lblColor;
+                ctx.font = '700 ' + (r > 45 ? '10px' : '8.5px') + ' Plus Jakarta Sans, sans-serif';
+                ctx.fillText(labelText, x, y + (r > 45 ? 11 : 9));
+            }
+        }
 
-        ctx.fillStyle = '#8A681F';
-        ctx.font = '800 8.5px Plus Jakarta Sans, sans-serif';
-        ctx.letterSpacing = '0.04em';
-        ctx.fillText('TOTAL CATALOG', cx, cy - 8);
+        // Bubble 1: Sarees (48%) - Luxury Master Gold Glass Bubble
+        const grad1 = ctx.createRadialGradient(cx - 56, cy - 16, 4, cx - 44, cy - 4, 52);
+        grad1.addColorStop(0, '#FFFFFF');
+        grad1.addColorStop(0.35, '#FAF5E8');
+        grad1.addColorStop(1, '#EBD8A5');
+        drawLuxuryGlassBubble(cx - 44, cy - 4, 52, grad1, '#8A681F', 'rgba(138, 104, 31, 0.25)', '48%', 'Sarees', '#5A4210', '#8A681F');
 
-        ctx.fillStyle = '#181512';
-        ctx.font = '900 14px Plus Jakarta Sans, sans-serif';
-        ctx.fillText('₹42.85L', cx, cy + 8);
+        // Bubble 2: Kurtis (32%) - Fresh Emerald Glass Bubble
+        const grad2 = ctx.createRadialGradient(cx + 34, cy - 32, 3, cx + 42, cy - 24, 38);
+        grad2.addColorStop(0, '#FFFFFF');
+        grad2.addColorStop(0.35, '#DCFCE7');
+        grad2.addColorStop(1, '#A7F3D0');
+        drawLuxuryGlassBubble(cx + 42, cy - 24, 38, grad2, '#15803D', 'rgba(22, 163, 74, 0.25)', '32%', 'Kurtis', '#15803D', '#16A34A');
+
+        // Bubble 3: Lehengas (13%) - Radiant Amber Glass Bubble
+        const grad3 = ctx.createRadialGradient(cx + 26, cy + 32, 2, cx + 32, cy + 38, 27);
+        grad3.addColorStop(0, '#FFFFFF');
+        grad3.addColorStop(0.35, '#FEF3C7');
+        grad3.addColorStop(1, '#FDE68A');
+        drawLuxuryGlassBubble(cx + 32, cy + 38, 27, grad3, '#D97706', 'rgba(217, 119, 6, 0.25)', '13%', 'Lehengas', '#B45309', '#D97706');
+
+        // Bubble 4: Dress Materials (7%) - Royal Amethyst Glass Bubble
+        const grad4 = ctx.createRadialGradient(cx + 70, cy + 20, 2, cx + 74, cy + 24, 19);
+        grad4.addColorStop(0, '#FFFFFF');
+        grad4.addColorStop(0.35, '#F3E8FF');
+        grad4.addColorStop(1, '#DDD6FE');
+        drawLuxuryGlassBubble(cx + 74, cy + 24, 19, grad4, '#7E22CE', 'rgba(126, 34, 206, 0.25)', '7%', '', '#6B21A8', '#7E22CE');
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════
