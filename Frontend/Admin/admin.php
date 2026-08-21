@@ -1005,48 +1005,111 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
 
-                    <!-- 2. Modern Category Sales & Expense Breakdown Card -->
+                    <!-- 2. Modern Category Sales & Expense Breakdown Card (World-Class Luxury UI) -->
                     <div class="adm-saas-chart-card">
                         <div class="adm-saas-card-head">
-                            <div>
-                                <h3 class="adm-saas-card-title">Category Breakdown</h3>
-                                <p class="adm-saas-card-sub">Catalog share from 1-7 Apr, 2026</p>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, #FAF5E8, #F3E8C8); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                        <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="adm-saas-card-title">Category Breakdown</h3>
+                                    <p class="adm-saas-card-sub">Catalog share • 1–7 Apr, 2026</p>
+                                </div>
                             </div>
-                            <button type="button" class="adm-saas-pill-btn" onclick="switchAdmTab('products')">View Report</button>
+                            <button type="button" class="adm-ref-view-ord-btn" onclick="switchAdmTab('products')">View Catalog ↗</button>
                         </div>
 
-                        <div class="adm-saas-canvas-wrap" style="height:170px; display:flex; align-items:center; justify-content:center;">
+                        <div class="adm-saas-canvas-wrap" style="height:175px; display:flex; align-items:center; justify-content:center;">
                             <canvas id="admCategoryChart"></canvas>
                         </div>
 
                         <div class="adm-saas-category-grid">
-                            <div class="adm-saas-cat-pod">
-                                <div class="adm-saas-cat-header">
-                                    <span class="adm-saas-leg-dot" style="background:#8A681F;"></span>
-                                    <span class="adm-saas-cat-name">Sarees (48%)</span>
+                            <!-- Pod 1: Sarees -->
+                            <div class="adm-saas-cat-pod" style="background:linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border-color:#D4AF37;">
+                                <div class="adm-saas-cat-top">
+                                    <div class="adm-saas-cat-title-wrap">
+                                        <div class="adm-saas-cat-icon" style="background:#FAF5E8; border:1px solid #D4AF37;">
+                                            <span class="adm-saas-leg-dot" style="background:#8A681F;"></span>
+                                        </div>
+                                        <span class="adm-saas-cat-name">Sarees</span>
+                                    </div>
+                                    <span class="adm-ref-pill purple" style="font-size:0.64rem; padding:1px 6px;">48%</span>
                                 </div>
-                                <div class="adm-saas-cat-amt">₹20,57,200</div>
+                                <div class="adm-saas-cat-amt" style="color:#8A681F;">₹20,57,200</div>
+                                <div class="adm-saas-cat-progress">
+                                    <div class="adm-saas-cat-bar" style="width:48%; background:linear-gradient(90deg, #8A681F, #D4AF37);"></div>
+                                </div>
+                                <div class="adm-saas-cat-footer">
+                                    <span>842 Lots Active</span>
+                                    <span style="color:#15803D; font-weight:700;">● In Stock</span>
+                                </div>
                             </div>
-                            <div class="adm-saas-cat-pod">
-                                <div class="adm-saas-cat-header">
-                                    <span class="adm-saas-leg-dot" style="background:#15803D;"></span>
-                                    <span class="adm-saas-cat-name">Kurtis (32%)</span>
+
+                            <!-- Pod 2: Kurtis & Rayon -->
+                            <div class="adm-saas-cat-pod" style="background:linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%); border-color:#86EFAC;">
+                                <div class="adm-saas-cat-top">
+                                    <div class="adm-saas-cat-title-wrap">
+                                        <div class="adm-saas-cat-icon" style="background:#DCFCE7; border:1px solid #86EFAC;">
+                                            <span class="adm-saas-leg-dot" style="background:#15803D;"></span>
+                                        </div>
+                                        <span class="adm-saas-cat-name">Kurtis & Rayon</span>
+                                    </div>
+                                    <span class="adm-ref-pill emerald" style="font-size:0.64rem; padding:1px 6px;">32%</span>
                                 </div>
-                                <div class="adm-saas-cat-amt">₹13,71,400</div>
+                                <div class="adm-saas-cat-amt" style="color:#15803D;">₹13,71,400</div>
+                                <div class="adm-saas-cat-progress">
+                                    <div class="adm-saas-cat-bar" style="width:32%; background:linear-gradient(90deg, #15803D, #22C55E);"></div>
+                                </div>
+                                <div class="adm-saas-cat-footer">
+                                    <span>418 Lots Active</span>
+                                    <span style="color:#15803D; font-weight:700;">● In Stock</span>
+                                </div>
                             </div>
-                            <div class="adm-saas-cat-pod">
-                                <div class="adm-saas-cat-header">
-                                    <span class="adm-saas-leg-dot" style="background:#D97706;"></span>
-                                    <span class="adm-saas-cat-name">Lehengas (13%)</span>
+
+                            <!-- Pod 3: Bridal Lehengas -->
+                            <div class="adm-saas-cat-pod" style="background:linear-gradient(135deg, #FAF5FF 0%, #FFFFFF 100%); border-color:#D8B4FE;">
+                                <div class="adm-saas-cat-top">
+                                    <div class="adm-saas-cat-title-wrap">
+                                        <div class="adm-saas-cat-icon" style="background:#F3E8FF; border:1px solid #D8B4FE;">
+                                            <span class="adm-saas-leg-dot" style="background:#7E22CE;"></span>
+                                        </div>
+                                        <span class="adm-saas-cat-name">Lehengas</span>
+                                    </div>
+                                    <span class="adm-ref-pill" style="background:#F3E8FF; color:#7E22CE; border:1px solid #D8B4FE; font-size:0.64rem; padding:1px 6px;">13%</span>
                                 </div>
-                                <div class="adm-saas-cat-amt">₹5,57,100</div>
+                                <div class="adm-saas-cat-amt" style="color:#7E22CE;">₹5,57,100</div>
+                                <div class="adm-saas-cat-progress">
+                                    <div class="adm-saas-cat-bar" style="width:13%; background:linear-gradient(90deg, #7E22CE, #A855F7);"></div>
+                                </div>
+                                <div class="adm-saas-cat-footer">
+                                    <span>126 Lots Active</span>
+                                    <span style="color:#D97706; font-weight:700;">● Low Stock</span>
+                                </div>
                             </div>
-                            <div class="adm-saas-cat-pod">
-                                <div class="adm-saas-cat-header">
-                                    <span class="adm-saas-leg-dot" style="background:#7E22CE;"></span>
-                                    <span class="adm-saas-cat-name">Dress Mat. (7%)</span>
+
+                            <!-- Pod 4: Dress Materials -->
+                            <div class="adm-saas-cat-pod" style="background:linear-gradient(135deg, #FEF3C7 0%, #FFFFFF 100%); border-color:#FCD34D;">
+                                <div class="adm-saas-cat-top">
+                                    <div class="adm-saas-cat-title-wrap">
+                                        <div class="adm-saas-cat-icon" style="background:#FEF3C7; border:1px solid #FCD34D;">
+                                            <span class="adm-saas-leg-dot" style="background:#D97706;"></span>
+                                        </div>
+                                        <span class="adm-saas-cat-name">Dress Materials</span>
+                                    </div>
+                                    <span class="adm-ref-pill rose" style="font-size:0.64rem; padding:1px 6px;">7%</span>
                                 </div>
-                                <div class="adm-saas-cat-amt">₹3,00,200</div>
+                                <div class="adm-saas-cat-amt" style="color:#B45309;">₹3,00,200</div>
+                                <div class="adm-saas-cat-progress">
+                                    <div class="adm-saas-cat-bar" style="width:7%; background:linear-gradient(90deg, #D97706, #F59E0B);"></div>
+                                </div>
+                                <div class="adm-saas-cat-footer">
+                                    <span>64 Lots Active</span>
+                                    <span style="color:#15803D; font-weight:700;">● In Stock</span>
+                                </div>
                             </div>
                         </div>
                     </div>

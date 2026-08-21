@@ -1052,7 +1052,7 @@
         const dpr = window.devicePixelRatio || 1;
 
         const w = Math.min(340, containerWidth);
-        const h = 180;
+        const h = 175;
         canvas.width = w * dpr;
         canvas.height = h * dpr;
         canvas.style.width = w + 'px';
@@ -1063,66 +1063,75 @@
 
         const cx = w / 2;
         const cy = h / 2;
+        const outerR = 66;
+        const innerR = 44;
 
-        // Helper to draw a luxury glowing bubble
-        function drawLuxuryBubble(x, y, r, fillGrad, strokeColor, pctText, labelText, pctColor, lblColor) {
+        const data = [
+            { pct: 0.48, colorA: '#8A681F', colorB: '#D4AF37', lbl: 'Sarees', share: '48%' },
+            { pct: 0.32, colorA: '#15803D', colorB: '#22C55E', lbl: 'Kurtis', share: '32%' },
+            { pct: 0.13, colorA: '#7E22CE', colorB: '#A855F7', lbl: 'Lehengas', share: '13%' },
+            { pct: 0.07, colorA: '#D97706', colorB: '#F59E0B', lbl: 'Dress Mat.', share: '7%' }
+        ];
+
+        let startAngle = -Math.PI / 2;
+        const gap = 0.04; // radians gap between segments
+
+        data.forEach(item => {
+            const sweep = item.pct * Math.PI * 2;
+            const segStart = startAngle + gap / 2;
+            const segEnd = startAngle + sweep - gap / 2;
+
+            // Draw donut segment
             ctx.save();
-            ctx.shadowColor = 'rgba(138, 104, 31, 0.15)';
-            ctx.shadowBlur = 10;
-            ctx.shadowOffsetY = 4;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.08)';
+            ctx.shadowBlur = 6;
+            ctx.shadowOffsetY = 2;
+
+            const grad = ctx.createLinearGradient(
+                cx + Math.cos(segStart) * outerR,
+                cy + Math.sin(segStart) * outerR,
+                cx + Math.cos(segEnd) * outerR,
+                cy + Math.sin(segEnd) * outerR
+            );
+            grad.addColorStop(0, item.colorA);
+            grad.addColorStop(1, item.colorB);
 
             ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.fillStyle = fillGrad;
+            ctx.arc(cx, cy, outerR, segStart, segEnd, false);
+            ctx.arc(cx, cy, innerR, segEnd, segStart, true);
+            ctx.closePath();
+            ctx.fillStyle = grad;
             ctx.fill();
-
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = strokeColor;
-            ctx.stroke();
             ctx.restore();
 
-            // Main Percentage Number
-            ctx.fillStyle = pctColor;
-            ctx.font = 'bold ' + (r > 42 ? '18px' : (r > 28 ? '14px' : '11px')) + ' Cinzel, serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(pctText, x, y - (r > 30 ? 6 : 0));
+            startAngle += sweep;
+        });
 
-            // Sub-label below percentage
-            if (r > 30) {
-                ctx.fillStyle = lblColor;
-                ctx.font = '600 9.5px Plus Jakarta Sans, sans-serif';
-                ctx.fillText(labelText, x, y + 10);
-            }
-        }
+        // Center circle backing
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, innerR - 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.shadowColor = 'rgba(138, 104, 31, 0.1)';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = '#FAF5E8';
+        ctx.stroke();
+        ctx.restore();
 
-        // Bubble 1: Sarees (48%) - Luxury Master Gold Glass Bubble
-        const grad1 = ctx.createRadialGradient(cx - 45, cy - 8, 5, cx - 45, cy - 8, 52);
-        grad1.addColorStop(0, '#FFFFFF');
-        grad1.addColorStop(0.4, '#FAF5E8');
-        grad1.addColorStop(1, '#EBD8A5');
-        drawLuxuryBubble(cx - 45, cy - 5, 50, grad1, '#8A681F', '48%', 'Sarees', '#5A4210', '#8A681F');
+        // Center KPI Text
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
-        // Bubble 2: Kurtis (32%) - Fresh Emerald Glass Bubble
-        const grad2 = ctx.createRadialGradient(cx + 42, cy - 22, 4, cx + 42, cy - 22, 38);
-        grad2.addColorStop(0, '#FFFFFF');
-        grad2.addColorStop(0.4, '#DCFCE7');
-        grad2.addColorStop(1, '#A7F3D0');
-        drawLuxuryBubble(cx + 42, cy - 20, 36, grad2, '#15803D', '32%', 'Kurtis', '#15803D', '#16A34A');
+        ctx.fillStyle = '#8A681F';
+        ctx.font = '800 8.5px Plus Jakarta Sans, sans-serif';
+        ctx.letterSpacing = '0.04em';
+        ctx.fillText('TOTAL CATALOG', cx, cy - 8);
 
-        // Bubble 3: Lehengas (13%) - Radiant Amber Glass Bubble
-        const grad3 = ctx.createRadialGradient(cx + 30, cy + 40, 3, cx + 30, cy + 40, 26);
-        grad3.addColorStop(0, '#FFFFFF');
-        grad3.addColorStop(0.4, '#FEF3C7');
-        grad3.addColorStop(1, '#FDE68A');
-        drawLuxuryBubble(cx + 30, cy + 38, 25, grad3, '#D97706', '13%', 'Lehengas', '#B45309', '#D97706');
-
-        // Bubble 4: Dress Mat. (7%) - Royal Amethyst Glass Bubble
-        const grad4 = ctx.createRadialGradient(cx + 72, cy + 30, 2, cx + 72, cy + 30, 18);
-        grad4.addColorStop(0, '#FFFFFF');
-        grad4.addColorStop(0.4, '#F3E8FF');
-        grad4.addColorStop(1, '#DDD6FE');
-        drawLuxuryBubble(cx + 74, cy + 32, 17, grad4, '#7E22CE', '7%', '', '#6B21A8', '#7E22CE');
+        ctx.fillStyle = '#181512';
+        ctx.font = '900 14px Plus Jakarta Sans, sans-serif';
+        ctx.fillText('₹42.85L', cx, cy + 8);
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════
