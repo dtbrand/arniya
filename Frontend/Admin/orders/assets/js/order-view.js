@@ -240,6 +240,174 @@
             }
         },
 
+        openAddressEditModal: function(orderId) {
+            orderId = orderId || (document.getElementById('editAddressOrderId')?.value) || 'DTB-001620';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: document.getElementById('shippingRecipientText')?.textContent.trim() || 'Wholesale Consignee (Surat Depot)',
+                phone: document.getElementById('shippingPhoneText')?.textContent.replace('TEL:', '').trim() || '+91 98220 19283',
+                gstin: document.getElementById('billingGstinText')?.textContent.replace('GSTIN:', '').trim() || '24AAECJ1928K1Z5',
+                address: {
+                    shipping: document.getElementById('shippingAddressDisplay')?.textContent.trim() || 'Godown 12, Transport Nagar, Surat, Gujarat - 395010',
+                    billing: document.getElementById('billingAddressDisplay')?.textContent.trim() || 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002'
+                }
+            };
+
+            const orderIdInput = document.getElementById('editAddressOrderId');
+            if (orderIdInput) orderIdInput.value = order.id;
+
+            const orderIdText = document.getElementById('editAddressModalOrderIdText');
+            if (orderIdText) orderIdText.textContent = order.id;
+
+            // Fill Shipping inputs
+            const shipRecipient = document.getElementById('editShippingRecipient');
+            if (shipRecipient) shipRecipient.value = order.customer || '';
+
+            const shipPhone = document.getElementById('editShippingPhone');
+            if (shipPhone) shipPhone.value = order.phone || '';
+
+            const shipAddr = (order.address && order.address.shipping) ? order.address.shipping : '';
+            const shipLine1 = document.getElementById('editShippingLine1');
+            if (shipLine1) shipLine1.value = shipAddr.split(',')[0] || 'Godown 12, Sector C, Transport Nagar';
+
+            const shipCity = document.getElementById('editShippingCity');
+            if (shipCity) shipCity.value = 'Surat';
+
+            const shipState = document.getElementById('editShippingState');
+            if (shipState) shipState.value = 'Gujarat';
+
+            const shipPin = document.getElementById('editShippingPincode');
+            if (shipPin) {
+                const pinMatch = shipAddr.match(/\b\d{6}\b/);
+                shipPin.value = pinMatch ? pinMatch[0] : '395010';
+            }
+
+            // Fill Billing inputs
+            const billFirm = document.getElementById('editBillingFirm');
+            if (billFirm) billFirm.value = document.getElementById('billingFirmText')?.textContent.trim() || order.customer || 'Vardhman Tex Private Limited';
+
+            const billGstin = document.getElementById('editBillingGstin');
+            if (billGstin) billGstin.value = order.gstin || '24AAECJ1928K1Z5';
+
+            const billAddr = (order.address && order.address.billing) ? order.address.billing : '';
+            const billLine1 = document.getElementById('editBillingLine1');
+            if (billLine1) billLine1.value = billAddr.split(',')[0] || 'Shop 42, Ground Floor, Millennium Textile Market';
+
+            const billCity = document.getElementById('editBillingCity');
+            if (billCity) billCity.value = 'Surat';
+
+            const billState = document.getElementById('editBillingState');
+            if (billState) billState.value = 'Gujarat';
+
+            const billPin = document.getElementById('editBillingPincode');
+            if (billPin) {
+                const pinMatch = billAddr.match(/\b\d{6}\b/);
+                billPin.value = pinMatch ? pinMatch[0] : '395002';
+            }
+
+            const sameCheckbox = document.getElementById('sameAsShippingCheckbox');
+            if (sameCheckbox) sameCheckbox.checked = false;
+
+            const modal = document.getElementById('orderAddressEditModal');
+            if (modal) modal.style.display = 'flex';
+        },
+
+        closeAddressEditModal: function() {
+            const modal = document.getElementById('orderAddressEditModal');
+            if (modal) modal.style.display = 'none';
+        },
+
+        copyShippingToBilling: function() {
+            const sameCheckbox = document.getElementById('sameAsShippingCheckbox');
+            if (!sameCheckbox || !sameCheckbox.checked) return;
+
+            const shipRecipient = document.getElementById('editShippingRecipient')?.value || '';
+            const shipLine1 = document.getElementById('editShippingLine1')?.value || '';
+            const shipCity = document.getElementById('editShippingCity')?.value || '';
+            const shipState = document.getElementById('editShippingState')?.value || '';
+            const shipPin = document.getElementById('editShippingPincode')?.value || '';
+
+            const billFirm = document.getElementById('editBillingFirm');
+            if (billFirm && shipRecipient) billFirm.value = shipRecipient;
+
+            const billLine1 = document.getElementById('editBillingLine1');
+            if (billLine1 && shipLine1) billLine1.value = shipLine1;
+
+            const billCity = document.getElementById('editBillingCity');
+            if (billCity && shipCity) billCity.value = shipCity;
+
+            const billState = document.getElementById('editBillingState');
+            if (billState && shipState) billState.value = shipState;
+
+            const billPin = document.getElementById('editBillingPincode');
+            if (billPin && shipPin) billPin.value = shipPin;
+        },
+
+        saveAddressChanges: function(e) {
+            if (e && e.preventDefault) e.preventDefault();
+
+            const orderId = document.getElementById('editAddressOrderId')?.value || 'DTB-001620';
+            const recipient = document.getElementById('editShippingRecipient')?.value.trim() || 'Wholesale Consignee';
+            const phone = document.getElementById('editShippingPhone')?.value.trim() || '+91 98220 19283';
+            const shipLine1 = document.getElementById('editShippingLine1')?.value.trim() || '';
+            const shipCity = document.getElementById('editShippingCity')?.value.trim() || 'Surat';
+            const shipState = document.getElementById('editShippingState')?.value.trim() || 'Gujarat';
+            const shipPin = document.getElementById('editShippingPincode')?.value.trim() || '395010';
+
+            const billFirm = document.getElementById('editBillingFirm')?.value.trim() || recipient;
+            const billGstin = document.getElementById('editBillingGstin')?.value.trim() || '24AAECJ1928K1Z5';
+            const billLine1 = document.getElementById('editBillingLine1')?.value.trim() || '';
+            const billCity = document.getElementById('editBillingCity')?.value.trim() || 'Surat';
+            const billState = document.getElementById('editBillingState')?.value.trim() || 'Gujarat';
+            const billPin = document.getElementById('editBillingPincode')?.value.trim() || '395002';
+
+            const fullShipping = `${shipLine1}, ${shipCity}, ${shipState} - ${shipPin}`;
+            const fullBilling = `${billLine1}, ${billCity}, ${billState} - ${billPin}`;
+
+            // Update DOM on view.php
+            const shipRecEl = document.getElementById('shippingRecipientText');
+            if (shipRecEl) shipRecEl.textContent = recipient;
+
+            const shipPhoneEl = document.getElementById('shippingPhoneText');
+            if (shipPhoneEl) shipPhoneEl.textContent = `TEL: ${phone}`;
+
+            const shipDispEl = document.getElementById('shippingAddressDisplay');
+            if (shipDispEl) shipDispEl.textContent = fullShipping;
+
+            const billFirmEl = document.getElementById('billingFirmText');
+            if (billFirmEl) billFirmEl.textContent = billFirm;
+
+            const billGstinEl = document.getElementById('billingGstinText');
+            if (billGstinEl) billGstinEl.innerHTML = `GSTIN: <span style="color:#8A681F; font-weight:800; font-family:monospace;">${billGstin}</span>`;
+
+            const billDispEl = document.getElementById('billingAddressDisplay');
+            if (billDispEl) billDispEl.textContent = fullBilling;
+
+            // Update drawer if open
+            const drawerShipEl = document.getElementById('drawerShippingAddress');
+            if (drawerShipEl) drawerShipEl.textContent = fullShipping;
+
+            // Update global order cache in JS
+            if (window.DT_ORDERS && window.DT_ORDERS.orders) {
+                const targetOrder = window.DT_ORDERS.orders.find(o => o.id === orderId);
+                if (targetOrder) {
+                    targetOrder.customer = recipient;
+                    targetOrder.phone = phone;
+                    targetOrder.gstin = billGstin;
+                    if (!targetOrder.address) targetOrder.address = {};
+                    targetOrder.address.shipping = fullShipping;
+                    targetOrder.address.billing = fullBilling;
+                }
+            }
+
+            this.closeAddressEditModal();
+
+            if (window.DT_ORDERS) {
+                window.DT_ORDERS.showToast('✅ Shipping & Billing addresses updated successfully!');
+            }
+        },
+
         openLedgerModal: function(name, phone, email) {
             const modal = document.getElementById('customerLedgerModal');
             if (!modal) return;
