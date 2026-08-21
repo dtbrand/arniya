@@ -753,15 +753,43 @@ input, select, textarea {
         transform: translateY(-50%) scale(1) !important;
     }
 
-    /* Hide badges cleanly in collapsed desktop mode */
+    /* 👑 LUXURY UPPER-SIDE MICRO COUNT BADGE IN COLLAPSED MODE */
     .adm-sidebar.collapsed .adm-nav-badge {
-        display: none !important;
+        display: inline-flex !important;
+        position: absolute !important;
+        top: -2px !important;
+        right: -2px !important;
+        font-size: 0.54rem !important;
+        font-weight: 800 !important;
+        padding: 1px 4px !important;
+        min-width: 14px !important;
+        height: 14px !important;
+        border-radius: 6px !important;
+        background: #8A681F !important;
+        color: #FFFFFF !important;
+        border: 1.2px solid #FFFFFF !important;
+        box-shadow: 0 2px 6px rgba(138, 104, 31, 0.35) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        z-index: 5 !important;
     }
 
-    /* Strictly HIDE all submenus, labels, arrows, and headers in collapsed state on desktop */
+    .adm-sidebar.collapsed .adm-nav-badge.green {
+        background: #16A34A !important;
+        color: #FFFFFF !important;
+    }
+
+    .adm-sidebar.collapsed .adm-nav-badge.gold {
+        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 100%) !important;
+        color: #181512 !important;
+    }
+
+    /* Strictly HIDE all submenus, labels, arrow wrappers, and headers in collapsed state on desktop */
     .adm-sidebar.collapsed .adm-nav-submenu,
     .adm-sidebar.collapsed .adm-nav-submenu.open,
     .adm-sidebar.collapsed .adm-nav-has-sub.open > .adm-nav-submenu,
+    .adm-sidebar.collapsed .adm-nav-arrow-wrap,
     .adm-sidebar.collapsed .adm-nav-arrow,
     .adm-sidebar.collapsed .adm-nav-label,
     .adm-sidebar.collapsed .adm-nav-heading,
