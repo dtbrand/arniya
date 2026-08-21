@@ -246,6 +246,164 @@
     border: 1px solid var(--dt-gold-radiant);
 }
 
+/* ══ SEARCHABLE ALL-WORLD COUNTRY PICKER COMPONENT ══ */
+.dt-country-picker-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.dt-country-trigger {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    background: #FAF8F4;
+    border: 1.2px solid #EAE5D9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #181512;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.dt-country-trigger:hover {
+    background: #FFFFFF;
+    border-color: var(--dt-gold-primary);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.1);
+}
+
+.dt-country-trigger-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dt-selected-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.dt-country-arrow {
+    color: #78716C;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.dt-country-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    background: #FFFFFF;
+    border: 1.5px solid var(--dt-gold-primary);
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: dtCountryPopIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dtCountryPopIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dt-country-search-box {
+    padding: 8px 10px;
+    background: #FAF8F4;
+    border-bottom: 1.2px solid #EAE5D9;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dt-country-search-icon {
+    position: absolute;
+    left: 20px;
+    color: #8A681F;
+    pointer-events: none;
+}
+
+.dt-country-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px 0 32px;
+    background: #FFFFFF;
+    border: 1.2px solid #D4AF37;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #181512;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.dt-country-search-input:focus {
+    border-color: #8A681F;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+}
+
+.dt-country-list {
+    max-height: 240px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0;
+}
+
+.dt-country-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #181512;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.dt-country-opt:hover {
+    background: #FAF5E8;
+    color: #8A681F;
+}
+
+.dt-country-opt.active {
+    background: #FAF5E8;
+    color: #8A681F;
+    font-weight: 800;
+}
+
+.dt-country-opt-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.dt-country-opt-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dt-country-opt-code {
+    font-size: 0.65rem;
+    font-weight: 800;
+    background: #F0ECE1;
+    color: #645D54;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
 /* Toast System */
 .dt-toast-container {
     position: fixed;

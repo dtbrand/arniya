@@ -432,23 +432,26 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 
                             <div class="dt-form-grid-2">
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Country / Destination <span style="color:#DC2626;">*</span></label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="IN" selected>India (Bharat) 🇮🇳</option>
-                                        <option value="US">United States (USA) 🇺🇸</option>
-                                        <option value="AE">United Arab Emirates (UAE / Dubai) 🇦🇪</option>
-                                        <option value="GB">United Kingdom (UK) 🇬🇧</option>
-                                        <option value="CA">Canada 🇨🇦</option>
-                                        <option value="AU">Australia 🇦🇺</option>
-                                        <option value="SG">Singapore 🇸🇬</option>
-                                        <option value="MY">Malaysia 🇲🇾</option>
-                                        <option value="MU">Mauritius 🇲🇺</option>
-                                        <option value="NP">Nepal 🇳🇵</option>
-                                        <option value="SA">Saudi Arabia 🇸🇦</option>
-                                        <option value="KW">Kuwait 🇰🇼</option>
-                                        <option value="QA">Qatar 🇶🇦</option>
-                                        <option value="OM">Oman 🇴🇲</option>
-                                    </select>
+                                    <label class="dt-form-label">Country / Destination (195+ World Markets) <span style="color:#DC2626;">*</span></label>
+                                    <div class="dt-country-picker-wrap" id="dtEditCountryPicker" data-selected-code="IN">
+                                        <input type="hidden" name="country_code" class="dt-country-hidden-val" value="IN">
+                                        <div class="dt-country-trigger">
+                                            <div class="dt-country-trigger-left">
+                                                <span class="dt-selected-flag">🇮🇳</span>
+                                                <span class="dt-selected-name">India (Bharat)</span>
+                                            </div>
+                                            <svg class="dt-country-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </div>
+                                        <div class="dt-country-dropdown">
+                                            <div class="dt-country-search-box">
+                                                <svg class="dt-country-search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                <input type="text" class="dt-country-search-input" placeholder="Search 195+ countries (e.g. India, USA, UAE, UK)..." autocomplete="off">
+                                            </div>
+                                            <div class="dt-country-list">
+                                                <!-- Dynamically populated & filtered by country-picker.js -->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="dt-form-group">
@@ -585,5 +588,6 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 </div>
 
 <script src="/Frontend/Admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
