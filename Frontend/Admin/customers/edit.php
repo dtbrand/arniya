@@ -600,7 +600,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 
                         <!-- ══ FORM ACTIONS FOOTER ══ -->
                         <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1;">
-                            <button type="button" class="dt-btn dt-btn-pale" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2;" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { window.showToast('Account deactivated.'); }">Deactivate Account</button>
+                            <button type="button" class="dt-btn dt-btn-danger" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { window.showToast('Account deactivated.'); }">Deactivate Account</button>
                             
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <a href="/Frontend/Admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-pale">Cancel</a>

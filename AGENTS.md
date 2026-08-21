@@ -110,38 +110,47 @@ Every page, table, card, modal, input, and label across the Admin Panel MUST str
 
 Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
 
-### 👑 A. Primary Gold Master Button
-- **Gradient**: `linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%)`
+### 👑 A. Primary Radiant Gold Master Button (`.dt-btn-gold` / `.adm-btn-gold`)
+- **Gradient**: `linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%)`
 - **Border**: `1px solid #8A681F`
-- **Text Color**: Dark Obsidian `#181512` (`font-weight: 800;`)
-- **Shadow**: `box-shadow: 0 2px 8px rgba(212,175,55,0.35);`
-- **Hover**: `transform: translateY(-1px); box-shadow: 0 4px 14px rgba(212,175,55,0.5);`
-- **Icon**: Crisp vector SVG with `stroke="#181512"` or `stroke="#8A681F"`
-- **Usage**: `+ Add Product`, `+ Add Brand`, `Save Changes`, `Update`, `Search`, `AI Generate`
+- **Text Color**: High-Contrast Obsidian `#111827` (`font-weight: 800; letter-spacing: -0.011em;`)
+- **Shadow**: `box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);`
+- **Hover**: `background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);`
+- **Icon**: Crisp vector SVG with `stroke="#111827"` or `stroke="#8A681F"`
+- **Usage**: `+ Add Product`, `+ Add Customer`, `Save Customer Profile`, `Save Changes`, `Update`, `Search`, `AI Generate`
 
-### 💬 B. WhatsApp B2B Emerald Button
+### ⬛ B. Dark Obsidian Master Hero Button (`.dt-btn-dark` / `.adm-btn-dark`)
+- **Gradient**: `linear-gradient(135deg, #181512 0%, #2A241E 100%)`
+- **Border**: `1.2px solid #8A681F`
+- **Text Color**: `#FAF5E8` (`font-weight: 700;`)
+- **Shadow**: `box-shadow: 0 2px 8px rgba(0,0,0,0.25);`
+- **Hover**: `border-color: #D4AF37; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.35);`
+- **Usage**: Primary Dark Actions, Quick Hero Triggers, Catalog Actions
+
+### 💬 C. WhatsApp B2B Emerald Button (`.dt-btn-emerald` / `.adm-btn-emerald`)
 - **Background**: `linear-gradient(135deg, #15803D 0%, #16A34A 100%)`
-- **Text Color**: `#ffffff` (`font-weight: 700;`)
+- **Text Color**: `#FFFFFF` (`font-weight: 700;`)
 - **Icon**: Official vector WhatsApp SVG icon with white fill/stroke
 - **Usage**: 1-Click WhatsApp Lot Enquiry, Instant Customer Connect
 
-### ⚪ C. Pale Gold Secondary Action Pill
+### ⚪ D. Pale Gold Secondary Action Pill (`.dt-btn-pale` / `.adm-btn-pale`)
 - **Background**: `#FAF5E8`
 - **Border**: `1px solid #D4AF37`
-- **Text Color**: `#8A681F` (`font-weight: 700;`)
-- **Usage**: `Edit`, `Apply`, `Filter`, `Upload Image`, `Quick Edit`
+- **Text Color**: Deep Bronze `#705114` (`font-weight: 700;`)
+- **Hover**: `background: #F5ECCE; color: #5A4210; border-color: #8A681F; transform: translateY(-1px);`
+- **Usage**: `Edit`, `Apply`, `Filter`, `Upload Image`, `Quick Edit`, `+ Add Tag`
 
-### 👁️ D. Soft Blue Info Pill
+### 👁️ E. Soft Blue Info Pill (`.dt-btn-info` / `.adm-btn-info`)
 - **Background**: `#EFF6FF`
-- **Border**: `1px solid #93C5FD`
+- **Border**: `1px solid #BFDBFE`
 - **Text Color**: `#1D4ED8` (`font-weight: 700;`)
 - **Usage**: `View on Shop`, `Customer Reply`, `Catalog SKUs`
 
-### 🗑️ E. Crimson Danger / Trash Pill
+### 🗑️ F. Crimson Danger / Trash Pill (`.dt-btn-danger` / `.adm-btn-danger`)
 - **Background**: `#FEF2F2`
 - **Border**: `1px solid #FECACA`
-- **Text Color**: `#DC2626` (`font-weight: 600;`)
-- **Usage**: `Delete`, `Move to Trash`
+- **Text Color**: `#DC2626` (`font-weight: 700;`)
+- **Usage**: `Deactivate Account`, `Delete`, `Move to Trash`
 
 ---
 

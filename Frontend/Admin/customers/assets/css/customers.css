@@ -119,76 +119,107 @@
     flex-wrap: wrap;
 }
 
-/* Buttons System */
+/* Buttons System — Master Luxury Button Architecture */
 .dt-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 7px 14px;
+    padding: 8px 16px;
     border-radius: 8px;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 700;
     font-family: var(--dt-font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     line-height: 1.2;
     border: none;
     box-sizing: border-box;
+    user-select: none;
 }
 
 .dt-btn-gold {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512 !important;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827 !important;
     border: 1px solid #8A681F;
-    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35);
     font-weight: 800;
 }
 
 .dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48);
+    color: #0F0E0C !important;
+}
+
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: #FAF5E8 !important;
+    border: 1.2px solid #8A681F;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+}
+
+.dt-btn-dark:hover {
+    background: linear-gradient(135deg, #2A241E 0%, #3D342A 100%);
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .dt-btn-pale {
-    background: var(--dt-gold-pale);
-    color: var(--dt-gold-primary);
-    border: 1px solid var(--dt-gold-radiant);
+    background: #FAF5E8;
+    color: #705114 !important;
+    border: 1px solid #D4AF37;
+    font-weight: 700;
 }
 
 .dt-btn-pale:hover {
-    background: #F3E8C8;
-    color: var(--dt-gold-dark);
+    background: #F5ECCE;
+    color: #5A4210 !important;
+    border-color: #8A681F;
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.15);
 }
 
 .dt-btn-emerald {
     background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
     color: #FFFFFF !important;
     border: 1px solid #15803D;
-    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 8px rgba(21, 128, 61, 0.3);
+    font-weight: 700;
 }
 
 .dt-btn-emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 14px rgba(21, 128, 61, 0.45);
 }
 
 .dt-btn-danger {
-    background: var(--dt-rose-bg);
-    color: var(--dt-rose);
+    background: #FEF2F2;
+    color: #DC2626 !important;
     border: 1px solid #FECACA;
+    font-weight: 700;
 }
 
 .dt-btn-danger:hover {
     background: #FEE2E2;
+    border-color: #F87171;
+    color: #B91C1C !important;
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
 }
 
 .dt-btn-sm {
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 5px 12px;
+    font-size: 0.74rem;
     border-radius: 6px;
 }
 

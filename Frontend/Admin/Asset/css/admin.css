@@ -4657,3 +4657,129 @@ svg.adm-search-icon {
     align-items: center;
     justify-content: space-between;
 }
+
+/* ════ UNIVERSAL MASTER LUXURY BUTTON ARCHITECTURE (TAILADMIN BENCHMARK) ════ */
+.dt-btn, .adm-btn, .dt-btn-action-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--adm-font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+/* 👑 Master Radiant Gold Button */
+.dt-btn-gold, .adm-btn-gold, .dt-btn-action-sm.gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    border: 1px solid #8A681F !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35) !important;
+    font-weight: 800 !important;
+}
+
+.dt-btn-gold:hover, .adm-btn-gold:hover, .dt-btn-action-sm.gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
+    color: #0F0E0C !important;
+}
+
+/* ⬛ Dark Obsidian Master Hero Button */
+.dt-btn-dark, .adm-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    color: #FAF5E8 !important;
+    border: 1.2px solid #8A681F !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+    font-weight: 700 !important;
+}
+
+.dt-btn-dark:hover, .adm-btn-dark:hover {
+    background: linear-gradient(135deg, #2A241E 0%, #3D342A 100%) !important;
+    border-color: #D4AF37 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ⚪ Pale Gold Secondary Action Pill */
+.dt-btn-pale, .adm-btn-pale, .dt-btn-action-sm.pale-gold {
+    background: #FAF5E8 !important;
+    color: #705114 !important;
+    border: 1px solid #D4AF37 !important;
+    font-weight: 700 !important;
+}
+
+.dt-btn-pale:hover, .adm-btn-pale:hover, .dt-btn-action-sm.pale-gold:hover {
+    background: #F5ECCE !important;
+    color: #5A4210 !important;
+    border-color: #8A681F !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.15) !important;
+}
+
+/* 💬 WhatsApp B2B Emerald Button */
+.dt-btn-emerald, .adm-btn-emerald, .dt-btn-action-sm.emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%) !important;
+    color: #FFFFFF !important;
+    border: 1px solid #15803D !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 8px rgba(21, 128, 61, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+.dt-btn-emerald:hover, .adm-btn-emerald:hover, .dt-btn-action-sm.emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(21, 128, 61, 0.45) !important;
+}
+
+/* 🗑️ Crimson Danger Action Button */
+.dt-btn-danger, .adm-btn-danger, .dt-btn-action-sm.danger {
+    background: #FEF2F2 !important;
+    color: #DC2626 !important;
+    border: 1px solid #FECACA !important;
+    font-weight: 700 !important;
+}
+
+.dt-btn-danger:hover, .adm-btn-danger:hover, .dt-btn-action-sm.danger:hover {
+    background: #FEE2E2 !important;
+    border-color: #F87171 !important;
+    color: #B91C1C !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15) !important;
+}
+
+/* 👁️ Soft Blue Info Action Button */
+.dt-btn-info, .adm-btn-info, .dt-btn-action-sm.blue {
+    background: #EFF6FF !important;
+    color: #1D4ED8 !important;
+    border: 1px solid #BFDBFE !important;
+    font-weight: 700 !important;
+}
+
+.dt-btn-info:hover, .adm-btn-info:hover, .dt-btn-action-sm.blue:hover {
+    background: #DBEAFE !important;
+    border-color: #93C5FD !important;
+    color: #1E40AF !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.15) !important;
+}
+
+/* Small Button Variant */
+.dt-btn-sm, .adm-btn-sm {
+    padding: 5px 12px !important;
+    font-size: 0.74rem !important;
+    border-radius: 6px !important;
+}
