@@ -37,26 +37,24 @@
     text-rendering: optimizeLegibility;
 }
 
-@keyframes dtGoldPlatinumRun {
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumGlow {
     0% {
-        border-color: #D4AF37 !important;
-        box-shadow: 0 0 0 2.5px #D4AF37, 0 0 12px 2px rgba(212, 175, 55, 0.6), inset 0 0 4px rgba(212, 175, 55, 0.15) !important;
-    }
-    25% {
-        border-color: #E2E8F0 !important;
-        box-shadow: 0 0 0 3px #E2E8F0, 0 0 16px 4px rgba(226, 232, 240, 0.9), 0 0 24px rgba(255, 255, 255, 0.8) !important;
-    }
-    50% {
-        border-color: #B8860B !important;
-        box-shadow: 0 0 0 2.5px #B8860B, 0 0 14px 3px rgba(184, 134, 11, 0.65), inset 0 0 6px rgba(184, 134, 11, 0.2) !important;
-    }
-    75% {
-        border-color: #FFFFFF !important;
-        box-shadow: 0 0 0 3px #FFFFFF, 0 0 18px 5px rgba(255, 255, 255, 0.95), 0 0 26px rgba(212, 175, 55, 0.5) !important;
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
     }
     100% {
-        border-color: #D4AF37 !important;
-        box-shadow: 0 0 0 2.5px #D4AF37, 0 0 12px 2px rgba(212, 175, 55, 0.6), inset 0 0 4px rgba(212, 175, 55, 0.15) !important;
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
     }
 }
 
@@ -73,8 +71,10 @@ input[type="date"]:focus,
 textarea:focus,
 select:focus {
     outline: none !important;
-    background: #FFFFFF !important;
-    animation: dtGoldPlatinumRun 1.5s linear infinite !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
     color: #111827 !important;
 }
 
