@@ -458,11 +458,262 @@
         }
     };
 
+    // ════ NEXT-LEVEL LIVE SEARCH ENGINE WITH AUTOCOMPLETE DROPDOWN ════
+    function handleGlobalSearch(query, isMobile) {
+        const targetContainer = isMobile 
+            ? document.getElementById('admMobileGlobalSearchResults') 
+            : document.getElementById('admGlobalSearchResults');
+
+        if (!targetContainer) return;
+
+        if (!query || query.trim().length === 0) {
+            targetContainer.style.display = 'none';
+            targetContainer.innerHTML = '';
+            return;
+        }
+
+        const q = query.trim().toLowerCase();
+        
+        // Match Products
+        const matchingProds = (products || []).filter(p => 
+            (p.name && p.name.toLowerCase().includes(q)) || 
+            (p.sku && p.sku.toLowerCase().includes(q)) ||
+            (p.category && p.category.toLowerCase().includes(q)) ||
+            (p.fabric && p.fabric.toLowerCase().includes(q))
+        ).slice(0, 4);
+
+        // Match Orders
+        const matchingOrders = (orders || []).filter(o => 
+            (o.id && o.id.toLowerCase().includes(q)) || 
+            (o.customer && o.customer.toLowerCase().includes(q)) ||
+            (o.city && o.city.toLowerCase().includes(q)) ||
+            (o.status && o.status.toLowerCase().includes(q))
+        ).slice(0, 3);
+
+        // Match Partners / Wholesalers
+        const matchingPartners = (partners || []).filter(pt => 
+            (pt.name && pt.name.toLowerCase().includes(q)) || 
+            (pt.city && pt.city.toLowerCase().includes(q)) ||
+            (pt.phone && pt.phone.toLowerCase().includes(q))
+        ).slice(0, 3);
+
+        const totalMatches = matchingProds.length + matchingOrders.length + matchingPartners.length;
+
+        if (totalMatches === 0) {
+            targetContainer.innerHTML = `
+                <div class="adm-live-search-empty">
+                    <div style="font-size:22px; margin-bottom:6px;">🔍</div>
+                    <div style="font-weight:700; color:#181512; margin-bottom:3px;">No direct matches found for "${query}"</div>
+                    <div style="font-size:11px; color:#64748B;">Try searching by Product Name (e.g. <i>Saree</i>), SKU (e.g. <i>KLN-SR-111</i>), or Order # (e.g. <i>DTB-001620</i>).</div>
+                </div>
+            `;
+            targetContainer.style.display = 'block';
+            return;
+        }
+
+        let html = `
+            <div class="adm-live-search-header">
+                <span>🔍 Instant Live Results for "<b>${query}</b>"</span>
+                <span class="adm-live-search-count-badge">${totalMatches} Result${totalMatches === 1 ? '' : 's'}</span>
+            </div>
+        `;
+
+        // 👗 PRODUCTS SECTION
+        if (matchingProds.length > 0) {
+            html += `
+                <div class="adm-live-search-group">
+                    <div class="adm-live-search-group-title">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <span>Products &amp; SKUs (${matchingProds.length})</span>
+                    </div>
+            `;
+            matchingProds.forEach(p => {
+                html += `
+                    <div class="adm-live-search-item" onclick="window.selectSearchProduct('${p.id}', '${p.sku}')">
+                        <img src="${p.image}" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="${p.name}" class="adm-live-search-thumb">
+                        <div class="adm-live-search-info">
+                            <div class="adm-live-search-title">${p.name}</div>
+                            <div class="adm-live-search-sub">
+                                <span style="font-weight:700; color:#8A681F;">${p.sku}</span>
+                                <span>•</span>
+                                <span>${p.category}</span>
+                                <span>•</span>
+                                <span style="color:#15803D; font-weight:700;">₹${(p.wholesale_price || 0).toLocaleString()} (Wholesale)</span>
+                            </div>
+                        </div>
+                        <span class="adm-live-search-badge" style="background:#DCFCE7; color:#15803D; border:1px solid #BBF7D0;">${p.stock} in Stock</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // 📦 ORDERS SECTION
+        if (matchingOrders.length > 0) {
+            html += `
+                <div class="adm-live-search-group">
+                    <div class="adm-live-search-group-title">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <span>Wholesale Orders (${matchingOrders.length})</span>
+                    </div>
+            `;
+            matchingOrders.forEach(o => {
+                const statusColor = o.status === 'Delivered' ? '#15803D' : (o.status === 'Processing' ? '#B45309' : '#1D4ED8');
+                const statusBg = o.status === 'Delivered' ? '#DCFCE7' : (o.status === 'Processing' ? '#FEF3C7' : '#EFF6FF');
+                html += `
+                    <div class="adm-live-search-item" onclick="window.selectSearchOrder('${o.id}')">
+                        <div class="adm-live-search-avatar" style="border-radius:6px; font-size:10px;">📦</div>
+                        <div class="adm-live-search-info">
+                            <div class="adm-live-search-title">Order #${o.id} — ${o.customer}</div>
+                            <div class="adm-live-search-sub">
+                                <span>${o.city || 'Surat Central Depot'}</span>
+                                <span>•</span>
+                                <span style="font-weight:700; color:#181512;">₹${(o.amount || 0).toLocaleString()}</span>
+                            </div>
+                        </div>
+                        <span class="adm-live-search-badge" style="background:${statusBg}; color:${statusColor}; border:1px solid ${statusColor}33;">${o.status}</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // 👤 PARTNERS SECTION
+        if (matchingPartners.length > 0) {
+            html += `
+                <div class="adm-live-search-group">
+                    <div class="adm-live-search-group-title">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>Wholesalers &amp; Partners (${matchingPartners.length})</span>
+                    </div>
+            `;
+            matchingPartners.forEach(pt => {
+                const initials = pt.name ? pt.name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase() : 'PT';
+                html += `
+                    <div class="adm-live-search-item" onclick="window.selectSearchPartner('${pt.name}')">
+                        <div class="adm-live-search-avatar">${initials}</div>
+                        <div class="adm-live-search-info">
+                            <div class="adm-live-search-title">${pt.name}</div>
+                            <div class="adm-live-search-sub">
+                                <span>${pt.city}</span>
+                                <span>•</span>
+                                <span>${pt.phone}</span>
+                            </div>
+                        </div>
+                        <span class="adm-live-search-badge" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">${pt.tier || 'Verified Wholesaler'}</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // Footer
+        html += `
+            <div class="adm-live-search-footer">
+                <span>Click any record to navigate</span>
+                <span style="color:#8A681F; font-weight:800; cursor:pointer;" onclick="window.executeGlobalSearch('${query}')">View Full Results ➔</span>
+            </div>
+        `;
+
+        targetContainer.innerHTML = html;
+        targetContainer.style.display = 'block';
+    }
+
+    window.selectSearchProduct = function(prodId, sku) {
+        hideAllLiveSearchResults();
+        if (typeof window.switchAdmTab === 'function') {
+            window.switchAdmTab('products');
+            const searchBox = document.getElementById('admProdSearch');
+            if (searchBox) {
+                searchBox.value = sku || '';
+                if (typeof filterProducts === 'function') filterProducts();
+            }
+        }
+        if (window.showToast) window.showToast(`👗 Navigated to Product SKU: ${sku}`);
+    };
+
+    window.selectSearchOrder = function(orderId) {
+        hideAllLiveSearchResults();
+        window.location.href = `/Frontend/Admin/orders/view.php?id=${encodeURIComponent(orderId)}`;
+    };
+
+    window.selectSearchPartner = function(partnerName) {
+        hideAllLiveSearchResults();
+        if (typeof window.switchAdmTab === 'function') {
+            window.switchAdmTab('partners');
+            const searchBox = document.getElementById('admPartnerSearch');
+            if (searchBox) {
+                searchBox.value = partnerName || '';
+                if (typeof filterPartners === 'function') filterPartners();
+            }
+        }
+        if (window.showToast) window.showToast(`👤 Navigated to Partner: ${partnerName}`);
+    };
+
+    window.executeGlobalSearch = function(query) {
+        hideAllLiveSearchResults();
+        if (!query || !query.trim()) return;
+        const q = query.trim().toLowerCase();
+
+        // Check matching order first
+        const foundOrder = (orders || []).find(o => o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q));
+        if (foundOrder) {
+            window.location.href = `/Frontend/Admin/orders/view.php?id=${encodeURIComponent(foundOrder.id)}`;
+            return;
+        }
+
+        // Check products
+        const foundProd = (products || []).find(p => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q));
+        if (foundProd) {
+            if (typeof window.switchAdmTab === 'function') {
+                window.switchAdmTab('products');
+                const searchBox = document.getElementById('admProdSearch');
+                if (searchBox) {
+                    searchBox.value = query;
+                    if (typeof filterProducts === 'function') filterProducts();
+                }
+            }
+            return;
+        }
+
+        // Fallback to Orders table search
+        if (typeof window.switchAdmTab === 'function') {
+            window.switchAdmTab('orders');
+            const searchBox = document.getElementById('admOrderSearch');
+            if (searchBox) {
+                searchBox.value = query;
+                if (typeof filterOrders === 'function') filterOrders();
+            }
+        }
+    };
+
+    function hideAllLiveSearchResults() {
+        const d = document.getElementById('admGlobalSearchResults');
+        if (d) d.style.display = 'none';
+        const md = document.getElementById('admMobileGlobalSearchResults');
+        if (md) md.style.display = 'none';
+    }
+
+    // Auto-dismiss live search on click outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#admHeaderSearchContainer') && !e.target.closest('#admMobileFullSearchBar')) {
+            hideAllLiveSearchResults();
+        }
+    });
+
+    // Auto-dismiss on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            hideAllLiveSearchResults();
+            if (typeof window.closeAdmMobileSearch === 'function') window.closeAdmMobileSearch();
+        }
+    });
+
     // ════ SEARCH INPUTS & 1-TAP CLEAR BUTTON ENGINE (STRICT RULE) ════
     function initSearchInputs() {
         const searchConfigs = [
-            { inputId: 'admGlobalSearch', clearId: 'admGlobalSearchClear', handler: handleGlobalSearch },
-            { inputId: 'admMobileGlobalSearch', clearId: 'admMobileGlobalSearchClear', handler: handleGlobalSearch },
+            { inputId: 'admGlobalSearch', clearId: 'admGlobalSearchClear', handler: (q) => handleGlobalSearch(q, false) },
+            { inputId: 'admMobileGlobalSearch', clearId: 'admMobileGlobalSearchClear', handler: (q) => handleGlobalSearch(q, true) },
             { inputId: 'admProdSearch', clearId: 'admProdSearchClear', handler: filterProducts },
             { inputId: 'admOrderSearch', clearId: 'admOrderSearchClear', handler: filterOrders },
             { inputId: 'admPartnerSearch', clearId: 'admPartnerSearchClear', handler: filterPartners },
@@ -481,6 +732,23 @@
                     if (typeof cfg.handler === 'function') cfg.handler(this.value.trim());
                 });
 
+                // Focus trigger to reopen if query present
+                input.addEventListener('focus', function() {
+                    if (this.value.trim().length > 0 && typeof cfg.handler === 'function') {
+                        cfg.handler(this.value.trim());
+                    }
+                });
+
+                // Enter key to execute search directly
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (typeof window.executeGlobalSearch === 'function') {
+                            window.executeGlobalSearch(this.value.trim());
+                        }
+                    }
+                });
+
                 if (clearBtn) {
                     clearBtn.addEventListener('click', function() {
                         input.value = '';
@@ -491,25 +759,6 @@
                 }
             }
         });
-    }
-
-    function handleGlobalSearch(query) {
-        if (!query) return;
-        const q = query.toLowerCase();
-        // Check if matching order or product or customer
-        const foundOrder = orders.find(o => o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q));
-        if (foundOrder) {
-            window.switchAdmTab('orders');
-            const searchBox = document.getElementById('admOrderSearch');
-            if (searchBox) { searchBox.value = query; filterOrders(query); }
-            return;
-        }
-        const foundProd = products.find(p => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q));
-        if (foundProd) {
-            window.switchAdmTab('products');
-            const searchBox = document.getElementById('admProdSearch');
-            if (searchBox) { searchBox.value = query; filterProducts(query); }
-        }
     }
 
     // ════ HIGH-DEFINITION DYNAMIC RESPONSIVE CANVAS CHARTS ════

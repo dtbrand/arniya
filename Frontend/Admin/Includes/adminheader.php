@@ -19,26 +19,26 @@
                 <span class="adm-mobile-brand-title">DT Brand's</span>
             </a>
 
-            <!-- ── Shop-Style Amazon Always-Open Search Bar (Desktop) ── -->
-            <div class="adm-search-amazon-bar" id="admDesktopSearchBox">
-                <div class="adm-search-cat-dropdown-wrap">
-                    <select class="adm-search-cat-select" id="admSearchCatSelect" aria-label="Search Filter">
-                        <option value="all">All</option>
-                        <option value="orders">Orders</option>
-                        <option value="products">Products</option>
-                        <option value="customers">Customers</option>
-                    </select>
-                    <svg class="adm-search-cat-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <!-- ── Clean Luxury Search Bar with Live Results Dropdown (Desktop) ── -->
+            <div class="adm-header-search-container" id="admHeaderSearchContainer">
+                <div class="adm-search-amazon-bar" id="admDesktopSearchBox">
+                    <svg class="adm-search-icon-left" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.3">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+
+                    <div class="adm-search-input-wrap">
+                        <input type="text" id="admGlobalSearch" class="adm-search-input-amazon" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off">
+                        <button type="button" id="admGlobalSearchClear" class="adm-search-clear-btn" title="Clear Search">✕</button>
+                    </div>
+
+                    <button type="button" class="adm-search-submit-btn" id="admGlobalSearchSubmitBtn" aria-label="Search" onclick="if(typeof window.executeGlobalSearch==='function') window.executeGlobalSearch(document.getElementById('admGlobalSearch').value)">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
                 </div>
 
-                <div class="adm-search-input-wrap">
-                    <input type="text" id="admGlobalSearch" class="adm-search-input-amazon" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off">
-                    <button type="button" id="admGlobalSearchClear" class="adm-search-clear-btn" title="Clear Search">✕</button>
-                </div>
-
-                <button type="button" class="adm-search-submit-btn" id="admGlobalSearchSubmitBtn" aria-label="Search" onclick="if(typeof handleGlobalSearch==='function') handleGlobalSearch(document.getElementById('admGlobalSearch').value)">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
+                <!-- Next-Level Live Search Dropdown Popup List -->
+                <div class="adm-live-search-dropdown" id="admGlobalSearchResults"></div>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
     <!-- ══ Mobile Full-Header Search Bar Overlay (Exact Shop Page Header Style) ══ -->
     <div class="adm-mobile-full-search-bar" id="admMobileFullSearchBar">
         <div class="adm-mobile-search-input-wrap">
-            <button type="button" class="adm-mobile-search-submit-icon-btn" onclick="if(typeof handleGlobalSearch==='function') handleGlobalSearch(document.getElementById('admMobileGlobalSearch').value)">
+            <button type="button" class="adm-mobile-search-submit-icon-btn" onclick="if(typeof window.executeGlobalSearch==='function') window.executeGlobalSearch(document.getElementById('admMobileGlobalSearch').value)">
                 <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
             <input type="text" id="admMobileGlobalSearch" class="adm-mobile-search-input-field" placeholder="Search orders, sarees, customers, SKUs..." autocomplete="off">
@@ -96,6 +96,8 @@
         <button type="button" class="adm-mobile-search-close-btn" onclick="window.closeAdmMobileSearch()" title="Close Search">
             <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
+        <!-- Mobile Live Search Dropdown Popup List -->
+        <div class="adm-mobile-live-search-dropdown" id="admMobileGlobalSearchResults"></div>
     </div>
 </header>
 
