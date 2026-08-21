@@ -174,7 +174,7 @@ $active_subnav = "";
                             <h1 class="dt-orders-title" style="margin:0; font-size:18px;">
                                 <span>Order #<?php echo htmlspecialchars($order['id']); ?></span>
                             </h1>
-                            <span class="dt-status-badge <?php echo $order['status']; ?>">
+                            <span id="viewPageStatusBadge" data-order-id="<?php echo $order['id']; ?>" class="dt-status-badge <?php echo $order['status']; ?>">
                                 <span class="dt-status-dot"></span>
                                 <span><?php echo str_replace('_', ' ', $order['status']); ?></span>
                             </span>

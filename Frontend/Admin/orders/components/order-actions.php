@@ -6,50 +6,51 @@
 ?>
 <!-- ══ Update Status Modal (Luxury Smart Redesign) ══ -->
 <div id="updateStatusModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_STATUS.closeStatusModal()">
-    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:540px; max-height:92vh; box-shadow:0 12px 40px rgba(0,0,0,0.32); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:540px; max-height:92vh; box-shadow:0 14px 44px rgba(0,0,0,0.35); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
         <!-- Modal Header -->
         <div style="padding:14px 20px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <div style="width:30px; height:30px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:34px; height:34px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; box-shadow:0 2px 6px rgba(212,175,55,0.2);">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 </div>
                 <div>
-                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Update Fulfillment &amp; Logistics</h3>
-                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="modalOrderIdText" style="color:#8A681F;">DTB-001624</strong></p>
+                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Update Order Status &amp; Fulfillment</h3>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot Dock • Order <strong id="modalOrderIdText" style="color:#8A681F; font-weight:800;">DTB-001624</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">
-                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
 
         <!-- Modal Scrollable Body -->
         <div style="padding:18px 20px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; font-size:12px; color:#181512;">
             
             <!-- Current Status & Quick Presets -->
-            <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.03em;">Current Pipeline Stage</span>
-                    <span id="modalCurrentStatusBadge" style="font-size:10px; font-weight:800; padding:2px 8px; border-radius:12px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; text-transform:uppercase;">SHIPPED</span>
+            <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Current Lifecycle Stage</span>
+                    <span id="modalCurrentStatusBadge" class="dt-status-badge shipped">
+                        <span class="dt-status-dot"></span>
+                        <span id="modalCurrentStatusBadgeText">SHIPPED</span>
+                    </span>
                 </div>
                 
                 <!-- Recommended 1-Click Fast Presets (100% Real Vector SVGs) -->
                 <div style="font-size:11px; color:#64748B; margin-bottom:6px; font-weight:700;">Recommended Fast Transitions:</div>
                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span>Packed &amp; QC Pass</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="background:#FFFFFF; border:1px solid #86EFAC; color:#15803D; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="background:#FFFFFF; border:1px solid #86EFAC; color:#15803D; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                         <span>Handover to Courier</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="background:#FFFFFF; border:1px solid #93C5FD; color:#1D4ED8; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="background:#FFFFFF; border:1px solid #93C5FD; color:#1D4ED8; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span>Out for Delivery</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
-                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#15803D" stroke-width="2.3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:5px 10px; border-radius:6px; font-size:11px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#15803D" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                         <span>Delivered</span>
                     </button>
                 </div>
@@ -57,8 +58,8 @@
 
             <!-- Target Status Selector -->
             <div>
-                <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">Target Status</label>
-                <select id="modalNewStatus" class="dt-order-search-input" style="height:36px; font-weight:700; border-radius:6px; border-color:#CBD5E1;">
+                <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">New Target Status</label>
+                <select id="modalNewStatus" class="dt-order-search-input" style="height:38px; font-weight:750; border-radius:6px; border:1px solid #D4AF37; background:#FFFFFF; padding:0 10px; width:100%; box-sizing:border-box;">
                     <optgroup label="Warehouse &amp; Production Phase">
                         <option value="pending">Pending Verification</option>
                         <option value="confirmed">Confirmed / Payment Verified</option>
@@ -83,7 +84,7 @@
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                 <div>
                     <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">Logistics Carrier</label>
-                    <select id="modalCarrierSelect" class="dt-order-search-input" style="height:36px; border-radius:6px; border-color:#CBD5E1;">
+                    <select id="modalCarrierSelect" class="dt-order-search-input" style="height:38px; border-radius:6px; border:1px solid #D4AF37; background:#FFFFFF; padding:0 10px; width:100%; box-sizing:border-box; font-weight:600;">
                         <option value="VRL Logistics Depot">VRL Logistics Depot (Surat)</option>
                         <option value="BlueDart Surface">BlueDart Surface Cargo</option>
                         <option value="Delhivery Express">Delhivery B2B Freight</option>
@@ -101,7 +102,7 @@
                             <span>Generate</span>
                         </a>
                     </label>
-                    <input type="text" id="modalTrackingInput" placeholder="e.g. VRL-99821" value="VRL-99821" class="dt-order-search-input" style="height:36px; border-radius:6px; border-color:#CBD5E1; font-weight:700;">
+                    <input type="text" id="modalTrackingInput" placeholder="e.g. VRL-99821" value="VRL-99821" class="dt-order-search-input" style="height:38px; border-radius:6px; border:1px solid #D4AF37; font-weight:750; padding:0 10px; width:100%; box-sizing:border-box;">
                 </div>
             </div>
 
@@ -116,12 +117,12 @@
 
             <!-- Status Transition Reason / Notes -->
             <div>
-                <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">Transition Note / Dispatch Log</label>
-                <input type="text" id="modalStatusReason" placeholder="e.g. Manifest verified and passed to courier dock" value="Manifest verified and passed to courier dock" class="dt-order-search-input" style="height:36px; border-radius:6px; border-color:#CBD5E1;">
+                <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">Status Transition Reason (Optional)</label>
+                <input type="text" id="modalStatusReason" placeholder="e.g. Manifest verified and passed to courier dock" value="Manifest verified and passed to courier dock" class="dt-order-search-input" style="height:38px; border-radius:6px; border:1px solid #D4AF37; font-weight:600; padding:0 10px; width:100%; box-sizing:border-box;">
                 <div style="margin-top:5px; display:flex; gap:6px; flex-wrap:wrap;">
-                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#F1F5F9; color:#475569; padding:2px 6px; border-radius:4px; cursor:pointer; border:1px solid #E2E8F0;">QC Passed &amp; Manifest Verified</span>
-                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#F1F5F9; color:#475569; padding:2px 6px; border-radius:4px; cursor:pointer; border:1px solid #E2E8F0;">Loaded on Truck #14 (Surat Hub)</span>
-                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#F1F5F9; color:#475569; padding:2px 6px; border-radius:4px; cursor:pointer; border:1px solid #E2E8F0;">Consignee E-Sign Delivered</span>
+                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:4px; cursor:pointer; border:1px solid #D4AF37; font-weight:700;">QC Passed &amp; Manifest Verified</span>
+                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:4px; cursor:pointer; border:1px solid #D4AF37; font-weight:700;">Loaded on Truck #14 (Surat Hub)</span>
+                    <span onclick="document.getElementById('modalStatusReason').value=this.textContent" style="font-size:10px; background:#FAF5E8; color:#8A681F; padding:2px 8px; border-radius:4px; cursor:pointer; border:1px solid #D4AF37; font-weight:700;">Consignee E-Sign Delivered</span>
                 </div>
             </div>
         </div>
