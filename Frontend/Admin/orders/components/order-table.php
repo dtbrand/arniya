@@ -200,16 +200,30 @@ $orders_list = [
 <!-- ══ Bulk Action Toolbar (Active on Multi-Select) ══ -->
 <div class="dt-bulk-bar" id="ordersBulkBar">
     <div class="dt-bulk-info">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        <span id="bulkSelectedCount">0 Orders Selected</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.3"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        <span id="bulkSelectedCount" style="font-weight:800; color:#FAF5E8;">0 Orders Selected</span>
     </div>
-    <div class="dt-bulk-actions-group">
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('confirmed')">Mark Confirmed</button>
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('processing')">Mark Processing</button>
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('packed')">Mark Packed</button>
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('shipped')">Mark Shipped</button>
-        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkPrint()">Print Selected Invoices</button>
-        <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_BULK_ACTIONS.executeBulkExport()">Export Selected</button>
+    <div class="dt-bulk-actions-group" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+        <!-- Batch Print All Courier Shipping Labels -->
+        <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_BULK_ACTIONS.executeBulkPrintLabels()" style="height:32px; padding:0 12px; font-size:11px; font-weight:800;" title="Print Courier Shipping Barcode Labels for All Selected Orders">
+            <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="#181512" stroke-width="2.3"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            <span>Bulk Print Labels</span>
+        </button>
+        <!-- Batch Print Tax Invoices -->
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkPrintInvoices()" style="height:32px; padding:0 11px; font-size:11px; font-weight:700;" title="Batch Print Tax Invoices">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Batch Invoices</span>
+        </button>
+        <!-- Batch Print Packing Slips -->
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkPrintPackingSlips()" style="height:32px; padding:0 11px; font-size:11px; font-weight:700;" title="Batch Print Packing Slips">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <span>Batch Packing Slips</span>
+        </button>
+        <!-- Fast Status Transitions -->
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('confirmed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Confirmed</button>
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('packed')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Packed</button>
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.executeBulkStatus('shipped')" style="height:32px; padding:0 10px; font-size:11px; font-weight:700;">Mark Shipped</button>
+        <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_BULK_ACTIONS.clearSelection()" style="height:32px; padding:0 10px; font-size:11px; font-weight:700; color:#DC2626;">✕ Deselect</button>
     </div>
 </div>
 
@@ -231,7 +245,7 @@ $orders_list = [
                     <th class="col-shipping" style="width:105px;">Shipping</th>
                     <th class="col-status" style="width:85px;">Status</th>
                     <th class="col-source" style="width:75px;">Source</th>
-                    <th class="col-actions" style="width:125px; text-align:right;">Actions</th>
+                    <th class="col-actions" style="width:145px; text-align:right;">Actions</th>
                 </tr>
             </thead>
             <tbody id="ordersTableBody">
@@ -248,9 +262,7 @@ $orders_list = [
                             <button type="button" class="dt-expand-btn" onclick="window.DT_ORDER_VIEW.toggleRowDetails('<?php echo $o['id']; ?>', this)" title="Quick Expand Row" style="background:none; border:none; padding:0; cursor:pointer; color:#64748B; display:flex; align-items:center; transition:transform 0.15s ease;">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </button>
-                            <a href="javascript:void(0)" onclick="window.DT_ORDER_VIEW.openDrawer('<?php echo $o['id']; ?>')" class="dt-order-id-link" title="Open Quick View Drawer">
-                                <span><?php echo $o['id']; ?></span>
-                            </a>
+                            <a href="/Frontend/Admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-order-id-link"><?php echo $o['id']; ?></a>
                         </div>
                     </td>
                     <td class="col-date" style="white-space:nowrap; font-size:11px; color:#64748B;">
@@ -313,7 +325,11 @@ $orders_list = [
                             <button type="button" class="dt-action-btn packing" onclick="window.DT_ORDER_VIEW.openPackingSlipModal('<?php echo $o['id']; ?>')" title="Warehouse Packing Manifest Popup">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             </button>
-                            <!-- 5. Cancel / Trash Action Modal Popup -->
+                            <!-- 5. Shipping & Box Barcode Label Popup -->
+                            <button type="button" class="dt-action-btn label" onclick="window.DT_ORDER_VIEW.openShippingLabelModal('<?php echo $o['id']; ?>')" title="Print Courier Shipping Barcode Label">
+                                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                            </button>
+                            <!-- 6. Cancel / Trash Action Modal Popup -->
                             <?php if ($o['status'] !== 'cancelled' && $o['status'] !== 'delivered'): ?>
                             <button type="button" class="dt-action-btn danger" onclick="window.DT_ORDER_STATUS.openCancelModal('<?php echo $o['id']; ?>')" title="Cancel Consignment Popup">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>

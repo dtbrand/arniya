@@ -245,3 +245,49 @@
         </div>
     </div>
 </div>
+
+<!-- ══ Courier Shipping Label & Box Barcode Preview Modal ══ -->
+<div id="orderShippingLabelModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeShippingLabelModal()">
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:540px; max-height:92vh; box-shadow:0 14px 44px rgba(0,0,0,0.35); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif; position:relative;">
+        <span id="shippingLabelModalOrderId" style="display:none;">DTB-001624</span>
+        
+        <!-- Top Action Controls -->
+        <div style="position:absolute; top:14px; right:16px; z-index:20;">
+            <a id="shippingLabelModalFullPageLink" href="#" target="_blank" style="display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 10px; font-size:11px; font-weight:700; color:#8A681F; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; text-decoration:none; box-shadow:0 1px 4px rgba(212,175,55,0.18); transition:all 0.15s ease;" title="Open Label in Full Tab">
+                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <span>Full Page ↗</span>
+            </a>
+        </div>
+
+        <!-- Modal Header -->
+        <div style="padding:14px 18px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:34px; height:34px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                </div>
+                <div>
+                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Courier Shipping &amp; Box Label</h3>
+                    <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="shippingLabelOrderIdTitle" style="color:#8A681F;">DTB-001624</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Scrollable Content -->
+        <div id="shippingLabelModalBody" style="flex:1; overflow-y:auto; padding:18px 20px; font-size:12px; color:#181512; background:#FFFFFF;">
+            <!-- Loaded dynamically by JS -->
+        </div>
+
+        <!-- Modal Footer -->
+        <div style="padding:12px 18px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
+            <div style="font-size:11px; color:#64748B;">Official Courier AWB Barcode • 4×6 Standard Label</div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeShippingLabelModal()" style="height:34px; padding:0 12px; font-size:11.5px;">✕ Close</button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.printShippingLabelDirect()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800;" title="Direct Print Label">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    <span>Print 4×6 Label</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
