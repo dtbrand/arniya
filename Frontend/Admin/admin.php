@@ -650,67 +650,112 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         <!-- Right Column: Store Performance + Fast Moving Lots -->
                         <div class="adm-ref-right-col">
-                            <!-- 1. Store Performance Speedometer Gauge Card -->
+                            <!-- 1. Store Performance Speedometer Gauge Card (World-Class Luxury UI) -->
                             <div class="adm-ref-perf-card">
-                                <div class="adm-ref-card-head" style="width:100%; margin-bottom:4px;">
-                                    <h3 class="adm-ref-card-title">Store Performance</h3>
-                                    <span class="adm-ref-pill emerald" style="font-size:0.65rem;">★ Top Tier</span>
+                                <div class="adm-ref-card-head" style="width:100%; margin-bottom:2px;">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, #FAF5E8, #F3E8C8); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                                <path d="M4 22h16"></path>
+                                                <path d="M10 14.66V17c0 .55-.45 1-1 1H7.5"></path>
+                                                <path d="M14 14.66V17c0 .55.45 1 1 1h1.5"></path>
+                                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="adm-ref-card-title">Store Performance</h3>
+                                    </div>
+                                    <span class="adm-ref-pill emerald" style="font-size:0.65rem; font-weight:800; padding:3px 9px;">
+                                        <span style="width:6px; height:6px; border-radius:50%; background:#15803D; display:inline-block;"></span>
+                                        Top 1% Tier
+                                    </span>
                                 </div>
                                 
-                                <!-- Semi-Circular Gauge Speedometer -->
+                                <!-- World-Class Radial Speedometer Dial -->
                                 <div class="adm-ref-gauge-wrap">
-                                    <svg viewBox="0 0 200 115" width="200" height="115" style="overflow:visible;">
-                                        <!-- Background track arc -->
-                                        <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F5F2EA" stroke-width="16" stroke-linecap="round" />
-                                        <!-- Red Alert segment -->
-                                        <path d="M 25 105 A 75 75 0 0 1 55 45" fill="none" stroke="#EF4444" stroke-width="16" stroke-linecap="round" />
-                                        <!-- Radiant Gold Transition segment -->
-                                        <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#D4AF37" stroke-width="16" />
-                                        <!-- Signature Heritage Gold & Obsidian Success segment -->
-                                        <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#8A681F" stroke-width="16" stroke-linecap="round" />
-                                        <!-- Center Pivot Pin -->
-                                        <circle cx="100" cy="105" r="7.5" fill="#181512" stroke="#D4AF37" stroke-width="2.5" />
-                                        <!-- Needle Indicator pointing to 94.9% -->
-                                        <line x1="100" y1="105" x2="152" y2="46" stroke="#181512" stroke-width="3.2" stroke-linecap="round" />
+                                    <svg viewBox="0 0 240 140" width="240" height="140" style="overflow:visible;">
+                                        <defs>
+                                            <linearGradient id="gaugeWorldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#EF4444" />
+                                                <stop offset="25%" stop-color="#F59E0B" />
+                                                <stop offset="65%" stop-color="#D4AF37" />
+                                                <stop offset="100%" stop-color="#10B981" />
+                                            </linearGradient>
+                                            <linearGradient id="gaugeTrackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#F5F2EA" />
+                                                <stop offset="100%" stop-color="#EBE5D8" />
+                                            </linearGradient>
+                                            <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                                                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#D4AF37" flood-opacity="0.35" />
+                                            </filter>
+                                        </defs>
+
+                                        <!-- Background track arc (180 deg) -->
+                                        <path d="M 30 125 A 90 90 0 0 1 210 125" fill="none" stroke="url(#gaugeTrackGrad)" stroke-width="14" stroke-linecap="round" />
+                                        
+                                        <!-- Subtle graduation tick marks -->
+                                        <circle cx="30" cy="125" r="2.5" fill="#CBD5E1" />
+                                        <circle cx="56" cy="61" r="2.5" fill="#CBD5E1" />
+                                        <circle cx="120" cy="35" r="2.5" fill="#CBD5E1" />
+                                        <circle cx="184" cy="61" r="2.5" fill="#CBD5E1" />
+                                        <circle cx="210" cy="125" r="2.5" fill="#CBD5E1" />
+
+                                        <!-- Active luminous progress arc (94.9% filled) -->
+                                        <path d="M 30 125 A 90 90 0 0 1 210 125" fill="none" stroke="url(#gaugeWorldGrad)" stroke-width="14" stroke-linecap="round" stroke-dasharray="282.74" stroke-dashoffset="14.4" filter="url(#gaugeGlow)" />
+                                        
+                                        <!-- Glowing Active Head Pulse Node -->
+                                        <circle cx="204" cy="98" r="6" fill="#10B981" stroke="#FFFFFF" stroke-width="2" />
+                                        <circle cx="204" cy="98" r="9.5" fill="none" stroke="#10B981" stroke-width="1.5" opacity="0.6" />
                                     </svg>
+
                                     <div class="adm-ref-gauge-score">
-                                        <span class="adm-ref-gauge-score-lbl">Index Score</span>
-                                        <span class="adm-ref-gauge-score-val">94.9%</span>
+                                        <span class="adm-ref-gauge-score-lbl">Surat Wholesale Index</span>
+                                        <div class="adm-ref-gauge-score-val">94.9<span style="font-size:1.25rem; color:#8A681F; font-weight:800;">%</span></div>
+                                        <div class="adm-ref-gauge-tier">
+                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                            High Performance Tier
+                                        </div>
                                     </div>
                                 </div>
 
-                                <p class="adm-ref-perf-text">Surat Wholesale fulfillment rate is <strong>12% faster</strong> than last week</p>
+                                <p class="adm-ref-perf-text">Surat Wholesale fulfillment rate is <strong style="color:#15803D;">12% faster</strong> than last week with <strong style="color:#8A681F;">99.4% accuracy</strong></p>
 
                                 <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#181512" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#181512" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="18" y1="20" x2="18" y2="10"></line>
                                         <line x1="12" y1="20" x2="12" y2="4"></line>
                                         <line x1="6" y1="20" x2="6" y2="14"></line>
                                     </svg>
-                                    View Performance Details
+                                    View Full Performance Analytics ↗
                                 </button>
 
                                 <div class="adm-ref-perf-stats-grid">
-                                    <div class="adm-ref-stat-box">
-                                        <span class="adm-ref-stat-box-lbl">Completed</span>
+                                    <div class="adm-ref-stat-box" style="background:#F0FDF4; border:1px solid #BBF7D0;">
+                                        <span class="adm-ref-stat-box-lbl" style="color:#15803D;">Completed</span>
                                         <span class="adm-ref-stat-box-val" style="color:#15803D;">1,542</span>
+                                        <span style="font-size:0.62rem; color:#166534; font-weight:600;">Lots Dispatched</span>
                                     </div>
-                                    <div class="adm-ref-stat-box">
-                                        <span class="adm-ref-stat-box-lbl">Fulfillment</span>
+                                    <div class="adm-ref-stat-box" style="background:#FAF5E8; border:1px solid #D4AF37;">
+                                        <span class="adm-ref-stat-box-lbl" style="color:#8A681F;">Fulfillment</span>
                                         <span class="adm-ref-stat-box-val" style="color:#8A681F;">94.9%</span>
+                                        <span style="font-size:0.62rem; color:#705114; font-weight:600;">On-Time Rate</span>
                                     </div>
-                                    <div class="adm-ref-stat-box">
-                                        <span class="adm-ref-stat-box-lbl">Pending</span>
+                                    <div class="adm-ref-stat-box" style="background:#FEF2F2; border:1px solid #FECACA;">
+                                        <span class="adm-ref-stat-box-lbl" style="color:#DC2626;">Pending</span>
                                         <span class="adm-ref-stat-box-val" style="color:#DC2626;">18</span>
+                                        <span style="font-size:0.62rem; color:#991B1B; font-weight:600;">Queue Verification</span>
                                     </div>
                                 </div>
 
                                 <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
-                                    Previous Week Details
+                                    Weekly Audit Log & History
                                 </button>
                             </div>
 
