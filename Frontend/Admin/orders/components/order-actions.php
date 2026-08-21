@@ -260,16 +260,28 @@
         </div>
 
         <!-- Modal Header -->
-        <div style="padding:14px 18px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+        <div style="padding:14px 18px 8px 18px; background:#FAF8F4; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div style="display:flex; align-items:center; gap:10px;">
                 <div style="width:34px; height:34px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                 </div>
                 <div>
-                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Courier Shipping &amp; Box Label</h3>
+                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">Shipping Label &amp; Packing Manifest</h3>
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="shippingLabelOrderIdTitle" style="color:#8A681F;">DTB-001624</strong></p>
                 </div>
             </div>
+        </div>
+
+        <!-- Mode Switcher Tabs (Shipping Barcode vs Warehouse Manifest) -->
+        <div style="display:flex; gap:6px; padding:0 18px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7;">
+            <button type="button" id="tabBtnShippingLabel" onclick="window.DT_ORDER_VIEW.switchDocTab('shipping')" style="flex:1; height:30px; font-size:11px; font-weight:800; border-radius:6px 6px 0 0; border:1px solid #D4AF37; border-bottom:none; cursor:pointer; background:#FFFFFF; color:#8A681F; display:flex; align-items:center; justify-content:center; gap:5px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                <span>4×6 Courier Shipping Label</span>
+            </button>
+            <button type="button" id="tabBtnPackingSlip" onclick="window.DT_ORDER_VIEW.switchDocTab('packing')" style="flex:1; height:30px; font-size:11px; font-weight:700; border-radius:6px 6px 0 0; border:1px solid #CBD5E1; border-bottom:none; cursor:pointer; background:#F1F5F9; color:#64748B; display:flex; align-items:center; justify-content:center; gap:5px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <span>Warehouse Packing Manifest</span>
+            </button>
         </div>
 
         <!-- Modal Scrollable Content -->
@@ -279,12 +291,12 @@
 
         <!-- Modal Footer -->
         <div style="padding:12px 18px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
-            <div style="font-size:11px; color:#64748B;">Official Courier AWB Barcode • 4×6 Standard Label</div>
+            <div id="shippingLabelFooterNote" style="font-size:11px; color:#64748B;">Official Courier AWB Barcode • 4×6 Standard Label</div>
             <div style="display:flex; gap:8px; align-items:center;">
                 <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeShippingLabelModal()" style="height:34px; padding:0 12px; font-size:11.5px;">✕ Close</button>
-                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.printShippingLabelDirect()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800;" title="Direct Print Label">
+                <button type="button" id="shippingLabelDirectPrintBtn" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.printShippingLabelDirect()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800;" title="Direct Print Label">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                    <span>Print 4×6 Label</span>
+                    <span id="shippingLabelDirectPrintBtnText">Print 4×6 Label</span>
                 </button>
             </div>
         </div>

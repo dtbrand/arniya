@@ -1324,6 +1324,124 @@
             }, 250);
 
             if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🖨️ Printing shipping label for ${order.id}`);
+        },
+
+        switchDocTab: function(tabName) {
+            const orderId = document.getElementById('shippingLabelModalOrderId')?.textContent || 'DTB-001624';
+            const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
+            const order = orders.find(o => o.id === orderId) || {
+                id: orderId,
+                customer: 'Rajesh Kumar',
+                firm: 'Vardhman Tex',
+                phone: '+91 98220 19283',
+                shipping: 'VRL Logistics Depot',
+                tracking: 'VRL-99821',
+                items_count: '25 pcs',
+                items_summary: 'Kanjivaram Silk Saree Pure Zari Weave (x25)',
+                amount: 112250,
+                date: '21 Aug 2026'
+            };
+
+            const tabShipping = document.getElementById('tabBtnShippingLabel');
+            const tabPacking = document.getElementById('tabBtnPackingSlip');
+            const body = document.getElementById('shippingLabelModalBody');
+            const footerNote = document.getElementById('shippingLabelFooterNote');
+            const printBtnText = document.getElementById('shippingLabelDirectPrintBtnText');
+            const printBtn = document.getElementById('shippingLabelDirectPrintBtn');
+
+            if (tabName === 'packing') {
+                if (tabShipping) {
+                    tabShipping.style.background = '#F1F5F9';
+                    tabShipping.style.color = '#64748B';
+                    tabShipping.style.borderColor = '#CBD5E1';
+                    tabShipping.style.fontWeight = '700';
+                }
+                if (tabPacking) {
+                    tabPacking.style.background = '#FFFFFF';
+                    tabPacking.style.color = '#B45309';
+                    tabPacking.style.borderColor = '#FCD34D';
+                    tabPacking.style.fontWeight = '800';
+                }
+                if (footerNote) footerNote.textContent = 'Internal Warehouse Dispatch Record • Silk Mark QC Passed';
+                if (printBtnText) printBtnText.textContent = 'Print Packing Manifest';
+                if (printBtn) printBtn.onclick = () => window.DT_ORDER_VIEW.printPackingSlipDirect(order.id);
+
+                if (body) {
+                    body.innerHTML = `
+                        <div style="border:1.5px solid #E2DFD7; border-radius:8px; padding:16px; background:#FFFFFF; font-family:'Plus Jakarta Sans', sans-serif;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:10px; margin-bottom:12px;">
+                                <div>
+                                    <h3 style="margin:0; font-size:15px; font-weight:800; color:#181512;">WAREHOUSE PACKING MANIFEST</h3>
+                                    <p style="margin:2px 0 0 0; font-size:10.5px; color:#64748B;">Surat Central Depot Dock 1 • QC Pass Verified</p>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span style="font-size:10px; font-weight:800; background:#FEF3C7; color:#B45309; border:1px solid #FCD34D; padding:2px 6px; border-radius:4px;">DISPATCH SLIP</span>
+                                    <div style="font-size:12px; font-weight:800; color:#181512; margin-top:2px;">${order.id}</div>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+                                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
+                                    <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Consignee Destination</div>
+                                    <div style="font-weight:800; font-size:12.5px; color:#181512;">${order.customer}</div>
+                                    <div style="font-size:11px; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
+                                    <div style="font-size:11px; color:#475569;">TEL: ${order.phone}</div>
+                                </div>
+                                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:6px; padding:10px;">
+                                    <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase;">Carrier &amp; Tracking</div>
+                                    <div style="font-weight:800; font-size:12px; color:#181512;">${order.shipping || 'VRL Logistics Depot'}</div>
+                                    <div style="font-size:11px; color:#475569;">AWB: ${order.tracking || 'VRL-99821'}</div>
+                                    <div style="font-size:10.5px; color:#15803D; font-weight:700;">QC Verification: 100% PASS</div>
+                                </div>
+                            </div>
+
+                            <table style="width:100%; border-collapse:collapse; margin-bottom:12px; font-size:11.5px;">
+                                <thead>
+                                    <tr style="background:#181512; color:#FAF5E8;">
+                                        <th style="padding:6px 8px; text-align:left;">Item Description &amp; SKU</th>
+                                        <th style="padding:6px 8px; text-align:center;">Qty</th>
+                                        <th style="padding:6px 8px; text-align:center;">QC Verified</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom:1px solid #E2E8F0;">
+                                        <td style="padding:8px;">
+                                            <strong>${order.items_summary || 'Kanjivaram Silk Saree Pure Zari Weave'}</strong><br>
+                                            <small style="color:#64748B;">Surat Central Depot Sealed Batch</small>
+                                        </td>
+                                        <td style="padding:8px; text-align:center; font-weight:800;">${order.items_count || '25 pcs'}</td>
+                                        <td style="padding:8px; text-align:center; color:#15803D; font-weight:800;">✓ PASS (Silk Mark)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:6px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#64748B;">
+                                <div>Total Master Cartons: <strong>2 Boxes</strong> (18.5 Kg)</div>
+                                <div style="font-weight:700; color:#181512;">Warehouse Dispatch Lead Verified</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                // Switch back to 4x6 Shipping Label
+                if (tabShipping) {
+                    tabShipping.style.background = '#FFFFFF';
+                    tabShipping.style.color = '#8A681F';
+                    tabShipping.style.borderColor = '#D4AF37';
+                    tabShipping.style.fontWeight = '800';
+                }
+                if (tabPacking) {
+                    tabPacking.style.background = '#F1F5F9';
+                    tabPacking.style.color = '#64748B';
+                    tabPacking.style.borderColor = '#CBD5E1';
+                    tabPacking.style.fontWeight = '700';
+                }
+                if (footerNote) footerNote.textContent = 'Official Courier AWB Barcode • 4×6 Standard Label';
+                if (printBtnText) printBtnText.textContent = 'Print 4×6 Label';
+                if (printBtn) printBtn.onclick = () => window.DT_ORDER_VIEW.printShippingLabelDirect(order.id);
+
+                this.openShippingLabelModal(order.id);
+            }
         }
     };
 })(window);

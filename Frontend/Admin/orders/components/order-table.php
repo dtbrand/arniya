@@ -321,15 +321,11 @@ $orders_list = [
                             <button type="button" class="dt-action-btn invoice" onclick="window.DT_ORDER_VIEW.openInvoiceModal('<?php echo $o['id']; ?>')" title="GST Tax Invoice Popup">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             </button>
-                            <!-- 4. Warehouse Packing Slip Modal Popup -->
-                            <button type="button" class="dt-action-btn packing" onclick="window.DT_ORDER_VIEW.openPackingSlipModal('<?php echo $o['id']; ?>')" title="Warehouse Packing Manifest Popup">
+                            <!-- 4. Courier Shipping Label & Box Barcode Popup -->
+                            <button type="button" class="dt-action-btn packing" onclick="window.DT_ORDER_VIEW.openShippingLabelModal('<?php echo $o['id']; ?>')" title="Print Courier Shipping Label & Box Barcode">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             </button>
-                            <!-- 5. Shipping & Box Barcode Label Popup -->
-                            <button type="button" class="dt-action-btn label" onclick="window.DT_ORDER_VIEW.openShippingLabelModal('<?php echo $o['id']; ?>')" title="Print Courier Shipping Barcode Label">
-                                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                            </button>
-                            <!-- 6. Cancel / Trash Action Modal Popup -->
+                            <!-- 5. Cancel / Trash Action Modal Popup -->
                             <?php if ($o['status'] !== 'cancelled' && $o['status'] !== 'delivered'): ?>
                             <button type="button" class="dt-action-btn danger" onclick="window.DT_ORDER_STATUS.openCancelModal('<?php echo $o['id']; ?>')" title="Cancel Consignment Popup">
                                 <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
