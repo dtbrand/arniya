@@ -314,14 +314,14 @@
         // Realistic financial waveforms for distinct KPI metrics
         const waveProfiles = {
             up: [
-                { path: "M 2 24 C 14 22, 22 26, 34 16 C 44 8, 56 12, 74 4", endX: 74, endY: 4 },
-                { path: "M 2 22 C 12 24, 24 14, 38 16 C 50 18, 58 8, 74 3", endX: 74, endY: 3 },
-                { path: "M 2 26 C 16 18, 28 20, 42 12 C 54 6, 62 10, 74 5", endX: 74, endY: 5 },
-                { path: "M 2 20 C 14 26, 26 12, 40 14 C 52 16, 64 6, 74 2", endX: 74, endY: 2 }
+                { path: "M 2 28 C 16 26, 26 30, 40 18 C 54 8, 68 14, 88 4", endX: 88, endY: 4 },
+                { path: "M 2 26 C 14 28, 28 16, 44 18 C 58 20, 70 8, 88 3", endX: 88, endY: 3 },
+                { path: "M 2 30 C 18 20, 32 22, 48 12 C 62 6, 74 10, 88 5", endX: 88, endY: 5 },
+                { path: "M 2 24 C 16 30, 30 14, 46 16 C 60 18, 74 6, 88 2", endX: 88, endY: 2 }
             ],
             down: [
-                { path: "M 2 4 C 14 6, 24 14, 38 12 C 50 18, 60 22, 74 25", endX: 74, endY: 25 },
-                { path: "M 2 6 C 16 4, 26 18, 42 16 C 54 22, 64 20, 74 26", endX: 74, endY: 26 }
+                { path: "M 2 4 C 16 6, 28 16, 44 14 C 58 20, 72 24, 88 28", endX: 88, endY: 28 },
+                { path: "M 2 6 C 18 4, 30 20, 48 18 C 62 24, 74 22, 88 30", endX: 88, endY: 30 }
             ]
         };
 
@@ -333,7 +333,7 @@
             const strokeColor = isUp ? '#16A34A' : '#DC2626';
             const fillColor = isUp ? '#22C55E' : '#EF4444';
 
-            const svgHtml = '<svg viewBox="0 0 78 28" width="76" height="28" style="overflow:visible; display:block;">' +
+            const svgHtml = '<svg viewBox="0 0 92 32" width="90" height="32" style="overflow:visible; display:block;">' +
                 '<defs>' +
                     '<linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
                         '<stop offset="0%" stop-color="' + fillColor + '" stop-opacity="0.32" />' +
@@ -341,13 +341,13 @@
                     '</linearGradient>' +
                 '</defs>' +
                 // Area fill under curve
-                '<path d="' + profile.path + ' L ' + profile.endX + ' 28 L 2 28 Z" fill="url(#' + gradId + ')" stroke="none" />' +
+                '<path d="' + profile.path + ' L ' + profile.endX + ' 32 L 2 32 Z" fill="url(#' + gradId + ')" stroke="none" />' +
                 // Smooth curved line
-                '<path d="' + profile.path + '" fill="none" stroke="' + strokeColor + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />' +
+                '<path d="' + profile.path + '" fill="none" stroke="' + strokeColor + '" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />' +
                 // Glowing outer pulse ring
-                '<circle cx="' + profile.endX + '" cy="' + profile.endY + '" r="5" fill="none" stroke="' + strokeColor + '" stroke-width="1.2" opacity="0.35" />' +
+                '<circle cx="' + profile.endX + '" cy="' + profile.endY + '" r="5.5" fill="none" stroke="' + strokeColor + '" stroke-width="1.2" opacity="0.35" />' +
                 // Crisp end point dot
-                '<circle cx="' + profile.endX + '" cy="' + profile.endY + '" r="2.8" fill="' + strokeColor + '" stroke="#FFFFFF" stroke-width="1.5" />' +
+                '<circle cx="' + profile.endX + '" cy="' + profile.endY + '" r="3" fill="' + strokeColor + '" stroke="#FFFFFF" stroke-width="1.5" />' +
             '</svg>';
 
             el.innerHTML = svgHtml;

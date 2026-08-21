@@ -452,7 +452,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <!-- ════ 22 MAIN KPI METRIC CARDS ════ -->
                 <div class="adm-kpi-grid">
                     <!-- 1. Total Revenue -->
-                    <div class="adm-kpi-card primary" onclick="switchAdmTab('reports')">
+                    <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Revenue</span>
                             <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
@@ -527,7 +527,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
 
                     <!-- 6. Total Orders -->
-                    <div class="adm-kpi-card primary" onclick="switchAdmTab('orders')">
+                    <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Orders</span>
                             <div class="adm-kpi-icon-box" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
@@ -642,7 +642,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="adm-kpi-val">348</div>
                         <div class="adm-kpi-bottom">
                             <span class="adm-kpi-delta up">₹4.8L Payouts</span>
-                            <span class="adm-badge gold" style="font-weight:700;">Active Hub</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
@@ -662,7 +662,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
 
                     <!-- 15. Total Wholesalers -->
-                    <div class="adm-kpi-card primary" onclick="switchAdmTab('partners')">
+                    <div class="adm-kpi-card" onclick="switchAdmTab('partners')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Wholesalers</span>
                             <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
@@ -672,7 +672,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="adm-kpi-val">46</div>
                         <div class="adm-kpi-bottom">
                             <span class="adm-kpi-delta up">68 Consignments</span>
-                            <span class="adm-badge emerald" style="font-weight:700;">Tier 1 VIP</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
@@ -686,8 +686,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val">1,240</div>
                         <div class="adm-kpi-bottom">
-                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">16 Categories</span>
-                            <span class="adm-badge gold" style="font-weight:700;">Surat Products</span>
+                            <span class="adm-kpi-delta up">16 Categories</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
@@ -716,8 +716,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val" style="color:#D97706;">14</div>
                         <div class="adm-kpi-bottom">
-                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">Threshold &lt; 5 pcs</span>
-                            <span class="adm-badge amber" style="font-weight:700;">Re-order</span>
+                            <span class="adm-kpi-delta down" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">&lt; 5 pcs</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
 
@@ -731,7 +731,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val" style="color:#DC2626;">41</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-badge rose" style="font-weight:700;">Restock Pending</span>
+                            <span class="adm-kpi-delta down" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">Restock Pending</span>
                             <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
@@ -746,8 +746,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val">₹48,200</div>
                         <div class="adm-kpi-bottom">
-                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">14 Invoices</span>
-                            <span class="adm-badge gold" style="font-weight:700;">Net 15</span>
+                            <span class="adm-kpi-delta up">14 Invoices</span>
+                            <div class="adm-kpi-sparkline" data-trend="up"></div>
                         </div>
                     </div>
 
@@ -761,8 +761,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val">3</div>
                         <div class="adm-kpi-bottom">
-                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">₹6,400 Value</span>
-                            <span class="adm-badge rose" style="font-weight:700;">Pending</span>
+                            <span class="adm-kpi-delta down" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">₹6,400 Pending</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
 
@@ -776,8 +776,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                         <div class="adm-kpi-val">5</div>
                         <div class="adm-kpi-bottom">
-                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">Quality Inspection</span>
-                            <span class="adm-badge rose" style="font-weight:700;">Pending</span>
+                            <span class="adm-kpi-delta down" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">Inspection</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
                 </div>

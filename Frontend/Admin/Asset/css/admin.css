@@ -1685,15 +1685,6 @@ svg.adm-search-icon {
     opacity: 1;
 }
 
-.adm-kpi-card.primary {
-    background: linear-gradient(135deg, #FAF8F4 0%, #FFFFFF 100%);
-    border-color: rgba(212, 175, 55, 0.45);
-}
-
-.adm-kpi-card.primary::before {
-    opacity: 1;
-}
-
 .adm-kpi-top {
     display: flex;
     align-items: center;
@@ -1701,7 +1692,7 @@ svg.adm-search-icon {
 }
 
 .adm-kpi-label {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     font-weight: 700;
     color: #645D54;
     text-transform: uppercase;
@@ -2368,8 +2359,8 @@ svg.adm-search-icon {
 
 /* ════ 👑 NEXT-LEVEL KPI SPARKLINES WITH HOVER GLOW ════ */
 .adm-kpi-sparkline {
-    width: 76px;
-    height: 28px;
+    width: 90px;
+    height: 32px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -2378,11 +2369,11 @@ svg.adm-search-icon {
 }
 
 .adm-kpi-card:hover .adm-kpi-sparkline {
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
 .adm-kpi-card:hover .adm-kpi-sparkline svg {
-    filter: drop-shadow(0 2px 6px rgba(22, 163, 74, 0.3));
+    filter: drop-shadow(0 3px 8px rgba(22, 163, 74, 0.35));
 }
 
 /* ════ ORDER STATUS PIPELINE FLOW ════ */
