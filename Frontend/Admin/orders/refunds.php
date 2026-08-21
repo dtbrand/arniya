@@ -188,17 +188,18 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#64748B;">UTR: ICICR52026082001</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4012')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4012')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4012', 'DTB-001612', '14940', 'Meenakshi Silk House')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4012', 'DTB-001612', '14940', 'Meenakshi Silk House')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4012', '14940', 'Meenakshi Silk House')" class="dt-btn" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; height:28px; padding:0 8px; font-size:10.5px;" title="WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4012', '14940', 'Meenakshi Silk House')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
@@ -219,17 +220,18 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#64748B;">REF: UPI-291084-IN</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4011')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4011')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4011', 'DTB-001609', '4990', 'Shweta Joshi')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4011', 'DTB-001609', '4990', 'Shweta Joshi')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4011', '4990', 'Shweta Joshi')" class="dt-btn" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; height:28px; padding:0 8px; font-size:10.5px;" title="WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4011', '4990', 'Shweta Joshi')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
@@ -250,17 +252,22 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#B45309; font-weight:700;">Action Req.</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.approveClaim('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-gold" style="height:28px; padding:0 10px; font-size:10.5px;" title="Approve & Credit Balance">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.approveClaim('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-gold" style="height:28px; padding:0 10px; font-size:11px;" title="Approve & Credit Balance">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 <span>Approve</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4010')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4010')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4010', 'DTB-001605', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4010', 'DTB-001605', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                                <span>Voucher</span>
+                                            </button>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
@@ -281,17 +288,18 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#64748B;">UTR: HDFCR52026081702</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4009')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4009')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4009', 'DTB-001598', '22500', 'Vardhman Tex Godown')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4009', 'DTB-001598', '22500', 'Vardhman Tex Godown')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4009', '22500', 'Vardhman Tex Godown')" class="dt-btn" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; height:28px; padding:0 8px; font-size:10.5px;" title="WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4009', '22500', 'Vardhman Tex Godown')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
@@ -312,17 +320,18 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#64748B;">REF: RZP-REF-771920</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4008')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4008')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4008', 'DTB-001590', '3850', 'Pooja Sharma')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4008', 'DTB-001590', '3850', 'Pooja Sharma')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4008', '3850', 'Pooja Sharma')" class="dt-btn" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; height:28px; padding:0 8px; font-size:10.5px;" title="WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4008', '3850', 'Pooja Sharma')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
@@ -343,17 +352,18 @@ $active_subnav = "refunds";
                                         <div style="font-size:10px; color:#64748B;">UTR: CR-NOTE-SURAT-099</div>
                                     </td>
                                     <td style="text-align:right;">
-                                        <div style="display:inline-flex; gap:5px;">
-                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4007')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                        <div style="display:inline-flex; gap:6px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4007')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                                 <span>View</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4007', 'DTB-001582', '18200', 'Ananya Silks Bangalore')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4007', 'DTB-001582', '18200', 'Ananya Silks Bangalore')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 9px; font-size:11px;" title="Credit Note PDF">
+                                                <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
                                             </button>
-                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4007', '18200', 'Ananya Silks Bangalore')" class="dt-btn" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; height:28px; padding:0 8px; font-size:10.5px;" title="WhatsApp Slip">
-                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="#15803D"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                                            <button type="button" onclick="window.DT_REFUNDS.shareWhatsApp('REF-4007', '18200', 'Ananya Silks Bangalore')" class="dt-btn" style="background:#15803D; border:1px solid #166534; color:#FFFFFF; height:28px; padding:0 9px; font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:4px; box-shadow:0 1px 4px rgba(21,128,61,0.2);" title="Share WhatsApp Slip">
+                                                <svg viewBox="0 0 24 24" width="12" height="12" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.677.15-.2.301-.777.979-.953 1.179-.176.2-.351.226-.652.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.786-1.677-2.087-.176-.301-.019-.464.132-.614.136-.135.301-.351.451-.527.15-.176.2-.301.301-.501.101-.2.05-.376-.025-.527-.075-.15-.677-1.632-.927-2.234-.244-.587-.492-.507-.677-.516-.176-.008-.376-.01-.576-.01s-.527.075-.803.376c-.276.301-1.053 1.028-1.053 2.508 0 1.479 1.078 2.908 1.229 3.109.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.38.197 1.9-.12.58-.352 1.78-1.454 2.03-2.86.251-1.406.251-2.61.176-2.86-.075-.251-.276-.376-.576-.527zM12 2C6.477 2 2 6.477 2 12c0 1.77.462 3.433 1.27 4.887L2 22l5.24-1.374A9.953 9.953 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+                                                <span>WhatsApp</span>
                                             </button>
                                         </div>
                                     </td>
