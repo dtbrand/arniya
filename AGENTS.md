@@ -188,17 +188,45 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-se
 
 ---
 
-## ⚡ 6. 100% Real Vector SVG Icon Standard (ZERO EMOJIS IN BUTTONS & ZERO DOLLAR ICONS)
+## 💎 7. Master Luxury Gold & Silver/Platinum Glass Hero Box Architecture
 
-- **NEVER** use emojis (such as ✏️, 👁️, 🗑️, 💾, 📦, 📁, ✕) inside buttons, action links, table rows, or modal headers.
-- **NEVER USE DOLLAR ICONS ($)**: DT Brand's & Jai Hanuman Tex is a Surat, India B2B/B2C textile brand. Never use dollar icons (`$`, dollar SVGs, or `$` symbols).
-- **ALWAYS USE 100% REAL INDIAN RUPEE (`₹`) VECTOR SVG ICONS**:
-  `<path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>` in all pricing, revenue cards, KPI ribbons, financial metrics, and catalogs.
-- **ALWAYS** use clean, lightweight, inline vector SVGs with:
-  - `viewBox="0 0 24 24"`
-  - `fill="none" stroke="currentColor"` (or brand `#8A681F` / `#D4AF37`)
-  - `stroke-width="2" - "2.8"`
-  - `stroke-linecap="round" stroke-linejoin="round"`
+All dark summary boxes, customer identity hero bars, and metric banners across the Admin Panel **MUST NEVER** be flat solid black. They **MUST ALWAYS** use the **Luxury Gold & Silver/Platinum Ambient Lining Glassmorphic Style**:
+
+```css
+@keyframes dtAdminAmbientLiningShimmer {
+    0% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+    }
+    50% {
+        background-position: 0% 0%, 100% 100%, -100% 100%;
+    }
+    100% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+
+.dt-hero-luxury-card, .adm-hero-dark-box, .dt-cust-hero-banner {
+    position: relative;
+    background:
+        linear-gradient(135deg, rgba(20, 17, 14, 0.94) 0%, rgba(32, 27, 21, 0.90) 50%, rgba(18, 22, 28, 0.94) 100%),
+        repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.045) 0px, rgba(212, 175, 55, 0.045) 1px, transparent 1px, transparent 14px),
+        repeating-linear-gradient(-45deg, rgba(226, 232, 240, 0.035) 0px, rgba(226, 232, 240, 0.035) 1px, transparent 1px, transparent 14px);
+    background-size: 100% 100%, 300% 300%, 300% 300%;
+    animation: dtAdminAmbientLiningShimmer 16s ease infinite alternate;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(212, 175, 55, 0.2), 0 0 24px rgba(212, 175, 55, 0.12);
+}
+```
+- **Text & Metric Contrast Hierarchy**:
+  - **Main Name / Entity Title**: `#FFFFFF` (Pure Bright White, `font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,0.6);`)
+  - **VIP / Standing Pill**: Radiant Gold gradient with obsidian text (`background: linear-gradient(135deg, #B8860B, #E6CA65); color: #111827; font-weight: 800;`)
+  - **Subtitles & Metadata**: `#E2E8F0` (Platinum Silver, `font-weight: 500;`)
+  - **Metric Labels**: `#CBD5E1` (Silver Slate, `font-weight: 800; text-transform: uppercase;`)
+  - **Currency / Financial Numbers**: `#F0D77B` (Radiant Luminous Gold, `font-weight: 900;`)
+  - **Orders / Counts**: `#FFFFFF` (Pure White, `font-weight: 900;`)
 
 ---
 

@@ -51,6 +51,41 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-se
 
 ---
 
+## 💎 Master Luxury Gold & Silver/Platinum Glass Hero Box Standard
+
+All dark summary boxes, customer identity hero bars, and overview metric strips across the Admin Panel **MUST ALWAYS** use the **Luxury Gold & Silver/Platinum Ambient Lining Glassmorphic Style**:
+
+```css
+@keyframes dtAdminAmbientLiningShimmer {
+    0% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+    }
+    50% {
+        background-position: 0% 0%, 100% 100%, -100% 100%;
+    }
+    100% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+
+.dt-hero-luxury-card, .adm-hero-dark-box, .dt-cust-hero-banner {
+    position: relative;
+    background:
+        linear-gradient(135deg, rgba(20, 17, 14, 0.94) 0%, rgba(32, 27, 21, 0.90) 50%, rgba(18, 22, 28, 0.94) 100%),
+        repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.045) 0px, rgba(212, 175, 55, 0.045) 1px, transparent 1px, transparent 14px),
+        repeating-linear-gradient(-45deg, rgba(226, 232, 240, 0.035) 0px, rgba(226, 232, 240, 0.035) 1px, transparent 1px, transparent 14px);
+    background-size: 100% 100%, 300% 300%, 300% 300%;
+    animation: dtAdminAmbientLiningShimmer 16s ease infinite alternate;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(212, 175, 55, 0.2), 0 0 24px rgba(212, 175, 55, 0.12);
+}
+```
+
+---
+
 ## 📱 Mobile & Tablet Responsive Architecture Rules
 
 - **KPI Metrics Ribbon**: Must use `grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))` on desktop, 2-column on tablet (`max-width: 1024px`), and 1-column on phone (`max-width: 600px`).

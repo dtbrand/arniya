@@ -332,33 +332,35 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                     </div>
                 </div>
 
-                <!-- Customer Identity Quick Hero Bar -->
-                <div style="background: linear-gradient(135deg, #181512 0%, #2A241E 100%); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; border: 1.5px solid var(--dt-gold-primary); box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="dt-cust-avatar <?php echo $cust['avatarColor']; ?>" style="width:44px; height:44px; font-size:1.1rem; border-radius:10px;">
+                <!-- Customer Identity Quick Hero Bar (Luxury Gold & Silver Glassmorphic Design) -->
+                <div class="dt-hero-luxury-card">
+                    <div style="display:flex; align-items:center; gap:12px; position:relative; z-index:2;">
+                        <div class="dt-cust-avatar <?php echo $cust['avatarColor']; ?>" style="width:46px; height:46px; font-size:1.15rem; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.3); border:1.5px solid rgba(212,175,55,0.4);">
                             <?php echo $cust['initial']; ?>
                         </div>
                         <div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <strong style="font-size:1.05rem; color:#FAF5E8; font-weight:800;"><?php echo $cust['first_name'] . ' ' . $cust['last_name']; ?></strong>
-                                <span class="dt-status-pill vip" style="font-size:0.62rem; padding:1px 6px;">★ VIP</span>
+                                <strong class="dt-hero-title"><?php echo $cust['first_name'] . ' ' . $cust['last_name']; ?></strong>
+                                <span class="dt-status-pill vip" style="font-size:0.62rem; padding:2px 7px; background:linear-gradient(135deg, #B8860B 0%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F;">★ VIP</span>
                             </div>
-                            <div style="font-size:0.72rem; color:#C5A859; margin-top:2px;">
-                                Customer Account #<?php echo $customer_id; ?> • Registered Member
+                            <div class="dt-hero-subtitle">
+                                <span>Customer Account #<?php echo $customer_id; ?></span>
+                                <span style="color:#D4AF37; margin:0 4px;">•</span>
+                                <span style="color:#CBD5E1;">Registered Member</span>
                             </div>
                         </div>
                     </div>
 
-                    <div style="display:flex; align-items:center; gap:16px;">
+                    <div style="display:flex; align-items:center; gap:18px; position:relative; z-index:2;">
                         <div style="text-align:right;">
-                            <span style="font-size:0.65rem; color:#A8A29E; text-transform:uppercase; font-weight:800; display:block;">Lifetime Value</span>
-                            <strong style="font-size:1.1rem; color:#D4AF37; font-weight:900;"><?php echo $cust['spent']; ?></strong>
+                            <span class="dt-hero-metric-label">Lifetime Value</span>
+                            <strong class="dt-hero-metric-gold"><?php echo $cust['spent']; ?></strong>
                         </div>
                         <div style="text-align:right;">
-                            <span style="font-size:0.65rem; color:#A8A29E; text-transform:uppercase; font-weight:800; display:block;">Total Orders</span>
-                            <strong style="font-size:1.1rem; color:#FFFFFF; font-weight:900;"><?php echo $cust['orders']; ?> Placed</strong>
+                            <span class="dt-hero-metric-label">Total Orders</span>
+                            <strong class="dt-hero-metric-white"><?php echo $cust['orders']; ?> Placed</strong>
                         </div>
-                        <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $cust['phone']); ?>?text=Hello%20<?php echo urlencode($cust['first_name']); ?>" target="_blank" class="dt-btn dt-btn-emerald dt-btn-sm" style="padding:6px 10px;">
+                        <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $cust['phone']); ?>?text=Hello%20<?php echo urlencode($cust['first_name']); ?>" target="_blank" class="dt-btn dt-btn-emerald dt-btn-sm" style="padding:6px 12px; font-size:0.75rem;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#FFFFFF" stroke-width="2.3"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>WhatsApp</span>
                         </a>
