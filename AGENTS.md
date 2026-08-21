@@ -34,8 +34,8 @@
 │ 6. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
 │    Every button, modal, drawer, and input must have working JS and backend. │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 7. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
-│    clipped dropdowns, and unstyled UI, then build missing parts end-to-end. │
+│ 7. 🚫 ON-DEMAND LIVE PREVIEW ONLY: NEVER launch browser preview or subagent  │
+│    automatically. ONLY open browser when the user EXPLICITLY requests it.  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 8. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
 └─────────────────────────────────────────────────────────────────────────────┘

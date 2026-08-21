@@ -16,7 +16,7 @@
 4. **⚡ 100% REAL VECTOR SVG ICONS & RUPEE MANDATE**: Zero emojis in core buttons, navigation, or table headers. All icons must be crisp inline SVG vectors (`stroke-width: 2 - 2.8`). **NEVER USE DOLLAR ICONS ($)** — ALWAYS use the 100% Real Indian Rupee (`₹`) Vector SVG (`<path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path>`) across all pricing, valuation, and revenue metrics.
 5. **📱 FLUID MOBILE & TABLET AUTO-SIZING**: Wholesale Desktop + Tablet + Mobile responsive layout with auto-fit grids, touch targets, and zero broken/clipped layouts across any device.
 6. **🎯 100% FULLY WORKING GUARANTEE**: Zero dead buttons or broken actions. Every button, modal, drawer, search input, and filter must have attached working JS and backend logic.
-7. **🔍 SCREENSHOT-DRIVEN DEEP AUDIT**: Auto-detect flaws, missing sub-options, clipped dropdowns, and unstyled UI, then build missing parts end-to-end.
+7. **🚫 ON-DEMAND LIVE PREVIEW ONLY**: NEVER launch browser preview or subagent automatically on routine edits. ONLY open browser when the user EXPLICITLY requests it ("browser open karo", "screenshot dikhao", "live preview check karo").
 8. **🚀 TRIPLE-SYNC DEPLOYMENT**: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.
 
 ---
