@@ -71,16 +71,18 @@ All dark summary boxes, customer identity hero bars, and overview metric strips 
 .dt-hero-luxury-card, .adm-hero-dark-box, .dt-cust-hero-banner {
     position: relative;
     background:
-        linear-gradient(135deg, rgba(18, 15, 12, 0.86) 0%, rgba(28, 23, 17, 0.82) 50%, rgba(15, 19, 26, 0.88) 100%),
-        repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.20) 0px, rgba(212, 175, 55, 0.20) 1.5px, transparent 1.5px, transparent 16px),
-        repeating-linear-gradient(-45deg, rgba(226, 232, 240, 0.16) 0px, rgba(226, 232, 240, 0.16) 1.5px, transparent 1.5px, transparent 16px);
-    background-size: 100% 100%, 300% 300%, 300% 300%;
-    animation: dtAdminAmbientLiningShimmer 10s ease-in-out infinite alternate;
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.42) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.32) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(245, 208, 92, 0.40) 0px, rgba(245, 208, 92, 0.40) 2px, transparent 2px, transparent 16px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.22) 0px, rgba(255, 255, 255, 0.22) 1.5px, transparent 1.5px, transparent 16px),
+        linear-gradient(135deg, rgba(42, 32, 16, 0.94) 0%, rgba(68, 52, 22, 0.90) 40%, rgba(50, 38, 18, 0.92) 75%, rgba(28, 22, 12, 0.96) 100%);
+    background-size: 200% 200%, 200% 200%, 300% 300%, 300% 300%, 100% 100%;
+    animation: dtAdminAmbientLiningShimmer 8s ease-in-out infinite alternate;
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(212, 175, 55, 0.65);
+    border: 2px solid #D4AF37;
     border-radius: 12px;
-    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 0 rgba(212, 175, 55, 0.3), 0 0 28px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.35), 0 0 24px rgba(212, 175, 55, 0.4);
 }
 ```
 

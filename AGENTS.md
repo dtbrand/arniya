@@ -195,37 +195,39 @@ All dark summary boxes, customer identity hero bars, and metric banners across t
 ```css
 @keyframes dtAdminAmbientLiningShimmer {
     0% {
-        background-position: 0% 0%, 0% 0%, 0% 0%;
+        background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
     }
     50% {
-        background-position: 0% 0%, 100% 100%, -100% 100%;
+        background-position: 100% 50%, 0% 0%, 100% 100%, -100% 100%;
     }
     100% {
-        background-position: 0% 0%, 0% 0%, 0% 0%;
+        background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
     }
 }
 
 .dt-hero-luxury-card, .adm-hero-dark-box, .dt-cust-hero-banner {
     position: relative;
     background:
-        linear-gradient(135deg, rgba(18, 15, 12, 0.86) 0%, rgba(28, 23, 17, 0.82) 50%, rgba(15, 19, 26, 0.88) 100%),
-        repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.20) 0px, rgba(212, 175, 55, 0.20) 1.5px, transparent 1.5px, transparent 16px),
-        repeating-linear-gradient(-45deg, rgba(226, 232, 240, 0.16) 0px, rgba(226, 232, 240, 0.16) 1.5px, transparent 1.5px, transparent 16px);
-    background-size: 100% 100%, 300% 300%, 300% 300%;
-    animation: dtAdminAmbientLiningShimmer 10s ease-in-out infinite alternate;
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.42) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.32) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, rgba(245, 208, 92, 0.40) 0px, rgba(245, 208, 92, 0.40) 2px, transparent 2px, transparent 16px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.22) 0px, rgba(255, 255, 255, 0.22) 1.5px, transparent 1.5px, transparent 16px),
+        linear-gradient(135deg, rgba(42, 32, 16, 0.94) 0%, rgba(68, 52, 22, 0.90) 40%, rgba(50, 38, 18, 0.92) 75%, rgba(28, 22, 12, 0.96) 100%);
+    background-size: 200% 200%, 200% 200%, 300% 300%, 300% 300%, 100% 100%;
+    animation: dtAdminAmbientLiningShimmer 8s ease-in-out infinite alternate;
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    border: 1.5px solid rgba(212, 175, 55, 0.65);
+    border: 2px solid #D4AF37;
     border-radius: 12px;
-    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 0 rgba(212, 175, 55, 0.3), 0 0 28px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.35), 0 0 24px rgba(212, 175, 55, 0.4);
 }
 ```
 - **Text & Metric Contrast Hierarchy**:
-  - **Main Name / Entity Title**: `#FFFFFF` (Pure Bright White, `font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,0.6);`)
-  - **VIP / Standing Pill**: Radiant Gold gradient with obsidian text (`background: linear-gradient(135deg, #B8860B, #E6CA65); color: #111827; font-weight: 800;`)
-  - **Subtitles & Metadata**: `#E2E8F0` (Platinum Silver, `font-weight: 500;`)
-  - **Metric Labels**: `#CBD5E1` (Silver Slate, `font-weight: 800; text-transform: uppercase;`)
-  - **Currency / Financial Numbers**: `#F0D77B` (Radiant Luminous Gold, `font-weight: 900;`)
+  - **Main Name / Entity Title**: `#FFFFFF` (Pure Bright White, `font-weight: 800; text-shadow: 0 2px 5px rgba(0,0,0,0.9);`)
+  - **VIP / Standing Pill**: Radiant Gold gradient with obsidian text (`background: linear-gradient(135deg, #FFE57F, #D4AF37, #B8860B); color: #111827; font-weight: 800; border: 1px solid #8A681F;`)
+  - **Subtitles & Metadata**: `#FEE685` (Pale Luminous Gold, `font-weight: 700;`)
+  - **Metric Labels**: `#F5ECCE` (Soft Gold Cream, `font-weight: 800; text-transform: uppercase;`)
+  - **Currency / Financial Numbers**: `#FFE57F` (Super Radiant Master Gold, `font-weight: 900;`)
   - **Orders / Counts**: `#FFFFFF` (Pure White, `font-weight: 900;`)
 
 ---
