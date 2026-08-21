@@ -490,6 +490,9 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 <!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
 <script>
 (function() {
+    'use strict';
+
+    // Mobile Sidebar Drawer Toggle (Always Full 285px Mode)
     window.toggleAdmMobileSidebar = function(e) {
         if (e) { 
             e.preventDefault(); 
@@ -498,9 +501,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         if (sidebar) {
-            if (window.innerWidth <= 1024) {
-                sidebar.classList.remove('collapsed');
-            }
+            sidebar.classList.remove('collapsed'); // Never allow collapsed on mobile
             const isOpen = sidebar.classList.toggle('mobile-open');
             if (backdrop) {
                 backdrop.style.display = isOpen ? 'block' : 'none';
@@ -515,11 +516,58 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         if (backdrop) backdrop.style.display = 'none';
     };
 
+    // Submenu Toggle with Auto-Expand on Closed Sidebar
+    window.toggleSidebarSubmenu = function(item) {
+        const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
+        
+        // If sidebar is currently collapsed on desktop, AUTO-EXPAND it when opening any submenu!
+        if (sidebar && sidebar.classList.contains('collapsed')) {
+            sidebar.classList.remove('collapsed');
+            try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
+        }
+
+        const parent = item.closest('.adm-nav-has-sub');
+        if (parent) {
+            const isOpen = parent.classList.contains('open');
+            if (isOpen) {
+                parent.classList.remove('open');
+                const sub = parent.querySelector('.adm-nav-submenu');
+                if (sub) sub.classList.remove('open');
+            } else {
+                // Auto-close any other open submenus first (Smart Luxury Accordion)
+                document.querySelectorAll('.adm-nav-has-sub').forEach(function(li) {
+                    if (li !== parent) {
+                        li.classList.remove('open');
+                        const otherSub = li.querySelector('.adm-nav-submenu');
+                        if (otherSub) otherSub.classList.remove('open');
+                    }
+                });
+                parent.classList.add('open');
+                const sub = parent.querySelector('.adm-nav-submenu');
+                if (sub) sub.classList.add('open');
+            }
+        }
+    };
+
     function initAdmSidebar() {
-        const sidebar = document.getElementById('admSidebar');
+        const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         const toggleBtn = document.getElementById('admSidebarToggleBtn');
         const sealMini = document.querySelector('.adm-brand-seal-mini');
+
+        // On screen size check: On mobile (<= 1024px), strictly remove collapsed
+        function checkResponsiveSidebar() {
+            if (window.innerWidth <= 1024) {
+                if (sidebar) sidebar.classList.remove('collapsed');
+            } else {
+                if (sidebar && localStorage.getItem('dt_adm_sidebar_collapsed') === '1') {
+                    sidebar.classList.add('collapsed');
+                }
+            }
+        }
+
+        checkResponsiveSidebar();
+        window.addEventListener('resize', checkResponsiveSidebar);
 
         if (backdrop) {
             backdrop.onclick = function(e) {
@@ -531,10 +579,21 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             toggleBtn.onclick = function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                sidebar.classList.toggle('collapsed');
-                try {
-                    localStorage.setItem('dt_adm_sidebar_collapsed', sidebar.classList.contains('collapsed') ? '1' : '0');
-                } catch(err) {}
+                
+                const willCollapse = !sidebar.classList.contains('collapsed');
+                if (willCollapse) {
+                    sidebar.classList.add('collapsed');
+                    // Auto-close any open submenus when closing the sidebar!
+                    document.querySelectorAll('.adm-nav-has-sub.open').forEach(function(li) {
+                        li.classList.remove('open');
+                        const sub = li.querySelector('.adm-nav-submenu');
+                        if (sub) sub.classList.remove('open');
+                    });
+                    try { localStorage.setItem('dt_adm_sidebar_collapsed', '1'); } catch(err) {}
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
+                }
             };
         }
 
@@ -543,19 +602,8 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 e.preventDefault();
                 e.stopPropagation();
                 sidebar.classList.remove('collapsed');
-                try {
-                    localStorage.setItem('dt_adm_sidebar_collapsed', '0');
-                } catch(err) {}
+                try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
             };
-        }
-
-        // Restore collapsed state from localStorage if on desktop
-        if (window.innerWidth > 1024 && sidebar) {
-            try {
-                if (localStorage.getItem('dt_adm_sidebar_collapsed') === '1') {
-                    sidebar.classList.add('collapsed');
-                }
-            } catch(err) {}
         }
     }
 
@@ -565,33 +613,4 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         initAdmSidebar();
     }
 })();
-
-function toggleSidebarSubmenu(item) {
-    const sidebar = document.getElementById('admSidebar');
-    if (sidebar && sidebar.classList.contains('collapsed')) {
-        sidebar.classList.remove('collapsed');
-        try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
-    }
-    const parent = item.closest('.adm-nav-has-sub');
-    if (parent) {
-        const isOpen = parent.classList.contains('open');
-        if (isOpen) {
-            parent.classList.remove('open');
-            const sub = parent.querySelector('.adm-nav-submenu');
-            if (sub) sub.classList.remove('open');
-        } else {
-            // Close any other open submenus first (Smart Luxury Accordion)
-            document.querySelectorAll('.adm-nav-has-sub').forEach(function(li) {
-                if (li !== parent) {
-                    li.classList.remove('open');
-                    const otherSub = li.querySelector('.adm-nav-submenu');
-                    if (otherSub) otherSub.classList.remove('open');
-                }
-            });
-            parent.classList.add('open');
-            const sub = parent.querySelector('.adm-nav-submenu');
-            if (sub) sub.classList.add('open');
-        }
-    }
-}
 </script>
