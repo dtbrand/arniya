@@ -1,11 +1,11 @@
 <?php
 /**
- * orders.php — Customer Orders History & Fulfillment Tracker
+ * tags.php — Customer Tagging Studio
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
-$page_title = "Customer Order History";
+$page_title = "Customer Tags Studio";
 $active_nav = "customers";
-$active_subnav = "orders";
+$active_subnav = "tags";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +19,7 @@ $active_subnav = "orders";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -31,19 +32,18 @@ $active_subnav = "orders";
                 <div class="dt-cust-head">
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
-                            <span>Shopper Order Streams</span>
-                            <span class="dt-cust-badge gold">Direct B2C Fulfillment</span>
+                            <span>Customer Tagging Studio</span>
+                            <span class="dt-cust-badge gold">Dynamic Labels</span>
                         </h1>
-                        <p class="dt-cust-subtitle">Monitor retail customer orders, tracking numbers, invoice downloads, and delivery TAT.</p>
+                        <p class="dt-cust-subtitle">Organize customer records with custom labels for VIP tiers, regional groupings, and product affinities.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
+                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
                     </div>
                 </div>
 
-                <!-- Sub Table Component -->
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-orders.php'; ?>
+                    <?php include __DIR__ . '/components/customer-tags.php'; ?>
                 </div>
             </div>
 
@@ -53,5 +53,6 @@ $active_subnav = "orders";
 </div>
 
 <script src="/Frontend/Admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/customers/assets/js/customer-tags.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

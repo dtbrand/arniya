@@ -1,11 +1,11 @@
 <?php
 /**
- * orders.php — Customer Orders History & Fulfillment Tracker
+ * addresses.php — Customer Address Book Management
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
-$page_title = "Customer Order History";
+$page_title = "Customer Saved Addresses";
 $active_nav = "customers";
-$active_subnav = "orders";
+$active_subnav = "addresses";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +19,7 @@ $active_subnav = "orders";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -31,19 +32,18 @@ $active_subnav = "orders";
                 <div class="dt-cust-head">
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
-                            <span>Shopper Order Streams</span>
-                            <span class="dt-cust-badge gold">Direct B2C Fulfillment</span>
+                            <span>Customer Address Books</span>
+                            <span class="dt-cust-badge gold">Shipping &amp; Billing</span>
                         </h1>
-                        <p class="dt-cust-subtitle">Monitor retail customer orders, tracking numbers, invoice downloads, and delivery TAT.</p>
+                        <p class="dt-cust-subtitle">Verify pin codes, state tax jurisdictions, and courier dispatch addresses.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
+                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
                     </div>
                 </div>
 
-                <!-- Sub Table Component -->
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-orders.php'; ?>
+                    <?php include __DIR__ . '/components/customer-addresses.php'; ?>
                 </div>
             </div>
 

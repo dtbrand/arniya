@@ -1,11 +1,11 @@
 <?php
 /**
- * orders.php — Customer Orders History & Fulfillment Tracker
+ * activity.php — Customer Activity Stream & Audit Log
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
-$page_title = "Customer Order History";
+$page_title = "Customer Activity & Audit Log";
 $active_nav = "customers";
-$active_subnav = "orders";
+$active_subnav = "activity";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +19,7 @@ $active_subnav = "orders";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -31,19 +32,18 @@ $active_subnav = "orders";
                 <div class="dt-cust-head">
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
-                            <span>Shopper Order Streams</span>
-                            <span class="dt-cust-badge gold">Direct B2C Fulfillment</span>
+                            <span>Shopper Audit Trail &amp; Activity Log</span>
+                            <span class="dt-cust-badge gold">Live Events</span>
                         </h1>
-                        <p class="dt-cust-subtitle">Monitor retail customer orders, tracking numbers, invoice downloads, and delivery TAT.</p>
+                        <p class="dt-cust-subtitle">Chronological timeline of logins, order submissions, cart additions, reviews, and address updates.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
+                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
                     </div>
                 </div>
 
-                <!-- Sub Table Component -->
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-orders.php'; ?>
+                    <?php include __DIR__ . '/components/customer-activity.php'; ?>
                 </div>
             </div>
 

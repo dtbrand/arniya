@@ -1,0 +1,280 @@
+/**
+ * customers.css — Core Stylesheet for Module 5: Customer Management
+ * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
+ */
+
+:root {
+    --dt-gold-primary: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-dark: #5A4210;
+    --dt-gold-pale: #FAF5E8;
+    --dt-cream-bg: #FDFBF7;
+    --dt-dark-obsidian: #181512;
+    --dt-emerald: #15803D;
+    --dt-emerald-bg: #DCFCE7;
+    --dt-amber: #B45309;
+    --dt-amber-bg: #FEF3C7;
+    --dt-rose: #DC2626;
+    --dt-rose-bg: #FEF2F2;
+    --dt-purple: #7E22CE;
+    --dt-purple-bg: #F3E8FF;
+    --dt-blue: #1D4ED8;
+    --dt-blue-bg: #EFF6FF;
+    --dt-border-light: #EAE5D9;
+    --dt-border-subtle: #F5F2EA;
+    --dt-text-main: #181512;
+    --dt-text-muted: #78716C;
+    --dt-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --dt-font-serif: 'Cinzel', serif;
+}
+
+/* Master Layout Container */
+.dt-customers-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Page Header */
+.dt-cust-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--dt-border-light);
+}
+
+.dt-cust-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dt-cust-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--dt-font-sans);
+    letter-spacing: -0.02em;
+}
+
+.dt-cust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.dt-cust-badge.gold {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+}
+
+.dt-cust-badge.green {
+    background: var(--dt-emerald-bg);
+    color: var(--dt-emerald);
+    border: 1px solid #86EFAC;
+}
+
+.dt-cust-badge.purple {
+    background: var(--dt-purple-bg);
+    color: var(--dt-purple);
+    border: 1px solid #D8B4FE;
+}
+
+.dt-cust-subtitle {
+    font-size: 0.78rem;
+    color: var(--dt-text-muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+.dt-cust-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Buttons System */
+.dt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: var(--dt-font-sans);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    box-sizing: border-box;
+}
+
+.dt-btn-gold {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
+    color: #181512 !important;
+    border: 1px solid #8A681F;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+    font-weight: 800;
+}
+
+.dt-btn-gold:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
+}
+
+.dt-btn-pale {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+}
+
+.dt-btn-pale:hover {
+    background: #F3E8C8;
+    color: var(--dt-gold-dark);
+    transform: translateY(-1px);
+}
+
+.dt-btn-emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    color: #FFFFFF !important;
+    border: 1px solid #15803D;
+    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.3);
+}
+
+.dt-btn-emerald:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(21, 128, 61, 0.45);
+}
+
+.dt-btn-danger {
+    background: var(--dt-rose-bg);
+    color: var(--dt-rose);
+    border: 1px solid #FECACA;
+}
+
+.dt-btn-danger:hover {
+    background: #FEE2E2;
+    transform: translateY(-1px);
+}
+
+.dt-btn-sm {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border-radius: 6px;
+}
+
+/* Card Containers */
+.dt-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--dt-border-light);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+}
+
+.dt-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.dt-card-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Status Pills */
+.dt-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.dt-status-pill.active {
+    background: var(--dt-emerald-bg);
+    color: var(--dt-emerald);
+    border: 1px solid #86EFAC;
+}
+
+.dt-status-pill.inactive {
+    background: #F3F4F6;
+    color: #4B5563;
+    border: 1px solid #D1D5DB;
+}
+
+.dt-status-pill.suspended {
+    background: var(--dt-rose-bg);
+    color: var(--dt-rose);
+    border: 1px solid #FECACA;
+}
+
+.dt-status-pill.vip {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+}
+
+/* Toast System */
+.dt-toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.dt-toast {
+    background: #181512;
+    color: #FFFFFF;
+    border: 1px solid #8A681F;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: dtToastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+}
+
+@keyframes dtToastSlideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
