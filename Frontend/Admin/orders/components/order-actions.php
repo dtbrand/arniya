@@ -50,7 +50,7 @@
                     </button>
                     <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#15803D" stroke-width="2.3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        <span>Delivered &amp; Settled</span>
+                        <span>Delivered</span>
                     </button>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <optgroup label="Logistics &amp; Transport Phase">
                         <option value="shipped">Shipped / In Transit (Depot Dispatch)</option>
                         <option value="out_for_delivery">Out for Godown Delivery</option>
-                        <option value="delivered">Delivered &amp; Payment Settled</option>
+                        <option value="delivered">Delivered</option>
                     </optgroup>
                     <optgroup label="Reverse &amp; Exceptions">
                         <option value="return_initiated">Return Initiated</option>
