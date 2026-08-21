@@ -169,33 +169,32 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
     <style>
         /* ════ MASTER RADIANT GOLD & SILVER LUXURY GLASS HERO BOX ════ */
-        @keyframes dtAdminAmbientLiningShimmer {
+        @keyframes dtAdminAmbientGlow {
             0% {
-                background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+                background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
             }
             50% {
-                background-position: 100% 50%, 0% 0%, 100% 100%, -100% 100%;
+                background-position: 100% 50%, 0% 50%, 0% 100%, 0% 0%;
             }
             100% {
-                background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+                background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
             }
         }
 
         .dt-hero-luxury-card {
             position: relative;
             background:
-                radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.42) 0%, transparent 65%),
-                radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.32) 0%, transparent 60%),
-                repeating-linear-gradient(45deg, rgba(245, 208, 92, 0.40) 0px, rgba(245, 208, 92, 0.40) 2px, transparent 2px, transparent 16px),
-                repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.22) 0px, rgba(255, 255, 255, 0.22) 1.5px, transparent 1.5px, transparent 16px),
-                linear-gradient(135deg, rgba(42, 32, 16, 0.94) 0%, rgba(68, 52, 22, 0.90) 40%, rgba(50, 38, 18, 0.92) 75%, rgba(28, 22, 12, 0.96) 100%) !important;
-            background-size: 200% 200%, 200% 200%, 300% 300%, 300% 300%, 100% 100% !important;
-            animation: dtAdminAmbientLiningShimmer 8s ease-in-out infinite alternate !important;
+                radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
+                radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%) !important;
+            background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100% !important;
+            animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate !important;
             -webkit-backdrop-filter: blur(20px) !important;
             backdrop-filter: blur(20px) !important;
             border: 2px solid #D4AF37 !important;
             border-radius: 12px !important;
-            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.35), 0 0 24px rgba(212, 175, 55, 0.4) !important;
+            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35) !important;
             padding: 15px 20px !important;
             display: flex !important;
             align-items: center !important;
