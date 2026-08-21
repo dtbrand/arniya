@@ -440,6 +440,30 @@
         });
     }
 
+    window.switchAdmRefTimeRange = function(range, btn) {
+        document.querySelectorAll('.adm-ref-time-pill').forEach(p => p.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        const amtEl = document.querySelector('.adm-ref-sales-amt');
+        const growthEl = document.querySelector('.adm-ref-sales-growth');
+
+        if (range === '1W') {
+            if (amtEl) amtEl.textContent = '₹3,48,200/=';
+            if (growthEl) growthEl.textContent = '↗ +18.2% vs previous 7-day average';
+        } else if (range === '1Y') {
+            if (amtEl) amtEl.textContent = '₹1,84,50,000/=';
+            if (growthEl) growthEl.textContent = '↗ +42.6% annual wholesale expansion';
+        } else {
+            if (amtEl) amtEl.textContent = '₹14,92,400/=';
+            if (growthEl) growthEl.textContent = '↗ +24.8% vs last month wholesale volume';
+        }
+
+        renderRefSalesChart();
+        if (window.showToast) {
+            window.showToast('Sales analytics updated: ' + range + ' view', 'success');
+        }
+    };
+
     function renderKPISparklines() {
         const sparkContainers = document.querySelectorAll('.adm-kpi-sparkline');
         if (!sparkContainers.length) return;

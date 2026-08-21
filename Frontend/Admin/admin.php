@@ -519,11 +519,20 @@ if (session_status() === PHP_SESSION_NONE) {
                             <!-- A. Sales Overview Chart Card -->
                             <div class="adm-ref-card">
                                 <div class="adm-ref-card-head">
-                                    <h3 class="adm-ref-card-title">Sales Analytics</h3>
-                                    <div class="adm-ref-date-picker">
-                                        <button type="button" class="adm-ref-date-btn">‹</button>
-                                        <span>July 2026</span>
-                                        <button type="button" class="adm-ref-date-btn">›</button>
+                                    <div>
+                                        <h3 class="adm-ref-card-title">Sales Analytics</h3>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div class="adm-ref-time-pills">
+                                            <button type="button" class="adm-ref-time-pill" onclick="switchAdmRefTimeRange('1W', this)">1W</button>
+                                            <button type="button" class="adm-ref-time-pill active" onclick="switchAdmRefTimeRange('1M', this)">1M</button>
+                                            <button type="button" class="adm-ref-time-pill" onclick="switchAdmRefTimeRange('1Y', this)">1Y</button>
+                                        </div>
+                                        <div class="adm-ref-date-picker">
+                                            <button type="button" class="adm-ref-date-btn">‹</button>
+                                            <span>July 2026</span>
+                                            <button type="button" class="adm-ref-date-btn">›</button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -551,7 +560,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             <!-- B. Recent Orders Table Card -->
                             <div class="adm-ref-card" style="padding: 18px 22px;">
                                 <div class="adm-ref-card-head" style="margin-bottom:12px;">
-                                    <h3 class="adm-ref-card-title">Recent Wholesale Orders</h3>
+                                    <div>
+                                        <h3 class="adm-ref-card-title">Recent Wholesale Orders</h3>
+                                    </div>
                                     <a href="javascript:void(0)" onclick="switchAdmTab('orders')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">View All ↗</a>
                                 </div>
                                 <div style="overflow-x:auto;">
@@ -570,7 +581,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <tr>
                                                 <td style="font-weight:800; color:#181512;">#ORD-9842</td>
                                                 <td style="color:#78716C;">Today, 14:20</td>
-                                                <td style="font-weight:700; color:#181512;">Abdullah Saqib (Delhi)</td>
+                                                <td>
+                                                    <div class="adm-ref-cust-cell">
+                                                        <div class="adm-ref-cust-avatar" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">AS</div>
+                                                        <div>
+                                                            <div style="font-weight:700; color:#181512;">Abdullah Saqib</div>
+                                                            <div style="font-size:0.68rem; color:#78716C;">Delhi Depot • 14 Lots</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><span class="adm-ref-pill emerald">Paid Online</span></td>
                                                 <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
                                                 <td style="text-align:right; font-weight:800; color:#181512;">₹48,200</td>
@@ -578,7 +597,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <tr>
                                                 <td style="font-weight:800; color:#181512;">#ORD-9841</td>
                                                 <td style="color:#78716C;">Today, 11:45</td>
-                                                <td style="font-weight:700; color:#181512;">Gulam Sabir (Mumbai)</td>
+                                                <td>
+                                                    <div class="adm-ref-cust-cell">
+                                                        <div class="adm-ref-cust-avatar" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">GS</div>
+                                                        <div>
+                                                            <div style="font-weight:700; color:#181512;">Gulam Sabir</div>
+                                                            <div style="font-size:0.68rem; color:#78716C;">Mumbai Hub • 8 Lots</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><span class="adm-ref-pill danger">UnPaid (COD)</span></td>
                                                 <td><span class="adm-ref-pill rose">Dispatched</span></td>
                                                 <td style="text-align:right; font-weight:800; color:#181512;">₹24,500</td>
@@ -586,7 +613,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <tr>
                                                 <td style="font-weight:800; color:#181512;">#ORD-9840</td>
                                                 <td style="color:#78716C;">Yesterday</td>
-                                                <td style="font-weight:700; color:#181512;">Aslam Khan (Surat)</td>
+                                                <td>
+                                                    <div class="adm-ref-cust-cell">
+                                                        <div class="adm-ref-cust-avatar" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">AK</div>
+                                                        <div>
+                                                            <div style="font-weight:700; color:#181512;">Aslam Khan</div>
+                                                            <div style="font-size:0.68rem; color:#78716C;">Surat Central • 32 Lots</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><span class="adm-ref-pill emerald">Paid Online</span></td>
                                                 <td><span class="adm-ref-pill emerald">Delivered</span></td>
                                                 <td style="text-align:right; font-weight:800; color:#181512;">₹95,000</td>
@@ -594,7 +629,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <tr>
                                                 <td style="font-weight:800; color:#181512;">#ORD-9839</td>
                                                 <td style="color:#78716C;">Yesterday</td>
-                                                <td style="font-weight:700; color:#181512;">Pooja Verma (Ahmedabad)</td>
+                                                <td>
+                                                    <div class="adm-ref-cust-cell">
+                                                        <div class="adm-ref-cust-avatar" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">PV</div>
+                                                        <div>
+                                                            <div style="font-weight:700; color:#181512;">Pooja Verma</div>
+                                                            <div style="font-size:0.68rem; color:#78716C;">Ahmedabad • 18 Lots</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><span class="adm-ref-pill emerald">Paid Online</span></td>
                                                 <td><span class="adm-ref-pill emerald">Delivered</span></td>
                                                 <td style="text-align:right; font-weight:800; color:#181512;">₹62,800</td>
@@ -605,65 +648,148 @@ if (session_status() === PHP_SESSION_NONE) {
                             </div>
                         </div>
 
-                        <!-- Right Column: Company Performance Speedometer Gauge -->
-                        <div class="adm-ref-perf-card">
-                            <h3 class="adm-ref-card-title" style="margin-bottom:6px;">Store Performance This Week</h3>
-                            
-                            <!-- Semi-Circular Gauge Speedometer -->
-                            <div class="adm-ref-gauge-wrap">
-                                <svg viewBox="0 0 200 115" width="200" height="115" style="overflow:visible;">
-                                    <!-- Background track arc -->
-                                    <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F5F2EA" stroke-width="18" stroke-linecap="round" />
-                                    <!-- Red Alert segment -->
-                                    <path d="M 25 105 A 75 75 0 0 1 55 45" fill="none" stroke="#EF4444" stroke-width="18" stroke-linecap="round" />
-                                    <!-- Radiant Gold Transition segment -->
-                                    <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#D4AF37" stroke-width="18" />
-                                    <!-- Signature Heritage Gold & Obsidian Success segment -->
-                                    <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#8A681F" stroke-width="18" stroke-linecap="round" />
-                                </svg>
-                                <div class="adm-ref-gauge-score">
-                                    <span class="adm-ref-gauge-score-lbl">Index Score</span>
-                                    <span class="adm-ref-gauge-score-val">94.9%</span>
+                        <!-- Right Column: Store Performance + Fast Moving Lots -->
+                        <div class="adm-ref-right-col">
+                            <!-- 1. Store Performance Speedometer Gauge Card -->
+                            <div class="adm-ref-perf-card">
+                                <div class="adm-ref-card-head" style="width:100%; margin-bottom:4px;">
+                                    <h3 class="adm-ref-card-title">Store Performance</h3>
+                                    <span class="adm-ref-pill emerald" style="font-size:0.65rem;">★ Top Tier</span>
                                 </div>
+                                
+                                <!-- Semi-Circular Gauge Speedometer -->
+                                <div class="adm-ref-gauge-wrap">
+                                    <svg viewBox="0 0 200 115" width="200" height="115" style="overflow:visible;">
+                                        <!-- Background track arc -->
+                                        <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F5F2EA" stroke-width="16" stroke-linecap="round" />
+                                        <!-- Red Alert segment -->
+                                        <path d="M 25 105 A 75 75 0 0 1 55 45" fill="none" stroke="#EF4444" stroke-width="16" stroke-linecap="round" />
+                                        <!-- Radiant Gold Transition segment -->
+                                        <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#D4AF37" stroke-width="16" />
+                                        <!-- Signature Heritage Gold & Obsidian Success segment -->
+                                        <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#8A681F" stroke-width="16" stroke-linecap="round" />
+                                        <!-- Center Pivot Pin -->
+                                        <circle cx="100" cy="105" r="7.5" fill="#181512" stroke="#D4AF37" stroke-width="2.5" />
+                                        <!-- Needle Indicator pointing to 94.9% -->
+                                        <line x1="100" y1="105" x2="152" y2="46" stroke="#181512" stroke-width="3.2" stroke-linecap="round" />
+                                    </svg>
+                                    <div class="adm-ref-gauge-score">
+                                        <span class="adm-ref-gauge-score-lbl">Index Score</span>
+                                        <span class="adm-ref-gauge-score-val">94.9%</span>
+                                    </div>
+                                </div>
+
+                                <p class="adm-ref-perf-text">Surat Wholesale fulfillment rate is <strong>12% faster</strong> than last week</p>
+
+                                <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#181512" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                    View Performance Details
+                                </button>
+
+                                <div class="adm-ref-perf-stats-grid">
+                                    <div class="adm-ref-stat-box">
+                                        <span class="adm-ref-stat-box-lbl">Completed</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#15803D;">1,542</span>
+                                    </div>
+                                    <div class="adm-ref-stat-box">
+                                        <span class="adm-ref-stat-box-lbl">Fulfillment</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#8A681F;">94.9%</span>
+                                    </div>
+                                    <div class="adm-ref-stat-box">
+                                        <span class="adm-ref-stat-box-lbl">Pending</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#DC2626;">18</span>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    Previous Week Details
+                                </button>
                             </div>
 
-                            <p class="adm-ref-perf-text">Surat Wholesale fulfillment rate is 12% faster than last week</p>
-
-                            <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#181512" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
-                                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                                </svg>
-                                View Performance Details
-                            </button>
-
-                            <div class="adm-ref-perf-stats">
-                                <div class="adm-ref-perf-stat-row">
-                                    <span class="adm-ref-perf-stat-item">
-                                        <span class="adm-ref-leg-dot" style="background:#15803D;"></span>
-                                        <span>Completed: 1,542</span>
-                                    </span>
-                                    <span class="adm-ref-perf-stat-item">
-                                        <span class="adm-ref-leg-dot" style="background:#8A681F;"></span>
-                                        <span>Fulfillment: 94.9%</span>
-                                    </span>
+                            <!-- 2. Fast Moving Catalog Lots & Stock Health Card -->
+                            <div class="adm-ref-card" style="padding: 18px 20px;">
+                                <div class="adm-ref-card-head" style="margin-bottom:12px;">
+                                    <h3 class="adm-ref-card-title">Fast Moving Catalog Lots</h3>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('products')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none;">Stock Health ↗</a>
                                 </div>
-                                <div class="adm-ref-perf-stat-row" style="justify-content:center; margin-top:4px;">
-                                    <span class="adm-ref-perf-stat-item">
-                                        <span class="adm-ref-leg-dot" style="background:#EF4444;"></span>
-                                        <span>Pending: 18</span>
-                                    </span>
+
+                                <div class="adm-ref-cat-list">
+                                    <!-- Item 1 -->
+                                    <div class="adm-ref-cat-item">
+                                        <div class="adm-ref-cat-top">
+                                            <span class="adm-ref-cat-name">
+                                                <span class="adm-ref-leg-dot" style="background:#8A681F;"></span>
+                                                Surat Silk & Jacquard Sarees
+                                            </span>
+                                            <span class="adm-ref-cat-val">₹7,16,350 (48%)</span>
+                                        </div>
+                                        <div class="adm-ref-progress-track">
+                                            <div class="adm-ref-progress-bar" style="width: 48%; background: linear-gradient(90deg, #8A681F, #D4AF37);"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item 2 -->
+                                    <div class="adm-ref-cat-item">
+                                        <div class="adm-ref-cat-top">
+                                            <span class="adm-ref-cat-name">
+                                                <span class="adm-ref-leg-dot" style="background:#15803D;"></span>
+                                                Ready Stock Kurtis & Rayon
+                                            </span>
+                                            <span class="adm-ref-cat-val">₹4,77,560 (32%)</span>
+                                        </div>
+                                        <div class="adm-ref-progress-track">
+                                            <div class="adm-ref-progress-bar" style="width: 32%; background: linear-gradient(90deg, #15803D, #22C55E);"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item 3 -->
+                                    <div class="adm-ref-cat-item">
+                                        <div class="adm-ref-cat-top">
+                                            <span class="adm-ref-cat-name">
+                                                <span class="adm-ref-leg-dot" style="background:#7E22CE;"></span>
+                                                Handcrafted Bridal Lehengas
+                                            </span>
+                                            <span class="adm-ref-cat-val">₹1,94,000 (13%)</span>
+                                        </div>
+                                        <div class="adm-ref-progress-track">
+                                            <div class="adm-ref-progress-bar" style="width: 13%; background: linear-gradient(90deg, #7E22CE, #A855F7);"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item 4 -->
+                                    <div class="adm-ref-cat-item">
+                                        <div class="adm-ref-cat-top">
+                                            <span class="adm-ref-cat-name">
+                                                <span class="adm-ref-leg-dot" style="background:#D97706;"></span>
+                                                Unstitched Dress Materials
+                                            </span>
+                                            <span class="adm-ref-cat-val">₹1,04,490 (7%)</span>
+                                        </div>
+                                        <div class="adm-ref-progress-track">
+                                            <div class="adm-ref-progress-bar" style="width: 7%; background: linear-gradient(90deg, #D97706, #F59E0B);"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="adm-ref-depot-banner">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2.2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                        </svg>
+                                        <span style="font-size:0.72rem; color:#15803D; font-weight:700;">Surat Central Depot: 96.4% Ready Stock</span>
+                                    </div>
+                                    <span class="adm-ref-pill emerald" style="font-size:0.64rem; padding:2px 7px;">Surat Live</span>
                                 </div>
                             </div>
-
-                            <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                                Previous Week Details
-                            </button>
                         </div>
                     </div>
                 </div>

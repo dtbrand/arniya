@@ -4140,18 +4140,19 @@ svg.adm-search-icon {
 /* 2-Column Master Grid */
 .adm-ref-main-grid {
     display: grid;
-    grid-template-columns: 2fr 1.05fr;
+    grid-template-columns: 1.8fr 1.15fr;
     gap: 18px;
-    align-items: start;
+    align-items: stretch;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
     .adm-ref-main-grid {
         grid-template-columns: 1fr;
     }
 }
 
-.adm-ref-left-col {
+.adm-ref-left-col,
+.adm-ref-right-col {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -4184,6 +4185,39 @@ svg.adm-search-icon {
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
     letter-spacing: -0.01em;
+}
+
+.adm-ref-time-pills {
+    display: inline-flex;
+    align-items: center;
+    background: #FAF8F4;
+    border: 1px solid #EAE5D9;
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.adm-ref-time-pill {
+    background: none;
+    border: none;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #645D54;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.adm-ref-time-pill:hover {
+    color: #181512;
+}
+
+.adm-ref-time-pill.active {
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+    box-shadow: 0 1px 4px rgba(212, 175, 55, 0.2);
 }
 
 .adm-ref-date-picker {
@@ -4235,7 +4269,7 @@ svg.adm-search-icon {
 }
 
 .adm-ref-sales-chart-wrap {
-    height: 185px;
+    height: 195px;
     position: relative;
     margin-bottom: 14px;
 }
@@ -4259,6 +4293,7 @@ svg.adm-search-icon {
     width: 9px;
     height: 9px;
     border-radius: 50%;
+    display: inline-block;
 }
 
 /* Recent Orders Table */
@@ -4280,7 +4315,7 @@ svg.adm-search-icon {
 }
 
 .adm-ref-table td {
-    padding: 12px 12px;
+    padding: 11px 12px;
     border-bottom: 1px solid #F5F2EA;
     color: #181512;
     vertical-align: middle;
@@ -4292,6 +4327,24 @@ svg.adm-search-icon {
 
 .adm-ref-table tr:hover td {
     background: #FAF8F4;
+}
+
+.adm-ref-cust-cell {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.adm-ref-cust-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 800;
+    flex-shrink: 0;
 }
 
 /* Right Performance Speedometer Card */
@@ -4317,7 +4370,7 @@ svg.adm-search-icon {
     width: 200px;
     height: 115px;
     position: relative;
-    margin: 10px auto 14px auto;
+    margin: 8px auto 12px auto;
 }
 
 .adm-ref-gauge-score {
@@ -4351,9 +4404,9 @@ svg.adm-search-icon {
     font-size: 0.78rem;
     color: #645D54;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     line-height: 1.4;
-    max-width: 220px;
+    max-width: 240px;
 }
 
 .adm-ref-view-btn {
@@ -4368,7 +4421,7 @@ svg.adm-search-icon {
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
 }
 
 .adm-ref-view-btn:hover {
@@ -4376,28 +4429,36 @@ svg.adm-search-icon {
     box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
 }
 
-.adm-ref-perf-stats {
+.adm-ref-perf-stats-grid {
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.adm-ref-stat-box {
+    background: #FAF8F4;
+    border: 1px solid #EAE5D9;
+    border-radius: 8px;
+    padding: 8px 6px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 18px;
-    font-size: 0.74rem;
+    align-items: center;
+    gap: 2px;
 }
 
-.adm-ref-perf-stat-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #645D54;
+.adm-ref-stat-box-lbl {
+    font-size: 0.65rem;
+    color: #78716C;
     font-weight: 600;
-    padding: 0 4px;
+    text-transform: uppercase;
 }
 
-.adm-ref-perf-stat-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+.adm-ref-stat-box-val {
+    font-size: 0.95rem;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .adm-ref-prev-btn {
@@ -4416,4 +4477,63 @@ svg.adm-search-icon {
 .adm-ref-prev-btn:hover {
     background: #F5ECCE;
     transform: translateY(-1px);
+}
+
+/* Category Progress Bars */
+.adm-ref-cat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.adm-ref-cat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.adm-ref-cat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.74rem;
+}
+
+.adm-ref-cat-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    color: #181512;
+}
+
+.adm-ref-cat-val {
+    font-weight: 800;
+    color: #645D54;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.adm-ref-progress-track {
+    width: 100%;
+    height: 6px;
+    background: #F1ECE1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.adm-ref-progress-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+.adm-ref-depot-banner {
+    background: #DCFCE7;
+    border: 1px solid #86EFAC;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
