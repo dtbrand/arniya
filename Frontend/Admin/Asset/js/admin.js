@@ -334,62 +334,10 @@
         }
     }
 
-    // ════ SIDEBAR TOGGLE ════
+    // ════ SIDEBAR CONTROLS (DELEGATES TO adminsidebar.php) ════
     function initSidebar() {
-        const sidebar = document.getElementById('admSidebar');
-        const toggleBtn = document.getElementById('admSidebarToggleBtn');
-        const backdrop = document.getElementById('admSidebarBackdrop');
-
-        if (toggleBtn && sidebar) {
-            toggleBtn.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                sidebar.classList.toggle('collapsed');
-                try {
-                    localStorage.setItem('dt_adm_sidebar_collapsed', sidebar.classList.contains('collapsed') ? '1' : '0');
-                } catch(err) {}
-            };
-        }
-
-        const sealMini = document.querySelector('.adm-brand-seal-mini');
-        if (sealMini && sidebar) {
-            sealMini.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                sidebar.classList.remove('collapsed');
-                try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
-            };
-        }
-
-        if (backdrop && sidebar) {
-            backdrop.onclick = function(e) {
-                e.preventDefault();
-                if (typeof window.closeAdmMobileSidebar === 'function') {
-                    window.closeAdmMobileSidebar();
-                } else {
-                    sidebar.classList.remove('mobile-open');
-                    backdrop.style.display = 'none';
-                }
-            };
-        }
-
-        // Restore collapsed state on desktop
-        if (window.innerWidth > 1024 && sidebar) {
-            try {
-                if (localStorage.getItem('dt_adm_sidebar_collapsed') === '1') {
-                    sidebar.classList.add('collapsed');
-                }
-            } catch(err) {}
-        }
+        // Self-contained in adminsidebar.php to guarantee zero conflicting listeners
     }
-
-    // ════ SIDEBAR SUBMENU ACCORDION ════
-    window.toggleSidebarSubmenu = function(el) {
-        const parentLi = el.closest('.adm-nav-has-sub');
-        if (parentLi) {
-            parentLi.classList.toggle('open');
-        }
-    };
 
     // ════ TAB ROUTING ════
     window.switchAdmTab = function(tabId) {
