@@ -18,9 +18,6 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Voucher <strong id="viewRefundIdText" style="color:#8A681F;">REF-4012</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_REFUNDS.closeViewRefundModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">
-                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
         </div>
 
         <!-- Modal Body Content -->
@@ -59,9 +56,6 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="refundOrderIdText" style="color:#8A681F;">DTB-001624</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_REFUNDS.closeRefundDrawer()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;">
-                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
         </div>
 
         <div style="padding:18px 20px; display:flex; flex-direction:column; gap:12px; font-size:12px;">
