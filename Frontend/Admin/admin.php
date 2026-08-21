@@ -969,38 +969,47 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 <!-- ════ MODERN SAAS/FINTECH CHARTS SECTION (2 LUXURY CARDS) ════ -->
                 <div class="adm-charts-grid">
-                    <!-- 1. Modern Revenue Analytics Card -->
+                    <!-- 1. Modern Revenue Analytics Card (World-Class Luxury UI) -->
                     <div class="adm-saas-chart-card">
                         <div class="adm-saas-card-head">
-                            <div>
-                                <h3 class="adm-saas-card-title">Revenue Analytics</h3>
-                                <p class="adm-saas-card-sub">Multi-channel sales from 1-7 Apr, 2026</p>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, #FAF5E8, #F3E8C8); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="adm-saas-card-title">Revenue Analytics</h3>
+                                    <p class="adm-saas-card-sub">Multi-channel sales • 1–7 Apr, 2026</p>
+                                </div>
                             </div>
-                            <button type="button" class="adm-saas-pill-btn" onclick="switchAdmTab('reports')">View Report</button>
+                            <button type="button" class="adm-ref-view-ord-btn" onclick="switchAdmTab('reports')">View Report ↗</button>
                         </div>
 
-                        <div class="adm-saas-kpi-row">
-                            <div class="adm-saas-kpi-val">₹42,85,900</div>
-                            <div class="adm-saas-delta-badge">
-                                <span>↑ 18.4%</span>
-                                <small>vs last week</small>
+                        <div class="adm-saas-kpi-row" style="display:flex; align-items:baseline; gap:12px; margin-bottom:10px;">
+                            <div class="adm-saas-kpi-val" style="font-size:1.8rem; font-weight:900; color:#181512; font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:-0.02em;">₹42,85,900</div>
+                            <div class="adm-saas-delta-badge" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; padding:2px 8px; border-radius:12px; font-weight:800; font-size:0.7rem; display:inline-flex; align-items:center; gap:4px;">
+                                <span>↗ +18.4%</span>
+                                <small style="font-size:0.64rem; font-weight:600; color:#166534;">vs last week</small>
                             </div>
                         </div>
 
-                        <div class="adm-saas-canvas-wrap">
+                        <div class="adm-saas-canvas-wrap" style="height:190px;">
                             <canvas id="admRevenueChart"></canvas>
                         </div>
 
-                        <div class="adm-saas-legend-row">
-                            <div class="adm-saas-leg-item">
-                                <span class="adm-saas-leg-dot" style="background:#8A681F;"></span>
-                                <span class="adm-saas-leg-lbl">B2B Wholesale</span>
-                                <span class="adm-saas-leg-val">₹28.4L</span>
+                        <div class="adm-saas-legend-row" style="display:flex; align-items:center; gap:18px; padding-top:10px; border-top:1.5px solid #F1ECE1; font-size:0.74rem;">
+                            <div class="adm-saas-leg-item" style="display:inline-flex; align-items:center; gap:6px;">
+                                <span class="adm-saas-leg-dot" style="background:#8A681F; width:8px; height:8px; border-radius:50%;"></span>
+                                <span class="adm-saas-leg-lbl" style="font-weight:700; color:#645D54;">B2B Wholesale:</span>
+                                <span class="adm-saas-leg-val" style="color:#8A681F; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">₹28.4L</span>
                             </div>
-                            <div class="adm-saas-leg-item">
-                                <span class="adm-saas-leg-dot" style="background:#15803D;"></span>
-                                <span class="adm-saas-leg-lbl">B2C & Resellers</span>
-                                <span class="adm-saas-leg-val">₹14.4L</span>
+                            <div class="adm-saas-leg-item" style="display:inline-flex; align-items:center; gap:6px;">
+                                <span class="adm-saas-leg-dot" style="background:#15803D; width:8px; height:8px; border-radius:50%;"></span>
+                                <span class="adm-saas-leg-lbl" style="font-weight:700; color:#645D54;">B2C & Resellers:</span>
+                                <span class="adm-saas-leg-val" style="color:#15803D; font-weight:800; font-family:'Plus Jakarta Sans', sans-serif;">₹14.4L</span>
                             </div>
                         </div>
                     </div>
