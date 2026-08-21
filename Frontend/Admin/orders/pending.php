@@ -35,12 +35,18 @@ $filter_status = "pending";
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
                             <span>Pending Verification Orders</span>
-                            <span class="dt-status-badge pending"><span class="dt-status-dot"></span><span>18 Pending</span></span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#B45309; box-shadow:0 0 0 2px rgba(180,83,9,0.2);"></span>
+                                <strong>18</strong> Pending
+                            </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders requiring manual wire verification, customer contact, or address validation.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← View All Orders</a>
+                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>View All Orders</span>
+                        </a>
                     </div>
                 </div>
 

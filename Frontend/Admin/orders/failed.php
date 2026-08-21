@@ -35,12 +35,18 @@ $filter_status = "failed";
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
                             <span>Failed Transactions &amp; Orders</span>
-                            <span class="dt-status-badge failed"><span class="dt-status-dot"></span><span>3 Failed</span></span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#DC2626; box-shadow:0 0 0 2px rgba(220,38,38,0.2);"></span>
+                                <strong>3</strong> Failed
+                            </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders with gateway timeouts, card authorization drops, or bank declines.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← View All Orders</a>
+                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>View All Orders</span>
+                        </a>
                     </div>
                 </div>
 

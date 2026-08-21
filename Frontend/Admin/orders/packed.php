@@ -34,13 +34,19 @@ $filter_status = "packed";
                 <div class="dt-orders-head">
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
-                            <span>Packed &amp; Sealed Parcels</span>
-                            <span class="dt-status-badge packed"><span class="dt-status-dot"></span><span>15 Packed</span></span>
+                            <span>Packed &amp; QC Passed Orders</span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#8A681F; box-shadow:0 0 0 2px rgba(138,104,31,0.2);"></span>
+                                <strong>15</strong> Packed
+                            </span>
                         </h1>
-                        <p class="dt-orders-subtitle">Consignments sealed in master cartons awaiting carrier handover at Surat dock.</p>
+                        <p class="dt-orders-subtitle">Consignments sealed with Silk Mark QC tags ready for courier pickup.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← View All Orders</a>
+                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>View All Orders</span>
+                        </a>
                     </div>
                 </div>
 

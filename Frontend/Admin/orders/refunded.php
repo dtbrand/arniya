@@ -35,12 +35,18 @@ $filter_status = "refunded";
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
                             <span>Refunded Orders &amp; Credit Notes</span>
-                            <span class="dt-status-badge refunded"><span class="dt-status-dot"></span><span>6 Refunded</span></span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#8A681F; box-shadow:0 0 0 2px rgba(138,104,31,0.2);"></span>
+                                <strong>6</strong> Refunded
+                            </span>
                         </h1>
                         <p class="dt-orders-subtitle">Orders with settled refunds processed through original gateways or B2B credit ledger adjustments.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/refunds.php" class="dt-btn dt-btn-gold">Manage Refunds Ledger</a>
+                        <a href="/Frontend/Admin/orders/refunds.php" class="dt-btn dt-btn-gold">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                            <span>Manage Refunds Ledger</span>
+                        </a>
                     </div>
                 </div>
 

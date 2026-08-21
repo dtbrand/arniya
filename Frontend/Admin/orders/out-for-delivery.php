@@ -34,13 +34,19 @@ $filter_status = "out_for_delivery";
                 <div class="dt-orders-head">
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
-                            <span>Out For Last-Mile Delivery</span>
-                            <span class="dt-status-badge out_for_delivery"><span class="dt-status-dot"></span><span>32 Out Today</span></span>
+                            <span>Out For Local Delivery</span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#1D4ED8; box-shadow:0 0 0 2px rgba(29,78,216,0.2);"></span>
+                                <strong>32</strong> Out for Delivery
+                            </span>
                         </h1>
-                        <p class="dt-orders-subtitle">Parcels out on courier delivery vans for destination handover today.</p>
+                        <p class="dt-orders-subtitle">Consignments loaded for destination hub dispatch and local doorstep delivery.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">← View All Orders</a>
+                        <a href="/Frontend/Admin/orders/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>View All Orders</span>
+                        </a>
                     </div>
                 </div>
 

@@ -35,12 +35,18 @@ $filter_status = "returned";
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
                             <span>Returned Consignments</span>
-                            <span class="dt-status-badge returned"><span class="dt-status-dot"></span><span>8 Returned</span></span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot" style="background:#B45309; box-shadow:0 0 0 2px rgba(180,83,9,0.2);"></span>
+                                <strong>8</strong> Returned
+                            </span>
                         </h1>
                         <p class="dt-orders-subtitle">Consignments received back at Surat central depot for physical inspection &amp; restocking.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/Frontend/Admin/orders/returns.php" class="dt-btn dt-btn-gold">Manage RMA Returns</a>
+                        <a href="/Frontend/Admin/orders/returns.php" class="dt-btn dt-btn-gold">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.3"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                            <span>Manage RMA Returns</span>
+                        </a>
                     </div>
                 </div>
 
