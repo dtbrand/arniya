@@ -471,7 +471,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Today's Revenue</span>
                             <div class="adm-kpi-icon-box" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             </div>
                         </div>
                         <div class="adm-kpi-val">₹1,84,500</div>

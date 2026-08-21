@@ -2366,20 +2366,23 @@ svg.adm-search-icon {
     letter-spacing: 0.02em;
 }
 
-/* ════ KPI SPARKLINES & PRIMARY CARD ════ */
-.adm-kpi-card.primary {
-    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
-    border-color: rgba(212, 175, 55, 0.45);
-}
-
-.adm-kpi-card.primary::before {
-    background: var(--adm-gold);
-    opacity: 1;
-}
-
+/* ════ 👑 NEXT-LEVEL KPI SPARKLINES WITH HOVER GLOW ════ */
 .adm-kpi-sparkline {
-    width: 60px;
-    height: 22px;
+    width: 76px;
+    height: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    transition: transform 0.22s ease;
+}
+
+.adm-kpi-card:hover .adm-kpi-sparkline {
+    transform: scale(1.05);
+}
+
+.adm-kpi-card:hover .adm-kpi-sparkline svg {
+    filter: drop-shadow(0 2px 6px rgba(22, 163, 74, 0.3));
 }
 
 /* ════ ORDER STATUS PIPELINE FLOW ════ */
