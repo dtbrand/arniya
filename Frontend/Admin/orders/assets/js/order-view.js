@@ -1052,15 +1052,17 @@
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId || 'DTB-001624',
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
+                customer: 'Rajesh Kumar (Vardhman Tex)',
                 phone: '+91 98220 19283',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
-                items_count: '25 pcs',
+                items_count: 25,
                 items_summary: 'Kanjivaram Silk Saree Pure Zari Weave (x25)',
                 amount: 112250,
-                date: '21 Aug 2026'
+                date: '21 Aug 2026',
+                address: {
+                    shipping: 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002'
+                }
             };
 
             const fullPageLink = document.getElementById('shippingLabelModalFullPageLink');
@@ -1074,107 +1076,38 @@
 
             const body = document.getElementById('shippingLabelModalBody');
             if (body) {
+                const shippingAddr = (order.address && order.address.shipping) ? order.address.shipping : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
                 body.innerHTML = `
-                    <div style="border:2px solid #181512; border-radius:6px; padding:12px; background:#FFFFFF; font-family:'Plus Jakarta Sans', sans-serif;">
-                        <!-- Carrier Header -->
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:8px;">
+                    <div class="dt-shipping-label-card" style="max-width:440px; margin:0 auto; background:#FFFFFF; border:2px solid #181512; border-radius:8px; padding:20px; font-family:'Plus Jakarta Sans', sans-serif;">
+                        <!-- Header Block -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:12px;">
                             <div>
-                                <div style="font-size:16px; font-weight:900; color:#181512; letter-spacing:0.02em;">${order.shipping || 'VRL LOGISTICS'}</div>
-                                <div style="font-size:10px; color:#64748B; font-weight:700;">SURAT CENTRAL DEPOT DOCK 1 • B2B FREIGHT</div>
+                                <div style="font-size:17px; font-weight:800; letter-spacing:0.5px; color:#181512;">${(order.shipping || 'VRL LOGISTICS DEPOT').toUpperCase()}</div>
+                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px;">Priority B2B Surface Logistics</div>
                             </div>
                             <div style="text-align:right;">
-                                <span style="font-size:10px; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">PREPAID</span>
-                                <div style="font-size:11px; font-weight:800; color:#181512; margin-top:2px;">SURAT ➔ HUB</div>
+                                <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px;">PREPAID</span>
                             </div>
                         </div>
 
-                        <!-- Barcode Graphic -->
-                        <div style="text-align:center; padding:10px 0; border-bottom:2px solid #181512; background:#FAF8F4; border-radius:4px; margin-bottom:10px;">
-                            <svg viewBox="0 0 260 44" width="240" height="38" style="margin:0 auto; display:block;">
-                                <rect x="5" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="11" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="16" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="24" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="29" y="0" width="4" height="44" fill="#000"/>
-                                <rect x="36" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="41" y="0" width="6" height="44" fill="#000"/>
-                                <rect x="50" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="56" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="61" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="69" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="75" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="80" y="0" width="6" height="44" fill="#000"/>
-                                <rect x="89" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="94" y="0" width="4" height="44" fill="#000"/>
-                                <rect x="101" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="107" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="115" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="120" y="0" width="4" height="44" fill="#000"/>
-                                <rect x="127" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="132" y="0" width="6" height="44" fill="#000"/>
-                                <rect x="141" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="147" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="152" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="160" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="165" y="0" width="4" height="44" fill="#000"/>
-                                <rect x="172" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="178" y="0" width="6" height="44" fill="#000"/>
-                                <rect x="187" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="192" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="200" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="206" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="211" y="0" width="6" height="44" fill="#000"/>
-                                <rect x="220" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="226" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="231" y="0" width="5" height="44" fill="#000"/>
-                                <rect x="239" y="0" width="3" height="44" fill="#000"/>
-                                <rect x="245" y="0" width="2" height="44" fill="#000"/>
-                                <rect x="250" y="0" width="4" height="44" fill="#000"/>
-                            </svg>
-                            <div style="font-family:monospace; font-size:13px; font-weight:800; letter-spacing:0.12em; margin-top:4px; color:#181512;">AWB: ${order.tracking || 'VRL-99821'}</div>
+                        <!-- Barcode Section -->
+                        <div style="text-align:center; padding:4px 0;">
+                            <div class="dt-label-barcode" style="height:48px; background:repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin:12px 0 4px 0;"></div>
+                            <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:3px; color:#181512; margin-top:4px;">${order.tracking || 'VRL-99821'}</div>
                         </div>
 
-                        <!-- Ship To (Consignee) -->
-                        <div style="border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:8px;">
-                            <div style="font-size:9.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">SHIP TO (CONSIGNEE):</div>
-                            <div style="font-size:13.5px; font-weight:800; color:#181512; margin-top:2px;">${order.customer}</div>
-                            <div style="font-size:11.5px; font-weight:700; color:#475569;">${order.firm || 'Vardhman Tex'}</div>
-                            <div style="font-size:11px; color:#334155; line-height:1.35; margin-top:2px;">Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002</div>
-                            <div style="font-size:11.5px; font-weight:800; color:#181512; margin-top:3px;">TEL: ${order.phone}</div>
+                        <!-- Order Manifest Meta Bar -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 12px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700; color:#475569;">
+                            <span>Order Reference: <strong style="color:#181512;">${order.id}</strong></span>
+                            <span>Consignment: <strong style="color:#181512;">${order.items_count || 25} Units</strong></span>
                         </div>
 
-                        <!-- Shipment Metrics Grid -->
-                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:8px; text-align:center; font-size:11px;">
-                            <div style="background:#F8FAFC; padding:4px; border-radius:4px; border:1px solid #E2E8F0;">
-                                <div style="font-size:9px; color:#64748B; font-weight:700;">ORDER ID</div>
-                                <div style="font-weight:800; color:#181512;">${order.id}</div>
-                            </div>
-                            <div style="background:#F8FAFC; padding:4px; border-radius:4px; border:1px solid #E2E8F0;">
-                                <div style="font-size:9px; color:#64748B; font-weight:700;">TOTAL QTY</div>
-                                <div style="font-weight:800; color:#15803D;">${order.items_count || '25 pcs'}</div>
-                            </div>
-                            <div style="background:#F8FAFC; padding:4px; border-radius:4px; border:1px solid #E2E8F0;">
-                                <div style="font-size:9px; color:#64748B; font-weight:700;">WEIGHT</div>
-                                <div style="font-weight:800; color:#8A681F;">18.5 Kg (2 Box)</div>
-                            </div>
-                        </div>
-
-                        <!-- SKUs Summary -->
-                        <div style="border-bottom:2px solid #181512; padding-bottom:6px; margin-bottom:8px; font-size:10.5px;">
-                            <div style="font-size:9px; font-weight:800; color:#64748B; text-transform:uppercase;">CONTENTS SUMMARY:</div>
-                            <div style="font-weight:700; color:#181512; margin-top:1px;">${order.items_summary || 'Kanjivaram Silk Saree Pure Zari Weave (x25)'}</div>
-                        </div>
-
-                        <!-- Return / Sender Info -->
-                        <div style="display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#64748B;">
-                            <div>
-                                <strong style="color:#181512; font-size:10px;">RETURN IF UNDELIVERED:</strong><br>
-                                DT Brand's &amp; Jai Hanuman Tex Central Depot<br>
-                                Ring Road, Surat, Gujarat - 395002 • GSTIN: 24AAECJ1928K1Z5
-                            </div>
-                            <div style="border:1px dashed #8A681F; padding:3px 6px; border-radius:3px; color:#8A681F; font-weight:800; font-size:9px; text-align:center;">
-                                QC PASS<br>SILK MARK
-                            </div>
+                        <!-- Consignee Delivery Destination -->
+                        <div style="border-top:2px solid #181512; margin-top:12px; padding-top:10px; font-size:12px; line-height:1.45;">
+                            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
+                            <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
+                            <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
+                            <div style="color:#64748B; font-size:11px; margin-top:3px;">TEL: ${order.phone || '+91 98220 19283'}</div>
                         </div>
                     </div>
                 `;
@@ -1193,14 +1126,14 @@
             const orders = (window.DT_ORDERS && window.DT_ORDERS.orders) ? window.DT_ORDERS.orders : [];
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId,
-                customer: 'Rajesh Kumar',
-                firm: 'Vardhman Tex',
+                customer: 'Rajesh Kumar (Vardhman Tex)',
                 phone: '+91 98220 19283',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
-                items_count: '25 pcs',
-                items_summary: 'Kanjivaram Silk Saree Pure Zari Weave (x25)',
-                amount: 112250
+                items_count: 25,
+                address: {
+                    shipping: 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002'
+                }
             };
 
             let iframe = document.getElementById('dtDirectPrintIframe');
@@ -1216,6 +1149,8 @@
                 document.body.appendChild(iframe);
             }
 
+            const shippingAddr = (order.address && order.address.shipping) ? order.address.shipping : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
+
             const doc = iframe.contentWindow.document;
             doc.open();
             doc.write(`
@@ -1225,88 +1160,38 @@
                     <title>Shipping Label ${order.id}</title>
                     <style>
                         @page { size: 100mm 150mm; margin: 0; }
-                        body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; margin: 0; padding: 12px; box-sizing: border-box; background: #FFF; color: #000; font-size: 11px; }
-                        .label-box { border: 2px solid #000; padding: 10px; border-radius: 4px; }
-                        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 6px; }
-                        .carrier { font-size: 16px; font-weight: 900; }
-                        .barcode { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px; }
-                        .shipto { border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px; }
-                        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 6px; font-size: 10px; }
-                        .return-box { display: flex; justify-content: space-between; font-size: 9px; }
+                        body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; margin: 0; padding: 16px; box-sizing: border-box; background: #FFF; color: #000; font-size: 11px; }
+                        .dt-shipping-label-card { max-width: 440px; margin: 0 auto; background: #FFF; border: 2px solid #181512; border-radius: 8px; padding: 16px; box-sizing: border-box; }
+                        .dt-label-barcode { height: 48px; background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin: 12px 0 4px 0; }
                     </style>
                 </head>
                 <body>
-                    <div class="label-box">
-                        <div class="header">
+                    <div class="dt-shipping-label-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:12px;">
                             <div>
-                                <div class="carrier">${order.shipping || 'VRL LOGISTICS'}</div>
-                                <div style="font-size: 9px; font-weight: bold;">SURAT CENTRAL DEPOT DOCK 1</div>
+                                <div style="font-size:17px; font-weight:800; letter-spacing:0.5px; color:#181512;">${(order.shipping || 'VRL LOGISTICS DEPOT').toUpperCase()}</div>
+                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px;">Priority B2B Surface Logistics</div>
                             </div>
-                            <div style="text-align: right; font-weight: bold;">
-                                PREPAID B2B<br>SURAT ➔ HUB
+                            <div style="text-align:right;">
+                                <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px;">PREPAID</span>
                             </div>
                         </div>
 
-                        <div class="barcode">
-                            <svg viewBox="0 0 260 40" width="240" height="34" style="margin: 0 auto; display: block;">
-                                <rect x="5" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="12" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="18" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="28" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="35" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="45" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="52" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="62" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="70" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="80" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="88" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="98" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="108" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="118" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="128" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="138" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="148" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="158" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="168" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="178" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="188" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="198" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="208" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="218" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="228" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="238" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="248" y="0" width="4" height="40" fill="#000"/>
-                            </svg>
-                            <div style="font-family: monospace; font-size: 13px; font-weight: 900; letter-spacing: 2px;">AWB: ${order.tracking || 'VRL-99821'}</div>
+                        <div style="text-align:center; padding:4px 0;">
+                            <div class="dt-label-barcode"></div>
+                            <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:3px; color:#181512; margin-top:4px;">${order.tracking || 'VRL-99821'}</div>
                         </div>
 
-                        <div class="shipto">
-                            <div style="font-size: 9px; font-weight: bold;">SHIP TO:</div>
-                            <div style="font-size: 14px; font-weight: 900;">${order.customer}</div>
-                            <div style="font-size: 11px; font-weight: bold;">${order.firm || 'Vardhman Tex'}</div>
-                            <div>Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002</div>
-                            <div style="font-size: 12px; font-weight: bold; margin-top: 2px;">TEL: ${order.phone}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 12px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700; color:#475569;">
+                            <span>Order Reference: <strong style="color:#181512;">${order.id}</strong></span>
+                            <span>Consignment: <strong style="color:#181512;">${order.items_count || 25} Units</strong></span>
                         </div>
 
-                        <div class="grid">
-                            <div><strong>ORDER:</strong><br>${order.id}</div>
-                            <div><strong>ITEMS:</strong><br>${order.items_count || '25 pcs'}</div>
-                            <div><strong>WEIGHT:</strong><br>18.5 Kg (2 Box)</div>
-                        </div>
-
-                        <div style="font-size: 10px; border-bottom: 2px solid #000; padding-bottom: 4px; margin-bottom: 6px;">
-                            <strong>CONTENTS:</strong> ${order.items_summary || 'Kanjivaram Silk Saree Pure Zari Weave (x25)'}
-                        </div>
-
-                        <div class="return-box">
-                            <div>
-                                <strong>RETURN TO:</strong><br>
-                                DT Brand's &amp; Jai Hanuman Tex, Surat - 395002<br>
-                                GSTIN: 24AAECJ1928K1Z5
-                            </div>
-                            <div style="border: 1px solid #000; padding: 2px 4px; font-weight: bold; text-align: center;">
-                                QC PASS<br>SILK MARK
-                            </div>
+                        <div style="border-top:2px solid #181512; margin-top:12px; padding-top:10px; font-size:12px; line-height:1.45;">
+                            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
+                            <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
+                            <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
+                            <div style="color:#64748B; font-size:11px; margin-top:3px;">TEL: ${order.phone || '+91 98220 19283'}</div>
                         </div>
                     </div>
                 </body>

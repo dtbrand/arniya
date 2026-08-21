@@ -147,84 +147,38 @@
             let labelsHtml = '';
             selectedOrders.forEach((order, idx) => {
                 const isLast = (idx === selectedOrders.length - 1);
+                const shippingAddr = (order.address && order.address.shipping) ? order.address.shipping : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
                 labelsHtml += `
-                    <div class="label-page" style="page-break-after: ${isLast ? 'auto' : 'always'}; margin-bottom: 20px; padding: 12px; border: 2px solid #000; border-radius: 4px; box-sizing: border-box; font-family: 'Plus Jakarta Sans', Arial, sans-serif;">
-                        <!-- Header -->
-                        <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 6px;">
+                    <div class="dt-shipping-label-card" style="page-break-after: ${isLast ? 'auto' : 'always'}; max-width: 440px; margin: 0 auto 20px auto; background: #FFFFFF; border: 2px solid #181512; border-radius: 8px; padding: 20px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; box-sizing: border-box;">
+                        <!-- Header Block -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:12px;">
                             <div>
-                                <div style="font-size: 16px; font-weight: 900; color: #000;">${order.shipping || 'VRL LOGISTICS DEPOT'}</div>
-                                <div style="font-size: 9px; font-weight: bold; color: #333;">SURAT CENTRAL DEPOT DOCK 1 • B2B FREIGHT</div>
+                                <div style="font-size:17px; font-weight:800; letter-spacing:0.5px; color:#181512;">${(order.shipping || 'VRL LOGISTICS DEPOT').toUpperCase()}</div>
+                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px;">Priority B2B Surface Logistics</div>
                             </div>
-                            <div style="text-align: right; font-weight: bold; font-size: 10px;">
-                                PREPAID B2B<br>SURAT ➔ REGIONAL HUB
+                            <div style="text-align:right;">
+                                <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px;">PREPAID</span>
                             </div>
                         </div>
 
-                        <!-- Barcode -->
-                        <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px;">
-                            <svg viewBox="0 0 260 40" width="240" height="34" style="margin: 0 auto; display: block;">
-                                <rect x="5" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="12" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="18" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="28" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="35" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="45" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="52" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="62" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="70" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="80" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="88" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="98" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="108" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="118" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="128" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="138" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="148" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="158" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="168" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="178" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="188" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="198" y="0" width="2" height="40" fill="#000"/>
-                                <rect x="208" y="0" width="6" height="40" fill="#000"/>
-                                <rect x="218" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="228" y="0" width="5" height="40" fill="#000"/>
-                                <rect x="238" y="0" width="3" height="40" fill="#000"/>
-                                <rect x="248" y="0" width="4" height="40" fill="#000"/>
-                            </svg>
-                            <div style="font-family: monospace; font-size: 13px; font-weight: 900; letter-spacing: 2px; margin-top: 2px;">AWB: ${order.tracking || 'VRL-99821'}</div>
+                        <!-- Barcode Section -->
+                        <div style="text-align:center; padding:4px 0;">
+                            <div class="dt-label-barcode" style="height:48px; background:repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin:12px 0 4px 0;"></div>
+                            <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:3px; color:#181512; margin-top:4px;">${order.tracking || 'VRL-99821'}</div>
                         </div>
 
-                        <!-- Ship To -->
-                        <div style="border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px;">
-                            <div style="font-size: 9px; font-weight: bold; color: #555;">SHIP TO (CONSIGNEE):</div>
-                            <div style="font-size: 14px; font-weight: 900; color: #000;">${order.customer}</div>
-                            <div style="font-size: 11px; font-weight: bold; color: #333;">${order.firm || 'Vardhman Tex'}</div>
-                            <div style="font-size: 10.5px; color: #222; margin-top: 2px;">Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002</div>
-                            <div style="font-size: 12px; font-weight: bold; margin-top: 2px;">TEL: ${order.phone}</div>
+                        <!-- Order Manifest Meta Bar -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 12px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700; color:#475569;">
+                            <span>Order Reference: <strong style="color:#181512;">${order.id}</strong></span>
+                            <span>Consignment: <strong style="color:#181512;">${order.items_count || 25} Units</strong></span>
                         </div>
 
-                        <!-- Grid Metrics -->
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 6px; font-size: 10px; text-align: center;">
-                            <div style="border-right: 1px solid #CCC; padding-right: 4px;"><strong>ORDER ID:</strong><br>${order.id}</div>
-                            <div style="border-right: 1px solid #CCC; padding: 0 4px;"><strong>QTY:</strong><br>${order.items_count || '15 pcs'}</div>
-                            <div style="padding-left: 4px;"><strong>WEIGHT:</strong><br>18.5 Kg</div>
-                        </div>
-
-                        <!-- Contents -->
-                        <div style="font-size: 10px; border-bottom: 2px solid #000; padding-bottom: 4px; margin-bottom: 6px;">
-                            <strong>CONTENTS:</strong> ${order.items_summary || 'Surat Handloom Saree Consignment (' + (order.items_count || '15 pcs') + ')'}
-                        </div>
-
-                        <!-- Return Info -->
-                        <div style="display: flex; justify-content: space-between; align-items: flex-end; font-size: 9px; color: #333;">
-                            <div>
-                                <strong>RETURN TO:</strong><br>
-                                DT Brand's &amp; Jai Hanuman Tex Central Depot<br>
-                                Ring Road, Surat, Gujarat - 395002 • GSTIN: 24AAECJ1928K1Z5
-                            </div>
-                            <div style="border: 1px solid #000; padding: 2px 4px; font-weight: bold; text-align: center; font-size: 8.5px;">
-                                QC PASS<br>SILK MARK
-                            </div>
+                        <!-- Consignee Delivery Destination -->
+                        <div style="border-top:2px solid #181512; margin-top:12px; padding-top:10px; font-size:12px; line-height:1.45;">
+                            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
+                            <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
+                            <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
+                            <div style="color:#64748B; font-size:11px; margin-top:3px;">TEL: ${order.phone || '+91 98220 19283'}</div>
                         </div>
                     </div>
                 `;
@@ -239,7 +193,9 @@
                     <title>Batch Shipping Labels (${selectedOrders.length} Orders)</title>
                     <style>
                         @page { size: 100mm 150mm; margin: 0; }
-                        body { margin: 0; padding: 0; background: #FFF; }
+                        body { margin: 0; padding: 16px; background: #FFF; box-sizing: border-box; }
+                        .dt-shipping-label-card { max-width: 440px; margin: 0 auto; background: #FFF; border: 2px solid #181512; border-radius: 8px; padding: 16px; box-sizing: border-box; }
+                        .dt-label-barcode { height: 48px; background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin: 12px 0 4px 0; }
                     </style>
                 </head>
                 <body>
