@@ -573,7 +573,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                     <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn" style="font-size:0.75rem; padding:5px 12px;">View All Orders (1,624) ↗</a>
                                 </div>
-                                <div style="overflow-x:auto;">
+                                <div class="adm-ref-table-wrap">
                                     <table class="adm-ref-table">
                                         <thead>
                                             <tr>
@@ -735,7 +735,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 
                                 <!-- World-Class Radial Speedometer Dial -->
                                 <div class="adm-ref-gauge-wrap">
-                                    <svg viewBox="0 0 240 140" width="240" height="140" style="overflow:visible;">
+                                    <svg viewBox="0 0 240 140" width="200" height="120" style="overflow:visible;">
                                         <defs>
                                             <linearGradient id="gaugeWorldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                                 <stop offset="0%" stop-color="#EF4444" />

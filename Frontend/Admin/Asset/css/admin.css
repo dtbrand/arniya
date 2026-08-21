@@ -3889,134 +3889,27 @@ svg.adm-search-icon {
     box-shadow: 0 2px 8px rgba(138, 104, 31, 0.04) !important;
     transition: transform 0.2s ease, border-color 0.2s ease !important;
 }
-
-.adm-saas-cat-pod:hover {
-    transform: translateY(-2px) !important;
-    border-color: #8A681F !important;
-    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.1) !important;
-}
-
-.adm-saas-cat-header {
-    display: flex !important;
-    align-items: center !important;
-    gap: 5px !important;
-}
-
-.adm-saas-cat-name {
-    font-size: 10.5px !important;
-    font-weight: 700 !important;
-    color: #5A4210 !important;
-}
-
-.adm-saas-cat-amt {
-    font-size: 12.5px !important;
-    font-weight: 800 !important;
-    color: #181512 !important;
-    padding-left: 13px !important;
-}
-
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   👑 DT BRAND'S 4-CARD MASTER WHOLESALE KPI RIBBON ENGINE (DESKTOP & MOBILE)
-   ══════════════════════════════════════════════════════════════════════════════ */
-.dt-kpi-ribbon {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 14px !important;
-    margin-bottom: 18px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-@media (max-width: 1100px) {
-    .dt-kpi-ribbon {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .dt-kpi-ribbon {
-        grid-template-columns: 1fr !important;
-        gap: 8px !important;
-    }
-}
-
-.dt-kpi-card {
-    background: #FFFFFF !important;
-    border: 1.2px solid rgba(212, 175, 55, 0.28) !important;
-    border-radius: 14px !important;
-    padding: 14px 16px !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 14px !important;
-    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.04) !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-    box-sizing: border-box !important;
-}
-
-.dt-kpi-card:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(138, 104, 31, 0.1) !important;
-    border-color: #8A681F !important;
-}
-
-.dt-kpi-icon-wrap {
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    border-radius: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
-}
-
-.dt-kpi-content {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 2px !important;
-    min-width: 0 !important;
-}
-
-.dt-kpi-lbl {
-    font-size: 10px !important;
-    font-weight: 800 !important;
-    color: #7A7266 !important;
-    letter-spacing: 0.05em !important;
-    text-transform: uppercase !important;
-    white-space: nowrap !important;
-}
-
-.dt-kpi-val {
-    font-family: 'Cinzel', var(--adm-font-serif), serif !important;
-    font-size: 16px !important;
-    font-weight: 800 !important;
-    color: #181512 !important;
-    line-height: 1.2 !important;
-    white-space: nowrap !important;
-}
-
-/* ══════════════════════════════════════════════════════════════
-   👑 DESKTOP REFERENCE DASHBOARD UI SUITE (AFRIVALLEY / SELLER UI)
-══════════════════════════════════════════════════════════════ */
 .adm-desktop-ref-suite {
     margin-bottom: 24px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .adm-ref-kpi-strip {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 @media (max-width: 1200px) {
     .adm-ref-kpi-strip {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -4029,21 +3922,23 @@ svg.adm-search-icon {
 .adm-ref-kpi-card {
     background: #FFFFFF;
     border: 1.2px solid #EAE5D9;
-    border-radius: 12px;
-    padding: 16px 18px;
+    border-radius: 10px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 105px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    min-height: 90px;
+    min-width: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     position: relative;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .adm-ref-kpi-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
     border-color: #D4AF37;
 }
 
@@ -4051,28 +3946,31 @@ svg.adm-search-icon {
     background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
     border: 1.5px solid #8A681F;
     color: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.2);
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.2);
 }
 
 .adm-ref-kpi-card.dark-card:hover {
     border-color: #D4AF37;
-    box-shadow: 0 10px 26px rgba(212, 175, 55, 0.35);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
+    transform: translateY(-2px);
 }
 
 .adm-ref-kpi-top {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
 }
 
 .adm-ref-kpi-lbl {
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     color: #645D54;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .adm-ref-kpi-card.dark-card .adm-ref-kpi-lbl {
@@ -4081,11 +3979,11 @@ svg.adm-search-icon {
 
 .adm-ref-kpi-val {
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    font-size: 1.7rem;
+    font-size: 1.45rem;
     font-weight: 800;
     color: #181512;
     line-height: 1.15;
-    margin: 6px 0 4px 0;
+    margin: 4px 0 2px 0;
     letter-spacing: -0.02em;
 }
 
@@ -4094,9 +3992,12 @@ svg.adm-search-icon {
 }
 
 .adm-ref-kpi-sub {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: #7A7266;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .adm-ref-kpi-card.dark-card .adm-ref-kpi-sub {
@@ -4107,10 +4008,11 @@ svg.adm-search-icon {
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: 20px;
+    white-space: nowrap;
 }
 
 .adm-ref-pill.purple {
@@ -4137,12 +4039,14 @@ svg.adm-search-icon {
     border: 1px solid rgba(220, 38, 38, 0.25);
 }
 
-/* 2-Column Master Grid */
+/* 2-Column Master Grid - Fluid Contained Layout */
 .adm-ref-main-grid {
     display: grid;
-    grid-template-columns: 1.8fr 1.15fr;
-    gap: 18px;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 @media (max-width: 1100px) {
@@ -4155,32 +4059,40 @@ svg.adm-search-icon {
 .adm-ref-right-col {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .adm-ref-card {
     background: #FFFFFF;
     border: 1.5px solid #EAE5D9;
-    border-radius: 14px;
-    padding: 20px 22px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .adm-ref-card:hover {
     border-color: #D4AF37;
-    box-shadow: 0 8px 22px rgba(138, 104, 31, 0.08);
+    box-shadow: 0 6px 18px rgba(138, 104, 31, 0.08);
 }
 
 .adm-ref-card-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .adm-ref-card-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 800;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -4192,7 +4104,7 @@ svg.adm-search-icon {
     align-items: center;
     background: #FAF8F4;
     border: 1px solid #EAE5D9;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 2px;
     gap: 2px;
 }
@@ -4200,9 +4112,9 @@ svg.adm-search-icon {
 .adm-ref-time-pill {
     background: none;
     border: none;
-    padding: 3px 9px;
-    border-radius: 6px;
-    font-size: 0.7rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.68rem;
     font-weight: 700;
     color: #645D54;
     cursor: pointer;
@@ -4217,20 +4129,20 @@ svg.adm-search-icon {
     background: #FAF5E8;
     color: #8A681F;
     border: 1px solid #D4AF37;
-    box-shadow: 0 1px 4px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 1px 3px rgba(212, 175, 55, 0.2);
 }
 
 .adm-ref-date-picker {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.74rem;
+    gap: 8px;
+    font-size: 0.72rem;
     color: #8A681F;
     font-weight: 700;
     background: #FAF5E8;
     border: 1px solid #D4AF37;
-    padding: 4px 12px;
-    border-radius: 8px;
+    padding: 3px 10px;
+    border-radius: 6px;
 }
 
 .adm-ref-date-btn {
@@ -4238,7 +4150,7 @@ svg.adm-search-icon {
     border: none;
     cursor: pointer;
     color: #8A681F;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 800;
     padding: 0 2px;
 }
@@ -4251,11 +4163,11 @@ svg.adm-search-icon {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .adm-ref-sales-amt {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 800;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -4263,60 +4175,73 @@ svg.adm-search-icon {
 }
 
 .adm-ref-sales-growth {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     color: #15803D;
     font-weight: 700;
 }
 
 .adm-ref-sales-chart-wrap {
-    height: 195px;
+    height: 180px;
     position: relative;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
 .adm-ref-legend-row {
     display: flex;
     align-items: center;
-    gap: 18px;
-    font-size: 0.74rem;
+    gap: 14px;
+    font-size: 0.72rem;
     color: #645D54;
     font-weight: 600;
+    flex-wrap: wrap;
 }
 
 .adm-ref-leg-item {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .adm-ref-leg-dot {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     display: inline-block;
+    flex-shrink: 0;
 }
 
 /* Recent Wholesale Orders Table - World-Class Luxury Styling */
+.adm-ref-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .adm-ref-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
 }
 
 .adm-ref-table th {
     text-align: left;
-    padding: 10px 12px;
-    font-size: 0.7rem;
+    padding: 8px 8px;
+    font-size: 0.67rem;
     font-weight: 800;
     color: #78716C;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     border-bottom: 1.5px solid #EAE5D9;
     white-space: nowrap;
 }
 
 .adm-ref-table td {
-    padding: 12px 12px;
+    padding: 9px 8px;
     border-bottom: 1px solid #F5F2EA;
     color: #181512;
     vertical-align: middle;
@@ -4338,15 +4263,15 @@ svg.adm-search-icon {
 .adm-ref-ord-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     background: #FAF5E8;
     border: 1px solid #D4AF37;
     color: #181512;
     font-weight: 800;
     font-family: 'Plus Jakarta Sans', monospace;
-    font-size: 0.74rem;
-    padding: 4px 8px;
-    border-radius: 6px;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border-radius: 5px;
     white-space: nowrap;
     letter-spacing: -0.01em;
 }
@@ -4354,75 +4279,76 @@ svg.adm-search-icon {
 .adm-ref-cust-cell {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .adm-ref-cust-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.74rem;
+    font-size: 0.7rem;
     font-weight: 800;
     flex-shrink: 0;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .adm-ref-cust-name {
     font-weight: 800;
     color: #181512;
-    font-size: 0.82rem;
-    line-height: 1.2;
+    font-size: 0.78rem;
+    line-height: 1.15;
 }
 
 .adm-ref-cust-depot {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
     color: #78716C;
     font-weight: 600;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .adm-ref-actions-cell {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 6px;
+    gap: 5px;
 }
 
 .adm-ref-wa-btn {
     background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
     color: #FFFFFF;
     border: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+    box-shadow: 0 2px 5px rgba(22, 163, 74, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
 }
 
 .adm-ref-wa-btn:hover {
     transform: scale(1.08);
-    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.5);
+    box-shadow: 0 3px 8px rgba(22, 163, 74, 0.5);
 }
 
 .adm-ref-view-ord-btn {
     background: #FAF5E8;
     border: 1px solid #D4AF37;
     color: #8A681F;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 800;
-    padding: 4px 9px;
-    border-radius: 6px;
+    padding: 3px 7px;
+    border-radius: 5px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: 2px;
     transition: all 0.2s ease;
     white-space: nowrap;
 }
@@ -4437,9 +4363,9 @@ svg.adm-search-icon {
 .adm-ref-perf-card {
     background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.07) 0%, #FFFFFF 65%);
     border: 1.5px solid #EAE5D9;
-    border-radius: 14px;
-    padding: 22px 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    border-radius: 12px;
+    padding: 16px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -4447,6 +4373,9 @@ svg.adm-search-icon {
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .adm-ref-perf-card::before {
@@ -4461,22 +4390,22 @@ svg.adm-search-icon {
 
 .adm-ref-perf-card:hover {
     border-color: #D4AF37;
-    box-shadow: 0 10px 28px rgba(138, 104, 31, 0.12);
+    box-shadow: 0 8px 22px rgba(138, 104, 31, 0.1);
     transform: translateY(-2px);
 }
 
 .adm-ref-gauge-wrap {
-    width: 240px;
-    height: 140px;
+    width: 200px;
+    height: 120px;
     position: relative;
-    margin: 6px auto 10px auto;
+    margin: 4px auto 8px auto;
     display: flex;
     justify-content: center;
 }
 
 .adm-ref-gauge-score {
     position: absolute;
-    bottom: 4px;
+    bottom: 2px;
     left: 0;
     right: 0;
     display: flex;
@@ -4486,16 +4415,16 @@ svg.adm-search-icon {
 }
 
 .adm-ref-gauge-score-lbl {
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     color: #8A681F;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 2px;
+    letter-spacing: 0.04em;
+    margin-bottom: 1px;
 }
 
 .adm-ref-gauge-score-val {
-    font-size: 2.2rem;
+    font-size: 1.85rem;
     font-weight: 900;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -4506,24 +4435,24 @@ svg.adm-search-icon {
 .adm-ref-gauge-tier {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 0.65rem;
+    gap: 3px;
+    font-size: 0.62rem;
     font-weight: 800;
     color: #15803D;
     background: #DCFCE7;
     border: 1px solid #86EFAC;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-top: 4px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-top: 3px;
 }
 
 .adm-ref-perf-text {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     color: #645D54;
     font-weight: 600;
-    margin-bottom: 14px;
-    line-height: 1.45;
-    max-width: 250px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    max-width: 240px;
 }
 
 .adm-ref-view-btn {
@@ -4531,41 +4460,42 @@ svg.adm-search-icon {
     background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
     color: #181512;
     font-weight: 800;
-    font-size: 0.82rem;
-    padding: 10px 16px;
-    border-radius: 8px;
+    font-size: 0.78rem;
+    padding: 9px 14px;
+    border-radius: 7px;
     border: 1px solid #8A681F;
     cursor: pointer;
-    box-shadow: 0 3px 10px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
     transition: all 0.2s ease;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
 }
 
 .adm-ref-view-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
     border-color: #D4AF37;
 }
 
 .adm-ref-perf-stats-grid {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
 .adm-ref-stat-box {
-    border-radius: 9px;
-    padding: 9px 6px;
+    border-radius: 8px;
+    padding: 7px 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: 1px;
+    min-width: 0;
     transition: transform 0.2s ease;
 }
 
@@ -4574,34 +4504,17 @@ svg.adm-search-icon {
 }
 
 .adm-ref-stat-box-lbl {
-    font-size: 0.63rem;
+    font-size: 0.6rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.02em;
 }
 
 .adm-ref-stat-box-val {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 800;
     font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.15;
-}
-
-.adm-ref-prev-btn {
-    width: 100%;
-    background: #FAF5E8;
-    color: #8A681F;
-    font-weight: 700;
-    font-size: 0.78rem;
-    padding: 9px 16px;
-    border-radius: 8px;
-    border: 1.2px solid #D4AF37;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
 }
 
 .adm-ref-prev-btn:hover {
