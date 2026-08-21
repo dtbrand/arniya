@@ -36,7 +36,10 @@ $filter_status = "all";
                     <div class="dt-orders-title-group">
                         <h1 class="dt-orders-title">
                             <span>Orders &amp; Logistics Fulfillment Center</span>
-                            <span class="dt-kpi-badge up" style="font-size:10px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">1,624 Total Orders</span>
+                            <span class="dt-title-counter-badge">
+                                <span class="dt-counter-dot"></span>
+                                <strong>1,624</strong> Total Orders
+                            </span>
                         </h1>
                         <p class="dt-orders-subtitle">Manage wholesale depot dispatches, reseller commissions, and retail parcel deliveries.</p>
                     </div>
