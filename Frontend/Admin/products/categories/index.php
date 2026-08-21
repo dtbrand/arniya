@@ -68,9 +68,9 @@ $active_subnav = "categories";
         box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
     .dt-cat-form-header {
-        background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
+        background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
         padding: 8px 12px;
-        color: #FAF5E8;
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         gap: 6px;

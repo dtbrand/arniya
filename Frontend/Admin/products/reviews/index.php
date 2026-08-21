@@ -408,12 +408,12 @@ $reviews_list = [
 <!-- ======================================================== -->
 <div id="addReviewModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
     <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Add Verified Customer Review</h3>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);">Add Verified Customer Review</h3>
             </div>
-            <button type="button" onclick="closeAddReviewModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" onclick="closeAddReviewModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
         <div style="padding:18px 20px;">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
@@ -473,12 +473,12 @@ $reviews_list = [
 <!-- ======================================================== -->
 <div id="replyReviewModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
     <div style="background:#fff; width:95%; max-width:500px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;" id="replyModalTitle">Store Official Reply</h3>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);" id="replyModalTitle">Store Official Reply</h3>
             </div>
-            <button type="button" onclick="closeReplyModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" onclick="closeReplyModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
         <div style="padding:18px 20px;">
             <p style="font-size:12.5px; color:#646970; margin-top:0; margin-bottom:10px;" id="replyTargetText">Replying to customer review...</p>

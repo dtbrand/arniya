@@ -130,13 +130,16 @@
 
 /* ── BULK ACTIONS STRIP ── */
 .dt-bulk-strip {
-    background: #181512;
+    background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.40) 0%, transparent 65%), linear-gradient(135deg, rgba(38, 28, 14, 0.98) 0%, rgba(58, 44, 18, 0.95) 50%, rgba(24, 18, 10, 0.98) 100%);
+    border: 1.5px solid #D4AF37;
+    border-radius: 8px;
     color: #FFFFFF;
     padding: 10px 20px;
     display: none;
     align-items: center;
     justify-content: space-between;
     font-size: 0.82rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.3), 0 0 15px rgba(212,175,55,0.25);
     animation: dtSlideDown 0.2s ease;
 }
 

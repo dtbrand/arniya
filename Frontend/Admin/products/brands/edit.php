@@ -46,9 +46,9 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
         margin-bottom: 18px;
     }
     .dt-card-header {
-        background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
+        background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
         padding: 12px 16px;
-        color: #FAF5E8;
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -104,8 +104,8 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #181512, #3D342A);
-        color: #D4AF37;
+        background: linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%);
+        color: #FFE57F;
         font-family: 'Cinzel', serif;
         font-weight: 800;
         font-size: 22px;
@@ -113,7 +113,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
         align-items: center;
         justify-content: center;
         border: 2px solid #D4AF37;
-        box-shadow: 0 2px 10px rgba(212,175,55,0.3);
+        box-shadow: 0 2px 10px rgba(212,175,55,0.35);
         overflow: hidden;
     }
     .dt-brand-avatar-lg img {

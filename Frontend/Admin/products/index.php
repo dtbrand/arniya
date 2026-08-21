@@ -155,8 +155,8 @@ $active_subnav = "";
         to { opacity: 1; transform: scale(1) translateY(0); }
     }
     .dt-modal-header {
-        background: #181512;
-        color: #fff;
+        background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
+        color: #FFFFFF;
         padding: 12px 16px;
         display: flex;
         justify-content: space-between;

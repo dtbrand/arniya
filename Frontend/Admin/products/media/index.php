@@ -637,12 +637,12 @@ $media_assets = [
 <!-- ======================================================== -->
 <div id="uploadMediaModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
     <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">B2B Bulk Media Uploader &amp; CDN Optimizer</h3>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);">B2B Bulk Media Uploader &amp; CDN Optimizer</h3>
             </div>
-            <button type="button" onclick="closeUploadModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" onclick="closeUploadModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
         <div style="padding:20px;">
             <div id="dragDropZone" style="border:2px dashed #D4AF37; background:#FAF5E8; border-radius:8px; padding:26px 18px; text-align:center; cursor:pointer;" onclick="document.getElementById('realMediaFileInput').click()">

@@ -4058,16 +4058,30 @@ svg.adm-search-icon {
 }
 
 .adm-ref-kpi-card.dark-card {
-    background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
-    border: 1.5px solid #8A681F;
-    color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.2);
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%) !important;
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100% !important;
+    animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 2px solid #D4AF37 !important;
+    border-radius: 12px !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35) !important;
 }
 
-.adm-ref-kpi-card.dark-card:hover {
-    border-color: #D4AF37;
-    box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
-    transform: translateY(-2px);
+.adm-ref-kpi-card.dark-card .adm-ref-kpi-lbl {
+    color: #F5ECCE !important;
+    font-weight: 800 !important;
+}
+
+.adm-ref-kpi-card.dark-card .adm-ref-kpi-val {
+    color: #FFE57F !important;
+    font-weight: 900 !important;
 }
 
 .adm-ref-kpi-top {

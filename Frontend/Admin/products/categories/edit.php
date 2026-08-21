@@ -38,9 +38,9 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
         margin-bottom: 18px;
     }
     .dt-card-header {
-        background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
+        background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
         padding: 12px 16px;
-        color: #FAF5E8;
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: space-between;

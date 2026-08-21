@@ -350,19 +350,19 @@ $active_subnav = "brands";
 <!-- ======================================================== -->
 <div id="editBrandModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
     <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Edit House Label: <span id="modalBrandTitleName" style="color:#D4AF37;">DT Signature</span></h3>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);">Edit House Label: <span id="modalBrandTitleName" style="color:#FFE57F;">DT Signature</span></h3>
             </div>
-            <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" onclick="closeEditBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
         <div style="padding:18px 22px;">
             <input type="hidden" id="editModalBrandId" value="1">
             
             <!-- Logo Upload Row -->
             <div style="display:flex; align-items:center; gap:16px; padding:12px 14px; background:#FAF5E8; border:1.5px dashed #D4AF37; border-radius:8px; margin-bottom:16px;">
-                <div id="modalLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 8px rgba(212,175,55,0.3);">
+                <div id="modalLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%); color:#FFE57F; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 10px rgba(212,175,55,0.35);">
                     DT
                 </div>
                 <div style="flex:1;">
@@ -411,18 +411,18 @@ $active_subnav = "brands";
 <!-- ======================================================== -->
 <div id="addBrandModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.75); backdrop-filter:blur(5px); z-index:9999999; align-items:center; justify-content:center;">
     <div style="background:#fff; width:95%; max-width:540px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37;">
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#D4AF37" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FAF5E8;">Add New House Label</h3>
+                <h3 style="margin:0; font-size:15px; font-weight:800; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);">Add New House Label</h3>
             </div>
-            <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FAF5E8; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+            <button type="button" onclick="closeAddBrandModal()" style="background:none; border:none; color:#FFE57F; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
         </div>
         <div style="padding:18px 22px;">
             
             <!-- Logo Upload Row -->
             <div style="display:flex; align-items:center; gap:16px; padding:12px 14px; background:#FAF5E8; border:1.5px dashed #D4AF37; border-radius:8px; margin-bottom:16px;">
-                <div id="newBrandLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #181512, #3D342A); color:#D4AF37; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 8px rgba(212,175,55,0.3);">
+                <div id="newBrandLogoPreview" style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%); color:#FFE57F; font-family:'Cinzel',serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; border:2px solid #D4AF37; flex-shrink:0; overflow:hidden; box-shadow:0 2px 10px rgba(212,175,55,0.35);">
                     JH
                 </div>
                 <div style="flex:1;">

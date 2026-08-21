@@ -12,13 +12,13 @@
         </h3>
 
         <!-- DT Brand's Gold Animated AI Magic Button in Right Corner -->
-        <button type="button" id="btnAiMagicGenerate" class="dt-ai-magic-btn" onclick="openAiImporterModal()" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); color:#FDE047; border:1px solid #D4AF37; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; box-shadow:0 2px 10px rgba(212,175,55,0.3); transition:all 0.25s ease; position:relative; overflow:hidden;">
+        <button type="button" id="btnAiMagicGenerate" class="dt-ai-magic-btn" onclick="openAiImporterModal()" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%); color:#FFE57F; border:1.5px solid #D4AF37; padding:5px 14px; border-radius:20px; font-size:12px; font-weight:800; cursor:pointer; box-shadow:0 2px 10px rgba(212,175,55,0.35); transition:all 0.25s ease; position:relative; overflow:hidden;">
             <!-- Real Multi-Sparkle Vector SVG Icon -->
             <svg class="dt-ai-anim-sparkle" viewBox="0 0 24 24" width="15" height="15" fill="none" style="filter:drop-shadow(0 0 3px #FCD34D);">
                 <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#D97706" stroke-width="1.2"/>
                 <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#F59E0B"/>
             </svg>
-            <span style="letter-spacing:0.3px; color:#FAF5E8;">AI Auto-Fill</span>
+            <span style="letter-spacing:0.3px; color:#FFFFFF; font-weight:800;">AI Auto-Fill</span>
             <span class="dt-ai-live-pulse"></span>
         </button>
     </div>
@@ -86,20 +86,20 @@
     <div style="background:#fff; width:95%; max-width:680px; border-radius:10px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.4); overflow:hidden; border:2px solid #D4AF37; animation:dtModalFadeIn 0.25s ease-out;">
         
         <!-- Modal Header in DT Brand's Signature Luxury Gold & Dark Velvet Theme -->
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
+        <div style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); padding:14px 18px; color:#FAF5E8; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37;">
             <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:32px; height:32px; border-radius:50%; background:rgba(212,175,55,0.15); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                <div style="width:32px; height:32px; border-radius:50%; background:rgba(212,175,55,0.2); border:1.5px solid #D4AF37; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(212,175,55,0.3);">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
                         <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#FCD34D" stroke="#D97706" stroke-width="1.2"/>
                         <path d="M19 16L20 18.5L22.5 19.5L20 20.5L19 23L18 20.5L15.5 19.5L18 18.5L19 16Z" fill="#F59E0B"/>
                     </svg>
                 </div>
                 <div>
-                    <h3 style="margin:0; font-size:15px; font-weight:800; letter-spacing:0.3px; color:#FAF5E8;">DT Brand's AI Product Details Importer</h3>
-                    <small style="color:#D4AF37; font-size:11px; font-weight:600;">Paste WhatsApp message, supplier catalog text, or product specs</small>
+                    <h3 style="margin:0; font-size:15px; font-weight:800; letter-spacing:0.3px; color:#FFFFFF; text-shadow:0 1px 3px rgba(0,0,0,0.8);">DT Brand's AI Product Details Importer</h3>
+                    <small style="color:#FFE57F; font-size:11px; font-weight:700;">Paste WhatsApp message, supplier catalog text, or product specs</small>
                 </div>
             </div>
-            <button type="button" onclick="closeAiImporterModal()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(212,175,55,0.3); border-radius:50%; width:28px; height:28px; color:#FAF5E8; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;" onmouseover="this.style.background='rgba(179,45,46,0.3)';this.style.color='#f87171';" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='#FAF5E8';">&times;</button>
+            <button type="button" onclick="closeAiImporterModal()" style="background:rgba(255,255,255,0.1); border:1px solid rgba(212,175,55,0.4); border-radius:50%; width:28px; height:28px; color:#FFE57F; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;" onmouseover="this.style.background='rgba(179,45,46,0.3)';this.style.color='#f87171';" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='#FFE57F';">&times;</button>
         </div>
 
         <!-- Modal Body -->

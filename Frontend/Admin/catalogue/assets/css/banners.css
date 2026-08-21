@@ -145,15 +145,15 @@
     margin-bottom: 2px;
 }
 .dt-mobile-app-header {
-    background: #181512;
-    color: #D4AF37;
+    background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 50%, #18120A 100%);
+    color: #FFE57F;
     padding: 6px 10px;
     font-size: 10px;
     font-weight: 800;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #D4AF37;
+    border-bottom: 1.5px solid #D4AF37;
     flex-shrink: 0;
 }
 .dt-mobile-banner-slot {

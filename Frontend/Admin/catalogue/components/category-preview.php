@@ -18,11 +18,11 @@
     </div>
 
     <div style="padding:16px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
-        <!-- Simulated Category Banner -->
-        <div style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#fff; border-radius:8px; padding:24px; border:1px solid #D4AF37; margin-bottom:16px;">
-            <span class="dt-badge gold" style="margin-bottom:8px;">DT SIGNATURE EXCLUSIVE</span>
-            <h2 style="font-family:'Cinzel', serif; font-size:22px; font-weight:800; color:#D4AF37; margin:6px 0;">Pure Silk Sarees &amp; Temple Borders</h2>
-            <p style="font-size:12px; color:#e2e8f0; max-width:600px; margin:0;">Surat Central Depot authentic powerloom and handloom silk collection with silk mark assurance.</p>
+        <!-- Simulated Category Banner (Luxury Gold Glass Style) -->
+        <div class="dt-hero-luxury-card" style="padding:24px; margin-bottom:16px; flex-direction:column; align-items:flex-start; gap:8px;">
+            <span class="dt-badge gold" style="margin-bottom:4px; font-weight:800; background:linear-gradient(135deg, #FFE57F, #D4AF37, #B8860B); color:#111827;">DT SIGNATURE EXCLUSIVE</span>
+            <h2 style="font-family:'Cinzel', serif; font-size:22px; font-weight:800; color:#FFE57F; margin:4px 0; text-shadow:0 2px 5px rgba(0,0,0,0.8);">Pure Silk Sarees &amp; Temple Borders</h2>
+            <p style="font-size:12.5px; color:#FAF5E8; max-width:600px; margin:0; line-height:1.5;">Surat Central Depot authentic powerloom and handloom silk collection with silk mark assurance.</p>
         </div>
 
         <!-- Simulated Product Grid -->

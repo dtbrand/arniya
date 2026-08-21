@@ -30,7 +30,7 @@
             
             <!-- Customer Profile Strip -->
             <div style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:8px; padding:10px 14px; display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; box-shadow:0 1px 4px rgba(0,0,0,0.02); flex-shrink:0;">
-                <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; border:1px solid #8A681F; box-shadow:0 2px 8px rgba(0,0,0,0.15); flex-shrink:0;">
+                <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%); color:#FFE57F; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; border:1.5px solid #D4AF37; box-shadow:0 2px 10px rgba(212,175,55,0.3); flex-shrink:0;">
                     <span id="ledgerAvatarInitials">RA</span>
                 </div>
                 <div>

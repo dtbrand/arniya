@@ -18,7 +18,7 @@ $customer_email = isset($order['email']) ? $order['email'] : 'rajesh@vardhmantex
     </div>
     <div class="dt-detail-card-body" style="display:flex; flex-direction:column; gap:10px;">
         <div style="display:flex; align-items:center; gap:10px;">
-            <div style="width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); color:#D4AF37; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; border:1px solid #8A681F; flex-shrink:0;">
+            <div style="width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg, #2A2010 0%, #443416 50%, #1C150B 100%); color:#FFE57F; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; border:1.5px solid #D4AF37; box-shadow:0 2px 8px rgba(212,175,55,0.3); flex-shrink:0;">
                 <?php echo strtoupper(substr($customer_name, 0, 2)); ?>
             </div>
             <div style="display:flex; flex-direction:column; gap:2px;">
