@@ -433,10 +433,36 @@
         }
     }
 
+    // ════ MOBILE SEARCH BAR CONTROLS (SHOP PAGE STYLE) ════
+    window.openAdmMobileSearch = function() {
+        const header = document.getElementById('admHeaderMain') || document.querySelector('.adm-header');
+        if (header) {
+            header.classList.add('mobile-search-active');
+            setTimeout(() => {
+                const mobInput = document.getElementById('admMobileGlobalSearch');
+                if (mobInput) mobInput.focus();
+            }, 50);
+        }
+    };
+
+    window.closeAdmMobileSearch = function() {
+        const header = document.getElementById('admHeaderMain') || document.querySelector('.adm-header');
+        if (header) {
+            header.classList.remove('mobile-search-active');
+            const mobInput = document.getElementById('admMobileGlobalSearch');
+            if (mobInput) {
+                mobInput.value = '';
+                const mobClear = document.getElementById('admMobileGlobalSearchClear');
+                if (mobClear) mobClear.style.display = 'none';
+            }
+        }
+    };
+
     // ════ SEARCH INPUTS & 1-TAP CLEAR BUTTON ENGINE (STRICT RULE) ════
     function initSearchInputs() {
         const searchConfigs = [
             { inputId: 'admGlobalSearch', clearId: 'admGlobalSearchClear', handler: handleGlobalSearch },
+            { inputId: 'admMobileGlobalSearch', clearId: 'admMobileGlobalSearchClear', handler: handleGlobalSearch },
             { inputId: 'admProdSearch', clearId: 'admProdSearchClear', handler: filterProducts },
             { inputId: 'admOrderSearch', clearId: 'admOrderSearchClear', handler: filterOrders },
             { inputId: 'admPartnerSearch', clearId: 'admPartnerSearchClear', handler: filterPartners },

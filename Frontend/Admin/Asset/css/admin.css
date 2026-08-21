@@ -810,11 +810,20 @@ input, select, textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 28px;
+    padding: 0 24px;
     position: sticky;
     top: 0;
     z-index: 900;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    background: #FFFFFF;
+}
+
+.adm-header-normal-view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
 }
 
 .adm-header-left {
@@ -822,27 +831,41 @@ input, select, textarea {
     align-items: center;
     gap: 16px;
     flex: 1;
-    max-width: 540px;
+    max-width: 560px;
 }
 
 .adm-mobile-menu-btn {
     display: none;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
     align-items: center;
     justify-content: center;
-    background: var(--adm-bg-alt);
-    color: var(--adm-text-main);
-    border: 1px solid var(--adm-border-soft);
+    background: #FAF8F4;
+    color: #181512;
+    border: 1px solid #D4AF37;
+    cursor: pointer;
 }
 
-/* ── SEARCH BAR WITH LEFT-ALIGNED ICON & RIGHT CLEAR BUTTON (STRICT RULE) ── */
+/* ── LUXURY COMMAND SEARCH BAR (DESKTOP) ── */
 .adm-search-box {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
+    max-width: 480px;
+    height: 38px;
+    background: #FAF8F4;
+    border: 1.5px solid #D4AF37;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(138, 104, 31, 0.06);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.adm-search-box:focus-within {
+    background: #FFFFFF;
+    border-color: #8A681F;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.22), 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .adm-search-icon {
@@ -851,57 +874,206 @@ input, select, textarea {
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: var(--adm-gold);
-    width: 16px;
-    height: 16px;
-    stroke-width: 2.2;
+    color: #8A681F;
+    width: 15px;
+    height: 15px;
+    stroke-width: 2.3;
 }
 
 .adm-search-input {
     width: 100%;
-    padding: 9px 36px 9px 38px; /* Left padding for search icon, right for clear */
-    font-size: 0.84rem;
-    font-weight: 500;
-    color: var(--adm-text-main);
-    background: var(--adm-bg-canvas);
-    border: 1.4px solid var(--adm-border-soft);
-    border-radius: 8px;
-    transition: var(--adm-transition);
+    height: 100%;
+    padding: 0 58px 0 36px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #181512;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 
-.adm-search-input:focus {
-    background: #FFFFFF;
-    border-color: var(--adm-gold);
-    box-shadow: 0 0 0 3px var(--adm-gold-glow);
+.adm-search-input::placeholder {
+    color: #94A3B8;
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+.adm-cmd-badge {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: 800;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    padding: 1px 5px;
+    border-radius: 4px;
+    pointer-events: none;
+    letter-spacing: 0.5px;
 }
 
 .adm-search-clear {
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background: var(--adm-border-soft);
-    color: var(--adm-text-muted);
-    font-size: 0.7rem;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    font-size: 9px;
+    font-weight: 800;
     display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: var(--adm-transition);
+    transition: all 0.15s ease;
 }
 
 .adm-search-clear:hover {
-    background: var(--adm-gold);
+    background: #8A681F;
     color: #FFFFFF;
+}
+
+/* Mobile search trigger button */
+.adm-mobile-search-trigger-btn {
+    display: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.adm-mobile-search-trigger-btn:hover {
+    background: #8A681F;
+    color: #FFFFFF;
+}
+
+/* ── MOBILE FULL-HEADER SEARCH BAR OVERLAY (SHOP PAGE STYLE) ── */
+.adm-mobile-full-search-bar {
+    display: none;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 8px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    animation: admMobileSearchFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes admMobileSearchFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.adm-header.mobile-search-active .adm-header-normal-view {
+    display: none !important;
+}
+
+.adm-header.mobile-search-active .adm-mobile-full-search-bar {
+    display: flex !important;
+}
+
+.adm-mobile-search-input-wrap {
+    flex: 1;
+    position: relative;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    background: #FAF8F4;
+    border: 1.5px solid #8A681F;
+    border-radius: 20px;
+    padding: 0 10px;
+    box-shadow: 0 1px 6px rgba(138, 104, 31, 0.08);
+    transition: all 0.2s ease;
+}
+
+.adm-mobile-search-input-wrap:focus-within {
+    border-color: #6F5218;
+    box-shadow: 0 0 0 2.5px rgba(138, 104, 31, 0.2);
+    background: #FFFFFF;
+}
+
+.adm-mobile-search-icon {
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+
+.adm-mobile-search-input-field {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #181512;
+    padding: 0 22px 0 4px;
+}
+
+.adm-mobile-search-input-field::placeholder {
+    color: #94A3B8;
+    font-size: 11.5px;
+}
+
+.adm-mobile-search-clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background: #FAF5E8;
+    color: #8A681F;
+    font-size: 9px;
+    font-weight: 800;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.adm-mobile-search-close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #D4AF37;
+    background: #FAF5E8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A681F;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+
+.adm-mobile-search-close-btn:hover {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
 }
 
 .adm-header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 /* Live WhatsApp CRM Status Pill */
@@ -2202,7 +2374,10 @@ input, select, textarea {
         display: flex !important;
     }
     .adm-search-box {
-        display: none !important; /* Hide long search box from header on small tablet */
+        display: none !important; /* Hide wide search box from header on mobile/tablet */
+    }
+    .adm-mobile-search-trigger-btn {
+        display: flex !important; /* Show mobile search trigger icon button */
     }
     .adm-sidebar {
         transform: translateX(-100%) !important;
