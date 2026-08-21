@@ -847,98 +847,146 @@ input, select, textarea {
     cursor: pointer;
 }
 
-/* ── LUXURY COMMAND SEARCH BAR (DESKTOP) ── */
-.adm-search-box {
-    position: relative;
+/* ── SHOP-STYLE AMAZON ALWAYS-OPEN SEARCH BAR (DESKTOP) ── */
+.adm-search-amazon-bar {
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 480px;
-    height: 38px;
-    background: #FAF8F4;
-    border: 1.5px solid #D4AF37;
+    background: #FFFFFF;
+    border: 1.5px solid #8A681F;
     border-radius: 8px;
+    height: 38px;
+    flex: 1;
+    max-width: 520px;
+    min-width: 280px;
     box-shadow: 0 2px 8px rgba(138, 104, 31, 0.06);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.adm-search-box:focus-within {
-    background: #FFFFFF;
-    border-color: #8A681F;
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.22), 0 4px 14px rgba(0, 0, 0, 0.06);
+.adm-search-amazon-bar:focus-within {
+    box-shadow: 0 0 0 3px rgba(138, 104, 31, 0.2), 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-color: #6F5218;
 }
 
-.adm-search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #8A681F;
-    width: 15px;
-    height: 15px;
-    stroke-width: 2.3;
-}
-
-.adm-search-input {
-    width: 100%;
+/* Category select pill */
+.adm-search-cat-dropdown-wrap {
+    position: relative;
     height: 100%;
-    padding: 0 58px 0 36px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: #181512;
+    display: flex;
+    align-items: center;
+    border-right: 1.5px solid #E5E3DE;
+    background: #FAF8F4;
+    border-radius: 6px 0 0 6px;
+    flex-shrink: 0;
+}
+
+.adm-search-cat-select {
+    -webkit-appearance: none;
+    appearance: none;
     background: transparent;
     border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #181512;
+    padding: 0 22px 0 10px;
+    height: 100%;
+    cursor: pointer;
     outline: none;
 }
 
-.adm-search-input::placeholder {
+.adm-search-cat-arrow {
+    position: absolute;
+    right: 6px;
+    width: 11px;
+    height: 11px;
+    stroke: #8A681F;
+    stroke-width: 2.2;
+    fill: none;
+    pointer-events: none;
+}
+
+/* Center text input */
+.adm-search-input-wrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.adm-search-input-amazon {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 28px 0 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #181512;
+    background: transparent;
+}
+
+.adm-search-input-amazon::placeholder {
     color: #94A3B8;
     font-size: 11.5px;
-    font-weight: 500;
 }
 
-.adm-cmd-badge {
+/* Clear 'x' button */
+.adm-search-clear-btn {
     position: absolute;
-    right: 28px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: monospace;
-    font-size: 10px;
-    font-weight: 800;
-    background: #FAF5E8;
-    border: 1px solid #D4AF37;
-    color: #8A681F;
-    padding: 1px 5px;
-    border-radius: 4px;
-    pointer-events: none;
-    letter-spacing: 0.5px;
-}
-
-.adm-search-clear {
-    position: absolute;
-    right: 8px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     width: 18px;
     height: 18px;
-    border-radius: 50%;
-    background: #FAF5E8;
-    border: 1px solid #D4AF37;
-    color: #8A681F;
-    font-size: 9px;
-    font-weight: 800;
     display: none;
     align-items: center;
     justify-content: center;
+    border: none;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    border-radius: 50%;
     cursor: pointer;
+    color: #8A681F;
+    font-size: 9px;
+    font-weight: 800;
     transition: all 0.15s ease;
 }
 
-.adm-search-clear:hover {
+.adm-search-clear-btn:hover {
     background: #8A681F;
     color: #FFFFFF;
+}
+
+/* Right gold submit button */
+.adm-search-submit-btn {
+    height: 100%;
+    width: 42px;
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #181512;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.adm-search-submit-btn:hover {
+    filter: brightness(1.08);
+}
+
+.adm-search-submit-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: #181512;
+    stroke-width: 2.5;
+    fill: none;
 }
 
 /* Mobile search trigger button */
@@ -962,7 +1010,7 @@ input, select, textarea {
     color: #FFFFFF;
 }
 
-/* ── MOBILE FULL-HEADER SEARCH BAR OVERLAY (SHOP PAGE STYLE) ── */
+/* ── MOBILE FULL-HEADER SEARCH BAR OVERLAY (EXACT SHOP PAGE STYLE) ── */
 .adm-mobile-full-search-bar {
     display: none;
     align-items: center;
@@ -996,7 +1044,7 @@ input, select, textarea {
     background: #FAF8F4;
     border: 1.5px solid #8A681F;
     border-radius: 20px;
-    padding: 0 10px;
+    padding: 0 8px 0 10px;
     box-shadow: 0 1px 6px rgba(138, 104, 31, 0.08);
     transition: all 0.2s ease;
 }
@@ -1007,9 +1055,25 @@ input, select, textarea {
     background: #FFFFFF;
 }
 
-.adm-mobile-search-icon {
-    flex-shrink: 0;
+.adm-mobile-search-submit-icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
     margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #8A681F;
+    flex-shrink: 0;
+}
+
+.adm-mobile-search-submit-icon-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2.3;
+    fill: none;
 }
 
 .adm-mobile-search-input-field {
@@ -1022,7 +1086,7 @@ input, select, textarea {
     font-size: 12px;
     font-weight: 600;
     color: #181512;
-    padding: 0 22px 0 4px;
+    padding: 0 20px 0 4px;
 }
 
 .adm-mobile-search-input-field::placeholder {
@@ -1032,7 +1096,7 @@ input, select, textarea {
 
 .adm-mobile-search-clear-btn {
     position: absolute;
-    right: 8px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     width: 18px;
@@ -1068,6 +1132,14 @@ input, select, textarea {
     background: #8A681F;
     color: #FFFFFF;
     border-color: #8A681F;
+}
+
+.adm-mobile-search-close-btn svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    fill: none;
 }
 
 .adm-header-right {
