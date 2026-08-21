@@ -139,14 +139,15 @@
 
             const modalBody = document.getElementById('viewRmaModalBody');
             
-            // Build Photos HTML
+            // Build Photos HTML with HD preview badges
             let photosHtml = '';
             data.photos.forEach((p, idx) => {
                 photosHtml += `
-                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.previewPhoto('${p.title}', '${p.tag}')" title="${p.title}">
-                        <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#FAF8F4; text-align:center; padding:4px;">
-                            <span style="font-size:22px;">${p.icon}</span>
-                            <span style="font-size:8.5px; font-weight:800; color:#8A681F; margin-top:2px; text-transform:uppercase;">${p.tag}</span>
+                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.previewPhoto('${p.title}', '${p.tag}')" title="Click to Inspect: ${p.title}">
+                        <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #FAF8F4 0%, #F5EFE6 100%); text-align:center; padding:5px; box-sizing:border-box;">
+                            <span style="font-size:24px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">${p.icon}</span>
+                            <span style="font-size:8.5px; font-weight:800; color:#8A681F; margin-top:3px; text-transform:uppercase; letter-spacing:0.3px;">${p.tag}</span>
+                            <span style="font-size:7.5px; color:#64748B; font-weight:600;">Tap Zoom</span>
                         </div>
                     </div>
                 `;
@@ -157,7 +158,7 @@
             data.qcChecklist.forEach(qc => {
                 qcHtml += `
                     <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:#181512;">
-                        <span style="color:#15803D; font-weight:800;">✓</span>
+                        <span style="color:#15803D; font-weight:800; font-size:12px;">✓</span>
                         <span>${qc.item}</span>
                     </div>
                 `;
@@ -165,46 +166,47 @@
 
             modalBody.innerHTML = `
                 <!-- Beneficiary & Return Header Card -->
-                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px 14px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                     <div>
-                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Customer &amp; Consignee</span>
-                        <div style="font-weight:800; font-size:13px; color:#181512; margin-top:2px;">${data.customer}</div>
-                        <div style="font-size:11px; color:#64748B; margin-top:2px;">${data.city} • ${data.contact}</div>
+                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Customer &amp; Consignee</span>
+                        <div style="font-weight:800; font-size:13.5px; color:#181512; margin-top:2px;">${data.customer}</div>
+                        <div style="font-size:11px; color:#64748B; margin-top:2px;">${data.city} • <span style="color:#181512; font-weight:600;">${data.contact}</span></div>
                     </div>
                     <div style="text-align:right;">
-                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Order &amp; Valuation</span>
-                        <div style="font-weight:800; font-size:13px; color:#DC2626; margin-top:2px;">₹${data.amount}</div>
+                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Order &amp; Valuation</span>
+                        <div style="font-weight:800; font-size:14px; color:#DC2626; margin-top:2px;">₹${data.amount}</div>
                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Order Ref: <a href="/Frontend/Admin/orders/view.php?id=${data.orderId}" style="color:#1D4ED8; font-weight:700; text-decoration:none;">${data.orderId}</a></div>
                     </div>
                 </div>
 
                 <!-- Product & Claim Reason Box -->
-                <div style="border-left:3px solid #D4AF37; padding:8px 12px; background:#FAF5E8; border-radius:0 6px 6px 0;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <strong style="color:#181512; font-size:12.5px;">${data.product}</strong>
-                        <span style="font-size:10px; font-weight:800; color:#8A681F; background:#FFFFFF; border:1px solid #D4AF37; padding:2px 6px; border-radius:4px;">${data.sku}</span>
+                <div style="border-left:3px solid #D4AF37; padding:10px 14px; background:#FAF5E8; border-radius:0 8px 8px 0; border-top:1px solid #EADBBA; border-right:1px solid #EADBBA; border-bottom:1px solid #EADBBA;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                        <strong style="color:#181512; font-size:13px;">${data.product}</strong>
+                        <span style="font-size:10px; font-weight:800; color:#8A681F; background:#FFFFFF; border:1px solid #D4AF37; padding:2px 8px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">${data.sku}</span>
                     </div>
-                    <div style="margin-top:4px; font-size:11.5px; color:#92400E; font-weight:700;">
+                    <div style="margin-top:5px; font-size:11.5px; color:#92400E; font-weight:750;">
                         Reason: ${data.reason}
                     </div>
-                    <div style="margin-top:6px; font-size:11px; color:#475569; line-height:1.4;">
+                    <div style="margin-top:6px; font-size:11px; color:#475569; line-height:1.45;">
                         ${data.note}
                     </div>
                 </div>
 
-                <!-- Evidence Section: Photos + Video Proof -->
-                <div style="display:grid; grid-template-columns:1fr 1.1fr; gap:12px;">
+                <!-- Evidence Section: Photos + Interactive Video Proof -->
+                <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:12px;">
                     <!-- Evidence Photos Gallery -->
                     <div class="dt-evidence-box">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.3px;">Defect Photos (${data.photos.length})</span>
-                            <span style="font-size:10px; color:#8A681F; font-weight:700;">High-Res HD</span>
+                            <span style="font-size:10px; color:#8A681F; font-weight:800; background:#FAF5E8; border:1px solid #D4AF37; padding:1px 5px; border-radius:3px;">HD Evidence</span>
                         </div>
                         <div class="dt-evidence-photos">
                             ${photosHtml}
                         </div>
-                        <div style="font-size:10px; color:#64748B; margin-top:8px;">
-                            Click thumbnail to inspect high-resolution defect zoom.
+                        <div style="font-size:10.5px; color:#64748B; margin-top:8px; display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <span>Click thumbnail for full-screen inspection zoom.</span>
                         </div>
                     </div>
 
@@ -212,28 +214,42 @@
                     <div class="dt-evidence-box">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                             <span style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.3px;">Unboxing Video Proof</span>
-                            <span style="font-size:10px; color:#15803D; font-weight:800;">✓ Verified Seal</span>
+                            <span style="font-size:10px; color:#15803D; font-weight:800; background:#DCFCE7; border:1px solid #86EFAC; padding:1px 6px; border-radius:3px;">✓ Verified Seal</span>
                         </div>
-                        <div class="dt-video-preview-card" onclick="window.DT_RETURNS.playVideoSim('${data.id}', '${data.videoDuration}')" title="Play Package Opening Video">
+                        <div id="rmaVideoPlayerCard" class="dt-video-preview-card" onclick="window.DT_RETURNS.toggleVideoPlay('${data.id}', '${data.videoDuration}')" title="Play Package Opening Video">
                             <span class="dt-video-badge">${data.videoDuration}</span>
-                            <div class="dt-video-play-btn">
+                            <div id="rmaVideoPlayIcon" class="dt-video-play-btn">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                             </div>
-                            <div style="font-size:11px; font-weight:700; text-shadow:0 1px 3px rgba(0,0,0,0.8);">Play Continuous Unboxing Video</div>
-                            <div style="font-size:9.5px; opacity:0.8; margin-top:2px;">100% Unbroken Seal Verification</div>
+                            <div id="rmaVideoTitleText" style="font-size:11.5px; font-weight:800; text-shadow:0 1px 4px rgba(0,0,0,0.85);">Play Continuous Unboxing Video</div>
+                            <div id="rmaVideoSubText" style="font-size:10px; opacity:0.85; margin-top:2px;">100% Unbroken Seal Verification</div>
+                            
+                            <!-- Video Simulation Controls (Active on play) -->
+                            <div id="rmaVideoControls" style="display:none; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.85)); padding:8px 10px; display:flex; flex-direction:column; gap:4px;">
+                                <div style="display:flex; justify-content:space-between; font-size:9.5px; color:#FFFFFF; font-weight:700;">
+                                    <span id="rmaVideoCurTime">00:18</span>
+                                    <span>${data.videoDuration}</span>
+                                </div>
+                                <div style="width:100%; height:4px; background:rgba(255,255,255,0.3); border-radius:2px; overflow:hidden;">
+                                    <div id="rmaVideoProgressBar" style="width:42%; height:100%; background:#D4AF37;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Reverse Courier Tracking & Surat Depot QC Dock Inspection -->
-                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:10px 12px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px 14px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                     <div>
-                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Reverse Pickup Logistics</span>
-                        <div style="font-weight:700; font-size:12px; color:#181512; margin-top:3px;">${data.carrier}</div>
-                        <div style="font-size:11px; color:#1D4ED8; font-weight:700; margin-top:2px;">AWB: ${data.awb}</div>
+                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Reverse Pickup Logistics</span>
+                        <div style="font-weight:750; font-size:12.5px; color:#181512; margin-top:3px;">${data.carrier}</div>
+                        <div style="font-size:11px; color:#1D4ED8; font-weight:700; margin-top:2px; display:flex; align-items:center; gap:4px;">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            <span>AWB: ${data.awb}</span>
+                        </div>
                     </div>
                     <div>
-                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase;">Depot QC Checklist</span>
+                        <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Depot QC Checklist</span>
                         <div style="display:flex; flex-direction:column; gap:4px; margin-top:3px;">
                             ${qcHtml}
                         </div>
@@ -259,15 +275,37 @@
 
         previewPhoto: function(title, tag) {
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🔍 High-Res Zoom: ${title} (${tag}) verified`);
+                window.DT_ORDERS.showToast(`🔍 Inspected HD Zoom: ${title} (${tag})`);
             }
         },
 
-        playVideoSim: function(rmaId, duration) {
-            if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`▶️ Playing continuous opening video for ${rmaId} (${duration})`);
+        toggleVideoPlay: function(rmaId, duration) {
+            const card = document.getElementById('rmaVideoPlayerCard');
+            const icon = document.getElementById('rmaVideoPlayIcon');
+            const title = document.getElementById('rmaVideoTitleText');
+            const sub = document.getElementById('rmaVideoSubText');
+            const controls = document.getElementById('rmaVideoControls');
+
+            if (!card || !icon) return;
+
+            const isPlaying = card.classList.contains('is-playing');
+            if (isPlaying) {
+                card.classList.remove('is-playing');
+                icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+                title.textContent = 'Play Continuous Unboxing Video';
+                sub.textContent = '100% Unbroken Seal Verification';
+                if (controls) controls.style.display = 'none';
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast(`⏸️ Paused unboxing video for ${rmaId}`);
+            } else {
+                card.classList.add('is-playing');
+                icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+                title.textContent = '▶️ Playing Unboxing Stream (4K 60fps)';
+                sub.textContent = 'Audio & Visual QC Scan in Progress...';
+                if (controls) controls.style.display = 'flex';
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast(`▶️ Streaming verified unboxing video for ${rmaId} (${duration})`);
             }
         },
+
 
         openRejectModal: function(returnId) {
             activeRmaId = returnId;

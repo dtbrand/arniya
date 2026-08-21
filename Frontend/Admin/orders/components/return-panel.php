@@ -304,12 +304,12 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 <!-- 🪟 1. VIEW RMA DETAILS, EVIDENCE PHOTOS & VIDEO MODAL         -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div id="viewRmaModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_RETURNS.closeRmaModal()">
-    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:680px; max-height:90vh; box-shadow:0 14px 44px rgba(0,0,0,0.35); overflow:hidden; display:flex; flex-direction:column; font-family:'Plus Jakarta Sans', sans-serif;">
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:760px; max-height:88vh; height:auto; box-shadow:0 14px 44px rgba(0,0,0,0.35); overflow:hidden; display:flex; flex-direction:column; font-family:'Plus Jakarta Sans', sans-serif;">
         <!-- Modal Header -->
         <div style="padding:14px 20px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <div style="width:30px; height:30px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:32px; height:32px; border-radius:7px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
                 </div>
                 <div>
                     <h3 style="margin:0; font-size:14px; font-weight:800; color:#181512;">RMA Claim &amp; Defect Inspection Evidence</h3>
@@ -318,8 +318,8 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
             </div>
         </div>
 
-        <!-- Modal Body Content -->
-        <div id="viewRmaModalBody" style="padding:18px 20px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; font-size:12px; color:#181512;">
+        <!-- Modal Body Content (Fluid Scrollable Container) -->
+        <div id="viewRmaModalBody" style="padding:18px 20px; flex:1 1 auto; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:14px; font-size:12px; color:#181512;">
             <!-- Loaded dynamically by JS -->
         </div>
 
