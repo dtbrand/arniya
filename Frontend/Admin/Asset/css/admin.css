@@ -773,6 +773,34 @@ input, select, textarea {
     box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
 }
 
+/* Strictly HIDE all submenus, labels, arrows, and headers in collapsed state */
+.adm-sidebar.collapsed .adm-nav-submenu,
+.adm-sidebar.collapsed .adm-nav-submenu.open,
+.adm-sidebar.collapsed .adm-nav-has-sub.open > .adm-nav-submenu,
+.adm-sidebar.collapsed .adm-nav-arrow,
+.adm-sidebar.collapsed .adm-nav-label,
+.adm-sidebar.collapsed .adm-nav-heading,
+.adm-sidebar.collapsed .adm-brand-logo-img,
+.adm-sidebar.collapsed .adm-brand-meta,
+.adm-sidebar.collapsed .adm-sidebar-toggle-btn {
+    display: none !important;
+}
+
+.adm-sidebar.collapsed .adm-brand-seal-mini {
+    display: flex !important;
+    cursor: pointer;
+}
+
+.adm-sidebar.collapsed .adm-sidebar-brand {
+    padding: 0 !important;
+    justify-content: center !important;
+}
+
+.adm-sidebar.collapsed .adm-brand-link {
+    justify-content: center !important;
+    width: 100% !important;
+}
+
 /* ════ MAIN WRAPPER ════ */
 .adm-main {
     flex: 1;

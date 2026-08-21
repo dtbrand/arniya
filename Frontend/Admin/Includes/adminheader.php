@@ -9,7 +9,7 @@
     <div class="adm-header-normal-view">
         <div class="adm-header-left">
             <!-- Mobile Toggle Hamburger Button -->
-            <button type="button" class="adm-mobile-menu-btn" id="admMobileMenuBtn" title="Toggle Navigation Menu">
+            <button type="button" class="adm-mobile-menu-btn" id="admMobileMenuBtn" onclick="if(typeof window.toggleAdmMobileSidebar==='function') window.toggleAdmMobileSidebar(event);" title="Toggle Navigation Menu">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.4" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
 

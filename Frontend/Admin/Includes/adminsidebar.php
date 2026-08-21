@@ -487,30 +487,44 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 </aside>
 
 <!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
+<!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->
 <script>
 (function() {
+    window.toggleAdmMobileSidebar = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const sidebar = document.getElementById('admSidebar');
+        const backdrop = document.getElementById('admSidebarBackdrop');
+        if (sidebar) {
+            sidebar.classList.toggle('mobile-open');
+            if (backdrop) {
+                backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+            }
+        }
+    };
+
+    window.closeAdmMobileSidebar = function() {
+        const sidebar = document.getElementById('admSidebar');
+        const backdrop = document.getElementById('admSidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('mobile-open');
+        if (backdrop) backdrop.style.display = 'none';
+    };
+
     function initAdmSidebar() {
         const mobileBtn = document.getElementById('admMobileMenuBtn');
         const sidebar = document.getElementById('admSidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         const toggleBtn = document.getElementById('admSidebarToggleBtn');
+        const sealMini = document.querySelector('.adm-brand-seal-mini');
 
-        if (mobileBtn && sidebar) {
+        if (mobileBtn) {
             mobileBtn.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                sidebar.classList.toggle('mobile-open');
-                if (backdrop) {
-                    backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
-                }
+                window.toggleAdmMobileSidebar(e);
             };
         }
 
-        if (backdrop && sidebar) {
+        if (backdrop) {
             backdrop.onclick = function(e) {
-                e.preventDefault();
-                sidebar.classList.remove('mobile-open');
-                backdrop.style.display = 'none';
+                window.closeAdmMobileSidebar();
             };
         }
 
@@ -519,7 +533,30 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 e.preventDefault();
                 e.stopPropagation();
                 sidebar.classList.toggle('collapsed');
+                try {
+                    localStorage.setItem('dt_adm_sidebar_collapsed', sidebar.classList.contains('collapsed') ? '1' : '0');
+                } catch(err) {}
             };
+        }
+
+        if (sealMini && sidebar) {
+            sealMini.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                sidebar.classList.remove('collapsed');
+                try {
+                    localStorage.setItem('dt_adm_sidebar_collapsed', '0');
+                } catch(err) {}
+            };
+        }
+
+        // Restore collapsed state from localStorage if on desktop
+        if (window.innerWidth > 1024 && sidebar) {
+            try {
+                if (localStorage.getItem('dt_adm_sidebar_collapsed') === '1') {
+                    sidebar.classList.add('collapsed');
+                }
+            } catch(err) {}
         }
     }
 
@@ -531,6 +568,11 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 })();
 
 function toggleSidebarSubmenu(item) {
+    const sidebar = document.getElementById('admSidebar');
+    if (sidebar && sidebar.classList.contains('collapsed')) {
+        sidebar.classList.remove('collapsed');
+        try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
+    }
     const parent = item.closest('.adm-nav-has-sub');
     if (parent) {
         const isOpen = parent.classList.contains('open');
