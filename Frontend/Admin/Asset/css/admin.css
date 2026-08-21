@@ -639,49 +639,84 @@ input, select, textarea {
 
 /* ════ COLLAPSED SIDEBAR ITEMS & ICONS (DESKTOP ONLY: min-width: 1025px) ════ */
 @media (min-width: 1025px) {
+    .adm-sidebar.collapsed {
+        width: 68px !important;
+        background: #FFFFFF !important;
+        border-right: 1.5px solid #EAE5D9 !important;
+        box-shadow: 2px 0 12px rgba(138, 104, 31, 0.04) !important;
+    }
+
+    .adm-sidebar.collapsed .adm-sidebar-brand {
+        height: 56px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-bottom: 1.2px solid rgba(212, 175, 55, 0.2) !important;
+    }
+
+    .adm-sidebar.collapsed .adm-sidebar-scroll {
+        padding: 8px 0 !important;
+    }
+
+    .adm-sidebar.collapsed .adm-nav-group {
+        margin-bottom: 8px !important;
+        padding-bottom: 6px !important;
+        border-bottom: 1px dashed rgba(212, 175, 55, 0.2) !important;
+    }
+
+    .adm-sidebar.collapsed .adm-nav-group:last-child {
+        border-bottom: none !important;
+    }
+
     .adm-sidebar.collapsed .adm-nav-list {
-        align-items: center;
-        padding: 2px 0;
-        gap: 5px;
+        align-items: center !important;
+        padding: 0 !important;
+        gap: 3px !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item {
-        width: 44px;
-        height: 44px;
-        padding: 0;
-        margin: 2px auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        border: 1.2px solid transparent;
-        position: relative;
-        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 42px !important;
+        height: 42px !important;
+        padding: 0 !important;
+        margin: 2px auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 10px !important;
+        border: 1.2px solid transparent !important;
+        position: relative !important;
+        background: transparent !important;
+        color: #5A5348 !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item .adm-nav-icon {
-        width: 20px;
-        height: 20px;
-        stroke-width: 2.2;
-        color: #5A5348;
-        transition: all 0.2s ease;
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        stroke-width: 2.2 !important;
+        color: #5A5348 !important;
+        stroke: #5A5348 !important;
+        transition: all 0.2s ease !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item:hover {
-        background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
-        border-color: rgba(212, 175, 55, 0.45);
-        box-shadow: 0 4px 12px rgba(138, 104, 31, 0.15);
-        transform: translateY(-1px) scale(1.06);
+        background: #FAF8F4 !important;
+        border-color: rgba(212, 175, 55, 0.4) !important;
+        box-shadow: 0 3px 10px rgba(138, 104, 31, 0.12) !important;
+        transform: translateY(-1px) !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item:hover .adm-nav-icon {
-        color: var(--adm-gold);
+        color: #8A681F !important;
+        stroke: #8A681F !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item.active {
-        background: #FAF5E8 !important;
-        border: 1.5px solid #D4AF37 !important;
-        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.18) !important;
+        background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%) !important;
+        border: 1.5px solid #8A681F !important;
+        box-shadow: 0 3px 10px rgba(138, 104, 31, 0.2) !important;
         transform: none !important;
     }
 
@@ -690,32 +725,32 @@ input, select, textarea {
         stroke: #8A681F !important;
     }
 
-    /* Floating Tooltip Bubble on Hover in Collapsed Mode */
+    /* Floating Luxury Tooltip Bubble on Hover in Collapsed Mode */
     .adm-sidebar.collapsed .adm-nav-item::after {
         content: attr(data-title);
         position: absolute;
-        left: calc(100% + 12px);
+        left: calc(100% + 10px);
         top: 50%;
-        transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%) scale(0.92);
         background: #181512;
         color: #FFF9EE;
         font-size: 0.74rem;
         font-weight: 700;
         letter-spacing: 0.02em;
-        padding: 6px 12px;
-        border-radius: 8px;
+        padding: 5px 11px;
+        border-radius: 7px;
         white-space: nowrap;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         border: 1.2px solid rgba(212, 175, 55, 0.5);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1200;
+        transition: opacity 0.16s ease, transform 0.16s ease;
+        z-index: 99999;
     }
 
     .adm-sidebar.collapsed .adm-nav-item:hover::after {
-        opacity: 1;
-        transform: translateY(-50%) scale(1);
+        opacity: 1 !important;
+        transform: translateY(-50%) scale(1) !important;
     }
 
     /* Hide badges cleanly in collapsed desktop mode */
@@ -738,12 +773,12 @@ input, select, textarea {
     /* Keep Sidebar Toggle Button ALWAYS visible and styled in collapsed mode */
     .adm-sidebar.collapsed .adm-sidebar-toggle-btn {
         display: flex !important;
-        width: 36px !important;
-        height: 36px !important;
+        width: 38px !important;
+        height: 38px !important;
         margin: 0 auto !important;
         background: #FAF5E8 !important;
         border: 1.2px solid #D4AF37 !important;
-        border-radius: 8px !important;
+        border-radius: 9px !important;
         color: #8A681F !important;
         align-items: center !important;
         justify-content: center !important;
@@ -760,12 +795,6 @@ input, select, textarea {
 
     .adm-sidebar.collapsed .adm-brand-seal-mini {
         display: none !important;
-    }
-
-    .adm-sidebar.collapsed .adm-sidebar-brand {
-        padding: 0 !important;
-        justify-content: center !important;
-        height: 52px !important;
     }
 
     .adm-sidebar.collapsed .adm-brand-link {
