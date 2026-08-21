@@ -198,37 +198,61 @@
     border-color: var(--dt-gold-radiant);
 }
 
-/* ════ INTERNAL ADMIN NOTES MANAGER ════ */
+/* ════ INTERNAL ADMIN NOTES MANAGER (LUXURY REDESIGN) ════ */
 .dt-notes-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 8px;
 }
 
-.dt-note-item {
+.dt-smart-note-card {
     background: #FAF8F4;
-    border-left: 3px solid var(--dt-gold);
-    border-radius: 0 6px 6px 0;
-    padding: 8px 12px;
-    font-size: 11.5px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    border: 1px solid #E2DFD7;
+    border-left: 3.5px solid #8A681F;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: all 0.18s ease;
+    animation: noteFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.dt-note-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #64748B;
-    font-weight: 600;
+.dt-smart-note-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-color: #D4AF37;
 }
 
-.dt-note-text {
-    color: #1E293B;
-    font-weight: 500;
+@keyframes noteFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dt-snippet-btn:hover {
+    background: #FAF5E8 !important;
+    border-color: #D4AF37 !important;
+    color: #8A681F !important;
+    transform: translateY(-1px);
+}
+
+.dt-note-tag-chip:hover:not(.is-active) {
+    background: #FAF5E8 !important;
+    border-color: #D4AF37 !important;
+    color: #8A681F !important;
+}
+
+.dt-note-util-btn:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+#newAdminNoteInput:focus {
+    border-color: #8A681F !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
 }
 
 /* ════ AUDIT TRAIL ACTIVITY LOG ════ */

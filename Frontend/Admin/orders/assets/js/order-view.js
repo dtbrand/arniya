@@ -208,6 +208,67 @@
             }
         },
 
+        selectNoteTag: function(btn, tag) {
+            const container = document.getElementById('adminNoteTagChips');
+            if (container) {
+                container.querySelectorAll('.dt-note-tag-chip').forEach(c => {
+                    c.classList.remove('is-active');
+                    c.style.background = '#FFFFFF';
+                    c.style.color = '#475569';
+                    c.style.border = '1px solid #CBD5E1';
+                    c.style.fontWeight = '700';
+                });
+            }
+            if (btn) {
+                btn.classList.add('is-active');
+                btn.style.background = '#8A681F';
+                btn.style.color = '#FFFFFF';
+                btn.style.border = '1px solid #D4AF37';
+                btn.style.fontWeight = '800';
+            }
+            const tagInput = document.getElementById('adminNoteSelectedTag');
+            if (tagInput) tagInput.value = tag;
+        },
+
+        insertNoteSnippet: function(text) {
+            const input = document.getElementById('newAdminNoteInput');
+            if (input) {
+                if (input.value.trim().length > 0) {
+                    input.value = input.value.trim() + ' ' + text;
+                } else {
+                    input.value = text;
+                }
+                input.focus();
+            }
+        },
+
+        copyNoteText: function(btn) {
+            const card = btn.closest('.dt-smart-note-card');
+            const textEl = card ? card.querySelector('.dt-note-body-text') : null;
+            if (textEl && window.DT_ORDERS) {
+                window.DT_ORDERS.copyText(textEl.innerText, 'Note Text');
+            }
+        },
+
+        deleteNote: function(noteId) {
+            const card = document.getElementById(noteId);
+            if (card) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(-6px)';
+                setTimeout(() => {
+                    card.remove();
+                    // Update notes count badge
+                    const noteList = document.getElementById('adminNotesList');
+                    const countBadge = document.getElementById('adminNotesCountBadge');
+                    if (noteList && countBadge) {
+                        const count = noteList.querySelectorAll('.dt-smart-note-card').length;
+                        countBadge.textContent = `${count} Note${count === 1 ? '' : 's'}`;
+                    }
+                    if (window.DT_ORDERS) window.DT_ORDERS.showToast('🗑️ Note deleted successfully');
+                }, 200);
+            }
+        },
+
         addNote: function() {
             const input = document.getElementById('newAdminNoteInput');
             if (!input || !input.value.trim()) {
@@ -215,21 +276,65 @@
                 return;
             }
 
+            const tag = document.getElementById('adminNoteSelectedTag')?.value || 'Dispatch Verification';
             const noteList = document.getElementById('adminNotesList');
             if (noteList) {
                 const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const noteId = 'note_' + Date.now();
                 const noteEl = document.createElement('div');
-                noteEl.className = 'dt-note-item';
+                noteEl.className = 'dt-smart-note-card';
+                noteEl.id = noteId;
+                noteEl.style.cssText = 'background:#FAF8F4; border:1px solid #E2DFD7; border-left:3.5px solid #8A681F; border-radius:8px; padding:10px 12px; transition:all 0.15s ease; animation: noteFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);';
+
                 noteEl.innerHTML = `
-                    <div class="dt-note-header">
-                        <span>Admin (Surat Central HQ)</span>
-                        <span>${now} • Just Now</span>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:26px; height:26px; border-radius:50%; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:800; font-size:10px; display:flex; align-items:center; justify-content:center;">
+                                GS
+                            </div>
+                            <div>
+                                <div style="display:flex; align-items:center; gap:6px;">
+                                    <span style="font-weight:800; font-size:12px; color:#181512;">Gautam Sethi</span>
+                                    <span style="font-size:9.5px; font-weight:700; color:#64748B; background:#FFFFFF; border:1px solid #E2DFD7; padding:1px 5px; border-radius:3px;">Super Admin</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:9.5px; font-weight:800; text-transform:uppercase; padding:2px 7px; border-radius:4px; letter-spacing:0.3px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                ${tag}
+                            </span>
+                            <span style="color:#64748B; font-size:10.5px; font-weight:600; display:inline-flex; align-items:center; gap:3px;">
+                                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <span>${now} • Just Now</span>
+                            </span>
+                        </div>
                     </div>
-                    <div class="dt-note-text">${input.value.trim()}</div>
+                    <div class="dt-note-body-text" style="color:#334155; font-size:12px; line-height:1.45; margin-left:34px; font-weight:500;">
+                        ${input.value.trim().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>")}
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:6px;">
+                        <button type="button" onclick="window.DT_ORDER_VIEW.copyNoteText(this)" class="dt-note-util-btn" style="background:#FFFFFF; border:1px solid #E2DFD7; border-radius:4px; padding:2px 6px; font-size:10px; font-weight:700; color:#64748B; cursor:pointer; display:inline-flex; align-items:center; gap:3px; transition:all 0.15s ease;" title="Copy Note Text">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>Copy</span>
+                        </button>
+                        <button type="button" onclick="window.DT_ORDER_VIEW.deleteNote('${noteId}')" class="dt-note-util-btn" style="background:#FFFFFF; border:1px solid #FECACA; border-radius:4px; padding:2px 6px; font-size:10px; font-weight:700; color:#DC2626; cursor:pointer; display:inline-flex; align-items:center; gap:3px; transition:all 0.15s ease;" title="Delete Note">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <span>Delete</span>
+                        </button>
+                    </div>
                 `;
+
                 noteList.prepend(noteEl);
                 input.value = '';
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast('Internal note saved successfully');
+
+                // Update count badge
+                const countBadge = document.getElementById('adminNotesCountBadge');
+                if (countBadge) {
+                    const count = noteList.querySelectorAll('.dt-smart-note-card').length;
+                    countBadge.textContent = `${count} Note${count === 1 ? '' : 's'}`;
+                }
+
+                if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ Internal admin note posted successfully!');
             }
         },
 
