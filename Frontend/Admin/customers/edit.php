@@ -168,6 +168,95 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
     <style>
+        /* ════ MASTER LUXURY GOLD & SILVER/PLATINUM GLASS HERO BOX ════ */
+        @keyframes dtAdminAmbientLiningShimmer {
+            0% {
+                background-position: 0% 0%, 0% 0%, 0% 0%;
+            }
+            50% {
+                background-position: 0% 0%, 100% 100%, -100% 100%;
+            }
+            100% {
+                background-position: 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+        .dt-hero-luxury-card {
+            position: relative;
+            background:
+                linear-gradient(135deg, rgba(18, 15, 12, 0.86) 0%, rgba(28, 23, 17, 0.82) 50%, rgba(15, 19, 26, 0.88) 100%),
+                repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.20) 0px, rgba(212, 175, 55, 0.20) 1.5px, transparent 1.5px, transparent 16px),
+                repeating-linear-gradient(-45deg, rgba(226, 232, 240, 0.16) 0px, rgba(226, 232, 240, 0.16) 1.5px, transparent 1.5px, transparent 16px) !important;
+            background-size: 100% 100%, 300% 300%, 300% 300% !important;
+            animation: dtAdminAmbientLiningShimmer 10s ease-in-out infinite alternate !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1.5px solid rgba(212, 175, 55, 0.65) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 0 rgba(212, 175, 55, 0.3), 0 0 28px rgba(212, 175, 55, 0.2) !important;
+            padding: 14px 18px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            flex-wrap: wrap !important;
+            gap: 12px !important;
+            overflow: hidden !important;
+        }
+
+        .dt-hero-luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent 0%, #D4AF37 25%, #FFFFFF 50%, #E2E8F0 75%, transparent 100%);
+            opacity: 0.95;
+            z-index: 1;
+        }
+
+        .dt-hero-title {
+            font-size: 1.12rem !important;
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.011em !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+        }
+
+        .dt-hero-subtitle {
+            font-size: 0.76rem !important;
+            color: #FAF5E8 !important;
+            margin-top: 2px !important;
+            font-weight: 600 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .dt-hero-metric-label {
+            font-size: 0.68rem !important;
+            color: #E2E8F0 !important;
+            text-transform: uppercase !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.05em !important;
+            display: block !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .dt-hero-metric-gold {
+            font-size: 1.2rem !important;
+            color: #FDE047 !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.01em !important;
+            text-shadow: 0 2px 8px rgba(253, 224, 71, 0.4), 0 1px 2px rgba(0,0,0,0.8) !important;
+        }
+
+        .dt-hero-metric-white {
+            font-size: 1.2rem !important;
+            color: #FFFFFF !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.01em !important;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0,0,0,0.8) !important;
+        }
+
         .dt-edit-card {
             background: #FFFFFF;
             border: 1.5px solid var(--dt-border-light);
