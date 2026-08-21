@@ -3,28 +3,22 @@
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 
-/* ══ 8-CARD MASTER KPI GRID ══ */
+/* ══ 8-CARD MASTER KPI GRID (STRICT SYMMETRICAL 4x2 ARCHITECTURE) ══ */
 .dt-cust-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
     width: 100%;
     box-sizing: border-box;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
     .dt-cust-kpi-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 768px) {
-    .dt-cust-kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 580px) {
     .dt-cust-kpi-grid {
         grid-template-columns: 1fr;
     }
@@ -160,10 +154,9 @@
 .dt-cust-filter-strip {
     display: flex;
     align-items: center;
-    gap: 8px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding-bottom: 2px;
     width: 100%;
 }
 
@@ -173,7 +166,7 @@
     gap: 6px;
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.74rem;
+    font-size: 0.73rem;
     font-weight: 700;
     background: #FFFFFF;
     border: 1.2px solid var(--dt-border-light);
@@ -488,10 +481,8 @@
 }
 
 .dt-cust-act-btn:hover {
-    background: var(--dt-gold-pale);
-    color: var(--dt-gold-primary);
-    border-color: var(--dt-gold-radiant);
     transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .dt-cust-act-btn.wa {
@@ -504,6 +495,30 @@
     background: #15803D;
     color: #FFFFFF;
     border-color: #15803D;
+}
+
+.dt-cust-act-btn.view {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: #1D4ED8;
+}
+
+.dt-cust-act-btn.view:hover {
+    background: #1D4ED8;
+    color: #FFFFFF;
+    border-color: #1D4ED8;
+}
+
+.dt-cust-act-btn.edit {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+}
+
+.dt-cust-act-btn.edit:hover {
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 100%);
+    color: #FFFFFF;
+    border-color: #8A681F;
 }
 
 /* ══ PAGINATION FOOTER ══ */

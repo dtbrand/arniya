@@ -303,10 +303,10 @@
                             <a href="https://wa.me/${c.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(c.name)}%2C%20welcome%20to%20DT%20Brand%27s" target="_blank" class="dt-cust-act-btn wa" title="1-Click WhatsApp Connect">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             </a>
-                            <a href="/Frontend/Admin/customers/view.php?id=${c.id}" class="dt-cust-act-btn" title="View 360° Profile">
+                            <a href="/Frontend/Admin/customers/view.php?id=${c.id}" class="dt-cust-act-btn view" title="View 360° Profile">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </a>
-                            <a href="/Frontend/Admin/customers/edit.php?id=${c.id}" class="dt-cust-act-btn" title="Edit Customer">
+                            <a href="/Frontend/Admin/customers/edit.php?id=${c.id}" class="dt-cust-act-btn edit" title="Edit Customer">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </a>
                         </div>
