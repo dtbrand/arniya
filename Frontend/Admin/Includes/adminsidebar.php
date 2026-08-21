@@ -580,6 +580,11 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                 e.preventDefault();
                 e.stopPropagation();
                 
+                if (window.innerWidth <= 1024) {
+                    window.closeAdmMobileSidebar();
+                    return;
+                }
+
                 const willCollapse = !sidebar.classList.contains('collapsed');
                 if (willCollapse) {
                     sidebar.classList.add('collapsed');
