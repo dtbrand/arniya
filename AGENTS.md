@@ -6,7 +6,7 @@
 
 ---
 
-## 👑 The 7 Golden Rules of DT Brand's Autonomous Development
+## 👑 The 8 Golden Rules of DT Brand's Autonomous Development
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -16,23 +16,28 @@
 │    seamlessly, auto-translate to clear intent, and write 100% professional │
 │    English in all UI, code, comments, labels, and git commits.              │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 2. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
+│ 2. 🔤 CLEAN & SHARP TYPOGRAPHY (TAILADMIN BENCHMARK): Always use 'Inter'   │
+│    & 'Plus Jakarta Sans' with antialiased smoothing, tight letter-spacing,  │
+│    and high-contrast colors (#111827 / #1F2937 / #64748B) for ultra-clear  │
+│    visibility across all tables, inputs, badges, and modals.                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 3. 🎨 100% STYLED BUTTONS MANDATE: Never use generic/plain browser buttons. │
 │    Every button must use DT Brand's gold gradient, emerald, or pale gold.   │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 3. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
+│ 4. ⚡ 100% REAL VECTOR SVG ICONS: ZERO emojis in buttons and navigation.     │
 │    All icons must be crisp inline SVG vectors (stroke-width: 2 - 2.8).      │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 4. 📱 FLUID MOBILE & TABLET AUTO-SIZING: Wholesale Desktop + Tablet + Phone │
+│ 5. 📱 FLUID MOBILE & TABLET AUTO-SIZING: Wholesale Desktop + Tablet + Phone │
 │    responsive architecture with auto-fit grids, touch targets, and zero     │
 │    broken/clipped layouts across any device.                                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 5. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
+│ 6. 🎯 100% FULLY WORKING GUARANTEE: Zero dead buttons or broken actions.    │
 │    Every button, modal, drawer, and input must have working JS and backend. │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 6. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
+│ 7. 🔍 SCREENSHOT-DRIVEN DEEP AUDIT: Auto-detect flaws, missing options,     │
 │    clipped dropdowns, and unstyled UI, then build missing parts end-to-end. │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ 7. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
+│ 8. 🚀 TRIPLE-SYNC DEPLOYMENT: Local (Clean) ➔ GitHub ➔ Hostinger Live FTP.  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -73,11 +78,35 @@ Every page, module, form, table, and modal created or modified across DT Brand's
    - If user input contains spelling typos (e.g. `scren short` ➔ Screenshot, `improment` ➔ Improvement, `apolad` ➔ Upload, `dasttop` ➔ Desktop, `projuct` ➔ Product, `buttn` ➔ Button), the agent must silently normalize and execute the intended goal accurately.
 3. **100% Professional English in Production Code & UI**:
    - **NEVER** use romanized Hindi or slang inside code, UI labels, buttons, placeholders, variable names, or git commit messages.
-   - **ALWAYS** use standard, pristine, professional English terms (e.g. `Catalog SKUs`, `Wholesale Pricing & Resale Margin`, `Surat Central Depot Ready Stock`, `Silk Mark Certified Handloom`, `Minimum Order Quantity (MOQ)`).
 
 ---
 
-## 🎨 3. Button & UI Component Styling Standards (MANDATORY)
+## 🔤 3. Crystal-Clear Typography & Text Visibility Standard (TailAdmin Benchmark)
+
+Every page, table, card, modal, input, and label across the Admin Panel MUST strictly adhere to the **Clean & Sharp Inter Typography Standard**:
+
+1. **Font Family Stack**:
+   ```css
+   font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+   ```
+2. **Sharp Anti-Aliasing & Rendering Engine**:
+   ```css
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   text-rendering: optimizeLegibility;
+   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+   letter-spacing: -0.011em;
+   ```
+3. **High-Contrast Text Hierarchy**:
+   - **Headings & Titles (`h1`, `h2`, `h3`, Card Headers)**: `#111827` (Deep Obsidian, `font-weight: 700 - 800;`)
+   - **Primary Body, Table Cells & Form Inputs**: `#1F2937` or `#334155` (`font-weight: 500 - 600;`)
+   - **Subtitles & Secondary Metadata**: `#64748B` or `#6B7280` (`font-weight: 500; font-size: 0.72rem - 0.78rem;`)
+   - **Gold Accent Numbers & Financials**: `#8A681F` / `#B8860B` (`font-weight: 800;`)
+4. **Zero Blurry or Washed-Out Text**: Never use light gray text on light backgrounds. Ensure WCAG AAA contrast ratio on all table headers, data cells, input placeholders, and status badges.
+
+---
+
+## 🎨 4. Button & UI Component Styling Standards (MANDATORY)
 
 Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow this exact hierarchy:
 

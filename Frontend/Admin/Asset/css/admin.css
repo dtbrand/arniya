@@ -5,7 +5,7 @@
  * Signature Heritage Gold Brand Aesthetics + Ultra-Clean TailAdmin Ergonomics
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap');
 
 :root {
     /* Brand Gold Palette */
@@ -32,11 +32,11 @@
     --adm-border-soft: #E5E1D7;
     --adm-border-card: rgba(138, 104, 31, 0.14);
 
-    /* Typography */
-    --adm-text-main: #181512;
-    --adm-text-body: #3B352E;
-    --adm-text-muted: #7A7266;
-    --adm-text-light: #A49D92;
+    /* Typography — Ultra-Clean High-Visibility Text */
+    --adm-text-main: #111827;
+    --adm-text-body: #1F2937;
+    --adm-text-muted: #64748B;
+    --adm-text-light: #94A3B8;
 
     /* Status Colors */
     --adm-success: #15803D;
@@ -51,9 +51,9 @@
     --adm-wa-dark: #075E54;
     --adm-wa-pale: #E8F8EE;
 
-    /* Fonts */
+    /* Fonts — Ultra-Clean Inter Typography */
     --adm-font-serif: 'Cinzel', Georgia, serif;
-    --adm-font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --adm-font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
     /* Dimensions & Shadows */
     --adm-sidebar-w: 240px;
@@ -82,6 +82,9 @@ html, body {
     color: var(--adm-text-main);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    letter-spacing: -0.011em;
     font-size: 14px;
     line-height: 1.5;
 }
@@ -93,14 +96,16 @@ a {
 
 button {
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--adm-font-sans);
+    -webkit-font-smoothing: antialiased;
     border: none;
     background: none;
     outline: none;
 }
 
 input, select, textarea {
-    font-family: inherit;
+    font-family: var(--adm-font-sans);
+    -webkit-font-smoothing: antialiased;
     outline: none;
 }
 
