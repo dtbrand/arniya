@@ -148,13 +148,18 @@
             selectedOrders.forEach((order, idx) => {
                 const isLast = (idx === selectedOrders.length - 1);
                 const shippingAddr = (order.address && order.address.shipping) ? order.address.shipping : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
+                const itemSummary = order.items_summary || 'Kanjivaram Pure Silk Zari Weave Saree';
+                const sizeVal = order.size || 'Free Size (6.3m with Blouse)';
+                const skuVal = order.sku || ('DTB-KANJI-' + String(order.id || '1624').slice(-4));
+                const qtyVal = order.items_count || 25;
+
                 labelsHtml += `
                     <div class="dt-shipping-label-card" style="page-break-after: ${isLast ? 'auto' : 'always'}; width: 100%; max-width: 100%; min-width: 100%; margin: 0 auto 20px auto; background: #FFFFFF; border: 2.5px solid #181512; border-radius: 8px; padding: 16px 20px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                         <!-- Header Block -->
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:10px;">
                             <div>
                                 <div style="font-size:16px; font-weight:900; letter-spacing:0.3px; color:#181512; line-height:1.2;">${(order.shipping || 'SURAT CENTRAL DEPOT EXPRESS').toUpperCase()}</div>
-                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">PRIORITY B2B SURFACE LOGISTICS</div>
+                                <div style="font-size:9.5px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">SURAT HUB / DOCK 1 • B2B SURFACE LOGISTICS</div>
                             </div>
                             <div style="text-align:right;">
                                 <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px; display:inline-block;">PREPAID</span>
@@ -223,21 +228,52 @@
                                 <rect x="439" y="0" width="4" height="50" fill="#000000"/>
                                 <rect x="445" y="0" width="5" height="50" fill="#000000"/>
                             </svg>
-                            <div style="font-family:monospace; font-weight:800; font-size:14.5px; letter-spacing:5px; color:#181512; margin-top:4px;">${order.tracking || 'VRL-99821'}</div>
-                        </div>
-
-                        <!-- Order Manifest Meta Bar -->
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 14px; margin-top:8px; border-radius:6px; font-size:11.5px; font-weight:700; color:#475569;">
-                            <span>Order Reference: <strong style="color:#181512;">${order.id}</strong></span>
-                            <span>Consignment: <strong style="color:#181512;">${order.items_count || 25} Units</strong></span>
+                            <div style="font-family:monospace; font-weight:800; font-size:14.5px; letter-spacing:5px; color:#181512; margin-top:4px;">AWB: ${order.tracking || 'VRL-99821'}</div>
                         </div>
 
                         <!-- Consignee Delivery Destination -->
-                        <div style="border-top:2px solid #181512; margin-top:10px; padding-top:8px; font-size:12px; line-height:1.4;">
-                            <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:2px;">DELIVER TO (CONSIGNEE):</div>
+                        <div style="border-top:2px solid #181512; border-bottom:2px solid #181512; padding:8px 0; margin-bottom:8px; font-size:12px; line-height:1.4;">
+                            <div style="font-size:9px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:2px;">DELIVER TO (CONSIGNEE):</div>
                             <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
                             <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
                             <div style="color:#64748B; font-size:11px; margin-top:3px; font-weight:600;">TEL: ${order.phone || '+91 98220 19283'}</div>
+                        </div>
+
+                        <!-- Product SKU & Size Table (Meesho Marketplace Format) -->
+                        <table style="width:100%; border-collapse:collapse; margin-bottom:8px; font-size:11px;">
+                            <thead>
+                                <tr style="background:#FAF8F4; border:1px solid #E2DFD7; text-align:left; color:#475569;">
+                                    <th style="padding:4px 6px; font-weight:800;">ITEM / SKU</th>
+                                    <th style="padding:4px 6px; font-weight:800; text-align:center;">SIZE</th>
+                                    <th style="padding:4px 6px; font-weight:800; text-align:center;">QTY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid #E2DFD7;">
+                                    <td style="padding:5px 6px;">
+                                        <div style="font-weight:800; color:#181512;">${itemSummary}</div>
+                                        <div style="font-size:9.5px; color:#64748B; font-family:monospace;">SKU: ${skuVal}</div>
+                                    </td>
+                                    <td style="padding:5px 6px; text-align:center; font-weight:800; color:#8A681F; white-space:nowrap;">
+                                        ${sizeVal}
+                                    </td>
+                                    <td style="padding:5px 6px; text-align:center; font-weight:900; color:#181512;">
+                                        ${qtyVal}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Order Reference & Seller Return Block -->
+                        <div style="display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#64748B; border-top:1px solid #E2DFD7; padding-top:6px;">
+                            <div>
+                                <div><strong>ORDER:</strong> <span style="color:#181512; font-weight:800;">${order.id}</span></div>
+                                <div><strong>SOLD BY:</strong> DT Brand's &amp; Jai Hanuman Tex, Surat</div>
+                                <div>GSTIN: 24AAECJ1928K1Z5 • 4×6 Standard Label</div>
+                            </div>
+                            <div style="border:1px solid #181512; padding:2px 6px; border-radius:3px; color:#181512; font-weight:800; font-size:9px; text-align:center;">
+                                QC PASS<br>SILK MARK
+                            </div>
                         </div>
                     </div>
                 `;
