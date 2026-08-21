@@ -236,7 +236,6 @@
                             <div style="font-size:9px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:2px;">DELIVER TO (CONSIGNEE):</div>
                             <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
                             <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
-                            <div style="color:#64748B; font-size:11px; margin-top:3px; font-weight:600;">TEL: ${order.phone || '+91 98220 19283'}</div>
                         </div>
 
                         <!-- Product SKU & Size Table (Meesho Marketplace Format) -->
@@ -264,15 +263,11 @@
                             </tbody>
                         </table>
 
-                        <!-- Order Reference & Seller Return Block -->
-                        <div style="display:flex; justify-content:space-between; align-items:flex-end; font-size:9.5px; color:#64748B; border-top:1px solid #E2DFD7; padding-top:6px;">
-                            <div>
-                                <div><strong>ORDER:</strong> <span style="color:#181512; font-weight:800;">${order.id}</span></div>
-                                <div><strong>SOLD BY:</strong> DT Brand's &amp; Jai Hanuman Tex, Surat</div>
-                                <div>GSTIN: 24AAECJ1928K1Z5 • 4×6 Standard Label</div>
-                            </div>
-                            <div style="border:1px solid #181512; padding:2px 6px; border-radius:3px; color:#181512; font-weight:800; font-size:9px; text-align:center;">
-                                QC PASS<br>SILK MARK
+                        <!-- Order Reference & QC Verification -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#475569; border-top:1px solid #E2DFD7; padding-top:6px; font-weight:700;">
+                            <div>Order Reference: <strong style="color:#181512;">${order.id}</strong></div>
+                            <div style="border:1px solid #181512; padding:2px 8px; border-radius:3px; color:#181512; font-weight:800; font-size:9.5px; text-align:center;">
+                                QC PASS • SILK MARK
                             </div>
                         </div>
                     </div>
