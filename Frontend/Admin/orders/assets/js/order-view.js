@@ -310,7 +310,11 @@
             if (sameCheckbox) sameCheckbox.checked = false;
 
             const modal = document.getElementById('orderAddressEditModal');
-            if (modal) modal.style.display = 'flex';
+            if (modal) {
+                modal.style.display = 'flex';
+                const scrollEl = document.getElementById('orderAddressEditFormScroll');
+                if (scrollEl) scrollEl.scrollTop = 0;
+            }
         },
 
         closeAddressEditModal: function() {
@@ -362,8 +366,8 @@
             const billState = document.getElementById('editBillingState')?.value.trim() || 'Gujarat';
             const billPin = document.getElementById('editBillingPincode')?.value.trim() || '395002';
 
-            const fullShipping = `${shipLine1}, ${shipCity}, ${shipState} - ${shipPin}`;
-            const fullBilling = `${billLine1}, ${billCity}, ${billState} - ${billPin}`;
+            const fullShipping = (shipLine1 ? `${shipLine1}, ` : '') + `${shipCity}, ${shipState} - ${shipPin}`;
+            const fullBilling = (billLine1 ? `${billLine1}, ` : '') + `${billCity}, ${billState} - ${billPin}`;
 
             // Update DOM on view.php
             const shipRecEl = document.getElementById('shippingRecipientText');

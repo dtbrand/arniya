@@ -303,13 +303,13 @@
     </div>
 </div>
 
-<!-- ══ Edit Order Delivery & Billing Addresses Modal ══ -->
+<!-- ══ Edit Order Delivery & Billing Addresses Modal (Luxury Redesign) ══ -->
 <div id="orderAddressEditModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_VIEW.closeAddressEditModal()">
-    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:620px; max-height:92vh; box-shadow:0 16px 48px rgba(0,0,0,0.35); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
-        <!-- Modal Header -->
+    <div style="background:#FFFFFF; border:1.5px solid #D4AF37; border-radius:12px; width:95%; max-width:640px; max-height:90vh; box-shadow:0 16px 48px rgba(0,0,0,0.35); display:flex; flex-direction:column; overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
+        <!-- Fixed Modal Header -->
         <div style="padding:14px 20px; background:#FAF8F4; border-bottom:1.5px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div style="display:flex; align-items:center; gap:10px;">
-                <div style="width:34px; height:34px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; box-shadow:0 2px 6px rgba(212,175,55,0.2);">
+                <div style="width:34px; height:34px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; box-shadow:0 2px 6px rgba(212,175,55,0.2); flex-shrink:0;">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
                 <div>
@@ -320,12 +320,12 @@
             <button type="button" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="width:28px; height:28px; border-radius:6px; border:1px solid #D4AF37; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; font-weight:800; transition:all 0.15s ease;" title="Close Modal">✕</button>
         </div>
 
-        <!-- Modal Scrollable Body -->
-        <form id="orderAddressEditForm" onsubmit="window.DT_ORDER_VIEW.saveAddressChanges(event)" style="padding:16px 20px; overflow-y:auto; display:flex; flex-direction:column; gap:16px; margin:0;">
+        <!-- Scrollable Form Body -->
+        <div id="orderAddressEditFormScroll" style="flex:1 1 auto; overflow-y:auto; padding:16px 20px; display:flex; flex-direction:column; gap:14px; background:#FFFFFF;">
             <input type="hidden" id="editAddressOrderId" value="">
 
             <!-- SECTION 1: Shipping & Delivery Destination -->
-            <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:14px;">
+            <div style="background:#FAF8F4; border:1.5px solid #E2DFD7; border-radius:8px; padding:14px 16px;">
                 <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px;">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                     <span style="font-size:11.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.4px;">1. Shipping / Godown Destination</span>
@@ -333,38 +333,38 @@
 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Recipient / Firm Name *</label>
-                        <input type="text" id="editShippingRecipient" required class="dt-input" style="width:100%; height:34px; font-size:12px; font-weight:600; box-sizing:border-box;" placeholder="e.g. Kalyan Sarees Wholesale">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Recipient / Consignee Name *</label>
+                        <input type="text" id="editShippingRecipient" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Kalyan Sarees Wholesale">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Contact Mobile Number *</label>
-                        <input type="text" id="editShippingPhone" required class="dt-input" style="width:100%; height:34px; font-size:12px; font-weight:600; box-sizing:border-box;" placeholder="e.g. +91 98220 19283">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Contact Mobile Number *</label>
+                        <input type="text" id="editShippingPhone" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. +91 98220 19283">
                     </div>
                 </div>
 
                 <div style="margin-bottom:10px;">
-                    <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Address Line 1 (Shop / Godown / Building) *</label>
-                    <input type="text" id="editShippingLine1" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="e.g. Godown 12, Sector C, Transport Nagar">
+                    <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Address Line 1 (Shop / Godown / Building) *</label>
+                    <input type="text" id="editShippingLine1" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Godown 12, Sector C, Transport Nagar">
                 </div>
 
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">City *</label>
-                        <input type="text" id="editShippingCity" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="Surat">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">City *</label>
+                        <input type="text" id="editShippingCity" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="Surat">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">State *</label>
-                        <input type="text" id="editShippingState" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="Gujarat">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">State *</label>
+                        <input type="text" id="editShippingState" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="Gujarat">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Pincode *</label>
-                        <input type="text" id="editShippingPincode" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="395010">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Pincode *</label>
+                        <input type="text" id="editShippingPincode" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="395010">
                     </div>
                 </div>
             </div>
 
             <!-- SECTION 2: GST Invoicing Billing Address -->
-            <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:14px;">
+            <div style="background:#FAF8F4; border:1.5px solid #E2DFD7; border-radius:8px; padding:14px 16px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                     <div style="display:flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M3 21h18"></path><path d="M5 21V7l8-4v18"></path><path d="M19 21V11l-6-4"></path><path d="M9 9h1"></path><path d="M9 13h1"></path><path d="M9 17h1"></path></svg>
@@ -378,45 +378,48 @@
 
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Billing Firm / Entity Name *</label>
-                        <input type="text" id="editBillingFirm" required class="dt-input" style="width:100%; height:34px; font-size:12px; font-weight:600; box-sizing:border-box;" placeholder="e.g. Vardhman Tex Private Limited">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Billing Firm / Entity Name *</label>
+                        <input type="text" id="editBillingFirm" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Vardhman Tex Private Limited">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">GSTIN (Tax ID)</label>
-                        <input type="text" id="editBillingGstin" class="dt-input" style="width:100%; height:34px; font-size:12px; font-weight:700; font-family:monospace; box-sizing:border-box;" placeholder="24AAECJ1928K1Z5">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">GSTIN (Tax ID)</label>
+                        <input type="text" id="editBillingGstin" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:700; font-family:monospace; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="24AAECJ1928K1Z5">
                     </div>
                 </div>
 
                 <div style="margin-bottom:10px;">
-                    <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Billing Street Address *</label>
-                    <input type="text" id="editBillingLine1" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="e.g. Shop 42, Textile Market, Ring Road">
+                    <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Billing Street Address *</label>
+                    <input type="text" id="editBillingLine1" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. Shop 42, Textile Market, Ring Road">
                 </div>
 
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">City *</label>
-                        <input type="text" id="editBillingCity" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="Surat">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">City *</label>
+                        <input type="text" id="editBillingCity" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="Surat">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">State *</label>
-                        <input type="text" id="editBillingState" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="Gujarat">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">State *</label>
+                        <input type="text" id="editBillingState" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="Gujarat">
                     </div>
                     <div>
-                        <label style="display:block; font-size:10.5px; font-weight:700; color:#475569; margin-bottom:4px;">Pincode *</label>
-                        <input type="text" id="editBillingPincode" required class="dt-input" style="width:100%; height:34px; font-size:12px; box-sizing:border-box;" placeholder="395002">
+                        <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Pincode *</label>
+                        <input type="text" id="editBillingPincode" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="395002">
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Modal Footer Controls -->
-            <div style="display:flex; justify-content:flex-end; gap:8px; align-items:center; padding-top:4px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="height:36px; padding:0 14px; font-size:12px;">Cancel</button>
-                <button type="submit" class="dt-btn dt-btn-gold" style="height:36px; padding:0 18px; font-size:12px; font-weight:800;">
+        <!-- Fixed Modal Footer -->
+        <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
+            <div style="font-size:11px; color:#64748B;">Surat Central Depot • Auto-syncs to Invoice &amp; Manifest</div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_VIEW.closeAddressEditModal()" style="height:34px; padding:0 14px; font-size:12px;">Cancel</button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_VIEW.saveAddressChanges()" style="height:34px; padding:0 18px; font-size:12px; font-weight:800;">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>Save Address Changes</span>
                 </button>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
