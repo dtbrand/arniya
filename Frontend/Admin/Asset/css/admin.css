@@ -786,24 +786,45 @@ input, select, textarea {
     .adm-sidebar.collapsed .adm-nav-label,
     .adm-sidebar.collapsed .adm-nav-heading,
     .adm-sidebar.collapsed .adm-brand-logo-img,
-    .adm-sidebar.collapsed .adm-brand-meta,
-    .adm-sidebar.collapsed .adm-sidebar-toggle-btn {
+    .adm-sidebar.collapsed .adm-brand-meta {
         display: none !important;
     }
 
-    .adm-sidebar.collapsed .adm-brand-seal-mini {
+    /* Keep Sidebar Toggle Button ALWAYS visible and styled in collapsed mode */
+    .adm-sidebar.collapsed .adm-sidebar-toggle-btn {
         display: flex !important;
-        cursor: pointer;
+        width: 36px !important;
+        height: 36px !important;
+        margin: 0 auto !important;
+        background: #FAF5E8 !important;
+        border: 1.2px solid #D4AF37 !important;
+        border-radius: 8px !important;
+        color: #8A681F !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .adm-sidebar.collapsed .adm-sidebar-toggle-btn:hover {
+        background: #8A681F !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 4px 12px rgba(138, 104, 31, 0.3) !important;
+        transform: translateY(-1px);
+    }
+
+    .adm-sidebar.collapsed .adm-brand-seal-mini {
+        display: none !important;
     }
 
     .adm-sidebar.collapsed .adm-sidebar-brand {
         padding: 0 !important;
         justify-content: center !important;
+        height: 52px !important;
     }
 
     .adm-sidebar.collapsed .adm-brand-link {
-        justify-content: center !important;
-        width: 100% !important;
+        display: none !important;
     }
 }
 
