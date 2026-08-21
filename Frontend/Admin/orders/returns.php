@@ -49,13 +49,14 @@ $active_subnav = "returns";
                     </div>
                 </div>
 
+                <?php $current_tab = $_GET['tab'] ?? 'all'; ?>
                 <!-- Returns Subnav -->
                 <div class="dt-orders-subnav">
-                    <a href="/Frontend/Admin/orders/returns.php" class="dt-orders-subnav-pill active">All Returns <small>8</small></a>
-                    <a href="/Frontend/Admin/orders/returns.php?tab=requested" class="dt-orders-subnav-pill">Requested <small>2</small></a>
-                    <a href="/Frontend/Admin/orders/returns.php?tab=approved" class="dt-orders-subnav-pill">Approved for Pickup <small>3</small></a>
-                    <a href="/Frontend/Admin/orders/returns.php?tab=received" class="dt-orders-subnav-pill">Depot Inspection <small>2</small></a>
-                    <a href="/Frontend/Admin/orders/returns.php?tab=completed" class="dt-orders-subnav-pill">Completed <small>1</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php" class="dt-orders-subnav-pill <?php echo $current_tab === 'all' ? 'active' : ''; ?>">All Returns <small>8</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=requested" class="dt-orders-subnav-pill <?php echo $current_tab === 'requested' ? 'active' : ''; ?>">Requested <small>2</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=approved" class="dt-orders-subnav-pill <?php echo $current_tab === 'approved' ? 'active' : ''; ?>">Approved for Pickup <small>3</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=received" class="dt-orders-subnav-pill <?php echo $current_tab === 'received' ? 'active' : ''; ?>">Depot Inspection <small>2</small></a>
+                    <a href="/Frontend/Admin/orders/returns.php?tab=completed" class="dt-orders-subnav-pill <?php echo $current_tab === 'completed' ? 'active' : ''; ?>">Completed <small>1</small></a>
                 </div>
 
                 <!-- Return Table Panel -->
