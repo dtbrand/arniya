@@ -569,6 +569,16 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         checkResponsiveSidebar();
         window.addEventListener('resize', checkResponsiveSidebar);
 
+        // Bind Submenu Row Click for Mobile & Tablet
+        document.querySelectorAll('.adm-nav-has-sub > a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024 || e.target.closest('.adm-nav-arrow-wrap') || (sidebar && sidebar.classList.contains('collapsed'))) {
+                    e.preventDefault();
+                    window.toggleSidebarSubmenu(this);
+                }
+            });
+        });
+
         if (backdrop) {
             backdrop.onclick = function(e) {
                 window.closeAdmMobileSidebar();
