@@ -385,49 +385,63 @@ if (session_status() === PHP_SESSION_NONE) {
                 <!-- ════ LIVE BUSINESS STATUS TICKER ════ -->
                 <section class="adm-live-ticker-strip">
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon" style="background:#DCFCE7; color:#15803D;"><span class="adm-pulse-dot"></span></div>
+                        <div class="adm-live-ticker-icon" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                            <span class="adm-pulse-dot" style="background:#16A34A;"></span>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val" id="liveUsersCount">142</div>
                             <div class="adm-live-ticker-lbl">Live Users Online</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon">🛍️</div>
+                        <div class="adm-live-ticker-icon" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">18</div>
                             <div class="adm-live-ticker-lbl">Live Orders Today</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon">💳</div>
+                        <div class="adm-live-ticker-icon" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">9</div>
                             <div class="adm-live-ticker-lbl">Active Checkouts</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon">⏳</div>
+                        <div class="adm-live-ticker-icon" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">₹48,200</div>
                             <div class="adm-live-ticker-lbl">Pending Payments</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon">🛒</div>
+                        <div class="adm-live-ticker-icon" style="background:#FAF8F4; color:#5A5348; border:1px solid #E2DFD7;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">34</div>
                             <div class="adm-live-ticker-lbl">Active Cart Sessions</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon">👤</div>
+                        <div class="adm-live-ticker-icon" style="background:#F3E8FF; color:#7E22CE; border:1px solid #D8B4FE;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">+12</div>
                             <div class="adm-live-ticker-lbl">New Registrations</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
-                        <div class="adm-live-ticker-icon" style="background:#FEE2E2; color:#DC2626;">⚠️</div>
+                        <div class="adm-live-ticker-icon" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </div>
                         <div>
                             <div class="adm-live-ticker-val">3 Items</div>
                             <div class="adm-live-ticker-lbl">Stock Alert</div>
@@ -441,7 +455,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card primary" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Revenue</span>
-                            <div class="adm-kpi-icon-box">💰</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹42,85,900</div>
                         <div class="adm-kpi-bottom">
@@ -454,7 +470,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Today's Revenue</span>
-                            <div class="adm-kpi-icon-box blue">💵</div>
+                            <div class="adm-kpi-icon-box" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹1,84,500</div>
                         <div class="adm-kpi-bottom">
@@ -467,7 +485,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Monthly Revenue</span>
-                            <div class="adm-kpi-icon-box">📈</div>
+                            <div class="adm-kpi-icon-box" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹38,20,000</div>
                         <div class="adm-kpi-bottom">
@@ -480,7 +500,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Gross Profit</span>
-                            <div class="adm-kpi-icon-box green">📊</div>
+                            <div class="adm-kpi-icon-box" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹14,92,400</div>
                         <div class="adm-kpi-bottom">
@@ -493,7 +515,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Net Profit</span>
-                            <div class="adm-kpi-icon-box">💎</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹11,45,200</div>
                         <div class="adm-kpi-bottom">
@@ -506,7 +530,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card primary" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Orders</span>
-                            <div class="adm-kpi-icon-box blue">📦</div>
+                            <div class="adm-kpi-icon-box" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">1,624</div>
                         <div class="adm-kpi-bottom">
@@ -519,7 +545,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Today's Orders</span>
-                            <div class="adm-kpi-icon-box blue">⚡</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">38</div>
                         <div class="adm-kpi-bottom">
@@ -532,11 +560,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Pending Orders</span>
-                            <div class="adm-kpi-icon-box purple">⏳</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val" style="color:#DC2626;">18</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-badge rose">Action Needed</span>
+                            <span class="adm-kpi-delta down" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">Action Needed</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
 
@@ -544,7 +575,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Completed Orders</span>
-                            <div class="adm-kpi-icon-box green">✅</div>
+                            <div class="adm-kpi-icon-box" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">1,542</div>
                         <div class="adm-kpi-bottom">
@@ -557,7 +590,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Cancelled Orders</span>
-                            <div class="adm-kpi-icon-box purple">❌</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">64</div>
                         <div class="adm-kpi-bottom">
@@ -570,7 +605,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('customers')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Customers</span>
-                            <div class="adm-kpi-icon-box purple">👥</div>
+                            <div class="adm-kpi-icon-box" style="background:#F3E8FF; color:#7E22CE; border:1px solid #D8B4FE;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">4,820</div>
                         <div class="adm-kpi-bottom">
@@ -583,7 +620,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('customers')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">New Customers (30D)</span>
-                            <div class="adm-kpi-icon-box purple">✨</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">348</div>
                         <div class="adm-kpi-bottom">
@@ -596,12 +635,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('partners')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Resellers</span>
-                            <div class="adm-kpi-icon-box purple">🤝</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">348</div>
                         <div class="adm-kpi-bottom">
                             <span class="adm-kpi-delta up">₹4.8L Payouts</span>
-                            <span class="adm-badge gold">Active Hub</span>
+                            <span class="adm-badge gold" style="font-weight:700;">Active Hub</span>
                         </div>
                     </div>
 
@@ -609,7 +650,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('partners')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Retailers</span>
-                            <div class="adm-kpi-icon-box blue">🏬</div>
+                            <div class="adm-kpi-icon-box" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">124</div>
                         <div class="adm-kpi-bottom">
@@ -622,12 +665,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card primary" onclick="switchAdmTab('partners')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Wholesalers</span>
-                            <div class="adm-kpi-icon-box">🏢</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">46</div>
                         <div class="adm-kpi-bottom">
                             <span class="adm-kpi-delta up">68 Consignments</span>
-                            <span class="adm-badge emerald">Tier 1 VIP</span>
+                            <span class="adm-badge emerald" style="font-weight:700;">Tier 1 VIP</span>
                         </div>
                     </div>
 
@@ -635,12 +680,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('products')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Total Products</span>
-                            <div class="adm-kpi-icon-box">👗</div>
+                            <div class="adm-kpi-icon-box" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">1,240</div>
                         <div class="adm-kpi-bottom">
-                            <span>16 Categories</span>
-                            <span class="adm-badge gold">Surat Products</span>
+                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">16 Categories</span>
+                            <span class="adm-badge gold" style="font-weight:700;">Surat Products</span>
                         </div>
                     </div>
 
@@ -648,7 +695,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('products')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Active In Stock</span>
-                            <div class="adm-kpi-icon-box green">🟢</div>
+                            <div class="adm-kpi-icon-box" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">1,185</div>
                         <div class="adm-kpi-bottom">
@@ -661,12 +710,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('products')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Low Stock</span>
-                            <div class="adm-kpi-icon-box" style="background:#FEF3C7; color:#D97706;">⚠️</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEF3C7; color:#D97706; border:1px solid #FCD34D;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val" style="color:#D97706;">14</div>
                         <div class="adm-kpi-bottom">
-                            <span>Threshold &lt; 5 pcs</span>
-                            <span class="adm-badge amber">Re-order</span>
+                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">Threshold &lt; 5 pcs</span>
+                            <span class="adm-badge amber" style="font-weight:700;">Re-order</span>
                         </div>
                     </div>
 
@@ -674,11 +725,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('products')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Out of Stock</span>
-                            <div class="adm-kpi-icon-box purple">🛑</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val" style="color:#DC2626;">41</div>
                         <div class="adm-kpi-bottom">
-                            <span class="adm-badge rose">Restock Pending</span>
+                            <span class="adm-badge rose" style="font-weight:700;">Restock Pending</span>
+                            <div class="adm-kpi-sparkline" data-trend="down"></div>
                         </div>
                     </div>
 
@@ -686,12 +740,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('reports')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Pending Payments</span>
-                            <div class="adm-kpi-icon-box">💳</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">₹48,200</div>
                         <div class="adm-kpi-bottom">
-                            <span>14 Invoices</span>
-                            <span class="adm-badge gold">Net 15</span>
+                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">14 Invoices</span>
+                            <span class="adm-badge gold" style="font-weight:700;">Net 15</span>
                         </div>
                     </div>
 
@@ -699,12 +755,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Refund Requests</span>
-                            <div class="adm-kpi-icon-box purple">🔄</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">3</div>
                         <div class="adm-kpi-bottom">
-                            <span>₹6,400 Value</span>
-                            <span class="adm-badge rose">Pending</span>
+                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">₹6,400 Value</span>
+                            <span class="adm-badge rose" style="font-weight:700;">Pending</span>
                         </div>
                     </div>
 
@@ -712,12 +770,14 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="adm-kpi-card" onclick="switchAdmTab('orders')">
                         <div class="adm-kpi-top">
                             <span class="adm-kpi-label">Return Requests</span>
-                            <div class="adm-kpi-icon-box purple">↩️</div>
+                            <div class="adm-kpi-icon-box" style="background:#FEE2E2; color:#DC2626; border:1px solid #FCA5A5;">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+                            </div>
                         </div>
                         <div class="adm-kpi-val">5</div>
                         <div class="adm-kpi-bottom">
-                            <span>Quality Inspection</span>
-                            <span class="adm-badge rose">Pending</span>
+                            <span style="font-size:0.75rem; color:#5A5348; font-weight:600;">Quality Inspection</span>
+                            <span class="adm-badge rose" style="font-weight:700;">Pending</span>
                         </div>
                     </div>
                 </div>
