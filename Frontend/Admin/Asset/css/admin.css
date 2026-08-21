@@ -2659,11 +2659,15 @@ svg.adm-search-icon {
     .adm-mobile-brand-link {
         display: flex !important;
     }
-    .adm-search-box {
-        display: none !important; /* Hide wide search box from header on mobile/tablet */
+    /* Strictly HIDE Desktop Wide Header Search Bar on Mobile / Tablet */
+    .adm-header-search-container,
+    .adm-search-amazon-bar,
+    #admDesktopSearchBox {
+        display: none !important;
     }
+    /* Strictly SHOW Mobile Search Icon Button in Header */
     .adm-mobile-search-trigger-btn {
-        display: flex !important; /* Show mobile search trigger icon button */
+        display: flex !important;
     }
     .adm-sidebar {
         transform: translateX(-100%) !important;
