@@ -149,36 +149,95 @@
                 const isLast = (idx === selectedOrders.length - 1);
                 const shippingAddr = (order.address && order.address.shipping) ? order.address.shipping : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
                 labelsHtml += `
-                    <div class="dt-shipping-label-card" style="page-break-after: ${isLast ? 'auto' : 'always'}; max-width: 440px; margin: 0 auto 20px auto; background: #FFFFFF; border: 2px solid #181512; border-radius: 8px; padding: 20px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; box-sizing: border-box;">
+                    <div class="dt-shipping-label-card" style="page-break-after: ${isLast ? 'auto' : 'always'}; max-width: 440px; margin: 0 auto 24px auto; background: #FFFFFF; border: 2px solid #181512; border-radius: 8px; padding: 20px 24px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                         <!-- Header Block -->
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:8px; margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #181512; padding-bottom:10px; margin-bottom:14px;">
                             <div>
-                                <div style="font-size:17px; font-weight:800; letter-spacing:0.5px; color:#181512;">${(order.shipping || 'VRL LOGISTICS DEPOT').toUpperCase()}</div>
-                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px;">Priority B2B Surface Logistics</div>
+                                <div style="font-size:16px; font-weight:900; letter-spacing:0.3px; color:#181512; line-height:1.2;">${(order.shipping || 'SURAT CENTRAL DEPOT EXPRESS').toUpperCase()}</div>
+                                <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px;">PRIORITY B2B SURFACE LOGISTICS</div>
                             </div>
                             <div style="text-align:right;">
-                                <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px;">PREPAID</span>
+                                <span style="font-size:10.5px; font-weight:800; border:2px solid #181512; padding:3px 10px; border-radius:4px; background:#181512; color:#FFFFFF; letter-spacing:0.5px; display:inline-block;">PREPAID</span>
                             </div>
                         </div>
 
                         <!-- Barcode Section -->
-                        <div style="text-align:center; padding:4px 0;">
-                            <div class="dt-label-barcode" style="height:48px; background:repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin:12px 0 4px 0;"></div>
-                            <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:3px; color:#181512; margin-top:4px;">${order.tracking || 'VRL-99821'}</div>
+                        <div style="text-align:center; padding:6px 0 10px 0;">
+                            <svg viewBox="0 0 320 54" width="100%" height="54" style="display:block; margin:0 auto;" preserveAspectRatio="none">
+                                <rect x="0" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="5" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="9" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="15" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="19" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="26" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="30" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="38" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="43" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="47" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="54" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="59" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="63" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="71" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="75" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="81" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="86" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="93" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="97" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="103" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="107" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="115" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="120" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="124" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="131" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="135" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="141" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="146" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="154" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="158" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="165" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="170" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="174" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="182" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="187" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="191" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="198" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="203" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="207" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="215" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="220" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="226" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="230" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="237" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="242" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="246" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="254" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="258" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="264" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="269" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="276" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="280" y="0" width="4" height="54" fill="#000000"/>
+                                <rect x="286" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="291" y="0" width="6" height="54" fill="#000000"/>
+                                <rect x="299" y="0" width="2" height="54" fill="#000000"/>
+                                <rect x="303" y="0" width="5" height="54" fill="#000000"/>
+                                <rect x="310" y="0" width="3" height="54" fill="#000000"/>
+                                <rect x="315" y="0" width="5" height="54" fill="#000000"/>
+                            </svg>
+                            <div style="font-family:monospace; font-weight:800; font-size:14px; letter-spacing:4px; color:#181512; margin-top:6px;">${order.tracking || 'VRL-99821'}</div>
                         </div>
 
                         <!-- Order Manifest Meta Bar -->
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:6px 12px; margin-top:10px; border-radius:4px; font-size:11px; font-weight:700; color:#475569;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:#FAF8F4; border:1px solid #E2DFD7; padding:7px 12px; margin-top:10px; border-radius:6px; font-size:11px; font-weight:700; color:#475569;">
                             <span>Order Reference: <strong style="color:#181512;">${order.id}</strong></span>
                             <span>Consignment: <strong style="color:#181512;">${order.items_count || 25} Units</strong></span>
                         </div>
 
                         <!-- Consignee Delivery Destination -->
-                        <div style="border-top:2px solid #181512; margin-top:12px; padding-top:10px; font-size:12px; line-height:1.45;">
+                        <div style="border-top:2px solid #181512; margin-top:14px; padding-top:10px; font-size:12px; line-height:1.45;">
                             <div style="font-size:9.5px; font-weight:800; text-transform:uppercase; color:#64748B; letter-spacing:0.5px; margin-bottom:3px;">DELIVER TO (CONSIGNEE):</div>
                             <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:2px;">${order.customer}</div>
                             <div style="color:#334155; font-size:11.5px;">${shippingAddr}</div>
-                            <div style="color:#64748B; font-size:11px; margin-top:3px;">TEL: ${order.phone || '+91 98220 19283'}</div>
+                            <div style="color:#64748B; font-size:11px; margin-top:3px; font-weight:600;">TEL: ${order.phone || '+91 98220 19283'}</div>
                         </div>
                     </div>
                 `;
@@ -192,10 +251,32 @@
                 <head>
                     <title>Batch Shipping Labels (${selectedOrders.length} Orders)</title>
                     <style>
-                        @page { size: 100mm 150mm; margin: 0; }
-                        body { margin: 0; padding: 16px; background: #FFF; box-sizing: border-box; }
-                        .dt-shipping-label-card { max-width: 440px; margin: 0 auto; background: #FFF; border: 2px solid #181512; border-radius: 8px; padding: 16px; box-sizing: border-box; }
-                        .dt-label-barcode { height: 48px; background: repeating-linear-gradient(90deg, #000, #000 2px, #fff 2px, #fff 5px, #000 5px, #000 8px, #fff 8px, #fff 9px); margin: 12px 0 4px 0; }
+                        @page { 
+                            size: auto; 
+                            margin: 10mm; 
+                        }
+                        * { box-sizing: border-box; }
+                        body { 
+                            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+                            margin: 0; 
+                            padding: 20px; 
+                            background: #FFF; 
+                            color: #000;
+                            -webkit-print-color-adjust: exact !important; 
+                            print-color-adjust: exact !important; 
+                        }
+                        .dt-shipping-label-card { 
+                            max-width: 440px !important; 
+                            width: 100% !important; 
+                            margin: 0 auto 24px auto !important; 
+                            background: #FFF !important; 
+                            border: 2px solid #181512 !important; 
+                            border-radius: 8px !important; 
+                            padding: 20px 24px !important; 
+                            box-sizing: border-box !important; 
+                            -webkit-print-color-adjust: exact !important; 
+                            print-color-adjust: exact !important; 
+                        }
                     </style>
                 </head>
                 <body>
