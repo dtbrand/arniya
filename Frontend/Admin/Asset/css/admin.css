@@ -679,14 +679,15 @@ input, select, textarea {
     }
 
     .adm-sidebar.collapsed .adm-nav-item.active {
-        background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
-        border-color: transparent;
-        box-shadow: 0 4px 14px rgba(138, 104, 31, 0.35);
-        transform: scale(1.05);
+        background: #FAF5E8 !important;
+        border: 1.5px solid #D4AF37 !important;
+        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.18) !important;
+        transform: none !important;
     }
 
     .adm-sidebar.collapsed .adm-nav-item.active .adm-nav-icon {
-        color: #FFFFFF;
+        color: #8A681F !important;
+        stroke: #8A681F !important;
     }
 
     /* Floating Tooltip Bubble on Hover in Collapsed Mode */
@@ -717,27 +718,9 @@ input, select, textarea {
         transform: translateY(-50%) scale(1);
     }
 
-    /* Small notification pulse dot on collapsed badge */
+    /* Hide badges cleanly in collapsed desktop mode */
     .adm-sidebar.collapsed .adm-nav-badge {
-        display: block;
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 8px;
-        height: 8px;
-        min-width: 0;
-        padding: 0;
-        border-radius: 50%;
-        font-size: 0;
-        line-height: 0;
-        background: var(--adm-gold);
-        border: 1.5px solid #FFFFFF;
-        box-shadow: 0 0 0 2px rgba(138, 104, 31, 0.2);
-    }
-
-    .adm-sidebar.collapsed .adm-nav-badge.green {
-        background: #16A34A;
-        box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+        display: none !important;
     }
 
     /* Strictly HIDE all submenus, labels, arrows, and headers in collapsed state on desktop */
