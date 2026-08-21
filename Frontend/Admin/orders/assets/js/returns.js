@@ -138,16 +138,15 @@
             document.getElementById('viewRmaIdText').textContent = data.id + ' • ' + data.typeLabel;
 
             const modalBody = document.getElementById('viewRmaModalBody');
-            
             // Build Photos HTML with HD preview badges
             let photosHtml = '';
             data.photos.forEach((p, idx) => {
                 photosHtml += `
-                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.previewPhoto('${p.title}', '${p.tag}')" title="Click to Inspect: ${p.title}">
+                    <div class="dt-evidence-photo-item" onclick="window.DT_RETURNS.openPhotoLightbox('${p.title}', '${p.tag}', '${data.id}', '${p.icon}')" title="Click to Open Full View: ${p.title}">
                         <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg, #FAF8F4 0%, #F5EFE6 100%); text-align:center; padding:5px; box-sizing:border-box;">
                             <span style="font-size:24px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.15));">${p.icon}</span>
                             <span style="font-size:8.5px; font-weight:800; color:#8A681F; margin-top:3px; text-transform:uppercase; letter-spacing:0.3px;">${p.tag}</span>
-                            <span style="font-size:7.5px; color:#64748B; font-weight:600;">Tap Zoom</span>
+                            <span style="font-size:7.5px; color:#1D4ED8; font-weight:700;">🔍 Click Full View</span>
                         </div>
                     </div>
                 `;
@@ -216,24 +215,13 @@
                             <span style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.3px;">Unboxing Video Proof</span>
                             <span style="font-size:10px; color:#15803D; font-weight:800; background:#DCFCE7; border:1px solid #86EFAC; padding:1px 6px; border-radius:3px;">✓ Verified Seal</span>
                         </div>
-                        <div id="rmaVideoPlayerCard" class="dt-video-preview-card" onclick="window.DT_RETURNS.toggleVideoPlay('${data.id}', '${data.videoDuration}')" title="Play Package Opening Video">
+                        <div id="rmaVideoPlayerCard" class="dt-video-preview-card" onclick="window.DT_RETURNS.openVideoTheater('${data.id}', '${data.videoDuration}')" title="Click to Open Full Video in Theater Mode">
                             <span class="dt-video-badge">${data.videoDuration}</span>
                             <div id="rmaVideoPlayIcon" class="dt-video-play-btn">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                             </div>
-                            <div id="rmaVideoTitleText" style="font-size:11.5px; font-weight:800; text-shadow:0 1px 4px rgba(0,0,0,0.85);">Play Continuous Unboxing Video</div>
-                            <div id="rmaVideoSubText" style="font-size:10px; opacity:0.85; margin-top:2px;">100% Unbroken Seal Verification</div>
-                            
-                            <!-- Video Simulation Controls (Active on play) -->
-                            <div id="rmaVideoControls" style="display:none; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.85)); padding:8px 10px; display:flex; flex-direction:column; gap:4px;">
-                                <div style="display:flex; justify-content:space-between; font-size:9.5px; color:#FFFFFF; font-weight:700;">
-                                    <span id="rmaVideoCurTime">00:18</span>
-                                    <span>${data.videoDuration}</span>
-                                </div>
-                                <div style="width:100%; height:4px; background:rgba(255,255,255,0.3); border-radius:2px; overflow:hidden;">
-                                    <div id="rmaVideoProgressBar" style="width:42%; height:100%; background:#D4AF37;"></div>
-                                </div>
-                            </div>
+                            <div style="font-size:11.5px; font-weight:800; text-shadow:0 1px 4px rgba(0,0,0,0.85);">Play Continuous Unboxing Video</div>
+                            <div style="font-size:10px; opacity:0.85; margin-top:2px;">100% Unbroken Seal Verification • Click Theater View</div>
                         </div>
                     </div>
                 </div>
@@ -244,7 +232,7 @@
                         <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Reverse Pickup Logistics</span>
                         <div style="font-weight:750; font-size:12.5px; color:#181512; margin-top:3px;">${data.carrier}</div>
                         <div style="font-size:11px; color:#1D4ED8; font-weight:700; margin-top:2px; display:flex; align-items:center; gap:4px;">
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                             <span>AWB: ${data.awb}</span>
                         </div>
                     </div>
@@ -266,6 +254,7 @@
             rejectBtn.onclick = () => window.DT_RETURNS.openRejectModal(returnId);
             whatsappBtn.onclick = () => window.DT_RETURNS.shareWhatsApp(returnId);
 
+            modalBody.scrollTop = 0;
             document.getElementById('viewRmaModal').style.display = 'flex';
         },
 
@@ -273,37 +262,123 @@
             document.getElementById('viewRmaModal').style.display = 'none';
         },
 
-        previewPhoto: function(title, tag) {
-            if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🔍 Inspected HD Zoom: ${title} (${tag})`);
-            }
+        openPhotoLightbox: function(title, tag, rmaId, icon) {
+            const data = RMA_DATA[rmaId] || {};
+            const lightbox = document.getElementById('dtMediaLightboxModal');
+            const badge = document.getElementById('lightboxTypeBadge');
+            const titleEl = document.getElementById('lightboxTitleText');
+            const subEl = document.getElementById('lightboxSubText');
+            const content = document.getElementById('lightboxMediaContent');
+            const footerInfo = document.getElementById('lightboxFooterInfo');
+
+            badge.textContent = `HD Defect Photo • ${tag}`;
+            badge.style.background = '#FAF5E8';
+            badge.style.color = '#8A681F';
+            badge.style.borderColor = '#D4AF37';
+
+            titleEl.textContent = `${title} — ${data.product || rmaId}`;
+            subEl.textContent = `Claim ID: ${rmaId} • Consignee: ${data.customer || 'Customer'} • Verified High-Res Weave Inspection`;
+            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800;">✓ Authenticated Defect Capture</span> • Original Upload Timestamp: <strong>${data.date || '20 Aug 2026'}</strong>`;
+
+            content.innerHTML = `
+                <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
+                    <div style="position:relative; width:100%; max-width:640px; height:340px; border-radius:10px; background:radial-gradient(circle, #2A241E 0%, #15110E 100%); border:2px solid #D4AF37; box-shadow:0 12px 36px rgba(0,0,0,0.8); display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
+                        <!-- Defect Pin Marker -->
+                        <div style="position:absolute; top:28%; left:42%; background:rgba(220,38,38,0.92); border:1.5px solid #FFFFFF; border-radius:20px; padding:3px 10px; font-size:10.5px; font-weight:800; color:#FFFFFF; box-shadow:0 4px 12px rgba(0,0,0,0.4); display:flex; align-items:center; gap:4px; z-index:10; animation:pulse 2s infinite;">
+                            <span>📍</span>
+                            <span>Defect Area: ${tag}</span>
+                        </div>
+
+                        <!-- Macro Canvas Simulation -->
+                        <div style="font-size:72px; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.5));">${icon || '🎨'}</div>
+                        <div style="margin-top:12px; font-size:14px; font-weight:800; color:#FAF5E8; letter-spacing:0.5px;">${title}</div>
+                        <div style="font-size:11px; color:#A8A29E; margin-top:4px;">Macro Texture Level • 4000 × 3000 Raw Sensor Data</div>
+                        
+                        <!-- Zoom Watermark -->
+                        <div style="position:absolute; bottom:12px; right:14px; background:rgba(0,0,0,0.7); border:1px solid #D4AF37; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:800; color:#D4AF37;">
+                            🔍 5.0× Optical Inspection
+                        </div>
+                    </div>
+
+                    <!-- Defect Annotation Details -->
+                    <div style="background:#241E18; border:1px solid #3D342A; border-radius:8px; padding:10px 16px; width:100%; max-width:640px; box-sizing:border-box; display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-size:10px; color:#8A681F; font-weight:800; text-transform:uppercase;">Inspection Finding</span>
+                            <div style="font-size:12px; font-weight:700; color:#FAF5E8; margin-top:2px;">${data.reason || 'Defect confirmed via unboxing audit'}</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <span style="font-size:10px; color:#8A681F; font-weight:800; text-transform:uppercase;">QC Result</span>
+                            <div style="font-size:12px; font-weight:800; color:#22C55E; margin-top:2px;">✓ Approved for Return</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            lightbox.style.display = 'flex';
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🔍 Opened Full-Screen Inspection: ${title}`);
         },
 
-        toggleVideoPlay: function(rmaId, duration) {
-            const card = document.getElementById('rmaVideoPlayerCard');
-            const icon = document.getElementById('rmaVideoPlayIcon');
-            const title = document.getElementById('rmaVideoTitleText');
-            const sub = document.getElementById('rmaVideoSubText');
-            const controls = document.getElementById('rmaVideoControls');
+        openVideoTheater: function(rmaId, duration) {
+            const data = RMA_DATA[rmaId] || {};
+            const lightbox = document.getElementById('dtMediaLightboxModal');
+            const badge = document.getElementById('lightboxTypeBadge');
+            const titleEl = document.getElementById('lightboxTitleText');
+            const subEl = document.getElementById('lightboxSubText');
+            const content = document.getElementById('lightboxMediaContent');
+            const footerInfo = document.getElementById('lightboxFooterInfo');
 
-            if (!card || !icon) return;
+            badge.textContent = `4K Unboxing Video Stream • ${duration || '0:42 HD'}`;
+            badge.style.background = '#DCFCE7';
+            badge.style.color = '#15803D';
+            badge.style.borderColor = '#86EFAC';
 
-            const isPlaying = card.classList.contains('is-playing');
-            if (isPlaying) {
-                card.classList.remove('is-playing');
-                icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
-                title.textContent = 'Play Continuous Unboxing Video';
-                sub.textContent = '100% Unbroken Seal Verification';
-                if (controls) controls.style.display = 'none';
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast(`⏸️ Paused unboxing video for ${rmaId}`);
-            } else {
-                card.classList.add('is-playing');
-                icon.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
-                title.textContent = '▶️ Playing Unboxing Stream (4K 60fps)';
-                sub.textContent = 'Audio & Visual QC Scan in Progress...';
-                if (controls) controls.style.display = 'flex';
-                if (window.DT_ORDERS) window.DT_ORDERS.showToast(`▶️ Streaming verified unboxing video for ${rmaId} (${duration})`);
-            }
+            titleEl.textContent = `Continuous Package Unboxing Stream — ${data.customer || rmaId}`;
+            subEl.textContent = `RMA: ${rmaId} • Order: ${data.orderId} • Continuous One-Take Recording (Zero Cuts / Intact Seal)`;
+            footerInfo.innerHTML = `<span style="color:#22C55E; font-weight:800;">✓ Official Courier Intake Verified</span> • Video Stream Status: <strong>LIVE PLAYBACK</strong>`;
+
+            content.innerHTML = `
+                <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
+                    <!-- Theater Video Box -->
+                    <div style="position:relative; width:100%; max-width:680px; height:360px; border-radius:12px; background:#000000; border:2px solid #D4AF37; box-shadow:0 14px 44px rgba(0,0,0,0.85); display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
+                        <!-- Top HUD Bar -->
+                        <div style="position:absolute; top:0; left:0; right:0; padding:10px 14px; background:linear-gradient(rgba(0,0,0,0.85), transparent); display:flex; justify-content:space-between; align-items:center; z-index:10; font-size:11px;">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#EF4444; animation:pulse 1.2s infinite;"></span>
+                                <strong style="color:#FFFFFF; letter-spacing:0.5px;">REC • UNBOXING ONE-TAKE</strong>
+                            </div>
+                            <span style="background:rgba(21,128,61,0.85); border:1px solid #86EFAC; color:#FFFFFF; font-size:9.5px; font-weight:800; padding:2px 8px; border-radius:4px;">✓ SEAL INTACT</span>
+                        </div>
+
+                        <!-- Center Play / Active Display -->
+                        <div style="text-align:center; z-index:5;">
+                            <div style="width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg, #8A681F 0%, #D4AF37 100%); display:flex; align-items:center; justify-content:center; color:#181512; margin:0 auto 10px auto; box-shadow:0 4px 16px rgba(212,175,55,0.6); cursor:pointer;">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                            </div>
+                            <div style="font-size:14px; font-weight:800; color:#FAF5E8; text-shadow:0 2px 6px rgba(0,0,0,0.9);">Playing Unboxing Video Proof Stream</div>
+                            <div style="font-size:11px; color:#D4AF37; font-weight:700; margin-top:3px;">Surat Central Depot Quality Department Audit</div>
+                        </div>
+
+                        <!-- Bottom Video Controls & Time Bar -->
+                        <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 16px; background:linear-gradient(transparent, rgba(0,0,0,0.95)); display:flex; flex-direction:column; gap:6px; z-index:10;">
+                            <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#FFFFFF; font-weight:700;">
+                                <span>▶️ 00:24 / ${duration || '00:42'}</span>
+                                <span style="color:#D4AF37;">4K Ultra-HD 60fps</span>
+                            </div>
+                            <div style="width:100%; height:6px; background:rgba(255,255,255,0.25); border-radius:3px; overflow:hidden;">
+                                <div style="width:58%; height:100%; background:linear-gradient(90deg, #8A681F, #D4AF37); border-radius:3px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            lightbox.style.display = 'flex';
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast(`🎥 Opened 4K Video Theater Mode for ${rmaId}`);
+        },
+
+        closeLightbox: function() {
+            const lightbox = document.getElementById('dtMediaLightboxModal');
+            if (lightbox) lightbox.style.display = 'none';
         },
 
 

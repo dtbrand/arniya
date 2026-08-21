@@ -398,3 +398,38 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
     </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- 🔍 3. FULL-SCREEN MEDIA & UNBOXING VIDEO LIGHTBOX VIEWER      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="dtMediaLightboxModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(15,12,9,0.88); z-index:99999999; backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_RETURNS.closeLightbox()">
+    <div style="background:#181512; border:1.5px solid #D4AF37; border-radius:14px; width:95%; max-width:820px; max-height:92vh; box-shadow:0 20px 60px rgba(0,0,0,0.6); overflow:hidden; display:flex; flex-direction:column; font-family:'Plus Jakarta Sans', sans-serif; color:#FFFFFF;">
+        <!-- Header -->
+        <div style="padding:14px 20px; background:#241E18; border-bottom:1px solid #3D342A; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span id="lightboxTypeBadge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px; text-transform:uppercase;">HD Evidence</span>
+                <div>
+                    <h4 id="lightboxTitleText" style="margin:0; font-size:13.5px; font-weight:800; color:#FAF5E8;">Evidence Inspection</h4>
+                    <p id="lightboxSubText" style="margin:2px 0 0 0; font-size:11px; color:#A8A29E;">Surat Central Depot Quality Audit</p>
+                </div>
+            </div>
+            <button type="button" onclick="window.DT_RETURNS.closeLightbox()" style="background:#2A241E; border:1px solid #5A4210; color:#D4AF37; width:28px; height:28px; border-radius:6px; cursor:pointer; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">✕</button>
+        </div>
+
+        <!-- Lightbox Canvas Body -->
+        <div id="lightboxMediaContent" style="padding:20px; flex:1 1 auto; overflow-y:auto; display:flex; align-items:center; justify-content:center; min-height:360px; background:#0D0B0A;">
+            <!-- Dynamically populated with high-res photo or video player -->
+        </div>
+
+        <!-- Lightbox Footer -->
+        <div style="padding:12px 20px; background:#241E18; border-top:1px solid #3D342A; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; flex-wrap:wrap; gap:8px;">
+            <div id="lightboxFooterInfo" style="font-size:11px; color:#D6D3D1;">
+                Verified Continuous Proof • 100% Intact Seal
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_RETURNS.closeLightbox()" style="height:32px; padding:0 14px; font-size:11.5px;">✕ Close Viewer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
