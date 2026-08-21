@@ -150,23 +150,36 @@ Every button across all pages, modals, tables, and forms **MUST ALWAYS** follow 
 
 ## ✨ 5. Form Field Focus Standard: Animated Gold & Platinum Running Line
 
-Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-input`, `.dt-cust-select`) across the entire Admin Panel **MUST ALWAYS** implement the **Gold & Platinum Mix Animated Running Border Line** on `:focus`:
+Every input field (`input`, `textarea`, `select`, `.dt-input-field`, `.adm-form-input`, `.dt-cust-select`, `.dt-country-search-input`) across the entire Admin Panel **MUST ALWAYS** implement the **Gold & Platinum Mix Animated Running Border Line** on `:focus`:
 
 ```css
 @keyframes dtGoldPlatinumRun {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        border-color: #D4AF37 !important;
+        box-shadow: 0 0 0 2.5px #D4AF37, 0 0 12px 2px rgba(212, 175, 55, 0.6), inset 0 0 4px rgba(212, 175, 55, 0.15) !important;
+    }
+    25% {
+        border-color: #E2E8F0 !important;
+        box-shadow: 0 0 0 3px #E2E8F0, 0 0 16px 4px rgba(226, 232, 240, 0.9), 0 0 24px rgba(255, 255, 255, 0.8) !important;
+    }
+    50% {
+        border-color: #B8860B !important;
+        box-shadow: 0 0 0 2.5px #B8860B, 0 0 14px 3px rgba(184, 134, 11, 0.65), inset 0 0 6px rgba(184, 134, 11, 0.2) !important;
+    }
+    75% {
+        border-color: #FFFFFF !important;
+        box-shadow: 0 0 0 3px #FFFFFF, 0 0 18px 5px rgba(255, 255, 255, 0.95), 0 0 26px rgba(212, 175, 55, 0.5) !important;
+    }
+    100% {
+        border-color: #D4AF37 !important;
+        box-shadow: 0 0 0 2.5px #D4AF37, 0 0 12px 2px rgba(212, 175, 55, 0.6), inset 0 0 4px rgba(212, 175, 55, 0.15) !important;
+    }
 }
 
-input:focus, select:focus, textarea:focus, .dt-input-field:focus {
+input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-search-input:focus {
     outline: none !important;
-    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
-                linear-gradient(135deg, #B8860B 0%, #E2E8F0 25%, #D4AF37 50%, #FFFFFF 75%, #C5A859 100%) border-box !important;
-    background-size: 250% 250% !important;
-    border: 1.5px solid transparent !important;
-    animation: dtGoldPlatinumRun 3s linear infinite !important;
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18), 0 4px 14px rgba(184, 134, 11, 0.12) !important;
+    background: #FFFFFF !important;
+    animation: dtGoldPlatinumRun 1.5s linear infinite !important;
     color: #111827 !important;
 }
 ```
