@@ -18,7 +18,9 @@
                     <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • Order <strong id="modalOrderIdText" style="color:#8A681F;">DTB-001624</strong></p>
                 </div>
             </div>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">✕</button>
+            <button type="button" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="width:28px; height:28px; border-radius:50%; border:1px solid #CBD5E1; background:#FFFFFF; color:#64748B; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; transition:all 0.15s ease;" title="Close Modal">
+                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
 
         <!-- Modal Scrollable Body -->
@@ -31,20 +33,24 @@
                     <span id="modalCurrentStatusBadge" style="font-size:10px; font-weight:800; padding:2px 8px; border-radius:12px; background:#DCFCE7; color:#15803D; border:1px solid #86EFAC; text-transform:uppercase;">SHIPPED</span>
                 </div>
                 
-                <!-- Recommended 1-Click Fast Presets -->
+                <!-- Recommended 1-Click Fast Presets (100% Real Vector SVGs) -->
                 <div style="font-size:11px; color:#64748B; margin-bottom:6px; font-weight:700;">Recommended Fast Transitions:</div>
                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; padding:4px 8px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:4px;">
-                        <span>📦 Packed &amp; QC Pass</span>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('packed', 'QC Passed - 100% Handloom Silk Mark Verified')" style="background:#FFFFFF; border:1px solid #D4AF37; color:#8A681F; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <span>Packed &amp; QC Pass</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="background:#FFFFFF; border:1px solid #86EFAC; color:#15803D; padding:4px 8px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:4px;">
-                        <span>🚚 Handover to Courier</span>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('shipped', 'Dispatched from Surat Dock 1 via VRL Logistics')" style="background:#FFFFFF; border:1px solid #86EFAC; color:#15803D; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <span>Handover to Courier</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="background:#FFFFFF; border:1px solid #93C5FD; color:#1D4ED8; padding:4px 8px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:4px;">
-                        <span>📍 Out for Delivery</span>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('out_for_delivery', 'Out for local godown delivery')" style="background:#FFFFFF; border:1px solid #93C5FD; color:#1D4ED8; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:700; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span>Out for Delivery</span>
                     </button>
-                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:4px 8px; border-radius:6px; font-size:10.5px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:4px;">
-                        <span>✅ Delivered &amp; Settled</span>
+                    <button type="button" onclick="window.DT_ORDER_STATUS.selectPreset('delivered', 'Delivered to consignee and payment cleared')" style="background:#FAF5E8; border:1.5px solid #8A681F; color:#181512; padding:4px 9px; border-radius:6px; font-size:10.5px; font-weight:800; cursor:pointer; transition:all 0.15s ease; display:flex; align-items:center; gap:5px;">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#15803D" stroke-width="2.3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span>Delivered &amp; Settled</span>
                     </button>
                 </div>
             </div>
@@ -53,18 +59,18 @@
             <div>
                 <label style="font-size:11.5px; font-weight:750; color:#181512; display:block; margin-bottom:4px;">Target Status</label>
                 <select id="modalNewStatus" class="dt-order-search-input" style="height:36px; font-weight:700; border-radius:6px; border-color:#CBD5E1;">
-                    <optgroup label="🏭 Warehouse &amp; Production Phase">
+                    <optgroup label="Warehouse &amp; Production Phase">
                         <option value="pending">Pending Verification</option>
                         <option value="confirmed">Confirmed / Payment Verified</option>
                         <option value="processing">Processing &amp; Loom Weaving</option>
                         <option value="packed">Packed &amp; QC Silk Mark Passed</option>
                     </optgroup>
-                    <optgroup label="🚚 Logistics &amp; Transport Phase">
+                    <optgroup label="Logistics &amp; Transport Phase">
                         <option value="shipped">Shipped / In Transit (Depot Dispatch)</option>
                         <option value="out_for_delivery">Out for Godown Delivery</option>
                         <option value="delivered">Delivered &amp; Payment Settled</option>
                     </optgroup>
-                    <optgroup label="⚠️ Reverse &amp; Exceptions">
+                    <optgroup label="Reverse &amp; Exceptions">
                         <option value="return_initiated">Return Initiated</option>
                         <option value="returned">Returned to Depot</option>
                         <option value="refunded">Refunded &amp; Closed</option>
@@ -90,7 +96,10 @@
                 <div>
                     <label style="font-size:11.5px; font-weight:750; color:#181512; display:flex; justify-content:space-between; margin-bottom:4px;">
                         <span>AWB / Tracking Number</span>
-                        <a href="javascript:void(0)" onclick="window.DT_ORDER_STATUS.autoGenerateAWB()" style="color:#8A681F; font-weight:700; font-size:10.5px; text-decoration:none;">⚡ Generate</a>
+                        <a href="javascript:void(0)" onclick="window.DT_ORDER_STATUS.autoGenerateAWB()" style="color:#8A681F; font-weight:700; font-size:10.5px; text-decoration:none; display:inline-flex; align-items:center; gap:3px;">
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#8A681F" stroke-width="2.3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>Generate</span>
+                        </a>
                     </label>
                     <input type="text" id="modalTrackingInput" placeholder="e.g. VRL-99821" value="VRL-99821" class="dt-order-search-input" style="height:36px; border-radius:6px; border-color:#CBD5E1; font-weight:700;">
                 </div>
@@ -121,9 +130,12 @@
         <div style="padding:12px 20px; background:#FAF8F4; border-top:1.5px solid #E2DFD7; display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
             <div style="font-size:11px; color:#64748B;">Surat Wholesale Central Depot</div>
             <div style="display:flex; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="height:34px; padding:0 14px; font-size:11.5px;">✕ Cancel</button>
-                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_STATUS.confirmStatusUpdate()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800;">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.closeStatusModal()" style="height:34px; padding:0 14px; font-size:11.5px; display:inline-flex; align-items:center; gap:5px;">
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="window.DT_ORDER_STATUS.confirmStatusUpdate()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:800; display:inline-flex; align-items:center; gap:5px;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>Confirm &amp; Sync Status</span>
                 </button>
             </div>
@@ -133,22 +145,24 @@
 
 <!-- ══ Cancel Order Modal ══ -->
 <div id="cancelOrderModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:999999; backdrop-filter:blur(4px); align-items:center; justify-content:center;" onclick="if(event.target===this)window.DT_ORDER_STATUS.closeCancelModal()">
-    <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:10px; width:95%; max-width:440px; box-shadow:0 8px 30px rgba(0,0,0,0.3); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
+    <div style="background:#FFFFFF; border:1px solid #FECACA; border-radius:12px; width:95%; max-width:460px; box-shadow:0 8px 30px rgba(0,0,0,0.3); overflow:hidden; font-family:'Plus Jakarta Sans', sans-serif;">
         <div style="padding:14px 18px; background:#FEF2F2; border-bottom:1px solid #FECACA; display:flex; align-items:center; justify-content:space-between;">
             <h3 style="margin:0; font-size:14px; font-weight:800; color:#DC2626; display:flex; align-items:center; gap:6px;">
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                 <span>Cancel Order Confirmation</span>
             </h3>
-            <button type="button" onclick="window.DT_ORDER_STATUS.closeCancelModal()" style="border:none; background:transparent; font-size:16px; cursor:pointer; color:#64748B; padding:0 4px;" title="Close Modal">✕</button>
+            <button type="button" onclick="window.DT_ORDER_STATUS.closeCancelModal()" style="border:none; background:transparent; font-size:16px; cursor:pointer; color:#64748B; padding:0 4px;" title="Close Modal">
+                <svg viewBox="0 0 24 24" width="12.5" height="12.5" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
-        <div style="padding:16px; display:flex; flex-direction:column; gap:12px;">
-            <div style="font-size:12px; color:#475569;">
+        <div style="padding:16px 18px; display:flex; flex-direction:column; gap:12px; font-size:12px;">
+            <div style="color:#475569;">
                 Are you sure you want to cancel order <strong id="cancelModalOrderIdText" style="color:#DC2626;">DTB-001624</strong>?
             </div>
 
             <div>
-                <label style="font-size:11px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Cancellation Reason</label>
-                <select id="cancelReasonSelect" class="dt-order-search-input" style="height:34px;">
+                <label style="font-size:11.5px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Cancellation Reason</label>
+                <select id="cancelReasonSelect" class="dt-order-search-input" style="height:36px; border-radius:6px;">
                     <option value="Customer Request">Customer Request via WhatsApp/Phone</option>
                     <option value="Out of Stock / Weave Delay">Out of Stock / Loom Weaving Delay</option>
                     <option value="Payment Gateway Failure">Payment Gateway Failure</option>
@@ -158,8 +172,11 @@
             </div>
         </div>
         <div style="padding:12px 18px; background:#FAF8F4; border-top:1px solid #E2DFD7; display:flex; justify-content:flex-end; gap:8px;">
-            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.closeCancelModal()">Keep Order</button>
-            <button type="button" class="dt-btn dt-btn-danger" onclick="window.DT_ORDER_STATUS.confirmCancelOrder()">Confirm Cancellation</button>
+            <button type="button" class="dt-btn dt-btn-pale" onclick="window.DT_ORDER_STATUS.closeCancelModal()" style="height:34px; padding:0 14px; font-size:11.5px;">Keep Order</button>
+            <button type="button" class="dt-btn dt-btn-danger" onclick="window.DT_ORDER_STATUS.confirmCancelOrder()" style="height:34px; padding:0 16px; font-size:11.5px; font-weight:700; display:inline-flex; align-items:center; gap:5px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Confirm Cancellation</span>
+            </button>
         </div>
     </div>
 </div>

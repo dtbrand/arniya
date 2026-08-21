@@ -56,7 +56,7 @@
             if (reasonEl) reasonEl.value = reason;
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🎯 Selected preset: ${status.replace('_', ' ').toUpperCase()}`);
+                window.DT_ORDERS.showToast(`Selected preset: ${status.replace('_', ' ').toUpperCase()}`);
             }
         },
 
@@ -75,7 +75,7 @@
             if (trackingEl) trackingEl.value = awb;
 
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`⚡ Generated AWB: ${awb}`);
+                window.DT_ORDERS.showToast(`Generated AWB Number: ${awb}`);
             }
         },
 
@@ -106,8 +106,8 @@
             this.closeStatusModal();
 
             if (window.DT_ORDERS) {
-                const waMsg = notifyWA ? ' • 💬 Customer WhatsApp alert dispatched' : '';
-                window.DT_ORDERS.showToast(`✅ Order ${orderId} updated to ${newStatus.toUpperCase()}${waMsg}`);
+                const waMsg = notifyWA ? ' (WhatsApp alert sent to consignee)' : '';
+                window.DT_ORDERS.showToast(`Order ${orderId} status updated to ${newStatus.toUpperCase()}${waMsg}`);
             }
         },
 
@@ -141,7 +141,7 @@
 
             this.closeCancelModal();
             if (window.DT_ORDERS) {
-                window.DT_ORDERS.showToast(`🛑 Order ${orderId} cancelled (${reason})`);
+                window.DT_ORDERS.showToast(`Order ${orderId} cancelled (${reason})`);
             }
         }
     };
