@@ -4048,15 +4048,16 @@ svg.adm-search-icon {
 }
 
 .adm-ref-kpi-card.dark-card {
-    background: #181512;
-    border-color: #2A241E;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 50%, #3D342A 100%);
+    border: 1.5px solid #8A681F;
     color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(24, 21, 18, 0.2);
+    box-shadow: 0 4px 16px rgba(138, 104, 31, 0.2);
 }
 
 .adm-ref-kpi-card.dark-card:hover {
-    border-color: #8A681F;
-    box-shadow: 0 10px 24px rgba(24, 21, 18, 0.35);
+    border-color: #D4AF37;
+    box-shadow: 0 10px 26px rgba(212, 175, 55, 0.35);
+    transform: translateY(-3px);
 }
 
 .adm-ref-kpi-top {
@@ -4068,21 +4069,24 @@ svg.adm-search-icon {
 
 .adm-ref-kpi-lbl {
     font-size: 0.74rem;
-    color: #78716C;
-    font-weight: 600;
+    color: #645D54;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .adm-ref-kpi-card.dark-card .adm-ref-kpi-lbl {
-    color: #A8A29E;
+    color: #D4AF37;
 }
 
 .adm-ref-kpi-val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.65rem;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-size: 1.7rem;
     font-weight: 800;
     color: #181512;
     line-height: 1.15;
     margin: 6px 0 4px 0;
+    letter-spacing: -0.02em;
 }
 
 .adm-ref-kpi-card.dark-card .adm-ref-kpi-val {
@@ -4091,12 +4095,12 @@ svg.adm-search-icon {
 
 .adm-ref-kpi-sub {
     font-size: 0.68rem;
-    color: #A8A29E;
-    font-weight: 500;
+    color: #7A7266;
+    font-weight: 600;
 }
 
 .adm-ref-kpi-card.dark-card .adm-ref-kpi-sub {
-    color: #D6D3D1;
+    color: #E2DFD7;
 }
 
 .adm-ref-pill {
@@ -4110,18 +4114,27 @@ svg.adm-search-icon {
 }
 
 .adm-ref-pill.purple {
-    background: #EDE9FE;
-    color: #6D28D9;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
 }
 
 .adm-ref-pill.rose {
-    background: #FFE4E6;
-    color: #E11D48;
+    background: #FEF3C7;
+    color: #B45309;
+    border: 1px solid #FCD34D;
 }
 
 .adm-ref-pill.emerald {
     background: #DCFCE7;
     color: #15803D;
+    border: 1px solid rgba(22, 163, 74, 0.25);
+}
+
+.adm-ref-pill.danger {
+    background: #FEE2E2;
+    color: #DC2626;
+    border: 1px solid rgba(220, 38, 38, 0.25);
 }
 
 /* 2-Column Master Grid */
@@ -4146,10 +4159,16 @@ svg.adm-search-icon {
 
 .adm-ref-card {
     background: #FFFFFF;
-    border: 1.2px solid #EAE5D9;
+    border: 1.5px solid #EAE5D9;
     border-radius: 14px;
     padding: 20px 22px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.adm-ref-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 8px 22px rgba(138, 104, 31, 0.08);
 }
 
 .adm-ref-card-head {
@@ -4160,10 +4179,11 @@ svg.adm-search-icon {
 }
 
 .adm-ref-card-title {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 800;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.01em;
 }
 
 .adm-ref-date-picker {
@@ -4171,11 +4191,11 @@ svg.adm-search-icon {
     align-items: center;
     gap: 10px;
     font-size: 0.74rem;
-    color: #78716C;
-    font-weight: 600;
-    background: #FAF8F4;
-    border: 1px solid #EAE5D9;
-    padding: 4px 10px;
+    color: #8A681F;
+    font-weight: 700;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    padding: 4px 12px;
     border-radius: 8px;
 }
 
@@ -4183,8 +4203,9 @@ svg.adm-search-icon {
     background: none;
     border: none;
     cursor: pointer;
-    color: #78716C;
-    font-size: 0.8rem;
+    color: #8A681F;
+    font-size: 0.85rem;
+    font-weight: 800;
     padding: 0 2px;
 }
 
@@ -4200,20 +4221,21 @@ svg.adm-search-icon {
 }
 
 .adm-ref-sales-amt {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
 }
 
 .adm-ref-sales-growth {
-    font-size: 0.74rem;
-    color: #16A34A;
+    font-size: 0.76rem;
+    color: #15803D;
     font-weight: 700;
 }
 
 .adm-ref-sales-chart-wrap {
-    height: 180px;
+    height: 185px;
     position: relative;
     margin-bottom: 14px;
 }
@@ -4221,9 +4243,9 @@ svg.adm-search-icon {
 .adm-ref-legend-row {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: 0.72rem;
-    color: #78716C;
+    gap: 18px;
+    font-size: 0.74rem;
+    color: #645D54;
     font-weight: 600;
 }
 
@@ -4234,8 +4256,8 @@ svg.adm-search-icon {
 }
 
 .adm-ref-leg-dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
 }
 
@@ -4249,11 +4271,12 @@ svg.adm-search-icon {
 .adm-ref-table th {
     text-align: left;
     padding: 10px 12px;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: #78716C;
-    text-transform: capitalize;
-    border-bottom: 1px solid #EAE5D9;
+    color: #645D54;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1.5px solid #EAE5D9;
 }
 
 .adm-ref-table td {
@@ -4274,7 +4297,7 @@ svg.adm-search-icon {
 /* Right Performance Speedometer Card */
 .adm-ref-perf-card {
     background: #FFFFFF;
-    border: 1.2px solid #EAE5D9;
+    border: 1.5px solid #EAE5D9;
     border-radius: 14px;
     padding: 22px 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
@@ -4282,6 +4305,12 @@ svg.adm-search-icon {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.adm-ref-perf-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 8px 22px rgba(138, 104, 31, 0.08);
 }
 
 .adm-ref-gauge-wrap {
@@ -4304,13 +4333,14 @@ svg.adm-search-icon {
 
 .adm-ref-gauge-score-lbl {
     font-size: 0.68rem;
-    color: #78716C;
-    font-weight: 600;
+    color: #8A681F;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .adm-ref-gauge-score-val {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
     font-weight: 800;
     color: #181512;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -4320,7 +4350,7 @@ svg.adm-search-icon {
 .adm-ref-perf-text {
     font-size: 0.78rem;
     color: #645D54;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 16px;
     line-height: 1.4;
     max-width: 220px;
@@ -4328,22 +4358,22 @@ svg.adm-search-icon {
 
 .adm-ref-view-btn {
     width: 100%;
-    background: #181512;
-    color: #FFFFFF;
-    font-weight: 700;
+    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
+    color: #181512;
+    font-weight: 800;
     font-size: 0.82rem;
     padding: 10px 16px;
     border-radius: 8px;
-    border: 1px solid #181512;
+    border: 1px solid #8A681F;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-bottom: 18px;
 }
 
 .adm-ref-view-btn:hover {
-    background: #2A241E;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(24, 21, 18, 0.25);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
 }
 
 .adm-ref-perf-stats {
@@ -4372,18 +4402,18 @@ svg.adm-search-icon {
 
 .adm-ref-prev-btn {
     width: 100%;
-    background: #FFFFFF;
-    color: #181512;
+    background: #FAF5E8;
+    color: #8A681F;
     font-weight: 700;
     font-size: 0.8rem;
     padding: 9px 16px;
     border-radius: 8px;
-    border: 1.2px solid #EAE5D9;
+    border: 1.2px solid #D4AF37;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .adm-ref-prev-btn:hover {
-    border-color: #D4AF37;
-    background: #FAF8F4;
+    background: #F5ECCE;
+    transform: translateY(-1px);
 }

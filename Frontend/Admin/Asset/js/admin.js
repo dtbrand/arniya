@@ -339,9 +339,9 @@
         const chartH = height - padTop - padBottom;
 
         // Y-axis grid & labels
-        const ySteps = ['200k', '150k', '100k', '50k', '0k'];
+        const ySteps = ['₹200k', '₹150k', '₹100k', '₹50k', '₹0k'];
         ctx.font = '10px "Plus Jakarta Sans", sans-serif';
-        ctx.fillStyle = '#94A3B8';
+        ctx.fillStyle = '#8A681F';
         ctx.textAlign = 'right';
 
         ySteps.forEach((label, i) => {
@@ -351,7 +351,7 @@
             // Dashed grid line
             ctx.beginPath();
             ctx.setLineDash([3, 3]);
-            ctx.strokeStyle = '#F1F5F9';
+            ctx.strokeStyle = '#F0EBE0';
             ctx.lineWidth = 1;
             ctx.moveTo(padLeft, y);
             ctx.lineTo(width - padRight, y);
@@ -373,7 +373,7 @@
         barData.forEach((d, idx) => {
             const x = padLeft + idx * barSpacing + (barSpacing - barW * 2) / 2;
 
-            // Last Month bar (Light slate)
+            // Last Month bar (Light slate/cream)
             const lmH = d.lm * chartH;
             ctx.fillStyle = '#E2E8F0';
             ctx.beginPath();
@@ -384,9 +384,16 @@
             }
             ctx.fill();
 
-            // Running Month bar (Highlight Blue / Turquoise)
+            // Running Month bar (Signature Radiant Gold Gradient & Emerald Peak)
             const rmH = d.rm * chartH;
-            ctx.fillStyle = idx === 7 ? '#1D4ED8' : (idx === 6 ? '#06B6D4' : '#93C5FD');
+            if (idx === 7) {
+                ctx.fillStyle = '#16A34A'; // Peak sale day in emerald
+            } else {
+                const goldGrad = ctx.createLinearGradient(0, padTop + chartH - rmH, 0, padTop + chartH);
+                goldGrad.addColorStop(0, '#D4AF37');
+                goldGrad.addColorStop(1, '#8A681F');
+                ctx.fillStyle = goldGrad;
+            }
             ctx.beginPath();
             if (ctx.roundRect) {
                 ctx.roundRect(x + barW + 2, padTop + chartH - rmH, barW, rmH, [3, 3, 0, 0]);
@@ -421,14 +428,14 @@
         ctx.lineTo(linePoints[linePoints.length - 1].x, linePoints[linePoints.length - 1].y);
         ctx.stroke();
 
-        // Prominent node points
+        // Prominent node points with gold ring
         [linePoints[1], linePoints[3], linePoints[4]].forEach(pt => {
             ctx.beginPath();
-            ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
-            ctx.fillStyle = '#181512';
+            ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
+            ctx.fillStyle = '#8A681F';
             ctx.fill();
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#D4AF37';
             ctx.stroke();
         });
     }

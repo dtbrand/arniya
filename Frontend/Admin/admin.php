@@ -460,23 +460,23 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="adm-ref-kpi-top">
                                 <span class="adm-ref-kpi-lbl">Total Orders</span>
                                 <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
-                                    <path d="M 2 18 C 12 12, 22 20, 34 8 C 42 2, 48 10, 52 4" stroke="#F43F5E" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M 2 18 C 12 12, 22 20, 34 8 C 42 2, 48 10, 52 4" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div class="adm-ref-kpi-val">34</div>
+                            <div class="adm-ref-kpi-val">1,542</div>
                             <div class="adm-ref-kpi-sub">Current month</div>
                         </div>
 
-                        <!-- Card 2: Total Sale (Dark Master Obsidian Card) -->
+                        <!-- Card 2: Total Sale (Dark Master Obsidian & Gold Card) -->
                         <div class="adm-ref-kpi-card dark-card" onclick="switchAdmTab('reports')">
                             <div class="adm-ref-kpi-top">
                                 <span class="adm-ref-kpi-lbl">Total Sale</span>
                                 <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
-                                    <path d="M 2 16 C 14 6, 26 20, 38 8 C 44 4, 48 8, 52 2" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+                                    <path d="M 2 16 C 14 6, 26 20, 38 8 C 44 4, 48 8, 52 2" stroke="#D4AF37" stroke-width="2.4" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div class="adm-ref-kpi-val">₹1,40,000</div>
-                            <div class="adm-ref-kpi-sub">Current month</div>
+                            <div class="adm-ref-kpi-val">₹14,92,400</div>
+                            <div class="adm-ref-kpi-sub">Current month live</div>
                         </div>
 
                         <!-- Card 3: Total Revenue -->
@@ -484,11 +484,11 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="adm-ref-kpi-top">
                                 <span class="adm-ref-kpi-lbl">Total Revenue</span>
                                 <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
-                                    <path d="M 2 18 C 14 10, 24 16, 36 6 C 42 2, 48 8, 52 4" stroke="#A855F7" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M 2 18 C 14 10, 24 16, 36 6 C 42 2, 48 8, 52 4" stroke="#15803D" stroke-width="2.2" stroke-linecap="round"/>
                                 </svg>
                             </div>
-                            <div class="adm-ref-kpi-val">₹30,000</div>
-                            <div class="adm-ref-kpi-sub">Current month</div>
+                            <div class="adm-ref-kpi-val">₹3,48,200</div>
+                            <div class="adm-ref-kpi-sub">Current month profit</div>
                         </div>
 
                         <!-- Card 4: Total Products -->
@@ -498,7 +498,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <span class="adm-ref-pill purple">40 ↑</span>
                             </div>
                             <div class="adm-ref-kpi-val">650</div>
-                            <div class="adm-ref-kpi-sub">Available products</div>
+                            <div class="adm-ref-kpi-sub">Available active SKUs</div>
                         </div>
 
                         <!-- Card 5: Total Categories -->
@@ -519,7 +519,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <!-- A. Sales Overview Chart Card -->
                             <div class="adm-ref-card">
                                 <div class="adm-ref-card-head">
-                                    <h3 class="adm-ref-card-title">Sales</h3>
+                                    <h3 class="adm-ref-card-title">Sales Analytics</h3>
                                     <div class="adm-ref-date-picker">
                                         <button type="button" class="adm-ref-date-btn">‹</button>
                                         <span>July 2026</span>
@@ -528,8 +528,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </div>
 
                                 <div class="adm-ref-sales-highlight">
-                                    <div class="adm-ref-sales-amt">₹1,40,000/=</div>
-                                    <div class="adm-ref-sales-growth">↗ 20% than last month</div>
+                                    <div class="adm-ref-sales-amt">₹14,92,400/=</div>
+                                    <div class="adm-ref-sales-growth">↗ +24.8% vs last month wholesale volume</div>
                                 </div>
 
                                 <div class="adm-ref-sales-chart-wrap">
@@ -539,20 +539,20 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <div class="adm-ref-legend-row">
                                     <div class="adm-ref-leg-item">
                                         <span class="adm-ref-leg-dot" style="background:#CBD5E1;"></span>
-                                        <span>Last Month</span>
+                                        <span>Last Month (Wholesale Base)</span>
                                     </div>
                                     <div class="adm-ref-leg-item">
-                                        <span class="adm-ref-leg-dot" style="background:#1D4ED8;"></span>
-                                        <span>Running Month</span>
+                                        <span class="adm-ref-leg-dot" style="background:#D4AF37;"></span>
+                                        <span style="color:#8A681F; font-weight:700;">Running Month (DT Brand's Live)</span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- B. Recent Orders Table Card -->
-                            <div class="adm-ref-card" style="padding: 16px 20px;">
-                                <div class="adm-ref-card-head" style="margin-bottom:10px;">
-                                    <h3 class="adm-ref-card-title">Recent Orders</h3>
-                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" style="font-size:0.72rem; color:#8A681F; font-weight:700; text-decoration:none;">View All ↗</a>
+                            <div class="adm-ref-card" style="padding: 18px 22px;">
+                                <div class="adm-ref-card-head" style="margin-bottom:12px;">
+                                    <h3 class="adm-ref-card-title">Recent Wholesale Orders</h3>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">View All ↗</a>
                                 </div>
                                 <div style="overflow-x:auto;">
                                     <table class="adm-ref-table">
@@ -568,36 +568,36 @@ if (session_status() === PHP_SESSION_NONE) {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="font-weight:700; color:#181512;">#221</td>
-                                                <td style="color:#78716C;">13 Feb 2026</td>
-                                                <td style="font-weight:600;">Abdullah Saqib</td>
-                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
+                                                <td style="font-weight:800; color:#181512;">#ORD-9842</td>
+                                                <td style="color:#78716C;">Today, 14:20</td>
+                                                <td style="font-weight:700; color:#181512;">Abdullah Saqib (Delhi)</td>
+                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
                                                 <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
-                                                <td style="text-align:right; font-weight:700;">₹200</td>
+                                                <td style="text-align:right; font-weight:800; color:#181512;">₹48,200</td>
                                             </tr>
                                             <tr>
-                                                <td style="font-weight:700; color:#181512;">#321</td>
-                                                <td style="color:#78716C;">15 Mar 2026</td>
-                                                <td style="font-weight:600;">Gulam Sabir</td>
-                                                <td><span class="adm-ref-pill rose">UnPaid</span></td>
-                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
-                                                <td style="text-align:right; font-weight:700;">₹150</td>
+                                                <td style="font-weight:800; color:#181512;">#ORD-9841</td>
+                                                <td style="color:#78716C;">Today, 11:45</td>
+                                                <td style="font-weight:700; color:#181512;">Gulam Sabir (Mumbai)</td>
+                                                <td><span class="adm-ref-pill danger">UnPaid (COD)</span></td>
+                                                <td><span class="adm-ref-pill rose">Dispatched</span></td>
+                                                <td style="text-align:right; font-weight:800; color:#181512;">₹24,500</td>
                                             </tr>
                                             <tr>
-                                                <td style="font-weight:700; color:#181512;">#435</td>
-                                                <td style="color:#78716C;">1 May 2026</td>
-                                                <td style="font-weight:600;">Aslam Khan</td>
-                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
-                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
-                                                <td style="text-align:right; font-weight:700;">₹4,000</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="font-weight:700; color:#181512;">#512</td>
-                                                <td style="color:#78716C;">18 Jul 2026</td>
-                                                <td style="font-weight:600;">Pooja Verma</td>
-                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
+                                                <td style="font-weight:800; color:#181512;">#ORD-9840</td>
+                                                <td style="color:#78716C;">Yesterday</td>
+                                                <td style="font-weight:700; color:#181512;">Aslam Khan (Surat)</td>
+                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
                                                 <td><span class="adm-ref-pill emerald">Delivered</span></td>
-                                                <td style="text-align:right; font-weight:700;">₹12,800</td>
+                                                <td style="text-align:right; font-weight:800; color:#181512;">₹95,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:800; color:#181512;">#ORD-9839</td>
+                                                <td style="color:#78716C;">Yesterday</td>
+                                                <td style="font-weight:700; color:#181512;">Pooja Verma (Ahmedabad)</td>
+                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
+                                                <td><span class="adm-ref-pill emerald">Delivered</span></td>
+                                                <td style="text-align:right; font-weight:800; color:#181512;">₹62,800</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -607,50 +607,63 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         <!-- Right Column: Company Performance Speedometer Gauge -->
                         <div class="adm-ref-perf-card">
-                            <h3 class="adm-ref-card-title" style="margin-bottom:6px;">Company Performance This Week</h3>
+                            <h3 class="adm-ref-card-title" style="margin-bottom:6px;">Store Performance This Week</h3>
                             
                             <!-- Semi-Circular Gauge Speedometer -->
                             <div class="adm-ref-gauge-wrap">
                                 <svg viewBox="0 0 200 115" width="200" height="115" style="overflow:visible;">
                                     <!-- Background track arc -->
-                                    <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F1F5F9" stroke-width="18" stroke-linecap="round" />
-                                    <!-- Red Danger/Alert segment -->
+                                    <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F5F2EA" stroke-width="18" stroke-linecap="round" />
+                                    <!-- Red Alert segment -->
                                     <path d="M 25 105 A 75 75 0 0 1 55 45" fill="none" stroke="#EF4444" stroke-width="18" stroke-linecap="round" />
-                                    <!-- Light Grey Transition segment -->
-                                    <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#CBD5E1" stroke-width="18" />
-                                    <!-- Deep Obsidian/Navy Success segment -->
-                                    <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#181512" stroke-width="18" stroke-linecap="round" />
+                                    <!-- Radiant Gold Transition segment -->
+                                    <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#D4AF37" stroke-width="18" />
+                                    <!-- Signature Heritage Gold & Obsidian Success segment -->
+                                    <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#8A681F" stroke-width="18" stroke-linecap="round" />
                                 </svg>
                                 <div class="adm-ref-gauge-score">
-                                    <span class="adm-ref-gauge-score-lbl">Score</span>
-                                    <span class="adm-ref-gauge-score-val">80</span>
+                                    <span class="adm-ref-gauge-score-lbl">Index Score</span>
+                                    <span class="adm-ref-gauge-score-val">94.9%</span>
                                 </div>
                             </div>
 
-                            <p class="adm-ref-perf-text">Your team performance is 10% better this week</p>
+                            <p class="adm-ref-perf-text">Surat Wholesale fulfillment rate is 12% faster than last week</p>
 
-                            <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">View Details</button>
+                            <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#181512" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                </svg>
+                                View Performance Details
+                            </button>
 
                             <div class="adm-ref-perf-stats">
                                 <div class="adm-ref-perf-stat-row">
                                     <span class="adm-ref-perf-stat-item">
-                                        <span class="adm-ref-leg-dot" style="background:#06B6D4;"></span>
-                                        <span>Completed 130</span>
+                                        <span class="adm-ref-leg-dot" style="background:#15803D;"></span>
+                                        <span>Completed: 1,542</span>
                                     </span>
                                     <span class="adm-ref-perf-stat-item">
-                                        <span class="adm-ref-leg-dot" style="background:#181512;"></span>
-                                        <span>Percentage 70%</span>
+                                        <span class="adm-ref-leg-dot" style="background:#8A681F;"></span>
+                                        <span>Fulfillment: 94.9%</span>
                                     </span>
                                 </div>
-                                <div class="adm-ref-perf-stat-row" style="justify-content:center; margin-top:2px;">
+                                <div class="adm-ref-perf-stat-row" style="justify-content:center; margin-top:4px;">
                                     <span class="adm-ref-perf-stat-item">
                                         <span class="adm-ref-leg-dot" style="background:#EF4444;"></span>
-                                        <span>Pending 130</span>
+                                        <span>Pending: 18</span>
                                     </span>
                                 </div>
                             </div>
 
-                            <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">Previous week Details</button>
+                            <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                Previous Week Details
+                            </button>
                         </div>
                     </div>
                 </div>
