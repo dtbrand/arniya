@@ -193,13 +193,34 @@ $active_subnav = "new";
 
                             <div class="dt-form-grid-2">
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Street Address / House No.</label>
-                                    <input type="text" class="dt-input-field no-icon" placeholder="House/Flat No., Building Name, Street">
+                                    <label class="dt-form-label">Country / Destination <span style="color:#DC2626;">*</span></label>
+                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="IN" selected>India (Bharat) 🇮🇳</option>
+                                        <option value="US">United States (USA) 🇺🇸</option>
+                                        <option value="AE">United Arab Emirates (UAE / Dubai) 🇦🇪</option>
+                                        <option value="GB">United Kingdom (UK) 🇬🇧</option>
+                                        <option value="CA">Canada 🇨🇦</option>
+                                        <option value="AU">Australia 🇦🇺</option>
+                                        <option value="SG">Singapore 🇸🇬</option>
+                                        <option value="MY">Malaysia 🇲🇾</option>
+                                        <option value="MU">Mauritius 🇲🇺</option>
+                                        <option value="NP">Nepal 🇳🇵</option>
+                                        <option value="SA">Saudi Arabia 🇸🇦</option>
+                                        <option value="KW">Kuwait 🇰🇼</option>
+                                        <option value="QA">Qatar 🇶🇦</option>
+                                        <option value="OM">Oman 🇴🇲</option>
+                                    </select>
                                 </div>
+
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Nearby Landmark</label>
                                     <input type="text" class="dt-input-field no-icon" placeholder="e.g. Near City Bus Stand">
                                 </div>
+                            </div>
+
+                            <div class="dt-form-group" style="margin-top:14px;">
+                                <label class="dt-form-label">Street Address / House No.</label>
+                                <input type="text" class="dt-input-field no-icon" placeholder="House/Flat No., Building Name, Street">
                             </div>
 
                             <div class="dt-form-grid-3" style="margin-top:14px;">
@@ -209,7 +230,7 @@ $active_subnav = "new";
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">State / UT</label>
+                                    <label class="dt-form-label">State / Province</label>
                                     <select class="dt-cust-select" style="width:100%; height:38px;">
                                         <option value="GJ" selected>Gujarat</option>
                                         <option value="MH">Maharashtra</option>
@@ -219,12 +240,13 @@ $active_subnav = "new";
                                         <option value="KA">Karnataka</option>
                                         <option value="TS">Telangana</option>
                                         <option value="UP">Uttar Pradesh</option>
+                                        <option value="OTHER">Other / International State</option>
                                     </select>
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">PIN Code</label>
-                                    <input type="text" class="dt-input-field no-icon" placeholder="6-digit PIN">
+                                    <label class="dt-form-label">PIN Code / Postal Code</label>
+                                    <input type="text" class="dt-input-field no-icon" placeholder="6-digit PIN / Zip">
                                 </div>
                             </div>
                         </div>

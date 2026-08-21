@@ -378,6 +378,20 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                     </div>
                                 </div>
 
+                                <!-- Preferred Language -->
+                                <div class="dt-form-group">
+                                    <label class="dt-form-label">Preferred Communication Language</label>
+                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="Hindi" <?php echo $cust['language'] === 'Hindi' ? 'selected' : ''; ?>>Hindi (हिंदी)</option>
+                                        <option value="Gujarati" <?php echo $cust['language'] === 'Gujarati' ? 'selected' : ''; ?>>Gujarati (ગુજરાતી)</option>
+                                        <option value="English" <?php echo $cust['language'] === 'English' ? 'selected' : ''; ?>>English</option>
+                                        <option value="Bengali" <?php echo $cust['language'] === 'Bengali' ? 'selected' : ''; ?>>Bengali (বাংলা)</option>
+                                        <option value="Marathi" <?php echo $cust['language'] === 'Marathi' ? 'selected' : ''; ?>>Marathi (मराठी)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="dt-form-grid-1" style="margin-top:14px;">
                                 <!-- Email Address & Verification / Missing Handling -->
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">
@@ -407,29 +421,6 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                     <?php endif; ?>
                                 </div>
                             </div>
-
-                            <div class="dt-form-grid-3" style="margin-top:14px;">
-                                <div class="dt-form-group">
-                                    <label class="dt-form-label">Date of Birth (Festive Rewards)</label>
-                                    <input type="date" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['dob']); ?>">
-                                </div>
-
-                                <div class="dt-form-group">
-                                    <label class="dt-form-label">Anniversary Date</label>
-                                    <input type="date" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['anniversary']); ?>">
-                                </div>
-
-                                <div class="dt-form-group">
-                                    <label class="dt-form-label">Preferred Language</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="Hindi" <?php echo $cust['language'] === 'Hindi' ? 'selected' : ''; ?>>Hindi (हिंदी)</option>
-                                        <option value="Gujarati" <?php echo $cust['language'] === 'Gujarati' ? 'selected' : ''; ?>>Gujarati (ગુજરાતી)</option>
-                                        <option value="English" <?php echo $cust['language'] === 'English' ? 'selected' : ''; ?>>English</option>
-                                        <option value="Bengali" <?php echo $cust['language'] === 'Bengali' ? 'selected' : ''; ?>>Bengali (বাংলা)</option>
-                                        <option value="Marathi" <?php echo $cust['language'] === 'Marathi' ? 'selected' : ''; ?>>Marathi (मराठी)</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- ══ SECTION 2: SHIPPING & BILLING ADDRESS ══ -->
@@ -441,13 +432,34 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 
                             <div class="dt-form-grid-2">
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Street Address / House No.</label>
-                                    <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['address']); ?>" placeholder="House/Flat No., Building Name, Street">
+                                    <label class="dt-form-label">Country / Destination <span style="color:#DC2626;">*</span></label>
+                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="IN" selected>India (Bharat) 🇮🇳</option>
+                                        <option value="US">United States (USA) 🇺🇸</option>
+                                        <option value="AE">United Arab Emirates (UAE / Dubai) 🇦🇪</option>
+                                        <option value="GB">United Kingdom (UK) 🇬🇧</option>
+                                        <option value="CA">Canada 🇨🇦</option>
+                                        <option value="AU">Australia 🇦🇺</option>
+                                        <option value="SG">Singapore 🇸🇬</option>
+                                        <option value="MY">Malaysia 🇲🇾</option>
+                                        <option value="MU">Mauritius 🇲🇺</option>
+                                        <option value="NP">Nepal 🇳🇵</option>
+                                        <option value="SA">Saudi Arabia 🇸🇦</option>
+                                        <option value="KW">Kuwait 🇰🇼</option>
+                                        <option value="QA">Qatar 🇶🇦</option>
+                                        <option value="OM">Oman 🇴🇲</option>
+                                    </select>
                                 </div>
+
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Nearby Landmark</label>
                                     <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['landmark']); ?>" placeholder="e.g. Opposite Metro Station, Near City Mall">
                                 </div>
+                            </div>
+
+                            <div class="dt-form-group" style="margin-top:14px;">
+                                <label class="dt-form-label">Street Address / House No.</label>
+                                <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['address']); ?>" placeholder="House/Flat No., Building Name, Street">
                             </div>
 
                             <div class="dt-form-grid-3" style="margin-top:14px;">
@@ -457,7 +469,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">State / UT</label>
+                                    <label class="dt-form-label">State / Province</label>
                                     <select class="dt-cust-select" style="width:100%; height:38px;">
                                         <option value="DL" <?php echo $cust['state'] === 'DL' ? 'selected' : ''; ?>>Delhi NCR</option>
                                         <option value="GJ" <?php echo $cust['state'] === 'GJ' ? 'selected' : ''; ?>>Gujarat</option>
@@ -467,12 +479,13 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                         <option value="KA" <?php echo $cust['state'] === 'KA' ? 'selected' : ''; ?>>Karnataka</option>
                                         <option value="TS" <?php echo $cust['state'] === 'TS' ? 'selected' : ''; ?>>Telangana</option>
                                         <option value="UP" <?php echo $cust['state'] === 'UP' ? 'selected' : ''; ?>>Uttar Pradesh</option>
+                                        <option value="OTHER">Other / International State</option>
                                     </select>
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">PIN Code (Postal Code)</label>
-                                    <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['pincode']); ?>" placeholder="6-digit Pincode">
+                                    <label class="dt-form-label">Postal Code / PIN Code</label>
+                                    <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['pincode']); ?>" placeholder="6-digit Pincode / Zip">
                                 </div>
                             </div>
                         </div>
