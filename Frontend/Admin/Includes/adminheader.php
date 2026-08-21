@@ -452,16 +452,6 @@
             });
         }
 
-        // Mobile Hamburger menu toggle
-        const mobMenuBtn = document.getElementById('admMobileMenuBtn');
-        if (mobMenuBtn) {
-            mobMenuBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const sidebar = document.querySelector('.adm-sidebar');
-                if (sidebar) sidebar.classList.toggle('mobile-open');
-            });
-        }
-
         // Dismiss on Click outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#admHeaderSearchContainer') && !e.target.closest('#admMobileFullSearchBar')) {

@@ -491,36 +491,32 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 <script>
 (function() {
     window.toggleAdmMobileSidebar = function(e) {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
-        const sidebar = document.getElementById('admSidebar');
+        if (e) { 
+            e.preventDefault(); 
+            e.stopPropagation(); 
+        }
+        const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         if (sidebar) {
-            sidebar.classList.toggle('mobile-open');
+            const isOpen = sidebar.classList.toggle('mobile-open');
             if (backdrop) {
-                backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+                backdrop.style.display = isOpen ? 'block' : 'none';
             }
         }
     };
 
     window.closeAdmMobileSidebar = function() {
-        const sidebar = document.getElementById('admSidebar');
+        const sidebar = document.getElementById('admSidebar') || document.querySelector('.adm-sidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         if (sidebar) sidebar.classList.remove('mobile-open');
         if (backdrop) backdrop.style.display = 'none';
     };
 
     function initAdmSidebar() {
-        const mobileBtn = document.getElementById('admMobileMenuBtn');
         const sidebar = document.getElementById('admSidebar');
         const backdrop = document.getElementById('admSidebarBackdrop');
         const toggleBtn = document.getElementById('admSidebarToggleBtn');
         const sealMini = document.querySelector('.adm-brand-seal-mini');
-
-        if (mobileBtn) {
-            mobileBtn.onclick = function(e) {
-                window.toggleAdmMobileSidebar(e);
-            };
-        }
 
         if (backdrop) {
             backdrop.onclick = function(e) {

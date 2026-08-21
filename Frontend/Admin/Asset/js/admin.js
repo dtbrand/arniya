@@ -338,38 +338,48 @@
     function initSidebar() {
         const sidebar = document.getElementById('admSidebar');
         const toggleBtn = document.getElementById('admSidebarToggleBtn');
-        const mobileToggle = document.getElementById('admMobileMenuBtn');
         const backdrop = document.getElementById('admSidebarBackdrop');
 
         if (toggleBtn && sidebar) {
-            toggleBtn.addEventListener('click', function() {
+            toggleBtn.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 sidebar.classList.toggle('collapsed');
-            });
+                try {
+                    localStorage.setItem('dt_adm_sidebar_collapsed', sidebar.classList.contains('collapsed') ? '1' : '0');
+                } catch(err) {}
+            };
         }
 
         const sealMini = document.querySelector('.adm-brand-seal-mini');
         if (sealMini && sidebar) {
-            sealMini.addEventListener('click', function(e) {
-                if (sidebar.classList.contains('collapsed')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    sidebar.classList.remove('collapsed');
+            sealMini.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                sidebar.classList.remove('collapsed');
+                try { localStorage.setItem('dt_adm_sidebar_collapsed', '0'); } catch(err) {}
+            };
+        }
+
+        if (backdrop && sidebar) {
+            backdrop.onclick = function(e) {
+                e.preventDefault();
+                if (typeof window.closeAdmMobileSidebar === 'function') {
+                    window.closeAdmMobileSidebar();
+                } else {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.style.display = 'none';
                 }
-            });
+            };
         }
 
-        if (mobileToggle && sidebar) {
-            mobileToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('mobile-open');
-                if (backdrop) backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
-            });
-        }
-
-        if (backdrop) {
-            backdrop.addEventListener('click', function() {
-                if (sidebar) sidebar.classList.remove('mobile-open');
-                backdrop.style.display = 'none';
-            });
+        // Restore collapsed state on desktop
+        if (window.innerWidth > 1024 && sidebar) {
+            try {
+                if (localStorage.getItem('dt_adm_sidebar_collapsed') === '1') {
+                    sidebar.classList.add('collapsed');
+                }
+            } catch(err) {}
         }
     }
 
@@ -1549,39 +1559,6 @@
             if (typeof window.showToast === 'function') window.showToast('📦 Product archived successfully');
         }
     };
-
-
-    // ════ MOBILE SIDEBAR DRAWER TOGGLE ════
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileBtn = document.getElementById('admMobileMenuBtn');
-        const sidebar = document.getElementById('admSidebar');
-        const backdrop = document.getElementById('admSidebarBackdrop');
-        const toggleBtn = document.getElementById('admSidebarToggleBtn');
-
-        if (mobileBtn && sidebar) {
-            mobileBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                sidebar.classList.toggle('mobile-open');
-                if (backdrop) {
-                    backdrop.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
-                }
-            });
-        }
-
-        if (backdrop && sidebar) {
-            backdrop.addEventListener('click', function() {
-                sidebar.classList.remove('mobile-open');
-                backdrop.style.display = 'none';
-            });
-        }
-
-        if (toggleBtn && sidebar) {
-            toggleBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                sidebar.classList.toggle('collapsed');
-            });
-        }
-    });
 
 })();
 
