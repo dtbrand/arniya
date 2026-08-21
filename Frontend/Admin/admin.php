@@ -449,6 +449,212 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                 </section>
 
+                <!-- ══════════════════════════════════════════════════════════════
+                     👑 DESKTOP REFERENCE DASHBOARD UI SUITE (EXACT REFERENCE MATCH)
+                ══════════════════════════════════════════════════════════════ -->
+                <div class="adm-desktop-ref-suite">
+                    <!-- 1. 5-Card Top Hero Metric Row -->
+                    <div class="adm-ref-kpi-strip">
+                        <!-- Card 1: Total Orders -->
+                        <div class="adm-ref-kpi-card" onclick="switchAdmTab('orders')">
+                            <div class="adm-ref-kpi-top">
+                                <span class="adm-ref-kpi-lbl">Total Orders</span>
+                                <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
+                                    <path d="M 2 18 C 12 12, 22 20, 34 8 C 42 2, 48 10, 52 4" stroke="#F43F5E" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="adm-ref-kpi-val">34</div>
+                            <div class="adm-ref-kpi-sub">Current month</div>
+                        </div>
+
+                        <!-- Card 2: Total Sale (Dark Master Obsidian Card) -->
+                        <div class="adm-ref-kpi-card dark-card" onclick="switchAdmTab('reports')">
+                            <div class="adm-ref-kpi-top">
+                                <span class="adm-ref-kpi-lbl">Total Sale</span>
+                                <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
+                                    <path d="M 2 16 C 14 6, 26 20, 38 8 C 44 4, 48 8, 52 2" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="adm-ref-kpi-val">₹1,40,000</div>
+                            <div class="adm-ref-kpi-sub">Current month</div>
+                        </div>
+
+                        <!-- Card 3: Total Revenue -->
+                        <div class="adm-ref-kpi-card" onclick="switchAdmTab('reports')">
+                            <div class="adm-ref-kpi-top">
+                                <span class="adm-ref-kpi-lbl">Total Revenue</span>
+                                <svg viewBox="0 0 54 22" width="54" height="22" fill="none">
+                                    <path d="M 2 18 C 14 10, 24 16, 36 6 C 42 2, 48 8, 52 4" stroke="#A855F7" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="adm-ref-kpi-val">₹30,000</div>
+                            <div class="adm-ref-kpi-sub">Current month</div>
+                        </div>
+
+                        <!-- Card 4: Total Products -->
+                        <div class="adm-ref-kpi-card" onclick="switchAdmTab('products')">
+                            <div class="adm-ref-kpi-top">
+                                <span class="adm-ref-kpi-lbl">Total Products</span>
+                                <span class="adm-ref-pill purple">40 ↑</span>
+                            </div>
+                            <div class="adm-ref-kpi-val">650</div>
+                            <div class="adm-ref-kpi-sub">Available products</div>
+                        </div>
+
+                        <!-- Card 5: Total Categories -->
+                        <div class="adm-ref-kpi-card" onclick="switchAdmTab('catalogue')">
+                            <div class="adm-ref-kpi-top">
+                                <span class="adm-ref-kpi-lbl">Total categories</span>
+                                <span class="adm-ref-pill rose">3 ↘</span>
+                            </div>
+                            <div class="adm-ref-kpi-val">12</div>
+                            <div class="adm-ref-kpi-sub">Available categories</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Master 2-Column Dashboard Layout -->
+                    <div class="adm-ref-main-grid">
+                        <!-- Left Column: Sales Chart + Recent Orders Table -->
+                        <div class="adm-ref-left-col">
+                            <!-- A. Sales Overview Chart Card -->
+                            <div class="adm-ref-card">
+                                <div class="adm-ref-card-head">
+                                    <h3 class="adm-ref-card-title">Sales</h3>
+                                    <div class="adm-ref-date-picker">
+                                        <button type="button" class="adm-ref-date-btn">‹</button>
+                                        <span>July 2026</span>
+                                        <button type="button" class="adm-ref-date-btn">›</button>
+                                    </div>
+                                </div>
+
+                                <div class="adm-ref-sales-highlight">
+                                    <div class="adm-ref-sales-amt">₹1,40,000/=</div>
+                                    <div class="adm-ref-sales-growth">↗ 20% than last month</div>
+                                </div>
+
+                                <div class="adm-ref-sales-chart-wrap">
+                                    <canvas id="admRefSalesChart"></canvas>
+                                </div>
+
+                                <div class="adm-ref-legend-row">
+                                    <div class="adm-ref-leg-item">
+                                        <span class="adm-ref-leg-dot" style="background:#CBD5E1;"></span>
+                                        <span>Last Month</span>
+                                    </div>
+                                    <div class="adm-ref-leg-item">
+                                        <span class="adm-ref-leg-dot" style="background:#1D4ED8;"></span>
+                                        <span>Running Month</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- B. Recent Orders Table Card -->
+                            <div class="adm-ref-card" style="padding: 16px 20px;">
+                                <div class="adm-ref-card-head" style="margin-bottom:10px;">
+                                    <h3 class="adm-ref-card-title">Recent Orders</h3>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" style="font-size:0.72rem; color:#8A681F; font-weight:700; text-decoration:none;">View All ↗</a>
+                                </div>
+                                <div style="overflow-x:auto;">
+                                    <table class="adm-ref-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order</th>
+                                                <th>Date</th>
+                                                <th>Customer ↑</th>
+                                                <th>Payment ↕</th>
+                                                <th>Status ↑</th>
+                                                <th style="text-align:right;">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="font-weight:700; color:#181512;">#221</td>
+                                                <td style="color:#78716C;">13 Feb 2026</td>
+                                                <td style="font-weight:600;">Abdullah Saqib</td>
+                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
+                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
+                                                <td style="text-align:right; font-weight:700;">₹200</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:700; color:#181512;">#321</td>
+                                                <td style="color:#78716C;">15 Mar 2026</td>
+                                                <td style="font-weight:600;">Gulam Sabir</td>
+                                                <td><span class="adm-ref-pill rose">UnPaid</span></td>
+                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
+                                                <td style="text-align:right; font-weight:700;">₹150</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:700; color:#181512;">#435</td>
+                                                <td style="color:#78716C;">1 May 2026</td>
+                                                <td style="font-weight:600;">Aslam Khan</td>
+                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
+                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
+                                                <td style="text-align:right; font-weight:700;">₹4,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:700; color:#181512;">#512</td>
+                                                <td style="color:#78716C;">18 Jul 2026</td>
+                                                <td style="font-weight:600;">Pooja Verma</td>
+                                                <td><span class="adm-ref-pill emerald">Paid</span></td>
+                                                <td><span class="adm-ref-pill emerald">Delivered</span></td>
+                                                <td style="text-align:right; font-weight:700;">₹12,800</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Company Performance Speedometer Gauge -->
+                        <div class="adm-ref-perf-card">
+                            <h3 class="adm-ref-card-title" style="margin-bottom:6px;">Company Performance This Week</h3>
+                            
+                            <!-- Semi-Circular Gauge Speedometer -->
+                            <div class="adm-ref-gauge-wrap">
+                                <svg viewBox="0 0 200 115" width="200" height="115" style="overflow:visible;">
+                                    <!-- Background track arc -->
+                                    <path d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="#F1F5F9" stroke-width="18" stroke-linecap="round" />
+                                    <!-- Red Danger/Alert segment -->
+                                    <path d="M 25 105 A 75 75 0 0 1 55 45" fill="none" stroke="#EF4444" stroke-width="18" stroke-linecap="round" />
+                                    <!-- Light Grey Transition segment -->
+                                    <path d="M 58 42 A 75 75 0 0 1 142 42" fill="none" stroke="#CBD5E1" stroke-width="18" />
+                                    <!-- Deep Obsidian/Navy Success segment -->
+                                    <path d="M 145 45 A 75 75 0 0 1 175 105" fill="none" stroke="#181512" stroke-width="18" stroke-linecap="round" />
+                                </svg>
+                                <div class="adm-ref-gauge-score">
+                                    <span class="adm-ref-gauge-score-lbl">Score</span>
+                                    <span class="adm-ref-gauge-score-val">80</span>
+                                </div>
+                            </div>
+
+                            <p class="adm-ref-perf-text">Your team performance is 10% better this week</p>
+
+                            <button type="button" class="adm-ref-view-btn" onclick="switchAdmTab('reports')">View Details</button>
+
+                            <div class="adm-ref-perf-stats">
+                                <div class="adm-ref-perf-stat-row">
+                                    <span class="adm-ref-perf-stat-item">
+                                        <span class="adm-ref-leg-dot" style="background:#06B6D4;"></span>
+                                        <span>Completed 130</span>
+                                    </span>
+                                    <span class="adm-ref-perf-stat-item">
+                                        <span class="adm-ref-leg-dot" style="background:#181512;"></span>
+                                        <span>Percentage 70%</span>
+                                    </span>
+                                </div>
+                                <div class="adm-ref-perf-stat-row" style="justify-content:center; margin-top:2px;">
+                                    <span class="adm-ref-perf-stat-item">
+                                        <span class="adm-ref-leg-dot" style="background:#EF4444;"></span>
+                                        <span>Pending 130</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <button type="button" class="adm-ref-prev-btn" onclick="switchAdmTab('reports')">Previous week Details</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ════ 22 MAIN KPI METRIC CARDS ════ -->
                 <div class="adm-kpi-grid">
                     <!-- 1. Total Revenue -->

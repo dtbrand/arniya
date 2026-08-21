@@ -305,7 +305,133 @@
         initBroadcaster();
         renderKPISparklines();
         initLiveTickers();
+        renderRefSalesChart();
+
+        window.addEventListener('resize', function() {
+            renderRefSalesChart();
+        });
     });
+
+    function renderRefSalesChart() {
+        const canvas = document.getElementById('admRefSalesChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        const width = rect.width || canvas.parentElement.clientWidth || 500;
+        const height = 180;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.scale(dpr, dpr);
+
+        ctx.clearRect(0, 0, width, height);
+
+        const padLeft = 45;
+        const padRight = 20;
+        const padTop = 15;
+        const padBottom = 25;
+        const chartW = width - padLeft - padRight;
+        const chartH = height - padTop - padBottom;
+
+        // Y-axis grid & labels
+        const ySteps = ['200k', '150k', '100k', '50k', '0k'];
+        ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#94A3B8';
+        ctx.textAlign = 'right';
+
+        ySteps.forEach((label, i) => {
+            const y = padTop + (chartH / (ySteps.length - 1)) * i;
+            ctx.fillText(label, padLeft - 8, y + 3);
+
+            // Dashed grid line
+            ctx.beginPath();
+            ctx.setLineDash([3, 3]);
+            ctx.strokeStyle = '#F1F5F9';
+            ctx.lineWidth = 1;
+            ctx.moveTo(padLeft, y);
+            ctx.lineTo(width - padRight, y);
+            ctx.stroke();
+        });
+        ctx.setLineDash([]);
+
+        // Data for bars (Running month & last month)
+        const barData = [
+            { lm: 0.3, rm: 0.4 }, { lm: 0.25, rm: 0.35 }, { lm: 0.45, rm: 0.5 }, { lm: 0.35, rm: 0.6 },
+            { lm: 0.5, rm: 0.4 }, { lm: 0.4, rm: 0.7 }, { lm: 0.3, rm: 0.55 }, { lm: 0.6, rm: 0.9 },
+            { lm: 0.55, rm: 0.8 }, { lm: 0.7, rm: 0.65 }, { lm: 0.45, rm: 0.5 }, { lm: 0.35, rm: 0.45 },
+            { lm: 0.5, rm: 0.6 }, { lm: 0.6, rm: 0.75 }, { lm: 0.4, rm: 0.5 }, { lm: 0.3, rm: 0.4 }
+        ];
+
+        const barSpacing = chartW / barData.length;
+        const barW = Math.max(5, Math.min(12, barSpacing * 0.42));
+
+        barData.forEach((d, idx) => {
+            const x = padLeft + idx * barSpacing + (barSpacing - barW * 2) / 2;
+
+            // Last Month bar (Light slate)
+            const lmH = d.lm * chartH;
+            ctx.fillStyle = '#E2E8F0';
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(x, padTop + chartH - lmH, barW, lmH, [3, 3, 0, 0]);
+            } else {
+                ctx.rect(x, padTop + chartH - lmH, barW, lmH);
+            }
+            ctx.fill();
+
+            // Running Month bar (Highlight Blue / Turquoise)
+            const rmH = d.rm * chartH;
+            ctx.fillStyle = idx === 7 ? '#1D4ED8' : (idx === 6 ? '#06B6D4' : '#93C5FD');
+            ctx.beginPath();
+            if (ctx.roundRect) {
+                ctx.roundRect(x + barW + 2, padTop + chartH - rmH, barW, rmH, [3, 3, 0, 0]);
+            } else {
+                ctx.rect(x + barW + 2, padTop + chartH - rmH, barW, rmH);
+            }
+            ctx.fill();
+        });
+
+        // Spline curve line overlay
+        const linePoints = [
+            { x: padLeft, y: padTop + chartH * 0.65 },
+            { x: padLeft + chartW * 0.18, y: padTop + chartH * 0.45 },
+            { x: padLeft + chartW * 0.35, y: padTop + chartH * 0.6 },
+            { x: padLeft + chartW * 0.55, y: padTop + chartH * 0.15 },
+            { x: padLeft + chartW * 0.75, y: padTop + chartH * 0.4 },
+            { x: padLeft + chartW * 0.95, y: padTop + chartH * 0.3 }
+        ];
+
+        ctx.beginPath();
+        ctx.strokeStyle = '#181512';
+        ctx.lineWidth = 2.4;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
+        ctx.moveTo(linePoints[0].x, linePoints[0].y);
+        for (let i = 0; i < linePoints.length - 1; i++) {
+            const xc = (linePoints[i].x + linePoints[i + 1].x) / 2;
+            const yc = (linePoints[i].y + linePoints[i + 1].y) / 2;
+            ctx.quadraticCurveTo(linePoints[i].x, linePoints[i].y, xc, yc);
+        }
+        ctx.lineTo(linePoints[linePoints.length - 1].x, linePoints[linePoints.length - 1].y);
+        ctx.stroke();
+
+        // Prominent node points
+        [linePoints[1], linePoints[3], linePoints[4]].forEach(pt => {
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#181512';
+            ctx.fill();
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.stroke();
+        });
+    }
 
     function renderKPISparklines() {
         const sparkContainers = document.querySelectorAll('.adm-kpi-sparkline');
