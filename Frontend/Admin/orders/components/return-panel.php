@@ -107,63 +107,62 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
     }
 }
 ?>
-
-<!-- ══ 4-Card RMA KPI Ribbon ══ -->
-<div class="dt-returns-kpi-grid">
-    <div class="dt-kpi-card">
-        <div class="dt-kpi-icon" style="background:#FAF5E8; border:1px solid #D4AF37;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-        </div>
-        <div class="dt-kpi-content">
-            <span class="dt-kpi-label">TOTAL RMA VOLUME</span>
-            <div class="dt-kpi-value-row">
-                <span class="dt-kpi-value">₹61,440</span>
-                <span class="dt-kpi-badge in-stock">8 Claims</span>
+<!-- ══ 4-Card Master RMA KPI Ribbon ══ -->
+<div class="dt-master-kpi-grid" style="margin-bottom:14px;">
+    <div class="dt-master-kpi-card active">
+        <div class="dt-kpi-header">
+            <span class="dt-kpi-tag">Total RMA Volume</span>
+            <div class="dt-kpi-icon-pill gold">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
             </div>
-            <span class="dt-kpi-sub">Customer Returns + RTO Packages</span>
         </div>
+        <div class="dt-kpi-number-wrap">
+            <span class="dt-kpi-main-number">₹61,440</span>
+            <span class="dt-kpi-trend-pill gold">8 Claims</span>
+        </div>
+        <div style="font-size:11px; color:#64748B; margin-top:2px;">Customer Returns + RTO Packages</div>
     </div>
 
-    <div class="dt-kpi-card">
-        <div class="dt-kpi-icon" style="background:#FEF3C7; border:1px solid #FDE68A;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#B45309" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        </div>
-        <div class="dt-kpi-content">
-            <span class="dt-kpi-label">PENDING REVIEW</span>
-            <div class="dt-kpi-value-row">
-                <span class="dt-kpi-value">₹12,450</span>
-                <span class="dt-kpi-badge low-stock">2 Action Req.</span>
+    <div class="dt-master-kpi-card">
+        <div class="dt-kpi-header">
+            <span class="dt-kpi-tag">Pending Review</span>
+            <div class="dt-kpi-icon-pill amber">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             </div>
-            <span class="dt-kpi-sub">Unboxing Evidence Verification</span>
         </div>
+        <div class="dt-kpi-number-wrap">
+            <span class="dt-kpi-main-number">₹12,450</span>
+            <span class="dt-kpi-trend-pill amber">2 Action Req.</span>
+        </div>
+        <div style="font-size:11px; color:#64748B; margin-top:2px;">Unboxing Evidence Verification</div>
     </div>
 
-    <div class="dt-kpi-card">
-        <div class="dt-kpi-icon" style="background:#EFF6FF; border:1px solid #BFDBFE;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1D4ED8" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-        </div>
-        <div class="dt-kpi-content">
-            <span class="dt-kpi-label">APPROVED FOR PICKUP</span>
-            <div class="dt-kpi-value-row">
-                <span class="dt-kpi-value">₹18,940</span>
-                <span class="dt-kpi-badge in-stock">3 Reverse AWB</span>
+    <div class="dt-master-kpi-card">
+        <div class="dt-kpi-header">
+            <span class="dt-kpi-tag">Approved for Pickup</span>
+            <div class="dt-kpi-icon-pill blue">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
             </div>
-            <span class="dt-kpi-sub">Courier Assigned &amp; In-Transit</span>
         </div>
+        <div class="dt-kpi-number-wrap">
+            <span class="dt-kpi-main-number">₹18,940</span>
+            <span class="dt-kpi-trend-pill blue">3 Reverse AWB</span>
+        </div>
+        <div style="font-size:11px; color:#64748B; margin-top:2px;">Courier Assigned &amp; In-Transit</div>
     </div>
 
-    <div class="dt-kpi-card">
-        <div class="dt-kpi-icon" style="background:#FAF5E8; border:1px solid #D4AF37;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
-        </div>
-        <div class="dt-kpi-content">
-            <span class="dt-kpi-label">DEPOT RESTOCKED</span>
-            <div class="dt-kpi-value-row">
-                <span class="dt-kpi-value">₹30,050</span>
-                <span class="dt-kpi-badge in-stock">100% Audited</span>
+    <div class="dt-master-kpi-card">
+        <div class="dt-kpi-header">
+            <span class="dt-kpi-tag">Depot Restocked</span>
+            <div class="dt-kpi-icon-pill emerald">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
             </div>
-            <span class="dt-kpi-sub">Surat Central Rack B2B Inventory</span>
         </div>
+        <div class="dt-kpi-number-wrap">
+            <span class="dt-kpi-main-number">₹30,050</span>
+            <span class="dt-kpi-trend-pill emerald">100% Audited</span>
+        </div>
+        <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Central Rack B2B Inventory</div>
     </div>
 </div>
 
@@ -222,7 +221,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
 <!-- ══ Master RMA Ledger Table ══ -->
 <div class="dt-order-table-card">
     <div class="dt-rma-table-wrap">
-        <table class="dt-order-table" id="rmaLedgerTable">
+        <table class="dt-order-table" id="rmaLedgerTable" style="min-width:1080px; width:100%;">
             <thead>
                 <tr>
                     <th class="col-rma-id" style="width:115px; white-space:nowrap;">Return ID</th>
@@ -232,7 +231,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                     <th class="col-rma-reason" style="min-width:170px;">Reason</th>
                     <th class="col-rma-amount" style="width:95px; white-space:nowrap;">Amount</th>
                     <th class="col-rma-status" style="width:130px; white-space:nowrap;">Status</th>
-                    <th class="col-rma-actions" style="width:280px; text-align:right; white-space:nowrap;">Actions</th>
+                    <th class="col-rma-actions" style="width:250px; text-align:right; white-space:nowrap;">Actions</th>
                 </tr>
             </thead>
             <tbody id="rmaTableBody">
