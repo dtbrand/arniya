@@ -140,6 +140,7 @@ $active_subnav = "refunds";
                         <button type="button" onclick="document.getElementById('refundSearchInput').value=''; window.DT_REFUNDS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; font-size:12px;">✕</button>
                     </div>
                     <div class="dt-refund-toolbar-right">
+                        <!-- Quick Payout Method Filter -->
                         <select id="payoutFilterSelect" onchange="window.DT_REFUNDS.filterByMethod(this.value)" class="dt-order-search-input" style="height:36px; font-weight:700; border-radius:6px; min-width:180px;">
                             <option value="all">All Payout Methods</option>
                             <option value="ICICI Direct Bank Transfer">ICICI Direct Bank Wire</option>
@@ -147,6 +148,37 @@ $active_subnav = "refunds";
                             <option value="B2B Wholesale Credit Ledger">B2B Credit Note Ledger</option>
                             <option value="Razorpay Instant Reversal">Razorpay Instant Reversal</option>
                         </select>
+
+                        <!-- Hide / Show Columns Options Dropdown (Like Orders Section) -->
+                        <div class="dt-col-dropdown-wrap" style="position:relative;">
+                            <button type="button" class="dt-btn dt-btn-pale" style="height:36px; padding:0 10px; font-size:11.5px; font-weight:700; white-space:nowrap; display:inline-flex; align-items:center; gap:5px;" onclick="window.DT_REFUNDS.toggleColumnMenu(event)" title="Show or Hide Table Columns">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                                </svg>
+                                <span>Columns</span>
+                                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            
+                            <div id="refundColumnVisibilityMenu" class="dt-col-menu" style="display:none; position:absolute; right:0; top:calc(100% + 6px); width:230px; background:#FFFFFF; border:1px solid #D4AF37; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.14); padding:10px 12px; z-index:99999;">
+                                <div style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #E2DFD7; padding-bottom:6px;">
+                                    <span>Toggle Visible Columns</span>
+                                    <button type="button" onclick="window.DT_REFUNDS.resetAllColumns()" style="background:none; border:none; font-size:10px; color:#1D4ED8; font-weight:700; cursor:pointer; padding:0;">Reset All</button>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:5px; font-size:11px; color:#1E293B;">
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-id" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-id', this.checked)"> <span>Refund ID</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-order" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-order', this.checked)"> <span>Order Ref</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-customer" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-customer', this.checked)"> <span>Customer &amp; Consignee</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-gateway" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-gateway', this.checked)"> <span>Payout Gateway</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-amount" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-amount', this.checked)"> <span>Amount (₹)</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-status" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-status', this.checked)"> <span>Settlement Status</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-settlement" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-settlement', this.checked)"> <span>Date / UTR Reference</span></label>
+                                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" data-col="col-ref-actions" checked onchange="window.DT_REFUNDS.toggleColumn('col-ref-actions', this.checked)"> <span>Row Actions</span></label>
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="button" onclick="window.location.reload();" class="dt-btn dt-btn-pale" style="height:36px; padding:0 12px; font-size:11.5px; font-weight:700; white-space:nowrap; display:inline-flex; align-items:center; gap:5px;">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                             <span>Refresh</span>
@@ -160,32 +192,32 @@ $active_subnav = "refunds";
                         <table class="dt-order-table" id="refundLedgerTable" style="min-width:1080px; width:100%;">
                             <thead>
                                 <tr>
-                                    <th style="width:100px; white-space:nowrap;">Refund ID</th>
-                                    <th style="width:110px; white-space:nowrap;">Order Ref</th>
-                                    <th style="min-width:210px;">Customer &amp; Consignee</th>
-                                    <th style="min-width:180px;">Payout Gateway</th>
-                                    <th style="width:95px; white-space:nowrap;">Amount</th>
-                                    <th style="width:120px; white-space:nowrap;">Status</th>
-                                    <th style="width:150px; white-space:nowrap;">Settlement Date / UTR</th>
-                                    <th style="width:250px; text-align:right; white-space:nowrap;">Actions</th>
+                                    <th class="col-ref-id" style="width:100px; white-space:nowrap;">Refund ID</th>
+                                    <th class="col-ref-order" style="width:110px; white-space:nowrap;">Order Ref</th>
+                                    <th class="col-ref-customer" style="min-width:210px;">Customer &amp; Consignee</th>
+                                    <th class="col-ref-gateway" style="min-width:180px;">Payout Gateway</th>
+                                    <th class="col-ref-amount" style="width:95px; white-space:nowrap;">Amount</th>
+                                    <th class="col-ref-status" style="width:120px; white-space:nowrap;">Status</th>
+                                    <th class="col-ref-settlement" style="width:150px; white-space:nowrap;">Settlement Date / UTR</th>
+                                    <th class="col-ref-actions" style="width:250px; text-align:right; white-space:nowrap;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="refundTableBody">
                                 <tr data-status="settled" data-method="ICICI Direct Bank Transfer">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4012</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001612" class="dt-order-id-link">DTB-001612</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4012</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001612" class="dt-order-id-link">DTB-001612</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Meenakshi Silk House</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Depot • Ph: +91 98221 00192</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">ICICI Direct Bank Transfer</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹14,940</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">ICICI Direct Bank Transfer</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹14,940</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">20 Aug 2026</div>
                                         <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: ICICR52026082001</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4012')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -204,20 +236,20 @@ $active_subnav = "refunds";
                                 </tr>
 
                                 <tr data-status="processing" data-method="UPI Reversal">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4011</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001609" class="dt-order-id-link">DTB-001609</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4011</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001609" class="dt-order-id-link">DTB-001609</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Shweta Joshi</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Ahmedabad Order • Ph: +91 98765 43210</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">UPI Reversal (PhonePe)</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,990</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">UPI Reversal (PhonePe)</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,990</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">19 Aug 2026</div>
                                         <div style="font-size:10px; color:#64748B; margin-top:1px;">REF: UPI-291084-IN</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4011')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -236,20 +268,20 @@ $active_subnav = "refunds";
                                 </tr>
 
                                 <tr data-status="pending" data-method="B2B Wholesale Credit Ledger">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4010</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001605" class="dt-order-id-link">DTB-001605</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4010</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001605" class="dt-order-id-link">DTB-001605</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Kalyan Sarees Wholesale</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Loom Defect Claim • Ph: +91 98330 99881</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,490</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge pending"><span class="dt-status-dot"></span><span>Pending Approval</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹4,490</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge pending"><span class="dt-status-dot"></span><span>Pending Approval</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">18 Aug 2026</div>
                                         <div style="font-size:10px; color:#B45309; font-weight:700; margin-top:1px;">Action Req.</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.approveClaim('REF-4010', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-gold" style="height:28px; padding:0 10px; font-size:11px;" title="Approve & Credit Balance">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -272,20 +304,20 @@ $active_subnav = "refunds";
                                 </tr>
 
                                 <tr data-status="settled" data-method="HDFC Bank Wire Transfer">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4009</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001598" class="dt-order-id-link">DTB-001598</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4009</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001598" class="dt-order-id-link">DTB-001598</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Vardhman Tex Godown</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Central Depot • Ph: +91 98220 19283</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">HDFC Direct Bank Wire</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹22,500</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">HDFC Direct Bank Wire</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹22,500</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">17 Aug 2026</div>
                                         <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: HDFCR52026081702</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4009')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -304,20 +336,20 @@ $active_subnav = "refunds";
                                 </tr>
 
                                 <tr data-status="processing" data-method="Razorpay Instant Reversal">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4008</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001590" class="dt-order-id-link">DTB-001590</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4008</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001590" class="dt-order-id-link">DTB-001590</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Pooja Sharma</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Mumbai Online Shop • Ph: +91 91981 10001</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">Razorpay Instant Reversal</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹3,850</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">Razorpay Instant Reversal</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹3,850</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge processing"><span class="dt-status-dot"></span><span>In Gateway</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">16 Aug 2026</div>
                                         <div style="font-size:10px; color:#64748B; margin-top:1px;">REF: RZP-REF-771920</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4008')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -336,20 +368,20 @@ $active_subnav = "refunds";
                                 </tr>
 
                                 <tr data-status="settled" data-method="B2B Wholesale Credit Ledger">
-                                    <td style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4007</td>
-                                    <td style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001582" class="dt-order-id-link">DTB-001582</a></td>
-                                    <td>
+                                    <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4007</td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/Frontend/Admin/orders/view.php?id=DTB-001582" class="dt-order-id-link">DTB-001582</a></td>
+                                    <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Ananya Silks Bangalore</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">B2B Wholesale • Ph: +91 98450 11223</div>
                                     </td>
-                                    <td style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
-                                    <td style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹18,200</td>
-                                    <td style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
-                                    <td style="white-space:nowrap;">
+                                    <td class="col-ref-gateway" style="font-size:11.5px; color:#475569; font-weight:600;">B2B Wholesale Credit Ledger</td>
+                                    <td class="col-ref-amount" style="font-weight:800; color:#DC2626; font-size:12.5px; white-space:nowrap;">₹18,200</td>
+                                    <td class="col-ref-status" style="white-space:nowrap;"><span class="dt-status-badge delivered"><span class="dt-status-dot"></span><span>Settled</span></span></td>
+                                    <td class="col-ref-settlement" style="white-space:nowrap;">
                                         <div style="font-size:11.5px; color:#181512; font-weight:700;">15 Aug 2026</div>
                                         <div style="font-size:10px; color:#64748B; margin-top:1px;">UTR: CR-NOTE-SURAT-099</div>
                                     </td>
-                                    <td style="text-align:right; white-space:nowrap;">
+                                    <td class="col-ref-actions" style="text-align:right; white-space:nowrap;">
                                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                                             <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4007')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 9px; font-size:11px; font-weight:700;" title="View Full Details">
                                                 <svg viewBox="0 0 24 24" width="11.5" height="11.5" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>

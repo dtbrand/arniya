@@ -392,7 +392,81 @@
                 iframe.contentWindow.focus();
                 iframe.contentWindow.print();
             }, 300);
+        },
+
+        toggleColumnMenu: function(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('refundColumnVisibilityMenu');
+            if (!menu) return;
+            const isVisible = menu.style.display === 'block';
+            menu.style.display = isVisible ? 'none' : 'block';
+        },
+
+        toggleColumn: function(colClass, isChecked) {
+            const cells = document.querySelectorAll('.' + colClass);
+            cells.forEach(c => c.style.display = isChecked ? '' : 'none');
+            
+            try {
+                const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_refund_cols') || '{}');
+                hiddenCols[colClass] = !isChecked;
+                localStorage.setItem('dt_hidden_refund_cols', JSON.stringify(hiddenCols));
+            } catch (e) {}
+
+            if (window.DT_ORDERS) {
+                const cleanName = colClass.replace('col-ref-', '').toUpperCase();
+                window.DT_ORDERS.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+            }
+        },
+
+        resetAllColumns: function() {
+            try {
+                localStorage.removeItem('dt_hidden_refund_cols');
+            } catch (e) {}
+
+            const checkboxes = document.querySelectorAll('#refundColumnVisibilityMenu input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = true;
+                const colClass = cb.dataset.col;
+                if (colClass) {
+                    const cells = document.querySelectorAll('.' + colClass);
+                    cells.forEach(c => c.style.display = '');
+                }
+            });
+
+            if (window.DT_ORDERS) window.DT_ORDERS.showToast('✅ All refund columns restored to default view');
+        },
+
+        initColumnPreferences: function() {
+            try {
+                const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_refund_cols') || '{}');
+                Object.keys(hiddenCols).forEach(colClass => {
+                    const isHidden = hiddenCols[colClass];
+                    if (isHidden) {
+                        const cells = document.querySelectorAll('.' + colClass);
+                        cells.forEach(c => c.style.display = 'none');
+                        const cb = document.querySelector(`#refundColumnVisibilityMenu input[data-col="${colClass}"]`);
+                        if (cb) cb.checked = false;
+                    }
+                });
+            } catch (e) {}
         }
     };
+
+    // Close column dropdown menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('refundColumnVisibilityMenu');
+        const wrap = document.querySelector('.dt-col-dropdown-wrap');
+        if (menu && wrap && !wrap.contains(e.target)) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Auto-init on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => window.DT_REFUNDS.initColumnPreferences());
+    } else {
+        window.DT_REFUNDS.initColumnPreferences();
+    }
 })();
+
 
