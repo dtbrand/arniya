@@ -4296,7 +4296,7 @@ svg.adm-search-icon {
     display: inline-block;
 }
 
-/* Recent Orders Table */
+/* Recent Wholesale Orders Table - World-Class Luxury Styling */
 .adm-ref-table {
     width: 100%;
     border-collapse: collapse;
@@ -4306,45 +4306,131 @@ svg.adm-search-icon {
 .adm-ref-table th {
     text-align: left;
     padding: 10px 12px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #645D54;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #78716C;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     border-bottom: 1.5px solid #EAE5D9;
+    white-space: nowrap;
 }
 
 .adm-ref-table td {
-    padding: 11px 12px;
+    padding: 12px 12px;
     border-bottom: 1px solid #F5F2EA;
     color: #181512;
     vertical-align: middle;
+    white-space: nowrap;
 }
 
 .adm-ref-table tr:last-child td {
     border-bottom: none;
 }
 
-.adm-ref-table tr:hover td {
+.adm-ref-table tbody tr {
+    transition: all 0.15s ease;
+}
+
+.adm-ref-table tbody tr:hover td {
     background: #FAF8F4;
+}
+
+.adm-ref-ord-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #181512;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', monospace;
+    font-size: 0.74rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
 }
 
 .adm-ref-cust-cell {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
 }
 
 .adm-ref-cust-avatar {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     font-weight: 800;
     flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.adm-ref-cust-name {
+    font-weight: 800;
+    color: #181512;
+    font-size: 0.82rem;
+    line-height: 1.2;
+}
+
+.adm-ref-cust-depot {
+    font-size: 0.68rem;
+    color: #78716C;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.adm-ref-actions-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.adm-ref-wa-btn {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    color: #FFFFFF;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.adm-ref-wa-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.5);
+}
+
+.adm-ref-view-ord-btn {
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 9px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.adm-ref-view-ord-btn:hover {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
 }
 
 /* Right Performance Speedometer Card - World-Class Luxury Design */

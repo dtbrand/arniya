@@ -557,90 +557,151 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </div>
                             </div>
 
-                            <!-- B. Recent Orders Table Card -->
+                            <!-- B. Recent Orders Table Card (World-Class Luxury Table) -->
                             <div class="adm-ref-card" style="padding: 18px 22px;">
-                                <div class="adm-ref-card-head" style="margin-bottom:12px;">
-                                    <div>
+                                <div class="adm-ref-card-head" style="margin-bottom:14px;">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, #FAF5E8, #F3E8C8); border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.3">
+                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                            </svg>
+                                        </div>
                                         <h3 class="adm-ref-card-title">Recent Wholesale Orders</h3>
+                                        <span class="adm-ref-pill emerald" style="font-size:0.65rem; padding:2px 7px;">Live Feed</span>
                                     </div>
-                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" style="font-size:0.75rem; color:#8A681F; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">View All ↗</a>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn" style="font-size:0.75rem; padding:5px 12px;">View All Orders (1,624) ↗</a>
                                 </div>
                                 <div style="overflow-x:auto;">
                                     <table class="adm-ref-table">
                                         <thead>
                                             <tr>
-                                                <th>Order</th>
-                                                <th>Date</th>
-                                                <th>Customer ↑</th>
-                                                <th>Payment ↕</th>
-                                                <th>Status ↑</th>
-                                                <th style="text-align:right;">Total</th>
+                                                <th>Order ID</th>
+                                                <th>Date & Time</th>
+                                                <th>B2B Customer & Location</th>
+                                                <th>Payment Method</th>
+                                                <th>Fulfillment Status</th>
+                                                <th style="text-align:right;">Order Total</th>
+                                                <th style="text-align:right;">Quick Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="font-weight:800; color:#181512;">#ORD-9842</td>
-                                                <td style="color:#78716C;">Today, 14:20</td>
+                                                <td><span class="adm-ref-ord-badge">#ORD-9842</span></td>
+                                                <td style="color:#645D54; font-weight:600;">Today • 14:20</td>
                                                 <td>
                                                     <div class="adm-ref-cust-cell">
                                                         <div class="adm-ref-cust-avatar" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">AS</div>
                                                         <div>
-                                                            <div style="font-weight:700; color:#181512;">Abdullah Saqib</div>
-                                                            <div style="font-size:0.68rem; color:#78716C;">Delhi Depot • 14 Lots</div>
+                                                            <div class="adm-ref-cust-name">Abdullah Saqib</div>
+                                                            <div class="adm-ref-cust-depot">📍 Delhi Central Hub • 14 Lots</div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
-                                                <td><span class="adm-ref-pill emerald">Fulfilled</span></td>
-                                                <td style="text-align:right; font-weight:800; color:#181512;">₹48,200</td>
+                                                <td><span class="adm-ref-pill emerald">✓ Paid Online</span></td>
+                                                <td><span class="adm-ref-pill emerald">● Fulfilled</span></td>
+                                                <td style="text-align:right;">
+                                                    <div style="font-weight:800; color:#181512; font-size:0.92rem; font-family:'Plus Jakarta Sans', sans-serif;">₹48,200</div>
+                                                    <div style="font-size:0.65rem; color:#78716C; font-weight:600;">14 Lots Saree</div>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    <div class="adm-ref-actions-cell">
+                                                        <a href="https://wa.me/919876543210?text=Hello%20Abdullah%2C%20regarding%20Wholesale%20Order%20ORD-9842" target="_blank" class="adm-ref-wa-btn" title="1-Click WhatsApp Lot Connect">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn">View ↗</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="font-weight:800; color:#181512;">#ORD-9841</td>
-                                                <td style="color:#78716C;">Today, 11:45</td>
+                                                <td><span class="adm-ref-ord-badge">#ORD-9841</span></td>
+                                                <td style="color:#645D54; font-weight:600;">Today • 11:45</td>
                                                 <td>
                                                     <div class="adm-ref-cust-cell">
                                                         <div class="adm-ref-cust-avatar" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #93C5FD;">GS</div>
                                                         <div>
-                                                            <div style="font-weight:700; color:#181512;">Gulam Sabir</div>
-                                                            <div style="font-size:0.68rem; color:#78716C;">Mumbai Hub • 8 Lots</div>
+                                                            <div class="adm-ref-cust-name">Gulam Sabir</div>
+                                                            <div class="adm-ref-cust-depot">📍 Mumbai Wholesale Hub • 8 Lots</div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td><span class="adm-ref-pill danger">UnPaid (COD)</span></td>
-                                                <td><span class="adm-ref-pill rose">Dispatched</span></td>
-                                                <td style="text-align:right; font-weight:800; color:#181512;">₹24,500</td>
+                                                <td><span class="adm-ref-pill rose">● Dispatched</span></td>
+                                                <td style="text-align:right;">
+                                                    <div style="font-weight:800; color:#181512; font-size:0.92rem; font-family:'Plus Jakarta Sans', sans-serif;">₹24,500</div>
+                                                    <div style="font-size:0.65rem; color:#78716C; font-weight:600;">8 Lots Kurti</div>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    <div class="adm-ref-actions-cell">
+                                                        <a href="https://wa.me/919876543210?text=Hello%20Gulam%2C%20regarding%20Wholesale%20Order%20ORD-9841" target="_blank" class="adm-ref-wa-btn" title="1-Click WhatsApp Lot Connect">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn">View ↗</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="font-weight:800; color:#181512;">#ORD-9840</td>
-                                                <td style="color:#78716C;">Yesterday</td>
+                                                <td><span class="adm-ref-ord-badge">#ORD-9840</span></td>
+                                                <td style="color:#645D54; font-weight:600;">Yesterday • 18:10</td>
                                                 <td>
                                                     <div class="adm-ref-cust-cell">
                                                         <div class="adm-ref-cust-avatar" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">AK</div>
                                                         <div>
-                                                            <div style="font-weight:700; color:#181512;">Aslam Khan</div>
-                                                            <div style="font-size:0.68rem; color:#78716C;">Surat Central • 32 Lots</div>
+                                                            <div class="adm-ref-cust-name">Aslam Khan</div>
+                                                            <div class="adm-ref-cust-depot">📍 Surat Central Depot • 32 Lots</div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
-                                                <td><span class="adm-ref-pill emerald">Delivered</span></td>
-                                                <td style="text-align:right; font-weight:800; color:#181512;">₹95,000</td>
+                                                <td><span class="adm-ref-pill emerald">✓ Paid Online</span></td>
+                                                <td><span class="adm-ref-pill emerald">● Delivered</span></td>
+                                                <td style="text-align:right;">
+                                                    <div style="font-weight:800; color:#181512; font-size:0.92rem; font-family:'Plus Jakarta Sans', sans-serif;">₹95,000</div>
+                                                    <div style="font-size:0.65rem; color:#78716C; font-weight:600;">32 Lots Silk Saree</div>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    <div class="adm-ref-actions-cell">
+                                                        <a href="https://wa.me/919876543210?text=Hello%20Aslam%2C%20regarding%20Wholesale%20Order%20ORD-9840" target="_blank" class="adm-ref-wa-btn" title="1-Click WhatsApp Lot Connect">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn">View ↗</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="font-weight:800; color:#181512;">#ORD-9839</td>
-                                                <td style="color:#78716C;">Yesterday</td>
+                                                <td><span class="adm-ref-ord-badge">#ORD-9839</span></td>
+                                                <td style="color:#645D54; font-weight:600;">Yesterday • 15:30</td>
                                                 <td>
                                                     <div class="adm-ref-cust-cell">
                                                         <div class="adm-ref-cust-avatar" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">PV</div>
                                                         <div>
-                                                            <div style="font-weight:700; color:#181512;">Pooja Verma</div>
-                                                            <div style="font-size:0.68rem; color:#78716C;">Ahmedabad • 18 Lots</div>
+                                                            <div class="adm-ref-cust-name">Pooja Verma</div>
+                                                            <div class="adm-ref-cust-depot">📍 Ahmedabad Depot • 18 Lots</div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><span class="adm-ref-pill emerald">Paid Online</span></td>
-                                                <td><span class="adm-ref-pill emerald">Delivered</span></td>
-                                                <td style="text-align:right; font-weight:800; color:#181512;">₹62,800</td>
+                                                <td><span class="adm-ref-pill emerald">✓ Paid Online</span></td>
+                                                <td><span class="adm-ref-pill emerald">● Delivered</span></td>
+                                                <td style="text-align:right;">
+                                                    <div style="font-weight:800; color:#181512; font-size:0.92rem; font-family:'Plus Jakarta Sans', sans-serif;">₹62,800</div>
+                                                    <div style="font-size:0.65rem; color:#78716C; font-weight:600;">18 Lots Lehenga</div>
+                                                </td>
+                                                <td style="text-align:right;">
+                                                    <div class="adm-ref-actions-cell">
+                                                        <a href="https://wa.me/919876543210?text=Hello%20Pooja%2C%20regarding%20Wholesale%20Order%20ORD-9839" target="_blank" class="adm-ref-wa-btn" title="1-Click WhatsApp Lot Connect">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn">View ↗</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
