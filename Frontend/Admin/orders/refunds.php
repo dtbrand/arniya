@@ -189,6 +189,10 @@ $active_subnav = "refunds";
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:5px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4012')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4012', 'DTB-001612', '14940', 'Meenakshi Silk House')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
@@ -216,6 +220,10 @@ $active_subnav = "refunds";
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:5px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4011')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4011', 'DTB-001609', '4990', 'Shweta Joshi')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
@@ -247,6 +255,10 @@ $active_subnav = "refunds";
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#181512" stroke-width="2.4"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 <span>Approve</span>
                                             </button>
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4010')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4010', 'DTB-001605', '4490', 'Kalyan Sarees Wholesale')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                             </button>
@@ -270,6 +282,10 @@ $active_subnav = "refunds";
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:5px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4009')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4009', 'DTB-001598', '22500', 'Vardhman Tex Godown')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
@@ -297,6 +313,10 @@ $active_subnav = "refunds";
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:5px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4008')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4008', 'DTB-001590', '3850', 'Pooja Sharma')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>
@@ -324,6 +344,10 @@ $active_subnav = "refunds";
                                     </td>
                                     <td style="text-align:right;">
                                         <div style="display:inline-flex; gap:5px;">
+                                            <button type="button" onclick="window.DT_REFUNDS.viewRefundDetails('REF-4007')" class="dt-btn" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; height:28px; padding:0 8px; font-size:10.5px; font-weight:700;" title="View Full Details">
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                                <span>View</span>
+                                            </button>
                                             <button type="button" onclick="window.DT_REFUNDS.downloadCreditNotePDF('REF-4007', 'DTB-001582', '18200', 'Ananya Silks Bangalore')" class="dt-btn dt-btn-pale" style="height:28px; padding:0 8px; font-size:10.5px;" title="Credit Note PDF">
                                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                                 <span>Voucher</span>

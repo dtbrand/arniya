@@ -10,7 +10,203 @@
     let currentMethodFilter = 'all';
     let currentSearchQuery = '';
 
+    const refundRecords = {
+        'REF-4012': {
+            refundId: 'REF-4012',
+            orderId: 'DTB-001612',
+            customer: 'Meenakshi Silk House',
+            contact: '+91 98221 00192',
+            location: 'Surat Depot Consignment',
+            payoutMethod: 'ICICI Direct Bank Transfer (Corporate RTGS)',
+            originalAmount: '1,12,250',
+            refundAmount: '14,940',
+            remainingBalance: '97,310',
+            status: 'settled',
+            statusText: 'Settled',
+            date: '20 Aug 2026, 04:30 PM',
+            utr: 'ICICR52026082001',
+            reason: 'Consignment returned to Surat depot intact and passed QC inspection.',
+            authorizedBy: 'Gautam Sethi (Super Admin)'
+        },
+        'REF-4011': {
+            refundId: 'REF-4011',
+            orderId: 'DTB-001609',
+            customer: 'Shweta Joshi',
+            contact: '+91 98765 43210',
+            location: 'Ahmedabad Retail Order',
+            payoutMethod: 'UPI Reversal (PhonePe Instant)',
+            originalAmount: '4,990',
+            refundAmount: '4,990',
+            remainingBalance: '0',
+            status: 'processing',
+            statusText: 'In Gateway',
+            date: '19 Aug 2026, 02:15 PM',
+            utr: 'UPI-291084-IN',
+            reason: 'Customer cancelled order prior to courier dispatch.',
+            authorizedBy: 'Auto-Gateway Trigger'
+        },
+        'REF-4010': {
+            refundId: 'REF-4010',
+            orderId: 'DTB-001605',
+            customer: 'Kalyan Sarees Wholesale',
+            contact: '+91 98330 99881',
+            location: 'Kalyan B2B Hub',
+            payoutMethod: 'B2B Wholesale Credit Ledger',
+            originalAmount: '54,490',
+            refundAmount: '4,490',
+            remainingBalance: '50,000',
+            status: 'pending',
+            statusText: 'Pending Approval',
+            date: '18 Aug 2026, 11:45 AM',
+            utr: 'Pending Admin Authorization',
+            reason: 'Loom defect claim on 2 pieces of Banarasi Katan Silk.',
+            authorizedBy: 'Awaiting Final Clearance'
+        },
+        'REF-4009': {
+            refundId: 'REF-4009',
+            orderId: 'DTB-001598',
+            customer: 'Vardhman Tex Godown',
+            contact: '+91 98220 19283',
+            location: 'Surat Central Depot',
+            payoutMethod: 'HDFC Bank Wire Transfer',
+            originalAmount: '2,22,500',
+            refundAmount: '22,500',
+            remainingBalance: '2,00,000',
+            status: 'settled',
+            statusText: 'Settled',
+            date: '17 Aug 2026, 06:10 PM',
+            utr: 'HDFCR52026081702',
+            reason: 'B2B Short Shipment adjustment against Surat Central Godown invoice.',
+            authorizedBy: 'Gautam Sethi (Super Admin)'
+        },
+        'REF-4008': {
+            refundId: 'REF-4008',
+            orderId: 'DTB-001590',
+            customer: 'Pooja Sharma',
+            contact: '+91 91981 10001',
+            location: 'Mumbai Online Shop',
+            payoutMethod: 'Razorpay Instant Reversal',
+            originalAmount: '3,850',
+            refundAmount: '3,850',
+            remainingBalance: '0',
+            status: 'processing',
+            statusText: 'In Gateway',
+            date: '16 Aug 2026, 01:20 PM',
+            utr: 'RZP-REF-771920',
+            reason: 'Duplicate payment on checkout payment gateway.',
+            authorizedBy: 'Razorpay Webhook Auto'
+        },
+        'REF-4007': {
+            refundId: 'REF-4007',
+            orderId: 'DTB-001582',
+            customer: 'Ananya Silks Bangalore',
+            contact: '+91 98450 11223',
+            location: 'Bangalore Commercial Hub',
+            payoutMethod: 'B2B Wholesale Credit Ledger',
+            originalAmount: '1,85,000',
+            refundAmount: '18,200',
+            remainingBalance: '1,66,800',
+            status: 'settled',
+            statusText: 'Settled',
+            date: '15 Aug 2026, 03:50 PM',
+            utr: 'CR-NOTE-SURAT-099',
+            reason: 'Return of 5 Handloom sets due to shade variation; credited to balance.',
+            authorizedBy: 'Gautam Sethi (Super Admin)'
+        }
+    };
+
     window.DT_REFUNDS = {
+        viewRefundDetails: function(refundId) {
+            const data = refundRecords[refundId] || refundRecords['REF-4012'];
+            const modal = document.getElementById('viewRefundModal');
+            const titleEl = document.getElementById('viewRefundIdText');
+            const bodyEl = document.getElementById('viewRefundModalBody');
+            const whatsappBtn = document.getElementById('viewRefundWhatsAppBtn');
+            const downloadBtn = document.getElementById('viewRefundDownloadBtn');
+
+            if (titleEl) titleEl.textContent = data.refundId;
+
+            if (bodyEl) {
+                let badgeClass = 'delivered';
+                if (data.status === 'pending') badgeClass = 'pending';
+                if (data.status === 'processing') badgeClass = 'processing';
+
+                bodyEl.innerHTML = `
+                    <!-- Row 1: Summary Cards -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px;">
+                            <div style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:6px;">Beneficiary Customer</div>
+                            <div style="font-size:13px; font-weight:800; color:#181512;">${data.customer}</div>
+                            <div style="font-size:11.5px; color:#475569; margin-top:2px;">Phone: <strong>${data.contact}</strong></div>
+                            <div style="font-size:11px; color:#64748B; margin-top:1px;">${data.location}</div>
+                        </div>
+
+                        <div style="background:#FAF8F4; border:1px solid #E2DFD7; border-radius:8px; padding:12px;">
+                            <div style="font-size:10.5px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:6px;">Settlement Gateway &amp; Audit</div>
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <span style="font-size:11.5px; color:#64748B;">Status:</span>
+                                <span class="dt-status-badge ${badgeClass}"><span class="dt-status-dot"></span><span>${data.statusText}</span></span>
+                            </div>
+                            <div style="font-size:11.5px; color:#475569; margin-top:4px;">Channel: <strong>${data.payoutMethod}</strong></div>
+                            <div style="font-size:11px; color:#64748B; margin-top:1px;">UTR / Ref: <strong style="color:#181512;">${data.utr}</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Financial Calculation Breakdown -->
+                    <div style="background:#FFFFFF; border:1.5px solid #E2DFD7; border-radius:8px; padding:14px;">
+                        <div style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; border-bottom:1px solid #E2DFD7; padding-bottom:6px; margin-bottom:10px; display:flex; justify-content:space-between;">
+                            <span>Financial Valuation Breakdown</span>
+                            <span>Order Ref: <a href="/Frontend/Admin/orders/view.php?id=${data.orderId}" style="color:#8A681F; font-weight:800; text-decoration:underline;">${data.orderId}</a></span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                            <div style="display:flex; justify-content:space-between; color:#475569;">
+                                <span>Original Invoice Amount:</span>
+                                <strong style="color:#181512;">₹${data.originalAmount}</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; color:#475569;">
+                                <span>Restocking / Depot Deductions:</span>
+                                <span style="color:#15803D; font-weight:700;">₹0 (100% Full Credit)</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; border-top:1px dashed #E2DFD7; padding-top:6px; margin-top:2px; font-weight:800; font-size:13.5px; color:#DC2626;">
+                                <span>Authorized Refund Valuation:</span>
+                                <span>₹${data.refundAmount}</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:11.5px; color:#15803D; font-weight:700; margin-top:2px;">
+                                <span>Remaining Order Ledger Balance:</span>
+                                <span>₹${data.remainingBalance}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Internal Remarks & Audit -->
+                    <div style="background:#FAF5E8; border:1px solid #D4AF37; border-radius:8px; padding:10px 14px; font-size:11.5px;">
+                        <div style="color:#8A681F; font-weight:800; margin-bottom:2px;">QC &amp; Authorization Remarks:</div>
+                        <div style="color:#181512;">${data.reason}</div>
+                        <div style="font-size:10.5px; color:#64748B; margin-top:4px;">Date: ${data.date} • Authorized By: <strong>${data.authorizedBy}</strong></div>
+                    </div>
+                `;
+            }
+
+            if (whatsappBtn) {
+                whatsappBtn.onclick = function() {
+                    window.DT_REFUNDS.shareWhatsApp(data.refundId, data.refundAmount.replace(/,/g, ''), data.customer);
+                };
+            }
+
+            if (downloadBtn) {
+                downloadBtn.onclick = function() {
+                    window.DT_REFUNDS.downloadCreditNotePDF(data.refundId, data.orderId, data.refundAmount.replace(/,/g, ''), data.customer);
+                };
+            }
+
+            if (modal) modal.style.display = 'flex';
+        },
+
+        closeViewRefundModal: function() {
+            const modal = document.getElementById('viewRefundModal');
+            if (modal) modal.style.display = 'none';
+        },
+
         openRefundDrawer: function(orderId, maxAmount) {
             const drawer = document.getElementById('refundDrawer');
             if (!drawer) return;
@@ -93,6 +289,12 @@
                     statusCell.innerHTML = '<span class="dt-status-dot"></span><span>Settled</span>';
                 }
                 row.setAttribute('data-status', 'settled');
+            }
+
+            if (refundRecords[refundId]) {
+                refundRecords[refundId].status = 'settled';
+                refundRecords[refundId].statusText = 'Settled';
+                refundRecords[refundId].utr = 'CR-NOTE-SURAT-' + Math.floor(100 + Math.random() * 900);
             }
 
             const msg = `Approved claim ${refundId} (₹${Number(amount).toLocaleString('en-IN')}) for ${customer}. Credit Note Issued.`;
