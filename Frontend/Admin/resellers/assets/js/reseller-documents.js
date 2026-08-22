@@ -1,12 +1,35 @@
 /**
  * reseller-documents.js — DT Brand's & Jai Hanuman Tex
- * High-Res Document Previewer, Drag & Drop Replacement, 100% Non-Blank Exact UI PDF Downloader & 1-Page Print Engine
+ * High-Res Document Previewer, Drag & Drop Replacement, Clean PDF Name & ID Generator, and Guaranteed 1-Page Print Engine
  */
 
 (function () {
     'use strict';
 
     let currentPreviewDoc = null;
+
+    // ── Clean Standardized PDF File Naming Function ──
+    function getCleanPdfFilename(docTitle, docId, resellerId) {
+        let baseName = 'KYC_Document';
+        const titleUpper = (docTitle || '').toUpperCase();
+
+        if (titleUpper.includes('GST')) {
+            baseName = 'GST_Registration_Certificate';
+        } else if (titleUpper.includes('AADHAAR') || titleUpper.includes('ADHAAR')) {
+            baseName = 'Proprietor_Aadhaar_Card';
+        } else if (titleUpper.includes('CHEQUE') || titleUpper.includes('BANK')) {
+            baseName = 'Cancelled_Cheque_Bank_Statement';
+        } else if (titleUpper.includes('TRADE') || titleUpper.includes('LICENSE')) {
+            baseName = 'Trade_License_Certificate';
+        } else {
+            baseName = (docTitle || 'Document').replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+
+        const cleanDocId = (docId || 'DOC401').replace(/[^a-zA-Z0-9]/g, '');
+        const cleanResellerId = (resellerId || 'RES1048').replace(/[^a-zA-Z0-9]/g, '');
+
+        return `${baseName}_${cleanDocId}_${cleanResellerId}.pdf`;
+    }
 
     // ── Preview Document ──
     window.previewResellerDoc = function (docId, title, identifier, format) {
@@ -61,9 +84,8 @@
         const docIdent = identifier || '24AAAPL1234F1Z8';
         const docRef = docId || 'DOC-401';
 
-        const safeTitle = docTitle.replace(/[^a-zA-Z0-9_-]/g, '_');
-        const safeId = docIdent.replace(/[^a-zA-Z0-9_-]/g, '_');
-        const pdfFilename = `${safeTitle}_${safeId}.pdf`;
+        // Clean, structured PDF filename: [DocName]_[DocID]_[ResellerID].pdf
+        const pdfFilename = getCleanPdfFilename(docTitle, docRef, 'RES-1048');
 
         // 1. Populate certificate elements
         populatePrintCertificate(docTitle, docIdent, docRef);
@@ -91,7 +113,7 @@
         // Add to body so html2canvas can calculate real pixel bounding boxes
         document.body.appendChild(renderBox);
 
-        window.showToast(`📥 Rendering Exact 1:1 PDF for "${docTitle}"...`);
+        window.showToast(`📥 Downloading "${pdfFilename}"...`);
 
         // Check if html2canvas and jsPDF are available
         const hasHtml2Canvas = typeof window.html2canvas === 'function';
@@ -127,7 +149,7 @@
 
                 pdf.addImage(imgData, 'JPEG', marginX, marginY, targetWidth, targetHeight);
                 pdf.save(pdfFilename);
-                window.showToast(`✅ Downloaded: "${pdfFilename}" (Exact Same UI PDF)`);
+                window.showToast(`✅ Saved: "${pdfFilename}"`);
             }).catch(function (err) {
                 console.error('html2canvas render error:', err);
                 if (renderBox.parentNode) {
@@ -218,7 +240,7 @@
             { id: 'DOC-404', title: 'Shop & Establishment Trade License', ref: 'SMC/TL/2023/91024' }
         ];
 
-        window.showToast('📦 Generating complete 1:1 UI PDF Dossier Package...');
+        window.showToast('📦 Generating clean KYC PDF Dossier Package...');
         docsToDownload.forEach((d, idx) => {
             setTimeout(() => {
                 downloadExactUiPdf(d.title, d.ref, d.id);
