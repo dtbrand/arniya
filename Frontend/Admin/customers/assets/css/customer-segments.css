@@ -97,9 +97,9 @@
 
 .dt-segment-stats {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
-    padding-top: 10px;
+    padding-top: 12px;
     border-top: 1.5px solid #F1ECE1;
 }
 
@@ -108,4 +108,21 @@
     font-weight: 900;
     color: var(--dt-dark-obsidian);
     font-family: var(--dt-font-sans);
+}
+
+@keyframes dtModalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .dt-segment-grid {
+        grid-template-columns: 1fr;
+    }
 }
