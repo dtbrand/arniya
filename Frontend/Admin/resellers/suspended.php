@@ -1,10 +1,12 @@
 <?php
 /**
  * suspended.php — DT Brand's & Jai Hanuman Tex
- * Suspended Resellers View
+ * Suspended & Locked Resellers
  */
-$page_title = "Suspended Resellers";
+$page_title = "Suspended Resellers View";
 $active_nav = "resellers";
+$active_subnav = "suspended";
+$active_filter = "suspended";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,35 +26,47 @@ $active_nav = "resellers";
     <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
-        <main class="adm-content">
-            <div class="dt-resellers-container">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <h1 style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">Suspended Resellers</h1>
-                            <span class="dt-reseller-badge purple">12 Suspended</span>
-                        </div>
-                        <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Accounts with locked purchasing due to credit breaches or pending compliance audits.</p>
+        <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
+            
+            <div class="dt-customers-container" style="display:flex; flex-direction:column; gap:12px;">
+                <div class="dt-cust-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div class="dt-cust-title-group">
+                        <h1 class="dt-cust-title" style="font-size:1.35rem; font-weight:900; color:#181512; margin:0; display:flex; align-items:center; gap:8px;">
+                            <span>Suspended Resellers</span>
+                            <span class="dt-cust-badge purple" style="font-size:0.72rem; padding:3px 8px; border-radius:6px; background:#F3E8FF; color:#7E22CE; border:1px solid #D8B4FE; font-weight:800;">12 Locked</span>
+                        </h1>
+                        <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage temporary account blocks due to credit default, overdue payouts, or compliance flags.</p>
                     </div>
-                    <a href="/Frontend/Admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to All Resellers</a>
+                    <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <a href="/Frontend/Admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to All Resellers</a>
+                    </div>
                 </div>
 
-                <?php include_once __DIR__ . '/components/reseller-stats.php'; ?>
+                <!-- 8-Card KPI Ribbon & Flow Filter Pills -->
+                <?php include __DIR__ . '/components/reseller-stats.php'; ?>
 
-                <div class="dt-card">
-                    <?php include_once __DIR__ . '/components/reseller-search.php'; ?>
-                    <?php include_once __DIR__ . '/components/reseller-table.php'; ?>
-                </div>
+                <!-- Toolbar & Live Search -->
+                <?php include __DIR__ . '/components/reseller-search.php'; ?>
+
+                <!-- Master Resellers Table -->
+                <?php include __DIR__ . '/components/reseller-table.php'; ?>
             </div>
+
+            <!-- Modals & Drawers -->
+            <?php include __DIR__ . '/components/reseller-filters.php'; ?>
+            <?php include __DIR__ . '/components/reseller-status.php'; ?>
+            <?php include __DIR__ . '/components/bulk-actions.php'; ?>
+
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
 
-<?php include_once __DIR__ . '/components/reseller-status.php'; ?>
 <script src="/Frontend/Admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     filterResellersByStatus('suspended');
