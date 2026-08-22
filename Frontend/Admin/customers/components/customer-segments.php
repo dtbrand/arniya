@@ -14,14 +14,18 @@
             <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Real-time automated customer clusters based on lifetime value (LTV), location, repeat frequency &amp; order history.</p>
         </div>
 
-        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <!-- Realtime Segment Filter Search -->
-            <div style="position:relative; width:220px;">
-                <input type="text" id="dtSegmentSearchInput" class="dt-input-field" placeholder="Search cohorts..." onkeyup="filterSegmentCards(this.value)" style="height:34px; font-size:0.78rem; padding:0 28px 0 10px;">
-                <button type="button" onclick="document.getElementById('dtSegmentSearchInput').value=''; filterSegmentCards('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:#78716C; cursor:pointer; font-size:0.75rem; padding:0;">✕</button>
+            <div style="position:relative; width:230px;">
+                <input type="text" id="dtSegmentSearchInput" class="dt-input-field" placeholder="Search cohorts by name..." oninput="document.getElementById('dtSegmentSearchClearBtn').style.display = this.value.trim() ? 'flex' : 'none'; filterSegmentCards(this.value);" onkeyup="filterSegmentCards(this.value)" style="height:36px; font-size:0.78rem; padding:0 28px 0 12px; width:100%; box-sizing:border-box; background:#FFFFFF;">
+                <button type="button" id="dtSegmentSearchClearBtn" onclick="document.getElementById('dtSegmentSearchInput').value=''; this.style.display='none'; filterSegmentCards('');" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); background:#EAE5D9; border:none; color:#181512; cursor:pointer; font-size:0.68rem; width:18px; height:18px; border-radius:50%; align-items:center; justify-content:center; padding:0;">✕</button>
             </div>
+            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="height:36px; padding:0 12px; font-size:0.75rem; display:inline-flex; align-items:center; gap:5px;" onclick="filterSegmentCards(document.getElementById('dtSegmentSearchInput').value)">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span>Search</span>
+            </button>
 
-            <button type="button" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;" onclick="openCreateSegmentModal()">
+            <button type="button" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px;" onclick="openCreateSegmentModal()">
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Create Segment</span>
             </button>

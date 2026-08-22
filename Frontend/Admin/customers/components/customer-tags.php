@@ -119,19 +119,23 @@ $master_tags = [
 <!-- ══ CUSTOMER TAGGING STUDIO ══ -->
 <div>
     <!-- Quick Tag Creator Card -->
-    <div style="background:#FAF8F4; border:1.2px solid #EAE5D9; border-radius:12px; padding:16px 20px; margin-bottom:20px;">
-        <div style="margin-bottom:12px;">
+    <div style="background:#FAF8F4; border:1.2px solid #EAE5D9; border-radius:12px; padding:18px 20px; margin-bottom:22px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+        <div style="margin-bottom:14px;">
             <h4 style="font-size:0.95rem; font-weight:800; color:#181512; margin:0;">Create &amp; Assign Dynamic Customer Tag</h4>
-            <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Create reusable tags for targeted WhatsApp broadcasts, VIP segment grouping, and staff memos.</p>
+            <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Create reusable categorization labels for targeted WhatsApp broadcasts, VIP standing, and customer profiles.</p>
         </div>
 
-        <form id="dtCreateTagForm" onsubmit="addCustomerTag(event)" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div style="flex:1; min-width:240px;">
-                <input type="text" id="dtCustNewTagInput" class="dt-input-field no-icon" placeholder="Tag Name (e.g. Surat High-Volume Silk Buyer, Wedding Shopper)..." required style="width:100%; height:38px; box-sizing:border-box;">
+        <form id="dtCreateTagForm" onsubmit="addCustomerTag(event)" style="display:grid; grid-template-columns: minmax(240px, 2fr) minmax(180px, 1fr) minmax(150px, 1fr) auto; gap:12px; align-items:flex-end;">
+            <!-- Field 1: Tag Name -->
+            <div class="dt-form-group">
+                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Tag Name / Label <span style="color:#DC2626;">*</span></label>
+                <input type="text" id="dtCustNewTagInput" class="dt-input-field no-icon" placeholder="e.g. Surat High-Volume Silk Buyer, NRI Shopper..." required style="width:100%; height:38px; box-sizing:border-box; background:#FFFFFF;">
             </div>
 
-            <div style="width:180px;">
-                <select id="dtTagCategorySelect" class="dt-cust-select" style="width:100%; height:38px;">
+            <!-- Field 2: Category -->
+            <div class="dt-form-group">
+                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Category &amp; Usage</label>
+                <select id="dtTagCategorySelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF;">
                     <option value="VIP Standing">VIP Standing</option>
                     <option value="Product Affinity" selected>Product Affinity</option>
                     <option value="Regional Cluster">Regional Cluster</option>
@@ -142,8 +146,10 @@ $master_tags = [
                 </select>
             </div>
 
-            <div style="width:140px;">
-                <select id="dtTagColorSelect" class="dt-cust-select" style="width:100%; height:38px;">
+            <!-- Field 3: Badge Theme -->
+            <div class="dt-form-group">
+                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Badge Color Theme</label>
+                <select id="dtTagColorSelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF;">
                     <option value="gold" selected>🟡 Radiant Gold</option>
                     <option value="green">🟢 Emerald Green</option>
                     <option value="blue">🔵 Sapphire Blue</option>
@@ -152,10 +158,13 @@ $master_tags = [
                 </select>
             </div>
 
-            <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px; height:38px; padding:0 16px;">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span>Create Tag</span>
-            </button>
+            <!-- Field 4: Create Button -->
+            <div>
+                <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px; height:38px; padding:0 18px; white-space:nowrap;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Create Tag</span>
+                </button>
+            </div>
         </form>
     </div>
 
@@ -178,13 +187,19 @@ $master_tags = [
 
     <!-- Master Tag Management Table & Search -->
     <div style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-        <!-- Table Toolbar -->
+        <!-- Table Toolbar with Dedicated Search Button -->
         <div style="padding:12px 18px; background:#FAF8F4; border-bottom:1.2px solid #EAE5D9; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
             <div style="font-size:0.88rem; font-weight:800; color:#181512;">Master Tag Directory &amp; Audience Rules</div>
             
-            <div style="position:relative; width:260px;">
-                <input type="text" id="dtTagSearchInput" class="dt-input-field" placeholder="Search tags by name or rule..." onkeyup="filterTagsTable(this.value)" style="height:34px; font-size:0.78rem; padding:0 28px 0 10px;">
-                <button type="button" onclick="document.getElementById('dtTagSearchInput').value=''; filterTagsTable('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; color:#78716C; cursor:pointer; font-size:0.75rem; padding:0;">✕</button>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <div style="position:relative; width:250px;">
+                    <input type="text" id="dtTagSearchInput" class="dt-input-field" placeholder="Search tags by name, rule or category..." oninput="document.getElementById('dtTagSearchClearBtn').style.display = this.value.trim() ? 'flex' : 'none'; filterTagsTable(this.value);" onkeyup="filterTagsTable(this.value)" style="height:36px; font-size:0.78rem; padding:0 28px 0 12px; width:100%; box-sizing:border-box; background:#FFFFFF;">
+                    <button type="button" id="dtTagSearchClearBtn" onclick="document.getElementById('dtTagSearchInput').value=''; this.style.display='none'; filterTagsTable('');" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); background:#EAE5D9; border:none; color:#181512; cursor:pointer; font-size:0.68rem; width:18px; height:18px; border-radius:50%; align-items:center; justify-content:center; padding:0;">✕</button>
+                </div>
+                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="height:36px; padding:0 12px; font-size:0.75rem; display:inline-flex; align-items:center; gap:5px;" onclick="filterTagsTable(document.getElementById('dtTagSearchInput').value)">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span>Search</span>
+                </button>
             </div>
         </div>
 
