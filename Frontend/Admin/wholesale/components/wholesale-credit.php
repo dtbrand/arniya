@@ -31,8 +31,8 @@ $credit_txns = getWholesaleCreditTxns($wholesale['id']);
                     <span>Adjust Credit Limit</span>
                 </button>
                 <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openRecordSettlementModal('<?php echo $wholesale['id']; ?>', <?php echo $utilized; ?>)">
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>+ Record Settlement</span>
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Record Settlement</span>
                 </button>
             </div>
         </div>
@@ -98,7 +98,8 @@ $credit_txns = getWholesaleCreditTxns($wholesale['id']);
                             <td style="text-align:right; font-weight:700; color:#181512; white-space:nowrap;"><?php echo $tx['utilized_after']; ?></td>
                             <td style="text-align:right; font-weight:900; color:#8A681F; white-space:nowrap;"><?php echo $tx['avail_after']; ?></td>
                             <td style="text-align:right; white-space:nowrap;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewWholesaleVoucher('<?php echo $tx['id']; ?>', '<?php echo addslashes($tx['desc']); ?>', '<?php echo $tx['debit'] !== '—' ? '-' . $tx['debit'] : '+' . $tx['credit']; ?>', '<?php echo $tx['date']; ?>', 'ORD-WHL-4821', 'Wholesale Finance Desk')">
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewWholesaleVoucher('<?php echo $tx['id']; ?>', '<?php echo addslashes($tx['desc']); ?>', '<?php echo $tx['debit'] !== '—' ? '-' . $tx['debit'] : '+' . $tx['credit']; ?>', '<?php echo $tx['date']; ?>', 'ORD-WHL-4821', 'Wholesale Finance Desk', '<?php echo addslashes($wholesale['name']); ?>', '<?php echo $wholesale['gstin']; ?>', '<?php echo $wholesale['id']; ?>')">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                                     <span>Voucher</span>
                                 </button>
                             </td>
