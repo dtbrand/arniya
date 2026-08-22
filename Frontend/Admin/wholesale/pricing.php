@@ -86,6 +86,7 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
     <div style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:12px; width:95%; max-width:440px; padding:20px; box-shadow:0 20px 50px rgba(0,0,0,0.4);">
         <h3 style="font-size:1.1rem; font-weight:900; color:#181512; margin:0 0 4px 0;">Edit Category Wholesale Margin</h3>
         <p id="editMarginCatName" style="font-size:0.78rem; color:#8A681F; font-weight:700; margin:0 0 14px 0;">Category Name</p>
+        <input type="hidden" id="editMarginRowId">
         <form onsubmit="submitCategoryMarginEdit(event)" style="display:flex; flex-direction:column; gap:12px;">
             <div>
                 <label style="font-size:0.72rem; font-weight:800; color:#181512; text-transform:uppercase; display:block; margin-bottom:4px;">Wholesale Margin Discount (%)</label>
@@ -102,6 +103,39 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
         </form>
     </div>
 </div>
+
+<!-- ══ ADD NEW CATEGORY RULE MODAL ══ -->
+<div id="dtAddCategoryMarginModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); z-index:99999; align-items:center; justify-content:center;">
+    <div style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:12px; width:95%; max-width:460px; padding:20px; box-shadow:0 20px 50px rgba(0,0,0,0.4);">
+        <h3 style="font-size:1.1rem; font-weight:900; color:#181512; margin:0 0 4px 0;">Add Fabric Margin Rule</h3>
+        <p style="font-size:0.78rem; color:#78716C; margin:0 0 14px 0;">Configure dynamic wholesale discount and MOQ for a new catalog category.</p>
+        <form onsubmit="submitAddCategoryRule(event)" style="display:flex; flex-direction:column; gap:12px;">
+            <div>
+                <label style="font-size:0.72rem; font-weight:800; color:#181512; text-transform:uppercase; display:block; margin-bottom:4px;">Fabric / Category Name</label>
+                <input type="text" id="addCategoryNameInput" placeholder="e.g. Chanderi Jacquard Silk" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.85rem; font-weight:700; padding:0 10px; box-sizing:border-box;">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div>
+                    <label style="font-size:0.72rem; font-weight:800; color:#181512; text-transform:uppercase; display:block; margin-bottom:4px;">Discount Margin (%)</label>
+                    <input type="number" id="addCategoryMarginInput" value="32" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.85rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:0.72rem; font-weight:800; color:#181512; text-transform:uppercase; display:block; margin-bottom:4px;">Min Lot (MOQ)</label>
+                    <input type="number" id="addCategoryMoqInput" value="20" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.85rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
+                </div>
+            </div>
+            <div>
+                <label style="font-size:0.72rem; font-weight:800; color:#181512; text-transform:uppercase; display:block; margin-bottom:4px;">Sample Retail MRP (₹)</label>
+                <input type="number" id="addCategoryMrpInput" value="2400" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.85rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="closeWholesaleModal('dtAddCategoryMarginModal')">Cancel</button>
+                <button type="submit" class="dt-btn dt-btn-gold">+ Save Category Rule</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-pricing.js?v=<?php echo time(); ?>"></script>
