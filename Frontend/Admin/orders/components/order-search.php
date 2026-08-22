@@ -7,10 +7,7 @@
 <div class="dt-order-toolbar">
     <!-- Real-Time Search Box -->
     <div class="dt-order-search-wrap">
-        <svg class="dt-order-search-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
-            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="orderSearchInput" class="dt-order-search-input" placeholder="Search Order ID, Customer, Phone, SKU, Tracking..." oninput="if(this.value.length>0){document.getElementById('orderSearchClear').classList.add('visible');}else{document.getElementById('orderSearchClear').classList.remove('visible');} window.DT_ORDER_LIST.filterTable();">
+        <input type="text" id="orderSearchInput" class="dt-order-search-input" placeholder="Search Order ID, Customer, Phone, SKU, Tracking..." style="padding-left:12px;" oninput="if(this.value.length>0){document.getElementById('orderSearchClear').classList.add('visible');}else{document.getElementById('orderSearchClear').classList.remove('visible');} window.DT_ORDER_LIST.filterTable();">
         <button type="button" id="orderSearchClear" class="dt-order-search-clear" onclick="window.DT_ORDER_LIST.clearSearch()" title="Clear search">✕</button>
     </div>
 

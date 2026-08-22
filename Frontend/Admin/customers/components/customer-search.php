@@ -8,10 +8,6 @@
 <!-- ══ SEARCH & FILTERS TOOLBAR CARD ══ -->
 <div class="dt-cust-toolbar-card">
     <div class="dt-cust-search-wrap">
-        <svg class="dt-cust-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
         <input 
             type="text" 
             id="dtCustSearchInput" 
@@ -19,6 +15,7 @@
             placeholder="Search by Customer Name, Phone, Email, City or ID..." 
             oninput="handleCustomerSearch(this.value)" 
             autocomplete="off"
+            style="padding-left:12px;"
         >
         <button type="button" id="dtCustSearchClear" class="dt-cust-search-clear" onclick="clearCustomerSearch()" title="Clear Search">✕</button>
     </div>

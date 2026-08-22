@@ -1319,13 +1319,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="adm-table-card">
                     <!-- Table Search & Filters Toolbar -->
                     <div class="adm-table-toolbar">
-                        <!-- Strict Rule: Left Search Icon & Right Clear Button -->
                         <div class="adm-search-box" style="max-width:320px;">
-                            <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="admProdSearch" class="adm-search-input" placeholder="Search product name, SKU, fabric..." oninput="if(typeof filterProducts==='function') filterProducts();">
+                            <input type="text" id="admProdSearch" class="adm-search-input" placeholder="Search product name, SKU, fabric..." style="padding-left:12px;" oninput="if(typeof filterProducts==='function') filterProducts();">
                             <button type="button" id="admProdSearchClear" class="adm-search-clear" onclick="document.getElementById('admProdSearch').value=''; if(typeof filterProducts==='function') filterProducts();">✕</button>
                         </div>
 
@@ -1418,13 +1413,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 <div class="adm-table-card">
                     <div class="adm-table-toolbar">
-                        <!-- Strict Rule: Left Search Icon & Right Clear Button -->
                         <div class="adm-search-box" style="max-width:320px;">
-                            <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="admOrderSearch" class="adm-search-input" placeholder="Search order ID, customer, phone...">
+                            <input type="text" id="admOrderSearch" class="adm-search-input" placeholder="Search order ID, customer, phone..." style="padding-left:12px;">
                             <button type="button" id="admOrderSearchClear" class="adm-search-clear">✕</button>
                         </div>
 
@@ -1572,13 +1562,8 @@ _Special 15% VIP Discount Applied!_</textarea>
 
                 <div class="adm-table-card">
                     <div class="adm-table-toolbar">
-                        <!-- Strict Rule: Left Search Icon & Right Clear Button -->
                         <div class="adm-search-box" style="max-width:320px;">
-                            <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="admPartnerSearch" class="adm-search-input" placeholder="Search partner name, GST, phone...">
+                            <input type="text" id="admPartnerSearch" class="adm-search-input" placeholder="Search partner name, GST, phone..." style="padding-left:12px;">
                             <button type="button" id="admPartnerSearchClear" class="adm-search-clear">✕</button>
                         </div>
                     </div>
@@ -1619,11 +1604,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                 <div class="adm-table-card">
                     <div class="adm-table-toolbar">
                         <div class="adm-search-box" style="max-width:320px;">
-                            <svg class="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input type="text" id="admCustomerSearch" class="adm-search-input" placeholder="Search customer name or phone...">
+                            <input type="text" id="admCustomerSearch" class="adm-search-input" placeholder="Search customer name or phone..." style="padding-left:12px;">
                             <button type="button" id="admCustomerSearchClear" class="adm-search-clear">✕</button>
                         </div>
                     </div>

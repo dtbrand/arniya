@@ -221,11 +221,7 @@ $variants_matrix = [
                 <!-- Mandatory Left-Aligned Search Icon with 1-Tap Clear Button -->
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
                     <div style="position:relative; display:inline-flex; align-items:center;">
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:12px; pointer-events:none;">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" id="variantSearchInput" class="wp-search-input" placeholder="Search variant SKU, color..." style="height:34px; padding-left:36px; padding-right:28px; width:240px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchVariants(this.value); toggleVariantSearchClearBtn(this.value)">
+                        <input type="text" id="variantSearchInput" class="wp-search-input" placeholder="Search variant SKU, color..." style="height:34px; padding-left:12px; padding-right:28px; width:240px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchVariants(this.value); toggleVariantSearchClearBtn(this.value)">
                         <span id="variantSearchClearBtn" onclick="clearVariantSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
                     <button type="button" class="wp-button primary" onclick="searchVariants(document.getElementById('variantSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>

@@ -1225,9 +1225,7 @@ input:focus, select:focus, textarea:focus, .dt-search-input:focus, .adm-form-inp
 }
 
 .adm-search-icon-left {
-    margin-left: 12px;
-    flex-shrink: 0;
-    pointer-events: none;
+    display: none !important;
 }
 
 /* Center text input */
@@ -1244,7 +1242,7 @@ input:focus, select:focus, textarea:focus, .dt-search-input:focus, .adm-form-inp
     height: 100%;
     border: none;
     outline: none;
-    padding: 0 28px 0 10px;
+    padding: 0 28px 0 12px !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 12px;
     font-weight: 500;

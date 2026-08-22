@@ -24,18 +24,13 @@
 }
 
 .dt-order-search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94A3B8;
-    pointer-events: none;
+    display: none !important;
 }
 
 .dt-order-search-input {
     width: 100%;
     height: 32px;
-    padding: 0 28px 0 30px;
+    padding: 0 28px 0 10px;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
     font-size: 11.5px;

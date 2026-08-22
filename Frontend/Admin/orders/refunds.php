@@ -135,8 +135,7 @@ $active_subnav = "refunds";
                 <!-- Toolbar & Debounced Live Search -->
                 <div class="dt-refund-toolbar">
                     <div class="dt-refund-toolbar-left">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#64748B" stroke-width="2.3" style="position:absolute; left:10px; top:50%; transform:translateY(-50%);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" id="refundSearchInput" oninput="window.DT_REFUNDS.handleSearch(this.value)" placeholder="Search Refund ID, Order ID, Customer, UTR..." class="dt-order-search-input" style="height:36px; padding-left:32px; width:100%; border-radius:6px; box-sizing:border-box;">
+                        <input type="text" id="refundSearchInput" oninput="window.DT_REFUNDS.handleSearch(this.value)" placeholder="Search Refund ID, Order ID, Customer, UTR..." class="dt-order-search-input" style="height:36px; padding-left:12px; width:100%; border-radius:6px; box-sizing:border-box;">
                         <button type="button" onclick="document.getElementById('refundSearchInput').value=''; window.DT_REFUNDS.handleSearch('');" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent; cursor:pointer; color:#94A3B8; font-size:12px;">✕</button>
                     </div>
                     <div class="dt-refund-toolbar-right">

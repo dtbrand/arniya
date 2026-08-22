@@ -24,14 +24,10 @@
         </select>
     </div>
 
-    <!-- Real-time Search Box with Left-Aligned Icon -->
+    <!-- Real-time Search Box with Clean Placeholder -->
     <div style="display:flex; align-items:center; gap:6px;">
         <div style="position:relative; display:inline-flex; align-items:center;">
-            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:8px; pointer-events:none;">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="catSearchInput" placeholder="Search categories, slugs..." style="height:28px; padding-left:26px; padding-right:22px; width:190px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="window.DT_CATALOGUE.filterTable('catSearchInput', 'catListTable', 'catSearchClear')">
+            <input type="text" id="catSearchInput" placeholder="Search categories, slugs..." style="height:28px; padding-left:10px; padding-right:22px; width:190px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="window.DT_CATALOGUE.filterTable('catSearchInput', 'catListTable', 'catSearchClear')">
             <span id="catSearchClear" onclick="window.DT_CATALOGUE.clearSearch('catSearchInput', 'catListTable', 'catSearchClear')" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
         </div>
         <button type="button" class="dt-btn-action-sm gold" onclick="window.DT_CATALOGUE.filterTable('catSearchInput', 'catListTable')" style="height:28px; font-size:11px; padding:0 10px;">

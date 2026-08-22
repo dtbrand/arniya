@@ -28,13 +28,8 @@ if (!headers_sent()) {
             <!-- ── Clean Luxury Search Bar with Live Results Dropdown (Desktop) ── -->
             <div class="adm-header-search-container" id="admHeaderSearchContainer">
                 <div class="adm-search-amazon-bar" id="admDesktopSearchBox">
-                    <svg class="adm-search-icon-left" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#8A681F" stroke-width="2.3">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-
                     <div class="adm-search-input-wrap">
-                        <input type="text" id="admGlobalSearch" class="adm-search-input-amazon" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off">
+                        <input type="text" id="admGlobalSearch" class="adm-search-input-amazon" placeholder="Search orders, sarees, customers, SKUs (e.g. KLN-SR-111)..." autocomplete="off" style="padding-left:14px;">
                         <button type="button" id="admGlobalSearchClear" class="adm-search-clear-btn" title="Clear Search">✕</button>
                     </div>
 

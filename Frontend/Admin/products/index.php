@@ -344,14 +344,10 @@ $active_subnav = "";
                     </button>
                 </div>
 
-                <!-- Mandatory Left-Aligned Search Icon with 1-Tap Clear Button -->
+                <!-- Search Box with Clean Left Placeholder and 1-Tap Clear Button -->
                 <div class="wp-search-box" style="display:flex; align-items:center; gap:6px;">
                     <div style="position:relative; display:inline-flex; align-items:center;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2" style="position:absolute; left:8px; pointer-events:none;">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" id="wpSearchInput" class="wp-search-input" placeholder="Search products, SKUs..." style="height:28px; padding-left:26px; padding-right:22px; width:180px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpProducts(this.value); toggleSearchClearBtn(this.value)">
+                        <input type="text" id="wpSearchInput" class="wp-search-input" placeholder="Search products, SKUs..." style="height:28px; padding-left:10px; padding-right:22px; width:180px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpProducts(this.value); toggleSearchClearBtn(this.value)">
                         <span id="wpSearchClearBtn" onclick="clearWpSearch()" style="position:absolute; right:7px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
                     <button type="button" class="dt-btn-action-sm gold" onclick="searchWpProducts(document.getElementById('wpSearchInput').value)" style="height:28px; font-size:11px; padding:0 10px;">
