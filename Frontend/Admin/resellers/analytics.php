@@ -1,10 +1,11 @@
 <?php
 /**
  * analytics.php — DT Brand's & Jai Hanuman Tex
- * Reseller Growth, GMV Velocity & Payout Analytics Studio
+ * Reseller Analytics & GMV Growth Studio
  */
-$page_title = "Reseller Analytics & Intelligence Studio";
+$page_title = "Reseller Analytics Studio";
 $active_nav = "resellers";
+$active_subnav = "analytics";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,126 +26,104 @@ $active_nav = "resellers";
     <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
-        <main class="adm-content">
+        <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
 
-            <div class="dt-resellers-container">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <h1 style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">Reseller Analytics &amp; GMV Intelligence</h1>
-                            <span class="dt-reseller-badge gold">Executive Dashboard</span>
-                        </div>
-                        <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Gross sales velocity, cohort repeat rates, payout burn, and tier distributions.</p>
+            <div class="dt-customers-container" style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;">
+                <div class="dt-cust-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div class="dt-cust-title-group">
+                        <h1 class="dt-cust-title" style="font-size:1.35rem; font-weight:900; color:#181512; margin:0; display:flex; align-items:center; gap:8px;">
+                            <span>Reseller Growth &amp; GMV Velocity Analytics</span>
+                            <span class="dt-cust-badge gold" style="font-size:0.72rem; padding:3px 8px; border-radius:6px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800;">₹48.6L Volume</span>
+                        </h1>
+                        <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Inspect network expansion metrics, commission payouts burn rate, and top grossing partner stores.</p>
                     </div>
-                    <a href="/Frontend/Admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to Resellers Directory</a>
-                </div>
-
-                <!-- 4-Card Master KPI Ribbon -->
-                <div class="dt-reseller-kpi-grid">
-                    <div class="dt-reseller-kpi-card">
-                        <div class="dt-reseller-kpi-top">
-                            <span class="dt-reseller-kpi-label">Active Network GMV</span>
-                            <div class="dt-reseller-kpi-icon gold">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
-                            </div>
-                        </div>
-                        <div class="dt-reseller-kpi-val">₹48.6 Lakhs</div>
-                        <div class="dt-reseller-kpi-bot"><span class="dt-reseller-kpi-delta">↑ +24.8% vs Last Quarter</span></div>
-                    </div>
-
-                    <div class="dt-reseller-kpi-card">
-                        <div class="dt-reseller-kpi-top">
-                            <span class="dt-reseller-kpi-label">Average Order Value (AOV)</span>
-                            <div class="dt-reseller-kpi-icon emerald">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#15803D" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
-                            </div>
-                        </div>
-                        <div class="dt-reseller-kpi-val">₹14,200</div>
-                        <div class="dt-reseller-kpi-bot"><span class="dt-reseller-kpi-delta">↑ High Wholesale Density</span></div>
-                    </div>
-
-                    <div class="dt-reseller-kpi-card">
-                        <div class="dt-reseller-kpi-top">
-                            <span class="dt-reseller-kpi-label">Monthly Repeat Rate</span>
-                            <div class="dt-reseller-kpi-icon blue">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#1D4ED8" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                            </div>
-                        </div>
-                        <div class="dt-reseller-kpi-val">84.2%</div>
-                        <div class="dt-reseller-kpi-bot"><span class="dt-reseller-kpi-delta">↑ High Partner Stickiness</span></div>
-                    </div>
-
-                    <div class="dt-reseller-kpi-card">
-                        <div class="dt-reseller-kpi-top">
-                            <span class="dt-reseller-kpi-label">Commission Disbursed</span>
-                            <div class="dt-reseller-kpi-icon purple">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#7E22CE" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                            </div>
-                        </div>
-                        <div class="dt-reseller-kpi-val">₹5.82 Lakhs</div>
-                        <div class="dt-reseller-kpi-bot"><span style="color:#78716C;">100% On-Time Disbursed</span></div>
+                    <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <a href="/Frontend/Admin/resellers/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            <span>Back to Resellers</span>
+                        </a>
+                        <a href="/Frontend/Admin/resellers/export.php" class="dt-btn dt-btn-gold">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Export Report</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- 2. Dual Analytics Cards -->
+                <!-- 8-Card KPI Ribbon & Flow Filter Pills -->
+                <?php include __DIR__ . '/components/reseller-stats.php'; ?>
+
+                <!-- Analytics Studio Grid -->
                 <div class="dt-reseller-analytics-grid">
-                    <!-- GMV Growth Chart -->
-                    <div class="dt-card" style="padding:18px;">
-                        <div class="dt-card-head" style="margin-bottom:14px;">
-                            <h4 class="dt-card-title">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                                <span>Reseller GMV Revenue Growth (6-Month Trend)</span>
-                            </h4>
-                            <span class="dt-reseller-badge gold">Monthly Velocity</span>
+                    <div class="dt-analytics-chart-card">
+                        <h4 class="dt-card-title" style="margin-bottom:12px;">Monthly Network GMV Growth (Last 6 Months)</h4>
+                        <div class="dt-chart-bars-wrap">
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill" style="height:45%;"></div>
+                                <span class="dt-chart-bar-label">Nov</span>
+                            </div>
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill" style="height:60%;"></div>
+                                <span class="dt-chart-bar-label">Dec</span>
+                            </div>
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill" style="height:72%;"></div>
+                                <span class="dt-chart-bar-label">Jan</span>
+                            </div>
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill" style="height:68%;"></div>
+                                <span class="dt-chart-bar-label">Feb</span>
+                            </div>
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill" style="height:84%;"></div>
+                                <span class="dt-chart-bar-label">Mar</span>
+                            </div>
+                            <div class="dt-chart-bar-group">
+                                <div class="dt-chart-bar-pill active" style="height:100%;"></div>
+                                <span class="dt-chart-bar-label">Apr (₹48.6L)</span>
+                            </div>
                         </div>
-                        <canvas id="resellerGmvChart" style="width:100%; height:220px;"></canvas>
                     </div>
 
-                    <!-- Tier Distribution -->
-                    <div class="dt-card" style="padding:18px;">
-                        <h4 class="dt-card-title" style="margin-bottom:14px;">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-                            <span>Partner Tier Distribution (348 Total)</span>
-                        </h4>
-
-                        <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+                    <div class="dt-analytics-chart-card">
+                        <h4 class="dt-card-title" style="margin-bottom:12px;">Tier Distribution &amp; Margin Split</h4>
+                        <div style="display:flex; flex-direction:column; gap:10px;">
                             <div>
                                 <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:4px;">
-                                    <span>★ Platinum Elite (30% Margin)</span>
-                                    <span style="color:#8A681F; font-weight:800;">42 Partners (12.1%)</span>
+                                    <span>Platinum Elite (30% Margin)</span>
+                                    <span style="color:#8A681F;">42 Partners (12%)</span>
                                 </div>
-                                <div style="height:8px; background:#F0ECE1; border-radius:4px; overflow:hidden;">
-                                    <div style="width:12.1%; height:100%; background:linear-gradient(90deg, #8A681F, #D4AF37);"></div>
+                                <div style="height:8px; background:#F5F2EA; border-radius:4px; overflow:hidden;">
+                                    <div style="width:12%; height:100%; background:linear-gradient(90deg, #D4AF37, #B8860B);"></div>
                                 </div>
                             </div>
 
                             <div>
                                 <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:4px;">
-                                    <span>★ Gold Partners (22% Margin)</span>
-                                    <span style="color:#8A681F; font-weight:800;">94 Partners (27.0%)</span>
+                                    <span>Gold Partner (22% Margin)</span>
+                                    <span style="color:#15803D;">124 Partners (36%)</span>
                                 </div>
-                                <div style="height:8px; background:#F0ECE1; border-radius:4px; overflow:hidden;">
-                                    <div style="width:27%; height:100%; background:linear-gradient(90deg, #D4AF37, #FFE57F);"></div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:4px;">
-                                    <span>★ Silver Growth (15% Margin)</span>
-                                    <span style="color:#8A681F; font-weight:800;">160 Partners (46.0%)</span>
-                                </div>
-                                <div style="height:8px; background:#F0ECE1; border-radius:4px; overflow:hidden;">
-                                    <div style="width:46%; height:100%; background:#94A3B8;"></div>
+                                <div style="height:8px; background:#F5F2EA; border-radius:4px; overflow:hidden;">
+                                    <div style="width:36%; height:100%; background:linear-gradient(90deg, #22C55E, #15803D);"></div>
                                 </div>
                             </div>
 
                             <div>
                                 <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:4px;">
-                                    <span>★ Bronze Starters (10% Margin)</span>
-                                    <span style="color:#8A681F; font-weight:800;">52 Partners (14.9%)</span>
+                                    <span>Silver Growth (15% Margin)</span>
+                                    <span style="color:#1D4ED8;">130 Partners (37%)</span>
                                 </div>
-                                <div style="height:8px; background:#F0ECE1; border-radius:4px; overflow:hidden;">
-                                    <div style="width:14.9%; height:100%; background:#FCD34D;"></div>
+                                <div style="height:8px; background:#F5F2EA; border-radius:4px; overflow:hidden;">
+                                    <div style="width:37%; height:100%; background:linear-gradient(90deg, #60A5FA, #1D4ED8);"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; margin-bottom:4px;">
+                                    <span>Bronze Starter (10% Margin)</span>
+                                    <span style="color:#B45309;">52 Partners (15%)</span>
+                                </div>
+                                <div style="height:8px; background:#F5F2EA; border-radius:4px; overflow:hidden;">
+                                    <div style="width:15%; height:100%; background:linear-gradient(90deg, #FBBF24, #B45309);"></div>
                                 </div>
                             </div>
                         </div>
@@ -158,68 +137,5 @@ $active_nav = "resellers";
 </div>
 
 <script src="/Frontend/Admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('resellerGmvChart');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = 220;
-
-    const data = [28, 32, 36, 41, 45, 48.6];
-    const labels = ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
-    const max = 60;
-
-    // Draw gradient
-    const grad = ctx.createLinearGradient(0, 0, 0, 200);
-    grad.addColorStop(0, 'rgba(212, 175, 55, 0.45)');
-    grad.addColorStop(1, 'rgba(212, 175, 55, 0.0)');
-
-    ctx.beginPath();
-    const step = (canvas.width - 40) / (data.length - 1);
-    data.forEach((val, i) => {
-        const x = 20 + (i * step);
-        const y = 190 - ((val / max) * 160);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.lineTo(canvas.width - 20, 200);
-    ctx.lineTo(20, 200);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Draw stroke line
-    ctx.beginPath();
-    ctx.strokeStyle = '#8A681F';
-    ctx.lineWidth = 3;
-    data.forEach((val, i) => {
-        const x = 20 + (i * step);
-        const y = 190 - ((val / max) * 160);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    // Draw Points
-    data.forEach((val, i) => {
-        const x = 20 + (i * step);
-        const y = 190 - ((val / max) * 160);
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = '#8A681F';
-        ctx.stroke();
-
-        ctx.fillStyle = '#181512';
-        ctx.font = 'bold 11px Plus Jakarta Sans, sans-serif';
-        ctx.fillText(`₹${val}L`, x - 12, y - 10);
-        ctx.fillStyle = '#78716C';
-        ctx.fillText(labels[i], x - 10, 212);
-    });
-});
-</script>
 </body>
 </html>

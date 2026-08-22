@@ -5,6 +5,7 @@
  */
 $page_title = "Reseller Export Studio";
 $active_nav = "resellers";
+$active_subnav = "export";
 ?>
 <!DOCTYPE html>
 <html lang="en">
