@@ -275,6 +275,12 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             </a>
                         </li>
                         <li>
+                            <a href="/Frontend/Admin/catalogue/display-settings.php" class="adm-nav-subitem <?php echo $current_subnav === 'display' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                <span>Display Settings</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="/Frontend/Admin/catalogue/seo/" class="adm-nav-subitem <?php echo $current_subnav === 'seo' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                 <span>SEO Suite</span>
