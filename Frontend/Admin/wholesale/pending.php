@@ -55,6 +55,7 @@ $active_subnav = "pending";
 
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-status.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

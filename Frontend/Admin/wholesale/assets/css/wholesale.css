@@ -286,3 +286,106 @@ textarea:focus {
     align-items: center;
     gap: 8px;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   LUXURY SLIDE-OVER RIGHT FILTER DRAWER & BACKDROP
+══════════════════════════════════════════════════════════════ */
+.dt-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 99998;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.dt-drawer-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+.dt-filter-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #FFFFFF;
+    box-shadow: -6px 0 30px rgba(0, 0, 0, 0.28);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.dt-filter-drawer.open {
+    right: 0;
+}
+
+.dt-drawer-head {
+    padding: 16px 18px;
+    border-bottom: 1.5px solid #EAE5D9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAF8F4;
+}
+
+.dt-drawer-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #181512;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-drawer-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #EAE5D9;
+    background: #FFFFFF;
+    color: #78716C;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.dt-drawer-close:hover {
+    background: #FEF2F2;
+    color: #DC2626;
+    border-color: #FECACA;
+}
+
+.dt-drawer-body {
+    padding: 18px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dt-drawer-foot {
+    padding: 14px 18px;
+    border-top: 1.5px solid #EAE5D9;
+    background: #FAF8F4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
