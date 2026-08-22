@@ -1,46 +1,12 @@
 <?php
 /**
  * wholesale-documents.php — DT Brand's & Jai Hanuman Tex
- * Encrypted Document Vault & Compliance Certificates Component
+ * Encrypted Document Vault & Compliance Certificates Component (100% Dynamic)
  */
-$docs = [
-    [
-        'id' => 'DOC-WHL-401',
-        'title' => 'GST Registration Certificate',
-        'type' => 'Tax Compliance (Form GST REG-06)',
-        'uploaded' => '14 Oct 2024',
-        'expiry' => 'Lifetime',
-        'status' => 'Verified',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'DOC-WHL-402',
-        'title' => 'Certificate of Incorporation (MCA)',
-        'type' => 'Legal Entity Proof (RoC Gujarat)',
-        'uploaded' => '14 Oct 2024',
-        'expiry' => 'Permanent',
-        'status' => 'Verified',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'DOC-WHL-403',
-        'title' => 'Director PAN & Aadhaar KYC',
-        'type' => 'Proprietor Identity Proof',
-        'uploaded' => '15 Oct 2024',
-        'expiry' => 'Valid',
-        'status' => 'Verified',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'DOC-WHL-404',
-        'title' => 'Bank Mandate & Cancelled Cheque',
-        'type' => 'Commercial Bank Clearance (HDFC Bank)',
-        'uploaded' => '16 Oct 2024',
-        'expiry' => 'Audited',
-        'status' => 'Verified',
-        'badge' => 'emerald'
-    ]
-];
+require_once __DIR__ . '/wholesale-data.php';
+$whl_id = isset($_GET['id']) ? $_GET['id'] : (isset($wholesale['id']) ? $wholesale['id'] : 'WHL-8012');
+$wholesale = isset($wholesale) && is_array($wholesale) ? $wholesale : getWholesalePartner($whl_id);
+$docs = getWholesaleDocuments($wholesale['id']);
 ?>
 
 <div class="dt-card">
@@ -92,7 +58,7 @@ $docs = [
                                 <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="previewKycDocument('<?php echo addslashes($d['title']); ?>', '<?php echo $d['id']; ?>', '<?php echo addslashes($d['type']); ?>')">
                                     <span>Preview</span>
                                 </button>
-                                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="downloadKycDocumentPdf('<?php echo addslashes($d['title']); ?>', '<?php echo $d['id']; ?>', 'WHL-8012')">
+                                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="downloadKycDocumentPdf('<?php echo addslashes($d['title']); ?>', '<?php echo $d['id']; ?>', '<?php echo $wholesale['id']; ?>')">
                                     <span>Download</span>
                                 </button>
                             </div>

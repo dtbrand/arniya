@@ -1,14 +1,12 @@
 <?php
 /**
  * wholesale-activity.php — DT Brand's & Jai Hanuman Tex
- * Immutable Audit Timeline & Account Activity Feed Component
+ * Immutable Audit Timeline & Account Activity Feed Component (100% Dynamic)
  */
-$activities = [
-    ['time' => 'Today, 05:15 PM', 'actor' => 'System / Dispatch Gate', 'action' => 'Order ORD-WHL-4821 dispatched (₹84,500 debited from revolving credit line)', 'badge' => 'gold'],
-    ['time' => '15 Aug 2026, 02:40 PM', 'actor' => 'Finance Desk (Gautam V.)', 'action' => 'NEFT Settlement of ₹1,50,000 reconciled & approved (UTR: HDFC8829104)', 'badge' => 'emerald'],
-    ['time' => '10 Aug 2026, 11:20 AM', 'actor' => 'Catalog Desk', 'action' => 'Assigned custom Festive 2026 Price List (PL-001) with 35% margin', 'badge' => 'blue'],
-    ['time' => '14 Oct 2024, 04:30 PM', 'actor' => 'Admin Superuser', 'action' => 'Account approved and onboarded to Platinum Wholesale Tier', 'badge' => 'emerald']
-];
+require_once __DIR__ . '/wholesale-data.php';
+$whl_id = isset($_GET['id']) ? $_GET['id'] : (isset($wholesale['id']) ? $wholesale['id'] : 'WHL-8012');
+$wholesale = isset($wholesale) && is_array($wholesale) ? $wholesale : getWholesalePartner($whl_id);
+$activities = getWholesaleActivities($wholesale['id']);
 ?>
 
 <div class="dt-card">

@@ -112,8 +112,10 @@
         const voucherEl = document.getElementById('dtPrintableVoucher');
         if (!voucherEl) return;
 
+        const whlIdInput = document.getElementById('adjustWholesaleId');
+        const whlId = (whlIdInput && whlIdInput.value) ? whlIdInput.value.replace(/[^a-zA-Z0-9]/g, '') : 'WHL';
         const cleanTxnId = (currentVoucherData.txnId || 'TXN9912').replace(/[^a-zA-Z0-9]/g, '');
-        const pdfFilename = `Wholesale_Credit_Voucher_${cleanTxnId}_WHL8012.pdf`;
+        const pdfFilename = `Wholesale_Credit_Voucher_${cleanTxnId}_${whlId}.pdf`;
 
         window.showToast(`📥 Downloading "${pdfFilename}"...`);
         setTimeout(() => {

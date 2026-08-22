@@ -1,43 +1,20 @@
 <?php
 /**
  * wholesale-credit.php — DT Brand's & Jai Hanuman Tex
- * Revolving Credit Line, Headroom Progress & Double-Entry Ledger
+ * Revolving Credit Line, Headroom Progress & Double-Entry Ledger (100% Dynamic)
  */
-$credit_txns = [
-    [
-        'id' => 'TXN-WHL-9912',
-        'date' => '22 Aug 2026, 05:15 PM',
-        'desc' => 'Wholesale Saree Dispatch Debit (Order ORD-WHL-4821)',
-        'debit' => '₹84,500',
-        'credit' => '—',
-        'utilized_after' => '₹2,10,000',
-        'avail_after' => '₹2,90,000',
-        'status' => 'Settled',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'TXN-WHL-9901',
-        'date' => '15 Aug 2026, 02:40 PM',
-        'desc' => 'NEFT Direct Bank Settlement (UTR: HDFC8829104)',
-        'debit' => '—',
-        'credit' => '₹1,50,000',
-        'utilized_after' => '₹1,25,500',
-        'avail_after' => '₹3,74,500',
-        'status' => 'Settled',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'TXN-WHL-9884',
-        'date' => '02 Aug 2026, 11:10 AM',
-        'desc' => 'Wholesale Festive Saree Dispatch Debit (Order ORD-WHL-4780)',
-        'debit' => '₹1,45,000',
-        'credit' => '—',
-        'utilized_after' => '₹2,75,500',
-        'avail_after' => '₹2,24,500',
-        'status' => 'Settled',
-        'badge' => 'emerald'
-    ]
-];
+require_once __DIR__ . '/wholesale-data.php';
+$whl_id = isset($_GET['id']) ? $_GET['id'] : (isset($wholesale['id']) ? $wholesale['id'] : 'WHL-8012');
+$wholesale = isset($wholesale) && is_array($wholesale) ? $wholesale : getWholesalePartner($whl_id);
+
+$sanctioned = max(0, (float)$wholesale['sanctioned_limit']);
+$utilized = max(0, (float)$wholesale['utilized_credit']);
+$available = max(0, (float)$wholesale['available_credit']);
+
+$util_pct = $sanctioned > 0 ? round(($utilized / $sanctioned) * 100, 1) : 0;
+$avail_pct = $sanctioned > 0 ? round(100 - $util_pct, 1) : 100;
+
+$credit_txns = getWholesaleCreditTxns($wholesale['id']);
 ?>
 
 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -46,14 +23,14 @@ $credit_txns = [
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
             <div>
                 <span style="font-size:0.68rem; color:#FFE57F; font-weight:800; text-transform:uppercase;">REVOLVING WHOLESALE CREDIT FACILITY</span>
-                <h3 style="font-size:1.2rem; font-weight:900; color:#FFFFFF; margin:2px 0 0 0;">Shree Balaji Silk Mills Credit Line</h3>
+                <h3 style="font-size:1.2rem; font-weight:900; color:#FFFFFF; margin:2px 0 0 0;"><?php echo htmlspecialchars($wholesale['legal_name']); ?> Credit Line</h3>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openCreditAdjustmentModal('WHL-8012', 500000, 210000)">
+                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openCreditAdjustmentModal('<?php echo $wholesale['id']; ?>', <?php echo $sanctioned; ?>, <?php echo $utilized; ?>)">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                     <span>Adjust Credit Limit</span>
                 </button>
-                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openRecordSettlementModal('WHL-8012', 210000)">
+                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openRecordSettlementModal('<?php echo $wholesale['id']; ?>', <?php echo $utilized; ?>)">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     <span>+ Record Settlement</span>
                 </button>
@@ -63,25 +40,25 @@ $credit_txns = [
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:6px;">
             <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.3); border-radius:8px; padding:10px 14px;">
                 <span style="font-size:0.65rem; color:#F5ECCE; font-weight:800; text-transform:uppercase;">SANCTIONED CREDIT</span>
-                <div id="heroSanctionedLimit" style="font-size:1.25rem; font-weight:900; color:#FFE57F;">₹5,00,000</div>
+                <div id="heroSanctionedLimit" style="font-size:1.25rem; font-weight:900; color:#FFE57F;">₹<?php echo number_format($sanctioned); ?></div>
             </div>
             <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.3); border-radius:8px; padding:10px 14px;">
                 <span style="font-size:0.65rem; color:#F5ECCE; font-weight:800; text-transform:uppercase;">CURRENT UTILIZED</span>
-                <div id="heroUtilizedCredit" style="font-size:1.25rem; font-weight:900; color:#FFFFFF;">₹2,10,000</div>
+                <div id="heroUtilizedCredit" style="font-size:1.25rem; font-weight:900; color:#FFFFFF;">₹<?php echo number_format($utilized); ?></div>
             </div>
             <div style="background:rgba(21,128,61,0.15); border:1px solid rgba(134,239,172,0.4); border-radius:8px; padding:10px 14px;">
                 <span style="font-size:0.65rem; color:#86EFAC; font-weight:800; text-transform:uppercase;">AVAILABLE HEADROOM</span>
-                <div id="heroAvailableCredit" style="font-size:1.25rem; font-weight:900; color:#86EFAC;">₹2,90,000</div>
+                <div id="heroAvailableCredit" style="font-size:1.25rem; font-weight:900; color:#86EFAC;">₹<?php echo number_format($available); ?></div>
             </div>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:4px; margin-top:4px;">
             <div style="display:flex; justify-content:space-between; font-size:0.7rem;">
-                <span id="progressPctText" style="color:#F5ECCE; font-weight:700;">42.0% Used</span>
-                <span id="progressAvailText" style="color:#86EFAC; font-weight:700;">58.0% (₹2,90,000) Available</span>
+                <span id="progressPctText" style="color:#F5ECCE; font-weight:700;"><?php echo $sanctioned > 0 ? $util_pct . '% Used' : 'Prepaid Account'; ?></span>
+                <span id="progressAvailText" style="color:#86EFAC; font-weight:700;"><?php echo $sanctioned > 0 ? $avail_pct . '% (₹' . number_format($available) . ') Available' : 'No Credit Assigned'; ?></span>
             </div>
             <div class="dt-wholesale-progress-wrap">
-                <div id="creditUtilizationProgressBar" class="dt-wholesale-progress-bar" style="width:42%;"></div>
+                <div id="creditUtilizationProgressBar" class="dt-wholesale-progress-bar" style="width:<?php echo min(100, $util_pct); ?>%;"></div>
             </div>
         </div>
     </div>

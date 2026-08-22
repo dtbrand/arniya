@@ -1,37 +1,12 @@
 <?php
 /**
  * wholesale-orders.php — DT Brand's & Jai Hanuman Tex
- * Wholesale Sourcing Orders & Bulk POs Component
+ * Wholesale Sourcing Orders & Bulk POs Component (100% Dynamic)
  */
-$wholesale_orders = [
-    [
-        'id' => 'ORD-WHL-4821',
-        'date' => '22 Aug 2026',
-        'items' => '120 Saree Lots (Pure Kanjeevaram & Banarasi)',
-        'amount' => '₹84,500',
-        'payment' => 'Revolving Credit (Net 30)',
-        'status' => 'Processing Dispatch',
-        'badge' => 'amber'
-    ],
-    [
-        'id' => 'ORD-WHL-4780',
-        'date' => '10 Aug 2026',
-        'items' => '240 Saree Lots (Surat Dola Silk Jacquard)',
-        'amount' => '₹1,45,000',
-        'payment' => 'Settled via NEFT',
-        'status' => 'Delivered & Settled',
-        'badge' => 'emerald'
-    ],
-    [
-        'id' => 'ORD-WHL-4692',
-        'date' => '25 Jul 2026',
-        'items' => '300 Saree Lots (Chanderi & Organza Festive)',
-        'amount' => '₹1,92,000',
-        'payment' => 'Settled via RTGS',
-        'status' => 'Delivered & Settled',
-        'badge' => 'emerald'
-    ]
-];
+require_once __DIR__ . '/wholesale-data.php';
+$whl_id = isset($_GET['id']) ? $_GET['id'] : (isset($wholesale['id']) ? $wholesale['id'] : 'WHL-8012');
+$wholesale = isset($wholesale) && is_array($wholesale) ? $wholesale : getWholesalePartner($whl_id);
+$wholesale_orders = getWholesaleOrders($wholesale['id']);
 ?>
 
 <div class="dt-card">
