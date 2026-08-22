@@ -5,12 +5,12 @@
 
 .dt-analytics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     gap: 16px;
     width: 100%;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .dt-analytics-grid {
         grid-template-columns: 1fr;
     }
@@ -20,11 +20,12 @@
     background: #FFFFFF;
     border: 1.2px solid var(--dt-border-light);
     border-radius: 12px;
-    padding: 18px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
     gap: 14px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
 }
 
 .dt-analytics-head {
@@ -32,6 +33,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #FAF5E8;
 }
 
 .dt-analytics-canvas-wrap {
@@ -51,6 +54,7 @@
     font-size: 0.72rem;
     font-weight: 700;
     color: #4B5563;
+    flex-wrap: wrap;
 }
 
 .dt-analytics-dot {
@@ -60,26 +64,98 @@
     display: inline-block;
 }
 
+/* ══ COHORT HEATMAP TABLE ══ */
 .dt-cohort-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.72rem;
+    border-collapse: separate;
+    border-spacing: 2px;
+    font-size: 0.73rem;
 }
 
 .dt-cohort-table th, .dt-cohort-table td {
     padding: 8px 6px;
     text-align: center;
-    border: 1px solid #EAE5D9;
+    border-radius: 4px;
 }
 
 .dt-cohort-table th {
     background: #FAF8F4;
     font-weight: 800;
     color: #78716C;
+    font-size: 0.68rem;
+    text-transform: uppercase;
 }
 
 .dt-cohort-cell {
     font-weight: 800;
-    border-radius: 4px;
+    color: #111827;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dt-cohort-cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 2;
+    position: relative;
+}
+
+/* ══ CHANNEL PROGRESS BARS ══ */
+.dt-channel-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px 0;
+    border-bottom: 1px solid #F6F3EC;
+}
+
+.dt-channel-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.dt-channel-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 700;
     color: #181512;
+}
+
+.dt-channel-bar-wrap {
+    width: 100%;
+    height: 7px;
+    background: #EAE5D9;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dt-channel-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ══ RFM MATRIX TIERS ══ */
+.dt-rfm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+}
+
+.dt-rfm-tier-card {
+    background: #FAF8F4;
+    border: 1.2px solid #EAE5D9;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.dt-rfm-tier-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(184,134,11,0.1);
 }
