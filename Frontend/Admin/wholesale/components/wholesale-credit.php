@@ -63,14 +63,41 @@ $credit_txns = getWholesaleCreditTxns($wholesale['id']);
         </div>
     </div>
 
-    <!-- ══ DOUBLE-ENTRY LEDGER TABLE ══ -->
-    <div class="dt-card">
-        <div class="dt-card-head">
+    <!-- ══ DOUBLE-ENTRY LEDGER TABLE AUDIT CARD ══ -->
+    <div class="dt-card" style="background:#FFFFFF; border:1.5px solid #EAE5D9; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.02); overflow:hidden;">
+        <!-- Toolbar Header -->
+        <div style="padding:12px 16px; border-bottom:1.5px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#FAF8F4;">
             <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                <h4 class="dt-card-title">Revolving Credit Double-Entry Ledger</h4>
+                <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                </div>
+                <div>
+                    <h4 style="font-size:0.9rem; font-weight:800; color:#181512; margin:0;">Revolving Credit Double-Entry Ledger</h4>
+                    <p style="font-size:0.7rem; color:#78716C; margin:1px 0 0 0;">Immutable double-entry log of order debits, settlements, and credit renewals.</p>
+                </div>
             </div>
-            <span class="dt-status-pill-clean gold">Audit Logged</span>
+
+            <!-- Filter & Search Controls -->
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <!-- Live Search Box -->
+                <div style="position:relative; width:200px;">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#78716C" stroke-width="2.2" style="position:absolute; left:9px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="wholesaleLedgerSearchInput" class="dt-wholesale-input" style="width:100%; height:30px; padding-left:28px; font-size:0.72rem; border-radius:6px; border:1.2px solid #EAE5D9; box-sizing:border-box;" placeholder="Search Txn, Order, UTR..." oninput="filterWholesaleCreditLedger()">
+                </div>
+
+                <!-- Type Filter -->
+                <select id="wholesaleLedgerTypeFilter" class="dt-wholesale-input" style="height:30px; font-size:0.72rem; padding:0 8px; border-radius:6px; border:1.2px solid #EAE5D9; box-sizing:border-box;" onchange="filterWholesaleCreditLedger()">
+                    <option value="all">All Types</option>
+                    <option value="debit">Debits (Orders)</option>
+                    <option value="credit">Credits (Settlements)</option>
+                </select>
+
+                <!-- Export Button -->
+                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="exportWholesaleLedgerStatement('<?php echo $wholesale['id']; ?>')">
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Export CSV</span>
+                </button>
+            </div>
         </div>
 
         <div style="overflow-x:auto; width:100%;">
@@ -87,12 +114,12 @@ $credit_txns = getWholesaleCreditTxns($wholesale['id']);
                         <th style="text-align:right; white-space:nowrap;">Voucher</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="wholesaleCreditLedgerTbody">
                     <?php foreach ($credit_txns as $tx): ?>
-                        <tr style="border-bottom:1px solid #F1ECE1;">
-                            <td style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;"><?php echo $tx['id']; ?></td>
+                        <tr class="wholesale-ledger-row" data-type="<?php echo $tx['debit'] !== '—' ? 'debit' : 'credit'; ?>" style="border-bottom:1px solid #F1ECE1;">
+                            <td class="wledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;"><?php echo $tx['id']; ?></td>
                             <td style="color:#78716C; font-size:0.75rem; white-space:nowrap;"><?php echo $tx['date']; ?></td>
-                            <td style="font-weight:700; color:#181512; white-space:nowrap;"><?php echo htmlspecialchars($tx['desc']); ?></td>
+                            <td class="wledger-desc-cell" style="font-weight:700; color:#181512; white-space:nowrap;"><?php echo htmlspecialchars($tx['desc']); ?></td>
                             <td style="text-align:right; font-weight:900; color:#DC2626; white-space:nowrap;"><?php echo $tx['debit']; ?></td>
                             <td style="text-align:right; font-weight:900; color:#15803D; white-space:nowrap;"><?php echo $tx['credit']; ?></td>
                             <td style="text-align:right; font-weight:700; color:#181512; white-space:nowrap;"><?php echo $tx['utilized_after']; ?></td>

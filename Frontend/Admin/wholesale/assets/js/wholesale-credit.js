@@ -78,6 +78,53 @@
         window.showToast(`✅ Credit settlement of ₹${amount.toLocaleString('en-IN')} recorded & credited!`);
     };
 
+    // ── Live Filter for Wholesale Credit Ledger ──
+    window.filterWholesaleCreditLedger = function () {
+        const query = (document.getElementById('wholesaleLedgerSearchInput')?.value || '').toLowerCase().trim();
+        const typeFilter = document.getElementById('wholesaleLedgerTypeFilter')?.value || 'all';
+
+        const rows = document.querySelectorAll('#wholesaleCreditLedgerTbody .wholesale-ledger-row');
+
+        rows.forEach((row) => {
+            const rowType = row.getAttribute('data-type') || '';
+            const idText = (row.querySelector('.wledger-id-cell')?.innerText || '').toLowerCase();
+            const descText = (row.querySelector('.wledger-desc-cell')?.innerText || '').toLowerCase();
+
+            const matchesQuery = !query || idText.includes(query) || descText.includes(query);
+            const matchesType = (typeFilter === 'all') || (rowType === typeFilter);
+
+            if (matchesQuery && matchesType) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    };
+
+    // ── Export Wholesale Ledger CSV Statement ──
+    window.exportWholesaleLedgerStatement = function (whlId) {
+        const cleanId = (whlId || 'WHL-8012').replace(/[^a-zA-Z0-9]/g, '');
+        const rows = [
+            ['Txn Reference', 'Timestamp', 'Narration / Description', 'Debit (INR)', 'Credit (INR)', 'Running Utilized (INR)', 'Available Credit (INR)'],
+            ['TXN-WHL-8912', '22 Aug 2026, 05:15 PM', 'Wholesale Saree Dispatch Debit (Order ORD-WHL-8112)', '-84500', '—', '210000', '290000'],
+            ['TXN-WHL-8812', '15 Aug 2026, 02:40 PM', 'NEFT Direct Bank Settlement (UTR: HDFC801288)', '—', '150000', '125500', '374500'],
+            ['TXN-WHL-8712', '02 Aug 2026, 11:10 AM', 'Wholesale Festive Saree Dispatch Debit (Order ORD-WHL-8062)', '-145000', '—', '270500', '229500'],
+            ['TXN-WHL-8640', '28 Jul 2026, 04:30 PM', 'RTGS Wholesaler Clearance (UTR: ICIC771920)', '—', '200000', '125500', '374500'],
+            ['TXN-WHL-8500', '01 Jul 2026, 12:00 AM', 'Quarterly Revolving Limit Sanction & Renewal', '—', '500000', '0', '500000']
+        ];
+
+        let csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `Wholesale_Credit_Ledger_${cleanId}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        window.showToast(`📊 Exported: Wholesale_Credit_Ledger_${cleanId}.csv`);
+    };
+
     window.viewWholesaleVoucher = function (txnId, type, amount, date, ref, actor, partnerName, partnerGstin, partnerId) {
         currentVoucherData = {
             txnId: txnId || 'TXN-WHL-8912',
