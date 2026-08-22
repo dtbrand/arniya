@@ -117,25 +117,30 @@ $master_tags = [
 ?>
 
 <!-- ══ CUSTOMER TAGGING STUDIO ══ -->
-<div>
+<div style="display:flex; flex-direction:column; gap:18px;">
     <!-- Quick Tag Creator Card -->
-    <div style="background:#FAF8F4; border:1.2px solid #EAE5D9; border-radius:12px; padding:18px 20px; margin-bottom:22px; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
-        <div style="margin-bottom:14px;">
-            <h4 style="font-size:0.95rem; font-weight:800; color:#181512; margin:0;">Create &amp; Assign Dynamic Customer Tag</h4>
-            <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Create reusable categorization labels for targeted WhatsApp broadcasts, VIP standing, and customer profiles.</p>
+    <div class="dt-card" style="padding:18px 20px;">
+        <div class="dt-card-head" style="margin-bottom:14px;">
+            <div>
+                <h3 class="dt-card-title">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span>Create &amp; Assign Dynamic Customer Tag</span>
+                </h3>
+                <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Create reusable categorization labels for targeted WhatsApp broadcasts, VIP standing, and customer profiles.</p>
+            </div>
         </div>
 
         <form id="dtCreateTagForm" onsubmit="addCustomerTag(event)" style="display:grid; grid-template-columns: minmax(240px, 2fr) minmax(180px, 1fr) minmax(150px, 1fr) auto; gap:12px; align-items:flex-end;">
             <!-- Field 1: Tag Name -->
             <div class="dt-form-group">
-                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Tag Name / Label <span style="color:#DC2626;">*</span></label>
-                <input type="text" id="dtCustNewTagInput" class="dt-input-field no-icon" placeholder="e.g. Surat High-Volume Silk Buyer, NRI Shopper..." required style="width:100%; height:38px; box-sizing:border-box; background:#FFFFFF;">
+                <label class="dt-form-label" style="display:block; font-size:0.73rem; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:5px;">Tag Name / Label <span style="color:#DC2626;">*</span></label>
+                <input type="text" id="dtCustNewTagInput" class="dt-input-field no-icon" placeholder="e.g. Surat High-Volume Silk Buyer, NRI Shopper..." required style="width:100%; height:38px; box-sizing:border-box; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.8rem;">
             </div>
 
             <!-- Field 2: Category -->
             <div class="dt-form-group">
-                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Category &amp; Usage</label>
-                <select id="dtTagCategorySelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF;">
+                <label class="dt-form-label" style="display:block; font-size:0.73rem; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:5px;">Category &amp; Usage</label>
+                <select id="dtTagCategorySelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-weight:600; color:#181512;">
                     <option value="VIP Standing">VIP Standing</option>
                     <option value="Product Affinity" selected>Product Affinity</option>
                     <option value="Regional Cluster">Regional Cluster</option>
@@ -148,8 +153,8 @@ $master_tags = [
 
             <!-- Field 3: Badge Theme -->
             <div class="dt-form-group">
-                <label class="dt-form-label" style="display:block; font-size:0.75rem; font-weight:700; color:#181512; margin-bottom:5px;">Badge Color Theme</label>
-                <select id="dtTagColorSelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF;">
+                <label class="dt-form-label" style="display:block; font-size:0.73rem; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:5px;">Badge Color Theme</label>
+                <select id="dtTagColorSelect" class="dt-cust-select" style="width:100%; height:38px; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-weight:600; color:#181512;">
                     <option value="gold" selected>🟡 Radiant Gold</option>
                     <option value="green">🟢 Emerald Green</option>
                     <option value="blue">🔵 Sapphire Blue</option>
@@ -169,10 +174,10 @@ $master_tags = [
     </div>
 
     <!-- Active Tag Cloud / Quick Filter Pills -->
-    <div style="margin-bottom:22px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+    <div class="dt-card" style="padding:16px 20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
             <div style="font-size:0.75rem; font-weight:800; color:#78716C; text-transform:uppercase; letter-spacing:0.04em;">Active Tag Directory Cloud (Click to Filter Table)</div>
-            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.7rem;" onclick="filterTagsTable('')">Show All Tags (12)</button>
+            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:3px 10px; font-size:0.72rem;" onclick="filterTagsTable('')">Show All Tags (12)</button>
         </div>
         
         <div class="dt-cust-tags-wrap" id="dtCustTagsContainer" style="gap:8px; display:flex; flex-wrap:wrap;">
@@ -186,14 +191,17 @@ $master_tags = [
     </div>
 
     <!-- Master Tag Management Table & Search -->
-    <div style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+    <div class="dt-card" style="padding:0; overflow:hidden;">
         <!-- Table Toolbar with Dedicated Search Button -->
         <div style="padding:12px 18px; background:#FAF8F4; border-bottom:1.2px solid #EAE5D9; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
-            <div style="font-size:0.88rem; font-weight:800; color:#181512;">Master Tag Directory &amp; Audience Rules</div>
+            <div style="font-size:0.88rem; font-weight:800; color:#181512; display:flex; align-items:center; gap:8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                <span>Master Tag Directory &amp; Audience Rules</span>
+            </div>
             
             <div style="display:flex; align-items:center; gap:8px;">
                 <div style="position:relative; width:250px;">
-                    <input type="text" id="dtTagSearchInput" class="dt-input-field" placeholder="Search tags by name, rule or category..." oninput="document.getElementById('dtTagSearchClearBtn').style.display = this.value.trim() ? 'flex' : 'none'; filterTagsTable(this.value);" onkeyup="filterTagsTable(this.value)" style="height:36px; font-size:0.78rem; padding:0 28px 0 12px; width:100%; box-sizing:border-box; background:#FFFFFF;">
+                    <input type="text" id="dtTagSearchInput" class="dt-input-field no-icon" placeholder="Search tags by name, rule or category..." oninput="document.getElementById('dtTagSearchClearBtn').style.display = this.value.trim() ? 'flex' : 'none'; filterTagsTable(this.value);" onkeyup="filterTagsTable(this.value)" style="height:36px; font-size:0.78rem; padding:0 28px 0 12px; width:100%; box-sizing:border-box; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px;">
                     <button type="button" id="dtTagSearchClearBtn" onclick="document.getElementById('dtTagSearchInput').value=''; this.style.display='none'; filterTagsTable('');" style="display:none; position:absolute; right:8px; top:50%; transform:translateY(-50%); background:#EAE5D9; border:none; color:#181512; cursor:pointer; font-size:0.68rem; width:18px; height:18px; border-radius:50%; align-items:center; justify-content:center; padding:0;">✕</button>
                 </div>
                 <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="height:36px; padding:0 12px; font-size:0.75rem; display:inline-flex; align-items:center; gap:5px;" onclick="filterTagsTable(document.getElementById('dtTagSearchInput').value)">
