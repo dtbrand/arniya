@@ -122,7 +122,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/products/" class="adm-nav-subitem <?php echo ($current_nav === 'products' && empty($current_subnav)) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Products</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,240</small>
+                                <span class="adm-nav-badge">1,240</span>
                             </a>
                         </li>
                         <li>
@@ -135,14 +135,14 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/products/categories/" class="adm-nav-subitem <?php echo $current_subnav === 'categories' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>Categories</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">16</small>
+                                <span class="adm-nav-badge">16</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/products/brands/" class="adm-nav-subitem <?php echo $current_subnav === 'brands' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
                                 <span>Brands</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">4</small>
+                                <span class="adm-nav-badge">4</span>
                             </a>
                         </li>
                         <li>
@@ -167,21 +167,21 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/products/featured/" class="adm-nav-subitem <?php echo $current_subnav === 'featured' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 <span>Featured</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">48</small>
+                                <span class="adm-nav-badge">48</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/products/best-sellers/" class="adm-nav-subitem <?php echo $current_subnav === 'best-sellers' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
                                 <span>Best Sellers</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">32</small>
+                                <span class="adm-nav-badge">32</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/products/new-arrivals/" class="adm-nav-subitem <?php echo $current_subnav === 'new-arrivals' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15 8 21 9 17 14 18 20 12 17 6 20 7 14 3 9 9 8 12 2"></polygon></svg>
                                 <span>New Arrivals</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">64</small>
+                                <span class="adm-nav-badge">64</span>
                             </a>
                         </li>
                         <li>
@@ -198,10 +198,11 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                         <li>
                             <a href="/Frontend/Admin/products/exports/" class="adm-nav-subitem <?php echo $current_subnav === 'exports' ? 'active' : ''; ?>">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                 <span>Export Studio</span>
                             </a>
                         </li>
+                    </ul>  </li>
                     </ul>
                 </li>
 
@@ -232,21 +233,21 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/catalogue/categories/" class="adm-nav-subitem <?php echo $current_subnav === 'categories' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>Categories</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">16</small>
+                                <span class="adm-nav-badge">16</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/catalogue/subcategories/" class="adm-nav-subitem <?php echo $current_subnav === 'subcategories' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
                                 <span>Subcategories</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">42</small>
+                                <span class="adm-nav-badge">42</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/catalogue/collections/" class="adm-nav-subitem <?php echo $current_subnav === 'collections' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 <span>Collections</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">8</small>
+                                <span class="adm-nav-badge">8</span>
                             </a>
                         </li>
                         <li>
@@ -297,49 +298,49 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/orders/index.php" class="adm-nav-subitem <?php echo ($current_nav === 'orders' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Orders</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,624</small>
+                                <span class="adm-nav-badge">1,624</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <span>Pending</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">18</small>
+                                <span class="adm-nav-badge">18</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/processing.php" class="adm-nav-subitem <?php echo $current_subnav === 'processing' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                                 <span>Processing</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">24</small>
+                                <span class="adm-nav-badge">24</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/shipped.php" class="adm-nav-subitem <?php echo $current_subnav === 'shipped' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                                 <span>In Transit / Shipped</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">84</small>
+                                <span class="adm-nav-badge">84</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/delivered.php" class="adm-nav-subitem <?php echo $current_subnav === 'delivered' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"></path></svg>
                                 <span>Delivered</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">1,542</small>
+                                <span class="adm-nav-badge">1,542</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/returns.php" class="adm-nav-subitem <?php echo $current_subnav === 'returns' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
                                 <span>RMA Returns</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">8</small>
+                                <span class="adm-nav-badge">8</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/orders/refunds.php" class="adm-nav-subitem <?php echo $current_subnav === 'refunds' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                                 <span>Refunds Ledger</span>
-                                <small style="color:#C5A859; font-size:0.65rem; margin-left:auto;">6</small>
+                                <span class="adm-nav-badge">6</span>
                             </a>
                         </li>
                         <li>
@@ -409,21 +410,21 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/Frontend/Admin/customers/active.php" class="adm-nav-subitem <?php echo $current_subnav === 'active' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 <span>Active Verified</span>
-                                <small style="color:#15803D; font-size:0.65rem; margin-left:auto;">4,180</small>
+                                <span class="adm-nav-badge green">4,180</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/customers/inactive.php" class="adm-nav-subitem <?php echo $current_subnav === 'inactive' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                                 <span>Inactive / Dormant</span>
-                                <small style="color:#B45309; font-size:0.65rem; margin-left:auto;">640</small>
+                                <span class="adm-nav-badge">640</span>
                             </a>
                         </li>
                         <li>
                             <a href="/Frontend/Admin/customers/new.php" class="adm-nav-subitem <?php echo $current_subnav === 'new' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                                 <span>New Registrations</span>
-                                <small style="color:#7E22CE; font-size:0.65rem; margin-left:auto;">348</small>
+                                <span class="adm-nav-badge">348</span>
                             </a>
                         </li>
                         <li>
