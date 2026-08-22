@@ -20,6 +20,9 @@ $active_subnav = "credit";
     <link rel="stylesheet" href="/Frontend/Admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/resellers/assets/css/reseller-credit.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <!-- html2canvas and jsPDF for High-DPI 1:1 PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <div class="adm-layout">
@@ -161,62 +164,111 @@ $active_subnav = "credit";
     </div>
 </div>
 
-<!-- 3. Digital Audit Voucher Modal -->
-<div id="dtVoucherModal" class="dt-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
-    <div class="dt-modal-dialog" style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:14px; width:95%; max-width:460px; box-shadow:0 20px 50px rgba(0,0,0,0.4); overflow:hidden;">
-        <div class="dt-modal-head" style="padding:14px 18px; border-bottom:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
+<!-- ══════════════════════════════════════════════════════════════
+     3. NEXT-LEVEL CERTIFIED DIGITAL CREDIT VOUCHER MODAL
+══════════════════════════════════════════════════════════════ -->
+<div id="dtVoucherModal" class="dt-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(6px); padding:16px;">
+    <div class="dt-modal-dialog" style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:14px; width:95%; max-width:580px; box-shadow:0 24px 60px rgba(0,0,0,0.45); overflow:hidden; max-height:92vh; display:flex; flex-direction:column;">
+        
+        <!-- Modal Top Bar -->
+        <div class="dt-modal-head" style="padding:12px 18px; border-bottom:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                <strong style="font-size:0.95rem; font-weight:800; color:#181512;">Digital Credit Ledger Voucher</strong>
+                <strong style="font-size:0.95rem; font-weight:800; color:#181512;">Official Digital Credit Voucher</strong>
             </div>
             <button type="button" onclick="closeCreditModal('dtVoucherModal')" style="background:none; border:none; font-size:20px; font-weight:bold; color:#78716C; cursor:pointer;">✕</button>
         </div>
 
-        <div class="dt-modal-body" style="padding:20px; display:flex; flex-direction:column; gap:12px; background:#FAF8F4;">
-            <div style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:10px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #F3EFE6; padding-bottom:8px;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">TRANSACTION ID:</span>
-                    <strong id="voucherTxnId" style="font-family:monospace; color:#8A681F; font-size:0.9rem;">TXN-8821</strong>
+        <!-- Scrollable Modal Body containing Printable Voucher Box -->
+        <div class="dt-modal-body" style="padding:18px; overflow-y:auto; background:#FAF8F4; flex:1;">
+            
+            <!-- ══ PRINTABLE CERTIFIED VOUCHER INNER BOX ══ -->
+            <div id="dtPrintableVoucher" class="dt-voucher-card">
+                
+                <!-- Voucher Header Strip -->
+                <div class="dt-voucher-header">
+                    <div>
+                        <div style="font-size:0.65rem; color:#FFE57F; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;">DT BRAND'S &amp; JAI HANUMAN TEX</div>
+                        <h4 style="font-size:1.05rem; font-weight:900; color:#FFFFFF; margin:2px 0 0 0; letter-spacing:-0.01em;">B2B Credit Settlement Voucher</h4>
+                        <small style="font-size:0.68rem; color:#F5ECCE;">ISO 9001:2015 Certified Wholesale Textile Network • Surat Hub</small>
+                    </div>
+                    <div style="text-align:right;">
+                        <span class="dt-reseller-badge gold" style="font-size:0.68rem; font-weight:800; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                            OFFICIAL AUDIT COPY
+                        </span>
+                        <div id="voucherTxnId" style="font-family:monospace; color:#FFE57F; font-size:0.85rem; font-weight:800; margin-top:4px;">TXN-8821</div>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">TYPE &amp; PARTICULARS:</span>
-                    <span id="voucherType" style="font-weight:800; color:#181512; font-size:0.8rem; text-align:right;">Debit (Order ORD-9842)</span>
+                <!-- Reseller & Account Details Strip -->
+                <div style="background:#FAF8F4; border:1px solid #EAE5D9; border-radius:8px; padding:10px 14px; display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.75rem;">
+                    <div>
+                        <span style="color:#78716C; font-weight:600; display:block;">Partner Reseller:</span>
+                        <strong style="color:#181512; font-weight:800;">Arniya Silk Heritage</strong>
+                        <div style="color:#78716C; font-size:0.7rem; font-family:monospace;">ID: RES-1048 • GSTIN: 24AAAPL1234F1Z8</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="color:#78716C; font-weight:600; display:block;">Date &amp; Timestamp:</span>
+                        <strong id="voucherDate" style="color:#181512; font-weight:800;">20 Aug 2026, 04:30 PM</strong>
+                        <div style="color:#15803D; font-weight:800; font-size:0.7rem;">✓ Digitally Verified</div>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">AMOUNT:</span>
-                    <strong id="voucherAmount" style="font-size:1.1rem; color:#15803D; font-weight:900;">-₹14,800</strong>
+                <!-- Particulars & Details -->
+                <div style="background:#FFFFFF; border:1px solid #EAE5D9; border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px; font-size:0.78rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #F1ECE1; padding-bottom:6px;">
+                        <span style="color:#78716C; font-weight:600;">Transaction Type:</span>
+                        <strong id="voucherType" style="color:#181512; font-weight:800;">Debit (Order ORD-9842)</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed #F1ECE1; padding-bottom:6px;">
+                        <span style="color:#78716C; font-weight:600;">Reference / UTR / Order No:</span>
+                        <strong id="voucherRef" style="font-family:monospace; color:#8A681F; font-weight:800;">ORD-9842</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#78716C; font-weight:600;">Authorized By:</span>
+                        <strong id="voucherActor" style="color:#181512; font-weight:700;">Automated Order Checkout</strong>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">DATE &amp; TIME:</span>
-                    <span id="voucherDate" style="color:#78716C; font-size:0.75rem; font-weight:600;">20 Aug 2026</span>
+                <!-- Amount Box & Security Stamp -->
+                <div class="dt-voucher-amount-box">
+                    <div>
+                        <span style="font-size:0.7rem; color:#78716C; font-weight:800; text-transform:uppercase;">TOTAL TRANSACTION AMOUNT</span>
+                        <div id="voucherAmount" style="font-size:1.6rem; font-weight:900; color:#15803D; line-height:1.1; margin-top:2px;">
+                            -₹14,800
+                        </div>
+                    </div>
+                    <div class="dt-voucher-stamp">
+                        <span>DT BRAND'S</span>
+                        <span style="font-size:0.5rem; color:#15803D;">✓ VERIFIED</span>
+                        <span>FINANCE</span>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">REFERENCE / UTR:</span>
-                    <span id="voucherRef" style="font-family:monospace; color:#181512; font-size:0.75rem; font-weight:700;">ORD-9842</span>
+                <!-- Footer Security Hash -->
+                <div style="border-top:1px solid #EAE5D9; padding-top:8px; display:flex; justify-content:space-between; align-items:center; font-size:0.68rem; color:#78716C;">
+                    <span>🔒 SHA-256: <code style="font-family:monospace; color:#8A681F;">9a4f8b2c1e7d03f6...</code></span>
+                    <span>System Generated • No Physical Signature Required</span>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid #F3EFE6; padding-top:8px;">
-                    <span style="font-size:0.75rem; color:#78716C; font-weight:700;">AUTHORIZED BY:</span>
-                    <span id="voucherActor" style="color:#181512; font-size:0.75rem; font-weight:800;">Automated Order Checkout</span>
-                </div>
-            </div>
-
-            <div style="text-align:center; font-size:0.68rem; color:#78716C; font-weight:600;">
-                🔒 Digitally Signed &amp; Audited by DT Brand's &amp; Jai Hanuman Tex Compliance Gateway
             </div>
         </div>
 
-        <div class="dt-modal-foot" style="padding:14px 18px; border-top:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
+        <!-- Modal Bottom Actions -->
+        <div class="dt-modal-foot" style="padding:12px 18px; border-top:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
             <button type="button" class="dt-btn dt-btn-pale" onclick="closeCreditModal('dtVoucherModal')">Close</button>
-            <button type="button" class="dt-btn dt-btn-gold" onclick="window.print()">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span>Print Voucher</span>
-            </button>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="printCurrentVoucher()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    <span>Print Voucher</span>
+                </button>
+                <button type="button" class="dt-btn dt-btn-gold" onclick="downloadVoucherPdf()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Download Voucher PDF</span>
+                </button>
+            </div>
         </div>
+
     </div>
 </div>
 

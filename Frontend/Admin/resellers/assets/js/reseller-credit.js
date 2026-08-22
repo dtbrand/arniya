@@ -1,6 +1,6 @@
 /**
  * reseller-credit.js — DT Brand's & Jai Hanuman Tex
- * B2B Revolving Credit Hub, Live Ledger Search, Settlement Engine & Voucher Generator
+ * B2B Revolving Credit Hub, Live Ledger Search, Settlement Engine & High-DPI Voucher PDF Generator
  */
 
 (function () {
@@ -8,6 +8,14 @@
 
     let currentSanctioned = 150000;
     let currentUtilized = 65000;
+    let currentVoucherData = {
+        txnId: 'TXN-8821',
+        type: 'Debit (Order ORD-9842)',
+        amount: '-₹14,800',
+        date: '20 Aug 2026, 04:30 PM',
+        ref: 'ORD-9842',
+        actor: 'Automated Order Checkout'
+    };
 
     // ── Helper to Update Hero Metrics & Progress Bar ──
     function updateHeroCreditMetrics() {
@@ -67,19 +75,19 @@
             const avail = Math.max(0, currentSanctioned - currentUtilized);
 
             tr.innerHTML = `
-                <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F;">${newTxnId}</td>
+                <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;">${newTxnId}</td>
                 <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;">${nowStr}</td>
-                <td class="ledger-desc-cell" style="font-weight:700; color:#181512;">
-                    <div style="display:flex; flex-direction:column;">
+                <td class="ledger-desc-cell" style="font-weight:700; color:#181512; white-space:nowrap;">
+                    <div style="display:flex; align-items:center; gap:8px;">
                         <span>Sanctioned Credit Limit Adjusted</span>
-                        <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace;">${reason}</small>
+                        <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace; background:#FAF5E8; padding:1px 6px; border-radius:4px; border:1px solid #EAE5D9;">${reason}</small>
                     </div>
                 </td>
                 <td style="text-align:right; font-weight:800; font-size:0.85rem; color:#15803D; white-space:nowrap;">+₹${newLimit.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#181512; white-space:nowrap;">₹${currentUtilized.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#15803D; white-space:nowrap;">₹${avail.toLocaleString('en-IN')}</td>
                 <td style="white-space:nowrap;"><span class="dt-status-pill-clean emerald">✓ COMPLETED</span></td>
-                <td style="color:#78716C; font-size:0.72rem;">Admin Gautam</td>
+                <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;">Admin Gautam</td>
                 <td style="text-align:right; white-space:nowrap;">
                     <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewTxnVoucher('${newTxnId}', 'Credit Limit Adjusted', '₹${newLimit.toLocaleString('en-IN')}', '${nowStr}', '${reason}', 'Admin Gautam')">
                         <span>Voucher</span>
@@ -134,19 +142,19 @@
             const avail = Math.max(0, currentSanctioned - currentUtilized);
 
             tr.innerHTML = `
-                <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F;">${newTxnId}</td>
+                <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;">${newTxnId}</td>
                 <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;">${nowStr}</td>
-                <td class="ledger-desc-cell" style="font-weight:700; color:#181512;">
-                    <div style="display:flex; flex-direction:column;">
+                <td class="ledger-desc-cell" style="font-weight:700; color:#181512; white-space:nowrap;">
+                    <div style="display:flex; align-items:center; gap:8px;">
                         <span>Credit Settlement (${mode})</span>
-                        <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace;">UTR #${utr}</small>
+                        <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace; background:#FAF5E8; padding:1px 6px; border-radius:4px; border:1px solid #EAE5D9;">UTR #${utr}</small>
                     </div>
                 </td>
                 <td style="text-align:right; font-weight:800; font-size:0.85rem; color:#15803D; white-space:nowrap;">+₹${amount.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#181512; white-space:nowrap;">₹${currentUtilized.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#15803D; white-space:nowrap;">₹${avail.toLocaleString('en-IN')}</td>
                 <td style="white-space:nowrap;"><span class="dt-status-pill-clean emerald">✓ SETTLED</span></td>
-                <td style="color:#78716C; font-size:0.72rem;">Accounts Desk</td>
+                <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;">Accounts Desk</td>
                 <td style="text-align:right; white-space:nowrap;">
                     <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewTxnVoucher('${newTxnId}', 'Credit Settlement (${mode})', '+₹${amount.toLocaleString('en-IN')}', '${nowStr}', 'UTR #${utr}', 'Accounts Desk')">
                         <span>Voucher</span>
@@ -185,15 +193,120 @@
 
     // ── View Digital Audit Voucher Modal ──
     window.viewTxnVoucher = function (txnId, type, amount, date, ref, actor) {
-        document.getElementById('voucherTxnId').innerText = txnId;
-        document.getElementById('voucherType').innerText = type;
-        document.getElementById('voucherAmount').innerText = amount;
-        document.getElementById('voucherDate').innerText = date;
-        document.getElementById('voucherRef').innerText = ref;
-        document.getElementById('voucherActor').innerText = actor;
+        currentVoucherData = {
+            txnId: txnId || 'TXN-8821',
+            type: type || 'Debit (Order ORD-9842)',
+            amount: amount || '-₹14,800',
+            date: date || '20 Aug 2026, 04:30 PM',
+            ref: ref || 'ORD-9842',
+            actor: actor || 'Automated Order Checkout'
+        };
+
+        const txnEl = document.getElementById('voucherTxnId');
+        const typeEl = document.getElementById('voucherType');
+        const amountEl = document.getElementById('voucherAmount');
+        const dateEl = document.getElementById('voucherDate');
+        const refEl = document.getElementById('voucherRef');
+        const actorEl = document.getElementById('voucherActor');
+
+        if (txnEl) txnEl.innerText = currentVoucherData.txnId;
+        if (typeEl) typeEl.innerText = currentVoucherData.type;
+        if (amountEl) {
+            amountEl.innerText = currentVoucherData.amount;
+            if (currentVoucherData.amount.startsWith('-')) {
+                amountEl.style.color = '#DC2626';
+            } else {
+                amountEl.style.color = '#15803D';
+            }
+        }
+        if (dateEl) dateEl.innerText = currentVoucherData.date;
+        if (refEl) refEl.innerText = currentVoucherData.ref;
+        if (actorEl) actorEl.innerText = currentVoucherData.actor;
 
         const modal = document.getElementById('dtVoucherModal');
         if (modal) modal.style.display = 'flex';
+    };
+
+    // ── Print Current Voucher ──
+    window.printCurrentVoucher = function () {
+        window.print();
+    };
+
+    // ── 👑 100% NON-BLANK EXACT SAME UI VOUCHER PDF DOWNLOAD (.pdf) ──
+    window.downloadVoucherPdf = function () {
+        const voucherEl = document.getElementById('dtPrintableVoucher');
+        if (!voucherEl) {
+            window.showToast('⚠️ Voucher element not found.');
+            return;
+        }
+
+        const cleanTxnId = (currentVoucherData.txnId || 'TXN8821').replace(/[^a-zA-Z0-9]/g, '');
+        const pdfFilename = `Credit_Voucher_${cleanTxnId}_RES1048.pdf`;
+
+        // Create temporary visible container in viewport for html2canvas
+        const renderBox = document.createElement('div');
+        renderBox.id = 'dtVoucherPdfRenderContainer';
+        renderBox.style.position = 'fixed';
+        renderBox.style.top = '0';
+        renderBox.style.left = '0';
+        renderBox.style.width = '640px';
+        renderBox.style.background = '#FFFFFF';
+        renderBox.style.zIndex = '9999999';
+        renderBox.style.padding = '12px';
+        renderBox.style.boxSizing = 'border-box';
+        renderBox.style.boxShadow = '0 10px 40px rgba(0,0,0,0.5)';
+        renderBox.innerHTML = voucherEl.outerHTML;
+
+        document.body.appendChild(renderBox);
+
+        window.showToast(`📥 Downloading "${pdfFilename}"...`);
+
+        const hasHtml2Canvas = typeof window.html2canvas === 'function';
+        const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : (typeof window.jsPDF === 'function' ? window.jsPDF : null);
+
+        if (hasHtml2Canvas && jsPDFClass) {
+            window.html2canvas(renderBox, {
+                scale: 2.5,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#FFFFFF',
+                logging: false
+            }).then(function (canvas) {
+                if (renderBox.parentNode) {
+                    renderBox.parentNode.removeChild(renderBox);
+                }
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                const pdf = new jsPDFClass({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const marginX = 10;
+                const marginY = 10;
+                const targetWidth = pageWidth - (marginX * 2);
+                const targetHeight = (canvas.height * targetWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'JPEG', marginX, marginY, targetWidth, targetHeight);
+                pdf.save(pdfFilename);
+                window.showToast(`✅ Saved: "${pdfFilename}"`);
+            }).catch(function (err) {
+                console.error('html2canvas render error:', err);
+                if (renderBox.parentNode) {
+                    renderBox.parentNode.removeChild(renderBox);
+                }
+                window.showToast('⚠️ PDF rendering fallback triggered.');
+            });
+            return;
+        }
+
+        // Fallback
+        if (renderBox.parentNode) {
+            renderBox.parentNode.removeChild(renderBox);
+        }
+        window.print();
     };
 
     // ── Export Ledger CSV Statement ──

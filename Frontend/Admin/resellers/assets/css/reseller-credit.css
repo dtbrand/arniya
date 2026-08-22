@@ -1,6 +1,6 @@
 /**
  * reseller-credit.css — DT Brand's & Jai Hanuman Tex
- * Master Luxury Credit Hub, Ambient Glass Hero Banner, Progress Bar & Ledger
+ * Master Luxury Credit Hub, Ambient Glass Hero Banner, Progress Bar, Ledger & Next-Level Voucher
  */
 
 @keyframes dtAdminAmbientGlow {
@@ -136,4 +136,86 @@
     background: #FEF3C7 !important;
     color: #B45309 !important;
     border: 1px solid #FDE68A !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   NEXT-LEVEL CERTIFIED DIGITAL CREDIT VOUCHER
+══════════════════════════════════════════════════════════════ */
+.dt-voucher-card {
+    background: #FFFFFF;
+    border: 1.5px solid #D4AF37;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.dt-voucher-header {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border: 1px solid #8A681F;
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.dt-voucher-amount-box {
+    background: #FAF8F4;
+    border: 1.5px dashed #D4AF37;
+    border-radius: 10px;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.dt-voucher-stamp {
+    width: 68px;
+    height: 68px;
+    border: 2px dashed #8A681F;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8A681F;
+    font-size: 0.55rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    transform: rotate(-10deg);
+    line-height: 1.1;
+    text-align: center;
+    background: rgba(250, 245, 232, 0.6);
+}
+
+@media print {
+    body * {
+        visibility: hidden !important;
+    }
+    #dtPrintableVoucher, #dtPrintableVoucher * {
+        visibility: visible !important;
+    }
+    #dtPrintableVoucher {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 10mm !important;
+        box-sizing: border-box !important;
+        background: #FFFFFF !important;
+        z-index: 9999999 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 }
