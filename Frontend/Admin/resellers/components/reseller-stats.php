@@ -7,7 +7,7 @@ $active_filter = isset($active_filter) ? $active_filter : 'all';
 ?>
 
 <!-- ══ 8-CARD EXECUTIVE KPI RIBBON ══ -->
-<div class="dt-cust-kpi-grid">
+<div class="dt-cust-kpi-grid" id="dtResellerKpiGrid" style="transition:all 0.3s ease;">
     <!-- Card 1: Total Resellers -->
     <div class="dt-cust-kpi-card <?php echo $active_filter === 'all' ? 'active' : ''; ?>" onclick="filterResellersByStatus('all', this)">
         <div class="dt-cust-kpi-top">
@@ -155,7 +155,7 @@ $active_filter = isset($active_filter) ? $active_filter : 'all';
 </div>
 
 <!-- ══ STATUS FLOW FILTER PILLS ══ -->
-<div class="dt-cust-filter-strip">
+<div class="dt-cust-filter-strip" id="dtResellerFilterStrip" style="transition:all 0.3s ease;">
     <button type="button" class="dt-cust-pill-btn active" onclick="filterResellersByStatus('all', this)">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         <span>All Resellers</span>

@@ -1,14 +1,47 @@
 /**
  * reseller-list.js — DT Brand's & Jai Hanuman Tex
- * Real-time Debounced Search, Multi-Filter Pipeline, Column Sorting, Row Selection & Pagination
+ * Real-time Debounced Search, Multi-Filter Pipeline, Column Sorting, Row Selection, Filter Show/Hide & Pagination
  */
 
 (function () {
     'use strict';
 
     let activeStatusFilter = 'all';
+    let activeTierFilter = 'all';
     let searchQuery = '';
     let currentSort = 'newest';
+    let isStatsHidden = false;
+
+    // ── Toggle Stats & Filters Ribbon ──
+    window.toggleResellerStatsAndFilters = function () {
+        const kpiGrid = document.getElementById('dtResellerKpiGrid');
+        const filterStrip = document.getElementById('dtResellerFilterStrip');
+        const toggleBtnText = document.getElementById('toggleStatsText');
+        const toggleBtnIcon = document.getElementById('toggleStatsIcon');
+
+        isStatsHidden = !isStatsHidden;
+
+        if (kpiGrid) {
+            kpiGrid.style.display = isStatsHidden ? 'none' : 'grid';
+        }
+        if (filterStrip) {
+            filterStrip.style.display = isStatsHidden ? 'none' : 'flex';
+        }
+
+        if (toggleBtnText) {
+            toggleBtnText.innerText = isStatsHidden ? 'Show Filters' : 'Hide Filters';
+        }
+
+        if (toggleBtnIcon) {
+            if (isStatsHidden) {
+                toggleBtnIcon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                toggleBtnIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        }
+
+        window.showToast(isStatsHidden ? 'Overview & Filter Strip Hidden' : 'Overview & Filter Strip Visible');
+    };
 
     // ── Real-Time Debounced Search ──
     let searchTimeout = null;
@@ -37,19 +70,42 @@
     // ── Status Filter Pills ──
     window.filterResellersByStatus = function (status, btn) {
         activeStatusFilter = status;
-        document.querySelectorAll('.dt-reseller-pill-btn').forEach(b => b.classList.remove('active'));
+
+        // Sync dropdown if exists
+        const statusSelect = document.getElementById('dtResellerStatusSelect');
+        if (statusSelect) {
+            if (status === 'approved' || status === 'Active') statusSelect.value = 'Active';
+            else if (status === 'pending' || status === 'Pending') statusSelect.value = 'Pending';
+            else if (status === 'suspended' || status === 'Suspended') statusSelect.value = 'Suspended';
+            else if (status === 'rejected' || status === 'Rejected') statusSelect.value = 'Rejected';
+            else statusSelect.value = 'all';
+        }
+
+        document.querySelectorAll('.dt-cust-pill-btn, .dt-reseller-pill-btn').forEach(b => b.classList.remove('active'));
         if (btn) btn.classList.add('active');
 
-        document.querySelectorAll('.dt-reseller-kpi-card').forEach(c => c.classList.remove('active'));
-        const activeKpi = document.querySelector(`.dt-reseller-kpi-card[data-status="${status}"]`);
+        document.querySelectorAll('.dt-cust-kpi-card, .dt-reseller-kpi-card').forEach(c => c.classList.remove('active'));
+        const activeKpi = document.querySelector(`.dt-cust-kpi-card[data-status="${status}"]`);
         if (activeKpi) activeKpi.classList.add('active');
 
         filterResellersTable();
     };
 
+    // ── Status Dropdown Handler ──
+    window.handleResellerStatusDropdown = function (status) {
+        activeStatusFilter = status;
+        filterResellersTable();
+    };
+
+    // ── Tier Dropdown Handler ──
+    window.handleResellerTierFilter = function (tier) {
+        activeTierFilter = tier;
+        filterResellersTable();
+    };
+
     // ── Sorting ──
     window.handleResellerSort = function (select) {
-        currentSort = select.value;
+        currentSort = select.value || 'newest';
         const tbody = document.querySelector('#dtResellersMasterTable tbody');
         if (!tbody) return;
 
@@ -73,7 +129,8 @@
         });
 
         rows.forEach(r => tbody.appendChild(r));
-        window.showToast(`Sorted by: ${select.options[select.selectedIndex].text}`);
+        const selectEl = typeof select === 'object' && select.options ? select.options[select.selectedIndex].text : currentSort;
+        window.showToast(`Sorted by: ${selectEl}`);
     };
 
     // ── Filter Pipeline ──
@@ -85,16 +142,17 @@
             const status = (row.getAttribute('data-status') || '').toLowerCase();
             const searchData = (row.getAttribute('data-search') || row.innerText || '').toLowerCase();
 
+            // Status Match
             let matchesStatus = false;
             if (activeStatusFilter === 'all') {
                 matchesStatus = true;
-            } else if (activeStatusFilter === 'approved' || activeStatusFilter === 'active') {
+            } else if (activeStatusFilter === 'approved' || activeStatusFilter.toLowerCase() === 'active') {
                 matchesStatus = (status === 'active' || status === 'approved');
-            } else if (activeStatusFilter === 'pending') {
+            } else if (activeStatusFilter.toLowerCase() === 'pending') {
                 matchesStatus = (status === 'pending');
-            } else if (activeStatusFilter === 'suspended') {
+            } else if (activeStatusFilter.toLowerCase() === 'suspended') {
                 matchesStatus = (status === 'suspended');
-            } else if (activeStatusFilter === 'rejected') {
+            } else if (activeStatusFilter.toLowerCase() === 'rejected') {
                 matchesStatus = (status === 'rejected');
             } else if (activeStatusFilter === 'platinum') {
                 matchesStatus = searchData.includes('platinum');
@@ -104,9 +162,18 @@
                 matchesStatus = status.includes(activeStatusFilter.toLowerCase());
             }
 
+            // Tier Match
+            let matchesTier = false;
+            if (activeTierFilter === 'all') {
+                matchesTier = true;
+            } else {
+                matchesTier = searchData.includes(activeTierFilter.toLowerCase());
+            }
+
+            // Search Keyword Match
             let matchesSearch = !searchQuery || searchData.includes(searchQuery);
 
-            if (matchesStatus && matchesSearch) {
+            if (matchesStatus && matchesTier && matchesSearch) {
                 row.style.display = '';
                 visibleCount++;
             } else {
