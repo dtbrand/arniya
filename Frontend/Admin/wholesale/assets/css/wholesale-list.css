@@ -107,6 +107,8 @@
     overflow-x: auto;
     width: 100%;
     -webkit-overflow-scrolling: touch;
+    position: relative;
+    border-top: 1px solid #F1ECE1;
 }
 
 .dt-wholesale-table {
@@ -118,7 +120,7 @@
 
 .dt-wholesale-table th,
 .dt-wholesale-table td {
-    padding: 11px 14px;
+    padding: 10px 12px;
     border-bottom: 1px solid #F1ECE1;
     vertical-align: middle;
     white-space: nowrap !important;
@@ -128,6 +130,9 @@
     background: #FAF8F4;
     color: #181512;
     font-weight: 800;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     text-align: left;
     border-bottom: 1.5px solid #EAE5D9;
 }
@@ -144,4 +149,23 @@
 
 .dt-wholesale-table td a:hover {
     color: #8A681F;
+}
+
+/* Column Visibility Dropdown Menu */
+.dt-col-dropdown-wrap .dt-col-menu label {
+    transition: background 0.15s ease;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+.dt-col-dropdown-wrap .dt-col-menu label:hover {
+    background: #FAF5E8;
+    color: #8A681F;
+}
+
+.dt-col-dropdown-wrap .dt-col-menu input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: #8A681F;
+    width: 14px;
+    height: 14px;
 }

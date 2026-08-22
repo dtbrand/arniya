@@ -17,9 +17,9 @@ $moq_rules = [
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             <h4 class="dt-card-title">Minimum Order Quantity (MOQ) &amp; Lot Sizing Rules</h4>
         </div>
-        <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('MOQ Rule Builder Opened')">
+        <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('MOQ Rule Creator Opened')">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>+ Add MOQ Rule</span>
+            <span>Add MOQ Rule</span>
         </button>
     </div>
 

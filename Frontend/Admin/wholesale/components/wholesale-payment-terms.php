@@ -20,7 +20,7 @@ $terms_matrix = [
         </div>
         <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="window.showToast('Payment Term Configurator Opened')">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>+ Add Payment Term</span>
+            <span>Add Payment Term</span>
         </button>
     </div>
 

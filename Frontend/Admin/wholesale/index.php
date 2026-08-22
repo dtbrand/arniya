@@ -51,7 +51,7 @@ $active_subnav = "all";
                         </a>
                         <a href="/Frontend/Admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add Wholesale Account</span>
+                            <span>Add Wholesale Account</span>
                         </a>
                     </div>
                 </div>
