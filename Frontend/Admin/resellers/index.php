@@ -1,17 +1,19 @@
 <?php
 /**
- * index.php — DT Brand's & Jai Hanuman Tex
- * Master Production Reseller Management Hub & Directory
+ * index.php — Reseller Management Master Dashboard & Directory
+ * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
-$page_title = "Resellers Network & Payouts Hub";
+$page_title = "Reseller Network & Directory";
 $active_nav = "resellers";
+$active_subnav = "all";
+$active_filter = "all";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resellers Hub - DT Brand's Admin</title>
+    <title><?php echo $page_title; ?> ‹ DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -24,88 +26,54 @@ $active_nav = "resellers";
     <?php include_once __DIR__ . '/../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
-        <main class="adm-content">
-
-            <div class="dt-resellers-container">
-                <!-- Page Title Header -->
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:4px;">
-                    <div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <h1 style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">Resellers Management</h1>
-                            <span class="dt-reseller-badge gold">348 Active Network</span>
-                        </div>
-                        <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">
-                            Manage DT Brand's reseller accounts, KYC verification, tiered pricing, margins, and weekly payout settlements.
-                        </p>
+        <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
+            
+            <div class="dt-customers-container" style="display:flex; flex-direction:column; gap:12px;">
+                <!-- Page Header -->
+                <div class="dt-cust-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <div class="dt-cust-title-group">
+                        <h1 class="dt-cust-title" style="font-size:1.35rem; font-weight:900; color:#181512; margin:0; display:flex; align-items:center; gap:8px;">
+                            <span>Reseller Network &amp; Partner Directory</span>
+                            <span class="dt-cust-badge gold" style="font-size:0.72rem; padding:3px 8px; border-radius:6px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800;">348 Active Partners</span>
+                        </h1>
+                        <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage DT Brand's authorized resellers, KYC verification, tiered margins, revolving credit lines, and 1-click WhatsApp connect.</p>
                     </div>
-
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <a href="/Frontend/Admin/resellers/applications.php" class="dt-btn dt-btn-pale">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#705114" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                            <span>Review Applications (24)</span>
-                        </a>
-                        <a href="/Frontend/Admin/resellers/analytics.php" class="dt-btn dt-btn-pale">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#705114" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                            <span>Analytics</span>
-                        </a>
-                        <a href="/Frontend/Admin/resellers/edit.php?action=new" class="dt-btn dt-btn-gold">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add Reseller</span>
+                    <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <button type="button" class="dt-btn dt-btn-pale" onclick="window.location.reload();">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                            <span>Refresh</span>
+                        </button>
+                        <a href="/Frontend/Admin/resellers/export.php" class="dt-btn dt-btn-gold">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Export All Resellers</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- 1. 8-Card Master Executive KPI Ribbon -->
-                <?php include_once __DIR__ . '/components/reseller-stats.php'; ?>
+                <!-- 8-Card KPI Ribbon & Flow Filter Pills -->
+                <?php include __DIR__ . '/components/reseller-stats.php'; ?>
 
-                <!-- 2. Status Flow Filter Pills -->
-                <div class="dt-reseller-filter-strip">
-                    <button type="button" class="dt-reseller-pill-btn active" onclick="filterResellersByStatus('all', this)">
-                        <span>All Resellers</span>
-                        <span class="dt-reseller-pill-count">348</span>
-                    </button>
-                    <button type="button" class="dt-reseller-pill-btn" onclick="filterResellersByStatus('pending', this)">
-                        <span>Pending Applications</span>
-                        <span class="dt-reseller-pill-count" style="background:#FEF3C7; color:#B45309;">24</span>
-                    </button>
-                    <button type="button" class="dt-reseller-pill-btn" onclick="filterResellersByStatus('approved', this)">
-                        <span>Approved &amp; Active</span>
-                        <span class="dt-reseller-pill-count">296</span>
-                    </button>
-                    <button type="button" class="dt-reseller-pill-btn" onclick="filterResellersByStatus('suspended', this)">
-                        <span>Suspended</span>
-                        <span class="dt-reseller-pill-count">12</span>
-                    </button>
-                    <button type="button" class="dt-reseller-pill-btn" onclick="filterResellersByStatus('rejected', this)">
-                        <span>Rejected</span>
-                        <span class="dt-reseller-pill-count">16</span>
-                    </button>
-                </div>
+                <!-- Toolbar & Debounced Live Search -->
+                <?php include __DIR__ . '/components/reseller-search.php'; ?>
 
-                <!-- 3. Master Reseller Card & Table -->
-                <div class="dt-card">
-                    <?php include_once __DIR__ . '/components/reseller-search.php'; ?>
-                    <?php include_once __DIR__ . '/components/reseller-table.php'; ?>
-                </div>
-
+                <!-- Master Resellers Table -->
+                <?php include __DIR__ . '/components/reseller-table.php'; ?>
             </div>
+
+            <!-- Modals & Drawers -->
+            <?php include __DIR__ . '/components/reseller-filters.php'; ?>
+            <?php include __DIR__ . '/components/reseller-status.php'; ?>
+            <?php include __DIR__ . '/components/bulk-actions.php'; ?>
 
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
 
-<!-- Modals & Bulk Actions -->
-<?php include_once __DIR__ . '/components/bulk-actions.php'; ?>
-<?php include_once __DIR__ . '/components/reseller-filters.php'; ?>
-<?php include_once __DIR__ . '/components/reseller-status.php'; ?>
-
 <script src="/Frontend/Admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
-<script src="/Frontend/Admin/resellers/assets/js/reseller-credit.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
-
 </body>
 </html>

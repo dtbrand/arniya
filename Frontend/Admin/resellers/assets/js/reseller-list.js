@@ -82,10 +82,28 @@
         let visibleCount = 0;
 
         rows.forEach(row => {
-            const status = row.getAttribute('data-status') || '';
+            const status = (row.getAttribute('data-status') || '').toLowerCase();
             const searchData = (row.getAttribute('data-search') || row.innerText || '').toLowerCase();
 
-            let matchesStatus = (activeStatusFilter === 'all') || (status.toLowerCase() === activeStatusFilter.toLowerCase());
+            let matchesStatus = false;
+            if (activeStatusFilter === 'all') {
+                matchesStatus = true;
+            } else if (activeStatusFilter === 'approved' || activeStatusFilter === 'active') {
+                matchesStatus = (status === 'active' || status === 'approved');
+            } else if (activeStatusFilter === 'pending') {
+                matchesStatus = (status === 'pending');
+            } else if (activeStatusFilter === 'suspended') {
+                matchesStatus = (status === 'suspended');
+            } else if (activeStatusFilter === 'rejected') {
+                matchesStatus = (status === 'rejected');
+            } else if (activeStatusFilter === 'platinum') {
+                matchesStatus = searchData.includes('platinum');
+            } else if (activeStatusFilter === 'credit') {
+                matchesStatus = searchData.includes('credit');
+            } else {
+                matchesStatus = status.includes(activeStatusFilter.toLowerCase());
+            }
+
             let matchesSearch = !searchQuery || searchData.includes(searchQuery);
 
             if (matchesStatus && matchesSearch) {
@@ -98,7 +116,7 @@
 
         const countEl = document.getElementById('dtResellerFilteredCount');
         if (countEl) {
-            countEl.innerText = `Showing ${visibleCount} of ${rows.length} resellers`;
+            countEl.innerHTML = `Showing <strong>1–${visibleCount}</strong> of <strong>${rows.length}</strong> Resellers`;
         }
 
         const emptyState = document.getElementById('dtResellerEmptyState');

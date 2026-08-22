@@ -1,242 +1,254 @@
 <?php
 /**
- * reseller-table.php — DT Brand's & Jai Hanuman Tex
- * Master Reseller Directory Table Component
+ * reseller-table.php — High-Density Responsive Reseller Master Table
+ * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 
 $resellers_data = [
     [
         'id' => 'RES-1048',
-        'name' => 'Shree Krishna Sarees & Boutique',
-        'contact' => 'Rameshwar Vyas',
-        'email' => 'krishna.boutique@gmail.com',
-        'phone' => '+91 98251 44321',
-        'city' => 'Surat, Gujarat',
-        'tier' => 'Platinum',
+        'name' => 'Pooja Sharma',
+        'biz_name' => 'Shree Krishna Sarees & Boutique',
+        'initials' => 'PS',
+        'avatar_color' => 'gold',
+        'contact' => 'Pooja Sharma',
+        'email' => 'pooja.sharma92@gmail.com',
+        'phone' => '+91 98110 29381',
+        'city' => 'Delhi, DL',
+        'tier' => 'Platinum Elite',
+        'tier_margin' => '30% Margin',
+        'tier_class' => 'gold',
         'orders' => 142,
         'purchase' => 845000,
         'credit' => 65000,
         'credit_limit' => 150000,
+        'last_order' => 'Today, 11:20 AM',
         'status' => 'Active',
+        'status_class' => 'emerald',
         'kyc' => 'Verified',
-        'joined' => '2025-11-12'
+        'joined' => '12 Jan 2025'
     ],
     [
         'id' => 'RES-1047',
-        'name' => 'Ananya Designer Studio',
-        'contact' => 'Ananya Sharma',
-        'email' => 'ananya.studio@yahoo.com',
-        'phone' => '+91 98765 43210',
-        'city' => 'Jaipur, Rajasthan',
-        'tier' => 'Gold',
+        'name' => 'Ananya Roy',
+        'biz_name' => 'Ananya Designer Studio',
+        'initials' => 'AR',
+        'avatar_color' => 'emerald',
+        'contact' => 'Ananya Roy',
+        'email' => 'ananya.roy.kolkata@yahoo.com',
+        'phone' => '+91 97118 23901',
+        'city' => 'Kolkata, WB',
+        'tier' => 'Gold Partner',
+        'tier_margin' => '22% Margin',
+        'tier_class' => 'emerald',
         'orders' => 88,
         'purchase' => 520000,
         'credit' => 42000,
         'credit_limit' => 100000,
+        'last_order' => 'Yesterday, 16:45',
         'status' => 'Active',
+        'status_class' => 'emerald',
         'kyc' => 'Verified',
-        'joined' => '2025-12-04'
+        'joined' => '04 Mar 2025'
     ],
     [
         'id' => 'RES-1046',
-        'name' => 'Vardhman Silk Emporium',
-        'contact' => 'Ketan Jain',
-        'email' => 'vardhman.silks@gmail.com',
-        'phone' => '+91 94280 11223',
-        'city' => 'Ahmedabad, Gujarat',
-        'tier' => 'Gold',
+        'name' => 'Ritu Rajvansh',
+        'biz_name' => 'Vardhman Silk Emporium',
+        'initials' => 'RR',
+        'avatar_color' => 'purple',
+        'contact' => 'Ritu Rajvansh',
+        'email' => 'ritu.rajvansh@outlook.com',
+        'phone' => '+91 94250 88219',
+        'city' => 'Jaipur, RJ',
+        'tier' => 'Gold Partner',
+        'tier_margin' => '22% Margin',
+        'tier_class' => 'gold',
         'orders' => 64,
         'purchase' => 380000,
         'credit' => 28000,
         'credit_limit' => 80000,
+        'last_order' => '19 Apr 2026',
         'status' => 'Active',
+        'status_class' => 'emerald',
         'kyc' => 'Verified',
-        'joined' => '2026-01-10'
+        'joined' => '18 Nov 2024'
     ],
     [
         'id' => 'RES-1045',
-        'name' => 'Royal Heritage Silks',
-        'contact' => 'Pooja Agarwal',
-        'email' => 'royal.silks@outlook.com',
-        'phone' => '+91 91234 56789',
-        'city' => 'Indore, Madhya Pradesh',
-        'tier' => 'Silver',
+        'name' => 'Meera Deshmukh',
+        'biz_name' => 'Royal Heritage Silks',
+        'initials' => 'MD',
+        'avatar_color' => 'amber',
+        'contact' => 'Meera Deshmukh',
+        'email' => 'meera.deshmukh@gmail.com',
+        'phone' => '+91 98220 44912',
+        'city' => 'Pune, MH',
+        'tier' => 'Silver Growth',
+        'tier_margin' => '15% Margin',
+        'tier_class' => 'blue',
         'orders' => 32,
         'purchase' => 195000,
         'credit' => 15000,
         'credit_limit' => 50000,
+        'last_order' => '15 Apr 2026',
         'status' => 'Active',
+        'status_class' => 'emerald',
         'kyc' => 'Verified',
-        'joined' => '2026-02-14'
+        'joined' => '10 Feb 2026'
     ],
     [
         'id' => 'RES-1044',
-        'name' => 'Mahalaxmi Fashion Hub',
-        'contact' => 'Suresh Patel',
-        'email' => 'mahalaxmi.fashion@gmail.com',
-        'phone' => '+91 98980 99887',
-        'city' => 'Rajkot, Gujarat',
-        'tier' => 'Bronze',
+        'name' => 'Sunita Agarwal',
+        'biz_name' => 'Mahalaxmi Fashion Hub',
+        'initials' => 'SA',
+        'avatar_color' => 'gold',
+        'contact' => 'Sunita Agarwal',
+        'email' => 'sunita.agarwalahd@gmail.com',
+        'phone' => '+91 99042 11980',
+        'city' => 'Ahmedabad, GJ',
+        'tier' => 'Bronze Starter',
+        'tier_margin' => '10% Margin',
+        'tier_class' => 'amber',
         'orders' => 0,
         'purchase' => 0,
         'credit' => 0,
         'credit_limit' => 25000,
+        'last_order' => 'No Orders',
         'status' => 'Pending',
+        'status_class' => 'amber',
         'kyc' => 'Needs Review',
-        'joined' => '2026-08-20'
+        'joined' => '28 Mar 2026'
     ],
     [
         'id' => 'RES-1043',
-        'name' => 'Gitanjali Sarees Kolkata',
-        'contact' => 'Debabrata Sen',
-        'email' => 'gitanjali.sarees@rediffmail.com',
-        'phone' => '+91 98310 12345',
-        'city' => 'Kolkata, West Bengal',
-        'tier' => 'Silver',
-        'orders' => 0,
-        'purchase' => 0,
-        'credit' => 0,
-        'credit_limit' => 50000,
-        'status' => 'Pending',
-        'kyc' => 'Pending',
-        'joined' => '2026-08-21'
-    ],
-    [
-        'id' => 'RES-1042',
-        'name' => 'Kavita Dress Materials',
-        'contact' => 'Kavita Choudhary',
-        'email' => 'kavita.dress@gmail.com',
-        'phone' => '+91 98200 44556',
-        'city' => 'Mumbai, Maharashtra',
-        'tier' => 'Silver',
+        'name' => 'Kavita Patel',
+        'biz_name' => 'Gitanjali Sarees Surat',
+        'initials' => 'KP',
+        'avatar_color' => 'emerald',
+        'contact' => 'Kavita Patel',
+        'email' => 'kavita.patel.surat@gmail.com',
+        'phone' => '+91 98790 33411',
+        'city' => 'Surat, GJ',
+        'tier' => 'Silver Growth',
+        'tier_margin' => '15% Margin',
+        'tier_class' => 'blue',
         'orders' => 18,
         'purchase' => 98000,
         'credit' => 78000,
         'credit_limit' => 50000,
+        'last_order' => '28 Mar 2026',
         'status' => 'Suspended',
+        'status_class' => 'purple',
         'kyc' => 'Verified',
-        'joined' => '2026-03-01'
-    ],
-    [
-        'id' => 'RES-1041',
-        'name' => 'Apex Textiles Agency',
-        'contact' => 'Vikas Malhotra',
-        'email' => 'apex.textiles@ukexport.com',
-        'phone' => '+91 98111 22334',
-        'city' => 'Delhi, NCR',
-        'tier' => 'Bronze',
-        'orders' => 0,
-        'purchase' => 0,
-        'credit' => 0,
-        'credit_limit' => 0,
-        'status' => 'Rejected',
-        'kyc' => 'Rejected',
-        'joined' => '2026-08-15'
+        'joined' => '05 Jan 2025'
     ]
 ];
 ?>
 
-<div style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
-    <table class="dt-reseller-table" id="dtResellersMasterTable">
+<!-- ══ MASTER RESELLER TABLE CONTAINER ══ -->
+<div class="dt-cust-table-wrap">
+    <table class="dt-cust-table" id="dtResellersMasterTable">
         <thead>
             <tr>
-                <th style="width:40px; text-align:center;">
-                    <input type="checkbox" id="dtResellerSelectAll" onchange="toggleAllResellerCheckboxes(this)" style="cursor:pointer;">
+                <th style="width:36px; text-align:center;">
+                    <input type="checkbox" id="dtResellerSelectAll" onchange="toggleAllResellerCheckboxes(this)" title="Select All Resellers">
                 </th>
-                <th>Reseller / Business</th>
-                <th>Contact &amp; Location</th>
-                <th>Tier</th>
-                <th style="text-align:center;">Orders</th>
-                <th style="text-align:right;">Total GMV (₹)</th>
-                <th style="text-align:right;">Credit Balance</th>
-                <th>KYC Status</th>
-                <th>Account Status</th>
-                <th>Joined</th>
-                <th style="text-align:center;">Actions</th>
+                <th class="sortable" onclick="handleResellerSort({value:'name-asc'})">
+                    RESELLER PROFILE ↕
+                </th>
+                <th>CONTACT DETAILS</th>
+                <th>TIER &amp; MARGIN</th>
+                <th style="text-align:center;" class="sortable" onclick="handleResellerSort({value:'orders-high'})">
+                    ORDERS ↕
+                </th>
+                <th class="sortable" onclick="handleResellerSort({value:'purchase-high'})">
+                    LIFETIME GMV ↕
+                </th>
+                <th>LAST ORDER</th>
+                <th>JOINED DATE</th>
+                <th>STATUS</th>
+                <th style="text-align:right;">QUICK ACTIONS</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($resellers_data as $r): ?>
-                <tr class="dt-reseller-row" 
+                <tr class="dt-reseller-row"
                     data-id="<?php echo $r['id']; ?>"
                     data-status="<?php echo $r['status']; ?>"
                     data-name="<?php echo htmlspecialchars($r['name']); ?>"
                     data-purchase="<?php echo $r['purchase']; ?>"
                     data-orders="<?php echo $r['orders']; ?>"
                     data-joined="<?php echo $r['joined']; ?>"
-                    data-search="<?php echo htmlspecialchars($r['id'] . ' ' . $r['name'] . ' ' . $r['contact'] . ' ' . $r['email'] . ' ' . $r['phone'] . ' ' . $r['city'] . ' ' . $r['tier'] . ' ' . $r['status']); ?>">
+                    data-search="<?php echo htmlspecialchars($r['id'] . ' ' . $r['name'] . ' ' . $r['biz_name'] . ' ' . $r['contact'] . ' ' . $r['email'] . ' ' . $r['phone'] . ' ' . $r['city'] . ' ' . $r['tier'] . ' ' . $r['status']); ?>">
                     
                     <td style="text-align:center;">
                         <input type="checkbox" class="dt-reseller-row-checkbox" value="<?php echo $r['id']; ?>" onchange="handleRowCheckboxChange()" style="cursor:pointer;">
                     </td>
 
-                    <!-- Business / Reseller -->
+                    <!-- Reseller Profile -->
                     <td>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div class="dt-reseller-avatar">
-                                <?php echo strtoupper(substr($r['name'], 0, 1)); ?>
+                        <div class="dt-cust-avatar-cell">
+                            <div class="dt-cust-avatar <?php echo $r['avatar_color']; ?>">
+                                <?php echo $r['initials']; ?>
                             </div>
-                            <div>
-                                <a href="/Frontend/Admin/resellers/view.php?id=<?php echo $r['id']; ?>" style="font-weight:800; color:#181512; text-decoration:none; font-size:0.82rem; display:block;">
-                                    <?php echo htmlspecialchars($r['name']); ?>
-                                </a>
-                                <small style="color:#8A681F; font-weight:800; font-size:0.68rem;"><?php echo $r['id']; ?></small>
+                            <div class="dt-cust-name-wrap">
+                                <div class="dt-cust-name-row">
+                                    <a href="/Frontend/Admin/resellers/view.php?id=<?php echo $r['id']; ?>" class="dt-cust-name">
+                                        <?php echo htmlspecialchars($r['name']); ?>
+                                    </a>
+                                    <?php if (strpos($r['tier'], 'Platinum') !== false || strpos($r['tier'], 'Gold') !== false): ?>
+                                        <span class="dt-tier-badge gold-tier" style="font-size:0.65rem; padding:1px 5px;">VIP</span>
+                                    <?php endif; ?>
+                                </div>
+                                <div style="font-size:0.68rem; color:#78716C; font-weight:600;">
+                                    #<?php echo $r['id']; ?> • <?php echo htmlspecialchars($r['city']); ?>
+                                </div>
                             </div>
                         </div>
                     </td>
 
-                    <!-- Contact & Location -->
+                    <!-- Contact Details -->
                     <td>
-                        <div style="font-weight:700; color:#181512; font-size:0.78rem;"><?php echo htmlspecialchars($r['contact']); ?></div>
-                        <div style="color:#78716C; font-size:0.7rem;"><?php echo htmlspecialchars($r['phone']); ?></div>
-                        <div style="color:#A8A29E; font-size:0.65rem;"><?php echo htmlspecialchars($r['city']); ?></div>
+                        <div style="font-weight:700; color:#181512; font-size:0.76rem;"><?php echo htmlspecialchars($r['phone']); ?></div>
+                        <div style="color:#78716C; font-size:0.7rem;"><?php echo htmlspecialchars($r['email']); ?></div>
                     </td>
 
-                    <!-- Tier -->
+                    <!-- Tier & Margin -->
                     <td>
-                        <?php 
-                        $tierClass = strtolower($r['tier']);
-                        if ($tierClass === 'gold') $tierClass = 'gold-tier';
-                        ?>
-                        <span class="dt-tier-badge <?php echo $tierClass; ?>">
-                            ★ <?php echo $r['tier']; ?>
+                        <span class="dt-reseller-badge <?php echo $r['tier_class']; ?>" style="font-size:0.7rem;">
+                            <?php echo $r['tier']; ?> (<?php echo $r['tier_margin']; ?>)
                         </span>
                     </td>
 
                     <!-- Orders -->
                     <td style="text-align:center; font-weight:800; color:#181512;">
-                        <a href="/Frontend/Admin/resellers/orders.php?reseller_id=<?php echo $r['id']; ?>" style="color:#1D4ED8; text-decoration:none;">
-                            <?php echo $r['orders']; ?>
+                        <a href="/Frontend/Admin/resellers/orders.php?reseller_id=<?php echo $r['id']; ?>" style="color:#181512; text-decoration:none;">
+                            <?php echo $r['orders']; ?> Orders
                         </a>
                     </td>
 
-                    <!-- Total Purchase -->
-                    <td style="text-align:right; font-weight:900; color:#8A681F;">
-                        ₹<?php echo number_format($r['purchase']); ?>
-                    </td>
-
-                    <!-- Credit Balance -->
-                    <td style="text-align:right;">
-                        <div style="font-weight:800; color:<?php echo $r['credit'] > $r['credit_limit'] ? '#DC2626' : '#181512'; ?>;">
-                            ₹<?php echo number_format($r['credit']); ?>
-                        </div>
-                        <small style="font-size:0.65rem; color:#78716C;">Limit: ₹<?php echo number_format($r['credit_limit']); ?></small>
-                    </td>
-
-                    <!-- KYC Status -->
+                    <!-- Lifetime GMV -->
                     <td>
-                        <?php if ($r['kyc'] === 'Verified'): ?>
-                            <span class="dt-reseller-badge emerald">✓ Verified</span>
-                        <?php elseif ($r['kyc'] === 'Needs Review'): ?>
-                            <span class="dt-reseller-badge amber">⏳ Needs Review</span>
-                        <?php elseif ($r['kyc'] === 'Rejected'): ?>
-                            <span class="dt-reseller-badge rose">✕ Rejected</span>
-                        <?php else: ?>
-                            <span class="dt-reseller-badge gold">● Pending</span>
-                        <?php endif; ?>
+                        <div style="font-weight:900; color:#181512; font-size:0.82rem;">
+                            ₹<?php echo number_format($r['purchase']); ?>
+                        </div>
+                        <div style="font-size:0.65rem; color:#78716C;">
+                            Credit: ₹<?php echo number_format($r['credit']); ?>
+                        </div>
                     </td>
 
-                    <!-- Account Status -->
+                    <!-- Last Order -->
+                    <td style="color:#181512; font-weight:600; font-size:0.72rem;">
+                        <?php echo $r['last_order']; ?>
+                    </td>
+
+                    <!-- Joined Date -->
+                    <td style="color:#78716C; font-size:0.72rem;">
+                        <?php echo $r['joined']; ?>
+                    </td>
+
+                    <!-- Status -->
                     <td>
                         <?php if ($r['status'] === 'Active'): ?>
                             <span class="dt-reseller-badge emerald">● Active</span>
@@ -249,64 +261,60 @@ $resellers_data = [
                         <?php endif; ?>
                     </td>
 
-                    <!-- Joined -->
-                    <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;">
-                        <?php echo date('d M Y', strtotime($r['joined'])); ?>
-                    </td>
-
-                    <!-- Actions -->
-                    <td style="text-align:center; white-space:nowrap;">
-                        <div style="display:inline-flex; align-items:center; gap:5px;">
-                            <a href="/Frontend/Admin/resellers/view.php?id=<?php echo $r['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm" title="View 360° Profile">
-                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#705114" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <span>View</span>
+                    <!-- Quick Actions -->
+                    <td style="text-align:right;">
+                        <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
+                            <!-- WhatsApp 1-Click Action -->
+                            <a href="https://wa.me/<?php echo str_replace(['+', ' '], '', $r['phone']); ?>?text=Namaste%20<?php echo urlencode($r['name']); ?>%20ji,%20greetings%20from%20DT%20Brand's%20Wholesale%20Hub!" 
+                               target="_blank" 
+                               class="dt-btn dt-btn-emerald" 
+                               style="padding:4px 8px; font-size:0.7rem; border-radius:6px;" 
+                               title="1-Click WhatsApp Direct Connect">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.781-.878-2.057-.978-.276-.1-.476-.15-.676.15-.2.3-.776.978-.952 1.178-.175.2-.351.225-.652.075-.301-.15-1.27-.468-2.42-1.493-.895-.798-1.5-1.784-1.676-2.084-.175-.3-.019-.462.132-.612.136-.135.301-.35.452-.525.15-.175.2-.3.301-.5.101-.2.05-.375-.025-.525-.075-.15-.676-1.63-.927-2.234-.244-.588-.492-.508-.676-.518l-.576-.01c-.2 0-.526.075-.802.375-.276.3-1.053 1.029-1.053 2.508s1.078 2.906 1.228 3.106c.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.378.197 1.897.12.578-.087 1.781-.728 2.032-1.431.25-.703.25-1.305.175-1.43-.075-.126-.276-.201-.577-.351zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.406C8.423 21.498 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
                             </a>
 
-                            <?php if ($r['status'] === 'Pending'): ?>
-                                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openApprovalModal('<?php echo $r['id']; ?>', '<?php echo htmlspecialchars($r['name']); ?>', '<?php echo $r['tier']; ?>')" title="Approve Application">
-                                    <span>Approve</span>
-                                </button>
-                                <button type="button" class="dt-btn dt-btn-rose dt-btn-sm" onclick="openRejectionModal('<?php echo $r['id']; ?>', '<?php echo htmlspecialchars($r['name']); ?>')" title="Reject Application">
-                                    <span>Reject</span>
-                                </button>
-                            <?php else: ?>
-                                <a href="/Frontend/Admin/resellers/edit.php?id=<?php echo $r['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm" title="Edit Profile">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#705114" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                </a>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="toggleResellerSuspension('<?php echo $r['id']; ?>', '<?php echo $r['status']; ?>')" title="<?php echo $r['status'] === 'Suspended' ? 'Reactivate Reseller' : 'Suspend Reseller'; ?>">
-                                    <?php if ($r['status'] === 'Suspended'): ?>
-                                        <span style="color:#15803D;">Reactivate</span>
-                                    <?php else: ?>
-                                        <span style="color:#DC2626;">Suspend</span>
-                                    <?php endif; ?>
-                                </button>
-                            <?php endif; ?>
+                            <!-- View 360° Profile -->
+                            <a href="/Frontend/Admin/resellers/view.php?id=<?php echo $r['id']; ?>" 
+                               class="dt-btn dt-btn-pale" 
+                               style="padding:4px 8px; font-size:0.7rem; border-radius:6px;" 
+                               title="View 360° Executive Dossier">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </a>
+
+                            <!-- Edit Account -->
+                            <a href="/Frontend/Admin/resellers/edit.php?id=<?php echo $r['id']; ?>" 
+                               class="dt-btn dt-btn-pale" 
+                               style="padding:4px 8px; font-size:0.7rem; border-radius:6px;" 
+                               title="Edit Reseller Account">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </a>
                         </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- ══ PAGINATION CONTROLS ══ -->
+    <div class="dt-cust-pagination">
+        <div id="dtResellerFilteredCount">
+            Showing <strong>1–<?php echo count($resellers_data); ?></strong> of <strong>348</strong> Resellers
+        </div>
+        <div class="dt-cust-pages-wrap">
+            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('First Page')" title="First Page">«</button>
+            <button type="button" class="dt-cust-page-btn active">1</button>
+            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('Page 2')">2</button>
+            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('Next Page')" title="Next Page">»</button>
+        </div>
+    </div>
 </div>
 
 <!-- Empty State -->
-<div id="dtResellerEmptyState" style="display:none; padding:40px 20px; text-align:center;">
+<div id="dtResellerEmptyState" style="display:none; padding:40px 20px; text-align:center; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:12px; margin-top:10px;">
     <div style="width:48px; height:48px; border-radius:50%; background:#FAF5E8; color:#8A681F; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#8A681F" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
     </div>
     <h4 style="font-size:0.95rem; font-weight:800; color:#181512; margin:0 0 4px 0;">No matching resellers found</h4>
     <p style="font-size:0.75rem; color:#78716C; margin:0 0 14px 0;">Try adjusting your keyword or clearing active status filters.</p>
     <button type="button" class="dt-btn dt-btn-pale" onclick="clearResellerSearch()">Clear Search Filters</button>
-</div>
-
-<!-- Pagination Bar -->
-<div class="dt-reseller-pagination">
-    <div id="dtResellerFilteredCount">Showing <?php echo count($resellers_data); ?> of <?php echo count($resellers_data); ?> resellers</div>
-    <div style="display:flex; align-items:center; gap:6px;">
-        <button type="button" class="dt-page-btn" onclick="window.showToast('Previous Page')">‹ Previous</button>
-        <button type="button" class="dt-page-btn active">1</button>
-        <button type="button" class="dt-page-btn" onclick="window.showToast('Page 2')">2</button>
-        <button type="button" class="dt-page-btn" onclick="window.showToast('Page 3')">3</button>
-        <button type="button" class="dt-page-btn" onclick="window.showToast('Next Page')">Next ›</button>
-    </div>
 </div>
