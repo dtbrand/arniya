@@ -18,6 +18,7 @@ $active_subnav = "export";
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
     <!-- html2canvas and jsPDF for High-DPI 1:1 PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -102,7 +103,69 @@ $active_subnav = "export";
                     </div>
                 </div>
 
-                <div class="dt-card" style="padding:22px;">
+                <div style="display:flex; flex-direction:column; gap:16px;">
+
+                    <!-- ══ 1. 4-CARD EXPORT KPI RIBBON ══ -->
+                    <div class="dt-pricing-kpi-grid">
+                        <div class="dt-pricing-kpi-card">
+                            <div class="dt-pricing-kpi-top">
+                                <span class="dt-pricing-kpi-label">TOTAL B2B PARTNERS</span>
+                                <div class="dt-pricing-kpi-icon">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                </div>
+                            </div>
+                            <div class="dt-pricing-kpi-val">124 Accounts</div>
+                            <div class="dt-pricing-kpi-bot">
+                                <span>Wholesale Directory</span>
+                                <span style="color:#8A681F; font-weight:800;">100% Exportable</span>
+                            </div>
+                        </div>
+
+                        <div class="dt-pricing-kpi-card">
+                            <div class="dt-pricing-kpi-top">
+                                <span class="dt-pricing-kpi-label">GSTIN COMPLIANCE</span>
+                                <div class="dt-pricing-kpi-icon emerald">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="dt-pricing-kpi-val" style="color:#15803D;">124 Verified</div>
+                            <div class="dt-pricing-kpi-bot">
+                                <span>Tax Invoicing Ready</span>
+                                <span style="color:#15803D; font-weight:800;">GST Audited</span>
+                            </div>
+                        </div>
+
+                        <div class="dt-pricing-kpi-card">
+                            <div class="dt-pricing-kpi-top">
+                                <span class="dt-pricing-kpi-label">SUPPORTED FORMATS</span>
+                                <div class="dt-pricing-kpi-icon blue">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="dt-pricing-kpi-val" style="color:#1D4ED8;">CSV • XLS • PDF</div>
+                            <div class="dt-pricing-kpi-bot">
+                                <span>High-DPI Master Engines</span>
+                                <span style="color:#1D4ED8; font-weight:800;">Universal</span>
+                            </div>
+                        </div>
+
+                        <div class="dt-pricing-kpi-card">
+                            <div class="dt-pricing-kpi-top">
+                                <span class="dt-pricing-kpi-label">DATA SECURITY</span>
+                                <div class="dt-pricing-kpi-icon emerald">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                            </div>
+                            <div class="dt-pricing-kpi-val" style="color:#15803D;">AES-256</div>
+                            <div class="dt-pricing-kpi-bot">
+                                <span>Encrypted Transmission</span>
+                                <span style="color:#15803D; font-weight:800;">Audit Logged</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ 2. MASTER EXPORT STUDIO CARD ══ -->
+                    <div class="dt-card" style="padding:22px;">
                     <form onsubmit="handleWholesaleExport(event)" style="display:flex; flex-direction:column; gap:20px;">
                         
                         <!-- 1. Format Selection -->
@@ -203,6 +266,7 @@ $active_subnav = "export";
                     </form>
                 </div>
             </div>
+        </div>
 
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
