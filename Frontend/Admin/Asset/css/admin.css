@@ -627,14 +627,50 @@ textarea:focus,
     box-shadow: 0 2px 8px rgba(212, 175, 55, 0.12);
 }
 
-.adm-nav-item.active {
-    background: linear-gradient(135deg, #FAF5E8 0%, #F5EDD6 100%);
-    color: #5A4210;
-    border: 1.5px solid #D4AF37;
-    border-left: 4px solid #8A681F;
-    font-weight: 800;
-    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.14);
-    transform: translateX(3px);
+/* ════ GOLD & PLATINUM ANIMATED RUNNING LASER BORDER PROPERTY & KEYFRAMES ════ */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* 👑 OPEN / ACTIVE MENU ITEM WITH SIGNATURE GOLD & PLATINUM RUNNING LASER BORDER */
+.adm-nav-item.active,
+.adm-nav-has-sub.open > .adm-nav-item {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FAF5E8, #F5EDD6) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2.5s linear infinite !important;
+    color: #5A4210 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 14px rgba(212, 175, 55, 0.35), 0 3px 10px rgba(138, 104, 31, 0.12) !important;
+    transform: translateX(3px) !important;
+}
+
+/* 👑 FORM INPUTS RUNNING LASER BORDER ON FOCUS */
+input:focus, select:focus, textarea:focus, .dt-search-input:focus, .adm-form-input:focus, .wp-search-input:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
 }
 
 .adm-nav-icon {
