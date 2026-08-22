@@ -1,6 +1,6 @@
 /**
  * reseller-pricing.js — DT Brand's & Jai Hanuman Tex
- * Tiered Pricing Matrix, Dynamic Tier Switching, Rule Customizer & SKU Overrides
+ * Tiered Pricing Matrix, Dynamic Tier Switching, Category Margin Editor & SKU Overrides
  */
 
 (function () {
@@ -32,7 +32,6 @@
             document.getElementById('switchTargetTierDisc').innerText = `${discountPct}% OFF MRP`;
             modal.style.display = 'flex';
         } else {
-            // Fallback direct execution
             window.executeTierSwitch();
         }
     };
@@ -85,6 +84,9 @@
             `;
         }
 
+        // Auto-recalculate category margins to match new tier
+        window.recalculateAllCategoryMargins(pendingTierSwitch.discount);
+
         window.closePricingModal('dtSwitchTierModal');
         window.showToast(`✅ Reseller successfully upgraded to "${pendingTierSwitch.name}" (${pendingTierSwitch.discount}% OFF MRP)!`);
     };
@@ -126,6 +128,102 @@
 
         window.closePricingModal('dtEditTierModal');
         window.showToast('✓ Tier rules and margin parameters updated successfully!');
+    };
+
+    // ── Category Margin Modal & Live Calculation ──
+    window.openEditCategoryMarginModal = function (rowId, catName, baseMrp, marginPct, minLot, ruleStatus) {
+        document.getElementById('editCatRowId').value = rowId;
+        document.getElementById('editCatName').value = catName;
+        document.getElementById('editCatBaseMrp').value = baseMrp;
+        document.getElementById('editCatMargin').value = marginPct;
+        document.getElementById('editCatMinLot').value = minLot;
+        document.getElementById('editCatRuleType').value = ruleStatus.includes('Special') || ruleStatus.includes('Custom') ? 'Special' : 'Default';
+
+        updateLiveNetPriceCalc();
+
+        const modal = document.getElementById('dtEditCategoryMarginModal');
+        if (modal) modal.style.display = 'flex';
+    };
+
+    window.updateLiveNetPriceCalc = function () {
+        const baseMrp = parseFloat(document.getElementById('editCatBaseMrp').value) || 0;
+        const marginPct = parseFloat(document.getElementById('editCatMargin').value) || 0;
+
+        const net = Math.round(baseMrp * (1 - (marginPct / 100)));
+        const netFormatted = '₹' + net.toLocaleString('en-IN');
+
+        const displayEl = document.getElementById('editCatNetPriceDisplay');
+        if (displayEl) {
+            displayEl.innerText = netFormatted;
+        }
+    };
+
+    window.saveCategoryMargin = function (event) {
+        if (event) event.preventDefault();
+
+        const rowId = document.getElementById('editCatRowId').value;
+        const marginPct = parseFloat(document.getElementById('editCatMargin').value) || 30;
+        const minLot = document.getElementById('editCatMinLot').value;
+        const ruleType = document.getElementById('editCatRuleType').value;
+        const baseMrp = parseFloat(document.getElementById('editCatBaseMrp').value) || 4500;
+
+        const net = Math.round(baseMrp * (1 - (marginPct / 100)));
+        const netFormatted = '₹' + net.toLocaleString('en-IN');
+
+        const row = document.getElementById(rowId);
+        if (row) {
+            row.setAttribute('data-margin', marginPct);
+            const rateCell = row.querySelector('.cat-rate-cell');
+            const marginCell = row.querySelector('.cat-margin-cell');
+            const minLotCell = row.querySelector('.cat-minlot-cell');
+            const statusCell = row.querySelector('.cat-status-cell');
+
+            if (rateCell) rateCell.innerText = netFormatted;
+            if (marginCell) {
+                marginCell.innerHTML = `<span class="dt-reseller-badge gold" style="font-size:0.72rem; font-weight:800;">${marginPct}% OFF</span>`;
+            }
+            if (minLotCell) minLotCell.innerText = minLot;
+            if (statusCell) {
+                if (ruleType === 'Special') {
+                    statusCell.innerHTML = `<span class="dt-reseller-badge gold" style="font-size:0.7rem; font-weight:800;">★ Special Boost</span>`;
+                } else {
+                    statusCell.innerHTML = `<span class="dt-reseller-badge emerald" style="font-size:0.7rem; font-weight:800;">✓ Active Tier Rule</span>`;
+                }
+            }
+        }
+
+        const catName = document.getElementById('editCatName').value;
+        window.closePricingModal('dtEditCategoryMarginModal');
+        window.showToast(`✅ Updated margin for "${catName}": ${marginPct}% OFF (Net: ${netFormatted})`);
+    };
+
+    // ── Recalculate All Category Margins ──
+    window.recalculateAllCategoryMargins = function (customDisc) {
+        let activeDiscount = 30;
+        if (customDisc) {
+            activeDiscount = parseFloat(customDisc);
+        } else {
+            const activeCard = document.querySelector('.dt-tier-card.current .tier-disc-val');
+            if (activeCard) {
+                activeDiscount = parseFloat(activeCard.innerText.replace(/[^0-9]/g, '')) || 30;
+            }
+        }
+
+        const rows = document.querySelectorAll('#categoryMarginTbody tr');
+        rows.forEach((row) => {
+            const mrp = parseFloat(row.getAttribute('data-mrp')) || 4500;
+            const net = Math.round(mrp * (1 - (activeDiscount / 100)));
+            const netFormatted = '₹' + net.toLocaleString('en-IN');
+
+            const rateCell = row.querySelector('.cat-rate-cell');
+            const marginCell = row.querySelector('.cat-margin-cell');
+            if (rateCell) rateCell.innerText = netFormatted;
+            if (marginCell) {
+                marginCell.innerHTML = `<span class="dt-reseller-badge gold" style="font-size:0.72rem; font-weight:800;">${activeDiscount}% OFF</span>`;
+            }
+        });
+
+        window.showToast(`✓ All category wholesale prices updated for ${activeDiscount}% Active Tier discount!`);
     };
 
     // ── Add SKU Override Modal & Logic ──

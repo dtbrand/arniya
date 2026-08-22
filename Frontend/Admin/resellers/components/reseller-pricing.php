@@ -55,11 +55,66 @@ $tiers = [
 ];
 
 $category_margins = [
-    ['cat' => 'Banarasi Katan Silk Sarees', 'base_mrp' => '₹4,500', 'reseller_rate' => '₹3,150', 'margin' => '30% OFF', 'min_lot' => '10 Pcs', 'status' => 'Active Tier Rule'],
-    ['cat' => 'Pure Soft Kanjivaram Sarees', 'base_mrp' => '₹6,800', 'reseller_rate' => '₹4,760', 'margin' => '30% OFF', 'min_lot' => '8 Pcs', 'status' => 'Active Tier Rule'],
-    ['cat' => 'Chanderi & Organza Designer', 'base_mrp' => '₹2,950', 'reseller_rate' => '₹2,065', 'margin' => '30% OFF', 'min_lot' => '12 Pcs', 'status' => 'Active Tier Rule'],
-    ['cat' => 'Surat Daily Wear Printed Sarees', 'base_mrp' => '₹1,250', 'reseller_rate' => '₹875', 'margin' => '30% OFF', 'min_lot' => '20 Pcs', 'status' => 'Active Tier Rule'],
-    ['cat' => 'Bridal Silk & Zari Lehengas', 'base_mrp' => '₹14,500', 'reseller_rate' => '₹9,800', 'margin' => '32.4% (Custom Boost)', 'min_lot' => '4 Pcs', 'status' => 'Special Override']
+    [
+        'id' => 'cat-banarasi',
+        'cat' => 'Banarasi Katan Silk Sarees',
+        'base_mrp' => '4500',
+        'base_mrp_display' => '₹4,500',
+        'reseller_rate_display' => '₹3,150',
+        'margin_val' => '30',
+        'margin_display' => '30% OFF',
+        'min_lot' => '10 Pcs',
+        'status' => 'Active Tier Rule',
+        'icon' => '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>'
+    ],
+    [
+        'id' => 'cat-kanjivaram',
+        'cat' => 'Pure Soft Kanjivaram Sarees',
+        'base_mrp' => '6800',
+        'base_mrp_display' => '₹6,800',
+        'reseller_rate_display' => '₹4,760',
+        'margin_val' => '30',
+        'margin_display' => '30% OFF',
+        'min_lot' => '8 Pcs',
+        'status' => 'Active Tier Rule',
+        'icon' => '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>'
+    ],
+    [
+        'id' => 'cat-organza',
+        'cat' => 'Chanderi & Organza Designer',
+        'base_mrp' => '2950',
+        'base_mrp_display' => '₹2,950',
+        'reseller_rate_display' => '₹2,065',
+        'margin_val' => '30',
+        'margin_display' => '30% OFF',
+        'min_lot' => '12 Pcs',
+        'status' => 'Active Tier Rule',
+        'icon' => '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>'
+    ],
+    [
+        'id' => 'cat-daily',
+        'cat' => 'Surat Daily Wear Printed Sarees',
+        'base_mrp' => '1250',
+        'base_mrp_display' => '₹1,250',
+        'reseller_rate_display' => '₹875',
+        'margin_val' => '30',
+        'margin_display' => '30% OFF',
+        'min_lot' => '20 Pcs',
+        'status' => 'Active Tier Rule',
+        'icon' => '<path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path>'
+    ],
+    [
+        'id' => 'cat-bridal',
+        'cat' => 'Bridal Silk & Zari Lehengas',
+        'base_mrp' => '14500',
+        'base_mrp_display' => '₹14,500',
+        'reseller_rate_display' => '₹9,800',
+        'margin_val' => '32.4',
+        'margin_display' => '32.4% (Custom Boost)',
+        'min_lot' => '4 Pcs',
+        'status' => 'Special Override',
+        'icon' => '<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>'
+    ]
 ];
 
 $sku_overrides = [
@@ -164,7 +219,7 @@ $sku_overrides = [
                 <strong style="font-size:0.95rem; color:#181512;">Fabric &amp; Category Margin Matrix</strong>
                 <p style="font-size:0.75rem; color:#78716C; margin:2px 0 0 0;">Automatic net price computation across major wholesale saree lines.</p>
             </div>
-            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('✓ Category margins synchronized with catalog base MRP')">
+            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="recalculateAllCategoryMargins()">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                 <span>Recalculate All</span>
             </button>
@@ -183,28 +238,29 @@ $sku_overrides = [
                         <th style="padding:10px 14px; text-align:right; font-weight:800; color:#181512;">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="categoryMarginTbody">
                     <?php foreach ($category_margins as $cm): ?>
-                        <tr style="border-bottom:1px solid #F3EFE6;">
+                        <tr id="<?php echo $cm['id']; ?>" style="border-bottom:1px solid #F3EFE6;" data-mrp="<?php echo $cm['base_mrp']; ?>" data-margin="<?php echo $cm['margin_val']; ?>">
                             <td style="padding:12px 14px; font-weight:700; color:#181512;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; color:#8A681F; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.75rem;">
-                                        SC
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <div style="width:32px; height:32px; border-radius:8px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><?php echo $cm['icon']; ?></svg>
                                     </div>
-                                    <span><?php echo $cm['cat']; ?></span>
+                                    <span class="cat-name-cell"><?php echo $cm['cat']; ?></span>
                                 </div>
                             </td>
-                            <td style="padding:12px 14px; color:#78716C; font-weight:600;"><?php echo $cm['base_mrp']; ?></td>
-                            <td style="padding:12px 14px; color:#15803D; font-weight:800; font-size:0.85rem;"><?php echo $cm['reseller_rate']; ?></td>
-                            <td style="padding:12px 14px;">
-                                <span class="dt-reseller-badge gold" style="font-size:0.72rem; font-weight:800;"><?php echo $cm['margin']; ?></span>
+                            <td class="cat-mrp-cell" style="padding:12px 14px; color:#78716C; font-weight:600;"><?php echo $cm['base_mrp_display']; ?></td>
+                            <td class="cat-rate-cell" style="padding:12px 14px; color:#15803D; font-weight:800; font-size:0.88rem;"><?php echo $cm['reseller_rate_display']; ?></td>
+                            <td class="cat-margin-cell" style="padding:12px 14px;">
+                                <span class="dt-reseller-badge gold" style="font-size:0.72rem; font-weight:800;"><?php echo $cm['margin_display']; ?></span>
                             </td>
-                            <td style="padding:12px 14px; color:#181512; font-weight:600;"><?php echo $cm['min_lot']; ?></td>
-                            <td style="padding:12px 14px;">
+                            <td class="cat-minlot-cell" style="padding:12px 14px; color:#181512; font-weight:600;"><?php echo $cm['min_lot']; ?></td>
+                            <td class="cat-status-cell" style="padding:12px 14px;">
                                 <span class="dt-reseller-badge emerald" style="font-size:0.7rem; font-weight:800;">✓ <?php echo $cm['status']; ?></span>
                             </td>
                             <td style="padding:12px 14px; text-align:right;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('⚙️ Editing custom margin for <?php echo addslashes($cm['cat']); ?>')">
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openEditCategoryMarginModal('<?php echo $cm['id']; ?>', '<?php echo addslashes($cm['cat']); ?>', '<?php echo $cm['base_mrp']; ?>', '<?php echo $cm['margin_val']; ?>', '<?php echo addslashes($cm['min_lot']); ?>', '<?php echo addslashes($cm['status']); ?>')">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <span>Edit</span>
                                 </button>
                             </td>

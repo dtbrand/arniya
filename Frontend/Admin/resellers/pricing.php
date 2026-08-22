@@ -148,7 +148,66 @@ $active_subnav = "pricing";
     </div>
 </div>
 
-<!-- 3. Add SKU Override Modal -->
+<!-- 3. Edit Category Margin Modal -->
+<div id="dtEditCategoryMarginModal" class="dt-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+    <div class="dt-modal-dialog" style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:14px; width:95%; max-width:520px; box-shadow:0 20px 50px rgba(0,0,0,0.4); overflow:hidden;">
+        <div class="dt-modal-head" style="padding:14px 18px; border-bottom:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.4"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <strong style="font-size:0.95rem; font-weight:800; color:#181512;">Configure Category Margin</strong>
+            </div>
+            <button type="button" onclick="closePricingModal('dtEditCategoryMarginModal')" style="background:none; border:none; font-size:20px; font-weight:bold; color:#78716C; cursor:pointer;">✕</button>
+        </div>
+
+        <form onsubmit="saveCategoryMargin(event)">
+            <input type="hidden" id="editCatRowId">
+            <input type="hidden" id="editCatBaseMrp">
+            <div class="dt-modal-body" style="padding:18px; display:flex; flex-direction:column; gap:12px;">
+                <div>
+                    <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Saree Category</label>
+                    <input type="text" id="editCatName" class="dt-cust-search-input" style="width:100%; height:38px; font-weight:800; background:#FAF8F4;" readonly>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Reseller Discount % *</label>
+                        <input type="number" id="editCatMargin" class="dt-cust-search-input" style="width:100%; height:38px;" min="1" max="90" oninput="updateLiveNetPriceCalc()" required>
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Calculated Net Price</label>
+                        <div id="editCatNetPriceDisplay" style="height:38px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:8px; display:flex; align-items:center; padding:0 12px; font-size:1rem; font-weight:900; color:#15803D;">
+                            ₹3,150
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Min. Lot Quantity *</label>
+                        <input type="text" id="editCatMinLot" class="dt-cust-search-input" style="width:100%; height:38px;" required>
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Rule Application</label>
+                        <select id="editCatRuleType" class="dt-cust-select" style="width:100%; height:38px; border-radius:8px;">
+                            <option value="Default">✓ Active Tier Default Rule</option>
+                            <option value="Special">★ Special Category Boost</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dt-modal-foot" style="padding:14px 18px; border-top:1px solid #EAE5D9; display:flex; justify-content:flex-end; gap:8px; background:#FAF8F4;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="closePricingModal('dtEditCategoryMarginModal')">Cancel</button>
+                <button type="submit" class="dt-btn dt-btn-gold">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Save Category Margin</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 4. Add SKU Override Modal -->
 <div id="dtAddSkuModal" class="dt-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:99999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
     <div class="dt-modal-dialog" style="background:#FFFFFF; border:2px solid #D4AF37; border-radius:14px; width:95%; max-width:520px; box-shadow:0 20px 50px rgba(0,0,0,0.4); overflow:hidden;">
         <div class="dt-modal-head" style="padding:14px 18px; border-bottom:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
