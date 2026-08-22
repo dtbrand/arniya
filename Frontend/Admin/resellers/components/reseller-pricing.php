@@ -277,15 +277,24 @@ $sku_overrides = [
 ══════════════════════════════════════════════════════════════ -->
 <div id="skuTab" class="dt-pricing-tab-pane" style="display:none;">
     <div class="dt-card" style="background:#FFFFFF; border:1.5px solid #EAE5D9; border-radius:12px; padding:18px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
             <div>
                 <strong style="font-size:0.95rem; color:#181512;">SKU-Specific Deal &amp; Special Rates</strong>
                 <p style="font-size:0.75rem; color:#78716C; margin:2px 0 0 0;">Overrides base tier discounts for specific premium sarees or seasonal campaigns.</p>
             </div>
-            <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openAddSkuOverrideModal()">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span>+ Add SKU Override</span>
-            </button>
+            
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <!-- Live Search Bar -->
+                <div style="position:relative; width:260px;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#78716C" stroke-width="2.2" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); pointer-events:none;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="skuSearchInput" class="dt-cust-search-input" style="width:100%; height:32px; padding-left:30px; font-size:0.75rem;" placeholder="Search SKU code or name..." oninput="filterSkuOverrides(this.value)">
+                </div>
+
+                <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="openAddSkuOverrideModal()">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Add SKU Override</span>
+                </button>
+            </div>
         </div>
 
         <div style="overflow-x:auto;">
@@ -303,19 +312,31 @@ $sku_overrides = [
                 </thead>
                 <tbody id="skuOverrideTbody">
                     <?php foreach ($sku_overrides as $so): ?>
-                        <tr style="border-bottom:1px solid #F3EFE6;">
-                            <td style="padding:12px 14px; font-family:monospace; font-weight:800; color:#8A681F;"><?php echo $so['sku']; ?></td>
-                            <td style="padding:12px 14px; font-weight:700; color:#181512;"><?php echo $so['name']; ?></td>
-                            <td style="padding:12px 14px; color:#78716C; text-decoration:line-through;"><?php echo $so['mrp']; ?></td>
-                            <td style="padding:12px 14px; color:#15803D; font-weight:900; font-size:0.88rem;"><?php echo $so['special_rate']; ?></td>
-                            <td style="padding:12px 14px; font-weight:700; color:#181512;"><?php echo $so['custom_moq']; ?></td>
-                            <td style="padding:12px 14px;">
+                        <tr class="sku-row-item" style="border-bottom:1px solid #F3EFE6;">
+                            <td class="sku-code-cell" style="padding:12px 14px; font-family:monospace; font-weight:800; color:#8A681F;"><?php echo $so['sku']; ?></td>
+                            <td class="sku-name-cell" style="padding:12px 14px; font-weight:700; color:#181512;">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; font-size:0.68rem; font-weight:900;">
+                                        SKU
+                                    </div>
+                                    <span><?php echo $so['name']; ?></span>
+                                </div>
+                            </td>
+                            <td class="sku-mrp-cell" style="padding:12px 14px; color:#78716C; text-decoration:line-through;"><?php echo $so['mrp']; ?></td>
+                            <td class="sku-rate-cell" style="padding:12px 14px; color:#15803D; font-weight:900; font-size:0.88rem;"><?php echo $so['special_rate']; ?></td>
+                            <td class="sku-moq-cell" style="padding:12px 14px; font-weight:700; color:#181512;"><?php echo $so['custom_moq']; ?></td>
+                            <td class="sku-rule-cell" style="padding:12px 14px;">
                                 <span class="dt-reseller-badge gold" style="font-size:0.7rem; font-weight:800;"><?php echo $so['rule']; ?></span>
                             </td>
                             <td style="padding:12px 14px; text-align:right;">
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626; border-color:#FECACA;" onclick="removeSkuOverride(this, '<?php echo $so['sku']; ?>')">
-                                    <span>Remove</span>
-                                </button>
+                                <div style="display:inline-flex; align-items:center; gap:6px;">
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openEditSkuModal(this, '<?php echo $so['sku']; ?>', '<?php echo addslashes($so['name']); ?>', '<?php echo $so['mrp']; ?>', '<?php echo $so['special_rate']; ?>', '<?php echo $so['custom_moq']; ?>', '<?php echo addslashes($so['rule']); ?>')">
+                                        <span>Edit</span>
+                                    </button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626; border-color:#FECACA;" onclick="removeSkuOverride(this, '<?php echo $so['sku']; ?>')">
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -1,12 +1,13 @@
 /**
  * reseller-pricing.js — DT Brand's & Jai Hanuman Tex
- * Tiered Pricing Matrix, Dynamic Tier Switching, Category Margin Editor & SKU Overrides
+ * Tiered Pricing Matrix, Dynamic Tier Switching, Category Margin Editor, SKU Overrides & Live Search
  */
 
 (function () {
     'use strict';
 
     let pendingTierSwitch = null;
+    let editingSkuRow = null;
 
     // ── Tab Switcher ──
     window.switchPricingTab = function (tabId, btn) {
@@ -226,8 +227,51 @@
         window.showToast(`✓ All category wholesale prices updated for ${activeDiscount}% Active Tier discount!`);
     };
 
-    // ── Add SKU Override Modal & Logic ──
+    // ── Live SKU Overrides Search Filter ──
+    window.filterSkuOverrides = function (query) {
+        const q = (query || '').toLowerCase().trim();
+        const rows = document.querySelectorAll('#skuOverrideTbody .sku-row-item');
+
+        rows.forEach((row) => {
+            const code = (row.querySelector('.sku-code-cell') ? row.querySelector('.sku-code-cell').innerText : '').toLowerCase();
+            const name = (row.querySelector('.sku-name-cell') ? row.querySelector('.sku-name-cell').innerText : '').toLowerCase();
+            const rule = (row.querySelector('.sku-rule-cell') ? row.querySelector('.sku-rule-cell').innerText : '').toLowerCase();
+
+            if (!q || code.includes(q) || name.includes(q) || rule.includes(q)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    };
+
+    // ── Add / Edit SKU Override Modal & Logic ──
     window.openAddSkuOverrideModal = function () {
+        editingSkuRow = null;
+        document.getElementById('skuModalTitle').innerText = 'Add SKU-Specific Price Override';
+        document.getElementById('skuCodeInput').value = '';
+        document.getElementById('skuCodeInput').readOnly = false;
+        document.getElementById('skuNameInput').value = '';
+        document.getElementById('skuMrpInput').value = '';
+        document.getElementById('skuSpecialRateInput').value = '';
+        document.getElementById('skuMoqInput').value = '';
+        document.getElementById('skuRuleInput').value = '';
+
+        const modal = document.getElementById('dtAddSkuModal');
+        if (modal) modal.style.display = 'flex';
+    };
+
+    window.openEditSkuModal = function (btn, sku, name, mrp, rate, moq, rule) {
+        editingSkuRow = btn ? btn.closest('tr') : null;
+        document.getElementById('skuModalTitle').innerText = `Edit Override: ${sku}`;
+        document.getElementById('skuCodeInput').value = sku;
+        document.getElementById('skuCodeInput').readOnly = true;
+        document.getElementById('skuNameInput').value = name;
+        document.getElementById('skuMrpInput').value = mrp;
+        document.getElementById('skuSpecialRateInput').value = rate;
+        document.getElementById('skuMoqInput').value = moq;
+        document.getElementById('skuRuleInput').value = rule;
+
         const modal = document.getElementById('dtAddSkuModal');
         if (modal) modal.style.display = 'flex';
     };
@@ -247,30 +291,61 @@
             return;
         }
 
-        const tbody = document.getElementById('skuOverrideTbody');
-        if (tbody) {
-            const tr = document.createElement('tr');
-            tr.style.borderBottom = '1px solid #F3EFE6';
-            tr.innerHTML = `
-                <td style="padding:12px 14px; font-family:monospace; font-weight:800; color:#8A681F;">${sku}</td>
-                <td style="padding:12px 14px; font-weight:700; color:#181512;">${name}</td>
-                <td style="padding:12px 14px; color:#78716C; text-decoration:line-through;">${mrp || '₹4,000'}</td>
-                <td style="padding:12px 14px; color:#15803D; font-weight:900; font-size:0.88rem;">${rate}</td>
-                <td style="padding:12px 14px; font-weight:700; color:#181512;">${moq || '6 Pcs'}</td>
-                <td style="padding:12px 14px;">
-                    <span class="dt-reseller-badge gold" style="font-size:0.7rem; font-weight:800;">${rule || 'Custom Deal'}</span>
-                </td>
-                <td style="padding:12px 14px; text-align:right;">
-                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626; border-color:#FECACA;" onclick="removeSkuOverride(this, '${sku}')">
-                        <span>Remove</span>
-                    </button>
-                </td>
-            `;
-            tbody.prepend(tr);
+        if (editingSkuRow) {
+            // Update existing row
+            const nameCell = editingSkuRow.querySelector('.sku-name-cell span:last-child');
+            const mrpCell = editingSkuRow.querySelector('.sku-mrp-cell');
+            const rateCell = editingSkuRow.querySelector('.sku-rate-cell');
+            const moqCell = editingSkuRow.querySelector('.sku-moq-cell');
+            const ruleCell = editingSkuRow.querySelector('.sku-rule-cell span');
+
+            if (nameCell) nameCell.innerText = name;
+            if (mrpCell) mrpCell.innerText = mrp;
+            if (rateCell) rateCell.innerText = rate;
+            if (moqCell) moqCell.innerText = moq;
+            if (ruleCell) ruleCell.innerText = rule || 'Custom Deal';
+
+            window.showToast(`✅ Special SKU pricing for "${sku}" updated!`);
+        } else {
+            // Add new row
+            const tbody = document.getElementById('skuOverrideTbody');
+            if (tbody) {
+                const tr = document.createElement('tr');
+                tr.className = 'sku-row-item';
+                tr.style.borderBottom = '1px solid #F3EFE6';
+                tr.innerHTML = `
+                    <td class="sku-code-cell" style="padding:12px 14px; font-family:monospace; font-weight:800; color:#8A681F;">${sku}</td>
+                    <td class="sku-name-cell" style="padding:12px 14px; font-weight:700; color:#181512;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; font-size:0.68rem; font-weight:900;">
+                                SKU
+                            </div>
+                            <span>${name}</span>
+                        </div>
+                    </td>
+                    <td class="sku-mrp-cell" style="padding:12px 14px; color:#78716C; text-decoration:line-through;">${mrp || '₹4,000'}</td>
+                    <td class="sku-rate-cell" style="padding:12px 14px; color:#15803D; font-weight:900; font-size:0.88rem;">${rate}</td>
+                    <td class="sku-moq-cell" style="padding:12px 14px; font-weight:700; color:#181512;">${moq || '6 Pcs'}</td>
+                    <td class="sku-rule-cell" style="padding:12px 14px;">
+                        <span class="dt-reseller-badge gold" style="font-size:0.7rem; font-weight:800;">${rule || 'Custom Deal'}</span>
+                    </td>
+                    <td style="padding:12px 14px; text-align:right;">
+                        <div style="display:inline-flex; align-items:center; gap:6px;">
+                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openEditSkuModal(this, '${sku}', '${name.replace(/'/g, "\\'")}', '${mrp}', '${rate}', '${moq}', '${rule.replace(/'/g, "\\'")}')">
+                                <span>Edit</span>
+                            </button>
+                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="color:#DC2626; border-color:#FECACA;" onclick="removeSkuOverride(this, '${sku}')">
+                                <span>Remove</span>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.prepend(tr);
+            }
+            window.showToast(`✅ Special SKU pricing rule for "${sku}" added!`);
         }
 
         window.closePricingModal('dtAddSkuModal');
-        window.showToast(`✅ Special SKU pricing rule for "${sku}" added!`);
     };
 
     window.removeSkuOverride = function (btn, sku) {

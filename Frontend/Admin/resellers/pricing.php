@@ -45,7 +45,7 @@ $active_subnav = "pricing";
                         </a>
                         <button type="button" class="dt-btn dt-btn-gold" onclick="openAddSkuOverrideModal()">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add SKU Override</span>
+                            <span>Add SKU Override</span>
                         </button>
                     </div>
                 </div>
@@ -213,7 +213,7 @@ $active_subnav = "pricing";
         <div class="dt-modal-head" style="padding:14px 18px; border-bottom:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <strong style="font-size:0.95rem; font-weight:800; color:#181512;">Add SKU-Specific Price Override</strong>
+                <strong id="skuModalTitle" style="font-size:0.95rem; font-weight:800; color:#181512;">Add SKU-Specific Price Override</strong>
             </div>
             <button type="button" onclick="closePricingModal('dtAddSkuModal')" style="background:none; border:none; font-size:20px; font-weight:bold; color:#78716C; cursor:pointer;">✕</button>
         </div>
