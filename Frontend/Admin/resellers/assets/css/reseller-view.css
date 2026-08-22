@@ -1,0 +1,171 @@
+/**
+ * reseller-view.css — DT Brand's & Jai Hanuman Tex
+ * Luxury Gold & Silver/Platinum Glass Hero Card, Profile Tabs & 360° Architecture
+ */
+
+/* ══ MASTER LUXURY HERO GLASS CARD ══ */
+.dt-reseller-hero-banner {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%);
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 2px solid #D4AF37;
+    border-radius: 14px;
+    padding: 22px 26px;
+    color: #FFFFFF;
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.dt-reseller-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dt-reseller-hero-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FFE57F, #D4AF37);
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    flex-shrink: 0;
+}
+
+.dt-reseller-hero-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+}
+
+.dt-reseller-hero-sub {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #FEE685;
+    margin: 3px 0 0 0;
+}
+
+.dt-reseller-hero-metrics {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.dt-reseller-hero-metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+}
+
+.dt-reseller-hero-metric-lbl {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #F5ECCE;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.dt-reseller-hero-metric-val {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #FFE57F;
+}
+
+/* ══ TAB NAVIGATION BAR ══ */
+.dt-reseller-nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1.5px solid #EAE5D9;
+    padding-bottom: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.dt-reseller-tab-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px 8px 0 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #645D54;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    border-bottom: 2.5px solid transparent;
+}
+
+.dt-reseller-tab-link:hover {
+    color: #8A681F;
+    background: #FAF5E8;
+}
+
+.dt-reseller-tab-link.active {
+    color: #8A681F;
+    font-weight: 800;
+    border-bottom-color: #8A681F;
+    background: #FAF5E8;
+}
+
+/* ══ TWO-COLUMN PROFILE GRID ══ */
+.dt-reseller-view-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .dt-reseller-view-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dt-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #F6F3EC;
+    font-size: 0.78rem;
+}
+
+.dt-info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.dt-info-lbl {
+    color: #78716C;
+    font-weight: 600;
+}
+
+.dt-info-val {
+    color: #181512;
+    font-weight: 700;
+    text-align: right;
+}

@@ -1,0 +1,406 @@
+/**
+ * resellers.css — DT Brand's & Jai Hanuman Tex
+ * Master Design System & Luxury UI Architecture for Reseller Management
+ */
+
+:root {
+    --dt-gold-primary: #8A681F;
+    --dt-gold-radiant: #D4AF37;
+    --dt-gold-pale: #FAF5E8;
+    --dt-gold-light: #FDFBF7;
+    --dt-gold-bronze: #705114;
+    --dt-gold-dark: #5A4210;
+
+    --dt-dark-obsidian: #181512;
+    --dt-dark-charcoal: #2A241E;
+    --dt-dark-card: #201B15;
+
+    --dt-border-light: #EAE5D9;
+    --dt-border-gold: #D4AF37;
+    --dt-border-dark: #3D342A;
+
+    --dt-emerald: #15803D;
+    --dt-emerald-bg: #DCFCE7;
+    --dt-amber: #B45309;
+    --dt-amber-bg: #FEF3C7;
+    --dt-rose: #DC2626;
+    --dt-rose-bg: #FEF2F2;
+    --dt-blue: #1D4ED8;
+    --dt-blue-bg: #EFF6FF;
+    --dt-purple: #7E22CE;
+    --dt-purple-bg: #F3E8FF;
+
+    --dt-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
+    }
+}
+
+@keyframes dtAdminAmbientGlow {
+    0% {
+        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
+    }
+    50% {
+        background-position: 100% 50%, 0% 50%, 0% 100%, 0% 0%;
+    }
+    100% {
+        background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%;
+    }
+}
+
+@keyframes dtModalPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ══ MASTER FORM FOCUS STANDARD (GOLD & PLATINUM RUNNING LINE) ══ */
+.dt-input-field:focus, 
+.dt-reseller-select:focus, 
+.dt-textarea-field:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* ══ RESELLER CONTAINER & CARDS ══ */
+.dt-resellers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-family: var(--dt-font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.dt-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--dt-border-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+}
+
+.dt-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.dt-card-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.011em;
+}
+
+/* ══ MASTER BUTTON ARCHITECTURE ══ */
+.dt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--dt-font-sans);
+    letter-spacing: -0.011em;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    line-height: 1.2;
+    border: none;
+    box-sizing: border-box;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827 !important;
+    border: 1px solid #8A681F;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35);
+    font-weight: 800;
+}
+
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48);
+    color: #0F0E0C !important;
+}
+
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: #FAF5E8 !important;
+    border: 1.2px solid #8A681F;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    font-weight: 700;
+}
+
+.dt-btn-dark:hover {
+    background: linear-gradient(135deg, #2A241E 0%, #3D342A 100%);
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.dt-btn-pale {
+    background: #FAF5E8;
+    color: #705114 !important;
+    border: 1px solid #D4AF37;
+    font-weight: 700;
+}
+
+.dt-btn-pale:hover {
+    background: #F5ECCE;
+    color: #5A4210 !important;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+.dt-btn-emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    color: #FFFFFF !important;
+    border: 1px solid #166534;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(21, 128, 61, 0.25);
+}
+
+.dt-btn-emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(21, 128, 61, 0.35);
+}
+
+.dt-btn-rose {
+    background: #FEF2F2;
+    color: #DC2626 !important;
+    border: 1px solid #FECACA;
+    font-weight: 700;
+}
+
+.dt-btn-rose:hover {
+    background: #FEE2E2;
+    border-color: #DC2626;
+    transform: translateY(-1px);
+}
+
+.dt-btn-sm {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    border-radius: 6px;
+}
+
+/* ══ BADGES & PILLS ══ */
+.dt-reseller-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.dt-reseller-badge.gold {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+}
+
+.dt-reseller-badge.emerald {
+    background: var(--dt-emerald-bg);
+    color: var(--dt-emerald);
+    border: 1px solid #86EFAC;
+}
+
+.dt-reseller-badge.amber {
+    background: var(--dt-amber-bg);
+    color: var(--dt-amber);
+    border: 1px solid #FCD34D;
+}
+
+.dt-reseller-badge.purple {
+    background: var(--dt-purple-bg);
+    color: var(--dt-purple);
+    border: 1px solid #D8B4FE;
+}
+
+.dt-reseller-badge.rose {
+    background: var(--dt-rose-bg);
+    color: var(--dt-rose);
+    border: 1px solid #FECACA;
+}
+
+.dt-reseller-badge.blue {
+    background: var(--dt-blue-bg);
+    color: var(--dt-blue);
+    border: 1px solid #BFDBFE;
+}
+
+/* ══ RESELLER TIER BADGES ══ */
+.dt-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.dt-tier-badge.platinum {
+    background: linear-gradient(135deg, #1E293B, #0F172A);
+    color: #F8FAFC;
+    border: 1px solid #94A3B8;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.dt-tier-badge.gold-tier {
+    background: linear-gradient(135deg, #FFE57F, #D4AF37);
+    color: #111827;
+    border: 1px solid #8A681F;
+    box-shadow: 0 2px 6px rgba(184,134,11,0.2);
+}
+
+.dt-tier-badge.silver {
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #CBD5E1;
+}
+
+.dt-tier-badge.bronze {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+}
+
+/* ══ MODAL BACKDROP & DIALOGS ══ */
+.dt-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 14, 12, 0.7);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.dt-modal-backdrop.open {
+    display: flex;
+}
+
+.dt-modal-dialog {
+    background: #FFFFFF;
+    border: 1.5px solid #D4AF37;
+    border-radius: 14px;
+    width: 95%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+    animation: dtModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+}
+
+.dt-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #FAF8F4;
+    border-bottom: 1.2px solid #EAE5D9;
+}
+
+.dt-modal-body {
+    padding: 20px;
+}
+
+.dt-modal-foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 14px 20px;
+    background: #FAF8F4;
+    border-top: 1.2px solid #EAE5D9;
+}
+
+/* Toast Container */
+#dtToastContainer {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dt-toast {
+    background: #181512;
+    color: #FAF5E8;
+    border: 1.2px solid #D4AF37;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    animation: dtModalPop 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -1,9 +1,9 @@
 <?php
 /**
- * approved.php — DT Brand's & Jai Hanuman Tex
- * Approved Resellers View
+ * suspended.php — DT Brand's & Jai Hanuman Tex
+ * Suspended Resellers View
  */
-$page_title = "Approved Resellers Network";
+$page_title = "Suspended Resellers";
 $active_nav = "resellers";
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ $active_nav = "resellers";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approved Resellers - DT Brand's Admin</title>
+    <title>Suspended Resellers - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -29,10 +29,10 @@ $active_nav = "resellers";
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
                     <div>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <h1 style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">Approved Resellers Network</h1>
-                            <span class="dt-reseller-badge emerald">296 Active Partners</span>
+                            <h1 style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">Suspended Resellers</h1>
+                            <span class="dt-reseller-badge purple">12 Suspended</span>
                         </div>
-                        <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Active B2B resellers authorized for margin ordering and credit lines.</p>
+                        <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Accounts with locked purchasing due to credit breaches or pending compliance audits.</p>
                     </div>
                     <a href="/Frontend/Admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to All Resellers</a>
                 </div>
@@ -55,7 +55,7 @@ $active_nav = "resellers";
 <script src="/Frontend/Admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    filterResellersByStatus('approved');
+    filterResellersByStatus('suspended');
 });
 </script>
 </body>

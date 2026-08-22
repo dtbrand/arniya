@@ -1,0 +1,17 @@
+/**
+ * reseller-analytics.css — DT Brand's & Jai Hanuman Tex
+ * Reseller Growth, GMV, Tier Distribution & Payout Analytics
+ */
+
+.dt-reseller-analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .dt-reseller-analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}

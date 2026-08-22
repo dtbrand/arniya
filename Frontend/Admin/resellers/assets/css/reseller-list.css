@@ -1,0 +1,286 @@
+/**
+ * reseller-list.css — DT Brand's & Jai Hanuman Tex
+ * 8-Card KPI Ribbon, Table Styles, Status Filters & Pagination
+ */
+
+/* ══ 8-CARD EXECUTIVE KPI RIBBON ══ */
+.dt-reseller-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.dt-reseller-kpi-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--dt-border-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.dt-reseller-kpi-card:hover {
+    border-color: var(--dt-gold-radiant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(138, 104, 31, 0.1);
+}
+
+.dt-reseller-kpi-card.active {
+    background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%);
+    border-color: var(--dt-gold-primary);
+    box-shadow: 0 4px 14px rgba(138, 104, 31, 0.12);
+}
+
+.dt-reseller-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.dt-reseller-kpi-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #78716C;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.dt-reseller-kpi-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dt-reseller-kpi-icon.gold {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+}
+
+.dt-reseller-kpi-icon.emerald {
+    background: var(--dt-emerald-bg);
+    color: var(--dt-emerald);
+    border: 1px solid #86EFAC;
+}
+
+.dt-reseller-kpi-icon.amber {
+    background: var(--dt-amber-bg);
+    color: var(--dt-amber);
+    border: 1px solid #FCD34D;
+}
+
+.dt-reseller-kpi-icon.purple {
+    background: var(--dt-purple-bg);
+    color: var(--dt-purple);
+    border: 1px solid #D8B4FE;
+}
+
+.dt-reseller-kpi-icon.rose {
+    background: var(--dt-rose-bg);
+    color: var(--dt-rose);
+    border: 1px solid #FECACA;
+}
+
+.dt-reseller-kpi-icon.blue {
+    background: var(--dt-blue-bg);
+    color: var(--dt-blue);
+    border: 1px solid #BFDBFE;
+}
+
+.dt-reseller-kpi-val {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--dt-dark-obsidian);
+    line-height: 1.2;
+}
+
+.dt-reseller-kpi-bot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.dt-reseller-kpi-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: var(--dt-emerald);
+}
+
+.dt-reseller-kpi-delta.down {
+    color: var(--dt-rose);
+}
+
+/* ══ STATUS FLOW FILTER PILLS ══ */
+.dt-reseller-filter-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.dt-reseller-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.73rem;
+    font-weight: 700;
+    background: #FFFFFF;
+    border: 1.2px solid var(--dt-border-light);
+    color: #645D54;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.dt-reseller-pill-btn:hover {
+    border-color: var(--dt-gold-radiant);
+    color: var(--dt-gold-primary);
+    background: var(--dt-gold-pale);
+}
+
+.dt-reseller-pill-btn.active {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border-color: var(--dt-gold-primary);
+    font-weight: 800;
+    box-shadow: 0 1px 4px rgba(138, 104, 31, 0.1);
+}
+
+.dt-reseller-pill-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    background: #F0ECE1;
+    color: #4B5563;
+}
+
+.dt-reseller-pill-btn.active .dt-reseller-pill-count {
+    background: var(--dt-gold-primary);
+    color: #FFFFFF;
+}
+
+/* ══ RESELLER SEARCH TOOLBAR ══ */
+.dt-reseller-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #FAF8F4;
+    border-bottom: 1.2px solid #EAE5D9;
+}
+
+.dt-reseller-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 280px;
+}
+
+/* ══ RESELLER TABLE ══ */
+.dt-reseller-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+
+.dt-reseller-table th {
+    background: #F9F6F0;
+    color: #78716C;
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1.5px solid #EAE5D9;
+    white-space: nowrap;
+}
+
+.dt-reseller-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #F1ECE1;
+    color: #181512;
+    vertical-align: middle;
+    transition: background 0.15s ease;
+}
+
+.dt-reseller-table tr:hover td {
+    background: #FDFBF7;
+}
+
+/* ══ RESELLER AVATAR BADGE ══ */
+.dt-reseller-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.85rem;
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1.2px solid var(--dt-gold-radiant);
+    flex-shrink: 0;
+}
+
+/* ══ PAGINATION CONTROLS ══ */
+.dt-reseller-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: #FAF8F4;
+    border-top: 1.2px solid #EAE5D9;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #78716C;
+}
+
+.dt-page-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: #FFFFFF;
+    border: 1px solid #EAE5D9;
+    color: #181512;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.dt-page-btn:hover {
+    border-color: #D4AF37;
+    background: #FAF5E8;
+}
+
+.dt-page-btn.active {
+    background: #8A681F;
+    color: #FFFFFF;
+    border-color: #8A681F;
+}

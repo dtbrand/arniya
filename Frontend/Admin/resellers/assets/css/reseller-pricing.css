@@ -1,0 +1,41 @@
+/**
+ * reseller-pricing.css — DT Brand's & Jai Hanuman Tex
+ * Tiered Pricing Matrix, Margin Calculator & MOQ Rules
+ */
+
+.dt-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.dt-tier-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.dt-tier-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(184, 134, 11, 0.12);
+}
+
+.dt-tier-card.current {
+    border-color: #8A681F;
+    background: linear-gradient(180deg, #FAF5E8 0%, #FFFFFF 100%);
+    box-shadow: 0 4px 16px rgba(184, 134, 11, 0.15);
+}
+
+.dt-tier-discount-pill {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #8A681F;
+}

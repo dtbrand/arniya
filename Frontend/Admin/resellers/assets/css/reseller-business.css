@@ -1,0 +1,44 @@
+/**
+ * reseller-business.css — DT Brand's & Jai Hanuman Tex
+ * Business Info, Tax / GST Verification Cards & Legal Profile
+ */
+
+.dt-business-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.dt-gst-verification-box {
+    background: #FAF8F4;
+    border: 1.2px solid #EAE5D9;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dt-gst-verified-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #DCFCE7;
+    color: #15803D;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border: 1px solid #86EFAC;
+}
+
+.dt-bank-card {
+    background: linear-gradient(135deg, #FAF8F4, #FFFFFF);
+    border: 1.2px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

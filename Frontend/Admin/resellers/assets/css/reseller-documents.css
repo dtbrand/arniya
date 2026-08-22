@@ -1,0 +1,47 @@
+/**
+ * reseller-documents.css — DT Brand's & Jai Hanuman Tex
+ * KYC Document Vault, Verification Grid & Document Viewer
+ */
+
+.dt-docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    width: 100%;
+}
+
+.dt-doc-card {
+    background: #FFFFFF;
+    border: 1.2px solid #EAE5D9;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.2s ease;
+}
+
+.dt-doc-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.08);
+}
+
+.dt-doc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.dt-doc-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
