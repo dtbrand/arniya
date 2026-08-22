@@ -37,12 +37,42 @@ $active_subnav = "tags";
                         </h1>
                         <p class="dt-cust-subtitle">Organize customer records with custom labels for VIP tiers, regional groupings, and product affinities.</p>
                     </div>
-                    <div class="dt-cust-actions">
-                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
+                    <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale" style="display:inline-flex; align-items:center; gap:6px;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>All Customers</span>
+                        </a>
+                        <button type="button" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;" onclick="document.getElementById('dtCustNewTagInput').focus()">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>+ Create Tag</span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="dt-card">
+                <!-- 4-Card KPI Ribbon -->
+                <div class="dt-cust-stats-ribbon" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin-bottom:16px;">
+                    <div class="dt-cust-stat-card" style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+                        <div style="font-size:0.7rem; font-weight:700; color:#78716C; text-transform:uppercase; margin-bottom:4px;">Total Active Tags</div>
+                        <div style="font-size:1.4rem; font-weight:900; color:#181512;">12 <span style="font-size:0.75rem; font-weight:600; color:#15803D;">Master Tags</span></div>
+                    </div>
+
+                    <div class="dt-cust-stat-card" style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+                        <div style="font-size:0.7rem; font-weight:700; color:#78716C; text-transform:uppercase; margin-bottom:4px;">Tagged Customers</div>
+                        <div style="font-size:1.4rem; font-weight:900; color:#8A681F;">4,820 <span style="font-size:0.75rem; font-weight:600; color:#78716C;">(100% Base)</span></div>
+                    </div>
+
+                    <div class="dt-cust-stat-card" style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+                        <div style="font-size:0.7rem; font-weight:700; color:#78716C; text-transform:uppercase; margin-bottom:4px;">Most Popular Tag</div>
+                        <div style="font-size:1.15rem; font-weight:900; color:#15803D;">Frequent Buyer <span style="font-size:0.75rem; font-weight:700; color:#181512;">(1,850)</span></div>
+                    </div>
+
+                    <div class="dt-cust-stat-card" style="background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+                        <div style="font-size:0.7rem; font-weight:700; color:#78716C; text-transform:uppercase; margin-bottom:4px;">Auto-Rule Cohorts</div>
+                        <div style="font-size:1.4rem; font-weight:900; color:#1D4ED8;">6 <span style="font-size:0.75rem; font-weight:600; color:#78716C;">Rules Active</span></div>
+                    </div>
+                </div>
+
+                <div class="dt-card" style="padding:18px 20px;">
                     <?php include __DIR__ . '/components/customer-tags.php'; ?>
                 </div>
             </div>
