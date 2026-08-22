@@ -458,8 +458,9 @@ $active_subnav = "imports";
                     <a href="/Frontend/Admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
                         <span>View Products Catalog (1,488 SKUs)</span>
                     </a>
-                    <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 16px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
-                        <span>+ Import Another Batch</span>
+                    <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 16px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>Import Another Batch</span>
                     </button>
                 </div>
             </div>

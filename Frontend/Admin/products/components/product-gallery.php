@@ -166,8 +166,8 @@
                             <div style="display:flex; gap:6px;">
                                 <input type="url" id="dtVideoUrlInput" class="dt-form-input" placeholder="e.g. https://www.youtube.com/shorts/... or https://instagram.com/reel/..." style="flex:1; font-size:11.5px;">
                                 <button type="button" class="dt-btn-action-sm gold" onclick="handleVideoUrlEmbed();">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                    <span>+ Add Link</span>
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span>Add Link</span>
                                 </button>
                             </div>
                             <span style="font-size:10px; color:#646970; display:block; margin-top:4px;">Add multiple video links (Reels, Shorts, Draping walkthroughs).</span>

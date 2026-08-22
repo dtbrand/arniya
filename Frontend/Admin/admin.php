@@ -177,7 +177,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             </div>
                             <a href="/Frontend/Admin/products/add.php" class="adm-app-action-btn">
                                 <svg viewBox="0 0 24 24" width="12" height="12" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                <span>+ Product</span>
+                                <span>Product</span>
                             </a>
                         </div>
                     </div>
@@ -376,8 +376,8 @@ if (session_status() === PHP_SESSION_NONE) {
                             <span>Export Sales CSV</span>
                         </button>
                         <button class="adm-btn-primary" onclick="openAddProductModal()">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add Product</span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add Product</span>
                         </button>
                     </div>
                 </div>
@@ -1204,8 +1204,8 @@ if (session_status() === PHP_SESSION_NONE) {
                             <span>📤 Export CSV</span>
                         </button>
                         <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>+ Add Product</span>
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add Product</span>
                         </a>
                     </div>
                 </div>

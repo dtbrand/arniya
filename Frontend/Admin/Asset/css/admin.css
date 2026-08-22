@@ -1778,27 +1778,37 @@ svg.adm-search-icon {
     border: 1.5px solid #FFFFFF;
 }
 
-/* Primary Action Button (+ Add Product / + Broadcast) */
+/* 👑 MASTER RADIANT GOLD PRIMARY ACTION BUTTON (+ Add Product / Main Triggers) */
 .adm-btn-primary {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, var(--adm-gold) 0%, var(--adm-gold-deep) 100%);
-    color: #FFFFFF;
+    gap: 7px;
+    padding: 7px 16px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
     font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 800;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(138, 104, 31, 0.25);
-    transition: var(--adm-transition);
+    border: 1px solid #8A681F !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+    text-decoration: none;
+    letter-spacing: -0.011em;
+    cursor: pointer;
 }
 
 .adm-btn-primary:hover {
-    background: linear-gradient(135deg, var(--adm-gold-bright) 0%, var(--adm-gold) 100%);
-    box-shadow: 0 5px 15px rgba(138, 104, 31, 0.35);
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
     transform: translateY(-1px);
-    color: #FFFFFF;
+    color: #111827 !important;
+}
+
+.adm-btn-primary svg {
+    stroke: #181512 !important;
+    stroke-width: 2.8 !important;
+    flex-shrink: 0;
 }
 
 .adm-btn-secondary {
