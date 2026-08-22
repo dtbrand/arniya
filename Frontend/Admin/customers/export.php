@@ -310,6 +310,18 @@ $active_subnav = "export";
 <script>
 let currentFormat = 'csv';
 
+// Mock Customer Master Database
+const mockCustomers = [
+    { id: "CUST-1042", name: "Ramesh Patel", phone: "+91 98251 44321", email: "ramesh.patel@gmail.com", tier: "VIP Champion", spend: 48500, orders: 6, aov: 8083, last_order: "2026-08-20", joined: "2025-11-12", city: "Surat", state: "Gujarat", country: "India (+91)", pincode: "395002", tags: "Frequent Buyer; Surat Hub", status: "Active" },
+    { id: "CUST-1041", name: "Priya Sharma", phone: "+91 98765 43210", email: "priya.s@yahoo.com", tier: "Active Shopper", spend: 32400, orders: 4, aov: 8100, last_order: "2026-08-18", joined: "2025-12-05", city: "Ahmedabad", state: "Gujarat", country: "India (+91)", pincode: "380001", tags: "Saree Enthusiast", status: "Active" },
+    { id: "CUST-1040", name: "Ananya Verma", phone: "+91 91234 56789", email: "ananya.v@outlook.com", tier: "Active Shopper", spend: 24800, orders: 3, aov: 8266, last_order: "2026-08-15", joined: "2026-01-10", city: "Mumbai", state: "Maharashtra", country: "India (+91)", pincode: "400001", tags: "Bridal Lehenga", status: "Active" },
+    { id: "CUST-1039", name: "Suresh Mehta", phone: "+91 94280 11223", email: "suresh.m@gmail.com", tier: "VIP Champion", spend: 64200, orders: 8, aov: 8025, last_order: "2026-08-14", joined: "2025-11-20", city: "Rajkot", state: "Gujarat", country: "India (+91)", pincode: "360001", tags: "B2B Wholesale Buyer", status: "Active" },
+    { id: "CUST-1038", name: "Meera Joshi", phone: "+91 98980 99887", email: "meera.j@gmail.com", tier: "Active Shopper", spend: 12600, orders: 2, aov: 6300, last_order: "2026-08-10", joined: "2026-02-14", city: "Vadodara", state: "Gujarat", country: "India (+91)", pincode: "390001", tags: "Festive Silk Seeker", status: "Active" },
+    { id: "CUST-1037", name: "Rajesh Gupta", phone: "+91 98111 22334", email: "rajesh.g@rediffmail.com", tier: "Active Shopper", spend: 18900, orders: 3, aov: 6300, last_order: "2026-08-05", joined: "2026-02-28", city: "Delhi", state: "Delhi", country: "India (+91)", pincode: "110001", tags: "COD Verified", status: "Active" },
+    { id: "CUST-1036", name: "Kavita Singhania", phone: "+91 98200 44556", email: "kavita.s@gmail.com", tier: "VIP Champion", spend: 85000, orders: 12, aov: 7083, last_order: "2026-08-01", joined: "2025-11-01", city: "Jaipur", state: "Rajasthan", country: "India (+91)", pincode: "302001", tags: "High-Value VIP; Saree Enthusiast", status: "Active" },
+    { id: "CUST-1035", name: "Vikram Malhotra", phone: "+44 7911 123456", email: "vikram.m@ukexport.com", tier: "VIP Champion", spend: 96000, orders: 5, aov: 19200, last_order: "2026-07-28", joined: "2025-12-18", city: "London", state: "Greater London", country: "United Kingdom (+44)", pincode: "SW1A 1AA", tags: "NRI Global Exporter", status: "Active" }
+];
+
 function selectExportFormat(fmt, el) {
     currentFormat = fmt;
     document.querySelectorAll('.dt-export-format-card').forEach(c => c.classList.remove('active'));
@@ -319,7 +331,7 @@ function selectExportFormat(fmt, el) {
 
     const est = document.getElementById('dtExportEstimate');
     if (est) {
-        if (fmt === 'csv') est.innerText = 'CSV File (~340 KB) • 4,820 Records';
+        if (fmt === 'csv') est.innerText = 'CSV Spreadsheet (~340 KB) • 4,820 Records';
         else if (fmt === 'excel') est.innerText = 'Excel XLSX Workbook (~820 KB) • 4,820 Records';
         else if (fmt === 'pdf') est.innerText = 'Printable PDF Dossier (~2.4 MB) • 4,820 Records';
     }
@@ -329,36 +341,237 @@ function toggleAllFields(check) {
     document.querySelectorAll('input[name="fields[]"]').forEach(cb => cb.checked = check);
 }
 
+function getSelectedFields() {
+    const checked = [];
+    document.querySelectorAll('input[name="fields[]"]:checked').forEach(cb => checked.push(cb.value));
+    return checked.length ? checked : ['id', 'name', 'phone', 'email', 'spend', 'orders', 'city', 'tags'];
+}
+
+function filterCustomersByScope(scope) {
+    if (scope === 'vip') return mockCustomers.filter(c => c.tier === 'VIP Champion' || c.spend >= 25000);
+    if (scope === 'frequent') return mockCustomers.filter(c => c.orders >= 3);
+    if (scope === 'gujarat') return mockCustomers.filter(c => c.state === 'Gujarat');
+    if (scope === 'nri') return mockCustomers.filter(c => c.country !== 'India (+91)');
+    if (scope === 'wholesale') return mockCustomers.filter(c => c.tags.includes('Wholesale') || c.spend >= 50000);
+    if (scope === 'dormant') return mockCustomers.filter(c => c.status === 'Inactive');
+    return mockCustomers;
+}
+
 function handleCustomerExport(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const scope = document.getElementById('dtExportAudienceScope').value;
+    const selectedFields = getSelectedFields();
+    const records = filterCustomersByScope(scope);
+
     window.showToast(`⏳ Generating ${currentFormat.toUpperCase()} file for "${scope}" cohort...`);
-    
+
     setTimeout(() => {
-        triggerQuickCsvDownload();
-    }, 800);
+        if (currentFormat === 'csv') {
+            downloadCsvFile(records, selectedFields);
+        } else if (currentFormat === 'excel') {
+            downloadExcelFile(records, selectedFields);
+        } else if (currentFormat === 'pdf') {
+            generatePdfDossier(records, selectedFields);
+        }
+    }, 600);
 }
 
 function triggerQuickCsvDownload() {
-    const csvContent = "data:text/csv;charset=utf-8," 
-        + "Customer ID,Full Name,Phone Number,Email,Lifetime Spend (INR),Total Orders,City,State,Standing,Tags\n"
-        + "CUST-1042,Ramesh Patel,+91 98251 44321,ramesh.patel@gmail.com,48500,6,Surat,Gujarat,VIP Champion,Frequent Buyer; Surat Hub\n"
-        + "CUST-1041,Priya Sharma,+91 98765 43210,priya.s@yahoo.com,32400,4,Ahmedabad,Gujarat,Active Shopper,Saree Enthusiast\n"
-        + "CUST-1040,Ananya Verma,+91 91234 56789,ananya.v@outlook.com,24800,3,Mumbai,Maharashtra,Active Shopper,Bridal Lehenga\n"
-        + "CUST-1039,Suresh Mehta,+91 94280 11223,suresh.m@gmail.com,64200,8,Rajkot,Gujarat,VIP Champion,B2B Wholesale Buyer\n"
-        + "CUST-1038,Meera Joshi,+91 98980 99887,meera.j@gmail.com,12600,2,Vadodara,Gujarat,Active Shopper,Festive Silk Seeker\n"
-        + "CUST-1037,Rajesh Gupta,+91 98111 22334,rajesh.g@rediffmail.com,18900,3,Delhi,Delhi,Active Shopper,COD Verified\n"
-        + "CUST-1036,Kavita Singhania,+91 98200 44556,kavita.s@gmail.com,85000,12,Jaipur,Rajasthan,VIP Champion,High-Value VIP; Saree Enthusiast";
+    currentFormat = 'csv';
+    handleCustomerExport();
+}
 
-    const encodedUri = encodeURI(csvContent);
+// ── 1. CSV Generator ──
+function downloadCsvFile(records, fields) {
+    const fieldMap = {
+        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email Address",
+        tier: "Standing Tier", spend: "Lifetime Spend (INR)", orders: "Total Orders",
+        aov: "Average Order Value (INR)", last_order: "Last Purchase Date", joined: "Joined Date",
+        city: "City", state: "State", country: "Country", pincode: "Postal Code",
+        tags: "Assigned Tags", status: "Account Status"
+    };
+
+    const headers = fields.map(f => `"${fieldMap[f] || f}"`).join(",");
+    const rows = records.map(r => {
+        return fields.map(f => `"${(r[f] !== undefined ? r[f] : '').toString().replace(/"/g, '""')}"`).join(",");
+    });
+
+    const csvData = "\uFEFF" + headers + "\n" + rows.join("\n");
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `DT_Brands_Customers_Export_${new Date().toISOString().slice(0,10)}.csv`);
+    link.href = URL.createObjectURL(blob);
+    link.download = `DT_Brands_Customers_Export_${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
-    window.showToast("✓ Export successful! Customer dataset downloaded.");
+    window.showToast("✓ CSV Export complete! File downloaded successfully.");
+}
+
+// ── 2. Excel Workbook (.xls XML/HTML) Generator ──
+function downloadExcelFile(records, fields) {
+    const fieldMap = {
+        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email Address",
+        tier: "Standing Tier", spend: "Lifetime Spend (₹)", orders: "Total Orders",
+        aov: "AOV (₹)", last_order: "Last Purchase Date", joined: "Joined Date",
+        city: "City", state: "State", country: "Country", pincode: "Postal Code",
+        tags: "Assigned Tags", status: "Account Status"
+    };
+
+    let tableHtml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Customers</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+    <style>
+        th { background-color: #B8860B; color: #FFFFFF; font-weight: bold; padding: 10px; border: 1px solid #8A681F; }
+        td { padding: 8px; border: 1px solid #EAE5D9; font-family: 'Segoe UI', Arial, sans-serif; font-size: 11pt; }
+        .currency { color: #8A681F; font-weight: bold; }
+        .vip { background-color: #FAF5E8; color: #8A681F; font-weight: bold; }
+    </style></head><body>
+    <h2>DT Brand's & Jai Hanuman Tex — Customer Master Report</h2>
+    <p>Generated on: ${new Date().toLocaleString()} | Total Records: ${records.length}</p>
+    <table><thead><tr>`;
+
+    fields.forEach(f => {
+        tableHtml += `<th>${fieldMap[f] || f}</th>`;
+    });
+    tableHtml += `</tr></thead><tbody>`;
+
+    records.forEach(r => {
+        tableHtml += `<tr>`;
+        fields.forEach(f => {
+            let val = r[f] !== undefined ? r[f] : '';
+            if (f === 'spend' || f === 'aov') {
+                tableHtml += `<td class="currency">₹${Number(val).toLocaleString()}</td>`;
+            } else if (f === 'tier' && val.includes('VIP')) {
+                tableHtml += `<td class="vip">${val}</td>`;
+            } else {
+                tableHtml += `<td>${val}</td>`;
+            }
+        });
+        tableHtml += `</tr>`;
+    });
+
+    tableHtml += `</tbody></table></body></html>`;
+
+    const blob = new Blob([tableHtml], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `DT_Brands_Customers_Report_${new Date().toISOString().slice(0, 10)}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.showToast("✓ Excel Workbook downloaded successfully!");
+}
+
+// ── 3. Printable PDF Dossier Generator ──
+function generatePdfDossier(records, fields) {
+    const fieldMap = {
+        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email",
+        tier: "Tier", spend: "LTV (₹)", orders: "Orders", aov: "AOV",
+        city: "City", state: "State", tags: "Tags", status: "Status"
+    };
+
+    const printWin = window.open('', '_blank', 'width=900,height=700');
+    if (!printWin) {
+        window.showToast('⚠️ Popups blocked. Please allow popups for PDF printing.');
+        return;
+    }
+
+    let printHtml = `<!DOCTYPE html>
+    <html>
+    <head>
+        <title>DT Brand's — Customer Dossier Report</title>
+        <style>
+            body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; padding: 24px; color: #181512; }
+            .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8A681F; padding-bottom: 14px; margin-bottom: 20px; }
+            .logo { font-size: 20px; font-weight: 900; color: #8A681F; }
+            .meta { font-size: 11px; color: #78716C; text-align: right; }
+            .kpi-strip { display: flex; gap: 12px; margin-bottom: 20px; }
+            .kpi-box { flex: 1; padding: 10px; border: 1px solid #EAE5D9; border-radius: 8px; background: #FAF8F4; text-align: center; }
+            .kpi-val { font-size: 16px; font-weight: 900; color: #8A681F; }
+            .kpi-lbl { font-size: 9px; font-weight: 800; color: #78716C; text-transform: uppercase; }
+            table { width: 100%; border-collapse: collapse; font-size: 11px; }
+            th { background: #FAF5E8; color: #8A681F; text-align: left; padding: 8px; border-bottom: 1.5px solid #D4AF37; font-weight: 800; }
+            td { padding: 8px; border-bottom: 1px solid #F1ECE1; }
+            .vip-pill { display: inline-block; padding: 2px 6px; border-radius: 10px; background: #FAF5E8; color: #8A681F; font-weight: bold; border: 1px solid #D4AF37; font-size: 9px; }
+            @media print {
+                body { padding: 0; }
+                @page { size: landscape; margin: 12mm; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div>
+                <div class="logo">👑 DT BRAND'S &amp; JAI HANUMAN TEX</div>
+                <div style="font-size:12px; font-weight:700; color:#181512; margin-top:2px;">Official Customer Executive Dossier</div>
+            </div>
+            <div class="meta">
+                <div><strong>Export Date:</strong> ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                <div><strong>Records Exported:</strong> ${records.length} Shoppers</div>
+            </div>
+        </div>
+
+        <div class="kpi-strip">
+            <div class="kpi-box">
+                <div class="kpi-val">${records.length}</div>
+                <div class="kpi-lbl">Target Shoppers</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-val">₹${records.reduce((acc, r) => acc + (r.spend || 0), 0).toLocaleString()}</div>
+                <div class="kpi-lbl">Aggregate LTV</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-val">${records.reduce((acc, r) => acc + (r.orders || 0), 0)}</div>
+                <div class="kpi-lbl">Total Completed Orders</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-val">100%</div>
+                <div class="kpi-lbl">CRM Verified</div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>`;
+
+    fields.forEach(f => {
+        printHtml += `<th>${fieldMap[f] || f}</th>`;
+    });
+    printHtml += `</tr></thead><tbody>`;
+
+    records.forEach(r => {
+        printHtml += `<tr>`;
+        fields.forEach(f => {
+            let val = r[f] !== undefined ? r[f] : '';
+            if (f === 'spend' || f === 'aov') {
+                printHtml += `<td style="font-weight:bold; color:#8A681F;">₹${Number(val).toLocaleString()}</td>`;
+            } else if (f === 'tier' && val.includes('VIP')) {
+                printHtml += `<td><span class="vip-pill">${val}</span></td>`;
+            } else {
+                printHtml += `<td>${val}</td>`;
+            }
+        });
+        printHtml += `</tr>`;
+    });
+
+    printHtml += `</tbody></table>
+        <div style="margin-top:24px; font-size:10px; color:#78716C; text-align:center; border-top:1px solid #EAE5D9; padding-top:10px;">
+            Confidential &amp; Proprietary • DT Brand's &amp; Jai Hanuman Tex Management Suite
+        </div>
+        <script>
+            window.onload = function() {
+                window.print();
+            };
+        <\/script>
+    </body>
+    </html>`;
+
+    printWin.document.open();
+    printWin.document.write(printHtml);
+    printWin.document.close();
+
+    window.showToast("✓ Printable PDF Dossier generated and print preview opened!");
 }
 </script>
 </body>
