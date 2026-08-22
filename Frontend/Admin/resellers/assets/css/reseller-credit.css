@@ -18,77 +18,72 @@
 .dt-credit-luxury-hero {
     position: relative;
     background:
-        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
-        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%);
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.35) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(28, 22, 14, 0.98) 0%, rgba(45, 35, 18, 0.95) 45%, rgba(24, 18, 10, 0.98) 100%);
     background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
     animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 2px solid #D4AF37;
-    border-radius: 14px;
-    padding: 22px 26px;
-    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1.5px solid #D4AF37;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 20px rgba(212, 175, 55, 0.25);
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .dt-credit-metrics-strip {
-    display: grid;
-    grid-template-columns: 1.4fr repeat(3, 1fr) auto;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 14px;
 }
 
-@media (max-width: 1100px) {
-    .dt-credit-metrics-strip {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
+.dt-credit-boxes-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-@media (max-width: 600px) {
-    .dt-credit-metrics-strip {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
+.dt-credit-stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    text-align: right;
+    backdrop-filter: blur(6px);
+}
+
+.dt-credit-stat-card.emerald {
+    border-color: rgba(134, 239, 172, 0.4);
+    background: rgba(21, 128, 61, 0.12);
 }
 
 .dt-credit-progress-wrap {
     width: 100%;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 20px;
-    height: 8px;
+    height: 6px;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.25);
 }
 
 .dt-credit-progress-bar {
     height: 100%;
     border-radius: 20px;
     background: linear-gradient(90deg, #D4AF37 0%, #FFE57F 100%);
-    box-shadow: 0 0 10px rgba(255, 229, 127, 0.8);
+    box-shadow: 0 0 8px rgba(255, 229, 127, 0.6);
     transition: width 0.4s ease;
-}
-
-.dt-credit-balance-val {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: #FFE57F;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-}
-
-.dt-credit-avail-val {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: #86EFAC;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
 }
 
 .dt-credit-ledger-table {
@@ -101,14 +96,14 @@
     background: #FAF8F4;
     color: #181512;
     font-weight: 800;
-    padding: 12px 14px;
+    padding: 10px 14px;
     text-align: left;
     border-bottom: 1.5px solid #EAE5D9;
     white-space: nowrap;
 }
 
 .dt-credit-ledger-table td {
-    padding: 12px 14px;
+    padding: 11px 14px;
     border-bottom: 1px solid #F1ECE1;
     vertical-align: middle;
 }
