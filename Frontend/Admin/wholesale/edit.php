@@ -1,14 +1,28 @@
 <?php
 /**
  * edit.php — DT Brand's & Jai Hanuman Tex
- * Wholesale Account & Commercial Terms Editor
+ * Wholesale Account & Commercial Terms Editor (100% Dynamic)
  */
 $page_title = "Edit Wholesale Account";
 $active_nav = "wholesalers";
 $active_subnav = "all";
 
+require_once __DIR__ . '/components/wholesale-data.php';
+
 $whl_id = isset($_GET['id']) ? $_GET['id'] : 'new';
 $is_new = ($whl_id === 'new');
+$partner = $is_new ? [
+    'id' => 'WHL-NEW',
+    'name' => '',
+    'legal_name' => '',
+    'gstin' => '',
+    'contact' => '',
+    'email' => '',
+    'phone' => '',
+    'tier_raw' => 'gold distributor',
+    'payment_terms' => 'Net 30 Days',
+    'sanctioned_limit' => 200000
+] : getWholesalePartner($whl_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +47,7 @@ $is_new = ($whl_id === 'new');
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                     <div>
                         <h1 class="dt-cust-title" style="font-size:1.35rem; font-weight:900; color:#181512; margin:0;">
-                            <?php echo $is_new ? '+ Add New Wholesale Account' : 'Edit Wholesale Profile (' . $whl_id . ')'; ?>
+                            <?php echo $is_new ? 'Add New Wholesale Account' : 'Edit Wholesale Profile (' . $whl_id . ')'; ?>
                         </h1>
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Configure corporate legal identity, credit terms, and assigned wholesale margin tiers.</p>
                     </div>
@@ -52,15 +66,15 @@ $is_new = ($whl_id === 'new');
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Trade / Brand Name *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo $is_new ? '' : 'Shree Balaji Textile Emporium'; ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['name']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Hub">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Legal Registered Entity Name</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo $is_new ? '' : 'Shree Balaji Silk Mills Pvt Ltd'; ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['legal_name']); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Pvt Ltd">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">GSTIN Tax Number *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo $is_new ? '' : '24AAAPL1234F1Z8'; ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-family:monospace; box-sizing:border-box;">
+                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['gstin']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-family:monospace; box-sizing:border-box;" placeholder="24AAAPL1234F1Z8">
                                 </div>
                             </div>
                         </div>
@@ -71,15 +85,15 @@ $is_new = ($whl_id === 'new');
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Authorized Contact Person *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo $is_new ? '' : 'Rameshwar Agarwal'; ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['contact']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Primary Email *</label>
-                                    <input type="email" class="dt-wholesale-input" value="<?php echo $is_new ? '' : 'balaji.textiles.surat@gmail.com'; ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="email" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['email']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">WhatsApp / Phone Number *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo $is_new ? '' : '+91 98251 44321'; ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['phone']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                             </div>
                         </div>
@@ -91,24 +105,25 @@ $is_new = ($whl_id === 'new');
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Assigned Margin Tier</label>
                                     <select class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
-                                        <option selected>Platinum Wholesale (35% Off)</option>
-                                        <option>Gold Distributor (28% Off)</option>
-                                        <option>Silver Bulk Partner (20% Off)</option>
-                                        <option>Bronze Starter (12% Off)</option>
+                                        <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'platinum wholesale') ? 'selected' : ''; ?>>Platinum Wholesale (35% Off)</option>
+                                        <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'gold distributor') ? 'selected' : ''; ?>>Gold Distributor (28% Off)</option>
+                                        <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'silver bulk partner') ? 'selected' : ''; ?>>Silver Bulk Partner (20% Off)</option>
+                                        <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'bronze starter') ? 'selected' : ''; ?>>Bronze Starter (12% Off)</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Payment Terms</label>
                                     <select class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
-                                        <option selected>Net 30 Days</option>
-                                        <option>Net 45 Days</option>
-                                        <option>Net 15 Days</option>
-                                        <option>Advance 50%</option>
+                                        <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '30') !== false) ? 'selected' : ''; ?>>Net 30 Days</option>
+                                        <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '45') !== false) ? 'selected' : ''; ?>>Net 45 Days</option>
+                                        <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '15') !== false) ? 'selected' : ''; ?>>Net 15 Days</option>
+                                        <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '50') !== false) ? 'selected' : ''; ?>>Advance 50%</option>
+                                        <option <?php echo (isset($partner['payment_terms']) && (strpos($partner['payment_terms'], 'Prepaid') !== false || strpos($partner['payment_terms'], 'Proforma') !== false)) ? 'selected' : ''; ?>>Prepaid / Proforma</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Sanctioned Credit Headroom (₹)</label>
-                                    <input type="number" value="<?php echo $is_new ? '200000' : '500000'; ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
+                                    <input type="number" value="<?php echo htmlspecialchars($partner['sanctioned_limit']); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
                                 </div>
                             </div>
                         </div>

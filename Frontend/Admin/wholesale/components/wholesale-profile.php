@@ -1,31 +1,20 @@
 <?php
 /**
  * wholesale-profile.php — DT Brand's & Jai Hanuman Tex
- * Master Luxury 360 Wholesale Partner Profile & Ambient Glass Hero Component
+ * Master Luxury 360 Wholesale Partner Profile & Ambient Glass Hero Component (100% Dynamic)
  */
-$wholesale = (isset($wholesale) && is_array($wholesale)) ? $wholesale : [
-    'id' => 'WHL-8012',
-    'name' => 'Shree Balaji Textile Emporium',
-    'legal_name' => 'Shree Balaji Silk Mills Pvt Ltd',
-    'contact' => 'Rameshwar Agarwal',
-    'email' => 'balaji.textiles.surat@gmail.com',
-    'phone' => '+91 98251 44321',
-    'city' => 'Surat, Gujarat',
-    'tier' => 'Platinum Wholesale (35% Off)',
-    'gstin' => '24AAAPL1234F1Z8',
-    'sanctioned_limit' => 500000,
-    'utilized_credit' => 210000,
-    'available_credit' => 290000,
-    'total_purchase' => 2450000,
-    'orders_count' => 64,
-    'payment_terms' => 'Net 30 Days',
-    'status' => 'Active',
-    'status_type' => 'approved',
-    'joined_date' => '14 Oct 2024'
-];
 
-$util_pct = round(($wholesale['utilized_credit'] / $wholesale['sanctioned_limit']) * 100, 1);
-$avail_pct = round(100 - $util_pct, 1);
+require_once __DIR__ . '/wholesale-data.php';
+
+$whl_id = isset($_GET['id']) ? $_GET['id'] : (isset($wholesale['id']) ? $wholesale['id'] : 'WHL-8012');
+$wholesale = getWholesalePartner($whl_id);
+
+$sanctioned = max(0, (float)$wholesale['sanctioned_limit']);
+$utilized = max(0, (float)$wholesale['utilized_credit']);
+$available = max(0, (float)$wholesale['available_credit']);
+
+$util_pct = $sanctioned > 0 ? round(($utilized / $sanctioned) * 100, 1) : 0;
+$avail_pct = $sanctioned > 0 ? round(100 - $util_pct, 1) : 100;
 ?>
 
 <div style="display:flex; flex-direction:column; gap:16px;">
@@ -34,12 +23,12 @@ $avail_pct = round(100 - $util_pct, 1);
         <div class="dt-wholesale-hero-top">
             <!-- Left Info Block -->
             <div style="display:flex; align-items:center; gap:14px;">
-                <div class="dt-wholesale-avatar-box">SB</div>
+                <div class="dt-wholesale-avatar-box"><?php echo htmlspecialchars($wholesale['initials']); ?></div>
                 <div>
                     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                         <h2 style="font-size:1.25rem; font-weight:900; color:#FFFFFF; margin:0;"><?php echo htmlspecialchars($wholesale['name']); ?></h2>
-                        <span class="dt-status-pill-clean gold">PLATINUM VIP</span>
-                        <span class="dt-status-pill-clean emerald">✓ VERIFIED KYC</span>
+                        <span class="dt-status-pill-clean <?php echo $wholesale['tier_badge']; ?>"><?php echo $wholesale['tier_short']; ?></span>
+                        <span class="dt-status-pill-clean <?php echo $wholesale['verification_badge']; ?>">✓ <?php echo strtoupper($wholesale['verification']); ?></span>
                     </div>
                     <div style="font-size:0.75rem; color:#F5ECCE; margin-top:3px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                         <span style="font-family:monospace; color:#FFE57F; font-weight:800;"><?php echo $wholesale['id']; ?></span>
@@ -60,8 +49,8 @@ $avail_pct = round(100 - $util_pct, 1);
                 </div>
                 <div class="dt-wholesale-stat-pill" style="border-color:rgba(134,239,172,0.4); background:rgba(21,128,61,0.15);">
                     <span style="font-size:0.65rem; color:#86EFAC; font-weight:800; text-transform:uppercase; display:block;">AVAILABLE CREDIT</span>
-                    <strong style="font-size:1.15rem; color:#86EFAC; font-weight:900;">₹<?php echo number_format($wholesale['available_credit']); ?></strong>
-                    <small style="font-size:0.68rem; color:#FFFFFF; display:block;"><?php echo $avail_pct; ?>% Headroom</small>
+                    <strong style="font-size:1.15rem; color:#86EFAC; font-weight:900;">₹<?php echo number_format($available); ?></strong>
+                    <small style="font-size:0.68rem; color:#FFFFFF; display:block;"><?php echo $sanctioned > 0 ? $avail_pct . '% Headroom' : 'Prepaid Account'; ?></small>
                 </div>
             </div>
         </div>
@@ -69,11 +58,11 @@ $avail_pct = round(100 - $util_pct, 1);
         <!-- 6px Progress Bar -->
         <div style="display:flex; flex-direction:column; gap:5px; border-top:1px solid rgba(212, 175, 55, 0.25); padding-top:10px;">
             <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.72rem;">
-                <span style="color:#F5ECCE; font-weight:700;">Revolving Credit Line: <strong style="color:#FFE57F;"><?php echo $util_pct; ?>% Utilized (₹<?php echo number_format($wholesale['utilized_credit']); ?> of ₹<?php echo number_format($wholesale['sanctioned_limit']); ?>)</strong></span>
+                <span style="color:#F5ECCE; font-weight:700;">Revolving Credit Line: <strong style="color:#FFE57F;"><?php echo $sanctioned > 0 ? $util_pct . '% Utilized (₹' . number_format($utilized) . ' of ₹' . number_format($sanctioned) . ')' : 'No Credit Facility Assigned (Prepaid / Proforma)'; ?></strong></span>
                 <span style="color:#86EFAC; font-weight:700;">Payment Terms: <strong><?php echo $wholesale['payment_terms']; ?></strong></span>
             </div>
             <div class="dt-wholesale-progress-wrap">
-                <div class="dt-wholesale-progress-bar" style="width:<?php echo $util_pct; ?>%;"></div>
+                <div class="dt-wholesale-progress-bar" style="width:<?php echo min(100, $util_pct); ?>%;"></div>
             </div>
         </div>
     </div>
@@ -94,7 +83,7 @@ $avail_pct = round(100 - $util_pct, 1);
         </button>
         <button type="button" class="dt-wholesale-tab-btn" onclick="switchWholesaleTab('orders', this)">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-            <span>Orders History (64)</span>
+            <span>Orders History (<?php echo $wholesale['orders_count']; ?>)</span>
         </button>
         <button type="button" class="dt-wholesale-tab-btn" onclick="switchWholesaleTab('pricing', this)">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
@@ -140,7 +129,7 @@ $avail_pct = round(100 - $util_pct, 1);
                             <strong style="color:#15803D; font-family:monospace;"><?php echo htmlspecialchars($wholesale['phone']); ?></strong>
                         </div>
                         <div style="display:flex; gap:8px; margin-top:4px;">
-                            <button type="button" class="dt-btn dt-btn-emerald dt-btn-sm" style="flex:1;" onclick="window.showToast('Connecting to WhatsApp...')">
+                            <button type="button" class="dt-btn dt-btn-emerald dt-btn-sm" style="flex:1;" onclick="window.showToast('Connecting to WhatsApp: <?php echo $wholesale['phone']; ?>')">
                                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#FFFFFF" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                 <span>WhatsApp</span>
                             </button>
@@ -152,17 +141,17 @@ $avail_pct = round(100 - $util_pct, 1);
                 <div class="dt-card" style="padding:16px;">
                     <h4 class="dt-card-title" style="margin-bottom:10px;">Account Standing</h4>
                     <div style="display:flex; flex-direction:column; gap:8px; font-size:0.75rem;">
-                        <div style="display:flex; justify-content:space-between;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="color:#78716C;">Registration Date:</span>
                             <strong style="color:#181512;"><?php echo $wholesale['joined_date']; ?></strong>
                         </div>
-                        <div style="display:flex; justify-content:space-between;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="color:#78716C;">Account Status:</span>
-                            <span class="dt-status-pill-clean emerald">✓ ACTIVE</span>
+                            <span class="dt-status-pill-clean <?php echo $wholesale['status_type'] === 'approved' ? 'emerald' : ($wholesale['status_type'] === 'pending' ? 'amber' : 'crimson'); ?>">✓ <?php echo strtoupper($wholesale['status']); ?></span>
                         </div>
-                        <div style="display:flex; justify-content:space-between;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="color:#78716C;">Assigned Tier:</span>
-                            <span class="dt-status-pill-clean gold">PLATINUM (35%)</span>
+                            <span class="dt-status-pill-clean <?php echo $wholesale['tier_badge']; ?>"><?php echo $wholesale['tier_short']; ?></span>
                         </div>
                     </div>
                 </div>
