@@ -239,7 +239,7 @@ $wholesalers = [
                     <th class="col-whl-verify" style="white-space:nowrap;">Verification</th>
                     <th class="col-whl-status" style="white-space:nowrap;">Status</th>
                     <th class="col-whl-activity" style="white-space:nowrap;">Last Activity</th>
-                    <th class="col-whl-actions" style="text-align:right; white-space:nowrap;">Actions</th>
+                    <th class="col-whl-actions" style="text-align:right; white-space:nowrap; padding-right:18px;">Actions</th>
                 </tr>
             </thead>
             <tbody id="wholesaleTableBody">
@@ -286,8 +286,8 @@ $wholesalers = [
                             </span>
                         </td>
                         <td class="col-whl-activity" style="color:#78716C; font-size:0.72rem; white-space:nowrap;"><?php echo $w['last_activity']; ?></td>
-                        <td class="col-whl-actions" style="text-align:right; white-space:nowrap;">
-                            <div style="display:flex; justify-content:flex-end; gap:6px;">
+                        <td class="col-whl-actions" style="text-align:right; white-space:nowrap; padding-right:18px;">
+                            <div style="display:flex; justify-content:flex-end; align-items:center; gap:6px;">
                                 <a href="/Frontend/Admin/wholesale/view.php?id=<?php echo $w['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm" title="View Profile">
                                     <span>View</span>
                                 </a>

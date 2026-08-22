@@ -109,18 +109,19 @@
     -webkit-overflow-scrolling: touch;
     position: relative;
     border-top: 1px solid #F1ECE1;
+    background: #FFFFFF;
 }
 
 .dt-wholesale-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.8rem;
-    min-width: 1100px;
+    table-layout: auto;
 }
 
 .dt-wholesale-table th,
 .dt-wholesale-table td {
-    padding: 10px 12px;
+    padding: 10px 14px;
     border-bottom: 1px solid #F1ECE1;
     vertical-align: middle;
     white-space: nowrap !important;
@@ -130,11 +131,79 @@
     background: #FAF8F4;
     color: #181512;
     font-weight: 800;
-    font-size: 0.74rem;
+    font-size: 0.73rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     text-align: left;
     border-bottom: 1.5px solid #EAE5D9;
+}
+
+.dt-wholesale-table th.col-whl-cb,
+.dt-wholesale-table td.col-whl-cb {
+    width: 1%;
+    text-align: center;
+    padding-left: 16px;
+    padding-right: 10px;
+}
+
+.dt-wholesale-table th.col-whl-name,
+.dt-wholesale-table td.col-whl-name {
+    min-width: 180px;
+}
+
+.dt-wholesale-table th.col-whl-contact,
+.dt-wholesale-table td.col-whl-contact {
+    min-width: 150px;
+}
+
+.dt-wholesale-table th.col-whl-tier,
+.dt-wholesale-table td.col-whl-tier {
+    min-width: 130px;
+}
+
+.dt-wholesale-table th.col-whl-orders,
+.dt-wholesale-table td.col-whl-orders {
+    min-width: 65px;
+    text-align: right;
+}
+
+.dt-wholesale-table th.col-whl-purchase,
+.dt-wholesale-table td.col-whl-purchase {
+    min-width: 120px;
+    text-align: right;
+}
+
+.dt-wholesale-table th.col-whl-terms,
+.dt-wholesale-table td.col-whl-terms {
+    min-width: 110px;
+}
+
+.dt-wholesale-table th.col-whl-credit,
+.dt-wholesale-table td.col-whl-credit {
+    min-width: 125px;
+}
+
+.dt-wholesale-table th.col-whl-verify,
+.dt-wholesale-table td.col-whl-verify {
+    min-width: 110px;
+}
+
+.dt-wholesale-table th.col-whl-status,
+.dt-wholesale-table td.col-whl-status {
+    min-width: 85px;
+}
+
+.dt-wholesale-table th.col-whl-activity,
+.dt-wholesale-table td.col-whl-activity {
+    min-width: 105px;
+}
+
+.dt-wholesale-table th.col-whl-actions,
+.dt-wholesale-table td.col-whl-actions {
+    width: 1%;
+    min-width: 140px;
+    text-align: right;
+    padding-right: 20px;
 }
 
 .dt-wholesale-table tbody tr:hover {
