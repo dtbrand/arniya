@@ -55,6 +55,34 @@ if (isset($active_nav) && !empty($active_nav)) {
 
 if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = $active_subnav;
+} elseif (strpos($req_uri, '/resellers/pending.php') !== false) {
+    $current_subnav = 'pending';
+} elseif (strpos($req_uri, '/resellers/approved.php') !== false) {
+    $current_subnav = 'approved';
+} elseif (strpos($req_uri, '/resellers/rejected.php') !== false) {
+    $current_subnav = 'rejected';
+} elseif (strpos($req_uri, '/resellers/suspended.php') !== false) {
+    $current_subnav = 'suspended';
+} elseif (strpos($req_uri, '/resellers/applications.php') !== false) {
+    $current_subnav = 'applications';
+} elseif (strpos($req_uri, '/resellers/verification.php') !== false) {
+    $current_subnav = 'verification';
+} elseif (strpos($req_uri, '/resellers/documents.php') !== false) {
+    $current_subnav = 'documents';
+} elseif (strpos($req_uri, '/resellers/pricing.php') !== false) {
+    $current_subnav = 'pricing';
+} elseif (strpos($req_uri, '/resellers/credit.php') !== false) {
+    $current_subnav = 'credit';
+} elseif (strpos($req_uri, '/resellers/commissions.php') !== false) {
+    $current_subnav = 'commissions';
+} elseif (strpos($req_uri, '/resellers/segments.php') !== false) {
+    $current_subnav = 'segments';
+} elseif (strpos($req_uri, '/resellers/analytics.php') !== false) {
+    $current_subnav = 'analytics';
+} elseif (strpos($req_uri, '/resellers/export.php') !== false) {
+    $current_subnav = 'export';
+} elseif (strpos($req_uri, '/resellers/') !== false) {
+    $current_subnav = 'all';
 } else {
     $current_subnav = '';
 }
@@ -376,11 +404,86 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-badge gold">VIP</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/Frontend/Admin/resellers/" class="adm-nav-item <?php echo $current_nav === 'resellers' ? 'active' : ''; ?>" id="navItem-resellers" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-partners')) { switchAdmTab('partners'); return false; }" data-title="Resellers Network">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <!-- RESELLERS WITH REAL SVG SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'resellers' ? 'open' : ''; ?>">
+                    <a href="/Frontend/Admin/resellers/" class="adm-nav-item <?php echo $current_nav === 'resellers' ? 'active' : ''; ?>" id="navItem-resellers" data-title="Resellers Network">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span class="adm-nav-label">Resellers</span>
+                        <span class="adm-nav-badge gold">348</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'resellers' ? 'open' : ''; ?>" id="admSubmenu-resellers">
+                        <li>
+                            <a href="/Frontend/Admin/resellers/" class="adm-nav-subitem <?php echo ($current_nav === 'resellers' && $current_subnav === 'all') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>All Resellers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                <span>Pending Applications</span>
+                                <span class="adm-nav-badge" style="background:#FEF3C7; color:#B45309;">24</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/approved.php" class="adm-nav-subitem <?php echo $current_subnav === 'approved' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span>Approved Partners</span>
+                                <span class="adm-nav-badge green">296</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/verification.php" class="adm-nav-subitem <?php echo $current_subnav === 'verification' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <span>KYC &amp; Verification</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/documents.php" class="adm-nav-subitem <?php echo $current_subnav === 'documents' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Document Vault</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/pricing.php" class="adm-nav-subitem <?php echo $current_subnav === 'pricing' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>Tiered Pricing &amp; MOQ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/credit.php" class="adm-nav-subitem <?php echo $current_subnav === 'credit' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                <span>Credit &amp; Wallet Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/commissions.php" class="adm-nav-subitem <?php echo $current_subnav === 'commissions' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                <span>Commissions &amp; Payouts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/segments.php" class="adm-nav-subitem <?php echo $current_subnav === 'segments' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Segments &amp; Cohorts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/analytics.php" class="adm-nav-subitem <?php echo $current_subnav === 'analytics' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                <span>Analytics &amp; GMV</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/resellers/export.php" class="adm-nav-subitem <?php echo $current_subnav === 'export' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export Studio</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/Frontend/Admin/retailers/" class="adm-nav-item <?php echo $current_nav === 'retailers' ? 'active' : ''; ?>" id="navItem-retailers" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-partners')) { switchAdmTab('partners'); return false; }" data-title="Retailer Accounts">
