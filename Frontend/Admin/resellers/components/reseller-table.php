@@ -1,6 +1,6 @@
 <?php
 /**
- * reseller-table.php — High-Density Responsive Reseller Master Table
+ * reseller-table.php — High-Density Responsive Reseller Master Table with Column Toggling
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 
@@ -151,24 +151,24 @@ $resellers_data = [
     <table class="dt-cust-table" id="dtResellersMasterTable">
         <thead>
             <tr>
-                <th style="width:36px; text-align:center;">
+                <th class="col-checkbox" style="width:36px; text-align:center;">
                     <input type="checkbox" id="dtResellerSelectAll" onchange="toggleAllResellerCheckboxes(this)" title="Select All Resellers">
                 </th>
-                <th class="sortable" onclick="handleResellerSort({value:'name-asc'})">
+                <th class="col-profile sortable" onclick="handleResellerSort({value:'name-asc'})">
                     RESELLER PROFILE ↕
                 </th>
-                <th>CONTACT DETAILS</th>
-                <th>TIER &amp; MARGIN</th>
-                <th style="text-align:center;" class="sortable" onclick="handleResellerSort({value:'orders-high'})">
+                <th class="col-contact">CONTACT DETAILS</th>
+                <th class="col-tier">TIER &amp; MARGIN</th>
+                <th class="col-orders sortable" style="text-align:center;" onclick="handleResellerSort({value:'orders-high'})">
                     ORDERS ↕
                 </th>
-                <th class="sortable" onclick="handleResellerSort({value:'purchase-high'})">
+                <th class="col-gmv sortable" onclick="handleResellerSort({value:'purchase-high'})">
                     LIFETIME GMV ↕
                 </th>
-                <th>LAST ORDER</th>
-                <th>JOINED DATE</th>
-                <th>STATUS</th>
-                <th style="text-align:right;">QUICK ACTIONS</th>
+                <th class="col-lastorder">LAST ORDER</th>
+                <th class="col-joined">JOINED DATE</th>
+                <th class="col-status">STATUS</th>
+                <th class="col-actions" style="text-align:right; min-width:110px; padding-right:14px;">QUICK ACTIONS</th>
             </tr>
         </thead>
         <tbody>
@@ -182,12 +182,12 @@ $resellers_data = [
                     data-joined="<?php echo $r['joined']; ?>"
                     data-search="<?php echo htmlspecialchars($r['id'] . ' ' . $r['name'] . ' ' . $r['biz_name'] . ' ' . $r['contact'] . ' ' . $r['email'] . ' ' . $r['phone'] . ' ' . $r['city'] . ' ' . $r['tier'] . ' ' . $r['status']); ?>">
                     
-                    <td style="text-align:center;">
+                    <td class="col-checkbox" style="text-align:center;">
                         <input type="checkbox" class="dt-reseller-row-checkbox" value="<?php echo $r['id']; ?>" onchange="handleRowCheckboxChange()" style="cursor:pointer;">
                     </td>
 
                     <!-- Reseller Profile -->
-                    <td>
+                    <td class="col-profile">
                         <div class="dt-cust-avatar-cell">
                             <div class="dt-cust-avatar <?php echo $r['avatar_color']; ?>">
                                 <?php echo $r['initials']; ?>
@@ -209,27 +209,27 @@ $resellers_data = [
                     </td>
 
                     <!-- Contact Details -->
-                    <td>
+                    <td class="col-contact">
                         <div style="font-weight:700; color:#181512; font-size:0.76rem;"><?php echo htmlspecialchars($r['phone']); ?></div>
                         <div style="color:#78716C; font-size:0.7rem;"><?php echo htmlspecialchars($r['email']); ?></div>
                     </td>
 
                     <!-- Tier & Margin -->
-                    <td>
+                    <td class="col-tier">
                         <span class="dt-reseller-badge <?php echo $r['tier_class']; ?>" style="font-size:0.7rem;">
                             <?php echo $r['tier']; ?> (<?php echo $r['tier_margin']; ?>)
                         </span>
                     </td>
 
                     <!-- Orders -->
-                    <td style="text-align:center; font-weight:800; color:#181512;">
+                    <td class="col-orders" style="text-align:center; font-weight:800; color:#181512;">
                         <a href="/Frontend/Admin/resellers/orders.php?reseller_id=<?php echo $r['id']; ?>" style="color:#181512; text-decoration:none;">
                             <?php echo $r['orders']; ?> Orders
                         </a>
                     </td>
 
                     <!-- Lifetime GMV -->
-                    <td>
+                    <td class="col-gmv">
                         <div style="font-weight:900; color:#181512; font-size:0.82rem;">
                             ₹<?php echo number_format($r['purchase']); ?>
                         </div>
@@ -239,17 +239,17 @@ $resellers_data = [
                     </td>
 
                     <!-- Last Order -->
-                    <td style="color:#181512; font-weight:600; font-size:0.72rem;">
+                    <td class="col-lastorder" style="color:#181512; font-weight:600; font-size:0.72rem;">
                         <?php echo $r['last_order']; ?>
                     </td>
 
                     <!-- Joined Date -->
-                    <td style="color:#78716C; font-size:0.72rem;">
+                    <td class="col-joined" style="color:#78716C; font-size:0.72rem;">
                         <?php echo $r['joined']; ?>
                     </td>
 
                     <!-- Status -->
-                    <td>
+                    <td class="col-status">
                         <?php if ($r['status'] === 'Active'): ?>
                             <span class="dt-reseller-badge emerald">● Active</span>
                         <?php elseif ($r['status'] === 'Pending'): ?>
@@ -262,7 +262,7 @@ $resellers_data = [
                     </td>
 
                     <!-- Quick Actions -->
-                    <td style="text-align:right;">
+                    <td class="col-actions" style="text-align:right; padding-right:14px;">
                         <div style="display:inline-flex; align-items:center; justify-content:flex-end; gap:6px;">
                             <!-- WhatsApp 1-Click Action -->
                             <a href="https://wa.me/<?php echo str_replace(['+', ' '], '', $r['phone']); ?>?text=Namaste%20<?php echo urlencode($r['name']); ?>%20ji,%20greetings%20from%20DT%20Brand's%20Wholesale%20Hub!" 

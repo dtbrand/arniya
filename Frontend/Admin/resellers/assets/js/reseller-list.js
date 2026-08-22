@@ -1,6 +1,6 @@
 /**
  * reseller-list.js — DT Brand's & Jai Hanuman Tex
- * Real-time Debounced Search, Multi-Filter Pipeline, Column Sorting, Row Selection, Filter Show/Hide & Pagination
+ * Real-time Debounced Search, Multi-Filter Pipeline, Column Sorting, Row Selection, Filter Show/Hide, Visible Columns Toggle & Pagination
  */
 
 (function () {
@@ -42,6 +42,73 @@
 
         window.showToast(isStatsHidden ? 'Overview & Filter Strip Hidden' : 'Overview & Filter Strip Visible');
     };
+
+    // ── Toggle Visible Columns Dropdown ──
+    window.toggleResellerColumnMenu = function (event) {
+        if (event) event.stopPropagation();
+        const menu = document.getElementById('dtResellerColumnMenu');
+        if (!menu) return;
+        const isVisible = menu.style.display === 'block';
+        menu.style.display = isVisible ? 'none' : 'block';
+    };
+
+    window.toggleResellerColumn = function (colClass, isChecked) {
+        const cells = document.querySelectorAll('.' + colClass);
+        cells.forEach(c => c.style.display = isChecked ? '' : 'none');
+
+        // Persist in localStorage
+        try {
+            const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_reseller_cols') || '{}');
+            hiddenCols[colClass] = !isChecked;
+            localStorage.setItem('dt_hidden_reseller_cols', JSON.stringify(hiddenCols));
+        } catch (e) {}
+
+        const cleanName = colClass.replace('col-', '').toUpperCase();
+        window.showToast(isChecked ? '👁️ ' + cleanName + ' column visible' : '🙈 ' + cleanName + ' column hidden');
+    };
+
+    window.resetAllResellerColumns = function () {
+        try {
+            localStorage.removeItem('dt_hidden_reseller_cols');
+        } catch (e) {}
+
+        const checkboxes = document.querySelectorAll('#dtResellerColumnMenu input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            cb.checked = true;
+            const colClass = cb.dataset.col;
+            if (colClass) {
+                const cells = document.querySelectorAll('.' + colClass);
+                cells.forEach(c => c.style.display = '');
+            }
+        });
+
+        window.showToast('✅ All columns restored to default');
+    };
+
+    function restoreResellerColumnPreferences() {
+        try {
+            const hiddenCols = JSON.parse(localStorage.getItem('dt_hidden_reseller_cols') || '{}');
+            Object.keys(hiddenCols).forEach(colClass => {
+                if (hiddenCols[colClass]) {
+                    const cb = document.querySelector(`#dtResellerColumnMenu input[data-col="${colClass}"]`);
+                    if (cb) cb.checked = false;
+                    const cells = document.querySelectorAll('.' + colClass);
+                    cells.forEach(c => c.style.display = 'none');
+                }
+            });
+        } catch (e) {}
+    }
+
+    // Auto-close Column dropdown on outside click
+    document.addEventListener('click', function (e) {
+        const menu = document.getElementById('dtResellerColumnMenu');
+        const btn = document.getElementById('btnToggleResellerCols');
+        if (menu && menu.style.display === 'block') {
+            if (!menu.contains(e.target) && !btn?.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        }
+    });
 
     // ── Real-Time Debounced Search ──
     let searchTimeout = null;
@@ -229,5 +296,10 @@
         if (master) master.checked = false;
         updateBulkActionBar();
     };
+
+    // Initialize Preferences
+    document.addEventListener('DOMContentLoaded', () => {
+        restoreResellerColumnPreferences();
+    });
 
 })();
