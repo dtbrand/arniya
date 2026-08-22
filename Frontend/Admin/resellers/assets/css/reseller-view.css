@@ -107,7 +107,7 @@
 .dt-reseller-tab-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     padding: 8px 14px;
     border-radius: 8px 8px 0 0;
     font-size: 0.78rem;
@@ -117,6 +117,16 @@
     white-space: nowrap;
     transition: all 0.15s ease;
     border-bottom: 2.5px solid transparent;
+    cursor: pointer;
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.dt-reseller-tab-link svg {
+    color: #8A681F;
+    flex-shrink: 0;
 }
 
 .dt-reseller-tab-link:hover {
