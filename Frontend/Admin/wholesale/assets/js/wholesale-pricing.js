@@ -14,9 +14,9 @@
 
         // Update Tab Active State
         if (btnElement) {
-            const parent = btnElement.closest('.dt-wholesale-tabs-nav');
+            const parent = btnElement.closest('.dt-pricing-tier-pills-wrap') || btnElement.closest('.dt-wholesale-tabs-nav');
             if (parent) {
-                parent.querySelectorAll('.dt-wholesale-tab-btn').forEach(b => b.classList.remove('active'));
+                parent.querySelectorAll('.dt-pricing-tier-btn, .dt-wholesale-tab-btn').forEach(b => b.classList.remove('active'));
                 btnElement.classList.add('active');
             }
         }

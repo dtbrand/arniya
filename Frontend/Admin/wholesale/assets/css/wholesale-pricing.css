@@ -1,52 +1,188 @@
 /**
  * wholesale-pricing.css — DT Brand's & Jai Hanuman Tex
- * Tier Pricing Matrix, Category Margins & SKU Price Overrides
+ * Luxury Tier Pricing Matrix, Segmented Controls, Dynamic Simulator & KPI Ribbon
  */
 
-.dt-pricing-grid {
+/* ══ 4-CARD PRICING KPI RIBBON ══ */
+.dt-pricing-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    width: 100%;
 }
 
-.dt-pricing-tier-card {
-    background: #FAF8F4;
+@media (max-width: 1024px) {
+    .dt-pricing-kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .dt-pricing-kpi-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+}
+
+.dt-pricing-kpi-card {
+    background: #FFFFFF;
     border: 1.5px solid #EAE5D9;
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: all 0.2s ease;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.dt-pricing-tier-card:hover {
-    background: #FFFFFF;
+.dt-pricing-kpi-card:hover {
     border-color: #D4AF37;
-    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.12);
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(184, 134, 11, 0.14);
 }
 
-.dt-pricing-tier-card.featured {
-    background: #FFFFFF;
-    border-color: #8A681F;
-    box-shadow: 0 0 0 1.5px #D4AF37, 0 6px 20px rgba(184, 134, 11, 0.15);
+.dt-pricing-kpi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.dt-discount-tag {
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: #15803D;
-    line-height: 1;
+.dt-pricing-kpi-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
-.dt-fabric-margin-pill {
+.dt-pricing-kpi-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background: #FAF8F4;
-    border: 1px solid #EAE5D9;
-    border-radius: 8px;
-    font-size: 0.76rem;
+    justify-content: center;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
 }
+
+.dt-pricing-kpi-icon.emerald {
+    background: #DCFCE7;
+    color: #15803D;
+    border-color: #86EFAC;
+}
+
+.dt-pricing-kpi-icon.blue {
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border-color: #BFDBFE;
+}
+
+.dt-pricing-kpi-val {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #111827;
+    line-height: 1.1;
+}
+
+.dt-pricing-kpi-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #78716C;
+}
+
+/* ══ LUXURY TIER SEGMENTED TAB PILLS ══ */
+.dt-pricing-tier-pills-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dt-pricing-tier-btn {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    color: #44403C;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.dt-pricing-tier-btn:hover {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(184, 134, 11, 0.12);
+}
+
+.dt-pricing-tier-btn.active {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%) !important;
+    border-color: #8A681F !important;
+    color: #FFE57F !important;
+    font-weight: 800 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+.dt-pricing-tier-btn.active svg {
+    stroke: #FFE57F !important;
+}
+
+/* ══ SIMULATOR LUXURY RESULT CARD ══ */
+.dt-sim-result-box {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border: 1.5px solid #D4AF37;
+    border-radius: 10px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+}
+
+.dt-sim-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dt-sim-label {
+    font-size: 0.65rem;
+    color: #F5ECCE;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-sim-val {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #FFFFFF;
+}
+
+.dt-sim-val.gold {
+    color: #FFE57F;
+}
+
+.dt-sim-val.green {
+    color: #86EFAC;
+}
+
