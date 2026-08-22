@@ -296,109 +296,109 @@ $reseller = [
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
-     👑 REAL OFFICIAL FULL-PAGE A4 PRINTABLE CERTIFICATE TEMPLATE
+     👑 REAL OFFICIAL FULL-PAGE A4 PRINTABLE CERTIFICATE TEMPLATE (STRICT 1-PAGE)
 ══════════════════════════════════════════════════════════════ -->
 <div id="dtPrintableCertificate" style="display:none;">
-    <div style="border: 2.5px solid #8A681F; padding: 28px 32px; border-radius: 10px; position: relative; background: #FFFFFF; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;">
+    <div class="dt-print-inner" style="border: 2px solid #8A681F; padding: 18px 22px; border-radius: 8px; position: relative; background: #FFFFFF; font-family: 'Inter', 'Plus Jakarta Sans', sans-serif; box-sizing: border-box;">
         
         <!-- Official Header with DT Brand's & Jai Hanuman Tex Branding -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8A681F; padding-bottom: 18px; margin-bottom: 22px;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-                <div style="width: 52px; height: 52px; border-radius: 8px; background: #8A681F; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 900;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #8A681F; padding-bottom: 12px; margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 44px; height: 44px; border-radius: 6px; background: #8A681F; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; font-weight: 900; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                     DT
                 </div>
                 <div>
-                    <h2 style="font-size: 1.35rem; font-weight: 900; color: #181512; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
-                    <p style="font-size: 0.76rem; color: #5A4210; margin: 2px 0 0 0; font-weight: 700;">Wholesale Textile B2B Network • Surat, Gujarat, India • ISO 9001:2015 Verified</p>
+                    <h2 style="font-size: 1.15rem; font-weight: 900; color: #181512; margin: 0; text-transform: uppercase; letter-spacing: 0.02em;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
+                    <p style="font-size: 0.72rem; color: #5A4210; margin: 2px 0 0 0; font-weight: 700;">Wholesale Textile B2B Network • Surat, Gujarat, India • ISO 9001:2015 Verified</p>
                 </div>
             </div>
             <div style="text-align: right;">
-                <div style="background: #FAF5E8; border: 1.5px solid #8A681F; color: #8A681F; font-size: 0.75rem; font-weight: 800; padding: 5px 12px; border-radius: 6px; display: inline-block; text-transform: uppercase;">
+                <div style="background: #FAF5E8; border: 1.5px solid #8A681F; color: #8A681F; font-size: 0.7rem; font-weight: 800; padding: 3px 10px; border-radius: 5px; display: inline-block; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                     Official KYC Certificate
                 </div>
-                <div style="font-size: 0.72rem; color: #78716C; margin-top: 5px; font-family: monospace; font-weight: 700;">DOC REF: <span id="printCertDocRef">DOC-401</span></div>
+                <div style="font-size: 0.68rem; color: #78716C; margin-top: 3px; font-family: monospace; font-weight: 700;">DOC REF: <span id="printCertDocRef">DOC-401</span></div>
             </div>
         </div>
 
         <!-- Document Title Banner -->
-        <div style="background: #FDFBF7; border: 1.5px solid #EAE5D9; border-radius: 8px; padding: 14px 20px; margin-bottom: 22px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background: #FDFBF7; border: 1.2px solid #EAE5D9; border-radius: 6px; padding: 10px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
             <div>
-                <span style="font-size: 0.7rem; color: #78716C; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">VERIFIED B2B CERTIFICATE:</span>
-                <h3 id="printCertDocTitle" style="font-size: 1.15rem; font-weight: 900; color: #181512; margin: 3px 0 0 0;">GST Registration Certificate (REG-06)</h3>
+                <span style="font-size: 0.65rem; color: #78716C; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">VERIFIED B2B CERTIFICATE:</span>
+                <h3 id="printCertDocTitle" style="font-size: 1rem; font-weight: 900; color: #181512; margin: 1px 0 0 0;">GST Registration Certificate (REG-06)</h3>
             </div>
-            <div style="background: #DCFCE7; color: #15803D; border: 1.5px solid #86EFAC; font-size: 0.82rem; font-weight: 900; padding: 6px 14px; border-radius: 6px;">
+            <div style="background: #DCFCE7; color: #15803D; border: 1.2px solid #86EFAC; font-size: 0.75rem; font-weight: 900; padding: 4px 10px; border-radius: 5px; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                 ✓ 100% VERIFIED &amp; AUTHENTIC
             </div>
         </div>
 
         <!-- 2-Column Details Table -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
             <!-- Partner Identity Details -->
-            <div style="border: 1.5px solid #EAE5D9; border-radius: 8px; padding: 16px;">
-                <div style="font-size: 0.78rem; font-weight: 800; color: #8A681F; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px dashed #E2DFD7; padding-bottom: 6px;">
+            <div style="border: 1.2px solid #EAE5D9; border-radius: 6px; padding: 12px;">
+                <div style="font-size: 0.72rem; font-weight: 800; color: #8A681F; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px dashed #E2DFD7; padding-bottom: 4px;">
                     Reseller Business Details
                 </div>
-                <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
+                <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Partner Name:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 800; text-align: right;" id="printCertPartnerName">Shree Krishna Sarees &amp; Boutique</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Partner Name:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 800; text-align: right;" id="printCertPartnerName">Shree Krishna Sarees &amp; Boutique</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Reseller ID:</td>
-                        <td style="color: #8A681F; padding: 5px 0; font-weight: 800; font-family: monospace; text-align: right;">RES-1048</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Reseller ID:</td>
+                        <td style="color: #8A681F; padding: 3px 0; font-weight: 800; font-family: monospace; text-align: right;">RES-1048</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Proprietor / Contact:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 700; text-align: right;">Rameshwar Vyas</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Proprietor / Contact:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 700; text-align: right;">Rameshwar Vyas</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Registered City / Hub:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 700; text-align: right;">Surat, Gujarat</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Registered City / Hub:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 700; text-align: right;">Surat, Gujarat</td>
                     </tr>
                 </table>
             </div>
 
             <!-- Verification & Compliance Audit -->
-            <div style="border: 1.5px solid #EAE5D9; border-radius: 8px; padding: 16px;">
-                <div style="font-size: 0.78rem; font-weight: 800; color: #8A681F; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px dashed #E2DFD7; padding-bottom: 6px;">
+            <div style="border: 1.2px solid #EAE5D9; border-radius: 6px; padding: 12px;">
+                <div style="font-size: 0.72rem; font-weight: 800; color: #8A681F; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px dashed #E2DFD7; padding-bottom: 4px;">
                     Compliance &amp; Verification Audit
                 </div>
-                <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
+                <table style="width: 100%; font-size: 0.75rem; border-collapse: collapse;">
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Govt Reference No:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 800; font-family: monospace; text-align: right;" id="printCertGovtRef">24AAAPL1234F1Z8</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Govt Reference No:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 800; font-family: monospace; text-align: right;" id="printCertGovtRef">24AAAPL1234F1Z8</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Digital SHA-256 Hash:</td>
-                        <td style="color: #15803D; padding: 5px 0; font-weight: 800; font-family: monospace; font-size: 0.72rem; text-align: right;">a94f8e31c79802d</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Digital SHA-256 Hash:</td>
+                        <td style="color: #15803D; padding: 3px 0; font-weight: 800; font-family: monospace; font-size: 0.68rem; text-align: right;">a94f8e31c79802d</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Verified By Officer:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 700; text-align: right;">Gautam Sethi (Chief Compliance)</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Verified By Officer:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 700; text-align: right;">Gautam Sethi (Chief Compliance)</td>
                     </tr>
                     <tr>
-                        <td style="color: #78716C; padding: 5px 0; font-weight: 600;">Verification Date:</td>
-                        <td style="color: #181512; padding: 5px 0; font-weight: 700; text-align: right;" id="printCertDate">12 Nov 2025</td>
+                        <td style="color: #78716C; padding: 3px 0; font-weight: 600;">Verification Date:</td>
+                        <td style="color: #181512; padding: 3px 0; font-weight: 700; text-align: right;" id="printCertDate">12 Nov 2025</td>
                     </tr>
                 </table>
             </div>
         </div>
 
         <!-- Official Sign-off & Stamp Section -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1.5px dashed #D4AF37; padding-top: 20px; margin-top: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1.2px dashed #D4AF37; padding-top: 12px; margin-top: 14px;">
             <div>
-                <div style="font-size: 0.72rem; color: #78716C; font-weight: 600; line-height: 1.5; max-width: 360px;">
+                <div style="font-size: 0.68rem; color: #78716C; font-weight: 600; line-height: 1.4; max-width: 340px;">
                     This certificate is an official verification record generated by DT Brand's &amp; Jai Hanuman Tex B2B Compliance Engine. Valid for authorized reseller procurement, revolving credit, and wholesale catalog distribution.
                 </div>
             </div>
             <div style="text-align: center;">
-                <div style="width: 86px; height: 86px; border: 2.5px solid #8A681F; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #8A681F; font-size: 0.62rem; font-weight: 900; text-transform: uppercase; margin: 0 auto 6px auto; transform: rotate(-8deg);">
+                <div style="width: 68px; height: 68px; border: 2px solid #8A681F; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #8A681F; font-size: 0.55rem; font-weight: 900; text-transform: uppercase; margin: 0 auto 4px auto; transform: rotate(-8deg); -webkit-print-color-adjust: exact; print-color-adjust: exact;">
                     <span>★ VERIFIED ★</span>
-                    <span style="font-size: 0.8rem; color: #15803D; font-weight: 900;">APPROVED</span>
+                    <span style="font-size: 0.72rem; color: #15803D; font-weight: 900;">APPROVED</span>
                     <span>DT BRAND'S</span>
                 </div>
-                <div style="font-size: 0.78rem; font-weight: 800; color: #181512;">Authorized Compliance Signatory</div>
-                <div style="font-size: 0.7rem; color: #78716C;">Surat Hub HQ, Gujarat</div>
+                <div style="font-size: 0.74rem; font-weight: 800; color: #181512;">Authorized Compliance Signatory</div>
+                <div style="font-size: 0.65rem; color: #78716C;">Surat Hub HQ, Gujarat</div>
             </div>
         </div>
     </div>
