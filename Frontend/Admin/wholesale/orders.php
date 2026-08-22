@@ -23,6 +23,7 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -83,5 +84,6 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
 </div>
 
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/wholesale/assets/js/wholesale-orders.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

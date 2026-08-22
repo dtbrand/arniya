@@ -304,6 +304,7 @@ $wholesale = getWholesalePartner($whl_id);
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-view.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-credit.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-pricing.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/wholesale/assets/js/wholesale-orders.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
 
