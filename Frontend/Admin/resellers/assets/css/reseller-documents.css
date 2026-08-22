@@ -1,6 +1,6 @@
 /**
  * reseller-documents.css — DT Brand's & Jai Hanuman Tex
- * KYC Document Vault, 2x2 Balanced Verification Grid & Next-Level Document Viewer
+ * KYC Document Vault, 2x2 Balanced Verification Grid, Next-Level Document Viewer & Clean A4 Print Engine
  */
 
 .dt-docs-grid {
@@ -107,4 +107,67 @@
     padding-top: 12px;
     flex-wrap: wrap;
     gap: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   👑 REAL OFFICIAL A4 PRINT MEDIA ENGINE
+══════════════════════════════════════════════════════════════ */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 8mm 10mm;
+    }
+
+    html, body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    /* Hide ALL screen UI elements */
+    .adm-sidebar, 
+    .adm-header, 
+    .adm-footer, 
+    .adm-nav,
+    .dt-modal-backdrop, 
+    .dt-cust-head, 
+    .dt-hero-luxury-card, 
+    .dt-card, 
+    .dt-customers-container, 
+    .dt-resellers-container,
+    .adm-layout,
+    .adm-main,
+    main.adm-content {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+
+    /* Show ONLY official printable document */
+    #dtPrintableCertificate,
+    #dtPrintableCertificate * {
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    #dtPrintableCertificate {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        background: #FFFFFF !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+    }
+
+    #dtPrintableCertificate .dt-print-inner {
+        display: block !important;
+    }
 }

@@ -1,6 +1,6 @@
 /**
  * reseller-documents.js — DT Brand's & Jai Hanuman Tex
- * High-Res Document Previewer, Drag & Drop Replacement, and Vault Operations
+ * High-Res Document Previewer, Drag & Drop Replacement, Vault Operations & Real A4 Print Engine
  */
 
 (function () {
@@ -18,6 +18,37 @@
 
         const modal = document.getElementById('dtPreviewDocModal');
         if (modal) modal.style.display = 'flex';
+    };
+
+    // ── Real Official A4 Certificate Print Engine ──
+    window.printCurrentDoc = function () {
+        const title = currentPreviewDoc ? currentPreviewDoc.title : 'GST Registration Certificate (REG-06)';
+        const identifier = currentPreviewDoc ? currentPreviewDoc.identifier : '24AAAPL1234F1Z8';
+        const docId = currentPreviewDoc ? currentPreviewDoc.id : 'DOC-401';
+
+        // Populate Printable Certificate
+        const titleEl = document.getElementById('printCertDocTitle');
+        const refEl = document.getElementById('printCertDocRef');
+        const govtRefEl = document.getElementById('printCertGovtRef');
+        const dateEl = document.getElementById('printCertDate');
+
+        if (titleEl) titleEl.innerText = title;
+        if (refEl) refEl.innerText = docId;
+        if (govtRefEl) govtRefEl.innerText = identifier;
+        if (dateEl) {
+            dateEl.innerText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        const cert = document.getElementById('dtPrintableCertificate');
+        if (cert) {
+            cert.style.display = 'block';
+        }
+
+        window.print();
+
+        setTimeout(() => {
+            if (cert) cert.style.display = 'none';
+        }, 1000);
     };
 
     // ── Download Current Doc ──
@@ -85,6 +116,12 @@
     // ── Open Upload New Document Modal ──
     window.openUploadNewDocModal = function () {
         window.openReplaceDocModal('DOC-401', 'Additional Business Certificate / Lease Deed');
+    };
+
+    // ── Close Modals Helper ──
+    window.closeKycModal = function (modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) modal.style.display = 'none';
     };
 
 })();
