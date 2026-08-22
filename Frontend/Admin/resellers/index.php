@@ -39,10 +39,6 @@ $active_filter = "all";
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage DT Brand's authorized resellers, KYC verification, tiered margins, revolving credit lines, and 1-click WhatsApp connect.</p>
                     </div>
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <button type="button" class="dt-btn dt-btn-pale" onclick="toggleResellerStatsAndFilters()" title="Hide / Show KPI Cards & Filter Strip">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span>Toggle Overview</span>
-                        </button>
                         <button type="button" class="dt-btn dt-btn-pale" onclick="window.location.reload();">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                             <span>Refresh</span>
