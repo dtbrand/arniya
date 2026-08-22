@@ -93,10 +93,7 @@ if (!headers_sent()) {
     <!-- ══ Mobile Full-Header Search Bar Overlay (Exact Shop Page Header Style) ══ -->
     <div class="adm-mobile-full-search-bar" id="admMobileFullSearchBar">
         <div class="adm-mobile-search-input-wrap">
-            <button type="button" class="adm-mobile-search-submit-icon-btn" onclick="if(typeof window.executeGlobalSearch==='function') window.executeGlobalSearch(document.getElementById('admMobileGlobalSearch').value)">
-                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-            <input type="text" id="admMobileGlobalSearch" class="adm-mobile-search-input-field" placeholder="Search orders, sarees, customers, SKUs..." autocomplete="off">
+            <input type="text" id="admMobileGlobalSearch" class="adm-mobile-search-input-field" placeholder="Search orders, sarees, customers, SKUs..." autocomplete="off" style="padding-left:14px;">
             <button type="button" id="admMobileGlobalSearchClear" class="adm-mobile-search-clear-btn" title="Clear Search">✕</button>
         </div>
         <button type="button" class="adm-mobile-search-close-btn" onclick="window.closeAdmMobileSearch()" title="Close Search">

@@ -1618,24 +1618,20 @@ svg.adm-search-icon {
 }
 
 .adm-mobile-search-submit-icon-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #8A681F;
-    flex-shrink: 0;
+    display: none !important;
 }
 
-.adm-mobile-search-submit-icon-btn svg {
-    width: 15px;
-    height: 15px;
-    stroke: currentColor;
-    stroke-width: 2.3;
-    fill: none;
+.adm-mobile-search-input-field {
+    flex: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0 28px 0 14px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #181512;
 }
 
 .adm-mobile-search-input-field {
@@ -3299,7 +3295,7 @@ svg.adm-search-icon {
         font-weight: 800 !important;
     }
 
-    /* Center Elevated Master Gold Orb */
+    /* 👑 Center Elevated Master Gold FAB (Quick Add Product Action) */
     .adm-dock-center-btn {
         display: flex !important;
         flex-direction: column !important;
@@ -3308,63 +3304,37 @@ svg.adm-search-icon {
         text-decoration: none !important;
         flex: 1 !important;
         position: relative !important;
-        top: -12px !important;
+        top: -15px !important;
     }
 
     .adm-dock-orb {
-        width: 46px !important;
-        height: 46px !important;
+        width: 48px !important;
+        height: 48px !important;
         border-radius: 50% !important;
-        background: linear-gradient(135deg, #15803D 0%, #16A34A 50%, #22C55E 100%) !important;
-        border: 2.5px solid #FAF5E8 !important;
-        color: #FFFFFF !important;
+        background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+        border: 2px solid #8A681F !important;
+        color: #111827 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        box-shadow: 0 4px 16px rgba(22, 163, 74, 0.45), 0 0 10px rgba(212, 175, 55, 0.35) !important;
-        animation: admOrbPulse 2.8s infinite ease-in-out !important;
-        transition: transform 0.25s ease !important;
+        box-shadow: 0 6px 20px rgba(184, 134, 11, 0.48), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease !important;
     }
 
     .adm-dock-plus-svg {
-        stroke: #FFFFFF !important;
-        animation: admPlusGlow 3.5s infinite ease-in-out !important;
-    }
-
-    @keyframes admOrbPulse {
-        0%, 100% {
-            transform: translateY(0) scale(1);
-            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.45), 0 0 8px rgba(212, 175, 55, 0.35);
-        }
-        50% {
-            transform: translateY(-3px) scale(1.06);
-            box-shadow: 0 8px 22px rgba(22, 163, 74, 0.65), 0 0 16px rgba(212, 175, 55, 0.6);
-        }
-    }
-
-    @keyframes admPlusGlow {
-        0%, 100% {
-            transform: rotate(0deg);
-        }
-        50% {
-            transform: rotate(90deg);
-        }
+        stroke: #111827 !important;
+        stroke-width: 2.8 !important;
+        width: 22px !important;
+        height: 22px !important;
     }
 
     .adm-dock-orb:hover, .adm-dock-orb:active {
-        transform: scale(1.14) translateY(-4px) !important;
+        transform: scale(1.1) translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(184, 134, 11, 0.65) !important;
     }
 
     .adm-dock-center-label {
-        font-size: 10.5px !important;
-        font-weight: 800 !important;
-        font-family: 'Cinzel', 'Plus Jakarta Sans', serif, sans-serif !important;
-        letter-spacing: 0.06em !important;
-        text-transform: uppercase !important;
-        background: linear-gradient(135deg, #8A681F 0%, #D4AF37 35%, #16A34A 70%, #15803D 100%) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        margin-top: 3px !important;
+        display: none !important;
     }
 
     .adm-dock-live-dot {
