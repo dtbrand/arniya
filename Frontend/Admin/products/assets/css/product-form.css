@@ -114,8 +114,8 @@
     display: inline-flex;
     align-items: center;
     gap: 3px;
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
     font-size: 9.5px;
     font-weight: 800;
     padding: 2px 7px;
@@ -192,8 +192,8 @@
 }
 
 .dt-media-pill-btn.gold {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
 }
 
 .dt-media-pill-btn.danger {
@@ -243,8 +243,8 @@
 }
 
 .dt-btn-action-sm.gold {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
     border-color: #8A681F;
     box-shadow: 0 2px 6px rgba(212,175,55,0.3);
 }
@@ -496,8 +496,8 @@
 }
 
 .dt-gaction-btn.make-main {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
 }
 
 .dt-gaction-btn.remove {

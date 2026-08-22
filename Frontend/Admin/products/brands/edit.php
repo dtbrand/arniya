@@ -148,7 +148,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>View on Shop</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="handleSaveBrand()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                    <button type="button" class="wp-button primary" onclick="handleSaveBrand()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Save &amp; Update Brand</span>
                     </button>
@@ -277,7 +277,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                                     <span style="font-size:12px; color:#646970;">Status:</span>
                                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;">🟢 Active &amp; Live</span>
                                 </div>
-                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:6px;">
                                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     <span>Save Changes</span>
                                 </button>

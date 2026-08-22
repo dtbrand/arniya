@@ -146,17 +146,19 @@
 
 /* Primary Gold Master Button */
 .dt-btn-gold {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%);
-    color: #181512;
-    border: 1px solid #8A681F;
-    font-weight: 800;
-    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    border: 1px solid #8A681F !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.011em !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 2px 8px rgba(184, 134, 11, 0.35) !important;
 }
 
 .dt-btn-gold:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.45);
-    color: #181512;
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 14px rgba(184, 134, 11, 0.48) !important;
+    color: #111827 !important;
 }
 
 /* WhatsApp / Emerald Success Button */

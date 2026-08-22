@@ -138,11 +138,11 @@ $active_subnav = "exports";
                         </p>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button type="button" class="wp-button primary" onclick="triggerExport('all', 'csv')" style="flex:1; height:34px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:5px;">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <button type="button" class="wp-button primary" onclick="triggerExport('all', 'csv')" style="flex:1; height:36px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:6px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35); border-radius:6px; cursor:pointer;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <span>Download CSV</span>
                         </button>
-                        <button type="button" class="wp-button" onclick="triggerExport('all', 'xlsx')" style="height:34px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <button type="button" class="wp-button" onclick="triggerExport('all', 'xlsx')" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#705114; border-radius:6px; cursor:pointer;">
                             Excel
                         </button>
                     </div>
@@ -161,11 +161,11 @@ $active_subnav = "exports";
                         </p>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button type="button" class="wp-button primary" onclick="triggerExport('wholesale', 'pdf')" style="flex:1; height:34px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:5px;">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <button type="button" class="wp-button primary" onclick="triggerExport('wholesale', 'pdf')" style="flex:1; height:36px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:6px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35); border-radius:6px; cursor:pointer;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                             <span>Download PDF Catalog</span>
                         </button>
-                        <button type="button" class="wp-button" onclick="triggerExport('wholesale', 'csv')" style="height:34px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <button type="button" class="wp-button" onclick="triggerExport('wholesale', 'csv')" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#705114; border-radius:6px; cursor:pointer;">
                             CSV
                         </button>
                     </div>
@@ -184,11 +184,11 @@ $active_subnav = "exports";
                         </p>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button type="button" class="wp-button primary" onclick="triggerExport('inventory', 'csv')" style="flex:1; height:34px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:5px;">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <button type="button" class="wp-button primary" onclick="triggerExport('inventory', 'csv')" style="flex:1; height:36px; font-size:12px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; justify-content:center; gap:6px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35); border-radius:6px; cursor:pointer;">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <span>Download Stock CSV</span>
                         </button>
-                        <button type="button" class="wp-button" onclick="triggerExport('inventory', 'xlsx')" style="height:34px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                        <button type="button" class="wp-button" onclick="triggerExport('inventory', 'xlsx')" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#705114; border-radius:6px; cursor:pointer;">
                             Excel
                         </button>
                     </div>

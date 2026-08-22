@@ -131,7 +131,7 @@ $subcategories_list = [
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                         <span>Parent Categories (16)</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openAddSubcategoryModal()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                    <button type="button" class="wp-button primary" onclick="openAddSubcategoryModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>+ Add Subcategory</span>
                     </button>
@@ -210,7 +210,7 @@ $subcategories_list = [
                         <input type="text" id="subcatSearchInput" class="wp-search-input" placeholder="Search subcategory, parent..." style="height:34px; padding-left:36px; padding-right:28px; width:230px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchSubcats(this.value); toggleSubcatSearchClearBtn(this.value)">
                         <span id="subcatSearchClearBtn" onclick="clearSubcatSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchSubcats(document.getElementById('subcatSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search</button>
+                    <button type="button" class="wp-button primary" onclick="searchSubcats(document.getElementById('subcatSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>
                 </div>
             </div>
 

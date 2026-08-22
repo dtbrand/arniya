@@ -114,7 +114,7 @@ $active_subnav = "brands";
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
                         <span>Attributes</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openAddBrandModal()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                    <button type="button" class="wp-button primary" onclick="openAddBrandModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>+ Add Brand</span>
                     </button>
@@ -193,7 +193,7 @@ $active_subnav = "brands";
                         <input type="text" id="brandSearchInput" class="wp-search-input" placeholder="Search brands, house labels..." style="height:34px; padding-left:36px; padding-right:28px; width:220px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchBrands(this.value); toggleBrandSearchClearBtn(this.value)">
                         <span id="brandSearchClearBtn" onclick="clearBrandSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchBrands(document.getElementById('brandSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search</button>
+                    <button type="button" class="wp-button primary" onclick="searchBrands(document.getElementById('brandSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>
                 </div>
             </div>
 
@@ -398,7 +398,7 @@ $active_subnav = "brands";
         </div>
         <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
             <button type="button" class="wp-button" onclick="closeEditBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitEditBrandModal()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+            <button type="button" class="wp-button primary" onclick="submitEditBrandModal()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 <span>Save &amp; Update Brand</span>
             </button>
@@ -458,7 +458,7 @@ $active_subnav = "brands";
         </div>
         <div style="background:#f6f7f7; padding:14px 22px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
             <button type="button" class="wp-button" onclick="closeAddBrandModal()" style="height:34px; font-size:12px; font-weight:700; padding:0 14px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="submitNewBrand()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+            <button type="button" class="wp-button primary" onclick="submitNewBrand()" style="height:34px; font-size:12px; font-weight:800; padding:0 18px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>+ Save &amp; Create Label</span>
             </button>

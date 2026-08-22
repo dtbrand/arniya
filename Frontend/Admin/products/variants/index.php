@@ -228,7 +228,7 @@ $variants_matrix = [
                         <input type="text" id="variantSearchInput" class="wp-search-input" placeholder="Search variant SKU, color..." style="height:34px; padding-left:36px; padding-right:28px; width:240px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchVariants(this.value); toggleVariantSearchClearBtn(this.value)">
                         <span id="variantSearchClearBtn" onclick="clearVariantSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:13px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchVariants(document.getElementById('variantSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search</button>
+                    <button type="button" class="wp-button primary" onclick="searchVariants(document.getElementById('variantSearchInput').value)" style="height:34px; font-size:12px; font-weight:800; padding:0 14px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>
                 </div>
             </div>
 

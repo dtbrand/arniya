@@ -536,8 +536,8 @@
 }
 
 .dt-cust-act-btn.edit:hover {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 100%);
-    color: #FFFFFF;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
     border-color: #8A681F;
 }
 
@@ -585,10 +585,10 @@
 }
 
 .dt-cust-page-btn.active {
-    background: linear-gradient(135deg, #8A681F 0%, #B8860B 100%);
-    color: #181512;
-    border-color: #8A681F;
-    font-weight: 800;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%) !important;
+    color: #111827 !important;
+    border-color: #8A681F !important;
+    font-weight: 800 !important;
 }
 
 /* ══ BULK ACTIONS FLOATING TOOLBAR ══ */

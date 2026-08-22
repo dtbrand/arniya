@@ -140,9 +140,9 @@ Description: Handcrafted pure silk bridal collection with rich pallu and embosse
         <!-- Modal Footer in DT Brand's Luxury Gold Action Button Style -->
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; align-items:center; gap:10px;">
             <button type="button" class="wp-button" onclick="closeAiImporterModal()" style="height:34px; font-size:12px; padding:0 14px;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:34px; font-size:12.5px; font-weight:800; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); display:inline-flex; align-items:center; gap:6px; border:1px solid #8A681F; color:#181512; box-shadow:0 3px 12px rgba(212,175,55,0.4); cursor:pointer; padding:0 16px;">
+            <button type="button" class="wp-button primary" onclick="parseAndAutoFillProductData()" style="height:34px; font-size:12.5px; font-weight:800; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); display:inline-flex; align-items:center; gap:6px; border:1px solid #8A681F; color:#111827; box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 12px rgba(212,175,55,0.4); cursor:pointer; padding:0 16px; border-radius:6px;">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
-                    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#181512"/>
+                    <path d="M12 2L14.2 8.3L20.5 10.5L14.2 12.7L12 19L9.8 12.7L3.5 10.5L9.8 8.3L12 2Z" fill="#111827"/>
                 </svg>
                 <span>⚡ AI Parse &amp; Auto-Fill All Fields</span>
             </button>

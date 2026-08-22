@@ -241,7 +241,7 @@ $active_subnav = "imports";
                     
                     <input type="file" id="csvFileInput" accept=".csv, .xlsx, .xls" style="display:none;" onchange="handleFileSelected(this)">
                     
-                    <button type="button" class="wp-button primary" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:36px; display:inline-flex; align-items:center; gap:6px;">
+                    <button type="button" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 16px; height:36px; display:inline-flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                         <span>Browse Files</span>
                     </button>
@@ -251,7 +251,7 @@ $active_subnav = "imports";
                     <div style="font-size:12px; color:#646970;">
                         Download Sample Template: <a href="#" onclick="downloadSampleTemplate(); return false;" style="color:#8A681F; font-weight:700; text-decoration:none;">📄 DT_Brand_Wholesale_Template.csv</a>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="goToStep(2)" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; display:inline-flex; align-items:center; gap:6px;">
+                    <button type="button" class="wp-button primary" onclick="goToStep(2)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; display:inline-flex; align-items:center; gap:6px;">
                         <span>Proceed to Step 2: Column Mapping</span>
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
@@ -316,7 +316,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">← Back to Upload</button>
-                    <button type="button" class="wp-button primary" onclick="goToStep(3)" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 3: Validation →</button>
+                    <button type="button" class="wp-button primary" onclick="goToStep(3)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 3: Validation →</button>
                 </div>
             </div>
 
@@ -346,7 +346,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <button type="button" class="wp-button" onclick="goToStep(2)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">← Back to Mapping</button>
-                    <button type="button" class="wp-button primary" onclick="goToStep(4)" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 4: Preview →</button>
+                    <button type="button" class="wp-button primary" onclick="goToStep(4)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 4: Preview →</button>
                 </div>
             </div>
 
@@ -389,7 +389,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <button type="button" class="wp-button" onclick="goToStep(3)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">← Back to Validation</button>
-                    <button type="button" class="wp-button primary" onclick="goToStep(5)" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 5: Errors &amp; Overrides →</button>
+                    <button type="button" class="wp-button primary" onclick="goToStep(5)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 5: Errors &amp; Overrides →</button>
                 </div>
             </div>
 
@@ -409,7 +409,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <button type="button" class="wp-button" onclick="goToStep(4)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">← Back to Preview</button>
-                    <button type="button" class="wp-button primary" onclick="goToStep(6)" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 6: Confirmation →</button>
+                    <button type="button" class="wp-button primary" onclick="goToStep(6)" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px;">Proceed to Step 6: Confirmation →</button>
                 </div>
             </div>
 
@@ -437,7 +437,7 @@ $active_subnav = "imports";
 
                 <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f0f0f1;">
                     <button type="button" class="wp-button" onclick="goToStep(5)" style="height:36px; padding:0 14px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">← Back to Errors</button>
-                    <button type="button" class="wp-button primary" onclick="executeImportNow()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 22px; height:38px; display:inline-flex; align-items:center; gap:6px;">
+                    <button type="button" class="wp-button primary" onclick="executeImportNow()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 22px; height:38px; display:inline-flex; align-items:center; gap:6px;">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Execute Import Now</span>
                     </button>
@@ -455,7 +455,7 @@ $active_subnav = "imports";
                 <p style="font-size:13px; color:#646970; margin:0 0 22px 0;">248 new products have been inserted into your catalog with active stock and wholesale MOQ pricing.</p>
                 
                 <div style="display:flex; justify-content:center; gap:12px;">
-                    <a href="/Frontend/Admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                    <a href="/Frontend/Admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
                         <span>View Products Catalog (1,488 SKUs)</span>
                     </a>
                     <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 16px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">

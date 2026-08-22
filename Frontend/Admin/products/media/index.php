@@ -453,7 +453,7 @@ $media_assets = [
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back</span>
                     </a>
-                    <button type="button" class="wp-button primary" onclick="openUploadModal()" style="background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
+                    <button type="button" class="wp-button primary" onclick="openUploadModal()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>+ Upload</span>
                     </button>
@@ -540,7 +540,7 @@ $media_assets = [
                         <input type="text" id="mediaSearchInput" class="wp-search-input" placeholder="Search SKU, filename..." style="height:32px; padding-left:32px; padding-right:26px; width:210px; font-size:12px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchMedia(this.value); toggleMediaSearchClearBtn(this.value)">
                         <span id="mediaSearchClearBtn" onclick="clearMediaSearch()" style="position:absolute; right:8px; cursor:pointer; color:#8c8f94; font-size:12px; font-weight:700; display:none;" title="Clear search">✕</span>
                     </div>
-                    <button type="button" class="wp-button primary" onclick="searchMedia(document.getElementById('mediaSearchInput').value)" style="height:32px; font-size:12px; font-weight:800; padding:0 12px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F;">Search</button>
+                    <button type="button" class="wp-button primary" onclick="searchMedia(document.getElementById('mediaSearchInput').value)" style="height:32px; font-size:12px; font-weight:800; padding:0 12px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F;">Search</button>
                 </div>
             </div>
 
@@ -655,7 +655,7 @@ $media_assets = [
         </div>
         <div style="background:#f6f7f7; padding:12px 18px; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:10px;">
             <button type="button" class="wp-button" onclick="closeUploadModal()" style="height:32px; font-size:11.5px; font-weight:700; padding:0 12px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">Cancel</button>
-            <button type="button" class="wp-button primary" onclick="document.getElementById('realMediaFileInput').click()" style="height:32px; font-size:11.5px; font-weight:800; padding:0 16px; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px;">
+            <button type="button" class="wp-button primary" onclick="document.getElementById('realMediaFileInput').click()" style="height:32px; font-size:11.5px; font-weight:800; padding:0 16px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; border:1px solid #8A681F; display:inline-flex; align-items:center; gap:6px;">
                 <span>Select &amp; Upload Files</span>
             </button>
         </div>
@@ -689,7 +689,7 @@ $media_assets = [
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Copy CDN Link</span>
                 </button>
-                <button type="button" class="wp-button primary" onclick="closeLightbox()" style="width:100%; height:32px; justify-content:center; background:linear-gradient(135deg, #8A681F 0%, #B8860B 50%, #D4AF37 100%); color:#181512; font-weight:800; border:1px solid #8A681F;">
+                <button type="button" class="wp-button primary" onclick="closeLightbox()" style="width:100%; height:32px; justify-content:center; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F;">
                     Done
                 </button>
             </div>
