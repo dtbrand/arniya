@@ -651,11 +651,6 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                     <input type="text" id="custEditPostalCode" name="postal_code" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['pincode']); ?>" placeholder="6-digit Pincode / Zip">
                                 </div>
                             </div>
-                        </div>div class="dt-form-group">
-                                    <label class="dt-form-label">Postal Code / PIN Code</label>
-                                    <input type="text" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['pincode']); ?>" placeholder="6-digit Pincode / Zip">
-                                </div>
-                            </div>
                         </div>
 
                         <!-- ══ SECTION 3: ACCOUNT STATUS, TIER & TAGS ══ -->
@@ -698,7 +693,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                 </div>
                                 <div style="display:flex; gap:8px;">
                                     <input type="text" id="dtNewTagInput" class="dt-input-field no-icon" style="max-width:280px;" placeholder="Add custom tag (e.g. Saree Lover)...">
-                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:5px;" onclick="
                                         const val = document.getElementById('dtNewTagInput').value.trim();
                                         if(val) {
                                             const chip = document.createElement('span');
@@ -708,7 +703,10 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                             document.getElementById('dtNewTagInput').value = '';
                                             window.showToast('✓ Tag added!');
                                         }
-                                    ">+ Add Tag</button>
+                                    ">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        <span>Add Tag</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -725,7 +723,10 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                                     <strong style="font-size:0.8rem; color:#181512; display:block;">Secure Password Reset</strong>
                                     <span style="font-size:0.72rem; color:#78716C;">Passwords are encrypted. Dispatches a secure 1-time reset link via SMS &amp; Email.</span>
                                 </div>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('✓ Secure Password Reset Link dispatched to <?php echo htmlspecialchars($cust['phone']); ?>!')">Dispatch Reset Link</button>
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;" onclick="window.showToast('✓ Secure Password Reset Link dispatched to <?php echo htmlspecialchars($cust['phone']); ?>!')">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    <span>Dispatch Reset Link</span>
+                                </button>
                             </div>
 
                             <div class="dt-form-group">
@@ -735,12 +736,18 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                         </div>
 
                         <!-- ══ FORM ACTIONS FOOTER ══ -->
-                        <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1;">
-                            <button type="button" class="dt-btn dt-btn-danger" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { window.showToast('Account deactivated.'); }">Deactivate Account</button>
+                        <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1; flex-wrap:wrap; gap:10px;">
+                            <button type="button" class="dt-btn dt-btn-danger" style="display:inline-flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { window.showToast('Account deactivated.'); }">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                <span>Deactivate Account</span>
+                            </button>
                             
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <a href="/Frontend/Admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-pale">Cancel</a>
-                                <button type="submit" class="dt-btn dt-btn-gold">Save Customer Profile</button>
+                                <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span>Save Customer Profile</span>
+                                </button>
                             </div>
                         </div>
                     </form>
