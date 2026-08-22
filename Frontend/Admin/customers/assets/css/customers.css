@@ -515,17 +515,10 @@ select:focus {
     align-items: center;
 }
 
-.dt-country-search-icon {
-    position: absolute;
-    left: 20px;
-    color: #8A681F;
-    pointer-events: none;
-}
-
 .dt-country-search-input {
     width: 100%;
     height: 32px;
-    padding: 0 10px 0 32px;
+    padding: 0 10px !important;
     background: #FFFFFF;
     border: 1.2px solid #D4AF37;
     border-radius: 6px;
@@ -534,6 +527,22 @@ select:focus {
     color: #181512;
     box-sizing: border-box;
     outline: none;
+}
+
+/* ⚡ Country-Wise Auto-Updated Field Flash Animation */
+@keyframes dtFieldAutoUpdated {
+    0% {
+        background-color: #FEF3C7 !important;
+        box-shadow: 0 0 0 2px #D4AF37, 0 0 12px rgba(212, 175, 55, 0.4) !important;
+    }
+    100% {
+        background-color: #FFFFFF !important;
+        box-shadow: none !important;
+    }
+}
+
+.dt-auto-updated {
+    animation: dtFieldAutoUpdated 1.2s ease-out !important;
 }
 
 .dt-country-list {

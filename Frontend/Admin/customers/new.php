@@ -193,17 +193,17 @@ $active_subnav = "new";
                                     <label class="dt-form-label">Mobile Phone Number <span style="color:#DC2626;">*</span></label>
                                     <div class="dt-input-icon-wrap">
                                         <svg class="dt-input-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                        <input type="tel" class="dt-input-field" placeholder="+91 98XXX XXXXX" required>
+                                        <input type="tel" id="custNewPhone" name="phone" class="dt-input-field" placeholder="+91 98XXX XXXXX" required>
                                     </div>
                                 </div>
 
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Preferred Communication Language</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                    <select id="custNewLanguage" name="language" class="dt-cust-select" style="width:100%; height:38px;">
                                         <optgroup label="── Primary Commercial Languages ──">
                                             <option value="Hindi" selected>Hindi (हिंदी)</option>
                                             <option value="Gujarati">Gujarati (ગુજરાતી)</option>
-                                            <option value="English">English (India)</option>
+                                            <option value="English">English (International / India)</option>
                                             <option value="Hinglish">Hinglish (Hindi / English)</option>
                                             <option value="Marathi">Marathi (मराठी)</option>
                                             <option value="Marwari">Marwari / Rajasthani (मारवाड़ी)</option>
@@ -214,7 +214,7 @@ $active_subnav = "new";
                                             <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
                                             <option value="Malayalam">Malayalam (മലയാളം)</option>
                                         </optgroup>
-                                        <optgroup label="── East & North-East Languages ──">
+                                        <optgroup label="── East &amp; North-East Languages ──">
                                             <option value="Bengali">Bengali / Bangla (বাংলা)</option>
                                             <option value="Odia">Odia / Oriya (ଓଡ଼ିଆ)</option>
                                             <option value="Assamese">Assamese (অসমীয়া)</option>
@@ -222,7 +222,7 @@ $active_subnav = "new";
                                             <option value="Bodo">Bodo (बोडो)</option>
                                             <option value="Santali">Santali (संथाली)</option>
                                         </optgroup>
-                                        <optgroup label="── North & West Indian Languages ──">
+                                        <optgroup label="── North &amp; West Indian Languages ──">
                                             <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
                                             <option value="Bhojpuri">Bhojpuri (भोजपुरी)</option>
                                             <option value="Maithili">Maithili (मैथिली)</option>
@@ -246,7 +246,7 @@ $active_subnav = "new";
                                     </label>
                                     <div class="dt-input-icon-wrap">
                                         <svg class="dt-input-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                        <input type="email" class="dt-input-field" placeholder="radhika@example.com">
+                                        <input type="email" id="custNewEmail" name="email" class="dt-input-field" placeholder="radhika@example.com">
                                     </div>
                                 </div>
                             </div>
@@ -273,8 +273,7 @@ $active_subnav = "new";
                                         </div>
                                         <div class="dt-country-dropdown">
                                             <div class="dt-country-search-box">
-                                                <svg class="dt-country-search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                <input type="text" class="dt-country-search-input" placeholder="Search 195+ countries (e.g. India, USA, UAE, UK)..." autocomplete="off">
+                                                <input type="text" class="dt-country-search-input" placeholder="Search 195+ countries (e.g. India, USA, UAE, UK)..." autocomplete="off" style="padding-left:10px;">
                                             </div>
                                             <div class="dt-country-list">
                                                 <!-- Dynamically populated & filtered by country-picker.js -->
@@ -285,24 +284,25 @@ $active_subnav = "new";
 
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Nearby Landmark</label>
-                                    <input type="text" class="dt-input-field no-icon" placeholder="e.g. Near City Bus Stand">
+                                    <input type="text" id="custNewLandmark" name="landmark" class="dt-input-field no-icon" placeholder="e.g. Near City Bus Stand / Textile Market Gate / Ring Road">
                                 </div>
                             </div>
 
                             <div class="dt-form-group" style="margin-top:14px;">
                                 <label class="dt-form-label">Street Address / House No.</label>
-                                <input type="text" class="dt-input-field no-icon" placeholder="House/Flat No., Building Name, Street">
+                                <input type="text" id="custNewAddress" name="address" class="dt-input-field no-icon" placeholder="House/Flat No., Building Name, Street / Society">
                             </div>
 
                             <div class="dt-form-grid-3" style="margin-top:14px;">
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">City</label>
-                                    <input type="text" class="dt-input-field no-icon" placeholder="e.g. Surat">
+                                    <input type="text" id="custNewCity" name="city" class="dt-input-field no-icon" placeholder="e.g. Surat, Mumbai, Delhi, Ahmedabad, Jaipur">
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">State / Province</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                    <label id="custNewStateLabel" class="dt-form-label dt-state-label">State / Union Territory</label>
+                                    <select id="custNewState" name="state" class="dt-cust-select dt-state-select" style="width:100%; height:38px;">
+                                        <!-- Dynamically auto-populated by country-picker.js -->
                                         <option value="GJ" selected>Gujarat</option>
                                         <option value="MH">Maharashtra</option>
                                         <option value="DL">Delhi NCR</option>
@@ -311,13 +311,13 @@ $active_subnav = "new";
                                         <option value="KA">Karnataka</option>
                                         <option value="TS">Telangana</option>
                                         <option value="UP">Uttar Pradesh</option>
-                                        <option value="OTHER">Other / International State</option>
+                                        <option value="OTHER">Other State / UT</option>
                                     </select>
                                 </div>
 
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">PIN Code / Postal Code</label>
-                                    <input type="text" class="dt-input-field no-icon" placeholder="6-digit PIN / Zip">
+                                    <label id="custNewPostalLabel" class="dt-form-label dt-postal-label">PIN Code (6-Digit)</label>
+                                    <input type="text" id="custNewPostalCode" name="postal_code" class="dt-input-field no-icon" placeholder="e.g. 395002">
                                 </div>
                             </div>
                         </div>
