@@ -18,6 +18,7 @@ $active_subnav = "segments";
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/Frontend/Admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -46,5 +47,6 @@ $active_subnav = "segments";
 </div>
 
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/Frontend/Admin/wholesale/assets/js/wholesale-segments.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
