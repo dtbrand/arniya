@@ -18,18 +18,22 @@ $category_margins = getWholesaleCategoryMargins($wholesale ? $wholesale['id'] : 
                 <span style="font-size:0.68rem; color:#8A681F; font-weight:800; text-transform:uppercase; letter-spacing:0.04em;">TIER MARGIN PROFILE</span>
                 <h4 style="font-size:0.95rem; font-weight:800; color:#181512; margin:2px 0 0 0;">Active Commercial Margin Tier</h4>
             </div>
-            <div class="dt-wholesale-tabs-nav" style="border:none; padding:0; width:auto;">
+            <div class="dt-wholesale-tabs-nav" style="border:none; padding:0; width:auto; gap:6px;">
                 <button type="button" class="dt-wholesale-tab-btn <?php echo (strpos($active_tier, 'platinum') !== false) ? 'active' : ''; ?>" onclick="switchPricingTier('platinum', 35, 'PLATINUM VIP', this)">
-                    <span>👑 Platinum VIP (35% Off)</span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span>Platinum VIP (35% Off)</span>
                 </button>
                 <button type="button" class="dt-wholesale-tab-btn <?php echo (strpos($active_tier, 'gold') !== false) ? 'active' : ''; ?>" onclick="switchPricingTier('gold', 28, 'GOLD VIP', this)">
-                    <span>🥇 Gold Distributor (28% Off)</span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="8" r="6"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    <span>Gold Distributor (28% Off)</span>
                 </button>
                 <button type="button" class="dt-wholesale-tab-btn <?php echo (strpos($active_tier, 'silver') !== false) ? 'active' : ''; ?>" onclick="switchPricingTier('silver', 20, 'SILVER BULK', this)">
-                    <span>🥈 Silver Bulk (20% Off)</span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Silver Bulk (20% Off)</span>
                 </button>
                 <button type="button" class="dt-wholesale-tab-btn <?php echo (strpos($active_tier, 'bronze') !== false) ? 'active' : ''; ?>" onclick="switchPricingTier('bronze', 12, 'BRONZE STARTER', this)">
-                    <span>🥉 Bronze Starter (12% Off)</span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>Bronze Starter (12% Off)</span>
                 </button>
             </div>
         </div>
@@ -45,7 +49,7 @@ $category_margins = getWholesaleCategoryMargins($wholesale ? $wholesale['id'] : 
             <div style="display:flex; align-items:center; gap:8px;">
                 <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openAddCategoryRuleModal()">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>+ Add Category Rule</span>
+                    <span>Add Category Rule</span>
                 </button>
                 <button type="button" class="dt-btn dt-btn-gold dt-btn-sm" onclick="recalculateAllWholesaleMargins()">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
@@ -76,7 +80,9 @@ $category_margins = getWholesaleCategoryMargins($wholesale ? $wholesale['id'] : 
                         <tr id="marginRow_<?php echo $idx; ?>" data-cat="<?php echo htmlspecialchars($m['cat']); ?>" data-retail="<?php echo $retail_num; ?>" data-offset="<?php echo ($m['margin'] - (isset($wholesale['margin_pct']) ? $wholesale['margin_pct'] : 35)); ?>">
                             <td style="font-weight:800; color:#181512; white-space:nowrap;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; font-size:11px;">👗</div>
+                                    <div style="width:28px; height:28px; border-radius:6px; background:#FAF5E8; border:1px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; flex-shrink:0;">
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"></path></svg>
+                                    </div>
                                     <span class="cat-name-text"><?php echo htmlspecialchars($m['cat']); ?></span>
                                 </div>
                             </td>
