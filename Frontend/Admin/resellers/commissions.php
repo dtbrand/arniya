@@ -163,7 +163,7 @@ $active_subnav = "commissions";
             <button type="button" onclick="closeCommModal('dtPayoutAdviceModal')" style="background:none; border:none; font-size:20px; font-weight:bold; color:#78716C; cursor:pointer;">✕</button>
         </div>
 
-        <div class="dt-modal-body" style="padding:18px; overflow-y:auto; background:#FAF8F4; flex:1;">
+        <div class="dt-modal-body" style="padding:14px 16px; overflow-y:auto; background:#FAF8F4; flex:1;">
             <!-- ══ PRINTABLE ADVICE BOX ══ -->
             <div id="dtPrintableAdvice" class="dt-advice-card">
                 
@@ -239,7 +239,7 @@ $active_subnav = "commissions";
         <div class="dt-modal-foot" style="padding:12px 18px; border-top:1px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; background:#FAF8F4;">
             <button type="button" class="dt-btn dt-btn-pale" onclick="closeCommModal('dtPayoutAdviceModal')">Close</button>
             <div style="display:flex; align-items:center; gap:8px;">
-                <button type="button" class="dt-btn dt-btn-pale" onclick="window.print()">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="printAdvice()">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     <span>Print Advice</span>
                 </button>

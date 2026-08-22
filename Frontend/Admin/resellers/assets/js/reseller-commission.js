@@ -264,6 +264,11 @@
         window.print();
     };
 
+    // ── Print Current Advice ──
+    window.printAdvice = function () {
+        window.print();
+    };
+
     // ── Close Modals Helper ──
     window.closeCommModal = function (modalId) {
         const modal = document.getElementById(modalId);
