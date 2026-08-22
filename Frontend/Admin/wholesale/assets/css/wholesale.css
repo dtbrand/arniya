@@ -379,13 +379,61 @@ textarea:focus {
     gap: 16px;
 }
 
-.dt-drawer-foot {
-    padding: 14px 18px;
-    border-top: 1.5px solid #EAE5D9;
+/* ══════════════════════════════════════════════════════════════
+   MASTER WHOLESALE TABLE STYLES (UNIVERSAL)
+══════════════════════════════════════════════════════════════ */
+.dt-wholesale-table-wrap {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    border-top: 1px solid var(--dt-border-subtle);
+    background: #FFFFFF;
+}
+
+.dt-wholesale-table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    table-layout: auto;
+}
+
+.dt-wholesale-table th,
+.dt-wholesale-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--dt-border-subtle);
+    vertical-align: middle;
+    white-space: nowrap !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dt-wholesale-table th {
     background: #FAF8F4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+    color: var(--dt-dark-obsidian);
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+    text-align: left;
+    border-bottom: 1.5px solid var(--dt-border-light);
+}
+
+.dt-wholesale-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.dt-wholesale-table tbody tr:hover {
+    background: #FDFBF7;
+}
+
+.dt-wholesale-table td a {
+    color: var(--dt-dark-obsidian);
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.dt-wholesale-table td a:hover {
+    color: var(--dt-gold-primary);
 }
 
