@@ -1,6 +1,6 @@
 <?php
 /**
- * adminsidebar.php — DT Brand's Admin Sidebar Navigation with Real SVG Icons
+ * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation with Real SVG Icons
  * DT Brand's & Jai Hanuman Tex
  */
 $req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
@@ -17,11 +17,11 @@ if (isset($active_nav) && !empty($active_nav)) {
     $current_nav = 'pricing';
 } elseif (strpos($req_uri, '/reviews/') !== false) {
     $current_nav = 'reviews';
-} elseif (strpos($req_uri, '/wholesale/') !== false) {
+} elseif (strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/wholesale/') !== false) {
     $current_nav = 'wholesalers';
 } elseif (strpos($req_uri, '/resellers/') !== false) {
     $current_nav = 'resellers';
-} elseif (strpos($req_uri, '/retail/') !== false) {
+} elseif (strpos($req_uri, '/retail/') !== false || strpos($req_uri, '/retailers/') !== false) {
     $current_nav = 'retail';
 } elseif (strpos($req_uri, '/customers/') !== false) {
     $current_nav = 'customers';
@@ -91,7 +91,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = 'analytics';
 } elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
-} elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/resellers/') !== false) {
+} elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
     $current_subnav = 'all';
 } else {
     $current_subnav = '';
@@ -403,9 +403,9 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             </ul>
         </div>
 
-        <!-- ── 3. CUSTOMERS & PARTNERS ── -->
+        <!-- ── 3. B2B PARTNERS ── -->
         <div class="adm-nav-group">
-            <div class="adm-nav-heading">CUSTOMERS &amp; PARTNERS</div>
+            <div class="adm-nav-heading">B2B PARTNERS</div>
             <ul class="adm-nav-list">
                 <!-- WHOLESALERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'wholesalers' ? 'open' : ''; ?>">
