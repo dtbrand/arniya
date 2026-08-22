@@ -12,7 +12,7 @@ $docs = [
         'status' => 'Verified',
         'size' => '1.4 MB (PDF)',
         'file_format' => 'PDF',
-        'preview_img' => 'gst_cert',
+        'format_class' => 'pdf',
         'identifier' => '24AAAPL1234F1Z8'
     ],
     [
@@ -23,7 +23,7 @@ $docs = [
         'status' => 'Verified',
         'size' => '2.1 MB (JPG)',
         'file_format' => 'JPG',
-        'preview_img' => 'aadhaar_card',
+        'format_class' => 'jpg',
         'identifier' => 'XXXX-XXXX-8921'
     ],
     [
@@ -34,7 +34,7 @@ $docs = [
         'status' => 'Verified',
         'size' => '980 KB (PDF)',
         'file_format' => 'PDF',
-        'preview_img' => 'cheque',
+        'format_class' => 'pdf',
         'identifier' => 'ICICI Bank • A/C: 002105018291'
     ],
     [
@@ -45,7 +45,7 @@ $docs = [
         'status' => 'Verified',
         'size' => '1.8 MB (PDF)',
         'file_format' => 'PDF',
-        'preview_img' => 'trade_license',
+        'format_class' => 'pdf',
         'identifier' => 'SMC/TL/2023/91024'
     ]
 ];
@@ -54,7 +54,7 @@ $docs = [
 <div class="dt-card" style="background:#FFFFFF; border:1.5px solid #EAE5D9; border-radius:12px; padding:20px; box-shadow:0 4px 16px rgba(0,0,0,0.03);">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; border-bottom:1px solid #F3EFE6; padding-bottom:14px;">
         <div style="display:flex; align-items:center; gap:10px;">
-            <div style="width:36px; height:36px; border-radius:8px; background:#FAF5E8; border:1.2px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F;">
+            <div style="width:38px; height:38px; border-radius:8px; background:#FAF5E8; border:1.2px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; flex-shrink:0;">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             </div>
             <div>
@@ -74,32 +74,40 @@ $docs = [
         </div>
     </div>
 
-    <!-- 4-Card Document Grid -->
-    <div class="dt-docs-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
+    <!-- ══ 2x2 BALANCED DOCUMENT GRID ══ -->
+    <div class="dt-docs-grid">
         <?php foreach ($docs as $d): ?>
-            <div id="<?php echo $d['id']; ?>" class="dt-doc-card" style="background:#FFFFFF; border:1.5px solid #EAE5D9; border-radius:12px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:12px; transition:all 0.2s ease;">
+            <div id="<?php echo $d['id']; ?>" class="dt-doc-card">
                 <div>
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="width:38px; height:38px; border-radius:8px; background:#FAF5E8; border:1.2px solid #D4AF37; display:flex; align-items:center; justify-content:center; color:#8A681F; font-weight:900; font-size:0.75rem; flex-shrink:0;">
+                    <!-- Card Top Info -->
+                    <div class="dt-doc-head">
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="dt-doc-icon-badge <?php echo $d['format_class']; ?>">
                                 <?php echo $d['file_format']; ?>
                             </div>
                             <div>
-                                <strong class="doc-title" style="font-size:0.86rem; color:#181512; display:block; font-weight:800; line-height:1.25;"><?php echo htmlspecialchars($d['title']); ?></strong>
-                                <small style="color:#78716C; font-size:0.7rem; font-weight:600;"><?php echo $d['type']; ?> • <?php echo $d['size']; ?></small>
+                                <strong class="doc-title" style="font-size:0.9rem; color:#181512; display:block; font-weight:800; line-height:1.3;"><?php echo htmlspecialchars($d['title']); ?></strong>
+                                <small style="color:#78716C; font-size:0.72rem; font-weight:600;"><?php echo $d['type']; ?> • <?php echo $d['size']; ?></small>
                             </div>
                         </div>
-                        <span class="doc-status-pill dt-reseller-badge emerald" style="font-size:0.7rem; font-weight:800;">✓ <?php echo $d['status']; ?></span>
+                        <span class="dt-doc-status-badge">
+                            ✓ Verified
+                        </span>
                     </div>
 
-                    <div style="background:#FAF8F4; border:1px dashed #D4AF37; border-radius:8px; padding:8px 12px; font-size:0.75rem; color:#181512; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.7rem; color:#78716C; font-weight:700;">REFERENCE:</span>
-                        <strong style="font-family:monospace; color:#8A681F;"><?php echo $d['identifier']; ?></strong>
+                    <!-- Reference Number Strip -->
+                    <div class="dt-doc-ref-box" style="margin-top:12px;">
+                        <span style="font-size:0.7rem; color:#78716C; font-weight:800; text-transform:uppercase;">Reference ID:</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <strong style="font-family:monospace; color:#8A681F; font-size:0.82rem; font-weight:800;"><?php echo $d['identifier']; ?></strong>
+                            <button type="button" onclick="copyToClipboard('<?php echo $d['identifier']; ?>', 'Reference ID')" style="background:none; border:none; color:#1D4ED8; font-size:0.7rem; font-weight:700; cursor:pointer; padding:0;" title="Copy Reference">Copy</button>
+                        </div>
                     </div>
                 </div>
 
-                <div style="display:flex; align-items:center; justify-content:space-between; border-top:1px solid #F1ECE1; padding-top:12px;">
-                    <span class="doc-date" style="font-size:0.7rem; color:#78716C; font-weight:600;">Uploaded: <?php echo $d['date']; ?></span>
+                <!-- Card Footer Actions -->
+                <div class="dt-doc-foot">
+                    <span class="doc-date" style="font-size:0.72rem; color:#78716C; font-weight:600;">Uploaded: <?php echo $d['date']; ?></span>
                     <div style="display:flex; align-items:center; gap:6px;">
                         <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="previewResellerDoc('<?php echo $d['id']; ?>', '<?php echo addslashes($d['title']); ?>', '<?php echo $d['identifier']; ?>', '<?php echo $d['file_format']; ?>')">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
