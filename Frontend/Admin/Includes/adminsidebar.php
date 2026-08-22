@@ -21,8 +21,8 @@ if (isset($active_nav) && !empty($active_nav)) {
     $current_nav = 'wholesalers';
 } elseif (strpos($req_uri, '/resellers/') !== false) {
     $current_nav = 'resellers';
-} elseif (strpos($req_uri, '/retailers/') !== false) {
-    $current_nav = 'retailers';
+} elseif (strpos($req_uri, '/retail/') !== false || strpos($req_uri, '/retailers/') !== false) {
+    $current_nav = 'retail';
 } elseif (strpos($req_uri, '/customers/') !== false) {
     $current_nav = 'customers';
 } elseif (strpos($req_uri, '/inventory/') !== false) {
@@ -564,11 +564,120 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="/Frontend/Admin/retailers/" class="adm-nav-item <?php echo $current_nav === 'retailers' ? 'active' : ''; ?>" id="navItem-retailers" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-partners')) { switchAdmTab('partners'); return false; }" data-title="Retailer Accounts">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span class="adm-nav-label">Retailers</span>
+                <!-- RETAIL MANAGEMENT WITH REAL SVG SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'retail' ? 'open' : ''; ?>">
+                    <a href="/Frontend/Admin/retail/" class="adm-nav-item <?php echo $current_nav === 'retail' ? 'active' : ''; ?>" id="navItem-retail" data-title="Retail Management">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span class="adm-nav-label">Retail Management</span>
+                        <span class="adm-nav-badge gold">D2C Hub</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'retail' ? 'open' : ''; ?>" id="admSubmenu-retail">
+                        <li>
+                            <a href="/Frontend/Admin/retail/" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && ($current_subnav === 'dashboard' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>Overview Hub</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/customers.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'customers') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                <span>Retail Customers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/orders.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'orders') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                <span>Retail Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/sales.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'sales') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <span>Sales Analysis</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/revenue.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'revenue') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>Net Revenue Studio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/pricing.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'pricing') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                <span>Pricing &amp; Margins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/discounts.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'discounts') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                <span>Discounts &amp; Coupons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/catalogue.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'catalogue') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                <span>Visual Merchandising</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/cart.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'cart') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                <span>Live Shopping Bags</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/abandoned-carts.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'abandoned-carts') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                                <span>Abandoned Carts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/checkout.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'checkout') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                <span>Checkout Funnel</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/segments.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'segments') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+                                <span>Customer Segments</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/activity.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'activity') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                <span>Activity Stream</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/reviews.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'reviews') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Ratings &amp; Reviews</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/wishlist.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'wishlist') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <span>Wishlist Demand</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/analytics.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'analytics') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                <span>Growth Analytics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/retail/export.php" class="adm-nav-subitem <?php echo ($current_nav === 'retail' && $current_subnav === 'export') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export Studio</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- CUSTOMERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'customers' ? 'open' : ''; ?>">
