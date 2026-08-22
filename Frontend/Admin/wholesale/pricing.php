@@ -140,7 +140,10 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
             </div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
                 <button type="button" class="dt-btn dt-btn-pale" onclick="closeWholesaleModal('dtAddCategoryMarginModal')">Cancel</button>
-                <button type="submit" class="dt-btn dt-btn-gold">+ Save Category Rule</button>
+                <button type="submit" class="dt-btn dt-btn-gold">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Save Category Rule</span>
+                </button>
             </div>
         </form>
     </div>
