@@ -111,7 +111,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                     <a href="/Frontend/Admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products (1,240 SKUs)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
-                        <span class="adm-nav-badge">1,240</span>
+                        <span class="adm-nav-badge gold">1,240</span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
