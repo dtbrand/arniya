@@ -649,8 +649,7 @@ textarea:focus,
     }
 }
 
-/* 👑 OPEN / ACTIVE MENU ITEM WITH SIGNATURE GOLD & PLATINUM RUNNING LASER BORDER */
-.adm-nav-item.active,
+/* 👑 ONLY OPEN SUBMENU PARENT GETS THE SIGNATURE GOLD & PLATINUM RUNNING LASER BORDER */
 .adm-nav-has-sub.open > .adm-nav-item {
     outline: none !important;
     border: 2px solid transparent !important;
@@ -661,6 +660,26 @@ textarea:focus,
     font-weight: 800 !important;
     box-shadow: 0 0 14px rgba(212, 175, 55, 0.35), 0 3px 10px rgba(138, 104, 31, 0.12) !important;
     transform: translateX(3px) !important;
+}
+
+/* When a menu item is closed/not open, strictly ZERO running line */
+.adm-nav-has-sub:not(.open) > .adm-nav-item,
+.adm-nav-has-sub:not(.open) > .adm-nav-item.active {
+    outline: none !important;
+    animation: none !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+    color: #2D2721 !important;
+}
+
+.adm-nav-has-sub:not(.open) > .adm-nav-item:hover {
+    background: #FAF8F4 !important;
+    color: #8A681F !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    transform: translateX(3px) !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.12) !important;
 }
 
 /* 👑 FORM INPUTS RUNNING LASER BORDER ON FOCUS */
@@ -890,7 +909,7 @@ input:focus, select:focus, textarea:focus, .dt-search-input:focus, .adm-form-inp
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35) !important;
 }
 
-.adm-nav-item.active .adm-nav-badge,
+/* 👑 ONLY OPEN PARENT MENU BADGE SWITCHES TO OBSIDIAN */
 .adm-nav-has-sub.open > .adm-nav-item .adm-nav-badge {
     background: #181512 !important;
     color: #FFE57F !important;
@@ -898,11 +917,18 @@ input:focus, select:focus, textarea:focus, .dt-search-input:focus, .adm-form-inp
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) !important;
 }
 
-.adm-nav-item.active .adm-nav-badge.green,
 .adm-nav-has-sub.open > .adm-nav-item .adm-nav-badge.green {
     background: #DCFCE7 !important;
     color: #15803D !important;
     border: 1.2px solid #86EFAC !important;
+}
+
+/* Closed parent badge remains clean pale gold */
+.adm-nav-has-sub:not(.open) > .adm-nav-item .adm-nav-badge {
+    background: #FAF5E8 !important;
+    color: #6B4E12 !important;
+    border: 1.2px solid #C5A859 !important;
+    box-shadow: 0 1px 3px rgba(138, 104, 31, 0.15) !important;
 }
 
 /* ════ COLLAPSED SIDEBAR ITEMS & ICONS (DESKTOP ONLY: min-width: 1025px) ════ */
