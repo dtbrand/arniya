@@ -19,6 +19,63 @@ $active_subnav = "export";
     <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/Frontend/Admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <style>
+        .dt-export-format-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: #FFFFFF;
+            border: 1.5px solid #EAE5D9;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+        .dt-export-format-card:hover {
+            border-color: #D4AF37;
+            background: #FAF8F4;
+            transform: translateY(-1px);
+        }
+        .dt-export-format-card.active {
+            border-color: #B8860B;
+            background: #FAF5E8;
+            box-shadow: 0 4px 12px rgba(184, 134, 11, 0.15);
+        }
+        .dt-export-format-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+        .dt-export-group-box {
+            background: #FAF8F4;
+            border: 1.2px solid #EAE5D9;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .dt-field-check-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #181512;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+        .dt-field-check-label input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: #8A681F;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="adm-layout">
@@ -27,87 +84,218 @@ $active_subnav = "export";
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content" style="padding: 14px 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
             
-            <div class="dt-customers-container">
+            <div class="dt-customers-container" style="display:flex; flex-direction:column; gap:16px;">
+                <!-- Page Header -->
                 <div class="dt-cust-head">
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
                             <span>Customer Export Studio</span>
                             <span class="dt-cust-badge gold">Data Reports</span>
                         </h1>
-                        <p class="dt-cust-subtitle">Generate downloadable CSV spreadsheets, Excel workbooks, or PDF printable dossiers with custom column selection.</p>
+                        <p class="dt-cust-subtitle">Generate custom downloadable CSV spreadsheets, Microsoft Excel workbooks, or formatted PDF dossiers.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
+                        <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>All Customers</span>
+                        </a>
+                        <button type="button" class="dt-btn dt-btn-gold" onclick="triggerQuickCsvDownload()">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Quick CSV Export</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4-Card Master KPI Ribbon -->
+                <div class="dt-cust-kpi-grid" style="grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));">
+                    <!-- Card 1: Total Base -->
+                    <div class="dt-cust-kpi-card active">
+                        <div class="dt-cust-kpi-top">
+                            <span class="dt-cust-kpi-label">TOTAL EXPORTABLE BASE</span>
+                            <div class="dt-cust-kpi-icon gold">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            </div>
+                        </div>
+                        <div class="dt-cust-kpi-val" style="color:#8A681F;">4,820</div>
+                        <div class="dt-cust-kpi-bot">
+                            <span class="dt-cust-kpi-delta">100% CRM Verified</span>
+                            <span style="color:#78716C;">Active Database</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Attributes -->
+                    <div class="dt-cust-kpi-card">
+                        <div class="dt-cust-kpi-top">
+                            <span class="dt-cust-kpi-label">AVAILABLE ATTRIBUTES</span>
+                            <div class="dt-cust-kpi-icon emerald">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            </div>
+                        </div>
+                        <div class="dt-cust-kpi-val" style="color:#15803D;">18 Fields</div>
+                        <div class="dt-cust-kpi-bot">
+                            <span class="dt-cust-kpi-delta">Demographics &amp; Orders</span>
+                            <span style="color:#15803D; font-weight:800;">Full Audit</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Formats -->
+                    <div class="dt-cust-kpi-card">
+                        <div class="dt-cust-kpi-top">
+                            <span class="dt-cust-kpi-label">SUPPORTED FORMATS</span>
+                            <div class="dt-cust-kpi-icon purple">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="dt-cust-kpi-val">3 Formats</div>
+                        <div class="dt-cust-kpi-bot">
+                            <span class="dt-cust-kpi-delta">CSV • XLSX • PDF</span>
+                            <span style="color:#78716C;">Instant Stream</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Security -->
+                    <div class="dt-cust-kpi-card">
+                        <div class="dt-cust-kpi-top">
+                            <span class="dt-cust-kpi-label">DATA SECURITY</span>
+                            <div class="dt-cust-kpi-icon gold">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            </div>
+                        </div>
+                        <div class="dt-cust-kpi-val" style="color:#181512; font-size:1.2rem;">Encrypted</div>
+                        <div class="dt-cust-kpi-bot">
+                            <span class="dt-cust-kpi-delta">Audit Logged</span>
+                            <span style="color:#78716C;">Staff Protected</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Export Wizard Card -->
-                <div class="dt-card" style="max-width:820px; margin:0 auto; width:100%;">
-                    <div class="dt-card-head" style="border-bottom:1.5px solid #F1ECE1; padding-bottom:10px;">
-                        <h3 class="dt-card-title">Configure Customer Export Parameters</h3>
+                <div class="dt-card" style="max-width:920px; width:100%; margin:0 auto; padding:22px 26px;">
+                    <div class="dt-card-head" style="margin-bottom:18px; border-bottom:1.2px solid #F1ECE1; padding-bottom:12px;">
+                        <div>
+                            <h3 class="dt-card-title">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Configure Customer Export Parameters</span>
+                            </h3>
+                            <p style="font-size:0.75rem; color:#78716C; margin:3px 0 0 0;">Customize audience segments, export format, and attributes to generate tailored reports.</p>
+                        </div>
                     </div>
 
-                    <form onsubmit="event.preventDefault(); window.showToast('📥 Exporting data file... Download will start automatically.');" style="display:flex; flex-direction:column; gap:16px; margin-top:12px;">
-                        <!-- Format Selection -->
+                    <form id="dtExportForm" onsubmit="handleCustomerExport(event)" style="display:flex; flex-direction:column; gap:20px;">
+                        <!-- 1. Select Export Format -->
                         <div>
-                            <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:8px;">1. Select Export Format</label>
-                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
-                                <label style="display:flex; align-items:center; gap:8px; padding:10px; background:#FAF8F4; border:1.5px solid var(--dt-gold-primary); border-radius:8px; cursor:pointer;">
-                                    <input type="radio" name="export_format" value="csv" checked>
-                                    <div>
-                                        <strong style="font-size:0.8rem; display:block; color:#181512;">CSV Spreadsheet</strong>
-                                        <small style="font-size:0.65rem; color:#78716C;">Universal .csv text</small>
+                            <label style="font-size:0.78rem; font-weight:800; color:#181512; display:block; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:10px;">1. Select Export File Format</label>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+                                <!-- CSV -->
+                                <div class="dt-export-format-card active" onclick="selectExportFormat('csv', this)">
+                                    <input type="radio" name="export_format" value="csv" checked style="display:none;">
+                                    <div class="dt-export-format-icon" style="background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37;">
+                                        CSV
                                     </div>
-                                </label>
+                                    <div>
+                                        <strong style="font-size:0.85rem; color:#181512; display:block;">CSV Spreadsheet</strong>
+                                        <small style="font-size:0.68rem; color:#78716C;">Universal UTF-8 text dataset</small>
+                                    </div>
+                                </div>
 
-                                <label style="display:flex; align-items:center; gap:8px; padding:10px; background:#FAF8F4; border:1px solid #EAE5D9; border-radius:8px; cursor:pointer;">
-                                    <input type="radio" name="export_format" value="excel">
-                                    <div>
-                                        <strong style="font-size:0.8rem; display:block; color:#181512;">Excel Workbook</strong>
-                                        <small style="font-size:0.65rem; color:#78716C;">Microsoft .xlsx format</small>
+                                <!-- Excel -->
+                                <div class="dt-export-format-card" onclick="selectExportFormat('excel', this)">
+                                    <input type="radio" name="export_format" value="excel" style="display:none;">
+                                    <div class="dt-export-format-icon" style="background:#DCFCE7; color:#15803D; border:1px solid #86EFAC;">
+                                        XLS
                                     </div>
-                                </label>
+                                    <div>
+                                        <strong style="font-size:0.85rem; color:#181512; display:block;">Excel Workbook</strong>
+                                        <small style="font-size:0.68rem; color:#78716C;">Microsoft .xlsx spreadsheet</small>
+                                    </div>
+                                </div>
 
-                                <label style="display:flex; align-items:center; gap:8px; padding:10px; background:#FAF8F4; border:1px solid #EAE5D9; border-radius:8px; cursor:pointer;">
-                                    <input type="radio" name="export_format" value="pdf">
-                                    <div>
-                                        <strong style="font-size:0.8rem; display:block; color:#181512;">Printable PDF</strong>
-                                        <small style="font-size:0.65rem; color:#78716C;">Formatted Dossier Document</small>
+                                <!-- PDF -->
+                                <div class="dt-export-format-card" onclick="selectExportFormat('pdf', this)">
+                                    <input type="radio" name="export_format" value="pdf" style="display:none;">
+                                    <div class="dt-export-format-icon" style="background:#EFF6FF; color:#1D4ED8; border:1px solid #BFDBFE;">
+                                        PDF
                                     </div>
-                                </label>
+                                    <div>
+                                        <strong style="font-size:0.85rem; color:#181512; display:block;">Printable PDF</strong>
+                                        <small style="font-size:0.68rem; color:#78716C;">Formatted executive dossier</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Data Scope -->
+                        <!-- 2. Audience Scope -->
                         <div>
-                            <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">2. Audience Scope</label>
-                            <select class="dt-cust-select" style="width:100%;">
-                                <option value="all">All Registered Customers (4,820 Shoppers)</option>
-                                <option value="active">Active Verified Accounts (4,180 Shoppers)</option>
-                                <option value="vip">VIP High-Value Spenders (312 Shoppers)</option>
-                                <option value="dormant">Dormant Accounts > 60 Days (640 Shoppers)</option>
+                            <label style="font-size:0.78rem; font-weight:800; color:#181512; display:block; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:8px;">2. Audience Scope &amp; Target Cohort</label>
+                            <select id="dtExportAudienceScope" class="dt-cust-select" style="width:100%; height:40px; font-size:0.82rem; font-weight:700; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px;">
+                                <option value="all" selected>All Registered Customers (4,820 Shoppers)</option>
+                                <option value="vip">VIP High-Value Spenders (312 Shoppers • LTV ≥ ₹25,000)</option>
+                                <option value="frequent">Frequent Repeat Buyers (1,850 Shoppers • Orders ≥ 3)</option>
+                                <option value="gujarat">Gujarat &amp; Surat Hub Shoppers (1,240 Shoppers)</option>
+                                <option value="nri">International &amp; NRI Global Buyers (486 Shoppers)</option>
+                                <option value="wholesale">B2B Wholesale Lot Orderers (748 Shoppers)</option>
+                                <option value="dormant">Dormant Shoppers &gt; 60 Days (640 Shoppers)</option>
                             </select>
                         </div>
 
-                        <!-- Included Columns Checkboxes -->
+                        <!-- 3. Fields & Attributes to Include -->
                         <div>
-                            <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:8px;">3. Fields &amp; Attributes to Include</label>
-                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; font-size:0.75rem; font-weight:700; color:#181512;">
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Customer ID</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Full Name</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Phone Number</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Email Address</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Total Orders</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Lifetime Spend (₹)</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> City &amp; State</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Joined Date</label>
-                                <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" checked> Assigned Tags</label>
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                                <label style="font-size:0.78rem; font-weight:800; color:#181512; text-transform:uppercase; letter-spacing:0.03em; margin:0;">3. Data Fields &amp; Attributes to Include</label>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.68rem;" onclick="toggleAllFields(true)">Select All</button>
+                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.68rem;" onclick="toggleAllFields(false)">Clear All</button>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
+                                <!-- Group A: Identity & Contact -->
+                                <div class="dt-export-group-box">
+                                    <strong style="font-size:0.75rem; color:#8A681F; text-transform:uppercase; display:block; margin-bottom:8px;">👤 Contact &amp; Identity</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="id" checked> Customer ID (CUST-XXXX)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="name" checked> Full Name</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="phone" checked> WhatsApp / Phone Number</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="email" checked> Email Address</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="tier" checked> Standing Tier (VIP / Regular)</label>
+                                </div>
+
+                                <!-- Group B: Commerce & Financials -->
+                                <div class="dt-export-group-box">
+                                    <strong style="font-size:0.75rem; color:#15803D; text-transform:uppercase; display:block; margin-bottom:8px;">💰 Orders &amp; Financials</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="spend" checked> Lifetime Spend (₹)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="orders" checked> Total Completed Orders</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="aov" checked> Average Order Value (AOV)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="last_order" checked> Last Purchase Date</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="joined" checked> Registration Date</label>
+                                </div>
+
+                                <!-- Group C: Location & CRM -->
+                                <div class="dt-export-group-box">
+                                    <strong style="font-size:0.75rem; color:#1D4ED8; text-transform:uppercase; display:block; margin-bottom:8px;">📍 Location &amp; CRM Flags</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="city" checked> City &amp; State</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="country" checked> Country &amp; Dial Code</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="pincode" checked> Postal Pincode</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="tags" checked> Assigned Tags</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="status" checked> Account Status (Active / VIP)</label>
+                                </div>
                             </div>
                         </div>
 
-                        <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; border-top:1.5px solid #F1ECE1; padding-top:14px;">
+                        <!-- 4. Export Summary Bar -->
+                        <div style="background:#FAF8F4; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                            <div style="font-size:0.75rem; color:#181512;">
+                                <strong>Estimated Output:</strong> <span id="dtExportEstimate">CSV File (~340 KB) • 4,820 Records</span>
+                            </div>
+                            <span class="dt-cust-badge emerald" style="font-size:0.65rem;">● Server Memory Stream Ready</span>
+                        </div>
+
+                        <!-- 5. Form Actions -->
+                        <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; border-top:1.5px solid #F1ECE1; padding-top:16px;">
                             <a href="/Frontend/Admin/customers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
-                            <button type="submit" class="dt-btn dt-btn-gold">Generate &amp; Download File</button>
+                            <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:8px; padding:0 22px; height:40px;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Generate &amp; Download File</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -119,5 +307,59 @@ $active_subnav = "export";
 </div>
 
 <script src="/Frontend/Admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script>
+let currentFormat = 'csv';
+
+function selectExportFormat(fmt, el) {
+    currentFormat = fmt;
+    document.querySelectorAll('.dt-export-format-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    const radio = el.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+
+    const est = document.getElementById('dtExportEstimate');
+    if (est) {
+        if (fmt === 'csv') est.innerText = 'CSV File (~340 KB) • 4,820 Records';
+        else if (fmt === 'excel') est.innerText = 'Excel XLSX Workbook (~820 KB) • 4,820 Records';
+        else if (fmt === 'pdf') est.innerText = 'Printable PDF Dossier (~2.4 MB) • 4,820 Records';
+    }
+}
+
+function toggleAllFields(check) {
+    document.querySelectorAll('input[name="fields[]"]').forEach(cb => cb.checked = check);
+}
+
+function handleCustomerExport(e) {
+    e.preventDefault();
+    const scope = document.getElementById('dtExportAudienceScope').value;
+    window.showToast(`⏳ Generating ${currentFormat.toUpperCase()} file for "${scope}" cohort...`);
+    
+    setTimeout(() => {
+        triggerQuickCsvDownload();
+    }, 800);
+}
+
+function triggerQuickCsvDownload() {
+    const csvContent = "data:text/csv;charset=utf-8," 
+        + "Customer ID,Full Name,Phone Number,Email,Lifetime Spend (INR),Total Orders,City,State,Standing,Tags\n"
+        + "CUST-1042,Ramesh Patel,+91 98251 44321,ramesh.patel@gmail.com,48500,6,Surat,Gujarat,VIP Champion,Frequent Buyer; Surat Hub\n"
+        + "CUST-1041,Priya Sharma,+91 98765 43210,priya.s@yahoo.com,32400,4,Ahmedabad,Gujarat,Active Shopper,Saree Enthusiast\n"
+        + "CUST-1040,Ananya Verma,+91 91234 56789,ananya.v@outlook.com,24800,3,Mumbai,Maharashtra,Active Shopper,Bridal Lehenga\n"
+        + "CUST-1039,Suresh Mehta,+91 94280 11223,suresh.m@gmail.com,64200,8,Rajkot,Gujarat,VIP Champion,B2B Wholesale Buyer\n"
+        + "CUST-1038,Meera Joshi,+91 98980 99887,meera.j@gmail.com,12600,2,Vadodara,Gujarat,Active Shopper,Festive Silk Seeker\n"
+        + "CUST-1037,Rajesh Gupta,+91 98111 22334,rajesh.g@rediffmail.com,18900,3,Delhi,Delhi,Active Shopper,COD Verified\n"
+        + "CUST-1036,Kavita Singhania,+91 98200 44556,kavita.s@gmail.com,85000,12,Jaipur,Rajasthan,VIP Champion,High-Value VIP; Saree Enthusiast";
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `DT_Brands_Customers_Export_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.showToast("✓ Export successful! Customer dataset downloaded.");
+}
+</script>
 </body>
 </html>
