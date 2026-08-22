@@ -17,7 +17,7 @@ if (isset($active_nav) && !empty($active_nav)) {
     $current_nav = 'pricing';
 } elseif (strpos($req_uri, '/reviews/') !== false) {
     $current_nav = 'reviews';
-} elseif (strpos($req_uri, '/wholesalers/') !== false) {
+} elseif (strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/wholesale/') !== false) {
     $current_nav = 'wholesalers';
 } elseif (strpos($req_uri, '/resellers/') !== false) {
     $current_nav = 'resellers';
@@ -55,33 +55,43 @@ if (isset($active_nav) && !empty($active_nav)) {
 
 if (isset($active_subnav) && !empty($active_subnav)) {
     $current_subnav = $active_subnav;
-} elseif (strpos($req_uri, '/resellers/pending.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/pending.php') !== false || strpos($req_uri, '/resellers/pending.php') !== false) {
     $current_subnav = 'pending';
-} elseif (strpos($req_uri, '/resellers/approved.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/approved.php') !== false || strpos($req_uri, '/resellers/approved.php') !== false) {
     $current_subnav = 'approved';
-} elseif (strpos($req_uri, '/resellers/rejected.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/rejected.php') !== false || strpos($req_uri, '/resellers/rejected.php') !== false) {
     $current_subnav = 'rejected';
-} elseif (strpos($req_uri, '/resellers/suspended.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/suspended.php') !== false || strpos($req_uri, '/resellers/suspended.php') !== false) {
     $current_subnav = 'suspended';
-} elseif (strpos($req_uri, '/resellers/applications.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/applications.php') !== false || strpos($req_uri, '/resellers/applications.php') !== false) {
     $current_subnav = 'applications';
-} elseif (strpos($req_uri, '/resellers/verification.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/verification.php') !== false || strpos($req_uri, '/resellers/verification.php') !== false) {
     $current_subnav = 'verification';
-} elseif (strpos($req_uri, '/resellers/documents.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/documents.php') !== false || strpos($req_uri, '/resellers/documents.php') !== false) {
     $current_subnav = 'documents';
-} elseif (strpos($req_uri, '/resellers/pricing.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/pricing.php') !== false || strpos($req_uri, '/resellers/pricing.php') !== false) {
     $current_subnav = 'pricing';
-} elseif (strpos($req_uri, '/resellers/credit.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/price-lists.php') !== false) {
+    $current_subnav = 'price-lists';
+} elseif (strpos($req_uri, '/wholesale/tiers.php') !== false) {
+    $current_subnav = 'tiers';
+} elseif (strpos($req_uri, '/wholesale/moq.php') !== false) {
+    $current_subnav = 'moq';
+} elseif (strpos($req_uri, '/wholesale/discounts.php') !== false) {
+    $current_subnav = 'discounts';
+} elseif (strpos($req_uri, '/wholesale/credit.php') !== false || strpos($req_uri, '/resellers/credit.php') !== false) {
     $current_subnav = 'credit';
+} elseif (strpos($req_uri, '/wholesale/orders.php') !== false) {
+    $current_subnav = 'orders';
 } elseif (strpos($req_uri, '/resellers/commissions.php') !== false) {
     $current_subnav = 'commissions';
-} elseif (strpos($req_uri, '/resellers/segments.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/segments.php') !== false || strpos($req_uri, '/resellers/segments.php') !== false) {
     $current_subnav = 'segments';
-} elseif (strpos($req_uri, '/resellers/analytics.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/analytics.php') !== false || strpos($req_uri, '/resellers/analytics.php') !== false) {
     $current_subnav = 'analytics';
-} elseif (strpos($req_uri, '/resellers/export.php') !== false) {
+} elseif (strpos($req_uri, '/wholesale/export.php') !== false || strpos($req_uri, '/resellers/export.php') !== false) {
     $current_subnav = 'export';
-} elseif (strpos($req_uri, '/resellers/') !== false) {
+} elseif (strpos($req_uri, '/wholesale/') !== false || strpos($req_uri, '/wholesalers/') !== false || strpos($req_uri, '/resellers/') !== false) {
     $current_subnav = 'all';
 } else {
     $current_subnav = '';
@@ -397,12 +407,81 @@ if (isset($active_subnav) && !empty($active_subnav)) {
         <div class="adm-nav-group">
             <div class="adm-nav-heading">B2B PARTNERS</div>
             <ul class="adm-nav-list">
-                <li>
-                    <a href="/Frontend/Admin/wholesalers/" class="adm-nav-item <?php echo $current_nav === 'wholesalers' ? 'active' : ''; ?>" id="navItem-wholesalers" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-partners')) { switchAdmTab('partners'); return false; }" data-title="Wholesale B2B Hub">
-                        <svg class="adm-nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <!-- WHOLESALERS WITH REAL SVG SUBMENU -->
+                <li class="adm-nav-has-sub <?php echo $current_nav === 'wholesalers' ? 'open' : ''; ?>">
+                    <a href="/Frontend/Admin/wholesale/" class="adm-nav-item <?php echo $current_nav === 'wholesalers' ? 'active' : ''; ?>" id="navItem-wholesalers" data-title="Wholesale B2B Hub (124)">
+                        <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span class="adm-nav-label">Wholesalers</span>
-                        <span class="adm-nav-badge gold">VIP</span>
+                        <span class="adm-nav-badge gold">124</span>
+                        <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
+                            <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </span>
                     </a>
+                    <ul class="adm-nav-submenu <?php echo $current_nav === 'wholesalers' ? 'open' : ''; ?>" id="admSubmenu-wholesalers">
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>All Wholesalers</span>
+                                <span class="adm-nav-badge">124</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/pending.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'pending') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                <span>Pending Applications</span>
+                                <span class="adm-nav-badge" style="background:#FEF3C7; color:#B45309;">14</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/approved.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'approved') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span>Approved Partners</span>
+                                <span class="adm-nav-badge green">98</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/pricing.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'pricing') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                                <span>Pricing &amp; Margins</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/tiers.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'tiers') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <span>Tiers &amp; MOQ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/credit.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'credit') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                <span>Credit Ledger</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/orders.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'orders') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                <span>Wholesale Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/segments.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'segments') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+                                <span>Cohorts &amp; Segments</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/analytics.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'analytics') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                <span>Growth Analytics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Frontend/Admin/wholesale/export.php" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && $current_subnav === 'export') ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Export Studio</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- RESELLERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'resellers' ? 'open' : ''; ?>">

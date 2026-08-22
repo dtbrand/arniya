@@ -1,0 +1,43 @@
+/**
+ * wholesale-credit.css — DT Brand's & Jai Hanuman Tex
+ * Luxury Ambient Glass Credit Hub, Headroom Bars & Double-Entry Ledger
+ */
+
+.dt-wholesale-credit-hero {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.35) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(28, 22, 14, 0.98) 0%, rgba(45, 35, 18, 0.95) 45%, rgba(24, 18, 10, 0.98) 100%);
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    animation: dtAdminAmbientGlow 8s ease-in-out infinite alternate;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1.5px solid #D4AF37;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 20px rgba(212, 175, 55, 0.25);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dt-wholesale-progress-wrap {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    height: 6px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.dt-wholesale-progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #D4AF37 0%, #FFE57F 100%);
+    box-shadow: 0 0 8px rgba(255, 229, 127, 0.6);
+    transition: width 0.4s ease;
+}

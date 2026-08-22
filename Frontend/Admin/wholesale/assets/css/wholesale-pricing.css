@@ -1,0 +1,52 @@
+/**
+ * wholesale-pricing.css — DT Brand's & Jai Hanuman Tex
+ * Tier Pricing Matrix, Category Margins & SKU Price Overrides
+ */
+
+.dt-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.dt-pricing-tier-card {
+    background: #FAF8F4;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.dt-pricing-tier-card:hover {
+    background: #FFFFFF;
+    border-color: #D4AF37;
+    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.12);
+    transform: translateY(-2px);
+}
+
+.dt-pricing-tier-card.featured {
+    background: #FFFFFF;
+    border-color: #8A681F;
+    box-shadow: 0 0 0 1.5px #D4AF37, 0 6px 20px rgba(184, 134, 11, 0.15);
+}
+
+.dt-discount-tag {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #15803D;
+    line-height: 1;
+}
+
+.dt-fabric-margin-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #FAF8F4;
+    border: 1px solid #EAE5D9;
+    border-radius: 8px;
+    font-size: 0.76rem;
+}

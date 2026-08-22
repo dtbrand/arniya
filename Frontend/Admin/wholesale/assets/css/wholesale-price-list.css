@@ -1,0 +1,32 @@
+/**
+ * wholesale-price-list.css — DT Brand's & Jai Hanuman Tex
+ * Custom Catalog Price Lists, Rule Matrices & Product Selectors
+ */
+
+.dt-pricelist-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.dt-pricelist-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 4px 16px rgba(184, 134, 11, 0.1);
+}
+
+.dt-pricelist-meta-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #FAF5E8;
+    color: #8A681F;
+    border: 1px solid #D4AF37;
+}

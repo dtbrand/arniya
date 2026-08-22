@@ -1,0 +1,29 @@
+/**
+ * wholesale-moq.css — DT Brand's & Jai Hanuman Tex
+ * Minimum Order Quantity, Lot Sizing & Volume Quantity Breaks
+ */
+
+.dt-moq-rule-box {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.dt-qty-break-pill {
+    background: #FAF8F4;
+    border: 1px solid #EAE5D9;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 120px;
+}
