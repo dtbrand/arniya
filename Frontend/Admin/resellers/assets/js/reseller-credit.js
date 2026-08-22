@@ -78,7 +78,7 @@
                 <td style="text-align:right; font-weight:800; font-size:0.85rem; color:#15803D; white-space:nowrap;">+₹${newLimit.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#181512; white-space:nowrap;">₹${currentUtilized.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#15803D; white-space:nowrap;">₹${avail.toLocaleString('en-IN')}</td>
-                <td><span class="dt-reseller-badge emerald" style="font-size:0.68rem; font-weight:800;">✓ Completed</span></td>
+                <td style="white-space:nowrap;"><span class="dt-status-pill-clean emerald">✓ COMPLETED</span></td>
                 <td style="color:#78716C; font-size:0.72rem;">Admin Gautam</td>
                 <td style="text-align:right; white-space:nowrap;">
                     <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewTxnVoucher('${newTxnId}', 'Credit Limit Adjusted', '₹${newLimit.toLocaleString('en-IN')}', '${nowStr}', '${reason}', 'Admin Gautam')">
@@ -145,7 +145,7 @@
                 <td style="text-align:right; font-weight:800; font-size:0.85rem; color:#15803D; white-space:nowrap;">+₹${amount.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#181512; white-space:nowrap;">₹${currentUtilized.toLocaleString('en-IN')}</td>
                 <td style="text-align:right; font-weight:800; color:#15803D; white-space:nowrap;">₹${avail.toLocaleString('en-IN')}</td>
-                <td><span class="dt-reseller-badge emerald" style="font-size:0.68rem; font-weight:800;">✓ Settled</span></td>
+                <td style="white-space:nowrap;"><span class="dt-status-pill-clean emerald">✓ SETTLED</span></td>
                 <td style="color:#78716C; font-size:0.72rem;">Accounts Desk</td>
                 <td style="text-align:right; white-space:nowrap;">
                     <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewTxnVoucher('${newTxnId}', 'Credit Settlement (${mode})', '+₹${amount.toLocaleString('en-IN')}', '${nowStr}', 'UTR #${utr}', 'Accounts Desk')">

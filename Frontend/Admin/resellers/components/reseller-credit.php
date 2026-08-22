@@ -185,26 +185,26 @@ $credit_logs = [
             <table class="dt-credit-ledger-table">
                 <thead>
                     <tr>
-                        <th>Txn ID</th>
-                        <th>Date &amp; Time</th>
-                        <th>Description / Reference</th>
-                        <th style="text-align:right;">Amount (₹)</th>
-                        <th style="text-align:right;">Running Utilized</th>
-                        <th style="text-align:right;">Available Credit</th>
-                        <th>Status</th>
-                        <th>Authorized By</th>
-                        <th style="text-align:right;">Action</th>
+                        <th style="white-space:nowrap;">Txn ID</th>
+                        <th style="white-space:nowrap;">Date &amp; Time</th>
+                        <th style="white-space:nowrap;">Description / Reference</th>
+                        <th style="text-align:right; white-space:nowrap;">Amount (₹)</th>
+                        <th style="text-align:right; white-space:nowrap;">Running Utilized</th>
+                        <th style="text-align:right; white-space:nowrap;">Available Credit</th>
+                        <th style="white-space:nowrap;">Status</th>
+                        <th style="white-space:nowrap;">Authorized By</th>
+                        <th style="text-align:right; white-space:nowrap;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="creditLedgerTbody">
                     <?php foreach ($credit_logs as $l): ?>
                         <tr class="ledger-row-item" data-type="<?php echo $l['category']; ?>" style="border-bottom:1px solid #F1ECE1;">
-                            <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F;"><?php echo $l['id']; ?></td>
+                            <td class="ledger-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;"><?php echo $l['id']; ?></td>
                             <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;"><?php echo $l['date']; ?></td>
-                            <td class="ledger-desc-cell" style="font-weight:700; color:#181512;">
-                                <div style="display:flex; flex-direction:column;">
+                            <td class="ledger-desc-cell" style="font-weight:700; color:#181512; white-space:nowrap;">
+                                <div style="display:flex; align-items:center; gap:8px;">
                                     <span><?php echo htmlspecialchars($l['type']); ?></span>
-                                    <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace;"><?php echo htmlspecialchars($l['order_ref']); ?></small>
+                                    <small style="font-size:0.68rem; color:#78716C; font-weight:600; font-family:monospace; background:#FAF5E8; padding:1px 6px; border-radius:4px; border:1px solid #EAE5D9;"><?php echo htmlspecialchars($l['order_ref']); ?></small>
                                 </div>
                             </td>
                             <td style="text-align:right; font-weight:800; font-size:0.85rem; color:<?php echo $l['amount'] < 0 ? '#DC2626' : '#15803D'; ?>; white-space:nowrap;">
@@ -212,10 +212,13 @@ $credit_logs = [
                             </td>
                             <td style="text-align:right; font-weight:800; color:#181512; white-space:nowrap;">₹<?php echo number_format($l['balance']); ?></td>
                             <td style="text-align:right; font-weight:800; color:#15803D; white-space:nowrap;">₹<?php echo number_format($l['available']); ?></td>
-                            <td>
-                                <span class="dt-reseller-badge emerald" style="font-size:0.68rem; font-weight:800;">✓ <?php echo $l['status']; ?></span>
+                            <td style="white-space:nowrap;">
+                                <span class="dt-status-pill-clean emerald">
+                                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    <span><?php echo strtoupper($l['status']); ?></span>
+                                </span>
                             </td>
-                            <td style="color:#78716C; font-size:0.72rem;"><?php echo htmlspecialchars($l['actor']); ?></td>
+                            <td style="color:#78716C; font-size:0.72rem; white-space:nowrap;"><?php echo htmlspecialchars($l['actor']); ?></td>
                             <td style="text-align:right; white-space:nowrap;">
                                 <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="viewTxnVoucher('<?php echo $l['id']; ?>', '<?php echo addslashes($l['type']); ?>', '<?php echo ($l['amount'] > 0 ? '+' : '-') . '₹' . number_format(abs($l['amount'])); ?>', '<?php echo $l['date']; ?>', '<?php echo addslashes($l['order_ref']); ?>', '<?php echo addslashes($l['actor']); ?>')">
                                     <span>Voucher</span>

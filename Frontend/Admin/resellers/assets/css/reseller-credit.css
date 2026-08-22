@@ -90,24 +90,50 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 0.8rem;
+    min-width: 850px;
+}
+
+.dt-credit-ledger-table th,
+.dt-credit-ledger-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #F1ECE1;
+    vertical-align: middle;
+    white-space: nowrap !important;
 }
 
 .dt-credit-ledger-table th {
     background: #FAF8F4;
     color: #181512;
     font-weight: 800;
-    padding: 10px 14px;
     text-align: left;
     border-bottom: 1.5px solid #EAE5D9;
-    white-space: nowrap;
-}
-
-.dt-credit-ledger-table td {
-    padding: 11px 14px;
-    border-bottom: 1px solid #F1ECE1;
-    vertical-align: middle;
 }
 
 .dt-credit-ledger-table tbody tr:hover {
     background: #FDFBF7;
+}
+
+.dt-status-pill-clean {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.dt-status-pill-clean.emerald {
+    background: #DCFCE7 !important;
+    color: #15803D !important;
+    border: 1px solid #86EFAC !important;
+}
+
+.dt-status-pill-clean.amber {
+    background: #FEF3C7 !important;
+    color: #B45309 !important;
+    border: 1px solid #FDE68A !important;
 }
