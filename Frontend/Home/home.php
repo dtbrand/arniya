@@ -358,7 +358,7 @@ $total_products = count($products);
                     </span>
                 </a>
 
-                <a href="/Frontend/Reseller/reseller.php" class="quick-card card-reseller">
+                <a href="/reseller" class="quick-card card-reseller">
                     <div class="quick-card-icon-wrap icon-reseller">
                         <svg viewBox="0 0 24 24" class="quick-card-svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     </div>
@@ -372,7 +372,7 @@ $total_products = count($products);
                     </span>
                 </a>
 
-                <a href="/Frontend/Wholesale/wholesale.php" class="quick-card card-wholesale">
+                <a href="/wholesale" class="quick-card card-wholesale">
                     <div class="quick-card-icon-wrap icon-wholesale">
                         <svg viewBox="0 0 24 24" class="quick-card-svg"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     </div>
@@ -660,7 +660,7 @@ $total_products = count($products);
                     <!-- Right CTAs -->
                     <div class="rpb-right">
                         <div class="rpb-cta-box">
-                            <a href="/Frontend/Reseller/reseller.php" class="rpb-btn-primary">
+                            <a href="/reseller" class="rpb-btn-primary">
                                 <span>Start Reselling Free</span>
                                 <svg viewBox="0 0 24 24" class="rpb-btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                             </a>
@@ -854,7 +854,7 @@ $total_products = count($products);
                     <!-- Right CTAs -->
                     <div class="ret-right">
                         <div class="ret-cta-box">
-                            <a href="/Frontend/Retailer/retailer.php" class="ret-btn-primary">
+                            <a href="/retailer" class="ret-btn-primary">
                                 <span>Open Retailer Hub</span>
                                 <svg viewBox="0 0 24 24" class="ret-btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                             </a>
@@ -941,7 +941,7 @@ $total_products = count($products);
                             <span class="wpb-cta-badge-dot"></span>
                             <span>Bulk Sourcing & Catalog Ready</span>
                         </div>
-                        <a href="/Frontend/Wholesale/wholesale.php" class="wpb-btn-primary">
+                        <a href="/wholesale" class="wpb-btn-primary">
                             <span>Explore Wholesale Catalog</span>
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
@@ -1232,7 +1232,7 @@ $total_products = count($products);
             </div>
 
             <div style="text-align:center; margin-top:32px;">
-                <a href="/Frontend/Reseller/reseller.php" class="workflow-cta-btn">
+                <a href="/reseller" class="workflow-cta-btn">
                     <span>Start Reselling Today (Zero Cost)</span>
                     <span class="btn-arrow-icon">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -1365,7 +1365,7 @@ $total_products = count($products);
             </div>
 
             <div style="text-align:center; margin-top:32px;">
-                <a href="/Frontend/Retailer/retailer.php" class="workflow-cta-btn">
+                <a href="/retailer" class="workflow-cta-btn">
                     <span>Explore Retailer Boutique Hub</span>
                     <span class="btn-arrow-icon">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -1495,7 +1495,7 @@ $total_products = count($products);
             </div>
 
             <div style="text-align:center; margin-top:32px;">
-                <a href="/Frontend/Wholesale/wholesale.php" class="workflow-cta-btn">
+                <a href="/wholesale" class="workflow-cta-btn">
                     <span>Browse Wholesale Lots</span>
                     <span class="btn-arrow-icon">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>

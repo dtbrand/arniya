@@ -32,7 +32,7 @@ $active_nav = "system";
                     <p class="adm-page-subtitle">Monitor PHP execution, MySQL database latencies, hourly backups, and cache performance.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

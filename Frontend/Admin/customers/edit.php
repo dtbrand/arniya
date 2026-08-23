@@ -472,7 +472,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 
                 <!-- Main Form Card -->
                 <div class="dt-edit-card">
-                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Profile Saved Successfully!'); setTimeout(() => window.location.href='/Frontend/Admin/customers/view.php?id=<?php echo $customer_id; ?>', 1000);">
+                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Profile Saved Successfully!'); setTimeout(() => window.location.href = '/admin/customers/view.php?id=<?php echo $customer_id; ?>', 1000);">
                         
                         <!-- ══ SECTION 1: PERSONAL & CONTACT INFORMATION ══ -->
                         <div class="dt-edit-section">

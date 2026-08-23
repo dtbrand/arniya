@@ -10,7 +10,7 @@
         openDrawer: function(orderId) {
             const drawer = document.getElementById('orderQuickViewDrawer');
             if (!drawer) {
-                window.location.href = '/Frontend/Admin/orders/view.php?id=' + encodeURIComponent(orderId);
+                window.location.href = '/admin/orders/view.php?id=' + encodeURIComponent(orderId);
                 return;
             }
 
@@ -742,7 +742,7 @@
         openInvoiceModal: function(orderId) {
             const modal = document.getElementById('orderInvoiceModal');
             if (!modal) {
-                window.location.href = '/Frontend/Admin/orders/invoice.php?id=' + encodeURIComponent(orderId);
+                window.location.href = '/admin/orders/invoice.php?id=' + encodeURIComponent(orderId);
                 return;
             }
 
@@ -863,7 +863,7 @@
         openPackingSlipModal: function(orderId) {
             const modal = document.getElementById('orderPackingSlipModal');
             if (!modal) {
-                window.location.href = '/Frontend/Admin/orders/packing-slip.php?id=' + encodeURIComponent(orderId);
+                window.location.href = '/admin/orders/packing-slip.php?id=' + encodeURIComponent(orderId);
                 return;
             }
 
@@ -1322,7 +1322,7 @@
         openShippingLabelModal: function(orderId) {
             const modal = document.getElementById('orderShippingLabelModal');
             if (!modal) {
-                window.location.href = '/Frontend/Admin/orders/shipping-label.php?id=' + encodeURIComponent(orderId);
+                window.location.href = '/admin/orders/shipping-label.php?id=' + encodeURIComponent(orderId);
                 return;
             }
 

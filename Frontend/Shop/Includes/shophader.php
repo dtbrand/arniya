@@ -845,13 +845,13 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
         <!-- Left: Back to Home Button (Shop page only) & Brand Logo -->
         <div class="header-left-group">
             <?php if (!$isHomePage): ?>
-            <a href="/Frontend/Home/home.php" class="shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
+            <a href="/" class="shop-back-btn" id="shopBackBtn" aria-label="Back to Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
             </a>
             <?php endif; ?>
 
-            <a href="/Frontend/Home/home.php" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <a href="/" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
             </a>
         </div>
@@ -911,11 +911,11 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
                     <span id="headerAccountLabel">Account</span>
                 </a>
                 <div class="header-account-dropdown" id="headerAccountDropdown">
-                    <a href="/Frontend/Home/home.php" class="ac-drop-item" style="color:var(--dark-gold, #8A681F); font-weight:800;">
+                    <a href="/" class="ac-drop-item" style="color:var(--dark-gold, #8A681F); font-weight:800;">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>🏠 Home Page</span>
                     </a>
-                    <a href="/Frontend/Shop/shop.php" class="ac-drop-item">
+                    <a href="/shop" class="ac-drop-item">
                         <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         <span>🛍️ Shop All Catalog</span>
                     </a>
@@ -1000,11 +1000,11 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
     <?php if (empty($hideHeaderSubnav) && strpos($_SERVER['PHP_SELF'] ?? '', 'home.php') === false): ?>
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
         <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
-            <a href="/Frontend/Home/home.php" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
+            <a href="/" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
                 <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 <span>Home</span>
             </a>
-            <a href="/Frontend/Shop/shop.php" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
+            <a href="/shop" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
                 <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 <span>Shop All</span>
             </a>

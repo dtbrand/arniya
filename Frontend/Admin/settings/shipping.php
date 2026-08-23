@@ -33,7 +33,7 @@ $active_nav = "settings";
                 </div>
                 <div class="adm-page-actions">
                     <a href="/Frontend/Admin/settings/" class="adm-btn-secondary">← Back to Settings Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 

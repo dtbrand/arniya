@@ -32,7 +32,7 @@ $active_nav = "shipping";
                     <p class="adm-page-subtitle">Manage Delhivery, BlueDart, and TCI Freight consignments with real-time tracking.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

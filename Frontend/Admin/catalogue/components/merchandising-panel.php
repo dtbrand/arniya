@@ -12,7 +12,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <span>Visual Merchandising: <?php echo htmlspecialchars($display_cat_name); ?> (Position Priority)</span>
         </h3>
         <div style="display:flex; gap:6px; align-items:center;">
-            <select class="wp-select" onchange="if(this.value) window.location.href='/Frontend/Admin/catalogue/categories/view.php?id=' + this.value" style="height:28px; font-size:11.5px; min-width:200px;">
+            <select class="wp-select" onchange="if(this.value) window.location.href = '/admin/catalogue/categories/view.php?id=' + this.value" style="height:28px; font-size:11.5px; min-width:200px;">
                 <option value="1" <?php echo $display_cat_name === 'Silk Sarees & Handlooms' ? 'selected' : ''; ?>>Category: Silk Sarees (420 SKUs)</option>
                 <option value="2" <?php echo $display_cat_name === 'Bridal & Festive Lehengas' ? 'selected' : ''; ?>>Category: Bridal Lehengas (280 SKUs)</option>
                 <option value="3" <?php echo $display_cat_name === 'Designer Kurtis & Tunics' ? 'selected' : ''; ?>>Category: Designer Kurtis (310 SKUs)</option>

@@ -1,74 +1,116 @@
 # ══════════════════════════════════════════════════════════════════
 #  HIGH-SPEED APACHE OPTIMIZATION & CLEAN ROUTING CONFIGURATION
-#  DT Brand's & Jai Hanuman Tex — Luxury Ethnic B2B Platform
+#  DT Brand's & Jai Hanuman Tex — Flipkart / Meesho Style URLs
 # ══════════════════════════════════════════════════════════════════
 
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
+    RewriteEngine On
+    RewriteBase /
 
-# ── 1. API ROUTES ──
-RewriteRule ^api/health(\.php)?$ api/health.php [L,QSA]
-RewriteRule ^api/products(\.php)?$ api/products.php [L,QSA]
-RewriteRule ^api/cart(\.php)?$ api/cart.php [L,QSA]
-RewriteRule ^api/wishlist(\.php)?$ api/wishlist.php [L,QSA]
-RewriteRule ^api/orders(\.php)?$ api/orders.php [L,QSA]
-RewriteRule ^api/categories(\.php)?$ api/categories.php [L,QSA]
-RewriteRule ^api/reseller(\.php)?$ api/reseller.php [L,QSA]
-RewriteRule ^api/wholesale(\.php)?$ api/wholesale.php [L,QSA]
+    # ── 1. CANONICAL REDIRECTS (Raw /Frontend/ to Clean Modern URLs) ──
+    # If a user/browser enters /Frontend/Admin/* directly, redirect to clean /admin/*
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Admin/([^\s?]*) [NC]
+    RewriteRule ^Frontend/Admin/(.*)$ /admin/$1 [R=301,L]
 
-# ── 2. E-COMMERCE CLEAN CONSUMER & PARTNER URLS ──
-RewriteRule ^$ /Frontend/Home/home.php [L,R=301]
-RewriteRule ^home(\.php)?$ /Frontend/Home/home.php [L,R=301]
-RewriteRule ^shop(\.php)?$ /Frontend/Shop/shop.php [L,R=301]
-RewriteRule ^product/([0-9]+)/?$ /Frontend/Single-Product/singleproduct.php?id=$1 [L,QSA]
-RewriteRule ^singleproduct(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,QSA]
-RewriteRule ^singelprodut(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301]
-RewriteRule ^wholesale(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
-RewriteRule ^wholesaler(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
-RewriteRule ^retailer(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301]
-RewriteRule ^reseller(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301]
+    # If user enters /Frontend/Shop/shop.php directly, redirect to /shop
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Shop/shop\.php [NC]
+    RewriteRule ^Frontend/Shop/shop\.php$ /shop [R=301,L]
 
-# ── 3. AUTH & CHECKOUT SHARED REWRITES ──
-RewriteRule ^myaccount(\.php)?$ /Shared/Auth/myaccount.php [L,R=301]
-RewriteRule ^account(\.php)?$ /Shared/Includes/account.php [L,R=301]
-RewriteRule ^cart(\.php)?$ /Shared/Includes/cart.php [L,R=301]
-RewriteRule ^checkout(\.php)?$ /Shared/Includes/checkout.php [L,R=301]
-RewriteRule ^quickview(\.php)?$ /Shared/Includes/quickview.php [L,R=301]
-RewriteRule ^smartshare(\.php)?$ /Shared/Includes/smartshare.php [L,R=301]
-RewriteRule ^wishlist(\.php)?$ /Shared/Includes/wishlist.php [L,R=301]
-RewriteRule ^reels(\.php)?$ /Shared/Includes/reels.php [L,R=301]
+    # If user enters /Frontend/Home/home.php directly, redirect to /
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Home/home\.php [NC]
+    RewriteRule ^Frontend/Home/home\.php$ / [R=301,L]
 
-# ── 4. ADMIN CONSOLE REWRITES ──
-RewriteRule ^admin/retail/?$ /Frontend/Admin/retail/index.php [L,R=301]
-RewriteRule ^admin/wholesale/?$ /Frontend/Admin/wholesale/index.php [L,R=301]
-RewriteRule ^admin/resellers/?$ /Frontend/Admin/resellers/index.php [L,R=301]
-RewriteRule ^admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
-RewriteRule ^Admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
-RewriteRule ^admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
-RewriteRule ^Admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
-RewriteRule ^admin/login(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
-RewriteRule ^adminlogin(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
-RewriteRule ^admin(\.php)?$ /Frontend/Admin/admin.php [L,R=301]
+    # If user enters /Frontend/Single-Product/singleproduct.php?id=X, redirect to /product/X
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Single-Product/singleproduct\.php\?id=([0-9]+) [NC]
+    RewriteRule ^Frontend/Single-Product/singleproduct\.php$ /product/%1? [R=301,L]
 
-# ── 5. ASSET ROUTING FALLBACKS ──
-RewriteRule ^Asset/css/admin\.css$ Frontend/Admin/Asset/css/admin.css [L]
-RewriteRule ^Asset/js/admin\.js$ Frontend/Admin/Asset/js/admin.js [L]
-RewriteRule ^Asset/css/shop\.css$ Frontend/Shop/Asset/css/shop.css [L]
-RewriteRule ^Asset/js/shop\.js$ Frontend/Shop/Asset/js/shop.js [L]
-RewriteRule ^Asset/css/singleproduct\.css$ Frontend/Single-Product/Asset/css/singleproduct.css [L]
-RewriteRule ^Asset/js/singleproduct\.js$ Frontend/Single-Product/Asset/js/singleproduct.js [L]
-RewriteRule ^Asset/css/wholesale\.css$ Frontend/Wholesale/Asset/css/wholesale.css [L]
-RewriteRule ^Asset/js/wholesale\.js$ Frontend/Wholesale/Asset/js/wholesale.js [L]
-RewriteRule ^Asset/css/retailer\.css$ Frontend/Retailer/Asset/css/retailer.css [L]
-RewriteRule ^Asset/js/retailer\.js$ Frontend/Retailer/Asset/js/retailer.js [L]
-RewriteRule ^Asset/css/reseller\.css$ Frontend/Reseller/Asset/css/reseller.css [L]
-RewriteRule ^Asset/js/reseller\.js$ Frontend/Reseller/Asset/js/reseller.js [L]
-RewriteRule ^Asset/images/(.*)$ Shared/Asset/images/$1 [L]
-RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
+    # If user enters /Frontend/Reseller/reseller.php, redirect to /reseller
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Reseller/reseller\.php [NC]
+    RewriteRule ^Frontend/Reseller/reseller\.php$ /reseller [R=301,L]
+
+    # If user enters /Frontend/Retailer/retailer.php, redirect to /retailer
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Retailer/retailer\.php [NC]
+    RewriteRule ^Frontend/Retailer/retailer\.php$ /retailer [R=301,L]
+
+    # If user enters /Frontend/Wholesale/wholesale.php, redirect to /wholesale
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Wholesale/wholesale\.php [NC]
+    RewriteRule ^Frontend/Wholesale/wholesale\.php$ /wholesale [R=301,L]
+
+
+    # ── 2. REST & AJAX API ROUTES ──
+    RewriteRule ^api/health(\.php)?$ api/health.php [L,QSA]
+    RewriteRule ^api/products(\.php)?$ api/products.php [L,QSA]
+    RewriteRule ^api/cart(\.php)?$ api/cart.php [L,QSA]
+    RewriteRule ^api/wishlist(\.php)?$ api/wishlist.php [L,QSA]
+    RewriteRule ^api/orders(\.php)?$ api/orders.php [L,QSA]
+    RewriteRule ^api/categories(\.php)?$ api/categories.php [L,QSA]
+    RewriteRule ^api/reseller(\.php)?$ api/reseller.php [L,QSA]
+    RewriteRule ^api/wholesale(\.php)?$ api/wholesale.php [L,QSA]
+
+
+    # ── 3. E-COMMERCE CLEAN FLIPKART/MEESHO STYLE CONSUMER URLS ──
+    RewriteRule ^$ Frontend/Home/home.php [L]
+    RewriteRule ^home/?$ Frontend/Home/home.php [L]
+    RewriteRule ^shop/?$ Frontend/Shop/shop.php [L,QSA]
+    RewriteRule ^collection/?$ Frontend/Shop/shop.php [L,QSA]
+    RewriteRule ^collection/([^/]+)/?$ Frontend/Shop/shop.php?category=$1 [L,QSA]
+    RewriteRule ^product/([0-9]+)/?$ Frontend/Single-Product/singleproduct.php?id=$1 [L,QSA]
+    RewriteRule ^p/([^/]+)-([0-9]+)/?$ Frontend/Single-Product/singleproduct.php?id=$2 [L,QSA]
+    RewriteRule ^wholesale/?$ Frontend/Wholesale/wholesale.php [L,QSA]
+    RewriteRule ^retailer/?$ Frontend/Retailer/retailer.php [L,QSA]
+    RewriteRule ^reseller/?$ Frontend/Reseller/reseller.php [L,QSA]
+
+    # Shared Auth, Bag & Checkout
+    RewriteRule ^cart/?$ Shared/Includes/cart.php [L,QSA]
+    RewriteRule ^checkout/?$ Shared/Includes/checkout.php [L,QSA]
+    RewriteRule ^wishlist/?$ Shared/Includes/wishlist.php [L,QSA]
+    RewriteRule ^account/?$ Shared/Auth/myaccount.php [L,QSA]
+    RewriteRule ^myaccount/?$ Shared/Auth/myaccount.php [L,QSA]
+    RewriteRule ^smartshare/?$ Shared/Includes/smartshare.php [L,QSA]
+    RewriteRule ^quickview/?$ Shared/Includes/quickview.php [L,QSA]
+    RewriteRule ^reels/?$ Shared/Includes/reels.php [L,QSA]
+
+
+    # ── 4. CLEAN ADMIN CONSOLE INTERNAL ROUTING (Clean URL Preserved in Address Bar!) ──
+    RewriteRule ^admin/?$ Frontend/Admin/admin.php [L,QSA]
+    RewriteRule ^admin/login/?$ Frontend/Admin/adminlogin.php [L,QSA]
+    RewriteRule ^admin/dashboard/?$ Frontend/Admin/admin.php [L,QSA]
+
+    # Specific Admin Submodule Directory Routing
+    RewriteRule ^admin/products/?$ Frontend/Admin/products/index.php [L,QSA]
+    RewriteRule ^admin/products/([^/]+\.php)$ Frontend/Admin/products/$1 [L,QSA]
+    RewriteRule ^admin/products/([^/]+)/?$ Frontend/Admin/products/$1/index.php [L,QSA]
+    RewriteRule ^admin/products/([^/]+)/([^/]+\.php)$ Frontend/Admin/products/$1/$2 [L,QSA]
+
+    RewriteRule ^admin/catalogue/?$ Frontend/Admin/catalogue/index.php [L,QSA]
+    RewriteRule ^admin/catalogue/([^/]+\.php)$ Frontend/Admin/catalogue/$1 [L,QSA]
+    RewriteRule ^admin/catalogue/([^/]+)/?$ Frontend/Admin/catalogue/$1/index.php [L,QSA]
+    RewriteRule ^admin/catalogue/([^/]+)/([^/]+\.php)$ Frontend/Admin/catalogue/$1/$2 [L,QSA]
+
+    # Generic Admin Submodules
+    RewriteRule ^admin/([^/]+)/?$ Frontend/Admin/$1/index.php [L,QSA]
+    RewriteRule ^admin/([^/]+)/([^/]+\.php)$ Frontend/Admin/$1/$2 [L,QSA]
+    RewriteRule ^admin/([^/]+)/(.*)$ Frontend/Admin/$1/$2 [L,QSA]
+
+
+    # ── 5. ASSET ROUTING FALLBACKS ──
+    RewriteRule ^Asset/css/admin\.css$ Frontend/Admin/Asset/css/admin.css [L]
+    RewriteRule ^Asset/js/admin\.js$ Frontend/Admin/Asset/js/admin.js [L]
+    RewriteRule ^Asset/css/shop\.css$ Frontend/Shop/Asset/css/shop.css [L]
+    RewriteRule ^Asset/js/shop\.js$ Frontend/Shop/Asset/js/shop.js [L]
+    RewriteRule ^Asset/css/singleproduct\.css$ Frontend/Single-Product/Asset/css/singleproduct.css [L]
+    RewriteRule ^Asset/js/singleproduct\.js$ Frontend/Single-Product/Asset/js/singleproduct.js [L]
+    RewriteRule ^Asset/css/wholesale\.css$ Frontend/Wholesale/Asset/css/wholesale.css [L]
+    RewriteRule ^Asset/js/wholesale\.js$ Frontend/Wholesale/Asset/js/wholesale.js [L]
+    RewriteRule ^Asset/css/retailer\.css$ Frontend/Retailer/Asset/css/retailer.css [L]
+    RewriteRule ^Asset/js/retailer\.js$ Frontend/Retailer/Asset/js/retailer.js [L]
+    RewriteRule ^Asset/css/reseller\.css$ Frontend/Reseller/Asset/css/reseller.css [L]
+    RewriteRule ^Asset/js/reseller\.js$ Frontend/Reseller/Asset/js/reseller.js [L]
+    RewriteRule ^Asset/images/(.*)$ Shared/Asset/images/$1 [L]
+    RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
 </IfModule>
 
-# ── 6. GZIP / DEFLATE COMPRESSION (Ultra-Fast Transfer) ──
+# ── 6. GZIP / DEFLATE COMPRESSION ──
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/rss+xml
@@ -100,8 +142,6 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault "access plus 1 month"
-
-    # Images & Fonts (1 Year Cache)
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/jpg "access plus 1 year"
@@ -110,8 +150,6 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/x-icon "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
-
-    # CSS & JavaScript (1 Month Cache)
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"

@@ -480,7 +480,7 @@
                 <span>Shop</span>
             </a>
 
-                    <a href="/Frontend/Shop/shop.php" class="pdp-brand-seal" title="Return to DT Brand's Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
+                    <a href="/shop" class="pdp-brand-seal" title="Return to DT Brand's Luxury Store" style="display:inline-flex; align-items:center; text-decoration:none;">
             <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Single-Product/Asset/images/logo.png';" alt="DT Brand's" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
         </a>
         </div>

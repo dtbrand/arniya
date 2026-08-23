@@ -32,7 +32,7 @@ $active_nav = "marketing";
                     <p class="adm-page-subtitle">Manage top banners, festive flash sale countdowns, and discount coupon codes.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

@@ -523,7 +523,7 @@
     <aside class="home-menu-drawer" id="homeMenuDrawer" onclick="event.stopPropagation()">
         <!-- Header with Brand Logo & Close Button -->
         <div class="home-menu-header">
-            <a href="/Frontend/Home/home.php" style="display:flex; align-items:center;">
+            <a href="/" style="display:flex; align-items:center;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
             </a>
             <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">✕</button>
@@ -550,13 +550,13 @@
             </div>
             <ul class="home-menu-list">
                 <li>
-                    <a href="/Frontend/Home/home.php" class="home-menu-link active">
+                    <a href="/" class="home-menu-link active">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span>Home Storefront</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/Frontend/Shop/shop.php" class="home-menu-link">
+                    <a href="/shop" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M3 9l1-5h16l1 5"></path><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"></path><path d="M4 14v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"></path><path d="M10 22v-6h4v6"></path></svg>
                         <span>All Products Shop</span>
                         <span class="home-menu-link-badge gold">ALL</span>
@@ -597,14 +597,14 @@
             </div>
             <ul class="home-menu-list">
                 <li>
-                    <a href="/Frontend/Reseller/reseller.php" class="home-menu-link">
+                    <a href="/reseller" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         <span>Reseller Partner Portal</span>
                         <span class="home-menu-link-badge gold">VIP</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/Frontend/Wholesale/wholesale.php" class="home-menu-link">
+                    <a href="/wholesale" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                         <span>Wholesale Bulk Factory</span>
                         <span class="home-menu-link-badge green">SLABS</span>
@@ -659,7 +659,7 @@
         </a>
 
         <!-- 2: SHOP / BOUTIQUE STORE (Real Storefront Canopy SVG) -->
-        <a href="/Frontend/Shop/shop.php" class="smart-nav-item" id="smartNavShop" data-tab="shop" onclick="handleSmartFooterAction(event, '/Frontend/Shop/shop.php', 'shop')">
+        <a href="/shop" class="smart-nav-item" id="smartNavShop" data-tab="shop" onclick="handleSmartFooterAction(event, '/Frontend/Shop/shop.php', 'shop')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <path d="M3 9l1-5h16l1 5"></path>

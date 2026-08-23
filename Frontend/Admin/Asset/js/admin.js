@@ -1697,7 +1697,7 @@
     window.duplicateProduct = function(id) {
         if (typeof window.showToast === 'function') window.showToast('📋 Duplicating product SKU...');
         setTimeout(() => {
-            window.location.href = '/Frontend/Admin/products/add.php?duplicated_from=' + (id || '101');
+            window.location.href = '/admin/products/add.php?duplicated_from=' + (id || '101');
         }, 600);
     };
 

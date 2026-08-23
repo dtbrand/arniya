@@ -32,7 +32,7 @@ $active_nav = "settings";
                     <p class="adm-page-subtitle">Configure company details, GSTIN, WhatsApp API credentials, and payment gateways.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

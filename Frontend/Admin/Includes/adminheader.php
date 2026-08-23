@@ -20,7 +20,7 @@ if (!headers_sent()) {
             </button>
 
             <!-- Mobile Brand Logo Link -->
-            <a href="/Frontend/Admin/admin.php" class="adm-mobile-brand-link" title="DT Brand's Admin CRM">
+            <a href="/admin" class="adm-mobile-brand-link" title="DT Brand's Admin CRM">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="adm-mobile-logo-img">
                 <span class="adm-mobile-brand-title">DT Brand's</span>
             </a>
@@ -67,13 +67,13 @@ if (!headers_sent()) {
             </button>
 
             <!-- Fast Action: + Add Product -->
-            <a href="/Frontend/Admin/products/add.php" class="adm-btn-primary" title="Add Product">
+            <a href="/admin/products/add.php" class="adm-btn-primary" title="Add Product">
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span class="adm-btn-text">Add Product</span>
             </a>
 
             <!-- Fast Action: Broadcast -->
-            <button type="button" class="adm-btn-secondary" onclick="if(typeof switchAdmTab==='function') switchAdmTab('whatsapp'); else window.location.href='/Frontend/Admin/whatsapp/';" title="Broadcast">
+            <button type="button" class="adm-btn-secondary" onclick="if(typeof switchAdmTab==='function') switchAdmTab('whatsapp'); else window.location.href = '/admin/whatsapp/';" title="Broadcast">
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                 <span>Broadcast</span>
             </button>

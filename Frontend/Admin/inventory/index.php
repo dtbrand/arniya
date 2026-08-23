@@ -32,7 +32,7 @@ $active_nav = "inventory";
                     <p class="adm-page-subtitle">Monitor stock in Surat Hub and Bhiwandi Warehouse with 1-click stock adjustments.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

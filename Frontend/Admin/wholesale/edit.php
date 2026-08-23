@@ -58,7 +58,7 @@ $partner = $is_new ? [
                 </div>
 
                 <div class="dt-card" style="padding:22px;">
-                    <form onsubmit="event.preventDefault(); window.showToast('✅ Wholesale profile saved successfully!'); setTimeout(()=>window.location.href='/Frontend/Admin/wholesale/index.php', 600);" style="display:flex; flex-direction:column; gap:18px;">
+                    <form onsubmit="event.preventDefault(); window.showToast('✅ Wholesale profile saved successfully!'); setTimeout(()=>window.location.href = '/admin/wholesale/index.php', 600);" style="display:flex; flex-direction:column; gap:18px;">
                         
                         <!-- 1. Identity -->
                         <div style="border-bottom:1.5px solid #F1ECE1; padding-bottom:16px;">

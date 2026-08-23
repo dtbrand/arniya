@@ -24,7 +24,7 @@ window.DT_CATEGORIES = {
         }
         window.DT_CATALOGUE.showToast('✅ Category saved successfully!', 'gold');
         setTimeout(() => {
-            window.location.href = '/Frontend/Admin/catalogue/categories/';
+            window.location.href = '/admin/catalogue/categories/';
         }, 800);
         return false;
     }

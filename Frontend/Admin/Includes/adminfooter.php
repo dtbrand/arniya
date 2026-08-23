@@ -27,7 +27,7 @@ $curr_nav = isset($active_nav) ? $active_nav : 'dashboard';
 <!-- ══ Luxury Mobile Wholesale-Style Bottom Navigation Dock (Sticky App Bar) ══ -->
 <nav class="adm-mobile-bottom-dock" id="admMobileBottomDock">
     <!-- Tab 1: Dashboard -->
-    <a href="/Frontend/Admin/admin.php" class="adm-dock-item <?php echo $curr_nav === 'dashboard' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-overview')){ switchAdmTab('overview'); return false; }" title="Dashboard">
+    <a href="/admin" class="adm-dock-item <?php echo $curr_nav === 'dashboard' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-overview')){ switchAdmTab('overview'); return false; }" title="Dashboard">
         <svg class="adm-dock-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         <span class="adm-dock-label">Dashboard</span>
     </a>

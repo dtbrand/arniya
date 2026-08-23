@@ -33,7 +33,7 @@ $active_nav = "reviews";
                 </div>
                 <div class="adm-page-actions">
                     <a href="/Frontend/Admin/reviews/" class="adm-btn-secondary">← Back to Reviews Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 

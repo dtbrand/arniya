@@ -567,7 +567,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <span class="adm-login-brand-sub">Enterprise CRM</span>
             </div>
         </a>
-        <a href="/Frontend/Shop/shop.php" class="adm-return-btn">
+        <a href="/shop" class="adm-return-btn">
             <span>← Return to Shop</span>
         </a>
     </header>

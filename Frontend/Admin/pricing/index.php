@@ -32,7 +32,7 @@ $active_nav = "pricing";
                     <p class="adm-page-subtitle">Define customized wholesale MOQ pricing, reseller margins, and festive discount coupons.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

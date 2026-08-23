@@ -32,7 +32,7 @@ $active_nav = "notifications";
                     <p class="adm-page-subtitle">Dispatch order dispatch alerts, WhatsApp notices, and restock alarms.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

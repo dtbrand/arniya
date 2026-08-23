@@ -33,7 +33,7 @@ $active_nav = "shipping";
                 </div>
                 <div class="adm-page-actions">
                     <a href="/Frontend/Admin/shipping/" class="adm-btn-secondary">← Back to Shipping Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 

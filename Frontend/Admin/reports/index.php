@@ -32,7 +32,7 @@ $active_nav = "reports";
                     <p class="adm-page-subtitle">Analyze gross sales, net profit margins, channel split, and GST tax filings.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

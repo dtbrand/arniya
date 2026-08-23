@@ -161,7 +161,7 @@ $active_subnav = "new";
 
                 <!-- Add Customer Form Card -->
                 <div class="dt-edit-card">
-                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Account Created Successfully!'); setTimeout(() => window.location.href='/Frontend/Admin/customers/index.php', 1000);">
+                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Account Created Successfully!'); setTimeout(() => window.location.href = '/admin/customers/index.php', 1000);">
                         
                         <!-- ══ SECTION 1: PERSONAL & CONTACT INFORMATION ══ -->
                         <div class="dt-edit-section">

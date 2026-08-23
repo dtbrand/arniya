@@ -32,7 +32,7 @@ $active_nav = "whatsapp";
                     <p class="adm-page-subtitle">Engage B2B buyers and retail customers via official WhatsApp Cloud API.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

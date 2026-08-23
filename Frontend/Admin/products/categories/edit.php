@@ -282,7 +282,7 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
                                 <a href="/Frontend/Admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
                                     📦 View Products in Category (420)
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category?')) { if(window.showToast) window.showToast('Category moved to trash'); window.location.href='/Frontend/Admin/products/categories/'; }">
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category?')) { if(window.showToast) window.showToast('Category moved to trash'); window.location.href = '/admin/products/categories/'; }">
                                     🗑️ Move Category to Trash
                                 </button>
                             </div>

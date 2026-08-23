@@ -32,7 +32,7 @@ $active_nav = "media";
                     <p class="adm-page-subtitle">Upload product photos, catalog shoots, and hero banner creatives.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

@@ -32,7 +32,7 @@ $active_nav = "cms";
                     <p class="adm-page-subtitle">Edit About Us, Wholesale Terms, Return Policy, and SEO Meta tags.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

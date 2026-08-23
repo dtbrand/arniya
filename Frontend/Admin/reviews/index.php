@@ -32,7 +32,7 @@ $active_nav = "reviews";
                     <p class="adm-page-subtitle">Review authentic customer ratings, buyer testimonials, and photo reviews.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

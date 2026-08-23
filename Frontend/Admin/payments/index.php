@@ -32,7 +32,7 @@ $active_nav = "payments";
                     <p class="adm-page-subtitle">Track UPI, NEFT Bank Wire, COD remittances, Razorpay gateways, and refunds.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
                 </div>
             </div>
 

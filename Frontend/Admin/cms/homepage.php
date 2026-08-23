@@ -33,7 +33,7 @@ $active_nav = "cms";
                 </div>
                 <div class="adm-page-actions">
                     <a href="/Frontend/Admin/cms/" class="adm-btn-secondary">← Back to Cms Suite</a>
-                    <a href="/Frontend/Admin/admin.php" class="adm-btn-secondary">Main Console</a>
+                    <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
 
