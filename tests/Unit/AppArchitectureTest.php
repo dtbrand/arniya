@@ -69,6 +69,6 @@ class AppArchitectureTest extends TestCase
     {
         $result = DatabaseSeeder::run();
         $this->assertEquals('success', $result['status']);
-        $this->assertEquals(6, $result['seeded_categories']);
+        $this->assertEquals(8, $result['seeded_categories']);
     }
 }

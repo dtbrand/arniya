@@ -20,7 +20,7 @@ class ProductCatalogTest extends TestCase
         $product = ProductCatalog::getById(1);
         $this->assertNotNull($product);
         $this->assertEquals(1, $product['id']);
-        $this->assertEquals('DT-KANJI-001', $product['sku']);
+        $this->assertEquals('KLN-SR-111', $product['sku']);
         $this->assertArrayHasKey('wholesale_price', $product);
         $this->assertArrayHasKey('retail_price', $product);
     }
