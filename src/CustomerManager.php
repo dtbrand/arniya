@@ -53,6 +53,33 @@ class CustomerManager
 
     public static function getAll(): array
     {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $rows = Database::query("SELECT * FROM customers ORDER BY id ASC");
+                if (!empty($rows)) {
+                    $result = [];
+                    foreach ($rows as $r) {
+                        $result[] = [
+                            'id' => (int)$r['id'],
+                            'name' => $r['name'],
+                            'phone' => $r['phone'] ?? '+91 98765 43210',
+                            'email' => $r['email'] ?? 'customer@example.com',
+                            'type' => $r['type'] ?? 'retail',
+                            'city' => $r['city'] ?? 'Surat',
+                            'state' => $r['state'] ?? 'Gujarat',
+                            'tier' => ($r['type'] ?? 'retail') === 'wholesale' ? 'Diamond Elite' : (($r['type'] ?? 'retail') === 'reseller' ? 'Gold VIP' : 'Silver Consumer'),
+                            'credit_limit' => (float)($r['credit_limit'] ?? 0),
+                            'outstanding_balance' => (float)($r['outstanding_balance'] ?? 0),
+                            'total_orders' => (int)($r['total_orders'] ?? 1),
+                            'lifetime_spend' => (float)($r['lifetime_spend'] ?? 4990)
+                        ];
+                    }
+                    return $result;
+                }
+            } catch (\Exception $e) {}
+        }
+
         return self::$customers;
     }
 

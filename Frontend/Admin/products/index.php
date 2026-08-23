@@ -3,6 +3,31 @@
  * index.php — DT Brand's Products Management Suite (Wholesale Desktop & WooCommerce Hybrid)
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
+$productsList = ProductCatalog::getAll();
+$totalProductsCount = count($productsList);
+$categoriesList = ProductCatalog::getCategories();
+$totalCategoriesCount = count($categoriesList);
+
+$totalCatalogValuation = 0;
+$totalUnitsInStock = 0;
+$lowStockCount = 0;
+
+foreach ($productsList as $p) {
+    $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
+    $wp = isset($p['wholesale_price']) ? (float)$p['wholesale_price'] : 0;
+    $totalCatalogValuation += ($qty * $wp);
+    $totalUnitsInStock += $qty;
+    if ($qty > 0 && $qty < 20) {
+        $lowStockCount++;
+    }
+}
+
 $page_title = "Products";
 $active_nav = "products";
 $active_subnav = "";
@@ -206,7 +231,7 @@ $active_subnav = "";
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:18px; font-weight:800; color:#181512; margin:0;">Products &amp; Wholesale Hub</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;">1,240 Total</span>
+                    <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;"><?php echo $totalProductsCount; ?> Total</span>
                     
                     <!-- Add Product Primary Gold Button -->
                     <a href="/Frontend/Admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
@@ -254,7 +279,7 @@ $active_subnav = "";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">ACTIVE B2B DESIGNS</div>
-                        <div style="font-size:14px; font-weight:800; color:#181512; line-height:1.2;">1,240 SKUs</div>
+                        <div style="font-size:14px; font-weight:800; color:#181512; line-height:1.2;"><?php echo $totalProductsCount; ?> SKUs</div>
                     </div>
                 </div>
 
@@ -264,7 +289,7 @@ $active_subnav = "";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">B2B CATALOG VALUATION</div>
-                        <div style="font-size:14px; font-weight:800; color:#15803D; line-height:1.2;">₹48.60 Lakhs</div>
+                        <div style="font-size:14px; font-weight:800; color:#15803D; line-height:1.2;">₹<?php echo number_format($totalCatalogValuation); ?></div>
                     </div>
                 </div>
 
@@ -274,7 +299,7 @@ $active_subnav = "";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">SURAT CENTRAL DEPOT</div>
-                        <div style="font-size:14px; font-weight:800; color:#1D4ED8; line-height:1.2;">8,450 Units</div>
+                        <div style="font-size:14px; font-weight:800; color:#1D4ED8; line-height:1.2;"><?php echo number_format($totalUnitsInStock); ?> Units</div>
                     </div>
                 </div>
 
@@ -284,14 +309,14 @@ $active_subnav = "";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">LOW STOCK REORDERS</div>
-                        <div style="font-size:14px; font-weight:800; color:#B45309; line-height:1.2;">14 Lots</div>
+                        <div style="font-size:14px; font-weight:800; color:#B45309; line-height:1.2;"><?php echo $lowStockCount; ?> Lots</div>
                     </div>
                 </div>
             </div>
 
             <!-- 3. Status Filter Links (.subsubsub) -->
             <ul class="wp-subsubsub" style="margin-bottom:10px; padding:0; display:flex; flex-wrap:wrap; gap:4px; font-size:11.5px;">
-                <li><a href="javascript:void(0)" class="current" onclick="filterWpProducts('', this)">All <span class="count" id="countAll">(1,240)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" class="current" onclick="filterWpProducts('', this)">All <span class="count" id="countAll">(<?php echo $totalProductsCount; ?>)</span></a> <span class="sep">|</span></li>
                 <li><a href="javascript:void(0)" onclick="filterWpProducts('Published', this)">Published <span class="count">(1,185)</span></a> <span class="sep">|</span></li>
                 <li><a href="javascript:void(0)" onclick="filterWpProducts('Draft', this)">Draft <span class="count">(14)</span></a> <span class="sep">|</span></li>
                 <li><a href="javascript:void(0)" onclick="filterWpProducts('Low Stock', this)">Low stock <span class="count">(14)</span></a> <span class="sep">|</span></li>
@@ -380,188 +405,70 @@ $active_subnav = "";
                                 <th style="padding:8px 10px;">Date</th>
                             </tr>
                         </thead>
-                        <tbody id="wpProductsTableBody">
-                            
-                            <!-- Row 1 -->
-                            <tr id="row-prod-101" data-cat="Silk Sarees" data-brand="DT Signature" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <input type="checkbox" class="wp-row-check" value="101" style="cursor:pointer; width:14px; height:14px;">
-                                </td>
-                                <td style="padding:8px 6px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="Saree" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
-                                </td>
-                                <td style="padding:8px 10px;">
-                                    <a href="/Frontend/Admin/products/edit.php?id=101" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Kanjivaram Pure Silk Gold Zari Saree</a>
-                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
-                                        <a href="/Frontend/Admin/products/edit.php?id=101" style="color:#8A681F; font-weight:700;">Edit</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="duplicateProductRow('row-prod-101')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="/Frontend/Admin/products/view.php?id=101" style="color:#1D4ED8; font-weight:600;">View</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="shareProductWhatsApp('Kanjivaram Pure Silk Gold Zari Saree', 'KLN-SR-111', '₹2,850')" style="color:#15803D; font-weight:700;">WhatsApp</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="trashProductRow('row-prod-101', 'Kanjivaram Pure Silk Gold Zari Saree')" style="color:#DC2626; font-weight:600;">Trash</a>
-                                    </div>
-                                </td>
-                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KLN-SR-111</code></td>
-                                <td style="padding:8px 8px;">
-                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
-                                        <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span class="stock-text">In stock (45)</span>
-                                    </span>
-                                </td>
-                                <td style="padding:8px 8px;">
-                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹4,490</strong><br>
-                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹2,850</small>
-                                </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Silk Sarees</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">5.0 ★</span> <span style="color:#646970; font-size:10.5px;">(128)</span></td>
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-101', 'Kanjivaram Pure Silk Gold Zari Saree')">★</button>
-                                </td>
-                                <td style="padding:8px 10px; font-size:11px;">
-                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
-                                    <small style="color:#646970;">2026/08/20</small>
-                                </td>
-                            </tr>
-
-                            <!-- Row 2 -->
-                            <tr id="row-prod-102" data-cat="Banarasi Brocade" data-brand="Arniya Heritage" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <input type="checkbox" class="wp-row-check" value="102" style="cursor:pointer; width:14px; height:14px;">
-                                </td>
-                                <td style="padding:8px 6px;">
-                                    <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="wp-thumb-img" alt="Saree" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
-                                </td>
-                                <td style="padding:8px 10px;">
-                                    <a href="/Frontend/Admin/products/edit.php?id=102" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Banarasi Royal Brocade Weave Saree</a>
-                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
-                                        <a href="/Frontend/Admin/products/edit.php?id=102" style="color:#8A681F; font-weight:700;">Edit</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="duplicateProductRow('row-prod-102')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="/Frontend/Admin/products/view.php?id=102" style="color:#1D4ED8; font-weight:600;">View</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="shareProductWhatsApp('Banarasi Royal Brocade Weave Saree', 'BNR-SR-204', '₹3,200')" style="color:#15803D; font-weight:700;">WhatsApp</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="trashProductRow('row-prod-102', 'Banarasi Royal Brocade Weave Saree')" style="color:#DC2626; font-weight:600;">Trash</a>
-                                    </div>
-                                </td>
-                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BNR-SR-204</code></td>
-                                <td style="padding:8px 8px;">
-                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
-                                        <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span class="stock-text">In stock (28)</span>
-                                    </span>
-                                </td>
-                                <td style="padding:8px 8px;">
-                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹4,990</strong><br>
-                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹3,200</small>
-                                </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Banarasi Brocade</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">Arniya Heritage</strong></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">4.9 ★</span> <span style="color:#646970; font-size:10.5px;">(94)</span></td>
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-102', 'Banarasi Royal Brocade Weave Saree')">★</button>
-                                </td>
-                                <td style="padding:8px 10px; font-size:11px;">
-                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
-                                    <small style="color:#646970;">2026/08/19</small>
-                                </td>
-                            </tr>
-
-                            <!-- Row 3 -->
-                            <tr id="row-prod-103" data-cat="Bridal Lehengas" data-brand="DT Couture" data-stock="Low stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <input type="checkbox" class="wp-row-check" value="103" style="cursor:pointer; width:14px; height:14px;">
-                                </td>
-                                <td style="padding:8px 6px;">
-                                    <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="wp-thumb-img" alt="Lehenga" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
-                                </td>
-                                <td style="padding:8px 10px;">
-                                    <a href="/Frontend/Admin/products/edit.php?id=103" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Crimson Bridal Handcrafted Zardosi Lehenga</a>
-                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
-                                        <a href="/Frontend/Admin/products/edit.php?id=103" style="color:#8A681F; font-weight:700;">Edit</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="duplicateProductRow('row-prod-103')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="/Frontend/Admin/products/view.php?id=103" style="color:#1D4ED8; font-weight:600;">View</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="shareProductWhatsApp('Crimson Bridal Handcrafted Zardosi Lehenga', 'BRD-LH-902', '₹11,500')" style="color:#15803D; font-weight:700;">WhatsApp</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="trashProductRow('row-prod-103', 'Crimson Bridal Handcrafted Zardosi Lehenga')" style="color:#DC2626; font-weight:600;">Trash</a>
-                                    </div>
-                                </td>
-                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">BRD-LH-902</code></td>
-                                <td style="padding:8px 8px;">
-                                    <span class="adm-badge prod-stock-badge" style="background:#FEF3C7; color:#B45309; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
-                                        <span style="width:5px; height:5px; border-radius:50%; background:#d97706; display:inline-block;"></span>
-                                        <span class="stock-text">Low stock (4)</span>
-                                    </span>
-                                </td>
-                                <td style="padding:8px 8px;">
-                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹16,490</strong><br>
-                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹11,500</small>
-                                </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Bridal Lehengas</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Couture</strong></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">5.0 ★</span> <span style="color:#646970; font-size:10.5px;">(42)</span></td>
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-103', 'Crimson Bridal Handcrafted Zardosi Lehenga')">★</button>
-                                </td>
-                                <td style="padding:8px 10px; font-size:11px;">
-                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
-                                    <small style="color:#646970;">2026/08/18</small>
-                                </td>
-                            </tr>
-
-                            <!-- Row 4 -->
-                            <tr id="row-prod-104" data-cat="Designer Kurtis" data-brand="DT Signature" data-stock="In stock" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <input type="checkbox" class="wp-row-check" value="104" style="cursor:pointer; width:14px; height:14px;">
-                                </td>
-                                <td style="padding:8px 6px;">
-                                    <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product4.png';" class="wp-thumb-img" alt="Kurti" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
-                                </td>
-                                <td style="padding:8px 10px;">
-                                    <a href="/Frontend/Admin/products/edit.php?id=104" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Chanderi Foil Printed Festive Kurti Set</a>
-                                    <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
-                                        <a href="/Frontend/Admin/products/edit.php?id=104" style="color:#8A681F; font-weight:700;">Edit</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="duplicateProductRow('row-prod-104')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="/Frontend/Admin/products/view.php?id=104" style="color:#1D4ED8; font-weight:600;">View</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="shareProductWhatsApp('Chanderi Foil Printed Festive Kurti Set', 'KRT-CH-401', '₹1,450')" style="color:#15803D; font-weight:700;">WhatsApp</a>
-                                        <span style="color:#c3c4c7;">|</span>
-                                        <a href="javascript:void(0)" onclick="trashProductRow('row-prod-104', 'Chanderi Foil Printed Festive Kurti Set')" style="color:#DC2626; font-weight:600;">Trash</a>
-                                    </div>
-                                </td>
-                                <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;">KRT-CH-401</code></td>
-                                <td style="padding:8px 8px;">
-                                    <span class="adm-badge prod-stock-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
-                                        <span style="width:5px; height:5px; border-radius:50%; background:#16a34a; display:inline-block;"></span>
-                                        <span class="stock-text">In stock (62)</span>
-                                    </span>
-                                </td>
-                                <td style="padding:8px 8px;">
-                                    <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹2,290</strong><br>
-                                    <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹1,450</small>
-                                </td>
-                                <td style="padding:8px 8px;"><a href="/Frontend/Admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;">Designer Kurtis</a></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
-                                <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;">4.8 ★</span> <span style="color:#646970; font-size:10.5px;">(68)</span></td>
-                                <td style="text-align: center; padding:8px 6px;">
-                                    <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, 'row-prod-104', 'Chanderi Foil Printed Festive Kurti Set')">★</button>
-                                </td>
-                                <td style="padding:8px 10px; font-size:11px;">
-                                    <span class="prod-status-text" style="color:#15803D; font-weight:700;">Published</span><br>
-                                    <small style="color:#646970;">2026/08/17</small>
-                                </td>
-                            </tr>
-
+                                                <tbody id="wpProductsTableBody">
+                            <?php foreach ($productsList as $p): ?>
+                                <?php
+                                $rowId = "row-prod-" . $p['id'];
+                                $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                                $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
+                                $isLow = ($qty < 20 && $qty > 0);
+                                $isOut = ($qty <= 0);
+                                $stockBg = $isOut ? '#FEE2E2' : ($isLow ? '#FEF3C7' : '#DCFCE7');
+                                $stockColor = $isOut ? '#DC2626' : ($isLow ? '#B45309' : '#15803D');
+                                $stockDot = $isOut ? '#ef4444' : ($isLow ? '#d97706' : '#16a34a');
+                                $stockLabel = $isOut ? 'Out of stock' : ($isLow ? 'Low stock (' . $qty . ')' : 'In stock (' . $qty . ')');
+                                $statusText = ($p['status'] ?? 'in_stock') === 'in_stock' ? 'Published' : ucfirst($p['status'] ?? 'published');
+                                $catName = $p['category'] ?? 'Silk Sarees';
+                                $sku = $p['sku'] ?? ('DT-SKU-' . $p['id']);
+                                $rp = (float)($p['retail_price'] ?? 0);
+                                $wp = (float)($p['wholesale_price'] ?? 0);
+                                $rating = (float)($p['rating'] ?? 4.9);
+                                $revCount = (int)($p['reviews_count'] ?? 50);
+                                ?>
+                                <tr id="<?= $rowId ?>" data-cat="<?= htmlspecialchars($catName) ?>" data-brand="DT Signature" data-stock="<?= $isOut ? 'Out of stock' : ($isLow ? 'Low stock' : 'In stock') ?>" data-status="Featured" data-featured="1" style="border-bottom:1px solid #f0f0f1; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                    <td style="text-align: center; padding:8px 6px;">
+                                        <input type="checkbox" class="wp-row-check" value="<?= $p['id'] ?>" style="cursor:pointer; width:14px; height:14px;">
+                                    </td>
+                                    <td style="padding:8px 6px;">
+                                        <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="<?= htmlspecialchars($p['title']) ?>" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                    </td>
+                                    <td style="padding:8px 10px;">
+                                        <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;"><?= htmlspecialchars($p['title']) ?></a>
+                                        <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
+                                            <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" style="color:#8A681F; font-weight:700;">Edit</a>
+                                            <span style="color:#c3c4c7;">|</span>
+                                            <a href="javascript:void(0)" onclick="duplicateProductRow('<?= $rowId ?>')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
+                                            <span style="color:#c3c4c7;">|</span>
+                                            <a href="/product/<?= $p['id'] ?>" target="_blank" style="color:#1D4ED8; font-weight:600;">View</a>
+                                            <span style="color:#c3c4c7;">|</span>
+                                            <a href="javascript:void(0)" onclick="shareProductWhatsApp('<?= addslashes($p['title']) ?>', '<?= $sku ?>', '₹<?= number_format($wp) ?>')" style="color:#15803D; font-weight:700;">WhatsApp</a>
+                                            <span style="color:#c3c4c7;">|</span>
+                                            <a href="javascript:void(0)" onclick="trashProductRow('<?= $rowId ?>', '<?= addslashes($p['title']) ?>')" style="color:#DC2626; font-weight:600;">Trash</a>
+                                        </div>
+                                    </td>
+                                    <td style="padding:8px 8px;"><code class="prod-sku-val" style="background:#f0f0f1; padding:2px 5px; border-radius:3px; font-size:11px;"><?= htmlspecialchars($sku) ?></code></td>
+                                    <td style="padding:8px 8px;">
+                                        <span class="adm-badge prod-stock-badge" style="background:<?= $stockBg ?>; color:<?= $stockColor ?>; font-weight:700; font-size:10.5px; padding:2px 6px; border-radius:10px; display:inline-flex; align-items:center; gap:4px;">
+                                            <span style="width:5px; height:5px; border-radius:50%; background:<?= $stockDot ?>; display:inline-block;"></span>
+                                            <span class="stock-text"><?= $stockLabel ?></span>
+                                        </span>
+                                    </td>
+                                    <td style="padding:8px 8px;">
+                                        <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹<?= number_format($rp) ?></strong><br>
+                                        <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹<?= number_format($wp) ?></small>
+                                    </td>
+                                    <td style="padding:8px 8px;"><a href="/admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;"><?= htmlspecialchars($catName) ?></a></td>
+                                    <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
+                                    <td style="padding:8px 8px; font-size:11.5px;"><span style="color:#D4AF37; font-weight:700;"><?= number_format($rating, 1) ?> ★</span> <span style="color:#646970; font-size:10.5px;">(<?= $revCount ?>)</span></td>
+                                    <td style="text-align: center; padding:8px 6px;">
+                                        <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, '<?= $rowId ?>', '<?= addslashes($p['title']) ?>')">★</button>
+                                    </td>
+                                    <td style="padding:8px 10px; font-size:11px;">
+                                        <span class="prod-status-text" style="color:#15803D; font-weight:700;"><?= $statusText ?></span><br>
+                                        <small style="color:#646970;">2026/08/24</small>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -570,209 +477,61 @@ $active_subnav = "";
             <!-- ======================================================== -->
             <!-- 5B. VIEW MODE: WHOLESALE DESKTOP GRID CARDS              -->
             <!-- ======================================================== -->
-            <div id="productGridView" class="dt-ws-grid" style="display:none;">
-                
-                <!-- WS Card 1 -->
-                <div class="dt-ws-card" id="card-prod-101">
-                    <div style="position:relative;">
-                        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-ws-card-img" alt="Kanjivaram Saree">
-                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#8A681F; color:#fff; font-weight:700; font-size:10px;">Best Seller</span>
-                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 6 Pcs</span>
-                    </div>
-                    <div style="padding:10px 12px; flex:1; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
-                            <span style="font-size:10.5px; font-weight:700; color:#8A681F;">SILK SAREES</span>
-                            <code style="font-size:10.5px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">KLN-SR-111</code>
+                        <div id="productGridView" class="dt-ws-grid" style="display:none;">
+                <?php foreach ($productsList as $p): ?>
+                    <?php
+                    $cardId = "card-prod-" . $p['id'];
+                    $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                    $catName = $p['category'] ?? 'Silk Sarees';
+                    $sku = $p['sku'] ?? ('DT-SKU-' . $p['id']);
+                    $rp = (float)($p['retail_price'] ?? 0);
+                    $wp = (float)($p['wholesale_price'] ?? 0);
+                    $margin = ($rp > 0 && $wp > 0) ? round((($rp - $wp) / $rp) * 100) : 35;
+                    $marginDiff = max(0, $rp - $wp);
+                    ?>
+                    <div class="dt-ws-card" id="<?= $cardId ?>">
+                        <div style="position:relative;">
+                            <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-ws-card-img" alt="<?= htmlspecialchars($p['title']) ?>">
+                            <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#8A681F; color:#fff; font-weight:700; font-size:10px;">Best Seller</span>
+                            <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: <?= $p['moq'] ?? 6 ?> Pcs</span>
                         </div>
-                        <h4 style="margin:4px 0 8px 0; font-size:13px; font-weight:700; color:#181512; line-height:1.3;">Kanjivaram Pure Silk Gold Zari Saree</h4>
-                        
-                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px;">
-                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                <div>
-                                    <small style="color:#5A4210; font-size:9.5px; font-weight:700;">WHOLESALE RATE</small>
-                                    <div style="font-size:14.5px; font-weight:800; color:#181512;">₹2,850 <small style="font-size:10.5px; font-weight:600; color:#646970;">/ pc</small></div>
-                                </div>
-                                <div style="text-align:right;">
-                                    <small style="color:#646970; font-size:9.5px;">Retail MRP</small>
-                                    <div style="font-size:12px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹4,490</div>
-                                </div>
+                        <div style="padding:10px 12px; flex:1; display:flex; flex-direction:column;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                                <span style="font-size:10.5px; font-weight:700; color:#8A681F; text-transform:uppercase;"><?= htmlspecialchars($catName) ?></span>
+                                <code style="font-size:10.5px; background:#f1f5f9; padding:2px 5px; border-radius:3px;"><?= htmlspecialchars($sku) ?></code>
                             </div>
-                            <div style="margin-top:3px; font-size:10px; color:#15803D; font-weight:700;">36% Resale Margin (+₹1,640/pc)</div>
-                        </div>
-
-                        <div style="margin-top:auto; display:flex; gap:6px;">
-                            <a href="/Frontend/Admin/products/edit.php?id=101" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                <span>Edit</span>
-                            </a>
-                            <button type="button" class="dt-btn-action-sm emerald" onclick="shareProductWhatsApp('Kanjivaram Pure Silk Gold Zari Saree', 'KLN-SR-111', '₹2,850')" style="flex:1; height:26px; font-size:11px; justify-content:center;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                                <span>WhatsApp</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- WS Card 2 -->
-                <div class="dt-ws-card" id="card-prod-102">
-                    <div style="position:relative;">
-                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" class="dt-ws-card-img" alt="Banarasi Saree">
-                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#D4AF37; color:#181512; font-weight:800; font-size:10px;">New Arrival</span>
-                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 8 Pcs</span>
-                    </div>
-                    <div style="padding:10px 12px; flex:1; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
-                            <span style="font-size:10.5px; font-weight:700; color:#8A681F;">BANARASI BROCADE</span>
-                            <code style="font-size:10.5px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">BNR-SR-204</code>
-                        </div>
-                        <h4 style="margin:4px 0 8px 0; font-size:13px; font-weight:700; color:#181512; line-height:1.3;">Banarasi Royal Brocade Weave Saree</h4>
-                        
-                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px;">
-                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                <div>
-                                    <small style="color:#5A4210; font-size:9.5px; font-weight:700;">WHOLESALE RATE</small>
-                                    <div style="font-size:14.5px; font-weight:800; color:#181512;">₹3,200 <small style="font-size:10.5px; font-weight:600; color:#646970;">/ pc</small></div>
+                            <h4 style="margin:4px 0 8px 0; font-size:13px; font-weight:700; color:#181512; line-height:1.3;"><?= htmlspecialchars($p['title']) ?></h4>
+                            
+                            <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                    <div>
+                                        <small style="color:#5A4210; font-size:9.5px; font-weight:700;">WHOLESALE RATE</small>
+                                        <div style="font-size:14.5px; font-weight:800; color:#181512;">₹<?= number_format($wp) ?> <small style="font-size:10.5px; font-weight:600; color:#646970;">/ pc</small></div>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <small style="color:#646970; font-size:9.5px;">Retail MRP</small>
+                                        <div style="font-size:12px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹<?= number_format($rp) ?></div>
+                                    </div>
                                 </div>
-                                <div style="text-align:right;">
-                                    <small style="color:#646970; font-size:9.5px;">Retail MRP</small>
-                                    <div style="font-size:12px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹4,990</div>
-                                </div>
+                                <div style="margin-top:3px; font-size:10px; color:#15803D; font-weight:700;"><?= $margin ?>% Resale Margin (+₹<?= number_format($marginDiff) ?>/pc)</div>
                             </div>
-                            <div style="margin-top:3px; font-size:10px; color:#15803D; font-weight:700;">35% Resale Margin (+₹1,790/pc)</div>
-                        </div>
 
-                        <div style="margin-top:auto; display:flex; gap:6px;">
-                            <a href="/Frontend/Admin/products/edit.php?id=102" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                <span>Edit</span>
-                            </a>
-                            <button type="button" class="dt-btn-action-sm emerald" onclick="shareProductWhatsApp('Banarasi Royal Brocade Weave Saree', 'BNR-SR-204', '₹3,200')" style="flex:1; height:26px; font-size:11px; justify-content:center;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                                <span>WhatsApp</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- WS Card 3 -->
-                <div class="dt-ws-card" id="card-prod-103">
-                    <div style="position:relative;">
-                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" class="dt-ws-card-img" alt="Bridal Lehenga">
-                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#B91C1C; color:#fff; font-weight:700; font-size:10px;">Luxury Bridal</span>
-                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#B45309; font-weight:800; font-size:10.5px;">MOQ: 2 Pcs</span>
-                    </div>
-                    <div style="padding:10px 12px; flex:1; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
-                            <span style="font-size:10.5px; font-weight:700; color:#8A681F;">BRIDAL LEHENGAS</span>
-                            <code style="font-size:10.5px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">BRD-LH-902</code>
-                        </div>
-                        <h4 style="margin:4px 0 8px 0; font-size:13px; font-weight:700; color:#181512; line-height:1.3;">Crimson Bridal Handcrafted Zardosi Lehenga</h4>
-                        
-                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px;">
-                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                <div>
-                                    <small style="color:#5A4210; font-size:9.5px; font-weight:700;">WHOLESALE RATE</small>
-                                    <div style="font-size:14.5px; font-weight:800; color:#181512;">₹11,500 <small style="font-size:10.5px; font-weight:600; color:#646970;">/ pc</small></div>
-                                </div>
-                                <div style="text-align:right;">
-                                    <small style="color:#646970; font-size:9.5px;">Retail MRP</small>
-                                    <div style="font-size:12px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹16,490</div>
-                                </div>
+                            <div style="margin-top:auto; display:flex; gap:6px;">
+                                <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>Edit</span>
+                                </a>
+                                <button type="button" class="dt-btn-action-sm emerald" onclick="shareProductWhatsApp('<?= addslashes($p['title']) ?>', '<?= $sku ?>', '₹<?= number_format($wp) ?>')" style="flex:1; height:26px; font-size:11px; justify-content:center;">
+                                    <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                    <span>WhatsApp</span>
+                                </button>
                             </div>
-                            <div style="margin-top:3px; font-size:10px; color:#15803D; font-weight:700;">30% Resale Margin (+₹4,990/pc)</div>
-                        </div>
-
-                        <div style="margin-top:auto; display:flex; gap:6px;">
-                            <a href="/Frontend/Admin/products/edit.php?id=103" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                <span>Edit</span>
-                            </a>
-                            <button type="button" class="dt-btn-action-sm emerald" onclick="shareProductWhatsApp('Crimson Bridal Handcrafted Zardosi Lehenga', 'BRD-LH-902', '₹11,500')" style="flex:1; height:26px; font-size:11px; justify-content:center;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                                <span>WhatsApp</span>
-                            </button>
                         </div>
                     </div>
-                </div>
-
-                <!-- WS Card 4 -->
-                <div class="dt-ws-card" id="card-prod-104">
-                    <div style="position:relative;">
-                        <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product4.png';" class="dt-ws-card-img" alt="Festive Kurti">
-                        <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#0F766E; color:#fff; font-weight:700; font-size:10px;">Super Value</span>
-                        <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: 12 Pcs</span>
-                    </div>
-                    <div style="padding:10px 12px; flex:1; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
-                            <span style="font-size:10.5px; font-weight:700; color:#8A681F;">DESIGNER KURTIS</span>
-                            <code style="font-size:10.5px; background:#f1f5f9; padding:2px 5px; border-radius:3px;">KRT-CH-401</code>
-                        </div>
-                        <h4 style="margin:4px 0 8px 0; font-size:13px; font-weight:700; color:#181512; line-height:1.3;">Chanderi Foil Printed Festive Kurti Set</h4>
-                        
-                        <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px;">
-                            <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                <div>
-                                    <small style="color:#5A4210; font-size:9.5px; font-weight:700;">WHOLESALE RATE</small>
-                                    <div style="font-size:14.5px; font-weight:800; color:#181512;">₹1,450 <small style="font-size:10.5px; font-weight:600; color:#646970;">/ pc</small></div>
-                                </div>
-                                <div style="text-align:right;">
-                                    <small style="color:#646970; font-size:9.5px;">Retail MRP</small>
-                                    <div style="font-size:12px; font-weight:600; color:#8c8f94; text-decoration:line-through;">₹2,290</div>
-                                </div>
-                            </div>
-                            <div style="margin-top:3px; font-size:10px; color:#15803D; font-weight:700;">37% Resale Margin (+₹840/pc)</div>
-                        </div>
-
-                        <div style="margin-top:auto; display:flex; gap:6px;">
-                            <a href="/Frontend/Admin/products/edit.php?id=104" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                <span>Edit</span>
-                            </a>
-                            <button type="button" class="dt-btn-action-sm emerald" onclick="shareProductWhatsApp('Chanderi Foil Printed Festive Kurti Set', 'KRT-CH-401', '₹1,450')" style="flex:1; height:26px; font-size:11px; justify-content:center;">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                                <span>WhatsApp</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                <?php endforeach; ?>
             </div>
 
-            <!-- 6. Bottom Toolbar: Bulk Actions & Pagination -->
-            <div class="wp-tablenav" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:10px;">
-                <div class="wp-tablenav-actions" style="display:flex; align-items:center; gap:6px;">
-                    <select class="wp-select" id="wpBulkActionSelectBottom" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7;">
-                        <option value="">Bulk actions</option>
-                        <option value="edit">Edit Selected</option>
-                        <option value="featured">Mark as featured</option>
-                        <option value="unfeatured">Remove from featured</option>
-                        <option value="trash">Move to Trash</option>
-                    </select>
-                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="handleWpBulkActionBottom()" style="height:28px; font-size:11px; padding:0 10px;">
-                        <span>Apply</span>
-                    </button>
-                </div>
-
-                <div class="wp-pagination" style="display:flex; align-items:center; gap:4px; font-size:11.5px;">
-                    <span style="color:#646970; font-weight:600; margin-right:4px;">1,240 items</span>
-                    <button type="button" class="wp-button" style="height:26px; width:26px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:3px;" disabled>&laquo;</button>
-                    <button type="button" class="wp-button" style="height:26px; width:26px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:3px;" disabled>&lsaquo;</button>
-                    <button type="button" class="dt-btn-action-sm gold" style="height:26px; width:26px; padding:0; justify-content:center; border-radius:3px; font-weight:800;">1</button>
-                    <button type="button" class="dt-btn-action-sm pale-gold" style="height:26px; width:26px; padding:0; justify-content:center; border-radius:3px;">2</button>
-                    <button type="button" class="dt-btn-action-sm pale-gold" style="height:26px; width:26px; padding:0; justify-content:center; border-radius:3px;">3</button>
-                    <span style="color:#8c8f94; padding:0 2px;">…</span>
-                    <button type="button" class="dt-btn-action-sm pale-gold" style="height:26px; width:26px; padding:0; justify-content:center; border-radius:3px;">50</button>
-                    <button type="button" class="wp-button" style="height:26px; width:26px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:3px;">&rsaquo;</button>
-                    <button type="button" class="wp-button" style="height:26px; width:26px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:3px;">&raquo;</button>
-                </div>
-            </div>
-
-        </main>
-        <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
-    </div>
-</div>
-
-<!-- ======================================================== -->
+            <!-- ======================================================== -->
 <!-- BULK QUICK EDIT MODAL                                    -->
 <!-- ======================================================== -->
 <div id="bulkEditModal" class="dt-modal-backdrop">

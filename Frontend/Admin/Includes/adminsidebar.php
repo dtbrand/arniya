@@ -3,6 +3,13 @@
  * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation with Real SVG Icons
  * DT Brand's & Jai Hanuman Tex
  */
+$sb_products_count = isset($totalProductsCount) ? $totalProductsCount : 6;
+$sb_categories_count = isset($totalCategoriesCount) ? $totalCategoriesCount : 8;
+$sb_orders_count = isset($totalOrdersCount) ? $totalOrdersCount : 4;
+$sb_wholesale_count = isset($totalWholesaleCount) ? $totalWholesaleCount : 1;
+$sb_reseller_count = isset($totalResellerCount) ? $totalResellerCount : 1;
+$sb_customers_count = isset($totalCustomersCount) ? $totalCustomersCount : 3;
+
 $req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
 if (isset($active_nav) && !empty($active_nav)) {
@@ -146,10 +153,10 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             <ul class="adm-nav-list">
                 <!-- PRODUCTS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'products' ? 'open' : ''; ?>">
-                    <a href="/admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products (1,240 SKUs)">
+                    <a href="/admin/products/" class="adm-nav-item <?php echo $current_nav === 'products' ? 'active' : ''; ?>" id="navItem-products" data-title="Products (<?php echo $sb_products_count; ?> SKUs)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span class="adm-nav-label">Products</span>
-                        <span class="adm-nav-badge gold">1,240</span>
+                        <span class="adm-nav-badge gold"><?php echo $sb_products_count; ?></span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
@@ -160,7 +167,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/products/" class="adm-nav-subitem <?php echo ($current_nav === 'products' && empty($current_subnav)) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Products</span>
-                                <span class="adm-nav-badge">1,240</span>
+                                <span class="adm-nav-badge"><?php echo $sb_products_count; ?></span>
                             </a>
                         </li>
                         <li>
@@ -245,10 +252,10 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 
                 <!-- CATALOGUE WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'catalogue' ? 'open' : ''; ?>">
-                    <a href="/admin/catalogue/" class="adm-nav-item <?php echo $current_nav === 'catalogue' ? 'active' : ''; ?>" id="navItem-catalogue" data-title="Catalogue (16 Categories)">
+                    <a href="/admin/catalogue/" class="adm-nav-item <?php echo $current_nav === 'catalogue' ? 'active' : ''; ?>" id="navItem-catalogue" data-title="Catalogue (<?php echo $sb_categories_count; ?> Categories)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                         <span class="adm-nav-label">Catalogue</span>
-                        <span class="adm-nav-badge gold">16 Cats</span>
+                        <span class="adm-nav-badge gold"><?php echo $sb_categories_count; ?> Cats</span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
@@ -322,10 +329,10 @@ if (isset($active_subnav) && !empty($active_subnav)) {
 
                 <!-- ORDERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'orders' ? 'open' : ''; ?>">
-                    <a href="/admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" data-title="Orders (1,624)">
+                    <a href="/admin/orders/" class="adm-nav-item <?php echo $current_nav === 'orders' ? 'active' : ''; ?>" id="navItem-orders" data-title="Orders (<?php echo $sb_orders_count; ?>)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span class="adm-nav-label">Orders</span>
-                        <span class="adm-nav-badge gold" id="admNavOrdersBadge">1,624</span>
+                        <span class="adm-nav-badge gold" id="admNavOrdersBadge"><?php echo $sb_orders_count; ?></span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
@@ -335,7 +342,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/orders/index.php" class="adm-nav-subitem <?php echo ($current_nav === 'orders' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Orders</span>
-                                <span class="adm-nav-badge">1,624</span>
+                                <span class="adm-nav-badge"><?php echo $sb_orders_count; ?></span>
                             </a>
                         </li>
                         <li>
@@ -409,10 +416,10 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             <ul class="adm-nav-list">
                 <!-- WHOLESALERS WITH REAL SVG SUBMENU -->
                 <li class="adm-nav-has-sub <?php echo $current_nav === 'wholesalers' ? 'open' : ''; ?>">
-                    <a href="/admin/wholesale/" class="adm-nav-item <?php echo $current_nav === 'wholesalers' ? 'active' : ''; ?>" id="navItem-wholesalers" data-title="Wholesale B2B Hub (124)">
+                    <a href="/admin/wholesale/" class="adm-nav-item <?php echo $current_nav === 'wholesalers' ? 'active' : ''; ?>" id="navItem-wholesalers" data-title="Wholesale B2B Hub (<?php echo $sb_wholesale_count; ?>)">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         <span class="adm-nav-label">Wholesalers</span>
-                        <span class="adm-nav-badge gold">124</span>
+                        <span class="adm-nav-badge gold"><?php echo $sb_wholesale_count; ?></span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
@@ -422,7 +429,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/wholesale/" class="adm-nav-subitem <?php echo ($current_nav === 'wholesalers' && ($current_subnav === 'all' || empty($current_subnav))) ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Wholesalers</span>
-                                <span class="adm-nav-badge">124</span>
+                                <span class="adm-nav-badge"><?php echo $sb_wholesale_count; ?></span>
                             </a>
                         </li>
                         <li>
@@ -488,7 +495,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                     <a href="/admin/resellers/" class="adm-nav-item <?php echo $current_nav === 'resellers' ? 'active' : ''; ?>" id="navItem-resellers" data-title="Resellers Network">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         <span class="adm-nav-label">Resellers</span>
-                        <span class="adm-nav-badge gold">348</span>
+                        <span class="adm-nav-badge gold"><?php echo $sb_reseller_count; ?></span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>
@@ -684,7 +691,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                     <a href="/admin/customers/" class="adm-nav-item <?php echo $current_nav === 'customers' ? 'active' : ''; ?>" id="navItem-customers" data-title="Customers Directory">
                         <svg class="adm-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         <span class="adm-nav-label">Customers</span>
-                        <span class="adm-nav-badge gold">4,820</span>
+                        <span class="adm-nav-badge gold"><?php echo $sb_customers_count; ?></span>
                         <span class="adm-nav-arrow-wrap" onclick="event.preventDefault(); event.stopPropagation(); toggleSidebarSubmenu(this);" title="Toggle submenu">
                             <svg class="adm-nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </span>

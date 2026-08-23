@@ -3,6 +3,15 @@
  * index.php — Customer Management Master Dashboard & Directory
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
+require_once __DIR__ . '/../../../src/CustomerManager.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\CustomerManager;
+use DTBrand\Database;
+
+$customersList = CustomerManager::getAll();
+$totalCustomersCount = count($customersList);
+
 $page_title = "Customer CRM & Directory";
 $active_nav = "customers";
 $active_subnav = "all";
@@ -34,7 +43,7 @@ $active_filter = "all";
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
                             <span>Customer CRM &amp; Shopper Directory</span>
-                            <span class="dt-cust-badge gold">4,820 Shoppers</span>
+                            <span class="dt-cust-badge gold"><?php echo number_format($totalCustomersCount); ?> Shoppers</span>
                         </h1>
                         <p class="dt-cust-subtitle">Manage retail customer profiles, lifetime purchases, repeat loyalty, and 1-click WhatsApp connect.</p>
                     </div>
