@@ -3,15 +3,33 @@
  * wholesale-stats.php — DT Brand's & Jai Hanuman Tex
  * 8-Card Master Wholesale KPI Ribbon & Filter Flow Pills
  */
+require_once __DIR__ . '/../../../../src/CustomerManager.php';
+require_once __DIR__ . '/../../../../src/OrderManager.php';
+require_once __DIR__ . '/../../../../src/Database.php';
+
+use DTBrand\CustomerManager;
+use DTBrand\OrderManager;
+use DTBrand\Database;
+
+$wholesaleCusts = CustomerManager::getByType('wholesale');
+$wholesaleCount = count($wholesaleCusts);
+
+$totalCredit = 0;
+$totalSpent = 0;
+foreach ($wholesaleCusts as $wc) {
+    $totalCredit += (float)($wc['credit_limit'] ?? 0);
+    $totalSpent += (float)($wc['lifetime_spend'] ?? 0);
+}
+
 $kpis = [
-    'total' => 124,
-    'active' => 98,
-    'pending' => 14,
-    'orders_month' => 412,
-    'gross_gmv' => '₹1.42 Cr',
-    'outstanding_credit' => '₹28.5L',
-    'suspended' => 6,
-    'platinum_vip' => 28
+    'total' => $wholesaleCount,
+    'active' => $wholesaleCount,
+    'pending' => 0,
+    'orders_month' => count(OrderManager::getAll()),
+    'gross_gmv' => '₹' . number_format($totalSpent),
+    'outstanding_credit' => '₹' . number_format($totalCredit),
+    'suspended' => 0,
+    'platinum_vip' => $wholesaleCount
 ];
 ?>
 

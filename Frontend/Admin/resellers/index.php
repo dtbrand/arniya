@@ -34,7 +34,7 @@ $active_filter = "all";
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title" style="font-size:1.35rem; font-weight:900; color:#181512; margin:0; display:flex; align-items:center; gap:8px;">
                             <span>Reseller Network &amp; Partner Directory</span>
-                            <span class="dt-cust-badge gold" style="font-size:0.72rem; padding:3px 8px; border-radius:6px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800;">348 Active Partners</span>
+                            <span class="dt-cust-badge gold" style="font-size:0.72rem; padding:3px 8px; border-radius:6px; background:#FAF5E8; color:#8A681F; border:1px solid #D4AF37; font-weight:800;"><?php echo number_format($totalResellerCount ?? 1); ?> Active Partners</span>
                         </h1>
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage DT Brand's authorized resellers, KYC verification, tiered margins, revolving credit lines, and 1-click WhatsApp connect.</p>
                     </div>

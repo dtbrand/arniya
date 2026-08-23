@@ -28,6 +28,33 @@ foreach ($productsList as $p) {
     }
 }
 
+$publishedCount = 0;
+$draftCount = 0;
+$outOfStockCount = 0;
+$featuredCount = 0;
+$bestSellerCount = 0;
+$newArrivalCount = 0;
+
+foreach ($productsList as $p) {
+    $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
+    $status = $p['status'] ?? 'in_stock';
+    if ($status === 'in_stock' || $status === 'published') {
+        $publishedCount++;
+    } elseif ($status === 'draft') {
+        $draftCount++;
+    }
+    if ($qty <= 0) {
+        $outOfStockCount++;
+    }
+    if (!empty($p['is_featured']) || ($p['rating'] ?? 0) >= 4.9) {
+        $featuredCount++;
+    }
+    if (($p['reviews_count'] ?? 0) >= 50) {
+        $bestSellerCount++;
+    }
+    $newArrivalCount++;
+}
+
 $page_title = "Products";
 $active_nav = "products";
 $active_subnav = "";
@@ -242,11 +269,11 @@ $active_subnav = "";
                     <!-- Secondary Action Buttons with Real SVG Icons -->
                     <a href="/Frontend/Admin/products/categories/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                        <span>Categories (16)</span>
+                        <span>Categories (<?php echo $totalCategoriesCount; ?>)</span>
                     </a>
                     <a href="/Frontend/Admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Brands (4)</span>
+                        <span>Brands (3)</span>
                     </a>
                     <a href="/Frontend/Admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
@@ -317,13 +344,13 @@ $active_subnav = "";
             <!-- 3. Status Filter Links (.subsubsub) -->
             <ul class="wp-subsubsub" style="margin-bottom:10px; padding:0; display:flex; flex-wrap:wrap; gap:4px; font-size:11.5px;">
                 <li><a href="javascript:void(0)" class="current" onclick="filterWpProducts('', this)">All <span class="count" id="countAll">(<?php echo $totalProductsCount; ?>)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Published', this)">Published <span class="count">(1,185)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Draft', this)">Draft <span class="count">(14)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Low Stock', this)">Low stock <span class="count">(14)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Out of Stock', this)">Out of stock <span class="count">(41)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Featured', this)">Featured <span class="count">(48)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('Best Seller', this)">Best Sellers <span class="count">(32)</span></a> <span class="sep">|</span></li>
-                <li><a href="javascript:void(0)" onclick="filterWpProducts('New Arrival', this)">New Arrivals <span class="count">(64)</span></a></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Published', this)">Published <span class="count">(<?php echo $publishedCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Draft', this)">Draft <span class="count">(<?php echo $draftCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Low Stock', this)">Low stock <span class="count">(<?php echo $lowStockCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Out of Stock', this)">Out of stock <span class="count">(<?php echo $outOfStockCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Featured', this)">Featured <span class="count">(<?php echo $featuredCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('Best Seller', this)">Best Sellers <span class="count">(<?php echo $bestSellerCount; ?>)</span></a> <span class="sep">|</span></li>
+                <li><a href="javascript:void(0)" onclick="filterWpProducts('New Arrival', this)">New Arrivals <span class="count">(<?php echo $newArrivalCount; ?>)</span></a></li>
             </ul>
 
             <!-- 4. Top Toolbar: Bulk Actions, Filter Dropdowns & Rule-Compliant Search Input -->
@@ -342,11 +369,9 @@ $active_subnav = "";
 
                     <select class="wp-select" id="wpCategoryFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:130px;">
                         <option value="">Select a category</option>
-                        <option value="Silk Sarees">Silk Sarees (420)</option>
-                        <option value="Banarasi Brocade">Banarasi Brocade (280)</option>
-                        <option value="Bridal Lehengas">Bridal Lehengas (160)</option>
-                        <option value="Designer Kurtis">Designer Kurtis (240)</option>
-                        <option value="Dress Materials">Dress Materials (140)</option>
+                        <?php foreach ($categoriesList as $cat): ?>
+                            <option value="<?php echo htmlspecialchars($cat['name']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
+                        <?php endforeach; ?>
                     </select>
 
                     <select class="wp-select" id="wpStockFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:135px;">
@@ -358,9 +383,9 @@ $active_subnav = "";
 
                     <select class="wp-select" id="wpBrandFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:110px;">
                         <option value="">Filter by brand</option>
-                        <option value="DT Signature">DT Signature (680)</option>
-                        <option value="Arniya Heritage">Arniya Heritage (420)</option>
-                        <option value="DT Couture">DT Couture (140)</option>
+                        <option value="DT Signature">DT Signature</option>
+                        <option value="Arniya Heritage">Arniya Heritage</option>
+                        <option value="Jai Hanuman Tex">Jai Hanuman Tex</option>
                     </select>
 
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="applyWpFilters()" style="height:28px; font-size:11px; padding:0 10px;">
@@ -946,16 +971,28 @@ function trashProductRow(rowId, productName) {
     const row = document.getElementById(rowId);
     if (!row) return;
 
-    row.style.transition = 'all 0.25s ease';
-    row.style.opacity = '0';
-    row.style.transform = 'translateX(20px)';
-    
-    setTimeout(() => {
+    const prodId = rowId.replace('row-prod-', '');
+
+    fetch('/api/products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=delete&id=' + encodeURIComponent(prodId)
+    }).then(res => res.json()).then(data => {
+        row.style.transition = 'all 0.25s ease';
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(20px)';
+        setTimeout(() => {
+            row.remove();
+            if (typeof window.showToast === 'function') {
+                window.showToast('🗑️ "' + productName + '" permanently deleted from database.');
+            }
+        }, 250);
+    }).catch(err => {
         row.remove();
         if (typeof window.showToast === 'function') {
-            window.showToast(`🗑️ "${productName}" moved to Trash`);
+            window.showToast('🗑️ "' + productName + '" moved to Trash');
         }
-    }, 250);
+    });
 }
 
 function shareProductWhatsApp(productName, sku, wholesaleRate) {
