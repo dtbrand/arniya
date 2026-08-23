@@ -91,11 +91,11 @@
                 fabric: p.fabric || 'Pure Silk',
                 colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
                 sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                url: '../Single-Product/singleproduct.php?id=' + p.id
+                url: '/Frontend/Single-Product/singleproduct.php?id=' + p.id
             };
             window.openSmartShareModal(itemData);
         } else if (p) {
-            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
+            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/Frontend/Single-Product/singleproduct.php?id=' + p.id);
             window.open(waUrl, '_blank');
         }
     };
@@ -904,18 +904,18 @@
                 var oldP = item.old_price ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
                 return '<div class="recently-viewed-card" data-product-id="' + item.id + '">' +
                     '<div class="rv-img-box">' +
-                        '<a href="../Single-Product/singleproduct.php?id=' + item.id + '" class="rv-img-link">' +
+                        '<a href="/Frontend/Single-Product/singleproduct.php?id=' + item.id + '" class="rv-img-link">' +
                             '<img src="' + item.image + '" alt="' + item.name + '" class="rv-card-img" loading="lazy" />' +
                         '</a>' +
                         '<span class="rv-discount-badge">' + disc + '</span>' +
-                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + item.id + ');}else{window.location.href=\'../Single-Product/singleproduct.php?id=' + item.id + '\';}" aria-label="Quick View">' +
+                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + item.id + ');}else{window.location.href=\'/Frontend/Single-Product/singleproduct.php?id=' + item.id + '\';}" aria-label="Quick View">' +
                             '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
                         '</button>' +
                     '</div>' +
                     '<div class="rv-card-body">' +
                         '<span class="rv-card-cat">' + (item.category || 'SAREES') + '</span>' +
                         '<h4 class="rv-card-title">' +
-                            '<a href="../Single-Product/singleproduct.php?id=' + item.id + '">' + item.name + '</a>' +
+                            '<a href="/Frontend/Single-Product/singleproduct.php?id=' + item.id + '">' + item.name + '</a>' +
                         '</h4>' +
                         '<div class="rv-price-wrap">' +
                             '<span class="rv-price-curr">₹' + Number(item.price).toLocaleString('en-IN') + '</span>' +

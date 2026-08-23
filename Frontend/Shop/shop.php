@@ -495,7 +495,7 @@ $total_products = count($products);
                 aria-label="<?= htmlspecialchars($p['name']) ?>"
             >
                 <div class="card-image-wrap">
-                    <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
+                    <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
                         <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
                     </a>
 
@@ -527,7 +527,7 @@ $total_products = count($products);
                 <div class="card-body">
                     <!-- Product Title -->
                     <h2 class="card-name">
-                        <a href="../Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="color:inherit;text-decoration:none;">
+                        <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="color:inherit;text-decoration:none;">
                             <?= htmlspecialchars($p['name']) ?>
                         </a>
                     </h2>

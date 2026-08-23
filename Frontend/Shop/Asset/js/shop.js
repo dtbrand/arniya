@@ -91,11 +91,11 @@
                 fabric: p.fabric || 'Pure Silk',
                 colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
                 sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                url: '../Single-Product/singleproduct.php?id=' + p.id
+                url: '/Frontend/Single-Product/singleproduct.php?id=' + p.id
             };
             window.openSmartShareModal(itemData);
         } else if (p) {
-            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
+            var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' at DT Brand\'s: ' + window.location.origin + '/Frontend/Single-Product/singleproduct.php?id=' + p.id);
             window.open(waUrl, '_blank');
         }
     };
