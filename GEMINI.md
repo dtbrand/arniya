@@ -111,6 +111,14 @@ All dark summary boxes, customer identity hero bars, and overview metric strips 
 - **Remote Folder**: `/public_html`
 - **Live URL**: `https://jaihanumantex.in/`
 
+### 🗄️ Hostinger Live MySQL Database Credentials
+
+- **Database Name**: `u602484543_demodt121`
+- **Database User**: `u602484543_demodt121`
+- **Database Password**: `Gautam@9006`
+- **Database Host**: `localhost` (Port `3306`)
+- **Website Base URL**: `https://jaihanumantex.in/`
+
 ### 🐙 GitHub Repository Details
 
 - **Repository URL**: `https://github.com/dtbrand/arniya.git`

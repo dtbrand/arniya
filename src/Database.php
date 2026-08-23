@@ -4,7 +4,7 @@ namespace DTBrand;
 
 /**
  * Database — Enterprise PDO Database Connection & Query Engine
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — Live Hostinger Production Credentials
  */
 class Database
 {
@@ -20,11 +20,11 @@ class Database
             return self::$pdo;
         }
 
-        $host = getenv('DB_HOST') ?: '127.0.0.1';
+        $host = getenv('DB_HOST') ?: 'localhost';
         $port = getenv('DB_PORT') ?: '3306';
-        $dbName = getenv('DB_NAME') ?: 'u602484543_arniya';
-        $username = getenv('DB_USER') ?: 'root';
-        $password = getenv('DB_PASS') ?: '';
+        $dbName = getenv('DB_NAME') ?: 'u602484543_demodt121';
+        $username = getenv('DB_USER') ?: 'u602484543_demodt121';
+        $password = getenv('DB_PASS') ?: 'Gautam@9006';
 
         try {
             $dsn = "mysql:host={$host};port={$port};dbname={$dbName};charset=utf8mb4";

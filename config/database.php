@@ -1,7 +1,7 @@
 <?php
 /**
  * config/database.php — Database Connection Configuration
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — Live Hostinger Production Credentials
  */
 
 return [
@@ -9,11 +9,11 @@ return [
     'connections' => [
         'mysql' => [
             'driver' => 'mysql',
-            'host' => getenv('DB_HOST') ?: '127.0.0.1',
+            'host' => getenv('DB_HOST') ?: 'localhost',
             'port' => getenv('DB_PORT') ?: '3306',
-            'database' => getenv('DB_NAME') ?: 'u602484543_arniya',
-            'username' => getenv('DB_USER') ?: 'root',
-            'password' => getenv('DB_PASS') ?: '',
+            'database' => getenv('DB_NAME') ?: 'u602484543_demodt121',
+            'username' => getenv('DB_USER') ?: 'u602484543_demodt121',
+            'password' => getenv('DB_PASS') ?: 'Gautam@9006',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'options' => [

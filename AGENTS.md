@@ -239,8 +239,13 @@ Every future AI agent and developer modifying this codebase MUST strictly adhere
 4. **Database Safety**:
    - All migrations must be idempotent and non-destructive.
    - Backups must be verified before executing schema updates.
-5. **Triple-Sync Deployment Protocol**:
-   - Local Clean Verification ➔ GitHub main Commit/Push ➔ Hostinger Live FTP Deployment.
+### 🗄️ Hostinger Live Production MySQL Database Credentials
+
+- **Database Name**: `u602484543_demodt121`
+- **Database User**: `u602484543_demodt121`
+- **Database Password**: `Gautam@9006`
+- **Database Host**: `localhost` (Port `3306`)
+- **Website URL**: `https://jaihanumantex.in/`
 
 ---
 
