@@ -1,4 +1,7 @@
 <?php
-header("Location: /Frontend/Admin/products/media/");
+/**
+ * gallery.php — Product Media Gallery Deep-Link
+ * DT Brand's & Jai Hanuman Tex
+ */
+header("Location: /Frontend/Admin/products/media/index.php?view=gallery");
 exit;
-?>
