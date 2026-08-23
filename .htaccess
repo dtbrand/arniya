@@ -18,7 +18,7 @@ RewriteRule ^api/reseller(\.php)?$ api/reseller.php [L,QSA]
 RewriteRule ^api/wholesale(\.php)?$ api/wholesale.php [L,QSA]
 
 # ── 2. E-COMMERCE CLEAN CONSUMER & PARTNER URLS ──
-RewriteRule ^$ /Frontend/Shop/shop.php [L,R=301]
+RewriteRule ^$ /Frontend/Home/home.php [L,R=301]
 RewriteRule ^home(\.php)?$ /Frontend/Home/home.php [L,R=301]
 RewriteRule ^shop(\.php)?$ /Frontend/Shop/shop.php [L,R=301]
 RewriteRule ^product/([0-9]+)/?$ /Frontend/Single-Product/singleproduct.php?id=$1 [L,QSA]
