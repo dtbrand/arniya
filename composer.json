@@ -19,7 +19,9 @@
     },
     "autoload": {
         "psr-4": {
-            "DTBrand\\": "src/"
+            "App\\": "app/",
+            "DTBrand\\": "src/",
+            "Database\\": "database/"
         }
     },
     "autoload-dev": {

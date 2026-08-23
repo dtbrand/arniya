@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /public/
+
+    # Direct routes
+    RewriteRule ^shop/?$ ../Frontend/Shop/shop.php [L]
+    RewriteRule ^product/([0-9]+)/?$ ../Frontend/Single-Product/singleproduct.php?id=$1 [L,QSA]
+    RewriteRule ^reseller/?$ ../Frontend/Reseller/reseller.php [L]
+    RewriteRule ^retailer/?$ ../Frontend/Retailer/retailer.php [L]
+    RewriteRule ^wholesale/?$ ../Frontend/Wholesale/wholesale.php [L]
+</IfModule>
