@@ -1,0 +1,5 @@
+# ShellCheck Configuration
+# DT Brand's & Jai Hanuman Tex
+
+disable=SC1090,SC1091
+shell=bash

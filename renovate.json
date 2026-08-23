@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["major-update", "requires-qa"]
+    },
+    {
+      "matchPackagePatterns": ["*playwright*", "*eslint*", "*prettier*", "*stylelint*"],
+      "groupName": "Frontend Tooling"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security", "high-priority"]
+  }
+}

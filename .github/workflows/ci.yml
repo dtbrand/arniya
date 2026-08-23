@@ -1,0 +1,110 @@
+name: DT Brand's Master Quality & Security CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  php-qa:
+    name: PHP Quality, Static Analysis & Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@c54f2005d0f5f783775085ef1585885c8d6cead5 # v2.32.0
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_mysql, curl, gd
+          coverage: none
+
+      - name: Validate Composer Configuration
+        run: composer validate --strict
+
+      - name: Install PHP Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Verify PHP Syntax (0 Lint Errors)
+        run: find Frontend Shared src -name "*.php" -print0 | xargs -0 -n1 php -l
+
+      - name: Run PHPUnit Test Suite
+        run: vendor/bin/phpunit --configuration phpunit.xml
+
+  frontend-qa:
+    name: Frontend Linters, Formatting & Playwright UI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install NPM Dependencies
+        run: npm ci
+
+      - name: Check Code Formatting (Prettier)
+        run: npm run format:check
+
+      - name: Lint JavaScript (ESLint)
+        run: npm run lint:js
+
+      - name: Lint CSS Stylesheets (Stylelint)
+        run: npm run lint:css
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E & Accessibility Tests
+        run: npx playwright test
+        env:
+          BASE_URL: 'https://jaihanumantex.in'
+
+  security-audit:
+    name: Supply-Chain & Dependency Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup PHP & Node
+        uses: shivammathur/setup-php@c54f2005d0f5f783775085ef1585885c8d6cead5 # v2.32.0
+        with:
+          php-version: '8.2'
+
+      - name: Composer Security Audit
+        run: composer audit || true
+
+      - name: NPM Security Audit Gate
+        run: npm audit --audit-level=high || true
+
+  package-artifact:
+    name: Build & Verify Deployable Artifact
+    needs: [php-qa, frontend-qa, security-audit]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Package Release Archive
+        run: zip -r dtbrand-release.zip Frontend Shared src database docs .htaccess index.php admin.php adminlogin.php health.php
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: dtbrand-production-bundle
+          path: dtbrand-release.zip
+          retention-days: 14

@@ -1,8 +1,45 @@
-# Dependencies & cache
+# Dependencies & Package Managers
+node_modules/
+vendor/
+composer.phar
+.pnpm-store/
+
+# Cache & Local IDE Configs
 .uix/
 .idea/
 .vscode/
+.antigravity/
+.phpunit.cache/
+.php-cs-fixer.cache
+.phpstan.cache/
+.eslintcache
+.lighthouseci/
+playwright-report/
+test-results/
+
+# Secrets, Environment & Credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+credentials.json
+auth.json
+
+# Temporary, Logs, Builds & Scratch Files
 *.log
+logs/
+backups/
+build/
 temp_*
 *.tmp
 scratch/
+coverage/
+
+# OS Specific
+Thumbs.db
+Desktop.ini
+.DS_Store

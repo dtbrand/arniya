@@ -1,0 +1,14 @@
+parameters:
+    level: 0
+    paths:
+        - src
+        - Frontend
+        - Shared
+    excludePaths:
+        - node_modules
+        - vendor
+        - scratch
+        - .uix
+        - backups
+        - build
+    treatPhpDocTypesAsCertain: false

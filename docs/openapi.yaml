@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: "DT Brand's & Jai Hanuman Tex — Commerce & CRM API"
+  description: "Official REST & AJAX API specification for DT Brand's wholesale, reseller, retail, and WhatsApp CRM platform."
+  version: "1.0.0"
+  contact:
+    name: "DT Brand's Technical Architecture"
+    email: "admin@jaihanumantex.in"
+servers:
+  - url: "https://jaihanumantex.in"
+    description: "Production Server"
+  - url: "http://localhost"
+    description: "Local Development Server"
+paths:
+  /health.php:
+    get:
+      summary: "System Health Status"
+      description: "Returns uptime, database latency, and service readiness."
+      responses:
+        '200':
+          description: "System is healthy"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    example: "2026-08-23T18:00:00Z"
+                  database:
+                    type: string
+                    example: "connected"
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /Frontend/Admin/system/database.php:
+    get:
+      summary: "Database Diagnostics"
+      description: "Retrieves table statistics, latency and row count status."
+      responses:
+        '200':
+          description: "Database diagnostic view rendered"
+
+  /Shared/Includes/cart.php:
+    post:
+      summary: "Cart Operations"
+      description: "Add, update, or remove items from shopping cart."
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [add, update, remove, clear]
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+                variant_id:
+                  type: string
+      responses:
+        '200':
+          description: "Cart updated"
+
+  /Frontend/Admin/whatsapp/broadcast.php:
+    post:
+      summary: "Trigger WhatsApp Broadcast"
+      description: "Dispatches catalog or promotional message to selected customer segment."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                segment_id:
+                  type: string
+                template:
+                  type: string
+                catalog_url:
+                  type: string
+      responses:
+        '200':
+          description: "Broadcast queued"

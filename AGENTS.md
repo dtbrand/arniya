@@ -183,12 +183,10 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus, .dt-country-se
     color: #111827 !important;
 }
 ```
-- **Background**: Solid crisp White `#FFFFFF` inside the input box to ensure 100% crystal-clear text readability.
-- **Border Effect**: Seamless rotating conic-gradient Gold & Platinum laser line traveling continuously around the border.
 
 ---
 
-## 💎 7. Master Luxury Gold & Silver/Platinum Glass Hero Box Architecture
+## 💎 6. Master Luxury Gold & Silver/Platinum Glass Hero Box Architecture
 
 All dark summary boxes, customer identity hero bars, and metric banners across the Admin Panel **MUST NEVER** be flat solid black. They **MUST ALWAYS** use the **Luxury Gold & Silver/Platinum Ambient Lining Glassmorphic Style**:
 
@@ -221,43 +219,44 @@ All dark summary boxes, customer identity hero bars, and metric banners across t
     box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
 }
 ```
-- **Text & Metric Contrast Hierarchy**:
-  - **Main Name / Entity Title**: `#FFFFFF` (Pure Bright White, `font-weight: 800; text-shadow: 0 2px 5px rgba(0,0,0,0.9);`)
-  - **VIP / Standing Pill**: Radiant Gold gradient with obsidian text (`background: linear-gradient(135deg, #FFE57F, #D4AF37, #B8860B); color: #111827; font-weight: 800; border: 1px solid #8A681F;`)
-  - **Subtitles & Metadata**: `#FEE685` (Pale Luminous Gold, `font-weight: 700;`)
-  - **Metric Labels**: `#F5ECCE` (Soft Gold Cream, `font-weight: 800; text-transform: uppercase;`)
-  - **Currency / Financial Numbers**: `#FFE57F` (Super Radiant Master Gold, `font-weight: 900;`)
-  - **Orders / Counts**: `#FFFFFF` (Pure White, `font-weight: 900;`)
 
 ---
 
-## 🎯 5. Complete End-to-End Functional Guarantee ("Sab Last Tak Working Ho")
+## 🛡️ 7. Permanent Engineering, Security & Testing Governance (The 73-Point Standard)
 
-- **Zero Dead Buttons**: Every button (`onClick`, form `submit`, anchor link) must have working JS logic attached.
-- **Form Actions**: Every form submit must capture field values, validate inputs, update the UI table dynamically, close the modal, and show an emerald/gold toast notification (`window.showToast(...)`).
-- **Real-Time Live Search**: Every search bar must instantly filter table rows or grid cards in real-time as the user types, with a functional 1-tap clear button (`✕`).
-- **Dropdown Filters**: Dropdown filters (e.g. Filter by Tier, Filter by Category, Filter by Rating) must filter table rows dynamically without requiring a page reload.
-- **Image & Logo Uploaders**: File input changes (`onchange`) must read the selected image via `FileReader` and update the live preview image/avatar instantly.
-- **Dynamic Form Prefilling & Parameter Binding**: All Edit/View pages (`edit.php?id=X`, `view.php?id=X`) must resolve `$_GET['id']` and prefill the exact entity data into title, slug, inputs, and descriptions.
-- **Native Direct Mouse Drag & Drop**: Every tree, category reorder, banner reorder, and list ordering UI must support native HTML5 direct mouse drag & drop with live ghost hover indicators (`.is-dragging`, `.drag-over-top`, `.drag-over-bottom`).
-- **Zero Undefined PHP Variables & Clean Problem Panel**: All component partials must safely default incoming variables (e.g. `$collection = (isset($collection) && is_array($collection)) ? $collection : [];`) to ensure zero IDE errors and zero runtime notices.
+Every future AI agent and developer modifying this codebase MUST strictly adhere to the following rules:
+
+1. **Absolute Codebase Preservation**:
+   - NEVER redesign existing layouts or swap color themes.
+   - NEVER modify pricing, discount, reseller, wholesale, or retail math without explicit user mandate.
+   - NEVER rename or delete working files.
+2. **Zero-Secrets Mandate**:
+   - NEVER commit plain passwords, API keys, private keys, or FTP passwords.
+   - Use environment variables (`.env`) or GitHub Secrets exclusively.
+3. **Automated Quality Testing**:
+   - Run PHP unit tests (`vendor/bin/phpunit`) and static analysis (`vendor/bin/phpstan`) before opening PRs.
+   - Run Playwright E2E and UI regression tests (`npm run test:e2e`).
+4. **Database Safety**:
+   - All migrations must be idempotent and non-destructive.
+   - Backups must be verified before executing schema updates.
+5. **Triple-Sync Deployment Protocol**:
+   - Local Clean Verification ➔ GitHub main Commit/Push ➔ Hostinger Live FTP Deployment.
 
 ---
 
-## 📋 6. Master Quality Control Checklist (Run on Every Task)
+## 📋 8. Master Quality Control Checklist (Run on Every Task)
 
-Before marking ANY task complete, every agent must verify:
+Before marking ANY task complete, verify:
 
-- [ ] **Fluid Mobile & Tablet Auto-Sizing**: Responsive on desktop, tablet, and mobile screens with zero clipping.
-- [ ] **Design System Compliance**: Uses DT Brand's signature colors (`#8A681F`, `#D4AF37`, `#181512`, `#FAF5E8`), real vector SVGs, and left-aligned search icon.
+- [ ] **Fluid Mobile & Tablet Auto-Sizing**: Responsive on desktop, tablet, and mobile with zero clipping.
+- [ ] **Design System Compliance**: Signature colors (`#8A681F`, `#D4AF37`, `#181512`), real vector SVGs.
 - [ ] **Zero Dollar Icons**: 100% Indian Rupee (`₹`) SVG used for all prices, valuations, and currency icons.
-- [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and documentation with zero typos.
+- [ ] **Professional English Standard**: 100% clean English terminology used in all code, labels, and docs.
 - [ ] **100% Styled Buttons**: Every button has explicit background gradient, border, text color, and hover state.
 - [ ] **Zero Emojis in Buttons**: All button icons use crisp inline vector SVGs.
-- [ ] **Direct Mouse Drag & Drop**: All reorder screens feature working mouse drag & drop reordering.
 - [ ] **Dynamic Data Prefilling**: Edit forms load real data from query parameters.
 - [ ] **Zero IDE & PHP Errors**: PHP linted cleanly (`php -l`), 0 undefined variables, 0 IDE problems.
-- [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links, stubs, or placeholder text.
+- [ ] **Completeness**: Feature is 100% functional end-to-end with no missing links or stubs.
 - [ ] **Sanitation**: All temporary scratch files cleaned up; workspace is clean.
 - [ ] **Git Synced**: Committed and pushed to GitHub `origin main`.
 - [ ] **Live Deployed**: Uploaded to Hostinger FTP server `/public_html/` and verified.
