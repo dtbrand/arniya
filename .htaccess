@@ -8,6 +8,14 @@
     RewriteBase /
 
     # ── 1. CANONICAL REDIRECTS (Raw /Frontend/ to Clean Modern URLs) ──
+    # If user enters /Frontend/Admin/admin.php directly, redirect to /admin
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Admin/admin\.php [NC]
+    RewriteRule ^Frontend/Admin/admin\.php$ /admin [R=301,L]
+
+    # If user enters /Frontend/Admin/adminlogin.php directly, redirect to /admin/login
+    RewriteCond %{THE_REQUEST} \s/+Frontend/Admin/adminlogin\.php [NC]
+    RewriteRule ^Frontend/Admin/adminlogin\.php$ /admin/login [R=301,L]
+
     # If a user/browser enters /Frontend/Admin/* directly, redirect to clean /admin/*
     RewriteCond %{THE_REQUEST} \s/+Frontend/Admin/([^\s?]*) [NC]
     RewriteRule ^Frontend/Admin/(.*)$ /admin/$1 [R=301,L]
