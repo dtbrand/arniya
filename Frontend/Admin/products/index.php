@@ -369,8 +369,10 @@ $active_subnav = "";
 
                     <select class="wp-select" id="wpCategoryFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:130px;">
                         <option value="">Select a category</option>
-                        <?php foreach ($categoriesList as $cat): ?>
-                            <option value="<?php echo htmlspecialchars($cat['name']); ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
+                        <?php foreach ($categoriesList as $cat): 
+                            $cName = is_array($cat) ? ($cat['name'] ?? '') : (string)$cat;
+                        ?>
+                            <option value="<?php echo htmlspecialchars($cName); ?>"><?php echo htmlspecialchars($cName); ?></option>
                         <?php endforeach; ?>
                     </select>
 
