@@ -5,6 +5,19 @@
  * Size Chart Modal, Pincode Estimator, WhatsApp Order, and Cart Integration.
  */
 
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
+// ── Dynamic Database-First PDP Catalog Loader ──
+$catalogProducts = ProductCatalog::getAll();
+$products = [];
+foreach ($catalogProducts as $cp) {
+    $products[$cp['id']] = $cp;
+}
+if (empty($products)) {
 $products = [
     1 => [
         'id'       => 1,
@@ -159,6 +172,7 @@ $products = [
         'desc'     => 'Dramatic cape-sleeved indo-western evening gown embellished with swarovski crystals and tone-on-tone pearl embroidery.'
     ],
 ];
+}
 
 // Resolve requested product ID (Default to #1)
 $pid = isset($_GET['id']) ? (int)$_GET['id'] : 1;
@@ -937,7 +951,7 @@ $colorHex = [
                 $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
                 foreach ($relatedItems as $rel):
                 ?>
-                <a href="singleproduct.php?id=<?= $rel['id'] ?>" class="pdp-rel-card">
+                <a href="/product/<?= $rel['id'] ?>" class="pdp-rel-card">
                     <div class="pdp-rel-img-wrap">
                         <?php if (!empty($rel['badge'])): ?>
                         <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>

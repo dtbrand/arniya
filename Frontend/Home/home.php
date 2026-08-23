@@ -5,7 +5,15 @@
  * Preserving DT Brand's Heritage Gold UI, Header, Footer & Architecture as Source of Truth
  */
 
-// ── Rich Multi-Category Catalog Database ──
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
+// ── Rich Multi-Category Catalog Database (Dynamic Database-First Pipeline) ──
+$products = ProductCatalog::getAll();
+if (empty($products)) {
 $products = [
     // ── Sarees ──
     [
@@ -231,6 +239,7 @@ $products = [
         'tier_prices'     => '6-11 pcs: ₹1,699 | 12-23 pcs: ₹1,549 | 24+ pcs: ₹1,399'
     ],
 ];
+}
 
 $categoriesList = [
     [

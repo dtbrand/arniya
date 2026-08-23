@@ -5,6 +5,15 @@
  * Premium Ethnic-Wear Shop — DT Brand's
  */
 
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
+// ── Dynamic Database-First Catalog Loader ──
+$products = ProductCatalog::getAll();
+if (empty($products)) {
 $products = [
     [
         'id'       => 1,
@@ -135,6 +144,7 @@ $products = [
         'in_stock' => true
     ],
 ];
+}
 
 $categories     = ['All','Sarees','Kurtis','Gowns','Lehengas','New Arrivals'];
 $total_products = count($products);

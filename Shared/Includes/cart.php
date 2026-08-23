@@ -578,8 +578,7 @@
                 if (typeof window.openCheckout === 'function') {
                     window.openCheckout();
                 } else {
-                    var total = document.getElementById('cartTotalVal').textContent;
-                    alert('✨ Thank you for choosing DT Brand\'s Luxury Ethnic Wear!\n\nYour order total is ' + total + '.\nProceeding to secure checkout...');
+                    window.location.href = '/checkout';
                 }
             });
         }

@@ -4,7 +4,7 @@ namespace DTBrand;
 
 /**
  * ProductCatalog — Master Ethnic Saree Inventory & Merchandising Engine
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — Live Hostinger Production Engine
  */
 class ProductCatalog
 {
@@ -13,18 +13,24 @@ class ProductCatalog
             'id' => 1,
             'sku' => 'KLN-SR-111',
             'title' => 'Nilambari Silk Saree with Rich Zari Pallu',
+            'name' => 'Nilambari Silk Saree with Rich Zari Pallu',
             'slug' => 'nilambari-silk-saree-rich-zari-pallu',
             'category' => 'Kanjivaram Silk',
             'fabric' => 'Pure Mulberry Silk',
             'weave' => 'Handloom Korvai Weave',
             'color' => 'Crimson Red & Antique Gold',
+            'colors' => ['Navy Blue', 'Royal Blue', 'Midnight Black'],
+            'size' => ['Free Size', 'M', 'L'],
             'mrp' => 6500.00,
+            'old_price' => 6500.00,
+            'price' => 4899.00,
             'retail_price' => 4899.00,
             'wholesale_price' => 1399.00,
             'reseller_price' => 2100.00,
             'reseller_profit' => 2100.00,
             'moq' => 8,
             'stock_qty' => 95,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 4.9,
             'reviews_count' => 142,
@@ -41,18 +47,24 @@ class ProductCatalog
             'id' => 2,
             'sku' => 'BNR-SR-204',
             'title' => 'Royal Banarasi Meenakari Silk Saree',
+            'name' => 'Royal Banarasi Meenakari Silk Saree',
             'slug' => 'royal-banarasi-meenakari-silk-saree',
             'category' => 'Banarasi Silk',
             'fabric' => 'Katan Brocade Silk',
             'weave' => 'Varanasi Kadwa Weave',
             'color' => 'Royal Emerald & Rose Gold',
+            'colors' => ['Maroon Red', 'Deep Wine', 'Ruby Red'],
+            'size' => ['Free Size', 'S', 'M'],
             'mrp' => 11000.00,
+            'old_price' => 11000.00,
+            'price' => 8499.00,
             'retail_price' => 8499.00,
             'wholesale_price' => 2499.00,
             'reseller_price' => 3500.00,
             'reseller_profit' => 3500.00,
             'moq' => 6,
             'stock_qty' => 68,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 4.9,
             'reviews_count' => 98,
@@ -69,18 +81,24 @@ class ProductCatalog
             'id' => 3,
             'sku' => 'PTH-MH-305',
             'title' => 'Maharani Paithani Handloom Silk Saree',
+            'name' => 'Maharani Paithani Handloom Silk Saree',
             'slug' => 'maharani-paithani-handloom-silk-saree',
             'category' => 'Paithani',
             'fabric' => 'Handloom Pure Silk',
             'weave' => 'Yeola Tapestry Technique',
             'color' => 'Peacock Blue & Magenta',
+            'colors' => ['Peacock Blue', 'Magenta', 'Golden Yellow'],
+            'size' => ['Free Size', 'L', 'XL'],
             'mrp' => 12500.00,
+            'old_price' => 12500.00,
+            'price' => 9499.00,
             'retail_price' => 9499.00,
             'wholesale_price' => 3199.00,
             'reseller_price' => 4200.00,
             'reseller_profit' => 4200.00,
             'moq' => 4,
             'stock_qty' => 42,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 5.0,
             'reviews_count' => 86,
@@ -97,18 +115,24 @@ class ProductCatalog
             'id' => 4,
             'sku' => 'CHN-FO-401',
             'title' => 'Chanderi Foil Printed Festive Kurti Set',
+            'name' => 'Chanderi Foil Printed Festive Kurti Set',
             'slug' => 'chanderi-foil-printed-festive-kurti-set',
             'category' => 'Designer Kurtis',
             'fabric' => 'Chanderi Silk Blend',
             'weave' => 'Tissue Foil Print',
             'color' => 'Sunset Mustard Gold',
+            'colors' => ['Mustard Gold', 'Rust Orange', 'Wine Red'],
+            'size' => ['Free Size', 'S', 'M', 'L'],
             'mrp' => 3499.00,
+            'old_price' => 3499.00,
+            'price' => 2290.00,
             'retail_price' => 2290.00,
             'wholesale_price' => 850.00,
             'reseller_price' => 1450.00,
             'reseller_profit' => 1450.00,
             'moq' => 12,
             'stock_qty' => 62,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 4.8,
             'reviews_count' => 68,
@@ -124,18 +148,24 @@ class ProductCatalog
             'id' => 5,
             'sku' => 'BRD-LH-902',
             'title' => 'Crimson Bridal Handcrafted Zardosi Lehenga',
+            'name' => 'Crimson Bridal Handcrafted Zardosi Lehenga',
             'slug' => 'crimson-bridal-handcrafted-zardosi-lehenga',
             'category' => 'Bridal Lehengas',
             'fabric' => 'Velvet & Raw Silk',
             'weave' => 'Hand Zari Zardosi',
             'color' => 'Crimson Velvet Red',
+            'colors' => ['Crimson Red', 'Maroon Velvet', 'Deep Ruby'],
+            'size' => ['S', 'M', 'L', 'XL'],
             'mrp' => 24990.00,
+            'old_price' => 24990.00,
+            'price' => 16490.00,
             'retail_price' => 16490.00,
             'wholesale_price' => 11500.00,
             'reseller_price' => 13800.00,
             'reseller_profit' => 4500.00,
             'moq' => 2,
             'stock_qty' => 18,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 5.0,
             'reviews_count' => 42,
@@ -151,18 +181,24 @@ class ProductCatalog
             'id' => 6,
             'sku' => 'ORG-TS-508',
             'title' => 'Organza Glass Tissue Floral Zari Saree',
+            'name' => 'Organza Glass Tissue Floral Zari Saree',
             'slug' => 'organza-glass-tissue-floral-zari-saree',
             'category' => 'Organza Tissue',
             'fabric' => 'Glass Tissue Organza',
             'weave' => 'Cutwork Scallop Weave',
             'color' => 'Pastel Mint & Silver',
+            'colors' => ['Pastel Mint', 'Silver Frost', 'Baby Pink'],
+            'size' => ['Free Size', 'M', 'L'],
             'mrp' => 4999.00,
+            'old_price' => 4999.00,
+            'price' => 3499.00,
             'retail_price' => 3499.00,
             'wholesale_price' => 1150.00,
             'reseller_price' => 1750.00,
             'reseller_profit' => 1750.00,
             'moq' => 8,
             'stock_qty' => 54,
+            'in_stock' => true,
             'status' => 'in_stock',
             'rating' => 4.7,
             'reviews_count' => 56,
@@ -178,12 +214,67 @@ class ProductCatalog
 
     public static function getAll(): array
     {
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $rows = Database::query("SELECT * FROM products ORDER BY id ASC");
+                if (!empty($rows)) {
+                    $list = [];
+                    foreach ($rows as $r) {
+                        $mrp = (float)$r['mrp'];
+                        $retail = (float)$r['retail_price'];
+                        $wholesale = (float)$r['wholesale_price'];
+                        $reseller = (float)$r['reseller_price'];
+                        $list[] = [
+                            'id' => (int)$r['id'],
+                            'sku' => $r['sku'],
+                            'title' => $r['title'],
+                            'name' => $r['title'],
+                            'slug' => $r['slug'] ?? '',
+                            'category' => $r['category_name'] ?? 'Kanjivaram Silk',
+                            'fabric' => $r['fabric'] ?? 'Pure Silk',
+                            'weave' => $r['weave'] ?? 'Handloom Korvai Weave',
+                            'color' => $r['color'] ?? 'Royal Silk',
+                            'colors' => ['Crimson Red', 'Navy Blue', 'Antique Gold'],
+                            'size' => ['Free Size', 'M', 'L'],
+                            'mrp' => $mrp,
+                            'old_price' => $mrp,
+                            'price' => $retail,
+                            'retail_price' => $retail,
+                            'wholesale_price' => $wholesale,
+                            'reseller_price' => $reseller,
+                            'reseller_profit' => ($reseller - $wholesale),
+                            'moq' => (int)($r['moq_full_set'] ?? 8),
+                            'stock_qty' => (int)$r['stock_qty'],
+                            'in_stock' => (int)$r['stock_qty'] > 0,
+                            'status' => $r['status'],
+                            'rating' => (float)$r['rating'],
+                            'reviews_count' => (int)$r['reviews_count'],
+                            'badge' => $r['badge'] ?? 'Bestseller',
+                            'image' => $r['primary_image'],
+                            'gallery' => [$r['primary_image']],
+                            'description' => $r['description'] ?? '',
+                            'moq_lots' => [
+                                'single' => (int)($r['moq_single'] ?? 1),
+                                'half_set' => (int)($r['moq_half_set'] ?? 4),
+                                'full_set' => (int)($r['moq_full_set'] ?? 8),
+                                'master_bale' => (int)($r['moq_master_bale'] ?? 24)
+                            ]
+                        ];
+                    }
+                    return $list;
+                }
+            } catch (\Exception $e) {
+                // fall through
+            }
+        }
         return self::$products;
     }
 
     public static function getById(int $id): ?array
     {
-        foreach (self::$products as $product) {
+        $all = self::getAll();
+        foreach ($all as $product) {
             if ($product['id'] === $id) {
                 return $product;
             }
@@ -193,7 +284,8 @@ class ProductCatalog
 
     public static function getBySku(string $sku): ?array
     {
-        foreach (self::$products as $product) {
+        $all = self::getAll();
+        foreach ($all as $product) {
             if (strcasecmp($product['sku'], $sku) === 0) {
                 return $product;
             }
@@ -203,8 +295,9 @@ class ProductCatalog
 
     public static function getCategories(): array
     {
+        $all = self::getAll();
         $categories = [];
-        foreach (self::$products as $product) {
+        foreach ($all as $product) {
             if (!in_array($product['category'], $categories, true)) {
                 $categories[] = $product['category'];
             }
@@ -212,9 +305,22 @@ class ProductCatalog
         return $categories;
     }
 
+    /**
+     * Get real recommended products
+     */
+    public static function getRecommendations(int $currentProductId = 0, int $limit = 4): array
+    {
+        $all = self::getAll();
+        $recommended = array_filter($all, function($p) use ($currentProductId) {
+            return $p['id'] !== $currentProductId;
+        });
+        return array_slice(array_values($recommended), 0, $limit);
+    }
+
     public static function filter(array $criteria = []): array
     {
-        return array_values(array_filter(self::$products, function ($product) use ($criteria) {
+        $all = self::getAll();
+        return array_values(array_filter($all, function ($product) use ($criteria) {
             if (!empty($criteria['category']) && strcasecmp($product['category'], $criteria['category']) !== 0) {
                 return false;
             }
