@@ -3,11 +3,51 @@
  * view.php — Dynamic Next-Level Product Overview & Analytics Suite
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
 $page_title = "Product Overview";
 $active_nav = "products";
 
-$product_id = isset($_GET['id']) ? intval($_GET['id']) : 101;
+$product_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+$p = ProductCatalog::getById($product_id);
+if (!$p) {
+    $all = ProductCatalog::getAll();
+    $p = !empty($all) ? $all[0] : null;
+}
 
+if ($p) {
+    $prod = [
+        'id' => $p['id'],
+        'name' => $p['title'] ?? $p['name'],
+        'sku' => $p['sku'],
+        'barcode' => '8901234500' . $p['id'],
+        'category' => $p['category'] ?? 'Silk Sarees',
+        'brand' => 'DT Signature (Arniya Heritage)',
+        'fabric' => $p['fabric'] ?? '100% Pure Mulberry Silk with 24K Gold Zari Weave',
+        'length' => '6.3 Meters (Includes 0.8m Running Blouse Piece)',
+        'hsn' => '5007 (5% GST Rate)',
+        'retail_price' => '₹' . number_format($p['retail_price'] ?? $p['price']),
+        'mrp' => '₹' . number_format($p['old_price'] ?? $p['mrp']),
+        'reseller_price' => '₹' . number_format($p['reseller_price'] ?? ($p['retail_price'] * 0.7)),
+        'wholesale_price' => '₹' . number_format($p['wholesale_price']) . '/pc (MOQ: ' . ($p['moq'] ?? 8) . ')',
+        'stock' => ($p['stock_qty'] ?? 50) . ' units',
+        'stock_pct' => '80%',
+        'stock_color' => '#15803D',
+        'image' => $p['image'] ?? '/Frontend/Shop/Asset/images/product1.png',
+        'views' => '4,820',
+        'cart_adds' => '842',
+        'sold' => '142 pcs',
+        'revenue' => '₹' . number_format(($p['retail_price'] ?? 4899) * 85),
+        'profit' => '₹' . number_format((($p['retail_price'] ?? 4899) - ($p['wholesale_price'] ?? 1399)) * 85),
+        'rating' => number_format($p['rating'] ?? 4.9, 1) . ' ★',
+        'reviews' => ($p['reviews_count'] ?? 85) . ' Reviews',
+        'status' => 'Active in Catalog'
+    ];
+} else {
 $catalog_products = [
     101 => [
         'id' => 101,
@@ -120,6 +160,7 @@ $catalog_products = [
 ];
 
 $prod = isset($catalog_products[$product_id]) ? $catalog_products[$product_id] : $catalog_products[101];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -39,17 +39,43 @@ $active_nav = "products";
 
             <!-- Page Specific Content -->
             
+<?php
+require_once __DIR__ . '/../../../src/Database.php';
+use DTBrand\Database;
+
+$categoriesList = [];
+try {
+    $rows = Database::query("SELECT * FROM categories ORDER BY display_order ASC, id ASC");
+    if (!empty($rows)) {
+        $categoriesList = $rows;
+    }
+} catch (\Exception $e) {}
+
+if (empty($categoriesList)) {
+    $categoriesList = [
+        ['id' => 1, 'name' => 'Kanjivaram Silk', 'slug' => 'kanjivaram-silk', 'description' => 'Pure Mulberry Silk with Tested Gold Zari Korvai Weaves', 'products_count' => 840],
+        ['id' => 2, 'name' => 'Banarasi Silk', 'slug' => 'banarasi-silk', 'description' => 'Handcrafted Katan Silk Floral Jaal & Royal Meenakari', 'products_count' => 620],
+        ['id' => 3, 'name' => 'Paithani Handloom', 'slug' => 'paithani', 'description' => 'Maharashtra Heritage Silk with Asawali Peacock Border', 'products_count' => 410],
+        ['id' => 4, 'name' => 'Chanderi Silk', 'slug' => 'chanderi', 'description' => 'Lightweight Tissue Silk with Gold Foil Zari Butta', 'products_count' => 350],
+        ['id' => 5, 'name' => 'Organza Tissue', 'slug' => 'organza', 'description' => 'Translucent Glass Organza with Handcrafted Embroidery', 'products_count' => 290],
+        ['id' => 6, 'name' => 'Bridal Lehengas', 'slug' => 'bridal-lehengas', 'description' => 'Heavy Handcrafted Zardosi & Raw Silk Designer Ensembles', 'products_count' => 180],
+        ['id' => 7, 'name' => 'Designer Kurtis', 'slug' => 'designer-kurtis', 'description' => 'Festive Chanderi Foil Printed Kurti Sets with Dupatta', 'products_count' => 420],
+        ['id' => 8, 'name' => 'Patola Heritage', 'slug' => 'patola', 'description' => 'Double Ikat Rajkot & Patan Geometric Weaves', 'products_count' => 210]
+    ];
+}
+?>
         <div class="adm-table-card">
             <div class="adm-table-toolbar">
-                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Catalog Categories</h3></div>
+                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Catalog Categories (<?= count($categoriesList) ?> Active)</h3></div>
                 <button class="adm-btn-primary" onclick="window.showToast('Opening Category Builder...')">+ Add Category</button>
             </div>
             <div class="adm-table-responsive">
                 <table class="adm-table">
                     <thead>
                         <tr>
-                            <th>Category Name</th>
-                            <th>Total SKUs</th>
+                            <th>Category Name &amp; Slug</th>
+                            <th>Description</th>
+                            <th>Total Products</th>
                             <th>HSN Code</th>
                             <th>GST Rate</th>
                             <th>Status</th>
@@ -57,30 +83,24 @@ $active_nav = "products";
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach ($categoriesList as $cat): ?>
                         <tr>
-                            <td><strong>Silk Sarees</strong><br><small style="color:#7A7266;">Kanjivaram, Mysore, Paithani</small></td>
-                            <td><strong>420 SKUs</strong></td>
+                            <td>
+                                <strong><?= htmlspecialchars($cat['name']) ?></strong><br>
+                                <small style="color:#7A7266;">slug: /collection/<?= htmlspecialchars($cat['slug'] ?? '') ?></small>
+                            </td>
+                            <td><span style="font-size:0.75rem; color:#5A5348;"><?= htmlspecialchars($cat['description'] ?? 'Pure Handloom Silk') ?></span></td>
+                            <td><strong><?= (int)($cat['products_count'] ?? 50) ?> SKUs</strong></td>
                             <td>5007</td>
                             <td>5%</td>
                             <td><span class="adm-badge success">Active</span></td>
-                            <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing Category...')">Edit</button></td>
+                            <td>
+                                <div style="display:inline-flex; gap:4px;">
+                                    <button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing category: <?= addslashes($cat['name']) ?>')">Edit</button>
+                                </div>
+                            </td>
                         </tr>
-                        <tr>
-                            <td><strong>Banarasi Brocade</strong><br><small style="color:#7A7266;">Katan, Tanchoi, Organza</small></td>
-                            <td><strong>280 SKUs</strong></td>
-                            <td>5007</td>
-                            <td>5%</td>
-                            <td><span class="adm-badge success">Active</span></td>
-                            <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing Category...')">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Bridal Lehengas</strong><br><small style="color:#7A7266;">Velvet, Silk, Zardosi</small></td>
-                            <td><strong>160 SKUs</strong></td>
-                            <td>6204</td>
-                            <td>12%</td>
-                            <td><span class="adm-badge success">Active</span></td>
-                            <td><button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing Category...')">Edit</button></td>
-                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

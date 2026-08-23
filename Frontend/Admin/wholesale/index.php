@@ -3,6 +3,15 @@
  * index.php — DT Brand's & Jai Hanuman Tex
  * Master Wholesale B2B Corporate Hub & Accounts Directory
  */
+require_once __DIR__ . '/../../../src/CustomerManager.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\CustomerManager;
+use DTBrand\Database;
+
+$wholesalersList = CustomerManager::getByType('wholesale');
+$totalWholesalersCount = count($wholesalersList);
+
 $page_title = "Wholesale Corporate Management";
 $active_nav = "wholesalers";
 $active_subnav = "all";
@@ -133,6 +142,9 @@ $active_subnav = "all";
     </div>
 </div>
 
+<script>
+    window.dbWholesalersData = <?= json_encode($wholesalersList) ?>;
+</script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>

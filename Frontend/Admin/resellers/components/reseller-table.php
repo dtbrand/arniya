@@ -4,6 +4,45 @@
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
 
+$resellers_data = [];
+if (!empty($resellersList)) {
+    foreach ($resellersList as $r) {
+        $name = $r['name'] ?? 'Reseller Partner';
+        $parts = explode(' ', $name);
+        $initials = strtoupper(($parts[0][0] ?? '') . ($parts[1][0] ?? ''));
+        $orders = (int)($r['total_orders'] ?? 0);
+        $spend = (float)($r['lifetime_spend'] ?? 0);
+        $credit = (float)($r['outstanding_balance'] ?? 0);
+        $creditLimit = (float)($r['credit_limit'] ?? 50000);
+        $tier = $r['tier'] ?? 'Gold VIP';
+
+        $resellers_data[] = [
+            'id' => 'RES-' . $r['id'],
+            'name' => $name,
+            'biz_name' => $name . ' (Reseller Hub)',
+            'initials' => $initials ?: 'RS',
+            'avatar_color' => 'gold',
+            'contact' => $name,
+            'email' => $r['email'] ?? 'partner@reseller.com',
+            'phone' => $r['phone'] ?? '+91 98765 43210',
+            'city' => ($r['city'] ?? 'Surat') . ', ' . ($r['state'] ?? 'GJ'),
+            'tier' => $tier,
+            'tier_margin' => '25% Margin',
+            'tier_class' => 'gold',
+            'orders' => $orders,
+            'purchase' => $spend,
+            'credit' => $credit,
+            'credit_limit' => $creditLimit,
+            'last_order' => 'Active',
+            'status' => ucfirst($r['status'] ?? 'Active'),
+            'status_class' => 'emerald',
+            'kyc' => 'Verified',
+            'joined' => '2026'
+        ];
+    }
+}
+
+if (empty($resellers_data)) {
 $resellers_data = [
     [
         'id' => 'RES-1048',
@@ -144,6 +183,7 @@ $resellers_data = [
         'joined' => '05 Jan 2025'
     ]
 ];
+}
 ?>
 
 <!-- ══ MASTER RESELLER TABLE CONTAINER ══ -->

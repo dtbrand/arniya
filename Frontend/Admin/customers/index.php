@@ -79,6 +79,9 @@ $active_filter = "all";
     </div>
 </div>
 
+<script>
+    window.dbCustomersData = <?= json_encode($customersList) ?>;
+</script>
 <script src="/Frontend/Admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/customers/assets/js/customer-list.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>

@@ -3,6 +3,15 @@
  * index.php — Reseller Management Master Dashboard & Directory
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
+require_once __DIR__ . '/../../../src/CustomerManager.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\CustomerManager;
+use DTBrand\Database;
+
+$resellersList = CustomerManager::getByType('reseller');
+$totalResellerCount = count($resellersList);
+
 $page_title = "Reseller Network & Directory";
 $active_nav = "resellers";
 $active_subnav = "all";
@@ -70,6 +79,9 @@ $active_filter = "all";
     </div>
 </div>
 
+<script>
+    window.dbResellersData = <?= json_encode($resellersList) ?>;
+</script>
 <script src="/Frontend/Admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>

@@ -6,8 +6,31 @@
 (function () {
     'use strict';
 
-    // Master Customer Data Model (Enterprise B2C Shoppers)
-    const masterCustomers = [
+    // Master Customer Data Model (Dynamically mapped from MySQL Database)
+    const masterCustomers = (window.dbCustomersData && Array.isArray(window.dbCustomersData) && window.dbCustomersData.length > 0)
+        ? window.dbCustomersData.map(function(c) {
+            var name = c.name || 'Valued Customer';
+            var parts = name.split(' ');
+            var initial = (parts[0] ? parts[0][0] : '') + (parts[1] ? parts[1][0] : '');
+            return {
+                id: 'CUST-' + c.id,
+                name: name,
+                initial: initial.toUpperCase() || 'C',
+                avatarColor: 'gold',
+                email: c.email || 'customer@dtbrands.com',
+                phone: c.phone || '+91 98765 43210',
+                type: c.type ? (c.type.charAt(0).toUpperCase() + c.type.slice(1) + ' Account') : 'Retail Verified',
+                city: (c.city || 'Surat') + ', ' + (c.state || 'GJ'),
+                orders: parseInt(c.total_orders) || 0,
+                spent: parseFloat(c.lifetime_spend) || 0,
+                aov: (parseInt(c.total_orders) > 0) ? Math.round(parseFloat(c.lifetime_spend) / parseInt(c.total_orders)) : 0,
+                lastOrder: 'Active',
+                joined: '2026',
+                status: c.status || 'active',
+                tags: [c.tier || 'Standard', 'Verified']
+            };
+        })
+        : [
         {
             id: 'CUST-1042',
             name: 'Pooja Sharma',

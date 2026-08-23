@@ -41,22 +41,33 @@
         }
 
         const sku = document.getElementById('pFormSku')?.value.trim() || '';
-        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 4990;
-        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 2850;
-        const stock = parseInt(document.getElementById('pFormStock')?.value) || 25;
+        const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 6500;
+        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 4899;
+        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 1399;
+        const reseller = parseFloat(document.getElementById('pFormReseller')?.value) || (retail * 0.70);
+        const stock = parseInt(document.getElementById('pFormStock')?.value) || 50;
         const cat = document.getElementById('pFormCat')?.value || 'Silk Sarees';
+        const fabric = document.getElementById('pFormFabric')?.value || 'Pure Mulberry Silk';
         const desc = document.getElementById('pFormDesc')?.value || '';
         const status = isDraft ? 'draft' : 'in_stock';
         
+        // Grab uploaded image if available
+        const mainImg = document.querySelector('.dt-media-thumb.primary img')?.src || document.querySelector('.dt-media-preview-item img')?.src || '/Frontend/Shop/Asset/images/product1.png';
+        const imgPath = mainImg.includes('://') ? new URL(mainImg).pathname : mainImg;
+
         const params = new URLSearchParams();
         params.append('action', 'create');
         params.append('title', title);
         params.append('sku', sku);
+        params.append('mrp', mrp);
         params.append('retail_price', retail);
         params.append('wholesale_price', wholesale);
+        params.append('reseller_price', reseller);
         params.append('stock_qty', stock);
         params.append('category', cat);
+        params.append('fabric', fabric);
         params.append('description', desc);
+        params.append('image', imgPath);
         params.append('status', status);
 
         fetch('/api/products.php', {

@@ -3,20 +3,25 @@
  * edit.php — Dynamic Product Edit Studio (WordPress & WooCommerce Style)
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
 $page_title = "Edit Product";
 $active_nav = "products";
 
-$product_id = isset($_GET['id']) ? intval($_GET['id']) : 101;
+$product_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+$prod = ProductCatalog::getById($product_id);
+if (!$prod) {
+    $all = ProductCatalog::getAll();
+    $prod = !empty($all) ? $all[0] : [
+        'id' => 1, 'name' => 'Kanjivaram Pure Silk Gold Zari Saree', 'title' => 'Kanjivaram Pure Silk Gold Zari Saree', 'sku' => 'KLN-SR-111', 'category' => 'Silk Sarees', 'brand' => 'DT Signature'
+    ];
+}
 
-$catalog_products = [
-    101 => ['id' => 101, 'name' => 'Kanjivaram Pure Silk Gold Zari Saree', 'sku' => 'KLN-SR-111', 'category' => 'Silk Sarees', 'brand' => 'DT Signature'],
-    102 => ['id' => 102, 'name' => 'Banarasi Royal Brocade Weave Saree', 'sku' => 'BNR-SR-204', 'category' => 'Banarasi Brocade', 'brand' => 'Arniya Heritage'],
-    103 => ['id' => 103, 'name' => 'Crimson Bridal Handcrafted Zardosi Lehenga', 'sku' => 'BRD-LH-902', 'category' => 'Bridal Lehengas', 'brand' => 'DT Couture'],
-    104 => ['id' => 104, 'name' => 'Chanderi Foil Printed Festive Kurti Set', 'sku' => 'KRT-CH-440', 'category' => 'Designer Kurtis', 'brand' => 'DT Signature']
-];
-
-$prod = isset($catalog_products[$product_id]) ? $catalog_products[$product_id] : $catalog_products[101];
-$edit_product_name = $prod['name'];
+$edit_product_name = $prod['title'] ?? $prod['name'];
 $edit_sku = $prod['sku'];
 ?>
 <!DOCTYPE html>

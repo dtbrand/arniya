@@ -28,21 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
     $slug = trim($_POST['slug'] ?? '') ?: strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $title));
     $sku = trim($_POST['sku'] ?? '') ?: ('DT-' . strtoupper(substr(uniqid(), -6)));
     $category_id = (int)($_POST['category_id'] ?? 1);
+    $category_name = trim($_POST['category'] ?? $_POST['category_name'] ?? 'Silk Sarees');
+    $fabric = trim($_POST['fabric'] ?? 'Pure Mulberry Silk');
     $description = trim($_POST['description'] ?? '');
     $retail_price = (float)($_POST['retail_price'] ?? 0);
-    $wholesale_price = (float)($_POST['wholesale_price'] ?? ($retail_price * 0.65));
-    $stock_qty = (int)($_POST['stock_qty'] ?? 10);
-    $image = trim($_POST['image'] ?? '/Frontend/Shop/Asset/images/product1.png');
+    $mrp = (float)($_POST['mrp'] ?? ($retail_price > 0 ? $retail_price * 1.35 : 4999.00));
+    $wholesale_price = (float)($_POST['wholesale_price'] ?? ($retail_price * 0.45));
+    $reseller_price = (float)($_POST['reseller_price'] ?? ($retail_price * 0.70));
+    $stock_qty = (int)($_POST['stock_qty'] ?? 50);
+    $image = trim($_POST['image'] ?? $_POST['primary_image'] ?? '/Frontend/Shop/Asset/images/product1.png');
     $status = trim($_POST['status'] ?? 'in_stock');
 
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
         try {
             $stmt = $db->prepare("
-                INSERT INTO products (category_id, sku, title, slug, description, retail_price, wholesale_price, stock_qty, status, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                INSERT INTO products (category_id, category_name, sku, title, slug, description, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
             ");
-            $stmt->execute([$category_id, $sku, $title, $slug, $description, $retail_price, $wholesale_price, $stock_qty, $status]);
+            $stmt->execute([$category_id, $category_name, $sku, $title, $slug, $description, $fabric, $mrp, $retail_price, $wholesale_price, $reseller_price, $stock_qty, $image, $status]);
             $newId = (int)$db->lastInsertId();
 
             if (!empty($image)) {

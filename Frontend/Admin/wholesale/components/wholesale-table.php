@@ -6,6 +6,42 @@
 
 $status_filter = isset($status_filter) ? $status_filter : 'all';
 
+$wholesalers = [];
+if (!empty($wholesalersList)) {
+    foreach ($wholesalersList as $w) {
+        $name = $w['name'] ?? 'Wholesale Partner';
+        $orders = (int)($w['total_orders'] ?? 0);
+        $spend = (float)($w['lifetime_spend'] ?? 0);
+        $avgOrder = $orders > 0 ? ($spend / $orders) : 0;
+        $tier = $w['tier'] ?? 'Platinum Wholesale';
+        $status = ucfirst($w['status'] ?? 'Active');
+
+        $wholesalers[] = [
+            'id' => 'WHL-' . $w['id'],
+            'name' => $name,
+            'legal_name' => $name . ' Enterprises',
+            'contact' => $name,
+            'email' => $w['email'] ?? 'partner@wholesale.com',
+            'phone' => $w['phone'] ?? '+91 98765 43210',
+            'city' => ($w['city'] ?? 'Surat') . ', ' . ($w['state'] ?? 'GJ'),
+            'tier' => $tier,
+            'tier_badge' => 'gold',
+            'orders' => $orders,
+            'purchase_val' => '₹' . number_format($spend),
+            'avg_order' => '₹' . number_format($avgOrder),
+            'payment_terms' => 'Net 30 Days',
+            'credit_status' => 'Good (₹' . number_format($w['credit_limit'] ?? 100000) . ' Limit)',
+            'credit_badge' => 'emerald',
+            'verification' => 'Verified KYC',
+            'verification_badge' => 'emerald',
+            'status' => $status,
+            'status_type' => strtolower($status) === 'active' ? 'approved' : strtolower($status),
+            'last_activity' => 'Active'
+        ];
+    }
+}
+
+if (empty($wholesalers)) {
 $wholesalers = [
     [
         'id' => 'WHL-8012',
@@ -140,6 +176,7 @@ $wholesalers = [
         'last_activity' => 'Overdue 14 Days'
     ]
 ];
+}
 ?>
 
 <div class="dt-card">
