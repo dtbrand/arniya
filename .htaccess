@@ -1,31 +1,35 @@
 # ══════════════════════════════════════════════════════════════════
 #  HIGH-SPEED APACHE OPTIMIZATION & CLEAN ROUTING CONFIGURATION
+#  DT Brand's & Jai Hanuman Tex — Luxury Ethnic B2B Platform
 # ══════════════════════════════════════════════════════════════════
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
 
-# Root URL -> Frontend Shop
-RewriteRule ^$ /Frontend/Shop/shop.php [L,R=301]
+# ── 1. API ROUTES ──
+RewriteRule ^api/health(\.php)?$ api/health.php [L,QSA]
+RewriteRule ^api/products(\.php)?$ api/products.php [L,QSA]
+RewriteRule ^api/cart(\.php)?$ api/cart.php [L,QSA]
+RewriteRule ^api/wishlist(\.php)?$ api/wishlist.php [L,QSA]
+RewriteRule ^api/orders(\.php)?$ api/orders.php [L,QSA]
+RewriteRule ^api/categories(\.php)?$ api/categories.php [L,QSA]
+RewriteRule ^api/reseller(\.php)?$ api/reseller.php [L,QSA]
+RewriteRule ^api/wholesale(\.php)?$ api/wholesale.php [L,QSA]
 
-# Page redirects from Root to respective Module folders
+# ── 2. E-COMMERCE CLEAN CONSUMER & PARTNER URLS ──
+RewriteRule ^$ /Frontend/Shop/shop.php [L,R=301]
+RewriteRule ^home(\.php)?$ /Frontend/Home/home.php [L,R=301]
 RewriteRule ^shop(\.php)?$ /Frontend/Shop/shop.php [L,R=301]
-RewriteRule ^singleproduct(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301]
+RewriteRule ^product/([0-9]+)/?$ /Frontend/Single-Product/singleproduct.php?id=$1 [L,QSA]
+RewriteRule ^singleproduct(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,QSA]
 RewriteRule ^singelprodut(\.php)?$ /Frontend/Single-Product/singleproduct.php [L,R=301]
 RewriteRule ^wholesale(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
 RewriteRule ^wholesaler(\.php)?$ /Frontend/Wholesale/wholesale.php [L,R=301]
 RewriteRule ^retailer(\.php)?$ /Frontend/Retailer/retailer.php [L,R=301]
 RewriteRule ^reseller(\.php)?$ /Frontend/Reseller/reseller.php [L,R=301]
 
-RewriteRule ^admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
-RewriteRule ^Admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
-RewriteRule ^admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
-RewriteRule ^Admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
-RewriteRule ^admin(\.php)?$ /Frontend/Admin/admin.php [L,R=301]
-RewriteRule ^adminlogin(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
-
-# Auth & Shared Rewrites
+# ── 3. AUTH & CHECKOUT SHARED REWRITES ──
 RewriteRule ^myaccount(\.php)?$ /Shared/Auth/myaccount.php [L,R=301]
 RewriteRule ^account(\.php)?$ /Shared/Includes/account.php [L,R=301]
 RewriteRule ^cart(\.php)?$ /Shared/Includes/cart.php [L,R=301]
@@ -35,7 +39,19 @@ RewriteRule ^smartshare(\.php)?$ /Shared/Includes/smartshare.php [L,R=301]
 RewriteRule ^wishlist(\.php)?$ /Shared/Includes/wishlist.php [L,R=301]
 RewriteRule ^reels(\.php)?$ /Shared/Includes/reels.php [L,R=301]
 
-# Fallback asset routing if requested from Root
+# ── 4. ADMIN CONSOLE REWRITES ──
+RewriteRule ^admin/retail/?$ /Frontend/Admin/retail/index.php [L,R=301]
+RewriteRule ^admin/wholesale/?$ /Frontend/Admin/wholesale/index.php [L,R=301]
+RewriteRule ^admin/resellers/?$ /Frontend/Admin/resellers/index.php [L,R=301]
+RewriteRule ^admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
+RewriteRule ^Admin/products/(.*)$ /Frontend/Admin/products/$1 [L,R=301]
+RewriteRule ^admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
+RewriteRule ^Admin/catalogue/(.*)$ /Frontend/Admin/catalogue/$1 [L,R=301]
+RewriteRule ^admin/login(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
+RewriteRule ^adminlogin(\.php)?$ /Frontend/Admin/adminlogin.php [L,R=301]
+RewriteRule ^admin(\.php)?$ /Frontend/Admin/admin.php [L,R=301]
+
+# ── 5. ASSET ROUTING FALLBACKS ──
 RewriteRule ^Asset/css/admin\.css$ Frontend/Admin/Asset/css/admin.css [L]
 RewriteRule ^Asset/js/admin\.js$ Frontend/Admin/Asset/js/admin.js [L]
 RewriteRule ^Asset/css/shop\.css$ Frontend/Shop/Asset/css/shop.css [L]
@@ -52,7 +68,7 @@ RewriteRule ^Asset/images/(.*)$ Shared/Asset/images/$1 [L]
 RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
 </IfModule>
 
-# ── 1. GZIP / DEFLATE COMPRESSION (Ultra-Fast Transfer) ──
+# ── 6. GZIP / DEFLATE COMPRESSION (Ultra-Fast Transfer) ──
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/rss+xml
@@ -80,12 +96,12 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
     AddOutputFilterByType DEFLATE application/json
 </IfModule>
 
-# ── 2. BROWSER CACHING HEADERS ──
+# ── 7. BROWSER CACHING HEADERS ──
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresDefault "access plus 1 month"
 
-    # Images (1 Year Cache)
+    # Images & Fonts (1 Year Cache)
     ExpiresByType image/webp "access plus 1 year"
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/jpg "access plus 1 year"
@@ -93,31 +109,10 @@ RewriteRule ^images/(.*)$ Shared/Asset/images/$1 [L]
     ExpiresByType image/gif "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
 
     # CSS & JavaScript (1 Month Cache)
     ExpiresByType text/css "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
     ExpiresByType text/javascript "access plus 1 month"
-
-    # Fonts (1 Year Cache)
-    ExpiresByType font/woff2 "access plus 1 year"
-    ExpiresByType font/woff "access plus 1 year"
-    ExpiresByType font/ttf "access plus 1 year"
-    ExpiresByType application/font-woff2 "access plus 1 year"
 </IfModule>
-
-# ── 3. CACHE-CONTROL HEADERS ──
-<IfModule mod_headers.c>
-    <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$">
-        Header set Cache-Control "max-age=31536000, public, immutable"
-    </FilesMatch>
-
-    <FilesMatch "\.(css|js)$">
-        Header set Cache-Control "max-age=2592000, public"
-    </FilesMatch>
-
-    Header set Connection keep-alive
-</IfModule>
-
-# ── 4. DISABLE ETAGS ──
-FileETag None
