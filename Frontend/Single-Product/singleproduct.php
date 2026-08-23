@@ -196,12 +196,13 @@ if (!$product) {
 }
 
 // Generate variation gallery images
-$galleryImages = [
-    $product['image'],
-    '/Frontend/Single-Product/Asset/images/product1.png',
-    '/Frontend/Single-Product/Asset/images/product1.png',
-    '/Frontend/Single-Product/Asset/images/product1.png'
-];
+$prodNum = (int)($product['id'] ?? 1);
+$baseMainImg = $product['image'] ?? '/Frontend/Single-Product/Asset/images/product1.png';
+$pImg2 = !empty($product['gallery'][1]) ? $product['gallery'][1] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum) % 8) + 1) . '.png');
+$pImg3 = !empty($product['gallery'][2]) ? $product['gallery'][2] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum + 1) % 8) + 1) . '.png');
+$pImg4 = !empty($product['gallery'][3]) ? $product['gallery'][3] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum + 2) % 8) + 1) . '.png');
+
+$galleryImages = array_values(array_unique([$baseMainImg, $pImg2, $pImg3, $pImg4]));
 
 // Myntra-Style Detailed Product Specifications
 $myntraSpecsMap = [
@@ -869,6 +870,50 @@ $colorHex = [
 
         </div>
     </div>
+
+    <!-- ════ LUXURY 360° VIDEO & FABRIC DRAPE SHOWCASE ════ -->
+    <section class="pdp-video-showcase-section" style="margin-top: 36px; padding: 24px; background: linear-gradient(135deg, #181512 0%, #2A241E 100%); border-radius: 16px; border: 1.5px solid #8A681F; color: #FAF5E8; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px;">
+            <div>
+                <span style="font-size:0.7rem; font-weight:800; color:#D4AF37; text-transform:uppercase; letter-spacing:0.12em; display:flex; align-items:center; gap:6px;">
+                    <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:#D4AF37; stroke-width:2;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    Live Fabric & Zari Video Drape
+                </span>
+                <h2 style="font-family:'Cinzel', serif; font-size:1.25rem; font-weight:700; color:#FFFFFF; margin:4px 0 0;"><?= htmlspecialchars($product['name']) ?> — 360° Video Preview</h2>
+            </div>
+            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20send%20live%20video%20for%20<?= urlencode($product['name']) ?>%20(SKU%3A%20<?= urlencode($product['sku'] ?? 'SAR-001') ?>)" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); color:#FFFFFF; padding:9px 18px; border-radius:30px; font-size:0.78rem; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(22,163,74,0.35);">
+                <svg viewBox="0 0 24 24" style="width:15px; height:15px; fill:none; stroke:#FFF; stroke-width:2.2;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Request Custom Live Video on WhatsApp
+            </a>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:center;">
+            <div style="position:relative; aspect-ratio:16/9; background:#0B0907; border-radius:12px; overflow:hidden; border:1px solid rgba(212,175,55,0.4); display:flex; align-items:center; justify-content:center;">
+                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" style="width:100%; height:100%; object-fit:cover; opacity:0.85;" />
+                <div style="position:absolute; inset:0; background:rgba(0,0,0,0.35); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;" onclick="if(typeof window.openReelsFeed==='function'){window.openReelsFeed();}else{alert('Playing HD Fabric Video...');}">
+                    <div style="width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 100%); display:flex; align-items:center; justify-content:center; box-shadow:0 0 24px rgba(212,175,55,0.8); border:2px solid #FFFFFF;">
+                        <svg viewBox="0 0 24 24" style="width:24px; height:24px; fill:#111827; margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                    <span style="margin-top:10px; font-size:0.75rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#FAF5E8; text-shadow:0 2px 4px rgba(0,0,0,0.8);">Click to Watch Full HD Video</span>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #D4AF37;">
+                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#D4AF37; font-weight:700;">Pure Metallic Zari & Weft Inspection</h4>
+                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Video shows pure gold/silver electroplated zari woven seamlessly into <?= htmlspecialchars($product['fabric'] ?? 'Pure Silk') ?> warp under studio lighting.</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #2E7D32;">
+                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#86EFAC; font-weight:700;">Fall & Drape Flow</h4>
+                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Ultra-lightweight yet monumental regal pleating. Does not crumple, holding crisp pleats for 12+ hours.</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #60A5FA;">
+                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#93C5FD; font-weight:700;">Includes Running Blouse Piece</h4>
+                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Comes with unstitched 80cm coordinated designer blouse fabric matching the rich pallu pattern.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">

@@ -544,25 +544,19 @@
 
     // Helper to generate photo variations for catalog items
     function getProductImages(p) {
-        var baseImg = p.image || '/Shared/Asset/images/product1.png';
-        var list = [baseImg];
-        var cat = (p.category || '').toLowerCase();
-        
-        // Push premium catalog variation photoshoot links
-        if (cat === 'sarees') {
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
-        } else if (cat === 'lehengas') {
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
-        } else {
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
-            list.push('/Shared/Asset/images/product1.png');
+        if (p.gallery && Array.isArray(p.gallery) && p.gallery.length > 0) {
+            return p.gallery;
         }
-        return list;
+        var baseImg = p.image || '/Frontend/Shop/Asset/images/product1.png';
+        var list = [baseImg];
+        var pid = parseInt(String(p.id).replace(/[^0-9]/g, ''), 10) || 1;
+        var p1 = ((pid) % 8) + 1;
+        var p2 = ((pid + 1) % 8) + 1;
+        var p3 = ((pid + 2) % 8) + 1;
+        list.push('/Frontend/Shop/Asset/images/product' + p1 + '.png');
+        list.push('/Frontend/Shop/Asset/images/product' + p2 + '.png');
+        list.push('/Frontend/Shop/Asset/images/product' + p3 + '.png');
+        return Array.from(new Set(list));
     }
 
     window.qvSliderInterval = null;
