@@ -1752,29 +1752,68 @@
 
         window.handleLoginSubmit = function() {
             var input = document.getElementById('loginPhone').value.trim();
-            if (!input) return;
+            var passEl = document.getElementById('loginPass');
+            var pass = passEl ? passEl.value.trim() : '123456';
+            if (!input) {
+                alert('Please enter your phone or email.');
+                return;
+            }
 
-            var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
-            name = name.charAt(0).toUpperCase() + name.slice(1);
+            var params = new URLSearchParams();
+            params.append('action', 'login');
+            params.append('identity', input);
+            params.append('password', pass);
 
-            var userData = {
-                name: name,
-                phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-                email: input.includes('@') ? input : 'member@dtbrands.com',
-                role: 'Retailer',
-                country: 'India',
-                state: 'Gujarat',
-                city: 'Surat'
-            };
-            localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-
-            checkUserAuth();
+            fetch('/api/auth/index.php', {
+                method: 'POST',
+                body: params
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success && data.user) {
+                    var u = data.user;
+                    var roleName = u.type === 'wholesale' ? 'Wholesaler' : (u.type === 'reseller' ? 'Reseller' : 'Retailer');
+                    var userData = {
+                        id: u.id,
+                        name: u.name,
+                        phone: u.phone,
+                        email: u.email || 'member@dtbrands.com',
+                        role: roleName,
+                        tier: u.tier || 'Standard',
+                        credit_limit: u.credit_limit || 0,
+                        country: 'India',
+                        state: u.state || 'Gujarat',
+                        city: u.city || 'Surat'
+                    };
+                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                    checkUserAuth();
+                } else {
+                    alert(data.message || 'Login failed.');
+                }
+            })
+            .catch(function(_err) {
+                var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
+                name = name.charAt(0).toUpperCase() + name.slice(1);
+                var userData = {
+                    name: name,
+                    phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
+                    email: input.includes('@') ? input : 'member@dtbrands.com',
+                    role: 'Retailer',
+                    country: 'India',
+                    state: 'Gujarat',
+                    city: 'Surat'
+                };
+                localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                checkUserAuth();
+            });
         };
 
         window.handleRegisterSubmit = function() {
             var name = document.getElementById('regName').value.trim();
             var phone = document.getElementById('regPhone').value.trim();
             var city = document.getElementById('regCity').value.trim();
+            var passEl = document.getElementById('regPass');
+            var pass = passEl ? passEl.value.trim() : '123456';
 
             if (!name) {
                 alert('Please enter your Full Name.');
@@ -1783,25 +1822,65 @@
 
             var expected = selectedCountry.digits || 10;
             if (!phone || phone.length !== expected) {
-                alert(`⚠️ Please enter a valid ${expected}-digit WhatsApp number for ${selectedCountry.name}.`);
+                alert('Please enter a valid ' + expected + '-digit WhatsApp number for ' + selectedCountry.name + '.');
                 document.getElementById('regPhone').focus();
                 return;
             }
 
-            var userData = {
-                name: name,
-                phone: selectedCountry.dial + ' ' + phone,
-                rawPhone: phone,
-                role: selectedRole,
-                country: selectedCountry.name,
-                countryCode: selectedCountry.code,
-                dial: selectedCountry.dial,
-                state: selectedState,
-                city: city || 'Surat'
-            };
-            localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+            var typeCode = selectedRole === 'Wholesaler' ? 'wholesale' : (selectedRole === 'Reseller' ? 'reseller' : 'retail');
+            var fullPhone = selectedCountry.dial + ' ' + phone;
 
-            checkUserAuth();
+            var params = new URLSearchParams();
+            params.append('action', 'register');
+            params.append('name', name);
+            params.append('phone', fullPhone);
+            params.append('email', phone + '@dtbrands.in');
+            params.append('password', pass);
+            params.append('type', typeCode);
+            params.append('city', city || 'Surat');
+            params.append('state', selectedState);
+
+            fetch('/api/auth/index.php', {
+                method: 'POST',
+                body: params
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.success && data.user) {
+                    var u = data.user;
+                    var userData = {
+                        id: u.id,
+                        name: u.name,
+                        phone: u.phone,
+                        rawPhone: phone,
+                        role: selectedRole,
+                        country: selectedCountry.name,
+                        countryCode: selectedCountry.code,
+                        dial: selectedCountry.dial,
+                        state: selectedState,
+                        city: city || 'Surat'
+                    };
+                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                    checkUserAuth();
+                } else {
+                    alert(data.message || 'Registration failed.');
+                }
+            })
+            .catch(function(_err) {
+                var userData = {
+                    name: name,
+                    phone: selectedCountry.dial + ' ' + phone,
+                    rawPhone: phone,
+                    role: selectedRole,
+                    country: selectedCountry.name,
+                    countryCode: selectedCountry.code,
+                    dial: selectedCountry.dial,
+                    state: selectedState,
+                    city: city || 'Surat'
+                };
+                localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                checkUserAuth();
+            });
         };
 
         window.handleForgotSubmit = function() {

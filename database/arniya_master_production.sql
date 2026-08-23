@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
     `name` VARCHAR(150) NOT NULL,
     `phone` VARCHAR(20) NOT NULL UNIQUE,
     `email` VARCHAR(150),
+    `password_hash` VARCHAR(255) DEFAULT NULL,
     `type` ENUM('retail', 'wholesale', 'reseller') DEFAULT 'retail',
     `city` VARCHAR(100),
     `state` VARCHAR(100),
@@ -112,8 +113,96 @@ CREATE TABLE IF NOT EXISTS `customers` (
     `gstin` VARCHAR(20) DEFAULT NULL,
     `pan` VARCHAR(20) DEFAULT NULL,
     `commission_rate` DECIMAL(5,2) DEFAULT 0.00,
+    `reset_token` VARCHAR(100) DEFAULT NULL,
+    `reset_expires` TIMESTAMP NULL DEFAULT NULL,
+    `last_login` TIMESTAMP NULL DEFAULT NULL,
     `status` ENUM('active', 'pending', 'suspended') DEFAULT 'active',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6B. USERS / ADMIN STAFF TABLE ──
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(150) NOT NULL,
+    `email` VARCHAR(150) NOT NULL UNIQUE,
+    `phone` VARCHAR(20) DEFAULT NULL,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `role` ENUM('super_admin', 'admin', 'manager', 'staff') DEFAULT 'admin',
+    `status` ENUM('active', 'inactive') DEFAULT 'active',
+    `last_login` TIMESTAMP NULL DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6C. CUSTOMER ADDRESSES TABLE ──
+CREATE TABLE IF NOT EXISTS `addresses` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT NOT NULL,
+    `recipient_name` VARCHAR(150) NOT NULL,
+    `phone` VARCHAR(20) NOT NULL,
+    `address_line1` VARCHAR(255) NOT NULL,
+    `address_line2` VARCHAR(255),
+    `city` VARCHAR(100) NOT NULL,
+    `state` VARCHAR(100) NOT NULL,
+    `pincode` VARCHAR(10) NOT NULL,
+    `address_type` ENUM('home', 'work', 'warehouse') DEFAULT 'home',
+    `is_default` TINYINT(1) DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6D. PRODUCT COLORS TABLE ──
+CREATE TABLE IF NOT EXISTS `product_colors` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(50) NOT NULL,
+    `hex_code` VARCHAR(10) NOT NULL,
+    `swatch_image` VARCHAR(255) DEFAULT NULL,
+    `status` ENUM('active', 'inactive') DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6E. PRODUCT SIZES TABLE ──
+CREATE TABLE IF NOT EXISTS `product_sizes` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(50) NOT NULL,
+    `sort_order` INT DEFAULT 1,
+    `status` ENUM('active', 'inactive') DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6F. PRODUCT VARIANTS TABLE ──
+CREATE TABLE IF NOT EXISTS `product_variants` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL,
+    `color_id` INT DEFAULT NULL,
+    `color_name` VARCHAR(50) DEFAULT NULL,
+    `size_id` INT DEFAULT NULL,
+    `size_name` VARCHAR(50) DEFAULT NULL,
+    `sku` VARCHAR(50) NOT NULL,
+    `stock_qty` INT DEFAULT 10,
+    `price` DECIMAL(10,2) DEFAULT NULL,
+    `image` VARCHAR(255) DEFAULT NULL,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6G. WISHLIST ITEMS TABLE ──
+CREATE TABLE IF NOT EXISTS `wishlist_items` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ── 6H. CART ITEMS TABLE ──
+CREATE TABLE IF NOT EXISTS `cart_items` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT DEFAULT NULL,
+    `session_id` VARCHAR(100) NOT NULL,
+    `product_id` INT NOT NULL,
+    `color` VARCHAR(50) DEFAULT NULL,
+    `size` VARCHAR(50) DEFAULT NULL,
+    `quantity` INT NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ── 7. ORDERS TABLE ──

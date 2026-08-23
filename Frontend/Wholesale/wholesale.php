@@ -11,6 +11,37 @@
  * - Obsidian Dark: #14110E / #0F172A
  */
 
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
+require_once __DIR__ . '/../../src/CustomerManager.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\OrderManager;
+use DTBrand\CustomerManager;
+
+$dbProducts = ProductCatalog::getAll();
+$catalogProducts = [];
+foreach ($dbProducts as $dp) {
+    $catalogProducts[] = [
+        'id'              => $dp['id'],
+        'sku'             => $dp['sku'],
+        'hsn'             => '5007',
+        'name'            => $dp['title'],
+        'category'        => $dp['category'],
+        'retail_price'    => $dp['retail_price'],
+        'wholesale_price' => $dp['wholesale_price'],
+        'moq'             => $dp['moq'] ?? 8,
+        'image'           => $dp['image'],
+        'badge'           => $dp['badge'] ?? 'New Catalogue',
+        'badge_icon'      => '✨',
+        'color'           => $dp['color'] ?? 'Royal Silk',
+        'fabric'          => $dp['fabric'] ?? 'Pure Silk',
+        'in_stock'        => $dp['stock_qty'] ?? 50,
+        'tier_prices'     => '8-15 pcs: ₹' . number_format($dp['wholesale_price']) . ' | 16-31 pcs: ₹' . number_format($dp['wholesale_price'] * 0.95) . ' | 32+ pcs: ₹' . number_format($dp['wholesale_price'] * 0.90)
+    ];
+}
+if (empty($catalogProducts)) {
 $catalogProducts = [
     // ── NEW CATALOGUE / FRESH ARRIVALS (Shown First Always) ──
     [
@@ -390,6 +421,7 @@ $catalogProducts = [
         'tier_prices'     => '12-23 pcs: ₹599 | 24-47 pcs: ₹549 | 48+ pcs: ₹499'
     ]
 ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

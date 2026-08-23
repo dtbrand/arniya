@@ -174,9 +174,26 @@ $products = [
 ];
 }
 
-// Resolve requested product ID (Default to #1)
+// Resolve requested product ID, SKU, or Slug
 $pid = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-$product = $products[$pid] ?? $products[1];
+$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
+$sku = isset($_GET['sku']) ? trim($_GET['sku']) : '';
+
+$product = null;
+if (!empty($sku)) {
+    $product = ProductCatalog::getBySku($sku);
+}
+if (!$product && !empty($slug)) {
+    foreach ($catalogProducts as $cp) {
+        if (($cp['slug'] ?? '') === $slug) {
+            $product = $cp;
+            break;
+        }
+    }
+}
+if (!$product) {
+    $product = ProductCatalog::getById($pid) ?? ($products[$pid] ?? reset($products));
+}
 
 // Generate variation gallery images
 $galleryImages = [

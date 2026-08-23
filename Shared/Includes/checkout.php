@@ -1241,45 +1241,77 @@
 
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
 
-        /* Craft Luxury WhatsApp Invoice Message */
-        var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
-                        `🔖 *Order ID:* #${orderId}\n` +
-                        `📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}\n` +
-                        `───────────────\n` +
-                        `👤 *Customer Name:* ${fullName}\n` +
-                        `📞 *WhatsApp:* +91 ${whatsApp}\n` +
-                        `📍 *Shipping Address:*\n${address}, ${city}, ${state} - ${pincode}\n` +
-                        (note ? `📝 *Custom Note:* ${note}\n` : '') +
-                        `───────────────\n` +
-                        `🛍️ *ORDERED ITEMS:*\n${itemsSummaryTxt}\n` +
-                        `───────────────\n` +
-                        `💵 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}\n` +
-                        (appliedDiscountAmount > 0 ? `🎁 *Discount (${appliedCouponCode}):* -₹${appliedDiscountAmount.toLocaleString('en-IN')}\n` : '') +
-                        `🚚 *Fast Delivery:* Express Priority Dispatch\n` +
-                        `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
-                        `💳 *Payment Method:* ${activePaymentMethod.toUpperCase()}\n` +
-                        `───────────────\n` +
-                        `Please confirm and share order dispatch tracking. Thank you! 🙏`;
+        /* Save Real Order to MySQL Database via api/orders.php */
+        var params = new URLSearchParams();
+        params.append('action', 'create');
+        params.append('customer_name', fullName);
+        params.append('customer_phone', whatsApp);
+        params.append('payment_method', activePaymentMethod);
+        params.append('discount', appliedDiscountAmount);
+        params.append('items', JSON.stringify(cart));
 
-        var waUrl = `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
+        fetch('/api/orders.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            var realOrderNumber = (data.order && data.order.order_number) ? data.order.order_number : orderId;
 
-        /* Show Success Overlay */
-        var successOverlay = document.getElementById('coSuccessOverlay');
-        var successOrderId = document.getElementById('coSuccessOrderId');
-        var successWaLink = document.getElementById('coSuccessWhatsAppLink');
+            /* Craft Luxury WhatsApp Invoice Message */
+            var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
+                            `🔖 *Order ID:* #${realOrderNumber}\n` +
+                            `📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}\n` +
+                            `───────────────\n` +
+                            `👤 *Customer Name:* ${fullName}\n` +
+                            `📞 *WhatsApp:* +91 ${whatsApp}\n` +
+                            `📍 *Shipping Address:*\n${address}, ${city}, ${state} - ${pincode}\n` +
+                            (note ? `📝 *Custom Note:* ${note}\n` : '') +
+                            `───────────────\n` +
+                            `🛍️ *ORDERED ITEMS:*\n${itemsSummaryTxt}\n` +
+                            `───────────────\n` +
+                            `💵 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}\n` +
+                            (appliedDiscountAmount > 0 ? `🎁 *Discount (${appliedCouponCode}):* -₹${appliedDiscountAmount.toLocaleString('en-IN')}\n` : '') +
+                            `🚚 *Fast Delivery:* Express Priority Dispatch\n` +
+                            `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
+                            `💳 *Payment Method:* ${activePaymentMethod.toUpperCase()}\n` +
+                            `───────────────\n` +
+                            `Please confirm and share order dispatch tracking. Thank you! 🙏`;
 
-        if (successOrderId) successOrderId.textContent = '#' + orderId;
-        if (successWaLink) successWaLink.href = waUrl;
-        if (successOverlay) successOverlay.classList.add('active');
+            var waUrl = `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
 
-        /* Clear Cart upon successful order placement */
-        localStorage.removeItem('dtbrands_cart');
-        window.cartState = [];
-        if (typeof window.syncBadges === 'function') window.syncBadges();
-        if (typeof window.renderCart === 'function') window.renderCart();
+            /* Show Success Overlay */
+            var successOverlay = document.getElementById('coSuccessOverlay');
+            var successOrderId = document.getElementById('coSuccessOrderId');
+            var successWaLink = document.getElementById('coSuccessWhatsAppLink');
 
-        /* Automatically open WhatsApp chat in new window/tab */
-        window.open(waUrl, '_blank');
+            if (successOrderId) successOrderId.textContent = '#' + realOrderNumber;
+            if (successWaLink) successWaLink.href = waUrl;
+            if (successOverlay) successOverlay.classList.add('active');
+
+            /* Clear Cart upon successful order placement */
+            localStorage.removeItem('dtbrands_cart');
+            window.cartState = [];
+            if (typeof window.syncBadges === 'function') window.syncBadges();
+            if (typeof window.renderCart === 'function') window.renderCart();
+
+            /* Automatically open WhatsApp chat in new window/tab */
+            window.open(waUrl, '_blank');
+        })
+        .catch(function(_err) {
+            var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
+                            `🔖 *Order ID:* #${orderId}\n` +
+                            `👤 *Customer:* ${fullName}\n` +
+                            `📞 *WhatsApp:* +91 ${whatsApp}\n` +
+                            `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
+                            `Please confirm order dispatch.`;
+            var waUrl = `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
+            var successOverlay = document.getElementById('coSuccessOverlay');
+            if (successOverlay) successOverlay.classList.add('active');
+            localStorage.removeItem('dtbrands_cart');
+            window.cartState = [];
+            window.open(waUrl, '_blank');
+        });
     }
 
     /* Bind Event Listeners on DOM Load */

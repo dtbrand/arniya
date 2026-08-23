@@ -4,7 +4,7 @@ namespace DTBrand;
 
 /**
  * CustomerManager — B2B Partner, Wholesale & Retail Identity Engine
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — Live Production Standard
  */
 class CustomerManager
 {
@@ -21,7 +21,8 @@ class CustomerManager
             'credit_limit' => 500000.00,
             'outstanding_balance' => 84500.00,
             'total_orders' => 48,
-            'lifetime_spend' => 1845000.00
+            'lifetime_spend' => 1845000.00,
+            'status' => 'active'
         ],
         [
             'id' => 102,
@@ -35,7 +36,8 @@ class CustomerManager
             'commission_rate' => 15.0,
             'pending_payout' => 14250.00,
             'total_orders' => 32,
-            'lifetime_spend' => 342000.00
+            'lifetime_spend' => 342000.00,
+            'status' => 'active'
         ],
         [
             'id' => 103,
@@ -47,7 +49,8 @@ class CustomerManager
             'state' => 'Karnataka',
             'tier' => 'Silver Consumer',
             'total_orders' => 5,
-            'lifetime_spend' => 28500.00
+            'lifetime_spend' => 28500.00,
+            'status' => 'active'
         ]
     ];
 
@@ -60,19 +63,23 @@ class CustomerManager
                 if (!empty($rows)) {
                     $result = [];
                     foreach ($rows as $r) {
+                        $type = $r['type'] ?? 'retail';
                         $result[] = [
                             'id' => (int)$r['id'],
                             'name' => $r['name'],
                             'phone' => $r['phone'] ?? '+91 98765 43210',
                             'email' => $r['email'] ?? 'customer@example.com',
-                            'type' => $r['type'] ?? 'retail',
+                            'type' => $type,
                             'city' => $r['city'] ?? 'Surat',
                             'state' => $r['state'] ?? 'Gujarat',
-                            'tier' => ($r['type'] ?? 'retail') === 'wholesale' ? 'Diamond Elite' : (($r['type'] ?? 'retail') === 'reseller' ? 'Gold VIP' : 'Silver Consumer'),
+                            'tier' => $r['tier'] ?? ($type === 'wholesale' ? 'Diamond Elite' : ($type === 'reseller' ? 'Gold VIP' : 'Silver Consumer')),
                             'credit_limit' => (float)($r['credit_limit'] ?? 0),
                             'outstanding_balance' => (float)($r['outstanding_balance'] ?? 0),
-                            'total_orders' => (int)($r['total_orders'] ?? 1),
-                            'lifetime_spend' => (float)($r['lifetime_spend'] ?? 4990)
+                            'total_orders' => (int)($r['total_orders'] ?? 0),
+                            'lifetime_spend' => (float)($r['lifetime_spend'] ?? 0),
+                            'commission_rate' => (float)($r['commission_rate'] ?? 15.0),
+                            'pending_payout' => (float)($r['pending_payout'] ?? 0),
+                            'status' => $r['status'] ?? 'active'
                         ];
                     }
                     return $result;
@@ -85,7 +92,8 @@ class CustomerManager
 
     public static function getById(int $id): ?array
     {
-        foreach (self::$customers as $c) {
+        $all = self::getAll();
+        foreach ($all as $c) {
             if ($c['id'] === $id) {
                 return $c;
             }
@@ -95,6 +103,7 @@ class CustomerManager
 
     public static function getByType(string $type): array
     {
-        return array_values(array_filter(self::$customers, fn($c) => strcasecmp($c['type'], $type) === 0));
+        $all = self::getAll();
+        return array_values(array_filter($all, fn($c) => strcasecmp($c['type'], $type) === 0));
     }
 }
