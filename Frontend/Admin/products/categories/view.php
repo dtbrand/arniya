@@ -25,10 +25,14 @@ if ($db !== null && !Database::isMockMode()) {
     } catch (\Exception $e) {}
 }
 
-$categoriesList = ProductCatalog::getCategories();
-$catName = $category['name'] ?? ($categoriesList[$catId - 1] ?? 'Silk Sarees');
+if (!$category) {
+    header('Location: /Frontend/Admin/products/categories/');
+    exit;
+}
+
+$catName = $category['name'];
 $catSlug = $category['slug'] ?? strtolower(str_replace(' ', '-', $catName));
-$catDesc = $category['description'] ?? 'Pure Mulberry & Kanjivaram Bridal Silks';
+$catDesc = $category['description'] ?? '';
 
 $productsList = ProductCatalog::filter(['category' => $catName]);
 $prodCount = count($productsList);

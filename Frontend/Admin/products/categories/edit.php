@@ -24,16 +24,8 @@ if ($db !== null && !Database::isMockMode()) {
 }
 
 if (!$category) {
-    $categoriesList = ProductCatalog::getCategories();
-    $fallbackName = $categoriesList[$cat_id - 1] ?? 'Silk Sarees';
-    $category = [
-        'id' => $cat_id,
-        'name' => $fallbackName,
-        'slug' => strtolower(str_replace(' ', '-', $fallbackName)),
-        'description' => 'Authentic handwoven ethnic sarees in ' . $fallbackName,
-        'image' => '/Frontend/Shop/Asset/images/product1.png',
-        'products_count' => count(ProductCatalog::filter(['category' => $fallbackName]))
-    ];
+    header('Location: /Frontend/Admin/products/categories/');
+    exit;
 }
 
 $catName = $category['name'];

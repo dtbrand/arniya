@@ -29,19 +29,6 @@ if ($db !== null && !Database::isMockMode()) {
     } catch (\Exception $e) {}
 }
 
-if (empty($dbCategories)) {
-    $categoriesList = ProductCatalog::getCategories();
-    foreach ($categoriesList as $idx => $cName) {
-        $dbCategories[] = [
-            'id' => $idx + 1,
-            'name' => $cName,
-            'slug' => strtolower(str_replace(' ', '-', $cName)),
-            'description' => 'Authentic handwoven sarees in ' . $cName,
-            'image' => '/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png',
-            'products_count' => count(ProductCatalog::filter(['category' => $cName]))
-        ];
-    }
-}
 $totalCategoryCount = count($dbCategories);
 ?>
 <!DOCTYPE html>
