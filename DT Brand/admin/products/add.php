@@ -3,9 +3,27 @@
  * add.php — Multi-Section Add Product Studio
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
 $page_title = "Add Product";
 $active_nav = "products";
 $active_subnav = "add";
+
+$cloned_id = isset($_GET['cloned_from']) ? intval($_GET['cloned_from']) : 0;
+$prod = null;
+if ($cloned_id > 0) {
+    $orig = ProductCatalog::getById($cloned_id);
+    if ($orig) {
+        $prod = $orig;
+        $prod['id'] = 0;
+        $prod['title'] = ($orig['title'] ?? $orig['name']) . ' (Copy)';
+        $prod['sku'] = ($orig['sku'] ?? 'SKU') . '-COPY';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
