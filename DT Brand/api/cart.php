@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-require_once __DIR__ . '/src/Database.php';
-require_once __DIR__ . '/src/ProductCatalog.php';
-require_once __DIR__ . '/src/PricingCalculator.php';
+require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/../src/PricingCalculator.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\PricingCalculator;

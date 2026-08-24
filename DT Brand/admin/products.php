@@ -4,8 +4,8 @@
  * DT Brand's & Jai Hanuman Tex
  */
 
-require_once __DIR__ . '/src/Database.php';
-require_once __DIR__ . '/src/ProductCatalog.php';
+require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/../src/ProductCatalog.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;

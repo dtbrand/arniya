@@ -4,8 +4,8 @@
  * Luxury Ethnic WhatsApp CRM Checkout Flow
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/src/ProductCatalog.php';
-require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/../src/Database.php';
 
 use DTBrand\ProductCatalog;
 

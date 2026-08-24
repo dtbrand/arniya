@@ -998,7 +998,7 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
     <?php 
-    require_once __DIR__ . '/../../../src/ProductCatalog.php';
+    require_once __DIR__ . '/../src/ProductCatalog.php';
     $headerCategories = \DTBrand\ProductCatalog::getCategories();
     ?>
     <?php if (empty($hideHeaderSubnav)): ?>

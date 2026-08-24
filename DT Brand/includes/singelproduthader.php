@@ -529,7 +529,7 @@
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
     <?php 
-    require_once __DIR__ . '/../../../src/ProductCatalog.php';
+    require_once __DIR__ . '/../src/ProductCatalog.php';
     $pdpCategories = \DTBrand\ProductCatalog::getCategories();
     ?>
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation" style="background: linear-gradient(90deg, #181512 0%, #2A241E 50%, #181512 100%); border-top: 1px solid rgba(212,175,55,0.25); border-bottom: 1px solid rgba(212,175,55,0.35); padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; display: flex; align-items: center;">

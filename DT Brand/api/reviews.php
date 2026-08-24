@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/../src/Database.php';
 
 use DTBrand\Database;
 
