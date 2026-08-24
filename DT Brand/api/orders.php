@@ -26,7 +26,29 @@ try {
 
     // Track order or list orders
     if ($method === 'GET') {
+        $action = trim($_GET['action'] ?? '');
+        if ($action === 'analytics') {
+            $range = $_GET['range'] ?? '1M';
+            $pdo = Database::getConnection();
+            $totalSales = 0.0;
+            $orderCount = 0;
+            if ($pdo !== null && !Database::isMockMode()) {
+                try {
+                    $totalSales = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+                    $orderCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+                } catch (\Exception $e) {}
+            }
+            echo json_encode([
+                'success' => true,
+                'range' => $range,
+                'total_sales' => $totalSales,
+                'order_count' => $orderCount
+            ]);
+            exit;
+        }
+
         $orderNumber = trim($_GET['order_number'] ?? '');
+
         $phone = trim($_GET['phone'] ?? '');
 
         if (!empty($orderNumber)) {
@@ -46,8 +68,9 @@ try {
             exit;
         }
 
-        echo json_encode(['success' => true, 'orders' => OrderManager::getAll(['limit' => 20])]);
+        echo json_encode(['success' => true, 'orders' => OrderManager::getAll()]);
         exit;
+
     }
 
     // Create Order

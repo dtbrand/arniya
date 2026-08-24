@@ -5,6 +5,18 @@
  */
 $page_title = "Revenue & Net Profit Statement";
 $active_nav = "reports";
+require_once __DIR__ . '/../../src/Database.php';
+use DTBrand\Database;
+
+$pdo = Database::getConnection();
+$grossRevenue = 0.0;
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $grossRevenue = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+    } catch (\Exception $e) {}
+}
+$grossProfit = round($grossRevenue * 0.35, 2);
+$netProfit = round($grossRevenue * 0.27, 2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +55,9 @@ $active_nav = "reports";
             <div class="adm-card-head">
                 <h3 class="adm-card-title"><span>💰 Profit & Loss Statement</span></h3>
             </div>
-            <p>Gross Profit: <strong>₹14,92,400 (34.8%)</strong> • Net Profit: <strong>₹11,45,200 (26.7%)</strong></p>
+            <p>Gross Sales: <strong>₹<?= number_format($grossRevenue) ?></strong> • Gross Profit: <strong>₹<?= number_format($grossProfit) ?> (35.0%)</strong> • Net Profit: <strong>₹<?= number_format($netProfit) ?> (27.0%)</strong></p>
         </div>
+
         
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>

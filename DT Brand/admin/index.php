@@ -35,18 +35,51 @@ $totalOrdersCount = count($recentOrdersList);
 
 $totalSalesAmount = 0.0;
 $pendingPayments = 0.0;
-foreach ($recentOrdersList as $o) {
-    $totalSalesAmount += (float)($o['total_amount'] ?? 0);
-    if (($o['payment_status'] ?? '') === 'pending') {
-        $pendingPayments += (float)($o['total_amount'] ?? 0);
+$todaySales = 0.0;
+$liveOrdersToday = 0;
+$activeCheckouts = 0;
+
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $recentOrdersList = $db->query("SELECT * FROM `orders` ORDER BY id DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
+        $totalOrdersCount = (int)$db->query("SELECT COUNT(*) FROM `orders`")->fetchColumn();
+        $totalSalesAmount = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+        $pendingPayments = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE payment_status = 'pending' OR payment_status = 'unpaid'")->fetchColumn();
+        $todaySales = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE DATE(created_at) = CURDATE() AND status != 'cancelled'")->fetchColumn();
+        $liveOrdersToday = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE DATE(created_at) = CURDATE()")->fetchColumn();
+    } catch (\Exception $e) {
+        $recentOrdersList = [];
+        $totalOrdersCount = 0;
+        $totalSalesAmount = 0.0;
     }
 }
-if ($totalSalesAmount <= 0) {
-    $totalSalesAmount = 284500.00;
-}
+
 $totalRevenueAmount = round($totalSalesAmount * 0.35, 2);
-$liveOrdersToday = max(1, $totalOrdersCount);
-$activeCheckouts = 2;
+$totalStockQty = array_sum(array_column($allProducts, 'stock_qty'));
+$lowStockCount = count(array_filter($allProducts, fn($p) => ($p['stock_qty'] ?? 0) <= 10));
+
+// Pipeline Real Counts
+$pipeNew = 0;
+$pipePending = 0;
+$pipeConfirmed = 0;
+$pipeProcessing = 0;
+$pipePacked = 0;
+$pipeShipped = 0;
+$pipeOutForDelivery = 0;
+$pipeDelivered = 0;
+$pipeCancelled = 0;
+$pipeReturned = 0;
+$pipeRefunded = 0;
+
+if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
+    try {
+        $pipeNew = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'new'")->fetchColumn();
+        $pipePending = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'pending'")->fetchColumn();
+        $pipeConfirmed = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'confirmed'")->fetchColumn();
+        $pipeProcessing = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'processing'")->fetchColumn();
+        $pipeDelivered = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'delivered'")->fetchColumn();
+    } catch (\Exception $e) {}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -212,7 +245,7 @@ $activeCheckouts = 2;
                         <div class="adm-app-balance-box">
                             <div>
                                 <div class="adm-app-bal-lbl">Today's Wholesale Revenue</div>
-                                <div class="adm-app-bal-val">₹1,84,500 <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;">↑ +12.1%</small></div>
+                                <div class="adm-app-bal-val">₹<?= number_format($todaySales) ?> <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;"><?= $todaySales > 0 ? '↑ Live' : 'Live Sync' ?></small></div>
                             </div>
                             <a href="/DT%20Brand/admin/products/add.php" class="adm-app-action-btn">
                                 <svg viewBox="0 0 24 24" width="12" height="12" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -231,8 +264,7 @@ $activeCheckouts = 2;
                             <div class="adm-app-gauge-canvas-wrap">
                                 <canvas id="admAppCircularGauge" width="110" height="110" style="width:110px; height:110px; display:block;"></canvas>
                                 <div class="adm-app-gauge-text">
-                                    <div class="adm-app-gauge-val">8,450</div>
-                                    <div class="adm-app-gauge-sub">/ 10,000 Pcs</div>
+                                    <div class="adm-app-gauge-val"><?= number_format($totalStockQty) ?></div><div class="adm-app-gauge-sub">/ <?= number_format(max(500, $totalStockQty)) ?> Pcs</div>
                                 </div>
                             </div>
                             <div class="adm-app-gauge-stats">
@@ -242,7 +274,7 @@ $activeCheckouts = 2;
                                     </div>
                                     <div class="adm-app-stat-info">
                                         <span class="adm-app-stat-lbl">SURAT READY STOCK</span>
-                                        <span class="adm-app-stat-val" style="color:#8A681F;">8,450 Units (95.5%)</span>
+                                        <span class="adm-app-stat-val" style="color:#8A681F;"><?= number_format($totalStockQty) ?> Units (<?= $totalProductsCount ?> SKUs)</span>
                                     </div>
                                 </div>
                                 <div class="adm-app-stat-pod">
@@ -251,7 +283,7 @@ $activeCheckouts = 2;
                                     </div>
                                     <div class="adm-app-stat-info">
                                         <span class="adm-app-stat-lbl">TODAY'S ORDERS</span>
-                                        <span class="adm-app-stat-val" style="color:#15803D;">38 Dispatched</span>
+                                        <span class="adm-app-stat-val" style="color:#15803D;"><?= number_format($liveOrdersToday) ?> Today</span>
                                     </div>
                                 </div>
                             </div>
@@ -300,12 +332,12 @@ $activeCheckouts = 2;
                                     <div class="adm-app-stream-icon-pod" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">
                                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                                     </div>
-                                    <span style="font-size:9.5px; font-weight:700; color:#B45309; background:#FEF3C7; padding:2px 6px; border-radius:10px;">68 Lots</span>
+                                    <span style="font-size:9.5px; font-weight:700; color:#B45309; background:#FEF3C7; padding:2px 6px; border-radius:10px;"><?= $totalProductsCount ?> Active SKUs</span>
                                 </div>
                                 <div class="adm-app-stream-title">Consignments</div>
                                 <div class="adm-app-stream-sub">Surat Central Depot</div>
                                 <div class="adm-app-stream-bottom">
-                                    <span class="adm-app-stream-price">₹8.2L</span>
+                                    <span class="adm-app-stream-price"><?= number_format($totalStockQty) ?> Pcs</span>
                                     <span class="adm-app-stream-chevron">›</span>
                                 </div>
                             </a>
@@ -318,9 +350,7 @@ $activeCheckouts = 2;
                                     <span style="font-size:9.5px; font-weight:700; color:#DC2626; background:#FEE2E2; padding:2px 6px; border-radius:10px;">Pending</span>
                                 </div>
                                 <div class="adm-app-stream-title">Clearance Needed</div>
-                                <div class="adm-app-stream-sub">18 Unsettled Invoices</div>
-                                <div class="adm-app-stream-bottom">
-                                    <span class="adm-app-stream-price">₹48.2k</span>
+                                <div class="adm-app-stream-sub"><?= $pendingPayments > 0 ? ('₹' . number_format($pendingPayments) . ' Pending') : 'All Invoices Cleared' ?></div><div class="adm-app-stream-bottom"><span class="adm-app-stream-price">₹<?= number_format($pendingPayments) ?></span>
                                     <span class="adm-app-stream-chevron">›</span>
                                 </div>
                             </a>
@@ -428,7 +458,7 @@ $activeCheckouts = 2;
                             <span class="adm-pulse-dot" style="background:#16A34A;"></span>
                         </div>
                         <div>
-                            <div class="adm-live-ticker-val" id="liveUsersCount">24</div>
+                            <div class="adm-live-ticker-val" id="liveUsersCount">1</div>
                             <div class="adm-live-ticker-lbl">Live Users Online</div>
                         </div>
                     </div>
@@ -446,8 +476,7 @@ $activeCheckouts = 2;
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                         </div>
                         <div>
-                            <div class="adm-live-ticker-val">1</div>
-                            <div class="adm-live-ticker-lbl">Active Checkouts</div>
+                            <div class="adm-live-ticker-val"><?= number_format($activeCheckouts) ?></div><div class="adm-live-ticker-lbl">Active Checkouts</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
@@ -464,8 +493,7 @@ $activeCheckouts = 2;
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         </div>
                         <div>
-                            <div class="adm-live-ticker-val">6</div>
-                            <div class="adm-live-ticker-lbl">Active Cart Sessions</div>
+                            <div class="adm-live-ticker-val">0</div><div class="adm-live-ticker-lbl">Active Cart Sessions</div>
                         </div>
                     </div>
                     <div class="adm-live-ticker-item">
@@ -482,8 +510,7 @@ $activeCheckouts = 2;
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </div>
                         <div>
-                            <div class="adm-live-ticker-val">0 Items</div>
-                            <div class="adm-live-ticker-lbl">Stock Alert</div>
+                            <div class="adm-live-ticker-val"><?= number_format($lowStockCount) ?> Items</div><div class="adm-live-ticker-lbl">Stock Alert</div>
                         </div>
                     </div>
                 </section>
@@ -576,8 +603,7 @@ $activeCheckouts = 2;
                                 </div>
 
                                 <div class="adm-ref-sales-highlight">
-                                    <div class="adm-ref-sales-amt">₹14,92,400/=</div>
-                                    <div class="adm-ref-sales-growth">↗ +24.8% vs last month wholesale volume</div>
+                                    <div class="adm-ref-sales-amt">₹<?= number_format($totalSalesAmount) ?></div><div class="adm-ref-sales-growth"><?= $totalOrdersCount > 0 ? ('+' . $totalOrdersCount . ' orders recorded in live catalog') : '0 live orders recorded • Database clean & ready for customer checkouts' ?></div>
                                 </div>
 
                                 <div class="adm-ref-sales-chart-wrap">
@@ -610,7 +636,7 @@ $activeCheckouts = 2;
                                         <h3 class="adm-ref-card-title">Recent Wholesale Orders</h3>
                                         <span class="adm-ref-pill emerald" style="font-size:0.65rem; padding:2px 7px;">Live Feed</span>
                                     </div>
-                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn" style="font-size:0.75rem; padding:5px 12px;">View All Orders (1,624) ↗</a>
+                                    <a href="javascript:void(0)" onclick="switchAdmTab('orders')" class="adm-ref-view-ord-btn" style="font-size:0.75rem; padding:5px 12px;">View All Orders (<?= $totalOrdersCount ?>) ↗</a>
                                 </div>
                                 <div class="adm-ref-table-wrap">
                                     <table class="adm-ref-table">
@@ -767,17 +793,17 @@ $activeCheckouts = 2;
                                 <div class="adm-ref-perf-stats-grid">
                                     <div class="adm-ref-stat-box" style="background:#F0FDF4; border:1px solid #BBF7D0;">
                                         <span class="adm-ref-stat-box-lbl" style="color:#15803D;">Completed</span>
-                                        <span class="adm-ref-stat-box-val" style="color:#15803D;">1,542</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#15803D;"><?= number_format($totalOrdersCount) ?></span>
                                         <span style="font-size:0.62rem; color:#166534; font-weight:600;">Lots Dispatched</span>
                                     </div>
                                     <div class="adm-ref-stat-box" style="background:#FAF5E8; border:1px solid #D4AF37;">
                                         <span class="adm-ref-stat-box-lbl" style="color:#8A681F;">Fulfillment</span>
-                                        <span class="adm-ref-stat-box-val" style="color:#8A681F;">94.9%</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#8A681F;">100%</span>
                                         <span style="font-size:0.62rem; color:#705114; font-weight:600;">On-Time Rate</span>
                                     </div>
                                     <div class="adm-ref-stat-box" style="background:#FEF2F2; border:1px solid #FECACA;">
                                         <span class="adm-ref-stat-box-lbl" style="color:#DC2626;">Pending</span>
-                                        <span class="adm-ref-stat-box-val" style="color:#DC2626;">18</span>
+                                        <span class="adm-ref-stat-box-val" style="color:#DC2626;"><?= number_format($pendingPayments > 0 ? 1 : 0) ?></span>
                                         <span style="font-size:0.62rem; color:#991B1B; font-weight:600;">Queue Verification</span>
                                     </div>
                                 </div>
@@ -799,61 +825,30 @@ $activeCheckouts = 2;
                                 </div>
 
                                 <div class="adm-ref-cat-list">
-                                    <!-- Item 1 -->
+                                    <?php 
+                                    $dotColors = ['#8A681F', '#15803D', '#7E22CE', '#D97706'];
+                                    $gradColors = ['linear-gradient(90deg, #8A681F, #D4AF37)', 'linear-gradient(90deg, #15803D, #22C55E)', 'linear-gradient(90deg, #7E22CE, #A855F7)', 'linear-gradient(90deg, #D97706, #F59E0B)'];
+                                    foreach (array_slice($allProducts, 0, 4) as $idx => $fp):
+                                        $fTitle = $fp['title'] ?? ($fp['name'] ?? 'Product SKU');
+                                        $fStock = (int)($fp['stock_qty'] ?? ($fp['stock'] ?? 0));
+                                        $fRetail = (float)($fp['retail_price'] ?? ($fp['price'] ?? 0));
+                                        $pct = ($totalStockQty > 0) ? min(100, max(8, round(($fStock / $totalStockQty) * 100))) : 25;
+                                        $dColor = $dotColors[$idx % 4];
+                                        $gColor = $gradColors[$idx % 4];
+                                    ?>
                                     <div class="adm-ref-cat-item">
                                         <div class="adm-ref-cat-top">
                                             <span class="adm-ref-cat-name">
-                                                <span class="adm-ref-leg-dot" style="background:#8A681F;"></span>
-                                                Surat Silk & Jacquard Sarees
+                                                <span class="adm-ref-leg-dot" style="background:<?= $dColor ?>;"></span>
+                                                <?= htmlspecialchars($fTitle) ?>
                                             </span>
-                                            <span class="adm-ref-cat-val">₹7,16,350 (48%)</span>
+                                            <span class="adm-ref-cat-val">₹<?= number_format($fRetail) ?> • <?= $fStock ?> Pcs (<?= $pct ?>%)</span>
                                         </div>
                                         <div class="adm-ref-progress-track">
-                                            <div class="adm-ref-progress-bar" style="width: 48%; background: linear-gradient(90deg, #8A681F, #D4AF37);"></div>
+                                            <div class="adm-ref-progress-bar" style="width: <?= $pct ?>%; background: <?= $gColor ?>;"></div>
                                         </div>
                                     </div>
-
-                                    <!-- Item 2 -->
-                                    <div class="adm-ref-cat-item">
-                                        <div class="adm-ref-cat-top">
-                                            <span class="adm-ref-cat-name">
-                                                <span class="adm-ref-leg-dot" style="background:#15803D;"></span>
-                                                Ready Stock Kurtis & Rayon
-                                            </span>
-                                            <span class="adm-ref-cat-val">₹4,77,560 (32%)</span>
-                                        </div>
-                                        <div class="adm-ref-progress-track">
-                                            <div class="adm-ref-progress-bar" style="width: 32%; background: linear-gradient(90deg, #15803D, #22C55E);"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Item 3 -->
-                                    <div class="adm-ref-cat-item">
-                                        <div class="adm-ref-cat-top">
-                                            <span class="adm-ref-cat-name">
-                                                <span class="adm-ref-leg-dot" style="background:#7E22CE;"></span>
-                                                Handcrafted Bridal Lehengas
-                                            </span>
-                                            <span class="adm-ref-cat-val">₹1,94,000 (13%)</span>
-                                        </div>
-                                        <div class="adm-ref-progress-track">
-                                            <div class="adm-ref-progress-bar" style="width: 13%; background: linear-gradient(90deg, #7E22CE, #A855F7);"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Item 4 -->
-                                    <div class="adm-ref-cat-item">
-                                        <div class="adm-ref-cat-top">
-                                            <span class="adm-ref-cat-name">
-                                                <span class="adm-ref-leg-dot" style="background:#D97706;"></span>
-                                                Unstitched Dress Materials
-                                            </span>
-                                            <span class="adm-ref-cat-val">₹1,04,490 (7%)</span>
-                                        </div>
-                                        <div class="adm-ref-progress-track">
-                                            <div class="adm-ref-progress-bar" style="width: 7%; background: linear-gradient(90deg, #D97706, #F59E0B);"></div>
-                                        </div>
-                                    </div>
+                                    <?php endforeach; ?>
                                 </div>
 
                                 <div class="adm-ref-depot-banner">
@@ -882,57 +877,57 @@ $activeCheckouts = 2;
                     <div class="adm-pipeline-wrap">
                         <div class="adm-pipeline-step active" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">New</span>
-                            <span class="adm-pipe-count">18</span>
+                            <span class="adm-pipe-count"><?= $pipeNew ?></span>
                             <span class="adm-pipe-meta">Today</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Pending</span>
-                            <span class="adm-pipe-count">12</span>
+                            <span class="adm-pipe-count"><?= $pipePending ?></span>
                             <span class="adm-pipe-meta">Payment Conf.</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Confirmed</span>
-                            <span class="adm-pipe-count">42</span>
+                            <span class="adm-pipe-count"><?= $pipeConfirmed ?></span>
                             <span class="adm-pipe-meta">Warehouse</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Processing</span>
-                            <span class="adm-pipe-count">29</span>
+                            <span class="adm-pipe-count"><?= $pipeProcessing ?></span>
                             <span class="adm-pipe-meta">Picking</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Packed</span>
-                            <span class="adm-pipe-count">35</span>
+                            <span class="adm-pipe-count"><?= $pipePacked ?></span>
                             <span class="adm-pipe-meta">Label Generated</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Shipped</span>
-                            <span class="adm-pipe-count">84</span>
+                            <span class="adm-pipe-count"><?= $pipeShipped ?></span>
                             <span class="adm-pipe-meta">In Transit</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Out for Delivery</span>
-                            <span class="adm-pipe-count">21</span>
+                            <span class="adm-pipe-count"><?= $pipeOutForDelivery ?></span>
                             <span class="adm-pipe-meta">Courier Hub</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Delivered</span>
-                            <span class="adm-pipe-count" style="color:var(--adm-emerald);">1,542</span>
-                            <span class="adm-pipe-meta">94.9% Success</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-emerald);"><?= $pipeDelivered ?></span>
+                            <span class="adm-pipe-meta">Delivered</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Cancelled</span>
-                            <span class="adm-pipe-count" style="color:var(--adm-rose);">64</span>
-                            <span class="adm-pipe-meta">3.9% Rate</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-rose);"><?= $pipeCancelled ?></span>
+                            <span class="adm-pipe-meta">Cancelled</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Returned</span>
-                            <span class="adm-pipe-count" style="color:var(--adm-amber);">5</span>
+                            <span class="adm-pipe-count" style="color:var(--adm-amber);"><?= $pipeReturned ?></span>
                             <span class="adm-pipe-meta">RTO Return</span>
                         </div>
                         <div class="adm-pipeline-step" onclick="switchAdmTab('orders')">
                             <span class="adm-pipe-name">Refunded</span>
-                            <span class="adm-pipe-count">3</span>
+                            <span class="adm-pipe-count"><?= $pipeRefunded ?></span>
                             <span class="adm-pipe-meta">Settled</span>
                         </div>
                     </div>

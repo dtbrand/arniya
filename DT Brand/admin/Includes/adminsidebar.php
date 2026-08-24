@@ -3,12 +3,37 @@
  * adminsidebar.php — Luxury Wholesaler-Style Admin Sidebar Navigation with Real SVG Icons
  * DT Brand's & Jai Hanuman Tex
  */
-$sb_products_count = isset($totalProductsCount) ? $totalProductsCount : 6;
-$sb_categories_count = isset($totalCategoriesCount) ? $totalCategoriesCount : 8;
-$sb_orders_count = isset($totalOrdersCount) ? $totalOrdersCount : 4;
-$sb_wholesale_count = isset($totalWholesaleCount) ? $totalWholesaleCount : 1;
-$sb_reseller_count = isset($totalResellerCount) ? $totalResellerCount : 1;
-$sb_customers_count = isset($totalCustomersCount) ? $totalCustomersCount : 3;
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/CustomerManager.php';
+
+use DTBrand\Database;
+use DTBrand\ProductCatalog;
+use DTBrand\CustomerManager;
+
+$sb_products_count = isset($totalProductsCount) ? (int)$totalProductsCount : count(ProductCatalog::getAll());
+$sb_categories_count = isset($totalCategoriesCount) ? (int)$totalCategoriesCount : count(ProductCatalog::getCategoriesWithDetails());
+
+$pdo_sb = Database::getConnection();
+if ($pdo_sb !== null && !Database::isMockMode()) {
+    try {
+        $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `orders`")->fetchColumn();
+        $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE type = 'wholesale' OR tier = 'wholesale'")->fetchColumn();
+        $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE type = 'reseller' OR tier = 'reseller'")->fetchColumn();
+        $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers`")->fetchColumn();
+    } catch (\Exception $e) {
+        $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
+        $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
+        $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
+        $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
+    }
+} else {
+    $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
+    $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
+    $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
+    $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
+}
+
 
 $req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 

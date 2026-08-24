@@ -5,6 +5,19 @@
  */
 $page_title = "Financial & GST Business Intelligence";
 $active_nav = "reports";
+require_once __DIR__ . '/../../src/Database.php';
+use DTBrand\Database;
+
+$pdo = Database::getConnection();
+$grossRevenue = 0.0;
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $grossRevenue = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+    } catch (\Exception $e) {}
+}
+$grossProfit = round($grossRevenue * 0.35, 2);
+$netProfit = round($grossRevenue * 0.27, 2);
+$gstPayable = round($grossRevenue * 0.05, 2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,33 +58,33 @@ $active_nav = "reports";
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹42,85,900</div>
+                    <div class="adm-kpi-val">₹<?= number_format($grossRevenue) ?></div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up">↑ +18.4% vs last mo</span>
+                        <span class="adm-kpi-delta up"><?= $grossRevenue > 0 ? '↑ Live Sync' : 'Database Ready' ?></span>
                     </div>
                 </div>
                 
                 <div class="adm-kpi-card">
                     <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Gross Profit (34.8%)</span>
+                        <span class="adm-kpi-label">Gross Profit (35.0%)</span>
                         <div class="adm-kpi-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹14,92,400</div>
+                    <div class="adm-kpi-val">₹<?= number_format($grossProfit) ?></div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up">↑ +15.2% Margin</span>
+                        <span class="adm-kpi-delta up">Margin Est.</span>
                     </div>
                 </div>
                 
                 <div class="adm-kpi-card">
                     <div class="adm-kpi-top">
-                        <span class="adm-kpi-label">Net Profit (26.7%)</span>
+                        <span class="adm-kpi-label">Net Profit (27.0%)</span>
                         <div class="adm-kpi-icon-box">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹11,45,200</div>
+                    <div class="adm-kpi-val">₹<?= number_format($netProfit) ?></div>
                     <div class="adm-kpi-bottom">
                         <span class="adm-kpi-delta up">Post-Tax Net</span>
                     </div>
@@ -84,12 +97,13 @@ $active_nav = "reports";
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                         </div>
                     </div>
-                    <div class="adm-kpi-val">₹2,14,295</div>
+                    <div class="adm-kpi-val">₹<?= number_format($gstPayable) ?></div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up">GSTR-1 Ready (5% & 12%)</span>
+                        <span class="adm-kpi-delta up">GSTR-1 Ready (5% Tax)</span>
                     </div>
                 </div>
             </div>
+
 
             <!-- Module Specific Interactive Content -->
             <div class="adm-card">
