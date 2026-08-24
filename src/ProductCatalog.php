@@ -218,8 +218,8 @@ class ProductCatalog
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 $rows = Database::query("SELECT * FROM products ORDER BY id ASC");
-                if (!empty($rows)) {
-                    $list = [];
+                $list = [];
+                if (is_array($rows)) {
                     foreach ($rows as $r) {
                         $mrp = (float)($r['mrp'] ?? 4999.00);
                         $retail = (float)($r['retail_price'] ?? ($mrp * 0.75));
@@ -274,15 +274,6 @@ class ProductCatalog
                                 'master_bale' => (int)($r['moq_master_bale'] ?? 24)
                             ]
                         ];
-                    }
-                    if (count($list) < 6) {
-                        // Merge with master seed products so all categories and full storefront are richly populated
-                        $existingIds = array_column($list, 'id');
-                        foreach (self::$products as $sp) {
-                            if (!in_array($sp['id'], $existingIds, true)) {
-                                $list[] = $sp;
-                            }
-                        }
                     }
                     return $list;
                 }

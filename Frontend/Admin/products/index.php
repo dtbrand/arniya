@@ -841,18 +841,37 @@ function processBulkAction(action) {
         }
     } 
     else if (action === 'trash') {
-        selected.forEach(chk => {
-            const row = chk.closest('tr');
-            if (row) {
-                row.style.transition = 'all 0.3s ease';
-                row.style.opacity = '0';
-                row.style.transform = 'scale(0.95)';
-                setTimeout(() => row.remove(), 300);
-            }
-        });
-        if (typeof window.showToast === 'function') {
-            window.showToast(`🗑️ Moved ${selected.length} product(s) to Trash`);
+        const ids = Array.from(selected).map(chk => chk.value);
+        if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected product(s) from the database and storefront?`)) {
+            return;
         }
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=bulk_delete&ids=' + encodeURIComponent(ids.join(','))
+        })
+        .then(res => res.json())
+        .then(data => {
+            selected.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) {
+                    row.style.transition = 'all 0.3s ease';
+                    row.style.opacity = '0';
+                    row.style.transform = 'scale(0.95)';
+                    setTimeout(() => row.remove(), 300);
+                }
+            });
+            if (typeof window.showToast === 'function') {
+                window.showToast(`🗑️ Permanently deleted ${ids.length} product(s) from database.`);
+            }
+        })
+        .catch(err => {
+            selected.forEach(chk => {
+                const row = chk.closest('tr');
+                if (row) row.remove();
+            });
+        });
     } 
     else if (action === 'edit') {
         openBulkEditModal(selected.length);
@@ -876,124 +895,104 @@ function saveBulkEdit() {
     const selected = document.querySelectorAll('.wp-row-check:checked');
     if (selected.length === 0) return;
 
-    const newCat = document.getElementById('bulkEditCategory')?.value;
-    const newBrand = document.getElementById('bulkEditBrand')?.value;
-    const newStock = document.getElementById('bulkEditStock')?.value;
-    const newPrice = document.getElementById('bulkEditPrice')?.value;
+    const ids = Array.from(selected).map(chk => chk.value);
+    const newCat = document.getElementById('bulkEditCategory')?.value || '';
+    const newBrand = document.getElementById('bulkEditBrand')?.value || '';
+    const newStock = document.getElementById('bulkEditStock')?.value || '';
+    const newPrice = document.getElementById('bulkEditPrice')?.value || '';
 
-    selected.forEach(chk => {
-        const row = chk.closest('tr');
-        if (!row) return;
-
-        if (newCat) {
-            row.setAttribute('data-cat', newCat);
-            const catLink = row.querySelector('.prod-cat-link');
-            if (catLink) catLink.textContent = newCat;
-        }
-
-        if (newBrand) {
-            row.setAttribute('data-brand', newBrand);
-            const brandVal = row.querySelector('.prod-brand-val');
-            if (brandVal) brandVal.textContent = newBrand;
-        }
-
-        if (newStock) {
-            row.setAttribute('data-stock', newStock);
-            const stockBadge = row.querySelector('.prod-stock-badge');
-            const stockText = row.querySelector('.stock-text');
-            if (stockBadge && stockText) {
-                if (newStock === 'In stock') {
-                    stockBadge.style.background = '#DCFCE7';
-                    stockBadge.style.color = '#15803D';
-                    stockText.textContent = 'In stock (Ready)';
-                } else if (newStock === 'Low stock') {
-                    stockBadge.style.background = '#FEF3C7';
-                    stockBadge.style.color = '#B45309';
-                    stockText.textContent = 'Low stock (5)';
-                } else if (newStock === 'Out of stock') {
-                    stockBadge.style.background = '#FEE2E2';
-                    stockBadge.style.color = '#DC2626';
-                    stockText.textContent = 'Out of stock';
-                }
-            }
-        }
-
-        if (newPrice) {
-            const wholesaleElem = row.querySelector('.prod-wholesale-price');
-            if (wholesaleElem) wholesaleElem.textContent = 'Wholesale: ' + newPrice;
-        }
-    });
-
-    closeBulkEditModal();
-    if (typeof window.showToast === 'function') {
-        window.showToast(`✨ Bulk updated ${selected.length} products successfully!`);
+    const params = new URLSearchParams();
+    params.append('action', 'bulk_update');
+    params.append('ids', ids.join(','));
+    if (newCat) params.append('category', newCat);
+    if (newStock) params.append('stock_status', newStock);
+    if (newPrice) {
+        const numericPrice = parseFloat(newPrice.replace(/[^0-9.]/g, '')) || 0;
+        if (numericPrice > 0) params.append('wholesale_price', numericPrice);
     }
+
+    if (typeof window.showToast === 'function') {
+        window.showToast('Saving changes to live database...');
+    }
+
+    fetch('/api/products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        closeBulkEditModal();
+        if (typeof window.showToast === 'function') {
+            window.showToast(`✨ Bulk updated ${ids.length} products in live database!`);
+        }
+        setTimeout(() => window.location.reload(), 400);
+    })
+    .catch(err => {
+        closeBulkEditModal();
+        setTimeout(() => window.location.reload(), 400);
+    });
 }
 
 function duplicateProductRow(rowId) {
-    const row = document.getElementById(rowId);
-    if (!row) return;
-
-    const clone = row.cloneNode(true);
-    const newId = 'row-prod-' + Date.now();
-    clone.id = newId;
-
-    const titleElem = clone.querySelector('.wp-row-title');
-    if (titleElem) {
-        titleElem.textContent = titleElem.textContent + ' (Copy)';
-    }
-
-    const skuElem = clone.querySelector('.prod-sku-val');
-    if (skuElem) {
-        skuElem.textContent = skuElem.textContent + '-COPY';
-    }
-
-    const check = clone.querySelector('.wp-row-check');
-    if (check) check.checked = false;
-
-    // Attach proper event handlers
-    const dupLink = clone.querySelector('a[onclick*="duplicateProductRow"]');
-    if (dupLink) dupLink.setAttribute('onclick', `duplicateProductRow('${newId}')`);
-
-    const trashLink = clone.querySelector('a[onclick*="trashProductRow"]');
-    if (trashLink) trashLink.setAttribute('onclick', `trashProductRow('${newId}', '${titleElem ? titleElem.textContent : 'Product'}')`);
-
-    const starBtn = clone.querySelector('.wp-star-btn');
-    if (starBtn) starBtn.setAttribute('onclick', `toggleFeaturedProduct(this, '${newId}', '${titleElem ? titleElem.textContent : 'Product'}')`);
-
-    clone.style.animation = 'dtModalIn 0.3s ease';
-    row.parentNode.insertBefore(clone, row.nextSibling);
-
+    const prodId = rowId.replace('row-prod-', '');
     if (typeof window.showToast === 'function') {
-        window.showToast('📋 Product duplicated successfully!');
+        window.showToast('📋 Duplicating product in database...');
     }
+
+    fetch('/api/products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=duplicate&id=' + encodeURIComponent(prodId)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✨ Product duplicated successfully in live database!');
+            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 400);
+        } else {
+            alert('Error duplicating: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Network error while duplicating product');
+    });
 }
 
 function trashProductRow(rowId, productName) {
-    const row = document.getElementById(rowId);
-    if (!row) return;
+    if (!confirm('Are you sure you want to permanently delete "' + productName + '" from database and storefront?')) {
+        return;
+    }
 
+    const row = document.getElementById(rowId);
     const prodId = rowId.replace('row-prod-', '');
 
     fetch('/api/products.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'action=delete&id=' + encodeURIComponent(prodId)
-    }).then(res => res.json()).then(data => {
-        row.style.transition = 'all 0.25s ease';
-        row.style.opacity = '0';
-        row.style.transform = 'translateX(20px)';
-        setTimeout(() => {
-            row.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast('🗑️ "' + productName + '" permanently deleted from database.');
-            }
-        }, 250);
-    }).catch(err => {
-        row.remove();
-        if (typeof window.showToast === 'function') {
-            window.showToast('🗑️ "' + productName + '" moved to Trash');
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (row) {
+            row.style.transition = 'all 0.25s ease';
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(20px)';
+            setTimeout(() => {
+                row.remove();
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🗑️ "' + productName + '" permanently deleted from database.');
+                }
+            }, 250);
         }
+    })
+    .catch(err => {
+        if (row) row.remove();
     });
 }
 
