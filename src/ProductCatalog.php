@@ -308,10 +308,21 @@ class ProductCatalog
 
     public static function getCategories(): array
     {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $rows = Database::query("SELECT name FROM categories WHERE status = 'active' ORDER BY display_order ASC");
+                if (!empty($rows)) {
+                    $catNames = array_column($rows, 'name');
+                    return array_values(array_unique(array_filter($catNames)));
+                }
+            } catch (\Exception $e) {}
+        }
+
         $all = self::getAll();
         $categories = [];
         foreach ($all as $product) {
-            if (!in_array($product['category'], $categories, true)) {
+            if (!empty($product['category']) && !in_array($product['category'], $categories, true)) {
                 $categories[] = $product['category'];
             }
         }
