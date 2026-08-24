@@ -1,8 +1,2 @@
 <?php
-/**
- * adminlogin.php — Root Entry Point for Admin Login
- * DT Brand's & Jai Hanuman Tex
- */
-header("Location: /Frontend/Admin/adminlogin.php");
-exit;
-?>
+require_once __DIR__ . '/DT Brand/admin/login.php';

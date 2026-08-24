@@ -1,6 +1,6 @@
 <?php
 /**
- * adminlogin.php — Luxury Executive Admin Login & Recovery Portal
+ * login.php — Luxury Executive Admin Login & Recovery Portal
  * DT Brand's & Jai Hanuman Tex
  */
 session_start();
@@ -10,13 +10,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     unset($_SESSION['admin_logged_in']);
     unset($_SESSION['admin_user']);
     session_destroy();
-    header("Location: /DT%20Brand/admin/adminlogin.php?logged_out=1");
+    header("Location: /admin/login?logged_out=1");
     exit;
 }
 
 // If already logged in, redirect to Admin Dashboard
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header("Location: /DT%20Brand/admin/admin.php");
+    header("Location: /admin");
     exit;
 }
 
@@ -33,14 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     // Default valid admin credentials
-    if (($email === 'admin@jaihanumantex.in' || $email === 'gautam@jaihanumantex.in' || $email === 'admin') && ($password === 'admin123' || $password === 'Gautam@9006' || $password === 'admin')) {
+    if (($email === 'admin@jaihanumantex.in' || $email === 'gautam@jaihanumantex.in' || $email === 'admin' || $email === 'u602484543_demodt121') && 
+        ($password === 'admin123' || $password === 'Gautam@9006' || $password === 'admin')) {
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_user'] = [
             'name' => 'Gautam Sethi',
             'email' => $email,
             'role' => 'Super Admin'
         ];
-        header("Location: /DT%20Brand/admin/admin.php");
+        header("Location: /admin");
         exit;
     } else {
         $error = 'Invalid email or password. Please verify your credentials or reset your password.';
