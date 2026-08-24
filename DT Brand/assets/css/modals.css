@@ -1,0 +1,409 @@
+/**
+ * DT Brand/assets/css/modals.css — Universal Modals, Drawers & Overlay Styling
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+/* ── Universal Overlay Backdrop ── */
+.dt-drawer-overlay,
+.dt-modal-overlay,
+.dt-reels-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.dt-drawer-overlay.active,
+.dt-modal-overlay.active,
+.dt-reels-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* ── Slide-In Drawer (Cart / Wishlist) ── */
+.dt-drawer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 95%;
+    max-width: 440px;
+    background: #FFFFFF;
+    box-shadow: -6px 0 30px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.dt-drawer-overlay.active .dt-drawer {
+    transform: translateX(0);
+}
+.dt-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1.5px solid #E5E7EB;
+    background: #FAF8F4;
+}
+.dt-drawer-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.dt-drawer-title-svg {
+    width: 20px;
+    height: 20px;
+    stroke: #8A681F;
+    fill: none;
+    stroke-width: 2.2;
+}
+.dt-drawer-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #111827;
+}
+.dt-drawer-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6B7280;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dt-drawer-close:hover { background: #E5E7EB; color: #111827; }
+
+/* Delivery Bar */
+.dt-delivery-bar {
+    padding: 8px 20px;
+    background: #FAF5E8;
+    border-bottom: 1px solid #E6CA65;
+}
+.dt-delivery-text {
+    font-size: 0.76rem;
+    color: #705114;
+    margin-bottom: 5px;
+}
+.dt-delivery-progress-track {
+    width: 100%;
+    height: 4px;
+    background: #E5E7EB;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.dt-delivery-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8A681F, #D4AF37);
+    transition: width 0.3s ease;
+}
+
+.dt-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+.dt-drawer-footer {
+    padding: 16px 20px;
+    border-top: 1.5px solid #E5E7EB;
+    background: #FFFFFF;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.05);
+}
+
+/* Empty State */
+.dt-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 30px 20px;
+}
+.dt-empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.dt-empty-title { font-size: 1.1rem; font-weight: 800; color: #111827; margin-bottom: 6px; }
+.dt-empty-desc { font-size: 0.85rem; color: #6B7280; margin-bottom: 18px; max-width: 280px; }
+
+/* Cart Item Card */
+.dt-cart-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #F3F4F6;
+}
+.dt-cart-item-thumb {
+    width: 70px;
+    height: 88px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #F9FAFB;
+    flex-shrink: 0;
+}
+.dt-cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dt-cart-item-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+}
+.dt-cart-item-meta {
+    font-size: 0.72rem;
+    color: #6B7280;
+}
+.dt-cart-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+}
+.dt-cart-item-price {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #111827;
+}
+.dt-cart-qty-stepper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.dt-cart-qty-stepper button {
+    width: 24px;
+    height: 24px;
+    background: #F9FAFB;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+.dt-cart-qty-stepper span {
+    width: 28px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* ── Centered Modal (Checkout / Auth / QuickView / Share) ── */
+.dt-modal {
+    margin: auto;
+    width: 95%;
+    max-width: 540px;
+    max-height: 90vh;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    overflow-y: auto;
+    position: relative;
+}
+.dt-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #E5E7EB;
+}
+.dt-modal-title { font-size: 1.1rem; font-weight: 800; color: #111827; }
+.dt-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #6B7280;
+}
+.dt-modal-body { padding: 20px; }
+
+/* ── QuickView Modal Grid ── */
+.dt-quickview-modal { max-width: 780px; }
+.dt-qv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+    padding: 20px;
+}
+@media (max-width: 767px) {
+    .dt-qv-grid { grid-template-columns: 1fr; }
+}
+.dt-qv-main-img-wrap {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #F9FAFB;
+    position: relative;
+}
+.dt-qv-main-img { width: 100%; height: auto; object-fit: cover; }
+.dt-qv-title { font-size: 1.2rem; font-weight: 800; color: #111827; margin: 4px 0 8px; }
+.dt-qv-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+.dt-qv-price { font-size: 1.3rem; font-weight: 800; color: #111827; }
+.dt-qv-old-price { font-size: 0.9rem; color: #9CA3AF; text-decoration: line-through; }
+.dt-qv-discount { font-size: 0.8rem; font-weight: 800; color: #15803D; background: #DCFCE7; padding: 2px 6px; border-radius: 4px; }
+
+.dt-qv-lots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 8px 0 14px;
+}
+.dt-lot-chip {
+    padding: 8px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    background: #FAF8F4;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.dt-lot-chip strong { display: block; font-size: 0.76rem; color: #111827; }
+.dt-lot-chip span { font-size: 0.65rem; color: #6B7280; }
+.dt-lot-chip.active { border-color: #8A681F; background: #FAF5E8; }
+
+.dt-qty-stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #8A681F;
+    border-radius: 6px;
+    overflow: hidden;
+    height: 36px;
+}
+.dt-qty-stepper button { width: 32px; height: 100%; background: #FAF5E8; border: none; font-size: 1.1rem; cursor: pointer; color: #705114; font-weight: bold; }
+.dt-qty-stepper input { width: 44px; height: 100%; border: none; text-align: center; font-weight: 800; font-size: 0.95rem; }
+
+/* ── Smart Share Modal ── */
+.dt-share-preview-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FAF8F4;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+.dt-share-thumb { width: 60px; height: 75px; object-fit: cover; border-radius: 4px; }
+.dt-margin-calculator-box {
+    background: #FAF5E8;
+    border: 1.5px solid #D4AF37;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 16px;
+}
+.dt-margin-title { font-size: 0.88rem; font-weight: 800; color: #705114; margin-bottom: 10px; }
+.dt-margin-inputs-row { display: flex; align-items: center; gap: 14px; }
+.dt-input-with-symbol {
+    display: flex;
+    align-items: center;
+    background: #FFF;
+    border: 1.5px solid #8A681F;
+    border-radius: 6px;
+    padding: 0 8px;
+    height: 38px;
+}
+.dt-input-with-symbol input { border: none; outline: none; font-size: 0.95rem; font-weight: 800; width: 90px; }
+.dt-profit-badge {
+    background: #15803D;
+    color: #FFF;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+.dt-share-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+/* ── Reels Modal ── */
+.dt-reels-modal-overlay {
+    align-items: center;
+    justify-content: center;
+}
+.dt-reels-container {
+    width: 380px;
+    height: 640px;
+    max-height: 95vh;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.dt-reel-card { width: 100%; height: 100%; position: relative; background: #000; }
+.dt-reel-poster { width: 100%; height: 100%; object-fit: cover; }
+.dt-reel-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 40%, rgba(0,0,0,0.7) 100%);
+}
+.dt-reel-actions-side {
+    position: absolute;
+    right: 12px;
+    bottom: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 10;
+}
+.dt-reel-action-btn {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #FFF;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    cursor: pointer;
+}
+.dt-reel-product-floating-card {
+    position: absolute;
+    left: 12px;
+    right: 68px;
+    bottom: 16px;
+    background: rgba(24, 21, 18, 0.9);
+    border: 1px solid #D4AF37;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+.dt-reel-prod-title { font-size: 0.78rem; font-weight: 700; color: #FFF; line-height: 1.2; }
+.dt-reel-price { font-size: 0.9rem; font-weight: 800; color: #FFE699; }
+.dt-reel-mrp { font-size: 0.72rem; color: #9CA3AF; text-decoration: line-through; }
+.dt-reels-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #FFF;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+}

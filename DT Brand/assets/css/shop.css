@@ -1,0 +1,507 @@
+/**
+ * DT Brand/assets/css/shop.css — Master Shop Layout, Dynamic Filters, Product Grid & Round Category Carousel
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+/* ── Hero Banner Slider ── */
+.dt-hero-slider-wrap {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 16px 20px 0;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dt-hero-slider {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 260px;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+}
+.dt-hero-slide-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.45s ease;
+}
+.dt-hero-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+.dt-hero-content {
+    max-width: 520px;
+    color: #FAF5E8;
+}
+.dt-hero-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #FFE699;
+    background: rgba(138, 104, 31, 0.35);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+.dt-hero-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.2;
+    color: #FFFFFF;
+}
+.dt-hero-desc {
+    font-size: 0.88rem;
+    color: #E2E8F0;
+    margin-bottom: 16px;
+}
+.dt-hero-img-wrap {
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dt-hero-img-wrap img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+}
+
+/* ── Round Category Rail Carousel ── */
+.dt-category-rail-section {
+    width: 100%;
+    padding: 10px 20px 16px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.dt-category-rail-track {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px;
+}
+.dt-category-rail-track::-webkit-scrollbar { display: none; }
+.dt-cat-circle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.dt-cat-circle-ring {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    padding: 2.5px;
+    background: linear-gradient(135deg, #8A681F, #D4AF37);
+    box-shadow: 0 3px 10px rgba(138,104,31,0.25);
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.dt-cat-circle-item:hover .dt-cat-circle-ring,
+.dt-cat-circle-item.active .dt-cat-circle-ring {
+    transform: scale(1.08);
+    box-shadow: 0 0 16px rgba(212,175,55,0.6);
+}
+.dt-cat-circle-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #FFFFFF;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dt-cat-circle-inner img { width: 100%; height: 100%; object-fit: cover; }
+.dt-cat-circle-inner .cat-icon { font-size: 1.4rem; color: #8A681F; }
+.dt-cat-circle-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1F2937;
+    white-space: nowrap;
+}
+.dt-cat-circle-item.active .dt-cat-circle-label { color: #8A681F; font-weight: 800; }
+
+/* ── Shop Layout: Sidebar + Grid ── */
+.dt-shop-layout {
+    display: flex;
+    gap: 24px;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+/* ── Left Sidebar Filter ── */
+.dt-filter-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    height: fit-content;
+}
+.dt-sf-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #F3F4F6;
+    margin-bottom: 14px;
+}
+.dt-sf-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #111827;
+}
+.dt-sf-clear-btn {
+    background: none;
+    border: none;
+    color: #8A681F;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.dt-sf-section {
+    border-bottom: 1px solid #F3F4F6;
+    padding: 12px 0;
+}
+.dt-sf-section-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 10px;
+}
+.dt-sf-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.dt-sf-chip {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    color: #4B5563;
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.dt-sf-chip:hover, .dt-sf-chip.active {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #705114;
+    font-weight: 700;
+}
+
+/* Swatches */
+.dt-sf-swatches {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+.dt-swatch-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #374151;
+}
+.dt-swatch-pill.active { border-color: #8A681F; background: #FAF5E8; }
+.dt-swatch-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+/* Price Range Slider */
+.dt-price-slider-wrap {
+    padding: 4px 0;
+}
+.dt-price-display-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #8A681F;
+    margin-bottom: 8px;
+}
+.dt-range-input {
+    width: 100%;
+    accent-color: #8A681F;
+    cursor: pointer;
+}
+
+/* ── Main Products Area ── */
+.dt-products-area {
+    flex: 1;
+}
+.dt-products-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+.dt-ptb-count {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #374151;
+}
+.dt-ptb-sort-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.dt-ptb-sort-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6B7280;
+}
+.dt-ptb-sort-select {
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1F2937;
+    background: #FFF;
+    outline: none;
+}
+
+/* Active Filter Tags */
+.dt-active-tags-bar {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+.dt-active-tags-bar.has-tags { display: flex; }
+.dt-active-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+.dt-active-tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: #705114;
+}
+
+/* ── Master Product Grid ── */
+.dt-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+/* ── Master Product Card ── */
+.dt-product-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+.dt-product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(138,104,31,0.12);
+    border-color: #D4AF37;
+}
+.dt-card-img-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 133%; /* 3:4 Aspect Ratio */
+    background: #F9FAFB;
+    overflow: hidden;
+}
+.dt-card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.dt-product-card:hover .dt-card-img {
+    transform: scale(1.04);
+}
+
+.dt-card-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: linear-gradient(135deg, #181512 0%, #3D342A 100%);
+    border: 1px solid #D4AF37;
+    color: #FFE699;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    z-index: 2;
+}
+.dt-card-wishlist-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.2s ease;
+}
+.dt-card-wishlist-btn:hover { background: #FFFFFF; transform: scale(1.1); }
+.dt-card-wishlist-btn svg { width: 16px; height: 16px; stroke: #8A681F; fill: none; stroke-width: 2.2; }
+.dt-card-wishlist-btn.active svg { fill: #DC2626; stroke: #DC2626; }
+
+.dt-card-share-btn {
+    position: absolute;
+    bottom: 34px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    color: #15803D;
+}
+.dt-card-share-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+.dt-card-cat-tag {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(24, 21, 18, 0.85);
+    color: #FFE699;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 0.8px solid #D4AF37;
+    z-index: 2;
+}
+
+.dt-card-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+.dt-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+}
+.dt-card-info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+.dt-card-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+.dt-card-price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #111827;
+}
+.dt-card-old-price {
+    font-size: 0.78rem;
+    color: #9CA3AF;
+    text-decoration: line-through;
+}
+.dt-card-discount {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #15803D;
+    background: #DCFCE7;
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+/* ── Mobile Layout (<768px) ── */
+@media (max-width: 1023px) {
+    .dt-filter-sidebar { display: none; }
+}
+@media (max-width: 767px) {
+    .dt-hero-slider { height: 180px; }
+    .dt-hero-slide { padding: 0 16px; }
+    .dt-hero-title { font-size: 1.2rem; }
+    .dt-hero-desc { font-size: 0.75rem; margin-bottom: 8px; }
+    .dt-hero-img-wrap { width: 130px; height: 130px; }
+    .dt-cat-circle-ring { width: 56px; height: 56px; }
+    .dt-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}

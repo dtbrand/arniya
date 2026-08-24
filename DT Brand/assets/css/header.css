@@ -1,0 +1,517 @@
+/**
+ * DT Brand/assets/css/header.css — Master Header, Search Bar, Subnav & Mobile Navigation Styles
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+/* ── Top Announcement Ticker ── */
+.dt-top-ticker {
+    background: linear-gradient(90deg, #705114 0%, #8E6B1F 50%, #705114 100%);
+    color: #FFF9EE;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    user-select: none;
+}
+.dt-ticker-track {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.dt-ticker-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 24px;
+}
+.dt-ticker-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+}
+.dt-ticker-slide.exit-up {
+    opacity: 0;
+    transform: translateY(-100%);
+    position: absolute;
+}
+.dt-ticker-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.dt-ticker-arrow.prev { left: 4px; }
+.dt-ticker-arrow.next { right: 4px; }
+
+/* ── Master Header Main Bar ── */
+.dt-master-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--soft-platinum, #E5E3DE);
+    box-shadow: 0 2px 14px rgba(138,104,31,0.08);
+}
+.dt-header-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 64px;
+    padding: 0 24px;
+    gap: 20px;
+}
+
+.dt-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+.dt-header-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-header-back-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.dt-brand-link { display: inline-flex; align-items: center; text-decoration: none; }
+.dt-brand-logo { height: 34px; width: auto; max-width: 160px; object-fit: contain; }
+
+/* ── Center Amazon-Style Search Bar ── */
+.dt-search-amazon {
+    flex: 1;
+    max-width: 680px;
+    display: flex;
+    align-items: center;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1.8px solid #8A681F;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(138,104,31,0.12);
+    position: relative;
+}
+.dt-search-cat-dropdown {
+    position: relative;
+    height: 100%;
+    border-right: 1.5px solid #E5E7EB;
+    background: #FAF8F4;
+    border-radius: 6px 0 0 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+.dt-search-cat-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4B5563;
+    cursor: pointer;
+    padding-right: 18px;
+}
+.dt-select-arrow {
+    position: absolute;
+    right: 8px;
+    width: 12px;
+    height: 12px;
+    stroke: #6B7280;
+    fill: none;
+    stroke-width: 2.2;
+    pointer-events: none;
+}
+.dt-search-input-wrap {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.dt-search-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    font-size: 0.85rem;
+    color: #111827;
+}
+.dt-search-clear {
+    position: absolute;
+    right: 8px;
+    background: #E5E7EB;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.7rem;
+    color: #4B5563;
+}
+.dt-search-submit {
+    width: 46px;
+    height: 100%;
+    background: linear-gradient(135deg, #8A681F 0%, #705114 100%);
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+}
+.dt-search-submit svg { width: 18px; height: 18px; stroke: #FFF; fill: none; stroke-width: 2.4; }
+
+.dt-search-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border: 1.5px solid #8A681F;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    z-index: 2000;
+    max-height: 360px;
+    overflow-y: auto;
+}
+.dt-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    text-decoration: none;
+    color: #1F2937;
+    font-size: 0.84rem;
+    border-bottom: 1px solid #F3F4F6;
+    transition: background 0.15s;
+}
+.dt-suggestion-item:hover { background: #FAF5E8; color: #8A681F; }
+.dt-suggestion-thumb { width: 34px; height: 34px; border-radius: 4px; object-fit: cover; }
+
+/* ── Right Actions ── */
+.dt-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.dt-icon-btn {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #FAF8F4;
+    border: 1.5px solid #E5E3DE;
+    color: #8A681F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.dt-icon-btn:hover { background: #FFFFFF; border-color: #8A681F; transform: translateY(-1px); }
+.dt-icon-btn svg { width: 19px; height: 19px; stroke: #8A681F; fill: none; stroke-width: 2.2; }
+.dt-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    background: #8A681F;
+    color: #FFF;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #FFFFFF;
+}
+
+/* Account Dropdown */
+.dt-account-wrap { position: relative; }
+.dt-account-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #FAF8F4;
+    border: 1.5px solid #E5E3DE;
+    color: #8A681F;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.dt-account-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.dt-account-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    background: #FFFFFF;
+    border: 1.5px solid #D4AF37;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    display: none;
+    z-index: 2000;
+}
+.dt-account-wrap:hover .dt-account-dropdown { display: block; }
+.dt-drop-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: #374151;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.dt-drop-item:hover { background: #FAF5E8; color: #8A681F; }
+.dt-drop-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+.dt-drop-divider { height: 1px; background: #E5E7EB; margin: 6px 0; }
+
+/* ── Attached Amazon-Style Luxury Gold Sub-Navigation Bar ── */
+.dt-attached-subnav {
+    width: 100%;
+    background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
+    border-top: 1px solid rgba(255, 235, 180, 0.35);
+    border-bottom: 1.5px solid #5C4310;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
+}
+.dt-subnav-scroll-track {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: 100%;
+}
+.dt-subnav-scroll-track::-webkit-scrollbar { display: none; }
+.dt-subnav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    padding: 2px 10px;
+    height: 20px;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #FFFDF8;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.dt-subnav-item:hover, .dt-subnav-item.active {
+    background: rgba(0, 0, 0, 0.22);
+    color: #FFE699;
+    box-shadow: inset 0 0 0 1px rgba(255, 230, 153, 0.4);
+}
+.dt-subnav-icon { width: 11px; height: 11px; stroke: currentColor; fill: none; }
+
+/* Mobile Search Overlay */
+.dt-mobile-search-bar {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #FFFFFF;
+    z-index: 1500;
+    padding: 0 12px;
+    align-items: center;
+    gap: 8px;
+}
+.dt-mobile-search-bar.active { display: flex; }
+.dt-mobile-search-inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #FAF8F4;
+    border: 1.5px solid #8A681F;
+    border-radius: 20px;
+    height: 38px;
+    padding: 0 12px;
+}
+.dt-mobile-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.85rem;
+}
+.dt-mobile-search-clear {
+    background: none;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #6B7280;
+    display: none;
+}
+.dt-mobile-search-submit {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #8A681F;
+    display: flex;
+    align-items: center;
+}
+.dt-mobile-search-submit svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+.dt-mobile-search-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF8F4;
+    border: 1px solid #E5E3DE;
+    color: #8A681F;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 1023px) {
+    .dt-search-amazon { display: none; }
+    .dt-mobile-search-btn { display: flex !important; }
+}
+@media (min-width: 1024px) {
+    .dt-mobile-search-btn { display: none !important; }
+}
+
+@media (max-width: 767px) {
+    .dt-header-main { height: 44px; padding: 0 12px; }
+    .dt-brand-logo { height: 28px; }
+    .dt-account-btn span { display: none; }
+    .dt-account-btn { padding: 6px; border-radius: 50%; width: 34px; height: 34px; justify-content: center; }
+    .dt-icon-btn { width: 34px; height: 34px; }
+    .dt-attached-subnav { height: 24px; padding: 0 8px; }
+    .dt-subnav-item { font-size: 0.60rem; height: 17px; padding: 1px 6px; }
+}
+
+/* ── Floating Mobile Bottom App Bar ── */
+.dt-mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    pointer-events: none;
+}
+@media (max-width: 1023px) {
+    .dt-mobile-bottom-nav { display: block; }
+    body { padding-bottom: 75px !important; }
+}
+.dt-bottom-nav-pill {
+    max-width: 440px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #221D18 0%, #14110E 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.38);
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.48), 0 2px 10px rgba(212, 175, 55, 0.18);
+    pointer-events: auto;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 4px;
+}
+.dt-bottom-tab {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    color: #A89F91;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+.dt-bottom-tab.active { color: #FFE699; }
+.dt-bottom-tab.active .dt-tab-icon-wrap svg { stroke: #FFE699; }
+.dt-tab-icon-wrap { position: relative; }
+.dt-tab-icon-wrap svg { width: 20px; height: 20px; stroke: #A89F91; fill: none; stroke-width: 2.2; }
+.dt-tab-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: #8A681F;
+    color: #FFF;
+    font-size: 0.6rem;
+    font-weight: 800;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

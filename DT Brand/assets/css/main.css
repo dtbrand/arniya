@@ -1,0 +1,251 @@
+/**
+ * DT Brand's & Jai Hanuman Tex — Master Design System & Core Stylesheet
+ * 100% TailAdmin Inter & Plus Jakarta Typography, Heritage Gold Tokens & Fluid Responsive Auto-Sizing
+ */
+
+:root {
+    /* Primary Heritage Luxury Gold Palette */
+    --gold-primary: #8A681F;
+    --gold-dark: #705114;
+    --gold-deep: #5A4210;
+    --gold-radiant: #D4AF37;
+    --gold-accent: #C5A859;
+    --gold-light: #E6CA65;
+    --gold-pale: #FAF5E8;
+    --gold-border: #D4AF37;
+    --gold-border-dark: #8A681F;
+
+    /* Velvet Obsidian & Dark Tones */
+    --dark-bg: #181512;
+    --dark-surface: #221D18;
+    --dark-card: #2A241E;
+    --dark-text: #111827;
+    --mid-text: #1F2937;
+    --slate-text: #4B5563;
+    --muted-text: #64748B;
+    --light-text: #9CA3AF;
+
+    /* Status Colors */
+    --emerald-primary: #15803D;
+    --emerald-light: #DCFCE7;
+    --amber-primary: #B45309;
+    --amber-light: #FEF3C7;
+    --crimson-primary: #DC2626;
+    --crimson-light: #FEF2F2;
+    --blue-primary: #1D4ED8;
+    --blue-light: #EFF6FF;
+
+    /* Backgrounds & Neutrals */
+    --bg-main: #FDFBF7;
+    --bg-card: #FFFFFF;
+    --soft-border: #E5E7EB;
+    --soft-platinum: #E2E8F0;
+
+    /* Typography */
+    --font-sans: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Cinzel', Georgia, serif;
+    --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
+    }
+}
+
+/* Base Reset & Typography */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-main);
+    color: var(--dark-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.011em;
+    overflow-x: hidden;
+}
+
+/* Master Form Focus Standard: Gold & Platinum Running Border */
+input:focus, select:focus, textarea:focus, .dt-input-field:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* ════════════ MASTER BUTTON MANDATE ════════════ */
+.dt-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827 !important;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: -0.011em;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
+}
+.dt-btn-gold svg {
+    width: 16px;
+    height: 16px;
+    stroke: #111827;
+    stroke-width: 2.2;
+    fill: none;
+}
+
+.dt-btn-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border: 1.2px solid #8A681F;
+    color: #FAF5E8 !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+}
+.dt-btn-dark:hover {
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+
+.dt-btn-emerald {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    border: 1px solid #14532D;
+    color: #FFFFFF !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.35);
+    transition: all 0.2s ease;
+}
+.dt-btn-emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(21, 128, 61, 0.5);
+}
+
+.dt-btn-pale {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114 !important;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.dt-btn-pale:hover {
+    background: #F5ECCE;
+    color: #5A4210 !important;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+/* Master Luxury Ambient Hero Box */
+.dt-hero-luxury-card {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 40%, rgba(212, 175, 55, 0.45) 0%, transparent 65%),
+        radial-gradient(ellipse at 85% 60%, rgba(245, 208, 92, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(38, 28, 14, 0.96) 0%, rgba(58, 44, 18, 0.92) 40%, rgba(42, 32, 16, 0.94) 75%, rgba(24, 18, 10, 0.98) 100%);
+    background-size: 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 2px solid #D4AF37;
+    border-radius: 12px;
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
+}
+
+/* Toast Container */
+.dt-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+.dt-toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #181512;
+    color: #FAF5E8;
+    border: 1px solid #D4AF37;
+    padding: 10px 16px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    font-size: 0.85rem;
+    font-weight: 600;
+    animation: dtToastSlideIn 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes dtToastSlideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
