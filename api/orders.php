@@ -78,12 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update_status') {
-    $orderId = (int)($_POST['order_id'] ?? $_POST['id'] ?? 0);
+    $orderId = trim($_POST['order_id'] ?? $_POST['id'] ?? '');
     $status = trim($_POST['status'] ?? '');
     $tracking = trim($_POST['tracking_number'] ?? '');
     $courier = trim($_POST['courier_name'] ?? '');
 
-    if ($orderId <= 0 || empty($status)) {
+    if (empty($orderId) || empty($status)) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Order ID and Status are required.']);
         exit;

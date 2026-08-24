@@ -264,21 +264,32 @@ class OrderManager
     }
 
     /**
-     * Update Order Fulfillment Status
+     * Update Order Fulfillment Status by ID or Order Number
      */
-    public static function updateStatus(int $orderId, string $status, ?string $trackingNumber = null, ?string $courier = null): bool
+    public static function updateStatus($orderIdentifier, string $status, ?string $trackingNumber = null, ?string $courier = null): bool
     {
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
             try {
-                $stmt = $db->prepare("
-                    UPDATE orders 
-                    SET fulfillment_status = ?,
-                        tracking_number = COALESCE(?, tracking_number),
-                        courier_name = COALESCE(?, courier_name)
-                    WHERE id = ?
-                ");
-                return $stmt->execute([$status, $trackingNumber, $courier, $orderId]);
+                if (is_numeric($orderIdentifier)) {
+                    $stmt = $db->prepare("
+                        UPDATE orders 
+                        SET fulfillment_status = ?,
+                            tracking_number = COALESCE(?, tracking_number),
+                            courier_name = COALESCE(?, courier_name)
+                        WHERE id = ? OR order_number = ?
+                    ");
+                    return $stmt->execute([$status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
+                } else {
+                    $stmt = $db->prepare("
+                        UPDATE orders 
+                        SET fulfillment_status = ?,
+                            tracking_number = COALESCE(?, tracking_number),
+                            courier_name = COALESCE(?, courier_name)
+                        WHERE order_number = ?
+                    ");
+                    return $stmt->execute([$status, $trackingNumber, $courier, (string)$orderIdentifier]);
+                }
             } catch (\Exception $e) {
                 return false;
             }

@@ -92,6 +92,19 @@
             const tracking = document.getElementById('modalTrackingInput')?.value || 'VRL-99821';
             const notifyWA = document.getElementById('modalNotifyWhatsApp')?.checked;
 
+            // Live API persistence to database
+            const formData = new FormData();
+            formData.append('action', 'update_status');
+            formData.append('order_id', orderId);
+            formData.append('status', newStatus);
+            formData.append('tracking_number', tracking);
+            formData.append('courier_name', carrier);
+
+            fetch('/api/orders.php', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json()).catch(err => console.log('Order status network sync:', err));
+
             // Update badge in table row or view page header
             const allBadges = document.querySelectorAll(`#statusBadge_${orderId}, #viewPageStatusBadge, .dt-status-badge[data-order-id="${orderId}"]`);
             allBadges.forEach(b => {
@@ -154,6 +167,17 @@
         confirmCancelOrder: function() {
             const orderId = document.getElementById('cancelModalOrderIdText').textContent;
             const reason = document.getElementById('cancelReasonSelect')?.value || 'Customer Request';
+
+            // Live API call
+            const formData = new FormData();
+            formData.append('action', 'update_status');
+            formData.append('order_id', orderId);
+            formData.append('status', 'cancelled');
+
+            fetch('/api/orders.php', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json()).catch(err => console.log('Order cancel network sync:', err));
 
             const badge = document.getElementById(`statusBadge_${orderId}`);
             if (badge) {

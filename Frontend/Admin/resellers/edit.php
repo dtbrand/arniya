@@ -43,41 +43,45 @@ $active_nav = "resellers";
 
                 <div class="dt-card" style="padding:22px;">
                     <form onsubmit="saveResellerProfile(event)" id="dtResellerProfileForm" data-editing="true">
+                        <input type="hidden" name="action" value="<?php echo $is_new ? 'create' : 'update'; ?>">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($reseller_id); ?>">
+                        <input type="hidden" name="type" value="reseller">
+
                         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-bottom:20px;">
                             <!-- Business Name -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Business / Trade Name *</label>
-                                <input type="text" class="dt-input-field" value="<?php echo $is_new ? '' : 'Shree Krishna Sarees & Boutique'; ?>" placeholder="e.g. Shree Krishna Sarees" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <input type="text" name="name" class="dt-input-field" value="<?php echo $is_new ? '' : 'Shree Krishna Sarees & Boutique'; ?>" placeholder="e.g. Shree Krishna Sarees" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                             </div>
 
                             <!-- Contact Person -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Contact Person / Proprietor *</label>
-                                <input type="text" class="dt-input-field" value="<?php echo $is_new ? '' : 'Rameshwar Vyas'; ?>" placeholder="e.g. Rameshwar Vyas" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <input type="text" name="contact" class="dt-input-field" value="<?php echo $is_new ? '' : 'Rameshwar Vyas'; ?>" placeholder="e.g. Rameshwar Vyas" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                             </div>
 
                             <!-- Phone -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">WhatsApp / Phone Number *</label>
-                                <input type="tel" class="dt-input-field" value="<?php echo $is_new ? '' : '+91 98251 44321'; ?>" placeholder="+91 98251 44321" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <input type="tel" name="phone" class="dt-input-field" value="<?php echo $is_new ? '' : '+91 98251 44321'; ?>" placeholder="+91 98251 44321" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                             </div>
 
                             <!-- Email -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Business Email *</label>
-                                <input type="email" class="dt-input-field" value="<?php echo $is_new ? '' : 'krishna.boutique@gmail.com'; ?>" placeholder="name@business.com" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <input type="email" name="email" class="dt-input-field" value="<?php echo $is_new ? '' : 'krishna.boutique@gmail.com'; ?>" placeholder="name@business.com" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                             </div>
 
                             <!-- GSTIN -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">GSTIN Tax Number</label>
-                                <input type="text" class="dt-input-field" value="<?php echo $is_new ? '' : '24AAAPL1234F1Z8'; ?>" placeholder="24AAAPL1234F1Z8" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-family:monospace; box-sizing:border-box;">
+                                <input type="text" name="gstin" class="dt-input-field" value="<?php echo $is_new ? '' : '24AAAPL1234F1Z8'; ?>" placeholder="24AAAPL1234F1Z8" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-family:monospace; box-sizing:border-box;">
                             </div>
 
                             <!-- Assigned Tier -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Reseller Margin Tier *</label>
-                                <select class="dt-reseller-select" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <select name="tier" class="dt-reseller-select" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                                     <option value="Platinum" <?php echo !$is_new ? 'selected' : ''; ?>>Platinum Elite (30% Margin • ₹1,50,000 Credit)</option>
                                     <option value="Gold">Gold Partner (22% Margin • ₹1,00,000 Credit)</option>
                                     <option value="Silver">Silver Growth (15% Margin • ₹50,000 Credit)</option>
@@ -88,13 +92,13 @@ $active_nav = "resellers";
                             <!-- City & State -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">City &amp; State *</label>
-                                <input type="text" class="dt-input-field" value="<?php echo $is_new ? '' : 'Surat, Gujarat'; ?>" placeholder="Surat, Gujarat" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; box-sizing:border-box;">
+                                <input type="text" name="city" class="dt-input-field" value="<?php echo $is_new ? '' : 'Surat, Gujarat'; ?>" placeholder="Surat, Gujarat" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; box-sizing:border-box;">
                             </div>
 
                             <!-- Account Status -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">Account Status *</label>
-                                <select class="dt-reseller-select" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <select name="status" class="dt-reseller-select" style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                                     <option value="Active" selected>Active Partner</option>
                                     <option value="Pending">Pending Review</option>
                                     <option value="Suspended">Suspended</option>
@@ -121,5 +125,33 @@ $active_nav = "resellers";
 
 <script src="/Frontend/Admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
 <script src="/Frontend/Admin/resellers/assets/js/reseller-view.js?v=<?php echo time(); ?>"></script>
+<script>
+function saveResellerProfile(e) {
+    e.preventDefault();
+    const form = document.getElementById('dtResellerProfileForm');
+    const formData = new FormData(form);
+
+    fetch('/api/customers.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✅ ' + data.message);
+            }
+            setTimeout(() => {
+                window.location.href = '/Frontend/Admin/resellers/index.php';
+            }, 600);
+        } else {
+            alert('Error: ' + (data.message || 'Could not save reseller account.'));
+        }
+    })
+    .catch(err => {
+        alert('Network error while saving reseller account.');
+    });
+}
+</script>
 </body>
 </html>

@@ -65,38 +65,42 @@ if (empty($categoriesList)) {
 }
 ?>
         <div class="adm-table-card">
-            <div class="adm-table-toolbar">
-                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800;">Catalog Categories (<?= count($categoriesList) ?> Active)</h3></div>
-                <button class="adm-btn-primary" onclick="window.showToast('Opening Category Builder...')">+ Add Category</button>
+            <div class="adm-table-toolbar" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div><h3 style="font-family:var(--adm-font-serif); font-size:1.05rem; font-weight:800; color:#111827;">Catalog Categories (<?= count($categoriesList) ?> Active)</h3></div>
+                <button class="adm-btn-primary dt-btn-gold" onclick="openAddCategoryModal()" style="display:inline-flex; align-items:center; gap:6px; font-weight:700; cursor:pointer;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>+ Add Category</span>
+                </button>
             </div>
-            <div class="adm-table-responsive">
-                <table class="adm-table">
+            <div class="adm-table-responsive" style="overflow-x:auto;">
+                <table class="adm-table" id="categoriesTable" style="width:100%; border-collapse:collapse;">
                     <thead>
-                        <tr>
-                            <th>Category Name &amp; Slug</th>
-                            <th>Description</th>
-                            <th>Total Products</th>
-                            <th>HSN Code</th>
-                            <th>GST Rate</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                        <tr style="background:#F8FAFC; border-bottom:1px solid #E2E8F0;">
+                            <th style="padding:10px 12px; text-align:left;">Category Name &amp; Slug</th>
+                            <th style="padding:10px 12px; text-align:left;">Description</th>
+                            <th style="padding:10px 12px; text-align:left;">Total Products</th>
+                            <th style="padding:10px 12px; text-align:left;">HSN Code</th>
+                            <th style="padding:10px 12px; text-align:left;">GST Rate</th>
+                            <th style="padding:10px 12px; text-align:left;">Status</th>
+                            <th style="padding:10px 12px; text-align:center;">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="categoriesTableBody">
                         <?php foreach ($categoriesList as $cat): ?>
-                        <tr>
-                            <td>
-                                <strong><?= htmlspecialchars($cat['name']) ?></strong><br>
-                                <small style="color:#7A7266;">slug: /collection/<?= htmlspecialchars($cat['slug'] ?? '') ?></small>
+                        <tr id="cat-row-<?= $cat['id'] ?>" style="border-bottom:1px solid #F1F5F9; transition:background 0.15s;" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                            <td style="padding:10px 12px;">
+                                <strong style="color:#111827; font-size:13px;"><?= htmlspecialchars($cat['name']) ?></strong><br>
+                                <small style="color:#64748B;">/collection/<?= htmlspecialchars($cat['slug'] ?? '') ?></small>
                             </td>
-                            <td><span style="font-size:0.75rem; color:#5A5348;"><?= htmlspecialchars($cat['description'] ?? 'Pure Handloom Silk') ?></span></td>
-                            <td><strong><?= (int)($cat['products_count'] ?? 50) ?> SKUs</strong></td>
-                            <td>5007</td>
-                            <td>5%</td>
-                            <td><span class="adm-badge success">Active</span></td>
-                            <td>
-                                <div style="display:inline-flex; gap:4px;">
-                                    <button class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Editing category: <?= addslashes($cat['name']) ?>')">Edit</button>
+                            <td style="padding:10px 12px;"><span style="font-size:0.8rem; color:#475569;"><?= htmlspecialchars($cat['description'] ?? 'Pure Handloom Silk') ?></span></td>
+                            <td style="padding:10px 12px;"><strong style="color:#8A681F;"><?= (int)($cat['products_count'] ?? 0) ?> SKUs</strong></td>
+                            <td style="padding:10px 12px; color:#475569;">5007</td>
+                            <td style="padding:10px 12px; color:#475569;">5%</td>
+                            <td style="padding:10px 12px;"><span class="adm-badge success" style="background:#DCFCE7; color:#15803D; padding:3px 8px; border-radius:12px; font-weight:700; font-size:11px;">Active</span></td>
+                            <td style="padding:10px 12px; text-align:center;">
+                                <div style="display:inline-flex; gap:6px;">
+                                    <button type="button" class="adm-btn-secondary dt-btn-pale" onclick="editCategoryRow(<?= $cat['id'] ?>, '<?= addslashes($cat['name']) ?>', '<?= addslashes($cat['slug'] ?? '') ?>', '<?= addslashes($cat['description'] ?? '') ?>')" style="padding:3px 8px; font-size:11px; border-radius:4px; cursor:pointer;">Edit</button>
+                                    <button type="button" class="adm-btn-danger" onclick="deleteCategoryRow(<?= $cat['id'] ?>, '<?= addslashes($cat['name']) ?>')" style="padding:3px 8px; font-size:11px; border-radius:4px; background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; cursor:pointer;">Delete</button>
                                 </div>
                             </td>
                         </tr>
@@ -105,11 +109,120 @@ if (empty($categoriesList)) {
                 </table>
             </div>
         </div>
-        
+
+        <!-- Add / Edit Category Modal -->
+        <div id="categoryModal" class="dt-modal-backdrop" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(24,21,18,0.6); backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:9999;">
+            <div class="dt-modal-dialog" style="background:#fff; border-radius:8px; width:95%; max-width:480px; box-shadow:0 10px 25px rgba(0,0,0,0.25); border:1px solid #D4AF37; overflow:hidden;">
+                <div class="dt-modal-header" style="background:radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%); color:#FFFFFF; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #D4AF37;">
+                    <h4 id="catModalTitle" style="font-size:14px; font-weight:700; margin:0;">+ Add New Category</h4>
+                    <button type="button" onclick="closeCategoryModal()" style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✕</button>
+                </div>
+                <form id="categoryForm" onsubmit="handleCategoryFormSubmit(event)" style="padding:16px;">
+                    <input type="hidden" id="catFormId" name="id" value="">
+                    <input type="hidden" id="catFormAction" name="action" value="create">
+                    
+                    <div style="margin-bottom:12px;">
+                        <label style="display:block; font-size:12px; font-weight:700; color:#334155; margin-bottom:4px;">Category Name *</label>
+                        <input type="text" id="catFormName" name="name" required placeholder="e.g. Kanjivaram Silk Sarees" style="width:100%; height:36px; padding:0 10px; border:1px solid #CBD5E1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                    </div>
+
+                    <div style="margin-bottom:12px;">
+                        <label style="display:block; font-size:12px; font-weight:700; color:#334155; margin-bottom:4px;">Slug (URL Path)</label>
+                        <input type="text" id="catFormSlug" name="slug" placeholder="e.g. kanjivaram-silk-sarees" style="width:100%; height:36px; padding:0 10px; border:1px solid #CBD5E1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                    </div>
+
+                    <div style="margin-bottom:16px;">
+                        <label style="display:block; font-size:12px; font-weight:700; color:#334155; margin-bottom:4px;">Description</label>
+                        <textarea id="catFormDesc" name="description" rows="3" placeholder="Brief description of fabric and weaving..." style="width:100%; padding:8px 10px; border:1px solid #CBD5E1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
+                    </div>
+
+                    <div style="display:flex; justify-content:flex-end; gap:8px;">
+                        <button type="button" class="adm-btn-secondary" onclick="closeCategoryModal()" style="padding:8px 14px; border-radius:6px; cursor:pointer;">Cancel</button>
+                        <button type="submit" class="adm-btn-primary dt-btn-gold" style="padding:8px 18px; border-radius:6px; font-weight:700; cursor:pointer;">Save Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         </main>
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
 <script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script>
+function openAddCategoryModal() {
+    document.getElementById('catModalTitle').textContent = '+ Add New Category';
+    document.getElementById('catFormId').value = '';
+    document.getElementById('catFormAction').value = 'create';
+    document.getElementById('catFormName').value = '';
+    document.getElementById('catFormSlug').value = '';
+    document.getElementById('catFormDesc').value = '';
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+function editCategoryRow(id, name, slug, desc) {
+    document.getElementById('catModalTitle').textContent = 'Edit Category: ' + name;
+    document.getElementById('catFormId').value = id;
+    document.getElementById('catFormAction').value = 'create'; // Uses INSERT ... ON DUPLICATE or creates update
+    document.getElementById('catFormName').value = name;
+    document.getElementById('catFormSlug').value = slug;
+    document.getElementById('catFormDesc').value = desc;
+    document.getElementById('categoryModal').style.display = 'flex';
+}
+
+function closeCategoryModal() {
+    document.getElementById('categoryModal').style.display = 'none';
+}
+
+function handleCategoryFormSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('categoryForm');
+    const formData = new FormData(form);
+
+    fetch('/api/categories.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            closeCategoryModal();
+            if (typeof window.showToast === 'function') {
+                window.showToast('✨ ' + data.message);
+            }
+            setTimeout(() => { window.location.reload(); }, 600);
+        } else {
+            alert('Error: ' + (data.message || 'Could not save category.'));
+        }
+    })
+    .catch(err => {
+        alert('Network error while saving category.');
+    });
+}
+
+function deleteCategoryRow(id, name) {
+    if (!confirm('Are you sure you want to delete category "' + name + '"?')) return;
+
+    fetch('/api/categories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=delete&id=' + encodeURIComponent(id)
+    })
+    .then(res => res.json())
+    .then(data => {
+        const row = document.getElementById('cat-row-' + id);
+        if (row) {
+            row.style.opacity = '0';
+            setTimeout(() => { row.remove(); }, 300);
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast('🗑️ Category "' + name + '" deleted successfully.');
+        }
+    })
+    .catch(err => {
+        alert('Could not delete category.');
+    });
+}
+</script>
 </body>
 </html>

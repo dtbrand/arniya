@@ -58,7 +58,10 @@ $partner = $is_new ? [
                 </div>
 
                 <div class="dt-card" style="padding:22px;">
-                    <form onsubmit="event.preventDefault(); window.showToast('✅ Wholesale profile saved successfully!'); setTimeout(()=>window.location.href = '/admin/wholesale/index.php', 600);" style="display:flex; flex-direction:column; gap:18px;">
+                    <form id="wholesaleEditForm" onsubmit="handleWholesaleFormSubmit(event)" style="display:flex; flex-direction:column; gap:18px;">
+                        <input type="hidden" name="action" value="<?php echo $is_new ? 'create' : 'update'; ?>">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($whl_id); ?>">
+                        <input type="hidden" name="type" value="wholesale">
                         
                         <!-- 1. Identity -->
                         <div style="border-bottom:1.5px solid #F1ECE1; padding-bottom:16px;">
@@ -66,15 +69,15 @@ $partner = $is_new ? [
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Trade / Brand Name *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['name']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Hub">
+                                    <input type="text" name="name" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['name']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Hub">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Legal Registered Entity Name</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['legal_name']); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Pvt Ltd">
+                                    <input type="text" name="legal_name" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['legal_name'] ?? ''); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;" placeholder="e.g. Surat Silks Pvt Ltd">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">GSTIN Tax Number *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['gstin']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-family:monospace; box-sizing:border-box;" placeholder="24AAAPL1234F1Z8">
+                                    <input type="text" name="gstin" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['gstin'] ?? ''); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; font-family:monospace; box-sizing:border-box;" placeholder="24AAAPL1234F1Z8">
                                 </div>
                             </div>
                         </div>
@@ -85,15 +88,15 @@ $partner = $is_new ? [
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Authorized Contact Person *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['contact']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" name="contact" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['contact'] ?? ''); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Primary Email *</label>
-                                    <input type="email" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['email']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="email" name="email" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['email'] ?? ''); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">WhatsApp / Phone Number *</label>
-                                    <input type="text" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['phone']); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
+                                    <input type="text" name="phone" class="dt-wholesale-input" value="<?php echo htmlspecialchars($partner['phone'] ?? ''); ?>" required style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 10px; font-size:0.8rem; box-sizing:border-box;">
                                 </div>
                             </div>
                         </div>
@@ -104,7 +107,7 @@ $partner = $is_new ? [
                             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Assigned Margin Tier</label>
-                                    <select class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
+                                    <select name="tier" class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
                                         <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'platinum wholesale') ? 'selected' : ''; ?>>Platinum Wholesale (35% Off)</option>
                                         <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'gold distributor') ? 'selected' : ''; ?>>Gold Distributor (28% Off)</option>
                                         <option <?php echo (isset($partner['tier_raw']) && $partner['tier_raw'] === 'silver bulk partner') ? 'selected' : ''; ?>>Silver Bulk Partner (20% Off)</option>
@@ -113,7 +116,7 @@ $partner = $is_new ? [
                                 </div>
                                 <div>
                                     <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Payment Terms</label>
-                                    <select class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
+                                    <select name="payment_terms" class="dt-wholesale-select" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:700;">
                                         <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '30') !== false) ? 'selected' : ''; ?>>Net 30 Days</option>
                                         <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '45') !== false) ? 'selected' : ''; ?>>Net 45 Days</option>
                                         <option <?php echo (isset($partner['payment_terms']) && strpos($partner['payment_terms'], '15') !== false) ? 'selected' : ''; ?>>Net 15 Days</option>
@@ -122,8 +125,8 @@ $partner = $is_new ? [
                                     </select>
                                 </div>
                                 <div>
-                                    <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Sanctioned Credit Headroom (₹)</label>
-                                    <input type="number" value="<?php echo htmlspecialchars($partner['sanctioned_limit']); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
+                                    <label style="font-size:0.72rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Sanctioned Credit Limit (₹)</label>
+                                    <input type="number" name="credit_limit" value="<?php echo htmlspecialchars($partner['sanctioned_limit'] ?? 200000); ?>" style="width:100%; height:36px; border:1.2px solid #EAE5D9; border-radius:8px; font-size:0.8rem; font-weight:800; padding:0 10px; box-sizing:border-box;">
                                 </div>
                             </div>
                         </div>
@@ -144,5 +147,33 @@ $partner = $is_new ? [
 </div>
 
 <script src="/Frontend/Admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script>
+function handleWholesaleFormSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('wholesaleEditForm');
+    const formData = new FormData(form);
+
+    fetch('/api/customers.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✅ ' + data.message);
+            }
+            setTimeout(() => {
+                window.location.href = '/Frontend/Admin/wholesale/index.php';
+            }, 600);
+        } else {
+            alert('Error: ' + (data.message || 'Could not save wholesale account.'));
+        }
+    })
+    .catch(err => {
+        alert('Network error while saving wholesale account.');
+    });
+}
+</script>
 </body>
 </html>

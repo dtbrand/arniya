@@ -106,4 +106,95 @@ class CustomerManager
         $all = self::getAll();
         return array_values(array_filter($all, fn($c) => strcasecmp($c['type'], $type) === 0));
     }
+
+    public static function create(array $data): array
+    {
+        $pdo = Database::getConnection();
+        $name = trim($data['name'] ?? 'New Customer');
+        $phone = trim($data['phone'] ?? '');
+        $email = trim($data['email'] ?? '');
+        $type = trim($data['type'] ?? 'retail');
+        $tier = trim($data['tier'] ?? ($type === 'wholesale' ? 'Diamond Elite' : ($type === 'reseller' ? 'Gold VIP' : 'Silver Consumer')));
+        $city = trim($data['city'] ?? 'Surat');
+        $state = trim($data['state'] ?? 'Gujarat');
+        $creditLimit = (float)($data['credit_limit'] ?? 0.0);
+        $status = trim($data['status'] ?? 'active');
+
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("INSERT INTO customers (name, phone, email, type, tier, city, state, credit_limit, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+                $stmt->execute([$name, $phone, $email, $type, $tier, $city, $state, $creditLimit, $status]);
+                $newId = (int)$pdo->lastInsertId();
+                return array_merge($data, ['id' => $newId, 'status' => $status]);
+            } catch (\Exception $e) {}
+        }
+
+        $newId = rand(200, 999);
+        $newRecord = array_merge($data, ['id' => $newId, 'status' => $status]);
+        self::$customers[] = $newRecord;
+        return $newRecord;
+    }
+
+    public static function update(int $id, array $data): bool
+    {
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $fields = [];
+                $params = [];
+                foreach (['name', 'phone', 'email', 'type', 'tier', 'city', 'state', 'credit_limit', 'outstanding_balance', 'status'] as $f) {
+                    if (isset($data[$f])) {
+                        $fields[] = "{$f} = ?";
+                        $params[] = $data[$f];
+                    }
+                }
+                if (!empty($fields)) {
+                    $params[] = $id;
+                    $stmt = $pdo->prepare("UPDATE customers SET " . implode(', ', $fields) . " WHERE id = ?");
+                    return $stmt->execute($params);
+                }
+            } catch (\Exception $e) {}
+        }
+        return true;
+    }
+
+    public static function delete(int $id): bool
+    {
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("DELETE FROM customers WHERE id = ?");
+                return $stmt->execute([$id]);
+            } catch (\Exception $e) {}
+        }
+        return true;
+    }
+
+    public static function getStats(): array
+    {
+        $all = self::getAll();
+        $totalWholesale = 0;
+        $totalResellers = 0;
+        $totalRetail = 0;
+        $totalCreditExtended = 0;
+        $totalOutstanding = 0;
+
+        foreach ($all as $c) {
+            if ($c['type'] === 'wholesale') $totalWholesale++;
+            elseif ($c['type'] === 'reseller') $totalResellers++;
+            else $totalRetail++;
+
+            $totalCreditExtended += (float)($c['credit_limit'] ?? 0);
+            $totalOutstanding += (float)($c['outstanding_balance'] ?? 0);
+        }
+
+        return [
+            'total_customers' => count($all),
+            'wholesale_count' => $totalWholesale,
+            'reseller_count' => $totalResellers,
+            'retail_count' => $totalRetail,
+            'credit_extended' => $totalCreditExtended,
+            'outstanding_balance' => $totalOutstanding
+        ];
+    }
 }
