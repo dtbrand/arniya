@@ -91,8 +91,6 @@ $prodCount = count($productsList);
                 </div>
                 <?php include_once __DIR__ . '/../components/product-table.php'; ?>
             </div>
-                <?php include_once __DIR__ . '/../components/product-table.php'; ?>
-            </div>
 
         </main>
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
@@ -101,3 +99,4 @@ $prodCount = count($productsList);
 <script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
+
