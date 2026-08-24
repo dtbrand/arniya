@@ -40,13 +40,13 @@
 }
 .pdp-mob-atc-btn {
     flex: 1;
-    height: 38px;
+    height: 40px;
     border-radius: 9px;
-    border: 1.8px solid var(--dark-gold, #8A681F);
-    background: #FFFFFF;
-    color: var(--dark-gold, #8A681F);
+    border: 1px solid #8A681F;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    color: #111827;
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -55,16 +55,17 @@
     justify-content: center;
     gap: 6px;
     cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.28);
     transition: all 0.2s ease;
 }
 .pdp-mob-atc-btn:hover, .pdp-mob-atc-btn:active {
-    background: #FAF3E0;
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
     transform: scale(0.98);
 }
 .pdp-mob-atc-btn svg {
     width: 15px;
     height: 15px;
-    stroke: currentColor;
+    stroke: #111827;
     fill: none;
     stroke-width: 2.2;
     animation: pdpBagSwing 2.4s infinite ease-in-out;
@@ -82,13 +83,13 @@
 
 .pdp-mob-buy-btn {
     flex: 1;
-    height: 38px;
+    height: 40px;
     border-radius: 9px;
-    border: none;
-    background: linear-gradient(135deg, #947124 0%, #684E17 100%);
-    color: #FFFFFF;
+    border: 1.2px solid #8A681F;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: #FAF5E8;
     font-family: var(--font-sans, 'Inter', sans-serif);
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -97,11 +98,12 @@
     justify-content: center;
     gap: 6px;
     cursor: pointer;
-    box-shadow: 0 3px 12px rgba(138,104,31,0.35);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
     transition: all 0.2s ease;
 }
 .pdp-mob-buy-btn:hover, .pdp-mob-buy-btn:active {
-    background: #5A4212;
+    border-color: #D4AF37;
+    background: linear-gradient(135deg, #241F1A 0%, #383028 100%);
     transform: scale(0.98);
 }
 .pdp-mob-buy-btn svg {
@@ -117,23 +119,19 @@
     0%, 100% { transform: scale(1); filter: drop-shadow(0 0 1px rgba(255,255,255,0.6)); }
     50% { transform: scale(1.26); filter: drop-shadow(0 0 5px rgba(255,255,255,0.95)); }
 }
-.pdp-mob-buy-btn:hover {
-    background: var(--deep-gold, #6F5218);
-}
-.pdp-mob-buy-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; }
 </style>
 
 <!-- ═══ Mobile Sticky Bottom Action Bar (Full-Width Dual Action: Add to Bag & Buy Now) ═══ -->
 <div class="pdp-mobile-bottom-bar" id="pdpMobileBar">
     <div class="pdp-mob-btn-group">
         <!-- Add to Bag -->
-        <button class="pdp-mob-atc-btn" id="pdpMobAtcBtn" onclick="handlePdpAddToCart()">
+        <button class="pdp-mob-atc-btn" id="pdpMobAtcBtn" onclick="if(typeof handlePdpAddToCart==='function') handlePdpAddToCart();">
             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
             <span>ADD TO BAG</span>
         </button>
 
         <!-- Buy Now (Instant Checkout) -->
-        <button class="pdp-mob-buy-btn" id="pdpMobBuyBtn" onclick="handlePdpBuyNow()">
+        <button class="pdp-mob-buy-btn" id="pdpMobBuyBtn" onclick="if(typeof handlePdpBuyNow==='function') handlePdpBuyNow();">
             <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             <span>BUY NOW</span>
         </button>

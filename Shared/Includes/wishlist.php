@@ -105,15 +105,17 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 }
 
 .wd-explore-btn {
-    padding: 11px 24px; border-radius: 26px;
-    background: linear-gradient(135deg, var(--dark-gold, #8A681F) 0%, var(--deep-gold, #6F5218) 100%);
-    color: #FFFFFF; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer;
-    box-shadow: 0 4px 16px rgba(138,104,31,0.3); transition: all 0.25s ease;
+    padding: 10px 22px; border-radius: 24px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827; font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 12px rgba(184,134,11,0.3); transition: all 0.22s ease;
     display: inline-flex; align-items: center; gap: 8px;
 }
 .wd-explore-btn:hover {
-    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(138,104,31,0.42);
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 5px 16px rgba(184,134,11,0.42);
 }
 
 /* ── Interactive Auto-Slide Product Recommendations with Full-Size Portrait Photo ── */
@@ -159,22 +161,44 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 .wd-rec-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
 .wd-rec-price { font-size: 0.82rem; font-weight: 800; color: var(--dark-gold, #8A681F); }
 .wd-rec-add-btn {
-    padding: 5px 10px; border-radius: 6px; background: var(--dark-gold, #8A681F);
-    color: #FFF; border: none; font-size: 0.65rem; font-weight: 700; cursor: pointer;
+    padding: 5px 10px; border-radius: 6px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827; font-size: 0.65rem; font-weight: 800; cursor: pointer;
     transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 3px;
 }
-.wd-rec-add-btn:hover { background: var(--deep-gold, #6F5218); transform: scale(1.05); }
+.wd-rec-add-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: scale(1.05);
+}
+
+.wd-move-bag-btn {
+    padding: 7px 14px; border-radius: 7px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(184,134,11,0.25);
+    transition: all 0.2s ease;
+}
+.wd-move-bag-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(184,134,11,0.38);
+}
 </style>
 
 <!-- ════════════ WISHLIST DRAWER MODAL ════════════ -->
 <div class="wishlist-drawer-backdrop" id="wishlistDrawerModal" aria-hidden="true" role="dialog" aria-label="Wishlist Drawer">
     <div class="wishlist-drawer-content">
         <div class="wd-header">
-            <div class="wd-title-wrap">
-                <h3 class="wd-title">My Saved Wishlist</h3>
-                <span class="wd-subtitle" id="wishlistBadgeSub">0 Saved Items</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+                <div>
+                    <h3 class="wd-title" style="margin:0; font-size:0.95rem;">Saved Wishlist</h3>
+                    <span class="wd-subtitle" id="wishlistBadgeSub" style="font-size:0.56rem;">0 Saved Items</span>
+                </div>
             </div>
-            <button class="wd-close-btn" id="closeWishlistDrawerBtn" aria-label="Close Wishlist">&times;</button>
+            <button class="wd-close-btn" id="closeWishlistDrawerBtn" onclick="if(typeof window.closeWishlistDrawer==='function') window.closeWishlistDrawer();" aria-label="Close Wishlist">✕</button>
         </div>
 
         <div class="wd-body" id="wishlistItemsWrap">

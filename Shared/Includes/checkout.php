@@ -1059,11 +1059,15 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         document.body.style.overflow = 'hidden';
     };
 
+    window.openCheckoutModal = window.openCheckout;
+
     window.closeCheckout = function() {
         var modal = document.getElementById('checkoutBackdrop');
         if (modal) modal.classList.remove('active');
         document.body.style.overflow = '';
     };
+
+    window.closeCheckoutModal = window.closeCheckout;
 
     window.selectPaymentMethod = function(method) {
         activePaymentMethod = method;
@@ -1103,15 +1107,18 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
         cart.forEach(function(item, idx) {
             var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
-            var itemTotal = priceNum * (item.qty || 1);
+            var qty = item.qty || 1;
+            var itemTotal = priceNum * qty;
             subtotal += itemTotal;
+            var imgSrc = item.image || item.img || '/Frontend/Shop/Asset/images/product1.png';
+            var itemName = item.name || item.title || 'Ethnic Attire';
 
             html += `
                 <div class="co-item-row">
-                    <img src="${item.img || '/Shared/Asset/images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="${imgSrc}" alt="${itemName}" class="co-item-img" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';">
                     <div class="co-item-info">
-                        <div class="co-item-name">${item.title || 'Ethnic Attire'}</div>
-                        <div class="co-item-meta">Size: <strong>${item.size || 'M'}</strong> | Qty: <strong>${item.qty || 1}</strong></div>
+                        <div class="co-item-name">${itemName}</div>
+                        <div class="co-item-meta">Size: <strong>${item.size || 'Free Size'}</strong> | Color: <strong>${item.color || 'Standard'}</strong> | Qty: <strong>${qty}</strong></div>
                         <div class="co-item-price-row">
                             <span class="co-item-price">₹${itemTotal.toLocaleString('en-IN')}</span>
                         </div>
@@ -1243,9 +1250,11 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
         cart.forEach(function(item, i) {
             var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
-            var itemTotal = priceNum * (item.qty || 1);
+            var qty = item.qty || 1;
+            var itemTotal = priceNum * qty;
             subtotal += itemTotal;
-            itemsSummaryTxt += `${i + 1}. *${item.title || 'Ethnic Product'}*\n   Size: ${item.size || 'M'} | Qty: ${item.qty || 1} | ₹${itemTotal.toLocaleString('en-IN')}\n`;
+            var itemName = item.name || item.title || 'Ethnic Product';
+            itemsSummaryTxt += `${i + 1}. *${itemName}*\n   Size: ${item.size || 'Free Size'} | Color: ${item.color || 'Standard'} | Qty: ${qty} | ₹${itemTotal.toLocaleString('en-IN')}\n`;
         });
 
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
@@ -1301,6 +1310,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             /* Clear Cart upon successful order placement */
             localStorage.removeItem('dtbrands_cart');
             window.cartState = [];
+            if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
             if (typeof window.syncBadges === 'function') window.syncBadges();
             if (typeof window.renderCart === 'function') window.renderCart();
 
@@ -1319,6 +1329,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             if (successOverlay) successOverlay.classList.add('active');
             localStorage.removeItem('dtbrands_cart');
             window.cartState = [];
+            if (typeof window.updateGlobalBadges === 'function') window.updateGlobalBadges();
             window.open(waUrl, '_blank');
         });
     }

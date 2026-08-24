@@ -16,7 +16,7 @@
         }
 
         var raw = String(msg || '').trim();
-        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        var cleanText = raw.replace(/^[^a-zA-Z0-9₹]+/, '').trim();
         if (!cleanText) cleanText = raw;
 
         var lower = raw.toLowerCase();
@@ -209,7 +209,7 @@
             }
         }, { passive: false });
 
-        track.addEventListener('touchend', function(e) {
+        track.addEventListener('touchend', function(_e) {
             if (isTouchDrag && isHorizontalSwipe) {
                 var diffX = touchCurrentX - touchStartX;
                 if (diffX < -40) {
@@ -316,9 +316,7 @@
         var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
 
         if (typeof window.addToCart === 'function') {
-            for (var i = 0; i < currentQty; i++) {
-                window.addToCart(currentProduct, selSize, selColor);
-            }
+            window.addToCart(currentProduct, selSize, selColor, currentQty);
         } else {
             // Local fallback
             try {
@@ -333,10 +331,11 @@
                     qty: currentQty
                 });
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
-            } catch(e) {}
+            } catch(_e) {
+                void _e;
+            }
         }
 
-        window.showToast('🛍️ Added ' + currentProduct.name + ' to Bag!');
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
         if (typeof window.openCartDrawer === 'function') {
             window.openCartDrawer();
@@ -352,9 +351,7 @@
         var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
 
         if (typeof window.addToCart === 'function') {
-            for (var i = 0; i < currentQty; i++) {
-                window.addToCart(currentProduct, selSize, selColor);
-            }
+            window.addToCart(currentProduct, selSize, selColor, currentQty);
         }
 
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
@@ -369,8 +366,12 @@
             setTimeout(function() {
                 window.openCheckout();
             }, 80);
+        } else if (typeof window.openCheckoutModal === 'function') {
+            setTimeout(function() {
+                window.openCheckoutModal();
+            }, 80);
         } else {
-            window.location.href = 'checkout.php';
+            window.location.href = '/checkout';
         }
     };
 
@@ -432,8 +433,8 @@
         var savedAddr = null;
         var user = null;
 
-        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch(e) {}
-        try { if (userRaw) user = JSON.parse(userRaw); } catch(e) {}
+        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch(_e1) { void _e1; }
+        try { if (userRaw) user = JSON.parse(userRaw); } catch(_e2) { void _e2; }
 
         var nameVal = (savedAddr && savedAddr.name) ? savedAddr.name : (user && user.name ? user.name : '');
         var phoneVal = (savedAddr && savedAddr.phone) ? savedAddr.phone : (user && user.phone ? user.phone : '');
@@ -578,7 +579,9 @@
                     state: state,
                     pincode: pincode
                 }));
-            } catch(err) {}
+            } catch(_err) {
+                void _err;
+            }
         }
 
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');

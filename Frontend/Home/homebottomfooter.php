@@ -829,6 +829,7 @@
         items.forEach(function(item) {
             var tab = item.getAttribute('data-tab');
             var isCurrent = false;
+            if (tab === 'home' && (currentPath === '/' || currentPath.endsWith('/') || currentPath.indexOf('home.php') !== -1)) isCurrent = true;
             if (tab === 'shop' && currentPath.indexOf('shop.php') !== -1) isCurrent = true;
 
             item.classList.toggle('active', isCurrent);
@@ -841,6 +842,8 @@
             syncDrawerUserState();
         });
     }
+
+    window.syncSmartWishlistCounter = syncSmartWishlistCounter;
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initActivePageTab);

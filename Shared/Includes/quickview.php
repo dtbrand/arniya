@@ -317,32 +317,79 @@
 .m-size-btn:hover { border-color: var(--dark-gold, #8A681F); color: var(--dark-gold, #8A681F); }
 .m-size-btn.active { border-color: var(--dark-gold, #8A681F); background: var(--dark-gold, #8A681F); color: #FFFFFF; box-shadow: 0 2px 8px rgba(138,104,31,0.25); }
 
-.modal-actions-myntra { display: flex; gap: 12px; margin-top: 6px; }
+.modal-actions-myntra { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.modal-actions-btn-row { display: flex; gap: 8px; width: 100%; }
+
 .modal-add-bag-btn {
-    flex: 2; padding: 13px 16px; border-radius: 8px;
-    background: var(--dark-gold, #8A681F); color: #FFFFFF;
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.82rem; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    transition: all 0.2s; border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 4px 14px rgba(138,104,31,0.25);
+    flex: 1.2; padding: 11px 14px; border-radius: 9px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827;
+    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.78rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: all 0.22s ease; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 10px rgba(184,134,11,0.28);
 }
-.modal-add-bag-btn:hover { background: var(--deep-gold, #6F5218); box-shadow: 0 6px 18px rgba(138,104,31,0.35); }
-.modal-add-bag-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+.modal-add-bag-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 5px 14px rgba(184,134,11,0.4);
+}
+.modal-add-bag-btn svg { width: 15px; height: 15px; stroke: #111827; fill: none; stroke-width: 2.2; flex-shrink: 0; }
+
+.modal-buy-now-btn {
+    flex: 1.2; padding: 11px 14px; border-radius: 9px;
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border: 1.2px solid #8A681F;
+    color: #FAF5E8;
+    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.78rem; font-weight: 800;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: all 0.22s ease; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+.modal-buy-now-btn:hover {
+    border-color: #D4AF37;
+    background: linear-gradient(135deg, #241F1A 0%, #383028 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(0,0,0,0.35);
+}
+.modal-buy-now-btn svg { width: 14px; height: 14px; fill: currentColor; stroke: currentColor; stroke-width: 1; flex-shrink: 0; }
+
+.modal-actions-sub-row { display: flex; gap: 8px; width: 100%; }
 
 .modal-wishlist-btn {
-    flex: 1; padding: 13px 14px; border-radius: 8px;
-    background: var(--off-white, #F8F6F0); color: var(--dark-text, #24211C);
-    border: 1.5px solid var(--soft-platinum, #E5E3DE);
-    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.78rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    flex: 1; padding: 9px 12px; border-radius: 8px;
+    background: #FAF8F4; color: var(--dark-text, #24211C);
+    border: 1px solid var(--soft-platinum, #E5E3DE);
+    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
     transition: all 0.2s; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
 }
 .modal-wishlist-btn:hover { border-color: var(--dark-gold, #8A681F); color: var(--dark-gold, #8A681F); background: #FAF3E0; }
 .modal-wishlist-btn.active { border-color: #E53935; color: #E53935; background: #FDE8E8; }
-.modal-wishlist-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
+.modal-wishlist-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0; }
 .modal-wishlist-btn.active svg { fill: #E53935; }
+
+.modal-wa-btn {
+    flex: 1.2; padding: 9px 12px; border-radius: 8px;
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    border: 1px solid #166534;
+    color: #FFFFFF;
+    font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: all 0.2s; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    text-decoration: none;
+}
+.modal-wa-btn:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(22,163,74,0.3);
+}
+.modal-wa-btn svg { width: 14px; height: 14px; fill: #FFFFFF; flex-shrink: 0; }
 
 .modal-perks { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; padding-top: 8px; border-top: 1px dashed var(--soft-platinum, #E5E3DE); }
 .m-perk-item { display: flex; align-items: center; gap: 8px; font-size: 0.72rem; color: var(--mid-text, #5A5348); font-weight: 500; }
@@ -686,14 +733,26 @@
                 '</div>' +
 
                 '<div class="modal-actions-myntra">' +
-                    '<button class="modal-add-bag-btn" id="qvAtc">' +
-                        '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
-                        'ADD TO BAG' +
-                    '</button>' +
-                    '<button class="modal-wishlist-btn ' + (isWish ? 'active' : '') + '" id="qvWishlist">' +
-                        '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
-                        'WISHLIST' +
-                    '</button>' +
+                    '<div class="modal-actions-btn-row">' +
+                        '<button class="modal-add-bag-btn" id="qvAtc">' +
+                            '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
+                            '<span>ADD TO BAG</span>' +
+                        '</button>' +
+                        '<button class="modal-buy-now-btn" id="qvBuyNow">' +
+                            '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+                            '<span>BUY NOW</span>' +
+                        '</button>' +
+                    '</div>' +
+                    '<div class="modal-actions-sub-row">' +
+                        '<button class="modal-wishlist-btn ' + (isWish ? 'active' : '') + '" id="qvWishlist">' +
+                            '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
+                            '<span>WISHLIST</span>' +
+                        '</button>' +
+                        '<a href="https://api.whatsapp.com/send?phone=919876543210&text=' + encodeURIComponent('Hi DT Brand, I am interested in ' + (p.name || 'this product') + ' (₹' + (p.price || 0) + '). Please share details.') + '" target="_blank" class="modal-wa-btn" id="qvWaBtn">' +
+                            '<svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>' +
+                            '<span>WHATSAPP</span>' +
+                        '</a>' +
+                    '</div>' +
                 '</div>' +
 
                 '<div class="modal-perks">' +
@@ -869,9 +928,35 @@
                 var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
 
                 if (typeof window.addToCart === 'function') {
-                    window.addToCart(p, selSize, selColor);
+                    window.addToCart(p, selSize, selColor, 1);
                 }
                 window.closeQV();
+            });
+        }
+
+        /* Buy Now (Instant Direct Checkout) */
+        var qvBuyNow = document.getElementById('qvBuyNow');
+        if (qvBuyNow) {
+            qvBuyNow.addEventListener('click', function() {
+                var activeSizeBtn = content.querySelector('.m-size-btn.active');
+                var selSize = activeSizeBtn ? activeSizeBtn.dataset.sz : 'Free Size';
+
+                var activeColorBtn = content.querySelector('.m-color-btn.active');
+                var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
+
+                if (typeof window.addToCart === 'function') {
+                    window.addToCart(p, selSize, selColor, 1);
+                }
+                window.closeQV();
+                setTimeout(function() {
+                    if (typeof window.openCheckout === 'function') {
+                        window.openCheckout();
+                    } else if (typeof window.openCheckoutModal === 'function') {
+                        window.openCheckoutModal();
+                    } else {
+                        window.location.href = '/checkout';
+                    }
+                }, 80);
             });
         }
 

@@ -1085,7 +1085,7 @@ window.closeWishlistDrawer = function() {
     var mobileSearchClear  = document.getElementById('mobileSearchClearBtn');
     var mobileSearchSubmit = document.getElementById('mobileSearchSubmitIconBtn');
 
-    function performSearch(source) {
+    function performSearch(source, isSubmit) {
         var query = '';
         if (source === 'mobile' && mobileSearchInput) {
             query = mobileSearchInput.value.trim();
@@ -1110,29 +1110,36 @@ window.closeWishlistDrawer = function() {
             if (typeof window.applyMasterFilters === 'function') {
                 window.applyMasterFilters();
             }
+        } else if (isSubmit && query.length > 0) {
+            /* Redirect to /shop with search parameters */
+            var url = '/shop?search=' + encodeURIComponent(query);
+            if (cat && cat !== 'All') {
+                url += '&category=' + encodeURIComponent(cat);
+            }
+            window.location.href = url;
         }
     }
 
     /* Desktop Events */
     if (searchInput) {
-        searchInput.addEventListener('input', function() { performSearch('desktop'); });
+        searchInput.addEventListener('input', function() { performSearch('desktop', false); });
         searchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
-                performSearch('desktop');
+                performSearch('desktop', true);
                 searchInput.blur();
             }
         });
     }
 
     if (searchCat) {
-        searchCat.addEventListener('change', function() { performSearch('desktop'); });
+        searchCat.addEventListener('change', function() { performSearch('desktop', true); });
     }
 
     if (searchClear) {
         searchClear.addEventListener('click', function() {
             if (searchInput) searchInput.value = '';
             if (mobileSearchInput) mobileSearchInput.value = '';
-            performSearch('desktop');
+            performSearch('desktop', false);
             if (searchInput) searchInput.focus();
         });
     }
@@ -1140,7 +1147,7 @@ window.closeWishlistDrawer = function() {
     if (searchSubmit) {
         searchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
-            performSearch('desktop');
+            performSearch('desktop', true);
         });
     }
 
@@ -1163,7 +1170,7 @@ window.closeWishlistDrawer = function() {
     if (mobileSearchSubmit) {
         mobileSearchSubmit.addEventListener('click', function(e) {
             e.preventDefault();
-            performSearch('mobile');
+            performSearch('mobile', true);
             if (mobileSearchInput) mobileSearchInput.blur();
         });
     }
@@ -1175,15 +1182,15 @@ window.closeWishlistDrawer = function() {
             if (header) header.classList.remove('mobile-search-active');
             if (mobileSearchInput) mobileSearchInput.value = '';
             if (searchInput) searchInput.value = '';
-            performSearch('mobile');
+            performSearch('mobile', false);
         });
     }
 
     if (mobileSearchInput) {
-        mobileSearchInput.addEventListener('input', function() { performSearch('mobile'); });
+        mobileSearchInput.addEventListener('input', function() { performSearch('mobile', false); });
         mobileSearchInput.addEventListener('keyup', function(e) {
             if (e.key === 'Enter') {
-                performSearch('mobile');
+                performSearch('mobile', true);
                 mobileSearchInput.blur();
             } else if (e.key === 'Escape') {
                 userManuallyClosedMobileSearch = true;
@@ -1199,7 +1206,7 @@ window.closeWishlistDrawer = function() {
                 mobileSearchInput.focus();
             }
             if (searchInput) searchInput.value = '';
-            performSearch('mobile');
+            performSearch('mobile', false);
         });
     }
 

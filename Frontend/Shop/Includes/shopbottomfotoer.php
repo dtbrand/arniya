@@ -1301,16 +1301,6 @@ input[type=range].mf-range::-moz-range-thumb {
         }
     }
 
-    function openMore() { 
-        syncMobileMoreAccountState();
-        addSheet.classList.add('open'); 
-        moreOverlay.classList.add('open'); 
-        moreOverlay.setAttribute('aria-hidden','false'); 
-        addSheet.setAttribute('aria-hidden','false'); 
-        addBtn.setAttribute('aria-expanded','true'); 
-        document.body.style.overflow='hidden'; 
-    }
-
     if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); if (typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='../../Shared/Auth/myaccount.php';} });
     if (logoutItem) logoutItem.addEventListener('click', function(){ 
         closeMore(); 
@@ -1338,6 +1328,8 @@ input[type=range].mf-range::-moz-range-thumb {
             }
         } catch(e) {}
     }
+
+    window.syncShopBottomFooterBadges = syncShopBottomFooterBadges;
 
     syncShopBottomFooterBadges();
     window.addEventListener('storage', syncShopBottomFooterBadges);

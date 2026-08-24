@@ -69,8 +69,38 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 .cd-total-val { font-size: 1.2rem; color: var(--dark-gold, #8A681F); }
 .cd-shipping { font-size: 0.75rem; color: var(--mid-text, #5A5348); font-weight: 500; }
 .cd-free-txt { color: #2E7D32; font-weight: 700; }
-.cd-checkout-btn { width: 100%; padding: 14px; border-radius: 8px; background: var(--dark-gold, #8A681F); color: #FFF; border: none; font-family: var(--font-sans, 'Inter', sans-serif); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(138,104,31,0.25); }
-.cd-checkout-btn:hover { background: var(--deep-gold, #6F5218); box-shadow: 0 6px 20px rgba(138,104,31,0.35); }
+.cd-checkout-btn {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827;
+    font-family: var(--font-sans, 'Inter', -apple-system, sans-serif);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 12px rgba(184,134,11,0.32);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.cd-checkout-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 18px rgba(184,134,11,0.45);
+}
+.cd-checkout-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #111827;
+    stroke-width: 2.4;
+    fill: none;
+}
 
 /* ── Animated Empty Cart Styles ── */
 .cd-empty-container {
@@ -115,15 +145,19 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 }
 
 .cd-explore-btn {
-    padding: 11px 24px; border-radius: 26px;
-    background: linear-gradient(135deg, var(--dark-gold, #8A681F) 0%, var(--deep-gold, #6F5218) 100%);
-    color: #FFFFFF; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer;
-    box-shadow: 0 4px 16px rgba(138,104,31,0.3); transition: all 0.25s ease;
+    padding: 10px 22px; border-radius: 24px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827; font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 12px rgba(184,134,11,0.3);
+    transition: all 0.22s ease;
     display: inline-flex; align-items: center; gap: 8px;
 }
 .cd-explore-btn:hover {
-    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(138,104,31,0.42);
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 5px 16px rgba(184,134,11,0.42);
 }
 
 /* ── Interactive Auto-Slide Product Recommendations with Full-Size Portrait Photo ── */
@@ -169,26 +203,31 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 .cd-rec-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
 .cd-rec-price { font-size: 0.82rem; font-weight: 800; color: var(--dark-gold, #8A681F); }
 .cd-rec-add-btn {
-    padding: 5px 10px; border-radius: 6px; background: var(--dark-gold, #8A681F);
-    color: #FFF; border: none; font-size: 0.65rem; font-weight: 700; cursor: pointer;
+    padding: 5px 10px; border-radius: 6px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827; font-size: 0.65rem; font-weight: 800; cursor: pointer;
     transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 3px;
 }
-.cd-rec-add-btn:hover { background: var(--deep-gold, #6F5218); transform: scale(1.05); }
+.cd-rec-add-btn:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: scale(1.05);
+}
 </style>
 
 <!-- ════════════ CART DRAWER MODAL ════════════ -->
 <div class="cart-drawer-backdrop" id="cartDrawerModal" aria-hidden="true" role="dialog" aria-label="Shopping Cart Drawer">
     <div class="cart-drawer-content">
         <div class="cd-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-        <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
-        <div>
-            <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
-            <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+                <div>
+                    <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
+                    <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
+                </div>
+            </div>
+            <button class="cd-close-btn" id="closeCartDrawerBtn" onclick="if(typeof window.closeCartDrawer==='function') window.closeCartDrawer();" aria-label="Close Cart">✕</button>
         </div>
-    </div>
-    <button class="cd-close-btn" id="closeCartDrawerBtn" onclick="if(typeof window.closeCartDrawer==='function') window.closeCartDrawer();" aria-label="Close Cart">✕</button>
-</div>
 
         <div class="cd-body" id="cartDrawerItemsWrap">
             <!-- Dynamic Items or Animated Empty State rendered via JS -->
@@ -204,7 +243,8 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 <span class="cd-free-txt">FAST DISPATCH</span>
             </div>
             <button class="cd-checkout-btn" id="cartCheckoutBtn">
-                PROCEED TO CHECKOUT &rarr;
+                <span>PROCEED TO CHECKOUT</span>
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
         </div>
     </div>
@@ -216,7 +256,10 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     function loadCart() {
         try {
             var raw = localStorage.getItem('dtbrands_cart');
-            if (raw !== null) return JSON.parse(raw);
+            if (raw !== null) {
+                var parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) return parsed;
+            }
         } catch(e) {}
         return [
             {
@@ -224,7 +267,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Banarasi Zari Saree',
                 price: 8499,
                 old_price: 11000,
-                image: '/Shared/Asset/images/product2.png',
+                image: '/Frontend/Shop/Asset/images/product2.png',
                 size: 'Free Size',
                 color: 'Maroon',
                 qty: 1
@@ -234,7 +277,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Bridal Zardosi Lehenga',
                 price: 24999,
                 old_price: 32000,
-                image: '/Shared/Asset/images/product6.png',
+                image: '/Frontend/Shop/Asset/images/product6.png',
                 size: 'S',
                 color: 'Red',
                 qty: 1
@@ -246,6 +289,9 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         try {
             localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
         } catch(e) {}
+        if (typeof window.updateGlobalBadges === 'function') {
+            window.updateGlobalBadges();
+        }
     }
 
     window.cartState = loadCart();
@@ -327,25 +373,26 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             if (footer) footer.style.display = 'none';
 
             /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider */
-            var products = window.allProducts || [
-                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/Shared/Asset/images/product1.png' },
-                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/Shared/Asset/images/product3.png' },
-                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/Shared/Asset/images/product5.png' },
-                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/Shared/Asset/images/product8.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Shared/Asset/images/product4.png' }
+            var products = window.allProducts || window.catalogProducts || window.products || [
+                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/Frontend/Shop/Asset/images/product1.png' },
+                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/Frontend/Shop/Asset/images/product3.png' },
+                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/Frontend/Shop/Asset/images/product5.png' },
+                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/Frontend/Shop/Asset/images/product8.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Frontend/Shop/Asset/images/product4.png' }
             ];
 
             // Render loop duplicates for seamless long scrolling
             var fullList = products.concat(products);
 
             var sliderCardsHtml = fullList.map(function(p) {
+                var imgSrc = p.image || p.img || '/Frontend/Shop/Asset/images/product1.png';
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" />' +
+                        '<img src="' + imgSrc + '" alt="' + (p.name || 'Ethnic Attire') + '" class="cd-rec-img" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\';" />' +
                     '</div>' +
-                    '<h5 class="cd-rec-title">' + p.name + '</h5>' +
+                    '<h5 class="cd-rec-title">' + (p.name || 'Ethnic Attire') + '</h5>' +
                     '<div class="cd-price-row">' +
-                        '<span class="cd-rec-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
+                        '<span class="cd-rec-price">₹' + Number(p.price || 2999).toLocaleString('en-IN') + '</span>' +
                         '<button class="cd-rec-add-btn" onclick="window.addRecToCart(' + p.id + ')">+ ADD</button>' +
                     '</div>' +
                 '</div>';
@@ -363,7 +410,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                     '</div>' +
                     '<h4 class="cd-empty-title">YOUR BAG IS EMPTY</h4>' +
                     '<p class="cd-empty-desc">Discover our handcrafted ethnic luxury collection & elevate your wardrobe.</p>' +
-                    '<button class="cd-explore-btn" onclick="window.closeCartDrawer(); window.scrollTo({top: 500, behavior: \'smooth\'});">' +
+                    '<button class="cd-explore-btn" onclick="window.closeCartDrawer(); window.location.href=\'/shop\';">' +
                         'EXPLORE COLLECTION &rarr;' +
                     '</button>' +
 
@@ -389,21 +436,23 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             var html = '';
             var totalPrice = 0;
             items.forEach(function(item, idx) {
-                totalPrice += item.price * item.qty;
-                var imgUrl = item.image || '/Shared/Asset/images/product1.png';
+                var qty = item.qty || 1;
+                var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
+                totalPrice += priceNum * qty;
+                var imgUrl = item.image || item.img || '/Frontend/Shop/Asset/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" />' +
+                    '<img src="' + imgUrl + '" alt="' + (item.name || 'Product') + '" class="cd-item-img" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\';" />' +
                     '<div class="cd-item-info">' +
-                        '<h4 class="cd-item-title">' + item.name + '</h4>' +
+                        '<h4 class="cd-item-title">' + (item.name || 'Ethnic Wear') + '</h4>' +
                         '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +
                         '<div class="cd-price-row">' +
-                            '<span class="cd-item-price">₹' + Number(item.price * item.qty).toLocaleString('en-IN') + '</span>' +
-                            (item.old_price ? '<span class="cd-item-old">₹' + Number(item.old_price * item.qty).toLocaleString('en-IN') + '</span>' : '') +
+                            '<span class="cd-item-price">₹' + Number(priceNum * qty).toLocaleString('en-IN') + '</span>' +
+                            (item.old_price ? '<span class="cd-item-old">₹' + Number(item.old_price * qty).toLocaleString('en-IN') + '</span>' : '') +
                         '</div>' +
                         '<div class="cd-qty-wrap">' +
                             '<button class="cd-qty-btn cd-minus-btn" onclick="window.updateCartQty(' + idx + ', -1)">-</button>' +
-                            '<span class="cd-qty-num">' + item.qty + '</span>' +
+                            '<span class="cd-qty-num">' + qty + '</span>' +
                             '<button class="cd-qty-btn cd-plus-btn" onclick="window.updateCartQty(' + idx + ', 1)">+</button>' +
                             '<button class="cd-remove-btn" onclick="window.removeFromCart(' + idx + ')">&times; Remove</button>' +
                         '</div>' +
@@ -422,8 +471,8 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     };
 
     window.addRecToCart = function(productId) {
-        var products = window.allProducts || [];
-        var p = products.find(function(x) { return x.id == productId; });
+        var products = window.allProducts || window.catalogProducts || window.products || [];
+        var p = products.find(function(x) { return x.id == productId || String(x.id) === String(productId); });
         if (p && typeof window.addToCart === 'function') {
             window.addToCart(p);
         }
@@ -447,32 +496,35 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         if (typeof window.showToast === 'function') window.showToast('Item removed from bag');
     };
 
-    window.addToCart = function(product, size, color) {
+    window.addToCart = function(product, size, color, qty) {
+        if (!product) return;
+        var addQty = parseInt(qty, 10) || 1;
         var chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || 'Free Size';
         var chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
+        var imgPath = product.image || product.img || '/Frontend/Shop/Asset/images/product1.png';
 
         var existing = window.cartState.find(function(item) {
-            return item.id == product.id && item.size == chosenSize && item.color == chosenColor;
+            return (item.id == product.id || String(item.id) === String(product.id)) && item.size == chosenSize && item.color == chosenColor;
         });
 
         if (existing) {
-            existing.qty += 1;
+            existing.qty += addQty;
         } else {
             window.cartState.push({
                 id: product.id,
-                name: product.name,
-                price: product.price,
-                old_price: product.old_price,
-                image: product.image,
+                name: product.name || product.title || 'Ethnic Attire',
+                price: parseInt(String(product.price).replace(/[^0-9]/g, ''), 10) || 2999,
+                old_price: product.old_price ? parseInt(String(product.old_price).replace(/[^0-9]/g, ''), 10) : null,
+                image: imgPath,
                 size: chosenSize,
                 color: chosenColor,
-                qty: 1
+                qty: addQty
             });
         }
         saveCart(window.cartState);
         window.renderCart();
         if (typeof window.showToast === 'function') {
-            window.showToast('Added ' + product.name + ' (' + chosenColor + ') to bag ✓');
+            window.showToast('Added ' + (product.name || 'item') + ' (' + chosenColor + ') to bag ✓', 'cart');
         }
         window.openCartDrawer();
     };
@@ -509,7 +561,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         }
     };
 
-    /* Global Badge Sync Helper */
+    /* Comprehensive Multi-Page Global Badge Sync Helper */
     window.updateGlobalBadges = function() {
         var cartList = window.cartState || [];
         var wishList = window.wishlistState || [];
@@ -517,33 +569,57 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         var cartQty = cartList.reduce(function(sum, item) { return sum + (item.qty || 1); }, 0);
         var wishQty = wishList.length;
 
-        /* 1. Header Cart Badge */
+        /* 1. Header Cart Badges */
         var cartBadge = document.getElementById('cartBadge');
         if (cartBadge) {
             cartBadge.textContent = cartQty;
             cartBadge.style.display = cartQty > 0 ? 'flex' : 'none';
         }
+        var pdpCartBadge = document.getElementById('pdpCartCount');
+        if (pdpCartBadge) {
+            pdpCartBadge.textContent = cartQty;
+            pdpCartBadge.style.display = cartQty > 0 ? 'flex' : 'none';
+        }
+        var headerCartBadge = document.getElementById('headerCartBadge');
+        if (headerCartBadge) {
+            headerCartBadge.textContent = cartQty;
+            headerCartBadge.style.display = cartQty > 0 ? 'flex' : 'none';
+        }
 
-        /* 2. Header Wishlist Badge */
+        /* 2. Header & Mobile Bottom Wishlist Badges */
         var wishBadge = document.getElementById('wishlistBadge');
         if (wishBadge) {
             wishBadge.textContent = wishQty;
             wishBadge.style.display = wishQty > 0 ? 'flex' : 'none';
         }
+        var pdpWishBadge = document.getElementById('pdpWishlistCount');
+        if (pdpWishBadge) {
+            pdpWishBadge.textContent = wishQty;
+            pdpWishBadge.style.display = wishQty > 0 ? 'flex' : 'none';
+        }
+        var smartWishBadge = document.getElementById('smartWishlistBadge');
+        if (smartWishBadge) {
+            smartWishBadge.textContent = wishQty;
+            smartWishBadge.style.display = wishQty > 0 ? 'flex' : 'none';
+        }
+        var shopSmartWishBadge = document.getElementById('shopSmartWishlistBadge');
+        if (shopSmartWishBadge) {
+            shopSmartWishBadge.textContent = wishQty;
+            shopSmartWishBadge.style.display = wishQty > 0 ? 'flex' : 'none';
+        }
 
-        /* 3. Mobile Options Cart Label */
+        /* 3. Mobile Options Labels */
         var moreCartLabel = document.getElementById('moreCartLabel');
         if (moreCartLabel) {
             moreCartLabel.textContent = 'My Cart (' + cartQty + ' Item' + (cartQty === 1 ? '' : 's') + ')';
         }
 
-        /* 4. Mobile Options Wishlist Label */
         var moreWishlistLabel = document.getElementById('moreWishlistLabel');
         if (moreWishlistLabel) {
             moreWishlistLabel.textContent = 'My Wishlist (' + wishQty + ' Item' + (wishQty === 1 ? '' : 's') + ')';
         }
 
-        /* 5. Subheader Labels */
+        /* 4. Subheader Labels */
         var cartBadgeSub = document.getElementById('cartBadgeSub');
         if (cartBadgeSub) {
             cartBadgeSub.textContent = cartQty + ' Luxury Item' + (cartQty === 1 ? '' : 's');
@@ -554,10 +630,16 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             wishlistBadgeSub.textContent = wishQty + ' Saved Item' + (wishQty === 1 ? '' : 's');
         }
 
+        /* 5. Checkout Item Counter */
+        var coItemCount = document.getElementById('coItemCount');
+        if (coItemCount) {
+            coItemCount.textContent = cartQty;
+        }
+
         /* 6. Product Cards Wishlist Sync */
-        document.querySelectorAll('.card-wishlist-btn').forEach(function(btn) {
+        document.querySelectorAll('.card-wishlist-btn, .rec-wishlist-btn').forEach(function(btn) {
             var id = btn.dataset.id;
-            var isWish = wishList.some(function(w) { return w.id == id; });
+            var isWish = wishList.some(function(w) { return w.id == id || String(w.id) === String(id); });
             btn.classList.toggle('active', isWish);
             btn.setAttribute('aria-pressed', isWish ? 'true' : 'false');
         });
@@ -586,6 +668,8 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 }
                 if (typeof window.openCheckout === 'function') {
                     window.openCheckout();
+                } else if (typeof window.openCheckoutModal === 'function') {
+                    window.openCheckoutModal();
                 } else {
                     window.location.href = '/checkout';
                 }
