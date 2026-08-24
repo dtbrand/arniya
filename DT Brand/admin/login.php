@@ -29,22 +29,19 @@ if (isset($_GET['logged_out'])) {
 
 // Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $email = strtolower(trim($_POST['email'] ?? ''));
     $password = trim($_POST['password'] ?? '');
 
-    // Default valid admin credentials
-    if (($email === 'admin@jaihanumantex.in' || $email === 'gautam@jaihanumantex.in' || $email === 'admin' || $email === 'u602484543_demodt121') && 
-        ($password === 'admin123' || $password === 'Gautam@9006' || $password === 'admin')) {
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_user'] = [
-            'name' => 'Gautam Sethi',
-            'email' => $email,
-            'role' => 'Super Admin'
-        ];
+    require_once __DIR__ . '/../src/Database.php';
+    require_once __DIR__ . '/../src/Auth.php';
+
+    $authRes = \DTBrand\Auth::adminLogin($email, $password);
+
+    if ($authRes['success']) {
         header("Location: /admin");
         exit;
     } else {
-        $error = 'Invalid email or password. Please verify your credentials or reset your password.';
+        $error = $authRes['message'] ?? 'Invalid credentials. Please verify your admin email and password.';
     }
 }
 ?>
@@ -602,14 +599,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <!-- Login Form -->
-            <form action="/DT%20Brand/admin/adminlogin.php" method="POST" class="adm-login-form">
+            <form action="/admin/login" method="POST" class="adm-login-form">
                 
                 <!-- Email Field -->
                 <div class="adm-field-group">
                     <label class="adm-field-label" for="adminEmail">Admin Email / Username</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <input type="text" id="adminEmail" name="email" class="adm-form-input" placeholder="admin@jaihanumantex.in" value="<?php echo htmlspecialchars($_POST['email'] ?? 'admin@jaihanumantex.in'); ?>" required autofocus>
+                        <input type="text" id="adminEmail" name="email" class="adm-form-input" placeholder="admin@dtbrand.in" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required autofocus>
                     </div>
                 </div>
 
@@ -618,7 +615,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="adm-field-label" for="adminPassword">Password</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <input type="password" id="adminPassword" name="password" class="adm-form-input" placeholder="••••••••••••" value="admin123" required>
+                        <input type="password" id="adminPassword" name="password" class="adm-form-input" placeholder="••••••••••••" value="" required>
                         <button type="button" class="adm-pwd-toggle" id="admPwdToggleBtn" title="Toggle password visibility" onclick="togglePasswordVisibility()">
                             <svg id="eyeIcon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </button>
@@ -641,15 +638,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </button>
             </form>
-
-            <!-- Quick Auto-Fill Demo Credentials -->
-            <div class="adm-demo-box">
-                <div class="adm-demo-info">
-                    <strong>Demo Access:</strong>
-                    <span><code>admin@jaihanumantex.in</code> / <code>admin123</code></span>
-                </div>
-                <button type="button" class="adm-demo-btn" onclick="fillDemoCredentials()">Auto-Fill</button>
-            </div>
 
             <!-- Security Footer -->
             <div class="adm-security-footer">
@@ -678,14 +666,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="button" class="adm-modal-close" onclick="closeForgotModal()">✕</button>
             </div>
             <p style="font-size:0.82rem; color:#7A7266; line-height:1.4;">
-                Enter your registered admin email or WhatsApp number. A secure 6-digit recovery OTP will be transmitted instantly.
+                Enter your registered admin email or WhatsApp number. A secure recovery link/OTP will be transmitted instantly.
             </p>
             <form onsubmit="handleForgotSubmit(event)" style="display:flex; flex-direction:column; gap:14px;">
                 <div class="adm-field-group">
                     <label class="adm-field-label">Admin Email or WhatsApp Number</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@jaihanumantex.in or +91 9822019283" required>
+                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 9822019283" required>
                     </div>
                 </div>
 
@@ -714,11 +702,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 pwdInput.type = 'password';
                 eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
             }
-        }
-
-        function fillDemoCredentials() {
-            document.getElementById('adminEmail').value = 'admin@jaihanumantex.in';
-            document.getElementById('adminPassword').value = 'admin123';
         }
 
         function openForgotModal() {

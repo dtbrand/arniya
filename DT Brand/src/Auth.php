@@ -197,25 +197,54 @@ class Auth
     {
         self::initSession();
 
-        $email = trim($email);
+        $email = strtolower(trim($email));
+        $password = trim($password);
         if (empty($email) || empty($password)) {
             return ['success' => false, 'message' => 'Email and password required.'];
         }
 
-        // Check against master admin credentials
-        if ($email === 'admin@dtbrand.com' || $email === 'admin@jaihanumantex.in' || $email === 'gautam@dtbrand.com') {
-            if ($password === 'Gautam@9006' || $password === 'admin123') {
-                $admin = [
-                    'id' => 1,
-                    'name' => 'DT Master Admin',
-                    'email' => $email,
-                    'role' => 'super_admin'
-                ];
-                session_regenerate_id(true);
-                $_SESSION['admin_user'] = $admin;
-                $_SESSION['admin_role'] = 'super_admin';
-                return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+        // 1. Try MySQL Database Admins Table
+        try {
+            $pdo = Database::getConnection();
+            if ($pdo !== null && !Database::isMockMode()) {
+                $stmt = $pdo->prepare("SELECT * FROM `admins` WHERE `email` = ? AND `status` = 'active' LIMIT 1");
+                $stmt->execute([$email]);
+                $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+                if ($row) {
+                    if (password_verify($password, $row['password']) || $row['password'] === $password || ($password === 'Gautam@9006' && in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in']))) {
+                        $admin = [
+                            'id' => (int)$row['id'],
+                            'name' => $row['name'] ?? 'Gautam Sethi',
+                            'email' => $row['email'],
+                            'role' => $row['role'] ?? 'super_admin'
+                        ];
+                        session_regenerate_id(true);
+                        $_SESSION['admin_logged_in'] = true;
+                        $_SESSION['admin_user'] = $admin;
+                        $_SESSION['admin_role'] = $admin['role'];
+                        try {
+                            $up = $pdo->prepare("UPDATE `admins` SET `last_login` = NOW() WHERE `id` = ?");
+                            $up->execute([$admin['id']]);
+                        } catch (\Throwable $e) {}
+                        return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+                    }
+                }
             }
+        } catch (\Throwable $e) {}
+
+        // 2. Real Master Admin Credential Verification (admin@dtbrand.in / Gautam@9006)
+        if (in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in', 'admin']) && $password === 'Gautam@9006') {
+            $admin = [
+                'id' => 1,
+                'name' => 'Gautam Sethi',
+                'email' => 'admin@dtbrand.in',
+                'role' => 'super_admin'
+            ];
+            session_regenerate_id(true);
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_user'] = $admin;
+            $_SESSION['admin_role'] = 'super_admin';
+            return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
         }
 
         return ['success' => false, 'message' => 'Invalid administrative credentials.'];
