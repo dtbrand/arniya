@@ -599,7 +599,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <!-- Login Form -->
-            <form action="/admin/login" method="POST" class="adm-login-form">
+            <form action="/admin/login/" method="POST" class="adm-login-form">
                 
                 <!-- Email Field -->
                 <div class="adm-field-group">
