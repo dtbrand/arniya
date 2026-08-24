@@ -262,30 +262,30 @@ try {
     $prodCount = (int)$pdo->query("SELECT COUNT(*) FROM `products`")->fetchColumn();
     if ($prodCount === 0 || $doSeed) {
         $sample_products = [
-            ['title' => 'Kanjivaram Pure Silk Gold Zari Saree', 'slug' => 'kanjivaram-pure-silk-saree', 'sku' => 'KLN-SR-111', 'category' => 'Silk Sarees', 'fabric' => 'Mulberry Silk', 'price' => 4490, 'retail_price' => 4490, 'wholesale_price' => 2850, 'reseller_price' => 3450, 'mrp' => 6990, 'stock_qty' => 45, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product1.png'],
-            ['title' => 'Banarasi Royal Brocade Weave Saree', 'slug' => 'banarasi-royal-brocade-saree', 'sku' => 'BNR-SR-204', 'category' => 'Banarasi', 'fabric' => 'Katan Silk', 'price' => 4990, 'retail_price' => 4990, 'wholesale_price' => 3200, 'reseller_price' => 3850, 'mrp' => 7490, 'stock_qty' => 28, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product2.png'],
-            ['title' => 'Crimson Bridal Handcrafted Zardosi Lehenga', 'slug' => 'crimson-bridal-zardosi-lehenga', 'sku' => 'BRD-LH-902', 'category' => 'Bridal Lehengas', 'fabric' => 'Raw Silk', 'price' => 16490, 'retail_price' => 16490, 'wholesale_price' => 11500, 'reseller_price' => 13200, 'mrp' => 24990, 'stock_qty' => 4, 'moq' => 1, 'image' => '/Frontend/Shop/Asset/images/product3.png'],
-            ['title' => 'Chanderi Pure Zari Border Saree', 'slug' => 'chanderi-pure-zari-saree', 'sku' => 'CHD-SR-301', 'category' => 'Silk Sarees', 'fabric' => 'Chanderi Silk', 'price' => 2890, 'retail_price' => 2890, 'wholesale_price' => 1750, 'reseller_price' => 2150, 'mrp' => 4290, 'stock_qty' => 95, 'moq' => 10, 'image' => '/Frontend/Shop/Asset/images/product4.png'],
-            ['title' => 'Designer Anarkali Embroidered Kurti Set', 'slug' => 'designer-anarkali-kurti-set', 'sku' => 'DSG-KT-408', 'category' => 'Designer Kurtis', 'fabric' => 'Georgette Foil', 'price' => 2490, 'retail_price' => 2490, 'wholesale_price' => 1450, 'reseller_price' => 1850, 'mrp' => 3990, 'stock_qty' => 62, 'moq' => 8, 'image' => '/Frontend/Shop/Asset/images/product5.png'],
-            ['title' => 'Paithani Peacock Pallu Heritage Silk Saree', 'slug' => 'paithani-peacock-pallu-saree', 'sku' => 'PTH-SR-512', 'category' => 'Paithani Handloom', 'fabric' => 'Yeola Paithani Silk', 'price' => 5490, 'retail_price' => 5490, 'wholesale_price' => 3650, 'reseller_price' => 4250, 'mrp' => 8990, 'stock_qty' => 34, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product6.png'],
-            ['title' => 'Organza Tissue Floral Foil Printed Saree', 'slug' => 'organza-tissue-floral-saree', 'sku' => 'ORG-SR-618', 'category' => 'Organza Tissue', 'fabric' => 'Glass Organza', 'price' => 2190, 'retail_price' => 2190, 'wholesale_price' => 1290, 'reseller_price' => 1650, 'mrp' => 3490, 'stock_qty' => 80, 'moq' => 12, 'image' => '/Frontend/Shop/Asset/images/product7.png'],
-            ['title' => 'Patan Patola Double Ikat Traditional Saree', 'slug' => 'patan-patola-double-ikat-saree', 'sku' => 'PTL-SR-705', 'category' => 'Patola Heritage', 'fabric' => 'Pure Mulberry Silk', 'price' => 6890, 'retail_price' => 6890, 'wholesale_price' => 4750, 'reseller_price' => 5450, 'mrp' => 11490, 'stock_qty' => 18, 'moq' => 4, 'image' => '/Frontend/Shop/Asset/images/product8.png']
+            ['sku' => 'KLN-SR-111', 'title' => 'Kanjivaram Pure Silk Gold Zari Saree', 'slug' => 'kanjivaram-pure-silk-saree', 'category_id' => 1, 'category_name' => 'Silk Sarees', 'fabric' => 'Mulberry Silk', 'mrp' => 6990, 'retail_price' => 4490, 'wholesale_price' => 2850, 'reseller_price' => 3450, 'stock_qty' => 45, 'rating' => 5.0, 'reviews_count' => 85, 'primary_image' => '/Frontend/Shop/Asset/images/product1.png', 'badge' => 'Bestseller', 'is_featured' => 1, 'is_bestseller' => 1, 'description' => 'Pure Mulberry Silk with 24K Gold Zari Korvai Weave'],
+            ['sku' => 'BNR-SR-204', 'title' => 'Banarasi Royal Brocade Weave Saree', 'slug' => 'banarasi-royal-brocade-saree', 'category_id' => 2, 'category_name' => 'Banarasi', 'fabric' => 'Katan Silk', 'mrp' => 7490, 'retail_price' => 4990, 'wholesale_price' => 3200, 'reseller_price' => 3850, 'stock_qty' => 28, 'rating' => 4.9, 'reviews_count' => 64, 'primary_image' => '/Frontend/Shop/Asset/images/product2.png', 'badge' => 'Royal Heritage', 'is_featured' => 1, 'is_bestseller' => 0, 'description' => 'Handcrafted Katan Silk Floral Jaal & Royal Meenakari'],
+            ['sku' => 'BRD-LH-902', 'title' => 'Crimson Bridal Handcrafted Zardosi Lehenga', 'slug' => 'crimson-bridal-zardosi-lehenga', 'category_id' => 6, 'category_name' => 'Bridal Lehengas', 'fabric' => 'Raw Silk', 'mrp' => 24990, 'retail_price' => 16490, 'wholesale_price' => 11500, 'reseller_price' => 13200, 'stock_qty' => 4, 'rating' => 5.0, 'reviews_count' => 19, 'primary_image' => '/Frontend/Shop/Asset/images/product3.png', 'badge' => 'Bridal Couture', 'is_featured' => 1, 'is_bestseller' => 1, 'description' => 'Heavy Handcrafted Zardosi & Raw Silk Designer Ensemble'],
+            ['sku' => 'CHD-SR-301', 'title' => 'Chanderi Pure Zari Border Saree', 'slug' => 'chanderi-pure-zari-saree', 'category_id' => 4, 'category_name' => 'Silk Sarees', 'fabric' => 'Chanderi Silk', 'mrp' => 4290, 'retail_price' => 2890, 'wholesale_price' => 1750, 'reseller_price' => 2150, 'stock_qty' => 95, 'rating' => 4.8, 'reviews_count' => 42, 'primary_image' => '/Frontend/Shop/Asset/images/product4.png', 'badge' => 'Lightweight', 'is_featured' => 0, 'is_bestseller' => 1, 'description' => 'Lightweight Tissue Silk with Gold Foil Zari Butta'],
+            ['sku' => 'DSG-KT-408', 'title' => 'Designer Anarkali Embroidered Kurti Set', 'slug' => 'designer-anarkali-kurti-set', 'category_id' => 7, 'category_name' => 'Designer Kurtis', 'fabric' => 'Georgette Foil', 'mrp' => 3990, 'retail_price' => 2490, 'wholesale_price' => 1450, 'reseller_price' => 1850, 'stock_qty' => 62, 'rating' => 4.9, 'reviews_count' => 53, 'primary_image' => '/Frontend/Shop/Asset/images/product5.png', 'badge' => 'Festive Ready', 'is_featured' => 0, 'is_bestseller' => 0, 'description' => 'Festive Chanderi Foil Printed Kurti Set with Dupatta'],
+            ['sku' => 'PTH-SR-512', 'title' => 'Paithani Peacock Pallu Heritage Silk Saree', 'slug' => 'paithani-peacock-pallu-saree', 'category_id' => 3, 'category_name' => 'Paithani Handloom', 'fabric' => 'Yeola Paithani Silk', 'mrp' => 8990, 'retail_price' => 5490, 'wholesale_price' => 3650, 'reseller_price' => 4250, 'stock_qty' => 34, 'rating' => 4.9, 'reviews_count' => 71, 'primary_image' => '/Frontend/Shop/Asset/images/product6.png', 'badge' => 'Heritage Weave', 'is_featured' => 1, 'is_bestseller' => 1, 'description' => 'Maharashtra Heritage Silk with Asawali Peacock Border'],
+            ['sku' => 'ORG-SR-618', 'title' => 'Organza Tissue Floral Foil Printed Saree', 'slug' => 'organza-tissue-floral-saree', 'category_id' => 5, 'category_name' => 'Organza Tissue', 'fabric' => 'Glass Organza', 'mrp' => 3490, 'retail_price' => 2190, 'wholesale_price' => 1290, 'reseller_price' => 1650, 'stock_qty' => 80, 'rating' => 4.7, 'reviews_count' => 38, 'primary_image' => '/Frontend/Shop/Asset/images/product7.png', 'badge' => 'Party Wear', 'is_featured' => 0, 'is_bestseller' => 0, 'description' => 'Translucent Glass Organza with Handcrafted Embroidery'],
+            ['sku' => 'PTL-SR-705', 'title' => 'Patan Patola Double Ikat Traditional Saree', 'slug' => 'patan-patola-double-ikat-saree', 'category_id' => 8, 'category_name' => 'Patola Heritage', 'fabric' => 'Pure Mulberry Silk', 'mrp' => 11490, 'retail_price' => 6890, 'wholesale_price' => 4750, 'reseller_price' => 5450, 'stock_qty' => 18, 'rating' => 5.0, 'reviews_count' => 29, 'primary_image' => '/Frontend/Shop/Asset/images/product8.png', 'badge' => 'Double Ikat', 'is_featured' => 1, 'is_bestseller' => 1, 'description' => 'Double Ikat Rajkot & Patan Geometric Weaves']
         ];
 
         foreach ($sample_products as $sp) {
             try {
-                // Check if SKU exists
                 $chk = $pdo->prepare("SELECT id FROM `products` WHERE sku = ?");
                 $chk->execute([$sp['sku']]);
                 if (!$chk->fetch()) {
                     $ins = $pdo->prepare("
-                        INSERT INTO `products` (title, slug, sku, category, fabric, price, retail_price, wholesale_price, reseller_price, mrp, stock_qty, moq, image, status, created_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'in_stock', NOW())
+                        INSERT INTO `products` (sku, title, slug, category_id, category_name, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, rating, reviews_count, primary_image, badge, is_featured, is_bestseller, status, description, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'in_stock', ?, NOW())
                     ");
                     $ins->execute([
-                        $sp['title'], $sp['slug'], $sp['sku'], $sp['category'], $sp['fabric'],
-                        $sp['price'], $sp['retail_price'], $sp['wholesale_price'], $sp['reseller_price'],
-                        $sp['mrp'], $sp['stock_qty'], $sp['moq'], $sp['image']
+                        $sp['sku'], $sp['title'], $sp['slug'], $sp['category_id'], $sp['category_name'], $sp['fabric'],
+                        $sp['mrp'], $sp['retail_price'], $sp['wholesale_price'], $sp['reseller_price'],
+                        $sp['stock_qty'], $sp['rating'], $sp['reviews_count'], $sp['primary_image'],
+                        $sp['badge'], $sp['is_featured'], $sp['is_bestseller'], $sp['description']
                     ]);
                 }
             } catch (\Exception $e) {}
@@ -297,9 +297,9 @@ try {
     $custCount = (int)$pdo->query("SELECT COUNT(*) FROM `customers`")->fetchColumn();
     if ($custCount === 0 || $doSeed) {
         $sample_custs = [
-            ['name' => 'Ananya Deshmukh', 'business_name' => 'Ananya Saree Emporium', 'phone' => '+91 98201 12345', 'email' => 'ananya.sarees@gmail.com', 'tier' => 'wholesale', 'city' => 'Mumbai', 'state' => 'Maharashtra', 'credit_limit' => 250000],
-            ['name' => 'Pooja Varma', 'business_name' => 'Varma Reseller Hub', 'phone' => '+91 98765 23456', 'email' => 'pooja.reseller@gmail.com', 'tier' => 'reseller', 'city' => 'Jaipur', 'state' => 'Rajasthan', 'credit_limit' => 100000],
-            ['name' => 'Kavita Singhania', 'business_name' => 'Singhania Wholesale Bazaar', 'phone' => '+91 98111 34567', 'email' => 'kavita.textiles@gmail.com', 'tier' => 'wholesale', 'city' => 'Kolkata', 'state' => 'West Bengal', 'credit_limit' => 500000]
+            ['name' => 'Ananya Deshmukh', 'phone' => '+91 98201 12345', 'email' => 'ananya.sarees@gmail.com', 'type' => 'wholesale', 'city' => 'Mumbai', 'state' => 'Maharashtra', 'tier' => 'Gold', 'credit_limit' => 250000.00, 'outstanding_balance' => 45000.00, 'total_orders' => 14, 'lifetime_spend' => 380000.00, 'gstin' => '27AAACD1234E1Z1'],
+            ['name' => 'Pooja Varma', 'phone' => '+91 98765 23456', 'email' => 'pooja.reseller@gmail.com', 'type' => 'reseller', 'city' => 'Jaipur', 'state' => 'Rajasthan', 'tier' => 'Silver', 'credit_limit' => 100000.00, 'outstanding_balance' => 12000.00, 'total_orders' => 8, 'lifetime_spend' => 145000.00, 'gstin' => '08AAACV5678F1Z2'],
+            ['name' => 'Kavita Singhania', 'phone' => '+91 98111 34567', 'email' => 'kavita.textiles@gmail.com', 'type' => 'wholesale', 'city' => 'Kolkata', 'state' => 'West Bengal', 'tier' => 'Platinum', 'credit_limit' => 500000.00, 'outstanding_balance' => 85000.00, 'total_orders' => 26, 'lifetime_spend' => 920000.00, 'gstin' => '19AAACS9012G1Z3']
         ];
 
         foreach ($sample_custs as $sc) {
@@ -308,10 +308,14 @@ try {
                 $chk->execute([$sc['phone']]);
                 if (!$chk->fetch()) {
                     $ins = $pdo->prepare("
-                        INSERT INTO `customers` (name, business_name, phone, email, tier, status, credit_limit, city, state, created_at)
-                        VALUES (?, ?, ?, ?, ?, 'active', ?, ?, ?, NOW())
+                        INSERT INTO `customers` (name, phone, email, type, city, state, tier, credit_limit, outstanding_balance, total_orders, lifetime_spend, gstin, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'active', NOW())
                     ");
-                    $ins->execute([$sc['name'], $sc['business_name'], $sc['phone'], $sc['email'], $sc['tier'], $sc['credit_limit'], $sc['city'], $sc['state']]);
+                    $ins->execute([
+                        $sc['name'], $sc['phone'], $sc['email'], $sc['type'], $sc['city'], $sc['state'],
+                        $sc['tier'], $sc['credit_limit'], $sc['outstanding_balance'], $sc['total_orders'],
+                        $sc['lifetime_spend'], $sc['gstin']
+                    ]);
                 }
             } catch (\Exception $e) {}
         }
@@ -322,9 +326,9 @@ try {
     $coupCount = (int)$pdo->query("SELECT COUNT(*) FROM `coupons`")->fetchColumn();
     if ($coupCount === 0 || $doSeed) {
         $sample_coupons = [
-            ['code' => 'WELCOME10', 'type' => 'percentage', 'value' => 10.00, 'min_spend' => 1999.00, 'max_discount' => 500.00, 'channel' => 'all'],
-            ['code' => 'WHOLESALE500', 'type' => 'fixed', 'value' => 500.00, 'min_spend' => 10000.00, 'max_discount' => 500.00, 'channel' => 'wholesale'],
-            ['code' => 'FESTIVE20', 'type' => 'percentage', 'value' => 20.00, 'min_spend' => 4999.00, 'max_discount' => 1500.00, 'channel' => 'retail']
+            ['code' => 'WELCOME10', 'discount_type' => 'percentage', 'discount_value' => 10.00, 'min_order_value' => 1999.00, 'max_discount' => 500.00, 'status' => 'active'],
+            ['code' => 'WHOLESALE500', 'discount_type' => 'fixed', 'discount_value' => 500.00, 'min_order_value' => 10000.00, 'max_discount' => 500.00, 'status' => 'active'],
+            ['code' => 'FESTIVE20', 'discount_type' => 'percentage', 'discount_value' => 20.00, 'min_order_value' => 4999.00, 'max_discount' => 1500.00, 'status' => 'active']
         ];
         foreach ($sample_coupons as $cp) {
             try {
@@ -332,15 +336,16 @@ try {
                 $chk->execute([$cp['code']]);
                 if (!$chk->fetch()) {
                     $ins = $pdo->prepare("
-                        INSERT INTO `coupons` (code, type, value, min_spend, max_discount, channel, status, created_at)
-                        VALUES (?, ?, ?, ?, ?, ?, 'active', NOW())
+                        INSERT INTO `coupons` (code, discount_type, discount_value, min_order_value, max_discount, status)
+                        VALUES (?, ?, ?, ?, ?, ?)
                     ");
-                    $ins->execute([$cp['code'], $cp['type'], $cp['value'], $cp['min_spend'], $cp['max_discount'], $cp['channel']]);
+                    $ins->execute([$cp['code'], $cp['discount_type'], $cp['discount_value'], $cp['min_order_value'], $cp['max_discount'], $cp['status']]);
                 }
             } catch (\Exception $e) {}
         }
         $seeded[] = 'coupons';
     }
+
 
     // 4. Seed Settings if empty
     $setCount = (int)$pdo->query("SELECT COUNT(*) FROM `settings`")->fetchColumn();
