@@ -254,9 +254,121 @@ try {
         $created_or_verified[] = $tName;
     }
 
+    // Auto-Seed Data if Tables are Empty or &seed=1 is requested
+    $seeded = [];
+    $doSeed = isset($_GET['seed']) && $_GET['seed'] === '1';
+
+    // 1. Seed Products if empty or requested
+    $prodCount = (int)$pdo->query("SELECT COUNT(*) FROM `products`")->fetchColumn();
+    if ($prodCount === 0 || $doSeed) {
+        $sample_products = [
+            ['title' => 'Kanjivaram Pure Silk Gold Zari Saree', 'slug' => 'kanjivaram-pure-silk-saree', 'sku' => 'KLN-SR-111', 'category' => 'Silk Sarees', 'fabric' => 'Mulberry Silk', 'price' => 4490, 'retail_price' => 4490, 'wholesale_price' => 2850, 'reseller_price' => 3450, 'mrp' => 6990, 'stock_qty' => 45, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product1.png'],
+            ['title' => 'Banarasi Royal Brocade Weave Saree', 'slug' => 'banarasi-royal-brocade-saree', 'sku' => 'BNR-SR-204', 'category' => 'Banarasi', 'fabric' => 'Katan Silk', 'price' => 4990, 'retail_price' => 4990, 'wholesale_price' => 3200, 'reseller_price' => 3850, 'mrp' => 7490, 'stock_qty' => 28, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product2.png'],
+            ['title' => 'Crimson Bridal Handcrafted Zardosi Lehenga', 'slug' => 'crimson-bridal-zardosi-lehenga', 'sku' => 'BRD-LH-902', 'category' => 'Bridal Lehengas', 'fabric' => 'Raw Silk', 'price' => 16490, 'retail_price' => 16490, 'wholesale_price' => 11500, 'reseller_price' => 13200, 'mrp' => 24990, 'stock_qty' => 4, 'moq' => 1, 'image' => '/Frontend/Shop/Asset/images/product3.png'],
+            ['title' => 'Chanderi Pure Zari Border Saree', 'slug' => 'chanderi-pure-zari-saree', 'sku' => 'CHD-SR-301', 'category' => 'Silk Sarees', 'fabric' => 'Chanderi Silk', 'price' => 2890, 'retail_price' => 2890, 'wholesale_price' => 1750, 'reseller_price' => 2150, 'mrp' => 4290, 'stock_qty' => 95, 'moq' => 10, 'image' => '/Frontend/Shop/Asset/images/product4.png'],
+            ['title' => 'Designer Anarkali Embroidered Kurti Set', 'slug' => 'designer-anarkali-kurti-set', 'sku' => 'DSG-KT-408', 'category' => 'Designer Kurtis', 'fabric' => 'Georgette Foil', 'price' => 2490, 'retail_price' => 2490, 'wholesale_price' => 1450, 'reseller_price' => 1850, 'mrp' => 3990, 'stock_qty' => 62, 'moq' => 8, 'image' => '/Frontend/Shop/Asset/images/product5.png'],
+            ['title' => 'Paithani Peacock Pallu Heritage Silk Saree', 'slug' => 'paithani-peacock-pallu-saree', 'sku' => 'PTH-SR-512', 'category' => 'Paithani Handloom', 'fabric' => 'Yeola Paithani Silk', 'price' => 5490, 'retail_price' => 5490, 'wholesale_price' => 3650, 'reseller_price' => 4250, 'mrp' => 8990, 'stock_qty' => 34, 'moq' => 6, 'image' => '/Frontend/Shop/Asset/images/product6.png'],
+            ['title' => 'Organza Tissue Floral Foil Printed Saree', 'slug' => 'organza-tissue-floral-saree', 'sku' => 'ORG-SR-618', 'category' => 'Organza Tissue', 'fabric' => 'Glass Organza', 'price' => 2190, 'retail_price' => 2190, 'wholesale_price' => 1290, 'reseller_price' => 1650, 'mrp' => 3490, 'stock_qty' => 80, 'moq' => 12, 'image' => '/Frontend/Shop/Asset/images/product7.png'],
+            ['title' => 'Patan Patola Double Ikat Traditional Saree', 'slug' => 'patan-patola-double-ikat-saree', 'sku' => 'PTL-SR-705', 'category' => 'Patola Heritage', 'fabric' => 'Pure Mulberry Silk', 'price' => 6890, 'retail_price' => 6890, 'wholesale_price' => 4750, 'reseller_price' => 5450, 'mrp' => 11490, 'stock_qty' => 18, 'moq' => 4, 'image' => '/Frontend/Shop/Asset/images/product8.png']
+        ];
+
+        foreach ($sample_products as $sp) {
+            try {
+                // Check if SKU exists
+                $chk = $pdo->prepare("SELECT id FROM `products` WHERE sku = ?");
+                $chk->execute([$sp['sku']]);
+                if (!$chk->fetch()) {
+                    $ins = $pdo->prepare("
+                        INSERT INTO `products` (title, slug, sku, category, fabric, price, retail_price, wholesale_price, reseller_price, mrp, stock_qty, moq, image, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'in_stock', NOW())
+                    ");
+                    $ins->execute([
+                        $sp['title'], $sp['slug'], $sp['sku'], $sp['category'], $sp['fabric'],
+                        $sp['price'], $sp['retail_price'], $sp['wholesale_price'], $sp['reseller_price'],
+                        $sp['mrp'], $sp['stock_qty'], $sp['moq'], $sp['image']
+                    ]);
+                }
+            } catch (\Exception $e) {}
+        }
+        $seeded[] = 'products';
+    }
+
+    // 2. Seed Customers if empty
+    $custCount = (int)$pdo->query("SELECT COUNT(*) FROM `customers`")->fetchColumn();
+    if ($custCount === 0 || $doSeed) {
+        $sample_custs = [
+            ['name' => 'Ananya Deshmukh', 'business_name' => 'Ananya Saree Emporium', 'phone' => '+91 98201 12345', 'email' => 'ananya.sarees@gmail.com', 'tier' => 'wholesale', 'city' => 'Mumbai', 'state' => 'Maharashtra', 'credit_limit' => 250000],
+            ['name' => 'Pooja Varma', 'business_name' => 'Varma Reseller Hub', 'phone' => '+91 98765 23456', 'email' => 'pooja.reseller@gmail.com', 'tier' => 'reseller', 'city' => 'Jaipur', 'state' => 'Rajasthan', 'credit_limit' => 100000],
+            ['name' => 'Kavita Singhania', 'business_name' => 'Singhania Wholesale Bazaar', 'phone' => '+91 98111 34567', 'email' => 'kavita.textiles@gmail.com', 'tier' => 'wholesale', 'city' => 'Kolkata', 'state' => 'West Bengal', 'credit_limit' => 500000]
+        ];
+
+        foreach ($sample_custs as $sc) {
+            try {
+                $chk = $pdo->prepare("SELECT id FROM `customers` WHERE phone = ?");
+                $chk->execute([$sc['phone']]);
+                if (!$chk->fetch()) {
+                    $ins = $pdo->prepare("
+                        INSERT INTO `customers` (name, business_name, phone, email, tier, status, credit_limit, city, state, created_at)
+                        VALUES (?, ?, ?, ?, ?, 'active', ?, ?, ?, NOW())
+                    ");
+                    $ins->execute([$sc['name'], $sc['business_name'], $sc['phone'], $sc['email'], $sc['tier'], $sc['credit_limit'], $sc['city'], $sc['state']]);
+                }
+            } catch (\Exception $e) {}
+        }
+        $seeded[] = 'customers';
+    }
+
+    // 3. Seed Coupons if empty
+    $coupCount = (int)$pdo->query("SELECT COUNT(*) FROM `coupons`")->fetchColumn();
+    if ($coupCount === 0 || $doSeed) {
+        $sample_coupons = [
+            ['code' => 'WELCOME10', 'type' => 'percentage', 'value' => 10.00, 'min_spend' => 1999.00, 'max_discount' => 500.00, 'channel' => 'all'],
+            ['code' => 'WHOLESALE500', 'type' => 'fixed', 'value' => 500.00, 'min_spend' => 10000.00, 'max_discount' => 500.00, 'channel' => 'wholesale'],
+            ['code' => 'FESTIVE20', 'type' => 'percentage', 'value' => 20.00, 'min_spend' => 4999.00, 'max_discount' => 1500.00, 'channel' => 'retail']
+        ];
+        foreach ($sample_coupons as $cp) {
+            try {
+                $chk = $pdo->prepare("SELECT id FROM `coupons` WHERE code = ?");
+                $chk->execute([$cp['code']]);
+                if (!$chk->fetch()) {
+                    $ins = $pdo->prepare("
+                        INSERT INTO `coupons` (code, type, value, min_spend, max_discount, channel, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, 'active', NOW())
+                    ");
+                    $ins->execute([$cp['code'], $cp['type'], $cp['value'], $cp['min_spend'], $cp['max_discount'], $cp['channel']]);
+                }
+            } catch (\Exception $e) {}
+        }
+        $seeded[] = 'coupons';
+    }
+
+    // 4. Seed Settings if empty
+    $setCount = (int)$pdo->query("SELECT COUNT(*) FROM `settings`")->fetchColumn();
+    if ($setCount === 0 || $doSeed) {
+        $sample_settings = [
+            ['key_name' => 'store_name', 'value_text' => "DT Brand's & Jai Hanuman Tex", 'category' => 'general'],
+            ['key_name' => 'whatsapp_number', 'value_text' => '+91 93278 12345', 'category' => 'whatsapp'],
+            ['key_name' => 'support_email', 'value_text' => 'contact@jaihanumantex.in', 'category' => 'general'],
+            ['key_name' => 'gstin_number', 'value_text' => '24AAACJ1234F1Z5', 'category' => 'tax'],
+            ['key_name' => 'currency_symbol', 'value_text' => '₹', 'category' => 'pricing']
+        ];
+        foreach ($sample_settings as $st) {
+            try {
+                $ins = $pdo->prepare("
+                    INSERT INTO `settings` (key_name, value_text, category, updated_at)
+                    VALUES (?, ?, ?, NOW())
+                    ON DUPLICATE KEY UPDATE value_text = VALUES(value_text)
+                ");
+                $ins->execute([$st['key_name'], $st['value_text'], $st['category']]);
+            } catch (\Exception $e) {}
+        }
+        $seeded[] = 'settings';
+    }
+
     // Refresh table list
     $stmt = $pdo->query("SHOW TABLES");
     $all_current_tables = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
 
     // Audit each table count and columns
     $table_details = [];
