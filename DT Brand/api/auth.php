@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-require_once __DIR__ . '/../src/Database.php';
-require_once __DIR__ . '/../src/Auth.php';
+require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/Auth.php';
 
 use DTBrand\Auth;
 

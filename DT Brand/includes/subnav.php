@@ -3,7 +3,7 @@
  * DT Brand/includes/subnav.php — Amazon-Style Attached Luxury Gold Sub-Navigation Bar
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/src/ProductCatalog.php';
 $subnavCategories = \DTBrand\ProductCatalog::getCategories();
 $currentCat = isset($selectedCategory) ? $selectedCategory : (isset($_GET['category']) ? $_GET['category'] : 'All');
 ?>

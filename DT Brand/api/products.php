@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-require_once __DIR__ . '/../src/Database.php';
-require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/src/Database.php';
+require_once __DIR__ . '/src/ProductCatalog.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
