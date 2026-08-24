@@ -16,19 +16,19 @@
             <!-- 1. Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Price ₹ <span style="color:#b32d2e;">*</span></label>
-                <input type="number" id="pFormMrp" class="adm-form-input" placeholder="e.g. 1000" value="1000">
+                <input type="number" id="pFormMrp" class="adm-form-input" placeholder="e.g. 1000" value="<?php echo isset($prod['mrp']) ? (float)$prod['mrp'] : 1000; ?>">
             </div>
 
             <!-- 2. Sale Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Sale Price ₹ <span style="color:#b32d2e;">*</span></label>
-                <input type="number" id="pFormRetail" class="adm-form-input" style="font-weight:700; color:#181512;" placeholder="e.g. 900" value="900">
+                <input type="number" id="pFormRetail" class="adm-form-input" style="font-weight:700; color:#181512;" placeholder="e.g. 900" value="<?php echo isset($prod['retail_price']) ? (float)$prod['retail_price'] : 900; ?>">
             </div>
 
             <!-- 3. Purchase Price -->
             <div class="adm-form-group">
                 <label class="adm-form-label">Purchase Price ₹ <span style="color:#b32d2e;">*</span></label>
-                <input type="number" id="pFormCost" class="adm-form-input" placeholder="e.g. 800" value="800" oninput="calculateCustomerSalePrice(this.value)">
+                <input type="number" id="pFormCost" class="adm-form-input" placeholder="e.g. 800" value="<?php echo isset($prod['wholesale_price']) ? (float)$prod['wholesale_price'] : 800; ?>" oninput="calculateCustomerSalePrice(this.value)">
             </div>
         </div>
     </div>

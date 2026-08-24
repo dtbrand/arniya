@@ -3,17 +3,51 @@
  * edit.php — DT Brand's Edit Category Suite (Wholesale & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../../src/Database.php';
+require_once __DIR__ . '/../../../../src/ProductCatalog.php';
+use DTBrand\Database;
+use DTBrand\ProductCatalog;
+
 $page_title = "Edit Category";
 $active_nav = "products";
 $active_subnav = "categories";
 $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+
+$category = null;
+$db = Database::getConnection();
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $stmt = $db->prepare("SELECT * FROM categories WHERE id = ?");
+        $stmt->execute([$cat_id]);
+        $category = $stmt->fetch(\PDO::FETCH_ASSOC);
+    } catch (\Exception $e) {}
+}
+
+if (!$category) {
+    $categoriesList = ProductCatalog::getCategories();
+    $fallbackName = $categoriesList[$cat_id - 1] ?? 'Silk Sarees';
+    $category = [
+        'id' => $cat_id,
+        'name' => $fallbackName,
+        'slug' => strtolower(str_replace(' ', '-', $fallbackName)),
+        'description' => 'Authentic handwoven ethnic sarees in ' . $fallbackName,
+        'image' => '/Frontend/Shop/Asset/images/product1.png',
+        'products_count' => count(ProductCatalog::filter(['category' => $fallbackName]))
+    ];
+}
+
+$catName = $category['name'];
+$catSlug = $category['slug'];
+$catDesc = $category['description'] ?? '';
+$catImg = !empty($category['image']) ? $category['image'] : '/Frontend/Shop/Asset/images/product1.png';
+$catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category ‹ Silk Sarees ‹ DT Brand's Admin</title>
+    <title>Edit Category ‹ <?php echo htmlspecialchars($catName); ?> ‹ DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
@@ -106,8 +140,8 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Edit Category</h1>
                     <span class="adm-badge gold" style="font-weight:700; font-size:11px;">ID: #<?php echo $cat_id; ?></span>
-                    <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;">Silk Sarees</span>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;">420 Active SKUs</span>
+                    <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;"><?php echo htmlspecialchars($catName); ?></span>
+                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;"><?php echo $catCount; ?> Active SKUs</span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
@@ -115,8 +149,8 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Product Categories</span>
                     </a>
-                    <a href="/Frontend/Shop/shop.php?category=silk-sarees" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <a href="/Frontend/Shop/shop.php?category=<?php echo urlencode($catSlug); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>View on Shop</span>
                     </a>
                     <button type="button" class="wp-button primary" onclick="handleSaveCategory()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
@@ -145,15 +179,15 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
                             <div class="dt-card-body">
                                 <div class="dt-form-group">
                                     <label>Category Name <span style="color:#b32d2e;">*</span></label>
-                                    <input type="text" id="editName" class="dt-form-input" value="Silk Sarees" required oninput="updateSlugPreview(this.value)">
+                                    <input type="text" id="editName" class="dt-form-input" value="<?php echo htmlspecialchars($catName); ?>" required oninput="updateSlugPreview(this.value)">
                                     <small style="color:#646970; font-size:11px; margin-top:3px; display:block;">Public title displayed on wholesale catalog &amp; retail shop.</small>
                                 </div>
 
                                 <div class="dt-form-group">
                                     <label>URL Slug</label>
-                                    <input type="text" id="editSlug" class="dt-form-input" value="silk-sarees">
+                                    <input type="text" id="editSlug" class="dt-form-input" value="<?php echo htmlspecialchars($catSlug); ?>">
                                     <div style="margin-top:4px; font-size:11px; color:#8A681F;">
-                                        <strong>Live URL:</strong> <code>https://jaihanumantex.in/category/<span id="slugLiveText">silk-sarees</span></code>
+                                        <strong>Live URL:</strong> <code>https://jaihanumantex.in/category/<span id="slugLiveText"><?php echo htmlspecialchars($catSlug); ?></span></code>
                                     </div>
                                 </div>
 
@@ -162,11 +196,12 @@ $cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
                                         <label>Parent Category</label>
                                         <select id="editParent" class="dt-form-select">
                                             <option value="none" selected>None (Top Level Root Category)</option>
+                                            <option value="silk-sarees">Silk Sarees</option>
                                             <option value="banarasi-brocade">Banarasi Brocade</option>
                                             <option value="bridal-lehengas">Bridal Lehengas</option>
                                             <option value="designer-kurtis">Designer Kurtis</option>
                                         </select>
-                                    </div>
+                                    </div></div>
 
                                     <div class="dt-form-group">
                                         <label>Display Type</label>

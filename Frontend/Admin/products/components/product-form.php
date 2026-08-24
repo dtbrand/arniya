@@ -38,16 +38,18 @@
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">HSN Code <span style="color:#b32d2e;">*</span></label>
-                <input type="text" id="pFormHsn" class="adm-form-input" value="5007 (Silk Weave)">
+                <input type="text" id="pFormHsn" class="adm-form-input" value="<?php echo isset($prod['hsn']) ? htmlspecialchars($prod['hsn']) : '5007 (Silk Weave)'; ?>">
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">Category <span style="color:#b32d2e;">*</span></label>
                 <select class="adm-form-select" id="pFormCat">
-                    <option selected>Silk Sarees</option>
-                    <option>Banarasi Brocade</option>
-                    <option>Bridal Lehengas</option>
-                    <option>Designer Kurtis</option>
-                    <option>Dress Materials</option>
+                    <?php 
+                    $currCat = $prod['category_name'] ?? ($prod['category'] ?? 'Kanjivaram Silk');
+                    $formCats = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getCategories() : ['Kanjivaram Silk', 'Banarasi Silk', 'Paithani', 'Designer Kurtis', 'Organza Sarees', 'Georgette & Chiffon'];
+                    foreach ($formCats as $c):
+                    ?>
+                        <option value="<?php echo htmlspecialchars($c); ?>" <?php echo ($currCat === $c) ? 'selected' : ''; ?>><?php echo htmlspecialchars($c); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="adm-form-group">
@@ -69,11 +71,11 @@
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">Fabric / Weave Specs</label>
-                <input type="text" id="pFormFabric" class="adm-form-input" placeholder="e.g. Pure Mulberry Silk with Gold Zari Border">
+                <input type="text" id="pFormFabric" class="adm-form-input" placeholder="e.g. Pure Mulberry Silk with Gold Zari Border" value="<?php echo isset($prod['fabric']) ? htmlspecialchars($prod['fabric']) : ''; ?>">
             </div>
             <div class="adm-form-group full">
                 <label class="adm-form-label">Full Product Description (Rich Text)</label>
-                <textarea id="pFormDesc" class="adm-form-textarea" rows="4" placeholder="Handwoven authentic Kanjivaram silk saree featuring pure gold zari border and rich pallu design. Includes unstitched matching blouse piece."></textarea>
+                <textarea id="pFormDesc" class="adm-form-textarea" rows="4" placeholder="Handwoven authentic Kanjivaram silk saree featuring pure gold zari border and rich pallu design. Includes unstitched matching blouse piece."><?php echo isset($prod['description']) ? htmlspecialchars($prod['description']) : ''; ?></textarea>
             </div>
         </div>
     </div>

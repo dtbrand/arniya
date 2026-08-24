@@ -146,7 +146,23 @@ $products = [
 ];
 }
 
-$categories     = ['All','Sarees','Kurtis','Gowns','Lehengas','New Arrivals'];
+$selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : '';
+if (!empty($selectedCategory) && strtolower($selectedCategory) !== 'all') {
+    $filtered = [];
+    foreach ($products as $p) {
+        $catName = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
+        $catSlug = strtolower(str_replace(' ', '-', $catName));
+        $targetSlug = strtolower(str_replace(' ', '-', $selectedCategory));
+        if ($catName === strtolower($selectedCategory) || $catSlug === $targetSlug || strpos($catSlug, $targetSlug) !== false || strpos($targetSlug, $catSlug) !== false) {
+            $filtered[] = $p;
+        }
+    }
+    if (!empty($filtered)) {
+        $products = $filtered;
+    }
+}
+
+$categories = array_unique(array_merge(['All'], ProductCatalog::getCategories()));
 $total_products = count($products);
 ?>
 <!DOCTYPE html>

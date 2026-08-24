@@ -19,28 +19,28 @@
         <div class="adm-form-grid">
             <div class="adm-form-group full">
                 <label class="adm-form-label">SEO Meta Title</label>
-                <input type="text" id="pFormSeoTitle" class="adm-form-input" placeholder="e.g. Pure Silk Sarees Online - Surat Weaving | DT Brand's" oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();">
+                <input type="text" id="pFormSeoTitle" class="adm-form-input" placeholder="e.g. Pure Silk Sarees Online - Surat Weaving | DT Brand's" value="<?php echo isset($prod['title']) ? htmlspecialchars($prod['title'] . " | DT Brand's") : ''; ?>" oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();">
             </div>
             <div class="adm-form-group full">
                 <label class="adm-form-label">Meta Description</label>
-                <textarea id="pFormSeoDesc" class="adm-form-textarea" rows="2" placeholder="Handcrafted pure silk sarees woven with authentic zari border. Order wholesale lots or single pieces directly from Surat mills." oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();"></textarea>
+                <textarea id="pFormSeoDesc" class="adm-form-textarea" rows="2" placeholder="Handcrafted pure silk sarees woven with authentic zari border. Order wholesale lots or single pieces directly from Surat mills." oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();"><?php echo isset($prod['description']) ? htmlspecialchars(substr($prod['description'], 0, 160)) : ''; ?></textarea>
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">URL Slug</label>
-                <input type="text" id="pFormSlug" class="adm-form-input" placeholder="kanjivaram-pure-silk-saree" oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();">
+                <input type="text" id="pFormSlug" class="adm-form-input" placeholder="kanjivaram-pure-silk-saree" value="<?php echo isset($prod['slug']) ? htmlspecialchars($prod['slug']) : ''; ?>" oninput="if(typeof updateGoogleSeoPreview==='function') updateGoogleSeoPreview();">
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">Focus Keywords</label>
-                <input type="text" id="pFormKeywords" class="adm-form-input" placeholder="pure silk saree, wholesale surat, banarasi zari">
+                <input type="text" id="pFormKeywords" class="adm-form-input" placeholder="pure silk saree, wholesale surat, banarasi zari" value="<?php echo isset($prod['category_name']) ? htmlspecialchars(strtolower($prod['category_name']) . ', pure silk, wholesale surat') : ''; ?>">
             </div>
         </div>
 
         <div style="margin-top:12px;">
             <label class="adm-form-label" style="margin-bottom:6px; display:block;">Google Search Snippet Preview</label>
             <div class="dt-google-snippet" style="background:#f8f9fa; border:1px solid #dfe1e5; border-radius:6px; padding:12px;">
-                <div class="dt-google-url" id="dtGoogleUrlPreview" style="font-size:12px; color:#202124;">https://jaihanumantex.in/product/kanjivaram-pure-silk-saree</div>
-                <div class="dt-google-title" id="dtGoogleTitlePreview" style="font-size:15px; color:#1a0dab; font-weight:500; margin:2px 0;">Kanjivaram Pure Silk Gold Zari Saree | DT Brand's Luxury Ethnic</div>
-                <div class="dt-google-desc" id="dtGoogleDescPreview" style="font-size:12px; color:#4d5156;">Handcrafted pure silk sarees woven with authentic zari border. Order wholesale lots or single pieces directly from Surat mills.</div>
+                <div class="dt-google-url" id="dtGoogleUrlPreview" style="font-size:12px; color:#202124;">https://jaihanumantex.in/product/<?php echo isset($prod['slug']) ? htmlspecialchars($prod['slug']) : 'kanjivaram-pure-silk-saree'; ?></div>
+                <div class="dt-google-title" id="dtGoogleTitlePreview" style="font-size:15px; color:#1a0dab; font-weight:500; margin:2px 0;"><?php echo isset($prod['title']) ? htmlspecialchars($prod['title']) : 'Kanjivaram Pure Silk Gold Zari Saree'; ?> | DT Brand's Luxury Ethnic</div>
+                <div class="dt-google-desc" id="dtGoogleDescPreview" style="font-size:12px; color:#4d5156;"><?php echo isset($prod['description']) ? htmlspecialchars(substr($prod['description'], 0, 160)) : 'Handcrafted pure silk sarees woven with authentic zari border. Order wholesale lots or single pieces directly from Surat mills.'; ?></div>
             </div>
         </div>
     </div>

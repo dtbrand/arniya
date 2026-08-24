@@ -3,9 +3,46 @@
  * categories/index.php — DT Brand's Product Categories & Taxonomy Hub (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
 $page_title = "Product Categories";
 $active_nav = "products";
 $active_subnav = "categories";
+
+$dbCategories = [];
+$allProducts = ProductCatalog::getAll();
+$totalProductCount = count($allProducts);
+$totalReadyStock = 0;
+
+foreach ($allProducts as $p) {
+    $totalReadyStock += (int)($p['stock_qty'] ?? 0);
+}
+
+$db = Database::getConnection();
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $dbCategories = Database::query("SELECT * FROM categories ORDER BY display_order ASC, id ASC");
+    } catch (\Exception $e) {}
+}
+
+if (empty($dbCategories)) {
+    $categoriesList = ProductCatalog::getCategories();
+    foreach ($categoriesList as $idx => $cName) {
+        $dbCategories[] = [
+            'id' => $idx + 1,
+            'name' => $cName,
+            'slug' => strtolower(str_replace(' ', '-', $cName)),
+            'description' => 'Authentic handwoven sarees in ' . $cName,
+            'image' => '/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png',
+            'products_count' => count(ProductCatalog::filter(['category' => $cName]))
+        ];
+    }
+}
+$totalCategoryCount = count($dbCategories);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,16 +141,15 @@ $active_subnav = "categories";
     }
     .dt-form-group textarea {
         width: 100%;
-        height: 38px;
-        padding: 4px 8px;
+        height: 52px;
+        padding: 6px 8px;
         font-size: 11.5px;
         color: #181512;
         background: #ffffff;
         border: 1px solid #c3c4c7;
         border-radius: 4px;
         box-sizing: border-box;
-        outline: none;
-        resize: none;
+        resize: vertical;
     }
     .dt-form-group input:focus, .dt-form-group select:focus, .dt-form-group textarea:focus {
         border-color: #8A681F;
@@ -124,10 +160,7 @@ $active_subnav = "categories";
         border: 1px solid #c3c4c7;
         border-radius: 6px;
         overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        min-width: 0;
-        width: 100%;
-        box-sizing: border-box;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .wp-table-responsive {
         width: 100%;
@@ -136,16 +169,15 @@ $active_subnav = "categories";
     }
     .wp-list-table {
         width: 100%;
-        min-width: 660px;
+        min-width: 600px;
         border-collapse: collapse;
     }
     .wp-list-table th {
-        background: #fafafa;
-        border-bottom: 1px solid #c3c4c7;
-        padding: 7px 8px;
-        font-size: 11px;
+        background: #f6f7f7;
+        font-size: 11.5px;
         font-weight: 700;
-        color: #50575e;
+        color: #2c3338;
+        border-bottom: 1px solid #c3c4c7;
         text-align: left;
     }
     .wp-list-table td {
@@ -187,17 +219,17 @@ $active_subnav = "categories";
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:18px; font-weight:800; color:#181512; margin:0;">Product Categories &amp; Taxonomies</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;">16 Taxonomies</span>
+                    <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;"><?php echo $totalCategoryCount; ?> Categories</span>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <a href="/Frontend/Admin/products/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>All Products (1,240)</span>
+                        <span>All Products (<?php echo $totalProductCount; ?>)</span>
                     </a>
                     <a href="/Frontend/Admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Brands (4)</span>
+                        <span>Brands (3)</span>
                     </a>
                     <a href="/Frontend/Admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
@@ -218,7 +250,7 @@ $active_subnav = "categories";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">ACTIVE CATEGORIES</div>
-                        <div style="font-size:14px; font-weight:800; color:#181512; line-height:1.2;">16 Taxonomies</div>
+                        <div style="font-size:14px; font-weight:800; color:#181512; line-height:1.2;"><?php echo $totalCategoryCount; ?> Categories</div>
                     </div>
                 </div>
 
@@ -228,7 +260,7 @@ $active_subnav = "categories";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">ASSIGNED SKUS</div>
-                        <div style="font-size:14px; font-weight:800; color:#15803D; line-height:1.2;">1,240 Products</div>
+                        <div style="font-size:14px; font-weight:800; color:#15803D; line-height:1.2;"><?php echo $totalProductCount; ?> Products</div>
                     </div>
                 </div>
 
@@ -248,7 +280,7 @@ $active_subnav = "categories";
                     </div>
                     <div style="min-width:0;">
                         <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">READY STOCK</div>
-                        <div style="font-size:14px; font-weight:800; color:#B45309; line-height:1.2;">8,450 Units</div>
+                        <div style="font-size:14px; font-weight:800; color:#B45309; line-height:1.2;"><?php echo number_format($totalReadyStock); ?> Units</div>
                     </div>
                 </div>
             </div>
@@ -278,10 +310,9 @@ $active_subnav = "categories";
                                 <label>Parent Category</label>
                                 <select id="catParent">
                                     <option value="none">None (Top Level)</option>
-                                    <option value="silk-sarees">Silk Sarees</option>
-                                    <option value="banarasi-brocade">Banarasi Brocade</option>
-                                    <option value="bridal-lehengas">Bridal Lehengas</option>
-                                    <option value="designer-kurtis">Designer Kurtis</option>
+                                    <?php foreach ($dbCategories as $pCat): ?>
+                                        <option value="<?php echo htmlspecialchars($pCat['slug']); ?>"><?php echo htmlspecialchars($pCat['name']); ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 
@@ -340,10 +371,9 @@ $active_subnav = "categories";
 
                             <select class="wp-select" id="catParentFilter" onchange="filterCatByParent(this.value)" style="height:28px; font-size:11.5px; min-width:125px; border-radius:4px; border:1px solid #c3c4c7; padding:0 6px;">
                                 <option value="">All Categories</option>
-                                <option value="Silk Sarees">Silk Sarees</option>
-                                <option value="Banarasi Brocade">Banarasi Brocade</option>
-                                <option value="Bridal Lehengas">Bridal Lehengas</option>
-                                <option value="Designer Kurtis">Designer Kurtis</option>
+                                <?php foreach ($dbCategories as $fCat): ?>
+                                    <option value="<?php echo htmlspecialchars($fCat['name']); ?>"><?php echo htmlspecialchars($fCat['name']); ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
@@ -375,115 +405,48 @@ $active_subnav = "categories";
                                 </tr>
                             </thead>
                             <tbody id="categoriesTableBody">
-                                
-                                <!-- Cat 1 -->
-                                <tr id="cat-row-1" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                    <td style="text-align:center; padding:7px 6px;">
-                                        <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:14px; height:14px;">
-                                    </td>
-                                    <td style="padding:7px 6px;">
-                                        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
-                                    </td>
-                                    <td style="padding:7px 10px;">
-                                        <strong style="font-size:12.5px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=1" style="color:#181512; text-decoration:none;">Silk Sarees</a></strong>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=1" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="openQuickEditCat(1, 'Silk Sarees', 'silk-sarees', 'Pure Mulberry & Kanjivaram Bridal Silks', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="deleteCatRow(1); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="/Frontend/Shop/shop.php?category=silk-sarees" target="_blank" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
-                                        </div>
-                                    </td>
-                                    <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Pure Mulberry &amp; Kanjivaram Bridal Silks</td>
-                                    <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;">silk-sarees</code></td>
-                                    <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
-                                    <td style="text-align:right; padding:7px 10px;">
-                                        <a href="/Frontend/Admin/products/?cat=silk-sarees" style="text-decoration:none;">
-                                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;">420</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Cat 1.1 Child -->
-                                <tr id="cat-row-2" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                    <td style="text-align:center; padding:7px 6px;">
-                                        <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:14px; height:14px;">
-                                    </td>
-                                    <td style="padding:7px 6px;">
-                                        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
-                                    </td>
-                                    <td style="padding:7px 10px;">
-                                        <span style="color:#8A681F; font-weight:700;">— </span><strong style="font-size:12.5px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=2" style="color:#181512; text-decoration:none;">Kanjivaram Pure Silk</a></strong>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=2" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="openQuickEditCat(2, 'Kanjivaram Pure Silk', 'kanjivaram-pure-silk', 'Authentic Kanchipuram Handloom Zari Weaves', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="deleteCatRow(2); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="/Frontend/Shop/shop.php?category=kanjivaram-pure-silk" target="_blank" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
-                                        </div>
-                                    </td>
-                                    <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Authentic Kanchipuram Handloom Zari Weaves</td>
-                                    <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;">kanjivaram-pure-silk</code></td>
-                                    <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
-                                    <td style="text-align:right; padding:7px 10px;">
-                                        <a href="/Frontend/Admin/products/?cat=kanjivaram-pure-silk" style="text-decoration:none;">
-                                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;">180</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Cat 1.2 Child -->
-                                <tr id="cat-row-3" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                    <td style="text-align:center; padding:7px 6px;">
-                                        <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:14px; height:14px;">
-                                    </td>
-                                    <td style="padding:7px 6px;">
-                                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
-                                    </td>
-                                    <td style="padding:7px 10px;">
-                                        <span style="color:#8A681F; font-weight:700;">— </span><strong style="font-size:12.5px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=3" style="color:#181512; text-decoration:none;">Soft Silk &amp; Tussar</a></strong>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=3" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="openQuickEditCat(3, 'Soft Silk & Tussar', 'soft-silk-tussar', 'Lightweight Festive Soft Silk Sarees', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="deleteCatRow(3); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="/Frontend/Shop/shop.php?category=soft-silk-tussar" target="_blank" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
-                                        </div>
-                                    </td>
-                                    <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Lightweight Festive Soft Silk Sarees</td>
-                                    <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;">soft-silk-tussar</code></td>
-                                    <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
-                                    <td style="text-align:right; padding:7px 10px;">
-                                        <a href="/Frontend/Admin/products/?cat=soft-silk-tussar" style="text-decoration:none;">
-                                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;">140</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                                <!-- Cat 2 -->
-                                <tr id="cat-row-4" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
-                                    <td style="text-align:center; padding:7px 6px;">
-                                        <input type="checkbox" class="cat-row-check" style="cursor:pointer; width:14px; height:14px;">
-                                    </td>
-                                    <td style="padding:7px 6px;">
-                                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
-                                    </td>
-                                    <td style="padding:7px 10px;">
-                                        <strong style="font-size:12.5px; color:#181512;"><a href="/Frontend/Admin/products/categories/edit.php?id=4" style="color:#181512; text-decoration:none;">Banarasi Brocade</a></strong>
-                                        <div class="wp-row-actions">
-                                            <a href="/Frontend/Admin/products/categories/edit.php?id=4" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="openQuickEditCat(4, 'Banarasi Brocade', 'banarasi-brocade', 'Royal Heritage Varanasi Brocades & Katan Silks', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="#" onclick="deleteCatRow(4); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                            <a href="/Frontend/Shop/shop.php?category=banarasi-brocade" target="_blank" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
-                                        </div>
-                                    </td>
-                                    <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Royal Heritage Varanasi Brocades &amp; Katan Silks</td>
-                                    <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;">banarasi-brocade</code></td>
-                                    <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
-                                    <td style="text-align:right; padding:7px 10px;">
-                                        <a href="/Frontend/Admin/products/?cat=banarasi-brocade" style="text-decoration:none;">
-                                            <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;">280</span>
-                                        </a>
-                                    </td>
-                                </tr>
-
+                                <?php if (empty($dbCategories)): ?>
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; padding:30px 10px; color:#64748B;">
+                                            No categories found. Use the form on the left to add your first category.
+                                        </td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($dbCategories as $cat): 
+                                        $catId = $cat['id'];
+                                        $catName = $cat['name'];
+                                        $catSlug = $cat['slug'] ?? strtolower(str_replace(' ', '-', $catName));
+                                        $catDesc = $cat['description'] ?? 'Authentic ethnic sarees & handlooms';
+                                        $catImg = !empty($cat['image']) ? $cat['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                                        $catCount = (int)($cat['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
+                                    ?>
+                                    <tr id="cat-row-<?= $catId ?>" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                        <td style="text-align:center; padding:7px 6px;">
+                                            <input type="checkbox" class="cat-row-check" value="<?= $catId ?>" style="cursor:pointer; width:14px; height:14px;">
+                                        </td>
+                                        <td style="padding:7px 6px;">
+                                            <img src="<?= htmlspecialchars($catImg) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
+                                        </td>
+                                        <td style="padding:7px 10px;">
+                                            <strong style="font-size:12.5px; color:#181512;"><a href="/Frontend/Admin/products/categories/view.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catName) ?></a></strong>
+                                            <div class="wp-row-actions">
+                                                <a href="/Frontend/Admin/products/categories/edit.php?id=<?= $catId ?>" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="#" onclick="openQuickEditCat(<?= $catId ?>, '<?= addslashes($catName) ?>', '<?= addslashes($catSlug) ?>', '<?= addslashes($catDesc) ?>', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="#" onclick="deleteCatRow(<?= $catId ?>); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="/Frontend/Admin/products/categories/view.php?id=<?= $catId ?>" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
+                                            </div>
+                                        </td>
+                                        <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= htmlspecialchars($catDesc) ?></td>
+                                        <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;"><?= htmlspecialchars($catSlug) ?></code></td>
+                                        <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
+                                        <td style="text-align:right; padding:7px 10px;">
+                                            <a href="/Frontend/Admin/products/?cat=<?= urlencode($catName) ?>" style="text-decoration:none;">
+                                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;"><?= $catCount ?></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

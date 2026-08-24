@@ -14,26 +14,27 @@
         <div class="adm-form-grid">
             <div class="adm-form-group">
                 <label class="adm-form-label">Total Stock Quantity (Units)</label>
-                <input type="number" class="adm-form-input" value="45">
+                <input type="number" id="pFormStock" class="adm-form-input" value="<?php echo isset($prod['stock_qty']) ? (int)$prod['stock_qty'] : (isset($prod['stock']) ? (int)$prod['stock'] : 50); ?>">
             </div>
             <div class="adm-form-group">
                 <label class="adm-form-label">Low Stock Alert Limit</label>
-                <input type="number" class="adm-form-input" value="5">
+                <input type="number" id="pFormLowStock" class="adm-form-input" value="5">
             </div>
             <div class="adm-form-group full">
                 <label class="adm-form-label">Primary Warehouse Depot</label>
-                <select class="adm-form-select">
-                    <option>Surat Central Hub (Mill Depot)</option>
+                <select id="pFormWarehouse" class="adm-form-select">
+                    <option selected>Surat Central Hub (Mill Depot)</option>
                     <option>Bhiwandi Textile Depot</option>
                 </select>
             </div>
             <div class="adm-form-group full">
                 <label class="adm-form-label">Stock Status</label>
-                <select class="adm-form-select">
-                    <option selected>In Stock</option>
-                    <option>Low Stock</option>
-                    <option>Out of Stock</option>
-                    <option>Backorder Allowed</option>
+                <select id="pFormStockStatus" class="adm-form-select">
+                    <?php $statusVal = $prod['status'] ?? 'in_stock'; ?>
+                    <option value="in_stock" <?php echo ($statusVal === 'in_stock') ? 'selected' : ''; ?>>In Stock</option>
+                    <option value="low_stock" <?php echo ($statusVal === 'low_stock') ? 'selected' : ''; ?>>Low Stock</option>
+                    <option value="out_of_stock" <?php echo ($statusVal === 'out_of_stock') ? 'selected' : ''; ?>>Out of Stock</option>
+                    <option value="draft" <?php echo ($statusVal === 'draft') ? 'selected' : ''; ?>>Draft / Inactive</option>
                 </select>
             </div>
         </div>

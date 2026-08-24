@@ -41,7 +41,7 @@
                     <!-- Main Photo Preview Container -->
                     <div class="dt-main-photo-preview-wrap" id="mainPhotoPreviewWrap">
                         <div class="dt-main-photo-img-holder">
-                            <img id="mainPhotoImg" src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Main Product Photo">
+                            <img id="mainPhotoImg" src="<?php echo isset($prod['primary_image']) ? htmlspecialchars($prod['primary_image']) : '/Frontend/Shop/Asset/images/product1.png'; ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Main Product Photo">
                             
                             <!-- Overlay on Hover -->
                             <div class="dt-main-photo-overlay">
