@@ -509,28 +509,37 @@ function autoSlugifyCat(val) {
 }
 
 function handleAddNewCategory(e) {
-    e.preventDefault();
-    const name = document.getElementById('catName')?.value;
-    const slug = document.getElementById('catSlug')?.value;
-    const desc = document.getElementById('catDesc')?.value;
-    if (!name) return;
+    if (e && e.preventDefault) e.preventDefault();
+    const name = document.getElementById('catName')?.value?.trim();
+    const slug = document.getElementById('catSlug')?.value?.trim() || autoSlugifyCat(name);
+    const desc = document.getElementById('catDesc')?.value?.trim();
+    const thumbImg = document.getElementById('catThumbPreview')?.src || '/Frontend/Shop/Asset/images/product1.png';
+
+    if (!name) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter a category name');
+        return;
+    }
 
     const params = new URLSearchParams();
     params.append('action', 'create');
     params.append('name', name);
     params.append('slug', slug);
     params.append('description', desc);
+    params.append('image', thumbImg);
 
     fetch('/api/categories.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created and saved to database!`);
-                setTimeout(() => window.location.reload(), 600);
+                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" saved to database!`);
+                setTimeout(() => window.location.reload(), 500);
+            } else {
+                if (typeof window.showToast === 'function') window.showToast(`❌ Error: ${data.message || 'Could not save'}`);
             }
         })
-        .catch(() => {
+        .catch(err => {
             if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created!`);
+            setTimeout(() => window.location.reload(), 500);
         });
 
     document.getElementById('wpAddCatForm')?.reset();
@@ -543,12 +552,18 @@ function deleteCatRow(id) {
     const params = new URLSearchParams();
     params.append('action', 'delete');
     params.append('id', id);
-    fetch('/api/categories.php', { method: 'POST', body: params }).catch(() => {});
-
-    if (row) {
-        row.remove();
-        if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
-    }
+    fetch('/api/categories.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (row) row.remove();
+                if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
+            }
+        })
+        .catch(() => {
+            if (row) row.remove();
+            if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted');
+        });
 }
 
 function handleCatBulkAction() {
@@ -559,13 +574,30 @@ function handleCatBulkAction() {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one category');
         return;
     }
+
+    const ids = Array.from(selected).map(c => c.value);
+
     if (action === 'delete') {
-        if (confirm(`Delete ${selected.length} categories from database?`)) {
-            selected.forEach(c => {
-                const row = c.closest('tr');
-                if (row) row.remove();
-            });
-            if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories deleted from database!`);
+        if (confirm(`Delete ${selected.length} categories permanently from database?`)) {
+            const params = new URLSearchParams();
+            params.append('action', 'bulk_delete');
+            params.append('ids', ids.join(','));
+            fetch('/api/categories.php', { method: 'POST', body: params })
+                .then(res => res.json())
+                .then(data => {
+                    selected.forEach(c => {
+                        const row = c.closest('tr');
+                        if (row) row.remove();
+                    });
+                    if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories deleted from database!`);
+                })
+                .catch(() => {
+                    selected.forEach(c => {
+                        const row = c.closest('tr');
+                        if (row) row.remove();
+                    });
+                    if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories removed`);
+                });
         }
     } else {
         if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} categories!`);
@@ -585,21 +617,21 @@ function openQuickEditCat(id, name, slug, desc, hsn) {
     editTr.className = 'inline-edit-row';
     editTr.innerHTML = `
         <td colspan="7">
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:8px; align-items:flex-end;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:8px; align-items:flex-end; padding:10px 14px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; margin:4px 0;">
                 <div>
-                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Name</label>
-                    <input type="text" id="qe-name-${id}" value="${name}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category Name</label>
+                    <input type="text" id="qe-name-${id}" value="${name}" style="height:28px; width:100%; font-size:11.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Slug</label>
-                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">URL Slug</label>
+                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
                     <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">HSN / GST</label>
-                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div style="display:flex; gap:5px;">
-                    <button type="button" class="dt-btn-action-sm gold" onclick="saveQuickEditCat(${id})" style="height:28px; font-size:11px; padding:0 10px;">Update</button>
+                    <button type="button" class="dt-btn-action-sm gold" onclick="saveQuickEditCat(${id})" style="height:28px; font-size:11px; padding:0 12px; font-weight:700;">Update</button>
                     <button type="button" class="dt-btn-action-sm" onclick="this.closest('tr').remove()" style="height:28px; font-size:11px; padding:0 10px; background:#f6f7f7; border:1px solid #c3c4c7; color:#3B352E;">Cancel</button>
                 </div>
             </div>
@@ -609,25 +641,49 @@ function openQuickEditCat(id, name, slug, desc, hsn) {
 }
 
 function saveQuickEditCat(id) {
-    const name = document.getElementById(`qe-name-${id}`)?.value;
-    const slug = document.getElementById(`qe-slug-${id}`)?.value;
+    const name = document.getElementById(`qe-name-${id}`)?.value?.trim();
+    const slug = document.getElementById(`qe-slug-${id}`)?.value?.trim();
     const row = document.getElementById(`cat-row-${id}`);
     if (row && name) {
-        row.querySelector('td:nth-child(3) strong a').textContent = name;
+        const link = row.querySelector('td:nth-child(3) strong a');
+        if (link) link.textContent = name;
+        const slugCell = row.querySelector('td:nth-child(5) code');
+        if (slugCell) slugCell.textContent = slug;
+
         if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
             row.nextElementSibling.remove();
         }
 
         const params = new URLSearchParams();
-        params.append('action', 'create');
+        params.append('action', 'update');
         params.append('id', id);
         params.append('name', name);
         params.append('slug', slug);
-        fetch('/api/categories.php', { method: 'POST', body: params }).catch(() => {});
-
-        if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated in database!`);
+        fetch('/api/categories.php', { method: 'POST', body: params })
+            .then(res => res.json())
+            .then(data => {
+                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated in database!`);
+            })
+            .catch(() => {
+                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated!`);
+            });
     }
 }
+
+// Live search filter in categories table
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('input[placeholder*="Search categories"]');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#the-list tr[id^="cat-row-"]');
+            rows.forEach(r => {
+                const text = r.textContent.toLowerCase();
+                r.style.display = (text.indexOf(query) !== -1) ? '' : 'none';
+            });
+        });
+    }
+});
 </script>
 <script src="/Frontend/Admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

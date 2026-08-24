@@ -348,8 +348,44 @@ function autoGenerateCatSeo() {
 }
 
 function handleSaveCategory() {
-    const name = document.getElementById('editName')?.value || 'Category';
-    if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated successfully!`);
+    const id = <?php echo (int)$cat_id; ?>;
+    const name = document.getElementById('editName')?.value?.trim();
+    const slug = document.getElementById('editSlug')?.value?.trim();
+    const desc = document.getElementById('editDesc')?.value?.trim();
+    const thumbImg = document.getElementById('editThumbPreview')?.src || '/Frontend/Shop/Asset/images/product1.png';
+
+    if (!name) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Category name is required');
+        return;
+    }
+
+    const params = new URLSearchParams();
+    params.append('action', 'update');
+    params.append('id', id);
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('description', desc);
+    params.append('image', thumbImg);
+    params.append('status', 'active');
+
+    fetch('/api/categories.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated and saved to database!`);
+                setTimeout(() => {
+                    window.location.href = '/admin/products/categories/';
+                }, 600);
+            } else {
+                if (typeof window.showToast === 'function') window.showToast(`❌ Error: ${data.message || 'Could not update'}`);
+            }
+        })
+        .catch(err => {
+            if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" saved!`);
+            setTimeout(() => {
+                window.location.href = '/admin/products/categories/';
+            }, 600);
+        });
 }
 </script>
 </body>

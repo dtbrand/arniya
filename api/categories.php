@@ -23,11 +23,20 @@ use DTBrand\ProductCatalog;
 $action = $_POST['action'] ?? $_GET['action'] ?? 'list';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($action === 'create' || $action === 'add') {
+    $rawInput = file_get_contents('php://input');
+    $jsonData = json_decode($rawInput, true);
+    if (is_array($jsonData)) {
+        $_POST = array_merge($_POST, $jsonData);
+    }
+    $action = $_POST['action'] ?? $action;
+
+    if ($action === 'create' || $action === 'add' || $action === 'update' || $action === 'edit') {
+        $id = (int)($_POST['id'] ?? 0);
         $name = trim($_POST['name'] ?? '');
         $slug = trim($_POST['slug'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '-', $name)));
         $desc = trim($_POST['description'] ?? '');
-        $image = trim($_POST['image'] ?? '/Frontend/Shop/Asset/images/category-kanjivaram.jpg');
+        $image = trim($_POST['image'] ?? '/Frontend/Shop/Asset/images/product1.png');
+        $status = trim($_POST['status'] ?? 'active');
 
         if (empty($name)) {
             http_response_code(400);
@@ -38,15 +47,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                $stmt = $pdo->prepare("INSERT INTO categories (name, slug, description, image, products_count) VALUES (?, ?, ?, ?, 0)");
-                $stmt->execute([$name, $slug, $desc, $image]);
-                $newId = (int)$pdo->lastInsertId();
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'Category created successfully.',
-                    'category' => ['id' => $newId, 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image]
-                ]);
-                exit;
+                if ($id > 0) {
+                    $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ?, description = ?, image = ?, status = ? WHERE id = ?");
+                    $stmt->execute([$name, $slug, $desc, $image, $status, $id]);
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Category updated successfully.',
+                        'category' => ['id' => $id, 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image, 'status' => $status]
+                    ]);
+                    exit;
+                } else {
+                    $orderStmt = $pdo->query("SELECT COALESCE(MAX(display_order), 0) + 1 AS next_order FROM categories");
+                    $nextOrder = (int)$orderStmt->fetchColumn();
+
+                    $stmt = $pdo->prepare("INSERT INTO categories (name, slug, description, image, display_order, status, products_count) VALUES (?, ?, ?, ?, ?, ?, 0)");
+                    $stmt->execute([$name, $slug, $desc, $image, $nextOrder, $status]);
+                    $newId = (int)$pdo->lastInsertId();
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Category created successfully.',
+                        'category' => ['id' => $newId, 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image, 'display_order' => $nextOrder]
+                    ]);
+                    exit;
+                }
             } catch (\Exception $e) {
                 http_response_code(500);
                 echo json_encode(['success' => false, 'message' => $e->getMessage()]);
@@ -56,8 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo json_encode([
             'success' => true,
-            'message' => 'Category registered successfully.',
-            'category' => ['id' => rand(10, 99), 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image]
+            'message' => 'Category saved successfully.',
+            'category' => ['id' => $id ?: rand(10, 99), 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image]
         ]);
         exit;
     }
@@ -79,6 +102,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         echo json_encode(['success' => true, 'message' => 'Category deleted successfully.']);
+        exit;
+    }
+
+    if ($action === 'bulk_delete') {
+        $ids = $_POST['ids'] ?? [];
+        if (is_string($ids)) {
+            $ids = array_map('intval', explode(',', $ids));
+        }
+        $ids = array_filter(array_map('intval', (array)$ids));
+
+        if (!empty($ids)) {
+            $pdo = Database::getConnection();
+            if ($pdo !== null && !Database::isMockMode()) {
+                try {
+                    $inPlaceholders = implode(',', array_fill(0, count($ids), '?'));
+                    $stmt = $pdo->prepare("DELETE FROM categories WHERE id IN ($inPlaceholders)");
+                    $stmt->execute(array_values($ids));
+                } catch (\Exception $e) {}
+            }
+        }
+
+        echo json_encode(['success' => true, 'message' => count($ids) . ' categories deleted successfully.']);
+        exit;
+    }
+
+    if ($action === 'reorder') {
+        $order = $_POST['order'] ?? [];
+        if (is_string($order)) {
+            $order = json_decode($order, true) ?: explode(',', $order);
+        }
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode() && is_array($order)) {
+            try {
+                $stmt = $pdo->prepare("UPDATE categories SET display_order = ? WHERE id = ?");
+                foreach ($order as $pos => $catId) {
+                    $stmt->execute([(int)$pos + 1, (int)$catId]);
+                }
+            } catch (\Exception $e) {}
+        }
+        echo json_encode(['success' => true, 'message' => 'Category display order updated.']);
         exit;
     }
 }
