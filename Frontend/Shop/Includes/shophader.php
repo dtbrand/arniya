@@ -667,97 +667,128 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
     stroke: currentColor; stroke-width: 2.2; fill: none;
 }
 
-/* ── Mobile Layout & Ultra-Compact Zero-Vibration Layout (<768px) ── */
+/* ── Mobile Layout & Ultra-Smooth Touch-Optimized Header (<768px) ── */
 @media (max-width: 767px) {
     .shop-header {
         height: auto;
         padding: 0;
         gap: 0;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background: #FFFFFF;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         transition: box-shadow 0.25s ease;
     }
 
-    /* Fixed Ultra-Compact 38px Slot for Normal View and Search Bar */
+    /* Spacious & Ergonomic 46px Header View */
     .header-normal-view,
     .mobile-full-search-bar {
-        height: 38px;
-        min-height: 38px;
-        max-height: 38px;
+        height: 46px;
+        min-height: 46px;
+        max-height: 46px;
         box-sizing: border-box;
     }
 
     .header-normal-view {
         position: relative;
-        padding: 0 10px;
+        padding: 0 12px;
         gap: 8px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
     }
+
     .header-left-group {
-        position: static;
         display: flex;
         align-items: center;
         gap: 8px;
+        flex-shrink: 0;
         z-index: 2;
     }
+
     .header-brand-link {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
-        z-index: 1;
-        pointer-events: auto;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
+        flex: 1;
+        min-width: 0;
     }
+
     .header-brand-real-logo {
-        height: 28px !important;
-        max-height: 28px !important;
+        height: 30px !important;
+        max-height: 30px !important;
         width: auto !important;
-        max-width: 135px !important;
+        max-width: 140px !important;
         object-fit: contain;
     }
+
     .shop-back-btn {
-        padding: 4px 9px;
-        font-size: 0.70rem;
+        padding: 5px 10px;
+        font-size: 0.72rem;
         gap: 4px;
-        border-radius: 14px;
-        z-index: 2;
+        border-radius: 16px;
+        border: 1px solid var(--soft-platinum, #E5E3DE);
+        background: #FAF8F4;
+        color: var(--dark-text, #24211C);
+        font-weight: 700;
+        flex-shrink: 0;
     }
     .shop-back-btn svg {
-        width: 12px;
-        height: 12px;
+        width: 13px;
+        height: 13px;
+        stroke: currentColor;
+        stroke-width: 2.2;
     }
-    .header-brand-name {
-        font-size: 0.92rem;
-    }
-    .header-brand-tagline {
-        font-size: 0.42rem;
-        letter-spacing: 0.14em;
-        margin-top: 1px;
-    }
+
     .header-actions {
-        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
         z-index: 2;
-        gap: 6px;
     }
+
     .header-icon-btn {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--soft-platinum, #E5E3DE);
+        background: #FAF8F4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-gold, #8A681F);
+        cursor: pointer;
+        position: relative;
+    }
+    .header-icon-btn:hover, .header-icon-btn:active {
+        background: #FFFFFF;
+        border-color: var(--dark-gold, #8A681F);
     }
     .header-icon-btn svg {
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: 17px;
+        stroke: var(--dark-gold, #8A681F);
+        stroke-width: 2.2;
+        fill: none;
     }
+
     .header-badge {
-        min-width: 14px;
-        height: 14px;
-        font-size: 0.50rem;
+        min-width: 16px;
+        height: 16px;
+        font-size: 0.58rem;
+        font-weight: 800;
         top: -3px;
         right: -3px;
+        background: var(--dark-gold, #8A681F);
+        color: #FFFFFF;
+        border: 1.5px solid #FFFFFF;
+        border-radius: 10px;
     }
+
     .search-amazon-bar {
         display: none !important; /* Hidden on mobile by default */
     }
@@ -768,48 +799,53 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
         display: none !important;
     }
 
-    /* Open Mobile Search Bar (Exact 38px Height) */
+    /* Open Mobile Search Bar (Exact 46px Height) */
     .mobile-full-search-bar {
-        padding: 0 8px;
-        gap: 6px;
+        padding: 0 10px;
+        gap: 8px;
+        background: #FFFFFF;
+        width: 100%;
     }
     .mobile-search-input-wrap {
-        height: 28px;
-        padding: 0 10px;
+        height: 34px;
+        padding: 0 12px;
+        border-radius: 20px;
     }
     .mobile-search-input-field {
-        font-size: 0.76rem;
+        font-size: 0.82rem;
     }
     .mobile-search-submit-icon-btn svg {
-        width: 13px;
-        height: 13px;
+        width: 15px;
+        height: 15px;
     }
     .mobile-search-close-btn {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
     }
     .mobile-search-close-btn svg {
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
     }
 
-    /* Permanently Visible Ultra-Compact 24px Category Subnav */
+    /* Permanently Visible Ultra-Compact Category Subnav */
     .header-attached-subnav {
-        height: 24px;
-        min-height: 24px;
-        max-height: 24px;
+        height: 28px;
+        min-height: 28px;
+        max-height: 28px;
         padding: 0 8px;
         box-sizing: border-box;
+        background: linear-gradient(90deg, #1C1814 0%, #2A241E 50%, #1C1814 100%);
     }
     .subnav-item {
-        font-size: 0.60rem;
-        padding: 1px 6px;
-        height: 17px;
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        height: 20px;
         gap: 4px;
+        border-radius: 4px;
     }
     .subnav-icon {
-        width: 9px;
-        height: 9px;
+        width: 11px;
+        height: 11px;
     }
 }
 </style>

@@ -16,18 +16,23 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9990;
+    z-index: 99998 !important;
     padding: 0 12px;
     padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
-    pointer-events: none;
+    pointer-events: auto !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .home-smart-bottom-footer {
-        display: block;
+        display: block !important;
     }
     body {
         padding-bottom: clamp(75px, 18vw, 90px) !important;
+    }
+}
+@media (min-width: 1025px) {
+    .home-smart-bottom-footer {
+        display: none !important;
     }
 }
 

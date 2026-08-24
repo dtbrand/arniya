@@ -338,15 +338,17 @@
         transform: translateY(-26px);
     }
 
-    /* Mobile Header Layout: Back to Shop (Left) | Brand Logo (Center) | Share Button (Right) */
+    /* Mobile Header Layout: Back to Shop (Left) | Brand Logo (Center) | Right Actions (Share + Cart) */
     .pdp-header-main {
         position: relative;
         height: 48px;
         min-height: 48px;
-        padding: 0 10px;
+        padding: 0 12px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
     }
     .pdp-top-ticker {
         height: 26px;
@@ -360,34 +362,49 @@
         width: auto;
         display: flex;
         align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        z-index: 2;
     }
     .pdp-header-actions {
+        display: flex !important;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        z-index: 2;
+    }
+    .pdp-header-actions .pdp-account-btn {
+        display: none !important;
+    }
+    .pdp-header-actions #pdpWishlistBtn {
         display: none !important;
     }
 
     /* Normal Small Back to Shop Button (Left) */
     .pdp-back-btn {
-        padding: 4px 9px;
-        font-size: 0.70rem;
+        padding: 5px 10px;
+        font-size: 0.72rem;
         gap: 4px;
-        border-radius: 14px;
+        border-radius: 16px;
         z-index: 2;
+        border: 1px solid var(--soft-platinum, #E5E3DE);
+        background: #FAF8F4;
     }
     .pdp-back-btn svg {
-        width: 12px;
-        height: 12px;
+        width: 13px;
+        height: 13px;
     }
 
-    /* Perfectly Centered Brand Seal (Mobile) */
+    /* Brand Seal (Mobile) */
     .pdp-brand-seal {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        flex: 1;
+        min-width: 0;
         gap: 6px;
         z-index: 1;
-        pointer-events: auto;
     }
     .pdp-logo-badge {
         width: 26px;
@@ -405,33 +422,20 @@
         letter-spacing: 0.12em;
     }
 
-    /* Right Share Icon Button (Mobile) */
-    .pdp-mobile-share-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: #FAF8F4;
-        border: 1.5px solid var(--soft-platinum, #E5E3DE);
-        color: var(--dark-gold, #8A681F);
-        cursor: pointer;
-        transition: all 0.2s ease;
-        flex-shrink: 0;
-        z-index: 2;
+    .pdp-icon-btn {
+        width: 34px;
+        height: 34px;
     }
-    .pdp-mobile-share-btn:hover {
-        background: #FFFFFF;
-        border-color: var(--dark-gold, #8A681F);
-        color: var(--dark-gold, #8A681F);
+    .pdp-icon-btn svg {
+        width: 16px;
+        height: 16px;
     }
-    .pdp-mobile-share-btn svg {
-        width: 14px;
-        height: 14px;
-        stroke: currentColor;
-        stroke-width: 2.2;
-        fill: none;
+    .pdp-badge-count {
+        min-width: 15px;
+        height: 15px;
+        font-size: 0.56rem;
+        top: -3px;
+        right: -3px;
     }
 }
 @media (min-width: 768px) {

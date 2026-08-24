@@ -15,10 +15,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 99998 !important;
     padding: 0 12px;
     padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
-    pointer-events: none;
+    pointer-events: auto !important;
     transition: transform 0.32s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.28s ease, visibility 0.28s ease;
     transform: translateY(0);
     opacity: 1;
@@ -47,15 +47,15 @@ body.drawer-open .shop-smart-bottom-footer {
     pointer-events: none !important;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
     .shop-smart-bottom-footer {
-        display: block;
+        display: block !important;
     }
     body {
         padding-bottom: clamp(75px, 18vw, 90px) !important;
     }
 }
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
     .shop-smart-bottom-footer {
         display: none !important;
     }

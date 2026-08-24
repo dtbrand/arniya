@@ -12,24 +12,30 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 99998 !important;
     background: #FFFFFF;
     border-top: 1.5px solid var(--gold-border, rgba(138,104,31,0.25));
     box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
     padding: 6px 10px calc(6px + env(safe-area-inset-bottom, 0px));
-    display: none; /* Desktop default */
+    display: none;
     align-items: center;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    pointer-events: auto !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
     .pdp-mobile-bottom-bar {
-        display: flex;
+        display: flex !important;
     }
     /* Add padding to page bottom so content doesn't get covered by sticky bar */
     .pdp-main-wrapper {
         padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+}
+@media (min-width: 1025px) {
+    .pdp-mobile-bottom-bar {
+        display: none !important;
     }
 }
 
