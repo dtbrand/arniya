@@ -92,6 +92,16 @@ body {
     overflow-x: hidden;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+svg {
+    vertical-align: middle;
+}
+
 /* Master Form Focus Standard: Gold & Platinum Running Border */
 input:focus, select:focus, textarea:focus, .dt-input-field:focus {
     outline: none !important;
@@ -103,23 +113,36 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus {
 }
 
 /* ════════════ MASTER BUTTON MANDATE ════════════ */
-.dt-btn-gold {
+.dt-btn-gold,
+.dt-btn-dark,
+.dt-btn-emerald,
+.dt-btn-pale,
+.dt-btn-info,
+.dt-footer-wa-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.dt-btn-gold {
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
     border: 1px solid #8A681F;
     color: #111827 !important;
     font-weight: 800;
-    font-size: 0.85rem;
     letter-spacing: -0.011em;
-    padding: 8px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
-    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .dt-btn-gold:hover {
     background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
@@ -127,29 +150,18 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
 }
 .dt-btn-gold svg {
-    width: 16px;
-    height: 16px;
+    width: 18px !important;
+    height: 18px !important;
     stroke: #111827;
     stroke-width: 2.2;
     fill: none;
 }
 
 .dt-btn-dark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
     border: 1.2px solid #8A681F;
     color: #FAF5E8 !important;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 8px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
     box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    transition: all 0.2s ease;
 }
 .dt-btn-dark:hover {
     border-color: #D4AF37;
@@ -158,21 +170,10 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus {
 }
 
 .dt-btn-emerald {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
     border: 1px solid #14532D;
     color: #FFFFFF !important;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 8px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
     box-shadow: 0 2px 8px rgba(21, 128, 61, 0.35);
-    transition: all 0.2s ease;
 }
 .dt-btn-emerald:hover {
     background: linear-gradient(135deg, #166534 0%, #15803D 100%);
@@ -181,26 +182,38 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus {
 }
 
 .dt-btn-pale {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
     background: #FAF5E8;
     border: 1px solid #D4AF37;
     color: #705114 !important;
-    font-weight: 700;
+    height: 38px;
+    padding: 0 14px;
     font-size: 0.82rem;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s ease;
 }
 .dt-btn-pale:hover {
     background: #F5ECCE;
     color: #5A4210 !important;
     border-color: #8A681F;
     transform: translateY(-1px);
+}
+
+/* Constrain all SVG icons inside buttons */
+.dt-btn-gold svg,
+.dt-btn-dark svg,
+.dt-btn-emerald svg,
+.dt-btn-pale svg,
+.dt-btn-info svg,
+.dt-footer-wa-btn svg,
+.dt-card-share-btn svg,
+.dt-card-wishlist-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+    min-height: 18px !important;
+    max-height: 18px !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
 
 /* Master Luxury Ambient Hero Box */
@@ -217,6 +230,154 @@ input:focus, select:focus, textarea:focus, .dt-input-field:focus {
     border: 2px solid #D4AF37;
     border-radius: 12px;
     box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.35);
+}
+
+/* ════════════ MASTER FOOTER STYLES ════════════ */
+.dt-master-footer {
+    background: #181512;
+    color: #FAF5E8;
+    border-top: 2px solid #D4AF37;
+    margin-top: 60px;
+    padding: 48px 0 24px;
+    font-family: var(--font-sans);
+}
+.dt-footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.dt-footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+}
+@media (max-width: 1024px) {
+    .dt-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+}
+@media (max-width: 600px) {
+    .dt-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+.dt-footer-col {
+    display: flex;
+    flex-direction: column;
+}
+.dt-footer-logo {
+    height: 38px !important;
+    width: auto !important;
+    max-width: 160px !important;
+    object-fit: contain;
+    margin-bottom: 14px;
+    display: block;
+}
+.dt-footer-desc {
+    font-size: 0.82rem;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+.dt-footer-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.dt-trust-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FFE699;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    width: fit-content;
+}
+.dt-footer-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    position: relative;
+    padding-bottom: 6px;
+}
+.dt-footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background: #D4AF37;
+    border-radius: 2px;
+}
+.dt-footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dt-footer-links li a {
+    color: #CBD5E1;
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+.dt-footer-links li a:hover {
+    color: #FFE699;
+    transform: translateX(3px);
+}
+.dt-footer-contact-item {
+    font-size: 0.82rem;
+    color: #CBD5E1;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+.dt-footer-contact-item strong {
+    color: #FFFFFF;
+}
+.dt-footer-wa-btn {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    border: 1px solid #14532D;
+    color: #FFFFFF !important;
+    margin-top: 10px;
+    width: fit-content;
+    height: 38px;
+}
+.dt-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 20px;
+    font-size: 0.75rem;
+    color: #94A3B8;
+}
+.dt-footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.dt-footer-bottom-links a {
+    color: #CBD5E1;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.dt-footer-bottom-links a:hover {
+    color: #FFE699;
 }
 
 /* Toast Container */

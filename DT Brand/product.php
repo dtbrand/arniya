@@ -303,7 +303,7 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
                 <!-- Action Buttons -->
                 <div class="dt-pdp-action-grid">
                     <button type="button" class="dt-btn-gold" style="height:44px; font-size:0.9rem;" onclick="addPdpToCart()">
-                        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <svg viewBox="0 0 24 24" style="width:18px; height:18px; stroke:#111827; fill:none; stroke-width:2.2;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                         <span>Add to Bag</span>
                     </button>
                     <button type="button" class="dt-btn-dark" style="height:44px; font-size:0.9rem;" onclick="buyNowPdp()">
@@ -313,14 +313,15 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 
                 <!-- WhatsApp Enquiry & Smart Share -->
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:24px;">
-                    <a href="https://wa.me/919876543210?text=Hi%20DT%20Brands,%20I%20am%20enquiring%20about%20<?= urlencode($product['name']) ?>%20(SKU:%20<?= urlencode($product['sku']) ?>)" target="_blank" rel="noopener" class="dt-btn-emerald">
-                        <svg viewBox="0 0 24 24"><path fill="#FFF" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                    <a href="https://wa.me/919876543210?text=Hi%20DT%20Brands,%20I%20am%20enquiring%20about%20<?= urlencode($product['name']) ?>%20(SKU:%20<?= urlencode($product['sku']) ?>)" target="_blank" rel="noopener" class="dt-btn-emerald" style="height:42px;">
+                        <svg viewBox="0 0 24 24" style="width:18px; height:18px; min-width:18px; max-width:18px; flex-shrink:0;"><path fill="#FFF" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
                         <span>WhatsApp Enquiry</span>
                     </a>
-                    <button type="button" class="dt-btn-pale" onclick="openSmartShare(<?= $product['id'] ?>)">
-                        <span>💬 WhatsApp Smart Share</span>
+                    <button type="button" class="dt-btn-pale" style="height:42px;" onclick="openSmartShare(<?= $product['id'] ?>)">
+                        <svg viewBox="0 0 24 24" style="width:18px; height:18px; min-width:18px; max-width:18px; flex-shrink:0;"><path fill="#15803D" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+                        <span>WhatsApp Smart Share</span>
                     </button>
-                    <button type="button" class="dt-btn-pale" onclick="openSizeChartModal()" style="grid-column: span 2;">
+                    <button type="button" class="dt-btn-pale" onclick="openSizeChartModal()" style="grid-column: span 2; height:38px;">
                         <span>📏 View Saree Dimensions &amp; Size Guide</span>
                     </button>
                 </div>
