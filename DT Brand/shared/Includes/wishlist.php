@@ -197,7 +197,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                 name: 'Royal Anarkali Kurti',
                 price: 2799,
                 old_price: 3900,
-                image: '/Shared/Asset/images/product5.png',
+                image: '/assets/images/product5.png',
                 category: 'Kurtis',
                 fabric: 'Cotton',
                 color: 'Green'
@@ -207,7 +207,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                 name: 'Ivory Designer Gown',
                 price: 7499,
                 old_price: 9500,
-                image: '/Shared/Asset/images/product8.png',
+                image: '/assets/images/product8.png',
                 category: 'Gowns',
                 fabric: 'Chiffon',
                 color: 'White'
@@ -296,10 +296,10 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         if (items.length === 0) {
             /* Render Animated Floating Heart SVG Empty Wishlist + Recommended Product Slider */
             var products = window.allProducts || [
-                { id: 2, name: 'Banarasi Zari Saree', price: 8499, image: '/Shared/Asset/images/product2.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Shared/Asset/images/product4.png' },
-                { id: 6, name: 'Bridal Zardosi Lehenga', price: 24999, image: '/Shared/Asset/images/product6.png' },
-                { id: 7, name: 'Mustard Block Print', price: 1899, image: '/Shared/Asset/images/product7.png' }
+                { id: 2, name: 'Banarasi Zari Saree', price: 8499, image: '/assets/images/product2.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/assets/images/product4.png' },
+                { id: 6, name: 'Bridal Zardosi Lehenga', price: 24999, image: '/assets/images/product6.png' },
+                { id: 7, name: 'Mustard Block Print', price: 1899, image: '/assets/images/product7.png' }
             ];
 
             var fullList = products.concat(products);
@@ -350,7 +350,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         } else {
             var html = '';
             items.forEach(function(item, idx) {
-                var imgUrl = item.image || '/Shared/Asset/images/product1.png';
+                var imgUrl = item.image || '/assets/images/product1.png';
 
                 html += '<div class="wd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" />' +
@@ -405,7 +405,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         window.toggleWishlistProduct = function(productOrId) {
         if (!productOrId) return false;
         var p = (typeof productOrId === 'object' && productOrId !== null) ? productOrId :
-            ((window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return x.id == productOrId || String(x.id) === String(productOrId); }) || { id: productOrId, name: 'Saved Item', price: 2999, image: '/Shared/Asset/images/product1.png' });
+            ((window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return x.id == productOrId || String(x.id) === String(productOrId); }) || { id: productOrId, name: 'Saved Item', price: 2999, image: '/assets/images/product1.png' });
         
         var idx = (window.wishlistState || []).findIndex(function(item) { return item && (item.id == p.id || String(item.id) === String(p.id)); });
         var added = false;

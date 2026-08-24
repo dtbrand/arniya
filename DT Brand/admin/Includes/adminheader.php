@@ -21,7 +21,7 @@ if (!headers_sent()) {
 
             <!-- Mobile Brand Logo Link -->
             <a href="/admin" class="adm-mobile-brand-link" title="DT Brand's Admin CRM">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="adm-mobile-logo-img">
+                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="adm-mobile-logo-img">
                 <span class="adm-mobile-brand-title">DT Brand's</span>
             </a>
 
@@ -80,7 +80,7 @@ if (!headers_sent()) {
 
             <!-- Admin Profile Pill -->
             <div class="adm-hdr-profile" onclick="if(typeof switchAdmTab==='function') switchAdmTab('settings');" title="Super Admin">
-                <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" class="adm-hdr-avatar">
+                <img src="/assets/images/profile.png" onerror="this.src='/assets/images/product1.png';" alt="Gautam Sethi" class="adm-hdr-avatar">
                 <div class="adm-hdr-user-text">
                     <span class="adm-hdr-name">Gautam Sethi</span>
                     <span class="adm-hdr-title">Super Admin</span>
@@ -110,13 +110,13 @@ if (!headers_sent()) {
 
     // Fallback Mock Data for Universal Global Search across all Admin pages
     window.DT_GLOBAL_PRODS = [
-        { id: 111, sku: 'KLN-SR-111', name: 'Pure Dola Silk Meenakari Saree', category: 'Sarees', wholesale_price: 1399, retail_price: 3499, stock: 95, image: '/Frontend/Shop/Asset/images/product2.png' },
-        { id: 109, sku: 'KLN-KT-109', name: 'Party Festive Sharara Suit Set', category: 'Kurtis', wholesale_price: 989, retail_price: 2699, stock: 125, image: '/Frontend/Shop/Asset/images/product5.png' },
-        { id: 110, sku: 'KLN-SR-110', name: 'Paithani Rich Pallu Saree', category: 'Sarees', wholesale_price: 1249, retail_price: 3199, stock: 110, image: '/Frontend/Shop/Asset/images/product1.png' },
-        { id: 106, sku: 'KLN-SR-106', name: 'Chanderi Silk Festive Saree', category: 'Sarees', wholesale_price: 649, retail_price: 1599, stock: 190, image: '/Frontend/Shop/Asset/images/product1.png' },
-        { id: 6,   sku: 'KLN-LH-006', name: 'Bridal Zardosi Lehenga Set', category: 'Lehengas', wholesale_price: 16499, retail_price: 24999, stock: 35, image: '/Frontend/Shop/Asset/images/product6.png' },
-        { id: 114, sku: 'KLN-GW-114', name: 'Indo-Western Embroidered Gown', category: 'Gowns', wholesale_price: 1999, retail_price: 4599, stock: 65, image: '/Frontend/Shop/Asset/images/product6.png' },
-        { id: 116, sku: 'KLN-DM-116', name: 'Pure Cotton Unstitched Suit Lot', category: 'Dress Materials', wholesale_price: 599, retail_price: 1499, stock: 180, image: '/Frontend/Shop/Asset/images/product3.png' }
+        { id: 111, sku: 'KLN-SR-111', name: 'Pure Dola Silk Meenakari Saree', category: 'Sarees', wholesale_price: 1399, retail_price: 3499, stock: 95, image: '/assets/images/product2.png' },
+        { id: 109, sku: 'KLN-KT-109', name: 'Party Festive Sharara Suit Set', category: 'Kurtis', wholesale_price: 989, retail_price: 2699, stock: 125, image: '/assets/images/product5.png' },
+        { id: 110, sku: 'KLN-SR-110', name: 'Paithani Rich Pallu Saree', category: 'Sarees', wholesale_price: 1249, retail_price: 3199, stock: 110, image: '/assets/images/product1.png' },
+        { id: 106, sku: 'KLN-SR-106', name: 'Chanderi Silk Festive Saree', category: 'Sarees', wholesale_price: 649, retail_price: 1599, stock: 190, image: '/assets/images/product1.png' },
+        { id: 6,   sku: 'KLN-LH-006', name: 'Bridal Zardosi Lehenga Set', category: 'Lehengas', wholesale_price: 16499, retail_price: 24999, stock: 35, image: '/assets/images/product6.png' },
+        { id: 114, sku: 'KLN-GW-114', name: 'Indo-Western Embroidered Gown', category: 'Gowns', wholesale_price: 1999, retail_price: 4599, stock: 65, image: '/assets/images/product6.png' },
+        { id: 116, sku: 'KLN-DM-116', name: 'Pure Cotton Unstitched Suit Lot', category: 'Dress Materials', wholesale_price: 599, retail_price: 1499, stock: 180, image: '/assets/images/product3.png' }
     ];
 
     window.DT_GLOBAL_ORDERS = [
@@ -260,7 +260,7 @@ if (!headers_sent()) {
             prods.forEach(p => {
                 html += `
                     <div class="adm-live-search-item" onclick="window.selectSearchProduct('${p.id}', '${p.sku}')">
-                        <img src="${p.image}" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="${p.name}" class="adm-live-search-thumb">
+                        <img src="${p.image}" onerror="this.src='/assets/images/product1.png';" alt="${p.name}" class="adm-live-search-thumb">
                         <div class="adm-live-search-info">
                             <div class="adm-live-search-title">${p.name}</div>
                             <div class="adm-live-search-sub">

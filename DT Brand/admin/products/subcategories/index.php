@@ -18,7 +18,7 @@ $subcategories_list = [
         'skus' => '142 SKUs',
         'valuation' => '₹8.40 Lakhs',
         'status' => 'Active',
-        'img' => '/Frontend/Shop/Asset/images/product1.png'
+        'img' => '/assets/images/product1.png'
     ],
     [
         'id' => 2,
@@ -29,7 +29,7 @@ $subcategories_list = [
         'skus' => '98 SKUs',
         'valuation' => '₹5.60 Lakhs',
         'status' => 'Active',
-        'img' => '/Frontend/Shop/Asset/images/product4.png'
+        'img' => '/assets/images/product4.png'
     ],
     [
         'id' => 3,
@@ -40,7 +40,7 @@ $subcategories_list = [
         'skus' => '84 SKUs',
         'valuation' => '₹12.20 Lakhs',
         'status' => 'Active',
-        'img' => '/Frontend/Shop/Asset/images/product3.png'
+        'img' => '/assets/images/product3.png'
     ],
     [
         'id' => 4,
@@ -51,7 +51,7 @@ $subcategories_list = [
         'skus' => '116 SKUs',
         'valuation' => '₹7.10 Lakhs',
         'status' => 'Active',
-        'img' => '/Frontend/Shop/Asset/images/product2.png'
+        'img' => '/assets/images/product2.png'
     ],
     [
         'id' => 5,
@@ -62,7 +62,7 @@ $subcategories_list = [
         'skus' => '64 SKUs',
         'valuation' => '₹2.80 Lakhs',
         'status' => 'Active',
-        'img' => '/Frontend/Shop/Asset/images/product5.png'
+        'img' => '/assets/images/product5.png'
     ]
 ];
 ?>
@@ -233,7 +233,7 @@ $subcategories_list = [
                                 <input type="checkbox" class="subcat-row-check" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:8px 8px;">
-                                <img src="<?php echo htmlspecialchars($sub['img']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
+                                <img src="<?php echo htmlspecialchars($sub['img']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
                             </td>
                             <td style="padding:12px 12px;">
                                 <strong style="font-size:13.5px; color:#181512; display:block; margin-bottom:2px;"><?php echo htmlspecialchars($sub['name']); ?></strong>

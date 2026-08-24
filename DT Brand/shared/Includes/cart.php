@@ -181,7 +181,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     <div class="cart-drawer-content">
         <div class="cd-header">
     <div style="display:flex; align-items:center; gap:10px;">
-        <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+        <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
         <div>
             <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
             <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>
@@ -224,7 +224,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Banarasi Zari Saree',
                 price: 8499,
                 old_price: 11000,
-                image: '/Shared/Asset/images/product2.png',
+                image: '/assets/images/product2.png',
                 size: 'Free Size',
                 color: 'Maroon',
                 qty: 1
@@ -234,7 +234,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Bridal Zardosi Lehenga',
                 price: 24999,
                 old_price: 32000,
-                image: '/Shared/Asset/images/product6.png',
+                image: '/assets/images/product6.png',
                 size: 'S',
                 color: 'Red',
                 qty: 1
@@ -328,11 +328,11 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 
             /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider */
             var products = window.allProducts || [
-                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/Shared/Asset/images/product1.png' },
-                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/Shared/Asset/images/product3.png' },
-                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/Shared/Asset/images/product5.png' },
-                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/Shared/Asset/images/product8.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Shared/Asset/images/product4.png' }
+                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/assets/images/product1.png' },
+                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/assets/images/product3.png' },
+                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/assets/images/product5.png' },
+                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/assets/images/product8.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/assets/images/product4.png' }
             ];
 
             // Render loop duplicates for seamless long scrolling
@@ -390,7 +390,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             var totalPrice = 0;
             items.forEach(function(item, idx) {
                 totalPrice += item.price * item.qty;
-                var imgUrl = item.image || '/Shared/Asset/images/product1.png';
+                var imgUrl = item.image || '/assets/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" />' +

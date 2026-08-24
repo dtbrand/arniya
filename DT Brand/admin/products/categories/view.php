@@ -77,7 +77,7 @@ $prodCount = count($productsList);
 
             <!-- Meta Card -->
             <div style="background:#fff; border:1px solid #c3c4c7; padding:12px 16px; border-radius:3px; margin-bottom:14px; display:flex; align-items:center; gap:16px;">
-                <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:54px; height:54px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" alt="<?php echo htmlspecialchars($catName); ?>">
+                <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:54px; height:54px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" alt="<?php echo htmlspecialchars($catName); ?>">
                 <div>
                     <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 2px 0;"><?php echo htmlspecialchars($catDesc); ?></h3>
                     <p style="font-size:12px; color:#646970; margin:0;">Slug: <code><?php echo htmlspecialchars($catSlug); ?></code> • HSN Code: <strong>5007 (5% GST)</strong> • Display Type: <strong>Default</strong></p>

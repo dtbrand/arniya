@@ -11,7 +11,7 @@
         <!-- Modal Header -->
         <div style="padding:12px 20px; background:#FAF8F4; border-bottom:1px solid #E2DFD7; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
             <div style="display:flex; align-items:center; gap:12px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:38px; width:auto; max-width:120px; object-fit:contain; display:block; flex-shrink:0;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" alt="DT Brand's Logo" style="height:38px; width:auto; max-width:120px; object-fit:contain; display:block; flex-shrink:0;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <h2 style="margin:0; font-size:15px; font-weight:800; color:#181512;">Customer Financial Ledger Statement</h2>

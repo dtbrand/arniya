@@ -17,7 +17,7 @@
                 date: '2026-08-21 11:20 AM',
                 updated: '2026-08-21 11:45 AM',
                 items: [
-                    { name: 'Kanjivaram Silk Saree Pure Zari Weave', sku: 'KNJ-001', variant: 'Royal Ruby / 5.5m', qty: 25, price: 4490, img: '/Shared/Asset/images/product1.png' }
+                    { name: 'Kanjivaram Silk Saree Pure Zari Weave', sku: 'KNJ-001', variant: 'Royal Ruby / 5.5m', qty: 25, price: 4490, img: '/assets/images/product1.png' }
                 ],
                 item_count: 25,
                 amount: 112250,
@@ -44,7 +44,7 @@
                 date: '2026-08-21 10:45 AM',
                 updated: '2026-08-21 11:00 AM',
                 items: [
-                    { name: 'Banarasi Brocade Silk Handloom', sku: 'BNR-004', variant: 'Bridal Crimson', qty: 1, price: 4990, img: '/Shared/Asset/images/product2.png' }
+                    { name: 'Banarasi Brocade Silk Handloom', sku: 'BNR-004', variant: 'Bridal Crimson', qty: 1, price: 4990, img: '/assets/images/product2.png' }
                 ],
                 item_count: 1,
                 amount: 4990,
@@ -71,7 +71,7 @@
                 date: '2026-08-21 09:30 AM',
                 updated: '2026-08-21 10:15 AM',
                 items: [
-                    { name: 'Paithani Peacock Border Handloom', sku: 'PTH-008', variant: 'Emerald Gold', qty: 10, price: 3890, img: '/Shared/Asset/images/product3.png' }
+                    { name: 'Paithani Peacock Border Handloom', sku: 'PTH-008', variant: 'Emerald Gold', qty: 10, price: 3890, img: '/assets/images/product3.png' }
                 ],
                 item_count: 10,
                 amount: 38900,
@@ -98,7 +98,7 @@
                 date: '2026-08-20 04:15 PM',
                 updated: '2026-08-20 05:00 PM',
                 items: [
-                    { name: 'Chanderi Zari Tissue Festive Saree', sku: 'CHD-012', variant: 'Pastel Peach', qty: 6, price: 2490, img: '/Shared/Asset/images/product4.png' }
+                    { name: 'Chanderi Zari Tissue Festive Saree', sku: 'CHD-012', variant: 'Pastel Peach', qty: 6, price: 2490, img: '/assets/images/product4.png' }
                 ],
                 item_count: 6,
                 amount: 14940,
@@ -125,7 +125,7 @@
                 date: '2026-08-20 02:00 PM',
                 updated: '2026-08-20 02:30 PM',
                 items: [
-                    { name: 'Pure Tussar Silk Hand Block Print', sku: 'TSR-019', variant: 'Beige Mustard', qty: 50, price: 2990, img: '/Shared/Asset/images/product5.png' }
+                    { name: 'Pure Tussar Silk Hand Block Print', sku: 'TSR-019', variant: 'Beige Mustard', qty: 50, price: 2990, img: '/assets/images/product5.png' }
                 ],
                 item_count: 50,
                 amount: 149500,
@@ -152,7 +152,7 @@
                 date: '2026-08-19 11:10 AM',
                 updated: '2026-08-19 03:00 PM',
                 items: [
-                    { name: 'Kalamkari Hand Painted Silk Saree', sku: 'KLM-005', variant: 'Indigo Gold', qty: 1, price: 3290, img: '/Shared/Asset/images/product6.png' }
+                    { name: 'Kalamkari Hand Painted Silk Saree', sku: 'KLM-005', variant: 'Indigo Gold', qty: 1, price: 3290, img: '/assets/images/product6.png' }
                 ],
                 item_count: 1,
                 amount: 3290,
@@ -179,7 +179,7 @@
                 date: '2026-08-19 09:00 AM',
                 updated: '2026-08-19 10:00 AM',
                 items: [
-                    { name: 'Surat Handloom Georgette Festive Lot', sku: 'GEO-088', variant: 'Assorted (x30)', qty: 30, price: 2490, img: '/Shared/Asset/images/product1.png' }
+                    { name: 'Surat Handloom Georgette Festive Lot', sku: 'GEO-088', variant: 'Assorted (x30)', qty: 30, price: 2490, img: '/assets/images/product1.png' }
                 ],
                 item_count: 30,
                 amount: 74700,
@@ -206,7 +206,7 @@
                 date: '2026-08-18 06:40 PM',
                 updated: '2026-08-19 08:30 AM',
                 items: [
-                    { name: 'Pure Mysore Silk Crepe Saree', sku: 'MYS-014', variant: 'Peacock Blue (x8)', qty: 8, price: 3290, img: '/Shared/Asset/images/product2.png' }
+                    { name: 'Pure Mysore Silk Crepe Saree', sku: 'MYS-014', variant: 'Peacock Blue (x8)', qty: 8, price: 3290, img: '/assets/images/product2.png' }
                 ],
                 item_count: 8,
                 amount: 26320,
@@ -233,7 +233,7 @@
                 date: '2026-08-18 11:00 AM',
                 updated: '2026-08-19 02:00 PM',
                 items: [
-                    { name: 'Banarasi Katan Handloom Silk Lot', sku: 'BNR-099', variant: 'Royal Zari (x5)', qty: 5, price: 6490, img: '/Shared/Asset/images/product3.png' }
+                    { name: 'Banarasi Katan Handloom Silk Lot', sku: 'BNR-099', variant: 'Royal Zari (x5)', qty: 5, price: 6490, img: '/assets/images/product3.png' }
                 ],
                 item_count: 5,
                 amount: 32450,
@@ -260,7 +260,7 @@
                 date: '2026-08-17 05:20 PM',
                 updated: '2026-08-18 01:00 PM',
                 items: [
-                    { name: 'Paithani Pure Silk Traditional Saree', sku: 'PTH-001', variant: 'Magenta Gold (x1)', qty: 1, price: 4990, img: '/Shared/Asset/images/product4.png' }
+                    { name: 'Paithani Pure Silk Traditional Saree', sku: 'PTH-001', variant: 'Magenta Gold (x1)', qty: 1, price: 4990, img: '/assets/images/product4.png' }
                 ],
                 item_count: 1,
                 amount: 4990,
@@ -287,7 +287,7 @@
                 date: '2026-08-17 02:15 PM',
                 updated: '2026-08-17 02:30 PM',
                 items: [
-                    { name: 'Tussar Handloom Saree Festive Silk', sku: 'TSR-003', variant: 'Natural Beige (x1)', qty: 1, price: 2990, img: '/Shared/Asset/images/product5.png' }
+                    { name: 'Tussar Handloom Saree Festive Silk', sku: 'TSR-003', variant: 'Natural Beige (x1)', qty: 1, price: 2990, img: '/assets/images/product5.png' }
                 ],
                 item_count: 1,
                 amount: 2990,

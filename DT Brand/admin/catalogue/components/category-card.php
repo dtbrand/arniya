@@ -7,7 +7,7 @@
 <div class="dt-coll-grid">
     <!-- Card 1 -->
     <div class="dt-coll-card">
-        <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" class="dt-coll-banner" alt="Silk Sarees">
+        <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" class="dt-coll-banner" alt="Silk Sarees">
         <div class="dt-coll-body">
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <h4 style="margin:0 0 4px 0; font-size:13.5px; font-weight:800; color:#181512;">Silk Sarees &amp; Handlooms</h4>
@@ -23,7 +23,7 @@
 
     <!-- Card 2 -->
     <div class="dt-coll-card">
-        <img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product3.png';" class="dt-coll-banner" alt="Bridal Lehengas">
+        <img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" class="dt-coll-banner" alt="Bridal Lehengas">
         <div class="dt-coll-body">
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <h4 style="margin:0 0 4px 0; font-size:13.5px; font-weight:800; color:#181512;">Bridal &amp; Festive Lehengas</h4>
@@ -39,7 +39,7 @@
 
     <!-- Card 3 -->
     <div class="dt-coll-card">
-        <img src="/Frontend/Shop/Asset/images/product4.png" onerror="this.src='/Shared/Asset/images/product4.png';" class="dt-coll-banner" alt="Designer Kurtis">
+        <img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" class="dt-coll-banner" alt="Designer Kurtis">
         <div class="dt-coll-body">
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <h4 style="margin:0 0 4px 0; font-size:13.5px; font-weight:800; color:#181512;">Designer Kurtis &amp; Tunics</h4>
@@ -55,7 +55,7 @@
 
     <!-- Card 4 -->
     <div class="dt-coll-card">
-        <img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" class="dt-coll-banner" alt="Banarasi Brocades">
+        <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" class="dt-coll-banner" alt="Banarasi Brocades">
         <div class="dt-coll-body">
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <h4 style="margin:0 0 4px 0; font-size:13.5px; font-weight:800; color:#181512;">Banarasi Brocades</h4>

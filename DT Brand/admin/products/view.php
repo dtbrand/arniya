@@ -37,7 +37,7 @@ if ($p) {
         'stock' => ($p['stock_qty'] ?? 50) . ' units',
         'stock_pct' => '80%',
         'stock_color' => '#15803D',
-        'image' => $p['image'] ?? '/Frontend/Shop/Asset/images/product1.png',
+        'image' => $p['image'] ?? '/assets/images/product1.png',
         'views' => '4,820',
         'cart_adds' => '842',
         'sold' => '142 pcs',
@@ -65,7 +65,7 @@ if ($p) {
         'stock' => '0 units',
         'stock_pct' => '0%',
         'stock_color' => '#DC2626',
-        'image' => '/Frontend/Shop/Asset/images/product1.png',
+        'image' => '/assets/images/product1.png',
         'views' => '0',
         'cart_adds' => '0',
         'sold' => '0 pcs',
@@ -165,7 +165,7 @@ if ($p) {
             <div class="dt-view-grid">
                 <!-- Left Sticky Preview Card -->
                 <div class="dt-view-sticky-card">
-                    <img src="<?php echo $prod['image']; ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; height:260px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;" alt="<?php echo htmlspecialchars($prod['name']); ?>">
+                    <img src="<?php echo $prod['image']; ?>" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:260px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;" alt="<?php echo htmlspecialchars($prod['name']); ?>">
                     
                     <div style="margin-top:14px;">
                         <h4 style="font-size:13.5px; font-weight:700; color:#1d2327; margin:0 0 6px 0;">Multi-Tier Pricing</h4>

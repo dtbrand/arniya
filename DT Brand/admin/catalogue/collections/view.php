@@ -18,7 +18,7 @@ $collections_db = [
         'valuation' => '₹4.80 L',
         'views' => '18,340',
         'growth' => '+24.5% this month',
-        'image' => '/Frontend/Shop/Asset/images/product1.png'
+        'image' => '/assets/images/product1.png'
     ],
     2 => [
         'title' => 'Royal Bridal Grandeur 2026',
@@ -29,7 +29,7 @@ $collections_db = [
         'valuation' => '₹8.40 L',
         'views' => '14,200',
         'growth' => '+28.0% this month',
-        'image' => '/Frontend/Shop/Asset/images/product6.png'
+        'image' => '/assets/images/product6.png'
     ],
     3 => [
         'title' => 'Diwali Festive Handloom Edit',
@@ -40,7 +40,7 @@ $collections_db = [
         'valuation' => '₹3.90 L',
         'views' => '16,500',
         'growth' => '+19.2% this month',
-        'image' => '/Frontend/Shop/Asset/images/product2.png'
+        'image' => '/assets/images/product2.png'
     ],
     4 => [
         'title' => 'Summer Daily Wear Kurtis',
@@ -51,7 +51,7 @@ $collections_db = [
         'valuation' => '₹1.85 L',
         'views' => '22,400',
         'growth' => '+15.4% this month',
-        'image' => '/Frontend/Shop/Asset/images/product4.png'
+        'image' => '/assets/images/product4.png'
     ],
     5 => [
         'title' => 'Surat Central Depot Ready Stock',
@@ -62,7 +62,7 @@ $collections_db = [
         'valuation' => '₹11.20 L',
         'views' => '29,800',
         'growth' => '+32.1% this month',
-        'image' => '/Frontend/Shop/Asset/images/product5.png'
+        'image' => '/assets/images/product5.png'
     ],
     6 => [
         'title' => 'Silk Mark Certified Heritage Sarees',
@@ -73,7 +73,7 @@ $collections_db = [
         'valuation' => '₹5.60 L',
         'views' => '12,900',
         'growth' => '+11.8% this month',
-        'image' => '/Frontend/Shop/Asset/images/product1.png'
+        'image' => '/assets/images/product1.png'
     ],
     7 => [
         'title' => 'Reseller Low MOQ Deals (MOQ 4)',
@@ -84,7 +84,7 @@ $collections_db = [
         'valuation' => '₹2.90 L',
         'views' => '34,100',
         'growth' => '+41.0% this month',
-        'image' => '/Frontend/Shop/Asset/images/product3.png'
+        'image' => '/assets/images/product3.png'
     ],
     8 => [
         'title' => 'Wedding Trousseau Master Box',
@@ -95,7 +95,7 @@ $collections_db = [
         'valuation' => '₹6.75 L',
         'views' => '9,400',
         'growth' => '+16.5% this month',
-        'image' => '/Frontend/Shop/Asset/images/product6.png'
+        'image' => '/assets/images/product6.png'
     ]
 ];
 
@@ -125,7 +125,7 @@ $coll = isset($collections_db[$coll_id]) ? $collections_db[$coll_id] : $collecti
             
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <img src="<?php echo htmlspecialchars($coll['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
+                    <img src="<?php echo htmlspecialchars($coll['image']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
                     <div>
                         <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;"><?php echo htmlspecialchars($coll['title']); ?></h1>
                         <div style="font-size:11.5px; color:#64748b; margin-top:2px;">

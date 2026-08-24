@@ -436,7 +436,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/reseller.css?v=1787019062?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/reseller.css?v=1787019062&v=<?= time() ?>">
 
     <style>
         .ws-smart-input-wrap svg,
@@ -4331,7 +4331,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE (END OF BODY)
     ═══════════════════════════════════════════ -->
-    <script src="/assets/js/reseller.js?v=1787019062?v=<?= time() ?>"></script>
+    <script src="/assets/js/reseller.js?v=1787019062&v=<?= time() ?>"></script>
 
 </body>
 </html>

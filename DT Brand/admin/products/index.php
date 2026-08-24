@@ -436,7 +436,7 @@ $active_subnav = "";
                             <?php foreach ($productsList as $p): ?>
                                 <?php
                                 $rowId = "row-prod-" . $p['id'];
-                                $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                                $img = !empty($p['image']) ? $p['image'] : '/assets/images/product1.png';
                                 $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
                                 $isLow = ($qty < 20 && $qty > 0);
                                 $isOut = ($qty <= 0);
@@ -457,7 +457,7 @@ $active_subnav = "";
                                         <input type="checkbox" class="wp-row-check" value="<?= $p['id'] ?>" style="cursor:pointer; width:14px; height:14px;">
                                     </td>
                                     <td style="padding:8px 6px;">
-                                        <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="<?= htmlspecialchars($p['title']) ?>" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                        <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/assets/images/product1.png';" class="wp-thumb-img" alt="<?= htmlspecialchars($p['title']) ?>" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
                                     </td>
                                     <td style="padding:8px 10px;">
                                         <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;"><?= htmlspecialchars($p['title']) ?></a>
@@ -508,7 +508,7 @@ $active_subnav = "";
                 <?php foreach ($productsList as $p): ?>
                     <?php
                     $cardId = "card-prod-" . $p['id'];
-                    $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                    $img = !empty($p['image']) ? $p['image'] : '/assets/images/product1.png';
                     $catName = $p['category'] ?? 'Silk Sarees';
                     $sku = $p['sku'] ?? ('DT-SKU-' . $p['id']);
                     $rp = (float)($p['retail_price'] ?? 0);
@@ -518,7 +518,7 @@ $active_subnav = "";
                     ?>
                     <div class="dt-ws-card" id="<?= $cardId ?>">
                         <div style="position:relative;">
-                            <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-ws-card-img" alt="<?= htmlspecialchars($p['title']) ?>">
+                            <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/assets/images/product1.png';" class="dt-ws-card-img" alt="<?= htmlspecialchars($p['title']) ?>">
                             <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#8A681F; color:#fff; font-weight:700; font-size:10px;">Best Seller</span>
                             <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: <?= $p['moq'] ?? 6 ?> Pcs</span>
                         </div>

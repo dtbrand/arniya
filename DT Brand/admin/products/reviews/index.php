@@ -25,7 +25,7 @@ $reviews_list = [
         'product_id' => 101,
         'status' => 'Approved',
         'featured' => true,
-        'user_img' => '/Shared/Asset/images/product1.png'
+        'user_img' => '/assets/images/product1.png'
     ],
     [
         'id' => 2,
@@ -43,7 +43,7 @@ $reviews_list = [
         'product_id' => 204,
         'status' => 'Approved',
         'featured' => false,
-        'user_img' => '/Shared/Asset/images/product2.png'
+        'user_img' => '/assets/images/product2.png'
     ],
     [
         'id' => 3,
@@ -61,7 +61,7 @@ $reviews_list = [
         'product_id' => 305,
         'status' => 'Approved',
         'featured' => true,
-        'user_img' => '/Shared/Asset/images/product3.png'
+        'user_img' => '/assets/images/product3.png'
     ],
     [
         'id' => 4,
@@ -329,7 +329,7 @@ $reviews_list = [
                                 <span style="font-size:11.5px; font-weight:700; color:#181512;"><?php echo $rev['rating']; ?> Rating</span>
                                 <?php if($rev['user_img']): ?>
                                 <div style="margin-top:6px; display:flex; gap:4px;">
-                                    <img src="<?php echo htmlspecialchars($rev['user_img']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" class="dt-user-img-thumb" alt="Customer Photo" title="Click to view full photo">
+                                    <img src="<?php echo htmlspecialchars($rev['user_img']); ?>" onerror="this.src='/assets/images/product1.png';" class="dt-user-img-thumb" alt="Customer Photo" title="Click to view full photo">
                                 </div>
                                 <?php endif; ?>
                             </td>
@@ -346,7 +346,7 @@ $reviews_list = [
                             </td>
                             <td style="padding:12px 10px; vertical-align:top;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product<?php echo ($rev['id'] % 5) + 1; ?>.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37;">
+                                    <img src="/assets/images/product<?php echo ($rev['id'] % 5) + 1; ?>.png" onerror="this.src='/assets/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37;">
                                     <div>
                                         <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $rev['product_id']; ?>" style="font-size:12px; font-weight:700; color:#181512; text-decoration:none;">
                                             <?php echo htmlspecialchars($rev['product']); ?>

@@ -22,7 +22,7 @@ $curated_products = [
         'stock' => 45,
         'rating' => '5.0',
         'reviews' => 128,
-        'img' => '/Frontend/Shop/Asset/images/product1.png',
+        'img' => '/assets/images/product1.png',
         'status' => 'In stock'
     ],
     [
@@ -39,7 +39,7 @@ $curated_products = [
         'stock' => 28,
         'rating' => '4.9',
         'reviews' => 94,
-        'img' => '/Frontend/Shop/Asset/images/product2.png',
+        'img' => '/assets/images/product2.png',
         'status' => 'In stock'
     ],
     [
@@ -56,7 +56,7 @@ $curated_products = [
         'stock' => 4,
         'rating' => '5.0',
         'reviews' => 42,
-        'img' => '/Frontend/Shop/Asset/images/product3.png',
+        'img' => '/assets/images/product3.png',
         'status' => 'Low stock'
     ],
     [
@@ -73,7 +73,7 @@ $curated_products = [
         'stock' => 32,
         'rating' => '4.9',
         'reviews' => 88,
-        'img' => '/Frontend/Shop/Asset/images/product4.png',
+        'img' => '/assets/images/product4.png',
         'status' => 'In stock'
     ],
     [
@@ -90,7 +90,7 @@ $curated_products = [
         'stock' => 60,
         'rating' => '4.8',
         'reviews' => 76,
-        'img' => '/Frontend/Shop/Asset/images/product5.png',
+        'img' => '/assets/images/product5.png',
         'status' => 'In stock'
     ]
 ];
@@ -329,7 +329,7 @@ $curated_products = [
                                 <input type="checkbox" class="curated-row-check" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:8px 8px;">
-                                <img src="<?php echo htmlspecialchars($p['img']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:44px; height:44px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
+                                <img src="<?php echo htmlspecialchars($p['img']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:44px; height:44px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
                             </td>
                             <td style="padding:10px 12px;">
                                 <strong style="font-size:13px; color:#181512; display:block; margin-bottom:3px;"><?php echo htmlspecialchars($p['title']); ?></strong>
@@ -389,7 +389,7 @@ $curated_products = [
             <div id="curatedGridView" class="dt-ws-grid" style="display:none;">
                 <?php foreach($curated_products as $p): ?>
                 <div class="dt-ws-card">
-                    <img src="<?php echo htmlspecialchars($p['img']); ?>" class="dt-ws-card-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="<?php echo htmlspecialchars($p['img']); ?>" class="dt-ws-card-img" onerror="this.src='/assets/images/product1.png';">
                     <div style="padding:12px; display:flex; flex-direction:column; justify-content:space-between; flex:1;">
                         <div>
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">

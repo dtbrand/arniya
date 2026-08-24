@@ -27,7 +27,7 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
         <tbody id="dtProductTableBody">
             <?php foreach ($productsList as $p): ?>
             <?php 
-                $pImg = !empty($p['image']) ? $p['image'] : ('/Frontend/Shop/Asset/images/product' . ((($p['id'] - 1) % 8) + 1) . '.png');
+                $pImg = !empty($p['image']) ? $p['image'] : ('/assets/images/product' . ((($p['id'] - 1) % 8) + 1) . '.png');
                 $pStatus = $p['status'] ?? 'in_stock';
                 $badgeClass = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'success' : ($pStatus === 'draft' ? 'warning' : 'danger');
                 $statusLabel = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'Active' : ucfirst($pStatus);
@@ -37,7 +37,7 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
                     <input type="checkbox" class="dt-prod-row-check" value="<?= $p['id'] ?>" onchange="window.handleRowSelect()" style="cursor:pointer;">
                 </td>
                 <td style="padding: 6px 4px;">
-                    <img src="<?= htmlspecialchars($pImg) ?>" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-prod-img" alt="<?= htmlspecialchars($p['title'] ?? $p['name']) ?>" style="width:36px; height:48px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
+                    <img src="<?= htmlspecialchars($pImg) ?>" onerror="this.onerror=null; this.src='/assets/images/product1.png';" class="dt-prod-img" alt="<?= htmlspecialchars($p['title'] ?? $p['name']) ?>" style="width:36px; height:48px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
                 </td>
                 <td style="padding: 6px 6px;">
                     <a href="/DT%20Brand/admin/products/view.php?id=<?= $p['id'] ?>" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;"><?= htmlspecialchars($p['title'] ?? $p['name']) ?></a>

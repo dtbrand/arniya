@@ -109,7 +109,7 @@ $active_subnav = "banners";
                                 </div>
                             </div>
                             <div class="dt-upload-zone" onclick="document.getElementById('deskBannerUpload').click()" style="padding:12px;">
-                                <img id="deskBannerPreview" src="/Frontend/Shop/Asset/images/product1.png" style="width:100%; height:90px; object-fit:cover; border-radius:4px; margin-bottom:6px; border:1px solid #e2e8f0;">
+                                <img id="deskBannerPreview" src="/assets/images/product1.png" style="width:100%; height:90px; object-fit:cover; border-radius:4px; margin-bottom:6px; border:1px solid #e2e8f0;">
                                 <input type="file" id="deskBannerUpload" style="display:none;" onchange="window.DT_CATALOGUE.previewImage(this, 'deskBannerPreview')">
                                 <span style="font-size:11px; font-weight:700; color:#8A681F;">Click to Upload / Change Desktop Banner Image</span>
                             </div>
@@ -142,7 +142,7 @@ $active_subnav = "banners";
                                 </div>
                             </div>
                             <div class="dt-upload-zone" onclick="document.getElementById('mobileBannerUpload').click()" style="padding:12px;">
-                                <img id="mobileBannerPreview" src="/Frontend/Shop/Asset/images/product2.png" style="width:100%; max-width:240px; height:110px; object-fit:cover; border-radius:6px; margin:0 auto 6px auto; display:block; border:1px solid #e2e8f0;">
+                                <img id="mobileBannerPreview" src="/assets/images/product2.png" style="width:100%; max-width:240px; height:110px; object-fit:cover; border-radius:6px; margin:0 auto 6px auto; display:block; border:1px solid #e2e8f0;">
                                 <input type="file" id="mobileBannerUpload" style="display:none;" onchange="window.DT_CATALOGUE.previewImage(this, 'mobileBannerPreview')">
                                 <span style="font-size:11px; font-weight:700; color:#8A681F;">Click to Upload Dedicated Mobile Banner Image</span>
                             </div>
@@ -212,7 +212,7 @@ $active_subnav = "banners";
 
                         <!-- Desktop View Container -->
                         <div id="prevBoxDesk" style="display:none; width:100%; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden; background:#181512;">
-                            <img src="/Frontend/Shop/Asset/images/product1.png" id="liveDeskImg" style="width:100%; height:90px; object-fit:cover; display:block;">
+                            <img src="/assets/images/product1.png" id="liveDeskImg" style="width:100%; height:90px; object-fit:cover; display:block;">
                         </div>
 
                         <!-- Authentic Mobile Phone View Container -->
@@ -224,7 +224,7 @@ $active_subnav = "banners";
                                     <span style="font-size:8px; background:#D4AF37; color:#181512; padding:1px 4px; border-radius:3px;">SURAT B2B</span>
                                 </div>
                                 <div class="dt-mobile-banner-slot" id="mobBannerSlot">
-                                    <img src="/Frontend/Shop/Asset/images/product2.png" id="liveMobImg" alt="Mobile Banner">
+                                    <img src="/assets/images/product2.png" id="liveMobImg" alt="Mobile Banner">
                                 </div>
                                 <div class="dt-mobile-banner-dots">
                                     <span class="dt-mobile-dot active"></span>
@@ -235,11 +235,11 @@ $active_subnav = "banners";
                                     <div style="font-size:9px; font-weight:800; color:#181512; margin-bottom:4px;">🔥 SURAT READY STOCK LOTS</div>
                                     <div class="dt-mobile-mini-grid">
                                         <div class="dt-mobile-mini-card">
-                                            <img src="/Frontend/Shop/Asset/images/product1.png">
+                                            <img src="/assets/images/product1.png">
                                             <div style="font-size:8px; font-weight:700; color:#15803D;">₹2,850 <small style="color:#64748b;">(Wholesale)</small></div>
                                         </div>
                                         <div class="dt-mobile-mini-card">
-                                            <img src="/Frontend/Shop/Asset/images/product3.png">
+                                            <img src="/assets/images/product3.png">
                                             <div style="font-size:8px; font-weight:700; color:#15803D;">₹3,200 <small style="color:#64748b;">(Wholesale)</small></div>
                                         </div>
                                     </div>

@@ -18,7 +18,7 @@ $categories_db = [
         'valuation' => '₹18.40 L',
         'views' => '24,580',
         'growth' => '+18.4% this month',
-        'image' => '/Frontend/Shop/Asset/images/product1.png'
+        'image' => '/assets/images/product1.png'
     ],
     2 => [
         'name' => 'Bridal & Festive Lehengas',
@@ -29,7 +29,7 @@ $categories_db = [
         'valuation' => '₹14.50 L',
         'views' => '19,240',
         'growth' => '+22.6% this month',
-        'image' => '/Frontend/Shop/Asset/images/product6.png'
+        'image' => '/assets/images/product6.png'
     ],
     3 => [
         'name' => 'Designer Kurtis & Tunics',
@@ -40,7 +40,7 @@ $categories_db = [
         'valuation' => '₹8.90 L',
         'views' => '31,800',
         'growth' => '+15.2% this month',
-        'image' => '/Frontend/Shop/Asset/images/product4.png'
+        'image' => '/assets/images/product4.png'
     ],
     4 => [
         'name' => 'Dress Materials & Unstitched',
@@ -51,7 +51,7 @@ $categories_db = [
         'valuation' => '₹6.75 L',
         'views' => '14,350',
         'growth' => '+9.8% this month',
-        'image' => '/Frontend/Shop/Asset/images/product5.png'
+        'image' => '/assets/images/product5.png'
     ],
     5 => [
         'name' => 'Banarasi Brocades',
@@ -62,7 +62,7 @@ $categories_db = [
         'valuation' => '₹12.20 L',
         'views' => '16,700',
         'growth' => '+14.1% this month',
-        'image' => '/Frontend/Shop/Asset/images/product2.png'
+        'image' => '/assets/images/product2.png'
     ],
     6 => [
         'name' => 'Festive Dupattas & Stoles',
@@ -73,7 +73,7 @@ $categories_db = [
         'valuation' => '₹2.80 L',
         'views' => '8,900',
         'growth' => '+5.4% this month',
-        'image' => '/Frontend/Shop/Asset/images/product3.png'
+        'image' => '/assets/images/product3.png'
     ]
 ];
 
@@ -103,7 +103,7 @@ $cat = isset($categories_db[$cat_id]) ? $categories_db[$cat_id] : $categories_db
             
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <img src="<?php echo htmlspecialchars($cat['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
+                    <img src="<?php echo htmlspecialchars($cat['image']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
                     <div>
                         <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;"><?php echo htmlspecialchars($cat['name']); ?></h1>
                         <div style="font-size:11.5px; color:#64748b; margin-top:2px;">Slug: <code>/shop/<?php echo htmlspecialchars($cat['slug']); ?></code> • <?php echo htmlspecialchars($cat['skus']); ?> Active</div>

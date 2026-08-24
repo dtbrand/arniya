@@ -22,7 +22,7 @@ $variants_matrix = [
         'wholesale' => '₹2,850',
         'stock' => 18,
         'status' => 'In Stock',
-        'img' => '/Frontend/Shop/Asset/images/product1.png'
+        'img' => '/assets/images/product1.png'
     ],
     [
         'id' => 1012,
@@ -37,7 +37,7 @@ $variants_matrix = [
         'wholesale' => '₹2,850',
         'stock' => 15,
         'status' => 'In Stock',
-        'img' => '/Frontend/Shop/Asset/images/product1.png'
+        'img' => '/assets/images/product1.png'
     ],
     [
         'id' => 1013,
@@ -52,7 +52,7 @@ $variants_matrix = [
         'wholesale' => '₹2,850',
         'stock' => 12,
         'status' => 'In Stock',
-        'img' => '/Frontend/Shop/Asset/images/product1.png'
+        'img' => '/assets/images/product1.png'
     ],
     [
         'id' => 2041,
@@ -67,7 +67,7 @@ $variants_matrix = [
         'wholesale' => '₹3,200',
         'stock' => 16,
         'status' => 'In Stock',
-        'img' => '/Frontend/Shop/Asset/images/product2.png'
+        'img' => '/assets/images/product2.png'
     ],
     [
         'id' => 2042,
@@ -82,7 +82,7 @@ $variants_matrix = [
         'wholesale' => '₹3,200',
         'stock' => 8,
         'status' => 'In Stock',
-        'img' => '/Frontend/Shop/Asset/images/product2.png'
+        'img' => '/assets/images/product2.png'
     ],
     [
         'id' => 3051,
@@ -97,7 +97,7 @@ $variants_matrix = [
         'wholesale' => '₹11,500',
         'stock' => 4,
         'status' => 'Low Stock',
-        'img' => '/Frontend/Shop/Asset/images/product3.png'
+        'img' => '/assets/images/product3.png'
     ]
 ];
 ?>
@@ -254,7 +254,7 @@ $variants_matrix = [
                                 <input type="checkbox" class="variant-row-check" style="cursor:pointer; width:15px; height:15px;">
                             </td>
                             <td style="padding:8px 8px;">
-                                <img src="<?php echo htmlspecialchars($v['img']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
+                                <img src="<?php echo htmlspecialchars($v['img']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
                             </td>
                             <td style="padding:10px 12px;">
                                 <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $v['parent_id']; ?>" style="font-size:13px; font-weight:700; color:#181512; text-decoration:none;">

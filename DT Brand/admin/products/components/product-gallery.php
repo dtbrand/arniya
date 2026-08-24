@@ -41,7 +41,7 @@
                     <!-- Main Photo Preview Container -->
                     <div class="dt-main-photo-preview-wrap" id="mainPhotoPreviewWrap">
                         <div class="dt-main-photo-img-holder">
-                            <img id="mainPhotoImg" src="<?php echo isset($prod['primary_image']) ? htmlspecialchars($prod['primary_image']) : '/Frontend/Shop/Asset/images/product1.png'; ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Main Product Photo">
+                            <img id="mainPhotoImg" src="<?php echo isset($prod['primary_image']) ? htmlspecialchars($prod['primary_image']) : '/assets/images/product1.png'; ?>" onerror="this.src='/assets/images/product1.png';" alt="Main Product Photo">
                             
                             <!-- Overlay on Hover -->
                             <div class="dt-main-photo-overlay">
@@ -125,7 +125,7 @@
                             <!-- Video Item 1 (Primary Model Draping Walkthrough) -->
                             <div class="dt-video-item-card" data-video-id="1">
                                 <div class="dt-video-card-thumb">
-                                    <video controls playsinline preload="metadata" poster="/Shared/Asset/images/product1.png">
+                                    <video controls playsinline preload="metadata" poster="/assets/images/product1.png">
                                         <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
                                     </video>
                                     <span class="dt-video-hd-badge">
@@ -198,9 +198,9 @@
             <div class="dt-gallery-preview-grid" id="dtGalleryPreviewGrid" style="margin-top:10px;">
                 
                 <!-- Gallery Item 1 (Angle 2) -->
-                <div class="dt-gallery-card" data-src="/Shared/Asset/images/product2.png">
+                <div class="dt-gallery-card" data-src="/assets/images/product2.png">
                     <div class="dt-gallery-img-wrap">
-                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" alt="Angle 2">
+                        <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" alt="Angle 2">
                         <div class="dt-gallery-card-actions">
                             <button type="button" class="dt-gaction-btn make-main" title="Set as Main Photo" onclick="setAsMainPhoto(this);">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -215,9 +215,9 @@
                 </div>
 
                 <!-- Gallery Item 2 (Angle 3) -->
-                <div class="dt-gallery-card" data-src="/Shared/Asset/images/product3.png">
+                <div class="dt-gallery-card" data-src="/assets/images/product3.png">
                     <div class="dt-gallery-img-wrap">
-                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" alt="Angle 3">
+                        <img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" alt="Angle 3">
                         <div class="dt-gallery-card-actions">
                             <button type="button" class="dt-gaction-btn make-main" title="Set as Main Photo" onclick="setAsMainPhoto(this);">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>

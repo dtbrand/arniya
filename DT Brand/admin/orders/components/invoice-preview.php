@@ -19,7 +19,7 @@ $grand_total = $subtotal + $tax_gst;
     <!-- Letterhead Header with Real Brand Logo -->
     <div class="dt-doc-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:16px; margin-bottom:20px;">
         <div style="display:flex; align-items:center; gap:16px;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:54px; width:auto; max-width:180px; object-fit:contain; display:block; flex-shrink:0;">
+            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" alt="DT Brand's Logo" style="height:54px; width:auto; max-width:180px; object-fit:contain; display:block; flex-shrink:0;">
             <div>
                 <h2 class="dt-doc-brand-title" style="margin:0; font-size:20px; font-weight:800; color:#181512; letter-spacing:-0.02em; line-height:1.2;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
                 <div class="dt-doc-brand-subtitle" style="font-size:11px; color:#64748B; margin-top:3px; line-height:1.35;">
@@ -69,7 +69,7 @@ $grand_total = $subtotal + $tax_gst;
                 <td style="padding:10px; color:#64748B; vertical-align:middle;"><?php echo ($idx + 1); ?></td>
                 <td style="padding:10px; vertical-align:middle;">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <img src="<?php echo $it['image'] ?? '/Shared/Asset/images/product1.png'; ?>" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Product Photo" style="width:42px; height:42px; border-radius:6px; object-fit:cover; border:1px solid #E2DFD7; background:#FAF8F4; flex-shrink:0;">
+                        <img src="<?php echo $it['image'] ?? '/assets/images/product1.png'; ?>" onerror="this.onerror=null; this.src='/assets/images/product1.png';" alt="Product Photo" style="width:42px; height:42px; border-radius:6px; object-fit:cover; border:1px solid #E2DFD7; background:#FAF8F4; flex-shrink:0;">
                         <div>
                             <strong style="color:#181512; font-size:12.5px; line-height:1.3; display:block;"><?php echo htmlspecialchars($it['name']); ?></strong>
                             <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">

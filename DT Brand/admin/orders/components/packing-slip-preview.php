@@ -14,7 +14,7 @@ $items = isset($order['items']) ? $order['items'] : [
         'variant' => 'Royal Ruby / 5.5m',
         'color_name' => 'Royal Ruby',
         'color_hex' => '#9B111E',
-        'image' => '/Shared/Asset/images/product1.png',
+        'image' => '/assets/images/product1.png',
         'qty' => 25
     ]
 ];
@@ -74,7 +74,7 @@ $items = isset($order['items']) ? $order['items'] : [
                 <td style="padding:10px; color:#64748B; vertical-align:middle;"><?php echo ($idx + 1); ?></td>
                 <td style="padding:10px; vertical-align:middle;">
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <img src="<?php echo $it['image'] ?? '/Shared/Asset/images/product1.png'; ?>" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Product Photo" style="width:46px; height:46px; border-radius:6px; object-fit:cover; border:1px solid #E2DFD7; background:#FAF8F4; flex-shrink:0;">
+                        <img src="<?php echo $it['image'] ?? '/assets/images/product1.png'; ?>" onerror="this.onerror=null; this.src='/assets/images/product1.png';" alt="Product Photo" style="width:46px; height:46px; border-radius:6px; object-fit:cover; border:1px solid #E2DFD7; background:#FAF8F4; flex-shrink:0;">
                         <div>
                             <strong style="color:#181512; font-size:12.5px; line-height:1.3; display:block;"><?php echo htmlspecialchars($it['name']); ?></strong>
                             <span style="font-size:10.5px; font-family:monospace; color:#8A681F; font-weight:700;">SKU: <?php echo htmlspecialchars($it['sku']); ?></span>

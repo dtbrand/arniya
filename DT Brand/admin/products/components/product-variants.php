@@ -445,7 +445,7 @@ function submitNewColorVariation() {
         </div>
         <div style="padding:10px 12px; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;">
             <div style="width:75px; text-align:center;">
-                <img src="/Shared/Asset/images/product4.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:68px; height:68px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
+                <img src="/assets/images/product4.png" onerror="this.src='/assets/images/product1.png';" style="width:68px; height:68px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7; cursor:pointer;" title="Click to upload color photo" onclick="this.nextElementSibling.click()">
                 <input type="file" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader();r.onload=e=>this.previousElementSibling.src=e.target.result;r.readAsDataURL(this.files[0]);window.showToast('${colorName} photo updated');}">
                 <button type="button" class="dt-btn-action-sm pale-gold" style="font-size:9.5px; padding:2px 6px; margin-top:4px; width:100%; justify-content:center;" onclick="this.previousElementSibling.click()">
                     <span>Upload</span>

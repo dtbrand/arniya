@@ -1003,11 +1003,11 @@
 
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
-        <a href="../../Frontend/Shop/shop.php" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
+        <a href="../../shop" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
-        <a href="../../Frontend/Shop/shop.php" class="return-shop-btn">
+        <a href="../../shop" class="return-shop-btn">
             <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>Back to Shop</span>
         </a>
@@ -1021,7 +1021,7 @@
             <div class="auth-card-header">
                 <!-- Royal Brand Real Logo -->
                 <div class="auth-brand-seal-wrap" style="display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
+                    <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
                 </div>
 
                 <h2 id="authHeading">Sign In</h2>
@@ -1290,7 +1290,7 @@
                                 <span class="order-status-badge status-processing">Processing & Stitching</span>
                             </div>
                             <div class="order-item-detail">
-                                <img src="/Shared/Asset/images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src="/Shared/Asset/images/product1.png";">
+                                <img src="/assets/images/product3.png" alt="Lehenga" class="order-thumb" onerror="this.src="/assets/images/product1.png";">
                                 <div>
                                     <div style="font-weight:800; color:var(--dark-text);">Bridal Zardozi Velvet Lehenga</div>
                                     <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Size: M • Colour: Maroon • Qty: 1</div>
@@ -1311,7 +1311,7 @@
                                 <span class="order-status-badge status-delivered">Delivered</span>
                             </div>
                             <div class="order-item-detail">
-                                <img src="/Shared/Asset/images/product1.png" alt="Saree" class="order-thumb">
+                                <img src="/assets/images/product1.png" alt="Saree" class="order-thumb">
                                 <div>
                                     <div style="font-weight:800; color:var(--dark-text);">Royal Banarasi Kanjeevaram Saree</div>
                                     <div style="font-size:0.75rem; color:var(--light-text); margin-top:2px;">Free Size • Colour: Royal Gold • Qty: 1</div>
@@ -1331,11 +1331,11 @@
                 <div style="display:flex; flex-direction:column; gap:16px;">
                     
                     <div class="stat-tiles">
-                        <a href="../../Frontend/Shop/shop.php" class="stat-tile">
+                        <a href="../../shop" class="stat-tile">
                             <div class="stat-tile-num" id="dashCartCount">0</div>
                             <div class="stat-tile-lbl">Bag Items</div>
                         </a>
-                        <a href="../../Frontend/Shop/shop.php" class="stat-tile">
+                        <a href="../../shop" class="stat-tile">
                             <div class="stat-tile-num" id="dashWishCount">0</div>
                             <div class="stat-tile-lbl">Saved Items</div>
                         </a>
@@ -1351,7 +1351,7 @@
                         </a>
                     </div>
 
-                    <a href="../../Frontend/Shop/shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
+                    <a href="../../shop" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
                         Browse Luxury Catalog
                     </a>
 
@@ -1894,7 +1894,7 @@
 
         window.handleLogoutClick = function() {
             localStorage.removeItem('dtbrands_user');
-            window.location.href = '../../Frontend/Shop/shop.php';
+            window.location.href = '../../shop';
         };
 
         /* Run on Page Load */

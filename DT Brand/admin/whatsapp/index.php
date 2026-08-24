@@ -162,7 +162,7 @@ $active_nav = "whatsapp";
                         <div class="adm-wa-preview-bubble" style="background:#DCF8C6; border:1px solid #C4E8A8; border-radius:8px; padding:12px; font-size:12.5px; color:#111827; line-height:1.5;">
                             <strong>👑 DT BRAND'S &amp; JAI HANUMAN TEX — FESTIVE SILK ALERT</strong><br>
                             Namaste! 🙏 Explore our latest 2026 Pure Handloom Silk Sarees &amp; Bridal Lehengas crafted for premium boutique collections.<br>
-                            👉 <strong>Explore Live Catalog:</strong> https://jaihanumantex.in/Frontend/Shop/shop.php
+                            👉 <strong>Explore Live Catalog:</strong> https://jaihanumantex.in/shop
                         </div>
                     </div>
                     <button type="button" class="adm-btn-primary dt-btn-gold" style="width:100%; height:40px; justify-content:center; display:flex; align-items:center; gap:8px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="launchBroadcastAlert()">

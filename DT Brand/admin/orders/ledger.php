@@ -107,7 +107,7 @@ $page_title = "Financial Ledger — " . $customer_name;
     <!-- Letterhead Header -->
     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px; margin-bottom:16px;">
         <div style="display:flex; align-items:center; gap:16px;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Logo" style="height:54px; width:auto; max-width:180px; object-fit:contain; display:block; flex-shrink:0;">
+            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" alt="DT Brand's Logo" style="height:54px; width:auto; max-width:180px; object-fit:contain; display:block; flex-shrink:0;">
             <div>
                 <h1 style="margin:0; font-size:20px; font-weight:800; color:#181512; letter-spacing:-0.02em; line-height:1.2;">DT BRAND'S &amp; JAI HANUMAN TEX</h1>
                 <div style="font-size:11px; color:#64748B; margin-top:3px; line-height:1.35;">

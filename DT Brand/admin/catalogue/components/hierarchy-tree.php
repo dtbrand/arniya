@@ -25,7 +25,7 @@
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-sarees')">−</button>
-                    <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
+                    <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Silk Sarees &amp; Handlooms</a>
                         <span class="dt-badge gold" style="font-size:9.5px; margin-left:6px;">Featured</span>
@@ -52,7 +52,7 @@
                             <span class="dt-tree-drag-handle" title="Drag to reorder with mouse">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
-                            <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
+                            <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
                             <span style="font-weight:600; font-size:12px;">Kanjivaram Silk</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -67,7 +67,7 @@
                             <span class="dt-tree-drag-handle" title="Drag to reorder with mouse">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
-                            <img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
+                            <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
                             <span style="font-weight:600; font-size:12px;">Banarasi Brocade</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -82,7 +82,7 @@
                             <span class="dt-tree-drag-handle" title="Drag to reorder with mouse">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
-                            <img src="/Frontend/Shop/Asset/images/product3.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
+                            <img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" style="width:22px; height:22px; border-radius:3px; object-fit:cover;">
                             <span style="font-weight:600; font-size:12px;">Chanderi &amp; Tussar</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -102,7 +102,7 @@
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-lehengas')">−</button>
-                    <img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
+                    <img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=2" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Bridal &amp; Festive Lehengas</a>
                         <span class="dt-badge gold" style="font-size:9.5px; margin-left:6px;">Featured</span>
@@ -160,7 +160,7 @@
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="6" r="1.5"></circle><circle cx="15" cy="6" r="1.5"></circle><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><circle cx="9" cy="18" r="1.5"></circle><circle cx="15" cy="18" r="1.5"></circle></svg>
                     </span>
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-kurtis')">−</button>
-                    <img src="/Frontend/Shop/Asset/images/product4.png" onerror="this.src='/Shared/Asset/images/product4.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
+                    <img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=3" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Designer Kurtis &amp; Tunics</a>
                     </div>

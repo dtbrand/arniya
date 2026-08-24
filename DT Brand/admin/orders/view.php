@@ -35,7 +35,7 @@ $all_orders_data = [
                 'variant' => 'Royal Ruby / 5.5m + Blouse',
                 'qty' => 25,
                 'price' => 4490,
-                'img' => '/Shared/Asset/images/product1.png'
+                'img' => '/assets/images/product1.png'
             ]
         ]
     ],
@@ -67,7 +67,7 @@ $all_orders_data = [
                 'variant' => 'Emerald Green / 5.5m',
                 'qty' => 1,
                 'price' => 4990,
-                'img' => '/Shared/Asset/images/product2.png'
+                'img' => '/assets/images/product2.png'
             ]
         ]
     ],
@@ -99,7 +99,7 @@ $all_orders_data = [
                 'variant' => 'Mustard Gold / Assorted Lot',
                 'qty' => 10,
                 'price' => 3890,
-                'img' => '/Shared/Asset/images/product3.png'
+                'img' => '/assets/images/product3.png'
             ]
         ]
     ]
@@ -134,7 +134,7 @@ $order = isset($all_orders_data[$order_id]) ? $all_orders_data[$order_id] : [
             'variant' => 'Assorted Handloom / 5.5m',
             'qty' => 15,
             'price' => 3660,
-            'img' => '/Shared/Asset/images/product1.png'
+            'img' => '/assets/images/product1.png'
         ]
     ]
 ];

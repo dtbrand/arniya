@@ -42,7 +42,7 @@
                 <!-- Cat 1 -->
                 <tr id="cat-row-1" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="1"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Silk Sarees</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Surat Central Depot Master Line</div>
@@ -65,7 +65,7 @@
                 <!-- Cat 2 -->
                 <tr id="cat-row-2" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="2"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=2" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Bridal Lehengas</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Handcrafted Heritage Zardosi</div>
@@ -88,7 +88,7 @@
                 <!-- Cat 3 -->
                 <tr id="cat-row-3" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="3"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product4.png" onerror="this.src='/Shared/Asset/images/product4.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=3" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Designer Kurtis</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Foil Prints &amp; Chanderi Sets</div>
@@ -111,7 +111,7 @@
                 <!-- Cat 4 -->
                 <tr id="cat-row-4" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="4"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product5.png" onerror="this.src='/Shared/Asset/images/product5.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product5.png" onerror="this.src='/assets/images/product5.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=4" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Dress Materials</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Unstitched Premium Cotton &amp; Silk</div>
@@ -134,7 +134,7 @@
                 <!-- Cat 5 -->
                 <tr id="cat-row-5" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="5"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=5" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Banarasi Brocades</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Kadhwa &amp; Meenakari Zari Borders</div>
@@ -157,7 +157,7 @@
                 <!-- Cat 6 -->
                 <tr id="cat-row-6" data-status="inactive">
                     <td style="text-align:center;"><input type="checkbox" class="cat-row-chk" value="6"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product3.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
+                    <td><img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #e2e8f0;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=6" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Festive Dupattas</a>
                         <div style="font-size:11px; color:#64748b; margin-top:2px;">Bandhani &amp; Banarasi Rich Stoles</div>

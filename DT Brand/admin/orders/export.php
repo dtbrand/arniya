@@ -506,7 +506,7 @@ function downloadPDFRegister() {
         <body>
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:14px;">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:52px; width:auto;">
+                    <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" style="height:52px; width:auto;">
                     <div>
                         <h2 style="margin:0; font-size:20px; font-weight:800;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
                         <div style="font-size:11px; color:#64748B;">Surat Central Depot Master Orders Audit Register • GSTIN: 24AAECJ1928K1Z5</div>

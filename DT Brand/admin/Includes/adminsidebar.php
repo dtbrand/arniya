@@ -137,7 +137,7 @@ if (isset($active_subnav) && !empty($active_subnav)) {
     <!-- Brand Logo Box -->
     <div class="adm-sidebar-brand">
         <a href="/admin" class="adm-brand-link" title="DT Brand's Executive Admin">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="adm-brand-logo-img">
+            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="adm-brand-logo-img">
             <div class="adm-brand-seal-mini" title="DT Brand's Admin">DT</div>
             <div class="adm-brand-meta">
                 <span class="adm-brand-name">DT Brand's</span>

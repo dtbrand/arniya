@@ -56,7 +56,7 @@
         const status = isDraft ? 'draft' : 'in_stock';
         
         // Grab uploaded image if available
-        const mainImg = document.getElementById('mainPhotoImg')?.src || document.querySelector('.dt-media-thumb.primary img')?.src || document.querySelector('.dt-media-preview-item img')?.src || '/Frontend/Shop/Asset/images/product1.png';
+        const mainImg = document.getElementById('mainPhotoImg')?.src || document.querySelector('.dt-media-thumb.primary img')?.src || document.querySelector('.dt-media-preview-item img')?.src || '/assets/images/product1.png';
         const imgPath = mainImg.includes('://') ? new URL(mainImg).pathname : mainImg;
 
         const params = new URLSearchParams();

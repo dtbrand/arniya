@@ -99,15 +99,15 @@ $active_nav = "media";
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:14px;">
                     <div style="border:1px solid #E5E1D7; border-radius:8px; overflow:hidden; background:#FAF8F4; text-align:center;">
-                        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; height:110px; object-fit:cover;">
+                        <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:110px; object-fit:cover;">
                         <div style="padding:6px; font-size:0.7rem; font-weight:700;">kanjivaram-1.webp</div>
                     </div>
                     <div style="border:1px solid #E5E1D7; border-radius:8px; overflow:hidden; background:#FAF8F4; text-align:center;">
-                        <img src="/Shared/Asset/images/product2.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" style="width:100%; height:110px; object-fit:cover;">
+                        <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" style="width:100%; height:110px; object-fit:cover;">
                         <div style="padding:6px; font-size:0.7rem; font-weight:700;">banarasi-brocade.webp</div>
                     </div>
                     <div style="border:1px solid #E5E1D7; border-radius:8px; overflow:hidden; background:#FAF8F4; text-align:center;">
-                        <img src="/Shared/Asset/images/product3.png" onerror="this.src='/Frontend/Shop/Asset/images/product3.png';" style="width:100%; height:110px; object-fit:cover;">
+                        <img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" style="width:100%; height:110px; object-fit:cover;">
                         <div style="padding:6px; font-size:0.7rem; font-weight:700;">bridal-lehenga.webp</div>
                     </div>
                 </div>

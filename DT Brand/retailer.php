@@ -436,7 +436,7 @@ $catalogProducts = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets/css/retailer.css?v=1787019062?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/retailer.css?v=1787019062&v=<?= time() ?>">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -2970,7 +2970,7 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
-    <script src="/assets/js/retailer.js?v=1787019062?v=<?= time() ?>"></script>
+    <script src="/assets/js/retailer.js?v=1787019062&v=<?= time() ?>"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/shared/cart.php'; ?>

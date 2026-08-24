@@ -19,7 +19,7 @@ $media_assets = [
         'size' => '245 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product1.png',
+        'img' => '/assets/images/product1.png',
         'date' => '20 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/kanjivaram-heritage-gold.webp'
     ],
@@ -33,7 +33,7 @@ $media_assets = [
         'size' => '312 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product2.png',
+        'img' => '/assets/images/product2.png',
         'date' => '19 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/banarasi-royal-maroon.webp'
     ],
@@ -47,7 +47,7 @@ $media_assets = [
         'size' => '420 KB',
         'dim' => '1800 × 2400',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product3.png',
+        'img' => '/assets/images/product3.png',
         'date' => '18 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/bridal-zardosi-crimson.webp'
     ],
@@ -61,7 +61,7 @@ $media_assets = [
         'size' => '198 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product4.png',
+        'img' => '/assets/images/product4.png',
         'date' => '17 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/paithani-peacock-pallu.webp'
     ],
@@ -75,7 +75,7 @@ $media_assets = [
         'size' => '165 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product5.png',
+        'img' => '/assets/images/product5.png',
         'date' => '16 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/chanderi-cotton-mint.webp'
     ],
@@ -89,7 +89,7 @@ $media_assets = [
         'size' => '280 KB',
         'dim' => '2000 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product6.png',
+        'img' => '/assets/images/product6.png',
         'date' => '15 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/surat-jacquard-texture.webp'
     ],
@@ -103,7 +103,7 @@ $media_assets = [
         'size' => '210 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product7.png',
+        'img' => '/assets/images/product7.png',
         'date' => '14 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/tussar-georgette-floral.webp'
     ],
@@ -117,7 +117,7 @@ $media_assets = [
         'size' => '195 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product8.png',
+        'img' => '/assets/images/product8.png',
         'date' => '13 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/organza-rose-gold.webp'
     ],
@@ -131,7 +131,7 @@ $media_assets = [
         'size' => '320 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product1.png',
+        'img' => '/assets/images/product1.png',
         'date' => '12 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/patola-double-ikkat.webp'
     ],
@@ -145,7 +145,7 @@ $media_assets = [
         'size' => '275 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product2.png',
+        'img' => '/assets/images/product2.png',
         'date' => '11 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/bandhani-gharchola.webp'
     ],
@@ -159,7 +159,7 @@ $media_assets = [
         'size' => '220 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product3.png',
+        'img' => '/assets/images/product3.png',
         'date' => '10 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/crepe-digital-foil.webp'
     ],
@@ -173,7 +173,7 @@ $media_assets = [
         'size' => '185 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product4.png',
+        'img' => '/assets/images/product4.png',
         'date' => '09 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/uppada-jamdani.webp'
     ],
@@ -187,7 +187,7 @@ $media_assets = [
         'size' => '260 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product5.png',
+        'img' => '/assets/images/product5.png',
         'date' => '08 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/gadwal-silk.webp'
     ],
@@ -201,7 +201,7 @@ $media_assets = [
         'size' => '240 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product6.png',
+        'img' => '/assets/images/product6.png',
         'date' => '07 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/mysore-crepe.webp'
     ],
@@ -215,7 +215,7 @@ $media_assets = [
         'size' => '215 KB',
         'dim' => '1600 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product7.png',
+        'img' => '/assets/images/product7.png',
         'date' => '06 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/pochampally-ikkat.webp'
     ],
@@ -229,7 +229,7 @@ $media_assets = [
         'size' => '350 KB',
         'dim' => '2000 × 2000',
         'format' => 'WEBP',
-        'img' => '/Frontend/Shop/Asset/images/product8.png',
+        'img' => '/assets/images/product8.png',
         'date' => '05 Aug 2026',
         'cdn_url' => 'https://cdn.jaihanumantex.in/media/products/surat-depot-lot.webp'
     ]
@@ -545,7 +545,7 @@ $media_assets = [
                 <?php foreach($media_assets as $asset): ?>
                 <div class="dt-media-card" data-category="<?php echo htmlspecialchars($asset['category']); ?>" data-type="<?php echo htmlspecialchars($asset['type']); ?>" data-title="<?php echo htmlspecialchars($asset['title'] . ' ' . $asset['filename'] . ' ' . $asset['sku']); ?>">
                     <div class="dt-media-card-img-wrap">
-                        <img src="<?php echo htmlspecialchars($asset['img']); ?>" alt="<?php echo htmlspecialchars($asset['title']); ?>" class="dt-media-card-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                        <img src="<?php echo htmlspecialchars($asset['img']); ?>" alt="<?php echo htmlspecialchars($asset['title']); ?>" class="dt-media-card-img" onerror="this.src='/assets/images/product1.png';">
                         <span class="dt-media-badge-format"><?php echo htmlspecialchars($asset['format']); ?></span>
                         <span class="dt-media-badge-size"><?php echo htmlspecialchars($asset['size']); ?></span>
                     </div>

@@ -776,7 +776,7 @@
                 body.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:12px; margin-bottom:14px; padding-right:110px; gap:12px;">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:48px; width:auto; display:block; object-fit:contain;">
+                            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" style="height:48px; width:auto; display:block; object-fit:contain;">
                             <div>
                                 <h2 style="margin:0; font-size:16px; font-weight:800; color:#181512; line-height:1.2;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
                                 <p style="margin:3px 0 0 0; font-size:10.5px; color:#64748B; line-height:1.3;">Surat Central Depot • Ring Road, Surat • GSTIN: 24AAECJ1928K1Z5</p>
@@ -816,7 +816,7 @@
                         <tbody>
                             <tr style="border-bottom:1px solid #E2E8F0;">
                                 <td style="padding:8px; display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #E2DFD7;">
+                                    <img src="/assets/images/product1.png" onerror="this.onerror=null; this.src='/assets/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #E2DFD7;">
                                     <div>
                                         <strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br>
                                         <small style="color:#64748B;">SKU: KNJ-001 • <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#9B111E; display:inline-block;"></span> Royal Ruby / 5.5m</span></small>
@@ -932,7 +932,7 @@
                             <tr style="border-bottom:1px solid #E2E8F0;">
                                 <td style="padding:8px; text-align:center; font-weight:700;">1</td>
                                 <td style="padding:8px; display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #E2DFD7;">
+                                    <img src="/assets/images/product1.png" onerror="this.onerror=null; this.src='/assets/images/product1.png';" style="width:36px; height:36px; border-radius:4px; object-fit:cover; border:1px solid #E2DFD7;">
                                     <div>
                                         <strong>Kanjivaram Silk Saree Pure Zari Weave</strong><br>
                                         <small style="color:#64748B;">SKU: KNJ-001 • <span style="display:inline-flex; align-items:center; gap:3px;"><span style="width:6px; height:6px; border-radius:50%; background:#9B111E; display:inline-block;"></span> Royal Ruby / 5.5m</span></small>
@@ -1064,7 +1064,7 @@
                 <body>
                     <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #8A681F; padding-bottom:14px;">
                         <div style="display:flex; align-items:center; gap:12px;">
-                            <img src="/Shared/Asset/images/logo.png" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/logo.png';" style="height:48px; width:auto;">
+                            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/assets/images/logo.png';" style="height:48px; width:auto;">
                             <div>
                                 <h2 style="margin:0; font-size:18px; font-weight:800;">DT BRAND'S &amp; JAI HANUMAN TEX</h2>
                                 <p style="margin:2px 0 0 0; font-size:11px; color:#64748B;">Surat Central Depot • GSTIN: 24AAECJ1928K1Z5</p>

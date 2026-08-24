@@ -57,7 +57,7 @@ $active_subnav = "subcategories";
                         <tbody>
                             <tr id="subcat-1">
                                 <td style="text-align:center;"><input type="checkbox" class="subcat-chk" value="101"></td>
-                                <td><img src="/Frontend/Shop/Asset/images/product1.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
+                                <td><img src="/assets/images/product1.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
                                 <td><strong>Kanjivaram Silk</strong></td>
                                 <td><a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" style="color:#8A681F; font-weight:700; text-decoration:none;">Silk Sarees</a></td>
                                 <td><strong>160 SKUs</strong></td>
@@ -73,7 +73,7 @@ $active_subnav = "subcategories";
                             </tr>
                             <tr id="subcat-2">
                                 <td style="text-align:center;"><input type="checkbox" class="subcat-chk" value="102"></td>
-                                <td><img src="/Frontend/Shop/Asset/images/product2.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
+                                <td><img src="/assets/images/product2.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
                                 <td><strong>Banarasi Brocade</strong></td>
                                 <td><a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" style="color:#8A681F; font-weight:700; text-decoration:none;">Silk Sarees</a></td>
                                 <td><strong>140 SKUs</strong></td>
@@ -89,7 +89,7 @@ $active_subnav = "subcategories";
                             </tr>
                             <tr id="subcat-3">
                                 <td style="text-align:center;"><input type="checkbox" class="subcat-chk" value="103"></td>
-                                <td><img src="/Frontend/Shop/Asset/images/product6.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
+                                <td><img src="/assets/images/product6.png" style="width:32px; height:32px; border-radius:4px; object-fit:cover;"></td>
                                 <td><strong>Zardosi Velvet Lehengas</strong></td>
                                 <td><a href="/DT%20Brand/admin/catalogue/categories/view.php?id=2" style="color:#8A681F; font-weight:700; text-decoration:none;">Bridal Lehengas</a></td>
                                 <td><strong>120 SKUs</strong></td>

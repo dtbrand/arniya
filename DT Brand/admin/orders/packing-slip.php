@@ -22,7 +22,7 @@ $order = [
             'variant' => 'Royal Ruby / 5.5m',
             'color_name' => 'Royal Ruby',
             'color_hex' => '#9B111E',
-            'image' => '/Shared/Asset/images/product1.png',
+            'image' => '/assets/images/product1.png',
             'qty' => 25
         ]
     ]

@@ -144,7 +144,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to Brands</span>
                     </a>
-                    <a href="/Frontend/Shop/shop.php?brand=<?php echo urlencode($cur_brand['name']); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                    <a href="/shop?brand=<?php echo urlencode($cur_brand['name']); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>View on Shop</span>
                     </a>

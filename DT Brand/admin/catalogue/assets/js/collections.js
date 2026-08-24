@@ -19,7 +19,7 @@ window.DT_COLLECTIONS = {
         item.style.animation = 'fadeIn 0.2s ease-out';
         item.innerHTML = `
             <div style="display:flex; align-items:center; gap:8px;">
-                <img src="${img}" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
+                <img src="${img}" onerror="this.src='/assets/images/product1.png';" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
                 <div>
                     <strong>${title}</strong>
                     <div style="font-size:10px; color:#64748b;">${sku} • ${price}</div>

@@ -37,7 +37,7 @@
                 <!-- Row 1 -->
                 <tr id="coll-row-1" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="1"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=1" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Surat Heritage Silk Festival</a>
                         <div style="font-size:11px; color:#64748b;">Exclusive Festive Wholesale Assortment</div>
@@ -61,7 +61,7 @@
                 <!-- Row 2 -->
                 <tr id="coll-row-2" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="2"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=2" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Royal Bridal Grandeur 2026</a>
                         <div style="font-size:11px; color:#64748b;">Luxury Zardosi &amp; Velvet Lehengas</div>
@@ -85,7 +85,7 @@
                 <!-- Row 3 -->
                 <tr id="coll-row-3" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="3"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=3" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Diwali Festive Handloom Edit</a>
                         <div style="font-size:11px; color:#64748b;">Pure Katan &amp; Chanderi Weaves</div>
@@ -109,7 +109,7 @@
                 <!-- Row 4 -->
                 <tr id="coll-row-4" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="4"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product4.png" onerror="this.src='/Shared/Asset/images/product4.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=4" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Summer Daily Wear Kurtis</a>
                         <div style="font-size:11px; color:#64748b;">Breathable Rayon &amp; Mulmul Sets</div>
@@ -133,7 +133,7 @@
                 <!-- Row 5 -->
                 <tr id="coll-row-5" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="5"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product5.png" onerror="this.src='/Shared/Asset/images/product5.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product5.png" onerror="this.src='/assets/images/product5.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=5" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Surat Central Depot Ready Stock</a>
                         <div style="font-size:11px; color:#64748b;">Fast Dispatch Wholesale Catalog Lots</div>
@@ -157,7 +157,7 @@
                 <!-- Row 6 -->
                 <tr id="coll-row-6" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="6"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=6" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Silk Mark Certified Heritage Sarees</a>
                         <div style="font-size:11px; color:#64748b;">Authentic Govt. Certified Pure Silk Weaves</div>
@@ -181,7 +181,7 @@
                 <!-- Row 7 -->
                 <tr id="coll-row-7" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="7"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product3.png" onerror="this.src='/Shared/Asset/images/product3.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=7" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Reseller Low MOQ Deals (MOQ 4)</a>
                         <div style="font-size:11px; color:#64748b;">Fast Moving Catalogues for WhatsApp Resellers</div>
@@ -205,7 +205,7 @@
                 <!-- Row 8 -->
                 <tr id="coll-row-8" data-status="active">
                     <td style="text-align:center;"><input type="checkbox" class="coll-row-chk" value="8"></td>
-                    <td><img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product6.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
+                    <td><img src="/assets/images/product6.png" onerror="this.src='/assets/images/product6.png';" style="width:40px; height:28px; border-radius:3px; object-fit:cover;"></td>
                     <td>
                         <a href="/DT%20Brand/admin/catalogue/collections/view.php?id=8" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;">Wedding Trousseau Master Box</a>
                         <div style="font-size:11px; color:#64748b;">Complete Bridal &amp; Family Festive Assortments</div>

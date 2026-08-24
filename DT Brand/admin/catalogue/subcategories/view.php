@@ -19,7 +19,7 @@ $subcategories_db = [
         'valuation' => '₹7.20 L',
         'views' => '11,450',
         'growth' => '+14.2% this month',
-        'image' => '/Frontend/Shop/Asset/images/product1.png'
+        'image' => '/assets/images/product1.png'
     ],
     102 => [
         'name' => 'Banarasi Brocade',
@@ -31,7 +31,7 @@ $subcategories_db = [
         'valuation' => '₹6.80 L',
         'views' => '9,230',
         'growth' => '+18.1% this month',
-        'image' => '/Frontend/Shop/Asset/images/product2.png'
+        'image' => '/assets/images/product2.png'
     ],
     103 => [
         'name' => 'Chanderi & Tussar',
@@ -43,7 +43,7 @@ $subcategories_db = [
         'valuation' => '₹4.40 L',
         'views' => '7,800',
         'growth' => '+9.5% this month',
-        'image' => '/Frontend/Shop/Asset/images/product3.png'
+        'image' => '/assets/images/product3.png'
     ],
     201 => [
         'name' => 'Zardosi Velvet Lehengas',
@@ -55,7 +55,7 @@ $subcategories_db = [
         'valuation' => '₹9.60 L',
         'views' => '14,200',
         'growth' => '+24.5% this month',
-        'image' => '/Frontend/Shop/Asset/images/product6.png'
+        'image' => '/assets/images/product6.png'
     ],
     202 => [
         'name' => 'Semi-Stitched Festive Sets',
@@ -67,7 +67,7 @@ $subcategories_db = [
         'valuation' => '₹4.90 L',
         'views' => '8,150',
         'growth' => '+12.0% this month',
-        'image' => '/Frontend/Shop/Asset/images/product6.png'
+        'image' => '/assets/images/product6.png'
     ]
 ];
 
@@ -97,7 +97,7 @@ $subcat = isset($subcategories_db[$subcat_id]) ? $subcategories_db[$subcat_id] :
             
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <img src="<?php echo htmlspecialchars($subcat['image']); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
+                    <img src="<?php echo htmlspecialchars($subcat['image']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:48px; height:48px; border-radius:6px; object-fit:cover; border:1px solid #D4AF37;">
                     <div>
                         <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;"><?php echo htmlspecialchars($subcat['name']); ?></h1>
                         <div style="font-size:11.5px; color:#64748b; margin-top:2px;">

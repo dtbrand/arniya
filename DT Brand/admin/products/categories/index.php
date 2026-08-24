@@ -326,7 +326,7 @@ $totalCategoryCount = count($dbCategories);
                             <div class="dt-form-group">
                                 <label>Thumbnail</label>
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" id="catThumbPreview" style="width:28px; height:28px; object-fit:cover; border-radius:3px; border:1px solid #c3c4c7; flex-shrink:0;">
+                                    <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" id="catThumbPreview" style="width:28px; height:28px; object-fit:cover; border-radius:3px; border:1px solid #c3c4c7; flex-shrink:0;">
                                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:26px; font-size:10.5px; flex:1; justify-content:center;">
                                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                                         <span>Upload Image</span>
@@ -404,7 +404,7 @@ $totalCategoryCount = count($dbCategories);
                                         $catName = $cat['name'];
                                         $catSlug = $cat['slug'] ?? strtolower(str_replace(' ', '-', $catName));
                                         $catDesc = $cat['description'] ?? 'Authentic ethnic sarees & handlooms';
-                                        $catImg = !empty($cat['image']) ? $cat['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                                        $catImg = !empty($cat['image']) ? $cat['image'] : '/assets/images/product1.png';
                                         $catCount = (int)($cat['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
                                     ?>
                                     <tr id="cat-row-<?= $catId ?>" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
@@ -412,7 +412,7 @@ $totalCategoryCount = count($dbCategories);
                                             <input type="checkbox" class="cat-row-check" value="<?= $catId ?>" style="cursor:pointer; width:14px; height:14px;">
                                         </td>
                                         <td style="padding:7px 6px;">
-                                            <img src="<?= htmlspecialchars($catImg) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
+                                            <img src="<?= htmlspecialchars($catImg) ?>" onerror="this.src='/assets/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
                                         </td>
                                         <td style="padding:7px 10px;">
                                             <strong style="font-size:12.5px; color:#181512;"><a href="/DT%20Brand/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catName) ?></a></strong>
@@ -500,7 +500,7 @@ function handleAddNewCategory(e) {
     const name = document.getElementById('catName')?.value?.trim();
     const slug = document.getElementById('catSlug')?.value?.trim() || autoSlugifyCat(name);
     const desc = document.getElementById('catDesc')?.value?.trim();
-    const thumbImg = document.getElementById('catThumbPreview')?.src || '/Frontend/Shop/Asset/images/product1.png';
+    const thumbImg = document.getElementById('catThumbPreview')?.src || '/assets/images/product1.png';
 
     if (!name) {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter a category name');

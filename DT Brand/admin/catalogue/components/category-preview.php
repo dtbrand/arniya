@@ -28,17 +28,17 @@
         <!-- Simulated Product Grid -->
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
             <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px; text-align:center;">
-                <img src="/Frontend/Shop/Asset/images/product1.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
+                <img src="/assets/images/product1.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
                 <div style="font-size:11.5px; font-weight:700; color:#181512;">Kanjivaram Gold Zari</div>
                 <div style="font-size:12px; font-weight:800; color:#15803D;">₹2,850 <small style="color:#64748b;">(Wholesale)</small></div>
             </div>
             <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px; text-align:center;">
-                <img src="/Frontend/Shop/Asset/images/product2.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
+                <img src="/assets/images/product2.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
                 <div style="font-size:11.5px; font-weight:700; color:#181512;">Banarasi Royal Brocade</div>
                 <div style="font-size:12px; font-weight:800; color:#15803D;">₹3,200 <small style="color:#64748b;">(Wholesale)</small></div>
             </div>
             <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px; text-align:center;">
-                <img src="/Frontend/Shop/Asset/images/product3.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
+                <img src="/assets/images/product3.png" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:6px;">
                 <div style="font-size:11.5px; font-weight:700; color:#181512;">Temple Border Chanderi</div>
                 <div style="font-size:12px; font-weight:800; color:#15803D;">₹2,400 <small style="color:#64748b;">(Wholesale)</small></div>
             </div>

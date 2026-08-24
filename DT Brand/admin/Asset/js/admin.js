@@ -19,7 +19,7 @@
             reseller_price: 1599,
             moq: 8,
             stock: 95,
-            image: '/Frontend/Shop/Asset/images/product2.png',
+            image: '/assets/images/product2.png',
             badge: 'New Catalogue',
             color: 'Crimson Rani',
             fabric: 'Dola Silk',
@@ -36,7 +36,7 @@
             reseller_price: 1199,
             moq: 8,
             stock: 125,
-            image: '/Frontend/Shop/Asset/images/product5.png',
+            image: '/assets/images/product5.png',
             badge: 'New Arrival',
             color: 'Teal Blue',
             fabric: 'Chanderi Gotapatti',
@@ -53,7 +53,7 @@
             reseller_price: 1449,
             moq: 8,
             stock: 110,
-            image: '/Frontend/Shop/Asset/images/product1.png',
+            image: '/assets/images/product1.png',
             badge: 'New Catalogue',
             color: 'Bottle Green',
             fabric: 'Art Silk Peacock Pallu',
@@ -70,7 +70,7 @@
             reseller_price: 799,
             moq: 12,
             stock: 190,
-            image: '/Frontend/Shop/Asset/images/product1.png',
+            image: '/assets/images/product1.png',
             badge: 'Festive Hot',
             color: 'Peacock Green',
             fabric: 'Chanderi Zari',
@@ -87,7 +87,7 @@
             reseller_price: 18999,
             moq: 2,
             stock: 35,
-            image: '/Frontend/Shop/Asset/images/product6.png',
+            image: '/assets/images/product6.png',
             badge: 'Bridal Couture',
             color: 'Crimson Red',
             fabric: 'Micro Velvet & Zari',
@@ -104,7 +104,7 @@
             reseller_price: 499,
             moq: 18,
             stock: 8,
-            image: '/Frontend/Shop/Asset/images/product6.png',
+            image: '/assets/images/product6.png',
             badge: 'Low Stock',
             color: 'Pastel Mint',
             fabric: 'Lakhnavi Handwork',
@@ -121,7 +121,7 @@
             reseller_price: 2299,
             moq: 6,
             stock: 65,
-            image: '/Frontend/Shop/Asset/images/product6.png',
+            image: '/assets/images/product6.png',
             badge: 'New Catalogue',
             color: 'Wine Burgundy',
             fabric: 'Silk Velvet Zari',
@@ -138,7 +138,7 @@
             reseller_price: 749,
             moq: 12,
             stock: 180,
-            image: '/Frontend/Shop/Asset/images/product8.png',
+            image: '/assets/images/product8.png',
             badge: 'New Arrival',
             color: 'Pastel Sky',
             fabric: '60x60 Cambric Cotton',
@@ -679,7 +679,7 @@
             matchingProds.forEach(p => {
                 html += `
                     <div class="adm-live-search-item" onclick="window.selectSearchProduct('${p.id}', '${p.sku}')">
-                        <img src="${p.image}" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="${p.name}" class="adm-live-search-thumb">
+                        <img src="${p.image}" onerror="this.src='/assets/images/product1.png';" alt="${p.name}" class="adm-live-search-thumb">
                         <div class="adm-live-search-info">
                             <div class="adm-live-search-title">${p.name}</div>
                             <div class="adm-live-search-sub">
@@ -1160,7 +1160,7 @@
                     </td>
                     <td>
                         <div class="adm-table-prod-cell">
-                            <img src="${p.image}" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="${p.name}" class="adm-prod-thumb">
+                            <img src="${p.image}" onerror="this.src='/assets/images/product1.png';" alt="${p.name}" class="adm-prod-thumb">
                             <div class="adm-prod-meta">
                                 <a href="/DT%20Brand/admin/products/view.php?id=${p.id}" class="adm-prod-title" style="color:#181512; text-decoration:none; font-weight:700;">${p.name}</a>
                                 <span class="adm-prod-sub">SKU: ${p.sku} | HSN: ${p.hsn} | Fabric: ${p.fabric}</span>
@@ -1363,7 +1363,7 @@
         const previewBox = document.getElementById('admBroadcastPreview');
 
         const templates = {
-            'catalogue': "✨ *DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE* ✨\n\nDear {Name},\nExplore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.\n\n👉 *View & Order Online:* https://jaihanumantex.in/Frontend/Shop/shop.php\n\n_Special 15% VIP Discount Applied!_",
+            'catalogue': "✨ *DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE* ✨\n\nDear {Name},\nExplore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.\n\n👉 *View & Order Online:* https://jaihanumantex.in/shop\n\n_Special 15% VIP Discount Applied!_",
             'festive': "🔥 *EXCLUSIVE FESTIVE BONANZA — 40% OFF* 🔥\n\nNamaste {Name},\nStock up your boutique with high-margin Silk Sarees & Sharara Suits before wedding season rush.\n\n📦 *Wholesale MOQ:* Only 8 pcs\n🚚 *Dispatch:* 24 Hours Express",
             'wholesale_drop': "💎 *WHOLESALE BULK LOT PRICE DROP ALERT* 💎\n\nDear Partner,\nPrices on Chanderi & Dola Silk lots reduced by up to ₹250/pc for 30+ pc lots.\n\n📲 Reply YES to receive full PDF Catalogue with HSN codes."
         };
@@ -1473,7 +1473,7 @@
                 reseller_price: wholesale + 200,
                 moq: moq,
                 stock: stock,
-                image: '/Frontend/Shop/Asset/images/product1.png',
+                image: '/assets/images/product1.png',
                 badge: 'New Arrival',
                 color: 'Assorted',
                 fabric: fabric,
@@ -1523,7 +1523,7 @@
         const prod = products.find(p => p.id === id);
         if (!prod) return;
 
-        const msg = `*DT BRAND'S ETHNIC COLLECTION*\n\n*${prod.name}* (SKU: ${prod.sku})\n💎 Category: ${prod.category} | Fabric: ${prod.fabric}\n💰 Retail: ₹${prod.retail_price} | Wholesale MOQ (${prod.moq} pcs): ₹${prod.wholesale_price}/pc\n\n👉 View Online: https://jaihanumantex.in/Frontend/Shop/shop.php`;
+        const msg = `*DT BRAND'S ETHNIC COLLECTION*\n\n*${prod.name}* (SKU: ${prod.sku})\n💎 Category: ${prod.category} | Fabric: ${prod.fabric}\n💰 Retail: ₹${prod.retail_price} | Wholesale MOQ (${prod.moq} pcs): ₹${prod.wholesale_price}/pc\n\n👉 View Online: https://jaihanumantex.in/shop`;
         const encoded = encodeURIComponent(msg);
         window.open(`https://wa.me/?text=${encoded}`, '_blank');
     };

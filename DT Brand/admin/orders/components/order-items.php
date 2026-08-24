@@ -12,7 +12,7 @@ $items = isset($order['items']) ? $order['items'] : [
         'price' => 4490,
         'tax' => 1122.50,
         'total' => 112250,
-        'img' => '/Shared/Asset/images/product1.png'
+        'img' => '/assets/images/product1.png'
     ]
 ];
 ?>
@@ -39,7 +39,7 @@ $items = isset($order['items']) ? $order['items'] : [
                 <tr>
                     <td>
                         <div class="dt-item-prod-cell">
-                            <img src="<?php echo htmlspecialchars($it['img'] ?? '/Shared/Asset/images/product1.png'); ?>" onerror="this.src='/Shared/Asset/images/product1.png';" alt="<?php echo htmlspecialchars($it['name']); ?>" class="dt-item-img">
+                            <img src="<?php echo htmlspecialchars($it['img'] ?? '/assets/images/product1.png'); ?>" onerror="this.src='/assets/images/product1.png';" alt="<?php echo htmlspecialchars($it['name']); ?>" class="dt-item-img">
                             <div class="dt-item-meta">
                                 <a href="/DT%20Brand/admin/products/" class="dt-item-name"><?php echo htmlspecialchars($it['name']); ?></a>
                                 <span class="dt-item-sku">SKU: <?php echo htmlspecialchars($it['sku']); ?></span>

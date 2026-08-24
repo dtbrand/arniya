@@ -243,7 +243,7 @@ $active_subnav = "brands";
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Edit</span>
                                     </button>
-                                    <a href="/Frontend/Shop/shop.php?brand=DT+Signature" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                    <a href="/shop?brand=DT+Signature" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         <span>View</span>
                                     </a>
@@ -283,7 +283,7 @@ $active_subnav = "brands";
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Edit</span>
                                     </button>
-                                    <a href="/Frontend/Shop/shop.php?brand=Arniya+Heritage" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                    <a href="/shop?brand=Arniya+Heritage" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         <span>View</span>
                                     </a>
@@ -323,7 +323,7 @@ $active_subnav = "brands";
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Edit</span>
                                     </button>
-                                    <a href="/Frontend/Shop/shop.php?brand=DT+Couture" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                                    <a href="/shop?brand=DT+Couture" target="_blank" class="dt-btn-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                         <span>View</span>
                                     </a>

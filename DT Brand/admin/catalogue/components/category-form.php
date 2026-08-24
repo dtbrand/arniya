@@ -9,7 +9,7 @@ $cat = isset($category_data) ? $category_data : [
     'parent' => '',
     'desc' => '',
     'short_desc' => '',
-    'image' => '/Frontend/Shop/Asset/images/product1.png',
+    'image' => '/assets/images/product1.png',
     'banner' => '',
     'display_style' => 'banner_grid',
     'active' => 1,
@@ -79,7 +79,7 @@ $cat = isset($category_data) ? $category_data : [
                 <div class="dt-form-group">
                     <label class="dt-form-label">Category Thumbnail (1:1 Ratio)</label>
                     <div class="dt-upload-zone" onclick="document.getElementById('catThumbUpload').click()">
-                        <img id="catThumbPreview" src="<?php echo $cat['image'] ? $cat['image'] : '/Frontend/Shop/Asset/images/product1.png'; ?>" class="dt-preview-thumb" style="margin:0 auto 8px auto; display:block;">
+                        <img id="catThumbPreview" src="<?php echo $cat['image'] ? $cat['image'] : '/assets/images/product1.png'; ?>" class="dt-preview-thumb" style="margin:0 auto 8px auto; display:block;">
                         <input type="file" id="catThumbUpload" style="display:none;" onchange="window.DT_CATALOGUE.previewImage(this, 'catThumbPreview')">
                         <span style="font-size:11px; font-weight:700; color:#8A681F;">Click to Upload Thumbnail</span>
                     </div>
@@ -88,7 +88,7 @@ $cat = isset($category_data) ? $category_data : [
                 <div class="dt-form-group">
                     <label class="dt-form-label">Category Hero Banner (Desktop / Mobile)</label>
                     <div class="dt-upload-zone" onclick="document.getElementById('catBannerUpload').click()">
-                        <img id="catBannerPreview" src="/Frontend/Shop/Asset/images/product2.png" style="width:100%; height:60px; object-fit:cover; border-radius:4px; margin-bottom:8px; display:block;">
+                        <img id="catBannerPreview" src="/assets/images/product2.png" style="width:100%; height:60px; object-fit:cover; border-radius:4px; margin-bottom:8px; display:block;">
                         <input type="file" id="catBannerUpload" style="display:none;" onchange="window.DT_CATALOGUE.previewImage(this, 'catBannerPreview')">
                         <span style="font-size:11px; font-weight:700; color:#8A681F;">Click to Upload Hero Banner</span>
                     </div>

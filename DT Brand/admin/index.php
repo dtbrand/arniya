@@ -230,7 +230,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                     <div class="adm-app-hero-card">
                         <div class="adm-app-hero-top">
                             <div class="adm-app-user-meta">
-                                <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" class="adm-app-avatar">
+                                <img src="/assets/images/profile.png" onerror="this.src='/assets/images/product1.png';" alt="Gautam Sethi" class="adm-app-avatar">
                                 <div>
                                     <div class="adm-app-greeting">Hi Gautam Sethi,</div>
                                     <div class="adm-app-subtext">Executive Super Admin</div>
@@ -1490,7 +1490,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
 Dear {Name},
 Explore our latest 2026 Pure Silk Sarees & Designer Lehengas crafted for premium festive collections.
 
-👉 *View & Order Online:* https://jaihanumantex.in/Frontend/Shop/shop.php
+👉 *View & Order Online:* https://jaihanumantex.in/shop
 
 _Special 15% VIP Discount Applied!_</textarea>
                             </div>
@@ -1502,7 +1502,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                     ✨ <strong>DT BRAND'S LUXURY ETHNIC FRESH CATALOGUE</strong> ✨<br><br>
                                     Dear Rajesh Kumar,<br>
                                     Explore our latest 2026 Pure Silk Sarees &amp; Designer Lehengas crafted for premium festive collections.<br><br>
-                                    👉 <strong>View &amp; Order Online:</strong> https://jaihanumantex.in/Frontend/Shop/shop.php<br><br>
+                                    👉 <strong>View &amp; Order Online:</strong> https://jaihanumantex.in/shop<br><br>
                                     <em>Special 15% VIP Discount Applied!</em>
                                 </div>
                             </div>
@@ -2296,19 +2296,19 @@ _Special 15% VIP Discount Applied!_</textarea>
 
                 <div class="dt-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:14px;">
                     <div class="adm-card" style="padding:8px; text-align:center;">
-                        <img src="/Frontend/Shop/Asset/images/product1.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <img src="/assets/images/product1.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
                         <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product1.png</div>
                     </div>
                     <div class="adm-card" style="padding:8px; text-align:center;">
-                        <img src="/Frontend/Shop/Asset/images/product2.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <img src="/assets/images/product2.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
                         <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product2.png</div>
                     </div>
                     <div class="adm-card" style="padding:8px; text-align:center;">
-                        <img src="/Frontend/Shop/Asset/images/product3.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <img src="/assets/images/product3.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
                         <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product3.png</div>
                     </div>
                     <div class="adm-card" style="padding:8px; text-align:center;">
-                        <img src="/Frontend/Shop/Asset/images/product4.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
+                        <img src="/assets/images/product4.png" style="width:100%; height:110px; object-fit:cover; border-radius:6px;">
                         <div style="font-size:0.7rem; font-weight:700; margin-top:6px;">product4.png</div>
                     </div>
                 </div>

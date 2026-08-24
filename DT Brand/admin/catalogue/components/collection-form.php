@@ -55,9 +55,9 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
                 <div>
                     <label class="dt-form-label">Available Catalog SKUs (Click to Add)</label>
                     <div class="dt-assign-box">
-                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(101, 'Kanjivaram Silk Saree', 'KLN-SR-111', '₹2,850', '/Frontend/Shop/Asset/images/product1.png')">
+                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(101, 'Kanjivaram Silk Saree', 'KLN-SR-111', '₹2,850', '/assets/images/product1.png')">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <img src="/Frontend/Shop/Asset/images/product1.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
+                                <img src="/assets/images/product1.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
                                 <div>
                                     <strong>Kanjivaram Silk Saree</strong>
                                     <div style="font-size:10px; color:#64748b;">KLN-SR-111 • ₹2,850</div>
@@ -66,9 +66,9 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
                             <button type="button" class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</button>
                         </div>
 
-                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(102, 'Banarasi Brocade Saree', 'BNR-SR-204', '₹3,200', '/Frontend/Shop/Asset/images/product2.png')">
+                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(102, 'Banarasi Brocade Saree', 'BNR-SR-204', '₹3,200', '/assets/images/product2.png')">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <img src="/Frontend/Shop/Asset/images/product2.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
+                                <img src="/assets/images/product2.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
                                 <div>
                                     <strong>Banarasi Brocade Saree</strong>
                                     <div style="font-size:10px; color:#64748b;">BNR-SR-204 • ₹3,200</div>
@@ -77,9 +77,9 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
                             <button type="button" class="dt-btn-action-sm pale-gold" style="height:20px; padding:0 6px; font-size:10px;">+ Add</button>
                         </div>
 
-                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(103, 'Zardosi Bridal Lehenga', 'BRD-LH-902', '₹11,500', '/Frontend/Shop/Asset/images/product6.png')">
+                        <div class="dt-assign-item" onclick="window.DT_COLLECTIONS.addProductToCollection(103, 'Zardosi Bridal Lehenga', 'BRD-LH-902', '₹11,500', '/assets/images/product6.png')">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <img src="/Frontend/Shop/Asset/images/product6.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
+                                <img src="/assets/images/product6.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
                                 <div>
                                     <strong>Zardosi Bridal Lehenga</strong>
                                     <div style="font-size:10px; color:#64748b;">BRD-LH-902 • ₹11,500</div>
@@ -96,7 +96,7 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
                     <div class="dt-assign-box" id="assignedProductsList">
                         <div class="dt-assign-item" id="assigned-prod-101">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <img src="/Frontend/Shop/Asset/images/product1.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
+                                <img src="/assets/images/product1.png" style="width:28px; height:28px; border-radius:4px; object-fit:cover;">
                                 <div>
                                     <strong>Kanjivaram Silk Saree</strong>
                                     <div style="font-size:10px; color:#64748b;">KLN-SR-111 • ₹2,850</div>

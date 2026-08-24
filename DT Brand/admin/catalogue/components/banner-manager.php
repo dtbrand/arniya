@@ -21,7 +21,7 @@
             <!-- Banner 1 -->
             <div class="dt-banner-card">
                 <div class="dt-banner-preview-box">
-                    <img src="/Frontend/Shop/Asset/images/product1.png" class="dt-banner-preview" alt="Silk Banner">
+                    <img src="/assets/images/product1.png" class="dt-banner-preview" alt="Silk Banner">
                 </div>
                 <div class="dt-banner-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -52,7 +52,7 @@
             <!-- Banner 2 -->
             <div class="dt-banner-card">
                 <div class="dt-banner-preview-box">
-                    <img src="/Frontend/Shop/Asset/images/product6.png" class="dt-banner-preview" alt="Bridal Banner">
+                    <img src="/assets/images/product6.png" class="dt-banner-preview" alt="Bridal Banner">
                 </div>
                 <div class="dt-banner-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -83,7 +83,7 @@
             <!-- Banner 3 -->
             <div class="dt-banner-card">
                 <div class="dt-banner-preview-box">
-                    <img src="/Frontend/Shop/Asset/images/product3.png" class="dt-banner-preview" alt="Reseller Deals Banner">
+                    <img src="/assets/images/product3.png" class="dt-banner-preview" alt="Reseller Deals Banner">
                 </div>
                 <div class="dt-banner-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">

@@ -796,7 +796,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         <!-- Header -->
                 <div class="co-header">
             <div class="co-header-brand" style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="co-title-group">
                     <h2>Secure Luxury Checkout</h2>
                     <span>DT Brand's Ethnic Couture</span>
@@ -1108,7 +1108,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
             html += `
                 <div class="co-item-row">
-                    <img src="${item.img || '/Shared/Asset/images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/Shared/Asset/images/product1.png';">
+                    <img src="${item.img || '/assets/images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/assets/images/product1.png';">
                     <div class="co-item-info">
                         <div class="co-item-name">${item.title || 'Ethnic Attire'}</div>
                         <div class="co-item-meta">Size: <strong>${item.size || 'M'}</strong> | Qty: <strong>${item.qty || 1}</strong></div>

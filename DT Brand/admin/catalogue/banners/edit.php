@@ -20,8 +20,8 @@ $banners_db = [
         'visibility' => 'All Devices (Responsive Auto-Switch)',
         'priority' => 1,
         'status' => 'Active (Visible Live)',
-        'desk_img' => '/Frontend/Shop/Asset/images/product1.png',
-        'mobile_img' => '/Frontend/Shop/Asset/images/product2.png'
+        'desk_img' => '/assets/images/product1.png',
+        'mobile_img' => '/assets/images/product2.png'
     ],
     2 => [
         'title' => 'Bridal Season Grandeur Spotlight',
@@ -34,8 +34,8 @@ $banners_db = [
         'visibility' => 'All Devices (Responsive Auto-Switch)',
         'priority' => 2,
         'status' => 'Active (Visible Live)',
-        'desk_img' => '/Frontend/Shop/Asset/images/product6.png',
-        'mobile_img' => '/Frontend/Shop/Asset/images/product6.png'
+        'desk_img' => '/assets/images/product6.png',
+        'mobile_img' => '/assets/images/product6.png'
     ]
 ];
 
@@ -269,11 +269,11 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                                     <div style="font-size:9px; font-weight:800; color:#181512; margin-bottom:4px;">🔥 SURAT READY STOCK LOTS</div>
                                     <div class="dt-mobile-mini-grid">
                                         <div class="dt-mobile-mini-card">
-                                            <img src="/Frontend/Shop/Asset/images/product1.png">
+                                            <img src="/assets/images/product1.png">
                                             <div style="font-size:8px; font-weight:700; color:#15803D;">₹2,850 <small style="color:#64748b;">(Wholesale)</small></div>
                                         </div>
                                         <div class="dt-mobile-mini-card">
-                                            <img src="/Frontend/Shop/Asset/images/product3.png">
+                                            <img src="/assets/images/product3.png">
                                             <div style="font-size:8px; font-weight:700; color:#15803D;">₹3,200 <small style="color:#64748b;">(Wholesale)</small></div>
                                         </div>
                                     </div>

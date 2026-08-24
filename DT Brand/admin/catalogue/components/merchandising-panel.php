@@ -29,7 +29,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 1 (Pinned) -->
             <div class="dt-merch-item is-pinned" id="merch-item-1">
                 <span class="dt-merch-rank-badge">#1 PINNED</span>
-                <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Shared/Asset/images/product1.png';" class="dt-merch-img" alt="Product 1">
+                <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" class="dt-merch-img" alt="Product 1">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Kanjivaram Gold Zari</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹2,850 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">
@@ -55,7 +55,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 2 -->
             <div class="dt-merch-item" id="merch-item-2">
                 <span class="dt-merch-rank-badge">#2</span>
-                <img src="/Frontend/Shop/Asset/images/product6.png" onerror="this.src='/Shared/Asset/images/product3.png';" class="dt-merch-img" alt="Product 2">
+                <img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" class="dt-merch-img" alt="Product 2">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Royal Velvet Bridal Zardosi</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹11,500 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">
@@ -81,7 +81,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 3 -->
             <div class="dt-merch-item" id="merch-item-3">
                 <span class="dt-merch-rank-badge">#3</span>
-                <img src="/Frontend/Shop/Asset/images/product2.png" onerror="this.src='/Shared/Asset/images/product2.png';" class="dt-merch-img" alt="Product 3">
+                <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" class="dt-merch-img" alt="Product 3">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Banarasi Kadhwa Brocade</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹3,200 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">
@@ -107,7 +107,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 4 -->
             <div class="dt-merch-item" id="merch-item-4">
                 <span class="dt-merch-rank-badge">#4</span>
-                <img src="/Frontend/Shop/Asset/images/product4.png" onerror="this.src='/Shared/Asset/images/product4.png';" class="dt-merch-img" alt="Product 4">
+                <img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" class="dt-merch-img" alt="Product 4">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Anarkali Festive Kurti Set</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹1,650 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">
@@ -133,7 +133,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 5 -->
             <div class="dt-merch-item" id="merch-item-5">
                 <span class="dt-merch-rank-badge">#5</span>
-                <img src="/Frontend/Shop/Asset/images/product5.png" onerror="this.src='/Shared/Asset/images/product5.png';" class="dt-merch-img" alt="Product 5">
+                <img src="/assets/images/product5.png" onerror="this.src='/assets/images/product5.png';" class="dt-merch-img" alt="Product 5">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Pure Modal Silk Material</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹1,420 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">
@@ -159,7 +159,7 @@ $display_cat_name = isset($cat_name) && !empty($cat_name) ? $cat_name : 'Silk Sa
             <!-- Product 6 -->
             <div class="dt-merch-item" id="merch-item-6">
                 <span class="dt-merch-rank-badge">#6</span>
-                <img src="/Frontend/Shop/Asset/images/product3.png" onerror="this.src='/Shared/Asset/images/product3.png';" class="dt-merch-img" alt="Product 6">
+                <img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" class="dt-merch-img" alt="Product 6">
                 <strong style="font-size:12px; color:#181512; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Bandhani Festive Dupatta</strong>
                 <div style="font-size:11px; color:#15803D; font-weight:700; margin:2px 0;">₹890 <small style="color:#64748b;">(Wholesale)</small></div>
                 <div class="dt-merch-ctrls">

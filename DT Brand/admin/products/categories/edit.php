@@ -31,7 +31,7 @@ if (!$category) {
 $catName = $category['name'];
 $catSlug = $category['slug'];
 $catDesc = $category['description'] ?? '';
-$catImg = !empty($category['image']) ? $category['image'] : '/Frontend/Shop/Asset/images/product1.png';
+$catImg = !empty($category['image']) ? $category['image'] : '/assets/images/product1.png';
 $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
 ?>
 <!DOCTYPE html>
@@ -141,7 +141,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Product Categories</span>
                     </a>
-                    <a href="/Frontend/Shop/shop.php?category=<?php echo urlencode($catSlug); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/shop?category=<?php echo urlencode($catSlug); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         <span>View on Shop</span>
                     </a>
@@ -253,7 +253,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                             <div class="dt-card-body">
                                 <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:6px;">Thumbnail Icon</label>
                                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-                                    <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" id="editThumbPreview" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1.5px solid #D4AF37;">
+                                    <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" id="editThumbPreview" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1.5px solid #D4AF37;">
                                     <input type="file" id="editFileInput" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader(); r.onload=e=>document.getElementById('editThumbPreview').src=e.target.result; r.readAsDataURL(this.files[0]); if(window.showToast) window.showToast('Thumbnail updated!');}">
                                     <button type="button" class="wp-button" onclick="document.getElementById('editFileInput').click()" style="height:32px; font-size:11.5px; font-weight:600;">
                                         Upload Image
@@ -344,7 +344,7 @@ function handleSaveCategory() {
     const name = document.getElementById('editName')?.value?.trim();
     const slug = document.getElementById('editSlug')?.value?.trim();
     const desc = document.getElementById('editDesc')?.value?.trim();
-    const thumbImg = document.getElementById('editThumbPreview')?.src || '/Frontend/Shop/Asset/images/product1.png';
+    const thumbImg = document.getElementById('editThumbPreview')?.src || '/assets/images/product1.png';
 
     if (!name) {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Category name is required');
