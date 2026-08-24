@@ -845,8 +845,38 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <span class="adm-nav-label">System Health</span>
                     </a>
                 </li>
+                <li>
+                    <a href="javascript:void(0);" class="adm-nav-item adm-nav-logout-link" id="navItem-logout" onclick="window.dtAdminLogout(event);" data-title="Sign Out / Logout">
+                        <svg class="adm-nav-icon adm-logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span class="adm-nav-label">Sign Out</span>
+                        <span class="adm-nav-badge crimson">EXIT</span>
+                    </a>
+                </li>
             </ul>
         </div>
+    </div>
+
+    <!-- ══ SIDEBAR FOOTER: ADMIN IDENTITY & LOGOUT BUTTON ══ -->
+    <div class="adm-sidebar-footer" id="admSidebarFooter">
+        <div class="adm-side-user-card" onclick="if(typeof switchAdmTab==='function'){ switchAdmTab('settings'); } else { window.location.href='/admin/settings/'; }" title="Admin Account Settings">
+            <img src="/assets/images/profile.png" onerror="this.src='/assets/images/product1.png';" alt="Gautam Sethi" class="adm-side-user-avatar">
+            <div class="adm-side-user-details">
+                <div class="adm-side-user-name">Gautam Sethi</div>
+                <div class="adm-side-user-role">Super Admin</div>
+            </div>
+        </div>
+        <button type="button" class="adm-sidebar-logout-btn" id="admSidebarLogoutBtn" onclick="event.stopPropagation(); window.dtAdminLogout(event);" title="Sign Out of Admin Console" aria-label="Sign Out">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="adm-sidebar-logout-text">Sign Out</span>
+        </button>
     </div>
 </aside>
 
