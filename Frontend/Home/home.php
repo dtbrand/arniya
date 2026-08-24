@@ -241,80 +241,46 @@ $products = [
 ];
 }
 
-$categoriesList = [
-    [
-        'name'        => 'Sarees',
-        'count'       => '450+ Designs',
-        'icon'        => '🥻',
-        'img'         => '/Frontend/Shop/Asset/images/product1.png',
-        'price_from'  => 'From ₹1,299',
-        'badge'       => '🔥 Bestseller',
-        'tagline'     => 'Banarasi & Kanjivaram'
-    ],
-    [
-        'name'        => 'Kurtis',
-        'count'       => '320+ Styles',
-        'icon'        => '👗',
-        'img'         => '/Frontend/Shop/Asset/images/product5.png',
-        'price_from'  => 'From ₹549',
-        'badge'       => '⚡ Trending',
-        'tagline'     => 'Anarkali & Straight Sets'
-    ],
-    [
-        'name'        => 'Gowns',
-        'count'       => '180+ Couture',
-        'icon'        => '✨',
-        'img'         => '/Frontend/Shop/Asset/images/product8.png',
-        'price_from'  => 'From ₹2,199',
-        'badge'       => '👑 Designer',
-        'tagline'     => 'Party Mirror Work'
-    ],
-    [
-        'name'        => 'Lehengas',
-        'count'       => '140+ Bridal',
-        'icon'        => '👑',
-        'img'         => '/Frontend/Shop/Asset/images/product6.png',
-        'price_from'  => 'From ₹6,999',
-        'badge'       => '💎 Bridal Pick',
-        'tagline'     => 'Heavy Velvet & Flare'
-    ],
-    [
-        'name'        => 'Suits',
-        'count'       => '210+ Sets',
-        'icon'        => '🌟',
-        'img'         => '/Frontend/Shop/Asset/images/product7.png',
-        'price_from'  => 'From ₹899',
-        'badge'       => '🏷️ Flat 25% Off',
-        'tagline'     => 'Sharara & Pant Sets'
-    ],
-    [
-        'name'        => 'Dress Material',
-        'count'       => '290+ Lots',
-        'icon'        => '🧵',
-        'img'         => '/Frontend/Shop/Asset/images/product4.png',
-        'price_from'  => 'From ₹649',
-        'badge'       => '🏭 Factory Price',
-        'tagline'     => 'Unstitched Pure Cotton'
-    ],
-    [
-        'name'        => 'Dupatta',
-        'count'       => '160+ Silk Lots',
-        'icon'        => '🧣',
-        'img'         => '/Frontend/Shop/Asset/images/product2.png',
-        'price_from'  => 'From ₹299',
-        'badge'       => '✨ Silk Edit',
-        'tagline'     => 'Banarasi Zari Border'
-    ],
-    [
-        'name'        => 'Jewellery',
-        'count'       => '120+ Kundan',
-        'icon'        => '💍',
-        'img'         => '/Frontend/Shop/Asset/images/product3.png',
-        'price_from'  => 'From ₹499',
-        'badge'       => '👑 Royal Kundan',
-        'tagline'     => 'Choker & Bridal Sets'
-    ],
-];
+$dbCategories = [];
+$db = Database::getConnection();
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $dbCategories = Database::query("SELECT * FROM categories WHERE status = 'active' ORDER BY display_order ASC");
+    } catch (\Exception $e) {}
+}
+
+$categoriesList = [];
+if (!empty($dbCategories)) {
+    foreach ($dbCategories as $idx => $c) {
+        $cName = $c['name'];
+        $cCount = count(ProductCatalog::filter(['category' => $cName]));
+        $categoriesList[] = [
+            'name' => $cName,
+            'slug' => $c['slug'] ?? strtolower(str_replace(' ', '-', $cName)),
+            'count' => $cCount . ' Designs',
+            'img' => !empty($c['image']) ? $c['image'] : ('/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png'),
+            'price_from' => 'Direct Surat Wholesale',
+            'badge' => 'Verified Mill',
+            'tagline' => !empty($c['description']) ? (strlen($c['description']) > 40 ? substr($c['description'], 0, 40) . '...' : $c['description']) : 'Authentic Collection'
+        ];
+    }
+}
+
+if (empty($categoriesList)) {
+    $fallbackCats = ProductCatalog::getCategories();
+    foreach ($fallbackCats as $idx => $cName) {
+        $cCount = count(ProductCatalog::filter(['category' => $cName]));
+        $categoriesList[] = [
+            'name' => $cName,
+            'slug' => strtolower(str_replace(' ', '-', $cName)),
+            'count' => $cCount . ' Designs',
+            'img' => '/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png',
+            'price_from' => 'Direct Surat Wholesale',
+            'badge' => 'Verified Mill',
+            'tagline' => 'Handcrafted Authentic Weaves'
+        ];
+    }
+}
 
 $total_products = count($products);
 ?>

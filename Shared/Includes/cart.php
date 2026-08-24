@@ -2,9 +2,18 @@
 /**
  * cart.php — PARTIAL INCLUDE
  * Self-Contained Fully Styled & Dynamic Cart Drawer Component
- * Features Full-Size Luxury Portrait Product Photography with Auto-Sliding, Desktop Mouse Drag & Mobile Touch Swipe
+ * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+
+$dbProductsForCart = ProductCatalog::getAll();
 ?>
+<script>
+window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
+</script>
 <style>
 /* ── Cart Drawer Base Styles ── */
 .cart-drawer-backdrop {

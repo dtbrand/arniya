@@ -2,9 +2,18 @@
 /**
  * checkout.php — Standalone & Modal Partial Component
  * Luxury Ethnic WhatsApp CRM Checkout Flow
- * 100% Fluid Responsive for Desktop & Mobile
+ * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+
+$dbProductsForCheckout = ProductCatalog::getAll();
 ?>
+<script>
+window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
+</script>
 <!-- ════════════════════════════════════════════════════
      CHECKOUT MODAL / DRAWER / CONTAINER
 ════════════════════════════════════════════════════ -->

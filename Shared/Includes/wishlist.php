@@ -2,9 +2,18 @@
 /**
  * wishlist.php — PARTIAL INCLUDE
  * Self-Contained Fully Styled & Dynamic Wishlist Drawer Component
- * Features Full-Size Luxury Portrait Product Photography with Auto-Sliding, Desktop Mouse Drag & Mobile Touch Swipe
+ * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+
+$dbProductsForWishlist = ProductCatalog::getAll();
 ?>
+<script>
+window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
+</script>
 <style>
 /* ── Wishlist Drawer Base Styles ── */
 .wishlist-drawer-backdrop {

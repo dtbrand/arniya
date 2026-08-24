@@ -730,4 +730,57 @@ function removeBorderVariationCard(cardId) {
     if (chip) chip.remove();
     if (typeof window.showToast === 'function') window.showToast(`Border option removed`);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    <?php 
+    $initialColors = $prod['colors'] ?? ['Crimson Red', 'Peacock Blue', 'Emerald Green'];
+    $initialSizes = $prod['size'] ?? ['Free Size (6.3m)', 'M (38)', 'L (40)'];
+    ?>
+    const presetColors = <?php echo json_encode($initialColors); ?>;
+    const presetSizes = <?php echo json_encode($initialSizes); ?>;
+
+    const colorHexMap = {
+        'Crimson Red': '#991b1b',
+        'Navy Blue': '#1e40af',
+        'Royal Blue': '#1e40af',
+        'Antique Gold': '#d97706',
+        'Peacock Blue': '#0f766e',
+        'Emerald Green': '#166534',
+        'Bottle Green': '#166534',
+        'Maroon Red': '#831843',
+        'Deep Wine': '#581c87',
+        'Ruby Red': '#991b1b',
+        'Rani Pink': '#db2777',
+        'Mustard Yellow': '#d97706',
+        'Golden Ochre': '#b45309',
+        'Pink': '#ec4899',
+        'Green': '#15803d',
+        'Red': '#dc2626',
+        'Orange': '#ea580c',
+        'White': '#ffffff'
+    };
+
+    if (Array.isArray(presetColors)) {
+        presetColors.forEach(c => {
+            const hex = colorHexMap[c] || '#8A681F';
+            const nameInput = document.getElementById('varColorName');
+            const hexInput = document.getElementById('varColorHex');
+            if (nameInput && hexInput) {
+                nameInput.value = c;
+                hexInput.value = hex;
+                submitNewColorVariation();
+            }
+        });
+    }
+
+    if (Array.isArray(presetSizes)) {
+        presetSizes.forEach(s => {
+            const sizeInput = document.getElementById('varSizeName');
+            if (sizeInput) {
+                sizeInput.value = s;
+                submitNewSizeVariation();
+            }
+        });
+    }
+});
 </script>
