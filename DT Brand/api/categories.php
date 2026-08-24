@@ -1,12 +1,12 @@
 <?php
 /**
- * api/categories.php — Category Tree & Lookbooks Feed API
+ * api/categories.php — Category Tree & Lookbooks Feed API & Real Database CRUD
  * DT Brand's & Jai Hanuman Tex
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -21,6 +21,34 @@ use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
 try {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    if ($method === 'POST' || $method === 'DELETE') {
+        $rawInput = file_get_contents('php://input');
+        $jsonData = json_decode($rawInput, true) ?: [];
+        $data = array_merge($_POST, $jsonData);
+
+        $action = trim($data['action'] ?? ($method === 'DELETE' ? 'delete' : 'create'));
+        $targetId = (int)($data['id'] ?? ($_GET['id'] ?? 0));
+
+        if ($action === 'create') {
+            $res = ProductCatalog::createCategory($data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        if ($action === 'delete') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Category ID required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = ProductCatalog::deleteCategory($targetId);
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Category deleted.' : 'Failed to delete category.'], JSON_PRETTY_PRINT);
+            exit;
+        }
+    }
+
     $categories = ProductCatalog::getCategoriesWithDetails();
 
     echo json_encode([
@@ -32,6 +60,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'Failed to load categories: ' . $e->getMessage()
+        'message' => 'Failed to process category request: ' . $e->getMessage()
     ], JSON_PRETTY_PRINT);
 }
+

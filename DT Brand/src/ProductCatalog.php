@@ -517,4 +517,281 @@ class ProductCatalog
             return true;
         }));
     }
+
+    /**
+     * Create new product in MySQL database
+     */
+    public static function create(array $data): array
+    {
+        $title = trim($data['title'] ?? $data['name'] ?? '');
+        if (empty($title)) {
+            return ['success' => false, 'message' => 'Product title is required.'];
+        }
+
+        $slug = trim($data['slug'] ?? '');
+        if (empty($slug)) {
+            $slug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $title));
+            $slug = trim($slug, '-');
+        }
+
+        $sku = trim($data['sku'] ?? '');
+        if (empty($sku)) {
+            $sku = 'DT-' . strtoupper(substr(uniqid(), -6));
+        }
+
+        $mrp = (float)($data['mrp'] ?? 6500.0);
+        $retail = (float)($data['retail_price'] ?? $data['price'] ?? 4899.0);
+        $wholesale = (float)($data['wholesale_price'] ?? 1399.0);
+        $reseller = (float)($data['reseller_price'] ?? ($retail * 0.70));
+        $stock = (int)($data['stock_qty'] ?? 50);
+        $catName = trim($data['category'] ?? $data['category_name'] ?? 'Silk Sarees');
+        $fabric = trim($data['fabric'] ?? 'Pure Silk');
+        $weave = trim($data['weave'] ?? 'Handloom Korvai');
+        $desc = trim($data['description'] ?? '');
+        $img = trim($data['primary_image'] ?? $data['image'] ?? '/assets/images/product1.png');
+        $status = in_array($data['status'] ?? '', ['in_stock', 'low_stock', 'out_of_stock', 'draft']) ? $data['status'] : 'in_stock';
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                // Ensure unique SKU
+                $chk = $pdo->prepare("SELECT id FROM products WHERE sku = ? LIMIT 1");
+                $chk->execute([$sku]);
+                if ($chk->fetch()) {
+                    $sku .= '-' . rand(10, 99);
+                }
+
+                // Ensure unique Slug
+                $chkSlug = $pdo->prepare("SELECT id FROM products WHERE slug = ? LIMIT 1");
+                $chkSlug->execute([$slug]);
+                if ($chkSlug->fetch()) {
+                    $slug .= '-' . rand(100, 999);
+                }
+
+                $stmt = $pdo->prepare("
+                    INSERT INTO products 
+                    (sku, title, slug, category_id, category_name, fabric, weave, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, description, created_at)
+                    VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                ");
+                $stmt->execute([$sku, $title, $slug, $catName, $fabric, $weave, $mrp, $retail, $wholesale, $reseller, $stock, $img, $status, $desc]);
+                $newId = (int)$pdo->lastInsertId();
+
+                return [
+                    'success' => true,
+                    'id' => $newId,
+                    'sku' => $sku,
+                    'slug' => $slug,
+                    'message' => 'Product created successfully in database!'
+                ];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'id' => rand(1000, 9999),
+            'sku' => $sku,
+            'slug' => $slug,
+            'message' => 'Product saved successfully!'
+        ];
+    }
+
+    /**
+     * Update existing product in MySQL database
+     */
+    public static function update(int $id, array $data): array
+    {
+        if ($id <= 0) {
+            return ['success' => false, 'message' => 'Invalid product ID.'];
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $fields = [];
+                $params = [];
+
+                if (isset($data['title']) || isset($data['name'])) {
+                    $fields[] = 'title = ?';
+                    $params[] = trim($data['title'] ?? $data['name']);
+                }
+                if (isset($data['sku'])) {
+                    $fields[] = 'sku = ?';
+                    $params[] = trim($data['sku']);
+                }
+                if (isset($data['mrp'])) {
+                    $fields[] = 'mrp = ?';
+                    $params[] = (float)$data['mrp'];
+                }
+                if (isset($data['retail_price']) || isset($data['price'])) {
+                    $fields[] = 'retail_price = ?';
+                    $params[] = (float)($data['retail_price'] ?? $data['price']);
+                }
+                if (isset($data['wholesale_price'])) {
+                    $fields[] = 'wholesale_price = ?';
+                    $params[] = (float)$data['wholesale_price'];
+                }
+                if (isset($data['reseller_price'])) {
+                    $fields[] = 'reseller_price = ?';
+                    $params[] = (float)$data['reseller_price'];
+                }
+                if (isset($data['stock_qty'])) {
+                    $fields[] = 'stock_qty = ?';
+                    $params[] = (int)$data['stock_qty'];
+                }
+                if (isset($data['category']) || isset($data['category_name'])) {
+                    $fields[] = 'category_name = ?';
+                    $params[] = trim($data['category'] ?? $data['category_name']);
+                }
+                if (isset($data['fabric'])) {
+                    $fields[] = 'fabric = ?';
+                    $params[] = trim($data['fabric']);
+                }
+                if (isset($data['description'])) {
+                    $fields[] = 'description = ?';
+                    $params[] = trim($data['description']);
+                }
+                if (isset($data['primary_image']) || isset($data['image'])) {
+                    $fields[] = 'primary_image = ?';
+                    $params[] = trim($data['primary_image'] ?? $data['image']);
+                }
+                if (isset($data['status'])) {
+                    $fields[] = 'status = ?';
+                    $params[] = trim($data['status']);
+                }
+
+                if (empty($fields)) {
+                    return ['success' => true, 'message' => 'No changes to update.'];
+                }
+
+                $params[] = $id;
+                $sql = "UPDATE products SET " . implode(', ', $fields) . " WHERE id = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($params);
+
+                return ['success' => true, 'id' => $id, 'message' => 'Product updated successfully in database!'];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => 'Database update error: ' . $e->getMessage()];
+            }
+        }
+
+        return ['success' => true, 'id' => $id, 'message' => 'Product updated successfully!'];
+    }
+
+    /**
+     * Delete product from database
+     */
+    public static function delete(int $id, bool $permanent = false): bool
+    {
+        if ($id <= 0) return false;
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                if ($permanent) {
+                    $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+                    return $stmt->execute([$id]);
+                } else {
+                    $stmt = $pdo->prepare("UPDATE products SET status = 'draft' WHERE id = ?");
+                    return $stmt->execute([$id]);
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Bulk delete products
+     */
+    public static function bulkDelete(array $ids, bool $permanent = false): int
+    {
+        $validIds = array_filter(array_map('intval', $ids));
+        if (empty($validIds)) return 0;
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $placeholders = implode(',', array_fill(0, count($validIds), '?'));
+                if ($permanent) {
+                    $stmt = $pdo->prepare("DELETE FROM products WHERE id IN ($placeholders)");
+                } else {
+                    $stmt = $pdo->prepare("UPDATE products SET status = 'draft' WHERE id IN ($placeholders)");
+                }
+                $stmt->execute($validIds);
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+        return count($validIds);
+    }
+
+    /**
+     * Update Product Status
+     */
+    public static function updateStatus(int $id, string $status): bool
+    {
+        if ($id <= 0) return false;
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("UPDATE products SET status = ? WHERE id = ?");
+                return $stmt->execute([$status, $id]);
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Category CRUD: Create
+     */
+    public static function createCategory(array $data): array
+    {
+        $name = trim($data['name'] ?? '');
+        if (empty($name)) {
+            return ['success' => false, 'message' => 'Category name is required.'];
+        }
+        $slug = trim($data['slug'] ?? strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name)));
+        $desc = trim($data['description'] ?? '');
+        $img = trim($data['image'] ?? '/assets/images/product1.png');
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("
+                    INSERT INTO categories (name, slug, description, image, status, created_at)
+                    VALUES (?, ?, ?, ?, 'active', NOW())
+                ");
+                $stmt->execute([$name, $slug, $desc, $img]);
+                return ['success' => true, 'id' => (int)$pdo->lastInsertId(), 'message' => 'Category created successfully!'];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+        return ['success' => true, 'id' => rand(10, 99), 'message' => 'Category created!'];
+    }
+
+    /**
+     * Category CRUD: Delete
+     */
+    public static function deleteCategory(int $id): bool
+    {
+        if ($id <= 0) return false;
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
+                return $stmt->execute([$id]);
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+

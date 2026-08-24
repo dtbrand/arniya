@@ -117,32 +117,49 @@ class CustomerManager
         $tier = trim($data['tier'] ?? ($type === 'wholesale' ? 'Diamond Elite' : ($type === 'reseller' ? 'Gold VIP' : 'Silver Consumer')));
         $city = trim($data['city'] ?? 'Surat');
         $state = trim($data['state'] ?? 'Gujarat');
+        $company = trim($data['company_name'] ?? '');
+        $gst = trim($data['gst_number'] ?? '');
         $creditLimit = (float)($data['credit_limit'] ?? 0.0);
         $status = trim($data['status'] ?? 'active');
+        $passwordHash = password_hash($data['password'] ?? 'dtbrand123', PASSWORD_BCRYPT);
 
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                $stmt = $pdo->prepare("INSERT INTO customers (name, phone, email, type, tier, city, state, credit_limit, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-                $stmt->execute([$name, $phone, $email, $type, $tier, $city, $state, $creditLimit, $status]);
+                $chk = $pdo->prepare("SELECT id FROM customers WHERE phone = ? LIMIT 1");
+                $chk->execute([$phone]);
+                if ($chk->fetch()) {
+                    return ['success' => false, 'message' => 'Customer with this phone number already exists.'];
+                }
+
+                $stmt = $pdo->prepare("
+                    INSERT INTO customers 
+                    (name, phone, email, password_hash, company_name, gst_number, type, tier, city, state, credit_limit, status, created_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                ");
+                $stmt->execute([$name, $phone, $email, $passwordHash, $company, $gst, $type, $tier, $city, $state, $creditLimit, $status]);
                 $newId = (int)$pdo->lastInsertId();
-                return array_merge($data, ['id' => $newId, 'status' => $status]);
-            } catch (\Exception $e) {}
+                return ['success' => true, 'id' => $newId, 'message' => 'Customer created successfully!'];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
         }
 
         $newId = rand(200, 999);
         $newRecord = array_merge($data, ['id' => $newId, 'status' => $status]);
         self::$customers[] = $newRecord;
-        return $newRecord;
+        return ['success' => true, 'id' => $newId, 'message' => 'Customer saved!'];
     }
 
-    public static function update(int $id, array $data): bool
+    public static function update(int $id, array $data): array
     {
+        if ($id <= 0) return ['success' => false, 'message' => 'Invalid ID'];
+
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 $fields = [];
                 $params = [];
-                foreach (['name', 'phone', 'email', 'type', 'tier', 'city', 'state', 'credit_limit', 'outstanding_balance', 'status'] as $f) {
+                foreach (['name', 'phone', 'email', 'company_name', 'gst_number', 'type', 'tier', 'city', 'state', 'credit_limit', 'outstanding_balance', 'status'] as $f) {
                     if (isset($data[$f])) {
                         $fields[] = "{$f} = ?";
                         $params[] = $data[$f];
@@ -151,11 +168,14 @@ class CustomerManager
                 if (!empty($fields)) {
                     $params[] = $id;
                     $stmt = $pdo->prepare("UPDATE customers SET " . implode(', ', $fields) . " WHERE id = ?");
-                    return $stmt->execute($params);
+                    $stmt->execute($params);
+                    return ['success' => true, 'id' => $id, 'message' => 'Customer updated successfully!'];
                 }
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
         }
-        return true;
+        return ['success' => true, 'id' => $id, 'message' => 'Customer updated!'];
     }
 
     public static function delete(int $id): bool
@@ -166,6 +186,36 @@ class CustomerManager
                 $stmt = $pdo->prepare("DELETE FROM customers WHERE id = ?");
                 return $stmt->execute([$id]);
             } catch (\Exception $e) {}
+        }
+        return true;
+    }
+
+    public static function updateStatus(int $id, string $status): bool
+    {
+        if ($id <= 0) return false;
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("UPDATE customers SET status = ? WHERE id = ?");
+                return $stmt->execute([$status, $id]);
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function updateCreditLimit(int $id, float $creditLimit): bool
+    {
+        if ($id <= 0) return false;
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("UPDATE customers SET credit_limit = ? WHERE id = ?");
+                return $stmt->execute([$creditLimit, $id]);
+            } catch (\Exception $e) {
+                return false;
+            }
         }
         return true;
     }
@@ -198,3 +248,5 @@ class CustomerManager
         ];
     }
 }
+
+

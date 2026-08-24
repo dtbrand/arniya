@@ -1,12 +1,12 @@
 <?php
 /**
- * api/products.php — High-Performance Product Catalog REST API
+ * api/products.php — High-Performance Product Catalog REST API & Real Database CRUD Engine
  * DT Brand's & Jai Hanuman Tex
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -21,6 +21,83 @@ use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
 try {
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──
+    if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+        $rawInput = file_get_contents('php://input');
+        $jsonData = json_decode($rawInput, true) ?: [];
+        $data = array_merge($_POST, $jsonData);
+
+        $action = trim($data['action'] ?? ($method === 'DELETE' ? 'delete' : 'create'));
+        $targetId = (int)($data['id'] ?? ($_GET['id'] ?? 0));
+
+        // Create Product
+        if ($action === 'create') {
+            $res = ProductCatalog::create($data);
+            if ($res['success']) {
+                http_response_code(201);
+                echo json_encode($res, JSON_PRETTY_PRINT);
+            } else {
+                http_response_code(400);
+                echo json_encode($res, JSON_PRETTY_PRINT);
+            }
+            exit;
+        }
+
+        // Update Product
+        if ($action === 'update') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for update.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $res = ProductCatalog::update($targetId, $data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Delete Product
+        if ($action === 'delete') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for deletion.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $permanent = !empty($data['permanent']);
+            $ok = ProductCatalog::delete($targetId, $permanent);
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Product removed successfully.' : 'Failed to remove product.'], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Bulk Delete
+        if ($action === 'bulk_delete') {
+            $ids = $data['ids'] ?? [];
+            if (!is_array($ids) || empty($ids)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Array of product IDs required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $permanent = !empty($data['permanent']);
+            $count = ProductCatalog::bulkDelete($ids, $permanent);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully removed {$count} products."], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Toggle Status
+        if ($action === 'toggle_status') {
+            if ($targetId <= 0 || empty($data['status'])) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID and new status required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = ProductCatalog::updateStatus($targetId, trim($data['status']));
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'status' => $data['status']], JSON_PRETTY_PRINT);
+            exit;
+        }
+    }
+
+    // ── 2. READ ACTIONS (GET) ──
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
     $sku = isset($_GET['sku']) ? trim($_GET['sku']) : '';
     $category = isset($_GET['category']) ? trim($_GET['category']) : '';
@@ -111,3 +188,4 @@ try {
         'message' => 'Server Error: ' . $e->getMessage()
     ], JSON_PRETTY_PRINT);
 }
+
