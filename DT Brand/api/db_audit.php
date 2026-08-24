@@ -254,9 +254,23 @@ try {
         $created_or_verified[] = $tName;
     }
 
+    $doClean = (isset($_GET['clean']) && $_GET['clean'] === '1') || (isset($_GET['clean_refresh']) && $_GET['clean_refresh'] === '1');
+    if ($doClean) {
+        // Disable foreign key checks for clean purge
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 0;");
+        $purge_tables = ['orders', 'order_items', 'order_status_history', 'whatsapp_logs', 'activity_logs', 'quotations', 'wallet_transactions', 'wallets', 'reviews', 'product_reviews', 'products', 'customers', 'coupons'];
+        foreach ($purge_tables as $pt) {
+            try {
+                $pdo->exec("TRUNCATE TABLE `$pt`");
+            } catch (\Exception $e) {}
+        }
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 1;");
+    }
+
     // Auto-Seed Data if Tables are Empty or &seed=1 is requested
     $seeded = [];
-    $doSeed = isset($_GET['seed']) && $_GET['seed'] === '1';
+    $doSeed = (isset($_GET['seed']) && $_GET['seed'] === '1') || $doClean;
+
 
     // 1. Seed Products if empty or requested
     $prodCount = (int)$pdo->query("SELECT COUNT(*) FROM `products`")->fetchColumn();
