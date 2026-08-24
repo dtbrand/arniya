@@ -17,9 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
+require_once __DIR__ . '/../src/DiscountEngine.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\PricingCalculator;
+use DTBrand\DiscountEngine;
 
 try {
     $rawInput = file_get_contents('php://input');
@@ -76,14 +78,17 @@ try {
     }
 
     $discount = 0.0;
-    if ($couponCode === 'FESTIVE25') {
-        $discount = round($subtotal * 0.25, 2);
-    } elseif ($couponCode === 'FIRST10') {
-        $discount = round($subtotal * 0.10, 2);
+    $couponResult = ['valid' => false, 'discount' => 0.0, 'message' => ''];
+    if (!empty($couponCode)) {
+        $couponResult = DiscountEngine::applyCoupon($couponCode, $subtotal, null, $userType);
+        if ($couponResult['valid']) {
+            $discount = (float)$couponResult['discount'];
+        }
     }
 
-    $shipping = ($subtotal > 2999 || $subtotal === 0.0) ? 0.0 : 150.0;
+    $shipping = ($subtotal > 999 || $subtotal === 0.0) ? 0.0 : 150.0;
     $calc = PricingCalculator::calculateOrderTotal($subtotal, $discount, $shipping, 5.0);
+
 
     echo json_encode([
         'success' => true,

@@ -378,4 +378,55 @@ class Auth
             'reset_token' => $token
         ];
     }
+
+    /**
+     * Generate CSRF Token
+     */
+    public static function generateCsrfToken(): string
+    {
+        self::initSession();
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+        return $_SESSION['csrf_token'];
+    }
+
+    /**
+     * Validate CSRF Token
+     */
+    public static function validateCsrfToken(?string $token): bool
+    {
+        self::initSession();
+        if (empty($token) || empty($_SESSION['csrf_token'])) {
+            return false;
+        }
+        return hash_equals($_SESSION['csrf_token'], $token);
+    }
+
+    /**
+     * IDOR Access Control: Check if user has permission to view an order
+     */
+    public static function canAccessOrder(int $orderId, ?int $userId, string $userRole = 'customer'): bool
+    {
+        if (in_array($userRole, ['super_admin', 'admin', 'order_manager'])) {
+            return true;
+        }
+        if (empty($userId)) {
+            return false;
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("SELECT customer_id FROM orders WHERE id = ? LIMIT 1");
+                $stmt->execute([$orderId]);
+                $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+                return $row && (int)$row['customer_id'] === $userId;
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+

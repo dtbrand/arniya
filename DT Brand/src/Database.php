@@ -96,6 +96,72 @@ class Database
     }
 
     /**
+     * Fetch single row safely
+     */
+    public static function fetchOne(string $sql, array $params = []): ?array
+    {
+        $pdo = self::getConnection();
+        if ($pdo === null) {
+            return null;
+        }
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $result = $stmt->fetch();
+            return $result ?: null;
+        } catch (\PDOException $e) {
+            error_log("[DATABASE ERROR] fetchOne Failed: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Begin database transaction
+     */
+    public static function beginTransaction(): bool
+    {
+        $pdo = self::getConnection();
+        if ($pdo && !$pdo->inTransaction()) {
+            return $pdo->beginTransaction();
+        }
+        return false;
+    }
+
+    /**
+     * Commit database transaction
+     */
+    public static function commit(): bool
+    {
+        $pdo = self::getConnection();
+        if ($pdo && $pdo->inTransaction()) {
+            return $pdo->commit();
+        }
+        return false;
+    }
+
+    /**
+     * Roll back database transaction
+     */
+    public static function rollBack(): bool
+    {
+        $pdo = self::getConnection();
+        if ($pdo && $pdo->inTransaction()) {
+            return $pdo->rollBack();
+        }
+        return false;
+    }
+
+    /**
+     * Check if currently in transaction
+     */
+    public static function inTransaction(): bool
+    {
+        $pdo = self::getConnection();
+        return $pdo ? $pdo->inTransaction() : false;
+    }
+
+    /**
      * Get last inserted ID
      */
     public static function lastInsertId(): string
@@ -104,3 +170,4 @@ class Database
         return $pdo ? $pdo->lastInsertId() : '0';
     }
 }
+

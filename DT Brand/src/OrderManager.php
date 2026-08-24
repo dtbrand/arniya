@@ -132,6 +132,7 @@ class OrderManager
         }
 
         return [
+            'success' => true,
             'id' => $dbOrderId,
             'order_number' => $orderNumber,
             'customer_name' => $customerName,
@@ -150,9 +151,36 @@ class OrderManager
     }
 
     /**
+     * Get single order by order number
+     */
+    public static function getByOrderNumber(string $orderNumber): ?array
+    {
+        return self::getOrderDetails($orderNumber);
+    }
+
+    /**
+     * Get orders by customer phone number
+     */
+    public static function getByPhone(string $phone): array
+    {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $db->prepare("SELECT * FROM orders WHERE customer_phone = ? ORDER BY id DESC");
+                $stmt->execute([$phone]);
+                return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            } catch (\Exception $e) {
+                return [];
+            }
+        }
+        return [];
+    }
+
+    /**
      * Generate official WhatsApp dispatch message
      */
     public static function generateWhatsAppNotice(string $orderNumber, float $grandTotal, string $customerName): string
+
     {
         $formattedTotal = '₹' . number_format($grandTotal, 2);
         return "Namaste {$customerName} ji! 🙏\n" .
@@ -264,13 +292,28 @@ class OrderManager
     }
 
     /**
-     * Update Order Fulfillment Status by ID or Order Number
+     * Update Order Fulfillment Status by ID or Order Number with Audit Trail Logging
      */
-    public static function updateStatus($orderIdentifier, string $status, ?string $trackingNumber = null, ?string $courier = null): bool
+    public static function updateStatus($orderIdentifier, string $status, ?string $trackingNumber = null, ?string $courier = null, string $updatedBy = 'Admin'): bool
     {
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
             try {
+                // 1. Get current order state
+                $currentOrder = null;
+                if (is_numeric($orderIdentifier)) {
+                    $cStmt = $db->prepare("SELECT id, fulfillment_status FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
+                    $cStmt->execute([(int)$orderIdentifier, (string)$orderIdentifier]);
+                    $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
+                } else {
+                    $cStmt = $db->prepare("SELECT id, fulfillment_status FROM orders WHERE order_number = ? LIMIT 1");
+                    $cStmt->execute([(string)$orderIdentifier]);
+                    $currentOrder = $cStmt->fetch(\PDO::FETCH_ASSOC);
+                }
+
+                $prevStatus = $currentOrder['fulfillment_status'] ?? 'pending';
+                $orderDbId = (int)($currentOrder['id'] ?? 0);
+
                 if (is_numeric($orderIdentifier)) {
                     $stmt = $db->prepare("
                         UPDATE orders 
@@ -279,7 +322,7 @@ class OrderManager
                             courier_name = COALESCE(?, courier_name)
                         WHERE id = ? OR order_number = ?
                     ");
-                    return $stmt->execute([$status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
+                    $res = $stmt->execute([$status, $trackingNumber, $courier, (int)$orderIdentifier, (string)$orderIdentifier]);
                 } else {
                     $stmt = $db->prepare("
                         UPDATE orders 
@@ -288,12 +331,67 @@ class OrderManager
                             courier_name = COALESCE(?, courier_name)
                         WHERE order_number = ?
                     ");
-                    return $stmt->execute([$status, $trackingNumber, $courier, (string)$orderIdentifier]);
+                    $res = $stmt->execute([$status, $trackingNumber, $courier, (string)$orderIdentifier]);
                 }
+
+                // 2. Log in order_status_history
+                if ($res && $orderDbId > 0) {
+                    try {
+                        $hStmt = $db->prepare("
+                            INSERT INTO order_status_history (order_id, previous_status, new_status, comment, updated_by, created_at)
+                            VALUES (?, ?, ?, ?, ?, NOW())
+                        ");
+                        $comment = "Order status updated to " . ucfirst($status) . ($trackingNumber ? " (AWB: {$trackingNumber})" : "");
+                        $hStmt->execute([$orderDbId, $prevStatus, $status, $comment, $updatedBy]);
+                    } catch (\Exception $ex) {
+                        // Safe fallback if history table not yet migrated
+                    }
+                }
+
+                return $res;
             } catch (\Exception $e) {
                 return false;
             }
         }
         return true;
     }
+
+    /**
+     * Get Complete Order Details with Items and Status History
+     */
+    public static function getOrderDetails($orderIdentifier): ?array
+    {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $order = null;
+                if (is_numeric($orderIdentifier)) {
+                    $stmt = $db->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
+                    $stmt->execute([(int)$orderIdentifier, (string)$orderIdentifier]);
+                    $order = $stmt->fetch(\PDO::FETCH_ASSOC);
+                } else {
+                    $stmt = $db->prepare("SELECT * FROM orders WHERE order_number = ? LIMIT 1");
+                    $stmt->execute([(string)$orderIdentifier]);
+                    $order = $stmt->fetch(\PDO::FETCH_ASSOC);
+                }
+
+                if ($order) {
+                    $orderId = (int)$order['id'];
+                    $itemsStmt = $db->prepare("SELECT * FROM order_items WHERE order_id = ?");
+                    $itemsStmt->execute([$orderId]);
+                    $order['items'] = $itemsStmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                    $histStmt = $db->prepare("SELECT * FROM order_status_history WHERE order_id = ? ORDER BY id ASC");
+                    $histStmt->execute([$orderId]);
+                    $order['history'] = $histStmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                    return $order;
+                }
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+        return null;
+    }
 }
+
