@@ -939,7 +939,7 @@ input[type=range].mf-range::-moz-range-thumb {
         <div style="font-size:0.68rem; font-weight:700; color:var(--dark-gold, #8A681F); text-transform:uppercase; letter-spacing:0.1em; padding:12px 0 4px; border-bottom:1.5px solid rgba(138,104,31,0.2);">
             Navigation & Shopping
         </div>
-        <div class="add-action-item" id="moreHomeAction" onclick="window.location.href='/Frontend/Home/home.php';">
+        <div class="add-action-item" id="moreHomeAction" onclick="window.location.href='/';">
             <div class="add-action-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
             <div><div class="add-action-label" style="color:var(--dark-gold, #8A681F); font-weight:800;">Home Page</div><div class="add-action-sub">Main shopping hub, offers & wholesale</div></div>
         </div>
