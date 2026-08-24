@@ -55,12 +55,9 @@ if (empty($categoriesList)) {
     }
 }
 
+$categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
 ?>
-<script>
-window.allCategories = <?php echo json_encode($dbCategories ?? []); ?>;
-window.allProducts = <?php echo json_encode($products ?? []); ?>;
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,6 +78,7 @@ window.allProducts = <?php echo json_encode($products ?? []); ?>;
         window.allProducts = window.shopProductsData;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
+        window.allCategories = <?php echo json_encode($categoriesDetails); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
     </script>

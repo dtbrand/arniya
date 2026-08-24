@@ -31,6 +31,7 @@ if (!empty($selectedCategory) && strtolower($selectedCategory) !== 'all') {
 }
 
 $categories = array_unique(array_merge(['All'], ProductCatalog::getCategories()));
+$categoriesDetails = ProductCatalog::getCategoriesWithDetails();
 $total_products = count($products);
 ?>
 <!DOCTYPE html>
@@ -49,9 +50,12 @@ $total_products = count($products);
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
-        window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
+        window.allProducts = <?php echo json_encode(isset($products) ? array_values($products) : []); ?>;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
+        window.shopProductsData = window.allProducts;
+        window.allCategories = <?php echo json_encode($categoriesDetails); ?>;
+        window.initialCategory = <?php echo json_encode($selectedCategory ?: 'All'); ?>;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
         window.openQuickViewModal = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
     </script>

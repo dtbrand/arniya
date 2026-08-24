@@ -104,7 +104,7 @@
        MASTER FILTER ENGINE & STATE MANAGEMENT
     ════════════════════════════════════════════════════ */
     window.masterFilterState = {
-        category: 'All',
+        category: window.initialCategory || 'All',
         colors: [],
         sizes: [],
         fabrics: [],
@@ -115,34 +115,44 @@
         sortBy: 'recommended'
     };
 
-    var cardElems = document.querySelectorAll('.product-card');
-
     /* ── Sub-Category Data for Round Circles (Dynamically Built from Live DB) ── */
     var subCategoryData = {
         'All': [
-            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all' }
+            { label: 'All Items', icon: '✦', gradient: 'gradient-1', type: 'all', val: 'All' }
         ]
     };
 
-    var catSource = (Array.isArray(window.allCategories) && window.allCategories.length > 0)
-        ? window.allCategories 
-        : (Array.isArray(window.allProducts) ? window.allProducts.map(function(p){ return { name: p.category, image: p.image }; }) : []);
+    var catSource = [];
+    if (Array.isArray(window.allCategories) && window.allCategories.length > 0) {
+        catSource = window.allCategories;
+    } else if (Array.isArray(window.allProducts) && window.allProducts.length > 0) {
+        catSource = window.allProducts.map(function(p){ return { name: p.category, image: p.image }; });
+    }
 
     var uniqueCatMap = {};
     catSource.forEach(function(c, i) {
-        if (!c || !c.name || uniqueCatMap[c.name]) return;
-        uniqueCatMap[c.name] = true;
-        var cImg = c.image || ('/Frontend/Shop/Asset/images/product' + ((i % 6) + 1) + '.png');
+        var cName = '';
+        var cImg = '';
+        if (typeof c === 'string') {
+            cName = c.trim();
+            cImg = '/Frontend/Shop/Asset/images/product' + ((i % 6) + 1) + '.png';
+        } else if (c && typeof c === 'object') {
+            cName = (c.name || c.title || '').trim();
+            cImg = c.image || ('/Frontend/Shop/Asset/images/product' + ((i % 6) + 1) + '.png');
+        }
+
+        if (!cName || cName.toLowerCase() === 'all' || uniqueCatMap[cName.toLowerCase()]) return;
+        uniqueCatMap[cName.toLowerCase()] = true;
 
         subCategoryData['All'].push({
-            label: c.name,
+            label: cName,
             img: cImg,
             type: 'category',
-            val: c.name
+            val: cName
         });
 
-        subCategoryData[c.name] = [
-            { label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name },
+        subCategoryData[cName] = [
+            { label: 'All ' + cName, img: cImg, type: 'category', val: cName },
             { label: 'Pure Silk', img: cImg, type: 'fabric', val: 'Pure Silk' },
             { label: 'Handloom', img: '/Frontend/Shop/Asset/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
             { label: 'Zari Weaves', img: '/Frontend/Shop/Asset/images/product3.png', type: 'fabric', val: 'Zari' },
@@ -154,9 +164,13 @@
         var track = document.getElementById('catSliderTrack');
         if (!track) return;
 
+        var currentSelected = (window.masterFilterState && window.masterFilterState.category) ? window.masterFilterState.category.toLowerCase() : 'all';
         var list = subCategoryData[mainCat] || subCategoryData['All'];
         track.innerHTML = list.map(function(item, idx) {
-            var isAct = idx === 0;
+            var itemVal = (item.val || '').toLowerCase();
+            var isAct = (item.type === 'all' && (currentSelected === 'all' || currentSelected === '')) ||
+                        (item.type === 'category' && itemVal === currentSelected) ||
+                        (idx === 0 && currentSelected === 'all');
             var circleContent = '';
             if (item.img) {
                 circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\'" />';
@@ -172,7 +186,7 @@
             '</button>';
         }).join('');
 
-        // Bind clicks on new round sub-category items
+        // Bind clicks on round sub-category items
         track.querySelectorAll('.cat-item').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 track.querySelectorAll('.cat-item').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
@@ -188,9 +202,17 @@
                 } else if (type === 'category') {
                     st.category = val;
                     st.fabrics = [];
+                } else if (type === 'all') {
+                    st.category = 'All';
+                    st.fabrics = [];
                 } else {
                     st.fabrics = [];
                 }
+
+                // Sync header subnav tabs
+                document.querySelectorAll('.main-cat-tab').forEach(function(t){
+                    t.classList.toggle('active', (t.dataset.cat || '').toLowerCase() === (st.category || 'All').toLowerCase());
+                });
 
                 window.applyMasterFilters();
                 if (typeof window.syncMobileFilterUI === 'function') window.syncMobileFilterUI();
@@ -227,46 +249,55 @@
 
     window.applyMasterFilters = function() {
         var st = window.masterFilterState;
+        var cardElems = document.querySelectorAll('.product-card');
         var total = 0;
+        var targetCat = (st.category || 'All').toLowerCase().trim();
 
         cardElems.forEach(function(card) {
-            var catMatch = (st.category === 'All' || st.category === 'New Arrivals' || card.dataset.category === st.category);
+            var cardCat = (card.dataset.category || '').toLowerCase().trim();
+            var catMatch = (targetCat === 'all' || targetCat === 'new arrivals' || cardCat === targetCat || cardCat.indexOf(targetCat) !== -1 || targetCat.indexOf(cardCat) !== -1);
             
-            var price = parseInt(card.dataset.price);
+            var price = parseInt(card.dataset.price) || 0;
             var priceMatch = (price >= st.minPrice && price <= st.maxPrice);
 
             var colorMatch = true;
-            if (st.colors.length > 0) {
-                colorMatch = st.colors.indexOf(card.dataset.color) !== -1;
+            if (st.colors && st.colors.length > 0) {
+                var cardColor = (card.dataset.color || '').toLowerCase();
+                colorMatch = st.colors.some(function(c) {
+                    return cardColor.indexOf(c.toLowerCase()) !== -1;
+                });
             }
 
             var sizeMatch = true;
-            if (st.sizes.length > 0) {
-                var cardSizes = card.dataset.size ? card.dataset.size.split(',') : [];
+            if (st.sizes && st.sizes.length > 0) {
+                var cardSizes = card.dataset.size ? card.dataset.size.split(',').map(function(s){ return s.trim().toLowerCase(); }) : [];
                 sizeMatch = st.sizes.some(function(s){ return cardSizes.indexOf(s) !== -1; });
             }
 
             var fabricMatch = true;
-            if (st.fabrics.length > 0) {
-                fabricMatch = st.fabrics.indexOf(card.dataset.fabric) !== -1;
+            if (st.fabrics && st.fabrics.length > 0) {
+                var cardFabric = (card.dataset.fabric || '').toLowerCase();
+                fabricMatch = st.fabrics.some(function(f) {
+                    return cardFabric.indexOf(f.toLowerCase()) !== -1 || f.toLowerCase().indexOf(cardFabric) !== -1;
+                });
             }
 
             var discount = parseInt(card.dataset.discount || '0');
             var discountMatch = (discount >= st.minDiscount);
 
             var stockMatch = true;
-            if (st.availability.length > 0) {
+            if (st.availability && st.availability.length > 0) {
                 stockMatch = st.availability.indexOf(card.dataset.stock) !== -1;
             }
 
             var searchMatch = true;
             if (st.searchQuery && st.searchQuery.length > 0) {
-                var q = st.searchQuery.toLowerCase();
-                var cardName = (card.querySelector('.card-title') ? card.querySelector('.card-title').textContent : '').toLowerCase();
-                var cardCat = (card.dataset.category || '').toLowerCase();
-                var cardFabric = (card.dataset.fabric || '').toLowerCase();
-                var cardColor = (card.dataset.color || '').toLowerCase();
-                searchMatch = cardName.indexOf(q) !== -1 || cardCat.indexOf(q) !== -1 || cardFabric.indexOf(q) !== -1 || cardColor.indexOf(q) !== -1;
+                var q = st.searchQuery.toLowerCase().trim();
+                var cardName = (card.querySelector('.card-name') ? card.querySelector('.card-name').textContent : '').toLowerCase();
+                var cardCatText = (card.dataset.category || '').toLowerCase();
+                var cardFabricText = (card.dataset.fabric || '').toLowerCase();
+                var cardColorText = (card.dataset.color || '').toLowerCase();
+                searchMatch = cardName.indexOf(q) !== -1 || cardCatText.indexOf(q) !== -1 || cardFabricText.indexOf(q) !== -1 || cardColorText.indexOf(q) !== -1;
             }
 
             var isMatch = catMatch && priceMatch && colorMatch && sizeMatch && fabricMatch && discountMatch && stockMatch && searchMatch;
@@ -282,16 +313,18 @@
         // Handle sorting if cards are visible
         if (st.sortBy) {
             var grid = document.getElementById('productsGrid');
-            var sortedCards = Array.from(cardElems);
-            sortedCards.sort(function(a, b) {
-                var pA = parseInt(a.dataset.price), pB = parseInt(b.dataset.price);
-                var dA = parseInt(a.dataset.discount||'0'), dB = parseInt(b.dataset.discount||'0');
-                if (st.sortBy === 'price_asc') return pA - pB;
-                if (st.sortBy === 'price_desc') return pB - pA;
-                if (st.sortBy === 'discount') return dB - dA;
-                return parseInt(a.dataset.productId) - parseInt(b.dataset.productId);
-            });
-            sortedCards.forEach(function(c){ grid.appendChild(c); });
+            if (grid) {
+                var sortedCards = Array.from(cardElems);
+                sortedCards.sort(function(a, b) {
+                    var pA = parseInt(a.dataset.price) || 0, pB = parseInt(b.dataset.price) || 0;
+                    var dA = parseInt(a.dataset.discount||'0'), dB = parseInt(b.dataset.discount||'0');
+                    if (st.sortBy === 'price_asc') return pA - pB;
+                    if (st.sortBy === 'price_desc') return pB - pA;
+                    if (st.sortBy === 'discount') return dB - dA;
+                    return parseInt(a.dataset.productId || '0') - parseInt(b.dataset.productId || '0');
+                });
+                sortedCards.forEach(function(c){ grid.appendChild(c); });
+            }
         }
 
         // Show/Hide Empty State
@@ -300,7 +333,14 @@
 
         // Update product count label
         var ptbCount = document.getElementById('ptbCount');
-        if (ptbCount) ptbCount.textContent = 'Showing ' + total + ' of ' + products.length + ' Products';
+        var totalCatalog = (window.allProducts && window.allProducts.length) ? window.allProducts.length : cardElems.length;
+        if (ptbCount) {
+            if (total === totalCatalog) {
+                ptbCount.textContent = 'Showing ' + total + ' Products';
+            } else {
+                ptbCount.textContent = 'Showing ' + total + ' of ' + totalCatalog + ' Products';
+            }
+        }
 
         // Sync Mobile Apply button text if exists
         var mfApplyBtn = document.getElementById('mfApplyBtn');
@@ -321,11 +361,11 @@
         var st = window.masterFilterState;
         var tags = [];
 
-        if (st.category !== 'All') {
+        if (st.category && st.category !== 'All') {
             tags.push({ label: st.category, type: 'category', val: st.category });
         }
         if (st.minPrice > 500 || st.maxPrice < 30000) {
-            tags.push({ label: '₹' + st.minPrice.toLocaleString() + ' - ₹' + st.maxPrice.toLocaleString(), type: 'price' });
+            tags.push({ label: '₹' + st.minPrice.toLocaleString('en-IN') + ' - ₹' + st.maxPrice.toLocaleString('en-IN'), type: 'price' });
         }
         st.colors.forEach(function(c){ tags.push({ label: c, type: 'color', val: c }); });
         st.sizes.forEach(function(s){ tags.push({ label: 'Size: ' + s, type: 'size', val: s }); });
@@ -351,7 +391,12 @@
         var st = window.masterFilterState;
         if (type === 'category') {
             st.category = 'All';
-            catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All'); });
+            document.querySelectorAll('.sf-chip[data-sf-type="category"]').forEach(function(ci){
+                ci.classList.toggle('active', ci.dataset.sfVal === 'All');
+            });
+            document.querySelectorAll('.main-cat-tab').forEach(function(t){
+                t.classList.toggle('active', (t.dataset.cat || '').toLowerCase() === 'all');
+            });
         } else if (type === 'price') {
             st.minPrice = 500; st.maxPrice = 30000;
             var sfMin = document.getElementById('sfPriceMin'), sfMax = document.getElementById('sfPriceMax');
@@ -744,7 +789,8 @@
     };
 
     /* Initial Sub-Categories and Master Filter Execution */
-    window.renderSubCategories('All');
+    var initialCategory = window.masterFilterState.category || 'All';
+    window.renderSubCategories(initialCategory);
     window.applyMasterFilters();
 
 })();

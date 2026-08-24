@@ -1027,47 +1027,6 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
         </div>
     </nav>
     <?php endif; ?>
-    <!-- ════════════ HOME CATEGORY NAVIGATION STRIP (INTEGRATED INSIDE HEADER) ════════════ -->
-    <nav class="home-cat-nav-bar" id="homeCatNavBar" aria-label="Main Categories">
-        <div class="home-cat-nav-container">
-            <div class="home-cat-nav-scroll" id="homeCatNavScroll">
-                <a href="#section-trending" class="home-cat-pill active" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('All'); return false;">
-                    <span class="home-cat-pill-icon">✨</span>
-                    <span>All Products</span>
-                </a>
-                <?php 
-                $catIcons = ['👑', '✨', '🥻', '👗', '💎', '🌟', '🌸', '🏷️'];
-                foreach ($headerCategories as $idx => $hCat): 
-                    $icon = $catIcons[$idx % count($catIcons)];
-                ?>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>'); return false;">
-                    <span class="home-cat-pill-icon"><?= $icon ?></span>
-                    <span><?= htmlspecialchars($hCat) ?></span>
-                </a>
-                <?php endforeach; ?>
-                <a href="#section-deals" class="home-cat-pill hot-pill">
-                    <span class="home-cat-pill-icon">🔥</span>
-                    <span>New Arrivals</span>
-                </a>
-                <a href="#section-bestsellers" class="home-cat-pill">
-                    <span class="home-cat-pill-icon">💎</span>
-                    <span>Best Sellers</span>
-                </a>
-                <a href="#section-offers" class="home-cat-pill offer-pill">
-                    <span class="home-cat-pill-icon">🏷️</span>
-                    <span>Special Offers</span>
-                </a>
-                <a href="#section-reseller" class="home-cat-pill reseller-pill">
-                    <span class="home-cat-pill-icon">⚡</span>
-                    <span>Reseller Hub</span>
-                </a>
-                <a href="#section-wholesale" class="home-cat-pill wholesale-pill">
-                    <span class="home-cat-pill-icon">🏭</span>
-                    <span>Wholesale Zone</span>
-                </a>
-            </div>
-        </div>
-    </nav>
 
 </header>
 

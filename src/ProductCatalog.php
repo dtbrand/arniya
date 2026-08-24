@@ -275,7 +275,9 @@ class ProductCatalog
                             ]
                         ];
                     }
-                    return $list;
+                    if (!empty($list)) {
+                        return $list;
+                    }
                 }
             } catch (\Exception $e) {
                 // fall through
@@ -344,6 +346,42 @@ class ProductCatalog
             }
         }
         return array_values(array_unique(array_filter($categories)));
+    }
+
+    public static function getCategoriesWithDetails(): array
+    {
+        $categories = [];
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $rows = Database::query("SELECT id, name, slug, description, image, products_count FROM categories WHERE status = 'active' ORDER BY display_order ASC, id ASC");
+                if (!empty($rows)) {
+                    foreach ($rows as $i => $r) {
+                        $img = !empty($r['image']) ? $r['image'] : ('/Frontend/Shop/Asset/images/product' . (($i % 6) + 1) . '.png');
+                        $categories[] = [
+                            'id' => (int)$r['id'],
+                            'name' => trim($r['name']),
+                            'slug' => trim($r['slug'] ?? ''),
+                            'image' => $img,
+                            'products_count' => (int)($r['products_count'] ?? 0)
+                        ];
+                    }
+                }
+            } catch (\Exception $e) {}
+        }
+        if (empty($categories)) {
+            $catNames = self::getCategories();
+            foreach ($catNames as $i => $name) {
+                $categories[] = [
+                    'id' => $i + 1,
+                    'name' => $name,
+                    'slug' => strtolower(str_replace(' ', '-', $name)),
+                    'image' => '/Frontend/Shop/Asset/images/product' . (($i % 6) + 1) . '.png',
+                    'products_count' => 0
+                ];
+            }
+        }
+        return $categories;
     }
 
     /**
