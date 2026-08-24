@@ -284,6 +284,10 @@ if (empty($categoriesList)) {
 
 $total_products = count($products);
 ?>
+<script>
+window.allCategories = <?php echo json_encode($dbCategories ?? []); ?>;
+window.allProducts = <?php echo json_encode($products ?? []); ?>;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -997,10 +1001,9 @@ $total_products = count($products);
             <!-- Category Filter Pills Bar -->
             <div class="rec-filter-pills-bar">
                 <button type="button" class="rec-filter-pill active" onclick="window.filterRecommendedCategory('All', this)">✨ All Picks (<?= count($products) ?>)</button>
-                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Sarees', this)">👑 Silk Sarees</button>
-                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Kurtis', this)">👗 Kurtis & Sets</button>
-                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Lehengas', this)">👰 Bridal Lehengas</button>
-                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('Gowns', this)">💎 Designer Gowns</button>
+                <?php foreach ($categoriesList as $catItem): ?>
+                <button type="button" class="rec-filter-pill" onclick="window.filterRecommendedCategory('<?= htmlspecialchars($catItem['name']) ?>', this)">👑 <?= htmlspecialchars($catItem['name']) ?></button>
+                <?php endforeach; ?>
             </div>
 
             <!-- 2-Line Horizontal Scrolling Multi-Row Track (Desktop: 5 per row, Mobile: 2 per row) -->

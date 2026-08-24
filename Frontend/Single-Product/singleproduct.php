@@ -204,242 +204,39 @@ $pImg4 = !empty($product['gallery'][3]) ? $product['gallery'][3] : ('/Frontend/S
 
 $galleryImages = array_values(array_unique([$baseMainImg, $pImg2, $pImg3, $pImg4]));
 
-// Myntra-Style Detailed Product Specifications
-$myntraSpecsMap = [
-    1 => [
-        ['title' => 'Type', 'val' => 'Banarasi'],
-        ['title' => 'Ornamentation', 'val' => 'Zari'],
-        ['title' => 'Border', 'val' => 'Woven Design'],
-        ['title' => 'Blouse Fabric', 'val' => 'Silk Blend'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Pure Silk'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    2 => [
-        ['title' => 'Type', 'val' => 'Banarasi'],
-        ['title' => 'Ornamentation', 'val' => 'Zari Jacquard'],
-        ['title' => 'Border', 'val' => 'Antique Gold Zari'],
-        ['title' => 'Blouse Fabric', 'val' => 'Katan Silk'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Katan Silk'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    3 => [
-        ['title' => 'Type', 'val' => 'Kasavu'],
-        ['title' => 'Ornamentation', 'val' => 'Zari'],
-        ['title' => 'Border', 'val' => 'Woven Design'],
-        ['title' => 'Blouse Fabric', 'val' => 'Tissue'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Tissue'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    4 => [
-        ['title' => 'Type', 'val' => 'Georgette'],
-        ['title' => 'Ornamentation', 'val' => 'Resham Threadwork'],
-        ['title' => 'Border', 'val' => 'Scalloped Floral'],
-        ['title' => 'Blouse Fabric', 'val' => 'Georgette'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Viscose Georgette'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    5 => [
-        ['title' => 'Type', 'val' => 'Anarkali'],
-        ['title' => 'Ornamentation', 'val' => 'Gota Patti'],
-        ['title' => 'Border', 'val' => 'Flared Kali Hem'],
-        ['title' => 'Blouse Fabric', 'val' => 'Chanderi Cotton'],
-        ['title' => 'Blouse', 'val' => 'Kurti & Dupatta Set'],
-        ['title' => 'Saree Fabric', 'val' => 'Chanderi Silk Cotton'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    6 => [
-        ['title' => 'Type', 'val' => 'Bridal Lehenga'],
-        ['title' => 'Ornamentation', 'val' => 'Zardozi & Dabka'],
-        ['title' => 'Border', 'val' => 'Heavy Embroidered'],
-        ['title' => 'Blouse Fabric', 'val' => 'Raw Silk & Velvet'],
-        ['title' => 'Blouse', 'val' => 'Choli Piece with Dupatta'],
-        ['title' => 'Saree Fabric', 'val' => 'Raw Silk & Velvet'],
-        ['title' => 'Wash Care', 'val' => 'Specialist Dry Clean'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    7 => [
-        ['title' => 'Type', 'val' => 'Bagru Block Print'],
-        ['title' => 'Ornamentation', 'val' => 'Natural Vegetable Dye'],
-        ['title' => 'Border', 'val' => 'Printed Zari Border'],
-        ['title' => 'Blouse Fabric', 'val' => 'Mulmul Cotton'],
-        ['title' => 'Blouse', 'val' => 'Blouse Piece'],
-        ['title' => 'Saree Fabric', 'val' => 'Mulmul Cotton'],
-        ['title' => 'Wash Care', 'val' => 'Gentle Hand Wash'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
-    8 => [
-        ['title' => 'Type', 'val' => 'Indo-Western Gown'],
-        ['title' => 'Ornamentation', 'val' => 'Swarovski & Pearls'],
-        ['title' => 'Border', 'val' => 'Flowing Cape Hem'],
-        ['title' => 'Blouse Fabric', 'val' => 'Organza Silk'],
-        ['title' => 'Blouse', 'val' => 'Attached Cape Set'],
-        ['title' => 'Saree Fabric', 'val' => 'Organza & Silk Crepe'],
-        ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-        ['title' => 'Net Quantity', 'val' => '1'],
-    ],
+// Dynamic Product Specifications from Database
+$currentSpecs = [
+    ['title' => 'Category', 'val' => $product['category'] ?? 'Silk Sarees'],
+    ['title' => 'Fabric', 'val' => $product['fabric'] ?? 'Pure Silk'],
+    ['title' => 'Weave / Craft', 'val' => $product['weave'] ?? 'Handloom Korvai'],
+    ['title' => 'Primary Color', 'val' => $product['color'] ?? 'Royal Silk'],
+    ['title' => 'Blouse Fabric', 'val' => 'Matching Silk Blouse Piece Included'],
+    ['title' => 'Border Style', 'val' => 'Pure Tested Gold Zari Jacquard'],
+    ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
+    ['title' => 'Net Quantity', 'val' => '1 Piece (With Silk Mark Certification)'],
 ];
-$currentSpecs = $myntraSpecsMap[$pid] ?? $myntraSpecsMap[3];
 
-// Myntra-Style Detailed Product Descriptions (Design Details, Size & Fit, Material & Care)
-$myntraProductDetailsMap = [
-    1 => [
-        'design_lines' => [
-            'Midnight Blue and Royal Gold-Toned Banarasi Silk saree',
-            'Intricate floral jaal woven design with contrast zari border',
-            'Has Zari detail',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Wedding & Festive Reception'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Pure Banarasi Katan Silk',
-            'Blouse fabric: Pure Silk Blend',
-            'Wash Care: Dry Clean Only'
-        ]
+// Dynamic Product Details (Design Details, Size & Fit, Material & Care) from Database
+$currentDetails = [
+    'design_lines' => [
+        htmlspecialchars($product['title'] ?? ($product['name'] ?? 'Royal Ethnic Saree')),
+        !empty($product['description']) ? htmlspecialchars($product['description']) : 'Authentic Surat handloom creation woven with pure tested zari and contrast border.',
+        'Fabric: ' . htmlspecialchars($product['fabric'] ?? 'Pure Silk'),
+        'Weave: ' . htmlspecialchars($product['weave'] ?? 'Handloom Korvai'),
+        'Includes unstitched blouse piece with matching border',
+        'Direct Surat Factory Wholesale Authenticity Guaranteed'
     ],
-    2 => [
-        'design_lines' => [
-            'Deep Wine and Ruby Red Banarasi Zari saree',
-            'Centuries-old kadhwa weaving technique with rich gold zari motifs',
-            'Opulent pallu with floral jaal and double zari border',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Bridal & Royal Gala'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Pure Katan Silk',
-            'Blouse fabric: Katan Silk',
-            'Wash Care: Dry Clean Only'
-        ]
+    'size_fit' => [
+        'Saree Length: 5.5 metres plus 0.8 metre blouse piece',
+        'Width: 1.06 metres (approx.)',
+        'Available sizes: ' . implode(', ', (array)($product['size'] ?? ['Free Size (6.3m)', 'M', 'L']))
     ],
-    3 => [
-        'design_lines' => [
-            'Off White and Gold-Toned Kasavu sarees',
-            'Woven Design saree with Woven Design Border border',
-            'Has Zari detail',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Onam'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Silk Blend',
-            'Blouse fabric: Silk Blend',
-            'Wash Care: Machine wash'
-        ]
-    ],
-    4 => [
-        'design_lines' => [
-            'Blush Pink floral embroidered Viscose Georgette saree',
-            'Hand-embroidered resham florals and delicate scalloped borders',
-            'Lightweight, fluid drape with romantic evening sheen',
-            'The saree comes with an unstitched blouse piece',
-            'The blouse worn by the model might be for modelling purpose only. Check the image of the blouse piece to understand how the actual blouse piece looks like.',
-            'Special Occasion: Evening Soiree & Cocktail'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: Viscose Georgette',
-            'Blouse fabric: Georgette',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    5 => [
-        'design_lines' => [
-            'Emerald Green Royal Anarkali Floor-Length Kurti Set',
-            '32-kali flared silhouette with intricate gota patti handwork on yoke and bell sleeves',
-            'Comes with matching churidar and sheer organza dupatta',
-            'Special Occasion: Festive Celebrations & Sangeet'
-        ],
-        'size_fit' => [
-            'Kurti Length: 52 inches (Floor Length)',
-            'Sleeve Length: 3/4th Bell Sleeves',
-            'Dupatta: 2.25 metres'
-        ],
-        'material_care' => [
-            'Kurti & Churidar: Chanderi Silk Cotton',
-            'Dupatta: Pure Organza',
-            'Wash Care: Dry Clean Only'
-        ]
-    ],
-    6 => [
-        'design_lines' => [
-            'Crimson Red Bridal Zardosi Couture Lehenga Set',
-            '180 hours of hand-embroidery with dabka, nakshi, and zardozi bullion',
-            'Complete with heavily embellished choli and dual dupattas (Velvet & Net)',
-            'Special Occasion: Royal Wedding & Pheras'
-        ],
-        'size_fit' => [
-            'Lehenga Flare (Gher): 4.5 metres',
-            'Lehenga Length: 43 inches',
-            'Choli Fabric: 1.2 metres (Unstitched)'
-        ],
-        'material_care' => [
-            'Lehenga & Choli: Raw Silk & Velvet',
-            'Dupatta: Soft Net & Velvet Border',
-            'Wash Care: Specialist Dry Clean Only'
-        ]
-    ],
-    7 => [
-        'design_lines' => [
-            'Mustard & Indigo Bagru Hand Block Printed Saree',
-            'Handcrafted using traditional wooden block carving and natural vegetable dyes',
-            'Soft breathable drape with geometric zari border',
-            'The saree comes with an unstitched blouse piece',
-            'Special Occasion: Daytime Cultural & Festive Events'
-        ],
-        'size_fit' => [
-            'Length: 5.5 metres plus 0.8 metre blouse piece',
-            'Width: 1.06 metres (approx.)'
-        ],
-        'material_care' => [
-            'Saree fabric: 100% Mulmul Cotton',
-            'Blouse fabric: Mulmul Cotton',
-            'Wash Care: Gentle Hand Wash in Cold Water'
-        ]
-    ],
-    8 => [
-        'design_lines' => [
-            'Ivory & Pearl Tone-on-Tone Embroidered Evening Gown',
-            'Dramatic sheer cape sleeves embellished with authentic Swarovski crystals',
-            'Modern indo-western structured silhouette',
-            'Special Occasion: Cocktail, Reception & Red Carpet'
-        ],
-        'size_fit' => [
-            'Gown Length: 56 inches',
-            'Cape Length: Floor-Sweeping (58 inches)'
-        ],
-        'material_care' => [
-            'Fabric: Organza & Silk Crepe',
-            'Lining: Butter Crepe',
-            'Wash Care: Dry Clean Only'
-        ]
+    'material_care' => [
+        'Fabric: ' . htmlspecialchars($product['fabric'] ?? 'Pure Silk'),
+        'Wash Care: Dry Clean Only',
+        'Origin: Surat Mill Handcrafted'
     ]
 ];
-$currentDetails = $myntraProductDetailsMap[$pid] ?? $myntraProductDetailsMap[3];
 
 $customerReviews = [
     [

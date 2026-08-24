@@ -291,11 +291,11 @@ $total_products = count($products);
             </button>
             <div class="sf-section-body">
                 <div class="sf-chips" role="group" aria-label="Category">
-                    <button class="sf-chip active" data-sf-type="category" data-sf-val="All" aria-pressed="true">All</button>
-                    <button class="sf-chip" data-sf-type="category" data-sf-val="Sarees" aria-pressed="false">Sarees</button>
-                    <button class="sf-chip" data-sf-type="category" data-sf-val="Kurtis" aria-pressed="false">Kurtis</button>
-                    <button class="sf-chip" data-sf-type="category" data-sf-val="Gowns" aria-pressed="false">Gowns</button>
-                    <button class="sf-chip" data-sf-type="category" data-sf-val="Lehengas" aria-pressed="false">Lehengas</button>
+                    <?php foreach ($categories as $catItem): 
+                        $isAct = ($catItem === 'All' && empty($selectedCategory)) || (strtolower($catItem) === strtolower($selectedCategory));
+                    ?>
+                    <button class="sf-chip <?= $isAct ? 'active' : '' ?>" data-sf-type="category" data-sf-val="<?= htmlspecialchars($catItem) ?>" aria-pressed="<?= $isAct ? 'true' : 'false' ?>"><?= htmlspecialchars($catItem) ?></button>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
