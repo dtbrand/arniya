@@ -5,7 +5,7 @@
  * Features Amazon-Style Always-Open Desktop Search Bar & Clean Full-Width Mobile Search Bar with Right Close Button
  */
 $currentPage = basename($_SERVER['PHP_SELF'] ?? '');
-$isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hideHeaderSubnav === true) || (isset($isHome) && $isHome === true));
+$isHomePage = ($currentPage === 'index.php' || $currentPage === 'home.php' || $currentPage === '' || (isset($hideHeaderSubnav) && $hideHeaderSubnav === true) || (isset($isHome) && $isHome === true));
 ?>
 <style>
 /* ── Shop Header ─────────────────────────────────────────── */
