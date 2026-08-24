@@ -4333,5 +4333,8 @@ $catalogProducts = [
     ═══════════════════════════════════════════ -->
     <script src="/assets/js/reseller.js?v=1787019062&v=<?= time() ?>"></script>
 
+<?php include_once __DIR__ . '/shared/reels.php'; ?>
+<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/shared/size_chart_modal.php'; ?>
 </body>
 </html>

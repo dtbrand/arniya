@@ -1101,5 +1101,8 @@ $colorHex = [
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/shared/smartshare.php'; ?>
 
+<?php include_once __DIR__ . '/shared/reels.php'; ?>
+<?php include_once __DIR__ . '/shared/account.php'; ?>
+<?php include_once __DIR__ . '/shared/size_chart_modal.php'; ?>
 </body>
 </html>
