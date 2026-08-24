@@ -410,26 +410,13 @@ class ProductCatalog
         $db = Database::getConnection();
         if ($db !== null && !Database::isMockMode()) {
             try {
-                $rows = Database::query("SELECT name FROM categories WHERE status = 'active' ORDER BY display_order ASC");
+                $rows = Database::query("SELECT name FROM categories WHERE status = 'active' ORDER BY display_order ASC, id ASC");
                 if (!empty($rows)) {
                     foreach ($rows as $r) {
                         if (!empty($r['name'])) {
                             $categories[] = trim($r['name']);
                         }
                     }
-                }
-
-                $pRows = Database::query("SELECT DISTINCT category_name FROM products WHERE status != 'trash' AND category_name IS NOT NULL AND category_name != ''");
-                if (!empty($pRows)) {
-                    foreach ($pRows as $pr) {
-                        $cName = trim($pr['category_name']);
-                        if (!empty($cName) && !in_array($cName, $categories, true)) {
-                            $categories[] = $cName;
-                        }
-                    }
-                }
-
-                if (!empty($categories)) {
                     return array_values(array_unique(array_filter($categories)));
                 }
             } catch (\Exception $e) {}
@@ -443,6 +430,7 @@ class ProductCatalog
         }
         return array_values(array_unique(array_filter($categories)));
     }
+
 
     public static function getCategoriesWithDetails(): array
     {

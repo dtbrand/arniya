@@ -1256,7 +1256,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                         </div>
                         <div class="dt-kpi-content">
                             <div class="dt-kpi-lbl">SURAT READY STOCK</div>
-                            <div class="dt-kpi-val" style="color:#15803D;">8,450 Units</div>
+                            <div class="dt-kpi-val" style="color:#15803D;"><?= number_format($totalStockQty) ?> Units</div>
                         </div>
                     </div>
 
@@ -1266,8 +1266,9 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                         </div>
                         <div class="dt-kpi-content">
                             <div class="dt-kpi-lbl">INVENTORY VALUATION</div>
-                            <div class="dt-kpi-val" style="color:#1D4ED8;">₹84.6 Lakhs</div>
+                            <div class="dt-kpi-val" style="color:#1D4ED8;">₹<?= number_format(array_sum(array_map(fn($p) => ((int)($p['stock_qty'] ?? 0)) * ((float)($p['retail_price'] ?? 0)), $allProducts))) ?></div>
                         </div>
+
                     </div>
 
                     <div class="dt-kpi-card">
