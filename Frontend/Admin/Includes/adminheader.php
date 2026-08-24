@@ -78,15 +78,43 @@ if (!headers_sent()) {
                 <span>Broadcast</span>
             </button>
 
-            <!-- Admin Profile Pill -->
-            <div class="adm-hdr-profile" onclick="if(typeof switchAdmTab==='function') switchAdmTab('settings');" title="Super Admin">
-                <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" class="adm-hdr-avatar">
-                <div class="adm-hdr-user-text">
-                    <span class="adm-hdr-name">Gautam Sethi</span>
-                    <span class="adm-hdr-title">Super Admin</span>
+            <!-- Admin Profile Pill & Interactive Dropdown -->
+            <div class="adm-hdr-profile-wrap" style="position:relative;">
+                <div class="adm-hdr-profile" onclick="if(typeof toggleAdmProfileDropdown==='function') toggleAdmProfileDropdown(event);" title="Super Admin" style="cursor:pointer;">
+                    <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" class="adm-hdr-avatar">
+                    <div class="adm-hdr-user-text">
+                        <span class="adm-hdr-name">Gautam Sethi</span>
+                        <span class="adm-hdr-title">Super Admin</span>
+                    </div>
+                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.2" fill="none" class="adm-hdr-caret"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
-                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.2" fill="none" class="adm-hdr-caret"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <!-- Profile Dropdown Menu -->
+                <div class="adm-hdr-profile-dropdown" id="admProfileDropdown" style="display:none; position:absolute; top:calc(100% + 8px); right:0; width:200px; background:#FFFFFF; border:1.5px solid rgba(212,175,55,0.35); border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.15); padding:6px 0; z-index:99999; animation:acDropFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+                    <div style="padding:8px 14px; border-bottom:1px solid #F0ECE1;">
+                        <div style="font-size:0.80rem; font-weight:800; color:#181512;">Gautam Sethi</div>
+                        <div style="font-size:0.68rem; color:#8A681F; font-weight:600;">Super Administrator</div>
+                    </div>
+                    <a href="/admin/settings/" style="display:flex; align-items:center; gap:8px; padding:8px 14px; color:#24211C; font-size:0.78rem; font-weight:600; text-decoration:none;" onmouseover="this.style.background='#FAF6ED'" onmouseout="this.style.background='transparent'">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#8A681F" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>Store Settings</span>
+                    </a>
+                    <a href="/admin/users/" style="display:flex; align-items:center; gap:8px; padding:8px 14px; color:#24211C; font-size:0.78rem; font-weight:600; text-decoration:none;" onmouseover="this.style.background='#FAF6ED'" onmouseout="this.style.background='transparent'">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#8A681F" stroke-width="2" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        <span>Users & Roles</span>
+                    </a>
+                    <div style="height:1px; background:#F0ECE1; margin:4px 0;"></div>
+                    <a href="/Frontend/Admin/logout.php" id="admHdrDropLogout" style="display:flex; align-items:center; gap:8px; padding:8px 14px; color:#DC2626; font-size:0.78rem; font-weight:700; text-decoration:none;" onmouseover="this.style.background='#FEF2F2'" onmouseout="this.style.background='transparent'">
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#DC2626" stroke-width="2.2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Logout Console</span>
+                    </a>
+                </div>
             </div>
+
+            <!-- Direct Fast Logout Button on Desktop Header -->
+            <a href="/Frontend/Admin/logout.php" class="adm-hdr-direct-logout" title="Sign Out of Admin Console" aria-label="Sign Out" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:18px; border:1px solid rgba(220,38,38,0.3); background:#FEF2F2; color:#DC2626; font-size:0.74rem; font-weight:700; text-decoration:none; transition:all 0.2s ease;">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Logout</span>
+            </a>
         </div>
     </div>
 
@@ -492,10 +520,23 @@ if (!headers_sent()) {
             });
         }
 
+        // Toggle Profile Dropdown
+        window.toggleAdmProfileDropdown = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            var drop = document.getElementById('admProfileDropdown');
+            if (drop) {
+                drop.style.display = (drop.style.display === 'none' || drop.style.display === '') ? 'block' : 'none';
+            }
+        };
+
         // Dismiss on Click outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#admHeaderSearchContainer') && !e.target.closest('#admMobileFullSearchBar')) {
                 hideAllLiveSearchResults();
+            }
+            if (!e.target.closest('.adm-hdr-profile-wrap')) {
+                var drop = document.getElementById('admProfileDropdown');
+                if (drop) drop.style.display = 'none';
             }
         });
 
@@ -504,6 +545,8 @@ if (!headers_sent()) {
             if (e.key === 'Escape') {
                 hideAllLiveSearchResults();
                 window.closeAdmMobileSearch();
+                var drop = document.getElementById('admProfileDropdown');
+                if (drop) drop.style.display = 'none';
             }
         });
     }

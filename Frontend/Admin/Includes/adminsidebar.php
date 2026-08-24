@@ -823,6 +823,20 @@ if (isset($active_subnav) && !empty($active_subnav)) {
             </ul>
         </div>
     </div>
+
+    <!-- ── USER IDENTITY & 1-CLICK LOGOUT FOOTER ── -->
+    <div class="adm-sidebar-user-footer" style="padding:10px 12px; border-top:1px solid rgba(212,175,55,0.25); background:linear-gradient(180deg, rgba(28,24,20,0.85) 0%, #14110E 100%); display:flex; align-items:center; justify-content:space-between; gap:8px; flex-shrink:0;">
+        <div style="display:flex; align-items:center; gap:9px; min-width:0;">
+            <img src="/Shared/Asset/images/profile.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" alt="Gautam Sethi" style="width:32px; height:32px; border-radius:50%; border:1.5px solid #D4AF37; object-fit:cover; flex-shrink:0;">
+            <div class="adm-sb-user-meta" style="min-width:0; overflow:hidden;">
+                <div style="font-size:0.76rem; font-weight:800; color:#FAF5E8; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; line-height:1.2;">Gautam Sethi</div>
+                <div style="font-size:0.62rem; color:#D4AF37; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">Super Admin</div>
+            </div>
+        </div>
+        <a href="/Frontend/Admin/logout.php" class="adm-sb-logout-btn" title="Sign Out of Admin Console" style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:8px; background:rgba(220,38,38,0.18); border:1px solid rgba(220,38,38,0.45); color:#EF4444; text-decoration:none; transition:all 0.2s ease; flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </a>
+    </div>
 </aside>
 
 <!-- ══ Mobile Sidebar & Submenu Self-Executing Controller ══ -->

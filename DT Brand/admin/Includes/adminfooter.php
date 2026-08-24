@@ -33,20 +33,20 @@ $curr_nav = isset($active_nav) ? $active_nav : 'dashboard';
     </a>
 
     <!-- Tab 2: Products Catalog -->
-    <a href="/DT%20Brand/admin/products/" class="adm-dock-item <?php echo $curr_nav === 'products' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-products')){ switchAdmTab('products'); return false; }" title="Products">
+    <a href="/admin/products/" class="adm-dock-item <?php echo $curr_nav === 'products' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-products')){ switchAdmTab('products'); return false; }" title="Products">
         <svg class="adm-dock-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
         <span class="adm-dock-label">Products</span>
     </a>
 
     <!-- Tab 3: Center Elevated Master Gold FAB (Quick Add Product) -->
-    <a href="/DT%20Brand/admin/products/add.php" class="adm-dock-center-btn" title="Add Product">
+    <a href="/admin/products/add.php" class="adm-dock-center-btn" title="Add Product">
         <div class="adm-dock-orb">
             <svg class="adm-dock-plus-svg" viewBox="0 0 24 24" width="22" height="22" stroke="#111827" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </div>
     </a>
 
     <!-- Tab 4: WhatsApp CRM -->
-    <a href="/DT%20Brand/admin/whatsapp/" class="adm-dock-item <?php echo $curr_nav === 'whatsapp' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-whatsapp')){ switchAdmTab('whatsapp'); return false; }" title="WhatsApp CRM">
+    <a href="/admin/whatsapp/" class="adm-dock-item <?php echo $curr_nav === 'whatsapp' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-whatsapp')){ switchAdmTab('whatsapp'); return false; }" title="WhatsApp CRM">
         <div style="position:relative; display:inline-flex;">
             <svg class="adm-dock-icon" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
             <span class="adm-dock-live-dot"></span>
@@ -55,7 +55,7 @@ $curr_nav = isset($active_nav) ? $active_nav : 'dashboard';
     </a>
 
     <!-- Tab 5: Orders Hub -->
-    <a href="/DT%20Brand/admin/orders/" class="adm-dock-item <?php echo $curr_nav === 'orders' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-orders')){ switchAdmTab('orders'); return false; }" title="Orders">
+    <a href="/admin/orders/" class="adm-dock-item <?php echo $curr_nav === 'orders' ? 'active' : ''; ?>" onclick="if(typeof switchAdmTab==='function' && document.getElementById('tab-orders')){ switchAdmTab('orders'); return false; }" title="Orders">
         <svg class="adm-dock-icon" viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         <span class="adm-dock-label">Orders</span>
     </a>
