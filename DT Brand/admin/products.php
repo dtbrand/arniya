@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $reseller = (float)($_POST['reseller_price'] ?? 2100);
         $mrp = (float)($_POST['mrp'] ?? ($retail * 1.3));
         $stock = (int)($_POST['stock_qty'] ?? 50);
-        $img = trim($_POST['primary_image'] ?? '/Frontend/Shop/Asset/images/product1.png');
+        $img = trim($_POST['primary_image'] ?? '/assets/images/product1.png');
 
         Database::execute("
             INSERT INTO products (sku, title, slug, category_name, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, created_at)
@@ -82,7 +82,7 @@ $categories = ProductCatalog::getCategories();
 
     <header class="dt-adm-header">
         <div style="display:flex; align-items:center; gap:12px;">
-            <a href="/admin/"><img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
+            <a href="/admin/"><img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
             <h1 style="font-size:1.15rem; font-weight:800; color:#FFFFFF;">Products Management</h1>
         </div>
         <nav style="display:flex; align-items:center; gap:8px;">

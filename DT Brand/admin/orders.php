@@ -50,7 +50,7 @@ $orders = OrderManager::getAll(['limit' => 50]);
 
     <header class="dt-adm-header">
         <div style="display:flex; align-items:center; gap:12px;">
-            <a href="/admin/"><img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
+            <a href="/admin/"><img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
             <h1 style="font-size:1.15rem; font-weight:800; color:#FFFFFF;">Orders Management</h1>
         </div>
         <nav style="display:flex; align-items:center; gap:8px;">

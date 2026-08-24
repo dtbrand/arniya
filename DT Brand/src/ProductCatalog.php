@@ -310,14 +310,14 @@ class ProductCatalog
 
                         $img = !empty($r['primary_image']) ? trim($r['primary_image']) : '';
                         if (empty($img) || $img === 'null' || $img === 'undefined') {
-                            $img = '/Frontend/Shop/Asset/images/product' . ((($pid - 1) % 8) + 1) . '.png';
+                            $img = '/assets/images/product' . ((($pid - 1) % 8) + 1) . '.png';
                         } elseif (strpos($img, '/') !== 0 && strpos($img, 'http') !== 0) {
                             $img = '/' . $img;
                         }
 
                         $gallery = [$img];
-                        $gallery[] = '/Frontend/Shop/Asset/images/product' . ((($pid) % 8) + 1) . '.png';
-                        $gallery[] = '/Frontend/Shop/Asset/images/product' . ((($pid + 1) % 8) + 1) . '.png';
+                        $gallery[] = '/assets/images/product' . ((($pid) % 8) + 1) . '.png';
+                        $gallery[] = '/assets/images/product' . ((($pid + 1) % 8) + 1) . '.png';
 
                         $disc = $mrp > 0 ? (int)round((($mrp - $retail) / $mrp) * 100) : 0;
 
@@ -453,7 +453,7 @@ class ProductCatalog
                 $rows = Database::query("SELECT id, name, slug, description, image, products_count FROM categories WHERE status = 'active' ORDER BY display_order ASC, id ASC");
                 if (!empty($rows)) {
                     foreach ($rows as $i => $r) {
-                        $img = !empty($r['image']) ? $r['image'] : ('/Frontend/Shop/Asset/images/product' . (($i % 6) + 1) . '.png');
+                        $img = !empty($r['image']) ? $r['image'] : ('/assets/images/product' . (($i % 6) + 1) . '.png');
                         $categories[] = [
                             'id' => (int)$r['id'],
                             'name' => trim($r['name']),
@@ -472,7 +472,7 @@ class ProductCatalog
                     'id' => $i + 1,
                     'name' => $name,
                     'slug' => strtolower(str_replace(' ', '-', $name)),
-                    'image' => '/Frontend/Shop/Asset/images/product' . (($i % 6) + 1) . '.png',
+                    'image' => '/assets/images/product' . (($i % 6) + 1) . '.png',
                     'products_count' => 0
                 ];
             }

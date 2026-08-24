@@ -150,7 +150,7 @@ $totalInventoryValuation = array_reduce($products, function($sum, $p) {
     <header class="dt-adm-header">
         <div class="dt-adm-title-wrap">
             <a href="/" style="text-decoration:none;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" />
+                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px;" />
             </a>
             <h1>Executive Management Console</h1>
         </div>

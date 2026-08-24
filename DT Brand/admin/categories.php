@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $name = trim($_POST['name'] ?? '');
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
         $desc = trim($_POST['description'] ?? '');
-        $img = trim($_POST['image'] ?? '/Frontend/Shop/Asset/images/product1.png');
+        $img = trim($_POST['image'] ?? '/assets/images/product1.png');
 
         Database::execute("
             INSERT INTO categories (name, slug, description, image, status, display_order, created_at)
@@ -73,7 +73,7 @@ $categories = ProductCatalog::getCategoriesWithDetails();
 
     <header class="dt-adm-header">
         <div style="display:flex; align-items:center; gap:12px;">
-            <a href="/admin/"><img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
+            <a href="/admin/"><img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
             <h1 style="font-size:1.15rem; font-weight:800; color:#FFFFFF;">Category Management</h1>
         </div>
         <nav style="display:flex; align-items:center; gap:8px;">
@@ -104,7 +104,7 @@ $categories = ProductCatalog::getCategoriesWithDetails();
                     </div>
                     <div>
                         <label style="font-size:0.75rem; font-weight:700; color:#475569;">Image URL</label>
-                        <input type="text" name="image" class="dt-input-field" value="/Frontend/Shop/Asset/images/product1.png" />
+                        <input type="text" name="image" class="dt-input-field" value="/assets/images/product1.png" />
                     </div>
                     <div style="grid-column: 1 / -1;">
                         <label style="font-size:0.75rem; font-weight:700; color:#475569;">Short Description</label>

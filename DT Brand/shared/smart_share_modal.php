@@ -21,7 +21,7 @@
         <div class="dt-modal-body">
             <!-- Product Preview Card -->
             <div class="dt-share-preview-card">
-                <img src="/Frontend/Shop/Asset/images/product1.png" alt="Product" id="dtShareImg" class="dt-share-thumb" />
+                <img src="/assets/images/product1.png" alt="Product" id="dtShareImg" class="dt-share-thumb" />
                 <div class="dt-share-info">
                     <h4 class="dt-share-name" id="dtShareTitle">Nilambari Silk Saree</h4>
                     <div class="dt-share-price-strip">

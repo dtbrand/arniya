@@ -44,7 +44,7 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
             <?php endif; ?>
 
             <a href="/" class="dt-brand-link" aria-label="DT Brand's Home">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="dt-brand-logo" />
+                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="dt-brand-logo" />
             </a>
         </div>
 

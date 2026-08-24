@@ -61,7 +61,7 @@
             subtotal += itemTotal;
 
             html += '<div class="dt-cart-item">' +
-                '<img src="' + (item.image || '/Frontend/Shop/Asset/images/product1.png') + '" class="dt-cart-item-thumb" alt="' + item.name + '" />' +
+                '<img src="' + (item.image || '/assets/images/product1.png') + '" class="dt-cart-item-thumb" alt="' + item.name + '" />' +
                 '<div class="dt-cart-item-info">' +
                 '<div class="dt-cart-item-title">' + item.name + '</div>' +
                 '<div class="dt-cart-item-meta">Color: ' + (item.color || 'Default') + ' | ' + (item.lot_type || 'Single') + '</div>' +
@@ -213,7 +213,7 @@
         var html = '';
         wish.forEach(function (item, idx) {
             html += '<div class="dt-cart-item">' +
-                '<img src="' + (item.image || '/Frontend/Shop/Asset/images/product1.png') + '" class="dt-cart-item-thumb" alt="' + item.name + '" />' +
+                '<img src="' + (item.image || '/assets/images/product1.png') + '" class="dt-cart-item-thumb" alt="' + item.name + '" />' +
                 '<div class="dt-cart-item-info">' +
                 '<div class="dt-cart-item-title">' + item.name + '</div>' +
                 '<div class="dt-cart-item-price">₹' + Number(item.price).toLocaleString('en-IN') + '</div>' +
@@ -638,7 +638,7 @@
         currentReelIndex = (currentReelIndex + dir + 8) % 8;
         var poster = document.getElementById('dtReelPoster');
         var title = document.getElementById('dtReelProdTitle');
-        if (poster) poster.src = '/Frontend/Shop/Asset/images/product' + (currentReelIndex + 1) + '.png';
+        if (poster) poster.src = '/assets/images/product' + (currentReelIndex + 1) + '.png';
         if (title) title.textContent = 'Luxury Handcrafted Saree Edit #' + (currentReelIndex + 1);
     };
 
@@ -656,7 +656,7 @@
             id: (currentReelIndex % 8) + 1,
             name: 'Reels Exclusive Silk Saree',
             price: 4899,
-            image: '/Frontend/Shop/Asset/images/product' + (currentReelIndex + 1) + '.png'
+            image: '/assets/images/product' + (currentReelIndex + 1) + '.png'
         }, 1, 'single');
         window.closeReelsModal();
         window.openCartDrawer();

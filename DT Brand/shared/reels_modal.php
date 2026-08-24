@@ -14,7 +14,7 @@
         <div class="dt-reel-card" id="dtCurrentReelCard">
             <!-- Simulated HD Video Background / Animation -->
             <div class="dt-reel-media-wrap">
-                <img src="/Frontend/Shop/Asset/images/product1.png" alt="Reel Video" id="dtReelPoster" class="dt-reel-poster" />
+                <img src="/assets/images/product1.png" alt="Reel Video" id="dtReelPoster" class="dt-reel-poster" />
                 <div class="dt-reel-video-overlay"></div>
                 <div class="dt-reel-badge">🎥 Live Mill Weaving</div>
             </div>

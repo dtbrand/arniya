@@ -71,7 +71,7 @@
                 id: pId,
                 name: product.name || product.title,
                 price: Number(product.price || product.retail_price || 0),
-                image: product.image || '/Frontend/Shop/Asset/images/product1.png',
+                image: product.image || '/assets/images/product1.png',
                 color: col,
                 size: sz,
                 lot_type: lot,
@@ -106,7 +106,7 @@
                 id: pId,
                 name: product.name || product.title,
                 price: Number(product.price || product.retail_price || 0),
-                image: product.image || '/Frontend/Shop/Asset/images/product1.png',
+                image: product.image || '/assets/images/product1.png',
                 category: product.category || ''
             });
             added = true;

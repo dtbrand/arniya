@@ -13,7 +13,7 @@
             <!-- Left: Gallery -->
             <div class="dt-qv-gallery">
                 <div class="dt-qv-main-img-wrap">
-                    <img src="/Frontend/Shop/Asset/images/product1.png" alt="Product" id="dtQvMainImg" class="dt-qv-main-img" />
+                    <img src="/assets/images/product1.png" alt="Product" id="dtQvMainImg" class="dt-qv-main-img" />
                     <span class="dt-qv-badge" id="dtQvBadge" style="display:none;">Bestseller</span>
                 </div>
                 <div class="dt-qv-thumbs" id="dtQvThumbs"></div>

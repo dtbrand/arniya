@@ -10,7 +10,7 @@
             <!-- Col 1: Brand & Heritage -->
             <div class="dt-footer-col brand-col">
                 <div class="dt-footer-brand-wrap">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="dt-footer-logo" />
+                    <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="dt-footer-logo" />
                     <p class="dt-footer-desc">
                         Surat's premier handloom silk manufacturing house. Weaving authentic Banarasi, Kanjivaram, and Paithani heritage with pure tested gold zari.
                     </p>
