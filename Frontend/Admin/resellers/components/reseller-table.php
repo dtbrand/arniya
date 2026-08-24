@@ -41,149 +41,6 @@ if (!empty($resellersList)) {
         ];
     }
 }
-
-if (empty($resellers_data)) {
-$resellers_data = [
-    [
-        'id' => 'RES-1048',
-        'name' => 'Pooja Sharma',
-        'biz_name' => 'Shree Krishna Sarees & Boutique',
-        'initials' => 'PS',
-        'avatar_color' => 'gold',
-        'contact' => 'Pooja Sharma',
-        'email' => 'pooja.sharma92@gmail.com',
-        'phone' => '+91 98110 29381',
-        'city' => 'Delhi, DL',
-        'tier' => 'Platinum Elite',
-        'tier_margin' => '30% Margin',
-        'tier_class' => 'gold',
-        'orders' => 142,
-        'purchase' => 845000,
-        'credit' => 65000,
-        'credit_limit' => 150000,
-        'last_order' => 'Today, 11:20 AM',
-        'status' => 'Active',
-        'status_class' => 'emerald',
-        'kyc' => 'Verified',
-        'joined' => '12 Jan 2025'
-    ],
-    [
-        'id' => 'RES-1047',
-        'name' => 'Ananya Roy',
-        'biz_name' => 'Ananya Designer Studio',
-        'initials' => 'AR',
-        'avatar_color' => 'emerald',
-        'contact' => 'Ananya Roy',
-        'email' => 'ananya.roy.kolkata@yahoo.com',
-        'phone' => '+91 97118 23901',
-        'city' => 'Kolkata, WB',
-        'tier' => 'Gold Partner',
-        'tier_margin' => '22% Margin',
-        'tier_class' => 'emerald',
-        'orders' => 88,
-        'purchase' => 520000,
-        'credit' => 42000,
-        'credit_limit' => 100000,
-        'last_order' => 'Yesterday, 16:45',
-        'status' => 'Active',
-        'status_class' => 'emerald',
-        'kyc' => 'Verified',
-        'joined' => '04 Mar 2025'
-    ],
-    [
-        'id' => 'RES-1046',
-        'name' => 'Ritu Rajvansh',
-        'biz_name' => 'Vardhman Silk Emporium',
-        'initials' => 'RR',
-        'avatar_color' => 'purple',
-        'contact' => 'Ritu Rajvansh',
-        'email' => 'ritu.rajvansh@outlook.com',
-        'phone' => '+91 94250 88219',
-        'city' => 'Jaipur, RJ',
-        'tier' => 'Gold Partner',
-        'tier_margin' => '22% Margin',
-        'tier_class' => 'gold',
-        'orders' => 64,
-        'purchase' => 380000,
-        'credit' => 28000,
-        'credit_limit' => 80000,
-        'last_order' => '19 Apr 2026',
-        'status' => 'Active',
-        'status_class' => 'emerald',
-        'kyc' => 'Verified',
-        'joined' => '18 Nov 2024'
-    ],
-    [
-        'id' => 'RES-1045',
-        'name' => 'Meera Deshmukh',
-        'biz_name' => 'Royal Heritage Silks',
-        'initials' => 'MD',
-        'avatar_color' => 'amber',
-        'contact' => 'Meera Deshmukh',
-        'email' => 'meera.deshmukh@gmail.com',
-        'phone' => '+91 98220 44912',
-        'city' => 'Pune, MH',
-        'tier' => 'Silver Growth',
-        'tier_margin' => '15% Margin',
-        'tier_class' => 'blue',
-        'orders' => 32,
-        'purchase' => 195000,
-        'credit' => 15000,
-        'credit_limit' => 50000,
-        'last_order' => '15 Apr 2026',
-        'status' => 'Active',
-        'status_class' => 'emerald',
-        'kyc' => 'Verified',
-        'joined' => '10 Feb 2026'
-    ],
-    [
-        'id' => 'RES-1044',
-        'name' => 'Sunita Agarwal',
-        'biz_name' => 'Mahalaxmi Fashion Hub',
-        'initials' => 'SA',
-        'avatar_color' => 'gold',
-        'contact' => 'Sunita Agarwal',
-        'email' => 'sunita.agarwalahd@gmail.com',
-        'phone' => '+91 99042 11980',
-        'city' => 'Ahmedabad, GJ',
-        'tier' => 'Bronze Starter',
-        'tier_margin' => '10% Margin',
-        'tier_class' => 'amber',
-        'orders' => 0,
-        'purchase' => 0,
-        'credit' => 0,
-        'credit_limit' => 25000,
-        'last_order' => 'No Orders',
-        'status' => 'Pending',
-        'status_class' => 'amber',
-        'kyc' => 'Needs Review',
-        'joined' => '28 Mar 2026'
-    ],
-    [
-        'id' => 'RES-1043',
-        'name' => 'Kavita Patel',
-        'biz_name' => 'Gitanjali Sarees Surat',
-        'initials' => 'KP',
-        'avatar_color' => 'emerald',
-        'contact' => 'Kavita Patel',
-        'email' => 'kavita.patel.surat@gmail.com',
-        'phone' => '+91 98790 33411',
-        'city' => 'Surat, GJ',
-        'tier' => 'Silver Growth',
-        'tier_margin' => '15% Margin',
-        'tier_class' => 'blue',
-        'orders' => 18,
-        'purchase' => 98000,
-        'credit' => 78000,
-        'credit_limit' => 50000,
-        'last_order' => '28 Mar 2026',
-        'status' => 'Suspended',
-        'status_class' => 'purple',
-        'kyc' => 'Verified',
-        'joined' => '05 Jan 2025'
-    ]
-];
-}
 ?>
 
 <!-- ══ MASTER RESELLER TABLE CONTAINER ══ -->
@@ -212,6 +69,18 @@ $resellers_data = [
             </tr>
         </thead>
         <tbody>
+            <?php if (empty($resellers_data)): ?>
+                <tr>
+                    <td colspan="9" style="text-align:center; padding:36px 16px; color:#64748B;">
+                        <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:4px;">No Resellers Found</div>
+                        <p style="font-size:12px; color:#64748B; margin:0 0 14px 0;">There are currently 0 reseller partners registered in the database.</p>
+                        <a href="/Frontend/Admin/resellers/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add First Reseller</span>
+                        </a>
+                    </td>
+                </tr>
+            <?php else: ?>
             <?php foreach ($resellers_data as $r): ?>
                 <tr class="dt-reseller-row"
                     data-id="<?php echo $r['id']; ?>"
@@ -332,19 +201,19 @@ $resellers_data = [
                     </td>
                 </tr>
             <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 
     <!-- ══ PAGINATION CONTROLS ══ -->
     <div class="dt-cust-pagination">
         <div id="dtResellerFilteredCount">
-            Showing <strong>1–<?php echo count($resellers_data); ?></strong> of <strong>348</strong> Resellers
+            Showing <strong>1–<?php echo count($resellers_data); ?></strong> of <strong><?php echo count($resellers_data); ?></strong> Resellers
         </div>
         <div class="dt-cust-pages-wrap">
-            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('First Page')" title="First Page">«</button>
+            <button type="button" class="dt-cust-page-btn" disabled title="First Page">«</button>
             <button type="button" class="dt-cust-page-btn active">1</button>
-            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('Page 2')">2</button>
-            <button type="button" class="dt-cust-page-btn" onclick="window.showToast('Next Page')" title="Next Page">»</button>
+            <button type="button" class="dt-cust-page-btn" disabled title="Next Page">»</button>
         </div>
     </div>
 </div>

@@ -1,21 +1,54 @@
 <?php
 /**
- * product-stats.php — 9 Product KPI Metric Cards with Crisp Vector SVG Icons
+ * product-stats.php — 9 Product Dynamic KPI Metric Cards with Crisp Vector SVG Icons
  * DT Brand's & Jai Hanuman Tex
  */
+$prods = isset($productsList) && is_array($productsList) ? $productsList : \DTBrand\ProductCatalog::getAll();
+$totalCount = count($prods);
+$activeCount = 0;
+$draftCount = 0;
+$inactiveCount = 0;
+$lowStockCount = 0;
+$outOfStockCount = 0;
+$featuredCount = 0;
+$bestSellerCount = 0;
+$newArrivalCount = 0;
+
+foreach ($prods as $p) {
+    $st = strtolower($p['status'] ?? 'in_stock');
+    $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
+    
+    if ($st === 'in_stock' || $st === 'active' || $st === 'published') {
+        $activeCount++;
+    } elseif ($st === 'draft') {
+        $draftCount++;
+    } else {
+        $inactiveCount++;
+    }
+
+    if ($qty <= 0) {
+        $outOfStockCount++;
+    } elseif ($qty < 10) {
+        $lowStockCount++;
+    }
+
+    if (!empty($p['is_featured']) || ($p['rating'] ?? 0) >= 4.9) $featuredCount++;
+    if (!empty($p['is_best_seller']) || ($p['orders_count'] ?? 0) > 10) $bestSellerCount++;
+    if (!empty($p['is_new_arrival'])) $newArrivalCount++;
+}
 ?>
 <div class="dt-summary-grid">
     <!-- 1. Total Products -->
-    <div class="dt-summary-card active" onclick="if(typeof filterProductTable==='function') filterProductTable(''); window.showToast('Showing all 1,240 products');">
+    <div class="dt-summary-card active" onclick="if(typeof filterProductTable==='function') filterProductTable(''); window.showToast('Showing all <?= $totalCount ?> catalog products');">
         <div class="dt-sum-top">
             <div class="dt-kpi-icon-box gold">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
             </div>
-            <span class="dt-sum-trend up">↑ +14.2%</span>
+            <span class="dt-sum-trend up">Live Database</span>
         </div>
-        <div class="dt-sum-val">1,240</div>
+        <div class="dt-sum-val"><?= number_format($totalCount) ?></div>
         <div class="dt-sum-lbl">Total Products</div>
-        <div style="font-size:0.65rem; color:#7A7266; margin-top:2px;">vs 1,085 last mo</div>
+        <div style="font-size:0.65rem; color:#7A7266; margin-top:2px;">Live MySQL SKUs</div>
     </div>
 
     <!-- 2. Active Products -->
@@ -24,9 +57,9 @@
             <div class="dt-kpi-icon-box green">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             </div>
-            <span class="dt-sum-trend up">95.5% Live</span>
+            <span class="dt-sum-trend up"><?= $totalCount > 0 ? round(($activeCount / $totalCount) * 100) : 100 ?>% Live</span>
         </div>
-        <div class="dt-sum-val">1,185</div>
+        <div class="dt-sum-val"><?= number_format($activeCount) ?></div>
         <div class="dt-sum-lbl">Active Products</div>
         <div style="font-size:0.65rem; color:#15803D; margin-top:2px;">In Shop &amp; B2B</div>
     </div>
@@ -39,7 +72,7 @@
             </div>
             <span class="dt-sum-trend" style="background:#F1F5F9; color:#475569;">Review</span>
         </div>
-        <div class="dt-sum-val">14</div>
+        <div class="dt-sum-val"><?= number_format($draftCount) ?></div>
         <div class="dt-sum-lbl">Draft Products</div>
         <div style="font-size:0.65rem; color:#7A7266; margin-top:2px;">Pending QA</div>
     </div>
@@ -52,20 +85,20 @@
             </div>
             <span class="dt-sum-trend" style="background:#F1F5F9; color:#475569;">Paused</span>
         </div>
-        <div class="dt-sum-val">0</div>
+        <div class="dt-sum-val"><?= number_format($inactiveCount) ?></div>
         <div class="dt-sum-lbl">Inactive</div>
         <div style="font-size:0.65rem; color:#7A7266; margin-top:2px;">Archived SKUs</div>
     </div>
 
     <!-- 5. Low Stock -->
-    <div class="dt-summary-card" onclick="if(typeof filterProductTable==='function') filterProductTable('Low Stock'); window.showToast('Filtering: Low Stock (< 5 pcs)');">
+    <div class="dt-summary-card" onclick="if(typeof filterProductTable==='function') filterProductTable('Low Stock'); window.showToast('Filtering: Low Stock (< 10 pcs)');">
         <div class="dt-sum-top">
             <div class="dt-kpi-icon-box amber">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
-            <span class="dt-sum-trend down">&lt; 5 pcs</span>
+            <span class="dt-sum-trend down">&lt; 10 pcs</span>
         </div>
-        <div class="dt-sum-val" style="color:#B45309;">14</div>
+        <div class="dt-sum-val" style="color:#B45309;"><?= number_format($lowStockCount) ?></div>
         <div class="dt-sum-lbl">Low Stock</div>
         <div style="font-size:0.65rem; color:#B45309; margin-top:2px;">Reorder needed</div>
     </div>
@@ -78,7 +111,7 @@
             </div>
             <span class="dt-sum-trend down">Restock</span>
         </div>
-        <div class="dt-sum-val" style="color:#DC2626;">41</div>
+        <div class="dt-sum-val" style="color:#DC2626;"><?= number_format($outOfStockCount) ?></div>
         <div class="dt-sum-lbl">Out of Stock</div>
         <div style="font-size:0.65rem; color:#DC2626; margin-top:2px;">Weaving in mill</div>
     </div>
@@ -91,7 +124,7 @@
             </div>
             <span class="dt-sum-trend up">Top Spot</span>
         </div>
-        <div class="dt-sum-val">48</div>
+        <div class="dt-sum-val"><?= number_format($featuredCount) ?></div>
         <div class="dt-sum-lbl">Featured</div>
         <div style="font-size:0.65rem; color:#8A681F; margin-top:2px;">Homepage show</div>
     </div>
@@ -104,9 +137,9 @@
             </div>
             <span class="dt-sum-trend up">High Vol</span>
         </div>
-        <div class="dt-sum-val">32</div>
+        <div class="dt-sum-val"><?= number_format($bestSellerCount) ?></div>
         <div class="dt-sum-lbl">Best Sellers</div>
-        <div style="font-size:0.65rem; color:#15803D; margin-top:2px;">&gt; 100+ pcs sold</div>
+        <div style="font-size:0.65rem; color:#15803D; margin-top:2px;">Top selling lots</div>
     </div>
 
     <!-- 9. New Arrivals -->
@@ -117,7 +150,7 @@
             </div>
             <span class="dt-sum-trend up">2026 Drop</span>
         </div>
-        <div class="dt-sum-val">64</div>
+        <div class="dt-sum-val"><?= number_format($newArrivalCount) ?></div>
         <div class="dt-sum-lbl">New Arrivals</div>
         <div style="font-size:0.65rem; color:#8A681F; margin-top:2px;">Festive catalog</div>
     </div>

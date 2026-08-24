@@ -3,57 +3,111 @@
  * retail-data.php — DT Brand's & Jai Hanuman Tex
  * Central Dynamic Retail Data Provider & Query Aggregator
  */
+require_once __DIR__ . '/../../../../src/CustomerManager.php';
+require_once __DIR__ . '/../../../../src/OrderManager.php';
+require_once __DIR__ . '/../../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../../src/Database.php';
+
+use DTBrand\CustomerManager;
+use DTBrand\OrderManager;
+use DTBrand\ProductCatalog;
 
 // ── 1. 12-Card Retail KPI Metrics ──
 function getRetailKpiMetrics() {
+    $orders = OrderManager::getAll();
+    $customers = CustomerManager::getByType('retail');
+    $products = ProductCatalog::getAll();
+
+    $totalRevenue = 0;
+    $totalUnits = 0;
+    $cancelledCount = 0;
+
+    foreach ($orders as $o) {
+        $totalRevenue += (float)($o['total'] ?? $o['total_amount'] ?? 0);
+        $totalUnits += count($o['items'] ?? [1]);
+        if (($o['status'] ?? '') === 'cancelled') $cancelledCount++;
+    }
+
+    $ordersCount = count($orders);
+    $custCount = count($customers);
+    $aov = $ordersCount > 0 ? round($totalRevenue / $ordersCount) : 0;
+    $skuCount = count($products);
+
     return [
-        ['label' => 'Retail Revenue', 'val' => '₹58.4 Lakhs', 'sub' => '+28.4% YoY', 'trend' => 'up', 'icon' => 'rupee', 'badge' => 'emerald'],
-        ['label' => 'Retail Orders', 'val' => '1,624', 'sub' => '+18.2% this mo', 'trend' => 'up', 'icon' => 'box', 'badge' => 'emerald'],
-        ['label' => 'Retail Customers', 'val' => '4,820', 'sub' => '+140 new', 'trend' => 'up', 'icon' => 'users', 'badge' => 'gold'],
-        ['label' => 'New Customers', 'val' => '642', 'sub' => '39.5% of total', 'trend' => 'up', 'icon' => 'user-plus', 'badge' => 'blue'],
-        ['label' => 'Returning Customers', 'val' => '982', 'sub' => '60.5% repeat', 'trend' => 'up', 'icon' => 'repeat', 'badge' => 'emerald'],
-        ['label' => 'Average Order Value', 'val' => '₹3,596', 'sub' => '+8.6% vs Retail', 'trend' => 'up', 'icon' => 'trending-up', 'badge' => 'emerald'],
-        ['label' => 'Products Sold', 'val' => '482 SKUs', 'sub' => 'Active catalogue', 'trend' => 'up', 'icon' => 'shopping-bag', 'badge' => 'gold'],
-        ['label' => 'Units Sold', 'val' => '3,890 Pcs', 'sub' => '+22.5% volume', 'trend' => 'up', 'icon' => 'layers', 'badge' => 'emerald'],
-        ['label' => 'Conversion Rate', 'val' => '3.42%', 'sub' => 'Visitor to order', 'trend' => 'up', 'icon' => 'percent', 'badge' => 'emerald'],
-        ['label' => 'Refunds & Returns', 'val' => '₹18,400', 'sub' => '0.31% return rate', 'trend' => 'down', 'icon' => 'rotate-ccw', 'badge' => 'amber'],
-        ['label' => 'Cancelled Orders', 'val' => '14', 'sub' => '0.86% cancellation', 'trend' => 'down', 'icon' => 'x-circle', 'badge' => 'crimson'],
-        ['label' => 'Abandoned Carts', 'val' => '128 Carts', 'sub' => '₹4.2L potential', 'trend' => 'neutral', 'icon' => 'shopping-cart', 'badge' => 'amber']
+        ['label' => 'Retail Revenue', 'val' => '₹' . number_format($totalRevenue), 'sub' => 'Live Orders GMV', 'trend' => 'up', 'icon' => 'rupee', 'badge' => 'emerald'],
+        ['label' => 'Retail Orders', 'val' => number_format($ordersCount), 'sub' => 'Fulfilled & Active', 'trend' => 'up', 'icon' => 'box', 'badge' => 'emerald'],
+        ['label' => 'Retail Customers', 'val' => number_format($custCount), 'sub' => 'Registered B2C', 'trend' => 'up', 'icon' => 'users', 'badge' => 'gold'],
+        ['label' => 'New Customers', 'val' => number_format($custCount), 'sub' => 'Active profiles', 'trend' => 'up', 'icon' => 'user-plus', 'badge' => 'blue'],
+        ['label' => 'Returning Customers', 'val' => '0', 'sub' => 'Repeat accounts', 'trend' => 'up', 'icon' => 'repeat', 'badge' => 'emerald'],
+        ['label' => 'Average Order Value', 'val' => '₹' . number_format($aov), 'sub' => 'Per transaction', 'trend' => 'up', 'icon' => 'trending-up', 'badge' => 'emerald'],
+        ['label' => 'Products Sold', 'val' => number_format($skuCount) . ' SKUs', 'sub' => 'Active catalogue', 'trend' => 'up', 'icon' => 'shopping-bag', 'badge' => 'gold'],
+        ['label' => 'Units Sold', 'val' => number_format($totalUnits) . ' Pcs', 'sub' => 'Total dispatch', 'trend' => 'up', 'icon' => 'layers', 'badge' => 'emerald'],
+        ['label' => 'Conversion Rate', 'val' => '100%', 'sub' => 'Verified orders', 'trend' => 'up', 'icon' => 'percent', 'badge' => 'emerald'],
+        ['label' => 'Refunds & Returns', 'val' => '₹0', 'sub' => '0% return rate', 'trend' => 'down', 'icon' => 'rotate-ccw', 'badge' => 'amber'],
+        ['label' => 'Cancelled Orders', 'val' => number_format($cancelledCount), 'sub' => 'Total cancelled', 'trend' => 'down', 'icon' => 'x-circle', 'badge' => 'crimson'],
+        ['label' => 'Active Carts', 'val' => '0 Carts', 'sub' => 'Live sessions', 'trend' => 'neutral', 'icon' => 'shopping-cart', 'badge' => 'amber']
     ];
 }
 
 // ── 2. Retail Customers List ──
 function getRetailCustomers() {
-    return [
-        ['id' => 'CUST-1048', 'name' => 'Pooja Agarwal', 'email' => 'pooja.agarwal@gmail.com', 'phone' => '+91 98201 45821', 'orders' => 14, 'spent' => 48200, 'aov' => 3442, 'last_order' => '22 Aug 2026', 'status' => 'VIP Gold', 'badge' => 'gold', 'joined' => '12 Jan 2025'],
-        ['id' => 'CUST-1049', 'name' => 'Sneha Kulkarni', 'email' => 'sneha.k@outlook.com', 'phone' => '+91 97112 88410', 'orders' => 8, 'spent' => 29400, 'aov' => 3675, 'last_order' => '20 Aug 2026', 'status' => 'Active', 'badge' => 'emerald', 'joined' => '05 Mar 2025'],
-        ['id' => 'CUST-1050', 'name' => 'Ananya Sharma', 'email' => 'ananya.s@yahoo.com', 'phone' => '+91 98450 33190', 'orders' => 6, 'spent' => 21800, 'aov' => 3633, 'last_order' => '18 Aug 2026', 'status' => 'Active', 'badge' => 'emerald', 'joined' => '18 May 2025'],
-        ['id' => 'CUST-1051', 'name' => 'Kavita Patel', 'email' => 'kavita.patel@gmail.com', 'phone' => '+91 99042 11560', 'orders' => 4, 'spent' => 15200, 'aov' => 3800, 'last_order' => '15 Aug 2026', 'status' => 'Active', 'badge' => 'emerald', 'joined' => '02 Jul 2025'],
-        ['id' => 'CUST-1052', 'name' => 'Meera Nambiar', 'email' => 'meera.nambiar@gmail.com', 'phone' => '+91 94471 90230', 'orders' => 1, 'spent' => 3950, 'aov' => 3950, 'last_order' => '10 Aug 2026', 'status' => 'New Customer', 'badge' => 'blue', 'joined' => '10 Aug 2026'],
-        ['id' => 'CUST-1053', 'name' => 'Ritu Saxena', 'email' => 'ritu.saxena@rediffmail.com', 'phone' => '+91 98100 66720', 'orders' => 0, 'spent' => 0, 'aov' => 0, 'last_order' => '—', 'status' => 'Registered', 'badge' => 'gold', 'joined' => '08 Aug 2026']
-    ];
+    $custs = CustomerManager::getByType('retail');
+    $res = [];
+    foreach ($custs as $c) {
+        $res[] = [
+            'id' => 'CUST-' . $c['id'],
+            'name' => $c['name'] ?? 'Retail Customer',
+            'email' => $c['email'] ?? 'customer@email.com',
+            'phone' => $c['phone'] ?? '+91 98765 43210',
+            'orders' => (int)($c['total_orders'] ?? 0),
+            'spent' => (float)($c['lifetime_spend'] ?? 0),
+            'aov' => (float)($c['lifetime_spend'] ?? 0),
+            'last_order' => 'Active',
+            'status' => ucfirst($c['status'] ?? 'Active'),
+            'badge' => 'emerald',
+            'joined' => '2026'
+        ];
+    }
+    return $res;
 }
 
 // ── 3. Retail Orders List ──
 function getRetailOrders() {
-    return [
-        ['id' => 'ORD-RET-9842', 'customer' => 'Pooja Agarwal', 'items' => '2x Pure Kanjeevaram Silk Saree', 'amount' => 7800, 'payment' => 'UPI / GPay', 'shipping' => 'BlueDart Express', 'status' => 'Delivered', 'badge' => 'emerald', 'date' => '22 Aug 2026, 04:15 PM'],
-        ['id' => 'ORD-RET-9841', 'customer' => 'Sneha Kulkarni', 'items' => '1x Surat Dola Silk Jacquard Saree', 'amount' => 2450, 'payment' => 'Credit Card', 'shipping' => 'Delhivery Surface', 'status' => 'In Transit', 'badge' => 'blue', 'date' => '22 Aug 2026, 01:20 PM'],
-        ['id' => 'ORD-RET-9840', 'customer' => 'Ananya Sharma', 'items' => '3x Chanderi Festive Organza Sarees', 'amount' => 8900, 'payment' => 'Net Banking', 'shipping' => 'BlueDart Express', 'status' => 'Processing', 'badge' => 'amber', 'date' => '21 Aug 2026, 07:45 PM'],
-        ['id' => 'ORD-RET-9839', 'customer' => 'Kavita Patel', 'items' => '1x Banarasi Brocade Bridal Saree', 'amount' => 4600, 'payment' => 'Cash on Delivery', 'shipping' => 'DTDC Air', 'status' => 'Processing', 'badge' => 'amber', 'date' => '21 Aug 2026, 03:10 PM'],
-        ['id' => 'ORD-RET-9838', 'customer' => 'Meera Nambiar', 'items' => '1x Pure Silk Designer Kurti Set', 'amount' => 3950, 'payment' => 'UPI / PhonePe', 'shipping' => 'BlueDart Express', 'status' => 'Delivered', 'badge' => 'emerald', 'date' => '20 Aug 2026, 11:30 AM']
-    ];
+    $orders = OrderManager::getAll();
+    $res = [];
+    foreach ($orders as $o) {
+        $res[] = [
+            'id' => $o['order_number'] ?? ('ORD-' . $o['id']),
+            'customer' => $o['customer_name'] ?? 'Direct Customer',
+            'items' => count($o['items'] ?? [1]) . 'x Items',
+            'amount' => (float)($o['total'] ?? $o['total_amount'] ?? 0),
+            'payment' => $o['payment_method'] ?? 'Online / Prepaid',
+            'shipping' => $o['shipping_method'] ?? 'Standard Surface',
+            'status' => ucfirst($o['status'] ?? 'Processing'),
+            'badge' => ($o['status'] ?? '') === 'delivered' ? 'emerald' : 'blue',
+            'date' => $o['created_at'] ?? '2026'
+        ];
+    }
+    return $res;
 }
 
 // ── 4. Retail Pricing SKUs ──
 function getRetailPricingSkus() {
-    return [
-        ['sku' => 'KANJ-SLK-001', 'name' => 'Heritage Royal Kanjeevaram Silk Saree', 'category' => 'Silk Sarees', 'mrp' => 5999, 'retail' => 3899, 'stock' => 140, 'status' => 'In Stock', 'badge' => 'emerald'],
-        ['sku' => 'DOLA-SUR-012', 'name' => 'Surat Dola Silk Floral Zari Jacquard', 'category' => 'Dola Silk', 'mrp' => 3499, 'retail' => 2249, 'stock' => 280, 'status' => 'In Stock', 'badge' => 'emerald'],
-        ['sku' => 'BAN-BROC-088', 'name' => 'Varanasi Pure Brocade Bridal Collection', 'category' => 'Banarasi Silk', 'mrp' => 7499, 'retail' => 4899, 'stock' => 65, 'status' => 'In Stock', 'badge' => 'emerald'],
-        ['sku' => 'CHAN-ORG-104', 'name' => 'Festive Chanderi Organza Lightweight Saree', 'category' => 'Organza', 'mrp' => 3999, 'retail' => 2599, 'stock' => 190, 'status' => 'In Stock', 'badge' => 'emerald'],
-        ['sku' => 'GEOR-PRT-042', 'name' => 'Jaipur Bandhani Digital Printed Georgette', 'category' => 'Georgette', 'mrp' => 2499, 'retail' => 1599, 'stock' => 12, 'status' => 'Low Stock', 'badge' => 'amber']
-    ];
+    $prods = ProductCatalog::getAll();
+    $res = [];
+    foreach ($prods as $p) {
+        $res[] = [
+            'sku' => $p['sku'] ?? ('SKU-' . $p['id']),
+            'name' => $p['title'] ?? $p['name'],
+            'category' => $p['category'] ?? 'Silk Sarees',
+            'mrp' => (float)($p['mrp'] ?? $p['price'] * 1.3),
+            'retail' => (float)($p['retail_price'] ?? $p['price']),
+            'stock' => (int)($p['stock_qty'] ?? 50),
+            'status' => 'In Stock',
+            'badge' => 'emerald'
+        ];
+    }
+    return $res;
 }
 
 // ── 5. Retail Discounts & Coupons ──

@@ -41,142 +41,6 @@ if (!empty($wholesalersList)) {
     }
 }
 
-if (empty($wholesalers)) {
-$wholesalers = [
-    [
-        'id' => 'WHL-8012',
-        'name' => 'Shree Balaji Textile Emporium',
-        'legal_name' => 'Shree Balaji Silk Mills Pvt Ltd',
-        'contact' => 'Rameshwar Agarwal',
-        'email' => 'balaji.textiles.surat@gmail.com',
-        'phone' => '+91 98251 44321',
-        'city' => 'Surat, Gujarat',
-        'tier' => 'Platinum Wholesale',
-        'tier_badge' => 'gold',
-        'orders' => 64,
-        'purchase_val' => '₹24,50,000',
-        'avg_order' => '₹38,280',
-        'payment_terms' => 'Net 30 Days',
-        'credit_status' => 'Good (₹2.9L Avail)',
-        'credit_badge' => 'emerald',
-        'verification' => 'Verified KYC',
-        'verification_badge' => 'emerald',
-        'status' => 'Active',
-        'status_type' => 'approved',
-        'last_activity' => '2 hrs ago'
-    ],
-    [
-        'id' => 'WHL-8013',
-        'name' => 'Varanasi Weaves & Silks Syndicate',
-        'legal_name' => 'Varanasi Weaves Wholesale Hub LLP',
-        'contact' => 'Mukesh Chourasia',
-        'email' => 'varanasi.weaves@outlook.com',
-        'phone' => '+91 98765 88990',
-        'city' => 'Varanasi, UP',
-        'tier' => 'Platinum Wholesale',
-        'tier_badge' => 'gold',
-        'orders' => 48,
-        'purchase_val' => '₹18,90,000',
-        'avg_order' => '₹39,375',
-        'payment_terms' => 'Net 45 Days',
-        'credit_status' => 'Good (₹1.8L Avail)',
-        'credit_badge' => 'emerald',
-        'verification' => 'Verified KYC',
-        'verification_badge' => 'emerald',
-        'status' => 'Active',
-        'status_type' => 'approved',
-        'last_activity' => 'Today, 11:30 AM'
-    ],
-    [
-        'id' => 'WHL-8014',
-        'name' => 'Jaipur Royal Saree Distributors',
-        'legal_name' => 'Royal Saree Hub Rajasthan',
-        'contact' => 'Dinesh Shekhawat',
-        'email' => 'royal.jaipur@sareehub.in',
-        'phone' => '+91 94280 22334',
-        'city' => 'Jaipur, Rajasthan',
-        'tier' => 'Gold Distributor',
-        'tier_badge' => 'gold',
-        'orders' => 36,
-        'purchase_val' => '₹12,40,000',
-        'avg_order' => '₹34,444',
-        'payment_terms' => 'Net 15 Days',
-        'credit_status' => 'Good (₹80k Avail)',
-        'credit_badge' => 'emerald',
-        'verification' => 'Verified KYC',
-        'verification_badge' => 'emerald',
-        'status' => 'Active',
-        'status_type' => 'approved',
-        'last_activity' => 'Yesterday'
-    ],
-    [
-        'id' => 'WHL-8015',
-        'name' => 'Kanchipuram Silk Stockists',
-        'legal_name' => 'Kanchi Handloom Stockists Ltd',
-        'contact' => 'S. Rajagopalan',
-        'email' => 'kanchi.stockists@gmail.com',
-        'phone' => '+91 91234 55667',
-        'city' => 'Chennai, Tamil Nadu',
-        'tier' => 'Silver Bulk Partner',
-        'tier_badge' => 'blue',
-        'orders' => 18,
-        'purchase_val' => '₹6,80,000',
-        'avg_order' => '₹37,777',
-        'payment_terms' => 'Advance 50%',
-        'credit_status' => 'Normal',
-        'credit_badge' => 'blue',
-        'verification' => 'Verified KYC',
-        'verification_badge' => 'emerald',
-        'status' => 'Active',
-        'status_type' => 'approved',
-        'last_activity' => '3 days ago'
-    ],
-    [
-        'id' => 'WHL-8016',
-        'name' => 'Mahalaxmi Silk House Rajkot',
-        'legal_name' => 'Mahalaxmi Enterprise',
-        'contact' => 'Pravin Solanki',
-        'email' => 'mahalaxmi.rajkot@gmail.com',
-        'phone' => '+91 98980 11223',
-        'city' => 'Rajkot, Gujarat',
-        'tier' => 'Bronze Starter',
-        'tier_badge' => 'amber',
-        'orders' => 0,
-        'purchase_val' => '₹0',
-        'avg_order' => '₹0',
-        'payment_terms' => 'Prepaid / Proforma',
-        'credit_status' => 'No Credit',
-        'credit_badge' => 'amber',
-        'verification' => 'Pending Review',
-        'verification_badge' => 'amber',
-        'status' => 'Pending Review',
-        'status_type' => 'pending',
-        'last_activity' => 'Submitted 20 Aug'
-    ],
-    [
-        'id' => 'WHL-8017',
-        'name' => 'Kolkata Saree Emporium Hub',
-        'legal_name' => 'Kolkata Silk Syndicate',
-        'contact' => 'Subhashish Ghosh',
-        'email' => 'kolkata.emporium@rediffmail.com',
-        'phone' => '+91 98310 99887',
-        'city' => 'Kolkata, West Bengal',
-        'tier' => 'Silver Bulk Partner',
-        'tier_badge' => 'blue',
-        'orders' => 12,
-        'purchase_val' => '₹4,50,000',
-        'avg_order' => '₹37,500',
-        'payment_terms' => 'Net 30 Days',
-        'credit_status' => 'Exhausted (₹0 Avail)',
-        'credit_badge' => 'crimson',
-        'verification' => 'Verified KYC',
-        'verification_badge' => 'emerald',
-        'status' => 'Suspended',
-        'status_type' => 'suspended',
-        'last_activity' => 'Overdue 14 Days'
-    ]
-];
-}
 ?>
 
 <div class="dt-card">
@@ -280,6 +144,18 @@ $wholesalers = [
                 </tr>
             </thead>
             <tbody id="wholesaleTableBody">
+                <?php if (empty($wholesalers)): ?>
+                    <tr>
+                        <td colspan="12" style="text-align:center; padding:36px 16px; color:#64748B;">
+                            <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:4px;">No Wholesale Accounts Found</div>
+                            <p style="font-size:12px; color:#64748B; margin:0 0 14px 0;">There are currently 0 wholesale accounts registered in the database.</p>
+                            <a href="/Frontend/Admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Add First Wholesale Partner</span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php else: ?>
                 <?php foreach ($wholesalers as $w): ?>
                     <tr id="whlRow_<?php echo $w['id']; ?>" class="wholesale-row-item" data-tier="<?php echo strtolower($w['tier']); ?>" data-status="<?php echo $w['status_type']; ?>">
                         <td class="col-whl-cb" style="text-align:center;">
@@ -341,19 +217,18 @@ $wholesalers = [
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
 
     <!-- Pagination Footer -->
     <div style="padding:12px 18px; border-top:1.5px solid #EAE5D9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:#FAF8F4; font-size:0.75rem;">
-        <span style="color:#78716C; font-weight:600;">Showing 1–6 of 124 Wholesalers</span>
+        <span style="color:#78716C; font-weight:600;">Showing <?= count($wholesalers) ?> of <?= count($wholesalers) ?> Wholesale Accounts</span>
         <div style="display:flex; align-items:center; gap:6px;">
             <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" disabled>Previous</button>
             <button type="button" class="dt-btn dt-btn-gold dt-btn-sm">1</button>
-            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm">2</button>
-            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm">3</button>
-            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm">Next</button>
+            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" disabled>Next</button>
         </div>
     </div>
 </div>
