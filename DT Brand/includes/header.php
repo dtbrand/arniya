@@ -37,13 +37,13 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
         <!-- Left: Brand Logo & Back to Home (Non-home pages) -->
         <div class="dt-header-left">
             <?php if (!$isHome): ?>
-            <a href="/DT Brand/" class="dt-header-back-btn" aria-label="Back to Home">
+            <a href="/" class="dt-header-back-btn" aria-label="Back to Home">
                 <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 <span>Home</span>
             </a>
             <?php endif; ?>
 
-            <a href="/DT Brand/" class="dt-brand-link" aria-label="DT Brand's Home">
+            <a href="/" class="dt-brand-link" aria-label="DT Brand's Home">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="dt-brand-logo" />
             </a>
         </div>
@@ -90,28 +90,28 @@ $isHome = ($currentScript === 'index.php' || $currentScript === 'home.php');
 
             <!-- Account Dropdown Button -->
             <div class="dt-account-wrap" id="dtAccountWrap">
-                <a href="javascript:void(0)" onclick="if(typeof openAuthModal==='function') openAuthModal('profile'); else if(typeof openAccountModal==='function') openAccountModal('login'); else window.location.href='/DT Brand/account.php';" class="dt-account-btn" id="dtAccountBtn" aria-label="Account">
+                <a href="javascript:void(0)" onclick="if(typeof openAuthModal==='function') openAuthModal('profile'); else if(typeof openAccountModal==='function') openAccountModal('login'); else window.location.href='/account.php';" class="dt-account-btn" id="dtAccountBtn" aria-label="Account">
                     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     <span id="dtAccountLabel">Account</span>
                 </a>
                 <div class="dt-account-dropdown" id="dtAccountDropdown">
-                    <a href="/DT Brand/" class="dt-drop-item" style="color:var(--dark-gold, #8A681F); font-weight:800;">
+                    <a href="/" class="dt-drop-item" style="color:var(--dark-gold, #8A681F); font-weight:800;">
                         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                         <span>Home</span>
                     </a>
-                    <a href="/DT Brand/shop.php" class="dt-drop-item">
+                    <a href="/shop.php" class="dt-drop-item">
                         <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         <span>Shop Catalog</span>
                     </a>
-                    <a href="/DT Brand/wholesale.php" class="dt-drop-item" style="color:#8A681F; font-weight:700;">
+                    <a href="/wholesale.php" class="dt-drop-item" style="color:#8A681F; font-weight:700;">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>Wholesale Hub</span>
                     </a>
-                    <a href="/DT Brand/reseller.php" class="dt-drop-item" style="color:#8A681F; font-weight:700;">
+                    <a href="/reseller.php" class="dt-drop-item" style="color:#8A681F; font-weight:700;">
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         <span>Reseller Portal</span>
                     </a>
-                    <a href="/DT Brand/account.php" class="dt-drop-item" id="dtDropAccountOrders">
+                    <a href="/account.php" class="dt-drop-item" id="dtDropAccountOrders">
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span>My Account & Orders</span>
                     </a>

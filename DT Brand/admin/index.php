@@ -34,9 +34,9 @@ $totalInventoryValuation = array_reduce($products, function($sum, $p) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         body { background: #F8FAFC; color: #1E293B; }
@@ -149,17 +149,17 @@ $totalInventoryValuation = array_reduce($products, function($sum, $p) {
     <!-- Executive Admin Header -->
     <header class="dt-adm-header">
         <div class="dt-adm-title-wrap">
-            <a href="/DT Brand/" style="text-decoration:none;">
+            <a href="/" style="text-decoration:none;">
                 <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" />
             </a>
             <h1>Executive Management Console</h1>
         </div>
         <nav class="dt-adm-nav">
-            <a href="/DT Brand/admin/" class="dt-adm-nav-link active">Dashboard</a>
-            <a href="/DT Brand/admin/products.php" class="dt-adm-nav-link">Products (<?= count($products) ?>)</a>
-            <a href="/DT Brand/admin/categories.php" class="dt-adm-nav-link">Categories (<?= count($categories) ?>)</a>
-            <a href="/DT Brand/admin/orders.php" class="dt-adm-nav-link">Orders</a>
-            <a href="/DT Brand/" class="dt-btn-pale" target="_blank" style="padding:4px 10px; font-size:0.75rem;">View Live Store &rarr;</a>
+            <a href="/admin/" class="dt-adm-nav-link active">Dashboard</a>
+            <a href="/admin/products.php" class="dt-adm-nav-link">Products (<?= count($products) ?>)</a>
+            <a href="/admin/categories.php" class="dt-adm-nav-link">Categories (<?= count($categories) ?>)</a>
+            <a href="/admin/orders.php" class="dt-adm-nav-link">Orders</a>
+            <a href="/" class="dt-btn-pale" target="_blank" style="padding:4px 10px; font-size:0.75rem;">View Live Store &rarr;</a>
         </nav>
     </header>
 
@@ -202,7 +202,7 @@ $totalInventoryValuation = array_reduce($products, function($sum, $p) {
             <div class="dt-adm-table-header">
                 <h3 class="dt-adm-table-title">Live Product Inventory</h3>
                 <div style="display:flex; gap:8px;">
-                    <a href="/DT Brand/admin/products.php" class="dt-btn-gold" style="font-size:0.78rem;">
+                    <a href="/admin/products.php" class="dt-btn-gold" style="font-size:0.78rem;">
                         <span>+ Add New Product</span>
                     </a>
                 </div>

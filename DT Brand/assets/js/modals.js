@@ -349,7 +349,7 @@
         var btn = document.getElementById('dtPlaceOrderBtn');
         if (btn) { btn.disabled = true; btn.innerHTML = '<span>Processing Order...</span>'; }
 
-        fetch('/DT Brand/api/orders.php', {
+        fetch('/api/orders.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -414,7 +414,7 @@
         var id = (document.getElementById('dtLoginIdentity') || {}).value;
         var pass = (document.getElementById('dtLoginPassword') || {}).value;
 
-        fetch('/DT Brand/api/auth.php?action=login', {
+        fetch('/api/auth.php?action=login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone: id, password: pass })
@@ -444,7 +444,7 @@
         var email = (document.getElementById('dtRegEmail') || {}).value;
         var pass = (document.getElementById('dtRegPassword') || {}).value;
 
-        fetch('/DT Brand/api/auth.php?action=register', {
+        fetch('/api/auth.php?action=register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: type, name: name, phone: phone, email: email, password: pass })
@@ -464,7 +464,7 @@
 
     // ════════════ 5. QUICKVIEW MODAL ════════════
     window.openQuickView = function (productId) {
-        fetch('/DT Brand/api/products.php?id=' + productId)
+        fetch('/api/products.php?id=' + productId)
             .then(function (r) { return r.json(); })
             .then(function (res) {
                 if (!res.success || !res.product) return;
@@ -492,7 +492,7 @@
                 if (price) price.textContent = '₹' + Number(p.price || p.retail_price).toLocaleString('en-IN');
                 if (oldPrice) oldPrice.textContent = p.old_price ? ('₹' + Number(p.old_price).toLocaleString('en-IN')) : '';
                 if (disc) disc.textContent = (p.discount || 25) + '% OFF';
-                if (fullLink) fullLink.href = '/DT Brand/product.php?id=' + p.id;
+                if (fullLink) fullLink.href = '/product.php?id=' + p.id;
 
                 if (modal) {
                     modal.classList.add('active');
@@ -536,7 +536,7 @@
 
     // ════════════ 6. SMART SHARE MODAL ════════════
     window.openSmartShare = function (productId) {
-        fetch('/DT Brand/api/products.php?id=' + productId)
+        fetch('/api/products.php?id=' + productId)
             .then(function (r) { return r.json(); })
             .then(function (res) {
                 if (!res.success || !res.product) return;

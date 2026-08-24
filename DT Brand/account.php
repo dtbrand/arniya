@@ -26,10 +26,10 @@ $orders = OrderManager::getAll(['limit' => 10]);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         .dt-acc-layout {
@@ -138,7 +138,7 @@ $orders = OrderManager::getAll(['limit' => 10]);
                 <button type="button" class="dt-acc-nav-link" onclick="switchAccTab('payouts')">
                     <span>💰 Reseller Commission & Payouts</span>
                 </button>
-                <button type="button" class="dt-acc-nav-link" style="color:#DC2626;" onclick="localStorage.removeItem('dtbrands_user'); window.location.href='/DT Brand/';">
+                <button type="button" class="dt-acc-nav-link" style="color:#DC2626;" onclick="localStorage.removeItem('dtbrands_user'); window.location.href='/';">
                     <span>🚪 Log Out</span>
                 </button>
             </nav>
@@ -156,7 +156,7 @@ $orders = OrderManager::getAll(['limit' => 10]);
                     <div class="dt-empty-icon">📦</div>
                     <h4 class="dt-empty-title">No Orders Yet</h4>
                     <p class="dt-empty-desc">Your order history will appear here once you place an order.</p>
-                    <a href="/DT Brand/shop.php" class="dt-btn-gold">Start Shopping &rarr;</a>
+                    <a href="/shop.php" class="dt-btn-gold">Start Shopping &rarr;</a>
                 </div>
                 <?php else: ?>
                     <?php foreach ($orders as $ord): ?>
@@ -202,9 +202,9 @@ $orders = OrderManager::getAll(['limit' => 10]);
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
     <script>
         function switchAccTab(tab) {

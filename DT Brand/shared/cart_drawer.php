@@ -32,7 +32,7 @@
                 <div class="dt-empty-icon">🛍️</div>
                 <h4 class="dt-empty-title">Your Bag is Empty</h4>
                 <p class="dt-empty-desc">Discover pure handloom sarees and designer ethnic collections.</p>
-                <a href="/DT Brand/shop.php" class="dt-btn-gold" onclick="closeCartDrawer()">Explore Catalog &rarr;</a>
+                <a href="/shop.php" class="dt-btn-gold" onclick="closeCartDrawer()">Explore Catalog &rarr;</a>
             </div>
         </div>
 

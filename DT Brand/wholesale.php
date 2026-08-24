@@ -24,10 +24,10 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         .dt-ws-hero {
@@ -128,12 +128,12 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
             <div class="dt-product-card">
                 <div class="dt-card-img-wrap">
                     <span class="dt-card-badge" style="background:#15803D; color:#FFF; border-color:#14532D;">Wholesale MOQ: <?= $p['moq'] ?? 8 ?> Pcs</span>
-                    <a href="/DT Brand/product.php?id=<?= $p['id'] ?>">
+                    <a href="/product.php?id=<?= $p['id'] ?>">
                         <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="dt-card-img" />
                     </a>
                 </div>
                 <div class="dt-card-body">
-                    <a href="/DT Brand/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name']) ?></a>
+                    <a href="/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name']) ?></a>
                     
                     <div style="background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; padding:6px 8px; margin:8px 0;">
                         <div style="display:flex; justify-content:space-between; font-size:0.75rem;">
@@ -150,7 +150,7 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
                         <button type="button" class="dt-btn-gold" style="padding:6px; font-size:0.75rem;" onclick="addToCart(<?= htmlspecialchars(json_encode($p)) ?>, <?= $p['moq'] ?? 8 ?>, 'full_set')">
                             <span>Add Set (<?= $p['moq'] ?? 8 ?> Pcs)</span>
                         </button>
-                        <a href="/DT Brand/product.php?id=<?= $p['id'] ?>" class="dt-btn-pale" style="padding:6px; font-size:0.75rem; text-align:center;">
+                        <a href="/product.php?id=<?= $p['id'] ?>" class="dt-btn-pale" style="padding:6px; font-size:0.75rem; text-align:center;">
                             <span>View Lots</span>
                         </a>
                     </div>
@@ -177,9 +177,9 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
 </body>
 </html>

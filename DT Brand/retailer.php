@@ -23,10 +23,10 @@ $products = ProductCatalog::getAll();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         .dt-retailer-hero {
@@ -153,9 +153,9 @@ $products = ProductCatalog::getAll();
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
     <script>
         var retailerProducts = <?= json_encode(array_values($products)) ?>;

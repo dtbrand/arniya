@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Security: Disable directory browsing
+    Options -Indexes
+
+    # 1. Clean Product Routes: /product/3 or /product/3/ or /product/slug
+    RewriteRule ^product/([0-9]+)/?$ product.php?id=$1 [QSA,L]
+    RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [QSA,L]
+
+    # 2. Main Storefront Clean Routes
+    RewriteRule ^shop/?$ shop.php [QSA,L]
+    RewriteRule ^wholesale/?$ wholesale.php [QSA,L]
+    RewriteRule ^reseller/?$ reseller.php [QSA,L]
+    RewriteRule ^retailer/?$ retailer.php [QSA,L]
+    RewriteRule ^account/?$ account.php [QSA,L]
+    RewriteRule ^admin/?$ admin/index.php [QSA,L]
+
+    # 3. Clean Extensionless PHP URL fallback
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^([^/]+)/?$ $1.php [QSA,L]
+</IfModule>

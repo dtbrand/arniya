@@ -10,9 +10,35 @@ require_once __DIR__ . '/src/ProductCatalog.php';
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-$productId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-$product = ProductCatalog::getById($productId);
+$productId = 1;
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $productId = (int)$_GET['id'];
+} elseif (isset($_GET['slug']) && !empty($_GET['slug'])) {
+    $found = ProductCatalog::getBySlug($_GET['slug']);
+    if ($found) {
+        $productId = (int)$found['id'];
+    } elseif (is_numeric($_GET['slug'])) {
+        $productId = (int)$_GET['slug'];
+    }
+} elseif (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
+    $seg = trim($_SERVER['PATH_INFO'], '/');
+    if (is_numeric($seg)) {
+        $productId = (int)$seg;
+    } else {
+        $found = ProductCatalog::getBySlug($seg);
+        if ($found) $productId = (int)$found['id'];
+    }
+} elseif (isset($_SERVER['REQUEST_URI'])) {
+    $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (preg_match('#product/([0-9]+)#i', $uriPath, $m)) {
+        $productId = (int)$m[1];
+    } elseif (preg_match('#product/([a-zA-Z0-9_-]+)#i', $uriPath, $m)) {
+        $found = ProductCatalog::getBySlug($m[1]);
+        if ($found) $productId = (int)$found['id'];
+    }
+}
 
+$product = ProductCatalog::getById($productId);
 if (!$product) {
     $product = ProductCatalog::getById(1);
 }
@@ -32,10 +58,10 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         .dt-pdp-layout {
@@ -212,8 +238,8 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
             <!-- Right: Details & Lot Buying Options -->
             <div class="dt-pdp-details-wrap">
                 <div class="dt-pdp-breadcrumb">
-                    <a href="/DT Brand/">Home</a> &rsaquo;
-                    <a href="/DT Brand/shop.php?category=<?= urlencode($product['category']) ?>"><?= htmlspecialchars($product['category']) ?></a> &rsaquo;
+                    <a href="/">Home</a> &rsaquo;
+                    <a href="/shop.php?category=<?= urlencode($product['category']) ?>"><?= htmlspecialchars($product['category']) ?></a> &rsaquo;
                     <span><?= htmlspecialchars($product['sku']) ?></span>
                 </div>
 
@@ -323,12 +349,12 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
                 <div class="dt-product-card">
                     <div class="dt-card-img-wrap">
                         <span class="dt-card-badge"><?= htmlspecialchars($rec['badge'] ?? 'Bestseller') ?></span>
-                        <a href="/DT Brand/product.php?id=<?= $rec['id'] ?>">
+                        <a href="/product.php?id=<?= $rec['id'] ?>">
                             <img src="<?= htmlspecialchars($rec['image']) ?>" alt="<?= htmlspecialchars($rec['name']) ?>" class="dt-card-img" />
                         </a>
                     </div>
                     <div class="dt-card-body">
-                        <a href="/DT Brand/product.php?id=<?= $rec['id'] ?>" class="dt-card-title"><?= htmlspecialchars($rec['name']) ?></a>
+                        <a href="/product.php?id=<?= $rec['id'] ?>" class="dt-card-title"><?= htmlspecialchars($rec['name']) ?></a>
                         <div class="dt-card-price-row">
                             <span class="dt-card-price">₹<?= number_format($rec['price']) ?></span>
                         </div>
@@ -356,9 +382,9 @@ $categoriesDetails = ProductCatalog::getCategoriesWithDetails();
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
     <script>
         var currentPdpProduct = <?= json_encode($product) ?>;

@@ -57,7 +57,7 @@ try {
                 'old_price' => $p['old_price'] ?? null,
                 'discount' => $p['discount'] ?? 0,
                 'image' => $p['image'],
-                'url' => '/DT Brand/product.php?id=' . $p['id']
+                'url' => '/product.php?id=' . $p['id']
             ];
         }
     }

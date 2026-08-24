@@ -23,10 +23,10 @@ $products = ProductCatalog::getAll();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <style>
         .dt-reseller-hero {
@@ -111,12 +111,12 @@ $products = ProductCatalog::getAll();
                     <button type="button" class="dt-card-share-btn" onclick="openSmartShare(<?= $p['id'] ?>)" aria-label="Share on WhatsApp">
                         <svg viewBox="0 0 24 24"><path fill="#15803D" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
                     </button>
-                    <a href="/DT Brand/product.php?id=<?= $p['id'] ?>">
+                    <a href="/product.php?id=<?= $p['id'] ?>">
                         <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="dt-card-img" />
                     </a>
                 </div>
                 <div class="dt-card-body">
-                    <a href="/DT Brand/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name']) ?></a>
+                    <a href="/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name']) ?></a>
                     
                     <div style="background:#DCFCE7; border:1px solid #86EFAC; border-radius:6px; padding:6px 8px; margin:8px 0;">
                         <div style="display:flex; justify-content:space-between; font-size:0.75rem;">
@@ -157,9 +157,9 @@ $products = ProductCatalog::getAll();
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
 </body>
 </html>

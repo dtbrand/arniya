@@ -23,8 +23,8 @@ $orders = OrderManager::getAll(['limit' => 50]);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
 
     <style>
         body { background: #F8FAFC; color: #1E293B; }
@@ -50,14 +50,14 @@ $orders = OrderManager::getAll(['limit' => 50]);
 
     <header class="dt-adm-header">
         <div style="display:flex; align-items:center; gap:12px;">
-            <a href="/DT Brand/admin/"><img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
+            <a href="/admin/"><img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px;" /></a>
             <h1 style="font-size:1.15rem; font-weight:800; color:#FFFFFF;">Orders Management</h1>
         </div>
         <nav style="display:flex; align-items:center; gap:8px;">
-            <a href="/DT Brand/admin/" class="dt-adm-nav-link">Dashboard</a>
-            <a href="/DT Brand/admin/products.php" class="dt-adm-nav-link">Products</a>
-            <a href="/DT Brand/admin/categories.php" class="dt-adm-nav-link">Categories</a>
-            <a href="/DT Brand/admin/orders.php" class="dt-adm-nav-link active">Orders (<?= count($orders) ?>)</a>
+            <a href="/admin/" class="dt-adm-nav-link">Dashboard</a>
+            <a href="/admin/products.php" class="dt-adm-nav-link">Products</a>
+            <a href="/admin/categories.php" class="dt-adm-nav-link">Categories</a>
+            <a href="/admin/orders.php" class="dt-adm-nav-link active">Orders (<?= count($orders) ?>)</a>
         </nav>
     </header>
 

@@ -53,7 +53,7 @@
                 return;
             }
 
-            fetch('/DT Brand/api/search.php?q=' + encodeURIComponent(q) + '&cat=' + encodeURIComponent(cat))
+            fetch('/api/search.php?q=' + encodeURIComponent(q) + '&cat=' + encodeURIComponent(cat))
                 .then(function (r) { return r.json(); })
                 .then(function (res) {
                     if (!res.success || !res.results || (!res.results.products.length && !res.results.categories.length)) {
@@ -66,7 +66,7 @@
                     if (res.results.categories && res.results.categories.length) {
                         html += '<div style="padding:6px 12px; background:#FAF8F4; font-size:0.7rem; font-weight:800; color:#8A681F;">CATEGORIES</div>';
                         res.results.categories.forEach(function (c) {
-                            html += '<a href="/DT Brand/shop.php?category=' + encodeURIComponent(c.name) + '" class="dt-suggestion-item">' +
+                            html += '<a href="/shop.php?category=' + encodeURIComponent(c.name) + '" class="dt-suggestion-item">' +
                                 '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#8A681F;fill:none;"><polyline points="9 18 15 12 9 6"></polyline></svg>' +
                                 '<span>' + c.name + '</span>' +
                                 '</a>';
@@ -117,7 +117,7 @@
             submitBtn.addEventListener('click', function () {
                 var q = searchInput.value.trim();
                 var cat = catSelect ? catSelect.value : 'All';
-                window.location.href = '/DT Brand/shop.php?search=' + encodeURIComponent(q) + '&category=' + encodeURIComponent(cat);
+                window.location.href = '/shop.php?search=' + encodeURIComponent(q) + '&category=' + encodeURIComponent(cat);
             });
         }
 
@@ -159,7 +159,7 @@
         if (submitBtn && input) {
             submitBtn.addEventListener('click', function () {
                 var q = input.value.trim();
-                if (q) window.location.href = '/DT Brand/shop.php?search=' + encodeURIComponent(q);
+                if (q) window.location.href = '/shop.php?search=' + encodeURIComponent(q);
             });
             input.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') submitBtn.click();

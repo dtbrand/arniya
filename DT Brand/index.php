@@ -26,10 +26,10 @@ $selectedCategory = 'All';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/DT Brand/assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/header.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/shop.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="/DT Brand/assets/css/modals.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/shop.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="/assets/css/modals.css?v=<?= time() ?>">
 
     <script>
         window.allProducts = <?= json_encode(array_values($products)) ?>;
@@ -47,12 +47,12 @@ $selectedCategory = 'All';
         <section class="dt-hero-slider-wrap">
             <div class="dt-hero-slider dt-hero-luxury-card">
                 <div class="dt-hero-slide-track">
-                    <div class="dt-hero-slide" onclick="window.location.href='/DT Brand/shop.php';">
+                    <div class="dt-hero-slide" onclick="window.location.href='/shop.php';">
                         <div class="dt-hero-content">
                             <span class="dt-hero-tag">✨ SURAT DIRECT MILL WHOLESALE</span>
                             <h1 class="dt-hero-title">Pure Kanjivaram & Banarasi Silk Heritage</h1>
                             <p class="dt-hero-desc">Authentic handloom zari brocades with 100% Silk Mark Certification. Direct factory pricing for retail, resellers, and wholesale.</p>
-                            <a href="/DT Brand/shop.php" class="dt-btn-gold">Explore Festive Catalog &rarr;</a>
+                            <a href="/shop.php" class="dt-btn-gold">Explore Festive Catalog &rarr;</a>
                         </div>
                         <div class="dt-hero-img-wrap">
                             <img src="/Frontend/Shop/Asset/images/product1.png" alt="Pure Silk Saree" />
@@ -94,7 +94,7 @@ $selectedCategory = 'All';
                     <div>
                         <h4 style="font-size:0.92rem; font-weight:800; color:#111827; margin-bottom:2px;">B2B Wholesale Lots</h4>
                         <p style="font-size:0.75rem; color:#6B7280; margin-bottom:6px;">Direct Surat mill rates with bale discounts.</p>
-                        <a href="/DT Brand/wholesale.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem;">Wholesale Hub &rarr;</a>
+                        <a href="/wholesale.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem;">Wholesale Hub &rarr;</a>
                     </div>
                 </div>
                 <div style="background:#FFFFFF; border:1.5px solid #15803D; border-radius:10px; padding:16px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(21,128,61,0.08);">
@@ -102,7 +102,7 @@ $selectedCategory = 'All';
                     <div>
                         <h4 style="font-size:0.92rem; font-weight:800; color:#111827; margin-bottom:2px;">Zero-Investment Reselling</h4>
                         <p style="font-size:0.75rem; color:#6B7280; margin-bottom:6px;">Share on WhatsApp, add margins & earn.</p>
-                        <a href="/DT Brand/reseller.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem; border-color:#15803D; color:#15803D;">Reseller Desk &rarr;</a>
+                        <a href="/reseller.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem; border-color:#15803D; color:#15803D;">Reseller Desk &rarr;</a>
                     </div>
                 </div>
                 <div style="background:#FFFFFF; border:1.5px solid #1D4ED8; border-radius:10px; padding:16px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 10px rgba(29,78,216,0.08);">
@@ -110,7 +110,7 @@ $selectedCategory = 'All';
                     <div>
                         <h4 style="font-size:0.92rem; font-weight:800; color:#111827; margin-bottom:2px;">Retail Silk Shopping</h4>
                         <p style="font-size:0.75rem; color:#6B7280; margin-bottom:6px;">Single piece order with luxury gift packaging.</p>
-                        <a href="/DT Brand/shop.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem; border-color:#1D4ED8; color:#1D4ED8;">Shop Retail &rarr;</a>
+                        <a href="/shop.php" class="dt-btn-pale" style="padding:2px 8px; font-size:0.72rem; border-color:#1D4ED8; color:#1D4ED8;">Shop Retail &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -210,13 +210,13 @@ $selectedCategory = 'All';
 
                             <span class="dt-card-cat-tag"><?= htmlspecialchars($p['category']) ?></span>
 
-                            <a href="/DT Brand/product.php?id=<?= $p['id'] ?>">
+                            <a href="/product.php?id=<?= $p['id'] ?>">
                                 <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name'] ?? $p['title']) ?>" class="dt-card-img" loading="lazy" />
                             </a>
                         </div>
 
                         <div class="dt-card-body">
-                            <a href="/DT Brand/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name'] ?? $p['title']) ?></a>
+                            <a href="/product.php?id=<?= $p['id'] ?>" class="dt-card-title"><?= htmlspecialchars($p['name'] ?? $p['title']) ?></a>
                             
                             <div class="dt-card-info-row">
                                 <span>★ <?= $p['rating'] ?? '4.9' ?> (<?= $p['reviews_count'] ?? 120 ?>)</span>
@@ -267,10 +267,10 @@ $selectedCategory = 'All';
     <?php include_once __DIR__ . '/shared/reels_modal.php'; ?>
 
     <!-- Master Scripts -->
-    <script src="/DT Brand/assets/js/core.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/header.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/shop.js?v=<?= time() ?>"></script>
-    <script src="/DT Brand/assets/js/modals.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/core.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/header.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/shop.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/modals.js?v=<?= time() ?>"></script>
 
 </body>
 </html>

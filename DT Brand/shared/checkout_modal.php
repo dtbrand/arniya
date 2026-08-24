@@ -148,8 +148,8 @@
                         <p>We have sent order details and tracking link to your registered phone.</p>
                     </div>
                     <div class="dt-success-actions">
-                        <a href="/DT Brand/account.php" class="dt-btn-pale">View My Orders</a>
-                        <a href="/DT Brand/shop.php" class="dt-btn-gold" onclick="closeCheckoutModal()">Continue Shopping</a>
+                        <a href="/account.php" class="dt-btn-pale">View My Orders</a>
+                        <a href="/shop.php" class="dt-btn-gold" onclick="closeCheckoutModal()">Continue Shopping</a>
                     </div>
                 </div>
             </div>

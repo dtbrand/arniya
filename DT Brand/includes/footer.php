@@ -25,12 +25,12 @@
             <div class="dt-footer-col">
                 <h4 class="dt-footer-title">Collections</h4>
                 <ul class="dt-footer-links">
-                    <li><a href="/DT Brand/shop.php?category=Kanjivaram+Silk">Kanjivaram Silk Sarees</a></li>
-                    <li><a href="/DT Brand/shop.php?category=Banarasi+Silk">Banarasi Kadwa Weaves</a></li>
-                    <li><a href="/DT Brand/shop.php?category=Paithani">Yeola Paithani Sarees</a></li>
-                    <li><a href="/DT Brand/shop.php?category=Designer+Kurtis">Designer Kurti Sets</a></li>
-                    <li><a href="/DT Brand/shop.php?category=Organza+Sarees">Pastel Organza Sarees</a></li>
-                    <li><a href="/DT Brand/shop.php?category=Georgette+%26+Chiffon">Bandhej Georgette</a></li>
+                    <li><a href="/shop.php?category=Kanjivaram+Silk">Kanjivaram Silk Sarees</a></li>
+                    <li><a href="/shop.php?category=Banarasi+Silk">Banarasi Kadwa Weaves</a></li>
+                    <li><a href="/shop.php?category=Paithani">Yeola Paithani Sarees</a></li>
+                    <li><a href="/shop.php?category=Designer+Kurtis">Designer Kurti Sets</a></li>
+                    <li><a href="/shop.php?category=Organza+Sarees">Pastel Organza Sarees</a></li>
+                    <li><a href="/shop.php?category=Georgette+%26+Chiffon">Bandhej Georgette</a></li>
                 </ul>
             </div>
 
@@ -38,11 +38,11 @@
             <div class="dt-footer-col">
                 <h4 class="dt-footer-title">Business & Partner Hub</h4>
                 <ul class="dt-footer-links">
-                    <li><a href="/DT Brand/wholesale.php">Wholesale B2B Catalog</a></li>
-                    <li><a href="/DT Brand/reseller.php">Zero-Investment Reseller</a></li>
-                    <li><a href="/DT Brand/retailer.php">Retailer Ordering Desk</a></li>
-                    <li><a href="/DT Brand/account.php">Partner Login & Portal</a></li>
-                    <li><a href="/DT Brand/wholesale.php#bale-pricing">Bale Lot Discounts</a></li>
+                    <li><a href="/wholesale.php">Wholesale B2B Catalog</a></li>
+                    <li><a href="/reseller.php">Zero-Investment Reseller</a></li>
+                    <li><a href="/retailer.php">Retailer Ordering Desk</a></li>
+                    <li><a href="/account.php">Partner Login & Portal</a></li>
+                    <li><a href="/wholesale.php#bale-pricing">Bale Lot Discounts</a></li>
                     <li><a href="https://wa.me/919876543210?text=Hi%20DT%20Brands,%20I%20want%20wholesale%20dealership" target="_blank" rel="noopener">Wholesale Dealership</a></li>
                 </ul>
             </div>
@@ -66,11 +66,11 @@
         <div class="dt-footer-bottom">
             <p>&copy; <?= date('Y') ?> DT Brand's &bull; Jai Hanuman Tex. All rights reserved. Direct Surat Handloom Manufacturer.</p>
             <div class="dt-footer-bottom-links">
-                <a href="/DT Brand/privacy.php">Privacy Policy</a>
+                <a href="/privacy.php">Privacy Policy</a>
                 <span>&bull;</span>
-                <a href="/DT Brand/terms.php">Terms of Wholesale</a>
+                <a href="/terms.php">Terms of Wholesale</a>
                 <span>&bull;</span>
-                <a href="/DT Brand/shipping.php">Shipping & Delivery</a>
+                <a href="/shipping.php">Shipping & Delivery</a>
             </div>
         </div>
     </div>

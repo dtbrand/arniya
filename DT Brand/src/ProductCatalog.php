@@ -38,10 +38,10 @@ class ProductCatalog
             'rating' => 4.9,
             'reviews_count' => 142,
             'badge' => 'Bestseller',
-            'image' => '/Frontend/Shop/Asset/images/product1.png',
+            'image' => '/assets/images/product1.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product1.png',
-                '/Frontend/Single-Product/Asset/images/product-01.jpg',
+                '/assets/images/product1.png',
+                '/assets/images/product1.webp',
             ],
             'description' => 'Authentic handwoven Kanjivaram pure silk saree featuring pure tested gold zari pallu and contrast korvai border.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -73,9 +73,10 @@ class ProductCatalog
             'rating' => 4.9,
             'reviews_count' => 218,
             'badge' => 'Exclusive',
-            'image' => '/Frontend/Shop/Asset/images/product2.png',
+            'image' => '/assets/images/product2.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product2.png',
+                '/assets/images/product2.png',
+                '/assets/images/product2.webp',
             ],
             'description' => 'Royal Banarasi pure silk saree with handcrafted kadwa meenakari motifs and rich gold zari weave.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -107,9 +108,10 @@ class ProductCatalog
             'rating' => 5.0,
             'reviews_count' => 96,
             'badge' => 'Heritage',
-            'image' => '/Frontend/Shop/Asset/images/product3.png',
+            'image' => '/assets/images/product3.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product3.png',
+                '/assets/images/product3.png',
+                '/assets/images/product3.webp',
             ],
             'description' => 'Authentic Yeola Paithani pure silk saree with traditional peacock motif pallu and rich zari border.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -141,9 +143,10 @@ class ProductCatalog
             'rating' => 4.8,
             'reviews_count' => 164,
             'badge' => 'Trending',
-            'image' => '/Frontend/Shop/Asset/images/product5.png',
+            'image' => '/assets/images/product5.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product5.png',
+                '/assets/images/product5.png',
+                '/assets/images/product5.webp',
             ],
             'description' => 'Designer 3-piece Chanderi silk Anarkali Kurti set with intricate gota patti and sequin work.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -175,9 +178,10 @@ class ProductCatalog
             'rating' => 4.7,
             'reviews_count' => 88,
             'badge' => 'New Arrival',
-            'image' => '/Frontend/Shop/Asset/images/product4.png',
+            'image' => '/assets/images/product4.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product4.png',
+                '/assets/images/product4.png',
+                '/assets/images/product4.webp',
             ],
             'description' => 'Lightweight pure glass organza saree featuring delicate floral cutwork and scalloped gold borders.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -209,9 +213,10 @@ class ProductCatalog
             'rating' => 4.9,
             'reviews_count' => 105,
             'badge' => 'Hot Seller',
-            'image' => '/Frontend/Shop/Asset/images/product8.png',
+            'image' => '/assets/images/product8.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product8.png',
+                '/assets/images/product8.png',
+                '/assets/images/product8.webp',
             ],
             'description' => 'Pure 60-gram georgette saree crafted with authentic Bandhej dots and shimmering hand-stitched gota patti.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -243,9 +248,10 @@ class ProductCatalog
             'rating' => 4.6,
             'reviews_count' => 56,
             'badge' => 'Summer Edit',
-            'image' => '/Frontend/Shop/Asset/images/product7.png',
+            'image' => '/assets/images/product7.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product7.png',
+                '/assets/images/product7.png',
+                '/assets/images/product7.webp',
             ],
             'description' => 'Airy hand block printed pure mulmul cotton saree using natural vegetable dyes for all-day comfort.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -277,9 +283,10 @@ class ProductCatalog
             'rating' => 5.0,
             'reviews_count' => 310,
             'badge' => 'Bridal Couture',
-            'image' => '/Frontend/Shop/Asset/images/product6.png',
+            'image' => '/assets/images/product6.png',
             'gallery' => [
-                '/Frontend/Shop/Asset/images/product6.png',
+                '/assets/images/product6.png',
+                '/assets/images/product6.webp',
             ],
             'description' => 'Royal bridal velvet lehenga with over 180 hours of hand-embroidered dabka, nakshi, and zardozi detailing.',
             'moq_lots' => ['single' => 1, 'half_set' => 4, 'full_set' => 8, 'master_bale' => 24]
@@ -368,6 +375,18 @@ class ProductCatalog
         $all = self::getAll();
         foreach ($all as $product) {
             if ((int)$product['id'] === $id) {
+                return $product;
+            }
+        }
+        return null;
+    }
+
+    public static function getBySlug(string $slug): ?array
+    {
+        $slug = trim(strtolower($slug));
+        $all = self::getAll();
+        foreach ($all as $product) {
+            if (isset($product['slug']) && strtolower($product['slug']) === $slug) {
                 return $product;
             }
         }

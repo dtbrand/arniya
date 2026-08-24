@@ -24,7 +24,7 @@
                 <div class="dt-empty-icon">♡</div>
                 <h4 class="dt-empty-title">Your Wishlist is Empty</h4>
                 <p class="dt-empty-desc">Save your favorite handcrafted sarees and designs to view them anytime.</p>
-                <a href="/DT Brand/shop.php" class="dt-btn-gold" onclick="closeWishlistDrawer()">Explore Catalog &rarr;</a>
+                <a href="/shop.php" class="dt-btn-gold" onclick="closeWishlistDrawer()">Explore Catalog &rarr;</a>
             </div>
         </div>
 
