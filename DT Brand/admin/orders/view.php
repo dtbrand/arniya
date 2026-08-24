@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * view.php — Premium Single Order Details Page
  * DT Brand's & Jai Hanuman Tex
@@ -152,10 +152,10 @@ $active_subnav = "";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-view.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-view.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -169,7 +169,7 @@ $active_subnav = "";
                 <div class="dt-orders-head">
                     <div class="dt-orders-title-group">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <a href="/DT%20Brand/admin/orders/index.php" style="color:#64748B; text-decoration:none; font-size:12px; font-weight:700;">← Orders</a>
+                            <a href="/admin/orders/index.php" style="color:#64748B; text-decoration:none; font-size:12px; font-weight:700;">← Orders</a>
                             <span style="color:#CBD5E1;">/</span>
                             <h1 class="dt-orders-title" style="margin:0; font-size:18px;">
                                 <span>Order #<?php echo htmlspecialchars($order['id']); ?></span>
@@ -183,11 +183,11 @@ $active_subnav = "";
                     </div>
 
                     <div class="dt-orders-actions">
-                        <a href="/DT%20Brand/admin/orders/invoice.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
+                        <a href="/admin/orders/invoice.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                             <span>Tax Invoice</span>
                         </a>
-                        <a href="/DT%20Brand/admin/orders/packing-slip.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
+                        <a href="/admin/orders/packing-slip.php?id=<?php echo $order['id']; ?>" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
                             <span>Packing Slip</span>
                         </a>
@@ -231,9 +231,9 @@ $active_subnav = "";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/refunds.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/refunds.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

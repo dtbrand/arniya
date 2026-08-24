@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * add.php — Multi-Section Add Product Studio
  * DT Brand's & Jai Hanuman Tex
@@ -34,10 +34,10 @@ if ($cloned_id > 0) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/product-form.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/variants.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/product-form.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/variants.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -51,13 +51,13 @@ if ($cloned_id > 0) {
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline">Add New Product</h1>
                     <span class="wp-page-title-action gold" style="font-weight:700;">NEW SKU</span>
-                    <a href="/DT%20Brand/admin/products/" class="wp-page-title-action secondary">
+                    <a href="/admin/products/" class="wp-page-title-action secondary">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         <span>All Products</span>
                     </a>
                 </div>
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button">
+                    <a href="/admin/products/" class="wp-button">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         <span>Cancel</span>
                     </a>
@@ -112,8 +112,8 @@ if ($cloned_id > 0) {
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

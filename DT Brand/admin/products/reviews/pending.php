@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $page_title = "Pending Reviews";
 $active_nav = "products";
 ?>
@@ -8,7 +8,7 @@ $active_nav = "products";
     <meta charset="UTF-8">
     <title>Pending Reviews — DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -21,7 +21,7 @@ $active_nav = "products";
                     <h1><span>Pending Reviews Moderation</span><span class="adm-badge rose">2 Pending</span></h1>
                 </div>
                 <div class="dt-prod-actions">
-                    <a href="/DT%20Brand/admin/products/reviews/" class="adm-btn-secondary">← All Reviews</a>
+                    <a href="/admin/products/reviews/" class="adm-btn-secondary">← All Reviews</a>
                 </div>
             </div>
             <div class="adm-table-card">
@@ -46,6 +46,6 @@ $active_nav = "products";
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

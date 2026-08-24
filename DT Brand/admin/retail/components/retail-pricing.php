@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * retail-pricing.php — DT Brand's & Jai Hanuman Tex
  * Retail Pricing & Margin Management Component
@@ -13,7 +13,7 @@ $skus = getRetailPricingSkus();
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
             <h4 class="dt-retail-card-title">Retail Pricing &amp; Margin Rules</h4>
         </div>
-        <a href="/DT%20Brand/admin/pricing/" class="dt-btn dt-btn-pale dt-btn-sm">Global Pricing Suite →</a>
+        <a href="/admin/pricing/" class="dt-btn dt-btn-pale dt-btn-sm">Global Pricing Suite →</a>
     </div>
 
     <div style="overflow-x:auto; width:100%;">

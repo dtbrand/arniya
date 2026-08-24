@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * checkout.php — DT Brand's & Jai Hanuman Tex
  * Retail 7-Step Checkout Funnel Diagnostics
@@ -16,9 +16,9 @@ $active_subnav = "checkout";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail-checkout.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail-checkout.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -45,7 +45,7 @@ $active_subnav = "checkout";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/retail/assets/js/retail-checkout.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail-checkout.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

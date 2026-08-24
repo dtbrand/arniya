@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * return-panel.php — Return Request Management Partial
  * DT Brand's & Jai Hanuman Tex
@@ -241,7 +241,7 @@ if ($tab_filter !== 'all' && isset($tab_status_map[$tab_filter])) {
                         <span class="dt-return-type-pill <?php echo $r['type'] === 'rto' ? 'rto' : ''; ?>"><?php echo $r['type_label']; ?></span>
                     </td>
                     <td class="col-rma-order" style="white-space:nowrap;">
-                        <a href="/DT%20Brand/admin/orders/view.php?id=<?php echo $r['order_id']; ?>" class="dt-order-id-link"><?php echo $r['order_id']; ?></a>
+                        <a href="/admin/orders/view.php?id=<?php echo $r['order_id']; ?>" class="dt-order-id-link"><?php echo $r['order_id']; ?></a>
                         <div style="font-size:10px; color:#64748B; margin-top:1px;"><?php echo $r['date']; ?></div>
                     </td>
                     <td class="col-rma-customer">

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * wholesale-table.php — DT Brand's & Jai Hanuman Tex
  * Master Wholesale Accounts Directory Table with Dynamic Column Visibility Manager
@@ -100,13 +100,13 @@ if (!empty($wholesalersList)) {
             </button>
 
             <!-- Export Link -->
-            <a href="/DT%20Brand/admin/wholesale/export.php" class="dt-btn dt-btn-pale dt-btn-sm">
+            <a href="/admin/wholesale/export.php" class="dt-btn dt-btn-pale dt-btn-sm">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 <span>Export</span>
             </a>
 
             <!-- Clean Add Wholesaler Button (Single +) -->
-            <a href="/DT%20Brand/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="font-weight:800;">
+            <a href="/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="font-weight:800;">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Add Wholesaler</span>
             </a>
@@ -149,7 +149,7 @@ if (!empty($wholesalersList)) {
                         <td colspan="12" style="text-align:center; padding:36px 16px; color:#64748B;">
                             <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:4px;">No Wholesale Accounts Found</div>
                             <p style="font-size:12px; color:#64748B; margin:0 0 14px 0;">There are currently 0 wholesale accounts registered in the database.</p>
-                            <a href="/DT%20Brand/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+                            <a href="/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
                                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 <span>Add First Wholesale Partner</span>
                             </a>
@@ -163,7 +163,7 @@ if (!empty($wholesalersList)) {
                         </td>
                         <td class="col-whl-name whl-name-cell" style="white-space:nowrap;">
                             <div>
-                                <a href="/DT%20Brand/admin/wholesale/view.php?id=<?php echo $w['id']; ?>" style="font-weight:800; font-size:0.84rem; color:#181512;">
+                                <a href="/admin/wholesale/view.php?id=<?php echo $w['id']; ?>" style="font-weight:800; font-size:0.84rem; color:#181512;">
                                     <?php echo htmlspecialchars($w['name']); ?>
                                 </a>
                                 <div style="font-size:0.7rem; color:#78716C; margin-top:2px;">
@@ -201,7 +201,7 @@ if (!empty($wholesalersList)) {
                         <td class="col-whl-activity" style="color:#78716C; font-size:0.72rem; white-space:nowrap;"><?php echo $w['last_activity']; ?></td>
                         <td class="col-whl-actions" style="text-align:right; white-space:nowrap; padding-right:18px;">
                             <div style="display:flex; justify-content:flex-end; align-items:center; gap:6px;">
-                                <a href="/DT%20Brand/admin/wholesale/view.php?id=<?php echo $w['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm" title="View Profile">
+                                <a href="/admin/wholesale/view.php?id=<?php echo $w['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm" title="View Profile">
                                     <span>View</span>
                                 </a>
                                 <?php if ($w['status_type'] === 'pending'): ?>
@@ -209,7 +209,7 @@ if (!empty($wholesalersList)) {
                                         <span>Approve</span>
                                     </button>
                                 <?php elseif ($w['status_type'] === 'approved'): ?>
-                                    <a href="/DT%20Brand/admin/wholesale/orders.php?id=<?php echo $w['id']; ?>" class="dt-btn dt-btn-info dt-btn-sm" title="View Orders">
+                                    <a href="/admin/wholesale/orders.php?id=<?php echo $w['id']; ?>" class="dt-btn dt-btn-info dt-btn-sm" title="View Orders">
                                         <span>Orders</span>
                                     </a>
                                 <?php endif; ?>

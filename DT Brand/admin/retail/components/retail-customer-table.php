@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * retail-customer-table.php — DT Brand's & Jai Hanuman Tex
  * Retail Customer Directory Table Component
@@ -27,7 +27,7 @@ $customers = getRetailCustomers();
                 <option value="new customer">New Customer</option>
             </select>
 
-            <a href="/DT%20Brand/admin/customers/" class="dt-btn dt-btn-pale dt-btn-sm">Full Customers Module →</a>
+            <a href="/admin/customers/" class="dt-btn dt-btn-pale dt-btn-sm">Full Customers Module →</a>
         </div>
     </div>
 
@@ -107,7 +107,7 @@ $customers = getRetailCustomers();
         </div>
         <div class="dt-modal-foot">
             <button type="button" class="dt-btn dt-btn-pale" onclick="closeRetailModal('dtRetailCustomerModal')">Close</button>
-            <a href="/DT%20Brand/admin/customers/" class="dt-btn dt-btn-gold">Open Full Customer Dossier</a>
+            <a href="/admin/customers/" class="dt-btn dt-btn-gold">Open Full Customer Dossier</a>
         </div>
     </div>
 </div>

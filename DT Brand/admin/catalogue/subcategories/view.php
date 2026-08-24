@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * subcategories/view.php — View Subcategory Details with Master Styles
  * DT Brand's & Jai Hanuman Tex
@@ -82,11 +82,11 @@ $subcat = isset($subcategories_db[$subcat_id]) ? $subcategories_db[$subcat_id] :
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -101,14 +101,14 @@ $subcat = isset($subcategories_db[$subcat_id]) ? $subcategories_db[$subcat_id] :
                     <div>
                         <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;"><?php echo htmlspecialchars($subcat['name']); ?></h1>
                         <div style="font-size:11.5px; color:#64748b; margin-top:2px;">
-                            Parent Category: <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=<?php echo $subcat['parent_id']; ?>" style="color:#8A681F; font-weight:700; text-decoration:none;"><?php echo htmlspecialchars($subcat['parent']); ?></a> • 
+                            Parent Category: <a href="/admin/catalogue/categories/view.php?id=<?php echo $subcat['parent_id']; ?>" style="color:#8A681F; font-weight:700; text-decoration:none;"><?php echo htmlspecialchars($subcat['parent']); ?></a> • 
                             Slug: <code>/shop/<?php echo htmlspecialchars($subcat['slug']); ?></code> • <?php echo htmlspecialchars($subcat['skus']); ?> Active
                         </div>
                     </div>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/DT%20Brand/admin/catalogue/subcategories/edit.php?id=<?php echo $subcat_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Subcategory</a>
-                    <a href="/DT%20Brand/admin/catalogue/subcategories/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to List</a>
+                    <a href="/admin/catalogue/subcategories/edit.php?id=<?php echo $subcat_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Subcategory</a>
+                    <a href="/admin/catalogue/subcategories/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to List</a>
                 </div>
             </div>
 
@@ -164,7 +164,7 @@ $subcat = isset($subcategories_db[$subcat_id]) ? $subcategories_db[$subcat_id] :
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

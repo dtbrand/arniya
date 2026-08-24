@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * order-search.php — Debounced Live Search Toolbar with Action Buttons & View Options
  * DT Brand's & Jai Hanuman Tex
@@ -43,7 +43,7 @@
         </button>
 
         <!-- Export Orders -->
-        <a href="/DT%20Brand/admin/orders/export.php" class="dt-btn dt-btn-pale" style="height:32px;">
+        <a href="/admin/orders/export.php" class="dt-btn dt-btn-pale" style="height:32px;">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             <span>Export</span>
         </a>
@@ -81,7 +81,7 @@
         </div>
 
         <!-- Master + Create Order Button -->
-        <a href="/DT%20Brand/admin/orders/create.php" class="dt-btn dt-btn-gold" style="height:32px; font-weight:800; padding:0 12px;">
+        <a href="/admin/orders/create.php" class="dt-btn dt-btn-gold" style="height:32px; font-weight:800; padding:0 12px;">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <span>Create Order</span>
         </a>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * verification.php — DT Brand's & Jai Hanuman Tex
  * Reseller KYC & Verification Studio
@@ -27,10 +27,10 @@ $reseller = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-documents.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-documents.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -50,7 +50,7 @@ $reseller = [
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Inspect Aadhaar, GSTIN certificates, and physical shop verifications for all B2B partners.</p>
                     </div>
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>Back to Resellers Directory</span>
                         </a>
@@ -58,7 +58,7 @@ $reseller = [
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF"><path d="M17.472 14.382c-.301-.15-1.781-.878-2.057-.978-.276-.1-.476-.15-.676.15-.2.3-.776.978-.952 1.178-.175.2-.351.225-.652.075-.301-.15-1.27-.468-2.42-1.493-.895-.798-1.5-1.784-1.676-2.084-.175-.3-.019-.462.132-.612.136-.135.301-.35.452-.525.15-.175.2-.3.301-.5.101-.2.05-.375-.025-.525-.075-.15-.676-1.63-.927-2.234-.244-.588-.492-.508-.676-.518l-.576-.01c-.2 0-.526.075-.802.375-.276.3-1.053 1.029-1.053 2.508s1.078 2.906 1.228 3.106c.15.2 2.122 3.24 5.141 4.544.718.31 1.279.496 1.716.635.722.23 1.378.197 1.897.12.578-.087 1.781-.728 2.032-1.431.25-.703.25-1.305.175-1.43-.075-.126-.276-.201-.577-.351zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.406C8.423 21.498 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
                             <span>WhatsApp Partner</span>
                         </a>
-                        <a href="/DT%20Brand/admin/resellers/documents.php" class="dt-btn dt-btn-gold">
+                        <a href="/admin/resellers/documents.php" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                             <span>Document Vault</span>
                         </a>
@@ -407,8 +407,8 @@ $reseller = [
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-verification.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-documents.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-verification.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-documents.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

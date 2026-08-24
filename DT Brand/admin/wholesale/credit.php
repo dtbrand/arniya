@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * credit.php — DT Brand's & Jai Hanuman Tex
  * Wholesale Revolving Credit Hub & Double-Entry Ledger (100% Dynamic)
@@ -21,9 +21,9 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-credit.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-credit.css?v=<?php echo time(); ?>">
     <!-- html2canvas and jsPDF for High-DPI 1:1 PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -39,12 +39,12 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
                 <!-- Top Breadcrumb & Return Nav -->
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
+                        <a href="/admin/wholesale/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>All Wholesalers</span>
                         </a>
                         <?php if ($wholesale): ?>
-                            <a href="/DT%20Brand/admin/wholesale/view.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
+                            <a href="/admin/wholesale/view.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
                                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 <span>Back to <?php echo htmlspecialchars($wholesale['id']); ?> Dossier</span>
                             </a>
@@ -52,10 +52,10 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
                     </div>
                     <?php if ($wholesale): ?>
                         <div style="display:flex; gap:8px;">
-                            <a href="/DT%20Brand/admin/wholesale/orders.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
+                            <a href="/admin/wholesale/orders.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
                                 <span>View Orders</span>
                             </a>
-                            <a href="/DT%20Brand/admin/wholesale/edit.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-gold dt-btn-sm">
+                            <a href="/admin/wholesale/edit.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-gold dt-btn-sm">
                                 <span>Edit Profile</span>
                             </a>
                         </div>
@@ -296,7 +296,7 @@ $wholesale = $whl_id ? getWholesalePartner($whl_id) : null;
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-credit.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-credit.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

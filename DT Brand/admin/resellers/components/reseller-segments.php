@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * reseller-segments.php — DT Brand's & Jai Hanuman Tex
  * Reseller Cohorts, Performance Clusters & Partner Directory Component
@@ -288,7 +288,7 @@ $partners = [
                             <td class="partner-id-cell" style="font-family:monospace; font-weight:800; color:#8A681F; white-space:nowrap;"><?php echo $p['id']; ?></td>
                             <td class="partner-name-cell" style="font-weight:800; color:#181512; white-space:nowrap;">
                                 <div>
-                                    <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $p['id']; ?>" style="color:#181512; text-decoration:none; font-weight:800;"><?php echo htmlspecialchars($p['name']); ?></a>
+                                    <a href="/admin/resellers/view.php?id=<?php echo $p['id']; ?>" style="color:#181512; text-decoration:none; font-weight:800;"><?php echo htmlspecialchars($p['name']); ?></a>
                                     <div style="font-size:0.7rem; color:#78716C; font-weight:500;"><?php echo htmlspecialchars($p['city']); ?></div>
                                 </div>
                             </td>
@@ -310,7 +310,7 @@ $partners = [
                                     <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="openReassignModal('<?php echo $p['id']; ?>', '<?php echo addslashes($p['name']); ?>', '<?php echo $p['cohort_id']; ?>')">
                                         <span>Re-assign</span>
                                     </button>
-                                    <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $p['id']; ?>" class="dt-btn dt-btn-info dt-btn-sm">
+                                    <a href="/admin/resellers/view.php?id=<?php echo $p['id']; ?>" class="dt-btn dt-btn-info dt-btn-sm">
                                         <span>Manage</span>
                                     </a>
                                 </div>

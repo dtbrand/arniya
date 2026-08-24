@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * collection-form.php — Collection Create/Edit & Product Assignment Form
  * DT Brand's & Jai Hanuman Tex
@@ -142,7 +142,7 @@ $c_featured = isset($collection['featured']) ? (!empty($collection['featured']))
             <button type="submit" class="dt-btn-action-sm gold" style="width:100%; height:34px; justify-content:center; font-size:12px; margin-bottom:8px;">
                 <span>Save Collection</span>
             </button>
-            <a href="/DT%20Brand/admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="width:100%; height:32px; justify-content:center; font-size:11.5px;">
+            <a href="/admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="width:100%; height:32px; justify-content:center; font-size:11.5px;">
                 <span>Cancel</span>
             </a>
         </div>

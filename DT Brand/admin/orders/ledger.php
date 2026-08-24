@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * ledger.php — Printable B2B Customer Account & Financial Ledger Statement
  * DT Brand's & Jai Hanuman Tex
@@ -25,9 +25,9 @@ $page_title = "Financial Ledger — " . $customer_name;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/documents.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/documents.css?v=<?php echo time(); ?>">
     <style>
         .dt-ledger-doc {
             max-width: 860px;
@@ -85,7 +85,7 @@ $page_title = "Financial Ledger — " . $customer_name;
 
 <!-- Actions Bar -->
 <div class="dt-doc-actions-bar" style="max-width:860px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/DT%20Brand/admin/orders/view.php?id=<?php echo htmlspecialchars($order_id); ?>" class="dt-btn dt-btn-pale">
+    <a href="/admin/orders/view.php?id=<?php echo htmlspecialchars($order_id); ?>" class="dt-btn dt-btn-pale">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         <span>Back to Order</span>
     </a>
@@ -275,8 +275,8 @@ $page_title = "Financial Ledger — " . $customer_name;
 
 </div>
 
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
 <?php if ($auto_print): ?>
 <script>
 window.addEventListener('DOMContentLoaded', () => {

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * categories/view.php — Category Deep Details, Analytics & Linked Products
  * DT Brand's & Jai Hanuman Tex
@@ -88,11 +88,11 @@ $cat = isset($categories_db[$cat_id]) ? $categories_db[$cat_id] : $categories_db
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -110,8 +110,8 @@ $cat = isset($categories_db[$cat_id]) ? $categories_db[$cat_id] : $categories_db
                     </div>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=<?php echo $cat_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Category</a>
-                    <a href="/DT%20Brand/admin/catalogue/categories/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to Categories</a>
+                    <a href="/admin/catalogue/categories/edit.php?id=<?php echo $cat_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Category</a>
+                    <a href="/admin/catalogue/categories/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to Categories</a>
                 </div>
             </div>
 
@@ -161,7 +161,7 @@ $cat = isset($categories_db[$cat_id]) ? $categories_db[$cat_id] : $categories_db
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

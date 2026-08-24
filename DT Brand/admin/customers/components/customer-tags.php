@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * customer-tags.php — Customer Tagging Studio Component
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -255,7 +255,7 @@ $master_tags = [
 
                             <td style="padding:12px 16px; text-align:right;">
                                 <div style="display:inline-flex; align-items:center; gap:6px;">
-                                    <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:3px 8px; font-size:0.72rem; text-decoration:none;" title="View Tagged Customers">
+                                    <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:3px 8px; font-size:0.72rem; text-decoration:none;" title="View Tagged Customers">
                                         View Customers
                                     </a>
                                     <button type="button" class="dt-btn dt-btn-emerald dt-btn-sm" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; font-size:0.72rem;" onclick="broadcastToTaggedGroup('<?php echo htmlspecialchars($tag['name']); ?>', <?php echo $tag['count']; ?>)">

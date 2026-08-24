@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * edit.php — DT Brand's & Jai Hanuman Tex
  * Wholesale Account & Commercial Terms Editor (100% Dynamic)
@@ -33,8 +33,8 @@ $partner = $is_new ? [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -51,7 +51,7 @@ $partner = $is_new ? [
                         </h1>
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Configure corporate legal identity, credit terms, and assigned wholesale margin tiers.</p>
                     </div>
-                    <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
+                    <a href="/admin/wholesale/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         <span>Cancel &amp; Return</span>
                     </a>
@@ -132,7 +132,7 @@ $partner = $is_new ? [
                         </div>
 
                         <div style="display:flex; justify-content:flex-end; gap:8px; border-top:1.5px solid #F1ECE1; padding-top:16px;">
-                            <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/wholesale/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="submit" class="dt-btn dt-btn-gold" style="height:38px; padding:0 20px;">
                                 <span>Save Wholesale Profile</span>
                             </button>
@@ -146,7 +146,7 @@ $partner = $is_new ? [
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
 <script>
 function handleWholesaleFormSubmit(e) {
     e.preventDefault();
@@ -164,7 +164,7 @@ function handleWholesaleFormSubmit(e) {
                 window.showToast('✅ ' + data.message);
             }
             setTimeout(() => {
-                window.location.href = '/DT%20Brand/admin/wholesale/index.php';
+                window.location.href = '/admin/wholesale/index.php';
             }, 600);
         } else {
             alert('Error: ' + (data.message || 'Could not save wholesale account.'));

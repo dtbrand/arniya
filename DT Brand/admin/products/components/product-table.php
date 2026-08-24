@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * product-table.php — High-Density Desktop Data Table with Real Database Data
  * DT Brand's & Jai Hanuman Tex
@@ -40,7 +40,7 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
                     <img src="<?= htmlspecialchars($pImg) ?>" onerror="this.onerror=null; this.src='/assets/images/product1.png';" class="dt-prod-img" alt="<?= htmlspecialchars($p['title'] ?? $p['name']) ?>" style="width:36px; height:48px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
                 </td>
                 <td style="padding: 6px 6px;">
-                    <a href="/DT%20Brand/admin/products/view.php?id=<?= $p['id'] ?>" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;"><?= htmlspecialchars($p['title'] ?? $p['name']) ?></a>
+                    <a href="/admin/products/view.php?id=<?= $p['id'] ?>" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;"><?= htmlspecialchars($p['title'] ?? $p['name']) ?></a>
                     <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: <?= htmlspecialchars($p['sku']) ?></span>
                 </td>
                 <td style="padding: 6px 6px; white-space:nowrap;"><strong><?= htmlspecialchars($p['category']) ?></strong></td>
@@ -60,13 +60,13 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
                 <td style="padding: 6px 6px; white-space:nowrap;"><span class="adm-badge <?= $badgeClass ?>"><?= $statusLabel ?></span></td>
                 <td style="text-align:right; padding: 6px 6px; white-space:nowrap;">
                     <div class="adm-action-btn-group" style="display:inline-flex; align-items:center; gap:3px;">
-                        <a href="/DT%20Brand/admin/products/view.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="View Details">
+                        <a href="/admin/products/view.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="View Details">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </a>
-                        <a href="/DT%20Brand/admin/products/edit.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="Edit">
+                        <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="Edit">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         </a>
-                        <a href="/DT%20Brand/admin/products/duplicate.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="Duplicate / Copy SKU">
+                        <a href="/admin/products/duplicate.php?id=<?= $p['id'] ?>" class="adm-action-btn" title="Duplicate / Copy SKU">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </a>
                         <button type="button" class="adm-action-btn" title="Delete" onclick="window.trashProductRow(<?= $p['id'] ?>, this)">

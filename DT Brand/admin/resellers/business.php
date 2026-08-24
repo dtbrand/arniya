@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * business.php — DT Brand's & Jai Hanuman Tex
  * Reseller Business Information
@@ -15,10 +15,10 @@ $active_nav = "resellers";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-business.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-business.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -36,7 +36,7 @@ $active_nav = "resellers";
                         </div>
                         <p style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Review trade entities, GSTIN credentials, PAN registrations, and company profiles.</p>
                     </div>
-                    <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to Resellers Directory</a>
+                    <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to Resellers Directory</a>
                 </div>
 
                 <?php include_once __DIR__ . '/components/reseller-business.php'; ?>
@@ -47,7 +47,7 @@ $active_nav = "resellers";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-view.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

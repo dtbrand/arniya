@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * activity.php — Customer Activity Stream & Audit Log
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,10 +16,10 @@ $active_subnav = "activity";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -38,7 +38,7 @@ $active_subnav = "activity";
                         <p class="dt-cust-subtitle">Chronological timeline of logins, order submissions, cart additions, reviews, and address updates.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
                     </div>
                 </div>
 
@@ -52,6 +52,6 @@ $active_subnav = "activity";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

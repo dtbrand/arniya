@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * tags.php — Customer Tagging Studio
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,10 +16,10 @@ $active_subnav = "tags";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -39,7 +39,7 @@ $active_subnav = "tags";
                         <p class="dt-cust-subtitle">Organize customer records with custom labels for VIP tiers, regional groupings, and product affinities.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             <span>All Customers</span>
                         </a>
@@ -122,7 +122,7 @@ $active_subnav = "tags";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-tags.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-tags.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

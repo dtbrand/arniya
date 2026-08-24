@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * moq.php — DT Brand's & Jai Hanuman Tex
  * Minimum Order Quantity (MOQ) & Volume Quantity Breaks
@@ -16,9 +16,9 @@ $active_subnav = "pricing";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-moq.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-moq.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -67,7 +67,7 @@ $active_subnav = "pricing";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-moq.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-moq.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

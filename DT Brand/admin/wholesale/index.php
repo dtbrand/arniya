@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * index.php — DT Brand's & Jai Hanuman Tex
  * Master Wholesale B2B Corporate Hub & Accounts Directory
@@ -25,9 +25,9 @@ $active_subnav = "all";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-list.css?v=<?php echo time(); ?>">
     <!-- html2canvas and jsPDF for High-DPI 1:1 PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -50,15 +50,15 @@ $active_subnav = "all";
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage DT Brands wholesale accounts, pricing tiers, revolving credit lines, and high-volume purchase agreements.</p>
                     </div>
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <a href="/DT%20Brand/admin/wholesale/applications.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/wholesale/applications.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                             <span>Applications (14)</span>
                         </a>
-                        <a href="/DT%20Brand/admin/wholesale/pricing.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/wholesale/pricing.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             <span>Pricing &amp; Margins</span>
                         </a>
-                        <a href="/DT%20Brand/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold">
+                        <a href="/admin/wholesale/edit.php?id=new" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             <span>Add Wholesale Account</span>
                         </a>
@@ -145,10 +145,10 @@ $active_subnav = "all";
 <script>
     window.dbWholesalersData = <?= json_encode($wholesalersList) ?>;
 </script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

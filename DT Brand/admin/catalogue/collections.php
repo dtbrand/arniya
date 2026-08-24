@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * collections.php — Collections Management Hub
  * DT Brand's & Jai Hanuman Tex
@@ -16,10 +16,10 @@ $active_subnav = "collections";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -33,7 +33,7 @@ $active_subnav = "collections";
                     <h1 class="wp-heading-inline" style="font-size:20px; font-weight:800; color:#181512; margin:0;">Curated Collections</h1>
                     <p style="font-size:12px; color:#64748b; margin:2px 0 0 0;">Group seasonal assortments, festive highlights, and trending lines without modifying category taxonomy.</p>
                 </div>
-                <a href="/DT%20Brand/admin/catalogue/collections/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">+ Add Collection</a>
+                <a href="/admin/catalogue/collections/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">+ Add Collection</a>
             </div>
 
             <?php include_once __DIR__ . '/components/collection-table.php'; ?>
@@ -43,7 +43,7 @@ $active_subnav = "collections";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

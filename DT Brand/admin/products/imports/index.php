@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * imports/index.php — DT Brand's 7-Step Master Product Import Wizard
  * Wholesale Desktop & Luxury Shop Standard
@@ -17,8 +17,8 @@ $active_subnav = "imports";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-card {
         background: #fff;
@@ -137,11 +137,11 @@ $active_subnav = "imports";
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Back to Products</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/exports/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                    <a href="/admin/products/exports/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                         <span>Export Studio</span>
                     </a>
@@ -455,7 +455,7 @@ $active_subnav = "imports";
                 <p style="font-size:13px; color:#646970; margin:0 0 22px 0;">248 new products have been inserted into your catalog with active stock and wholesale MOQ pricing.</p>
                 
                 <div style="display:flex; justify-content:center; gap:12px;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                    <a href="/admin/products/" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 18px; height:36px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
                         <span>View Products Catalog (1,488 SKUs)</span>
                     </a>
                     <button type="button" class="wp-button" onclick="goToStep(1)" style="height:36px; padding:0 16px; font-size:12px; font-weight:700; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; display:inline-flex; align-items:center; gap:6px;">
@@ -510,6 +510,6 @@ function executeImportNow() {
     }, 600);
 }
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

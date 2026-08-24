@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * banners/edit.php — Edit Banner with Multi-Size & Mobile Engine
  * DT Brand's & Jai Hanuman Tex
@@ -50,10 +50,10 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/banners.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/banners.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -68,7 +68,7 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
                     <p style="font-size:12px; color:#64748b; margin:2px 0 0 0;">Update desktop &amp; mobile banner assets, aspect ratios, and device targeting rules.</p>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/DT%20Brand/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 12px; font-size:11.5px; text-decoration:none;">Back to Banners</a>
+                    <a href="/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 12px; font-size:11.5px; text-decoration:none;">Back to Banners</a>
                 </div>
             </div>
 
@@ -230,7 +230,7 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
 
                         <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
                             <button type="submit" class="dt-btn-action-sm gold" style="height:36px; justify-content:center; font-size:12px; font-weight:800;">Save Changes</button>
-                            <a href="/DT%20Brand/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel</a>
+                            <a href="/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel</a>
                         </div>
                     </div>
 
@@ -289,6 +289,6 @@ $banner = isset($banners_db[$banner_id]) ? $banners_db[$banner_id] : $banners_db
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

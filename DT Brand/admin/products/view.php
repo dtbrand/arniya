@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * view.php — Dynamic Next-Level Product Overview & Analytics Suite
  * DT Brand's & Jai Hanuman Tex
@@ -106,9 +106,9 @@ if ($p) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/product-view.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/product-view.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -122,7 +122,7 @@ if ($p) {
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline"><?php echo htmlspecialchars($prod['name']); ?></h1>
                     <span class="adm-badge success"><?php echo htmlspecialchars($prod['status']); ?></span>
-                    <a href="/DT%20Brand/admin/products/" class="wp-page-title-action secondary">
+                    <a href="/admin/products/" class="wp-page-title-action secondary">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         <span>Back to Catalog</span>
                     </a>
@@ -132,7 +132,7 @@ if ($p) {
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" style="color:#25D366;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                         <span>WhatsApp Share</span>
                     </button>
-                    <a href="/DT%20Brand/admin/products/duplicate.php?id=<?php echo $prod['id']; ?>" class="wp-button">
+                    <a href="/admin/products/duplicate.php?id=<?php echo $prod['id']; ?>" class="wp-button">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         <span>Duplicate</span>
                     </a>
@@ -140,7 +140,7 @@ if ($p) {
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
                         <span>Archive</span>
                     </button>
-                    <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $prod['id']; ?>" class="wp-button primary">
+                    <a href="/admin/products/edit.php?id=<?php echo $prod['id']; ?>" class="wp-button primary">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <span>Edit Product</span>
                     </a>
@@ -228,7 +228,7 @@ if ($p) {
                             <tr><td style="width:140px; padding:6px 0; color:#646970; font-weight:600;">Product Name:</td><td><strong><?php echo htmlspecialchars($prod['name']); ?></strong></td></tr>
                             <tr><td style="padding:6px 0; color:#646970; font-weight:600;">SKU Code:</td><td><code><?php echo htmlspecialchars($prod['sku']); ?></code></td></tr>
                             <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Barcode:</td><td><code><?php echo htmlspecialchars($prod['barcode']); ?></code></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Category:</td><td><a href="/DT%20Brand/admin/products/categories/" style="color:#2271b1; text-decoration:none;"><?php echo htmlspecialchars($prod['category']); ?></a></td></tr>
+                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Category:</td><td><a href="/admin/products/categories/" style="color:#2271b1; text-decoration:none;"><?php echo htmlspecialchars($prod['category']); ?></a></td></tr>
                             <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Brand / Collection:</td><td><strong><?php echo htmlspecialchars($prod['brand']); ?></strong></td></tr>
                             <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Fabric Material:</td><td><?php echo htmlspecialchars($prod['fabric']); ?></td></tr>
                             <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Saree / Dress Length:</td><td><?php echo htmlspecialchars($prod['length']); ?></td></tr>
@@ -267,6 +267,6 @@ if ($p) {
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

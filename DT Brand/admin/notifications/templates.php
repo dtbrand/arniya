@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * templates.php - DT Brand's Admin Notification Message Templates
  * DT Brand's & Jai Hanuman Tex
@@ -15,7 +15,7 @@ $active_nav = "notifications";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -32,7 +32,7 @@ $active_nav = "notifications";
                     <p class="adm-page-subtitle">Manage pre-approved WhatsApp Cloud API and SMS notification templates.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/DT%20Brand/admin/notifications/" class="adm-btn-secondary">← Back to Notifications Suite</a>
+                    <a href="/admin/notifications/" class="adm-btn-secondary">← Back to Notifications Suite</a>
                     <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
@@ -70,6 +70,6 @@ $active_nav = "notifications";
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

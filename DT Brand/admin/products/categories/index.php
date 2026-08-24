@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * categories/index.php — DT Brand's Product Categories & Taxonomy Hub (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -40,8 +40,8 @@ $totalCategoryCount = count($dbCategories);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     /* ── Compact & Auto-Sizing Layout Architecture ── */
     .dt-kpi-ribbon {
@@ -210,19 +210,19 @@ $totalCategoryCount = count($dbCategories);
                 </div>
 
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (<?php echo $totalProductCount; ?>)</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span>Brands (3)</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
                         <span>Attributes</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
+                    <a href="/admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Product</span>
                     </a>
@@ -415,19 +415,19 @@ $totalCategoryCount = count($dbCategories);
                                             <img src="<?= htmlspecialchars($catImg) ?>" onerror="this.src='/assets/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
                                         </td>
                                         <td style="padding:7px 10px;">
-                                            <strong style="font-size:12.5px; color:#181512;"><a href="/DT%20Brand/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catName) ?></a></strong>
+                                            <strong style="font-size:12.5px; color:#181512;"><a href="/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catName) ?></a></strong>
                                             <div class="wp-row-actions">
-                                                <a href="/DT%20Brand/admin/products/categories/edit.php?id=<?= $catId ?>" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="/admin/products/categories/edit.php?id=<?= $catId ?>" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
                                                 <a href="#" onclick="openQuickEditCat(<?= $catId ?>, '<?= addslashes($catName) ?>', '<?= addslashes($catSlug) ?>', '<?= addslashes($catDesc) ?>', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
                                                 <a href="#" onclick="deleteCatRow(<?= $catId ?>); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                                <a href="/DT%20Brand/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
+                                                <a href="/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
                                             </div>
                                         </td>
                                         <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= htmlspecialchars($catDesc) ?></td>
                                         <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;"><?= htmlspecialchars($catSlug) ?></code></td>
                                         <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
                                         <td style="text-align:right; padding:7px 10px;">
-                                            <a href="/DT%20Brand/admin/products/?cat=<?= urlencode($catName) ?>" style="text-decoration:none;">
+                                            <a href="/admin/products/?cat=<?= urlencode($catName) ?>" style="text-decoration:none;">
                                                 <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;"><?= $catCount ?></span>
                                             </a>
                                         </td>
@@ -672,6 +672,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

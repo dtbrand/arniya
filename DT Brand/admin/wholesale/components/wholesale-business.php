@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * wholesale-business.php — DT Brand's & Jai Hanuman Tex
  * Business Legal Information, GSTIN & Warehouse Address Card (100% Dynamic)
@@ -14,7 +14,7 @@ $wholesale = isset($wholesale) && is_array($wholesale) ? $wholesale : getWholesa
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <h4 class="dt-card-title">Business Legal Entity &amp; Tax Profile</h4>
         </div>
-        <a href="/DT%20Brand/admin/wholesale/edit.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">Edit Business Info</a>
+        <a href="/admin/wholesale/edit.php?id=<?php echo $wholesale['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">Edit Business Info</a>
     </div>
 
     <div style="padding:18px; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; font-size:0.78rem;">

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * order-items.php — Order Line Items Breakdown Table Component
  * DT Brand's & Jai Hanuman Tex
@@ -41,7 +41,7 @@ $items = isset($order['items']) ? $order['items'] : [
                         <div class="dt-item-prod-cell">
                             <img src="<?php echo htmlspecialchars($it['img'] ?? '/assets/images/product1.png'); ?>" onerror="this.src='/assets/images/product1.png';" alt="<?php echo htmlspecialchars($it['name']); ?>" class="dt-item-img">
                             <div class="dt-item-meta">
-                                <a href="/DT%20Brand/admin/products/" class="dt-item-name"><?php echo htmlspecialchars($it['name']); ?></a>
+                                <a href="/admin/products/" class="dt-item-name"><?php echo htmlspecialchars($it['name']); ?></a>
                                 <span class="dt-item-sku">SKU: <?php echo htmlspecialchars($it['sku']); ?></span>
                             </div>
                         </div>

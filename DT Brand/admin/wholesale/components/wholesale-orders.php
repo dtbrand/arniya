@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * wholesale-orders.php — DT Brand's & Jai Hanuman Tex
  * Wholesale Sourcing Orders & Bulk POs Component (100% Dynamic)
@@ -206,7 +206,7 @@ $wholesale_orders = getWholesaleOrders($wholesale['id']);
 
         <div class="dt-modal-foot" style="padding:12px 18px; border-top:1px solid #EAE5D9; display:flex; justify-content:flex-end; gap:8px; background:#FAF8F4;">
             <button type="button" class="dt-btn dt-btn-pale" onclick="closeWholesaleModal('dtWholesaleOrderModal')">Close</button>
-            <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-gold">
+            <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 <span>Full Orders Suite</span>
             </a>

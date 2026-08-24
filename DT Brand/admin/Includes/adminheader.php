@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * adminheader.php — Luxury Top Header with Shop-Style Clean Desktop & Full-Width Mobile Search Bar
  * DT Brand's & Jai Hanuman Tex
@@ -438,14 +438,14 @@ if (!headers_sent()) {
                 if (typeof filterProducts === 'function') filterProducts();
             }
         } else {
-            window.location.href = `/DT%20Brand/admin/admin.php#products`;
+            window.location.href = `/admin/admin.php#products`;
         }
         if (window.showToast) window.showToast(`👗 Navigated to Product SKU: ${sku}`);
     };
 
     window.selectSearchOrder = function(orderId) {
         hideAllLiveSearchResults();
-        window.location.href = `/DT%20Brand/admin/orders/view.php?id=${encodeURIComponent(orderId)}`;
+        window.location.href = `/admin/orders/view.php?id=${encodeURIComponent(orderId)}`;
     };
 
     window.selectSearchPartner = function(partnerName) {
@@ -458,7 +458,7 @@ if (!headers_sent()) {
                 if (typeof filterPartners === 'function') filterPartners();
             }
         } else {
-            window.location.href = `/DT%20Brand/admin/admin.php#partners`;
+            window.location.href = `/admin/admin.php#partners`;
         }
         if (window.showToast) window.showToast(`👤 Navigated to Partner: ${partnerName}`);
     };
@@ -472,7 +472,7 @@ if (!headers_sent()) {
         const ords = (window.orders || window.DT_GLOBAL_ORDERS || []);
         const foundOrder = ords.find(o => o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q));
         if (foundOrder) {
-            window.location.href = `/DT%20Brand/admin/orders/view.php?id=${encodeURIComponent(foundOrder.id)}`;
+            window.location.href = `/admin/orders/view.php?id=${encodeURIComponent(foundOrder.id)}`;
             return;
         }
 
@@ -488,7 +488,7 @@ if (!headers_sent()) {
                     if (typeof filterProducts === 'function') filterProducts();
                 }
             } else {
-                window.location.href = `/DT%20Brand/admin/admin.php#products`;
+                window.location.href = `/admin/admin.php#products`;
             }
             return;
         }
@@ -502,7 +502,7 @@ if (!headers_sent()) {
                 if (typeof filterOrders === 'function') filterOrders();
             }
         } else {
-            window.location.href = `/DT%20Brand/admin/orders/view.php?id=DTB-001620`;
+            window.location.href = `/admin/orders/view.php?id=DTB-001620`;
         }
     };
 

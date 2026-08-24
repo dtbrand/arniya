@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * hierarchy.php — Category Hierarchy & Taxonomy Tree View
  * DT Brand's & Jai Hanuman Tex
@@ -16,10 +16,10 @@ $active_subnav = "hierarchy";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/hierarchy.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/hierarchy.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -34,8 +34,8 @@ $active_subnav = "hierarchy";
                     <p style="font-size:12px; color:#64748b; margin:2px 0 0 0;">Visual tree view of parent, child subcategories and product counts.</p>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/DT%20Brand/admin/catalogue/categories/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">+ Add Root Category</a>
-                    <a href="/DT%20Brand/admin/catalogue/subcategories/add.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">+ Add Subcategory</a>
+                    <a href="/admin/catalogue/categories/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">+ Add Root Category</a>
+                    <a href="/admin/catalogue/subcategories/add.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">+ Add Subcategory</a>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@ $active_subnav = "hierarchy";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/hierarchy.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/hierarchy.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

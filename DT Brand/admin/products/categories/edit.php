@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * edit.php — DT Brand's Edit Category Suite (Wholesale & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -24,7 +24,7 @@ if ($db !== null && !Database::isMockMode()) {
 }
 
 if (!$category) {
-    header('Location: /DT%20Brand/admin/products/categories/');
+    header('Location: /admin/products/categories/');
     exit;
 }
 
@@ -43,8 +43,8 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-edit-grid {
         display: grid;
@@ -137,7 +137,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/categories/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/categories/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>Product Categories</span>
                     </a>
@@ -306,7 +306,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                                 <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; margin-bottom:8px;">
                                     Save Changes
                                 </button>
-                                <a href="/DT%20Brand/admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
+                                <a href="/admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
                                     📦 View Products in Category (420)
                                 </a>
                                 <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category?')) { if(window.showToast) window.showToast('Category moved to trash'); window.location.href = '/admin/products/categories/'; }">

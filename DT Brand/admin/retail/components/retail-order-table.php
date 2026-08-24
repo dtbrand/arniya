@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * retail-order-table.php — DT Brand's & Jai Hanuman Tex
  * Retail Orders Table Component
@@ -27,7 +27,7 @@ $orders = getRetailOrders();
                 <option value="processing">Processing</option>
             </select>
 
-            <a href="/DT%20Brand/admin/orders/" class="dt-btn dt-btn-pale dt-btn-sm">Full Orders Module →</a>
+            <a href="/admin/orders/" class="dt-btn dt-btn-pale dt-btn-sm">Full Orders Module →</a>
         </div>
     </div>
 
@@ -104,7 +104,7 @@ $orders = getRetailOrders();
         </div>
         <div class="dt-modal-foot">
             <button type="button" class="dt-btn dt-btn-pale" onclick="closeRetailModal('dtRetailOrderModal')">Close</button>
-            <a href="/DT%20Brand/admin/orders/" class="dt-btn dt-btn-gold">Open in Orders Suite</a>
+            <a href="/admin/orders/" class="dt-btn dt-btn-gold">Open in Orders Suite</a>
         </div>
     </div>
 </div>

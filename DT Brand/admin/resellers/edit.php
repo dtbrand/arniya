@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * edit.php — DT Brand's & Jai Hanuman Tex
  * Reseller Profile Editor & New Reseller Onboarding
@@ -17,9 +17,9 @@ $active_nav = "resellers";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -38,7 +38,7 @@ $active_nav = "resellers";
                             Configure business profile, contact details, assigned margin tier, and credit limit.
                         </p>
                     </div>
-                    <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to Resellers Directory</a>
+                    <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to Resellers Directory</a>
                 </div>
 
                 <div class="dt-card" style="padding:22px;">
@@ -108,7 +108,7 @@ $active_nav = "resellers";
 
                         <!-- Form Action Buttons -->
                         <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; border-top:1.5px solid #F1ECE1; padding-top:16px;">
-                            <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="submit" class="dt-btn dt-btn-gold" style="height:40px; padding:0 22px;">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                                 <span>Save Reseller Profile</span>
@@ -123,8 +123,8 @@ $active_nav = "resellers";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-view.js?v=<?php echo time(); ?>"></script>
 <script>
 function saveResellerProfile(e) {
     e.preventDefault();
@@ -142,7 +142,7 @@ function saveResellerProfile(e) {
                 window.showToast('✅ ' + data.message);
             }
             setTimeout(() => {
-                window.location.href = '/DT%20Brand/admin/resellers/index.php';
+                window.location.href = '/admin/resellers/index.php';
             }, 600);
         } else {
             alert('Error: ' + (data.message || 'Could not save reseller account.'));

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * admin.php — Luxury Executive Admin Dashboard & WhatsApp CRM Control Center
  * DT Brand's & Jai Hanuman Tex
@@ -94,8 +94,8 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Admin CSS Stylesheet -->
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -247,7 +247,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                                 <div class="adm-app-bal-lbl">Today's Wholesale Revenue</div>
                                 <div class="adm-app-bal-val">₹<?= number_format($todaySales) ?> <small style="font-size:11px; color:#4ADE80; font-family:'Plus Jakarta Sans'; font-weight:700;"><?= $todaySales > 0 ? '↑ Live' : 'Live Sync' ?></small></div>
                             </div>
-                            <a href="/DT%20Brand/admin/products/add.php" class="adm-app-action-btn">
+                            <a href="/admin/products/add.php" class="adm-app-action-btn">
                                 <svg viewBox="0 0 24 24" width="12" height="12" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 <span>Product</span>
                             </a>
@@ -1161,7 +1161,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                         <p class="adm-page-subtitle">Manage B2C Retail &amp; B2B Wholesale pricing, MOQ rules, stock alerts, and fabric specs.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/products/imports/" class="adm-btn-secondary">
+                        <a href="/admin/products/imports/" class="adm-btn-secondary">
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span>📥 Import Wizard</span>
                         </a>
@@ -1169,7 +1169,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <span>📤 Export CSV</span>
                         </button>
-                        <a href="/DT%20Brand/admin/products/add.php" class="adm-btn-primary">
+                        <a href="/admin/products/add.php" class="adm-btn-primary">
                             <svg viewBox="0 0 24 24" width="13" height="13" stroke="#181512" stroke-width="2.8" fill="none"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             <span>Add Product</span>
                         </a>
@@ -1178,61 +1178,61 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
 
                 <!-- ══ PRODUCT SUB-OPTION QUICK PILLS WITH 100% REAL VECTOR SVG ICONS ══ -->
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/products/" class="adm-prod-pill active">
+                    <a href="/admin/products/" class="adm-prod-pill active">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         <span>All Products</span>
                         <span class="adm-prod-pill-badge">1,240</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/add.php" class="adm-prod-pill">
+                    <a href="/admin/products/add.php" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Product</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/categories/" class="adm-prod-pill">
+                    <a href="/admin/products/categories/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                         <span>Categories</span>
                         <span class="adm-prod-pill-badge">16</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/brands/" class="adm-prod-pill">
+                    <a href="/admin/products/brands/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>
                         <span>Brands</span>
                         <span class="adm-prod-pill-badge">4</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/attributes/" class="adm-prod-pill">
+                    <a href="/admin/products/attributes/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
                         <span>Attributes</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/variants/" class="adm-prod-pill">
+                    <a href="/admin/products/variants/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line></svg>
                         <span>Variants</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/media/" class="adm-prod-pill">
+                    <a href="/admin/products/media/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                         <span>Media</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/featured/" class="adm-prod-pill">
+                    <a href="/admin/products/featured/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span>Featured</span>
                         <span class="adm-prod-pill-badge">48</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/best-sellers/" class="adm-prod-pill">
+                    <a href="/admin/products/best-sellers/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
                         <span>Best Sellers</span>
                         <span class="adm-prod-pill-badge">32</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/new-arrivals/" class="adm-prod-pill">
+                    <a href="/admin/products/new-arrivals/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15 8 21 9 17 14 18 20 12 17 6 20 7 14 3 9 9 8 12 2"></polygon></svg>
                         <span>New Arrivals</span>
                         <span class="adm-prod-pill-badge">64</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/reviews/" class="adm-prod-pill">
+                    <a href="/admin/products/reviews/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span>Reviews</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/imports/" class="adm-prod-pill">
+                    <a href="/admin/products/imports/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         <span>Import</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/exports/" class="adm-prod-pill">
+                    <a href="/admin/products/exports/" class="adm-prod-pill">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                         <span>Export</span>
                     </a>
@@ -1789,7 +1789,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Configure wholesale MOQ volume tiers, reseller commission margins, and festive discount coupons.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/pricing/discounts.php" class="adm-btn-secondary">🏷️ Manage Coupons</a>
+                        <a href="/admin/pricing/discounts.php" class="adm-btn-secondary">🏷️ Manage Coupons</a>
                         <button class="adm-btn-secondary" onclick="window.exportCurrentTable('pricing_matrix')">📤 Export Pricing CSV</button>
                         <button class="adm-btn-primary" onclick="window.showToast('Add Price Tier Rule...')">+ Add Tier Rule</button>
                     </div>
@@ -1797,11 +1797,11 @@ _Special 15% VIP Discount Applied!_</textarea>
 
                 <!-- Product Options Subnav Pills -->
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/pricing/" class="adm-prod-pill active"><span>🏷️ All Pricing Rules</span></a>
-                    <a href="/DT%20Brand/admin/pricing/retail.php" class="adm-prod-pill"><span>🛍️ Retail B2C Rates</span></a>
-                    <a href="/DT%20Brand/admin/pricing/wholesale.php" class="adm-prod-pill"><span>🏭 Wholesale MOQ Rates</span></a>
-                    <a href="/DT%20Brand/admin/pricing/reseller.php" class="adm-prod-pill"><span>🤝 Reseller Margins</span></a>
-                    <a href="/DT%20Brand/admin/pricing/discounts.php" class="adm-prod-pill"><span>🎁 Festive Discounts</span></a>
+                    <a href="/admin/pricing/" class="adm-prod-pill active"><span>🏷️ All Pricing Rules</span></a>
+                    <a href="/admin/pricing/retail.php" class="adm-prod-pill"><span>🛍️ Retail B2C Rates</span></a>
+                    <a href="/admin/pricing/wholesale.php" class="adm-prod-pill"><span>🏭 Wholesale MOQ Rates</span></a>
+                    <a href="/admin/pricing/reseller.php" class="adm-prod-pill"><span>🤝 Reseller Margins</span></a>
+                    <a href="/admin/pricing/discounts.php" class="adm-prod-pill"><span>🎁 Festive Discounts</span></a>
                 </div>
 
                 <!-- 4 Pricing Summary Cards -->
@@ -1905,16 +1905,16 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Moderate customer reviews, pin verified photo reviews to product pages, and respond to inquiries.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/reviews/pending.php" class="adm-btn-secondary">⏳ Pending Moderation (2)</a>
+                        <a href="/admin/reviews/pending.php" class="adm-btn-secondary">⏳ Pending Moderation (2)</a>
                         <button class="adm-btn-secondary" onclick="window.exportCurrentTable('customer_reviews')">📤 Export Reviews</button>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/reviews/" class="adm-prod-pill active"><span>⭐️ All Reviews (342)</span></a>
-                    <a href="/DT%20Brand/admin/reviews/pending.php" class="adm-prod-pill"><span>⏳ Pending (2)</span></a>
-                    <a href="/DT%20Brand/admin/reviews/approved.php" class="adm-prod-pill"><span>✅ Approved (338)</span></a>
-                    <a href="/DT%20Brand/admin/reviews/rejected.php" class="adm-prod-pill"><span>🛑 Rejected (2)</span></a>
+                    <a href="/admin/reviews/" class="adm-prod-pill active"><span>⭐️ All Reviews (342)</span></a>
+                    <a href="/admin/reviews/pending.php" class="adm-prod-pill"><span>⏳ Pending (2)</span></a>
+                    <a href="/admin/reviews/approved.php" class="adm-prod-pill"><span>✅ Approved (338)</span></a>
+                    <a href="/admin/reviews/rejected.php" class="adm-prod-pill"><span>🛑 Rejected (2)</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -1979,17 +1979,17 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Track stock allocations across Surat Central Mill Depot and Bhiwandi Logistics Hub.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/inventory/stock-in.php" class="adm-btn-primary">+ Stock In (Procurement)</a>
+                        <a href="/admin/inventory/stock-in.php" class="adm-btn-primary">+ Stock In (Procurement)</a>
                         <button class="adm-btn-secondary" onclick="window.exportCurrentTable('inventory_stock')">📤 Export Stock</button>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/inventory/" class="adm-prod-pill active"><span>📦 All Inventory</span></a>
-                    <a href="/DT%20Brand/admin/inventory/stock-in.php" class="adm-prod-pill"><span>📥 Stock In</span></a>
-                    <a href="/DT%20Brand/admin/inventory/stock-out.php" class="adm-prod-pill"><span>📤 Stock Out</span></a>
-                    <a href="/DT%20Brand/admin/inventory/low-stock.php" class="adm-prod-pill"><span>⚠️ Low Stock (14)</span></a>
-                    <a href="/DT%20Brand/admin/inventory/adjustment.php" class="adm-prod-pill"><span>⚖️ Stock Adjustment</span></a>
+                    <a href="/admin/inventory/" class="adm-prod-pill active"><span>📦 All Inventory</span></a>
+                    <a href="/admin/inventory/stock-in.php" class="adm-prod-pill"><span>📥 Stock In</span></a>
+                    <a href="/admin/inventory/stock-out.php" class="adm-prod-pill"><span>📤 Stock Out</span></a>
+                    <a href="/admin/inventory/low-stock.php" class="adm-prod-pill"><span>⚠️ Low Stock (14)</span></a>
+                    <a href="/admin/inventory/adjustment.php" class="adm-prod-pill"><span>⚖️ Stock Adjustment</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2014,7 +2014,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                     <td>15 units (Order #ORD-9841)</td>
                                     <td><strong style="color:#15803D;">95 units</strong></td>
                                     <td><span class="adm-badge success">Optimal</span></td>
-                                    <td><a href="/DT%20Brand/admin/inventory/adjustment.php" class="adm-btn-secondary adm-btn-sm">Adjust</a></td>
+                                    <td><a href="/admin/inventory/adjustment.php" class="adm-btn-secondary adm-btn-sm">Adjust</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>BRD-LH-902</strong><br><small>Bridal Zardosi Lehenga</small></td>
@@ -2023,7 +2023,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                     <td>1 unit</td>
                                     <td><strong style="color:#DC2626;">3 units</strong></td>
                                     <td><span class="adm-badge warning">Low Stock</span></td>
-                                    <td><a href="/DT%20Brand/admin/inventory/stock-in.php" class="adm-btn-secondary adm-btn-sm">Restock</a></td>
+                                    <td><a href="/admin/inventory/stock-in.php" class="adm-btn-secondary adm-btn-sm">Restock</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2044,16 +2044,16 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Manage Delhivery, BlueDart &amp; TCI Freight logistics integrations and dispatch manifests.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/shipping/tracking.php" class="adm-btn-secondary">🔍 Live Tracking</a>
+                        <a href="/admin/shipping/tracking.php" class="adm-btn-secondary">🔍 Live Tracking</a>
                         <button class="adm-btn-primary" onclick="window.showToast('Generate Shipping Manifest...')">+ Create Manifest</button>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/shipping/" class="adm-prod-pill active"><span>🚚 Active Shipments</span></a>
-                    <a href="/DT%20Brand/admin/shipping/methods.php" class="adm-prod-pill"><span>📦 Courier Partners</span></a>
-                    <a href="/DT%20Brand/admin/shipping/rates.php" class="adm-prod-pill"><span>💰 Shipping Rates</span></a>
-                    <a href="/DT%20Brand/admin/shipping/tracking.php" class="adm-prod-pill"><span>📍 AWB Tracking</span></a>
+                    <a href="/admin/shipping/" class="adm-prod-pill active"><span>🚚 Active Shipments</span></a>
+                    <a href="/admin/shipping/methods.php" class="adm-prod-pill"><span>📦 Courier Partners</span></a>
+                    <a href="/admin/shipping/rates.php" class="adm-prod-pill"><span>💰 Shipping Rates</span></a>
+                    <a href="/admin/shipping/tracking.php" class="adm-prod-pill"><span>📍 AWB Tracking</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2113,10 +2113,10 @@ _Special 15% VIP Discount Applied!_</textarea>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/payments/" class="adm-prod-pill active"><span>💳 All Transactions</span></a>
-                    <a href="/DT%20Brand/admin/payments/successful.php" class="adm-prod-pill"><span>✅ Successful</span></a>
-                    <a href="/DT%20Brand/admin/payments/pending.php" class="adm-prod-pill"><span>⏳ Pending Verification</span></a>
-                    <a href="/DT%20Brand/admin/payments/refunds.php" class="adm-prod-pill"><span>🔄 Refunds</span></a>
+                    <a href="/admin/payments/" class="adm-prod-pill active"><span>💳 All Transactions</span></a>
+                    <a href="/admin/payments/successful.php" class="adm-prod-pill"><span>✅ Successful</span></a>
+                    <a href="/admin/payments/pending.php" class="adm-prod-pill"><span>⏳ Pending Verification</span></a>
+                    <a href="/admin/payments/refunds.php" class="adm-prod-pill"><span>🔄 Refunds</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2167,16 +2167,16 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Run flash sales, configure festive banner sliders, and distribute WhatsApp promo codes.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/marketing/banners.php" class="adm-btn-secondary">🖼️ Homepage Banners</a>
-                        <a href="/DT%20Brand/admin/marketing/coupons.php" class="adm-btn-primary">+ Create Coupon</a>
+                        <a href="/admin/marketing/banners.php" class="adm-btn-secondary">🖼️ Homepage Banners</a>
+                        <a href="/admin/marketing/coupons.php" class="adm-btn-primary">+ Create Coupon</a>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/marketing/" class="adm-prod-pill active"><span>📢 All Campaigns</span></a>
-                    <a href="/DT%20Brand/admin/marketing/banners.php" class="adm-prod-pill"><span>🖼️ Banners</span></a>
-                    <a href="/DT%20Brand/admin/marketing/coupons.php" class="adm-prod-pill"><span>🎟️ Coupons</span></a>
-                    <a href="/DT%20Brand/admin/marketing/campaigns.php" class="adm-prod-pill"><span>⚡ Flash Sales</span></a>
+                    <a href="/admin/marketing/" class="adm-prod-pill active"><span>📢 All Campaigns</span></a>
+                    <a href="/admin/marketing/banners.php" class="adm-prod-pill"><span>🖼️ Banners</span></a>
+                    <a href="/admin/marketing/coupons.php" class="adm-prod-pill"><span>🎟️ Coupons</span></a>
+                    <a href="/admin/marketing/campaigns.php" class="adm-prod-pill"><span>⚡ Flash Sales</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2227,15 +2227,15 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Manage homepage hero announcements, brand story, contact address, and legal policies.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/cms/homepage.php" class="adm-btn-primary">✏️ Edit Homepage Content</a>
+                        <a href="/admin/cms/homepage.php" class="adm-btn-primary">✏️ Edit Homepage Content</a>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/cms/" class="adm-prod-pill active"><span>📄 All Pages</span></a>
-                    <a href="/DT%20Brand/admin/cms/homepage.php" class="adm-prod-pill"><span>🏠 Homepage</span></a>
-                    <a href="/DT%20Brand/admin/cms/about.php" class="adm-prod-pill"><span>📖 About DT Brand's</span></a>
-                    <a href="/DT%20Brand/admin/cms/contact.php" class="adm-prod-pill"><span>📞 Contact &amp; Mills</span></a>
+                    <a href="/admin/cms/" class="adm-prod-pill active"><span>📄 All Pages</span></a>
+                    <a href="/admin/cms/homepage.php" class="adm-prod-pill"><span>🏠 Homepage</span></a>
+                    <a href="/admin/cms/about.php" class="adm-prod-pill"><span>📖 About DT Brand's</span></a>
+                    <a href="/admin/cms/contact.php" class="adm-prod-pill"><span>📞 Contact &amp; Mills</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2256,14 +2256,14 @@ _Special 15% VIP Discount Applied!_</textarea>
                                     <td><code>/Frontend/Home/home.php</code></td>
                                     <td>Today, 02:00 PM</td>
                                     <td><span class="adm-badge success">Live</span></td>
-                                    <td><a href="/DT%20Brand/admin/cms/homepage.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                                    <td><a href="/admin/cms/homepage.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
                                 </tr>
                                 <tr>
                                     <td><strong>About Heritage &amp; Weaving Mills</strong></td>
                                     <td><code>/Frontend/Home/about.php</code></td>
                                     <td>12 Aug 2026</td>
                                     <td><span class="adm-badge success">Live</span></td>
-                                    <td><a href="/DT%20Brand/admin/cms/about.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
+                                    <td><a href="/admin/cms/about.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2284,14 +2284,14 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Centralized media asset vault with WebP compression and instant CDN delivery.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/media/upload.php" class="adm-btn-primary">📤 Upload New Media</a>
+                        <a href="/admin/media/upload.php" class="adm-btn-primary">📤 Upload New Media</a>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/media/" class="adm-prod-pill active"><span>🖼️ All Media</span></a>
-                    <a href="/DT%20Brand/admin/media/upload.php" class="adm-prod-pill"><span>📤 Upload Media</span></a>
-                    <a href="/DT%20Brand/admin/media/gallery.php" class="adm-prod-pill"><span>📸 Gallery Folders</span></a>
+                    <a href="/admin/media/" class="adm-prod-pill active"><span>🖼️ All Media</span></a>
+                    <a href="/admin/media/upload.php" class="adm-prod-pill"><span>📤 Upload Media</span></a>
+                    <a href="/admin/media/gallery.php" class="adm-prod-pill"><span>📸 Gallery Folders</span></a>
                 </div>
 
                 <div class="dt-media-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:14px;">
@@ -2328,9 +2328,9 @@ _Special 15% VIP Discount Applied!_</textarea>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/notifications/" class="adm-prod-pill active"><span>🔔 All Alerts</span></a>
-                    <a href="/DT%20Brand/admin/notifications/templates.php" class="adm-prod-pill"><span>📝 Message Templates</span></a>
-                    <a href="/DT%20Brand/admin/notifications/push.php" class="adm-prod-pill"><span>📲 Push Notifications</span></a>
+                    <a href="/admin/notifications/" class="adm-prod-pill active"><span>🔔 All Alerts</span></a>
+                    <a href="/admin/notifications/templates.php" class="adm-prod-pill"><span>📝 Message Templates</span></a>
+                    <a href="/admin/notifications/push.php" class="adm-prod-pill"><span>📲 Push Notifications</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2378,14 +2378,14 @@ _Special 15% VIP Discount Applied!_</textarea>
                         <p class="adm-page-subtitle">Manage staff access permissions for catalog management, order processing, and accounting.</p>
                     </div>
                     <div class="adm-page-actions">
-                        <a href="/DT%20Brand/admin/users/admins.php" class="adm-btn-primary">+ Add Staff Member</a>
+                        <a href="/admin/users/admins.php" class="adm-btn-primary">+ Add Staff Member</a>
                     </div>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/users/" class="adm-prod-pill active"><span>👥 Staff Users</span></a>
-                    <a href="/DT%20Brand/admin/users/roles.php" class="adm-prod-pill"><span>🛡️ Permission Roles</span></a>
-                    <a href="/DT%20Brand/admin/users/activity-logs.php" class="adm-prod-pill"><span>📜 Audit Logs</span></a>
+                    <a href="/admin/users/" class="adm-prod-pill active"><span>👥 Staff Users</span></a>
+                    <a href="/admin/users/roles.php" class="adm-prod-pill"><span>🛡️ Permission Roles</span></a>
+                    <a href="/admin/users/activity-logs.php" class="adm-prod-pill"><span>📜 Audit Logs</span></a>
                 </div>
 
                 <div class="adm-table-card">
@@ -2439,10 +2439,10 @@ _Special 15% VIP Discount Applied!_</textarea>
                 </div>
 
                 <div class="adm-prod-subnav-strip">
-                    <a href="/DT%20Brand/admin/system/" class="adm-prod-pill active"><span>🖥️ Server Status</span></a>
-                    <a href="/DT%20Brand/admin/system/health.php" class="adm-prod-pill"><span>❤️ Health Check</span></a>
-                    <a href="/DT%20Brand/admin/system/database.php" class="adm-prod-pill"><span>🗄️ MySQL Database</span></a>
-                    <a href="/DT%20Brand/admin/system/backups.php" class="adm-prod-pill"><span>💾 Backups &amp; Snapshots</span></a>
+                    <a href="/admin/system/" class="adm-prod-pill active"><span>🖥️ Server Status</span></a>
+                    <a href="/admin/system/health.php" class="adm-prod-pill"><span>❤️ Health Check</span></a>
+                    <a href="/admin/system/database.php" class="adm-prod-pill"><span>🗄️ MySQL Database</span></a>
+                    <a href="/admin/system/backups.php" class="adm-prod-pill"><span>💾 Backups &amp; Snapshots</span></a>
                 </div>
 
                 <div class="adm-kpi-grid">
@@ -2610,7 +2610,7 @@ _Special 15% VIP Discount Applied!_</textarea>
 </div>
 
 <!-- Admin JavaScript Engine -->
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

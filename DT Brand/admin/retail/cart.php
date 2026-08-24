@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * cart.php — DT Brand's & Jai Hanuman Tex
  * Retail Live Shopping Bag Monitor
@@ -16,9 +16,9 @@ $active_subnav = "cart";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail-cart.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail-cart.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -36,7 +36,7 @@ $active_subnav = "cart";
                         </h1>
                         <p class="dt-retail-subtitle">Real-time customer cart sessions, added saree quantities, and potential cart values.</p>
                     </div>
-                    <a href="/DT%20Brand/admin/retail/abandoned-carts.php" class="dt-btn dt-btn-gold">
+                    <a href="/admin/retail/abandoned-carts.php" class="dt-btn dt-btn-gold">
                         <span>Abandoned Carts Studio →</span>
                     </a>
                 </div>
@@ -48,7 +48,7 @@ $active_subnav = "cart";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/retail/assets/js/retail-cart.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail-cart.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

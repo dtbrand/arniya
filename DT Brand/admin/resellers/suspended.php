@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * suspended.php — DT Brand's & Jai Hanuman Tex
  * Suspended & Locked Resellers
@@ -17,9 +17,9 @@ $active_filter = "suspended";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -38,7 +38,7 @@ $active_filter = "suspended";
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Manage temporary account blocks due to credit default, overdue payouts, or compliance flags.</p>
                     </div>
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to All Resellers</a>
+                        <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">← Back to All Resellers</a>
                     </div>
                 </div>
 
@@ -62,11 +62,11 @@ $active_filter = "suspended";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     filterResellersByStatus('suspended');

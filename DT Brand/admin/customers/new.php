@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * new.php — Luxury Add New Customer Registration
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,10 +16,10 @@ $active_subnav = "new";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
     <style>
         .dt-edit-card {
             background: #FFFFFF;
@@ -155,7 +155,7 @@ $active_subnav = "new";
                         <p class="dt-cust-subtitle">Create a direct retail customer account with verified phone, email credentials, and delivery address.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Directory</a>
                     </div>
                 </div>
 
@@ -351,7 +351,7 @@ $active_subnav = "new";
 
                         <!-- ══ FORM ACTIONS FOOTER ══ -->
                         <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1;">
-                            <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="submit" class="dt-btn dt-btn-gold">+ Save &amp; Create Customer</button>
                         </div>
                     </form>
@@ -363,7 +363,7 @@ $active_subnav = "new";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

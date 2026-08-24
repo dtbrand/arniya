@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * orders.php — Customer Orders History & Fulfillment Tracker
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,9 +16,9 @@ $active_subnav = "orders";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -37,7 +37,7 @@ $active_subnav = "orders";
                         <p class="dt-cust-subtitle">Monitor retail customer orders, tracking numbers, invoice downloads, and delivery TAT.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
+                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-gold">Open Master Orders Console →</a>
                     </div>
                 </div>
 
@@ -52,6 +52,6 @@ $active_subnav = "orders";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

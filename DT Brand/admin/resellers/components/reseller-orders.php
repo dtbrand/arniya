@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * reseller-orders.php — DT Brand's & Jai Hanuman Tex
  * Reseller Sourced Customer Orders & Dropship History Component
@@ -43,7 +43,7 @@ $orders = [
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1D4ED8" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
             <span>Reseller Sourced Orders (142 Completed)</span>
         </h4>
-        <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-pale dt-btn-sm">View All in Orders Module →</a>
+        <a href="/admin/orders/index.php" class="dt-btn dt-btn-pale dt-btn-sm">View All in Orders Module →</a>
     </div>
 
     <div style="overflow-x:auto; width:100%;">
@@ -73,7 +73,7 @@ $orders = [
                         <td><span class="dt-reseller-badge emerald">● <?php echo $o['status']; ?></span></td>
                         <td><span class="dt-reseller-badge gold"><?php echo $o['pay_status']; ?></span></td>
                         <td style="text-align:center;">
-                            <a href="/DT%20Brand/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">View Order</a>
+                            <a href="/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">View Order</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

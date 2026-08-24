@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * seo/index.php — Catalogue SEO Hub
  * DT Brand's & Jai Hanuman Tex
@@ -16,11 +16,11 @@ $active_subnav = "seo";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/seo.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/categories.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/seo.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -35,8 +35,8 @@ $active_subnav = "seo";
                     <p style="font-size:12px; color:#64748b; margin:2px 0 0 0;">Manage search engine metadata, OpenGraph tags, canonical URLs, and Google SERP rich previews.</p>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/DT%20Brand/admin/catalogue/seo/category.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Category SEO</a>
-                    <a href="/DT%20Brand/admin/catalogue/seo/collections.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Collections SEO</a>
+                    <a href="/admin/catalogue/seo/category.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Category SEO</a>
+                    <a href="/admin/catalogue/seo/collections.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Collections SEO</a>
                 </div>
             </div>
 
@@ -47,6 +47,6 @@ $active_subnav = "seo";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

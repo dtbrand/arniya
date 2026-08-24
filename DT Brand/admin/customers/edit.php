@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * edit.php — Luxury Edit Customer Profile & CRM Preferences
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -163,10 +163,10 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
     <style>
         /* ════ MASTER RADIANT GOLD & SILVER LUXURY GLASS HERO BOX ════ */
         @keyframes dtAdminAmbientGlow {
@@ -430,8 +430,8 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                         <p class="dt-cust-subtitle">Update contact details, verified email credentials, shipping address, customer tier, and staff memos.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">← Customer List</a>
-                        <a href="/DT%20Brand/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold">View 360° Dossier ↗</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Customer List</a>
+                        <a href="/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold">View 360° Dossier ↗</a>
                     </div>
                 </div>
 
@@ -743,7 +743,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
                             </button>
                             
                             <div style="display:flex; align-items:center; gap:10px;">
-                                <a href="/DT%20Brand/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-pale">Cancel</a>
+                                <a href="/admin/customers/view.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-pale">Cancel</a>
                                 <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:6px;">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                     <span>Save Customer Profile</span>
@@ -759,7 +759,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

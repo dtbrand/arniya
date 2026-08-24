@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * variants/index.php — DT Brand's Master Variant & SKU Combination Matrix
  * Wholesale Dashboard & Luxury Shop Standard
@@ -110,8 +110,8 @@ $variants_matrix = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-card {
         background: #fff;
@@ -153,11 +153,11 @@ $variants_matrix = [
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (1,240)</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/attributes/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                    <a href="/admin/products/attributes/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"></path></svg>
                         <span>Attributes Studio</span>
                     </a>
@@ -257,7 +257,7 @@ $variants_matrix = [
                                 <img src="<?php echo htmlspecialchars($v['img']); ?>" onerror="this.src='/assets/images/product1.png';" style="width:38px; height:38px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; display:block;">
                             </td>
                             <td style="padding:10px 12px;">
-                                <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $v['parent_id']; ?>" style="font-size:13px; font-weight:700; color:#181512; text-decoration:none;">
+                                <a href="/admin/products/edit.php?id=<?php echo $v['parent_id']; ?>" style="font-size:13px; font-weight:700; color:#181512; text-decoration:none;">
                                     <?php echo htmlspecialchars($v['parent_name']); ?>
                                 </a>
                             </td>
@@ -288,7 +288,7 @@ $variants_matrix = [
                                 <?php endif; ?>
                             </td>
                             <td style="padding:10px 12px; text-align:right;">
-                                <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $v['parent_id']; ?>#variations" class="wp-button" style="height:26px; font-size:11px; padding:0 8px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; text-decoration:none;">
+                                <a href="/admin/products/edit.php?id=<?php echo $v['parent_id']; ?>#variations" class="wp-button" style="height:26px; font-size:11px; padding:0 8px; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; text-decoration:none;">
                                     Edit Variant
                                 </a>
                             </td>
@@ -344,6 +344,6 @@ function handleVariantBulkAction() {
     if (typeof window.showToast === 'function') window.showToast(`✨ Bulk action "${action}" applied!`);
 }
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * refunded.php — Refunded Orders Filtered View
  * DT Brand's & Jai Hanuman Tex
@@ -18,10 +18,10 @@ $filter_status = "refunded";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -43,7 +43,7 @@ $filter_status = "refunded";
                         <p class="dt-orders-subtitle">Orders with settled refunds processed through original gateways or B2B credit ledger adjustments.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/DT%20Brand/admin/orders/refunds.php" class="dt-btn dt-btn-gold">
+                        <a href="/admin/orders/refunds.php" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
                             <span>Manage Refunds Ledger</span>
                         </a>
@@ -64,11 +64,11 @@ $filter_status = "refunded";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/order-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

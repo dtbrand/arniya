@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * customer-ledger.php — B2B Wholesale Customer Financial Ledger Modal
  * DT Brand's & Jai Hanuman Tex
@@ -130,7 +130,7 @@
                             <!-- Row 1 -->
                             <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
                                 <td style="padding:9px 12px; color:#64748B; font-size:11px;">21 Aug 2026</td>
-                                <td style="padding:9px 12px;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001624" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001624</a></td>
+                                <td style="padding:9px 12px;"><a href="/admin/orders/view.php?id=DTB-001624" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001624</a></td>
                                 <td style="padding:9px 12px; color:#181512; font-weight:600;">Consignment Invoice (Kanjivaram Silk 25pcs)</td>
                                 <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,12,250</td>
                                 <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
@@ -150,7 +150,7 @@
                             <!-- Row 3 -->
                             <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
                                 <td style="padding:9px 12px; color:#64748B; font-size:11px;">10 Aug 2026</td>
-                                <td style="padding:9px 12px;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001605" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001605</a></td>
+                                <td style="padding:9px 12px;"><a href="/admin/orders/view.php?id=DTB-001605" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001605</a></td>
                                 <td style="padding:9px 12px; color:#181512; font-weight:600;">Banarasi Silk Lot Consignment (40pcs)</td>
                                 <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">2,45,000</td>
                                 <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
@@ -170,7 +170,7 @@
                             <!-- Row 5 -->
                             <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
                                 <td style="padding:9px 12px; color:#64748B; font-size:11px;">25 Jul 2026</td>
-                                <td style="padding:9px 12px;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001582" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001582</a></td>
+                                <td style="padding:9px 12px;"><a href="/admin/orders/view.php?id=DTB-001582" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001582</a></td>
                                 <td style="padding:9px 12px; color:#181512; font-weight:600;">Chanderi &amp; Tussar Festive Catalog (35pcs)</td>
                                 <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,85,250</td>
                                 <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
@@ -190,7 +190,7 @@
                             <!-- Row 7 -->
                             <tr style="border-bottom:1px solid #F1EFE9; transition:background 0.15s ease;">
                                 <td style="padding:9px 12px; color:#64748B; font-size:11px;">08 Jul 2026</td>
-                                <td style="padding:9px 12px;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001550" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001550</a></td>
+                                <td style="padding:9px 12px;"><a href="/admin/orders/view.php?id=DTB-001550" style="font-weight:800; color:#8A681F; text-decoration:none;">DTB-001550</a></td>
                                 <td style="padding:9px 12px; color:#181512; font-weight:600;">Paithani Heritage Zari Collection (20pcs)</td>
                                 <td style="padding:9px 12px; text-align:right; font-weight:800; color:#181512;">1,42,000</td>
                                 <td style="padding:9px 12px; text-align:right; color:#94A3B8;">—</td>
@@ -225,7 +225,7 @@
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span>Export Excel (.xls)</span>
                 </button>
-                <a href="/DT%20Brand/admin/orders/ledger.php?id=<?php echo urlencode($order['id'] ?? 'DTB-001624'); ?>" target="_blank" class="dt-btn dt-btn-pale" style="height:32px; font-size:11px; text-decoration:none;">
+                <a href="/admin/orders/ledger.php?id=<?php echo urlencode($order['id'] ?? 'DTB-001624'); ?>" target="_blank" class="dt-btn dt-btn-pale" style="height:32px; font-size:11px; text-decoration:none;">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                     <span>Full Ledger Page</span>
                 </a>

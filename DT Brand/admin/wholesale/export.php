@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * export.php — DT Brand's & Jai Hanuman Tex
  * Wholesale Multi-Format Data Exporter (CSV, Excel XLS, Executive PDF Dossier)
@@ -16,9 +16,9 @@ $active_subnav = "export";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
     <!-- html2canvas and jsPDF for High-DPI 1:1 PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -257,7 +257,7 @@ $active_subnav = "export";
 
                         <!-- Form Actions -->
                         <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; border-top:1.5px solid #F1ECE1; padding-top:16px;">
-                            <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/wholesale/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="submit" class="dt-btn dt-btn-gold" style="height:40px; padding:0 22px;">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 <span>Generate &amp; Download File</span>
@@ -273,7 +273,7 @@ $active_subnav = "export";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
 <script>
 let currentWhlFormat = 'csv';
 

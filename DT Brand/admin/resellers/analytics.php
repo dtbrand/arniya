@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * analytics.php — DT Brand's & Jai Hanuman Tex
  * Reseller Analytics & GMV Growth Studio
@@ -74,10 +74,10 @@ $top_partners = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-analytics.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-analytics.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -97,7 +97,7 @@ $top_partners = [
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Inspect network expansion metrics, commission payouts burn rate, and top grossing partner stores.</p>
                     </div>
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>Back to Resellers</span>
                         </a>
@@ -236,7 +236,7 @@ $top_partners = [
                                 <p style="font-size:0.7rem; color:#78716C; margin:1px 0 0 0;">Highest GMV contributing wholesale &amp; dropship saree stores.</p>
                             </div>
                         </div>
-                        <a href="/DT%20Brand/admin/resellers/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
+                        <a href="/admin/resellers/index.php" class="dt-btn dt-btn-pale dt-btn-sm">
                             <span>View All 348 Resellers</span>
                         </a>
                     </div>
@@ -263,7 +263,7 @@ $top_partners = [
                                             </span>
                                         </td>
                                         <td style="white-space:nowrap;">
-                                            <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $p['id']; ?>" style="color:#181512; text-decoration:none; font-weight:800; font-size:0.82rem;">
+                                            <a href="/admin/resellers/view.php?id=<?php echo $p['id']; ?>" style="color:#181512; text-decoration:none; font-weight:800; font-size:0.82rem;">
                                                 <?php echo htmlspecialchars($p['name']); ?>
                                             </a>
                                             <div style="font-size:0.7rem; color:#78716C;"><?php echo htmlspecialchars($p['city']); ?> • <span style="font-family:monospace;"><?php echo $p['id']; ?></span></div>
@@ -281,7 +281,7 @@ $top_partners = [
                                             ✓ <?php echo $p['health']; ?>
                                         </td>
                                         <td style="text-align:right; white-space:nowrap;">
-                                            <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $p['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
+                                            <a href="/admin/resellers/view.php?id=<?php echo $p['id']; ?>" class="dt-btn dt-btn-pale dt-btn-sm">
                                                 <span>Profile</span>
                                             </a>
                                         </td>
@@ -299,7 +299,7 @@ $top_partners = [
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
 <script>
 function exportAnalyticsReport() {
     const rows = [

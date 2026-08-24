@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * category-card.php — Visual Category Card Component
  * DT Brand's & Jai Hanuman Tex
@@ -15,8 +15,8 @@
             </div>
             <p style="font-size:11px; color:#64748b; margin:0 0 10px 0;">420 Active SKUs • 3 Subcategories</p>
             <div style="margin-top:auto; display:flex; gap:6px;">
-                <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
-                <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=1" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
+                <a href="/admin/catalogue/categories/view.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
+                <a href="/admin/catalogue/categories/edit.php?id=1" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
             </div>
         </div>
     </div>
@@ -31,8 +31,8 @@
             </div>
             <p style="font-size:11px; color:#64748b; margin:0 0 10px 0;">280 Active SKUs • 2 Subcategories</p>
             <div style="margin-top:auto; display:flex; gap:6px;">
-                <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=2" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
-                <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=2" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
+                <a href="/admin/catalogue/categories/view.php?id=2" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
+                <a href="/admin/catalogue/categories/edit.php?id=2" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
             </div>
         </div>
     </div>
@@ -47,8 +47,8 @@
             </div>
             <p style="font-size:11px; color:#64748b; margin:0 0 10px 0;">310 Active SKUs • 2 Subcategories</p>
             <div style="margin-top:auto; display:flex; gap:6px;">
-                <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=3" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
-                <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=3" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
+                <a href="/admin/catalogue/categories/view.php?id=3" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
+                <a href="/admin/catalogue/categories/edit.php?id=3" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
             </div>
         </div>
     </div>
@@ -63,8 +63,8 @@
             </div>
             <p style="font-size:11px; color:#64748b; margin:0 0 10px 0;">185 Active SKUs • 3 Subcategories</p>
             <div style="margin-top:auto; display:flex; gap:6px;">
-                <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=5" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
-                <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=5" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
+                <a href="/admin/catalogue/categories/view.php?id=5" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">View Details</a>
+                <a href="/admin/catalogue/categories/edit.php?id=5" class="dt-btn-action-sm gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">Edit</a>
             </div>
         </div>
     </div>

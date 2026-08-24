@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * active.php — Active Verified Customers Hub
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -17,9 +17,9 @@ $active_filter = "active";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -38,8 +38,8 @@ $active_filter = "active";
                         <p class="dt-cust-subtitle">Shoppers with active accounts, verified mobile numbers, and recent purchase activity.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">← All Customers</a>
-                        <a href="/DT%20Brand/admin/customers/export.php" class="dt-btn dt-btn-gold">Export Active List</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← All Customers</a>
+                        <a href="/admin/customers/export.php" class="dt-btn dt-btn-gold">Export Active List</a>
                     </div>
                 </div>
 
@@ -57,11 +57,11 @@ $active_filter = "active";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof filterCustomersByStatus === 'function') {

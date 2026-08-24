@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * banner-manager.php — Category & Collection Banner Manager Component
  * DT Brand's & Jai Hanuman Tex
@@ -11,8 +11,8 @@
             <span>Active Hero &amp; Multi-Size Banners (6 Active Slots)</span>
         </h3>
         <div style="display:flex; gap:6px; align-items:center;">
-            <a href="/DT%20Brand/admin/catalogue/banners/reorder.php" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px; text-decoration:none;">Reorder Banners</a>
-            <a href="/DT%20Brand/admin/catalogue/banners/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px; text-decoration:none;">+ Add Banner</a>
+            <a href="/admin/catalogue/banners/reorder.php" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px; text-decoration:none;">Reorder Banners</a>
+            <a href="/admin/catalogue/banners/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px; text-decoration:none;">+ Add Banner</a>
         </div>
     </div>
 
@@ -38,7 +38,7 @@
                         <span style="color:#15803D; font-weight:700;">Priority #1</span>
                     </div>
                     <div style="display:flex; gap:6px; margin-top:10px;">
-                        <a href="/DT%20Brand/admin/catalogue/banners/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
+                        <a href="/admin/catalogue/banners/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             <span>Edit Banner</span>
                         </a>
@@ -69,7 +69,7 @@
                         <span style="color:#15803D; font-weight:700;">Priority #2</span>
                     </div>
                     <div style="display:flex; gap:6px; margin-top:10px;">
-                        <a href="/DT%20Brand/admin/catalogue/banners/edit.php?id=2" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
+                        <a href="/admin/catalogue/banners/edit.php?id=2" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             <span>Edit Banner</span>
                         </a>
@@ -100,7 +100,7 @@
                         <span style="color:#15803D; font-weight:700;">Priority #3</span>
                     </div>
                     <div style="display:flex; gap:6px; margin-top:10px;">
-                        <a href="/DT%20Brand/admin/catalogue/banners/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
+                        <a href="/admin/catalogue/banners/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="flex:1; height:26px; font-size:11px; justify-content:center; text-decoration:none;">
                             <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             <span>Edit Banner</span>
                         </a>

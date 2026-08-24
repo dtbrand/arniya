@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * analytics.php — DT Brand's & Jai Hanuman Tex
  * Wholesale Growth & GMV Velocity Analytics (100% Dynamic)
@@ -16,10 +16,10 @@ $active_subnav = "analytics";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-analytics.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-pricing.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-analytics.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -165,7 +165,7 @@ $active_subnav = "analytics";
                                 <div style="display:flex; flex-direction:column; gap:8px;">
                                     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#FAF8F4; border-radius:8px; border:1px solid #D4AF37;">
                                         <div>
-                                            <a href="/DT%20Brand/admin/wholesale/view.php?id=WHL-8012" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#1 Shree Balaji Textile Emporium</a>
+                                            <a href="/admin/wholesale/view.php?id=WHL-8012" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#1 Shree Balaji Textile Emporium</a>
                                             <small style="font-size:0.7rem; color:#78716C; display:block;">Surat, Gujarat • 64 Orders • WHL-8012</small>
                                         </div>
                                         <strong style="font-size:0.95rem; color:#8A681F; font-weight:900;">₹24,50,000</strong>
@@ -173,7 +173,7 @@ $active_subnav = "analytics";
 
                                     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#FFFFFF; border-radius:8px; border:1px solid #EAE5D9;">
                                         <div>
-                                            <a href="/DT%20Brand/admin/wholesale/view.php?id=WHL-8013" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#2 Varanasi Weaves &amp; Silks</a>
+                                            <a href="/admin/wholesale/view.php?id=WHL-8013" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#2 Varanasi Weaves &amp; Silks</a>
                                             <small style="font-size:0.7rem; color:#78716C; display:block;">Varanasi, UP • 48 Orders • WHL-8013</small>
                                         </div>
                                         <strong style="font-size:0.95rem; color:#181512; font-weight:900;">₹18,90,000</strong>
@@ -181,7 +181,7 @@ $active_subnav = "analytics";
 
                                     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#FFFFFF; border-radius:8px; border:1px solid #EAE5D9;">
                                         <div>
-                                            <a href="/DT%20Brand/admin/wholesale/view.php?id=WHL-8014" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#3 Jaipur Royal Saree Distributors</a>
+                                            <a href="/admin/wholesale/view.php?id=WHL-8014" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#3 Jaipur Royal Saree Distributors</a>
                                             <small style="font-size:0.7rem; color:#78716C; display:block;">Jaipur, Rajasthan • 36 Orders • WHL-8014</small>
                                         </div>
                                         <strong style="font-size:0.95rem; color:#181512; font-weight:900;">₹12,40,000</strong>
@@ -189,7 +189,7 @@ $active_subnav = "analytics";
 
                                     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#FFFFFF; border-radius:8px; border:1px solid #EAE5D9;">
                                         <div>
-                                            <a href="/DT%20Brand/admin/wholesale/view.php?id=WHL-8015" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#4 Kanchipuram Silk Syndicate</a>
+                                            <a href="/admin/wholesale/view.php?id=WHL-8015" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#4 Kanchipuram Silk Syndicate</a>
                                             <small style="font-size:0.7rem; color:#78716C; display:block;">Chennai, Tamil Nadu • 28 Orders • WHL-8015</small>
                                         </div>
                                         <strong style="font-size:0.95rem; color:#181512; font-weight:900;">₹9,80,000</strong>
@@ -197,7 +197,7 @@ $active_subnav = "analytics";
 
                                     <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#FFFFFF; border-radius:8px; border:1px solid #EAE5D9;">
                                         <div>
-                                            <a href="/DT%20Brand/admin/wholesale/view.php?id=WHL-8016" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#5 Kolkata Handloom Guild</a>
+                                            <a href="/admin/wholesale/view.php?id=WHL-8016" style="font-size:0.82rem; color:#181512; font-weight:800; text-decoration:none;">#5 Kolkata Handloom Guild</a>
                                             <small style="font-size:0.7rem; color:#78716C; display:block;">Kolkata, West Bengal • 22 Orders • WHL-8016</small>
                                         </div>
                                         <strong style="font-size:0.95rem; color:#181512; font-weight:900;">₹8,20,000</strong>
@@ -268,8 +268,8 @@ $active_subnav = "analytics";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-analytics.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-analytics.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
 

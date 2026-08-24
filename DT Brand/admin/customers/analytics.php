@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * analytics.php — Customer Growth, Retention & Cohort Analytics
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,10 +16,10 @@ $active_subnav = "analytics";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-analytics.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-analytics.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -39,7 +39,7 @@ $active_subnav = "analytics";
                         <p class="dt-cust-subtitle">Track customer acquisition velocity, repeat reorder intervals, cohort retention, and lifetime value trajectory.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             <span>All Customers</span>
                         </a>
@@ -318,7 +318,7 @@ $active_subnav = "analytics";
                                 </h3>
                                 <p style="font-size:0.72rem; color:#78716C; margin:2px 0 0 0;">Recency, Frequency, Monetary value customer clustering</p>
                             </div>
-                            <a href="/DT%20Brand/admin/customers/segments.php" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.7rem; text-decoration:none;">View Segments</a>
+                            <a href="/admin/customers/segments.php" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.7rem; text-decoration:none;">View Segments</a>
                         </div>
 
                         <div class="dt-rfm-grid">
@@ -382,7 +382,7 @@ $active_subnav = "analytics";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('dtCustGrowthCanvas');

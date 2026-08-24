@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * index.php — Reseller Management Master Dashboard & Directory
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -26,9 +26,9 @@ $active_filter = "all";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/resellers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/resellers/assets/css/reseller-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -52,7 +52,7 @@ $active_filter = "all";
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                             <span>Refresh</span>
                         </button>
-                        <a href="/DT%20Brand/admin/resellers/export.php" class="dt-btn dt-btn-gold">
+                        <a href="/admin/resellers/export.php" class="dt-btn dt-btn-gold">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span>Export All Resellers</span>
                         </a>
@@ -82,10 +82,10 @@ $active_filter = "all";
 <script>
     window.dbResellersData = <?= json_encode($resellersList) ?>;
 </script>
-<script src="/DT%20Brand/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/resellers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/reseller-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/resellers/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

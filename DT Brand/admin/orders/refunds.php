@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * refunds.php — Refund Management & Credit Notes Ledger
  * DT Brand's & Jai Hanuman Tex
@@ -16,11 +16,11 @@ $active_subnav = "refunds";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/refunds.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/refunds.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -42,7 +42,7 @@ $active_subnav = "refunds";
                         <p class="dt-orders-subtitle">Track gateway payouts, UPI chargeback reversals, and B2B wholesale credit ledger balances.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>Back to Orders</span>
                         </a>
@@ -204,7 +204,7 @@ $active_subnav = "refunds";
                             <tbody id="refundTableBody">
                                 <tr data-status="settled" data-method="ICICI Direct Bank Transfer">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4012</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001612" class="dt-order-id-link">DTB-001612</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001612" class="dt-order-id-link">DTB-001612</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Meenakshi Silk House</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Depot • Ph: +91 98221 00192</div>
@@ -236,7 +236,7 @@ $active_subnav = "refunds";
 
                                 <tr data-status="processing" data-method="UPI Reversal">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4011</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001609" class="dt-order-id-link">DTB-001609</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001609" class="dt-order-id-link">DTB-001609</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Shweta Joshi</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Ahmedabad Order • Ph: +91 98765 43210</div>
@@ -268,7 +268,7 @@ $active_subnav = "refunds";
 
                                 <tr data-status="pending" data-method="B2B Wholesale Credit Ledger">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4010</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001605" class="dt-order-id-link">DTB-001605</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001605" class="dt-order-id-link">DTB-001605</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Kalyan Sarees Wholesale</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Loom Defect Claim • Ph: +91 98330 99881</div>
@@ -304,7 +304,7 @@ $active_subnav = "refunds";
 
                                 <tr data-status="settled" data-method="HDFC Bank Wire Transfer">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4009</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001598" class="dt-order-id-link">DTB-001598</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001598" class="dt-order-id-link">DTB-001598</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Vardhman Tex Godown</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Surat Central Depot • Ph: +91 98220 19283</div>
@@ -336,7 +336,7 @@ $active_subnav = "refunds";
 
                                 <tr data-status="processing" data-method="Razorpay Instant Reversal">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4008</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001590" class="dt-order-id-link">DTB-001590</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001590" class="dt-order-id-link">DTB-001590</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Pooja Sharma</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">Mumbai Online Shop • Ph: +91 91981 10001</div>
@@ -368,7 +368,7 @@ $active_subnav = "refunds";
 
                                 <tr data-status="settled" data-method="B2B Wholesale Credit Ledger">
                                     <td class="col-ref-id" style="white-space:nowrap; font-weight:800; color:#8A681F;">REF-4007</td>
-                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/DT%20Brand/admin/orders/view.php?id=DTB-001582" class="dt-order-id-link">DTB-001582</a></td>
+                                    <td class="col-ref-order" style="white-space:nowrap;"><a href="/admin/orders/view.php?id=DTB-001582" class="dt-order-id-link">DTB-001582</a></td>
                                     <td class="col-ref-customer">
                                         <div style="font-weight:750; color:#181512; font-size:12px; line-height:1.3;">Ananya Silks Bangalore</div>
                                         <div style="font-size:11px; color:#64748B; margin-top:2px;">B2B Wholesale • Ph: +91 98450 11223</div>
@@ -410,7 +410,7 @@ $active_subnav = "refunds";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/refunds.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/refunds.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

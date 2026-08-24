@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * reseller-table.php — High-Density Responsive Reseller Master Table with Column Toggling
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -74,7 +74,7 @@ if (!empty($resellersList)) {
                     <td colspan="9" style="text-align:center; padding:36px 16px; color:#64748B;">
                         <div style="font-size:14px; font-weight:800; color:#181512; margin-bottom:4px;">No Resellers Found</div>
                         <p style="font-size:12px; color:#64748B; margin:0 0 14px 0;">There are currently 0 reseller partners registered in the database.</p>
-                        <a href="/DT%20Brand/admin/resellers/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+                        <a href="/admin/resellers/edit.php?id=new" class="dt-btn dt-btn-gold dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#181512" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                             <span>Add First Reseller</span>
                         </a>
@@ -103,7 +103,7 @@ if (!empty($resellersList)) {
                             </div>
                             <div class="dt-cust-name-wrap">
                                 <div class="dt-cust-name-row">
-                                    <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $r['id']; ?>" class="dt-cust-name">
+                                    <a href="/admin/resellers/view.php?id=<?php echo $r['id']; ?>" class="dt-cust-name">
                                         <?php echo htmlspecialchars($r['name']); ?>
                                     </a>
                                     <?php if (strpos($r['tier'], 'Platinum') !== false || strpos($r['tier'], 'Gold') !== false): ?>
@@ -132,7 +132,7 @@ if (!empty($resellersList)) {
 
                     <!-- Orders -->
                     <td class="col-orders" style="text-align:center; font-weight:800; color:#181512;">
-                        <a href="/DT%20Brand/admin/resellers/orders.php?reseller_id=<?php echo $r['id']; ?>" style="color:#181512; text-decoration:none;">
+                        <a href="/admin/resellers/orders.php?reseller_id=<?php echo $r['id']; ?>" style="color:#181512; text-decoration:none;">
                             <?php echo $r['orders']; ?> Orders
                         </a>
                     </td>
@@ -183,7 +183,7 @@ if (!empty($resellersList)) {
                             </a>
 
                             <!-- View 360° Profile -->
-                            <a href="/DT%20Brand/admin/resellers/view.php?id=<?php echo $r['id']; ?>" 
+                            <a href="/admin/resellers/view.php?id=<?php echo $r['id']; ?>" 
                                class="dt-btn dt-btn-pale" 
                                style="padding:4px 8px; font-size:0.7rem; border-radius:6px;" 
                                title="View 360° Executive Dossier">
@@ -191,7 +191,7 @@ if (!empty($resellersList)) {
                             </a>
 
                             <!-- Edit Account -->
-                            <a href="/DT%20Brand/admin/resellers/edit.php?id=<?php echo $r['id']; ?>" 
+                            <a href="/admin/resellers/edit.php?id=<?php echo $r['id']; ?>" 
                                class="dt-btn dt-btn-pale" 
                                style="padding:4px 8px; font-size:0.7rem; border-radius:6px;" 
                                title="Edit Reseller Account">

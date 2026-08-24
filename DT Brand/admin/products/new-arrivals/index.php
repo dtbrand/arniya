@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * New Arrivals Studio — DT Brand's Master Wholesale Suite
  * DT Brand's & Jai Hanuman Tex
@@ -104,8 +104,8 @@ $curated_products = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-card {
         background: #fff;
@@ -201,7 +201,7 @@ $curated_products = [
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (1,240)</span>
                     </a>
@@ -218,7 +218,7 @@ $curated_products = [
                         </button>
                     </div>
 
-                    <a href="/DT%20Brand/admin/products/add.php" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35); text-decoration:none;">
+                    <a href="/admin/products/add.php" class="wp-button primary" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35); text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#181512" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Product</span>
                     </a>
@@ -366,7 +366,7 @@ $curated_products = [
                             </td>
                             <td style="padding:10px 12px; text-align:right;">
                                 <div style="display:flex; gap:4px; justify-content:flex-end;">
-                                    <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $p['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Edit Product">
+                                    <a href="/admin/products/edit.php?id=<?php echo $p['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Edit Product">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Edit</span>
                                     </a>
@@ -413,7 +413,7 @@ $curated_products = [
                         </div>
 
                         <div style="display:flex; gap:6px; justify-content:space-between; padding-top:8px; border-top:1px solid #f1f5f9;">
-                            <a href="/DT%20Brand/admin/products/edit.php?id=<?php echo $p['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; flex:1; justify-content:center;">Edit</a>
+                            <a href="/admin/products/edit.php?id=<?php echo $p['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; flex:1; justify-content:center;">Edit</a>
                             <a href="/Frontend/Single-Product/singleproduct.php?id=<?php echo $p['id']; ?>" target="_blank" class="dt-action-pill" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; flex:1; justify-content:center;">View</a>
                             <button type="button" class="dt-action-pill" onclick="window.shareProductWhatsApp(<?php echo $p['id']; ?>)" style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; padding:0 8px;">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#15803D" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
@@ -521,6 +521,6 @@ window.shareProductWhatsApp = function(id) {
     }
 };
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

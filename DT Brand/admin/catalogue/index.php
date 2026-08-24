@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * index.php — DT Brand's Master Catalogue Management Dashboard
  * DT Brand's & Jai Hanuman Tex
@@ -16,11 +16,11 @@ $active_subnav = "overview";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/hierarchy.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/hierarchy.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -40,19 +40,19 @@ $active_subnav = "overview";
                 </div>
                 
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/catalogue/categories/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">
+                    <a href="/admin/catalogue/categories/add.php" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Category</span>
                     </a>
-                    <a href="/DT%20Brand/admin/catalogue/collections/add.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
+                    <a href="/admin/catalogue/collections/add.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span>Add Collection</span>
                     </a>
-                    <a href="/DT%20Brand/admin/catalogue/navigation.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
+                    <a href="/admin/catalogue/navigation.php" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                         <span>Manage Navigation</span>
                     </a>
-                    <a href="/DT%20Brand/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
+                    <a href="/admin/catalogue/banners/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                         <span>Manage Banners</span>
                     </a>
@@ -68,22 +68,22 @@ $active_subnav = "overview";
                     👑 DT BRAND'S WHOLESALE CATALOGUE TAXONOMY FLOW
                 </div>
                 <div class="dt-cat-flow-steps">
-                    <a href="/DT%20Brand/admin/catalogue/categories/" class="dt-cat-flow-step" style="text-decoration:none;">
+                    <a href="/admin/catalogue/categories/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 1</div>
                         <div class="dt-cat-flow-title">16 Root Categories</div>
                         <div class="dt-cat-flow-count">14 Active Live</div>
                     </a>
-                    <a href="/DT%20Brand/admin/catalogue/subcategories/" class="dt-cat-flow-step" style="text-decoration:none;">
+                    <a href="/admin/catalogue/subcategories/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 2</div>
                         <div class="dt-cat-flow-title">42 Subcategories</div>
                         <div class="dt-cat-flow-count">Fabric &amp; Weave Types</div>
                     </a>
-                    <a href="/DT%20Brand/admin/catalogue/collections/" class="dt-cat-flow-step" style="text-decoration:none;">
+                    <a href="/admin/catalogue/collections/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 3</div>
                         <div class="dt-cat-flow-title">8 Curated Collections</div>
                         <div class="dt-cat-flow-count">Festive &amp; Bridal Lines</div>
                     </a>
-                    <a href="/DT%20Brand/admin/products/" class="dt-cat-flow-step" style="text-decoration:none;">
+                    <a href="/admin/products/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 4</div>
                         <div class="dt-cat-flow-title">1,240 Total SKUs</div>
                         <div class="dt-cat-flow-count">Surat Central Depot Stock</div>
@@ -108,13 +108,13 @@ $active_subnav = "overview";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/hierarchy.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/banners.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/navigation.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/merchandising.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/catalogue/assets/js/filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/hierarchy.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/categories.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/banners.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/navigation.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/merchandising.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/filters.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

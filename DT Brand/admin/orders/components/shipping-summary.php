@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * shipping-summary.php — Shipping Partner & Dispatch Summary Component
  * DT Brand's & Jai Hanuman Tex
@@ -32,10 +32,10 @@ $tracking_id = isset($order['tracking_id']) ? $order['tracking_id'] : 'VRL-SURAT
             <strong style="color:#15803D;">22 Aug 2026 (Depot Dock)</strong>
         </div>
         <div style="display:flex; gap:6px; margin-top:4px;">
-            <a href="/DT%20Brand/admin/orders/shipping-label.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
+            <a href="/admin/orders/shipping-label.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
                 <span>Print Label</span>
             </a>
-            <a href="/DT%20Brand/admin/orders/packing-slip.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
+            <a href="/admin/orders/packing-slip.php?id=<?php echo htmlspecialchars($order['id'] ?? 'DTB-001624'); ?>" class="dt-btn dt-btn-pale" style="flex:1; height:28px; font-size:11px;">
                 <span>Packing Slip</span>
             </a>
         </div>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * hierarchy-tree.php — Category Hierarchy Tree Component
  * DT Brand's & Jai Hanuman Tex
@@ -27,7 +27,7 @@
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-sarees')">−</button>
                     <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
-                        <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=1" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Silk Sarees &amp; Handlooms</a>
+                        <a href="/admin/catalogue/categories/view.php?id=1" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Silk Sarees &amp; Handlooms</a>
                         <span class="dt-badge gold" style="font-size:9.5px; margin-left:6px;">Featured</span>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-sarees')" title="Move Down" style="height:24px; padding:0 6px;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
+                    <a href="/admin/catalogue/categories/edit.php?id=1" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <span class="dt-badge green">160 SKUs</span>
-                            <a href="/DT%20Brand/admin/catalogue/subcategories/edit.php?id=101" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
+                            <a href="/admin/catalogue/subcategories/edit.php?id=101" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
                         </div>
                     </div>
                 </li>
@@ -72,7 +72,7 @@
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <span class="dt-badge green">140 SKUs</span>
-                            <a href="/DT%20Brand/admin/catalogue/subcategories/edit.php?id=102" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
+                            <a href="/admin/catalogue/subcategories/edit.php?id=102" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
                         </div>
                     </div>
                 </li>
@@ -87,7 +87,7 @@
                         </div>
                         <div style="display:flex; align-items:center; gap:6px;">
                             <span class="dt-badge green">120 SKUs</span>
-                            <a href="/DT%20Brand/admin/catalogue/subcategories/edit.php?id=103" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
+                            <a href="/admin/catalogue/subcategories/edit.php?id=103" class="dt-btn-action-sm pale-gold" style="height:22px; padding:0 6px; font-size:10.5px;">Edit</a>
                         </div>
                     </div>
                 </li>
@@ -104,7 +104,7 @@
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-lehengas')">−</button>
                     <img src="/assets/images/product6.png" onerror="this.src='/assets/images/product3.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
-                        <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=2" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Bridal &amp; Festive Lehengas</a>
+                        <a href="/admin/catalogue/categories/view.php?id=2" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Bridal &amp; Festive Lehengas</a>
                         <span class="dt-badge gold" style="font-size:9.5px; margin-left:6px;">Featured</span>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-lehengas')" title="Move Down" style="height:24px; padding:0 6px;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=2" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
+                    <a href="/admin/catalogue/categories/edit.php?id=2" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@
                     <button type="button" class="dt-tree-toggle" onclick="window.DT_HIERARCHY.toggleNode(this, 'children-kurtis')">−</button>
                     <img src="/assets/images/product4.png" onerror="this.src='/assets/images/product4.png';" style="width:26px; height:26px; border-radius:4px; object-fit:cover;">
                     <div>
-                        <a href="/DT%20Brand/admin/catalogue/categories/view.php?id=3" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Designer Kurtis &amp; Tunics</a>
+                        <a href="/admin/catalogue/categories/view.php?id=3" style="color:#181512; text-decoration:none; font-size:12.5px; font-weight:700;">Designer Kurtis &amp; Tunics</a>
                     </div>
                 </div>
                 <div style="display:flex; align-items:center; gap:8px;">
@@ -174,7 +174,7 @@
                     <button type="button" class="dt-btn-action-sm pale-gold" onclick="window.DT_HIERARCHY.moveDown('node-kurtis')" title="Move Down" style="height:24px; padding:0 6px;">
                         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <a href="/DT%20Brand/admin/catalogue/categories/edit.php?id=3" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
+                    <a href="/admin/catalogue/categories/edit.php?id=3" class="dt-btn-action-sm pale-gold" style="height:24px; padding:0 8px; font-size:11px;">Edit</a>
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * index.php - DT Brand's Admin Whatsapp Module
  * DT Brand's & Jai Hanuman Tex
@@ -31,7 +31,7 @@ $active_nav = "whatsapp";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -48,7 +48,7 @@ $active_nav = "whatsapp";
                     <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Engage B2B buyers and retail customers via official WhatsApp Cloud API.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/DT%20Brand/admin/admin.php" class="adm-btn-secondary dt-btn-pale" style="text-decoration:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px;">← Back to Main Console</a>
+                    <a href="/admin/admin.php" class="adm-btn-secondary dt-btn-pale" style="text-decoration:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px;">← Back to Main Console</a>
                 </div>
             </div>
 
@@ -175,7 +175,7 @@ $active_nav = "whatsapp";
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 <script>
 function launchBroadcastAlert() {
     const audience = document.getElementById('waTargetAudience').value;

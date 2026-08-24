@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * export.php — Customer Export Studio (CSV / Excel / PDF)
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -16,9 +16,9 @@ $active_subnav = "export";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
     <style>
         .dt-export-format-card {
             display: flex;
@@ -95,7 +95,7 @@ $active_subnav = "export";
                         <p class="dt-cust-subtitle">Generate custom downloadable CSV spreadsheets, Microsoft Excel workbooks, or formatted PDF dossiers.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             <span>All Customers</span>
                         </a>
@@ -291,7 +291,7 @@ $active_subnav = "export";
 
                         <!-- 5. Form Actions -->
                         <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; border-top:1.5px solid #F1ECE1; padding-top:16px;">
-                            <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="submit" class="dt-btn dt-btn-gold" style="display:inline-flex; align-items:center; gap:8px; padding:0 22px; height:40px;">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111827" stroke-width="2.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 <span>Generate &amp; Download File</span>
@@ -306,7 +306,7 @@ $active_subnav = "export";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script>
 let currentFormat = 'csv';
 

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * view.php — Category Details & Filtered Products Catalogue
  * DT Brand's & Jai Hanuman Tex
@@ -26,7 +26,7 @@ if ($db !== null && !Database::isMockMode()) {
 }
 
 if (!$category) {
-    header('Location: /DT%20Brand/admin/products/categories/');
+    header('Location: /admin/products/categories/');
     exit;
 }
 
@@ -46,9 +46,9 @@ $prodCount = count($productsList);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/products.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/products.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -62,13 +62,13 @@ $prodCount = count($productsList);
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline">Category: <?php echo htmlspecialchars($catName); ?></h1>
                     <span class="wp-page-title-action gold" style="font-weight:700;"><?php echo $prodCount; ?> Products</span>
-                    <a href="/DT%20Brand/admin/products/categories/" class="wp-page-title-action secondary">
+                    <a href="/admin/products/categories/" class="wp-page-title-action secondary">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         <span>Back to Categories</span>
                     </a>
                 </div>
                 <div>
-                    <a href="/DT%20Brand/admin/products/categories/edit.php?id=<?php echo $catId; ?>" class="wp-button primary">
+                    <a href="/admin/products/categories/edit.php?id=<?php echo $catId; ?>" class="wp-button primary">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                         <span>Edit Category</span>
                     </a>
@@ -96,7 +96,7 @@ $prodCount = count($productsList);
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
 

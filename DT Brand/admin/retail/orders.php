@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * orders.php — DT Brand's & Jai Hanuman Tex
  * Retail Orders Management
@@ -16,9 +16,9 @@ $active_subnav = "orders";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/retail/assets/css/retail-orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/retail/assets/css/retail-orders.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -37,7 +37,7 @@ $active_subnav = "orders";
                         <p class="dt-retail-subtitle">Direct retail customer orders, payment receipts, and express courier fulfillments.</p>
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <a href="/DT%20Brand/admin/orders/" class="dt-btn dt-btn-gold">
+                        <a href="/admin/orders/" class="dt-btn dt-btn-gold">
                             <span>All Orders Suite →</span>
                         </a>
                     </div>
@@ -52,8 +52,8 @@ $active_subnav = "orders";
 
 <?php include_once __DIR__ . '/components/bulk-actions.php'; ?>
 
-<script src="/DT%20Brand/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/retail/assets/js/retail-orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/retail/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/retail-orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/retail/assets/js/bulk-actions.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

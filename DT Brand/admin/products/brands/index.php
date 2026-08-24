@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * brands/index.php — DT Brand's House Labels & Brand Suite (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -16,8 +16,8 @@ $active_subnav = "brands";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-ribbon {
         display: grid;
@@ -102,15 +102,15 @@ $active_subnav = "brands";
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (1,240)</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/categories/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/categories/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                         <span>Categories (16)</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/attributes/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
+                    <a href="/admin/products/attributes/" class="wp-button" style="height:32px; padding:0 11px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line></svg>
                         <span>Attributes</span>
                     </a>
@@ -227,7 +227,7 @@ $active_subnav = "brands";
                                 <span class="adm-badge gold" style="font-weight:700; font-size:11px; padding:3px 8px;" id="brand-tier-1">👑 Primary Flagship</span>
                             </td>
                             <td style="padding:12px 10px;">
-                                <a href="/DT%20Brand/admin/products/?brand=DT+Signature" style="text-decoration:none;">
+                                <a href="/admin/products/?brand=DT+Signature" style="text-decoration:none;">
                                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:12px; padding:3px 8px; border-radius:10px;">680 SKUs</span>
                                 </a>
                             </td>
@@ -267,7 +267,7 @@ $active_subnav = "brands";
                                 <span class="adm-badge" style="background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8; font-weight:700; font-size:11px; padding:3px 8px;" id="brand-tier-2">💎 Heritage Brocade</span>
                             </td>
                             <td style="padding:12px 10px;">
-                                <a href="/DT%20Brand/admin/products/?brand=Arniya+Heritage" style="text-decoration:none;">
+                                <a href="/admin/products/?brand=Arniya+Heritage" style="text-decoration:none;">
                                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:12px; padding:3px 8px; border-radius:10px;">420 SKUs</span>
                                 </a>
                             </td>
@@ -307,7 +307,7 @@ $active_subnav = "brands";
                                 <span class="adm-badge" style="background:#FDF2F8; border:1px solid #F472B6; color:#9D174D; font-weight:700; font-size:11px; padding:3px 8px;" id="brand-tier-3">👑 Bridal Luxury</span>
                             </td>
                             <td style="padding:12px 10px;">
-                                <a href="/DT%20Brand/admin/products/?brand=DT+Couture" style="text-decoration:none;">
+                                <a href="/admin/products/?brand=DT+Couture" style="text-decoration:none;">
                                     <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:12px; padding:3px 8px; border-radius:10px;">140 SKUs</span>
                                 </a>
                             </td>
@@ -577,6 +577,6 @@ function handleBrandBulkAction() {
     if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} brands!`);
 }
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * retail-reviews.php — DT Brand's & Jai Hanuman Tex
  * Retail Reviews & Rating Analytics Component
@@ -13,7 +13,7 @@ $reviews_data = getRetailReviewsSummary();
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A681F" stroke-width="2.3"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             <h4 class="dt-retail-card-title">Retail Product Ratings &amp; Reviews (4.8 ★ / 1,240 Reviews)</h4>
         </div>
-        <a href="/DT%20Brand/admin/reviews/" class="dt-btn dt-btn-pale dt-btn-sm">Full Reviews Suite →</a>
+        <a href="/admin/reviews/" class="dt-btn dt-btn-pale dt-btn-sm">Full Reviews Suite →</a>
     </div>
 
     <div style="overflow-x:auto; width:100%;">

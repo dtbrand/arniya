@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $page_title = "Upload Media";
 $active_nav = "products";
 ?>
@@ -8,8 +8,8 @@ $active_nav = "products";
     <meta charset="UTF-8">
     <title>Upload Media — DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/media.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/media.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -22,7 +22,7 @@ $active_nav = "products";
                     <h1><span>Upload High-Res Media</span></h1>
                 </div>
                 <div class="dt-prod-actions">
-                    <a href="/DT%20Brand/admin/products/media/" class="adm-btn-secondary">← Back to Media Library</a>
+                    <a href="/admin/products/media/" class="adm-btn-secondary">← Back to Media Library</a>
                 </div>
             </div>
             <div class="adm-card">
@@ -37,6 +37,6 @@ $active_nav = "products";
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

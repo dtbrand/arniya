@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * returns.php — Return Merchandise Authorization (RMA) Management
  * DT Brand's & Jai Hanuman Tex
@@ -16,11 +16,11 @@ $active_subnav = "returns";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/returns.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-status.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/returns.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -42,7 +42,7 @@ $active_subnav = "returns";
                         <p class="dt-orders-subtitle">Manage customer returns, defect reviews, Surat depot dock inspections, and reverse pickups.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="15 18 9 12 15 6"></polyline></svg>
                             <span>Back to Orders</span>
                         </a>
@@ -52,11 +52,11 @@ $active_subnav = "returns";
                 <?php $current_tab = $_GET['tab'] ?? 'all'; ?>
                 <!-- Returns Subnav -->
                 <div class="dt-orders-subnav">
-                    <a href="/DT%20Brand/admin/orders/returns.php" class="dt-orders-subnav-pill <?php echo $current_tab === 'all' ? 'active' : ''; ?>">All Returns <small>8</small></a>
-                    <a href="/DT%20Brand/admin/orders/returns.php?tab=requested" class="dt-orders-subnav-pill <?php echo $current_tab === 'requested' ? 'active' : ''; ?>">Requested <small>2</small></a>
-                    <a href="/DT%20Brand/admin/orders/returns.php?tab=approved" class="dt-orders-subnav-pill <?php echo $current_tab === 'approved' ? 'active' : ''; ?>">Approved for Pickup <small>3</small></a>
-                    <a href="/DT%20Brand/admin/orders/returns.php?tab=received" class="dt-orders-subnav-pill <?php echo $current_tab === 'received' ? 'active' : ''; ?>">Depot Inspection <small>2</small></a>
-                    <a href="/DT%20Brand/admin/orders/returns.php?tab=completed" class="dt-orders-subnav-pill <?php echo $current_tab === 'completed' ? 'active' : ''; ?>">Completed <small>1</small></a>
+                    <a href="/admin/orders/returns.php" class="dt-orders-subnav-pill <?php echo $current_tab === 'all' ? 'active' : ''; ?>">All Returns <small>8</small></a>
+                    <a href="/admin/orders/returns.php?tab=requested" class="dt-orders-subnav-pill <?php echo $current_tab === 'requested' ? 'active' : ''; ?>">Requested <small>2</small></a>
+                    <a href="/admin/orders/returns.php?tab=approved" class="dt-orders-subnav-pill <?php echo $current_tab === 'approved' ? 'active' : ''; ?>">Approved for Pickup <small>3</small></a>
+                    <a href="/admin/orders/returns.php?tab=received" class="dt-orders-subnav-pill <?php echo $current_tab === 'received' ? 'active' : ''; ?>">Depot Inspection <small>2</small></a>
+                    <a href="/admin/orders/returns.php?tab=completed" class="dt-orders-subnav-pill <?php echo $current_tab === 'completed' ? 'active' : ''; ?>">Completed <small>1</small></a>
                 </div>
 
                 <!-- Return Table Panel -->
@@ -68,7 +68,7 @@ $active_subnav = "returns";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/orders/assets/js/returns.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/returns.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

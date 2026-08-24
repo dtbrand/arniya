@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * order-table.php — Master Orders Table Component
  * DT Brand's & Jai Hanuman Tex
@@ -78,7 +78,7 @@ $orders_list = OrderManager::getAll();
                             <button type="button" class="dt-expand-btn" onclick="window.DT_ORDER_VIEW.toggleRowDetails('<?php echo $o['id']; ?>', this)" title="Quick Expand Row" style="background:none; border:none; padding:0; cursor:pointer; color:#64748B; display:flex; align-items:center; transition:transform 0.15s ease;">
                                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </button>
-                            <a href="/DT%20Brand/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-order-id-link"><?php echo $o['id']; ?></a>
+                            <a href="/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-order-id-link"><?php echo $o['id']; ?></a>
                         </div>
                     </td>
                     <td class="col-date" style="white-space:nowrap; font-size:11px; color:#64748B;">
@@ -171,8 +171,8 @@ $orders_list = OrderManager::getAll();
                                 <div style="font-size:10px; color:#64748B;"><?php echo htmlspecialchars($o['phone']); ?></div>
                             </div>
                             <div style="display:flex; gap:6px;">
-                                <a href="/DT%20Brand/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-pale" style="height:26px; font-size:10px; padding:0 8px;">Full Details</a>
-                                <a href="/DT%20Brand/admin/orders/invoice.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-emerald" style="height:26px; font-size:10px; padding:0 8px;">Tax Invoice</a>
+                                <a href="/admin/orders/view.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-pale" style="height:26px; font-size:10px; padding:0 8px;">Full Details</a>
+                                <a href="/admin/orders/invoice.php?id=<?php echo $o['id']; ?>" class="dt-btn dt-btn-emerald" style="height:26px; font-size:10px; padding:0 8px;">Tax Invoice</a>
                             </div>
                         </div>
                     </td>

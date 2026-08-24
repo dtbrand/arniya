@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * export.php — Order Export Studio & Real Data Exporter
  * DT Brand's & Jai Hanuman Tex — Master Wholesale Architecture
@@ -247,9 +247,9 @@ $active_subnav = "export";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/orders.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/orders/assets/css/order-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -268,7 +268,7 @@ $active_subnav = "export";
                         <p class="dt-orders-subtitle">Export filtered order manifests, GST tax ledgers, and logistics dispatch sheets with real data.</p>
                     </div>
                     <div class="dt-orders-actions">
-                        <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/orders/index.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                             <span>Back to Orders</span>
                         </a>
@@ -340,7 +340,7 @@ $active_subnav = "export";
                         </div>
 
                         <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:6px;">
-                            <a href="/DT%20Brand/admin/orders/index.php" class="dt-btn dt-btn-pale">Cancel</a>
+                            <a href="/admin/orders/index.php" class="dt-btn dt-btn-pale">Cancel</a>
                             <button type="button" id="btnDownloadExport" class="dt-btn dt-btn-gold" onclick="executeRealExport()" style="height:36px; padding:0 18px; font-weight:800; font-size:12px;">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                 <span id="btnDownloadExportText">Download Real Export File</span>
@@ -548,6 +548,6 @@ function downloadPDFRegister() {
     printWindow.document.close();
 }
 </script>
-<script src="/DT%20Brand/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/orders/assets/js/orders.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

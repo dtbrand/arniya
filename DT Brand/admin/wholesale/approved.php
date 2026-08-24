@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * approved.php — DT Brand's & Jai Hanuman Tex
  * Approved & Active Wholesale Partners Roster
@@ -16,9 +16,9 @@ $active_subnav = "approved";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/wholesale/assets/css/wholesale-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/wholesale/assets/css/wholesale-list.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -37,7 +37,7 @@ $active_subnav = "approved";
                         <p class="dt-cust-subtitle" style="font-size:0.78rem; color:#78716C; margin:3px 0 0 0;">Active B2B wholesale buyers with sanctioned credit facilities and customized price lists.</p>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <a href="/DT%20Brand/admin/wholesale/export.php" class="dt-btn dt-btn-pale">
+                        <a href="/admin/wholesale/export.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                             <span>Export Roster</span>
                         </a>
@@ -53,9 +53,9 @@ $active_subnav = "approved";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/wholesale/assets/js/wholesale-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-list.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-filters.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/wholesale/assets/js/wholesale-status.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

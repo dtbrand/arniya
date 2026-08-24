@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * wholesale-stats.php — DT Brand's & Jai Hanuman Tex
  * 8-Card Master Wholesale KPI Ribbon & Filter Flow Pills
@@ -37,7 +37,7 @@ $kpis = [
     <!-- 8-Card Master KPI Grid -->
     <div class="dt-wholesale-kpi-grid">
         <!-- 1. Total Wholesale Accounts -->
-        <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/index.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Total Wholesalers</span>
                 <div class="dt-wholesale-kpi-icon">
@@ -49,7 +49,7 @@ $kpis = [
         </a>
 
         <!-- 2. Active Accounts -->
-        <a href="/DT%20Brand/admin/wholesale/approved.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/approved.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Active Partners</span>
                 <div class="dt-wholesale-kpi-icon emerald">
@@ -61,7 +61,7 @@ $kpis = [
         </a>
 
         <!-- 3. Pending Applications -->
-        <a href="/DT%20Brand/admin/wholesale/pending.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/pending.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Pending Review</span>
                 <div class="dt-wholesale-kpi-icon amber">
@@ -73,7 +73,7 @@ $kpis = [
         </a>
 
         <!-- 4. Wholesale Orders -->
-        <a href="/DT%20Brand/admin/wholesale/orders.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/orders.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Orders This Month</span>
                 <div class="dt-wholesale-kpi-icon blue">
@@ -97,7 +97,7 @@ $kpis = [
         </div>
 
         <!-- 6. Outstanding Credit -->
-        <a href="/DT%20Brand/admin/wholesale/credit.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/credit.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Outstanding Credit</span>
                 <div class="dt-wholesale-kpi-icon emerald">
@@ -109,7 +109,7 @@ $kpis = [
         </a>
 
         <!-- 7. Suspended Accounts -->
-        <a href="/DT%20Brand/admin/wholesale/suspended.php" class="dt-wholesale-kpi-card">
+        <a href="/admin/wholesale/suspended.php" class="dt-wholesale-kpi-card">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label">Suspended / Locked</span>
                 <div class="dt-wholesale-kpi-icon amber">
@@ -121,7 +121,7 @@ $kpis = [
         </a>
 
         <!-- 8. Platinum VIP Tier Card -->
-        <a href="/DT%20Brand/admin/wholesale/tiers.php" class="dt-wholesale-kpi-card" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border-color:#8A681F; color:#FFFFFF;">
+        <a href="/admin/wholesale/tiers.php" class="dt-wholesale-kpi-card" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border-color:#8A681F; color:#FFFFFF;">
             <div class="dt-wholesale-kpi-top">
                 <span class="dt-wholesale-kpi-label" style="color:#FFE57F;">Platinum VIP Tier</span>
                 <div class="dt-wholesale-kpi-icon" style="background:rgba(212,175,55,0.2); border-color:#D4AF37; color:#FFE57F;">
@@ -135,12 +135,12 @@ $kpis = [
 
     <!-- Flow Filter Badges Strip -->
     <div style="display:flex; align-items:center; gap:8px; overflow-x:auto; padding:4px 0;">
-        <a href="/DT%20Brand/admin/wholesale/index.php" class="dt-status-pill-clean gold" style="text-decoration:none;">All Wholesalers 124</a>
-        <a href="/DT%20Brand/admin/wholesale/approved.php" class="dt-status-pill-clean emerald" style="text-decoration:none;">Active Verified 98</a>
-        <a href="/DT%20Brand/admin/wholesale/pending.php" class="dt-status-pill-clean amber" style="text-decoration:none;">Pending Applications 14</a>
-        <a href="/DT%20Brand/admin/wholesale/tiers.php" class="dt-status-pill-clean gold" style="text-decoration:none;">Platinum Tier (35%) 28</a>
-        <a href="/DT%20Brand/admin/wholesale/credit.php" class="dt-status-pill-clean blue" style="text-decoration:none;">With Credit Line 64</a>
-        <a href="/DT%20Brand/admin/wholesale/suspended.php" class="dt-status-pill-clean crimson" style="text-decoration:none;">Suspended 6</a>
-        <a href="/DT%20Brand/admin/wholesale/rejected.php" class="dt-status-pill-clean crimson" style="text-decoration:none;">Rejected 10</a>
+        <a href="/admin/wholesale/index.php" class="dt-status-pill-clean gold" style="text-decoration:none;">All Wholesalers 124</a>
+        <a href="/admin/wholesale/approved.php" class="dt-status-pill-clean emerald" style="text-decoration:none;">Active Verified 98</a>
+        <a href="/admin/wholesale/pending.php" class="dt-status-pill-clean amber" style="text-decoration:none;">Pending Applications 14</a>
+        <a href="/admin/wholesale/tiers.php" class="dt-status-pill-clean gold" style="text-decoration:none;">Platinum Tier (35%) 28</a>
+        <a href="/admin/wholesale/credit.php" class="dt-status-pill-clean blue" style="text-decoration:none;">With Credit Line 64</a>
+        <a href="/admin/wholesale/suspended.php" class="dt-status-pill-clean crimson" style="text-decoration:none;">Suspended 6</a>
+        <a href="/admin/wholesale/rejected.php" class="dt-status-pill-clean crimson" style="text-decoration:none;">Rejected 10</a>
     </div>
 </div>

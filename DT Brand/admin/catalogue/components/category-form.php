@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * category-form.php — Master Category Add/Edit Form Component
  * DT Brand's & Jai Hanuman Tex
@@ -142,7 +142,7 @@ $cat = isset($category_data) ? $category_data : [
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     <span>Save Category</span>
                 </button>
-                <a href="/DT%20Brand/admin/catalogue/categories/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel &amp; Return</a>
+                <a href="/admin/catalogue/categories/" class="dt-btn-action-sm pale-gold" style="height:32px; justify-content:center; font-size:11.5px; text-decoration:none;">Cancel &amp; Return</a>
             </div>
         </div>
     </div>

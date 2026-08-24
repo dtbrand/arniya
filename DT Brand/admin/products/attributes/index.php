@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * attributes/index.php — DT Brand's Master Textile Attributes & Taxonomies
  * 100% Fully Functional End-to-End Standard
@@ -78,8 +78,8 @@ $attributes_list = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     .dt-kpi-ribbon {
         display: grid;
@@ -162,11 +162,11 @@ $attributes_list = [
                 </div>
 
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/DT%20Brand/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
+                    <a href="/admin/products/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products</span>
                     </a>
-                    <a href="/DT%20Brand/admin/products/variants/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
+                    <a href="/admin/products/variants/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; text-decoration:none; background:#EFF6FF; border:1px solid #93C5FD; color:#1D4ED8;">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#1D4ED8" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>Variants Matrix</span>
                     </a>
@@ -291,7 +291,7 @@ $attributes_list = [
                             </td>
                             <td style="padding:12px 12px; text-align:right;">
                                 <div style="display:flex; gap:5px; justify-content:flex-end;">
-                                    <a href="/DT%20Brand/admin/products/attributes/values.php?id=<?php echo $attr['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
+                                    <a href="/admin/products/attributes/values.php?id=<?php echo $attr['id']; ?>" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
                                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                         <span>Configure Terms</span>
                                     </a>
@@ -470,7 +470,7 @@ function submitNewAttribute() {
         </td>
         <td style="padding:12px 12px; text-align:right;">
             <div style="display:flex; gap:5px; justify-content:flex-end;">
-                <a href="/DT%20Brand/admin/products/attributes/values.php?id=${currentId}" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
+                <a href="/admin/products/attributes/values.php?id=${currentId}" class="dt-action-pill" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F;" title="Configure Terms">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     <span>Configure Terms</span>
                 </a>
@@ -592,6 +592,6 @@ function handleAttrBulkAction() {
     }
 }
 </script>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

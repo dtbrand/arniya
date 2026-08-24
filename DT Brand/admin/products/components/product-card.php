@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * product-card.php — Grid View Product Card
  */
@@ -18,8 +18,8 @@
             <div style="color:#8A681F; font-weight:700; font-size:0.85rem;">₹2,850 <small>Wholesale</small></div>
         </div>
         <div style="display:flex; gap:6px;">
-            <a href="/DT%20Brand/admin/products/view.php?id=101" class="adm-btn-secondary adm-btn-sm" style="flex:1; justify-content:center;">View</a>
-            <a href="/DT%20Brand/admin/products/edit.php?id=101" class="adm-btn-primary adm-btn-sm" style="flex:1; justify-content:center;">Edit</a>
+            <a href="/admin/products/view.php?id=101" class="adm-btn-secondary adm-btn-sm" style="flex:1; justify-content:center;">View</a>
+            <a href="/admin/products/edit.php?id=101" class="adm-btn-primary adm-btn-sm" style="flex:1; justify-content:center;">Edit</a>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * revenue.php - DT Brand's Admin Revenue & Net Profit Statement
  * DT Brand's & Jai Hanuman Tex
@@ -27,7 +27,7 @@ $netProfit = round($grossRevenue * 0.27, 2);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -44,7 +44,7 @@ $netProfit = round($grossRevenue * 0.27, 2);
                     <p class="adm-page-subtitle">Profit and loss calculations including fabric costs, weaving expenses, and net profit.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/DT%20Brand/admin/reports/" class="adm-btn-secondary">← Back to Reports Suite</a>
+                    <a href="/admin/reports/" class="adm-btn-secondary">← Back to Reports Suite</a>
                     <a href="/admin" class="adm-btn-secondary">Main Console</a>
                 </div>
             </div>
@@ -63,6 +63,6 @@ $netProfit = round($grossRevenue * 0.27, 2);
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
-<script src="/DT%20Brand/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

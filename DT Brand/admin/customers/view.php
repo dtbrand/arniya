@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * view.php — Customer 360° Profile & Deep Dossier
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
@@ -17,11 +17,11 @@ $active_subnav = "view";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/DT%20Brand/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-view.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/DT%20Brand/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customers.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-list.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-view.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/customers/assets/css/customer-profile.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -41,8 +41,8 @@ $active_subnav = "view";
                         <p class="dt-cust-subtitle">Comprehensive overview of lifetime orders, address book, internal notes, and activity timeline.</p>
                     </div>
                     <div class="dt-cust-actions">
-                        <a href="/DT%20Brand/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Customers</a>
-                        <a href="/DT%20Brand/admin/customers/edit.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold">Edit Customer</a>
+                        <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Back to Customers</a>
+                        <a href="/admin/customers/edit.php?id=<?php echo $customer_id; ?>" class="dt-btn dt-btn-gold">Edit Customer</a>
                     </div>
                 </div>
 
@@ -112,8 +112,8 @@ $active_subnav = "view";
     </div>
 </div>
 
-<script src="/DT%20Brand/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-view.js?v=<?php echo time(); ?>"></script>
-<script src="/DT%20Brand/admin/customers/assets/js/customer-status.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-view.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/customers/assets/js/customer-status.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
