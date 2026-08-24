@@ -396,16 +396,22 @@ if (!headers_sent()) {
 .adm-dd-logout-btn:hover svg { stroke: #FFF; }
 
 /* ══════════════ LOGOUT CONFIRMATION MODAL ══════════════ */
+/* display is controlled via JS (style.display). Do NOT set display here. */
 .adm-logout-modal-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15,10,5,0.72);
     z-index: 999999;
-    display: flex !important;
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+}
+.adm-logout-modal-backdrop[style*="flex"],
+.adm-logout-modal-backdrop.show {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 .adm-logout-modal-card {
     background: #FFFFFF;
@@ -1216,7 +1222,7 @@ if (!headers_sent()) {
         fetch('/admin/logout.php', { method: 'POST' })
             .catch(() => {})
             .finally(() => {
-                window.location.href = '/admin/login.php?logged_out=1';
+                window.location.href = '/admin/login/?logged_out=1';
             });
     };
 
