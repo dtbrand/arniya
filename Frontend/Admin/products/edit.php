@@ -59,17 +59,18 @@ $edit_sku = $prod['sku'];
                     </a>
                 </div>
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <a href="/Frontend/Admin/products/view.php?id=<?php echo $prod['id']; ?>" class="wp-button">
+                    <a href="/Frontend/Single-Product/singleproduct.php?id=<?php echo $prod['id']; ?>" target="_blank" class="wp-button">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        <span>View Details</span>
+                        <span>Preview Storefront</span>
                     </a>
-                    <button type="button" class="wp-button" onclick="window.open('/Frontend/Single-Product/singleproduct.php?id=<?php echo $prod['id']; ?>', '_blank')">Preview Storefront</button>
-                    <button type="button" class="wp-button primary" onclick="window.showToast('✨ Product updated successfully!')">
+                    <button type="button" class="wp-button primary dt-btn-gold" onclick="saveProductToDatabase(false, <?php echo $prod['id']; ?>)">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Update Product</span>
                     </button>
                 </div>
             </div>
+
+            <input type="hidden" id="pFormId" value="<?php echo $prod['id']; ?>">
 
             <!-- Multi-Section Form Grid -->
             <div class="dt-form-grid-layout">

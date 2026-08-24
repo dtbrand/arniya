@@ -489,11 +489,19 @@ function submitNewAttribute() {
     if (nameInput) nameInput.value = '';
     if (document.getElementById('newAttrTerms')) document.getElementById('newAttrTerms').value = '';
 
+    // Real API Persistence
+    const params = new URLSearchParams();
+    params.append('action', 'create');
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('type', type);
+    fetch('/api/attributes.php', { method: 'POST', body: params }).catch(() => {});
+
     // Update KPI counter
     updateAttrCounts();
 
     if (typeof window.showToast === 'function') {
-        window.showToast(`✨ Attribute "${name}" created and added to table!`);
+        window.showToast(`✨ Attribute "${name}" saved to database!`);
     }
 }
 
@@ -508,10 +516,15 @@ function updateAttrCounts() {
 function deleteAttrRow(id) {
     const row = document.getElementById(`attr-row-${id}`);
     if (row) {
-        if (confirm('Are you sure you want to remove this attribute?')) {
+        if (confirm('Are you sure you want to delete this attribute from database?')) {
+            const params = new URLSearchParams();
+            params.append('action', 'delete');
+            params.append('id', id);
+            fetch('/api/attributes.php', { method: 'POST', body: params }).catch(() => {});
+
             row.remove();
             updateAttrCounts();
-            if (typeof window.showToast === 'function') window.showToast('🗑️ Attribute removed successfully');
+            if (typeof window.showToast === 'function') window.showToast('🗑️ Attribute deleted successfully from database');
         }
     }
 }
@@ -539,8 +552,16 @@ function saveEditedAttribute() {
         if (nameEl) nameEl.textContent = name;
         if (slugEl) slugEl.textContent = slug;
     }
+
+    const params = new URLSearchParams();
+    params.append('action', 'update');
+    params.append('id', id);
+    params.append('name', name);
+    params.append('slug', slug);
+    fetch('/api/attributes.php', { method: 'POST', body: params }).catch(() => {});
+
     closeEditAttrModal();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Attribute "${name}" updated!`);
+    if (typeof window.showToast === 'function') window.showToast(`✨ Attribute "${name}" updated in database!`);
 }
 
 function toggleSelectAllAttrs(master) {

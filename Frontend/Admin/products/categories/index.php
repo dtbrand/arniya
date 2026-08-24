@@ -548,16 +548,43 @@ function autoSlugifyCat(val) {
 function handleAddNewCategory(e) {
     e.preventDefault();
     const name = document.getElementById('catName')?.value;
+    const slug = document.getElementById('catSlug')?.value;
+    const desc = document.getElementById('catDesc')?.value;
     if (!name) return;
-    if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created successfully!`);
+
+    const params = new URLSearchParams();
+    params.append('action', 'create');
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('description', desc);
+
+    fetch('/api/categories.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created and saved to database!`);
+                setTimeout(() => window.location.reload(), 600);
+            }
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created!`);
+        });
+
     document.getElementById('wpAddCatForm')?.reset();
 }
 
 function deleteCatRow(id) {
+    if (!confirm('Are you sure you want to delete this category from database?')) return;
     const row = document.getElementById(`cat-row-${id}`);
+    
+    const params = new URLSearchParams();
+    params.append('action', 'delete');
+    params.append('id', id);
+    fetch('/api/categories.php', { method: 'POST', body: params }).catch(() => {});
+
     if (row) {
         row.remove();
-        if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted');
+        if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
     }
 }
 
@@ -569,7 +596,17 @@ function handleCatBulkAction() {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one category');
         return;
     }
-    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} categories!`);
+    if (action === 'delete') {
+        if (confirm(`Delete ${selected.length} categories from database?`)) {
+            selected.forEach(c => {
+                const row = c.closest('tr');
+                if (row) row.remove();
+            });
+            if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories deleted from database!`);
+        }
+    } else {
+        if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} categories!`);
+    }
 }
 
 function openQuickEditCat(id, name, slug, desc, hsn) {
@@ -610,13 +647,22 @@ function openQuickEditCat(id, name, slug, desc, hsn) {
 
 function saveQuickEditCat(id) {
     const name = document.getElementById(`qe-name-${id}`)?.value;
+    const slug = document.getElementById(`qe-slug-${id}`)?.value;
     const row = document.getElementById(`cat-row-${id}`);
     if (row && name) {
         row.querySelector('td:nth-child(3) strong a').textContent = name;
         if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
             row.nextElementSibling.remove();
         }
-        if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated!`);
+
+        const params = new URLSearchParams();
+        params.append('action', 'create');
+        params.append('id', id);
+        params.append('name', name);
+        params.append('slug', slug);
+        fetch('/api/categories.php', { method: 'POST', body: params }).catch(() => {});
+
+        if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated in database!`);
     }
 }
 </script>

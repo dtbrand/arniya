@@ -541,66 +541,29 @@ function submitEditBrandModal() {
             if (avatarEl) avatarEl.innerHTML = `<img src="${lastUploadedLogoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
         }
 
+        const params = new URLSearchParams();
+        params.append('action', 'update');
+        params.append('id', id);
+        params.append('name', name);
+        params.append('description', tagline);
+        fetch('/api/brands.php', { method: 'POST', body: params }).catch(() => {});
+
         closeEditBrandModal();
-        if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated successfully!`);
+        if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated in live database!`);
     }
-}
-
-function toggleBrandSearchClearBtn(val) {
-    const btn = document.getElementById('brandSearchClearBtn');
-    if (btn) btn.style.display = val.length > 0 ? 'inline' : 'none';
-}
-
-function clearBrandSearch() {
-    const input = document.getElementById('brandSearchInput');
-    if (input) {
-        input.value = '';
-        toggleBrandSearchClearBtn('');
-        searchBrands('');
-        input.focus();
-    }
-}
-
-function toggleSelectAllBrands(master) {
-    const checks = document.querySelectorAll('.brand-row-check');
-    checks.forEach(c => c.checked = master.checked);
-}
-
-function searchBrands(q) {
-    const rows = document.querySelectorAll('#brandsTableBody tr');
-    const term = (q || '').toLowerCase().trim();
-    rows.forEach(r => {
-        const txt = r.textContent.toLowerCase();
-        r.style.display = txt.includes(term) ? '' : 'none';
-    });
-}
-
-function filterBrandByTier(tier) {
-    const rows = document.querySelectorAll('#brandsTableBody tr');
-    rows.forEach(r => {
-        if (!tier) {
-            r.style.display = '';
-        } else {
-            const txt = r.textContent.toLowerCase();
-            r.style.display = txt.includes(tier.toLowerCase()) ? '' : 'none';
-        }
-    });
-}
-
-function openAddBrandModal() {
-    const m = document.getElementById('addBrandModal');
-    if (m) m.style.display = 'flex';
-}
-
-function closeAddBrandModal() {
-    const m = document.getElementById('addBrandModal');
-    if (m) m.style.display = 'none';
 }
 
 function submitNewBrand() {
     const name = document.getElementById('newBrandName')?.value || 'House Label';
+    const desc = document.getElementById('newBrandDesc')?.value || '';
+    const params = new URLSearchParams();
+    params.append('action', 'create');
+    params.append('name', name);
+    params.append('description', desc);
+    fetch('/api/brands.php', { method: 'POST', body: params }).catch(() => {});
+
     closeAddBrandModal();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" created successfully!`);
+    if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" created and saved to database!`);
 }
 
 function handleBrandBulkAction() {

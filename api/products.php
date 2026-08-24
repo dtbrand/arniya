@@ -77,10 +77,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     }
 
     $title = trim($_POST['title'] ?? '');
+    $sku = trim($_POST['sku'] ?? '');
+    $category = trim($_POST['category'] ?? $_POST['category_name'] ?? '');
+    $fabric = trim($_POST['fabric'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $mrp = (float)($_POST['mrp'] ?? 0);
     $retail_price = (float)($_POST['retail_price'] ?? 0);
     $wholesale_price = (float)($_POST['wholesale_price'] ?? 0);
+    $reseller_price = (float)($_POST['reseller_price'] ?? 0);
     $stock_qty = (int)($_POST['stock_qty'] ?? 0);
     $status = trim($_POST['status'] ?? 'in_stock');
+    $image = trim($_POST['image'] ?? $_POST['primary_image'] ?? '');
 
     $db = Database::getConnection();
     if ($db !== null && !Database::isMockMode()) {
@@ -88,15 +95,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
             $stmt = $db->prepare("
                 UPDATE products 
                 SET title = COALESCE(NULLIF(?, ''), title),
+                    sku = COALESCE(NULLIF(?, ''), sku),
+                    category_name = COALESCE(NULLIF(?, ''), category_name),
+                    fabric = COALESCE(NULLIF(?, ''), fabric),
+                    description = COALESCE(NULLIF(?, ''), description),
+                    mrp = COALESCE(NULLIF(?, 0), mrp),
                     retail_price = COALESCE(NULLIF(?, 0), retail_price),
                     wholesale_price = COALESCE(NULLIF(?, 0), wholesale_price),
+                    reseller_price = COALESCE(NULLIF(?, 0), reseller_price),
                     stock_qty = ?,
                     status = ?,
+                    primary_image = COALESCE(NULLIF(?, ''), primary_image),
                     updated_at = NOW()
                 WHERE id = ?
             ");
-            $stmt->execute([$title, $retail_price, $wholesale_price, $stock_qty, $status, $id]);
-            echo json_encode(['success' => true, 'message' => 'Product updated successfully', 'id' => $id]);
+            $stmt->execute([
+                $title, $sku, $category, $fabric, $description,
+                $mrp, $retail_price, $wholesale_price, $reseller_price,
+                $stock_qty, $status, $image, $id
+            ]);
+            echo json_encode(['success' => true, 'message' => 'Product updated successfully in live database', 'id' => $id]);
             exit;
         } catch (\Exception $e) {
             http_response_code(500);
@@ -106,6 +124,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
     }
 
     echo json_encode(['success' => true, 'message' => 'Product updated', 'id' => $id]);
+    exit;
+}
+
+// Handle MOVE / Reassign Category
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'move') {
+    $id = (int)($_POST['id'] ?? 0);
+    $category_name = trim($_POST['category'] ?? $_POST['category_name'] ?? '');
+    if ($id > 0 && !empty($category_name)) {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $db->prepare("UPDATE products SET category_name = ?, updated_at = NOW() WHERE id = ?");
+                $stmt->execute([$category_name, $id]);
+                echo json_encode(['success' => true, 'message' => "Product #{$id} moved to {$category_name}"]);
+                exit;
+            } catch (\Exception $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+                exit;
+            }
+        }
+    }
+    echo json_encode(['success' => true, 'message' => 'Product moved']);
     exit;
 }
 

@@ -33,12 +33,16 @@
         if (gDesc) gDesc.textContent = desc;
     };
 
-    window.saveProductToDatabase = function(isDraft) {
+    window.saveProductToDatabase = function(isDraft, customId) {
         const title = document.getElementById('pFormName')?.value.trim();
         if (!title) {
             alert('Please enter a product title!');
             return;
         }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = customId || parseInt(document.getElementById('pFormId')?.value) || parseInt(urlParams.get('id')) || 0;
+        const isUpdate = (productId > 0 && window.location.pathname.includes('edit.php'));
 
         const sku = document.getElementById('pFormSku')?.value.trim() || '';
         const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 6500;
@@ -56,7 +60,10 @@
         const imgPath = mainImg.includes('://') ? new URL(mainImg).pathname : mainImg;
 
         const params = new URLSearchParams();
-        params.append('action', 'create');
+        params.append('action', isUpdate ? 'update' : 'create');
+        if (isUpdate) {
+            params.append('id', productId);
+        }
         params.append('title', title);
         params.append('sku', sku);
         params.append('mrp', mrp);
@@ -78,10 +85,10 @@
         .then(data => {
             if (data.success) {
                 if (typeof window.showToast === 'function') {
-                    window.showToast('✨ Product ' + (isDraft ? 'saved as draft' : 'published') + ' to live catalog!');
+                    window.showToast(isUpdate ? '✨ Product updated successfully in database!' : ('✨ Product ' + (isDraft ? 'saved as draft' : 'published') + ' to live catalog!'));
                 }
                 setTimeout(() => {
-                    window.location.href = '/admin/products/';
+                    window.location.href = '/Frontend/Admin/products/';
                 }, 700);
             } else {
                 alert('Error: ' + (data.message || 'Could not save product'));
@@ -92,8 +99,63 @@
                 window.showToast('✨ Product saved successfully!');
             }
             setTimeout(() => {
-                window.location.href = '/admin/products/';
+                window.location.href = '/Frontend/Admin/products/';
             }, 700);
+        });
+    };
+
+    window.deleteProductFromDatabase = function(productId, title) {
+        if (!confirm('Are you sure you want to delete product "' + (title || '#' + productId) + '" from database?')) {
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append('action', 'delete');
+        params.append('id', productId);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🗑️ Product deleted successfully.');
+                }
+                const row = document.getElementById('product-row-' + productId) || document.querySelector(`tr[data-id="${productId}"]`);
+                if (row) {
+                    row.style.opacity = '0';
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    setTimeout(() => window.location.reload(), 600);
+                }
+            } else {
+                alert('Error: ' + (data.message || 'Could not delete product'));
+            }
+        })
+        .catch(_err => {
+            alert('Network error while deleting product.');
+        });
+    };
+
+    window.moveProductCategory = function(productId, targetCategory) {
+        const params = new URLSearchParams();
+        params.append('action', 'move');
+        params.append('id', productId);
+        params.append('category', targetCategory);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('📁 ' + (data.message || 'Product category updated'));
+                }
+            }
         });
     };
 })();
