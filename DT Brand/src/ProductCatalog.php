@@ -793,5 +793,68 @@ class ProductCatalog
         }
         return true;
     }
+
+    /**
+     * Category CRUD: Update
+     */
+    public static function updateCategory(int $id, array $data): array
+    {
+        if ($id <= 0) return ['success' => false, 'message' => 'Invalid category ID.'];
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $fields = [];
+                $params = [];
+                if (isset($data['name'])) {
+                    $fields[] = 'name = ?';
+                    $params[] = trim($data['name']);
+                }
+                if (isset($data['slug'])) {
+                    $fields[] = 'slug = ?';
+                    $params[] = trim($data['slug']);
+                }
+                if (isset($data['description'])) {
+                    $fields[] = 'description = ?';
+                    $params[] = trim($data['description']);
+                }
+                if (isset($data['image'])) {
+                    $fields[] = 'image = ?';
+                    $params[] = trim($data['image']);
+                }
+                if (empty($fields)) {
+                    return ['success' => true, 'message' => 'No changes.'];
+                }
+                $params[] = $id;
+                $stmt = $pdo->prepare("UPDATE categories SET " . implode(', ', $fields) . " WHERE id = ?");
+                $stmt->execute($params);
+                return ['success' => true, 'id' => $id, 'message' => 'Category updated successfully!'];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => $e->getMessage()];
+            }
+        }
+        return ['success' => true, 'id' => $id, 'message' => 'Category updated!'];
+    }
+
+    /**
+     * Category CRUD: Bulk Delete
+     */
+    public static function bulkDeleteCategories(array $ids): int
+    {
+        $validIds = array_filter(array_map('intval', $ids));
+        if (empty($validIds)) return 0;
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $placeholders = implode(',', array_fill(0, count($validIds), '?'));
+                $stmt = $pdo->prepare("DELETE FROM categories WHERE id IN ($placeholders)");
+                $stmt->execute($validIds);
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+        return count($validIds);
+    }
 }
+
 

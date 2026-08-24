@@ -37,6 +37,17 @@ try {
             exit;
         }
 
+        if ($action === 'update') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Category ID required for update.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $res = ProductCatalog::updateCategory($targetId, $data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
         if ($action === 'delete') {
             if ($targetId <= 0) {
                 http_response_code(400);
@@ -47,6 +58,17 @@ try {
             echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Category deleted.' : 'Failed to delete category.'], JSON_PRETTY_PRINT);
             exit;
         }
+
+        if ($action === 'bulk_delete') {
+            $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = explode(',', $ids);
+            }
+            $count = ProductCatalog::bulkDeleteCategories($ids);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully removed {$count} categories."], JSON_PRETTY_PRINT);
+            exit;
+        }
+
     }
 
     $categories = ProductCatalog::getCategoriesWithDetails();
