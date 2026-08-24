@@ -102,7 +102,14 @@
         "Subchildren",
         "uploaders",
         "SERP",
-        "swipeable"
+        "swipeable",
+        "homebottomfooter",
+        "Myntra",
+        "MYNTRA",
+        "topbar",
+        "colour",
+        "Colour",
+        "hasphoto"
     ],
     "ignorePaths": [
         ".gemini/**",

@@ -2475,8 +2475,8 @@ input[type=range].sf-range::-moz-range-thumb {
     top: 8px;
     left: 8px;
     background: rgba(24, 20, 16, 0.78);
-    backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
     color: #F8D67A;
     font-size: 0.58rem;
     font-weight: 800;

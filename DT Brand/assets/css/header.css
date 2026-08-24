@@ -144,8 +144,8 @@
     padding: 0 10px;
 }
 .dt-search-cat-select {
-    appearance: none;
     -webkit-appearance: none;
+    appearance: none;
     background: transparent;
     border: none;
     outline: none;

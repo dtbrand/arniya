@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup PHP 8.2
-        uses: shivammathur/setup-php@c54f2005d0f5f783775085ef1585885c8d6cead5 # v2.32.0
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, intl, pdo_mysql, curl, gd
@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup PHP & Node
-        uses: shivammathur/setup-php@c54f2005d0f5f783775085ef1585885c8d6cead5 # v2.32.0
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
