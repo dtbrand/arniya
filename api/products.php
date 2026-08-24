@@ -386,7 +386,9 @@ $products = ProductCatalog::filter($filters);
 echo json_encode([
     'success' => true,
     'count' => count($products),
+    'total' => count($products),
     'categories' => ProductCatalog::getCategories(),
+    'products' => $products,
     'data' => $products
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 exit;
