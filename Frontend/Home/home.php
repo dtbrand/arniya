@@ -88,7 +88,7 @@ window.allProducts = <?php echo json_encode($products ?? []); ?>;
 <body>
 
 <!-- ════════════ SECTION 1: EXISTING HEADER PARTIAL ════════════ -->
-<?php $hideHeaderSubnav = true; include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
+<?php include_once __DIR__ . '/../Shop/Includes/shophader.php'; ?>
 
 <div class="page-wrapper">
 

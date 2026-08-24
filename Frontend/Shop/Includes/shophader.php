@@ -997,7 +997,11 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
     </div>
 
     <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
-    <?php if (empty($hideHeaderSubnav) && strpos($_SERVER['PHP_SELF'] ?? '', 'home.php') === false): ?>
+    <?php 
+    require_once __DIR__ . '/../../../src/ProductCatalog.php';
+    $headerCategories = \DTBrand\ProductCatalog::getCategories();
+    ?>
+    <?php if (empty($hideHeaderSubnav)): ?>
     <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation">
         <div class="subnav-scroll-track" id="mainCatSliderTrack" role="tablist">
             <a href="/" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; color:inherit; font-weight:800;">
@@ -1008,23 +1012,21 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
                 <svg class="subnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                 <span>Shop All</span>
             </a>
-            <button class="subnav-item main-cat-tab active" role="tab" data-cat="All" aria-selected="true">
+            <button class="subnav-item main-cat-tab <?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'active' : '' ?>" role="tab" data-cat="All" aria-selected="<?= empty($selectedCategory) || strtolower($selectedCategory) === 'all' ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('All');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('All');}else{window.location.href='/shop?category=all';}">
                 <svg class="subnav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 <span>All Categories</span>
             </button>
-            <button class="subnav-item main-cat-tab" role="tab" data-cat="Sarees" aria-selected="false">Sarees</button>
-            <button class="subnav-item main-cat-tab" role="tab" data-cat="Kurtis" aria-selected="false">Kurtis</button>
-            <button class="subnav-item main-cat-tab" role="tab" data-cat="Gowns" aria-selected="false">Gowns</button>
-            <button class="subnav-item main-cat-tab" role="tab" data-cat="Lehengas" aria-selected="false">Lehengas</button>
-            <button class="subnav-item main-cat-tab" role="tab" data-cat="New Arrivals" aria-selected="false">★ New In</button>
+            <?php foreach ($headerCategories as $hCat): 
+                $isCatActive = isset($selectedCategory) && (strtolower($selectedCategory) === strtolower($hCat) || strtolower(str_replace('-', ' ', $selectedCategory)) === strtolower($hCat));
+            ?>
+            <button class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" role="tab" data-cat="<?= htmlspecialchars($hCat) ?>" aria-selected="<?= $isCatActive ? 'true' : 'false' ?>" onclick="if(typeof window.filterByBanner==='function'){window.filterByBanner('<?= htmlspecialchars(addslashes($hCat)) ?>');}else if(typeof window.filterHomeCategory==='function'){window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>');}else{window.location.href='/shop?category=<?= urlencode($hCat) ?>';}"><?= htmlspecialchars($hCat) ?></button>
+            <?php endforeach; ?>
             <button class="subnav-item subnav-reels-btn" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" aria-label="Watch Video Reels">
                 <span>🎥 Reels</span>
             </button>
         </div>
     </nav>
     <?php endif; ?>
-
-    <?php if (!empty($hideHeaderSubnav) || strpos($_SERVER['PHP_SELF'] ?? '', 'home.php') !== false): ?>
     <!-- ════════════ HOME CATEGORY NAVIGATION STRIP (INTEGRATED INSIDE HEADER) ════════════ -->
     <nav class="home-cat-nav-bar" id="homeCatNavBar" aria-label="Main Categories">
         <div class="home-cat-nav-container">
@@ -1033,26 +1035,16 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
                     <span class="home-cat-pill-icon">✨</span>
                     <span>All Products</span>
                 </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Sarees'); return false;">
-                    <span class="home-cat-pill-icon">🥻</span>
-                    <span>Sarees</span>
+                <?php 
+                $catIcons = ['👑', '✨', '🥻', '👗', '💎', '🌟', '🌸', '🏷️'];
+                foreach ($headerCategories as $idx => $hCat): 
+                    $icon = $catIcons[$idx % count($catIcons)];
+                ?>
+                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('<?= htmlspecialchars(addslashes($hCat)) ?>'); return false;">
+                    <span class="home-cat-pill-icon"><?= $icon ?></span>
+                    <span><?= htmlspecialchars($hCat) ?></span>
                 </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Kurtis'); return false;">
-                    <span class="home-cat-pill-icon">👗</span>
-                    <span>Kurtis</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Gowns'); return false;">
-                    <span class="home-cat-pill-icon">✨</span>
-                    <span>Gowns</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Lehengas'); return false;">
-                    <span class="home-cat-pill-icon">👑</span>
-                    <span>Lehengas</span>
-                </a>
-                <a href="#section-trending" class="home-cat-pill" onclick="if(typeof window.filterHomeCategory==='function') window.filterHomeCategory('Suits'); return false;">
-                    <span class="home-cat-pill-icon">🌟</span>
-                    <span>Suits & Sets</span>
-                </a>
+                <?php endforeach; ?>
                 <a href="#section-deals" class="home-cat-pill hot-pill">
                     <span class="home-cat-pill-icon">🔥</span>
                     <span>New Arrivals</span>
@@ -1076,7 +1068,6 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
             </div>
         </div>
     </nav>
-    <?php endif; ?>
 
 </header>
 
