@@ -5,11 +5,15 @@
     # Security: Disable directory browsing
     Options -Indexes
 
-    # 1. Clean Product Routes: /product/3 or /product/3/ or /product/slug
+    # 1. Canonical 301 Redirects: /home, /home.php, /index.php to clean root /
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(home|home\.php|index\.php)\ HTTP/ [NC]
+    RewriteRule ^(home|home\.php|index\.php)$ / [R=301,L]
+
+    # 2. Clean Product Routes: /product/3 or /product/3/ or /product/slug
     RewriteRule ^product/([0-9]+)/?$ product.php?id=$1 [QSA,L]
     RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [QSA,L]
 
-    # 2. Main Storefront Clean Routes
+    # 3. Main Storefront Clean Routes
     RewriteRule ^shop/?$ shop.php [QSA,L]
     RewriteRule ^wholesale/?$ wholesale.php [QSA,L]
     RewriteRule ^reseller/?$ reseller.php [QSA,L]
@@ -17,7 +21,7 @@
     RewriteRule ^account/?$ account.php [QSA,L]
     RewriteRule ^admin/?$ admin/index.php [QSA,L]
 
-    # 3. Clean Extensionless PHP URL fallback
+    # 4. Clean Extensionless PHP URL fallback
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}.php -f
     RewriteRule ^([^/]+)/?$ $1.php [QSA,L]
