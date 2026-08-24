@@ -1,0 +1,168 @@
+/**
+ * reseller-segments.css — DT Brand's & Jai Hanuman Tex
+ * Reseller Cohorts, Performance Clusters, KPI Ribbon & Partner Directory
+ */
+
+.dt-segment-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .dt-segment-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .dt-segment-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dt-segment-stat-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.dt-segment-stat-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.12);
+}
+
+.dt-segment-stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #FAF5E8;
+    border: 1.2px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A681F;
+    flex-shrink: 0;
+}
+
+.dt-segment-stat-icon.emerald {
+    background: #DCFCE7;
+    border-color: #86EFAC;
+    color: #15803D;
+}
+
+.dt-segment-stat-icon.amber {
+    background: #FEF3C7;
+    border-color: #FDE68A;
+    color: #B45309;
+}
+
+.dt-segment-stat-icon.blue {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: #1D4ED8;
+}
+
+/* 4-Cohort Cards Grid */
+.dt-cohort-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.dt-cohort-card {
+    background: #FAF8F4;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.dt-cohort-card:hover {
+    background: #FFFFFF;
+    border-color: #D4AF37;
+    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.1);
+    transform: translateY(-2px);
+}
+
+.dt-cohort-card.active-cohort {
+    border-color: #8A681F;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px #D4AF37, 0 8px 24px rgba(184, 134, 11, 0.15);
+}
+
+/* Directory Table */
+.dt-segment-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    min-width: 880px;
+}
+
+.dt-segment-table th,
+.dt-segment-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #F1ECE1;
+    vertical-align: middle;
+    white-space: nowrap !important;
+}
+
+.dt-segment-table th {
+    background: #FAF8F4;
+    color: #181512;
+    font-weight: 800;
+    text-align: left;
+    border-bottom: 1.5px solid #EAE5D9;
+}
+
+.dt-segment-table tbody tr:hover {
+    background: #FDFBF7;
+}
+
+.dt-status-pill-clean {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.dt-status-pill-clean.gold {
+    background: #FAF5E8 !important;
+    color: #8A681F !important;
+    border: 1px solid #D4AF37 !important;
+}
+
+.dt-status-pill-clean.emerald {
+    background: #DCFCE7 !important;
+    color: #15803D !important;
+    border: 1px solid #86EFAC !important;
+}
+
+.dt-status-pill-clean.blue {
+    background: #EFF6FF !important;
+    color: #1D4ED8 !important;
+    border: 1px solid #BFDBFE !important;
+}
+
+.dt-status-pill-clean.amber {
+    background: #FEF3C7 !important;
+    color: #B45309 !important;
+    border: 1px solid #FDE68A !important;
+}

@@ -1,0 +1,42 @@
+/**
+ * wholesale-tiers.css — DT Brand's & Jai Hanuman Tex
+ * Wholesale Tiers Studio, Qualification Thresholds & Benefits
+ */
+
+.dt-tiers-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.dt-tier-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.dt-tier-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(184, 134, 11, 0.12);
+}
+
+.dt-tier-card.platinum {
+    border-color: #8A681F;
+    box-shadow: 0 0 0 1px #D4AF37, 0 8px 24px rgba(184, 134, 11, 0.15);
+}
+
+.dt-tier-benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    color: #181512;
+    font-weight: 600;
+}

@@ -1,0 +1,499 @@
+/**
+ * order-list.css — Order Table, Search, Filters, Bulk Actions & Pagination
+ * DT Brand's & Jai Hanuman Tex
+ */
+
+/* ════ TOOLBAR & SEARCH SECTION ════ */
+.dt-order-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.dt-order-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 380px;
+}
+
+.dt-order-search-icon {
+    display: none !important;
+}
+
+.dt-order-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 28px 0 10px;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #1E293B;
+    background: #FAF8F4;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.dt-order-search-input:focus {
+    border-color: var(--dt-gold-radiant);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.18);
+}
+
+.dt-order-search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #E2E8F0;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 9px;
+    color: #475569;
+}
+
+.dt-order-search-clear.visible {
+    display: flex;
+}
+
+.dt-order-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ════ BULK ACTION BAR (SHOWN WHEN CHECKBOXES SELECTED) ════ */
+.dt-bulk-bar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.40) 0%, transparent 65%), linear-gradient(135deg, rgba(38, 28, 14, 0.98) 0%, rgba(58, 44, 18, 0.95) 50%, rgba(24, 18, 10, 0.98) 100%);
+    border: 1.5px solid #D4AF37;
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.3), 0 0 15px rgba(212,175,55,0.25);
+    animation: dtFadeInDown 0.2s ease-out;
+}
+
+.dt-bulk-bar.active {
+    display: flex;
+}
+
+@keyframes dtFadeInDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dt-bulk-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--dt-gold-radiant);
+}
+
+.dt-bulk-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* ════ ORDER TABLE CARD & CONTAINER ════ */
+.dt-order-table-card {
+    background: #FFFFFF;
+    border: 1px solid var(--dt-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.dt-table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dt-order-table {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    text-align: left;
+}
+
+.dt-order-table thead th {
+    background: #FAF8F4;
+    border-bottom: 1.5px solid #E2DFD7;
+    padding: 8px 10px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.dt-order-table tbody tr {
+    border-bottom: 1px solid #F1EFE9;
+    border-left: 2.5px solid transparent;
+    transition: all 0.12s ease;
+}
+
+.dt-order-table tbody tr:hover {
+    background: #FDFBF7;
+    border-left-color: var(--dt-gold-radiant);
+}
+
+.dt-order-table tbody tr.selected {
+    background: #FAF5E8;
+    border-left-color: var(--dt-gold);
+}
+
+.dt-order-table td {
+    padding: 7px 10px;
+    vertical-align: middle;
+    color: #1E293B;
+}
+
+/* Checkbox Style */
+.dt-checkbox {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--dt-gold);
+    cursor: pointer;
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* Order ID Link */
+.dt-order-id-link {
+    font-weight: 800;
+    color: var(--dt-obsidian);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11.5px;
+    transition: color 0.15s ease;
+    white-space: nowrap;
+}
+
+.dt-order-id-link:hover {
+    color: var(--dt-gold);
+}
+
+/* Customer Meta in Row */
+.dt-customer-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 130px;
+    max-width: 170px;
+}
+
+.dt-customer-name {
+    font-weight: 700;
+    color: #0F172A;
+    font-size: 11.5px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dt-customer-phone {
+    font-size: 10px;
+    color: #64748B;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Items Preview Pill */
+.dt-items-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #8A681F;
+    white-space: nowrap;
+}
+
+/* Amount Display */
+.dt-amount-cell {
+    font-weight: 800;
+    color: var(--dt-obsidian);
+    font-size: 12px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-feature-settings: "tnum";
+}
+
+/* Table Row Action Menu */
+.dt-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.dt-action-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid #E2E8F0;
+    background: #FFFFFF;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.dt-action-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.dt-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.dt-action-btn.view {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: #1D4ED8;
+}
+
+.dt-action-btn.view:hover {
+    background: #DBEAFE;
+    border-color: #93C5FD;
+    color: #1E40AF;
+}
+
+.dt-action-btn.edit {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+}
+
+.dt-action-btn.edit:hover {
+    background: #F5EDD6;
+    border-color: #8A681F;
+    color: #5A4210;
+}
+
+.dt-action-btn.invoice {
+    background: #DCFCE7;
+    border-color: #86EFAC;
+    color: #15803D;
+}
+
+.dt-action-btn.invoice:hover {
+    background: #BBF7D0;
+    border-color: #4ADE80;
+    color: #166534;
+}
+
+.dt-action-btn.packing {
+    background: #FEF3C7;
+    border-color: #FCD34D;
+    color: #B45309;
+}
+
+.dt-action-btn.packing:hover {
+    background: #FDE68A;
+    border-color: #F59E0B;
+    color: #92400E;
+}
+
+.dt-action-btn.label {
+    background: #FAF5E8;
+    border-color: #D4AF37;
+    color: #8A681F;
+}
+
+.dt-action-btn.label:hover {
+    background: #F5EDD6;
+    border-color: #8A681F;
+    color: #5A4210;
+}
+
+.dt-action-btn.danger {
+    background: #FEF2F2;
+    border-color: #FECACA;
+    color: #DC2626;
+}
+
+.dt-action-btn.danger:hover {
+    background: #FEE2E2;
+    border-color: #F87171;
+    color: #991B1B;
+}
+
+/* ════ PAGINATION BAR ════ */
+.dt-pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #FAF8F4;
+    border-top: 1px solid #E2DFD7;
+}
+
+.dt-pagination-info {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.dt-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dt-page-btn {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 4px;
+    border: 1px solid #CBD5E1;
+    background: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dt-page-btn:hover:not(:disabled) {
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold);
+    border-color: var(--dt-gold-radiant);
+}
+
+.dt-page-btn.active {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    color: var(--dt-gold-radiant);
+    border-color: var(--dt-gold);
+}
+
+.dt-page-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ════ ADVANCED FILTERS DRAWER / MODAL ════ */
+.dt-filter-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #FFFFFF;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dt-filter-drawer.open {
+    right: 0;
+}
+
+.dt-drawer-head {
+    padding: 16px;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAF8F4;
+}
+
+.dt-drawer-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--dt-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-drawer-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.dt-drawer-close:hover {
+    background: #E2E8F0;
+    color: #0F172A;
+}
+
+.dt-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dt-drawer-foot {
+    padding: 14px 16px;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    background: #FAF8F4;
+}

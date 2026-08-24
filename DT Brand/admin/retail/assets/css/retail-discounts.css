@@ -1,0 +1,28 @@
+/**
+ * retail-discounts.css — DT Brand's & Jai Hanuman Tex
+ * Retail Promo Codes, Discount Vouchers & Merchandising Rules
+ */
+
+.dt-discount-voucher-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.dt-discount-voucher-code {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #8A681F;
+    background: #FAF5E8;
+    border: 1px dashed #D4AF37;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}

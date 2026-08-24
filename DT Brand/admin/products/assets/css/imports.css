@@ -1,0 +1,60 @@
+/**
+ * imports.css — 7-Step Product Import Wizard & Export Studio
+ */
+
+.dt-wizard-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.dt-wizard-steps::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: #E5E1D7;
+    z-index: 1;
+}
+
+.dt-step-node {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background: #F8F6F0;
+    padding: 0 10px;
+}
+
+.dt-step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2px solid #E5E1D7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    margin: 0 auto 6px;
+    color: #7A7266;
+    transition: all 0.2s ease;
+}
+
+.dt-step-node.active .dt-step-num {
+    background: #8A681F;
+    border-color: #8A681F;
+    color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(138, 104, 31, 0.2);
+}
+
+.dt-step-lbl {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #7A7266;
+    text-transform: uppercase;
+}

@@ -1,0 +1,177 @@
+/* ==========================================================================
+   navigation.css — Visual Menu Builder, Drag & Drop & Live Mega Menu Simulator
+   DT Brand's & Jai Hanuman Tex
+   ========================================================================== */
+
+.dt-nav-builder-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 18px;
+}
+@media (max-width: 900px) {
+    .dt-nav-builder-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dt-nav-avail-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 16px;
+}
+.dt-nav-struct-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+/* ── Draggable Navigation Tree List ── */
+.dt-menu-nest-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dt-menu-nest-item {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: grab;
+    transition: all 0.2s ease;
+    user-select: none;
+    box-sizing: border-box;
+}
+.dt-menu-nest-item:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 2px 8px rgba(212,175,55,0.18);
+}
+.dt-menu-nest-item.is-child {
+    margin-left: 28px;
+    border-left: 3px solid #8A681F;
+    background: #FAF5E8;
+}
+.dt-menu-nest-item.is-subchild {
+    margin-left: 56px;
+    border-left: 3px solid #D4AF37;
+    background: #FDFBF7;
+}
+
+/* Dragging Ghost Feedback States */
+.dt-menu-nest-item.is-dragging {
+    opacity: 0.4;
+    border: 2px dashed #8A681F;
+    background: #FAF5E8;
+}
+.dt-menu-nest-item.drag-over-top {
+    border-top: 3px solid #8A681F !important;
+}
+.dt-menu-nest-item.drag-over-bottom {
+    border-bottom: 3px solid #8A681F !important;
+}
+
+.dt-menu-drag-grip {
+    display: flex;
+    align-items: center;
+    color: #8A681F;
+    cursor: grab;
+    flex-shrink: 0;
+}
+
+/* ── Live Desktop Mega Menu Preview ── */
+.dt-mega-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    background: #181512;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #D4AF37;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+@media (max-width: 800px) {
+    .dt-mega-menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+}
+@media (max-width: 500px) {
+    .dt-mega-menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.dt-mega-col-title {
+    color: #D4AF37;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+.dt-mega-link {
+    color: #cbd5e1;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 6px;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.dt-mega-link:hover {
+    color: #D4AF37;
+    padding-left: 2px;
+}
+
+/* ── Live Mobile Drawer Navigation Simulator ── */
+.dt-mobile-nav-drawer {
+    width: 240px;
+    background: #fff;
+    border: 6px solid #181512;
+    border-radius: 20px;
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+}
+.dt-mob-drawer-header {
+    background: #181512;
+    color: #D4AF37;
+    padding: 10px 14px;
+    font-weight: 800;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dt-mob-drawer-body {
+    padding: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.dt-mob-menu-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #181512;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+}
+.dt-mob-menu-link.is-sub {
+    padding-left: 22px;
+    font-weight: 500;
+    font-size: 11px;
+    color: #64748b;
+    background: #FAF5E8;
+}

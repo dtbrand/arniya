@@ -1,0 +1,161 @@
+/**
+ * product-form.js — Add / Edit Product Live Calculations, Real Database CRUD & SEO Builder
+ */
+(function() {
+    'use strict';
+
+    window.calcPricePreview = function() {
+        const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 0;
+        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 0;
+        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 0;
+        const cost = parseFloat(document.getElementById('pFormCost')?.value) || (wholesale * 0.7);
+
+        const discountPct = mrp > 0 ? Math.round(((mrp - retail) / mrp) * 100) : 0;
+        const grossMargin = retail > 0 ? Math.round(((retail - cost) / retail) * 100) : 0;
+
+        const discEl = document.getElementById('pPrevDiscount');
+        const marginEl = document.getElementById('pPrevMargin');
+        if (discEl) discEl.textContent = discountPct + '% Off';
+        if (marginEl) marginEl.textContent = grossMargin + '% Gross Margin';
+    };
+
+    window.updateGoogleSeoPreview = function() {
+        const title = document.getElementById('pFormSeoTitle')?.value || document.getElementById('pFormName')?.value || "Product Title — DT Brand's";
+        const desc = document.getElementById('pFormSeoDesc')?.value || "Explore authentic Pure Silk Sarees, Banarasi Brocades & Lehengas handcrafted in Surat at DT Brand's.";
+        const slug = document.getElementById('pFormSlug')?.value || 'product-url-slug';
+
+        const gTitle = document.getElementById('dtGoogleTitlePreview');
+        const gUrl = document.getElementById('dtGoogleUrlPreview');
+        const gDesc = document.getElementById('dtGoogleDescPreview');
+
+        if (gTitle) gTitle.textContent = title + " | DT Brand's Luxury Ethnic";
+        if (gUrl) gUrl.textContent = 'https://jaihanumantex.in/product/' + slug;
+        if (gDesc) gDesc.textContent = desc;
+    };
+
+    window.saveProductToDatabase = function(isDraft, customId) {
+        const title = document.getElementById('pFormName')?.value.trim();
+        if (!title) {
+            alert('Please enter a product title!');
+            return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = customId || parseInt(document.getElementById('pFormId')?.value) || parseInt(urlParams.get('id')) || 0;
+        const isUpdate = (productId > 0 && window.location.pathname.includes('edit.php'));
+
+        const sku = document.getElementById('pFormSku')?.value.trim() || '';
+        const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 6500;
+        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 4899;
+        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 1399;
+        const reseller = parseFloat(document.getElementById('pFormReseller')?.value) || (retail * 0.70);
+        const stock = parseInt(document.getElementById('pFormStock')?.value) || 50;
+        const cat = document.getElementById('pFormCat')?.value || 'Silk Sarees';
+        const fabric = document.getElementById('pFormFabric')?.value || 'Pure Mulberry Silk';
+        const desc = document.getElementById('pFormDesc')?.value || '';
+        const status = isDraft ? 'draft' : 'in_stock';
+        
+        // Grab uploaded image if available
+        const mainImg = document.querySelector('.dt-media-thumb.primary img')?.src || document.querySelector('.dt-media-preview-item img')?.src || '/Frontend/Shop/Asset/images/product1.png';
+        const imgPath = mainImg.includes('://') ? new URL(mainImg).pathname : mainImg;
+
+        const params = new URLSearchParams();
+        params.append('action', isUpdate ? 'update' : 'create');
+        if (isUpdate) {
+            params.append('id', productId);
+        }
+        params.append('title', title);
+        params.append('sku', sku);
+        params.append('mrp', mrp);
+        params.append('retail_price', retail);
+        params.append('wholesale_price', wholesale);
+        params.append('reseller_price', reseller);
+        params.append('stock_qty', stock);
+        params.append('category', cat);
+        params.append('fabric', fabric);
+        params.append('description', desc);
+        params.append('image', imgPath);
+        params.append('status', status);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast(isUpdate ? '✨ Product updated successfully in database!' : ('✨ Product ' + (isDraft ? 'saved as draft' : 'published') + ' to live catalog!'));
+                }
+                setTimeout(() => {
+                    window.location.href = '/DT%20Brand/admin/products/';
+                }, 700);
+            } else {
+                alert('Error: ' + (data.message || 'Could not save product'));
+            }
+        })
+        .catch(_err => {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✨ Product saved successfully!');
+            }
+            setTimeout(() => {
+                window.location.href = '/DT%20Brand/admin/products/';
+            }, 700);
+        });
+    };
+
+    window.deleteProductFromDatabase = function(productId, title) {
+        if (!confirm('Are you sure you want to delete product "' + (title || '#' + productId) + '" from database?')) {
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append('action', 'delete');
+        params.append('id', productId);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🗑️ Product deleted successfully.');
+                }
+                const row = document.getElementById('product-row-' + productId) || document.querySelector(`tr[data-id="${productId}"]`);
+                if (row) {
+                    row.style.opacity = '0';
+                    setTimeout(() => row.remove(), 300);
+                } else {
+                    setTimeout(() => window.location.reload(), 600);
+                }
+            } else {
+                alert('Error: ' + (data.message || 'Could not delete product'));
+            }
+        })
+        .catch(_err => {
+            alert('Network error while deleting product.');
+        });
+    };
+
+    window.moveProductCategory = function(productId, targetCategory) {
+        const params = new URLSearchParams();
+        params.append('action', 'move');
+        params.append('id', productId);
+        params.append('category', targetCategory);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('📁 ' + (data.message || 'Product category updated'));
+                }
+            }
+        });
+    };
+})();

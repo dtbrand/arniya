@@ -1,0 +1,283 @@
+/**
+ * product-list.css — Desktop Data Table, Filters, Search & Bulk Actions
+ */
+
+/* ── TABLE CARD & TOOLBAR ── */
+.dt-table-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: var(--adm-radius-md, 12px);
+    box-shadow: var(--adm-shadow-sm, 0 1px 3px rgba(0,0,0,0.04));
+    overflow: hidden;
+}
+
+.dt-toolbar {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--adm-border-soft, #E5E1D7);
+    background: #FAF8F4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.dt-search-wrap {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+}
+
+.dt-search-icon {
+    display: none !important;
+}
+
+.dt-search-input {
+    width: 100%;
+    height: 38px;
+    padding: 0 34px 0 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    border: 1.2px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: var(--adm-radius-sm, 8px);
+    background: #FFFFFF;
+    color: var(--adm-text-main, #181512);
+    transition: all 0.2s ease;
+}
+
+.dt-search-input:focus {
+    border-color: var(--adm-gold, #8A681F);
+    box-shadow: 0 0 0 3px rgba(138, 104, 31, 0.15);
+    outline: none;
+}
+
+.dt-search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #E5E1D7;
+    color: #5A5348;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* Search Suggestions Popover */
+.dt-search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: #FFFFFF;
+    border: 1px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 100;
+    display: none;
+}
+
+.dt-search-suggestions.open { display: block; }
+
+.dt-suggestion-item {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.dt-suggestion-item:hover { background: #FAF5E8; color: #8A681F; }
+
+/* ── ADVANCED FILTERS BAR ── */
+.dt-filters-bar {
+    padding: 12px 20px;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--adm-border-soft, #E5E1D7);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dt-filter-pill-select {
+    height: 34px;
+    padding: 0 28px 0 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border: 1px solid var(--adm-border-soft, #E5E1D7);
+    border-radius: 6px;
+    background: #FAF8F4;
+    color: var(--adm-text-main, #181512);
+    cursor: pointer;
+}
+
+.dt-filter-pill-select:focus { border-color: var(--adm-gold, #8A681F); outline: none; }
+
+/* ── BULK ACTIONS STRIP ── */
+.dt-bulk-strip {
+    background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.40) 0%, transparent 65%), linear-gradient(135deg, rgba(38, 28, 14, 0.98) 0%, rgba(58, 44, 18, 0.95) 50%, rgba(24, 18, 10, 0.98) 100%);
+    border: 1.5px solid #D4AF37;
+    border-radius: 8px;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.3), 0 0 15px rgba(212,175,55,0.25);
+    animation: dtSlideDown 0.2s ease;
+}
+
+.dt-bulk-strip.open { display: flex; }
+
+.dt-bulk-btns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-bulk-btn {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.12);
+    color: #FFFFFF;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dt-bulk-btn:hover {
+    background: var(--adm-gold, #8A681F);
+    border-color: var(--adm-gold, #8A681F);
+}
+
+.dt-bulk-btn.danger:hover {
+    background: #DC2626;
+    border-color: #DC2626;
+}
+
+/* ── DATA TABLE ── */
+.dt-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.dt-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+    text-align: left;
+}
+
+.dt-data-table th {
+    background: #FAF8F4;
+    padding: 12px 14px;
+    font-weight: 700;
+    color: var(--adm-text-muted, #7A7266);
+    border-bottom: 1.5px solid var(--adm-border-soft, #E5E1D7);
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+}
+
+.dt-data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #F0EDE6;
+    color: var(--adm-text-body, #3B352E);
+    vertical-align: middle;
+}
+
+.dt-data-table tr:hover td {
+    background: #FAF8F4;
+}
+
+/* Product Cell */
+.dt-prod-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.dt-prod-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid var(--adm-border-soft, #E5E1D7);
+}
+
+.dt-prod-info-name {
+    font-weight: 700;
+    color: var(--adm-text-main, #181512);
+    display: block;
+    line-height: 1.3;
+}
+
+.dt-prod-info-sku {
+    font-size: 0.72rem;
+    color: var(--adm-gold, #8A681F);
+    font-weight: 600;
+}
+
+/* ── PAGINATION ── */
+.dt-pagination {
+    padding: 14px 20px;
+    background: #FAF8F4;
+    border-top: 1px solid var(--adm-border-soft, #E5E1D7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.dt-page-info {
+    font-size: 0.78rem;
+    color: var(--adm-text-muted, #7A7266);
+}
+
+.dt-page-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dt-page-btn {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid var(--adm-border-soft, #E5E1D7);
+    background: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--adm-text-main, #181512);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dt-page-btn:hover {
+    border-color: var(--adm-gold, #8A681F);
+    color: var(--adm-gold, #8A681F);
+}
+
+.dt-page-btn.active {
+    background: var(--adm-gold, #8A681F);
+    color: #FFFFFF;
+    border-color: var(--adm-gold, #8A681F);
+}

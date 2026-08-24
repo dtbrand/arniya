@@ -1,0 +1,439 @@
+/**
+ * wholesale.css — DT Brand's & Jai Hanuman Tex
+ * Master Wholesale B2B Design System Tokens, Badges, Luxury Buttons & Focus Lines
+ */
+
+:root {
+    --dt-gold-primary: #8A681F;
+    --dt-gold-light: #D4AF37;
+    --dt-gold-accent: #FFE57F;
+    --dt-gold-pale: #FAF5E8;
+    --dt-dark-obsidian: #181512;
+    --dt-dark-velvet: #2A241E;
+    --dt-border-light: #EAE5D9;
+    --dt-border-subtle: #F1ECE1;
+    --dt-text-heading: #111827;
+    --dt-text-body: #1F2937;
+    --dt-text-muted: #64748B;
+    --dt-emerald-text: #15803D;
+    --dt-emerald-bg: #DCFCE7;
+    --dt-emerald-border: #86EFAC;
+    --dt-amber-text: #B45309;
+    --dt-amber-bg: #FEF3C7;
+    --dt-amber-border: #FDE68A;
+    --dt-crimson-text: #DC2626;
+    --dt-crimson-bg: #FEF2F2;
+    --dt-crimson-border: #FECACA;
+    --dt-blue-text: #1D4ED8;
+    --dt-blue-bg: #EFF6FF;
+    --dt-blue-border: #BFDBFE;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GOLD & PLATINUM MIX ANIMATED RUNNING BORDER FOCUS LINE
+══════════════════════════════════════════════════════════════ */
+@property --dt-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes dtBorderRotate {
+    to {
+        --dt-border-angle: 360deg;
+    }
+}
+
+@keyframes dtGoldPlatinumGlow {
+    0% {
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.45), 0 0 16px rgba(226, 232, 240, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.75), 0 0 28px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.dt-wholesale-input:focus,
+.dt-wholesale-select:focus,
+.dt-wholesale-textarea:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+                conic-gradient(from var(--dt-border-angle), #D4AF37 0deg, #FFFFFF 60deg, #E2E8F0 120deg, #D4AF37 180deg, #FFFFFF 240deg, #B8860B 300deg, #D4AF37 360deg) border-box !important;
+    animation: dtBorderRotate 2s linear infinite, dtGoldPlatinumGlow 1.5s ease-in-out infinite alternate !important;
+    color: #111827 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MASTER LUXURY BUTTON STYLING (DT BRAND'S STANDARD)
+══════════════════════════════════════════════════════════════ */
+.dt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    border: none;
+    box-sizing: border-box;
+}
+
+.dt-btn-sm {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    border-radius: 6px;
+}
+
+.dt-btn-lg {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    border-radius: 9px;
+}
+
+/* Radiant Gold Button */
+.dt-btn-gold {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1px solid #8A681F;
+    color: #111827 !important;
+    font-weight: 800;
+    letter-spacing: -0.011em;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(184,134,11,0.35);
+}
+
+.dt-btn-gold:hover {
+    background: linear-gradient(135deg, #C59312 0%, #DFC04E 50%, #F0D77B 100%);
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 14px rgba(184,134,11,0.48);
+}
+
+/* Dark Obsidian Hero Button */
+.dt-btn-dark {
+    background: linear-gradient(135deg, #181512 0%, #2A241E 100%);
+    border: 1.2px solid #8A681F;
+    color: #FAF5E8 !important;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.dt-btn-dark:hover {
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+
+/* WhatsApp Emerald Button */
+.dt-btn-emerald {
+    background: linear-gradient(135deg, #15803D 0%, #16A34A 100%);
+    border: 1px solid #166534;
+    color: #FFFFFF !important;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(21,128,61,0.3);
+}
+
+.dt-btn-emerald:hover {
+    background: linear-gradient(135deg, #166534 0%, #15803D 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(21,128,61,0.45);
+}
+
+/* Pale Gold Secondary Action Pill */
+.dt-btn-pale {
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #705114 !important;
+    font-weight: 700;
+}
+
+.dt-btn-pale:hover {
+    background: #F5ECCE;
+    color: #5A4210 !important;
+    border-color: #8A681F;
+    transform: translateY(-1px);
+}
+
+/* Soft Blue Info Pill */
+.dt-btn-info {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: #1D4ED8 !important;
+    font-weight: 700;
+}
+
+.dt-btn-info:hover {
+    background: #DBEAFE;
+    color: #1E40AF !important;
+    border-color: #93C5FD;
+}
+
+/* Crimson Danger Button */
+.dt-btn-danger {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626 !important;
+    font-weight: 700;
+}
+
+.dt-btn-danger:hover {
+    background: #FEE2E2;
+    color: #B91C1C !important;
+    border-color: #F87171;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STRICT SINGLE-LINE STATUS PILLS
+══════════════════════════════════════════════════════════════ */
+.dt-status-pill-clean {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase;
+}
+
+.dt-status-pill-clean.gold {
+    background: #FAF5E8 !important;
+    color: #8A681F !important;
+    border: 1px solid #D4AF37 !important;
+}
+
+.dt-status-pill-clean.emerald {
+    background: #DCFCE7 !important;
+    color: #15803D !important;
+    border: 1px solid #86EFAC !important;
+}
+
+.dt-status-pill-clean.amber {
+    background: #FEF3C7 !important;
+    color: #B45309 !important;
+    border: 1px solid #FDE68A !important;
+}
+
+.dt-status-pill-clean.blue {
+    background: #EFF6FF !important;
+    color: #1D4ED8 !important;
+    border: 1px solid #BFDBFE !important;
+}
+
+.dt-status-pill-clean.crimson {
+    background: #FEF2F2 !important;
+    color: #DC2626 !important;
+    border: 1px solid #FECACA !important;
+}
+
+.dt-status-pill-clean.purple {
+    background: #FAF5FF !important;
+    color: #7E22CE !important;
+    border: 1px solid #E9D5FF !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONTAINER & GENERAL CARDS
+══════════════════════════════════════════════════════════════ */
+.dt-wholesale-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.dt-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--dt-border-light);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.dt-card-head {
+    padding: 14px 18px;
+    border-bottom: 1.5px solid var(--dt-border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #FAF8F4;
+}
+
+.dt-card-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--dt-dark-obsidian);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LUXURY SLIDE-OVER RIGHT FILTER DRAWER & BACKDROP
+══════════════════════════════════════════════════════════════ */
+.dt-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    z-index: 99998;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.dt-drawer-backdrop.open {
+    display: block;
+    opacity: 1;
+}
+
+.dt-filter-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 380px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #FFFFFF;
+    box-shadow: -6px 0 30px rgba(0, 0, 0, 0.28);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.dt-filter-drawer.open {
+    right: 0;
+}
+
+.dt-drawer-head {
+    padding: 16px 18px;
+    border-bottom: 1.5px solid #EAE5D9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FAF8F4;
+}
+
+.dt-drawer-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #181512;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-drawer-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #EAE5D9;
+    background: #FFFFFF;
+    color: #78716C;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.dt-drawer-close:hover {
+    background: #FEF2F2;
+    color: #DC2626;
+    border-color: #FECACA;
+}
+
+.dt-drawer-body {
+    padding: 18px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MASTER WHOLESALE TABLE STYLES (UNIVERSAL)
+══════════════════════════════════════════════════════════════ */
+.dt-wholesale-table-wrap {
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    border-top: 1px solid var(--dt-border-subtle);
+    background: #FFFFFF;
+}
+
+.dt-wholesale-table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    table-layout: auto;
+}
+
+.dt-wholesale-table th,
+.dt-wholesale-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--dt-border-subtle);
+    vertical-align: middle;
+    white-space: nowrap !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dt-wholesale-table th {
+    background: #FAF8F4;
+    color: var(--dt-dark-obsidian);
+    font-weight: 800;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+    text-align: left;
+    border-bottom: 1.5px solid var(--dt-border-light);
+}
+
+.dt-wholesale-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.dt-wholesale-table tbody tr:hover {
+    background: #FDFBF7;
+}
+
+.dt-wholesale-table td a {
+    color: var(--dt-dark-obsidian);
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.dt-wholesale-table td a:hover {
+    color: var(--dt-gold-primary);
+}
+

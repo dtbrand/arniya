@@ -1,0 +1,110 @@
+/**
+ * retail-dashboard.css — DT Brand's & Jai Hanuman Tex
+ * Retail Dashboard 12-Card KPI Grid & Sales Velocity Styling
+ */
+
+.dt-retail-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+@media (max-width: 1024px) {
+    .dt-retail-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .dt-retail-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
+.dt-retail-kpi-card {
+    background: #FFFFFF;
+    border: 1.5px solid #EAE5D9;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dt-retail-kpi-card:hover {
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(138, 104, 31, 0.08);
+}
+
+.dt-retail-kpi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dt-retail-kpi-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #78716C;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.dt-retail-kpi-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A681F;
+}
+
+.dt-retail-kpi-icon.emerald {
+    background: #DCFCE7;
+    border-color: #86EFAC;
+    color: #15803D;
+}
+
+.dt-retail-kpi-icon.blue {
+    background: #EFF6FF;
+    border-color: #BFDBFE;
+    color: #1D4ED8;
+}
+
+.dt-retail-kpi-icon.amber {
+    background: #FEF3C7;
+    border-color: #FCD34D;
+    color: #B45309;
+}
+
+.dt-retail-kpi-icon.crimson {
+    background: #FEE2E2;
+    border-color: #FCA5A5;
+    color: #DC2626;
+}
+
+.dt-retail-kpi-val {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #181512;
+    margin: 2px 0;
+}
+
+.dt-retail-kpi-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    color: #78716C;
+    border-top: 1px dashed #F1ECE1;
+    padding-top: 5px;
+}

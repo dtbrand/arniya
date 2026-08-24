@@ -1,0 +1,42 @@
+/**
+ * retail-customers.css — DT Brand's & Jai Hanuman Tex
+ * Retail Customer Directory, Profile Link & Segment Badges
+ */
+
+.dt-retail-cust-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF5E8;
+    border: 1px solid #D4AF37;
+    color: #8A681F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.dt-retail-cust-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.dt-retail-cust-name {
+    font-weight: 800;
+    color: #181512;
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+.dt-retail-cust-name:hover {
+    color: #8A681F;
+    text-decoration: underline;
+}
+
+.dt-retail-cust-sub {
+    font-size: 0.7rem;
+    color: #78716C;
+}

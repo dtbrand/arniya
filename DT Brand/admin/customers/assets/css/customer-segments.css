@@ -1,0 +1,128 @@
+/**
+ * customer-segments.css — Segment Rule Builder & Cohort Management
+ * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
+ */
+
+.dt-segment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.dt-segment-card {
+    background: #FFFFFF;
+    border: 1.2px solid var(--dt-border-light);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+
+.dt-segment-card:hover {
+    border-color: var(--dt-gold-radiant);
+    box-shadow: 0 6px 18px rgba(138, 104, 31, 0.08);
+}
+
+.dt-segment-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.dt-segment-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dt-segment-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dt-gold-pale);
+    color: var(--dt-gold-primary);
+    border: 1px solid var(--dt-gold-radiant);
+    flex-shrink: 0;
+}
+
+.dt-segment-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #181512;
+    margin: 0;
+}
+
+.dt-segment-sub {
+    font-size: 0.72rem;
+    color: #78716C;
+    margin: 0;
+}
+
+.dt-segment-conditions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #FAF8F4;
+    border: 1px solid #EAE5D9;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.dt-segment-cond-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #4B5563;
+}
+
+.dt-segment-cond-badge {
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: #181512;
+}
+
+.dt-segment-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1.5px solid #F1ECE1;
+}
+
+.dt-segment-count {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--dt-dark-obsidian);
+    font-family: var(--dt-font-sans);
+}
+
+@keyframes dtModalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .dt-segment-grid {
+        grid-template-columns: 1fr;
+    }
+}
