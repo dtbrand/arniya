@@ -39,16 +39,35 @@
                 : Math.round(file.size / 1024) + ' KB';
 
             if (dimLabel) {
-                dimLabel.textContent = `High-Res Cover (${sizeStr})`;
+                dimLabel.textContent = `High-Res Cover (${sizeStr}) • Uploading...`;
             }
 
-            if (typeof window.showToast === 'function') {
-                window.showToast('⭐️ Main catalog photo updated successfully!');
-            }
+            // Real Server Upload
+            const fd = new FormData();
+            fd.append('file', file);
+            fetch('/api/upload.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success && res.url) {
+                    if (mainImg) mainImg.src = res.url;
+                    if (dimLabel) dimLabel.textContent = `High-Res Cover (${sizeStr}) • Saved to Server`;
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('⭐️ Main photo uploaded to server successfully!');
+                    }
+                }
+            })
+            .catch(_err => {
+                if (dimLabel) dimLabel.textContent = `High-Res Cover (${sizeStr})`;
+            });
+
             updateMediaCounts();
         };
         reader.readAsDataURL(file);
     };
+
 
     window.removeMainPhoto = function() {
         const previewWrap = document.getElementById('mainPhotoPreviewWrap');
@@ -244,7 +263,9 @@
             window.showToast('🎬 Video link added successfully!');
         }
         // Switch back to upload tab to see list
-        switchVideoTab('upload');
+        if (typeof window.switchVideoTab === 'function') {
+            window.switchVideoTab('upload');
+        }
         updateMediaCounts();
     };
 
@@ -258,7 +279,7 @@
         const addSlot = grid ? grid.querySelector('.dt-gallery-add-slot') : null;
         let loadedCount = 0;
 
-        Array.from(files).forEach((file, index) => {
+        Array.from(files).forEach((file, _index) => {
             if (!file.type.startsWith('image/')) return;
 
             const reader = new FileReader();
@@ -288,6 +309,20 @@
                     grid.appendChild(card);
                 }
 
+                // Upload to server in background
+                const fd = new FormData();
+                fd.append('file', file);
+                fetch('/api/upload.php', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success && res.url) {
+                        card.setAttribute('data-src', res.url);
+                        const img = card.querySelector('img');
+                        if (img) img.src = res.url;
+                    }
+                })
+                .catch(_err => {});
+
                 loadedCount++;
                 if (loadedCount === files.length) {
                     if (typeof window.showToast === 'function') {
@@ -298,6 +333,7 @@
             };
             reader.readAsDataURL(file);
         });
+
     };
 
     window.setAsMainPhoto = function(btn) {
