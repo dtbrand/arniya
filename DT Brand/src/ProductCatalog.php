@@ -668,22 +668,78 @@ class ProductCatalog
     }
 
     /**
-     * Delete product from database
+     * Duplicate an existing product in MySQL database
      */
-    public static function delete(int $id, bool $permanent = false): bool
+    public static function duplicate(int $id): array
+    {
+        if ($id <= 0) {
+            return ['success' => false, 'message' => 'Invalid product ID for duplication.'];
+        }
+
+        $prod = self::getById($id);
+        if (!$prod) {
+            return ['success' => false, 'message' => 'Product not found.'];
+        }
+
+        $pdo = Database::getConnection();
+        $newTitle = ($prod['title'] ?? 'Product') . ' (Copy)';
+        $newSku = ($prod['sku'] ?? 'SKU') . '-CP' . rand(10, 99);
+        $newSlug = ($prod['slug'] ?? 'product') . '-copy-' . rand(100, 999);
+        $catName = $prod['category'] ?? 'Kanjivaram Silk';
+        $fabric = $prod['fabric'] ?? 'Pure Mulberry Silk';
+        $weave = $prod['weave'] ?? 'Handloom Korvai Weave';
+        $mrp = (float)($prod['mrp'] ?? 4999);
+        $retail = (float)($prod['retail_price'] ?? ($prod['price'] ?? 3999));
+        $wholesale = (float)($prod['wholesale_price'] ?? 1499);
+        $reseller = (float)($prod['reseller_price'] ?? 2199);
+        $stock = (int)($prod['stock_qty'] ?? 50);
+        $img = $prod['image'] ?? '/assets/images/product1.png';
+        $desc = $prod['description'] ?? 'Authentic handwoven pure silk saree.';
+        $status = 'published';
+
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("
+                    INSERT INTO products 
+                    (sku, title, slug, category_id, category_name, fabric, weave, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, description, created_at)
+                    VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                ");
+                $stmt->execute([$newSku, $newTitle, $newSlug, $catName, $fabric, $weave, $mrp, $retail, $wholesale, $reseller, $stock, $img, $status, $desc]);
+                $newId = (int)$pdo->lastInsertId();
+
+                return [
+                    'success' => true,
+                    'id' => $newId,
+                    'sku' => $newSku,
+                    'title' => $newTitle,
+                    'message' => 'Product duplicated successfully in database!'
+                ];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => 'Database duplicate error: ' . $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'id' => rand(1000, 9999),
+            'sku' => $newSku,
+            'title' => $newTitle,
+            'message' => 'Product duplicated successfully!'
+        ];
+    }
+
+    /**
+     * Delete product permanently from database
+     */
+    public static function delete(int $id, bool $permanent = true): bool
     {
         if ($id <= 0) return false;
 
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                if ($permanent) {
-                    $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
-                    return $stmt->execute([$id]);
-                } else {
-                    $stmt = $pdo->prepare("UPDATE products SET status = 'draft' WHERE id = ?");
-                    return $stmt->execute([$id]);
-                }
+                $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+                return $stmt->execute([$id]);
             } catch (\Exception $e) {
                 return false;
             }
@@ -692,9 +748,9 @@ class ProductCatalog
     }
 
     /**
-     * Bulk delete products
+     * Bulk delete products permanently
      */
-    public static function bulkDelete(array $ids, bool $permanent = false): int
+    public static function bulkDelete(array $ids, bool $permanent = true): int
     {
         $validIds = array_filter(array_map('intval', $ids));
         if (empty($validIds)) return 0;
@@ -703,12 +759,57 @@ class ProductCatalog
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 $placeholders = implode(',', array_fill(0, count($validIds), '?'));
-                if ($permanent) {
-                    $stmt = $pdo->prepare("DELETE FROM products WHERE id IN ($placeholders)");
-                } else {
-                    $stmt = $pdo->prepare("UPDATE products SET status = 'draft' WHERE id IN ($placeholders)");
-                }
+                $stmt = $pdo->prepare("DELETE FROM products WHERE id IN ($placeholders)");
                 $stmt->execute($validIds);
+                return $stmt->rowCount();
+            } catch (\Exception $e) {
+                return 0;
+            }
+        }
+        return count($validIds);
+    }
+
+    /**
+     * Bulk update products
+     */
+    public static function bulkUpdate(array $ids, array $data): int
+    {
+        $validIds = array_filter(array_map('intval', $ids));
+        if (empty($validIds)) return 0;
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $fields = [];
+                $params = [];
+
+                if (!empty($data['category']) || !empty($data['category_name'])) {
+                    $fields[] = 'category_name = ?';
+                    $params[] = trim($data['category'] ?? $data['category_name']);
+                }
+                if (isset($data['stock_status'])) {
+                    $fields[] = 'status = ?';
+                    $params[] = trim($data['stock_status']);
+                }
+                if (isset($data['status'])) {
+                    $fields[] = 'status = ?';
+                    $params[] = trim($data['status']);
+                }
+                if (isset($data['wholesale_price']) && (float)$data['wholesale_price'] > 0) {
+                    $fields[] = 'wholesale_price = ?';
+                    $params[] = (float)$data['wholesale_price'];
+                }
+                if (isset($data['retail_price']) && (float)$data['retail_price'] > 0) {
+                    $fields[] = 'retail_price = ?';
+                    $params[] = (float)$data['retail_price'];
+                }
+
+                if (empty($fields)) return 0;
+
+                $placeholders = implode(',', array_fill(0, count($validIds), '?'));
+                $sql = "UPDATE products SET " . implode(', ', $fields) . " WHERE id IN ($placeholders)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(array_merge($params, $validIds));
                 return $stmt->rowCount();
             } catch (\Exception $e) {
                 return 0;

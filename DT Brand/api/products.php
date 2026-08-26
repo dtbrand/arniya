@@ -45,8 +45,8 @@ try {
             exit;
         }
 
-        // Update Product
-        if ($action === 'update') {
+        // Update / Quick Edit Product
+        if ($action === 'update' || $action === 'quick_edit') {
             if ($targetId <= 0) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Product ID is required for update.'], JSON_PRETTY_PRINT);
@@ -57,30 +57,59 @@ try {
             exit;
         }
 
-        // Delete Product
-        if ($action === 'delete') {
+        // Duplicate Product
+        if ($action === 'duplicate') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for duplication.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $res = ProductCatalog::duplicate($targetId);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Delete / Trash Product
+        if ($action === 'delete' || $action === 'trash') {
             if ($targetId <= 0) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Product ID is required for deletion.'], JSON_PRETTY_PRINT);
                 exit;
             }
-            $permanent = !empty($data['permanent']);
-            $ok = ProductCatalog::delete($targetId, $permanent);
-            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Product removed successfully.' : 'Failed to remove product.'], JSON_PRETTY_PRINT);
+            $ok = ProductCatalog::delete($targetId, true);
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Product permanently removed from database.' : 'Failed to remove product.'], JSON_PRETTY_PRINT);
             exit;
         }
 
-        // Bulk Delete
+        // Bulk Delete Products
         if ($action === 'bulk_delete') {
             $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
             if (!is_array($ids) || empty($ids)) {
                 http_response_code(400);
-                echo json_encode(['success' => false, 'message' => 'Array of product IDs required.'], JSON_PRETTY_PRINT);
+                echo json_encode(['success' => false, 'message' => 'List of product IDs required.'], JSON_PRETTY_PRINT);
                 exit;
             }
-            $permanent = !empty($data['permanent']);
-            $count = ProductCatalog::bulkDelete($ids, $permanent);
-            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully removed {$count} products."], JSON_PRETTY_PRINT);
+            $count = ProductCatalog::bulkDelete($ids, true);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Permanently deleted {$count} products from database."], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Bulk Update Products
+        if ($action === 'bulk_update') {
+            $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
+            if (!is_array($ids) || empty($ids)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'List of product IDs required for bulk update.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $count = ProductCatalog::bulkUpdate($ids, $data);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully updated {$count} products in database."], JSON_PRETTY_PRINT);
             exit;
         }
 
