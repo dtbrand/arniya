@@ -163,14 +163,17 @@ $active_nav = "inventory";
                                     <td><span class="adm-badge default"><?= htmlspecialchars($p['category'] ?? 'Silk Sarees') ?></span></td>
                                     <td>Surat Central Hub</td>
                                     <td>
-                                        <strong style="<?= $stock <= 15 ? 'color:#DC2626;' : 'color:#15803D;' ?>"><?= number_format($stock) ?> units</strong>
+                                        <div style="display:flex; align-items:center; gap:6px;">
+                                            <strong id="stock-val-<?= $p['id'] ?>" style="<?= $stock <= 15 ? 'color:#DC2626;' : 'color:#15803D;' ?> font-size:0.95rem;"><?= number_format($stock) ?> units</strong>
+                                        </div>
                                     </td>
                                     <td><strong>₹<?= number_format((float)($p['wholesale_price'] ?? 0)) ?></strong></td>
-                                    <td><span class="adm-badge <?= $statusClass ?>"><?= $statusText ?></span></td>
+                                    <td><span id="stock-badge-<?= $p['id'] ?>" class="adm-badge <?= $statusClass ?>"><?= $statusText ?></span></td>
                                     <td>
-                                        <div style="display:flex; gap:6px;">
-                                            <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="adm-btn-secondary" style="padding:4px 8px; font-size:0.72rem; text-decoration:none;">Adjust</a>
-                                            <button class="adm-btn-primary" style="padding:4px 8px; font-size:0.72rem;" onclick="window.showToast('Purchase Order created for <?= addslashes($p['sku'] ?? '') ?>!')">⚡ Re-Order</button>
+                                        <div style="display:flex; gap:4px; align-items:center;">
+                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, 10, '<?= addslashes($p['sku'] ?? '') ?>')">+10</button>
+                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="padding:2px 7px; font-size:0.75rem; font-weight:800;" onclick="quickAdjustStock(<?= $p['id'] ?>, -10, '<?= addslashes($p['sku'] ?? '') ?>')">-10</button>
+                                            <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="adm-btn-secondary adm-btn-sm" style="text-decoration:none; font-size:0.75rem;">Edit</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -183,6 +186,35 @@ $active_nav = "inventory";
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function quickAdjustStock(prodId, delta, sku) {
+    const valEl = document.getElementById('stock-val-' + prodId);
+    let currentQty = parseInt(valEl ? valEl.textContent.replace(/[^0-9]/g, '') : '0') || 0;
+    let newQty = Math.max(0, currentQty + delta);
+    
+    if (valEl) {
+        valEl.textContent = newQty + ' units';
+        valEl.style.color = newQty <= 15 ? '#DC2626' : '#15803D';
+    }
+    const badgeEl = document.getElementById('stock-badge-' + prodId);
+    if (badgeEl) {
+        badgeEl.className = 'adm-badge ' + (newQty <= 0 ? 'danger' : (newQty <= 15 ? 'warning' : 'success'));
+        badgeEl.textContent = newQty <= 0 ? 'Out of Stock' : (newQty <= 15 ? 'Low Stock' : 'Healthy');
+    }
+
+    const params = new URLSearchParams();
+    params.append('action', 'update');
+    params.append('id', prodId);
+    params.append('stock_qty', newQty);
+    fetch('/api/products.php', { method: 'POST', body: params })
+        .then(() => {
+            if (typeof window.showToast === 'function') {
+                window.showToast(`📦 Stock for ${sku} updated to ${newQty} units in database!`);
+            }
+        })
+        .catch(() => {});
+}
+</script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
