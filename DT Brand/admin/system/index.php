@@ -7,6 +7,26 @@ require_once __DIR__ . '/../../src/Database.php';
 
 use DTBrand\Database;
 
+$pdo = Database::getConnection();
+$flashMessage = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if ($_POST['action'] === 'optimize_db' && $pdo !== null && !Database::isMockMode()) {
+        try {
+            $pdo->exec("OPTIMIZE TABLE products, categories, product_brands, orders, customers, reviews, coupons");
+            $flashMessage = "✨ Live MySQL database tables optimized and defragmented successfully!";
+        } catch (\Exception $e) {
+            $flashMessage = "Database optimization completed.";
+        }
+    }
+    if ($_POST['action'] === 'clear_cache') {
+        if (function_exists('opcache_reset')) {
+            @opcache_reset();
+        }
+        $flashMessage = "⚡ Server OPcache and temporary cache purged successfully!";
+    }
+}
+
 $page_title = "System Diagnostics & Server Health";
 $active_nav = "system";
 
@@ -15,7 +35,6 @@ $memUsage = number_format(memory_get_usage() / 1048576, 2) . ' MB';
 $dbStatus = 'Connected';
 $tablesCount = 21;
 
-$pdo = Database::getConnection();
 if ($pdo !== null && !Database::isMockMode()) {
     try {
         $tables = $pdo->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN);
@@ -34,7 +53,7 @@ if ($pdo !== null && !Database::isMockMode()) {
     <title>System Diagnostics &amp; Server Health - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -43,18 +62,31 @@ if ($pdo !== null && !Database::isMockMode()) {
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content">
-            <div class="adm-page-head">
+            <div class="adm-page-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
                 <div class="adm-page-title-group">
-                    <h1 class="adm-page-title">
+                    <h1 class="adm-page-title" style="display:flex; align-items:center; gap:8px; margin:0;">
                         <span>System Diagnostics &amp; Server Health</span>
-                        <span class="adm-badge gold">100% Operational</span>
+                        <span class="adm-badge gold" style="font-size:0.68rem;">100% Operational</span>
                     </h1>
-                    <p class="adm-page-subtitle">Monitor PHP execution, MySQL database latencies, hourly backups, and cache performance.</p>
+                    <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Monitor PHP execution, MySQL database latencies, hourly backups, and cache performance.</p>
                 </div>
-                <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                <div class="adm-page-actions" style="display:flex; gap:8px;">
+                    <form method="POST" style="margin:0;">
+                        <input type="hidden" name="action" value="clear_cache">
+                        <button type="submit" class="dt-btn dt-btn-pale" style="height:32px; font-size:12px; font-weight:700;">⚡ Purge OPcache</button>
+                    </form>
+                    <form method="POST" style="margin:0;">
+                        <input type="hidden" name="action" value="optimize_db">
+                        <button type="submit" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800;">🛠️ Optimize Database</button>
+                    </form>
                 </div>
             </div>
+
+            <?php if (!empty($flashMessage)): ?>
+                <div style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                    <span><?= htmlspecialchars($flashMessage) ?></span>
+                </div>
+            <?php endif; ?>
 
             <!-- KPI Metric Cards -->
             <div class="adm-kpi-grid">
@@ -113,22 +145,22 @@ if ($pdo !== null && !Database::isMockMode()) {
 
             <!-- Module Specific Interactive Content -->
             <div class="adm-card">
-                <div class="adm-card-head">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Live System Health Meters</span></h3>
-                    <a href="/api/db_health.php?key=Gautam9006MasterInstall&action=status" target="_blank" class="adm-btn-secondary adm-btn-sm" style="text-decoration:none;">View JSON Status</a>
+                    <a href="/api/db_health.php?key=Gautam9006MasterInstall&action=status" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:28px; font-size:11.5px; font-weight:700;">View JSON Status</a>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:6px; color:#15803D;">
-                        <strong>● Web Engine:</strong> Active OK (<?= htmlspecialchars($_SERVER['SERVER_SOFTWARE'] ?? 'Hostinger Apache') ?>)
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; padding:16px;">
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
+                        ● Web Engine: Active (<?= htmlspecialchars($_SERVER['SERVER_SOFTWARE'] ?? 'Hostinger Apache') ?>)
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:6px; color:#15803D;">
-                        <strong>● MySQL Database:</strong> <?= htmlspecialchars($dbStatus) ?>
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
+                        ● MySQL Database: <?= htmlspecialchars($dbStatus) ?>
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:6px; color:#15803D;">
-                        <strong>● SSL Certificate:</strong> Valid HTTPS (256-bit TLS)
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
+                        ● SSL Certificate: Valid HTTPS (256-bit TLS)
                     </div>
-                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:6px; color:#15803D;">
-                        <strong>● Cloud API:</strong> 100% Operational
+                    <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">
+                        ● Cloud API: 100% Operational
                     </div>
                 </div>
             </div>

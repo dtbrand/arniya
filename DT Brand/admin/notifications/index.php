@@ -67,7 +67,7 @@ $triggerRules = [
     <title>Push &amp; Automated Notifications Hub - DT Brand's Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -76,16 +76,16 @@ $triggerRules = [
     <div class="adm-main">
         <?php include_once __DIR__ . '/../Includes/adminheader.php'; ?>
         <main class="adm-content">
-            <div class="adm-page-head">
+            <div class="adm-page-head" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
                 <div class="adm-page-title-group">
-                    <h1 class="adm-page-title">
+                    <h1 class="adm-page-title" style="display:flex; align-items:center; gap:8px; margin:0;">
                         <span>Push &amp; Automated Notifications Hub</span>
-                        <span class="adm-badge gold">Multi-Channel</span>
+                        <span class="adm-badge gold" style="font-size:0.68rem;">Multi-Channel</span>
                     </h1>
-                    <p class="adm-page-subtitle">Dispatch order dispatch alerts, WhatsApp notices, and restock alarms.</p>
+                    <p class="adm-page-subtitle" style="margin:4px 0 0 0; color:#64748B; font-size:0.82rem;">Dispatch order dispatch alerts, WhatsApp notices, and restock alarms.</p>
                 </div>
                 <div class="adm-page-actions">
-                    <a href="/admin" class="adm-btn-secondary">← Back to Main Console</a>
+                    <a href="/admin/admin.php" class="dt-btn dt-btn-pale" style="text-decoration:none; height:32px; font-size:12px; font-weight:700;">← Back to Console</a>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@ $triggerRules = [
                     <div class="adm-kpi-top">
                         <span class="adm-kpi-label">WhatsApp Open Rate</span>
                         <div class="adm-kpi-icon-box">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M12 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </div>
                     </div>
                     <div class="adm-kpi-val">84.2%</div>
@@ -146,9 +146,9 @@ $triggerRules = [
 
             <!-- Module Specific Interactive Content -->
             <div class="adm-card">
-                <div class="adm-card-head">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Automated Trigger Notification Rules</span></h3>
-                    <button class="adm-btn-primary" onclick="window.showToast('✨ Trigger notification rule saved!');">+ Add Rule</button>
+                    <button type="button" class="dt-btn dt-btn-gold" style="height:32px; font-size:12px; font-weight:800;" onclick="window.showToast('✨ Trigger notification rule saved!');">+ Add Rule</button>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -167,11 +167,11 @@ $triggerRules = [
                                 <tr>
                                     <td><strong><?= htmlspecialchars($tr['event']) ?></strong></td>
                                     <td><span class="adm-badge gold"><?= htmlspecialchars($tr['channel']) ?></span></td>
-                                    <td><code><?= htmlspecialchars($tr['template']) ?></code></td>
+                                    <td><code style="font-size:11.5px; background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700; border:1px solid #D4AF37;"><?= htmlspecialchars($tr['template']) ?></code></td>
                                     <td><small style="color:#7A7266;"><?= htmlspecialchars($tr['condition']) ?></small></td>
                                     <td><span class="adm-badge success"><?= htmlspecialchars($tr['status']) ?></span></td>
                                     <td>
-                                        <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Testing rule: <?= htmlspecialchars($tr['event']) ?>...');">Test Trigger</button>
+                                        <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="testNotificationTrigger('<?= addslashes($tr['event']) ?>', '<?= addslashes($tr['template']) ?>')">⚡ Test Trigger</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -183,6 +183,18 @@ $triggerRules = [
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+function testNotificationTrigger(eventTitle, template) {
+    if (typeof window.showToast === 'function') {
+        window.showToast(`🚀 Dispatched test notification for "${eventTitle}" (${template})`);
+    }
+    const params = new URLSearchParams();
+    params.append('action', 'broadcast');
+    params.append('audience', 'wholesale');
+    params.append('message', `[TEST TRIGGER: ${eventTitle}] DT Brand's automated event executed.`);
+    fetch('/api/whatsapp.php', { method: 'POST', body: params }).catch(() => {});
+}
+</script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
