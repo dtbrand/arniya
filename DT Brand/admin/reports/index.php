@@ -133,30 +133,30 @@ $netProfit = round($grossRevenue * 0.27, 2);
                 <div class="adm-card-head">
                     <h3 class="adm-card-title"><span>Export Tax &amp; Performance Reports</span></h3>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:8px; text-align:center;">
-                        <div style="margin-bottom:8px;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; padding:18px;">
+                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:10px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                        <div style="margin-bottom:10px; display:inline-flex; padding:10px; background:#FAF5E8; border-radius:50%; border:1px solid #D4AF37;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                         </div>
-                        <strong>Sales Summary (CSV/Excel)</strong>
-                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 12px;">Detailed breakdown of all <?= $totalOrdersCount ?> recorded orders.</p>
-                        <a href="/admin/orders/export.php?download=1&format=csv" class="adm-btn-secondary adm-btn-sm" style="text-decoration:none; display:inline-block;">Download CSV</a>
+                        <div style="font-weight:800; font-size:13px; color:#181512;">Sales Summary (CSV / Excel)</div>
+                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 14px;">Detailed breakdown of all <?= $totalOrdersCount ?> recorded orders with GMV and customer info.</p>
+                        <a href="/admin/orders/export.php?download=1&format=csv" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; justify-content:center; width:100%; height:32px; font-size:12px; font-weight:700;">Download CSV</a>
                     </div>
-                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:8px; text-align:center;">
-                        <div style="margin-bottom:8px;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:10px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                        <div style="margin-bottom:10px; display:inline-flex; padding:10px; background:#FAF5E8; border-radius:50%; border:1px solid #D4AF37;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
                         </div>
-                        <strong>GST GSTR-1 Filing Sheet</strong>
-                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 12px;">B2B Invoices + B2C HSN summary.</p>
-                        <a href="/admin/orders/export.php?download=1&format=excel" class="adm-btn-primary adm-btn-sm" style="text-decoration:none; display:inline-block;">Download GSTR-1</a>
+                        <div style="font-weight:800; font-size:13px; color:#181512;">GST GSTR-1 Filing Sheet</div>
+                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 14px;">B2B Invoices + B2C HSN summary tax audit report ready for accountant filing.</p>
+                        <a href="/admin/orders/export.php?download=1&format=excel" class="dt-btn dt-btn-gold" style="text-decoration:none; display:inline-flex; justify-content:center; width:100%; height:32px; font-size:12px; font-weight:800;">Download GSTR-1</a>
                     </div>
-                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:8px; text-align:center;">
-                        <div style="margin-bottom:8px;">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <div style="padding:18px; background:#FAF8F4; border:1px solid #E5E1D7; border-radius:10px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                        <div style="margin-bottom:10px; display:inline-flex; padding:10px; background:#FAF5E8; border-radius:50%; border:1px solid #D4AF37;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A681F" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                         </div>
-                        <strong>Reseller Commission Sheet</strong>
-                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 12px;">Weekly reseller payout audit log.</p>
-                        <a href="/admin/customers/export.php" class="adm-btn-secondary adm-btn-sm" style="text-decoration:none; display:inline-block;">Download Sheet</a>
+                        <div style="font-weight:800; font-size:13px; color:#181512;">Reseller Commission Sheet</div>
+                        <p style="font-size:0.75rem; color:#7A7266; margin:4px 0 14px;">Weekly reseller payout audit log with margin and wallet calculations.</p>
+                        <a href="/admin/resellers/export.php" class="dt-btn dt-btn-pale" style="text-decoration:none; display:inline-flex; justify-content:center; width:100%; height:32px; font-size:12px; font-weight:700;">Download Sheet</a>
                     </div>
                 </div>
             </div>
