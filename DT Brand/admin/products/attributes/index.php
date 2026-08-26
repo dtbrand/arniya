@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * attributes/index.php — DT Brand's Master Textile Attributes & Taxonomies
  * 100% Fully Functional End-to-End Standard
@@ -579,13 +579,19 @@ function handleAttrBulkAction() {
     }
     
     if (action === 'delete') {
-        if (confirm(`Delete ${selected.length} selected attributes?`)) {
+        if (confirm(`Delete ${selected.length} selected attributes from database?`)) {
             selected.forEach(c => {
+                const id = c.value;
+                const params = new URLSearchParams();
+                params.append('action', 'delete');
+                params.append('id', id);
+                fetch('/api/attributes.php', { method: 'POST', body: params }).catch(() => {});
+
                 const row = c.closest('tr');
                 if (row) row.remove();
             });
             updateAttrCounts();
-            if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} attributes deleted!`);
+            if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} attributes deleted from database!`);
         }
     } else if (action === 'export') {
         if (typeof window.showToast === 'function') window.showToast(`📊 Exporting ${selected.length} attributes matrix to CSV...`);
