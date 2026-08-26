@@ -3451,11 +3451,11 @@ $catalogProducts = [
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div>
                             <label style="font-size: 0.70rem; font-weight:600; color: var(--ws-text-muted); display: block; margin-bottom: 3px;">Start Date</label>
-                            <input type="date" id="customStartDate" value="2026-08-10" class="ws-input" style="height: 38px; font-size: 0.80rem;">
+                            <input type="date" id="customStartDate" value="<?= date('Y-m-d', strtotime('-30 days')) ?>" class="ws-input" style="height: 38px; font-size: 0.80rem;">
                         </div>
                         <div>
                             <label style="font-size: 0.70rem; font-weight:600; color: var(--ws-text-muted); display: block; margin-bottom: 3px;">End Date</label>
-                            <input type="date" id="customEndDate" value="2026-08-16" class="ws-input" style="height: 38px; font-size: 0.80rem;">
+                            <input type="date" id="customEndDate" value="<?= date('Y-m-d') ?>" class="ws-input" style="height: 38px; font-size: 0.80rem;">
                         </div>
                     </div>
                     <button class="ws-btn ws-btn-primary" style="width: 100%; margin-top: 10px; height: 38px; font-size: 0.82rem;" onclick="applyCustomDateRange()">

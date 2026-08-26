@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * index.php — DT Brand's Products Management Suite (Wholesale Desktop & WooCommerce Hybrid)
  * DT Brand's & Jai Hanuman Tex
@@ -491,8 +491,8 @@ $active_subnav = "";
                                         <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, '<?= $rowId ?>', '<?= addslashes($p['title']) ?>')">★</button>
                                     </td>
                                     <td style="padding:8px 10px; font-size:11px;">
-                                        <span class="prod-status-text" style="color:#15803D; font-weight:700;"><?= $statusText ?></span><br>
-                                        <small style="color:#646970;">2026/08/24</small>
+                                        <span class="prod-status-text" style="color:<?= ($statusText === 'Draft') ? '#64748B' : '#15803D' ?>; font-weight:700;"><?= $statusText ?></span><br>
+                                        <small style="color:#646970;"><?= !empty($p['created_at']) ? date('Y/m/d', strtotime($p['created_at'])) : date('Y/m/d') ?></small>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

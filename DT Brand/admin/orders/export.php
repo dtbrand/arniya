@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * export.php — Order Export Studio & Real Data Exporter
  * DT Brand's & Jai Hanuman Tex — Master Wholesale Architecture
@@ -296,11 +296,11 @@ $active_subnav = "export";
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                             <div>
                                 <label style="font-size:11px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Date From</label>
-                                <input type="date" id="exportDateFrom" value="2026-08-01" class="dt-order-search-input" style="height:34px; font-weight:600;">
+                                <input type="date" id="exportDateFrom" value="<?= date('Y-m-d', strtotime('-30 days')) ?>" class="dt-order-search-input" style="height:34px; font-weight:600;">
                             </div>
                             <div>
                                 <label style="font-size:11px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">Date To</label>
-                                <input type="date" id="exportDateTo" value="2026-08-21" class="dt-order-search-input" style="height:34px; font-weight:600;">
+                                <input type="date" id="exportDateTo" value="<?= date('Y-m-d') ?>" class="dt-order-search-input" style="height:34px; font-weight:600;">
                             </div>
                         </div>
 
