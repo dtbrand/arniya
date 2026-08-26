@@ -31,7 +31,7 @@ if ($action === 'calculate') {
             'margin_percent' => $marginPercent,
             'reseller_profit' => $marginAmount,
             'final_customer_price' => $finalSellingPrice,
-            'smart_share_url' => "https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php?id={$product['id']}&ref=reseller_vip"
+            'smart_share_url' => "https://jaihanumantex.in/product.php?id={$product['id']}&ref=reseller_vip"
         ]
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     exit;
