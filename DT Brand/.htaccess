@@ -19,6 +19,11 @@
     RewriteRule ^reseller/?$ reseller.php [QSA,L]
     RewriteRule ^retailer/?$ retailer.php [QSA,L]
     RewriteRule ^account/?$ account.php [QSA,L]
+    RewriteRule ^cart/?$ cart.php [QSA,L]
+    RewriteRule ^checkout/?$ checkout.php [QSA,L]
+    RewriteRule ^wishlist/?$ wishlist.php [QSA,L]
+    RewriteRule ^about-us/?$ about-us.php [QSA,L]
+    RewriteRule ^about/?$ about-us.php [QSA,L]
     RewriteRule ^admin/?$ admin/index.php [QSA,L]
 
     # 4. Clean Extensionless PHP URL fallback
