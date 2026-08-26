@@ -17,6 +17,7 @@
         if (event) event.preventDefault();
         const whlId = document.getElementById('approveWhlId').value;
         const tier = document.getElementById('approvedTierSelect').value;
+        const credit = document.getElementById('approveCreditLimit')?.value || 200000;
 
         const row = document.getElementById('whlRow_' + whlId);
         if (row) {
@@ -26,6 +27,14 @@
                 statusCell.innerHTML = `<span class="dt-status-pill-clean emerald">✓ APPROVED</span>`;
             }
         }
+
+        const params = new URLSearchParams();
+        params.append('action', 'update_status');
+        params.append('id', whlId.replace(/[^0-9]/g, '') || '1');
+        params.append('status', 'active');
+        params.append('tier', tier);
+        params.append('credit_limit', credit);
+        fetch('/api/customers.php', { method: 'POST', body: params }).catch(() => {});
 
         window.closeWholesaleModal('dtApproveWholesaleModal');
         window.showToast(`✅ Wholesale Partner "${whlId}" approved on ${tier} Tier!`);
@@ -50,6 +59,12 @@
                 statusCell.innerHTML = `<span class="dt-status-pill-clean crimson">✕ REJECTED</span>`;
             }
         }
+
+        const params = new URLSearchParams();
+        params.append('action', 'update_status');
+        params.append('id', whlId.replace(/[^0-9]/g, '') || '1');
+        params.append('status', 'rejected');
+        fetch('/api/customers.php', { method: 'POST', body: params }).catch(() => {});
 
         window.closeWholesaleModal('dtRejectWholesaleModal');
         window.showToast(`⚠️ Application "${whlId}" rejected (${reason})`);
