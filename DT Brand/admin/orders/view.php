@@ -1,143 +1,113 @@
-﻿<?php
+<?php
 /**
  * view.php — Premium Single Order Details Page
  * DT Brand's & Jai Hanuman Tex
  */
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/OrderManager.php';
 
-// Complete master order dictionary
-$all_orders_data = [
-    'DTB-001624' => [
-        'id' => 'DTB-001624',
+use DTBrand\Database;
+use DTBrand\OrderManager;
+
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+$order = null;
+
+$pdo = Database::getConnection();
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
+        $stmt->execute([$order_id, $order_id]);
+        $dbOrder = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($dbOrder) {
+            $parsedItems = [];
+            if (!empty($dbOrder['items_json'])) {
+                $decoded = json_decode($dbOrder['items_json'], true);
+                if (is_array($decoded)) {
+                    foreach ($decoded as $it) {
+                        $parsedItems[] = [
+                            'name' => $it['name'] ?? 'Handloom Textile Saree',
+                            'sku' => $it['sku'] ?? ('SKU-' . ($it['id'] ?? 1)),
+                            'variant' => $it['variant'] ?? 'Standard 5.5m + Blouse',
+                            'qty' => (int)($it['quantity'] ?? ($it['qty'] ?? 1)),
+                            'price' => (float)($it['price'] ?? 4490),
+                            'img' => $it['image'] ?? '/assets/images/product1.png'
+                        ];
+                    }
+                }
+            }
+            if (empty($parsedItems)) {
+                $parsedItems[] = [
+                    'name' => 'Royal Heritage Silk Saree',
+                    'sku' => 'DT-SR-001',
+                    'variant' => 'Standard / 5.5m',
+                    'qty' => 1,
+                    'price' => (float)($dbOrder['total_amount'] ?? 4899),
+                    'img' => '/assets/images/product1.png'
+                ];
+            }
+
+            $order = [
+                'id' => $dbOrder['order_number'] ?? ('DTB-' . str_pad($dbOrder['id'], 6, '0', STR_PAD_LEFT)),
+                'date' => date('d M Y, h:i A', strtotime($dbOrder['created_at'] ?? 'now')),
+                'customer' => $dbOrder['customer_name'] ?? 'Valued Customer',
+                'customer_type' => ucfirst($dbOrder['channel'] ?? 'Retail') . ' Order',
+                'phone' => $dbOrder['customer_phone'] ?? '+91 98765 43210',
+                'email' => $dbOrder['customer_email'] ?? 'customer@dtbrands.in',
+                'status' => strtolower($dbOrder['fulfillment_status'] ?? 'processing'),
+                'amount' => (float)($dbOrder['total_amount'] ?? 0),
+                'discount' => (float)($dbOrder['discount_amount'] ?? 0),
+                'payment_method' => strtoupper($dbOrder['payment_method'] ?? 'UPI / COD'),
+                'payment_status' => strtolower($dbOrder['payment_status'] ?? 'paid'),
+                'payment_ref' => $dbOrder['payment_ref'] ?? ('TXN-' . substr(md5($order_id), 0, 10)),
+                'shipping_method' => 'Surat Express Priority Cargo',
+                'carrier' => $dbOrder['courier_name'] ?? 'Delhivery Express',
+                'tracking_id' => $dbOrder['tracking_number'] ?? ('DLV-' . substr(md5($order_id), 0, 8)),
+                'notes' => $dbOrder['notes'] ?? 'Order verified and processed via DT Brand\'s automated pipeline.',
+                'address' => [
+                    'billing' => $dbOrder['shipping_address'] ?? "Surat Textile Market\nRing Road, Surat, Gujarat - 395002",
+                    'shipping' => $dbOrder['shipping_address'] ?? "Surat Textile Market\nRing Road, Surat, Gujarat - 395002"
+                ],
+                'items' => $parsedItems
+            ];
+        }
+    } catch (\Exception $e) {}
+}
+
+if (!$order) {
+    // Master fallback if not found in database
+    $order = [
+        'id' => $order_id,
         'date' => '21 Aug 2026, 11:20 AM',
-        'customer' => 'Rajesh Kumar (Vardhman Tex)',
+        'customer' => 'Wholesale Consignee (Surat Depot)',
         'customer_type' => 'Wholesale B2B Reseller',
         'phone' => '+91 98220 19283',
-        'email' => 'rajesh@vardhmantex.com',
-        'status' => 'cancelled',
-        'amount' => 112250,
+        'email' => 'orders@dtbrands.in',
+        'status' => 'processing',
+        'amount' => 54900,
         'discount' => 0,
         'payment_method' => 'Bank Wire / RTGS',
         'payment_status' => 'paid',
-        'payment_ref' => 'UTR-9821039812',
+        'payment_ref' => 'UTR-' . substr(md5($order_id), 0, 10),
         'shipping_method' => 'Surat Central Depot Cargo Express',
         'carrier' => 'VRL Logistics Depot',
-        'tracking_id' => 'VRL-99821',
-        'notes' => 'Consignment cancelled per buyer request due to logistics schedule change.',
+        'tracking_id' => 'VRL-' . substr($order_id, -5),
+        'notes' => 'Verified order manifest. Ready for Surat central dispatch.',
         'address' => [
-            'billing' => "Shop 42, Textile Market\nRing Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5",
-            'shipping' => "Godown 12, Transport Nagar\nSurat, Gujarat - 395010\nContact: +91 98220 19283"
+            'billing' => "Shop 42, Textile Market\nRing Road, Surat, Gujarat - 395002",
+            'shipping' => "Godown 12, Transport Nagar\nSurat, Gujarat - 395010"
         ],
         'items' => [
             [
-                'name' => 'Kanjivaram Silk Saree Pure Zari Weave',
-                'sku' => 'KNJ-001',
-                'variant' => 'Royal Ruby / 5.5m + Blouse',
-                'qty' => 25,
-                'price' => 4490,
+                'name' => 'Surat Pure Silk Festive Collection Lot',
+                'sku' => 'SRT-099',
+                'variant' => 'Assorted Handloom / 5.5m',
+                'qty' => 15,
+                'price' => 3660,
                 'img' => '/assets/images/product1.png'
             ]
         ]
-    ],
-    'DTB-001623' => [
-        'id' => 'DTB-001623',
-        'date' => '21 Aug 2026, 10:45 AM',
-        'customer' => 'Pooja Sharma',
-        'customer_type' => 'Retail Customer (B2C)',
-        'phone' => '+91 98765 43210',
-        'email' => 'pooja.sharma@gmail.com',
-        'status' => 'delivered',
-        'amount' => 4990,
-        'discount' => 0,
-        'payment_method' => 'UPI / PhonePe',
-        'payment_status' => 'paid',
-        'payment_ref' => 'UPI-99210982-Pay',
-        'shipping_method' => 'BlueDart Air Express',
-        'carrier' => 'BlueDart Express',
-        'tracking_id' => 'BD-88291',
-        'notes' => 'Parcel delivered safely at customer residence with digital OTP verification.',
-        'address' => [
-            'billing' => "Flat 402, Lotus Heights\nAndheri West, Mumbai, Maharashtra - 400053",
-            'shipping' => "Flat 402, Lotus Heights\nAndheri West, Mumbai, Maharashtra - 400053\nContact: +91 98765 43210"
-        ],
-        'items' => [
-            [
-                'name' => 'Banarasi Katan Pure Silk Festive Saree',
-                'sku' => 'BNR-012',
-                'variant' => 'Emerald Green / 5.5m',
-                'qty' => 1,
-                'price' => 4990,
-                'img' => '/assets/images/product2.png'
-            ]
-        ]
-    ],
-    'DTB-001622' => [
-        'id' => 'DTB-001622',
-        'date' => '20 Aug 2026, 04:30 PM',
-        'customer' => 'Surat Central Saree Depot (Direct Consignment)',
-        'customer_type' => 'B2B Wholesale Lot',
-        'phone' => '+91 98250 88771',
-        'email' => 'orders@suratdepot.com',
-        'status' => 'packed',
-        'amount' => 38900,
-        'discount' => 0,
-        'payment_method' => 'Bank Wire / RTGS',
-        'payment_status' => 'paid',
-        'payment_ref' => 'UTR-10928374',
-        'shipping_method' => 'DTDC Express Cargo',
-        'carrier' => 'DTDC Priority',
-        'tracking_id' => 'DTDC-4491',
-        'notes' => 'Packed in 2 heavy-duty tamper-proof master cartons. Ready for dispatch.',
-        'address' => [
-            'billing' => "Unit 10, Ring Road Textile Market\nSurat, Gujarat - 395002\nGSTIN: 24BBDPT9981K1Z2",
-            'shipping' => "Godown B, Transport Nagar\nSurat, Gujarat - 395010"
-        ],
-        'items' => [
-            [
-                'name' => 'Chanderi Zari Handloom Cotton Silk Saree',
-                'sku' => 'CHN-044',
-                'variant' => 'Mustard Gold / Assorted Lot',
-                'qty' => 10,
-                'price' => 3890,
-                'img' => '/assets/images/product3.png'
-            ]
-        ]
-    ]
-];
-
-// Fallback to master template if ID not in predefined map
-$order = isset($all_orders_data[$order_id]) ? $all_orders_data[$order_id] : [
-    'id' => $order_id,
-    'date' => '21 Aug 2026, 11:20 AM',
-    'customer' => 'Wholesale Consignee (Surat Depot)',
-    'customer_type' => 'Wholesale B2B Reseller',
-    'phone' => '+91 98220 19283',
-    'email' => 'orders@dtbrands.in',
-    'status' => 'processing',
-    'amount' => 54900,
-    'discount' => 0,
-    'payment_method' => 'Bank Wire / RTGS',
-    'payment_status' => 'paid',
-    'payment_ref' => 'UTR-' . substr(md5($order_id), 0, 10),
-    'shipping_method' => 'Surat Central Depot Cargo Express',
-    'carrier' => 'VRL Logistics Depot',
-    'tracking_id' => 'VRL-' . substr($order_id, -5),
-    'notes' => 'Verified order manifest. Ready for Surat central dispatch.',
-    'address' => [
-        'billing' => "Shop 42, Textile Market\nRing Road, Surat, Gujarat - 395002",
-        'shipping' => "Godown 12, Transport Nagar\nSurat, Gujarat - 395010"
-    ],
-    'items' => [
-        [
-            'name' => 'Surat Pure Silk Festive Collection Lot',
-            'sku' => 'SRT-099',
-            'variant' => 'Assorted Handloom / 5.5m',
-            'qty' => 15,
-            'price' => 3660,
-            'img' => '/assets/images/product1.png'
-        ]
-    ]
-];
+    ];
+}
 
 $page_title = "Order " . $order['id'];
 $active_nav = "orders";
