@@ -15,8 +15,18 @@
             `👉 Complete your purchase at https://jaihanumantex.in/`
         );
 
-        window.open(`https://api.whatsapp.com/send?phone=91${phone.replace(/[^0-9]/g, '')}&text=${msg}`, '_blank');
-        window.showToast(`🚀 WhatsApp Recovery Sent to ${customerName}!`);
+        const cleanPhone = '91' + phone.replace(/[^0-9]/g, '');
+        window.open(`https://api.whatsapp.com/send?phone=${cleanPhone}&text=${msg}`, '_blank');
+        
+        const params = new URLSearchParams();
+        params.append('action', 'broadcast');
+        params.append('audience', 'retail');
+        params.append('message', `[ABANDONED CART RECOVERY: ${customerName}] ${items} (${cartValue})`);
+        fetch('/api/whatsapp.php', { method: 'POST', body: params }).catch(() => {});
+
+        if (typeof window.showToast === 'function') {
+            window.showToast(`🚀 WhatsApp Recovery Sent to ${customerName}!`);
+        }
     };
 
 })();
