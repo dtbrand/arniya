@@ -124,9 +124,12 @@ if (empty($shipmentsList)) {
 
             <!-- Module Specific Interactive Content -->
             <div class="adm-card">
-                <div class="adm-card-head">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Courier Partner Serviceability &amp; Dispatches</span></h3>
-                    <a href="/admin/orders/export.php?download=1&format=csv" class="adm-btn-primary adm-btn-sm" style="text-decoration:none;">📄 Download Courier Manifest</a>
+                    <a href="/admin/orders/export.php?download=1&format=csv" class="dt-btn dt-btn-gold" style="text-decoration:none; height:32px; font-size:12px; font-weight:800; display:inline-flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>📄 Download Courier Manifest</span>
+                    </a>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -138,6 +141,7 @@ if (empty($shipmentsList)) {
                                 <th>Customer &amp; City</th>
                                 <th>Channel</th>
                                 <th>Tracking Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -151,12 +155,15 @@ if (empty($shipmentsList)) {
                                 $badgeClass = $fStatus === 'delivered' ? 'success' : ($fStatus === 'cancelled' ? 'danger' : 'info');
                                 ?>
                                 <tr>
-                                    <td><code><?= htmlspecialchars($tracking) ?></code></td>
+                                    <td><code style="font-size:11.5px; background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700; border:1px solid #D4AF37;"><?= htmlspecialchars($tracking) ?></code></td>
                                     <td><strong><?= htmlspecialchars($orderNum) ?></strong></td>
                                     <td><?= htmlspecialchars($courier) ?></td>
                                     <td><?= htmlspecialchars($customer) ?></td>
                                     <td><span class="adm-badge gold"><?= strtoupper(htmlspecialchars($sh['channel'] ?? 'RETAIL')) ?></span></td>
                                     <td><span class="adm-badge <?= $badgeClass ?>"><?= ucfirst($fStatus) ?></span></td>
+                                    <td>
+                                        <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="window.showToast('📍 Tracking AWB <?= htmlspecialchars($tracking) ?> via <?= htmlspecialchars($courier) ?> (Status: <?= ucfirst($fStatus) ?>)')">📍 Track</button>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

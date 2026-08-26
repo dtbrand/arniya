@@ -135,9 +135,12 @@ $cmsPages = [
 
             <!-- Module Specific Interactive Content -->
             <div class="adm-card">
-                <div class="adm-card-head">
+                <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Static &amp; Policy Content Pages</span></h3>
-                    <button class="adm-btn-primary" onclick="window.showToast('✨ Page content updated successfully!');">Publish Changes</button>
+                    <button type="button" class="dt-btn dt-btn-gold" style="font-weight:800; font-size:12px; height:32px; padding:0 14px;" onclick="window.showToast('✨ All CMS policy pages synchronized and published live!');">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#111827" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <span>Publish All Changes</span>
+                    </button>
                 </div>
                 <div class="adm-table-responsive">
                     <table class="adm-table">
@@ -155,12 +158,15 @@ $cmsPages = [
                             <?php foreach ($cmsPages as $p): ?>
                                 <tr>
                                     <td><strong><?= htmlspecialchars($p['title']) ?></strong></td>
-                                    <td><code><?= htmlspecialchars($p['slug']) ?></code></td>
+                                    <td><code style="font-size:11.5px; background:#FAF5E8; padding:2px 6px; border-radius:4px; color:#8A681F; font-weight:700; border:1px solid #D4AF37;"><?= htmlspecialchars($p['slug']) ?></code></td>
                                     <td><span class="adm-badge gold"><?= htmlspecialchars($p['type']) ?></span></td>
                                     <td><small style="color:#7A7266;"><?= htmlspecialchars($p['last_modified']) ?></small></td>
                                     <td><span class="adm-badge success"><?= htmlspecialchars($p['status']) ?></span></td>
                                     <td>
-                                        <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('Opening editor for <?= htmlspecialchars($p['title']) ?>...');">Edit Content</button>
+                                        <div style="display:flex; gap:6px;">
+                                            <a href="<?= htmlspecialchars($p['slug']) ?>" target="_blank" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px; text-decoration:none;">View</a>
+                                            <button type="button" class="dt-btn dt-btn-pale" style="height:26px; padding:0 8px; font-size:11px;" onclick="window.showToast('📝 CMS Editor ready for <?= htmlspecialchars($p['title']) ?>');">Edit</button>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
