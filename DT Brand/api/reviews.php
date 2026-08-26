@@ -100,6 +100,17 @@ try {
             exit;
         }
 
+        if ($action === 'reject' || $action === 'unpublish') {
+            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
+                try {
+                    $pdo->prepare("UPDATE product_reviews SET status = 'rejected' WHERE id = ?")->execute([$reviewId]);
+                    $pdo->prepare("UPDATE reviews SET status = 'rejected' WHERE id = ?")->execute([$reviewId]);
+                } catch (\Exception $e) {}
+            }
+            echo json_encode(['success' => true, 'message' => 'Review status updated to rejected.']);
+            exit;
+        }
+
         $pId = (int)($data['product_id'] ?? 0);
         $name = trim($data['name'] ?? 'Verified Buyer');
         $rating = max(1, min(5, (int)($data['rating'] ?? 5)));
