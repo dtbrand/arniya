@@ -1637,8 +1637,8 @@
                 var locEl = document.getElementById('dashUserLocation');
                 var roleEl = document.getElementById('dashUserRoleBadge');
 
-                if (nameEl) nameEl.textContent = user.name || 'Luxury Member';
-                if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
+                if (nameEl) nameEl.textContent = user.name || 'Member';
+                if (phoneEl) phoneEl.textContent = user.phone || '';
                 if (locEl && user.city && user.state) {
                     locEl.textContent = `📍 ${user.city}, ${user.state}, ${user.country || 'India'}`;
                 }
@@ -1660,12 +1660,12 @@
                     if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
                     if (linkEl) {
-                        linkEl.href = '../../wholesale.php';
+                        linkEl.href = '/wholesale.php';
                         linkEl.textContent = 'Open Wholesaler Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../wholesale.php';
+                        heroBtn.href = '/wholesale.php';
                         heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'retailer') {
@@ -1673,12 +1673,12 @@
                     if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = '../../retailer.php';
+                        linkEl.href = '/retailer.php';
                         linkEl.textContent = 'Open Retailer Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../retailer.php';
+                        heroBtn.href = '/retailer.php';
                         heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'reseller') {
@@ -1686,12 +1686,12 @@
                     if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = '../../reseller.php';
+                        linkEl.href = '/reseller.php';
                         linkEl.textContent = 'Open Reseller Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../reseller.php';
+                        heroBtn.href = '/reseller.php';
                         heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
                     }
                 } else {
@@ -1753,9 +1753,14 @@
         window.handleLoginSubmit = function() {
             var input = document.getElementById('loginPhone').value.trim();
             var passEl = document.getElementById('loginPass');
-            var pass = passEl ? passEl.value.trim() : '123456';
+            var pass = passEl ? passEl.value.trim() : '';
             if (!input) {
                 alert('Please enter your phone or email.');
+                return;
+            }
+            if (!pass) {
+                alert('Please enter your password.');
+                if (passEl) { passEl.focus(); }
                 return;
             }
 
@@ -1772,7 +1777,8 @@
             .then(function(data) {
                 if (data.success && data.user) {
                     var u = data.user;
-                    var roleName = u.type === 'wholesale' ? 'Wholesaler' : (u.type === 'reseller' ? 'Reseller' : 'Retailer');
+                    var lType = (u.type || 'retail').toLowerCase();
+                    var roleName = lType === 'wholesale' ? 'Wholesaler' : (lType === 'reseller' ? 'Reseller' : 'Retailer');
                     var userData = {
                         id: u.id,
                         name: u.name,
@@ -1792,19 +1798,9 @@
                 }
             })
             .catch(function(_err) {
-                var name = input.includes('@') ? input.split('@')[0] : 'Luxury Member';
-                name = name.charAt(0).toUpperCase() + name.slice(1);
-                var userData = {
-                    name: name,
-                    phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
-                    email: input.includes('@') ? input : 'member@dtbrands.com',
-                    role: 'Retailer',
-                    country: 'India',
-                    state: 'Gujarat',
-                    city: 'Surat'
-                };
-                localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                checkUserAuth();
+                // Never fabricate a session here. A network/server failure means
+                // the password was never verified, so there is nothing to trust.
+                alert('We could not reach the server to sign you in. Please check your connection and try again.');
             });
         };
 
@@ -1813,10 +1809,16 @@
             var phone = document.getElementById('regPhone').value.trim();
             var city = document.getElementById('regCity').value.trim();
             var passEl = document.getElementById('regPass');
-            var pass = passEl ? passEl.value.trim() : '123456';
+            var pass = passEl ? passEl.value.trim() : '';
 
             if (!name) {
                 alert('Please enter your Full Name.');
+                return;
+            }
+
+            if (pass.length < 6) {
+                alert('Please choose a password of at least 6 characters.');
+                if (passEl) { passEl.focus(); }
                 return;
             }
 
@@ -1848,12 +1850,18 @@
             .then(function(data) {
                 if (data.success && data.user) {
                     var u = data.user;
+                    // Trust the account type the SERVER stored, not the one picked
+                    // in the form — otherwise the UI can show B2B pricing for a
+                    // tier the backend never actually granted.
+                    var srvType = (u.type || 'retail').toLowerCase();
+                    var srvRole = srvType === 'wholesale' ? 'Wholesaler' : (srvType === 'reseller' ? 'Reseller' : 'Retailer');
                     var userData = {
                         id: u.id,
                         name: u.name,
                         phone: u.phone,
                         rawPhone: phone,
-                        role: selectedRole,
+                        role: srvRole,
+                        tier: u.tier || 'Standard',
                         country: selectedCountry.name,
                         countryCode: selectedCountry.code,
                         dial: selectedCountry.dial,
@@ -1867,19 +1875,10 @@
                 }
             })
             .catch(function(_err) {
-                var userData = {
-                    name: name,
-                    phone: selectedCountry.dial + ' ' + phone,
-                    rawPhone: phone,
-                    role: selectedRole,
-                    country: selectedCountry.name,
-                    countryCode: selectedCountry.code,
-                    dial: selectedCountry.dial,
-                    state: selectedState,
-                    city: city || 'Surat'
-                };
-                localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                checkUserAuth();
+                // Never fabricate a session here. On a network/server failure the
+                // account was never created, and trusting the locally-chosen role
+                // would hand out Wholesaler/Reseller B2B pricing for free.
+                alert('We could not reach the server to create your account. Please check your connection and try again.');
             });
         };
 
@@ -1893,13 +1892,55 @@
         };
 
         window.handleLogoutClick = function() {
-            localStorage.removeItem('dtbrands_user');
-            window.location.href = '/shop';
+            // Clear the PHP session too, otherwise the server still considers the
+            // visitor signed in and the APIs keep returning their data.
+            fetch('/api/auth.php?action=logout', {
+                method: 'POST',
+                credentials: 'same-origin'
+            })
+            .catch(function() { /* still sign out locally below */ })
+            .then(function() {
+                localStorage.removeItem('dtbrands_user');
+                window.location.href = '/shop.php';
+            });
         };
 
         /* Run on Page Load */
         document.addEventListener('DOMContentLoaded', function() {
+            // Paint immediately from the cached user so the page does not flicker…
             checkUserAuth();
+
+            // …then confirm with the server. localStorage is only a cache: if the
+            // PHP session has expired (or was never real), drop it and show the
+            // login card instead of a dashboard the visitor is not entitled to.
+            fetch('/api/auth.php?action=session', { credentials: 'same-origin' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (!data) return;
+                    if (data.authenticated && data.user) {
+                        var u = data.user;
+                        var t = (u.type || 'retail').toLowerCase();
+                        var stored = {};
+                        try { stored = JSON.parse(localStorage.getItem('dtbrands_user')) || {}; } catch (e) {}
+                        stored.id = u.id;
+                        stored.name = u.name || stored.name;
+                        stored.phone = u.phone || stored.phone;
+                        stored.email = u.email || stored.email;
+                        stored.role = t === 'wholesale' ? 'Wholesaler' : (t === 'reseller' ? 'Reseller' : 'Retailer');
+                        stored.tier = u.tier || stored.tier || 'Standard';
+                        if (u.city) stored.city = u.city;
+                        if (u.state) stored.state = u.state;
+                        localStorage.setItem('dtbrands_user', JSON.stringify(stored));
+                        checkUserAuth();
+                    } else if (localStorage.getItem('dtbrands_user')) {
+                        localStorage.removeItem('dtbrands_user');
+                        checkUserAuth();
+                    }
+                })
+                .catch(function() {
+                    // Offline: leave the cached view alone rather than logging the
+                    // customer out over a dropped connection.
+                });
         });
     })();
     </script>

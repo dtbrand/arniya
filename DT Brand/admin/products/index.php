@@ -887,7 +887,6 @@ function toggleFeaturedProduct(btn, rowId, productName) {
     const row = document.getElementById(rowId);
     const prodId = rowId.replace('row-prod-', '');
     const isCurrentlyActive = btn.classList.contains('active');
-    const newStatus = isCurrentlyActive ? 'published' : 'in_stock';
     const isFeatured = isCurrentlyActive ? 0 : 1;
 
     if (isCurrentlyActive) {
@@ -912,7 +911,6 @@ function toggleFeaturedProduct(btn, rowId, productName) {
     params.append('action', 'quick_edit');
     params.append('id', prodId);
     params.append('is_featured', isFeatured);
-    params.append('status', newStatus);
 
     fetch('/api/products.php', {
         method: 'POST',
@@ -954,40 +952,57 @@ function processBulkAction(action) {
         return;
     }
 
-    if (action === 'featured') {
+    if (action === 'featured' || action === 'unfeatured') {
+        const makeFeatured = (action === 'featured');
+        const ids = Array.from(selected).map(chk => chk.value);
+
         selected.forEach(chk => {
             const row = chk.closest('tr');
             if (row) {
-                row.setAttribute('data-featured', '1');
-                row.setAttribute('data-status', 'Featured');
+                row.setAttribute('data-featured', makeFeatured ? '1' : '0');
+                row.setAttribute('data-status', makeFeatured ? 'Featured' : 'Published');
                 const starBtn = row.querySelector('.wp-star-btn');
                 if (starBtn) {
-                    starBtn.classList.add('active');
-                    starBtn.style.color = '#D4AF37';
+                    if (makeFeatured) {
+                        starBtn.classList.add('active');
+                        starBtn.style.color = '#D4AF37';
+                    } else {
+                        starBtn.classList.remove('active');
+                        starBtn.style.color = '#c3c4c7';
+                    }
                 }
             }
         });
-        if (typeof window.showToast === 'function') {
-            window.showToast(`🌟 Marked ${selected.length} product(s) as Featured!`);
-        }
-    } 
-    else if (action === 'unfeatured') {
-        selected.forEach(chk => {
-            const row = chk.closest('tr');
-            if (row) {
-                row.setAttribute('data-featured', '0');
-                row.setAttribute('data-status', 'Published');
-                const starBtn = row.querySelector('.wp-star-btn');
-                if (starBtn) {
-                    starBtn.classList.remove('active');
-                    starBtn.style.color = '#c3c4c7';
+
+        /* Persist to the live database — not just the row styling. */
+        const params = new URLSearchParams();
+        params.append('action', 'bulk_update');
+        params.append('ids', ids.join(','));
+        params.append('is_featured', makeFeatured ? 1 : 0);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (typeof window.showToast === 'function') {
+                if (data && data.success) {
+                    window.showToast(makeFeatured
+                        ? `🌟 Marked ${ids.length} product(s) as Featured in database!`
+                        : `Removed ${ids.length} product(s) from Featured in database.`);
+                } else {
+                    window.showToast('⚠️ Could not save featured status. Please retry.');
                 }
             }
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') {
+                window.showToast('⚠️ Could not save featured status. Please retry.');
+            }
         });
-        if (typeof window.showToast === 'function') {
-            window.showToast(`Removed ${selected.length} product(s) from Featured`);
-        }
-    } 
+    }
     else if (action === 'trash') {
         const ids = Array.from(selected).map(chk => chk.value);
         if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected product(s) from the database and storefront?`)) {

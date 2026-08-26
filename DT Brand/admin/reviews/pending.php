@@ -92,8 +92,8 @@ if (empty($pendingReviews)) {
                                         </div>
                                     </td>
                                     <td>
-                                        <?php if (!empty($r['title'])): ?>
-                                            <div style="font-weight:700; font-size:12px; color:#181512; margin-bottom:2px;"><?= htmlspecialchars($r['title']) ?></div>
+                                        <?php $rTitle = $r['review_title'] ?? ($r['title'] ?? ''); if ($rTitle !== ''): ?>
+                                            <div style="font-weight:700; font-size:12px; color:#181512; margin-bottom:2px;"><?= htmlspecialchars($rTitle) ?></div>
                                         <?php endif; ?>
                                         <div style="font-size:12px; color:#334155; line-height:1.4;">
                                             <?= htmlspecialchars($r['comment'] ?? ($r['review_text'] ?? 'Great handloom quality!')) ?>

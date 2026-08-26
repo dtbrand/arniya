@@ -25,15 +25,24 @@ try {
     $data = json_decode($rawInput, true) ?: $_POST;
 
     if ($action === 'login') {
-        $phoneOrEmail = trim($data['phone'] ?? ($data['email'] ?? ''));
+        // Accept any of the field names the storefront forms use for the
+        // phone-or-email identity. Auth::login() resolves either against
+        // customers.phone / customers.email.
+        $phoneOrEmail = trim($data['identity'] ?? ($data['phone'] ?? ($data['email'] ?? '')));
         $password = $data['password'] ?? '';
         $res = Auth::login($phoneOrEmail, $password);
+        if (!$res['success']) {
+            http_response_code(401);
+        }
         echo json_encode($res, JSON_PRETTY_PRINT);
         exit;
     }
 
     if ($action === 'register') {
         $res = Auth::register($data);
+        if (!$res['success']) {
+            http_response_code(400);
+        }
         echo json_encode($res, JSON_PRETTY_PRINT);
         exit;
     }
@@ -41,6 +50,61 @@ try {
     if ($action === 'logout') {
         Auth::logout();
         echo json_encode(['success' => true, 'message' => 'Logged out successfully.'], JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'update_profile') {
+        // The customer id comes from the SERVER session only. Never from the
+        // request body — otherwise any visitor could edit anyone's profile by
+        // posting a different id.
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to update your profile.']);
+            exit;
+        }
+        $res = Auth::updateProfile((int)$current['id'], [
+            'name'  => trim($data['name'] ?? ''),
+            'email' => trim($data['email'] ?? ''),
+            'city'  => trim($data['city'] ?? ''),
+            'state' => trim($data['state'] ?? '')
+        ]);
+        if (!$res['success']) {
+            http_response_code(400);
+        } else {
+            // Hand the refreshed session user back so the client can re-render
+            // from server truth instead of guessing what was saved.
+            $res['user'] = Auth::getCurrentUser();
+        }
+        echo json_encode($res, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'change_password') {
+        $current = Auth::getCurrentUser();
+        if ($current === null || empty($current['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to change your password.']);
+            exit;
+        }
+        $res = Auth::changePassword(
+            (int)$current['id'],
+            (string)($data['current_password'] ?? ''),
+            (string)($data['new_password'] ?? '')
+        );
+        if (!$res['success']) {
+            http_response_code(400);
+        }
+        echo json_encode($res, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($action === 'forgot_password') {
+        // Always answers the same way whether or not the account exists, so this
+        // cannot be used to enumerate registered phone numbers.
+        $identity = trim($data['identity'] ?? ($data['phone'] ?? ($data['email'] ?? '')));
+        $res = Auth::requestPasswordReset($identity);
+        echo json_encode($res, JSON_PRETTY_PRINT);
         exit;
     }
 

@@ -3506,8 +3506,11 @@ $catalogProducts = [
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE
+         reseller.js is loaded ONCE at the end of <body> (see below), after the
+         cart/checkout/quickview partials exist. It used to be loaded here as
+         well with a different query string, so the browser fetched and ran the
+         whole file twice and every listener was bound twice.
     ═══════════════════════════════════════════ -->
-    <script src="/assets/js/reseller.js?v=1787019062"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/shared/cart.php'; ?>
@@ -4331,7 +4334,8 @@ $catalogProducts = [
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE (END OF BODY)
     ═══════════════════════════════════════════ -->
-    <script src="/assets/js/reseller.js?v=1787019062&v=<?= time() ?>"></script>
+    <script src="/assets/js/reseller.js?v=<?= time() ?>"></script>
+    <script src="/assets/js/profile-save.js?v=<?= time() ?>"></script>
 
 <?php include_once __DIR__ . '/shared/reels.php'; ?>
 <?php include_once __DIR__ . '/shared/account.php'; ?>

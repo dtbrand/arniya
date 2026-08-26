@@ -2971,6 +2971,7 @@ $catalogProducts = [
          JAVASCRIPT CONTROLLER & STATE ENGINE
     ═══════════════════════════════════════════ -->
     <script src="/assets/js/retailer.js?v=1787019062&v=<?= time() ?>"></script>
+    <script src="/assets/js/profile-save.js?v=<?= time() ?>"></script>
 
     <!-- ════════════ CART DRAWER PARTIAL ════════════ -->
     <?php include_once __DIR__ . '/shared/cart.php'; ?>

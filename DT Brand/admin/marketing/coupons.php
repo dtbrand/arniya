@@ -23,9 +23,9 @@ if ($pdo !== null && !Database::isMockMode()) {
 
 if (empty($coupons)) {
     $coupons = [
-        ['id' => 1, 'code' => 'FESTIVE2026', 'discount_type' => 'percentage', 'discount_value' => 15.00, 'min_order_amount' => 2999.00, 'status' => 'active', 'times_used' => 48],
-        ['id' => 2, 'code' => 'B2BWHOLESALE', 'discount_type' => 'fixed', 'discount_value' => 1000.00, 'min_order_amount' => 15000.00, 'status' => 'active', 'times_used' => 22],
-        ['id' => 3, 'code' => 'RETAIL5', 'discount_type' => 'percentage', 'discount_value' => 5.00, 'min_order_amount' => 999.00, 'status' => 'active', 'times_used' => 94]
+        ['id' => 1, 'code' => 'FESTIVE2026', 'discount_type' => 'percentage', 'discount_value' => 15.00, 'min_order_value' => 2999.00, 'status' => 'active', 'times_used' => 48],
+        ['id' => 2, 'code' => 'B2BWHOLESALE', 'discount_type' => 'flat', 'discount_value' => 1000.00, 'min_order_value' => 15000.00, 'status' => 'active', 'times_used' => 22],
+        ['id' => 3, 'code' => 'RETAIL5', 'discount_type' => 'percentage', 'discount_value' => 5.00, 'min_order_value' => 999.00, 'status' => 'active', 'times_used' => 94]
     ];
 }
 ?>
@@ -96,7 +96,8 @@ if (empty($coupons)) {
                                     </td>
                                     <td>
                                         <span style="color:#64748B; font-weight:600;">
-                                            <?= (float)$c['min_order_amount'] > 0 ? ('₹' . number_format((float)$c['min_order_amount'])) : 'No Minimum' ?>
+                                            <?php $minSpend = (float)($c['min_order_value'] ?? $c['min_order_amount'] ?? 0); ?>
+                                            <?= $minSpend > 0 ? ('₹' . number_format($minSpend)) : 'No Minimum' ?>
                                         </span>
                                     </td>
                                     <td>
@@ -136,7 +137,7 @@ if (empty($coupons)) {
                         <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Discount Type</label>
                         <select id="newCouponType" style="width:100%; height:36px; border:1.5px solid #EAE5D9; border-radius:6px; padding:0 8px; font-weight:600;">
                             <option value="percentage">Percentage (%)</option>
-                            <option value="fixed">Flat Amount (₹)</option>
+                            <option value="flat">Flat Amount (₹)</option>
                         </select>
                     </div>
                     <div>
@@ -183,7 +184,7 @@ function submitNewCoupon(e) {
     params.append('code', code);
     params.append('discount_type', type);
     params.append('discount_value', val);
-    params.append('min_order_amount', min);
+    params.append('min_order_value', min);
 
     fetch('/api/coupons.php', { method: 'POST', body: params })
         .then(res => res.json())

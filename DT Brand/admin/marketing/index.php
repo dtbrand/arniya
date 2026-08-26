@@ -15,26 +15,28 @@ $pdo = Database::getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'create_coupon') {
         $code = strtoupper(trim($_POST['code'] ?? ''));
-        $type = trim($_POST['discount_type'] ?? 'percentage');
+        // Live coupons.discount_type is ENUM('percentage','flat'); the form
+        // submits 'fixed' for a flat-amount coupon, so normalise it here.
+        $rawType = strtolower(trim($_POST['discount_type'] ?? 'percentage'));
+        $type = ($rawType === 'flat' || $rawType === 'fixed') ? 'flat' : 'percentage';
         $val = (float)($_POST['discount_value'] ?? 10);
-        $min = (float)($_POST['min_order_amount'] ?? 1000);
+        $min = (float)($_POST['min_order_value'] ?? $_POST['min_order_amount'] ?? 0);
+        $maxDiscount = (float)($_POST['max_discount'] ?? 0);
         if (!empty($code) && $pdo !== null && !Database::isMockMode()) {
             try {
-                $pdo->exec("CREATE TABLE IF NOT EXISTS coupons (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    code VARCHAR(50) NOT NULL UNIQUE,
-                    discount_type VARCHAR(20) DEFAULT 'percentage',
-                    discount_value DECIMAL(10,2) NOT NULL,
-                    min_order_amount DECIMAL(10,2) DEFAULT 0.00,
-                    times_used INT DEFAULT 0,
-                    usage_limit INT DEFAULT 1000,
-                    used_count INT DEFAULT 0,
-                    status VARCHAR(20) DEFAULT 'active',
-                    channel VARCHAR(20) DEFAULT 'all',
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
-                $stmt = $pdo->prepare("INSERT INTO coupons (code, discount_type, discount_value, min_order_amount, status) VALUES (?, ?, ?, ?, 'active') ON DUPLICATE KEY UPDATE discount_value = VALUES(discount_value), min_order_amount = VALUES(min_order_amount)");
-                $stmt->execute([$code, $type, $val, $min]);
+                // Matches the live `arniya` schema exactly, so it can never create
+                // a divergent table if it somehow runs before the migrator.
+                $pdo->exec("CREATE TABLE IF NOT EXISTS `coupons` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `code` VARCHAR(50) NOT NULL UNIQUE,
+                    `discount_type` ENUM('percentage','flat') DEFAULT 'percentage',
+                    `discount_value` DECIMAL(10,2) NOT NULL,
+                    `min_order_value` DECIMAL(10,2) DEFAULT 0.00,
+                    `max_discount` DECIMAL(10,2) DEFAULT 0.00,
+                    `status` ENUM('active','expired') DEFAULT 'active'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+                $stmt = $pdo->prepare("INSERT INTO `coupons` (`code`, `discount_type`, `discount_value`, `min_order_value`, `max_discount`, `status`) VALUES (?, ?, ?, ?, ?, 'active') ON DUPLICATE KEY UPDATE discount_type = VALUES(discount_type), discount_value = VALUES(discount_value), min_order_value = VALUES(min_order_value), max_discount = VALUES(max_discount), status = 'active'");
+                $stmt->execute([$code, $type, $val, $min, $maxDiscount]);
             } catch (\Exception $e) {}
         }
         header('Location: /admin/marketing/?success=1');
@@ -75,7 +77,7 @@ if (empty($couponsList)) {
             'code' => 'FESTIVE15',
             'discount_type' => 'percentage',
             'discount_value' => 15.0,
-            'min_order_amount' => 2999.0,
+            'min_order_value' => 2999.0,
             'times_used' => 284,
             'status' => 'active'
         ],
@@ -84,7 +86,7 @@ if (empty($couponsList)) {
             'code' => 'VIPWHOLESALE5',
             'discount_type' => 'percentage',
             'discount_value' => 5.0,
-            'min_order_amount' => 50000.0,
+            'min_order_value' => 50000.0,
             'times_used' => 42,
             'status' => 'active'
         ],
@@ -93,7 +95,7 @@ if (empty($couponsList)) {
             'code' => 'FIRST500',
             'discount_type' => 'fixed',
             'discount_value' => 500.0,
-            'min_order_amount' => 4990.0,
+            'min_order_value' => 4990.0,
             'times_used' => 156,
             'status' => 'active'
         ]
@@ -215,7 +217,7 @@ $activeCouponsCount = count($couponsList);
                                 $dVal = ($cp['discount_type'] ?? '') === 'percentage'
                                     ? ($cp['discount_value'] . '% Off')
                                     : ('₹' . number_format((float)($cp['discount_value'] ?? 0)) . ' Flat Off');
-                                $minAmt = (float)($cp['min_order_amount'] ?? 0);
+                                $minAmt = (float)($cp['min_order_value'] ?? $cp['min_order_amount'] ?? 0);
                                 $used = (int)($cp['times_used'] ?? 0);
                                 $status = strtolower($cp['status'] ?? 'active');
                                 ?>
@@ -260,7 +262,7 @@ $activeCouponsCount = count($couponsList);
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Discount Type</label>
                 <select name="discount_type" style="width:100%; height:36px; padding:0 10px; font-size:13px; font-weight:700; border:1px solid #CBD5E1; border-radius:6px; box-sizing:border-box;">
                     <option value="percentage">Percentage (% Off)</option>
-                    <option value="fixed">Fixed Amount (₹ Flat Off)</option>
+                    <option value="flat">Fixed Amount (₹ Flat Off)</option>
                 </select>
             </div>
             <div>
@@ -269,7 +271,7 @@ $activeCouponsCount = count($couponsList);
             </div>
             <div>
                 <label style="display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px;">Minimum Order Amount (₹)</label>
-                <input type="number" step="1" name="min_order_amount" value="2999" style="width:100%; height:36px; padding:0 10px; font-size:13px; font-weight:700; border:1px solid #CBD5E1; border-radius:6px; box-sizing:border-box;">
+                <input type="number" step="1" name="min_order_value" value="2999" style="width:100%; height:36px; padding:0 10px; font-size:13px; font-weight:700; border:1px solid #CBD5E1; border-radius:6px; box-sizing:border-box;">
             </div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
                 <button type="button" class="dt-btn dt-btn-pale" onclick="document.getElementById('createCouponModal').style.display='none';">Cancel</button>

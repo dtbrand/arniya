@@ -99,6 +99,51 @@ $catalogProducts = ProductCatalog::getAll();
 </div>
 
 <script>
+/* Same storefront number used by the cart drawer, footer and about page. */
+var BRAND_WHATSAPP_NUMBER = '919876543210';
+
+/* Build the concierge confirmation from the order the SERVER saved. Prices are
+   re-derived server-side from the live catalogue, so the local cart figures are
+   not authoritative and must not be messaged to the mill. */
+function buildCheckoutWaUrl(srvOrder, form) {
+    var o = srvOrder || {};
+    var p = o.pricing || {};
+    var money = function(n) { return Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }); };
+
+    var lines = '';
+    (o.items || []).forEach(function(item, i) {
+        var qty = Number(item.quantity || item.qty) || 1;
+        var lineTotal = Number(item.line_total);
+        if (!(lineTotal > 0)) { lineTotal = (Number(item.price) || 0) * qty; }
+        var label = item.title || item.name || 'Ethnic Product';
+        lines += (i + 1) + '. *' + label + '*' + (item.sku ? ' (' + item.sku + ')' : '') +
+                 '\n   Qty: ' + qty + ' | ₹' + money(lineTotal) + '\n';
+    });
+
+    var gst = Number(p.gst_amount || p.gst) || 0;
+    var discount = Number(p.discount) || 0;
+    var shipping = Number(p.shipping) || 0;
+
+    var msg = "👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n" +
+              '🔖 *Order ID:* #' + (o.order_number || '') + '\n' +
+              '───────────────\n' +
+              '👤 *Customer Name:* ' + form.name + '\n' +
+              '📞 *WhatsApp:* ' + form.phone + '\n' +
+              '📍 *Shipping Address:*\n' + form.address + '\n' +
+              '───────────────\n' +
+              (lines ? '🛍️ *ORDERED ITEMS:*\n' + lines + '───────────────\n' : '') +
+              '💵 *Subtotal:* ₹' + money(p.subtotal) + '\n' +
+              (discount > 0 ? '🎁 *Discount:* -₹' + money(discount) + '\n' : '') +
+              (gst > 0 ? '🧾 *GST:* ₹' + money(gst) + '\n' : '') +
+              (shipping > 0 ? '🚚 *Shipping:* ₹' + money(shipping) + '\n' : '') +
+              '✨ *GRAND TOTAL:* ₹' + money(o.total_amount || p.grand_total) + '\n' +
+              '💳 *Payment Method:* ' + String(form.payment || 'cod').toUpperCase() + '\n' +
+              '───────────────\n' +
+              'Please confirm and share order dispatch tracking. Thank you! 🙏';
+
+    return 'https://api.whatsapp.com/send?phone=' + BRAND_WHATSAPP_NUMBER + '&text=' + encodeURIComponent(msg);
+}
+
 function handleDirectCheckout(e) {
     e.preventDefault();
 
@@ -149,9 +194,31 @@ function handleDirectCheckout(e) {
     .then(function(data) {
         if (data && data.success) {
             var num = (data.order && data.order.order_number) ? data.order.order_number : '';
+            // Show the total the SERVER actually charged. It is recalculated from
+            // live catalogue prices, so it can differ from the cart if a price
+            // changed or the shopper is on a B2B tier.
+            var amt = (data.order && data.order.total_amount) ? Number(data.order.total_amount) : 0;
+            var amtText = amt > 0 ? ' Total: ₹' + amt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '.' : '';
+
+            // Actually hand the order to WhatsApp instead of only promising it.
+            var waUrl = buildCheckoutWaUrl(data.order, {
+                name: name,
+                phone: phone,
+                address: payload.shipping_address,
+                payment: payload.payment_method
+            });
+
             localStorage.removeItem('dtbrands_cart');
-            alert('🎉 Order placed successfully!' + (num ? ' Your order number is ' + num + '.' : '') + ' Our WhatsApp concierge will confirm dispatch shortly.');
-            window.location.href = '/shop';
+            alert('🎉 Order placed successfully!' + (num ? ' Your order number is ' + num + '.' : '') + amtText + ' We are opening WhatsApp so our concierge can confirm dispatch.');
+
+            // If the popup is blocked, navigate there instead of silently
+            // dropping the confirmation we just promised.
+            var waWin = window.open(waUrl, '_blank');
+            if (!waWin) {
+                window.location.href = waUrl;
+            } else {
+                window.location.href = '/shop';
+            }
         } else {
             if (btn) { btn.disabled = false; btn.textContent = 'Confirm & Place Order'; }
             alert('We could not place your order: ' + ((data && data.message) ? data.message : 'Please try again.'));

@@ -749,9 +749,25 @@ class ProductCatalog
                     $fields[] = 'primary_image = ?';
                     $params[] = trim($data['primary_image'] ?? $data['image']);
                 }
-                if (isset($data['status'])) {
-                    $fields[] = 'status = ?';
-                    $params[] = trim($data['status']);
+                if (isset($data['is_featured'])) {
+                    $fields[] = 'is_featured = ?';
+                    $params[] = ((bool)$data['is_featured']) ? 1 : 0;
+                }
+                if (isset($data['status']) || isset($data['stock_status'])) {
+                    // Whitelist against the live ENUM. Normalise human-readable
+                    // labels ("In stock" -> "in_stock") and the legacy 'published'
+                    // alias, then drop anything unrecognised so a bad value can
+                    // never corrupt the column.
+                    $validStatuses = ['in_stock', 'low_stock', 'out_of_stock', 'draft'];
+                    $st = strtolower(trim((string)($data['status'] ?? $data['stock_status'])));
+                    $st = str_replace([' ', '-'], '_', $st);
+                    if ($st === 'published' || $st === 'active') {
+                        $st = 'in_stock'; // legacy alias for a live product
+                    }
+                    if (in_array($st, $validStatuses, true)) {
+                        $fields[] = 'status = ?';
+                        $params[] = $st;
+                    }
                 }
 
                 if (empty($fields)) {
@@ -931,13 +947,25 @@ class ProductCatalog
                     $fields[] = 'category_name = ?';
                     $params[] = trim($data['category'] ?? $data['category_name']);
                 }
-                if (isset($data['stock_status'])) {
-                    $fields[] = 'status = ?';
-                    $params[] = trim($data['stock_status']);
+                if (isset($data['is_featured'])) {
+                    $fields[] = 'is_featured = ?';
+                    $params[] = ((bool)$data['is_featured']) ? 1 : 0;
                 }
-                if (isset($data['status'])) {
-                    $fields[] = 'status = ?';
-                    $params[] = trim($data['status']);
+                if (isset($data['status']) || isset($data['stock_status'])) {
+                    // Whitelist against the live ENUM. Normalise human-readable
+                    // labels ("In stock" -> "in_stock") and the legacy 'published'
+                    // alias, then drop anything unrecognised so a bad value can
+                    // never corrupt the column.
+                    $validStatuses = ['in_stock', 'low_stock', 'out_of_stock', 'draft'];
+                    $st = strtolower(trim((string)($data['status'] ?? $data['stock_status'])));
+                    $st = str_replace([' ', '-'], '_', $st);
+                    if ($st === 'published' || $st === 'active') {
+                        $st = 'in_stock';
+                    }
+                    if (in_array($st, $validStatuses, true)) {
+                        $fields[] = 'status = ?';
+                        $params[] = $st;
+                    }
                 }
                 if (isset($data['wholesale_price']) && (float)$data['wholesale_price'] > 0) {
                     $fields[] = 'wholesale_price = ?';
@@ -968,11 +996,20 @@ class ProductCatalog
     public static function updateStatus(int $id, string $status): bool
     {
         if ($id <= 0) return false;
+        // Whitelist against the live ENUM('in_stock','low_stock','out_of_stock','draft').
+        $validStatuses = ['in_stock', 'low_stock', 'out_of_stock', 'draft'];
+        $st = str_replace([' ', '-'], '_', strtolower(trim($status)));
+        if ($st === 'published' || $st === 'active') {
+            $st = 'in_stock'; // legacy alias for a live product
+        }
+        if (!in_array($st, $validStatuses, true)) {
+            return false;
+        }
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 $stmt = $pdo->prepare("UPDATE products SET status = ? WHERE id = ?");
-                return $stmt->execute([$status, $id]);
+                return $stmt->execute([$st, $id]);
             } catch (\Exception $e) {
                 return false;
             }

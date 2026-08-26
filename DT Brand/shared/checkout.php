@@ -1251,15 +1251,13 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         var randomNum = Math.floor(100000 + Math.random() * 900000);
         var orderId = 'KLN-' + randomNum;
 
-        /* Calculate Subtotal and Grand Total */
+        /* Local subtotal — used only as a fallback if the server response is
+           missing pricing. The authoritative figures come back from the API. */
         var subtotal = 0;
-        var itemsSummaryTxt = '';
 
-        cart.forEach(function(item, i) {
+        cart.forEach(function(item) {
             var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
-            var itemTotal = priceNum * (item.qty || 1);
-            subtotal += itemTotal;
-            itemsSummaryTxt += `${i + 1}. *${item.name || item.title || 'Ethnic Product'}*\n   Size: ${item.size || 'M'} | Qty: ${item.qty || 1} | ₹${itemTotal.toLocaleString('en-IN')}\n`;
+            subtotal += priceNum * (item.qty || 1);
         });
 
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
@@ -1280,7 +1278,35 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         var placeBtnText = placeBtn ? placeBtn.textContent : '';
         if (placeBtn) { placeBtn.disabled = true; placeBtn.textContent = 'Placing your order…'; }
 
-        function buildWaUrl(orderNumberForMsg) {
+        /* Build the confirmation from the order the SERVER actually saved.
+           The server re-prices every line from the live catalogue at the
+           customer's own tier and adds GST, so the local cart figures can
+           legitimately differ. Messaging the local numbers would tell the mill
+           a total we never recorded. */
+        function buildWaUrl(srvOrder) {
+            var o = srvOrder || {};
+            var p = o.pricing || {};
+            var orderNumberForMsg = o.order_number || orderId;
+
+            var money = function(n) { return Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 }); };
+
+            var srvItems = (o.items && o.items.length) ? o.items : cart;
+            var lines = '';
+            srvItems.forEach(function(item, i) {
+                var qty = Number(item.quantity || item.qty) || 1;
+                var lineTotal = Number(item.line_total);
+                if (!(lineTotal > 0)) { lineTotal = (Number(item.price) || 0) * qty; }
+                var label = item.title || item.name || 'Ethnic Product';
+                lines += `${i + 1}. *${label}*${item.sku ? ` (${item.sku})` : ''}\n   Size: ${item.size || 'M'} | Qty: ${qty} | ₹${money(lineTotal)}\n`;
+            });
+
+            var srvSubtotal = Number(p.subtotal) > 0 ? Number(p.subtotal) : subtotal;
+            var srvDiscount = Number(p.discount) || 0;
+            var srvGst = Number(p.gst_amount || p.gst) || 0;
+            var srvShipping = Number(p.shipping) || 0;
+            var srvTotal = Number(o.total_amount) > 0 ? Number(o.total_amount)
+                         : (Number(p.grand_total) > 0 ? Number(p.grand_total) : grandTotal);
+
             var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
                             `🔖 *Order ID:* #${orderNumberForMsg}\n` +
                             `📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}\n` +
@@ -1290,12 +1316,13 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
                             `📍 *Shipping Address:*\n${address}, ${city}, ${state} - ${pincode}\n` +
                             (note ? `📝 *Custom Note:* ${note}\n` : '') +
                             `───────────────\n` +
-                            `🛍️ *ORDERED ITEMS:*\n${itemsSummaryTxt}\n` +
+                            `🛍️ *ORDERED ITEMS:*\n${lines}\n` +
                             `───────────────\n` +
-                            `💵 *Subtotal:* ₹${subtotal.toLocaleString('en-IN')}\n` +
-                            (appliedDiscountAmount > 0 ? `🎁 *Discount (${appliedCouponCode}):* -₹${appliedDiscountAmount.toLocaleString('en-IN')}\n` : '') +
-                            `🚚 *Fast Delivery:* Express Priority Dispatch\n` +
-                            `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
+                            `💵 *Subtotal:* ₹${money(srvSubtotal)}\n` +
+                            (srvDiscount > 0 ? `🎁 *Discount${appliedCouponCode ? ` (${appliedCouponCode})` : ''}:* -₹${money(srvDiscount)}\n` : '') +
+                            (srvGst > 0 ? `🧾 *GST:* ₹${money(srvGst)}\n` : '') +
+                            (srvShipping > 0 ? `🚚 *Shipping:* ₹${money(srvShipping)}\n` : `🚚 *Fast Delivery:* Express Priority Dispatch\n`) +
+                            `✨ *GRAND TOTAL:* ₹${money(srvTotal)}\n` +
                             `💳 *Payment Method:* ${activePaymentMethod.toUpperCase()}\n` +
                             `───────────────\n` +
                             `Please confirm and share order dispatch tracking. Thank you! 🙏`;
@@ -1320,15 +1347,26 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             }
 
             var realOrderNumber = (data.order && data.order.order_number) ? data.order.order_number : orderId;
-            var waUrl = buildWaUrl(realOrderNumber);
+            var waUrl = buildWaUrl(data.order);
 
             /* Show Success Overlay */
             var successOverlay = document.getElementById('coSuccessOverlay');
             var successOrderId = document.getElementById('coSuccessOrderId');
             var successWaLink = document.getElementById('coSuccessWhatsAppLink');
+            var successDesc = document.getElementById('coSuccessDesc');
 
             if (successOrderId) successOrderId.textContent = '#' + realOrderNumber;
             if (successWaLink) successWaLink.href = waUrl;
+
+            /* Confirm the amount the server actually recorded, so the shopper
+               sees the same figure the mill receives. */
+            var confirmedTotal = Number(data.order && data.order.total_amount) || 0;
+            if (successDesc && confirmedTotal > 0) {
+                successDesc.textContent = 'Thank you for choosing DT Brand\'s Ethnic Luxury. Your confirmed order total is ₹'
+                    + confirmedTotal.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    + ' (GST included). We have forwarded your order invoice directly to our WhatsApp concierge team.';
+            }
+
             if (successOverlay) successOverlay.classList.add('active');
 
             /* Clear the bag ONLY after the order is truly saved */

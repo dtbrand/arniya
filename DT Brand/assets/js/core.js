@@ -38,7 +38,17 @@
     // Global Cart State Manager
     window.getCart = function () {
         try {
-            return JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
+            var raw = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]');
+            if (!Array.isArray(raw)) return [];
+            // Heal bags already saved with a bad quantity. A NaN qty serialises
+            // to null, which then renders as "null" in the drawer and posts an
+            // unusable line to the order API.
+            return raw.map(function (item) {
+                if (item && typeof item === 'object') {
+                    item.qty = Math.max(1, Number(item.qty) || 1);
+                }
+                return item;
+            }).filter(Boolean);
         } catch (e) {
             return [];
         }
@@ -55,7 +65,10 @@
     window.addToCart = function (product, qty, lotType, selectedColor, selectedSize) {
         var cart = window.getCart();
         var pId = Number(product.id);
-        var q = Math.max(1, Number(qty || 1));
+        // Number(qty) can be NaN if a caller passes a non-numeric value; the
+        // `|| 1` collapses NaN to 1 so a line can never carry a NaN quantity
+        // (which serialises to null and breaks the cart badge and the order).
+        var q = Math.max(1, Number(qty) || 1);
         var lot = lotType || 'single';
         var col = selectedColor || (Array.isArray(product.colors) ? product.colors[0] : (product.color || 'Default'));
         var sz = selectedSize || (Array.isArray(product.size) ? product.size[0] : 'Free Size');
@@ -65,7 +78,7 @@
         });
 
         if (existingIdx > -1) {
-            cart[existingIdx].qty += q;
+            cart[existingIdx].qty = (Number(cart[existingIdx].qty) || 0) + q;
         } else {
             cart.push({
                 id: pId,

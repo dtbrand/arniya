@@ -310,15 +310,21 @@
     // Add To Bag Function (Integrates directly with Cart Drawer)
     window.handlePdpAddToCart = function() {
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+        var sizeList = Array.isArray(currentProduct.size) ? currentProduct.size : [];
+        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (sizeList[0] || 'Free Size');
 
         var activeColorBtn = document.querySelector('.pdp-color-btn.active');
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
+        var colorList = Array.isArray(currentProduct.colors) ? currentProduct.colors : [];
+        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (colorList[0] || 'Standard');
 
         if (typeof window.addToCart === 'function') {
-            for (var i = 0; i < currentQty; i++) {
-                window.addToCart(currentProduct, selSize, selColor);
-            }
+            // addToCart(product, qty, lotType, selectedColor, selectedSize).
+            // This used to be called as (product, selSize, selColor) inside a
+            // loop, so the size string landed in the qty slot (Number('M') ->
+            // NaN, giving the line a NaN quantity), the colour landed in
+            // lot_type, and the shopper's actual size/colour choice was dropped
+            // in favour of the first option.
+            window.addToCart(currentProduct, currentQty, 'single', selColor, selSize);
         } else {
             // Local fallback
             try {

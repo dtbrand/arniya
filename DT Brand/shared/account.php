@@ -1134,68 +1134,18 @@
         return '/retailer.php';
     };
 
-    /* ── 1-Tap Quick Demo Logins for Instant Testing ── */
-    window.quickDemoLogin = function(role) {
-        var targetRole = role || 'Retailer';
-        var rLower = targetRole.toLowerCase();
-        var userData = {};
-
-        if (rLower === 'reseller') {
-            userData = {
-                name: 'Pooja Sharma',
-                companyName: 'Pooja Boutique & Ethnic Hub',
-                phone: '+91 98765 12345',
-                rawPhone: '9876512345',
-                email: 'pooja.reseller@gmail.com',
-                role: 'Reseller',
-                gst_type: 'none',
-                gst_number: '',
-                address: 'Flat 302, Palm Heights, Link Road',
-                city: 'Jaipur',
-                state: 'Rajasthan',
-                pincode: '302001'
-            };
-        } else if (rLower === 'wholesaler' || rLower === 'wholesale') {
-            userData = {
-                name: 'Ramesh Patel',
-                companyName: 'Surat Loomcraft Mega Traders',
-                phone: '+91 98765 88990',
-                rawPhone: '9876588990',
-                email: 'ramesh@suratloomcraft.com',
-                role: 'Wholesaler',
-                gst_type: 'gst',
-                gst_number: '24AABCU9603R1ZM',
-                address: 'Plot No. 108, Phase 2, GIDC Textile Market',
-                city: 'Surat',
-                state: 'Gujarat',
-                pincode: '395002'
-            };
-        } else {
-            userData = {
-                name: 'Rajesh Kumar',
-                companyName: 'Shree Krishna Silks Pvt Ltd',
-                phone: '+91 98765 43210',
-                rawPhone: '9876543210',
-                email: 'rajesh@shreekrishnasilks.com',
-                role: 'Retailer',
-                gst_type: 'gst',
-                gst_number: '24AABCU9603R1ZM',
-                address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
-                city: 'Surat',
-                state: 'Gujarat',
-                pincode: '395002'
-            };
-        }
-
-        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
-
+    /* -- Demo login backdoor REMOVED (security) --
+       This helper previously wrote a fully-privileged session straight into
+       localStorage (including Wholesaler B2B pricing) with no server check.
+       It is kept only as a stub so any stale onclick handler still works;
+       it now just opens the real, server-validated login form. */
+    window.quickDemoLogin = function() {
         if (typeof window.showToast === 'function') {
-            window.showToast('👑 Logged in as Verified ' + userData.role + ' (' + userData.name + ')!');
+            window.showToast('Please sign in with your registered mobile number and password.');
         }
-
-        window.closeAccountModal();
-        window.location.href = window.getUserDashboardUrl(userData.role);
+        if (typeof window.openAccountModal === 'function') {
+            window.openAccountModal('login');
+        }
     };
 
     /* ── Global Role-Based Direct Dashboard Navigation Helper ── */
@@ -1271,6 +1221,28 @@
         }
     };
 
+    /* Maps a server `customers` row into the localStorage profile shape.
+       The role/tier ALWAYS comes from the database record — never from the
+       modal's role pills — so a visitor cannot self-assign B2B pricing. */
+    function dtProfileFromServer(u) {
+        var t = (u.type || 'retail').toLowerCase();
+        var roleName = (t === 'wholesale') ? 'Wholesaler' : ((t === 'reseller') ? 'Reseller' : 'Retailer');
+        return {
+            id: u.id,
+            name: u.name || 'Member',
+            companyName: u.company_name || u.business_name || ((u.name || 'Member') + (roleName === 'Retailer' ? ' Boutique' : ' Enterprise')),
+            phone: u.phone || '',
+            rawPhone: String(u.phone || '').replace(/[^0-9]/g, '').slice(-10),
+            email: u.email || '',
+            role: roleName,
+            tier: u.tier || 'Standard',
+            gst_number: u.gst_number || '',
+            country: u.country || 'India',
+            state: u.state || '',
+            city: u.city || ''
+        };
+    }
+
     window.handleAccountLogin = function() {
         var emailInput = document.getElementById('acLoginEmail');
         var passInput = document.getElementById('acLoginPass');
@@ -1286,31 +1258,33 @@
             return;
         }
 
-        var existingUser = window.getCurrentUser();
-        var chosenRole = modalSelectedRole || (existingUser && existingUser.role) || 'Retailer';
-        var name = (existingUser && existingUser.name) ? existingUser.name : (input.includes('@') ? input.split('@')[0] : 'B2B Member');
-        name = name.charAt(0).toUpperCase() + name.slice(1);
+        /* Credentials are verified server-side against the customers table.
+           Nothing is written to localStorage unless the server confirms it. */
+        var params = new URLSearchParams();
+        params.append('action', 'login');
+        params.append('identity', input);
+        params.append('password', pass);
 
-        var userData = {
-            name: name,
-            companyName: (existingUser && existingUser.companyName) ? existingUser.companyName : (name + ' Boutique'),
-            phone: input.includes('@') ? (existingUser ? existingUser.phone : '+91 98765 43210') : '+91 ' + input,
-            rawPhone: input.replace(/[^0-9]/g, '').slice(-10),
-            email: input.includes('@') ? input : (existingUser ? existingUser.email : 'member@dtbrands.com'),
-            role: chosenRole,
-            country: existingUser ? (existingUser.country || 'India') : modalSelectedCountry.name,
-            state: existingUser ? (existingUser.state || 'Maharashtra') : modalSelectedState,
-            city: existingUser ? (existingUser.city || 'Surat') : 'Surat'
-        };
-        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        fetch('/api/auth.php', { method: 'POST', body: params })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data && data.success && data.user) {
+                    var userData = dtProfileFromServer(data.user);
+                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                    try { window.dispatchEvent(new Event('storage')); } catch(e) {}
 
-        if (typeof window.showToast === 'function') {
-            window.showToast('✨ Welcome back, ' + name + ' (' + chosenRole + ')!');
-        }
-
-        window.closeAccountModal();
-        window.location.href = window.getUserDashboardUrl(chosenRole);
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('✨ Welcome back, ' + userData.name + ' (' + userData.role + ')!');
+                    }
+                    window.closeAccountModal();
+                    window.location.href = window.getUserDashboardUrl(userData.role);
+                } else {
+                    alert((data && data.message) ? data.message : 'Invalid credentials. Please try again.');
+                }
+            })
+            .catch(function() {
+                alert('We could not reach the sign-in service. Please check your connection and try again.');
+            });
     };
 
     window.handleAccountRegister = function() {
@@ -1336,26 +1310,44 @@
         }
 
         var chosenRole = modalSelectedRole || 'Retailer';
-        var userData = {
-            name: name,
-            companyName: name + (chosenRole === 'Retailer' ? ' Boutique' : ' Enterprise'),
-            phone: modalSelectedCountry.dial + ' ' + phone,
-            rawPhone: phone,
-            email: 'member@dtbrands.com',
-            role: chosenRole,
-            country: modalSelectedCountry.name,
-            state: modalSelectedState,
-            city: city || modalSelectedState
-        };
-        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        var typeCode = (chosenRole === 'Wholesaler') ? 'wholesale' : ((chosenRole === 'Reseller') ? 'reseller' : 'retail');
+        var fullPhone = modalSelectedCountry.dial + ' ' + phone;
 
-        if (typeof window.showToast === 'function') {
-            window.showToast('🎉 Welcome to DT Brand\'s, ' + name + '!');
-        }
+        /* Creates the real customers row (bcrypt-hashed password) server-side. */
+        var params = new URLSearchParams();
+        params.append('action', 'register');
+        params.append('name', name);
+        params.append('phone', fullPhone);
+        params.append('email', phone + '@dtbrands.in');
+        params.append('password', pass);
+        params.append('type', typeCode);
+        params.append('city', city || modalSelectedState);
+        params.append('state', modalSelectedState);
 
-        window.closeAccountModal();
-        window.location.href = window.getUserDashboardUrl(chosenRole);
+        fetch('/api/auth.php', { method: 'POST', body: params })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data && data.success && data.user) {
+                    var userData = dtProfileFromServer(data.user);
+                    /* Keep the locality the customer just typed for display. */
+                    userData.country = modalSelectedCountry.name;
+                    userData.state = userData.state || modalSelectedState;
+                    userData.city = userData.city || (city || modalSelectedState);
+                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+                    try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('🎉 Welcome to DT Brand\'s, ' + userData.name + '!');
+                    }
+                    window.closeAccountModal();
+                    window.location.href = window.getUserDashboardUrl(userData.role);
+                } else {
+                    alert((data && data.message) ? data.message : 'We could not create your account. Please try again.');
+                }
+            })
+            .catch(function() {
+                alert('We could not reach the registration service. Please check your connection and try again.');
+            });
     };
 
     window.handleAccountForgot = function() {
@@ -1363,11 +1355,13 @@
         var input = inputEl ? inputEl.value.trim() : '';
         if (!input) return;
 
-        var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
+        /* Self-service reset is not automated yet, so hand off to the WhatsApp
+           concierge and say exactly that — do not claim a link was sent. */
+        var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {
-            window.showToast('📩 Reset link sent to your WhatsApp!');
+            window.showToast('💬 Opening WhatsApp — our team will verify you and reset your password.');
         }
     };
 
@@ -1377,7 +1371,13 @@
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }
-        window.location.href = '/shop.php';
+        /* Clear the server-side PHP session too, then leave. */
+        var done = function() { window.location.href = '/shop.php'; };
+        try {
+            fetch('/api/auth.php?action=logout', { method: 'POST' }).then(done).catch(done);
+        } catch (e) {
+            done();
+        }
     };
 
     /* Bind events */

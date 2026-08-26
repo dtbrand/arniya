@@ -30,6 +30,8 @@ class Auth
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
         $type = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        $city = trim($data['city'] ?? '');
+        $state = trim($data['state'] ?? '');
 
         if (empty($name) || empty($phone) || empty($password)) {
             return ['success' => false, 'message' => 'Name, phone number, and password are required.'];
@@ -58,14 +60,14 @@ class Auth
                     // Password-less row (e.g. created during guest checkout): let the
                     // owner claim it by setting their password and details now.
                     $customerId = (int)$existing['id'];
-                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ? WHERE id = ?");
-                    $upd->execute([$name, $email, $passwordHash, $type, $customerId]);
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
+                    $upd->execute([$name, $email, $passwordHash, $type, $city, $state, $customerId]);
                 } else {
                     $stmt = $pdo->prepare("
-                        INSERT INTO customers (name, phone, email, password_hash, type, status, created_at)
-                        VALUES (?, ?, ?, ?, ?, 'active', NOW())
+                        INSERT INTO customers (name, phone, email, password_hash, type, city, state, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, 'active', NOW())
                     ");
-                    $stmt->execute([$name, $phone, $email, $passwordHash, $type]);
+                    $stmt->execute([$name, $phone, $email, $passwordHash, $type, $city, $state]);
                     $customerId = (int)$pdo->lastInsertId();
                 }
 
@@ -76,6 +78,8 @@ class Auth
                     'email' => $email,
                     'type' => $type,
                     'tier' => 'Standard',
+                    'city' => $city,
+                    'state' => $state,
                     'status' => 'active'
                 ];
 
@@ -148,6 +152,9 @@ class Auth
                             'email' => $customer['email'] ?? '',
                             'type' => $customer['type'] ?? 'retail',
                             'tier' => $customer['tier'] ?? 'Standard',
+                            'city' => $customer['city'] ?? '',
+                            'state' => $customer['state'] ?? '',
+                            'gstin' => $customer['gstin'] ?? '',
                             'credit_limit' => (float)($customer['credit_limit'] ?? 0),
                             'outstanding_balance' => (float)($customer['outstanding_balance'] ?? 0),
                             'status' => $customer['status']
@@ -352,8 +359,10 @@ class Auth
                 ]);
 
                 if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
-                    if (!empty($data['name'])) $_SESSION['user']['name'] = $data['name'];
+                    if (!empty($data['name']))  $_SESSION['user']['name']  = $data['name'];
                     if (!empty($data['email'])) $_SESSION['user']['email'] = $data['email'];
+                    if (!empty($data['city']))  $_SESSION['user']['city']  = $data['city'];
+                    if (!empty($data['state'])) $_SESSION['user']['state'] = $data['state'];
                 }
 
                 return ['success' => true, 'message' => 'Profile updated successfully.'];

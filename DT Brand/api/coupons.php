@@ -108,7 +108,10 @@ try {
 
     if ($action === 'create') {
         $code = strtoupper(trim($_POST['code'] ?? ''));
-        $type = ($_POST['discount_type'] ?? 'percentage') === 'flat' ? 'flat' : 'percentage';
+        // Storefront enum is ('percentage','flat'); the admin UIs historically
+        // submit 'fixed' for a flat-amount coupon, so treat it as 'flat'.
+        $rawType = strtolower(trim($_POST['discount_type'] ?? 'percentage'));
+        $type = ($rawType === 'flat' || $rawType === 'fixed') ? 'flat' : 'percentage';
         $val = (float)($_POST['discount_value'] ?? 10);
         $min = (float)($_POST['min_order_value'] ?? $_POST['min_order_amount'] ?? 0);
         $maxDiscount = (float)($_POST['max_discount'] ?? $_POST['max_discount_amount'] ?? 0);
