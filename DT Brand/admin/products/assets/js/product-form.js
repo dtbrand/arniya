@@ -88,7 +88,7 @@
                     window.showToast(isUpdate ? '✨ Product updated successfully in database!' : ('✨ Product ' + (isDraft ? 'saved as draft' : 'published') + ' to live catalog!'));
                 }
                 setTimeout(() => {
-                    window.location.href = '/DT%20Brand/admin/products/';
+                    window.location.href = '/admin/products/';
                 }, 700);
             } else {
                 alert('Error: ' + (data.message || 'Could not save product'));
@@ -99,7 +99,7 @@
                 window.showToast('✨ Product saved successfully!');
             }
             setTimeout(() => {
-                window.location.href = '/DT%20Brand/admin/products/';
+                window.location.href = '/admin/products/';
             }, 700);
         });
     };
