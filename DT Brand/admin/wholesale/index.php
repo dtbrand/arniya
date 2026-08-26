@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * index.php — DT Brand's & Jai Hanuman Tex
  * Master Wholesale B2B Corporate Hub & Accounts Directory
@@ -52,7 +52,7 @@ $active_subnav = "all";
                     <div class="dt-cust-actions" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                         <a href="/admin/wholesale/applications.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span>Applications (14)</span>
+                            <span>Applications (<?= $totalWholesalersCount ?>)</span>
                         </a>
                         <a href="/admin/wholesale/pricing.php" class="dt-btn dt-btn-pale">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
