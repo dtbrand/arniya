@@ -1,4 +1,5 @@
 # 👑 DT BRAND'S & JAI HANUMAN TEX — MASTER ARCHITECTURE & FULL SYSTEM AUDIT
+
 > **Comprehensive Mastermind Blueprint, UI/UX Ecosystem, Popup & Modal Mapping, Backend Core Architecture, REST API Suite, Database Schema & Performance Standard**
 > *Platform: DT Brand's Luxury Ethnic Handlooms & B2B Wholesale CRM*
 > *Deployment Target: Hostinger Production Server (`147.93.99.134` / `/public_html/`) & GitHub (`dtbrand/arniya`)*
@@ -39,7 +40,7 @@
 ## 📱 2. Front-End Pages & Portals Mapping
 
 | Page URL | Template File | Primary Purpose | Key Components Included | Database Integrations |
-|---|---|---|---|---|
+| :--- | :--- | :--- | :--- | :--- |
 | **`/` (Home)** | `DT Brand/index.php` | Luxury Brand Storefront Landing | Hero Slider, Curated Collections, Featured Grid, Testimonials, Footer | `categories`, `products`, `banners`, `settings` |
 | **`/shop`** | `DT Brand/shop.php` | Full E-Commerce Product Catalog | Category Pills, Live Price Filters, QuickView, Grid/List Views, Cart Drawer | `products`, `categories`, `coupons` |
 | **`/product.php?id=X`** | `DT Brand/product.php` | Single Product PDP (Product Detail Page) | High-Res Zoom Gallery, MOQ Lots, Pincode Checker, WhatsApp Enquiry, Size Modal | `products`, `product_reviews`, `categories` |
@@ -53,7 +54,7 @@
 ## 🪟 3. Pop-ups, Modals, Drawers & Interactive Overlays Mapping
 
 | Modal / Popup | Component File / Trigger | Features & User Actions | Backend / JS Flow |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | **🛒 Cart Drawer** | `shared/cart-drawer.php` (`openCartDrawer()`) | Slide-over cart, quantity +/- steppers, item removal, coupon input, subtotal, checkout trigger | `localStorage` + `window.cartState` + `/api/cart.php` |
 | **💳 Checkout Modal** | `shared/checkout.php` (`openCheckout()`) | Full-screen luxury checkout overlay, address fields, 10-digit phone validator, payment methods (Razorpay, UPI, COD, Wire), WhatsApp order invoice creation | Submits POST to `/api/orders.php`, writes to MySQL `orders` & `order_items`, updates customer spend, decrements stock |
 | **👁️ QuickView Modal** | `shared/quickview.php` (`openQuickView(id)`) | Instant product preview without leaving page, image switcher, price breakdown, size picker, instant add-to-cart | Dynamically populated via `window.allProducts` / `/api/products.php?id=X` |
@@ -68,7 +69,7 @@
 ## 👑 4. Admin Suite Modules Mapping
 
 | Module Name | Directory / URL | Key Features | Real Database Metrics |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | **Executive Command** | `/admin/` & `/admin/admin.php` | Real-time overview of Sales Analytics, Live Orders, Gross Margins, Low Stock warnings | `SELECT COALESCE(SUM(total_amount), 0) FROM orders`, `COUNT(*) FROM products` |
 | **Products Management** | `/admin/products/` | Dual View Switcher (WooCommerce Table + Wholesale Grid), Real SKU filters, Stock alerts, Star featured toggle | Dynamic loop from `ProductCatalog::getAll()`, valuations, category links |
 | **Add / Edit Product** | `/admin/products/add.php` & `edit.php` | Multi-image media uploader, wholesale vs retail pricing, MOQ configurations, fabric & weave settings | Direct CRUD to `products` and `product_media` tables |
@@ -85,7 +86,7 @@
 ## 🔌 5. REST API Suite & Backend Endpoints
 
 | Endpoint URL | HTTP Methods | Parameters / Payload | Description & Output |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | **`/api/products.php`** | `GET`, `POST`, `PUT`, `DELETE` | `id`, `category`, `search`, `page`, `limit`, product JSON | Full CRUD engine for products. Returns JSON product lists or single product object with gallery and stock. |
 | **`/api/orders.php`** | `GET`, `POST` | `action=create`, `customer_name`, `customer_phone`, `items`, `payment_method` | Creates real database orders with transaction safety, decrements stock, updates customer analytics, returns order number and WhatsApp message. |
 | **`/api/customers.php`** | `GET`, `POST`, `PUT`, `DELETE` | `id`, `type`, customer profile JSON | CRUD for B2B wholesalers, resellers, and retail customers. |
@@ -153,6 +154,7 @@ To guarantee sub-second server response times and ultra-smooth fluid UI performa
 ## 🔄 8. Triple-Sync Deployment Protocol
 
 Every modification strictly follows the 3-step synchronization:
+
 1. **Local**: Clean validation and testing in `c:\Users\sai\Desktop\WhatsApp CRM`.
 2. **GitHub**: Auto-commit with clear descriptive commit message to `origin main`.
 3. **Hostinger Live FTP**: Binary deployment directly to `/public_html/` on IP `147.93.99.134`.
