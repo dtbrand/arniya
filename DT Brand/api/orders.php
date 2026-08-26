@@ -76,17 +76,26 @@ try {
     // Create Order
     if ($method === 'POST') {
         $rawInput = file_get_contents('php://input');
-        $data = json_decode($rawInput, true) ?: $_POST;
+        $jsonData = json_decode($rawInput, true);
+        $data = is_array($jsonData) ? $jsonData : $_POST;
+
+        if (!empty($data['items']) && is_string($data['items'])) {
+            $data['items'] = json_decode($data['items'], true);
+        }
 
         if (empty($data['items']) || !is_array($data['items'])) {
             http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Order must contain items.']);
+            echo json_encode(['success' => false, 'message' => 'Order must contain items array.']);
             exit;
         }
 
         $res = OrderManager::createOrder($data);
         if ($res['success']) {
-            echo json_encode($res, JSON_PRETTY_PRINT);
+            echo json_encode([
+                'success' => true,
+                'order' => $res,
+                'message' => 'Order successfully created in live database.'
+            ], JSON_PRETTY_PRINT);
         } else {
             http_response_code(400);
             echo json_encode($res, JSON_PRETTY_PRINT);

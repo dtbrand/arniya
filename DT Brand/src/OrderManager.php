@@ -28,8 +28,8 @@ class OrderManager
         $gstRate = (float)($orderData['gst_rate'] ?? 5.0);
 
         $calc = PricingCalculator::calculateOrderTotal($subtotal, $discount, $shipping, $gstRate);
-        $grandTotal = $calc['grand_total'];
-        $gstAmount = $calc['gst_amount'];
+        $grandTotal = (float)($calc['grand_total'] ?? $subtotal);
+        $gstAmount = (float)($calc['gst_amount'] ?? $calc['gst'] ?? 0.0);
 
         $customerId = (int)($orderData['customer_id'] ?? 0);
         $customerName = trim($orderData['customer_name'] ?? 'Direct Customer');
@@ -63,6 +63,10 @@ class OrderManager
                     }
                 }
 
+                // Map and validate status enums
+                $validFulfillment = in_array($fulfillmentStatus, ['unfulfilled','processing','dispatched','delivered','cancelled']) ? $fulfillmentStatus : 'processing';
+                $validPayment = in_array($paymentStatus, ['pending','paid','credit','refunded']) ? $paymentStatus : 'paid';
+
                 // Insert into orders table
                 $stmt = $pdo->prepare("
                     INSERT INTO orders (order_number, customer_id, customer_name, customer_phone, channel, subtotal, discount, gst_rate, gst_amount, shipping_fee, total_amount, payment_method, payment_status, fulfillment_status, tracking_number, courier_name, created_at)
@@ -82,8 +86,8 @@ class OrderManager
                     $shipping,
                     $grandTotal,
                     $paymentMethod,
-                    $paymentStatus,
-                    $fulfillmentStatus,
+                    $validPayment,
+                    $validFulfillment,
                     $trackingNum
                 ]);
                 $dbOrderId = (int)$pdo->lastInsertId();
@@ -105,7 +109,7 @@ class OrderManager
                     $prodTitle = $it['title'] ?? $it['name'] ?? 'Silk Saree';
                     $prodSku = $it['sku'] ?? 'DT-SKU';
                     $unitPrice = (float)($it['price'] ?? 0);
-                    $qty = (int)($it['quantity'] ?? 1);
+                    $qty = (int)($it['quantity'] ?? $it['qty'] ?? 1);
                     $totalItemPrice = $unitPrice * $qty;
 
                     $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
@@ -114,26 +118,30 @@ class OrderManager
 
                 // Update customer total_orders and lifetime_spend
                 if ($customerId > 0) {
-                    $pdo->prepare("
-                        UPDATE customers 
-                        SET total_orders = total_orders + 1, 
-                            lifetime_spend = lifetime_spend + ? 
-                        WHERE id = ?
-                    ")->execute([$grandTotal, $customerId]);
+                    try {
+                        $pdo->prepare("
+                            UPDATE customers 
+                            SET total_orders = COALESCE(total_orders, 0) + 1, 
+                                lifetime_spend = COALESCE(lifetime_spend, 0) + ? 
+                            WHERE id = ?
+                        ")->execute([$grandTotal, $customerId]);
+                    } catch (\Exception $ce) {}
                 }
 
                 $pdo->commit();
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 if ($pdo->inTransaction()) {
                     $pdo->rollBack();
                 }
-                error_log("[ORDER CREATION ERROR] " . $e->getMessage());
+                $dbError = $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
+                error_log("[ORDER CREATION ERROR] " . $dbError);
             }
         }
 
         return [
-            'success' => true,
+            'success' => ($dbOrderId > 0),
             'id' => $dbOrderId,
+            'db_error' => $dbError ?? null,
             'order_number' => $orderNumber,
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,

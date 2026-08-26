@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * admin.php — Luxury Executive Admin Dashboard & WhatsApp CRM Control Center
  * DT Brand's & Jai Hanuman Tex
@@ -43,9 +43,9 @@ if ($db !== null && !Database::isMockMode()) {
     try {
         $recentOrdersList = $db->query("SELECT * FROM `orders` ORDER BY id DESC LIMIT 10")->fetchAll(\PDO::FETCH_ASSOC);
         $totalOrdersCount = (int)$db->query("SELECT COUNT(*) FROM `orders`")->fetchColumn();
-        $totalSalesAmount = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
-        $pendingPayments = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE payment_status = 'pending' OR payment_status = 'unpaid'")->fetchColumn();
-        $todaySales = (float)$db->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE DATE(created_at) = CURDATE() AND status != 'cancelled'")->fetchColumn();
+        $totalSalesAmount = (float)$db->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE fulfillment_status != 'cancelled'")->fetchColumn();
+        $pendingPayments = (float)$db->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE payment_status = 'pending' OR payment_status = 'unpaid'")->fetchColumn();
+        $todaySales = (float)$db->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE DATE(created_at) = CURDATE() AND fulfillment_status != 'cancelled'")->fetchColumn();
         $liveOrdersToday = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE DATE(created_at) = CURDATE()")->fetchColumn();
     } catch (\Exception $e) {
         $recentOrdersList = [];
@@ -73,11 +73,13 @@ $pipeRefunded = 0;
 
 if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
     try {
-        $pipeNew = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'new'")->fetchColumn();
-        $pipePending = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'pending'")->fetchColumn();
-        $pipeConfirmed = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'confirmed'")->fetchColumn();
-        $pipeProcessing = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'processing'")->fetchColumn();
-        $pipeDelivered = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE status = 'delivered'")->fetchColumn();
+        $pipeNew = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'pending' OR fulfillment_status = 'new'")->fetchColumn();
+        $pipePending = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'pending'")->fetchColumn();
+        $pipeConfirmed = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'confirmed'")->fetchColumn();
+        $pipeProcessing = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'processing'")->fetchColumn();
+        $pipeShipped = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'dispatched' OR fulfillment_status = 'shipped'")->fetchColumn();
+        $pipeDelivered = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'delivered'")->fetchColumn();
+        $pipeCancelled = (int)$db->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status = 'cancelled'")->fetchColumn();
     } catch (\Exception $e) {}
 }
 ?>

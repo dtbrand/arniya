@@ -1764,7 +1764,7 @@
             params.append('identity', input);
             params.append('password', pass);
 
-            fetch('/api/auth/index.php', {
+            fetch('/api/auth.php', {
                 method: 'POST',
                 body: params
             })
@@ -1840,7 +1840,7 @@
             params.append('city', city || 'Surat');
             params.append('state', selectedState);
 
-            fetch('/api/auth/index.php', {
+            fetch('/api/auth.php', {
                 method: 'POST',
                 body: params
             })
@@ -1894,7 +1894,7 @@
 
         window.handleLogoutClick = function() {
             localStorage.removeItem('dtbrands_user');
-            window.location.href = '../../shop.php';
+            window.location.href = '/shop';
         };
 
         /* Run on Page Load */

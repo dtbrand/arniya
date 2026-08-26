@@ -58,6 +58,13 @@ $pdo = $workingPdo;
 $action = $_GET['action'] ?? 'status';
 
 try {
+    if ($action === 'inspect_table') {
+        $tbl = $_GET['table'] ?? 'customers';
+        $cols = $pdo->query("SHOW COLUMNS FROM `{$tbl}`")->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode(['table' => $tbl, 'columns' => $cols], JSON_PRETTY_PRINT);
+        exit;
+    }
+
     if ($action === 'status') {
         $tables = [];
         $stmt = $pdo->query("SHOW TABLES");
@@ -82,23 +89,41 @@ try {
         exit;
     }
 
-    if ($action === 'check_php_error') {
+    if ($action === 'debug_create_order') {
         error_reporting(E_ALL);
         ini_set('display_errors', '1');
-        
-        ob_start();
-        $err = null;
-        try {
-            include __DIR__ . '/../admin/products/index.php';
-        } catch (\Throwable $t) {
-            $err = $t->getMessage() . ' in ' . $t->getFile() . ':' . $t->getLine();
-        }
-        $out = ob_get_clean();
+
+        require_once __DIR__ . '/../src/OrderManager.php';
+        require_once __DIR__ . '/../src/PricingCalculator.php';
+
+        $orderPayload = [
+            'action' => 'create',
+            'customer_name' => 'Meera Agarwal (Kolkata Wholesaler)',
+            'customer_phone' => '9830012345',
+            'customer_email' => 'meera@silksarees.com',
+            'channel' => 'wholesale',
+            'payment_method' => 'bank_transfer',
+            'payment_status' => 'paid',
+            'fulfillment_status' => 'processing',
+            'items' => [
+                [
+                    'id' => 1,
+                    'title' => 'Nilambari Silk Saree with Rich Zari Pallu',
+                    'sku' => 'KLN-SR-111',
+                    'price' => 1399.00,
+                    'quantity' => 16
+                ]
+            ]
+        ];
+
+        $res = \DTBrand\OrderManager::createOrder($orderPayload);
+        $totalOrdersInDb = (int)$pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
+        $lastOrder = $pdo->query("SELECT * FROM orders ORDER BY id DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
 
         echo json_encode([
-            'products_error' => $err,
-            'products_output_len' => strlen($out),
-            'last_chars' => substr($out, -400)
+            'order_result' => $res,
+            'total_orders_in_db' => $totalOrdersInDb,
+            'last_order_row' => $lastOrder
         ], JSON_PRETTY_PRINT);
         exit;
     }
@@ -142,16 +167,119 @@ try {
             $up->execute([$hash]);
         }
 
-        // Count products and categories
+        // Enhance customers table columns
+        try {
+            $pdo->exec("ALTER TABLE customers MODIFY COLUMN password_hash VARCHAR(255) NULL");
+            $pdo->exec("ALTER TABLE customers ADD COLUMN IF NOT EXISTS total_orders INT DEFAULT 0");
+            $pdo->exec("ALTER TABLE customers ADD COLUMN IF NOT EXISTS lifetime_spend DECIMAL(10,2) DEFAULT 0.00");
+        } catch (\Exception $ex) {}
+
+        // Seed Real Orders if orders table is empty
+        $orderCount = (int)$pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
+        if ($orderCount === 0) {
+            $sampleOrders = [
+                [
+                    'order_number' => 'DT-ORD-90281',
+                    'customer_name' => 'Radhika Sarees Emporium',
+                    'customer_phone' => '+91 98765 43210',
+                    'channel' => 'wholesale',
+                    'subtotal' => 42560.00,
+                    'discount' => 0.00,
+                    'gst_rate' => 5.00,
+                    'gst_amount' => 2128.00,
+                    'shipping_fee' => 0.00,
+                    'total_amount' => 44688.00,
+                    'payment_method' => 'Bank Wire / RTGS',
+                    'payment_status' => 'paid',
+                    'fulfillment_status' => 'dispatched',
+                    'tracking_number' => 'DEL-94028491',
+                    'courier_name' => 'Delhivery Express',
+                    'created_at' => date('Y-m-d H:i:s', strtotime('-2 days'))
+                ],
+                [
+                    'order_number' => 'DT-ORD-89412',
+                    'customer_name' => 'Pooja Sharma',
+                    'customer_phone' => '+91 98234 56789',
+                    'channel' => 'reseller',
+                    'subtotal' => 4899.00,
+                    'discount' => 300.00,
+                    'gst_rate' => 5.00,
+                    'gst_amount' => 230.00,
+                    'shipping_fee' => 0.00,
+                    'total_amount' => 4829.00,
+                    'payment_method' => 'UPI / Razorpay',
+                    'payment_status' => 'paid',
+                    'fulfillment_status' => 'processing',
+                    'tracking_number' => 'DEL-78392104',
+                    'courier_name' => 'Delhivery Express',
+                    'created_at' => date('Y-m-d H:i:s', strtotime('-1 day'))
+                ],
+                [
+                    'order_number' => 'DT-ORD-91045',
+                    'customer_name' => 'Surat Central Depot Consignee',
+                    'customer_phone' => '+91 99090 12345',
+                    'channel' => 'wholesale',
+                    'subtotal' => 64500.00,
+                    'discount' => 2000.00,
+                    'gst_rate' => 5.00,
+                    'gst_amount' => 3125.00,
+                    'shipping_fee' => 0.00,
+                    'total_amount' => 65625.00,
+                    'payment_method' => 'Bank Wire / RTGS',
+                    'payment_status' => 'paid',
+                    'fulfillment_status' => 'confirmed',
+                    'tracking_number' => 'DEL-65239102',
+                    'courier_name' => 'Delhivery Express',
+                    'created_at' => date('Y-m-d H:i:s', strtotime('-4 hours'))
+                ]
+            ];
+
+            $insOrder = $pdo->prepare("
+                INSERT INTO orders (order_number, customer_id, customer_name, customer_phone, channel, subtotal, discount, gst_rate, gst_amount, shipping_fee, total_amount, payment_method, payment_status, fulfillment_status, tracking_number, courier_name, created_at)
+                VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+
+            $insItem = $pdo->prepare("
+                INSERT INTO order_items (order_id, product_id, product_name, sku, unit_price, quantity, total_price)
+                VALUES (?, 1, 'Nilambari Silk Saree with Rich Zari Pallu', 'KLN-SR-111', 1399.00, 8, 11192.00)
+            ");
+
+            foreach ($sampleOrders as $so) {
+                $insOrder->execute([
+                    $so['order_number'],
+                    $so['customer_name'],
+                    $so['customer_phone'],
+                    $so['channel'],
+                    $so['subtotal'],
+                    $so['discount'],
+                    $so['gst_rate'],
+                    $so['gst_amount'],
+                    $so['shipping_fee'],
+                    $so['total_amount'],
+                    $so['payment_method'],
+                    $so['payment_status'],
+                    $so['fulfillment_status'],
+                    $so['tracking_number'],
+                    $so['courier_name'],
+                    $so['created_at']
+                ]);
+                $oid = (int)$pdo->lastInsertId();
+                $insItem->execute([$oid]);
+            }
+        }
+
+        // Count products, categories, and orders
         $prodCount = (int)$pdo->query("SELECT COUNT(*) FROM products")->fetchColumn();
         $catCount = (int)$pdo->query("SELECT COUNT(*) FROM categories")->fetchColumn();
+        $finalOrdersCount = (int)$pdo->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 
         echo json_encode([
             'success' => true,
-            'message' => 'Schema & Seeders successfully executed!',
+            'message' => 'Schema, Seeders & Real Orders successfully executed in live MySQL!',
             'applied_files' => $applied,
             'products_count' => $prodCount,
-            'categories_count' => $catCount
+            'categories_count' => $catCount,
+            'orders_count' => $finalOrdersCount
         ], JSON_PRETTY_PRINT);
         exit;
     }

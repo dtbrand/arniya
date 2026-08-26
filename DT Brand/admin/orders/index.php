@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * index.php — Orders & Logistics Fulfillment Center Main Dashboard
  * DT Brand's & Jai Hanuman Tex
@@ -38,7 +38,7 @@ $filter_status = "all";
                             <span>Orders &amp; Logistics Fulfillment Center</span>
                             <span class="dt-title-counter-badge">
                                 <span class="dt-counter-dot"></span>
-                                <strong>1,624</strong> Total Orders
+                                <strong><?php require_once __DIR__ . '/../../src/OrderManager.php'; echo number_format(count(\DTBrand\OrderManager::getAll())); ?></strong> Total Orders
                             </span>
                         </h1>
                         <p class="dt-orders-subtitle">Manage wholesale depot dispatches, reseller commissions, and retail parcel deliveries.</p>
