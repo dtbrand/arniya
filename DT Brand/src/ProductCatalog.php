@@ -834,6 +834,45 @@ class ProductCatalog
     }
 
     /**
+     * Adjust stock quantity by delta (increment/decrement) in MySQL
+     */
+    public static function adjustStock(int $id, int $delta): array
+    {
+        if ($id <= 0) {
+            return ['success' => false, 'message' => 'Invalid product ID.'];
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo !== null && !Database::isMockMode()) {
+            try {
+                $stmt = $pdo->prepare("UPDATE products SET stock_qty = GREATEST(0, COALESCE(stock_qty, 0) + ?) WHERE id = ?");
+                $stmt->execute([$delta, $id]);
+                
+                $get = $pdo->prepare("SELECT stock_qty, title, sku FROM products WHERE id = ? LIMIT 1");
+                $get->execute([$id]);
+                $row = $get->fetch();
+                $newQty = $row ? (int)$row['stock_qty'] : 0;
+
+                return [
+                    'success' => true,
+                    'id' => $id,
+                    'new_stock' => $newQty,
+                    'message' => "Stock successfully adjusted by {$delta} (New total: {$newQty} units)."
+                ];
+            } catch (\Exception $e) {
+                return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
+            }
+        }
+
+        return [
+            'success' => true,
+            'id' => $id,
+            'new_stock' => max(0, 50 + $delta),
+            'message' => "Stock adjusted successfully."
+        ];
+    }
+
+    /**
      * Delete product permanently from database
      */
     public static function delete(int $id, bool $permanent = true): bool

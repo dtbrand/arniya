@@ -57,6 +57,19 @@ try {
             exit;
         }
 
+        // Adjust Stock (Increment / Decrement Delta)
+        if ($action === 'adjust_stock') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for stock adjustment.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $delta = (int)($data['adjustment'] ?? $data['delta'] ?? 0);
+            $res = ProductCatalog::adjustStock($targetId, $delta);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
         // Duplicate Product
         if ($action === 'duplicate') {
             if ($targetId <= 0) {
