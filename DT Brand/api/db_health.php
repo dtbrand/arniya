@@ -82,19 +82,23 @@ try {
         exit;
     }
 
-    if ($action === 'test_catalog') {
-        $dbConn = Database::getConnection();
-        $isMock = Database::isMockMode();
-        $allProds = ProductCatalog::getAll();
-        $allCats = ProductCatalog::getCategoriesWithDetails();
+    if ($action === 'check_php_error') {
+        error_reporting(E_ALL);
+        ini_set('display_errors', '1');
+        
+        ob_start();
+        $err = null;
+        try {
+            include __DIR__ . '/../admin/products/index.php';
+        } catch (\Throwable $t) {
+            $err = $t->getMessage() . ' in ' . $t->getFile() . ':' . $t->getLine();
+        }
+        $out = ob_get_clean();
 
         echo json_encode([
-            'success' => true,
-            'db_connected' => ($dbConn !== null),
-            'is_mock_mode' => $isMock,
-            'all_products_count' => count($allProds),
-            'all_categories_count' => count($allCats),
-            'first_product' => $allProds[0] ?? null
+            'products_error' => $err,
+            'products_output_len' => strlen($out),
+            'last_chars' => substr($out, -400)
         ], JSON_PRETTY_PRINT);
         exit;
     }
