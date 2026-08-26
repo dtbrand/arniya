@@ -73,12 +73,46 @@ try {
 
     }
 
-    // Create Order
+    // Order Actions (Create, Update Status, Delete)
     if ($method === 'POST') {
         $rawInput = file_get_contents('php://input');
         $jsonData = json_decode($rawInput, true);
         $data = is_array($jsonData) ? $jsonData : $_POST;
 
+        $action = trim($data['action'] ?? 'create');
+
+        // Update Order Status / Tracking
+        if ($action === 'update_status') {
+            $orderId = $data['order_id'] ?? ($data['id'] ?? '');
+            $status = trim($data['status'] ?? 'processing');
+            $tracking = !empty($data['tracking_number']) ? trim($data['tracking_number']) : null;
+            $courier = !empty($data['courier_name']) ? trim($data['courier_name']) : null;
+
+            if (empty($orderId)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Order ID required.']);
+                exit;
+            }
+
+            $ok = OrderManager::updateStatus($orderId, $status, $tracking, $courier);
+            echo json_encode(['success' => $ok, 'order_id' => $orderId, 'status' => $status, 'message' => $ok ? 'Order status updated in live database.' : 'Failed to update order status.']);
+            exit;
+        }
+
+        // Delete Order
+        if ($action === 'delete') {
+            $orderId = $data['order_id'] ?? ($data['id'] ?? '');
+            if (empty($orderId)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Order ID required for deletion.']);
+                exit;
+            }
+            $ok = OrderManager::deleteOrder($orderId);
+            echo json_encode(['success' => $ok, 'order_id' => $orderId, 'message' => $ok ? 'Order permanently removed from database.' : 'Failed to remove order.']);
+            exit;
+        }
+
+        // Create Order
         if (!empty($data['items']) && is_string($data['items'])) {
             $data['items'] = json_decode($data['items'], true);
         }

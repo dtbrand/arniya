@@ -401,5 +401,29 @@ class OrderManager
         }
         return null;
     }
+
+    /**
+     * Delete Order permanently
+     */
+    public static function deleteOrder($orderId): bool
+    {
+        $db = Database::getConnection();
+        if ($db !== null && !Database::isMockMode()) {
+            try {
+                if (is_numeric($orderId)) {
+                    $stmt = $db->prepare("DELETE FROM orders WHERE id = ? OR order_number = ?");
+                    return $stmt->execute([(int)$orderId, (string)$orderId]);
+                } else {
+                    $stmt = $db->prepare("DELETE FROM orders WHERE order_number = ?");
+                    return $stmt->execute([(string)$orderId]);
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
+
 
