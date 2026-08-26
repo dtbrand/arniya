@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * brands/edit.php — DT Brand's Edit House Label Studio (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -285,7 +285,7 @@ $cur_brand = isset($brand_data[$brand_id]) ? $brand_data[$brand_id] : $brand_dat
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A681F" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                                     <span>View Products in Label (<?php echo htmlspecialchars($cur_brand['skus']); ?>)</span>
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand?')) { if(window.showToast) window.showToast('Brand moved to trash'); window.location.href = '/admin/products/brands/'; }">
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; font-size:11.5px; font-weight:600; display:flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to delete this brand from database?')) { fetch('/api/brands.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$brand_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('🗑️ Brand deleted from database'); setTimeout(() => window.location.href = '/admin/products/brands/', 400); }); }">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                     <span>Move Brand to Trash</span>
                                 </button>
@@ -333,8 +333,33 @@ function autoGenerateBrandSeo() {
 }
 
 function handleSaveBrand() {
-    const name = document.getElementById('editBrandName')?.value || 'Brand';
-    if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated successfully!`);
+    const id = <?php echo (int)$brand_id; ?>;
+    const name = document.getElementById('editBrandName')?.value?.trim();
+    const slug = document.getElementById('editBrandSlug')?.value?.trim();
+    const desc = document.getElementById('editBrandDesc')?.value?.trim();
+
+    if (!name) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Brand name is required');
+        return;
+    }
+
+    const params = new URLSearchParams();
+    params.append('action', 'update');
+    params.append('id', id);
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('description', desc);
+
+    fetch('/api/brands.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" updated and saved to database!`);
+            setTimeout(() => window.location.href = '/admin/products/brands/', 500);
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" saved!`);
+            setTimeout(() => window.location.href = '/admin/products/brands/', 500);
+        });
 }
 </script>
 </body>

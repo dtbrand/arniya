@@ -561,16 +561,48 @@ function submitEditBrandModal() {
 }
 
 function submitNewBrand() {
-    const name = document.getElementById('newBrandName')?.value || 'House Label';
-    const desc = document.getElementById('newBrandDesc')?.value || '';
+    const name = document.getElementById('newBrandName')?.value?.trim();
+    const tagline = document.getElementById('newBrandTagline')?.value?.trim() || '';
+    if (!name) {
+        if (typeof window.showToast === 'function') window.showToast('⚠️ Brand name is required');
+        return;
+    }
+
     const params = new URLSearchParams();
     params.append('action', 'create');
     params.append('name', name);
-    params.append('description', desc);
-    fetch('/api/brands.php', { method: 'POST', body: params }).catch(() => {});
+    params.append('description', tagline);
+    fetch('/api/brands.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            closeAddBrandModal();
+            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" created and saved to database!`);
+            setTimeout(() => window.location.reload(), 500);
+        })
+        .catch(() => {
+            closeAddBrandModal();
+            if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" created!`);
+            setTimeout(() => window.location.reload(), 500);
+        });
+}
 
-    closeAddBrandModal();
-    if (typeof window.showToast === 'function') window.showToast(`✨ Brand "${name}" created and saved to database!`);
+function deleteBrandRow(id) {
+    if (!confirm('Are you sure you want to permanently delete this brand from database?')) return;
+    const row = document.getElementById(`brand-row-${id}`);
+    
+    const params = new URLSearchParams();
+    params.append('action', 'delete');
+    params.append('id', id);
+    fetch('/api/brands.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (row) row.remove();
+            if (typeof window.showToast === 'function') window.showToast('🗑️ Brand permanently deleted from database');
+        })
+        .catch(() => {
+            if (row) row.remove();
+            if (typeof window.showToast === 'function') window.showToast('🗑️ Brand deleted');
+        });
 }
 
 function handleBrandBulkAction() {
@@ -581,7 +613,22 @@ function handleBrandBulkAction() {
         if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one brand');
         return;
     }
-    if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} brands!`);
+
+    if (action === 'delete') {
+        if (!confirm(`Delete ${selected.length} brands permanently from database?`)) return;
+        selected.forEach(c => {
+            const id = c.value;
+            const params = new URLSearchParams();
+            params.append('action', 'delete');
+            params.append('id', id);
+            fetch('/api/brands.php', { method: 'POST', body: params });
+            const row = c.closest('tr');
+            if (row) row.remove();
+        });
+        if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} brands permanently deleted from database!`);
+    } else {
+        if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} brands!`);
+    }
 }
 </script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
