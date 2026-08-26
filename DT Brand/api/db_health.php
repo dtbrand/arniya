@@ -128,7 +128,7 @@ try {
         exit;
     }
 
-    if ($action === 'migrate') {
+    if ($action === 'seed_all' || $action === 'migrate') {
         $applied = [];
         $files = ['schema.sql', 'seeders.sql'];
 
@@ -136,11 +136,94 @@ try {
             $path = __DIR__ . '/../database/' . $file;
             if (file_exists($path)) {
                 $sql = file_get_contents($path);
-                // Multi-query execution
                 $pdo->exec($sql);
                 $applied[] = $file;
             }
         }
+
+        // 1. Seed Brands
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `brands` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(150) NOT NULL,
+                    `slug` VARCHAR(150) NOT NULL UNIQUE,
+                    `description` TEXT NULL,
+                    `origin_city` VARCHAR(100) DEFAULT 'Surat, Gujarat',
+                    `status` VARCHAR(20) DEFAULT 'active',
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+            $pdo->exec("
+                INSERT IGNORE INTO `brands` (`id`, `name`, `slug`, `description`, `origin_city`, `status`) VALUES
+                (1, 'DT Brand\'s Heritage', 'dt-brands-heritage', 'Signature Surat pure silk handloom collection.', 'Surat, Gujarat', 'active'),
+                (2, 'Jai Hanuman Tex Mills', 'jai-hanuman-tex-mills', 'Direct powerloom and handloom weaving unit.', 'Surat, Gujarat', 'active'),
+                (3, 'Arniya Pure Katan', 'arniya-pure-katan', 'Varanasi pure zari kadwa bridal silks.', 'Varanasi, UP', 'active'),
+                (4, 'Kanchipuram Royal Edit', 'kanchipuram-royal-edit', 'Pure tested gold zari heirloom sarees.', 'Kanchipuram, TN', 'active');
+            ");
+        } catch (\Exception $ex) {}
+
+        // 2. Seed Attributes
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `attributes` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(150) NOT NULL,
+                    `slug` VARCHAR(150) NOT NULL UNIQUE,
+                    `type` VARCHAR(50) DEFAULT 'select',
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+            $pdo->exec("
+                INSERT IGNORE INTO `attributes` (`id`, `name`, `slug`, `type`) VALUES
+                (1, 'Color Variations', 'pa_color', 'color'),
+                (2, 'Fabric & Material', 'pa_fabric', 'text'),
+                (3, 'Zari & Weaving Technique', 'pa_zari', 'text'),
+                (4, 'Saree Length & Blouse', 'pa_size_saree', 'text');
+            ");
+        } catch (\Exception $ex) {}
+
+        // 3. Seed Reviews & Product Reviews
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `product_reviews` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `product_id` INT NOT NULL DEFAULT 1,
+                    `customer_name` VARCHAR(150) NOT NULL,
+                    `rating` INT NOT NULL DEFAULT 5,
+                    `review_text` TEXT NOT NULL,
+                    `city` VARCHAR(100) DEFAULT 'Mumbai',
+                    `status` VARCHAR(20) DEFAULT 'approved',
+                    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+            $pdo->exec("
+                INSERT IGNORE INTO `product_reviews` (`id`, `product_id`, `customer_name`, `rating`, `review_text`, `city`, `status`) VALUES
+                (1, 1, 'Pooja Sharma', 5, 'The silk quality is unmatched! Pure gold zari and royal finish.', 'Mumbai', 'approved'),
+                (2, 2, 'Ananya Roy', 5, 'Authentic Banarasi kadwa weave. Ordered for my sister wedding.', 'Kolkata', 'approved'),
+                (3, 3, 'Meera Agarwal', 5, 'Direct factory pricing and rapid dispatch. Wholesale profit margins are great.', 'Surat', 'approved'),
+                (4, 4, 'Sunita Patel', 5, 'Flawless zari borders and soft pure mulberry silk drape.', 'Ahmedabad', 'approved');
+            ");
+        } catch (\Exception $ex) {}
+
+        // 4. Seed WhatsApp Logs
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `whatsapp_logs` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `audience` VARCHAR(50) DEFAULT 'retail',
+                    `message` TEXT NOT NULL,
+                    `status` VARCHAR(20) DEFAULT 'delivered',
+                    `sent_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ");
+            $pdo->exec("
+                INSERT IGNORE INTO `whatsapp_logs` (`id`, `audience`, `message`, `status`, `sent_at`) VALUES
+                (1, 'wholesale', '🌟 DT Brand\'s Diwali Festive 2026 Wholesale Saree Bale Catalog Dispatched.', 'delivered', NOW()),
+                (2, 'retail', 'Namaste! Your pure silk saree order DTB-001623 has been packed and handed to BlueDart.', 'delivered', NOW()),
+                (3, 'reseller', '🚀 Reseller Profit Commission of ₹4,850 credited to your wallet.', 'delivered', NOW());
+            ");
+        } catch (\Exception $ex) {}
 
         // Also ensure admin table has the master admin credentials
         $hash = password_hash('Gautam@9006', PASSWORD_BCRYPT);
