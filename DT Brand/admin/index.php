@@ -598,7 +598,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                                         </div>
                                         <div class="adm-ref-date-picker">
                                             <button type="button" class="adm-ref-date-btn">‹</button>
-                                            <span>July 2026</span>
+                                            <span><?= date('F Y') ?></span>
                                             <button type="button" class="adm-ref-date-btn">›</button>
                                         </div>
                                     </div>

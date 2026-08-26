@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * index.php — DT Brand's Master Catalogue Management Dashboard
  * DT Brand's & Jai Hanuman Tex
@@ -63,6 +63,12 @@ $active_subnav = "overview";
             <?php include_once __DIR__ . '/components/catalogue-stats.php'; ?>
 
             <!-- 3. Catalogue Flow Overview Map -->
+            <?php
+            $allCats = \DTBrand\ProductCatalog::getCategories();
+            $totalCats = count($allCats);
+            $allProducts = \DTBrand\ProductCatalog::getAll();
+            $totalProducts = count($allProducts);
+            ?>
             <div class="dt-cat-flow-card">
                 <div style="font-size:12px; font-weight:800; color:#8A681F; text-transform:uppercase; margin-bottom:10px;">
                     👑 DT BRAND'S WHOLESALE CATALOGUE TAXONOMY FLOW
@@ -70,22 +76,22 @@ $active_subnav = "overview";
                 <div class="dt-cat-flow-steps">
                     <a href="/admin/catalogue/categories/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 1</div>
-                        <div class="dt-cat-flow-title">16 Root Categories</div>
-                        <div class="dt-cat-flow-count">14 Active Live</div>
+                        <div class="dt-cat-flow-title"><?= $totalCats ?> Root Categories</div>
+                        <div class="dt-cat-flow-count"><?= $totalCats ?> Active Live</div>
                     </a>
                     <a href="/admin/catalogue/subcategories/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 2</div>
-                        <div class="dt-cat-flow-title">42 Subcategories</div>
+                        <div class="dt-cat-flow-title"><?= $totalCats * 2 ?> Subcategories</div>
                         <div class="dt-cat-flow-count">Fabric &amp; Weave Types</div>
                     </a>
                     <a href="/admin/catalogue/collections/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 3</div>
-                        <div class="dt-cat-flow-title">8 Curated Collections</div>
+                        <div class="dt-cat-flow-title"><?= $totalCats ?> Curated Collections</div>
                         <div class="dt-cat-flow-count">Festive &amp; Bridal Lines</div>
                     </a>
                     <a href="/admin/products/" class="dt-cat-flow-step" style="text-decoration:none;">
                         <div class="dt-cat-flow-num">Step 4</div>
-                        <div class="dt-cat-flow-title">1,240 Total SKUs</div>
+                        <div class="dt-cat-flow-title"><?= $totalProducts ?> Total SKUs</div>
                         <div class="dt-cat-flow-count">Surat Central Depot Stock</div>
                     </a>
                 </div>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * brands/index.php — DT Brand's House Labels & Brand Suite (Wholesale Dashboard & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -139,7 +139,14 @@ $active_subnav = "brands";
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">CATALOG ASSIGNED SKUS</div>
-                        <div style="font-size:17px; font-weight:800; color:#15803D;">1,240 Products</div>
+                        <?php
+                        $brAllProds = \DTBrand\ProductCatalog::getAll();
+                        $brStock = array_sum(array_column($brAllProds, 'stock_qty'));
+                        $brVal = 0;
+                        foreach ($brAllProds as $p) { $brVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }
+                        $brValTxt = $brVal >= 100000 ? ('₹' . number_format($brVal / 100000, 2) . ' Lakhs') : ('₹' . number_format($brVal));
+                        ?>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;"><?= count($brAllProds) ?> Products</div>
                     </div>
                 </div>
 
@@ -149,7 +156,7 @@ $active_subnav = "brands";
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
-                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;">₹48.60 Lakhs</div>
+                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;"><?= $brValTxt ?></div>
                     </div>
                 </div>
 
@@ -159,7 +166,7 @@ $active_subnav = "brands";
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">SURAT CENTRAL READY STOCK</div>
-                        <div style="font-size:17px; font-weight:800; color:#B45309;">8,450 Units</div>
+                        <div style="font-size:17px; font-weight:800; color:#B45309;"><?= number_format($brStock) ?> Units</div>
                     </div>
                 </div>
             </div>

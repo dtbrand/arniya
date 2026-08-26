@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * subcategories/index.php — DT Brand's Master Subcategories Hierarchy
  * Wholesale Dashboard & Luxury Shop Standard
@@ -156,7 +156,7 @@ $subcategories_list = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">ASSIGNED CATALOG SKUS</div>
-                        <div style="font-size:17px; font-weight:800; color:#15803D;">1,240 Products</div>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;"><?= count(\DTBrand\ProductCatalog::getAll()) ?> Products</div>
                     </div>
                 </div>
 
@@ -166,7 +166,13 @@ $subcategories_list = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
-                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;">₹48.60 Lakhs</div>
+                        <?php
+                        $subAllProds = \DTBrand\ProductCatalog::getAll();
+                        $subVal = 0;
+                        foreach ($subAllProds as $p) { $subVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }
+                        $subValTxt = $subVal >= 100000 ? ('₹' . number_format($subVal / 100000, 2) . ' Lakhs') : ('₹' . number_format($subVal));
+                        ?>
+                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;"><?= $subValTxt ?></div>
                     </div>
                 </div>
 

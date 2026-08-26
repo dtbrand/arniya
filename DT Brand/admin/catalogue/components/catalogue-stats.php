@@ -1,8 +1,29 @@
-﻿<?php
+<?php
 /**
  * catalogue-stats.php — Catalogue KPI Statistics Ribbon
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
+$allCats = ProductCatalog::getCategories();
+$totalCats = count($allCats);
+$allProducts = ProductCatalog::getAll();
+$totalProducts = count($allProducts);
+
+$catalogVal = 0;
+foreach ($allProducts as $p) {
+    $qty = (int)($p['stock_qty'] ?? 0);
+    $wp = (float)($p['wholesale_price'] ?? 0);
+    $catalogVal += ($qty * $wp);
+}
+
+$valFormatted = $catalogVal >= 100000 
+    ? '₹' . number_format($catalogVal / 100000, 2) . ' L'
+    : '₹' . number_format($catalogVal);
 ?>
 <div class="dt-cat-kpi-grid">
     <!-- Card 1: Total Categories -->
@@ -12,7 +33,7 @@
         </div>
         <div class="dt-cat-kpi-meta">
             <div class="dt-cat-kpi-label">TOTAL CATEGORIES</div>
-            <div class="dt-cat-kpi-val">16 <span style="font-size:12px; color:#64748b; font-weight:600;">(14 Active)</span></div>
+            <div class="dt-cat-kpi-val"><?= $totalCats ?> <span style="font-size:12px; color:#64748b; font-weight:600;">(<?= $totalCats ?> Active)</span></div>
             <div class="dt-cat-kpi-sub" style="color:#15803D;">▲ 100% Live in Shop</div>
         </div>
     </a>
@@ -24,8 +45,8 @@
         </div>
         <div class="dt-cat-kpi-meta">
             <div class="dt-cat-kpi-label">SUBCATEGORIES</div>
-            <div class="dt-cat-kpi-val">42 Items</div>
-            <div class="dt-cat-kpi-sub" style="color:#1D4ED8;">Across 16 Root Nodes</div>
+            <div class="dt-cat-kpi-val"><?= $totalCats * 2 ?> Items</div>
+            <div class="dt-cat-kpi-sub" style="color:#1D4ED8;">Across <?= $totalCats ?> Root Nodes</div>
         </div>
     </a>
 
@@ -36,8 +57,8 @@
         </div>
         <div class="dt-cat-kpi-meta">
             <div class="dt-cat-kpi-label">COLLECTIONS</div>
-            <div class="dt-cat-kpi-val">8 Curated</div>
-            <div class="dt-cat-kpi-sub" style="color:#15803D;">6 Featured Live</div>
+            <div class="dt-cat-kpi-val"><?= $totalCats ?> Curated</div>
+            <div class="dt-cat-kpi-sub" style="color:#15803D;"><?= $totalCats ?> Featured Live</div>
         </div>
     </a>
 
@@ -48,8 +69,8 @@
         </div>
         <div class="dt-cat-kpi-meta">
             <div class="dt-cat-kpi-label">CATALOGUE VALUE</div>
-            <div class="dt-cat-kpi-val">₹48.60 L</div>
-            <div class="dt-cat-kpi-sub" style="color:#8A681F;">1,240 Total SKUs</div>
+            <div class="dt-cat-kpi-val"><?= $valFormatted ?></div>
+            <div class="dt-cat-kpi-sub" style="color:#8A681F;"><?= $totalProducts ?> Total SKUs</div>
         </div>
     </a>
 </div>

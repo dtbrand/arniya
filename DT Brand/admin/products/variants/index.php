@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * variants/index.php — DT Brand's Master Variant & SKU Combination Matrix
  * Wholesale Dashboard & Luxury Shop Standard
@@ -182,7 +182,14 @@ $variants_matrix = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">SURAT READY STOCK</div>
-                        <div style="font-size:17px; font-weight:800; color:#15803D;">8,450 Units in Depot</div>
+                        <?php
+                        $varAllProds = \DTBrand\ProductCatalog::getAll();
+                        $varStock = array_sum(array_column($varAllProds, 'stock_qty'));
+                        $varVal = 0;
+                        foreach ($varAllProds as $p) { $varVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }
+                        $varValTxt = $varVal >= 100000 ? ('₹' . number_format($varVal / 100000, 2) . ' Lakhs') : ('₹' . number_format($varVal));
+                        ?>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;"><?= number_format($varStock) ?> Units in Depot</div>
                     </div>
                 </div>
 
@@ -192,7 +199,7 @@ $variants_matrix = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
-                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;">₹48.60 Lakhs</div>
+                        <div style="font-size:17px; font-weight:800; color:#1D4ED8;"><?= $varValTxt ?></div>
                     </div>
                 </div>
 
