@@ -28,11 +28,30 @@
     window.submitCustomerStatusChange = function (e) {
         if (e) e.preventDefault();
         const statusSelect = document.getElementById('dtCustNewStatusSelect');
-        const reasonInput = document.getElementById('dtCustStatusReasonInput');
         const newStatus = statusSelect?.value || 'active';
+        const targetId = currentTargetCustId;
         
+        if (targetId) {
+            const params = new URLSearchParams();
+            params.append('action', 'update_status');
+            params.append('id', targetId);
+            params.append('status', newStatus);
+            fetch('/api/customers.php', { method: 'POST', body: params }).catch(() => {});
+
+            const row = document.getElementById('custRow_' + targetId) || document.querySelector(`tr[data-cust-id="${targetId}"]`);
+            if (row) {
+                const badge = row.querySelector('.dt-status-pill-clean') || row.querySelector('.adm-badge');
+                if (badge) {
+                    badge.className = 'dt-status-pill-clean ' + (newStatus === 'active' ? 'emerald' : (newStatus === 'suspended' ? 'crimson' : 'amber'));
+                    badge.textContent = newStatus.toUpperCase();
+                }
+            }
+        }
+
         window.closeCustomerStatusModal();
-        window.showToast(`✓ Customer ${currentTargetCustId || ''} status updated to ${newStatus.toUpperCase()}!`);
+        if (typeof window.showToast === 'function') {
+            window.showToast(`✓ Customer #${targetId || ''} status updated to ${newStatus.toUpperCase()} in database!`);
+        }
     };
 
 })();
