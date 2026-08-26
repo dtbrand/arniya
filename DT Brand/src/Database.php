@@ -26,22 +26,31 @@ class Database
         $username = getenv('DB_USER') ?: 'u602484543_demodt121';
         $password = getenv('DB_PASS') ?: 'Gautam@9006';
 
-        try {
-            $dsn = "mysql:host={$host};port={$port};dbname={$dbName};charset=utf8mb4";
-            $options = [
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                \PDO::ATTR_EMULATE_PREPARES => false,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
-            ];
-            self::$pdo = new \PDO($dsn, $username, $password, $options);
-            self::$isMockMode = false;
-        } catch (\PDOException $e) {
-            // Graceful fallback when MySQL server is offline / local development mode
-            self::$isMockMode = true;
-            self::$pdo = null;
+        $candidates = [
+            $host,
+            'localhost',
+            '127.0.0.1',
+        ];
+
+        foreach (array_unique($candidates) as $h) {
+            try {
+                $dsn = "mysql:host={$h};port={$port};dbname={$dbName};charset=utf8mb4";
+                $options = [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                    \PDO::ATTR_EMULATE_PREPARES => false
+                ];
+                self::$pdo = new \PDO($dsn, $username, $password, $options);
+                self::$isMockMode = false;
+                return self::$pdo;
+            } catch (\PDOException $e) {
+                // Try next candidate
+            }
         }
 
+        // Graceful fallback when MySQL server is offline / local development mode
+        self::$isMockMode = true;
+        self::$pdo = null;
         return self::$pdo;
     }
 
