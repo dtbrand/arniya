@@ -949,7 +949,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
                 <!-- Coupon Box -->
                 <div class="co-coupon-wrap">
-                    <input type="text" id="coCouponInput" class="co-coupon-input" placeholder="Promo code (e.g. ROYAL10)">
+                    <input type="text" id="coCouponInput" class="co-coupon-input" placeholder="Promo code (e.g. FESTIVE25)">
                     <button class="co-coupon-btn" id="coApplyCouponBtn">Apply</button>
                 </div>
                 <div id="coCouponMessage" style="font-size: 0.7rem; display: none;"></div>
@@ -1108,9 +1108,9 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
             html += `
                 <div class="co-item-row">
-                    <img src="${item.img || '/assets/images/product1.png'}" alt="${item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${item.image || item.img || '/assets/images/product1.png'}" alt="${item.name || item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/assets/images/product1.png';">
                     <div class="co-item-info">
-                        <div class="co-item-name">${item.title || 'Ethnic Attire'}</div>
+                        <div class="co-item-name">${item.name || item.title || 'Ethnic Attire'}</div>
                         <div class="co-item-meta">Size: <strong>${item.size || 'M'}</strong> | Qty: <strong>${item.qty || 1}</strong></div>
                         <div class="co-item-price-row">
                             <span class="co-item-price">₹${itemTotal.toLocaleString('en-IN')}</span>
@@ -1143,7 +1143,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         if (grandTotalEl) grandTotalEl.textContent = '₹' + grandTotal.toLocaleString('en-IN');
     };
 
-    /* Coupon Handler */
+    /* Coupon Handler — validates against the live coupon table via /api/coupons.php */
     function applyCoupon() {
         var input = document.getElementById('coCouponInput');
         var msg = document.getElementById('coCouponMessage');
@@ -1156,6 +1156,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             return sum + (priceNum * (item.qty || 1));
         }, 0);
 
+        // Empty code clears any applied discount.
         if (!code) {
             appliedDiscountAmount = 0;
             appliedCouponCode = '';
@@ -1164,32 +1165,45 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             return;
         }
 
-        if (code === 'ROYAL10') {
-            appliedDiscountAmount = Math.round(subtotal * 0.10);
-            appliedCouponCode = 'ROYAL10';
-            if (msg) {
-                msg.style.display = 'block';
-                msg.style.color = '#2E7D32';
-                msg.textContent = '✨ Coupon ROYAL10 applied! 10% Royal Festive discount saved.';
-            }
-        } else if (code === 'FESTIVE500') {
-            appliedDiscountAmount = Math.min(subtotal, 500);
-            appliedCouponCode = 'FESTIVE500';
-            if (msg) {
-                msg.style.display = 'block';
-                msg.style.color = '#2E7D32';
-                msg.textContent = '✨ Coupon FESTIVE500 applied! Flat ₹500 discount saved.';
-            }
-        } else {
-            appliedDiscountAmount = 0;
-            appliedCouponCode = '';
-            if (msg) {
-                msg.style.display = 'block';
-                msg.style.color = '#D32F2F';
-                msg.textContent = '❌ Invalid Coupon Code. Try "ROYAL10" for 10% off!';
-            }
+        if (msg) {
+            msg.style.display = 'block';
+            msg.style.color = '#8A681F';
+            msg.textContent = 'Checking coupon…';
         }
-        window.renderCheckoutItems();
+
+        var qs = 'action=validate&code=' + encodeURIComponent(code) + '&subtotal=' + encodeURIComponent(subtotal);
+        fetch('/api/coupons.php?' + qs)
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data && data.success) {
+                    appliedDiscountAmount = Math.round(Number(data.discount) || 0);
+                    appliedCouponCode = data.code || code;
+                    if (msg) {
+                        msg.style.display = 'block';
+                        msg.style.color = '#2E7D32';
+                        msg.textContent = '✨ ' + (data.message || ('Coupon ' + appliedCouponCode + ' applied!'));
+                    }
+                } else {
+                    appliedDiscountAmount = 0;
+                    appliedCouponCode = '';
+                    if (msg) {
+                        msg.style.display = 'block';
+                        msg.style.color = '#D32F2F';
+                        msg.textContent = '❌ ' + ((data && data.message) ? data.message : 'Invalid coupon code.');
+                    }
+                }
+                window.renderCheckoutItems();
+            })
+            .catch(function() {
+                appliedDiscountAmount = 0;
+                appliedCouponCode = '';
+                if (msg) {
+                    msg.style.display = 'block';
+                    msg.style.color = '#D32F2F';
+                    msg.textContent = 'Could not validate coupon right now. Please try again.';
+                }
+                window.renderCheckoutItems();
+            });
     }
 
     /* Place Order & WhatsApp Integration */
@@ -1245,7 +1259,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
             var itemTotal = priceNum * (item.qty || 1);
             subtotal += itemTotal;
-            itemsSummaryTxt += `${i + 1}. *${item.title || 'Ethnic Product'}*\n   Size: ${item.size || 'M'} | Qty: ${item.qty || 1} | ₹${itemTotal.toLocaleString('en-IN')}\n`;
+            itemsSummaryTxt += `${i + 1}. *${item.name || item.title || 'Ethnic Product'}*\n   Size: ${item.size || 'M'} | Qty: ${item.qty || 1} | ₹${itemTotal.toLocaleString('en-IN')}\n`;
         });
 
         var grandTotal = Math.max(0, subtotal - appliedDiscountAmount);
@@ -1255,21 +1269,20 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         params.append('action', 'create');
         params.append('customer_name', fullName);
         params.append('customer_phone', whatsApp);
+        params.append('shipping_address', address + ', ' + city + ', ' + state + ' - ' + pincode);
+        params.append('channel', 'retail');
         params.append('payment_method', activePaymentMethod);
         params.append('discount', appliedDiscountAmount);
+        if (appliedCouponCode) params.append('coupon_code', appliedCouponCode);
         params.append('items', JSON.stringify(cart));
 
-        fetch('/api/orders.php', {
-            method: 'POST',
-            body: params
-        })
-        .then(function(res) { return res.json(); })
-        .then(function(data) {
-            var realOrderNumber = (data.order && data.order.order_number) ? data.order.order_number : orderId;
+        var placeBtn = document.getElementById('coPlaceOrderBtn');
+        var placeBtnText = placeBtn ? placeBtn.textContent : '';
+        if (placeBtn) { placeBtn.disabled = true; placeBtn.textContent = 'Placing your order…'; }
 
-            /* Craft Luxury WhatsApp Invoice Message */
+        function buildWaUrl(orderNumberForMsg) {
             var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
-                            `🔖 *Order ID:* #${realOrderNumber}\n` +
+                            `🔖 *Order ID:* #${orderNumberForMsg}\n` +
                             `📅 *Date:* ${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}\n` +
                             `───────────────\n` +
                             `👤 *Customer Name:* ${fullName}\n` +
@@ -1286,8 +1299,28 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
                             `💳 *Payment Method:* ${activePaymentMethod.toUpperCase()}\n` +
                             `───────────────\n` +
                             `Please confirm and share order dispatch tracking. Thank you! 🙏`;
+            return `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
+        }
 
-            var waUrl = `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
+        function orderFailed(reason) {
+            if (placeBtn) { placeBtn.disabled = false; placeBtn.textContent = placeBtnText || 'Place Order'; }
+            alert('We could not record your order' + (reason ? (': ' + reason) : '.') + '\n\nYour bag has been kept — please try again.');
+        }
+
+        fetch('/api/orders.php', {
+            method: 'POST',
+            body: params
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            /* Only treat it as placed if the database actually saved it. */
+            if (!data || !data.success) {
+                orderFailed(data && data.message ? data.message : '');
+                return;
+            }
+
+            var realOrderNumber = (data.order && data.order.order_number) ? data.order.order_number : orderId;
+            var waUrl = buildWaUrl(realOrderNumber);
 
             /* Show Success Overlay */
             var successOverlay = document.getElementById('coSuccessOverlay');
@@ -1298,28 +1331,17 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             if (successWaLink) successWaLink.href = waUrl;
             if (successOverlay) successOverlay.classList.add('active');
 
-            /* Clear Cart upon successful order placement */
+            /* Clear the bag ONLY after the order is truly saved */
             localStorage.removeItem('dtbrands_cart');
             window.cartState = [];
             if (typeof window.syncBadges === 'function') window.syncBadges();
             if (typeof window.renderCart === 'function') window.renderCart();
 
-            /* Automatically open WhatsApp chat in new window/tab */
+            /* Open WhatsApp confirmation for the customer */
             window.open(waUrl, '_blank');
         })
-        .catch(function(_err) {
-            var waMessage = `👑 *DT BRAND'S ETHNIC LUXURY — NEW ORDER*\n\n` +
-                            `🔖 *Order ID:* #${orderId}\n` +
-                            `👤 *Customer:* ${fullName}\n` +
-                            `📞 *WhatsApp:* +91 ${whatsApp}\n` +
-                            `✨ *GRAND TOTAL:* ₹${grandTotal.toLocaleString('en-IN')}\n` +
-                            `Please confirm order dispatch.`;
-            var waUrl = `https://api.whatsapp.com/send?phone=${BRAND_WHATSAPP_NUMBER}&text=${encodeURIComponent(waMessage)}`;
-            var successOverlay = document.getElementById('coSuccessOverlay');
-            if (successOverlay) successOverlay.classList.add('active');
-            localStorage.removeItem('dtbrands_cart');
-            window.cartState = [];
-            window.open(waUrl, '_blank');
+        .catch(function() {
+            orderFailed('a network error occurred');
         });
     }
 

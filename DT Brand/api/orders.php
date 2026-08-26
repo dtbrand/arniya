@@ -34,8 +34,8 @@ try {
             $orderCount = 0;
             if ($pdo !== null && !Database::isMockMode()) {
                 try {
-                    $totalSales = (float)$pdo->query("SELECT COALESCE(SUM(total), 0) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
-                    $orderCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE status != 'cancelled'")->fetchColumn();
+                    $totalSales = (float)$pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE fulfillment_status != 'cancelled'")->fetchColumn();
+                    $orderCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status != 'cancelled'")->fetchColumn();
                 } catch (\Exception $e) {}
             }
             echo json_encode([

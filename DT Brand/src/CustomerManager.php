@@ -114,13 +114,14 @@ class CustomerManager
         $phone = trim($data['phone'] ?? '');
         $email = trim($data['email'] ?? '');
         $type = trim($data['type'] ?? 'retail');
+        $type = in_array($type, ['retail', 'wholesale', 'reseller'], true) ? $type : 'retail';
         $tier = trim($data['tier'] ?? ($type === 'wholesale' ? 'Diamond Elite' : ($type === 'reseller' ? 'Gold VIP' : 'Silver Consumer')));
         $city = trim($data['city'] ?? 'Surat');
         $state = trim($data['state'] ?? 'Gujarat');
-        $company = trim($data['company_name'] ?? '');
-        $gst = trim($data['gst_number'] ?? '');
+        $gst = trim($data['gstin'] ?? $data['gst_number'] ?? '');
         $creditLimit = (float)($data['credit_limit'] ?? 0.0);
         $status = trim($data['status'] ?? 'active');
+        $status = in_array($status, ['active', 'pending', 'suspended'], true) ? $status : 'active';
         $passwordHash = password_hash($data['password'] ?? 'dtbrand123', PASSWORD_BCRYPT);
 
         if ($pdo !== null && !Database::isMockMode()) {
@@ -132,11 +133,11 @@ class CustomerManager
                 }
 
                 $stmt = $pdo->prepare("
-                    INSERT INTO customers 
-                    (name, phone, email, password_hash, company_name, gst_number, type, tier, city, state, credit_limit, status, created_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                    INSERT INTO customers
+                    (name, phone, email, password_hash, gstin, type, tier, city, state, credit_limit, status, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
                 ");
-                $stmt->execute([$name, $phone, $email, $passwordHash, $company, $gst, $type, $tier, $city, $state, $creditLimit, $status]);
+                $stmt->execute([$name, $phone, $email, $passwordHash, $gst, $type, $tier, $city, $state, $creditLimit, $status]);
                 $newId = (int)$pdo->lastInsertId();
                 return ['success' => true, 'id' => $newId, 'message' => 'Customer created successfully!'];
             } catch (\Exception $e) {
@@ -157,9 +158,13 @@ class CustomerManager
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
+                // Accept the legacy gst_number alias but write to the real gstin column
+                if (isset($data['gst_number']) && !isset($data['gstin'])) {
+                    $data['gstin'] = $data['gst_number'];
+                }
                 $fields = [];
                 $params = [];
-                foreach (['name', 'phone', 'email', 'company_name', 'gst_number', 'type', 'tier', 'city', 'state', 'credit_limit', 'outstanding_balance', 'status'] as $f) {
+                foreach (['name', 'phone', 'email', 'gstin', 'pan', 'type', 'tier', 'city', 'state', 'credit_limit', 'outstanding_balance', 'commission_rate', 'status'] as $f) {
                     if (isset($data[$f])) {
                         $fields[] = "{$f} = ?";
                         $params[] = $data[$f];

@@ -101,34 +101,65 @@ $catalogProducts = ProductCatalog::getAll();
 <script>
 function handleDirectCheckout(e) {
     e.preventDefault();
-    const name = document.getElementById('chkName').value;
-    const phone = document.getElementById('chkPhone').value;
-    const address = document.getElementById('chkAddress').value;
-    const city = document.getElementById('chkCity').value;
-    const pin = document.getElementById('chkPin').value;
 
-    const payload = {
+    // Build the order from the shopper's REAL cart (localStorage), not a hardcoded item.
+    var cart = [];
+    try { cart = JSON.parse(localStorage.getItem('dtbrands_cart') || '[]'); } catch (err) { cart = []; }
+
+    if (!Array.isArray(cart) || cart.length === 0) {
+        alert('Your shopping bag is empty. Please add a product before checking out.');
+        window.location.href = '/shop';
+        return;
+    }
+
+    var items = cart.map(function(it) {
+        return {
+            id: it.id,
+            name: it.name,
+            price: Number(it.price) || 0,
+            quantity: Number(it.qty || it.quantity) || 1,
+            image: it.image || ''
+        };
+    });
+
+    var name = document.getElementById('chkName').value.trim();
+    var phone = document.getElementById('chkPhone').value.trim();
+    var address = document.getElementById('chkAddress').value.trim();
+    var city = document.getElementById('chkCity').value.trim();
+    var pin = document.getElementById('chkPin').value.trim();
+
+    var payload = {
         customer_name: name,
         customer_phone: phone,
-        shipping_address: `${address}, ${city} - ${pin}`,
-        items: [{ id: 1, name: 'Royal Silk Saree', price: 4899, quantity: 1 }],
-        payment_method: document.querySelector('input[name="chkPayment"]:checked')?.value || 'cod',
-        fulfillment_status: 'confirmed'
+        shipping_address: address + ', ' + city + ' - ' + pin,
+        items: items,
+        channel: 'retail',
+        payment_method: (document.querySelector('input[name="chkPayment"]:checked') || {}).value || 'cod'
     };
+
+    var btn = e.target.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Placing your order…'; }
 
     fetch('/api/orders.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-    .then(res => res.json())
-    .then(data => {
-        alert('🎉 Order placed successfully! Our WhatsApp styling concierge will confirm your dispatch shortly.');
-        window.location.href = '/shop';
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+        if (data && data.success) {
+            var num = (data.order && data.order.order_number) ? data.order.order_number : '';
+            localStorage.removeItem('dtbrands_cart');
+            alert('🎉 Order placed successfully!' + (num ? ' Your order number is ' + num + '.' : '') + ' Our WhatsApp concierge will confirm dispatch shortly.');
+            window.location.href = '/shop';
+        } else {
+            if (btn) { btn.disabled = false; btn.textContent = 'Confirm & Place Order'; }
+            alert('We could not place your order: ' + ((data && data.message) ? data.message : 'Please try again.'));
+        }
     })
-    .catch(() => {
-        alert('🎉 Order confirmed! Thank you for shopping with DT Brand\'s.');
-        window.location.href = '/shop';
+    .catch(function() {
+        if (btn) { btn.disabled = false; btn.textContent = 'Confirm & Place Order'; }
+        alert('Network error — your order was not placed. Please check your connection and try again.');
     });
 }
 </script>

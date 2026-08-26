@@ -92,7 +92,36 @@ class DatabaseMigrationRunner {
             }
         }
 
+        $this->applyColumnUpgrades($pdo, $results);
+
         return ['status' => 'success', 'executed' => $results];
+    }
+
+    /**
+     * Idempotent, safe in-place column upgrades for databases that were created
+     * before a column was added to the master schema. Each upgrade checks for the
+     * column first and only ALTERs when it is missing, so re-running is always safe
+     * and never disturbs existing data.
+     */
+    private function applyColumnUpgrades(\PDO $pdo, array &$results): void {
+        $upgrades = [
+            ['table' => 'orders', 'column' => 'shipping_address', 'definition' => 'TEXT DEFAULT NULL AFTER `courier_name`'],
+        ];
+
+        foreach ($upgrades as $up) {
+            try {
+                $chk = $pdo->prepare("SHOW COLUMNS FROM `{$up['table']}` LIKE ?");
+                $chk->execute([$up['column']]);
+                if ($chk->fetch(\PDO::FETCH_ASSOC)) {
+                    $results[] = ['upgrade' => "{$up['table']}.{$up['column']}", 'status' => 'ALREADY_PRESENT'];
+                    continue;
+                }
+                $pdo->exec("ALTER TABLE `{$up['table']}` ADD COLUMN `{$up['column']}` {$up['definition']}");
+                $results[] = ['upgrade' => "{$up['table']}.{$up['column']}", 'status' => 'COLUMN_ADDED'];
+            } catch (\PDOException $e) {
+                $results[] = ['upgrade' => "{$up['table']}.{$up['column']}", 'status' => 'ERROR', 'error' => $e->getMessage()];
+            }
+        }
     }
 }
 

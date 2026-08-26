@@ -224,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
     `fulfillment_status` ENUM('unfulfilled', 'processing', 'dispatched', 'delivered', 'cancelled') DEFAULT 'dispatched',
     `tracking_number` VARCHAR(100) DEFAULT NULL,
     `courier_name` VARCHAR(100) DEFAULT 'Delhivery Express',
+    `shipping_address` TEXT DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX `idx_order_number` (`order_number`),
     INDEX `idx_customer` (`customer_id`)

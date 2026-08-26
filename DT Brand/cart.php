@@ -91,5 +91,101 @@ $catalogProducts = ProductCatalog::getAll();
 <?php include_once __DIR__ . '/shared/wishlist.php'; ?>
 <?php include_once __DIR__ . '/shared/checkout.php'; ?>
 
+<script>
+/* Render the dedicated /cart page from the shopper's real localStorage bag. */
+(function() {
+    var CART_KEY = 'dtbrands_cart';
+    function readCart() {
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]') || []; } catch (e) { return []; }
+    }
+    function writeCart(cart) {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        window.cartState = cart;
+        if (typeof window.syncBadges === 'function') window.syncBadges();
+        if (typeof window.renderCart === 'function') window.renderCart();
+    }
+    function money(n) { return '₹' + (Number(n) || 0).toLocaleString('en-IN'); }
+    function priceNum(p) { return parseInt(String(p).replace(/[^0-9]/g, ''), 10) || 0; }
+
+    window.renderCartPage = function() {
+        var list = document.getElementById('cartItemsList');
+        var subtotalEl = document.getElementById('cartSubtotal');
+        var grandEl = document.getElementById('cartGrandTotal');
+        if (!list) return;
+
+        var cart = readCart();
+        if (!cart.length) {
+            list.innerHTML =
+                '<div style="text-align:center; padding:40px 20px;">' +
+                '<div style="font-size:2.5rem; margin-bottom:12px;">🛍️</div>' +
+                '<h3 style="font-size:1.1rem; font-weight:800; margin:0 0 6px 0;">Your Bag is Empty</h3>' +
+                '<p style="font-size:0.85rem; color:#78716C; margin:0 0 20px 0;">Explore our 2026 pure handloom collection and wholesale sets.</p>' +
+                '<a href="/shop" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:10px 24px; border-radius:8px; font-weight:800; text-decoration:none; border:1px solid #8A681F;">Explore Handloom Edit</a>' +
+                '</div>';
+            if (subtotalEl) subtotalEl.textContent = money(0);
+            if (grandEl) grandEl.textContent = money(0);
+            return;
+        }
+
+        var subtotal = 0;
+        var html = '';
+        cart.forEach(function(item, idx) {
+            var unit = priceNum(item.price);
+            var qty = item.qty || item.quantity || 1;
+            var lineTotal = unit * qty;
+            subtotal += lineTotal;
+            html +=
+              '<div style="display:flex; gap:14px; border:1px solid #EAE5D9; border-radius:10px; padding:12px;">' +
+                '<img src="' + (item.image || '/assets/images/product1.png') + '" alt="' + (item.name || 'Product') + '" style="width:84px; height:100px; object-fit:cover; border-radius:8px;" onerror="this.src=\'/assets/images/product1.png\';">' +
+                '<div style="flex:1; display:flex; flex-direction:column;">' +
+                  '<div style="display:flex; justify-content:space-between; gap:10px;">' +
+                    '<strong style="font-size:0.95rem;">' + (item.name || 'Ethnic Attire') + '</strong>' +
+                    '<button data-remove="' + idx + '" aria-label="Remove item" style="background:none; border:none; color:#B91C1C; cursor:pointer; font-weight:800; font-size:1.1rem; line-height:1;">×</button>' +
+                  '</div>' +
+                  '<div style="font-size:0.78rem; color:#78716C; margin:4px 0 auto;">Size: <strong>' + (item.size || 'Free Size') + '</strong> &nbsp;|&nbsp; Color: <strong>' + (item.color || 'Standard') + '</strong></div>' +
+                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">' +
+                    '<div style="display:flex; align-items:center; gap:10px; border:1px solid #CBD5E1; border-radius:8px; padding:2px 8px;">' +
+                      '<button data-dec="' + idx + '" aria-label="Decrease quantity" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:#181512;">−</button>' +
+                      '<span style="min-width:20px; text-align:center; font-weight:700;">' + qty + '</span>' +
+                      '<button data-inc="' + idx + '" aria-label="Increase quantity" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:#181512;">+</button>' +
+                    '</div>' +
+                    '<strong style="color:#8A681F;">' + money(lineTotal) + '</strong>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+        });
+        list.innerHTML = html;
+        if (subtotalEl) subtotalEl.textContent = money(subtotal);
+        if (grandEl) grandEl.textContent = money(subtotal);
+    };
+
+    document.addEventListener('click', function(e) {
+        var t = e.target;
+        if (!t || !t.getAttribute) return;
+        var inc = t.getAttribute('data-inc');
+        var dec = t.getAttribute('data-dec');
+        var rem = t.getAttribute('data-remove');
+        if (inc === null && dec === null && rem === null) return;
+
+        var cart = readCart();
+        if (inc !== null) {
+            var i = parseInt(inc, 10);
+            if (cart[i]) { cart[i].qty = (cart[i].qty || 1) + 1; }
+        } else if (dec !== null) {
+            var j = parseInt(dec, 10);
+            if (cart[j]) { cart[j].qty = Math.max(1, (cart[j].qty || 1) - 1); }
+        } else if (rem !== null) {
+            var k = parseInt(rem, 10);
+            if (cart[k]) { cart.splice(k, 1); }
+        }
+        writeCart(cart);
+        window.renderCartPage();
+    });
+
+    document.addEventListener('DOMContentLoaded', window.renderCartPage);
+    if (document.readyState !== 'loading') window.renderCartPage();
+})();
+</script>
+
 </body>
 </html>

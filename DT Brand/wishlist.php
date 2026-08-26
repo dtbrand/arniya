@@ -39,27 +39,93 @@ $catalogProducts = ProductCatalog::getAll();
         <p style="margin:0; font-size:0.88rem; color:#E5E1D7;">Bookmark pure zari sarees, bridal lehengas, and wholesale catalogs for rapid ordering.</p>
     </div>
 
-    <div class="dt-wsh-grid">
-        <?php foreach (array_slice($catalogProducts, 0, 4) as $p): ?>
-            <div class="dt-wsh-card">
-                <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['title']) ?>" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:280px; object-fit:cover;">
-                <div style="padding:14px;">
-                    <div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;"><?= htmlspecialchars($p['category']) ?></div>
-                    <h3 style="font-size:1rem; font-weight:800; color:#181512; margin:4px 0 8px 0;"><?= htmlspecialchars($p['title']) ?></h3>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <strong style="font-size:1.15rem; color:#8A681F;">₹<?= number_format((float)$p['price']) ?></strong>
-                        <span style="font-size:0.78rem; color:#15803D; font-weight:700;">🟢 In Stock</span>
-                    </div>
-                    <a href="/product.php?id=<?= $p['id'] ?>" style="display:block; text-align:center; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; text-decoration:none; border:1px solid #8A681F;">View Product</a>
-                </div>
-            </div>
-        <?php endforeach; ?>
+    <div class="dt-wsh-grid" id="wishlistGrid">
+        <!-- Rendered from the shopper's real saved wishlist (localStorage: dtbrands_wishlist) -->
+    </div>
+    <div id="wishlistEmptyState" style="display:none; text-align:center; padding:50px 20px;">
+        <div style="font-size:2.5rem; margin-bottom:12px;">💛</div>
+        <h3 style="font-size:1.15rem; font-weight:800; margin:0 0 6px 0;">Your Wishlist is Empty</h3>
+        <p style="font-size:0.88rem; color:#78716C; margin:0 0 20px 0;">Tap the heart on any product to save it here for later.</p>
+        <a href="/shop" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:10px 24px; border-radius:8px; font-weight:800; text-decoration:none; border:1px solid #8A681F;">Discover the Collection</a>
     </div>
 </div>
 
 <?php include_once __DIR__ . '/shared/cart.php'; ?>
 <?php include_once __DIR__ . '/shared/wishlist.php'; ?>
 <?php include_once __DIR__ . '/shared/checkout.php'; ?>
+
+<script>
+/* Render the dedicated /wishlist page from the shopper's real saved items. */
+(function() {
+    function readWishlist() {
+        try { return JSON.parse(localStorage.getItem('dtbrands_wishlist') || '[]') || []; } catch (e) { return []; }
+    }
+    function money(n) { return '₹' + (Number(String(n).replace(/[^0-9.]/g, '')) || 0).toLocaleString('en-IN'); }
+
+    window.renderWishlistPage = function() {
+        var grid = document.getElementById('wishlistGrid');
+        var empty = document.getElementById('wishlistEmptyState');
+        if (!grid) return;
+
+        var items = readWishlist();
+        if (!items.length) {
+            grid.innerHTML = '';
+            if (empty) empty.style.display = 'block';
+            return;
+        }
+        if (empty) empty.style.display = 'none';
+
+        grid.innerHTML = items.map(function(p) {
+            var name = p.name || p.title || 'Saved Weave';
+            var img = p.image || '/assets/images/product1.png';
+            var cat = p.category || 'Handloom';
+            return '' +
+              '<div class="dt-wsh-card" data-wid="' + p.id + '">' +
+                '<div style="position:relative;">' +
+                  '<img src="' + img + '" alt="' + name + '" onerror="this.src=\'/assets/images/product1.png\';" style="width:100%; height:280px; object-fit:cover;">' +
+                  '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:#B91C1C; font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);">×</button>' +
+                '</div>' +
+                '<div style="padding:14px;">' +
+                  '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' +
+                  '<h3 style="font-size:1rem; font-weight:800; color:#181512; margin:4px 0 8px 0;">' + name + '</h3>' +
+                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">' +
+                    '<strong style="font-size:1.15rem; color:#8A681F;">' + money(p.price) + '</strong>' +
+                    '<span style="font-size:0.78rem; color:#15803D; font-weight:700;">🟢 In Stock</span>' +
+                  '</div>' +
+                  '<div style="display:flex; gap:8px;">' +
+                    '<button data-add-wish="' + p.id + '" style="flex:1; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; border:1px solid #8A681F; cursor:pointer;">Add to Bag</button>' +
+                    '<a href="/product.php?id=' + p.id + '" style="flex:1; text-align:center; background:#181512; color:#FAF5E8; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; text-decoration:none;">View</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+        }).join('');
+    };
+
+    document.addEventListener('click', function(e) {
+        var t = e.target;
+        if (!t || !t.getAttribute) return;
+        var removeId = t.getAttribute('data-remove-wish');
+        var addId = t.getAttribute('data-add-wish');
+
+        if (removeId !== null) {
+            if (typeof window.toggleWishlistProduct === 'function') {
+                window.toggleWishlistProduct(removeId); // item is present → toggles off (removes)
+            } else {
+                var kept = readWishlist().filter(function(x) { return String(x.id) !== String(removeId); });
+                localStorage.setItem('dtbrands_wishlist', JSON.stringify(kept));
+            }
+            window.renderWishlistPage();
+        } else if (addId !== null) {
+            /* Pass the stored product object so we don't depend on window.allProducts here. */
+            var item = readWishlist().find(function(x) { return String(x.id) === String(addId); });
+            if (item && typeof window.addToCart === 'function') window.addToCart(item);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', window.renderWishlistPage);
+    if (document.readyState !== 'loading') window.renderWishlistPage();
+})();
+</script>
 
 </body>
 </html>

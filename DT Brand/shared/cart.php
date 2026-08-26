@@ -218,28 +218,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             var raw = localStorage.getItem('dtbrands_cart');
             if (raw !== null) return JSON.parse(raw);
         } catch(e) {}
-        return [
-            {
-                id: 2,
-                name: 'Banarasi Zari Saree',
-                price: 8499,
-                old_price: 11000,
-                image: '/assets/images/product2.png',
-                size: 'Free Size',
-                color: 'Maroon',
-                qty: 1
-            },
-            {
-                id: 6,
-                name: 'Bridal Zardosi Lehenga',
-                price: 24999,
-                old_price: 32000,
-                image: '/assets/images/product6.png',
-                size: 'S',
-                color: 'Red',
-                qty: 1
-            }
-        ];
+        return [];
     }
 
     function saveCart(cart) {
@@ -429,6 +408,11 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         }
     };
 
+    /* Legacy alias used by some home-page sliders (e.g. Recently Viewed) */
+    window.directAddToCart = function(productId) {
+        if (typeof window.addToCart === 'function') window.addToCart(productId);
+    };
+
     window.updateCartQty = function(idx, delta) {
         if (!window.cartState[idx]) return;
         window.cartState[idx].qty += delta;
@@ -448,6 +432,21 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     };
 
     window.addToCart = function(product, size, color) {
+        // Accept a product OBJECT or a product id (resolve via the live catalog).
+        if (product === null || typeof product === 'undefined') return;
+        if (typeof product !== 'object') {
+            var pid = product;
+            product = (window.allProducts || []).find(function(x) {
+                return x.id == pid || String(x.id) === String(pid);
+            });
+            if (!product) {
+                if (typeof window.showToast === 'function') window.showToast('Sorry, this product is currently unavailable.');
+                return;
+            }
+        }
+        // Guard against legacy callers that passed a quantity as the 2nd arg.
+        if (typeof size === 'number') size = undefined;
+
         var chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || 'Free Size';
         var chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
 

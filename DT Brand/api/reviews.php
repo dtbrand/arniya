@@ -81,7 +81,6 @@ try {
         if ($action === 'delete') {
             if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
                 try {
-                    $pdo->prepare("DELETE FROM product_reviews WHERE id = ?")->execute([$reviewId]);
                     $pdo->prepare("DELETE FROM reviews WHERE id = ?")->execute([$reviewId]);
                 } catch (\Exception $e) {}
             }
@@ -92,7 +91,6 @@ try {
         if ($action === 'approve') {
             if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
                 try {
-                    $pdo->prepare("UPDATE product_reviews SET status = 'approved' WHERE id = ?")->execute([$reviewId]);
                     $pdo->prepare("UPDATE reviews SET status = 'approved' WHERE id = ?")->execute([$reviewId]);
                 } catch (\Exception $e) {}
             }
@@ -103,7 +101,6 @@ try {
         if ($action === 'reject' || $action === 'unpublish') {
             if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
                 try {
-                    $pdo->prepare("UPDATE product_reviews SET status = 'rejected' WHERE id = ?")->execute([$reviewId]);
                     $pdo->prepare("UPDATE reviews SET status = 'rejected' WHERE id = ?")->execute([$reviewId]);
                 } catch (\Exception $e) {}
             }
@@ -115,7 +112,7 @@ try {
         $name = trim($data['name'] ?? 'Verified Buyer');
         $rating = max(1, min(5, (int)($data['rating'] ?? 5)));
         $text = trim($data['review_text'] ?? ($data['text'] ?? ''));
-        $city = trim($data['city'] ?? 'India');
+        $title = trim($data['review_title'] ?? ($data['title'] ?? ''));
 
         if (empty($text)) {
             http_response_code(400);
@@ -124,10 +121,15 @@ try {
         }
 
         if ($pdo !== null && !Database::isMockMode()) {
-            Database::execute(
-                "INSERT INTO reviews (product_id, customer_name, rating, review_text, city, status, created_at) VALUES (?, ?, ?, ?, ?, 'approved', NOW())",
-                [$pId, $name, $rating, $text, $city]
+            $ok = Database::execute(
+                "INSERT INTO reviews (product_id, customer_name, rating, review_title, review_text, verified_buyer, status, created_at) VALUES (?, ?, ?, ?, ?, 1, 'approved', NOW())",
+                [$pId, $name, $rating, $title, $text]
             );
+            if (!$ok) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Could not save your review right now. Please try again.']);
+                exit;
+            }
         }
 
         echo json_encode(['success' => true, 'message' => 'Thank you! Your verified review has been published.']);

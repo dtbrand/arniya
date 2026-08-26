@@ -5,38 +5,43 @@ namespace DTBrand;
 /**
  * DiscountEngine — Coupon, Promo Code & Tiered Discount Validation
  * DT Brand's & Jai Hanuman Tex
+ *
+ * Live `coupons` schema: code, discount_type ENUM('percentage','flat'),
+ * discount_value, min_order_value, max_discount, status ENUM('active','expired').
+ * There is no channel / expiry / usage-limit column in production.
  */
 class DiscountEngine
 {
     /**
-     * Standard built-in fallback coupons
+     * Built-in fallback coupons — mirror the live `coupons` seed exactly so
+     * validation behaves identically whether or not MySQL is reachable.
      */
     private static array $defaultCoupons = [
-        'DTHANDLOOM10' => [
+        'FESTIVE25' => [
             'type' => 'percentage',
-            'value' => 10.0,
-            'min_order' => 1500.0,
-            'max_discount' => 1000.0,
-            'channel' => 'all'
+            'value' => 25.0,
+            'min_order' => 1999.0,
+            'max_discount' => 1500.0,
         ],
-        'FESTIVE500' => [
-            'type' => 'fixed',
-            'value' => 500.0,
-            'min_order' => 5000.0,
-            'max_discount' => 500.0,
-            'channel' => 'all'
-        ],
-        'RESELLERVIP' => [
+        'VIPRESELLER' => [
             'type' => 'percentage',
             'value' => 15.0,
-            'min_order' => 2000.0,
-            'max_discount' => 2500.0,
-            'channel' => 'reseller'
-        ]
+            'min_order' => 3000.0,
+            'max_discount' => 2000.0,
+        ],
+        'BULK50' => [
+            'type' => 'percentage',
+            'value' => 50.0,
+            'min_order' => 20000.0,
+            'max_discount' => 10000.0,
+        ],
     ];
 
     /**
-     * Apply coupon code to subtotal with channel filtering
+     * Apply a coupon code to a subtotal.
+     *
+     * The live coupons table has no channel column, so $channel is retained only
+     * for backward compatibility with existing call sites and no longer filters.
      */
     public static function applyCoupon(string $code, float $subtotal, ?array $availableCoupons = null, string $channel = 'all'): array
     {
@@ -50,66 +55,55 @@ class DiscountEngine
             ];
         }
 
-        // 1. Try querying live database
+        // 1. Authoritative check against the live database
         $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             try {
-                $stmt = $pdo->prepare("
-                    SELECT * FROM coupons 
-                    WHERE code = ? 
-                      AND status = 'active' 
-                      AND (starts_at IS NULL OR starts_at <= NOW()) 
-                      AND (expires_at IS NULL OR expires_at >= NOW()) 
-                      AND (used_count < usage_limit)
-                    LIMIT 1
-                ");
+                $stmt = $pdo->prepare("SELECT * FROM coupons WHERE code = ? AND status = 'active' LIMIT 1");
                 $stmt->execute([$code]);
                 $dbCoupon = $stmt->fetch(\PDO::FETCH_ASSOC);
 
                 if ($dbCoupon) {
-                    // Check channel restriction
-                    if ($dbCoupon['channel'] !== 'all' && $channel !== 'all' && $dbCoupon['channel'] !== $channel) {
-                        return [
-                            'valid' => false,
-                            'discount' => 0.0,
-                            'message' => "This coupon is exclusively valid for {$dbCoupon['channel']} orders."
-                        ];
-                    }
-
-                    $minOrder = (float)($dbCoupon['min_order_amount'] ?? 0);
+                    $minOrder = (float)($dbCoupon['min_order_value'] ?? 0);
                     if ($subtotal < $minOrder) {
                         return [
                             'valid' => false,
                             'discount' => 0.0,
-                            'message' => 'Minimum order value of ₹' . number_format($minOrder, 2) . ' required.'
+                            'message' => 'Minimum order value of ₹' . number_format($minOrder, 2) . ' required for this coupon.'
                         ];
                     }
 
-                    $discount = 0.0;
-                    $val = (float)$dbCoupon['discount_value'];
-                    if ($dbCoupon['discount_type'] === 'percentage' || $dbCoupon['discount_type'] === 'percent') {
+                    $val = (float)($dbCoupon['discount_value'] ?? 0);
+                    if (($dbCoupon['discount_type'] ?? 'percentage') === 'flat') {
+                        $discount = min($subtotal, $val);
+                    } else {
                         $discount = round($subtotal * ($val / 100.0), 2);
                         if (!empty($dbCoupon['max_discount']) && (float)$dbCoupon['max_discount'] > 0) {
                             $discount = min($discount, (float)$dbCoupon['max_discount']);
                         }
-                    } else {
-                        $discount = min($subtotal, $val);
                     }
 
                     return [
                         'valid' => true,
                         'code' => $code,
                         'discount' => $discount,
-                        'title' => $dbCoupon['title'] ?? 'Coupon Discount',
-                        'message' => 'Coupon ' . $code . ' applied successfully! You saved ₹' . number_format($discount, 2) . '.'
+                        'title' => 'Coupon ' . $code,
+                        'message' => 'Coupon ' . $code . ' applied! You saved ₹' . number_format($discount, 2) . '.'
                     ];
                 }
+
+                // Connected to the DB but no such active coupon — this is authoritative.
+                return [
+                    'valid' => false,
+                    'discount' => 0.0,
+                    'message' => 'Invalid or expired coupon code: ' . $code
+                ];
             } catch (\Exception $e) {
-                // Fallback to in-memory dictionary
+                // Query failed (e.g. table missing) — fall through to the in-memory dictionary.
             }
         }
 
-        // 2. Fallback dictionary check
+        // 2. Fallback dictionary (mock mode / DB unreachable)
         $coupons = $availableCoupons ?? self::$defaultCoupons;
         if (!isset($coupons[$code])) {
             return [
@@ -125,12 +119,11 @@ class DiscountEngine
             return [
                 'valid' => false,
                 'discount' => 0.0,
-                'message' => 'Minimum order value of ₹' . number_format($minOrder, 2) . ' required.'
+                'message' => 'Minimum order value of ₹' . number_format($minOrder, 2) . ' required for this coupon.'
             ];
         }
 
-        $discount = 0.0;
-        $val = (float)$coupon['value'];
+        $val = (float)($coupon['value'] ?? 0);
         $type = $coupon['type'] ?? 'percentage';
         if ($type === 'percentage' || $type === 'percent') {
             $discount = round($subtotal * ($val / 100.0), 2);
@@ -145,9 +138,8 @@ class DiscountEngine
             'valid' => true,
             'code' => $code,
             'discount' => $discount,
-            'title' => 'Festive Coupon',
-            'message' => 'Coupon ' . $code . ' applied successfully! You saved ₹' . number_format($discount, 2) . '.'
+            'title' => 'Coupon ' . $code,
+            'message' => 'Coupon ' . $code . ' applied! You saved ₹' . number_format($discount, 2) . '.'
         ];
     }
 }
-

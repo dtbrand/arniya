@@ -191,28 +191,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
             var raw = localStorage.getItem('dtbrands_wishlist');
             if (raw !== null) return JSON.parse(raw);
         } catch(e) {}
-        return [
-            {
-                id: 5,
-                name: 'Royal Anarkali Kurti',
-                price: 2799,
-                old_price: 3900,
-                image: '/assets/images/product5.png',
-                category: 'Kurtis',
-                fabric: 'Cotton',
-                color: 'Green'
-            },
-            {
-                id: 8,
-                name: 'Ivory Designer Gown',
-                price: 7499,
-                old_price: 9500,
-                image: '/assets/images/product8.png',
-                category: 'Gowns',
-                fabric: 'Chiffon',
-                color: 'White'
-            }
-        ];
+        return [];
     }
 
     function saveWishlist(list) {

@@ -800,7 +800,7 @@ class ProductCatalog
         $stock = (int)($prod['stock_qty'] ?? 50);
         $img = $prod['image'] ?? '/assets/images/product1.png';
         $desc = $prod['description'] ?? 'Authentic handwoven pure silk saree.';
-        $status = 'published';
+        $status = 'in_stock';
 
         if ($pdo !== null && !Database::isMockMode()) {
             try {

@@ -19,7 +19,7 @@ class OrderManager
 
         foreach ($items as $item) {
             $price = (float)($item['price'] ?? 0);
-            $qty = (int)($item['quantity'] ?? 1);
+            $qty = (int)($item['quantity'] ?? $item['qty'] ?? 1);
             $subtotal += ($price * $qty);
         }
 
@@ -34,6 +34,7 @@ class OrderManager
         $customerId = (int)($orderData['customer_id'] ?? 0);
         $customerName = trim($orderData['customer_name'] ?? 'Direct Customer');
         $customerPhone = trim($orderData['customer_phone'] ?? '');
+        $shippingAddress = trim((string)($orderData['shipping_address'] ?? ''));
         $channel = in_array($orderData['channel'] ?? '', ['retail', 'wholesale', 'reseller', 'whatsapp']) ? $orderData['channel'] : 'retail';
         $paymentMethod = $orderData['payment_method'] ?? 'razorpay';
         $paymentStatus = $orderData['payment_status'] ?? 'paid';
@@ -54,11 +55,12 @@ class OrderManager
                     if ($existing) {
                         $customerId = (int)$existing['id'];
                     } else {
+                        $custType = in_array($channel, ['retail', 'wholesale', 'reseller'], true) ? $channel : 'retail';
                         $insCust = $pdo->prepare("
                             INSERT INTO customers (name, phone, email, type, status, created_at)
                             VALUES (?, ?, ?, ?, 'active', NOW())
                         ");
-                        $insCust->execute([$customerName, $customerPhone, $orderData['customer_email'] ?? '', $channel]);
+                        $insCust->execute([$customerName, $customerPhone, $orderData['customer_email'] ?? '', $custType]);
                         $customerId = (int)$pdo->lastInsertId();
                     }
                 }
@@ -67,13 +69,14 @@ class OrderManager
                 $validFulfillment = in_array($fulfillmentStatus, ['unfulfilled','processing','dispatched','delivered','cancelled']) ? $fulfillmentStatus : 'processing';
                 $validPayment = in_array($paymentStatus, ['pending','paid','credit','refunded']) ? $paymentStatus : 'paid';
 
-                // Insert into orders table
-                $stmt = $pdo->prepare("
-                    INSERT INTO orders (order_number, customer_id, customer_name, customer_phone, channel, subtotal, discount, gst_rate, gst_amount, shipping_fee, total_amount, payment_method, payment_status, fulfillment_status, tracking_number, courier_name, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Delhivery Express', NOW())
-                ");
+                // Insert into orders table. shipping_address is included only when the
+                // live table actually has the column, so order creation never fails on a
+                // database that predates the column (it self-heals once migrate.php re-runs).
                 $trackingNum = 'TRK-' . strtoupper(substr(uniqid(), -8));
-                $stmt->execute([
+
+                $cols = "order_number, customer_id, customer_name, customer_phone, channel, subtotal, discount, gst_rate, gst_amount, shipping_fee, total_amount, payment_method, payment_status, fulfillment_status, tracking_number, courier_name";
+                $vals = "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Delhivery Express'";
+                $orderParams = [
                     $orderNumber,
                     $customerId,
                     $customerName,
@@ -89,7 +92,16 @@ class OrderManager
                     $validPayment,
                     $validFulfillment,
                     $trackingNum
-                ]);
+                ];
+
+                if ($shippingAddress !== '' && self::ordersHasColumn($pdo, 'shipping_address')) {
+                    $cols .= ", shipping_address";
+                    $vals .= ", ?";
+                    $orderParams[] = $shippingAddress;
+                }
+
+                $stmt = $pdo->prepare("INSERT INTO orders ({$cols}, created_at) VALUES ({$vals}, NOW())");
+                $stmt->execute($orderParams);
                 $dbOrderId = (int)$pdo->lastInsertId();
 
                 // Insert order items & update product stock
@@ -145,6 +157,7 @@ class OrderManager
             'order_number' => $orderNumber,
             'customer_name' => $customerName,
             'customer_phone' => $customerPhone,
+            'shipping_address' => $shippingAddress,
             'customer_email' => $orderData['customer_email'] ?? '',
             'channel' => $channel,
             'items' => $items,
@@ -156,6 +169,26 @@ class OrderManager
             'created_at' => date('Y-m-d H:i:s'),
             'whatsapp_notice' => self::generateWhatsAppNotice($orderNumber, $grandTotal, $customerName)
         ];
+    }
+
+    /**
+     * Probe (once, cached) whether the live `orders` table has a given column.
+     * Lets writes stay compatible with databases created before a column existed.
+     */
+    private static function ordersHasColumn(\PDO $pdo, string $column): bool
+    {
+        static $cache = [];
+        if (array_key_exists($column, $cache)) {
+            return $cache[$column];
+        }
+        try {
+            $stmt = $pdo->prepare("SHOW COLUMNS FROM orders LIKE ?");
+            $stmt->execute([$column]);
+            $cache[$column] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            $cache[$column] = false;
+        }
+        return $cache[$column];
     }
 
     /**
@@ -389,9 +422,16 @@ class OrderManager
                     $itemsStmt->execute([$orderId]);
                     $order['items'] = $itemsStmt->fetchAll(\PDO::FETCH_ASSOC);
 
-                    $histStmt = $db->prepare("SELECT * FROM order_status_history WHERE order_id = ? ORDER BY id ASC");
-                    $histStmt->execute([$orderId]);
-                    $order['history'] = $histStmt->fetchAll(\PDO::FETCH_ASSOC);
+                    // Status history is optional — the live schema has no order_status_history
+                    // table, so a missing table must not blank out an otherwise-valid order.
+                    $order['history'] = [];
+                    try {
+                        $histStmt = $db->prepare("SELECT * FROM order_status_history WHERE order_id = ? ORDER BY id ASC");
+                        $histStmt->execute([$orderId]);
+                        $order['history'] = $histStmt->fetchAll(\PDO::FETCH_ASSOC);
+                    } catch (\Exception $he) {
+                        // No history table in this deployment — leave as an empty timeline.
+                    }
 
                     return $order;
                 }
