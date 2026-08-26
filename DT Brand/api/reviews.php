@@ -74,6 +74,32 @@ try {
         $rawInput = file_get_contents('php://input');
         $data = json_decode($rawInput, true) ?: $_POST;
 
+        $action = trim($data['action'] ?? '');
+        $reviewId = (int)($data['id'] ?? 0);
+        $pdo = Database::getConnection();
+
+        if ($action === 'delete') {
+            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
+                try {
+                    $pdo->prepare("DELETE FROM product_reviews WHERE id = ?")->execute([$reviewId]);
+                    $pdo->prepare("DELETE FROM reviews WHERE id = ?")->execute([$reviewId]);
+                } catch (\Exception $e) {}
+            }
+            echo json_encode(['success' => true, 'message' => 'Review deleted successfully.']);
+            exit;
+        }
+
+        if ($action === 'approve') {
+            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
+                try {
+                    $pdo->prepare("UPDATE product_reviews SET status = 'approved' WHERE id = ?")->execute([$reviewId]);
+                    $pdo->prepare("UPDATE reviews SET status = 'approved' WHERE id = ?")->execute([$reviewId]);
+                } catch (\Exception $e) {}
+            }
+            echo json_encode(['success' => true, 'message' => 'Review approved successfully.']);
+            exit;
+        }
+
         $pId = (int)($data['product_id'] ?? 0);
         $name = trim($data['name'] ?? 'Verified Buyer');
         $rating = max(1, min(5, (int)($data['rating'] ?? 5)));
@@ -86,7 +112,6 @@ try {
             exit;
         }
 
-        $pdo = Database::getConnection();
         if ($pdo !== null && !Database::isMockMode()) {
             Database::execute(
                 "INSERT INTO reviews (product_id, customer_name, rating, review_text, city, status, created_at) VALUES (?, ?, ?, ?, ?, 'approved', NOW())",

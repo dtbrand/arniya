@@ -198,8 +198,9 @@ foreach ($reviewsList as $r) {
                                         <div style="display:flex; gap:6px;">
                                             <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('📌 Review pinned to storefront!')">📌 Pin</button>
                                             <?php if ($rStatus === 'pending'): ?>
-                                                <button type="button" class="adm-btn-primary adm-btn-sm" onclick="document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').className='adm-badge success'; document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').innerText='Approved & Live'; this.remove(); window.showToast('✨ Review approved & published live!');">✓ Approve</button>
+                                                <button type="button" class="adm-btn-primary adm-btn-sm" onclick="fetch('/api/reviews.php', { method: 'POST', body: 'action=approve&id=<?= (int)$rev['id'] ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').className='adm-badge success'; document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').innerText='Approved & Live'; this.remove(); window.showToast('✨ Review approved & published live!'); });">✓ Approve</button>
                                             <?php endif; ?>
+                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2;" onclick="if(confirm('Permanently delete this customer review?')) { fetch('/api/reviews.php', { method: 'POST', body: 'action=delete&id=<?= (int)$rev['id'] ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { document.getElementById('rev-row-<?= $rev['id'] ?>')?.remove(); window.showToast('🗑️ Review deleted from database'); }); }">🗑️ Delete</button>
                                         </div>
                                     </td>
                                 </tr>

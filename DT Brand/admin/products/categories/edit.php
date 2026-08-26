@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * edit.php — DT Brand's Edit Category Suite (Wholesale & Luxury Shop Standard)
  * DT Brand's & Jai Hanuman Tex
@@ -309,7 +309,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                                 <a href="/admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
                                     📦 View Products in Category (420)
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category?')) { if(window.showToast) window.showToast('Category moved to trash'); window.location.href = '/admin/products/categories/'; }">
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category from database?')) { fetch('/api/categories.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$cat_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('🗑️ Category deleted from database'); setTimeout(() => window.location.href = '/admin/products/categories/', 400); }); }">
                                     🗑️ Move Category to Trash
                                 </button>
                             </div>
