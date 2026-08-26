@@ -4,102 +4,65 @@
  * Wholesale Dashboard & Luxury Shop Standard
  * DT Brand's & Jai Hanuman Tex
  */
+require_once __DIR__ . '/../../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../../src/Database.php';
+
+use DTBrand\ProductCatalog;
+use DTBrand\Database;
+
 $page_title = "Variants Matrix";
 $active_nav = "products";
 $active_subnav = "variants";
 
-$variants_matrix = [
-    [
-        'id' => 1011,
-        'parent_name' => 'Kanjivaram Pure Silk Gold Zari Saree',
-        'parent_id' => 101,
-        'sku' => 'KLN-SR-111-RED',
-        'color' => 'Crimson Red',
-        'color_hex' => '#991b1b',
-        'size' => 'Free Size (6.3m)',
+$allCatalog = ProductCatalog::getAll();
+$variants_matrix = [];
+
+foreach ($allCatalog as $prod) {
+    $pId = $prod['id'];
+    $pName = $prod['title'] ?? ($prod['name'] ?? 'Luxury Handloom Saree');
+    $pSku = $prod['sku'] ?? ('DT-SKU-' . $pId);
+    $pPrice = (float)($prod['price'] ?? 4490);
+    $pWholesale = (float)($prod['wholesale_price'] ?? round($pPrice * 0.65));
+    $pStock = (int)($prod['stock_qty'] ?? 15);
+    $pImg = $prod['image'] ?? '/assets/images/product1.png';
+    $pCat = $prod['category'] ?? 'Sarees';
+
+    $variants_matrix[] = [
+        'id' => (int)($pId * 10 + 1),
+        'parent_name' => $pName,
+        'parent_id' => $pId,
+        'sku' => $pSku . '-STD',
+        'color' => 'Royal Heritage Gold / Crimson',
+        'color_hex' => '#8A681F',
+        'size' => 'Free Size (6.3m with Blouse)',
         'fabric' => 'Pure Mulberry Silk',
-        'retail' => '₹4,490',
-        'wholesale' => '₹2,850',
-        'stock' => 18,
-        'status' => 'In Stock',
-        'img' => '/assets/images/product1.png'
-    ],
-    [
-        'id' => 1012,
-        'parent_name' => 'Kanjivaram Pure Silk Gold Zari Saree',
-        'parent_id' => 101,
-        'sku' => 'KLN-SR-111-GRN',
-        'color' => 'Bottle Green',
-        'color_hex' => '#065f46',
-        'size' => 'Free Size (6.3m)',
-        'fabric' => 'Pure Mulberry Silk',
-        'retail' => '₹4,490',
-        'wholesale' => '₹2,850',
-        'stock' => 15,
-        'status' => 'In Stock',
-        'img' => '/assets/images/product1.png'
-    ],
-    [
-        'id' => 1013,
-        'parent_name' => 'Kanjivaram Pure Silk Gold Zari Saree',
-        'parent_id' => 101,
-        'sku' => 'KLN-SR-111-BLU',
-        'color' => 'Royal Blue',
-        'color_hex' => '#1e40af',
-        'size' => 'Free Size (6.3m)',
-        'fabric' => 'Pure Mulberry Silk',
-        'retail' => '₹4,490',
-        'wholesale' => '₹2,850',
-        'stock' => 12,
-        'status' => 'In Stock',
-        'img' => '/assets/images/product1.png'
-    ],
-    [
-        'id' => 2041,
-        'parent_name' => 'Banarasi Royal Brocade Weave Saree',
-        'parent_id' => 204,
-        'sku' => 'BNR-SR-204-MRN',
-        'color' => 'Royal Maroon',
-        'color_hex' => '#831843',
-        'size' => 'Free Size (6.3m)',
-        'fabric' => 'Katan Silk Brocade',
-        'retail' => '₹4,990',
-        'wholesale' => '₹3,200',
-        'stock' => 16,
-        'status' => 'In Stock',
-        'img' => '/assets/images/product2.png'
-    ],
-    [
-        'id' => 2042,
-        'parent_name' => 'Banarasi Royal Brocade Weave Saree',
-        'parent_id' => 204,
-        'sku' => 'BNR-SR-204-GLD',
-        'color' => 'Mustard Gold',
-        'color_hex' => '#b45309',
-        'size' => 'Free Size (6.3m)',
-        'fabric' => 'Katan Silk Brocade',
-        'retail' => '₹4,990',
-        'wholesale' => '₹3,200',
-        'stock' => 8,
-        'status' => 'In Stock',
-        'img' => '/assets/images/product2.png'
-    ],
-    [
-        'id' => 3051,
-        'parent_name' => 'Crimson Bridal Handcrafted Zardosi Lehenga',
-        'parent_id' => 305,
-        'sku' => 'BRD-LH-902-CRMS',
-        'color' => 'Crimson Bridal Red',
-        'color_hex' => '#991b1b',
-        'size' => 'Semi-Stitched Free Size',
-        'fabric' => 'Micro Velvet Zardosi',
-        'retail' => '₹16,490',
-        'wholesale' => '₹11,500',
-        'stock' => 4,
-        'status' => 'Low Stock',
-        'img' => '/assets/images/product3.png'
-    ]
-];
+        'retail' => '₹' . number_format($pPrice),
+        'wholesale' => '₹' . number_format($pWholesale),
+        'stock' => $pStock,
+        'status' => $pStock > 10 ? 'In Stock' : ($pStock > 0 ? 'Low Stock' : 'Out of Stock'),
+        'img' => $pImg
+    ];
+}
+
+if (empty($variants_matrix)) {
+    $variants_matrix = [
+        [
+            'id' => 1011,
+            'parent_name' => 'Kanjivaram Pure Silk Gold Zari Saree',
+            'parent_id' => 101,
+            'sku' => 'KLN-SR-111-RED',
+            'color' => 'Crimson Red',
+            'color_hex' => '#991b1b',
+            'size' => 'Free Size (6.3m)',
+            'fabric' => 'Pure Mulberry Silk',
+            'retail' => '₹4,490',
+            'wholesale' => '₹2,850',
+            'stock' => 18,
+            'status' => 'In Stock',
+            'img' => '/assets/images/product1.png'
+        ]
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
