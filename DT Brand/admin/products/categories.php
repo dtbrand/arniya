@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * categories.php - DT Brand's Admin Category & Fabric Collections
  * DT Brand's & Jai Hanuman Tex
@@ -60,7 +60,8 @@ if (empty($categoriesList)) {
         ['id' => 5, 'name' => 'Organza Tissue', 'slug' => 'organza', 'description' => 'Translucent Glass Organza with Handcrafted Embroidery', 'products_count' => 290],
         ['id' => 6, 'name' => 'Bridal Lehengas', 'slug' => 'bridal-lehengas', 'description' => 'Heavy Handcrafted Zardosi & Raw Silk Designer Ensembles', 'products_count' => 180],
         ['id' => 7, 'name' => 'Designer Kurtis', 'slug' => 'designer-kurtis', 'description' => 'Festive Chanderi Foil Printed Kurti Sets with Dupatta', 'products_count' => 420],
-        ['id' => 8, 'name' => 'Patola Heritage', 'slug' => 'patola', 'description' => 'Double Ikat Rajkot & Patan Geometric Weaves', 'products_count' => 210]
+        ['id' => 8, 'name' => 'Men\'s Ethnic Wear', 'slug' => 'mens-ethnic-wear', 'description' => 'Royal Pure Silk Kurtas, Handloom Dhotis & Wedding Sherwanis', 'products_count' => 240],
+        ['id' => 9, 'name' => 'Patola Heritage', 'slug' => 'patola', 'description' => 'Double Ikat Rajkot & Patan Geometric Weaves', 'products_count' => 210]
     ];
 }
 ?>

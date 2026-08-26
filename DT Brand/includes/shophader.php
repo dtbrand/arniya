@@ -861,10 +861,12 @@ $isHomePage = ($currentPage === 'index.php' || $currentPage === 'home.php' || $c
             <div class="search-cat-dropdown-wrap">
                 <select class="search-cat-select" id="searchCatSelect" aria-label="Select category">
                     <option value="All">All Categories</option>
-                    <option value="Sarees">Sarees</option>
-                    <option value="Kurtis">Kurtis</option>
+                    <option value="Sarees">Silk Sarees</option>
+                    <option value="Kurtis">Designer Kurtis</option>
+                    <option value="Men's Ethnic Wear">Men's Ethnic Wear</option>
+                    <option value="Lehengas">Bridal Lehengas</option>
+                    <option value="Organza Sarees">Organza Sarees</option>
                     <option value="Gowns">Gowns</option>
-                    <option value="Lehengas">Lehengas</option>
                 </select>
                 <svg class="search-cat-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </div>
