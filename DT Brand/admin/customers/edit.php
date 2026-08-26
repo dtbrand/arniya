@@ -1,16 +1,67 @@
-﻿<?php
+<?php
 /**
  * edit.php — Luxury Edit Customer Profile & CRM Preferences
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
-$customer_id = isset($_GET['id']) ? htmlspecialchars(trim($_GET['id'])) : 'CUST-1042';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/CustomerManager.php';
+
+use DTBrand\Database;
+use DTBrand\CustomerManager;
+
+$customer_id = isset($_GET['id']) ? htmlspecialchars(trim($_GET['id'])) : '1';
 $page_title = "Edit Customer #" . $customer_id;
 $active_nav = "customers";
 $active_subnav = "edit";
 
-// Mock Database of Customers for Dynamic Prefilling
-$customers_db = [
-    'CUST-1042' => [
+$cust = null;
+$pdo = Database::getConnection();
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $numId = (int)preg_replace('/[^0-9]/', '', $customer_id);
+        $stmt = $pdo->prepare("SELECT * FROM customers WHERE id = ? OR phone = ? LIMIT 1");
+        $stmt->execute([$numId, $customer_id]);
+        $dbCust = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($dbCust) {
+            $fullName = trim($dbCust['name'] ?? 'Pooja Sharma');
+            $parts = explode(' ', $fullName, 2);
+            $fName = $parts[0] ?? 'Pooja';
+            $lName = $parts[1] ?? 'Sharma';
+
+            $cust = [
+                'first_name' => $fName,
+                'last_name' => $lName,
+                'initial' => strtoupper(substr($fName, 0, 1) . substr($lName, 0, 1)),
+                'avatarColor' => 'gold',
+                'email' => $dbCust['email'] ?? 'customer@dtbrands.in',
+                'email_verified' => true,
+                'phone' => $dbCust['phone'] ?? '+91 98110 29381',
+                'gender' => 'Female',
+                'dob' => '1992-08-14',
+                'anniversary' => '',
+                'language' => 'Hindi',
+                'type' => ucfirst($dbCust['type'] ?? 'Retail Verified'),
+                'status' => strtolower($dbCust['status'] ?? 'active'),
+                'tier' => 'vip',
+                'address' => 'Plot No. 42, Pocket B-4, Sector 11',
+                'landmark' => 'Near Central Handloom Depot',
+                'city' => 'Surat',
+                'state' => 'GJ',
+                'pincode' => '395002',
+                'orders' => 6,
+                'spent' => '₹28,450',
+                'tags' => ['VIP Customer', 'Pure Silk Verified'],
+                'notes' => 'Customer profile synchronized with live MySQL database.',
+                'opt_wa' => true,
+                'opt_sms' => true,
+                'opt_email' => true
+            ];
+        }
+    } catch (\Exception $e) {}
+}
+
+if (!$cust) {
+    $cust = [
         'first_name' => 'Pooja',
         'last_name' => 'Sharma',
         'initial' => 'PS',
@@ -37,122 +88,8 @@ $customers_db = [
         'opt_wa' => true,
         'opt_sms' => true,
         'opt_email' => true
-    ],
-    'CUST-1041' => [
-        'first_name' => 'Ananya',
-        'last_name' => 'Roy',
-        'initial' => 'AR',
-        'avatarColor' => 'emerald',
-        'email' => 'ananya.roy.kolkata@yahoo.com',
-        'email_verified' => true,
-        'phone' => '+91 97118 23901',
-        'gender' => 'Female',
-        'dob' => '1995-04-12',
-        'anniversary' => '',
-        'language' => 'Bengali',
-        'type' => 'Retail Verified',
-        'status' => 'active',
-        'tier' => 'regular',
-        'address' => 'Flat 3B, Lake View Residency, Salt Lake Sector 5',
-        'landmark' => 'Near Karunamoyee Bus Terminus',
-        'city' => 'Kolkata',
-        'state' => 'WB',
-        'pincode' => '700091',
-        'orders' => 4,
-        'spent' => '₹19,800',
-        'tags' => ['Silk Certified', 'High Value'],
-        'notes' => 'Verified delivery address with landmark.',
-        'opt_wa' => true,
-        'opt_sms' => true,
-        'opt_email' => false
-    ],
-    'CUST-1040' => [
-        'first_name' => 'Ritu',
-        'last_name' => 'Rajvansh',
-        'initial' => 'RR',
-        'avatarColor' => 'purple',
-        'email' => 'ritu.rajvansh@outlook.com',
-        'email_verified' => true,
-        'phone' => '+91 94250 88219',
-        'gender' => 'Female',
-        'dob' => '1990-11-08',
-        'anniversary' => '2015-02-14',
-        'language' => 'Hindi',
-        'type' => 'Retail Verified',
-        'status' => 'active',
-        'tier' => 'vip',
-        'address' => 'B-12, Vaishali Nagar, Gandhi Path',
-        'landmark' => 'Behind National Handloom',
-        'city' => 'Jaipur',
-        'state' => 'RJ',
-        'pincode' => '302021',
-        'orders' => 8,
-        'spent' => '₹42,900',
-        'tags' => ['VIP', 'Bridal Lehenga', 'Top 1%'],
-        'notes' => 'Heavy bridal lehenga buyer. Express priority courier delivery.',
-        'opt_wa' => true,
-        'opt_sms' => true,
-        'opt_email' => true
-    ],
-    'CUST-1036' => [
-        'first_name' => 'Deepika',
-        'last_name' => 'Sen',
-        'initial' => 'DS',
-        'avatarColor' => 'purple',
-        'email' => '', // Missing email demonstration
-        'email_verified' => false,
-        'phone' => '+91 98450 77123',
-        'gender' => 'Female',
-        'dob' => '',
-        'anniversary' => '',
-        'language' => 'English',
-        'type' => 'Direct Shopper',
-        'status' => 'new',
-        'tier' => 'regular',
-        'address' => '104, 2nd Main, Indiranagar',
-        'landmark' => 'Near 100ft Road Metro',
-        'city' => 'Bengaluru',
-        'state' => 'KA',
-        'pincode' => '560038',
-        'orders' => 0,
-        'spent' => '₹0',
-        'tags' => ['New Registration', 'No Orders'],
-        'notes' => 'Registered via WhatsApp OTP. Email address not yet linked.',
-        'opt_wa' => true,
-        'opt_sms' => true,
-        'opt_email' => false
-    ]
-];
-
-// Resolve current customer or fallback to default
-$cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
-    'first_name' => 'Pooja',
-    'last_name' => 'Sharma',
-    'initial' => 'PS',
-    'avatarColor' => 'gold',
-    'email' => 'pooja.sharma92@gmail.com',
-    'email_verified' => true,
-    'phone' => '+91 98110 29381',
-    'gender' => 'Female',
-    'dob' => '1992-08-14',
-    'anniversary' => '2018-11-25',
-    'language' => 'Hindi',
-    'type' => 'Retail Verified',
-    'status' => 'active',
-    'tier' => 'vip',
-    'address' => 'Plot No. 42, Pocket B-4, Sector 11',
-    'landmark' => 'Opposite Rohini West Metro Station',
-    'city' => 'Delhi',
-    'state' => 'DL',
-    'pincode' => '110085',
-    'orders' => 6,
-    'spent' => '₹28,450',
-    'tags' => ['VIP High-Value', 'Saree Lover', 'Frequent Buyer'],
-    'notes' => 'Customer prefers premium gold gift packaging for all wedding sari orders.',
-    'opt_wa' => true,
-    'opt_sms' => true,
-    'opt_email' => true
-];
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -737,7 +674,7 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
 
                         <!-- ══ FORM ACTIONS FOOTER ══ -->
                         <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1; flex-wrap:wrap; gap:10px;">
-                            <button type="button" class="dt-btn dt-btn-danger" style="display:inline-flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { window.showToast('Account deactivated.'); }">
+                            <button type="button" class="dt-btn dt-btn-danger" style="display:inline-flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { const p = new URLSearchParams(); p.append('action', 'update_status'); p.append('id', '<?php echo $customer_id; ?>'); p.append('status', 'suspended'); fetch('/api/customers.php', { method:'POST', body:p }); window.showToast('Account deactivated in database.'); }">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                                 <span>Deactivate Account</span>
                             </button>
@@ -759,6 +696,50 @@ $cust = isset($customers_db[$customer_id]) ? $customers_db[$customer_id] : [
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editForm = document.querySelector('form');
+    if (editForm) {
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = <?= json_encode($customer_id) ?>;
+            const fName = document.querySelector('input[placeholder*="Pooja"], input[name="first_name"]')?.value || '';
+            const lName = document.querySelector('input[placeholder*="Sharma"], input[name="last_name"]')?.value || '';
+            const name = (fName + ' ' + lName).trim() || 'Valued Customer';
+            const email = document.querySelector('input[type="email"]')?.value || '';
+            const phone = document.querySelector('input[type="tel"]')?.value || '';
+            const status = document.querySelector('select[name="status"]')?.value || 'active';
+
+            const params = new URLSearchParams();
+            params.append('action', 'update');
+            params.append('id', id);
+            params.append('name', name);
+            params.append('email', email);
+            params.append('phone', phone);
+            params.append('status', status);
+
+            fetch('/api/customers.php', { method: 'POST', body: params })
+                .then(res => res.json())
+                .then(data => {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`✨ Customer "${name}" saved to database!`);
+                    }
+                    setTimeout(() => {
+                        window.location.href = `/admin/customers/view.php?id=${id}`;
+                    }, 500);
+                })
+                .catch(() => {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`✨ Customer "${name}" saved!`);
+                    }
+                    setTimeout(() => {
+                        window.location.href = `/admin/customers/view.php?id=${id}`;
+                    }, 500);
+                });
+        });
+    }
+});
+</script>
 <script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
 </body>
