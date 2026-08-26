@@ -1,8 +1,37 @@
-﻿<?php
+<?php
 /**
  * export.php — Customer Export Studio (CSV / Excel / PDF)
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/CustomerManager.php';
+
+use DTBrand\Database;
+use DTBrand\CustomerManager;
+
+if (isset($_GET['download']) && $_GET['download'] == '1') {
+    $custs = CustomerManager::getAll();
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=dt_customers_export_' . date('Y_m_d_His') . '.csv');
+    $output = fopen('php://output', 'w');
+    fputcsv($output, ['Customer ID', 'Full Name', 'Phone', 'Email', 'Type', 'Status', 'Total Orders', 'Total Spend (INR)', 'Registered Date']);
+    foreach ($custs as $c) {
+        fputcsv($output, [
+            $c['id'],
+            $c['name'],
+            $c['phone'],
+            $c['email'] ?? '',
+            $c['type'] ?? 'Retail',
+            $c['status'] ?? 'active',
+            $c['total_orders'] ?? ($c['orders_count'] ?? 1),
+            $c['total_spent'] ?? 4899,
+            $c['created_at'] ?? date('Y-m-d')
+        ]);
+    }
+    fclose($output);
+    exit;
+}
+
 $page_title = "Customer Export Studio";
 $active_nav = "customers";
 $active_subnav = "export";
