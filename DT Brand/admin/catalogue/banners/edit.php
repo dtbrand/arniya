@@ -1,4 +1,6 @@
 ﻿<?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * banners/edit.php — Edit Banner with Multi-Size & Mobile Engine
  * DT Brand's & Jai Hanuman Tex

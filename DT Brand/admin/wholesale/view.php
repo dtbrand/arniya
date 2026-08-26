@@ -1,4 +1,6 @@
 ﻿<?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * view.php — DT Brand's & Jai Hanuman Tex
  * Master Wholesale Partner 360 Profile & Commercial Dossier (100% Dynamic)

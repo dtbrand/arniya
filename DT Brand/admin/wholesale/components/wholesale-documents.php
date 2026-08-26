@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * wholesale-documents.php — DT Brand's & Jai Hanuman Tex
  * Encrypted Document Vault & Compliance Certificates Component (100% Dynamic)

@@ -1,4 +1,6 @@
 ﻿<?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * order-stats.php — 4-Card Executive KPI Ribbon + Interactive Status Flow Pills
  * DT Brand's & Jai Hanuman Tex — Master Wholesale Architecture

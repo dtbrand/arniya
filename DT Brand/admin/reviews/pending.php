@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * pending.php - DT Brand's Admin Pending Review Moderation
  * DT Brand's & Jai Hanuman Tex
@@ -14,12 +16,8 @@ $pdo = Database::getConnection();
 $pendingReviews = [];
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $stmt = $pdo->query("SELECT * FROM `product_reviews` WHERE `status` = 'pending' OR `status` IS NULL ORDER BY `id` DESC");
+        $stmt = $pdo->query("SELECT r.*, p.title AS product_title FROM reviews r LEFT JOIN products p ON p.id = r.product_id WHERE r.status = 'pending' OR r.status IS NULL ORDER BY r.id DESC");
         $pendingReviews = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        if (empty($pendingReviews)) {
-            $stmt2 = $pdo->query("SELECT * FROM `reviews` WHERE `status` = 'pending' OR `status` IS NULL ORDER BY `id` DESC");
-            $pendingReviews = $stmt2->fetchAll(\PDO::FETCH_ASSOC);
-        }
     } catch (\Exception $e) {}
 }
 

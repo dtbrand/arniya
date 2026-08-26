@@ -163,15 +163,8 @@ try {
             ");
         } catch (\Exception $ex) {}
 
-        // 3. Seed Reviews & Product Reviews
+        // 3. Seed Reviews
         try {
-            $pdo->exec("
-                INSERT IGNORE INTO `product_reviews` (`id`, `product_id`, `customer_name`, `city`, `rating`, `title`, `comment`, `occasion`, `is_verified`, `status`, `created_at`) VALUES
-                (1, 1, 'Pooja Sharma', 'Mumbai', 5, 'Unmatched Pure Gold Zari', 'The silk quality is unmatched! Pure gold zari and royal finish.', 'Wedding', 1, 'approved', NOW()),
-                (2, 2, 'Ananya Roy', 'Kolkata', 5, 'Authentic Banarasi Weave', 'Authentic Banarasi kadwa weave. Ordered for my sister wedding.', 'Festive', 1, 'approved', NOW()),
-                (3, 3, 'Meera Agarwal', 'Surat', 5, 'Best Factory Wholesale Rates', 'Direct factory pricing and rapid dispatch. Wholesale profit margins are great.', 'Wholesale', 1, 'approved', NOW()),
-                (4, 4, 'Sunita Patel', 'Ahmedabad', 5, 'Exquisite Temple Borders', 'Flawless zari borders and soft pure mulberry silk drape.', 'Partywear', 1, 'approved', NOW());
-            ");
             $pdo->exec("
                 INSERT IGNORE INTO `reviews` (`id`, `product_id`, `customer_name`, `rating`, `review_title`, `review_text`, `verified_buyer`, `status`, `created_at`) VALUES
                 (1, 1, 'Pooja Sharma', 5, 'Royal Kanjivaram Silk', 'Pure silk with rich zari borders.', 1, 'approved', NOW()),
@@ -189,30 +182,21 @@ try {
             ");
         } catch (\Exception $ex) {}
 
-        // Also ensure admin table has the master admin credentials
-        $hash = password_hash('Gautam@9006', PASSWORD_BCRYPT);
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS `admins` (
-                `id` INT AUTO_INCREMENT PRIMARY KEY,
-                `name` VARCHAR(150) NOT NULL DEFAULT 'Gautam Sethi',
-                `email` VARCHAR(191) NOT NULL UNIQUE,
-                `password` VARCHAR(255) NOT NULL,
-                `role` VARCHAR(50) NOT NULL DEFAULT 'super_admin',
-                `status` VARCHAR(20) NOT NULL DEFAULT 'active',
-                `last_login` DATETIME NULL,
-                `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-        ");
-
-        $check = $pdo->prepare("SELECT id FROM admins WHERE email = 'admin@dtbrand.in'");
-        $check->execute();
-        if (!$check->fetch()) {
-            $ins = $pdo->prepare("INSERT INTO admins (name, email, password, role, status) VALUES ('Gautam Sethi', 'admin@dtbrand.in', ?, 'super_admin', 'active')");
-            $ins->execute([$hash]);
-        } else {
-            $up = $pdo->prepare("UPDATE admins SET password = ?, status = 'active' WHERE email = 'admin@dtbrand.in'");
-            $up->execute([$hash]);
-        }
+        // Ensure an administrator exists in the real `users` table (the admin
+        // console authenticates against `users`, not a separate `admins` table).
+        // Seed only when the table is empty and never overwrite an existing
+        // admin's chosen password.
+        try {
+            $adminCount = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+            if ($adminCount === 0) {
+                $adminEmail = strtolower(trim(getenv('ADMIN_EMAIL') ?: 'admin@dtbrand.in'));
+                $adminPass  = getenv('ADMIN_PASSWORD') ?: 'Gautam@9006';
+                $adminName  = getenv('ADMIN_NAME') ?: 'DT Brand Admin';
+                $hash = password_hash($adminPass, PASSWORD_BCRYPT);
+                $ins = $pdo->prepare("INSERT INTO `users` (name, email, password_hash, role, status, created_at) VALUES (?, ?, ?, 'super_admin', 'active', NOW())");
+                $ins->execute([$adminName, $adminEmail, $hash]);
+            }
+        } catch (\Exception $ex) {}
 
         // Enhance customers table columns
         try {

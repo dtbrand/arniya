@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * index.php - DT Brand's Admin Reviews Module
  * DT Brand's & Jai Hanuman Tex
@@ -17,7 +19,7 @@ $pdo = Database::getConnection();
 
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $stmt = $pdo->query("SELECT * FROM product_reviews ORDER BY id DESC LIMIT 50");
+        $stmt = $pdo->query("SELECT r.*, p.title AS product_title FROM reviews r LEFT JOIN products p ON p.id = r.product_id ORDER BY r.id DESC LIMIT 50");
         $reviewsList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
     } catch (\Exception $e) {}
 }

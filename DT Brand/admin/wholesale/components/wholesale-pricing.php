@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * wholesale-pricing.php — DT Brand's & Jai Hanuman Tex
  * Multi-Tier Wholesale Margin Rules, Volume Slabs & Dynamic Pricing Calculator (100% Dynamic)

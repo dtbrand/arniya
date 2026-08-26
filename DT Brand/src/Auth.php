@@ -45,18 +45,29 @@ class Auth
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 // Check if phone or email already registered
-                $checkStmt = $pdo->prepare("SELECT id FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
+                $checkStmt = $pdo->prepare("SELECT id, password_hash FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
                 $checkStmt->execute([$phone, $email]);
-                if ($checkStmt->fetch()) {
-                    return ['success' => false, 'message' => 'An account with this phone or email already exists.'];
-                }
+                $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
 
-                $stmt = $pdo->prepare("
-                    INSERT INTO customers (name, phone, email, password_hash, type, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, 'active', NOW())
-                ");
-                $stmt->execute([$name, $phone, $email, $passwordHash, $type]);
-                $customerId = (int)$pdo->lastInsertId();
+                if ($existing) {
+                    // A row that already has a password belongs to a registered
+                    // customer — never allow it to be silently taken over.
+                    if (!empty($existing['password_hash'])) {
+                        return ['success' => false, 'message' => 'An account with this phone or email already exists. Please sign in instead.'];
+                    }
+                    // Password-less row (e.g. created during guest checkout): let the
+                    // owner claim it by setting their password and details now.
+                    $customerId = (int)$existing['id'];
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ? WHERE id = ?");
+                    $upd->execute([$name, $email, $passwordHash, $type, $customerId]);
+                } else {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO customers (name, phone, email, password_hash, type, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, 'active', NOW())
+                    ");
+                    $stmt->execute([$name, $phone, $email, $passwordHash, $type]);
+                    $customerId = (int)$pdo->lastInsertId();
+                }
 
                 $user = [
                     'id' => $customerId,
@@ -120,19 +131,14 @@ class Auth
 
                 if ($customer) {
                     $hash = $customer['password_hash'] ?? '';
-                    // If password_hash exists, verify it; if newly migrated and empty, allow initial set or match
-                    $passwordValid = false;
-                    if (!empty($hash)) {
-                        $passwordValid = password_verify($password, $hash);
-                    } else {
-                        // Allow initial setup if password matches master setup
-                        $passwordValid = ($password === 'Gautam@9006' || $password === '123456' || strlen($password) >= 6);
-                        if ($passwordValid) {
-                            $newHash = password_hash($password, PASSWORD_BCRYPT);
-                            $upStmt = $pdo->prepare("UPDATE customers SET password_hash = ? WHERE id = ?");
-                            $upStmt->execute([$newHash, $customer['id']]);
-                        }
+                    // Only accept a login when a real bcrypt hash is present and
+                    // verifies. Accounts with no password set (e.g. created during
+                    // guest checkout or admin import) cannot be logged into until a
+                    // password is created via registration — no "any password" bypass.
+                    if (empty($hash)) {
+                        return ['success' => false, 'message' => 'No password is set for this account yet. Please use "Create Account" with this phone/email to set your password.'];
                     }
+                    $passwordValid = password_verify($password, $hash);
 
                     if ($passwordValid) {
                         $user = [
@@ -168,26 +174,10 @@ class Auth
             }
         }
 
-        // Demo / Fallback login
-        if ($password === 'Gautam@9006' || $password === '123456' || strlen($password) >= 6) {
-            $user = [
-                'id' => 101,
-                'name' => 'Radhika Sarees Emporium',
-                'phone' => $identity,
-                'email' => $identity,
-                'type' => 'wholesale',
-                'tier' => 'Diamond Elite',
-                'credit_limit' => 500000.00,
-                'outstanding_balance' => 84500.00,
-                'status' => 'active'
-            ];
-            session_regenerate_id(true);
-            $_SESSION['user'] = $user;
-            $_SESSION['user_type'] = $user['type'];
-            return ['success' => true, 'message' => 'Login successful!', 'user' => $user];
-        }
-
-        return ['success' => false, 'message' => 'Invalid credentials.'];
+        // Database unreachable — customer accounts cannot be verified offline, so
+        // do not fabricate a session. Fail closed rather than granting a privileged
+        // demo account to anyone with a 6-character password.
+        return ['success' => false, 'message' => 'Login is temporarily unavailable. Please try again shortly.'];
     }
 
     /**
@@ -203,48 +193,87 @@ class Auth
             return ['success' => false, 'message' => 'Email and password required.'];
         }
 
-        // 1. Try MySQL Database Admins Table
+        // Resolve the configured master/bootstrap administrator credential. These
+        // are overridable via environment on the server; the defaults preserve the
+        // owner's existing credential so a fresh deploy is never locked out. The
+        // bootstrap only functions while NO admin exists yet — it self-closes the
+        // moment the first `users` row is created (here or by the migration seed).
+        $bootstrapEmail = strtolower(trim(getenv('ADMIN_EMAIL') ?: 'admin@dtbrand.in'));
+        $bootstrapPass  = getenv('ADMIN_PASSWORD') ?: 'Gautam@9006';
+        $bootstrapName  = getenv('ADMIN_NAME') ?: 'DT Brand Admin';
+
+        // 1. Authenticate against the real admin/staff `users` table
         try {
             $pdo = Database::getConnection();
             if ($pdo !== null && !Database::isMockMode()) {
-                $stmt = $pdo->prepare("SELECT * FROM `admins` WHERE `email` = ? AND `status` = 'active' LIMIT 1");
+                $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ? AND `status` = 'active' LIMIT 1");
                 $stmt->execute([$email]);
                 $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
                 if ($row) {
-                    if (password_verify($password, $row['password']) || $row['password'] === $password || ($password === 'Gautam@9006' && in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in']))) {
+                    // Existing admin: verify the stored bcrypt hash only. No
+                    // plaintext comparison and no credential bypass.
+                    if (!empty($row['password_hash']) && password_verify($password, $row['password_hash'])) {
                         $admin = [
                             'id' => (int)$row['id'],
-                            'name' => $row['name'] ?? 'Gautam Sethi',
+                            'name' => $row['name'] ?? 'Administrator',
                             'email' => $row['email'],
-                            'role' => $row['role'] ?? 'super_admin'
+                            'role' => $row['role'] ?? 'admin'
                         ];
                         session_regenerate_id(true);
                         $_SESSION['admin_logged_in'] = true;
                         $_SESSION['admin_user'] = $admin;
                         $_SESSION['admin_role'] = $admin['role'];
                         try {
-                            $up = $pdo->prepare("UPDATE `admins` SET `last_login` = NOW() WHERE `id` = ?");
+                            $up = $pdo->prepare("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?");
                             $up->execute([$admin['id']]);
                         } catch (\Throwable $e) {}
                         return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
                     }
+
+                    // A matching admin exists but the password is wrong — reject.
+                    return ['success' => false, 'message' => 'Invalid administrative credentials.'];
                 }
+
+                // First-run bootstrap: only when the users table has no admin yet,
+                // allow the configured master credential to create the first
+                // super-admin. This path is dead as soon as one admin exists.
+                $adminCount = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+                if ($adminCount === 0 && $email === $bootstrapEmail && $password === $bootstrapPass) {
+                    $hash = password_hash($bootstrapPass, PASSWORD_BCRYPT);
+                    $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `password_hash`, `role`, `status`, `created_at`) VALUES (?, ?, ?, 'super_admin', 'active', NOW())");
+                    $ins->execute([$bootstrapName, $bootstrapEmail, $hash]);
+                    $admin = [
+                        'id' => (int)$pdo->lastInsertId(),
+                        'name' => $bootstrapName,
+                        'email' => $bootstrapEmail,
+                        'role' => 'super_admin'
+                    ];
+                    session_regenerate_id(true);
+                    $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_user'] = $admin;
+                    $_SESSION['admin_role'] = 'super_admin';
+                    return ['success' => true, 'message' => 'Admin account initialised. Please change this password immediately.', 'admin' => $admin];
+                }
+
+                return ['success' => false, 'message' => 'Invalid administrative credentials.'];
             }
         } catch (\Throwable $e) {}
 
-        // 2. Real Master Admin Credential Verification (admin@dtbrand.in / Gautam@9006)
-        if (in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in', 'admin']) && $password === 'Gautam@9006') {
+        // 2. Offline fallback (database unreachable): accept ONLY the configured
+        // master credential so the console remains reachable during an outage.
+        if (Database::isMockMode() && $email === $bootstrapEmail && $password === $bootstrapPass) {
             $admin = [
                 'id' => 1,
-                'name' => 'Gautam Sethi',
-                'email' => 'admin@dtbrand.in',
+                'name' => $bootstrapName,
+                'email' => $bootstrapEmail,
                 'role' => 'super_admin'
             ];
             session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_user'] = $admin;
             $_SESSION['admin_role'] = 'super_admin';
-            return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+            return ['success' => true, 'message' => 'Admin authentication successful (offline mode).', 'admin' => $admin];
         }
 
         return ['success' => false, 'message' => 'Invalid administrative credentials.'];
@@ -266,6 +295,7 @@ class Auth
     public static function adminLogout(): void
     {
         self::initSession();
+        unset($_SESSION['admin_logged_in']);
         unset($_SESSION['admin_user']);
         unset($_SESSION['admin_role']);
     }
@@ -391,10 +421,12 @@ class Auth
                 ");
                 $stmt->execute([$token, $identity, $identity]);
 
+                // Do NOT return the raw token in the response — it would let anyone
+                // reset any account's password. The token is stored for delivery via
+                // a trusted channel (email/SMS) out of band.
                 return [
                     'success' => true,
-                    'message' => 'Password reset instructions and verification link have been generated.',
-                    'reset_token' => $token
+                    'message' => 'If an account matches those details, password reset instructions have been sent.'
                 ];
             } catch (\Exception $e) {
                 return ['success' => false, 'message' => 'Reset error: ' . $e->getMessage()];
@@ -403,8 +435,7 @@ class Auth
 
         return [
             'success' => true,
-            'message' => 'Password reset token generated.',
-            'reset_token' => $token
+            'message' => 'If an account matches those details, password reset instructions have been sent.'
         ];
     }
 

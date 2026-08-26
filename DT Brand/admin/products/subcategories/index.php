@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * subcategories/index.php — DT Brand's Master Subcategories Hierarchy
  * Wholesale Dashboard & Luxury Shop Standard

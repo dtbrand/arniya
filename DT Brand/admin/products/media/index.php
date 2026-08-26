@@ -1,4 +1,6 @@
 ﻿<?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * media/index.php — DT Brand's Master Product Media & CDN Asset Studio
  * Wholesale Dashboard & Luxury Shop Standard (4, 6, 7, 8 Column & List Density Modes)

@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * wholesale-credit.php — DT Brand's & Jai Hanuman Tex
  * Revolving Credit Line, Headroom Progress & Double-Entry Ledger (100% Dynamic)

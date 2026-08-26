@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * adminfooter.php — Luxury Admin Dashboard Bottom Status Bar & Mobile Bottom Dock
  * DT Brand's & Jai Hanuman Tex

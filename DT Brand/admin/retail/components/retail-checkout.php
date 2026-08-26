@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * retail-checkout.php — DT Brand's & Jai Hanuman Tex
  * Retail 7-Step Checkout Funnel Diagnostics Component

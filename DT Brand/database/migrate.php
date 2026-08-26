@@ -93,8 +93,38 @@ class DatabaseMigrationRunner {
         }
 
         $this->applyColumnUpgrades($pdo, $results);
+        $this->ensureAdminUser($pdo, $results);
 
         return ['status' => 'success', 'executed' => $results];
+    }
+
+    /**
+     * Seed the first administrator into the `users` table when it is empty. The
+     * master schema intentionally ships no admin row, which would otherwise leave
+     * the console unreachable. The password is hashed here on the server (PHP is
+     * present at migration time) so no plaintext credential is ever stored. Runs
+     * only while the table has zero rows, so re-running never overwrites a real
+     * admin or their chosen password.
+     */
+    private function ensureAdminUser(\PDO $pdo, array &$results): void {
+        try {
+            $count = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+            if ($count > 0) {
+                $results[] = ['seed' => 'users.admin', 'status' => 'ALREADY_PRESENT'];
+                return;
+            }
+
+            $email = strtolower(trim(getenv('ADMIN_EMAIL') ?: 'admin@dtbrand.in'));
+            $pass  = getenv('ADMIN_PASSWORD') ?: 'Gautam@9006';
+            $name  = getenv('ADMIN_NAME') ?: 'DT Brand Admin';
+            $hash  = password_hash($pass, PASSWORD_BCRYPT);
+
+            $stmt = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `password_hash`, `role`, `status`, `created_at`) VALUES (?, ?, ?, 'super_admin', 'active', NOW())");
+            $stmt->execute([$name, $email, $hash]);
+            $results[] = ['seed' => 'users.admin', 'status' => 'ADMIN_CREATED', 'email' => $email];
+        } catch (\PDOException $e) {
+            $results[] = ['seed' => 'users.admin', 'status' => 'ERROR', 'error' => $e->getMessage()];
+        }
     }
 
     /**

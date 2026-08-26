@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * approved.php - DT Brand's Admin Approved Customer Reviews
  * DT Brand's & Jai Hanuman Tex
@@ -14,12 +16,8 @@ $pdo = Database::getConnection();
 $approvedReviews = [];
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $stmt = $pdo->query("SELECT * FROM `product_reviews` WHERE `status` = 'approved' ORDER BY `id` DESC");
+        $stmt = $pdo->query("SELECT r.*, p.title AS product_title FROM reviews r LEFT JOIN products p ON p.id = r.product_id WHERE r.status = 'approved' ORDER BY r.id DESC");
         $approvedReviews = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        if (empty($approvedReviews)) {
-            $stmt2 = $pdo->query("SELECT * FROM `reviews` WHERE `status` = 'approved' ORDER BY `id` DESC");
-            $approvedReviews = $stmt2->fetchAll(\PDO::FETCH_ASSOC);
-        }
     } catch (\Exception $e) {}
 }
 

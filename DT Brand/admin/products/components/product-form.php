@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * product-form.php — Basic Product Information Form with Clean DT Brand's AI Importer Modal
  * DT Brand's & Jai Hanuman Tex

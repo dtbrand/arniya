@@ -1,4 +1,6 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * reseller-profile.php — DT Brand's & Jai Hanuman Tex
  * Luxury Gold & Silver/Platinum Glass Hero Banner & Identity Card
