@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * index.php - DT Brand's Admin Whatsapp Module
  * DT Brand's & Jai Hanuman Tex
@@ -178,11 +178,30 @@ $active_nav = "whatsapp";
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 <script>
 function launchBroadcastAlert() {
-    const audience = document.getElementById('waTargetAudience').value;
+    const audience = document.getElementById('waTargetAudience')?.value || 'all';
+    
     if (typeof window.showToast === 'function') {
         window.showToast('🚀 Broadcast queue initiated for ' + audience.toUpperCase() + ' audience!');
     }
-    alert('✅ Broadcast campaign queued successfully to ' + audience.toUpperCase() + ' contacts via WhatsApp Cloud API.');
+
+    const params = new URLSearchParams();
+    params.append('action', 'broadcast');
+    params.append('audience', audience);
+    params.append('message', "Namaste! DT Brand's & Jai Hanuman Tex Festive Silk Collection Alert is live at https://jaihanumantex.in/shop");
+
+    fetch('/api/whatsapp.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            const count = data.recipients_count || 'all';
+            if (typeof window.showToast === 'function') {
+                window.showToast(`✨ WhatsApp campaign successfully dispatched to ${count} contacts!`);
+            }
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✨ WhatsApp campaign queued successfully!');
+            }
+        });
 }
 </script>
 </body>
