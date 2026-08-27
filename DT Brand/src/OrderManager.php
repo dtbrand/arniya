@@ -76,10 +76,34 @@ class OrderManager
             return in_array($requested, $allowed, true) ? $requested : 'retail';
         }
 
-        // A storefront visitor gets the tier their own account was granted.
-        $type = strtolower((string)($_SESSION['user']['type'] ?? ''));
-        if ($type === 'wholesale' || $type === 'reseller') {
-            return $type;
+        // A storefront visitor gets the tier their own account was granted — and
+        // the grant is re-read from the customers table rather than taken from the
+        // session. The session is only a cache of what was true at login, so
+        // trusting it alone would keep honouring wholesale pricing for an account
+        // that has since been suspended, or that was self-assigned a trade tier
+        // before signup started requiring approval. A trade tier counts only while
+        // the row is status='active'.
+        $customerId = (int)($_SESSION['user']['id'] ?? 0);
+        if ($customerId > 0) {
+            $db = Database::getConnection();
+            if ($db !== null && !Database::isMockMode()) {
+                try {
+                    $stmt = $db->prepare("SELECT type, status FROM customers WHERE id = ? LIMIT 1");
+                    $stmt->execute([$customerId]);
+                    $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+                    if ($row && ($row['status'] ?? '') === 'active') {
+                        $verified = strtolower((string)($row['type'] ?? ''));
+                        if ($verified === 'wholesale' || $verified === 'reseller') {
+                            return $verified;
+                        }
+                    }
+                    // Row missing, not active, or retail -> fall through to retail.
+                    return ($requested === 'whatsapp') ? 'whatsapp' : 'retail';
+                } catch (\Throwable $e) {
+                    // Cannot verify the tier, so do not grant one.
+                    return ($requested === 'whatsapp') ? 'whatsapp' : 'retail';
+                }
+            }
         }
 
         // 'whatsapp' is a fulfilment route rather than a pricing tier, so a

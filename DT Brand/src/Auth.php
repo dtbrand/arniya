@@ -52,9 +52,44 @@ class Auth
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 // Check if phone or email already registered
-                $checkStmt = $pdo->prepare("SELECT id, password_hash FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
+                $checkStmt = $pdo->prepare("SELECT id, password_hash, type, status FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
                 $checkStmt->execute([$phone, $email]);
                 $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+
+                // ── Which tier does this account actually get? ──
+                //
+                // A wholesale or reseller account buys at mill rates, so the tier
+                // can never be granted by the person asking for it. This used to
+                // take $data['type'] straight from the request and write it to the
+                // row as 'active', which meant any visitor could pick
+                // "Wholesaler" in the storefront role selector and immediately buy
+                // the whole catalogue at wholesale prices.
+                //
+                // Now a trade request is RECORDED (customers.type holds what was
+                // asked for) but left status='pending'. Auth::login only accepts
+                // status='active', so the account is inert until an admin verifies
+                // the GSTIN and approves it. Retail signup is unchanged and still
+                // works immediately.
+                $alreadyApprovedB2B = $existing
+                    && in_array(($existing['type'] ?? 'retail'), ['wholesale', 'reseller'], true)
+                    && ($existing['status'] ?? '') === 'active';
+
+                if ($alreadyApprovedB2B) {
+                    // An admin already approved this trade account (the row was
+                    // created at guest checkout or imported). Claiming it must not
+                    // demote it back to pending.
+                    $grantType = $existing['type'];
+                    $grantStatus = 'active';
+                    $needsApproval = false;
+                } elseif ($isB2BRequest) {
+                    $grantType = $requestedType;
+                    $grantStatus = 'pending';
+                    $needsApproval = true;
+                } else {
+                    $grantType = 'retail';
+                    $grantStatus = 'active';
+                    $needsApproval = false;
+                }
 
                 if ($existing) {
                     // A row that already has a password belongs to a registered
@@ -65,15 +100,30 @@ class Auth
                     // Password-less row (e.g. created during guest checkout): let the
                     // owner claim it by setting their password and details now.
                     $customerId = (int)$existing['id'];
-                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
-                    $upd->execute([$name, $email, $passwordHash, $type, $city, $state, $customerId]);
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, status = ?, gstin = COALESCE(NULLIF(?, ''), gstin), pan = COALESCE(NULLIF(?, ''), pan), city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
+                    $upd->execute([$name, $email, $passwordHash, $grantType, $grantStatus, $gstin, $pan, $city, $state, $customerId]);
                 } else {
                     $stmt = $pdo->prepare("
-                        INSERT INTO customers (name, phone, email, password_hash, type, city, state, status, created_at)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, 'active', NOW())
+                        INSERT INTO customers (name, phone, email, password_hash, type, city, state, gstin, pan, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
                     ");
-                    $stmt->execute([$name, $phone, $email, $passwordHash, $type, $city, $state]);
+                    $stmt->execute([$name, $phone, $email, $passwordHash, $grantType, $city, $state, $gstin, $pan, $grantStatus]);
                     $customerId = (int)$pdo->lastInsertId();
+                }
+
+                // A pending trade account is NOT signed in — there is nothing to
+                // sign in to until it is approved. Say so plainly rather than
+                // handing back a session that prices at retail while the account
+                // is labelled "wholesale".
+                if ($needsApproval) {
+                    $label = ($grantType === 'wholesale') ? 'wholesale' : 'reseller';
+                    return [
+                        'success' => true,
+                        'pending_approval' => true,
+                        'requested_type' => $grantType,
+                        'message' => 'Thank you — your ' . $label . ' account application has been received. Our team verifies trade details (GSTIN) before activating '
+                            . $label . ' pricing, and will confirm on WhatsApp at ' . $phone . '. You can shop at retail prices in the meantime.'
+                    ];
                 }
 
                 $user = [
@@ -81,21 +131,31 @@ class Auth
                     'name' => $name,
                     'phone' => $phone,
                     'email' => $email,
-                    'type' => $type,
+                    'type' => $grantType,
                     'tier' => 'Standard',
                     'city' => $city,
                     'state' => $state,
-                    'status' => 'active'
+                    'status' => $grantStatus
                 ];
 
                 session_regenerate_id(true);
                 $_SESSION['user'] = $user;
-                $_SESSION['user_type'] = $type;
+                $_SESSION['user_type'] = $grantType;
 
                 return ['success' => true, 'message' => 'Registration successful! Welcome to DT Brand\'s.', 'user' => $user];
             } catch (\Exception $e) {
                 return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
             }
+        }
+
+        // No database. A trade tier cannot be verified — or even recorded — so it
+        // must not be handed out here either; this fallback previously minted a
+        // fully "active" wholesale session with no persistence at all.
+        if ($isB2BRequest) {
+            return [
+                'success' => false,
+                'message' => 'Trade account applications cannot be accepted right now. Please try again shortly or contact us on WhatsApp.'
+            ];
         }
 
         // Fallback session registration
@@ -104,13 +164,13 @@ class Auth
             'name' => $name,
             'phone' => $phone,
             'email' => $email,
-            'type' => $type,
+            'type' => 'retail',
             'tier' => 'Standard',
             'status' => 'active'
         ];
         session_regenerate_id(true);
         $_SESSION['user'] = $user;
-        $_SESSION['user_type'] = $type;
+        $_SESSION['user_type'] = 'retail';
 
         return ['success' => true, 'message' => 'Registration successful!', 'user' => $user];
     }

@@ -451,7 +451,17 @@
         })
             .then(function (r) { return r.json(); })
             .then(function (res) {
-                if (res.success) {
+                /* A trade application is accepted but not signed in until an admin
+                   approves it, so there is no res.user to store. Without this
+                   branch the line below wrote the string "undefined" into
+                   localStorage and the header rendered a logged-in shell for an
+                   account that cannot log in. */
+                if (res.success && res.pending_approval) {
+                    window.closeAuthModal();
+                    window.showToast(res.message || 'Trade account application received — we will confirm on WhatsApp.', 'success');
+                    return;
+                }
+                if (res.success && res.user) {
                     localStorage.setItem('dtbrands_user', JSON.stringify(res.user));
                     window.showToast('Account created successfully!', 'success');
                     window.closeAuthModal();
@@ -459,6 +469,9 @@
                 } else {
                     window.showToast(res.message || 'Registration failed', 'error');
                 }
+            })
+            .catch(function () {
+                window.showToast('Could not reach the registration service. Please try again.', 'error');
             });
     };
 

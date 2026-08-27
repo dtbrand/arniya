@@ -1848,6 +1848,14 @@
             })
             .then(function(res) { return res.json(); })
             .then(function(data) {
+                /* A wholesale/reseller application is recorded but not signed in:
+                   trade pricing is only granted after an admin verifies the trade
+                   details. Report the application honestly instead of falling
+                   through to the generic "could not create account" branch. */
+                if (data && data.success && data.pending_approval) {
+                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once it is approved.');
+                    return;
+                }
                 if (data.success && data.user) {
                     var u = data.user;
                     // Trust the account type the SERVER stored, not the one picked

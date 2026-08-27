@@ -1327,6 +1327,14 @@
         fetch('/api/auth.php', { method: 'POST', body: params })
             .then(function(res) { return res.json(); })
             .then(function(data) {
+                /* A wholesale/reseller application is accepted but NOT signed in —
+                   trade pricing needs an admin to verify the GSTIN first. Report
+                   that as the success it is, rather than as a failed signup. */
+                if (data && data.success && data.pending_approval) {
+                    window.closeAccountModal();
+                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once it is approved.');
+                    return;
+                }
                 if (data && data.success && data.user) {
                     var userData = dtProfileFromServer(data.user);
                     /* Keep the locality the customer just typed for display. */
