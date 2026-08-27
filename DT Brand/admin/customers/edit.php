@@ -660,11 +660,11 @@ if (!$cust) {
                             <div style="background:#FAF8F4; border:1px solid #EAE5D9; border-radius:10px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
                                 <div>
                                     <strong style="font-size:0.8rem; color:#181512; display:block;">Secure Password Reset</strong>
-                                    <span style="font-size:0.72rem; color:#78716C;">Passwords are encrypted. Dispatches a secure 1-time reset link via SMS &amp; Email.</span>
+                                    <span style="font-size:0.72rem; color:#78716C;">No automated SMS/email sender is configured. This opens WhatsApp so you can help the customer reset their password.</span>
                                 </div>
-                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;" onclick="window.showToast('✓ Secure Password Reset Link dispatched to <?php echo htmlspecialchars($cust['phone']); ?>!')">
+                                <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:6px;" onclick="dtSendResetLink('<?php echo htmlspecialchars($cust['phone'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars(addslashes($cust['first_name'] ?? ''), ENT_QUOTES); ?>')">
                                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    <span>Dispatch Reset Link</span>
+                                    <span>Reset via WhatsApp</span>
                                 </button>
                             </div>
 
@@ -676,7 +676,7 @@ if (!$cust) {
 
                         <!-- ══ FORM ACTIONS FOOTER ══ -->
                         <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; background:#FAF8F4; border-top:1.5px solid #F1ECE1; flex-wrap:wrap; gap:10px;">
-                            <button type="button" class="dt-btn dt-btn-danger" style="display:inline-flex; align-items:center; gap:6px;" onclick="if(confirm('Are you sure you want to deactivate customer account #<?php echo $customer_id; ?>?')) { const p = new URLSearchParams(); p.append('action', 'update_status'); p.append('id', '<?php echo $customer_id; ?>'); p.append('status', 'suspended'); fetch('/api/customers.php', { method:'POST', body:p }); window.showToast('Account deactivated in database.'); }">
+                            <button type="button" class="dt-btn dt-btn-danger" style="display:inline-flex; align-items:center; gap:6px;" onclick="dtDeactivateCustomer(<?php echo (int)$customer_id; ?>)">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                                 <span>Deactivate Account</span>
                             </button>
@@ -699,6 +699,54 @@ if (!$cust) {
 </div>
 
 <script>
+function dtCustomerToast(message) {
+    if (typeof window.showToast === 'function') { window.showToast(message); }
+    else { alert(message); }
+}
+
+/* Deactivating suspends the account, which blocks sign-in and (for a trade
+   buyer) revokes wholesale/reseller pricing. Confirm the server actually did it
+   before saying so — /api/customers.php requires an admin session and will
+   answer 401 if it has expired. */
+function dtDeactivateCustomer(id) {
+    if (!confirm('Deactivate customer account #' + id + '? They will no longer be able to sign in.')) return;
+
+    var params = new URLSearchParams();
+    params.append('action', 'update_status');
+    params.append('id', id);
+    params.append('status', 'suspended');
+
+    fetch('/api/customers.php', { method: 'POST', body: params })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data && data.success) {
+                dtCustomerToast('✓ Account #' + id + ' deactivated.');
+                setTimeout(function () { window.location.href = '/admin/customers/view.php?id=' + id; }, 600);
+            } else {
+                dtCustomerToast('⚠ ' + ((data && data.message) || 'The account was NOT deactivated.'));
+            }
+        })
+        .catch(function () {
+            dtCustomerToast('⚠ Network error — the account was NOT deactivated.');
+        });
+}
+
+/* There is no automated SMS/email sender wired up in this project, so this
+   cannot silently claim a link was dispatched. Auth::requestPasswordReset
+   stores the token; delivery is done by hand over WhatsApp. */
+function dtSendResetLink(phone, name) {
+    var digits = String(phone || '').replace(/\D+/g, '');
+    if (digits.length === 10) { digits = '91' + digits; }
+    if (!digits) {
+        dtCustomerToast('⚠ This customer has no phone number on file.');
+        return;
+    }
+    var msg = 'Namaste ' + (name || 'ji') + ', this is DT Brand\'s & Jai Hanuman Tex. '
+            + 'To reset your account password, please reply here and our team will help you set a new one.';
+    window.open('https://wa.me/' + digits + '?text=' + encodeURIComponent(msg), '_blank');
+    dtCustomerToast('WhatsApp opened — send the message to start the reset.');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const editForm = document.querySelector('form');
     if (editForm) {
@@ -720,23 +768,23 @@ document.addEventListener('DOMContentLoaded', function() {
             params.append('phone', phone);
             params.append('status', status);
 
+            /* Only navigate away on a confirmed save. Previously both .then and
+               .catch reported success and redirected, so a rejected write looked
+               identical to a stored one and the edits were silently lost. */
             fetch('/api/customers.php', { method: 'POST', body: params })
                 .then(res => res.json())
                 .then(data => {
-                    if (typeof window.showToast === 'function') {
-                        window.showToast(`✨ Customer "${name}" saved to database!`);
+                    if (data && data.success) {
+                        dtCustomerToast(`✨ Customer "${name}" saved to database!`);
+                        setTimeout(() => {
+                            window.location.href = `/admin/customers/view.php?id=${id}`;
+                        }, 500);
+                    } else {
+                        dtCustomerToast('⚠ ' + ((data && data.message) || `"${name}" was NOT saved. Your changes are still on screen.`));
                     }
-                    setTimeout(() => {
-                        window.location.href = `/admin/customers/view.php?id=${id}`;
-                    }, 500);
                 })
                 .catch(() => {
-                    if (typeof window.showToast === 'function') {
-                        window.showToast(`✨ Customer "${name}" saved!`);
-                    }
-                    setTimeout(() => {
-                        window.location.href = `/admin/customers/view.php?id=${id}`;
-                    }, 500);
+                    dtCustomerToast(`⚠ Network error — "${name}" was NOT saved. Your changes are still on screen.`);
                 });
         });
     }

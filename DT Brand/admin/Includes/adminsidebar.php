@@ -23,17 +23,23 @@ if ($pdo_sb !== null && !Database::isMockMode()) {
         $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE type = 'wholesale' OR tier = 'wholesale'")->fetchColumn();
         $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE type = 'reseller' OR tier = 'reseller'")->fetchColumn();
         $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers`")->fetchColumn();
+        // Trade accounts waiting for approval. Wholesale/reseller signups are held
+        // at status='pending' and cannot sign in until an admin approves them, so
+        // this badge is the only prompt that real buyers are waiting.
+        $sb_pending_trade_count = (int)$pdo_sb->query("SELECT COUNT(*) FROM `customers` WHERE `status` = 'pending'")->fetchColumn();
     } catch (\Exception $e) {
         $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
         $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
         $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
         $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
+        $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
     }
 } else {
     $sb_orders_count = isset($totalOrdersCount) ? (int)$totalOrdersCount : 0;
     $sb_wholesale_count = isset($totalWholesaleCount) ? (int)$totalWholesaleCount : 2;
     $sb_reseller_count = isset($totalResellerCount) ? (int)$totalResellerCount : 1;
     $sb_customers_count = isset($totalCustomersCount) ? (int)$totalCustomersCount : 3;
+    $sb_pending_trade_count = 0; // Unknown; never invent an approval backlog.
 }
 
 
@@ -713,6 +719,15 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                             <a href="/admin/customers/" class="adm-nav-subitem <?php echo ($current_nav === 'customers' && $current_subnav === 'all') ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                                 <span>All Customers</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/customers/pending.php" class="adm-nav-subitem <?php echo $current_subnav === 'pending' ? 'active' : ''; ?>">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 12l2 2 4-4"></path><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.66 0 3.22.45 4.56 1.24"></path></svg>
+                                <span>Trade Approvals</span>
+                                <?php if ($sb_pending_trade_count > 0): ?>
+                                    <span class="adm-nav-badge gold"><?php echo $sb_pending_trade_count; ?></span>
+                                <?php endif; ?>
                             </a>
                         </li>
                         <li>

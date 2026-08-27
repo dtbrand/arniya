@@ -136,6 +136,9 @@ class DatabaseMigrationRunner {
     private function applyColumnUpgrades(\PDO $pdo, array &$results): void {
         $upgrades = [
             ['table' => 'orders', 'column' => 'shipping_address', 'definition' => 'TEXT DEFAULT NULL AFTER `courier_name`'],
+            ['table' => 'products', 'column' => 'is_featured', 'definition' => 'TINYINT(1) DEFAULT 0 AFTER `status`'],
+            ['table' => 'customers', 'column' => 'gstin', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `lifetime_spend`'],
+            ['table' => 'customers', 'column' => 'pan', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `gstin`'],
         ];
 
         foreach ($upgrades as $up) {
@@ -151,6 +154,13 @@ class DatabaseMigrationRunner {
             } catch (\PDOException $e) {
                 $results[] = ['upgrade' => "{$up['table']}.{$up['column']}", 'status' => 'ERROR', 'error' => $e->getMessage()];
             }
+        }
+
+        try {
+            $pdo->exec("ALTER TABLE `customers` MODIFY COLUMN `status` ENUM('active', 'pending', 'suspended') DEFAULT 'active'");
+            $results[] = ['upgrade' => 'customers.status_enum', 'status' => 'VERIFIED_OR_MODIFIED'];
+        } catch (\PDOException $e) {
+            $results[] = ['upgrade' => 'customers.status_enum', 'status' => 'ERROR', 'error' => $e->getMessage()];
         }
     }
 }

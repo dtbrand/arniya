@@ -1187,6 +1187,21 @@
                         </div>
                     </div>
 
+                    <!--
+                        Trade credentials, shown only for Wholesaler/Reseller. A trade
+                        signup is held at pending until an admin verifies the GSTIN, so
+                        collecting it here is what makes that review possible.
+                    -->
+                    <div class="auth-form-group" id="regTradeKycGroup" style="display:none;">
+                        <label class="auth-label" for="regGstin">GSTIN <span style="font-weight:600; color:var(--mid-text);">(speeds up approval)</span></label>
+                        <input type="text" id="regGstin" class="auth-input" placeholder="e.g. 24ABCDE1234F1Z5" maxlength="15" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
+                        <label class="auth-label" for="regPan" style="margin-top:10px; display:block;">PAN <span style="font-weight:600; color:var(--mid-text);">(optional)</span></label>
+                        <input type="text" id="regPan" class="auth-input" placeholder="e.g. ABCDE1234F" maxlength="10" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
+                        <p style="font-size:0.74rem; color:var(--mid-text); margin:8px 0 0 0; line-height:1.45; font-weight:500;">
+                            Trade accounts are reviewed before wholesale pricing is activated. We'll confirm on WhatsApp — you can shop at retail prices meanwhile.
+                        </p>
+                    </div>
+
                     <!-- Password -->
                     <div class="auth-form-group">
                         <label class="auth-label" for="regPass">Password <span class="req">*</span></label>
@@ -1591,6 +1606,11 @@
             document.querySelectorAll('.role-pill-btn').forEach(function(c) {
                 c.classList.toggle('selected', c.dataset.role === role);
             });
+            // Only trade roles need GSTIN/PAN, and only trade roles go through approval.
+            var kyc = document.getElementById('regTradeKycGroup');
+            if (kyc) {
+                kyc.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
+            }
         };
 
         /* Validate WhatsApp Digits in real-time */
@@ -1841,6 +1861,16 @@
             params.append('type', typeCode);
             params.append('city', city || 'Surat');
             params.append('state', selectedState);
+
+            /* Trade credentials, only meaningful for a wholesale/reseller request.
+               Auth::register stores them on the pending row so the approver has
+               something to verify. */
+            if (typeCode !== 'retail') {
+                var gstinEl = document.getElementById('regGstin');
+                var panEl = document.getElementById('regPan');
+                params.append('gstin', gstinEl ? gstinEl.value.trim() : '');
+                params.append('pan', panEl ? panEl.value.trim() : '');
+            }
 
             fetch('/api/auth.php', {
                 method: 'POST',

@@ -431,9 +431,20 @@
                 }
             })
             .catch(function () {
-                window.showToast('Welcome back!', 'success');
-                window.closeAuthModal();
+                /* A failed request is not a sign-in. Greeting the visitor and
+                   closing the modal left them believing they were logged in
+                   while no session and no stored user existed, so every
+                   account action afterwards silently failed. */
+                window.showToast('Could not reach the sign-in service. Please try again.', 'error');
             });
+    };
+
+    /* Trade roles alone need GSTIN/PAN, and trade roles alone go through approval. */
+    window.dtToggleTradeKyc = function (type) {
+        var box = document.getElementById('dtRegTradeKyc');
+        if (box) {
+            box.style.display = (type === 'wholesale' || type === 'reseller') ? 'block' : 'none';
+        }
     };
 
     window.handleAuthRegister = function (e) {
@@ -444,10 +455,18 @@
         var email = (document.getElementById('dtRegEmail') || {}).value;
         var pass = (document.getElementById('dtRegPassword') || {}).value;
 
+        var payload = { type: type, name: name, phone: phone, email: email, password: pass };
+        /* Auth::register stores these on the pending row so the approver has
+           something to verify. Only sent for a trade request. */
+        if (type === 'wholesale' || type === 'reseller') {
+            payload.gstin = ((document.getElementById('dtRegGstin') || {}).value || '').trim();
+            payload.pan = ((document.getElementById('dtRegPan') || {}).value || '').trim();
+        }
+
         fetch('/api/auth.php?action=register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: type, name: name, phone: phone, email: email, password: pass })
+            body: JSON.stringify(payload)
         })
             .then(function (r) { return r.json(); })
             .then(function (res) {

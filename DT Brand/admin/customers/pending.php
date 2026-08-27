@@ -71,7 +71,7 @@ $pendingCount = count($pendingRows);
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
                             <span>Trade Account Approvals</span>
-                            <span class="dt-cust-badge <?php echo $pendingCount > 0 ? 'amber' : 'green'; ?>">
+                            <span class="dt-cust-badge <?php echo $pendingCount > 0 ? 'gold' : 'green'; ?>">
                                 <?php echo $pendingCount; ?> Awaiting Review
                             </span>
                         </h1>
@@ -223,7 +223,7 @@ function dtRefreshPendingCount() {
     var badge = document.querySelector('.dt-cust-badge');
     if (badge) {
         badge.textContent = remaining + ' Awaiting Review';
-        badge.className = 'dt-cust-badge ' + (remaining > 0 ? 'amber' : 'green');
+        badge.className = 'dt-cust-badge ' + (remaining > 0 ? 'gold' : 'green');
     }
     if (remaining === 0) {
         var tbody = document.querySelector('.dt-cust-table tbody');

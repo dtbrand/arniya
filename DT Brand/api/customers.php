@@ -81,8 +81,23 @@ try {
                 echo json_encode(['success' => false, 'message' => 'Customer ID and status required.'], JSON_PRETTY_PRINT);
                 exit;
             }
-            $ok = CustomerManager::updateStatus($targetId, trim($data['status']));
-            echo json_encode(['success' => $ok, 'id' => $targetId, 'status' => $data['status']], JSON_PRETTY_PRINT);
+            $newStatus = strtolower(trim($data['status']));
+            if (!in_array($newStatus, ['active', 'pending', 'suspended'], true)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Status must be active, pending or suspended.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = CustomerManager::updateStatus($targetId, $newStatus);
+            if (!$ok) {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'id' => $targetId,
+                    'message' => 'That customer could not be updated — the account may no longer exist.',
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+            echo json_encode(['success' => true, 'id' => $targetId, 'status' => $newStatus], JSON_PRETTY_PRINT);
             exit;
         }
 

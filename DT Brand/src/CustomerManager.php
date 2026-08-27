@@ -195,19 +195,50 @@ class CustomerManager
         return true;
     }
 
+    /**
+     * Flip a customer account between active / pending / suspended.
+     *
+     * This is the switch that grants trade pricing: a wholesale or reseller
+     * signup is parked at 'pending' by Auth::register, and only becomes able to
+     * sign in and buy at mill rates once it is 'active'. So it must not report
+     * success unless a row really changed.
+     *
+     * customers.status is an ENUM, and MySQL outside strict mode silently
+     * coerces an unknown value to '' while execute() still returns true — which
+     * would blank the status and read back as a successful approval. Hence the
+     * whitelist.
+     */
     public static function updateStatus(int $id, string $status): bool
     {
         if ($id <= 0) return false;
-        $pdo = Database::getConnection();
-        if ($pdo !== null && !Database::isMockMode()) {
-            try {
-                $stmt = $pdo->prepare("UPDATE customers SET status = ? WHERE id = ?");
-                return $stmt->execute([$status, $id]);
-            } catch (\Exception $e) {
-                return false;
-            }
+
+        $status = strtolower(trim($status));
+        if (!in_array($status, ['active', 'pending', 'suspended'], true)) {
+            return false;
         }
-        return true;
+
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            // No database means nothing was stored. Saying otherwise would let
+            // an admin believe a trade account had been approved.
+            return false;
+        }
+
+        try {
+            $stmt = $pdo->prepare("UPDATE customers SET status = ? WHERE id = ?");
+            $stmt->execute([$status, $id]);
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+            // rowCount() is 0 both for "no such customer" and for "already had
+            // this status". Only the second is a success.
+            $check = $pdo->prepare("SELECT status FROM customers WHERE id = ? LIMIT 1");
+            $check->execute([$id]);
+            $current = $check->fetchColumn();
+            return $current !== false && strtolower((string)$current) === $status;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public static function updateCreditLimit(int $id, float $creditLimit): bool

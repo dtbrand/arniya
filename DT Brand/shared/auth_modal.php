@@ -54,11 +54,25 @@
                 
                 <div class="dt-field-group">
                     <label class="dt-field-label">Account Role *</label>
-                    <select class="dt-input-field" id="dtRegType">
+                    <select class="dt-input-field" id="dtRegType" onchange="dtToggleTradeKyc(this.value)">
                         <option value="retail">Retail Shopper (Personal Wear)</option>
                         <option value="wholesale">Wholesaler / Mill Partner (B2B Lots)</option>
                         <option value="reseller">Reseller Partner (Earn Margins on WhatsApp)</option>
                     </select>
+                </div>
+                <!--
+                    Trade credentials, revealed only for wholesale/reseller. Those
+                    signups are held for approval and an admin has to verify the GSTIN
+                    before mill-rate pricing is switched on.
+                -->
+                <div class="dt-field-group" id="dtRegTradeKyc" style="display:none;">
+                    <label class="dt-field-label">GSTIN (speeds up approval)</label>
+                    <input type="text" class="dt-input-field" id="dtRegGstin" placeholder="e.g. 24ABCDE1234F1Z5" maxlength="15" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')" />
+                    <label class="dt-field-label" style="margin-top:10px; display:block;">PAN (optional)</label>
+                    <input type="text" class="dt-input-field" id="dtRegPan" placeholder="e.g. ABCDE1234F" maxlength="10" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')" />
+                    <p style="font-size:0.74rem; color:#78716C; margin:8px 0 0 0; line-height:1.45; font-weight:500;">
+                        Trade accounts are reviewed before wholesale pricing is activated. We'll confirm on WhatsApp — you can shop at retail prices meanwhile.
+                    </p>
                 </div>
                 <div class="dt-field-group">
                     <label class="dt-field-label">Full Name *</label>
