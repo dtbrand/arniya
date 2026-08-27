@@ -29,9 +29,14 @@ class Auth
         $phone = trim($data['phone'] ?? '');
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $type = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        // The tier the visitor ASKED for. It is not granted here — see below.
+        $requestedType = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        $isB2BRequest = ($requestedType !== 'retail');
         $city = trim($data['city'] ?? '');
         $state = trim($data['state'] ?? '');
+        // Captured so an admin has something to verify a trade account against.
+        $gstin = strtoupper(preg_replace('/\s+/', '', (string)($data['gstin'] ?? '')));
+        $pan = strtoupper(preg_replace('/\s+/', '', (string)($data['pan'] ?? '')));
 
         if (empty($name) || empty($phone) || empty($password)) {
             return ['success' => false, 'message' => 'Name, phone number, and password are required.'];
