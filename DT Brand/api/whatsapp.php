@@ -16,9 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/CustomerManager.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Database;
 use DTBrand\CustomerManager;
+
+// Admin-only. This endpoint reads the outbound message log (which contains
+// customer phone numbers and message bodies) and writes new log entries for
+// broadcasts. It had no authentication, so anyone could read the log or forge
+// entries in it.
+dt_api_require_admin('use the WhatsApp console');
 
 try {
     $method = $_SERVER['REQUEST_METHOD'];

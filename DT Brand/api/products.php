@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
@@ -25,6 +26,16 @@ try {
 
     // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──
     if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+        // Admin-only. GET reads stay public because the storefront quickview and
+        // smart-share modals fetch /api/products.php?id=… (assets/js/modals.js),
+        // but every write caller lives under /admin/ — the product form, the
+        // product list, bulk actions and the five inventory screens.
+        //
+        // This block had no authentication, so any visitor could create, edit,
+        // duplicate, bulk-delete or re-price the entire catalogue, and
+        // action=adjust_stock let them rewrite stock levels at will.
+        dt_api_require_admin('change the product catalogue');
+
         $rawInput = file_get_contents('php://input');
         $jsonData = json_decode($rawInput, true) ?: [];
         $data = array_merge($_POST, $jsonData);

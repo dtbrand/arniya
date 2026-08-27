@@ -7,14 +7,26 @@
 header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/_guard.php';
+
 use DTBrand\Database;
 
-$token = $_GET['token'] ?? ($_POST['token'] ?? '');
-if ($token !== 'DTBrand_Secret_2026') {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized access.'], JSON_PRETTY_PRINT);
-    exit;
-}
+// Admin-only, and the most destructive route in the project: with `clean=1` it
+// disables foreign key checks and TRUNCATEs orders, order_items, reviews,
+// products, customers and coupons — i.e. one request wipes the live shop and
+// replaces it with demo seed data.
+//
+// It used to be gated by a single string literal held right here in the file:
+//     if ($token !== 'DTBrand_Secret_2026')
+// That literal is committed to the repository, so the "secret" was readable by
+// anyone with source access, and it travelled in the query string where it lands
+// in browser history, proxy logs and server access logs. Anyone who ever saw
+// /api/db_audit.php?token=DTBrand_Secret_2026&clean=1 held a permanent
+// delete-everything link that no password change would revoke.
+//
+// Nothing in the project calls this endpoint — it is a leftover build tool — so
+// requiring the admin session breaks no caller.
+dt_api_require_admin('run a database audit');
 
 try {
     $pdo = Database::getConnection();

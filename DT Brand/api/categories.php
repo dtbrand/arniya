@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
@@ -24,6 +25,12 @@ try {
     $method = $_SERVER['REQUEST_METHOD'];
 
     if ($method === 'POST' || $method === 'DELETE') {
+        // Admin-only. GET stays public so the category feed can be read by the
+        // storefront; every write caller lives under /admin/products/categories/.
+        // This block was unauthenticated, so any visitor could rename, re-order,
+        // create or bulk-delete the shop's entire category tree.
+        dt_api_require_admin('change product categories');
+
         $rawInput = file_get_contents('php://input');
         $jsonData = json_decode($rawInput, true) ?: [];
         $data = array_merge($_POST, $jsonData);

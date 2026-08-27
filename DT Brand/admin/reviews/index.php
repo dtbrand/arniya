@@ -198,11 +198,10 @@ foreach ($reviewsList as $r) {
                                     <td><span class="adm-badge <?= $badgeClass ?>"><?= $badgeText ?></span></td>
                                     <td>
                                         <div style="display:flex; gap:6px;">
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" onclick="window.showToast('📌 Review pinned to storefront!')">📌 Pin</button>
                                             <?php if ($rStatus === 'pending'): ?>
-                                                <button type="button" class="adm-btn-primary adm-btn-sm" onclick="fetch('/api/reviews.php', { method: 'POST', body: 'action=approve&id=<?= (int)$rev['id'] ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').className='adm-badge success'; document.getElementById('rev-row-<?= $rev['id'] ?>').querySelector('.adm-badge').innerText='Approved & Live'; this.remove(); window.showToast('✨ Review approved & published live!'); });">✓ Approve</button>
+                                                <button type="button" class="adm-btn-primary adm-btn-sm" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'approve')">✓ Approve</button>
                                             <?php endif; ?>
-                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2;" onclick="if(confirm('Permanently delete this customer review?')) { fetch('/api/reviews.php', { method: 'POST', body: 'action=delete&id=<?= (int)$rev['id'] ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { document.getElementById('rev-row-<?= $rev['id'] ?>')?.remove(); window.showToast('🗑️ Review deleted from database'); }); }">🗑️ Delete</button>
+                                            <button type="button" class="adm-btn-secondary adm-btn-sm" style="color:#DC2626; border-color:#FECACA; background:#FEF2F2;" onclick="dtModerateReview(<?= (int)$rev['id'] ?>, 'delete')">🗑️ Delete</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -215,6 +214,51 @@ foreach ($reviewsList as $r) {
         <?php include_once __DIR__ . '/../Includes/adminfooter.php'; ?>
     </div>
 </div>
+<script>
+/* Moderation via /api/reviews.php. The buttons previously called fetch() and
+   acted on `.then(() => ...)` of the raw Response, which resolves for ANY HTTP
+   status — a 401 or a 500 updated the badge and toasted "published live" just
+   like a success. The response is now parsed and checked.
+
+   A "📌 Pin" button used to sit here too; its only action was showing the toast
+   "Review pinned to storefront!". There is no pinned column on the reviews
+   table and nothing was ever stored, so it has been removed rather than left
+   claiming to do something. */
+function dtModerateReview(id, action) {
+    if (action === 'delete' && !confirm('Permanently delete this customer review?')) return;
+
+    const toast = (m) => { if (typeof window.showToast === 'function') window.showToast(m); };
+    const params = new URLSearchParams();
+    params.append('action', action);
+    params.append('id', id);
+
+    fetch('/api/reviews.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (!data || !data.success) {
+                toast('Could not update the review: ' + ((data && data.message) ? data.message : 'please try again.'));
+                return;
+            }
+            const row = document.getElementById('rev-row-' + id);
+            if (action === 'delete') {
+                if (row) row.remove();
+                toast('🗑️ Review deleted from database');
+                return;
+            }
+            const badge = row ? row.querySelector('.adm-badge') : null;
+            if (badge) {
+                badge.className = 'adm-badge success';
+                badge.innerText = 'Approved & Live';
+            }
+            const btn = row ? row.querySelector('.adm-btn-primary') : null;
+            if (btn) btn.remove();
+            toast('✨ Review approved & published live!');
+        })
+        .catch(() => {
+            toast('Network error — the review was not updated. Please try again.');
+        });
+}
+</script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

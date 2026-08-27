@@ -7,16 +7,25 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Database;
 use DTBrand\ProductCatalog;
 
-$key = $_GET['key'] ?? '';
-if ($key !== 'Gautam9006MasterInstall' && $key !== 'dt_audit_key_2026') {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Unauthorized access.']);
-    exit;
-}
+// Admin-only. This endpoint can run migrations, ALTER the customers table and
+// INSERT into `users` (i.e. mint an admin account), so it is one of the most
+// powerful routes in the project.
+//
+// It used to be gated solely by a URL key compared against two string literals
+// held in this file:
+//     if ($key !== 'Gautam9006MasterInstall' && $key !== 'dt_audit_key_2026')
+// Those literals are committed to the repository, so the "secret" was public to
+// anyone who could read the source, and it travelled in the query string where
+// it lands in browser history, proxy logs and server access logs. It is now
+// gated by the same admin session as the console. The single caller is the
+// "View JSON Status" link on admin/system/index.php, which is a normal
+// same-origin navigation and so carries the session cookie.
+dt_api_require_admin('run database diagnostics');
 
 $diag = [];
 $candidates = [
@@ -60,6 +69,20 @@ $action = $_GET['action'] ?? 'status';
 try {
     if ($action === 'inspect_table') {
         $tbl = $_GET['table'] ?? 'customers';
+        // The table name is interpolated into the statement, so it must be
+        // validated against the real table list rather than trusted. It was
+        // previously dropped straight into SHOW COLUMNS FROM `{$tbl}`, where a
+        // backtick in the parameter breaks out of the quoting.
+        $known = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+        if (!in_array($tbl, $known, true)) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Unknown table.',
+                'available' => $known
+            ], JSON_PRETTY_PRINT);
+            exit;
+        }
         $cols = $pdo->query("SHOW COLUMNS FROM `{$tbl}`")->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode(['table' => $tbl, 'columns' => $cols], JSON_PRETTY_PRINT);
         exit;

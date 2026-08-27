@@ -16,9 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/CustomerManager.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\CustomerManager;
 use DTBrand\Database;
+
+// Admin-only in full. Every action here touches customer records — names,
+// phone numbers, GSTINs, credit limits and outstanding balances — so even the
+// read side is privileged. This endpoint previously had no authentication at
+// all: anyone who knew the URL could list the entire customer book or edit and
+// delete records. Customers manage their own profile through /api/auth.php,
+// which scopes every change to their own session.
+dt_api_require_admin('manage customers');
 
 try {
     $method = $_SERVER['REQUEST_METHOD'];

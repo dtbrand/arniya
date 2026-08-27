@@ -311,7 +311,7 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
                                 <a href="/admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
                                     📦 View Products in Category (420)
                                 </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="if(confirm('Are you sure you want to delete this category from database?')) { fetch('/api/categories.php', { method: 'POST', body: 'action=delete&id=<?php echo (int)$cat_id; ?>', headers: {'Content-Type': 'application/x-www-form-urlencoded'} }).then(() => { if(window.showToast) window.showToast('🗑️ Category deleted from database'); setTimeout(() => window.location.href = '/admin/products/categories/', 400); }); }">
+                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="dtDeleteCategory(<?php echo (int)$cat_id; ?>)">
                                     🗑️ Move Category to Trash
                                 </button>
                             </div>
@@ -375,10 +375,33 @@ function handleSaveCategory() {
             }
         })
         .catch(err => {
-            if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" saved!`);
-            setTimeout(() => {
-                window.location.href = '/admin/products/categories/';
-            }, 600);
+            if (typeof window.showToast === 'function') window.showToast(`⚠️ Network error — category "${name}" was NOT saved. Please try again.`);
+        });
+}
+
+/* Delete is only reported as done, and only navigates away, once the server
+   confirms it. This used to be an inline onclick using .then(() => ...) on the
+   raw Response, which resolves for ANY HTTP status — so a 401 or a 500 still
+   toasted "Category deleted from database" and redirected to the list. */
+function dtDeleteCategory(id) {
+    if (!confirm('Are you sure you want to delete this category from database?')) return;
+
+    const params = new URLSearchParams();
+    params.append('action', 'delete');
+    params.append('id', id);
+
+    fetch('/api/categories.php', { method: 'POST', body: params })
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.success) {
+                if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
+                setTimeout(() => { window.location.href = '/admin/products/categories/'; }, 400);
+            } else {
+                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + ((data && data.message) || 'Could not delete this category.'));
+            }
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') window.showToast('⚠️ Network error — the category was NOT deleted.');
         });
 }
 </script>

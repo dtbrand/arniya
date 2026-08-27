@@ -10,11 +10,24 @@
  */
 header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Database;
 
 $action = $_REQUEST['action'] ?? 'get_all';
 $pdo = Database::getConnection();
+
+// `validate` is the only action the storefront uses (shared/checkout.php sends
+// action=validate&code=…&subtotal=…), and a shopper must be able to try a code
+// without signing in as an admin, so it stays public.
+//
+// Everything else is admin-only. Without this, any visitor could POST
+// action=create to mint themselves a 100%-off coupon, POST action=delete to
+// destroy the campaigns the shop is running, or GET action=get_all to dump every
+// unpublished discount code in the table.
+if ($action !== 'validate') {
+    dt_api_require_admin('manage coupons');
+}
 
 /**
  * Compute the discount a coupon grants on a given subtotal.
@@ -134,11 +147,22 @@ try {
 
     if ($action === 'delete') {
         $id = (int)($_POST['id'] ?? 0);
-        if ($id > 0) {
-            $stmt = $pdo->prepare("DELETE FROM `coupons` WHERE `id` = ?");
-            $stmt->execute([$id]);
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'A coupon ID is required.']);
+            exit;
         }
-        echo json_encode(['success' => true, 'message' => 'Coupon removed successfully.']);
+        $stmt = $pdo->prepare("DELETE FROM `coupons` WHERE `id` = ?");
+        $stmt->execute([$id]);
+        // Report what actually happened. This used to echo success even when the
+        // id was missing or matched no row, so the admin list removed the row and
+        // toasted "deleted from database" for a coupon that was still live.
+        if ($stmt->rowCount() === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'id' => $id, 'message' => 'That coupon no longer exists.']);
+            exit;
+        }
+        echo json_encode(['success' => true, 'id' => $id, 'message' => 'Coupon removed successfully.']);
         exit;
     }
 

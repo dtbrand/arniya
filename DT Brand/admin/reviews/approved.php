@@ -124,51 +124,42 @@ if (empty($approvedReviews)) {
 </div>
 
 <script>
-function unpublishReview(id) {
+/* Only mutate the table once the server confirms the change. These handlers
+   used to remove the row and toast "deleted from database" unconditionally,
+   including from .catch() — so an unauthorised, missing or failed write was
+   indistinguishable from a successful one. */
+function dtReviewToast(m) {
+    if (typeof window.showToast === 'function') window.showToast(m);
+}
+
+function dtReviewAction(id, action, okMessage) {
     const params = new URLSearchParams();
-    params.append('action', 'unpublish');
+    params.append('action', action);
     params.append('id', id);
 
     fetch('/api/reviews.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
+            if (!data || !data.success) {
+                dtReviewToast('Could not update the review: ' + ((data && data.message) ? data.message : 'please try again.'));
+                return;
+            }
             const r = document.getElementById('appReviewRow_' + id);
             if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast('✓ Review unpublished from storefront.');
-            }
+            dtReviewToast(okMessage);
         })
         .catch(() => {
-            const r = document.getElementById('appReviewRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast('✓ Review unpublished.');
-            }
+            dtReviewToast('Network error — the review was not updated. Please try again.');
         });
+}
+
+function unpublishReview(id) {
+    dtReviewAction(id, 'unpublish', '✓ Review unpublished from storefront.');
 }
 
 function deleteReview(id) {
     if (!confirm('Are you sure you want to permanently delete this review?')) return;
-    const params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-
-    fetch('/api/reviews.php', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(data => {
-            const r = document.getElementById('appReviewRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast('✓ Review deleted from database.');
-            }
-        })
-        .catch(() => {
-            const r = document.getElementById('appReviewRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast('✓ Review deleted.');
-            }
-        });
+    dtReviewAction(id, 'delete', '✓ Review deleted from database.');
 }
 </script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>

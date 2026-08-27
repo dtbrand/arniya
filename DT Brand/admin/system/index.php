@@ -149,7 +149,7 @@ if ($pdo !== null && !Database::isMockMode()) {
             <div class="adm-card">
                 <div class="adm-card-head" style="display:flex; justify-content:space-between; align-items:center;">
                     <h3 class="adm-card-title"><span>Live System Health Meters</span></h3>
-                    <a href="/api/db_health.php?key=Gautam9006MasterInstall&action=status" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:28px; font-size:11.5px; font-weight:700;">View JSON Status</a>
+                    <a href="/api/db_health.php?action=status" target="_blank" class="dt-btn dt-btn-pale" style="text-decoration:none; height:28px; font-size:11.5px; font-weight:700;">View JSON Status</a>
                 </div>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; padding:16px;">
                     <div style="padding:14px; background:#DCFCE7; border:1px solid #BBF7D0; border-radius:8px; color:#15803D; font-weight:700; font-size:12.5px;">

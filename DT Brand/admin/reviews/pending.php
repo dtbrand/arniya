@@ -126,21 +126,25 @@ function moderateReview(id, action) {
     params.append('action', action);
     params.append('id', id);
 
+    const toast = (m) => { if (typeof window.showToast === 'function') window.showToast(m); };
+
     fetch('/api/reviews.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
+            // Only drop the row once the server confirms the change. This used
+            // to remove it and report success unconditionally — including from
+            // the .catch() branch — so a rejected or failed moderation looked
+            // identical to a successful one and the review silently stayed put.
+            if (!data || !data.success) {
+                toast('Could not update the review: ' + ((data && data.message) ? data.message : 'please try again.'));
+                return;
+            }
             const r = document.getElementById('reviewRow_' + id);
             if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast(action === 'approve' ? '✨ Review approved & published to live storefront!' : 'Review rejected.');
-            }
+            toast(action === 'approve' ? '✨ Review approved & published to live storefront!' : 'Review rejected.');
         })
         .catch(() => {
-            const r = document.getElementById('reviewRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast(action === 'approve' ? '✨ Review approved!' : 'Review rejected.');
-            }
+            toast('Network error — the review was not updated. Please try again.');
         });
 }
 </script>

@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/PricingCalculator.php';
 require_once __DIR__ . '/../src/OrderManager.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\OrderManager;
 use DTBrand\Database;
@@ -28,6 +29,10 @@ try {
     if ($method === 'GET') {
         $action = trim($_GET['action'] ?? '');
         if ($action === 'analytics') {
+            // Admin-only: shop-wide revenue. The only caller is the admin
+            // dashboard chart (admin/Asset/js/admin.js).
+            dt_api_require_admin('view order analytics');
+
             $range = $_GET['range'] ?? '1M';
             $pdo = Database::getConnection();
             $totalSales = 0.0;
@@ -50,6 +55,37 @@ try {
         $orderNumber = trim($_GET['order_number'] ?? '');
 
         $phone = trim($_GET['phone'] ?? '');
+
+        // Self-service order tracking. A buyer must present BOTH the order number
+        // and the phone number on that order, so knowing one alone reveals
+        // nothing. Order numbers are sequential (DT-ORD-90281, DT-ORD-89412...),
+        // so accepting an order number by itself let anyone walk the whole order
+        // book — names, phone numbers, addresses and amounts. Requiring the pair
+        // keeps the feature usable without making it enumerable.
+        if ($orderNumber !== '' && $phone !== '' && !dt_api_is_admin()) {
+            $order = OrderManager::getByOrderNumber($orderNumber);
+            $digits = static function ($v) {
+                $d = preg_replace('/\D+/', '', (string)$v);
+                return strlen($d) > 10 ? substr($d, -10) : $d;
+            };
+            if ($order && $digits($order['customer_phone'] ?? '') !== '' &&
+                $digits($order['customer_phone'] ?? '') === $digits($phone)) {
+                echo json_encode(['success' => true, 'order' => $order]);
+            } else {
+                // Deliberately identical for "no such order" and "wrong phone",
+                // so this cannot be used to test whether an order exists.
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'No order found for that order number and phone number.']);
+            }
+            exit;
+        }
+
+        // Everything below reads other people's orders in bulk, so it is
+        // admin-only. None of these had any authentication: a bare
+        // GET /api/orders.php returned OrderManager::getAll() — every order in
+        // the shop with customer names, phone numbers and totals — and
+        // ?phone= let anyone dump a given customer's full order history.
+        dt_api_require_admin('read order records');
 
         if (!empty($orderNumber)) {
             $order = OrderManager::getByOrderNumber($orderNumber);
@@ -83,6 +119,11 @@ try {
 
         // Update Order Status / Tracking
         if ($action === 'update_status') {
+            // Admin-only: the caller is the admin order screen
+            // (admin/orders/assets/js/order-status.js). Unauthenticated, this let
+            // anyone mark any order paid, dispatched or cancelled.
+            dt_api_require_admin('update an order');
+
             $orderId = $data['order_id'] ?? ($data['id'] ?? '');
             $status = trim($data['status'] ?? 'processing');
             $tracking = !empty($data['tracking_number']) ? trim($data['tracking_number']) : null;
@@ -101,6 +142,9 @@ try {
 
         // Delete Order
         if ($action === 'delete') {
+            // Admin-only, and irreversible.
+            dt_api_require_admin('delete an order');
+
             $orderId = $data['order_id'] ?? ($data['id'] ?? '');
             if (empty($orderId)) {
                 http_response_code(400);

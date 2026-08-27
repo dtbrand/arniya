@@ -13,6 +13,15 @@ use DTBrand\Database;
 
 $action = $_POST['action'] ?? $_GET['action'] ?? 'list';
 
+// Creating, renaming or deleting an attribute mutates the shared product
+// taxonomy, so it is admin-only. Reading the list stays public so storefront
+// filters keep working. Before this guard existed, any visitor could POST to
+// this endpoint and rewrite or wipe the taxonomy.
+require_once __DIR__ . '/_guard.php';
+if ($_SERVER['REQUEST_METHOD'] !== 'GET' || in_array($action, ['create', 'update', 'delete'], true)) {
+    dt_api_require_admin('change product attributes');
+}
+
 // Handle CREATE Attribute
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
     $name = trim($_POST['name'] ?? '');

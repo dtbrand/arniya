@@ -172,6 +172,15 @@ function closeCreateCouponModal() {
     if (m) m.style.display = 'none';
 }
 
+/* Shared toast helper so a failure is never reported as a save. */
+function dtCouponToast(message) {
+    if (typeof window.showToast === 'function') {
+        window.showToast(message);
+    } else {
+        alert(message);
+    }
+}
+
 function submitNewCoupon(e) {
     e.preventDefault();
     const code = document.getElementById('newCouponCode').value.trim().toUpperCase();
@@ -186,21 +195,23 @@ function submitNewCoupon(e) {
     params.append('discount_value', val);
     params.append('min_order_value', min);
 
+    /* Only reload — and only claim the coupon is live — when the server says it
+       saved. Both branches used to toast "saved in MySQL database!" regardless,
+       including from .catch(), so a rejected write looked identical to a real
+       one and the reload quietly showed the coupon missing. */
     fetch('/api/coupons.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
-            closeCreateCouponModal();
-            if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Coupon "${code}" saved in MySQL database!`);
+            if (data && data.success) {
+                closeCreateCouponModal();
+                dtCouponToast(data.message || `✨ Coupon "${code}" saved in MySQL database!`);
+                setTimeout(() => { window.location.reload(); }, 600);
+            } else {
+                dtCouponToast('⚠ ' + ((data && data.message) || `Could not save coupon "${code}".`));
             }
-            setTimeout(() => { window.location.reload(); }, 600);
         })
         .catch(() => {
-            closeCreateCouponModal();
-            if (typeof window.showToast === 'function') {
-                window.showToast(`✨ Coupon "${code}" created!`);
-            }
-            setTimeout(() => { window.location.reload(); }, 600);
+            dtCouponToast(`⚠ Network error — coupon "${code}" was NOT saved. Please try again.`);
         });
 }
 
@@ -210,21 +221,22 @@ function deleteCoupon(id, code) {
     params.append('action', 'delete');
     params.append('id', id);
 
+    /* The row is removed only after the server confirms the delete. It used to be
+       removed in .catch() too, so a coupon that was still active vanished from
+       the screen and stayed redeemable at checkout. */
     fetch('/api/coupons.php', { method: 'POST', body: params })
         .then(res => res.json())
         .then(data => {
-            const r = document.getElementById('couponRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast(`✓ Coupon "${code}" deleted from database.`);
+            if (data && data.success) {
+                const r = document.getElementById('couponRow_' + id);
+                if (r) r.remove();
+                dtCouponToast(data.message || `✓ Coupon "${code}" deleted from database.`);
+            } else {
+                dtCouponToast('⚠ ' + ((data && data.message) || `Could not delete coupon "${code}".`));
             }
         })
         .catch(() => {
-            const r = document.getElementById('couponRow_' + id);
-            if (r) r.remove();
-            if (typeof window.showToast === 'function') {
-                window.showToast(`✓ Coupon "${code}" removed.`);
-            }
+            dtCouponToast(`⚠ Network error — coupon "${code}" was NOT deleted.`);
         });
 }
 </script>

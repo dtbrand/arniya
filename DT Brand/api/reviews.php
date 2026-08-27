@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\Database;
 
@@ -33,39 +34,11 @@ try {
             }
         }
 
-        if (empty($reviews)) {
-            // High-fidelity fallback customer feedback
-            $reviews = [
-                [
-                    'id' => 1,
-                    'product_id' => $productId ?: 1,
-                    'customer_name' => 'Priya Sharma',
-                    'city' => 'Mumbai, MH',
-                    'rating' => 5,
-                    'review_text' => 'The fabric quality and real zari weave is breathtaking! Arrived in luxury royal gift packaging within 3 days to Mumbai.',
-                    'created_at' => date('Y-m-d H:i:s', strtotime('-2 days'))
-                ],
-                [
-                    'id' => 2,
-                    'product_id' => $productId ?: 1,
-                    'customer_name' => 'Ananya Mehta',
-                    'city' => 'Surat, Gujarat',
-                    'rating' => 5,
-                    'review_text' => 'Exactly as depicted in the photos. The silk drape feels extremely luxurious, pure, and lightweight. The WhatsApp styling concierge was very helpful.',
-                    'created_at' => date('Y-m-d H:i:s', strtotime('-4 days'))
-                ],
-                [
-                    'id' => 3,
-                    'product_id' => $productId ?: 2,
-                    'customer_name' => 'Dr. Radhika Iyer',
-                    'city' => 'Bengaluru, KA',
-                    'rating' => 5,
-                    'review_text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless.',
-                    'created_at' => date('Y-m-d H:i:s', strtotime('-7 days'))
-                ]
-            ];
-        }
-
+        // No invented reviews. This used to return three hardcoded testimonials
+        // ("Priya Sharma", "Ananya Mehta", "Dr. Radhika Iyer") whenever the table
+        // was empty, which showed shoppers fabricated social proof for products
+        // nobody had reviewed. An empty list is the truth; the storefront should
+        // render its "no reviews yet" state.
         echo json_encode(['success' => true, 'count' => count($reviews), 'reviews' => $reviews], JSON_PRETTY_PRINT);
         exit;
     }
@@ -78,33 +51,52 @@ try {
         $reviewId = (int)($data['id'] ?? 0);
         $pdo = Database::getConnection();
 
-        if ($action === 'delete') {
-            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
-                try {
-                    $pdo->prepare("DELETE FROM reviews WHERE id = ?")->execute([$reviewId]);
-                } catch (\Exception $e) {}
-            }
-            echo json_encode(['success' => true, 'message' => 'Review deleted successfully.']);
-            exit;
-        }
+        // Moderation is admin-only. Without this, any visitor could approve
+        // their own review, reject a genuine one, or delete the whole table's
+        // worth of feedback one id at a time.
+        if (in_array($action, ['delete', 'approve', 'reject', 'unpublish'], true)) {
+            dt_api_require_admin('moderate reviews');
 
-        if ($action === 'approve') {
-            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
-                try {
-                    $pdo->prepare("UPDATE reviews SET status = 'approved' WHERE id = ?")->execute([$reviewId]);
-                } catch (\Exception $e) {}
+            if ($reviewId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'A valid review id is required.']);
+                exit;
             }
-            echo json_encode(['success' => true, 'message' => 'Review approved successfully.']);
-            exit;
-        }
+            if ($pdo === null || Database::isMockMode()) {
+                http_response_code(503);
+                echo json_encode(['success' => false, 'message' => 'Database unavailable — the review was not changed.']);
+                exit;
+            }
 
-        if ($action === 'reject' || $action === 'unpublish') {
-            if ($reviewId > 0 && $pdo !== null && !Database::isMockMode()) {
-                try {
-                    $pdo->prepare("UPDATE reviews SET status = 'rejected' WHERE id = ?")->execute([$reviewId]);
-                } catch (\Exception $e) {}
+            // Report what actually happened. These branches used to swallow the
+            // exception and answer "deleted successfully" regardless.
+            try {
+                if ($action === 'delete') {
+                    $stmt = $pdo->prepare("DELETE FROM reviews WHERE id = ?");
+                    $stmt->execute([$reviewId]);
+                    $verb = 'deleted';
+                } elseif ($action === 'approve') {
+                    $stmt = $pdo->prepare("UPDATE reviews SET status = 'approved' WHERE id = ?");
+                    $stmt->execute([$reviewId]);
+                    $verb = 'approved';
+                } else {
+                    $stmt = $pdo->prepare("UPDATE reviews SET status = 'rejected' WHERE id = ?");
+                    $stmt->execute([$reviewId]);
+                    $verb = 'rejected';
+                }
+            } catch (\Exception $e) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Could not update the review: ' . $e->getMessage()]);
+                exit;
             }
-            echo json_encode(['success' => true, 'message' => 'Review status updated to rejected.']);
+
+            if ($stmt->rowCount() === 0) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'message' => 'No review found with id ' . $reviewId . '.']);
+                exit;
+            }
+
+            echo json_encode(['success' => true, 'id' => $reviewId, 'message' => 'Review ' . $verb . ' successfully.']);
             exit;
         }
 
@@ -120,19 +112,46 @@ try {
             exit;
         }
 
-        if ($pdo !== null && !Database::isMockMode()) {
-            $ok = Database::execute(
-                "INSERT INTO reviews (product_id, customer_name, rating, review_title, review_text, verified_buyer, status, created_at) VALUES (?, ?, ?, ?, ?, 1, 'approved', NOW())",
-                [$pId, $name, $rating, $title, $text]
-            );
-            if (!$ok) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Could not save your review right now. Please try again.']);
-                exit;
-            }
+        // A review submitted by an admin from the console is published straight
+        // away. A review submitted by the public goes into the moderation queue
+        // that admin/reviews/pending.php already exists to work through, and is
+        // NOT stamped verified_buyer.
+        //
+        // Previously every anonymous POST was inserted as
+        // `verified_buyer = 1, status = 'approved'` — so anyone could publish
+        // unlimited five-star reviews on any product, each labelled as coming
+        // from a verified buyer, without ever passing moderation.
+        $isAdmin = dt_api_is_admin();
+        $status = $isAdmin ? 'approved' : 'pending';
+        $verified = $isAdmin ? 1 : 0;
+
+        if ($name === '') {
+            $name = 'Customer';
         }
 
-        echo json_encode(['success' => true, 'message' => 'Thank you! Your verified review has been published.']);
+        if ($pdo === null || Database::isMockMode()) {
+            http_response_code(503);
+            echo json_encode(['success' => false, 'message' => 'We could not save your review right now. Please try again shortly.']);
+            exit;
+        }
+
+        $ok = Database::execute(
+            "INSERT INTO reviews (product_id, customer_name, rating, review_title, review_text, verified_buyer, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())",
+            [$pId, $name, $rating, $title, $text, $verified, $status]
+        );
+        if (!$ok) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Could not save your review right now. Please try again.']);
+            exit;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'status'  => $status,
+            'message' => $isAdmin
+                ? 'Review published.'
+                : 'Thank you! Your review has been submitted and will appear once our team has checked it.'
+        ]);
         exit;
     }
 

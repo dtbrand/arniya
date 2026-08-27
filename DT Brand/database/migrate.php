@@ -155,12 +155,61 @@ class DatabaseMigrationRunner {
     }
 }
 
-// Support execution via Web with Auth or CLI
+// Support execution via CLI, or over the web for an administrator.
+//
+// The web gate used to be a single string literal held in this file:
+//     if ($isCli || $authKey === 'Gautam9006MasterInstall')
+// That literal is committed to the repository and travelled in the query string,
+// so it was public to anyone with source access and logged in browser history,
+// proxies and server access logs.
+//
+// Replacing it with an admin session alone would create a chicken-and-egg on a
+// fresh install: a blank database has no administrator to sign in as, so the
+// schema could never be created. So the web gate opens in exactly two cases:
+//
+//   1. A signed-in admin  — the normal case once the shop exists.
+//   2. An empty database  — genuine first-install bootstrap. There is no data
+//      to protect and no account to authenticate against yet. As soon as the
+//      schema exists this window closes by itself.
+//
+// The migration itself is non-destructive (17 CREATE TABLE IF NOT EXISTS plus
+// seeds with explicit ids), so a re-run cannot drop or duplicate live data.
 $isCli = (php_sapi_name() === 'cli');
-$authKey = $_GET['key'] ?? '';
 
-if ($isCli || $authKey === 'Gautam9006MasterInstall') {
-    $runner = new DatabaseMigrationRunner();
+/** True only when the target database has no tables at all. */
+function dt_migrate_is_blank_database(DatabaseMigrationRunner $runner): bool {
+    try {
+        $pdo = $runner->getPDO();
+        if ($pdo === null) {
+            return false; // cannot prove it is blank -> stay closed
+        }
+        $tables = $pdo->query("SHOW TABLES")->fetchAll(\PDO::FETCH_COLUMN);
+        return count($tables) === 0;
+    } catch (\Throwable $e) {
+        return false;
+    }
+}
+
+$runner = new DatabaseMigrationRunner();
+$webAllowed = false;
+
+if (!$isCli) {
+    require_once __DIR__ . '/../api/_guard.php';
+    $webAllowed = dt_api_is_admin() || dt_migrate_is_blank_database($runner);
+
+    if (!$webAllowed) {
+        http_response_code(401);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => false,
+            'error'   => 'unauthorized',
+            'message' => 'Admin sign-in required to run migrations. Please sign in at /admin/login.php, or run this file from the command line: php database/migrate.php'
+        ], JSON_PRETTY_PRINT);
+        exit;
+    }
+}
+
+if ($isCli || $webAllowed) {
     if (isset($_GET['action']) && $_GET['action'] === 'run') {
         header('Content-Type: application/json');
         echo json_encode($runner->runMigrations(), JSON_PRETTY_PRINT);
