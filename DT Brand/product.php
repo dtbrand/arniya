@@ -1184,6 +1184,5 @@ function pdp_relative_date(string $ts): string
 
 <?php include_once __DIR__ . '/shared/reels.php'; ?>
 <?php include_once __DIR__ . '/shared/account.php'; ?>
-<?php include_once __DIR__ . '/shared/size_chart_modal.php'; ?>
 </body>
 </html>

@@ -2053,6 +2053,5 @@ $total_products = count($products);
 <!-- ════════════ MASTER ENGINE SCRIPT ════════════ -->
 <script src="/assets/js/home.js?v=1787019062&v=<?php echo time(); ?>"></script>
 
-<?php include_once __DIR__ . '/shared/size_chart_modal.php'; ?>
 </body>
 </html>
