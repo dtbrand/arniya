@@ -281,6 +281,10 @@ class ProductCatalog
             'old_price' => $mrp,
             'price' => $retail,
             'retail_price' => $retail,
+            'sale_price' => (float)($r['sale_price'] ?? 0),
+            'sale_discount' => (float)($r['sale_price'] ?? 0),
+            'effective_price' => max(0, $retail - (float)($r['sale_price'] ?? 0)),
+            'effective_customer_price' => ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - (float)($r['sale_price'] ?? 0)) : max(0, $retail - (float)($r['sale_price'] ?? 0)),
             'wholesale_price' => $wholesale,
             'reseller_price' => $reseller,
             'reseller_profit' => ($reseller - $wholesale),
@@ -994,6 +998,7 @@ class ProductCatalog
         $sellingType = (isset($data['selling_type']) && $data['selling_type'] === 'full_set') ? 'full_set' : 'single_piece';
         $custPrice = ($sellingType === 'single_piece' && isset($data['customer_price']) && (float)$data['customer_price'] > 0)
             ? (float)$data['customer_price'] : null;
+        $salePrice = isset($data['sale_price']) ? max(0, (float)$data['sale_price']) : (isset($data['sale_discount']) ? max(0, (float)$data['sale_discount']) : 0.0);
 
         try {
             // rating and reviews_count are written as 0 on purpose: the column
@@ -1002,11 +1007,11 @@ class ProductCatalog
             $stmt = $pdo->prepare(
                 "INSERT INTO products
                  (sku, title, slug, category_id, category_name, fabric, weave, zari_type,
-                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, wholesale_price,
+                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, sale_price, wholesale_price,
                   reseller_price, moq_single, moq_half_set, moq_full_set, moq_master_bale,
                   stock_qty, rating, reviews_count, primary_image, badge, is_featured,
                   is_bestseller, status, selling_type, description, created_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
             );
             $stmt->execute([
                 $sku, $title, $slug, $cat['id'], $cat['name'],
@@ -1016,7 +1021,7 @@ class ProductCatalog
                 mb_substr(trim((string)($data['pallu_style'] ?? $data['border'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['blouse_piece'] ?? $data['blouse'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['occasion'] ?? '')), 0, 100),
-                $mrp, $retail, $custPrice, $wholesale, $reseller,
+                $mrp, $retail, $custPrice, $salePrice, $wholesale, $reseller,
                 max(1, (int)($data['moq_single'] ?? 1)),
                 max(0, (int)($data['moq_half_set'] ?? 0)),
                 max(0, (int)($data['moq_full_set'] ?? $data['moq'] ?? 0)),
@@ -1130,6 +1135,10 @@ class ProductCatalog
                 $cp = (float)$data['customer_price'];
                 $add('customer_price', $cp > 0 ? $cp : null);
             }
+        }
+        if (isset($data['sale_price']) || isset($data['sale_discount'])) {
+            $sp = (float)($data['sale_price'] ?? $data['sale_discount'] ?? 0);
+            $add('sale_price', max(0, $sp));
         }
         foreach (['mrp', 'retail_price', 'wholesale_price', 'reseller_price'] as $col) {
             $present = isset($data[$col]) || ($col === 'retail_price' && isset($data['price']));

@@ -139,10 +139,6 @@
               + ' placeholder="auto" value="' + esc(v.sku || '') + '"'
               + ' style="height:26px; font-size:11px; width:130px;"></td>'
             + '<td style="padding:6px 8px; border-bottom:1px solid #e5e5e5;">'
-              + '<input type="number" min="0" step="1" data-vfield="price" class="adm-form-input"'
-              + ' placeholder="retail" value="' + esc(v.price == null ? '' : v.price) + '"'
-              + ' style="height:26px; font-size:11px; width:90px;"></td>'
-            + '<td style="padding:6px 8px; border-bottom:1px solid #e5e5e5;">'
               + '<input type="number" min="0" step="1" data-vfield="stock" class="adm-form-input"'
               + ' value="' + esc(v.stock_qty == null ? 0 : v.stock_qty) + '"'
               + ' style="height:26px; font-size:11px; width:78px;"></td>'
@@ -174,7 +170,6 @@
                 hex: r.getAttribute('data-vhex') || '',
                 image: r.getAttribute('data-vimage') || '',
                 sku: fieldVal(r, 'sku'),
-                price: fieldVal(r, 'price'),
                 stock_qty: fieldVal(r, 'stock')
             };
         }
@@ -216,7 +211,7 @@
             body.appendChild(buildRow({
                 colour: p.colour, size: p.size, hex: p.hex || prev.hex || '',
                 image: prev.image || '', sku: prev.sku || '',
-                price: prev.price || '', stock_qty: prev.stock_qty || 0
+                stock_qty: prev.stock_qty || 0
             }));
         });
         refreshEmptyNote();
@@ -291,15 +286,13 @@
             var colour = r.getAttribute('data-vcolour') || '';
             var size = r.getAttribute('data-vsize') || '';
             if (colour === '' && size === '') { continue; }
-            var price = fieldVal(r, 'price');
             out.push({
                 color: colour,
                 hex: r.getAttribute('data-vhex') || '',
                 size: size,
                 sku: fieldVal(r, 'sku'),
-                // Blank price means "use the product price", so it is sent as
-                // null rather than 0 — a 0 would be stored as a free variant.
-                price: (price !== '' && parseFloat(price) > 0) ? parseFloat(price) : null,
+                // Price auto-inherits the product's rule-based pricing studio
+                price: null,
                 stock_qty: Math.max(0, parseInt(fieldVal(r, 'stock'), 10) || 0),
                 image: r.getAttribute('data-vimage') || ''
             });

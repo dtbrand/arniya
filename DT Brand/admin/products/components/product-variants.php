@@ -111,8 +111,7 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                             <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Colour</th>
                             <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Size</th>
                             <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Variant SKU</th>
-                            <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Price &#8377;</th>
-                            <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Stock</th>
+                            <th style="text-align:left; padding:6px 8px; border-bottom:1px solid #c3c4c7;">Stock (Units)</th>
                             <th style="border-bottom:1px solid #c3c4c7;"></th>
                         </tr>
                     </thead>
@@ -123,9 +122,7 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                 No variant rows. A product can be saved without any — it then has no colour or size options.
             </div>
             <div style="font-size:10.5px; color:#646970; margin-top:6px;">
-                Leave Price blank to use the product's retail price. Blank SKU is generated from the
-                product SKU on save. Stock here is per variant and is separate from the product's own
-                stock quantity. Each active row represents one purchasable Color &times; Size variant.
+                Variant pricing automatically inherits rule-based prices from the Product Pricing Studio. Blank SKU is generated automatically from the base SKU on save. Stock is tracked per Color &times; Size variant.
             </div>
 
             <!-- 3B. FULL SET DYNAMIC PREVIEW BOX (Compact Luxury) -->
