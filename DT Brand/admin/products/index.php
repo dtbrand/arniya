@@ -593,11 +593,9 @@ $active_subnav = "";
                 <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Product Category</label>
                 <select id="bulkEditCategory" class="wp-select" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
                     <option value="">— Keep Current Category —</option>
-                    <option value="Silk Sarees">Silk Sarees</option>
-                    <option value="Banarasi Brocade">Banarasi Brocade</option>
-                    <option value="Bridal Lehengas">Bridal Lehengas</option>
-                    <option value="Designer Kurtis">Designer Kurtis</option>
-                    <option value="Dress Materials">Dress Materials</option>
+                    <?php foreach ($categoriesList as $catOption): ?>
+                        <option value="<?= htmlspecialchars($catOption) ?>"><?= htmlspecialchars($catOption) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -637,6 +635,8 @@ $active_subnav = "";
 </div>
 
 <script>
+window.DT_AVAILABLE_CATEGORIES = <?php echo json_encode(array_values($categoriesList)); ?>;
+
 function switchProductView(mode) {
     const table = document.getElementById('productTableView');
     const grid = document.getElementById('productGridView');
@@ -768,7 +768,7 @@ function applyWpFilters() {
     }
 }
 
-/* ── INLINE QUICK EDIT FOR PRODUCT ROW ── */
+/* ── INLINE QUICK EDIT FOR PRODUCT ROW (100% Dynamic Real Categories) ── */
 function openProductQuickEdit(id, title, sku, retail, wholesale, stock, category, status) {
     const row = document.getElementById(`row-prod-${id}`);
     if (!row) return;
@@ -776,6 +776,18 @@ function openProductQuickEdit(id, title, sku, retail, wholesale, stock, category
     if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-product-quickedit-row')) {
         row.nextElementSibling.remove();
         return;
+    }
+
+    const availableCats = window.DT_AVAILABLE_CATEGORIES || Array.from(document.querySelectorAll('#wpCategoryFilter option')).map(o => o.value).filter(Boolean);
+    let catOptionsHtml = '<option value="">— Select Category —</option>';
+    let matched = false;
+    availableCats.forEach(c => {
+        const isSel = (c.toLowerCase() === (category || '').toLowerCase());
+        if (isSel) matched = true;
+        catOptionsHtml += `<option value="${c.replace(/"/g, '&quot;')}" ${isSel ? 'selected' : ''}>${c}</option>`;
+    });
+    if (category && !matched) {
+        catOptionsHtml += `<option value="${category.replace(/"/g, '&quot;')}" selected>${category}</option>`;
     }
 
     const editTr = document.createElement('tr');
@@ -806,14 +818,7 @@ function openProductQuickEdit(id, title, sku, retail, wholesale, stock, category
                 <div>
                     <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category</label>
                     <select id="pqe-cat-${id}" style="height:30px; width:100%; font-size:11.5px; font-weight:600; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
-                        <option value="Kanjivaram Silk" ${category === 'Kanjivaram Silk' ? 'selected' : ''}>Kanjivaram Silk</option>
-                        <option value="Banarasi Silk" ${category === 'Banarasi Silk' ? 'selected' : ''}>Banarasi Silk</option>
-                        <option value="Paithani Handloom" ${category === 'Paithani Handloom' || category === 'Paithani' ? 'selected' : ''}>Paithani Handloom</option>
-                        <option value="Men's Ethnic Wear" ${category === "Men's Ethnic Wear" ? 'selected' : ''}>Men's Ethnic Wear</option>
-                        <option value="Designer Kurtis" ${category === 'Designer Kurtis' || category === 'Kurtis' ? 'selected' : ''}>Designer Kurtis</option>
-                        <option value="Organza Sarees" ${category === 'Organza Sarees' ? 'selected' : ''}>Organza Sarees</option>
-                        <option value="Georgette & Chiffon" ${category === 'Georgette & Chiffon' ? 'selected' : ''}>Georgette & Chiffon</option>
-                        <option value="Bridal Lehengas" ${category === 'Bridal Lehengas' || category === 'Saree' ? 'selected' : ''}>Bridal Lehengas</option>
+                        ${catOptionsHtml}
                     </select>
                 </div>
                 <div style="display:flex; gap:6px;">
