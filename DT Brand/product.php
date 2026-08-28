@@ -689,67 +689,6 @@ function pdp_relative_date(string $ts): string
         </div>
     </div>
 
-    <!-- ════ VIDEO SHOWCASE — only when this product actually has a video ════
-         This section used to render for every product: a still photograph at 85%
-         opacity behind a gold play button labelled "Click to Watch Full HD Video"
-         that opened the reels feed or alerted "Playing HD Fabric Video...", beside
-         three fixed claims (electroplated zari, "holds crisp pleats for 12+ hours",
-         "unstitched 80cm coordinated designer blouse fabric"). It now plays the
-         uploaded file or the pasted embed, and disappears when there is none. -->
-    <?php
-    $pdpVideoMedia = array_values(array_filter($pdpMedia, static fn($m) => $m['kind'] !== 'image'));
-    ?>
-    <?php if ($pdpVideoMedia !== []): ?>
-    <section class="pdp-video-showcase-section" style="margin-top: 36px; padding: 24px; background: linear-gradient(135deg, #181512 0%, #2A241E 100%); border-radius: 16px; border: 1.5px solid #8A681F; color: #FAF5E8; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px;">
-            <div>
-                <span style="font-size:0.7rem; font-weight:800; color:#D4AF37; text-transform:uppercase; letter-spacing:0.12em; display:flex; align-items:center; gap:6px;">
-                    <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:#D4AF37; stroke-width:2;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                    Fabric &amp; Zari Video
-                </span>
-                <h2 style="font-family:'Cinzel', serif; font-size:1.25rem; font-weight:700; color:#FFFFFF; margin:4px 0 0;"><?= htmlspecialchars($pName) ?> — Video</h2>
-            </div>
-            <a href="https://api.whatsapp.com/send?phone=<?= rawurlencode($pdpWaNumber) ?>&amp;text=<?= rawurlencode('Hi, please send a live video for ' . $pName . ($pSku !== '' ? ' (SKU: ' . $pSku . ')' : '')) ?>" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); color:#FFFFFF; padding:9px 18px; border-radius:30px; font-size:0.78rem; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(22,163,74,0.35);">
-                <svg viewBox="0 0 24 24" style="width:15px; height:15px; fill:none; stroke:#FFF; stroke-width:2.2;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                Request Custom Live Video on WhatsApp
-            </a>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:start;">
-            <?php foreach ($pdpVideoMedia as $vIdx => $vItem): ?>
-            <div style="position:relative; aspect-ratio:16/9; background:#0B0907; border-radius:12px; overflow:hidden; border:1px solid rgba(212,175,55,0.4);">
-                <?php if ($vItem['kind'] === 'video'): ?>
-                <video
-                    src="<?= htmlspecialchars($vItem['src']) ?>"
-                    poster="<?= htmlspecialchars($pdpPoster) ?>"
-                    controls
-                    playsinline
-                    preload="metadata"
-                    style="width:100%; height:100%; object-fit:cover; display:block;"
-                ></video>
-                <?php else: ?>
-                <iframe
-                    src="<?= htmlspecialchars($vItem['src']) ?>"
-                    title="<?= htmlspecialchars($pName) ?> video <?= (int)$vIdx + 1 ?>"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    loading="lazy"
-                    style="width:100%; height:100%; border:0; display:block;"
-                ></iframe>
-                <?php endif; ?>
-            </div>
-            <?php endforeach; ?>
-        </div>
-
-        <?php if ($pDescription !== '' || $pFabric !== ''): ?>
-        <div style="margin-top:16px; background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #D4AF37;">
-            <h4 style="margin:0 0 4px; font-size:0.85rem; color:#D4AF37; font-weight:700;"><?= htmlspecialchars($pFabric !== '' ? $pFabric : 'About this piece') ?></h4>
-            <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.5;"><?= htmlspecialchars($pDescription !== '' ? $pDescription : $pName) ?></p>
-        </div>
-        <?php endif; ?>
-    </section>
-    <?php endif; ?>
-
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
         <h2 class="pdp-section-title-large">Verified Customer Reviews</h2>
