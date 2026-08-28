@@ -10,7 +10,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     unset($_SESSION['admin_logged_in']);
     unset($_SESSION['admin_user']);
     session_destroy();
-    header("Location: /admin/login?logged_out=1");
+    // Trailing slash: `admin/login` is a real directory, so the slashless form
+    // costs an extra 301 hop on every sign-out.
+    header("Location: /admin/login/?logged_out=1");
     exit;
 }
 
