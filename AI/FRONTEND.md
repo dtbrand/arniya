@@ -50,7 +50,7 @@ universal header/footer refactor that was never wired up — classify, do not de
 
 ## 3. There is no server-side session on the storefront — at all
 
-```
+```bash
 $ grep -c '$_SESSION' *.php      # every root storefront page
 about-us.php 0   account.php 0   cart.php 0     checkout.php 0   index.php 0
 product.php 0    reseller.php 0  retailer.php 0 shop.php 0       wholesale.php 0  wishlist.php 0
@@ -151,5 +151,3 @@ fabricated identities and merchandise that read as real data. Full inventory in
   `order-list.js`, `refunds.js`, `returns.js`, `wholesale-segments.js`); they 404 on live because
   the repo's `DT Brand/` **is** the web root. Do not confuse these with the 9 legitimate
   `…%20DT%20Brand%27s…` occurrences inside `wa.me` message text, which are correct.
-
-
