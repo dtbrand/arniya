@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -74,40 +74,25 @@ if ($cloned_id > 0) {
                 </div>
             </div>
 
-            <!-- Multi-Section Form Grid -->
-            <div class="dt-form-grid-layout">
-                <!-- Left Main Column -->
-                <div>
-                    <!-- 1. Basic Information -->
-                    <?php include_once __DIR__ . '/components/product-form.php'; ?>
+            <!-- Unified 100% Full-Width Multi-Section Form Studio -->
+            <div class="dt-form-single-layout" style="display:flex; flex-direction:column; gap:10px; width:100%; max-width:100%;">
+                <!-- 1. Basic Information & Taxonomy -->
+                <?php include_once __DIR__ . '/components/product-form.php'; ?>
 
-                    <!-- 2. Product Media Upload -->
-                    <?php include_once __DIR__ . '/components/product-gallery.php'; ?>
+                <!-- 2. Product Media Upload -->
+                <?php include_once __DIR__ . '/components/product-gallery.php'; ?>
 
-                    <!-- 3. Multi-Tier Pricing -->
-                    <?php include_once __DIR__ . '/components/product-pricing.php'; ?>
+                <!-- 3. Multi-Tier Pricing Studio (5-Role Live Matrix) -->
+                <?php include_once __DIR__ . '/components/product-pricing.php'; ?>
 
-                    <!-- 4. Variants Matrix -->
-                    <?php include_once __DIR__ . '/components/product-variants.php'; ?>
+                <!-- 4. Colours, Sizes & Variants Matrix -->
+                <?php include_once __DIR__ . '/components/product-variants.php'; ?>
 
-                    <!-- 5. SEO Section -->
-                    <?php include_once __DIR__ . '/components/product-seo.php'; ?>
-                </div>
+                <!-- 5. Inventory, Publishing Status & B2B MOQ Lots -->
+                <?php include_once __DIR__ . '/components/product-inventory.php'; ?>
 
-                <!-- Right Sidebar Column -->
-                <div>
-                    <!-- Visibility & Publishing -->
-                    <?php include_once __DIR__ . '/components/product-status.php'; ?>
-
-                    <!-- Inventory Section -->
-                    <?php include_once __DIR__ . '/components/product-inventory.php'; ?>
-
-                    <!-- Shipping Section -->
-                    <?php include_once __DIR__ . '/components/product-shipping.php'; ?>
-
-                    <!-- Permissions Section -->
-                    <?php include_once __DIR__ . '/components/product-permissions.php'; ?>
-                </div>
+                <!-- 6. Search Engine Optimization (SEO) -->
+                <?php include_once __DIR__ . '/components/product-seo.php'; ?>
             </div>
 
         </main>
