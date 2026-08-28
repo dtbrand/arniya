@@ -245,7 +245,7 @@ function pdp_relative_date(string $ts): string
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/assets/css/singleproduct.css?v=1787019062">
+<link rel="stylesheet" href="/assets/css/singleproduct.css?v=1787020000">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -303,17 +303,30 @@ function pdp_relative_date(string $ts): string
                     <?php endif; ?>
                 </div>
 
-                <!-- 3D Luxury HD Video Reel Floating Button (Bottom-Left Corner) -->
+                <!-- 3D Luxury HD Video / Reels Animated Floating Trigger (Bottom-Left Corner) -->
                 <?php if ($pdpHasVideos): ?>
-                <button type="button" class="pdp-3d-video-btn" id="pdp3dVideoBtn" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" aria-label="Watch HD Video Reel">
-                    <div class="pdp-3d-btn-pulse"></div>
-                    <div class="pdp-3d-btn-inner">
-                        <div class="pdp-3d-btn-icon">
-                            <svg viewBox="0 0 24 24" class="pdp-3d-play-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                <button type="button" class="pdp-3d-reel-btn" id="pdp3dVideoBtn" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" aria-label="Watch HD Video Reels">
+                    <div class="pdp-3d-radar-ring ring-1"></div>
+                    <div class="pdp-3d-radar-ring ring-2"></div>
+                    <div class="pdp-3d-btn-capsule">
+                        <div class="pdp-3d-icon-disc">
+                            <svg viewBox="0 0 24 24" class="pdp-3d-reel-svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <polygon points="10 8 16 12 10 16 10 8" fill="#111827" stroke="none"></polygon>
+                            </svg>
                         </div>
-                        <div class="pdp-3d-btn-text">
-                            <span class="pdp-3d-title">WATCH HD VIDEO</span>
-                            <span class="pdp-3d-sub"><?= $pdpVideoCount > 1 ? $pdpVideoCount . ' HD Videos • 360° Drape' : '360° Real Fabric Drape' ?></span>
+                        <div class="pdp-3d-label-box">
+                            <div class="pdp-3d-top-line">
+                                <span class="pdp-3d-live-dot"></span>
+                                <span class="pdp-3d-badge-tag">HD REELS</span>
+                                <?php if ($pdpVideoCount > 1): ?>
+                                <span class="pdp-3d-count-pill"><?= $pdpVideoCount ?> Videos</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="pdp-3d-action-text">
+                                <span>360° Drape Video</span>
+                                <svg viewBox="0 0 24 24" class="pdp-3d-arrow-svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
                         </div>
                     </div>
                 </button>
@@ -1115,7 +1128,7 @@ function pdp_relative_date(string $ts): string
         window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.pdpWhatsAppNumber = <?= json_encode($pdpWaNumber) ?>;
     </script>
-    <script src="/assets/js/singleproduct.js?v=1787019062"></script>
+    <script src="/assets/js/singleproduct.js?v=1787020000"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/shared/smartshare.php'; ?>
