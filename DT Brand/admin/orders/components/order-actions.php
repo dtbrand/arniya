@@ -340,7 +340,7 @@
                     </div>
                     <div>
                         <label style="display:block; font-size:11px; font-weight:700; color:#334155; margin-bottom:4px;">Contact Mobile Number *</label>
-                        <input type="text" id="editShippingPhone" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. +91 98220 19283">
+                        <input type="text" id="editShippingPhone" class="dt-input" style="width:100%; height:36px; padding:0 10px; border:1.5px solid #CBD5E1; border-radius:6px; font-size:12px; font-weight:600; box-sizing:border-box; background:#FFFFFF; outline:none;" placeholder="e.g. +91 70463 63528">
                     </div>
                 </div>
 

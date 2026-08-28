@@ -1041,7 +1041,7 @@
                 <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit();">
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
-                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
                     </div>
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPass">
@@ -1188,17 +1188,16 @@
                     </div>
 
                     <!--
-                        Trade credentials, shown only for Wholesaler/Reseller. A trade
-                        signup is held at pending until an admin verifies the GSTIN, so
-                        collecting it here is what makes that review possible.
+                        Trade signup notice, shown only for Wholesaler/Reseller. GSTIN and
+                        PAN are no longer asked for at signup - a trade account is still
+                        held at pending, and the trade details are collected by the team
+                        on WhatsApp during approval and stored from the admin customer
+                        editor. The note stays so a trade applicant is told up front that
+                        mill-rate pricing is not switched on instantly.
                     -->
-                    <div class="auth-form-group" id="regTradeKycGroup" style="display:none;">
-                        <label class="auth-label" for="regGstin">GSTIN <span style="font-weight:600; color:var(--mid-text);">(speeds up approval)</span></label>
-                        <input type="text" id="regGstin" class="auth-input" placeholder="e.g. 24ABCDE1234F1Z5" maxlength="15" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
-                        <label class="auth-label" for="regPan" style="margin-top:10px; display:block;">PAN <span style="font-weight:600; color:var(--mid-text);">(optional)</span></label>
-                        <input type="text" id="regPan" class="auth-input" placeholder="e.g. ABCDE1234F" maxlength="10" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
-                        <p style="font-size:0.74rem; color:var(--mid-text); margin:8px 0 0 0; line-height:1.45; font-weight:500;">
-                            Trade accounts are reviewed before wholesale pricing is activated. We'll confirm on WhatsApp — you can shop at retail prices meanwhile.
+                    <div class="auth-form-group" id="regTradeNoteGroup" style="display:none;">
+                        <p style="font-size:0.74rem; color:var(--mid-text); margin:0; line-height:1.45; font-weight:500;">
+                            Trade accounts are reviewed before wholesale pricing is activated. We'll confirm your trade details on WhatsApp — you can shop at retail prices meanwhile.
                         </p>
                     </div>
 
@@ -1226,7 +1225,7 @@
                     </p>
                     <div class="auth-form-group">
                         <label class="auth-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
-                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
                     </div>
                     <button type="submit" class="auth-btn-submit">
                         <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1250,7 +1249,7 @@
                     <div class="profile-avatar-circle" id="dashUserInitials">GV</div>
                     <div class="profile-details">
                         <h2 id="dashUserName">Gautam Vaishnav</h2>
-                        <div class="profile-phone" id="dashUserPhone">+91 8890639215</div>
+                        <div class="profile-phone" id="dashUserPhone">+91 7046363528</div>
                         <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
                         <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
                     </div>
@@ -1606,10 +1605,10 @@
             document.querySelectorAll('.role-pill-btn').forEach(function(c) {
                 c.classList.toggle('selected', c.dataset.role === role);
             });
-            // Only trade roles need GSTIN/PAN, and only trade roles go through approval.
-            var kyc = document.getElementById('regTradeKycGroup');
-            if (kyc) {
-                kyc.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
+            // Only trade roles go through approval, so only they see the review note.
+            var note = document.getElementById('regTradeNoteGroup');
+            if (note) {
+                note.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
             }
         };
 
@@ -1862,15 +1861,9 @@
             params.append('city', city || 'Surat');
             params.append('state', selectedState);
 
-            /* Trade credentials, only meaningful for a wholesale/reseller request.
-               Auth::register stores them on the pending row so the approver has
-               something to verify. */
-            if (typeCode !== 'retail') {
-                var gstinEl = document.getElementById('regGstin');
-                var panEl = document.getElementById('regPan');
-                params.append('gstin', gstinEl ? gstinEl.value.trim() : '');
-                params.append('pan', panEl ? panEl.value.trim() : '');
-            }
+            /* GSTIN/PAN are not collected at signup. A trade request is still
+               recorded as pending; the team captures the trade details on WhatsApp
+               during approval and an admin stores them from the customer editor. */
 
             fetch('/api/auth.php', {
                 method: 'POST',

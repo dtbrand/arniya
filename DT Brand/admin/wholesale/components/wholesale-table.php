@@ -24,7 +24,7 @@ if (!empty($wholesalersList)) {
             'legal_name' => $name . ' Enterprises',
             'contact' => $name,
             'email' => $w['email'] ?? 'partner@wholesale.com',
-            'phone' => $w['phone'] ?? '+91 98765 43210',
+            'phone' => $w['phone'] ?? '+91 70463 63528',
             'city' => ($w['city'] ?? 'Surat') . ', ' . ($w['state'] ?? 'GJ'),
             'tier' => $tier,
             'tier_badge' => 'gold',

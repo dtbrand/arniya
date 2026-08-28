@@ -331,11 +331,39 @@ class OrderManager
                         $customerId = (int)$existing['id'];
                     } else {
                         $custType = in_array($channel, ['retail', 'wholesale', 'reseller'], true) ? $channel : 'retail';
-                        $insCust = $pdo->prepare("
-                            INSERT INTO customers (name, phone, email, type, status, created_at)
-                            VALUES (?, ?, ?, ?, 'active', NOW())
-                        ");
-                        $insCust->execute([$customerName, $customerPhone, $orderData['customer_email'] ?? '', $custType]);
+
+                        // A guest has no password, so this INSERT never named
+                        // password_hash. On the current schema the column is
+                        // nullable and that is fine, but a database created from
+                        // the older schema.sql declares it VARCHAR(255) NOT NULL
+                        // with no default - and MySQL in strict mode then rejects
+                        // the row with "Field 'password_hash' doesn't have a
+                        // default value". That happens inside this transaction, so
+                        // the whole order was rolled back and guest checkout failed
+                        // outright. Ask the live table what it needs and satisfy it:
+                        // '' is written only when the column refuses NULL, and an
+                        // empty hash is exactly what "no password set" means
+                        // everywhere else (Auth::login refuses it and
+                        // Auth::register lets the owner claim the row later).
+                        $custCols = "name, phone, email, type, status, created_at";
+                        $custVals = "?, ?, ?, ?, 'active', NOW()";
+                        $custParams = [$customerName, $customerPhone, $orderData['customer_email'] ?? '', $custType];
+                        try {
+                            $pwStmt = $pdo->query("SHOW COLUMNS FROM `customers` LIKE 'password_hash'");
+                            $pwCol = $pwStmt ? $pwStmt->fetch(\PDO::FETCH_ASSOC) : null;
+                            if ($pwCol && ($pwCol['Null'] ?? 'YES') === 'NO' && ($pwCol['Default'] ?? null) === null) {
+                                $custCols = "name, phone, email, password_hash, type, status, created_at";
+                                $custVals = "?, ?, ?, ?, ?, 'active', NOW()";
+                                $custParams = [$customerName, $customerPhone, $orderData['customer_email'] ?? '', '', $custType];
+                            }
+                        } catch (\Exception $pwEx) {
+                            // Column introspection is a convenience, not a
+                            // requirement; fall through to the standard insert.
+                            error_log('DT guest customer column check failed: ' . $pwEx->getMessage());
+                        }
+
+                        $insCust = $pdo->prepare("INSERT INTO customers ({$custCols}) VALUES ({$custVals})");
+                        $insCust->execute($custParams);
                         $customerId = (int)$pdo->lastInsertId();
                     }
                 }
@@ -588,7 +616,7 @@ class OrderManager
                             'db_id' => (int)$r['id'],
                             'customer' => $r['customer_name'] ?? 'Direct Customer',
                             'customer_type' => ucfirst($r['customer_type'] ?? 'Retail'),
-                            'phone' => $r['customer_phone'] ?? '+91 98765 43210',
+                            'phone' => $r['customer_phone'] ?? '+91 70463 63528',
                             'date' => date('d M Y, h:i A', strtotime($r['created_at'] ?? 'now')),
                             'items_count' => '1 lot',
                             'items_summary' => 'Ethnic Silk Sarees',
@@ -613,7 +641,7 @@ class OrderManager
                 'db_id' => 1,
                 'customer' => 'Radhika Sarees Emporium',
                 'customer_type' => 'Wholesale',
-                'phone' => '+91 98765 43210',
+                'phone' => '+91 70463 63528',
                 'date' => '21 Aug 2026, 11:20 AM',
                 'items_count' => '24 pcs',
                 'items_summary' => 'Nilambari & Banarasi Silk (x24)',
@@ -631,7 +659,7 @@ class OrderManager
                 'db_id' => 2,
                 'customer' => 'Pooja Sharma',
                 'customer_type' => 'Reseller',
-                'phone' => '+91 98234 56789',
+                'phone' => '+91 70463 63528',
                 'date' => '22 Aug 2026, 02:45 PM',
                 'items_count' => '1 pc',
                 'items_summary' => 'Royal Banarasi Meenakari Silk Saree',

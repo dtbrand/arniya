@@ -7,7 +7,7 @@
  */
 $customer_name = isset($order['customer']) ? $order['customer'] : 'Rajesh Kumar (Vardhman Tex)';
 $customer_type = isset($order['customer_type']) ? $order['customer_type'] : 'Wholesale B2B';
-$customer_phone = isset($order['phone']) ? $order['phone'] : '+91 98220 19283';
+$customer_phone = isset($order['phone']) ? $order['phone'] : '+91 70463 63528';
 $customer_email = isset($order['email']) ? $order['email'] : 'rajesh@vardhmantex.com';
 ?>
 <div class="dt-detail-card">

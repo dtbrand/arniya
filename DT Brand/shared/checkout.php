@@ -839,7 +839,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
                             <label class="co-label" for="coWhatsApp">WhatsApp Number <span class="required">*</span></label>
                             <div class="co-phone-wrap">
                                 <span class="co-phone-prefix">+91</span>
-                                <input type="tel" id="coWhatsApp" class="co-input co-phone-input" placeholder="9876543210" maxlength="10" required>
+                                <input type="tel" id="coWhatsApp" class="co-input co-phone-input" placeholder="7046363528" maxlength="10" required>
                             </div>
                         </div>
                     </div>

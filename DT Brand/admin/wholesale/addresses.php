@@ -48,7 +48,7 @@ $active_subnav = "all";
                             <strong style="font-size:0.88rem; color:#181512; display:block;">Shree Balaji Textile Central Stockyard</strong>
                             <p style="font-size:0.76rem; color:#78716C; margin:6px 0 0 0; line-height:1.4;">
                                 Plot 42, Millennium Textile Market-2, Ring Road, Surat, Gujarat 395002<br>
-                                Contact: Rameshwar Agarwal • Ph: +91 98251 44321
+                                Contact: Rameshwar Agarwal • Ph: +91 70463 63528
                             </p>
                         </div>
 
@@ -60,7 +60,7 @@ $active_subnav = "all";
                             <strong style="font-size:0.88rem; color:#181512; display:block;">Balaji North Gujarat Sourcing Point</strong>
                             <p style="font-size:0.76rem; color:#78716C; margin:6px 0 0 0; line-height:1.4;">
                                 Shed 18, GIDC Industrial Estate, Naroda, Ahmedabad, Gujarat 382330<br>
-                                Contact: Jitendra Vyas • Ph: +91 94280 99887
+                                Contact: Jitendra Vyas • Ph: +91 70463 63528
                             </p>
                         </div>
                     </div>

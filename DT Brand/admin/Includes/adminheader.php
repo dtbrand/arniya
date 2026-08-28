@@ -769,9 +769,9 @@ if (!headers_sent()) {
     ];
 
     window.DT_GLOBAL_PARTNERS = [
-        { name: 'Kalyan Brocade Hub', city: 'Surat / Bangalore', phone: '+91 98220 19283', tier: 'Verified Wholesaler' },
-        { name: 'Shree Balaji Sarees', city: 'Kolkata Central Market', phone: '+91 98450 11223', tier: 'Gold Distributor' },
-        { name: 'Radha Krishna Silks', city: 'Ahmedabad Ring Road', phone: '+91 97120 44556', tier: 'VIP Partner' }
+        { name: 'Kalyan Brocade Hub', city: 'Surat / Bangalore', phone: '+91 70463 63528', tier: 'Verified Wholesaler' },
+        { name: 'Shree Balaji Sarees', city: 'Kolkata Central Market', phone: '+91 70463 63528', tier: 'Gold Distributor' },
+        { name: 'Radha Krishna Silks', city: 'Ahmedabad Ring Road', phone: '+91 70463 63528', tier: 'VIP Partner' }
     ];
 
     // ════ ⚡ UNIVERSAL AUTO CLEAR CACHE ENGINE ════

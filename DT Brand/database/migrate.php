@@ -178,11 +178,34 @@ class DatabaseMigrationRunner {
      * and never disturbs existing data.
      */
     private function applyColumnUpgrades(\PDO $pdo, array &$results): void {
+        // Order matters. An `AFTER x` clause fails outright when x is missing, so
+        // any column used as an AFTER target below is itself added earlier in this
+        // list. `customers.gstin AFTER lifetime_spend` used to be the first entry
+        // touching that table, which meant on a database built from the older
+        // database/schema.sql - where lifetime_spend does not exist - the ALTER
+        // threw, the upgrade was recorded as ERROR, and gstin was never added.
         $upgrades = [
-            ['table' => 'orders', 'column' => 'shipping_address', 'definition' => 'TEXT DEFAULT NULL AFTER `courier_name`'],
+            ['table' => 'orders', 'column' => 'shipping_address', 'definition' => 'TEXT DEFAULT NULL'],
             ['table' => 'products', 'column' => 'is_featured', 'definition' => 'TINYINT(1) DEFAULT 0 AFTER `status`'],
+
+            // ── customers: the columns src/Auth.php depends on ──
+            //
+            // These are all present in the master schema, but CREATE TABLE IF NOT
+            // EXISTS never alters a table that already exists, so a site whose
+            // `customers` table was created by database/schema.sql is missing every
+            // one of them. That is what made the create-account form answer with a
+            // raw SQL message: registration writes password_hash, and "Forgot
+            // password" writes reset_token/reset_expires.
+            ['table' => 'customers', 'column' => 'password_hash', 'definition' => 'VARCHAR(255) DEFAULT NULL AFTER `email`'],
+            ['table' => 'customers', 'column' => 'total_orders', 'definition' => 'INT DEFAULT 0'],
+            ['table' => 'customers', 'column' => 'lifetime_spend', 'definition' => 'DECIMAL(12,2) DEFAULT 0.00'],
             ['table' => 'customers', 'column' => 'gstin', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `lifetime_spend`'],
             ['table' => 'customers', 'column' => 'pan', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `gstin`'],
+            ['table' => 'customers', 'column' => 'commission_rate', 'definition' => 'DECIMAL(5,2) DEFAULT 0.00'],
+            ['table' => 'customers', 'column' => 'reset_token', 'definition' => 'VARCHAR(100) DEFAULT NULL'],
+            ['table' => 'customers', 'column' => 'reset_expires', 'definition' => 'TIMESTAMP NULL DEFAULT NULL'],
+            ['table' => 'customers', 'column' => 'last_login', 'definition' => 'TIMESTAMP NULL DEFAULT NULL'],
+
             // The colour and size the shopper actually picked. Without these the
             // selection made in the quick view / product page was thrown away at
             // checkout, so an order for "Red, 6.3m" reached the warehouse as a
@@ -204,6 +227,20 @@ class DatabaseMigrationRunner {
             } catch (\PDOException $e) {
                 $results[] = ['upgrade' => "{$up['table']}.{$up['column']}", 'status' => 'ERROR', 'error' => $e->getMessage()];
             }
+        }
+
+        // `customers.password_hash` must accept NULL. The older schema.sql declared
+        // it VARCHAR(255) NOT NULL with no default, and every row this project
+        // creates without a password - a guest checkout, an admin import - is then
+        // rejected by MySQL in strict mode with "Field 'password_hash' doesn't have
+        // a default value", which rolled back the enclosing order transaction.
+        // Widening a column to accept NULL cannot lose an existing hash, and on a
+        // table that is already nullable this is a no-op.
+        try {
+            $pdo->exec("ALTER TABLE `customers` MODIFY COLUMN `password_hash` VARCHAR(255) DEFAULT NULL");
+            $results[] = ['upgrade' => 'customers.password_hash_nullable', 'status' => 'VERIFIED_OR_MODIFIED'];
+        } catch (\PDOException $e) {
+            $results[] = ['upgrade' => 'customers.password_hash_nullable', 'status' => 'ERROR', 'error' => $e->getMessage()];
         }
 
         try {

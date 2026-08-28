@@ -1041,7 +1041,7 @@
                 <form id="loginForm" onsubmit="event.preventDefault(); handleLoginSubmit();">
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPhone">WhatsApp Number or Email <span class="req">*</span></label>
-                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                        <input type="text" id="loginPhone" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
                     </div>
                     <div class="auth-form-group">
                         <label class="auth-label" for="loginPass">
@@ -1211,7 +1211,7 @@
                     </p>
                     <div class="auth-form-group">
                         <label class="auth-label" for="forgotInput">WhatsApp Number / Email <span class="req">*</span></label>
-                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                        <input type="text" id="forgotInput" class="auth-input" placeholder="e.g. 7046363528 or radhika@example.com" required>
                     </div>
                     <button type="submit" class="auth-btn-submit">
                         <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1235,7 +1235,7 @@
                     <div class="profile-avatar-circle" id="dashUserInitials">GV</div>
                     <div class="profile-details">
                         <h2 id="dashUserName">Gautam Vaishnav</h2>
-                        <div class="profile-phone" id="dashUserPhone">+91 8890639215</div>
+                        <div class="profile-phone" id="dashUserPhone">+91 7046363528</div>
                         <div class="profile-location" id="dashUserLocation">📍 Surat, Gujarat, India</div>
                         <div class="vip-badge" id="dashUserRoleBadge">🛍️ Retailer Member</div>
                     </div>
@@ -1638,7 +1638,7 @@
                 var roleEl = document.getElementById('dashUserRoleBadge');
 
                 if (nameEl) nameEl.textContent = user.name || 'Luxury Member';
-                if (phoneEl) phoneEl.textContent = user.phone || '+91 98765 43210';
+                if (phoneEl) phoneEl.textContent = user.phone || '+91 70463 63528';
                 if (locEl && user.city && user.state) {
                     locEl.textContent = `📍 ${user.city}, ${user.state}, ${user.country || 'India'}`;
                 }
@@ -1796,7 +1796,7 @@
                 name = name.charAt(0).toUpperCase() + name.slice(1);
                 var userData = {
                     name: name,
-                    phone: input.includes('@') ? '+91 98765 43210' : '+91 ' + input,
+                    phone: input.includes('@') ? '+91 70463 63528' : '+91 ' + input,
                     email: input.includes('@') ? input : 'member@dtbrands.com',
                     role: 'Retailer',
                     country: 'India',

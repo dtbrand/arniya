@@ -48,7 +48,7 @@
                     </div>
                     <div class="dt-field-group">
                         <label class="dt-field-label">Mobile Number *</label>
-                        <input type="tel" class="dt-input-field" id="dtCoPhone" placeholder="e.g. 9876543210" required />
+                        <input type="tel" class="dt-input-field" id="dtCoPhone" placeholder="e.g. 7046363528" required />
                     </div>
                     <div class="dt-field-group full-width">
                         <label class="dt-field-label">Email Address (for invoice & tracking)</label>

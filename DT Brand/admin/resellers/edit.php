@@ -65,7 +65,7 @@ $active_nav = "resellers";
                             <!-- Phone -->
                             <div>
                                 <label style="font-size:0.75rem; font-weight:800; color:#181512; display:block; margin-bottom:6px;">WhatsApp / Phone Number *</label>
-                                <input type="tel" name="phone" class="dt-input-field" value="<?php echo $is_new ? '' : '+91 98251 44321'; ?>" placeholder="+91 98251 44321" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
+                                <input type="tel" name="phone" class="dt-input-field" value="<?php echo $is_new ? '' : '+91 70463 63528'; ?>" placeholder="+91 70463 63528" required style="width:100%; height:38px; border:1.2px solid #EAE5D9; border-radius:8px; padding:0 12px; font-size:0.82rem; font-weight:700; box-sizing:border-box;">
                             </div>
 
                             <!-- Email -->

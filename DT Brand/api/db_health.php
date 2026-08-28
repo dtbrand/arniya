@@ -122,7 +122,7 @@ try {
         $orderPayload = [
             'action' => 'create',
             'customer_name' => 'Meera Agarwal (Kolkata Wholesaler)',
-            'customer_phone' => '9830012345',
+            'customer_phone' => '7046363528',
             'customer_email' => 'meera@silksarees.com',
             'channel' => 'wholesale',
             'payment_method' => 'bank_transfer',
@@ -200,8 +200,8 @@ try {
             $pdo->exec("
                 INSERT IGNORE INTO `whatsapp_logs` (`id`, `recipient_phone`, `template_name`, `message_type`, `payload`, `status`, `created_at`) VALUES
                 (1, '917046363528', 'dt_order_placed_v1', 'template', '{\"order_id\":\"DTB-001623\"}', 'delivered', NOW()),
-                (2, '919822019283', 'b2b_wholesale_quote', 'document', '{\"quote_id\":\"Q-9921\"}', 'delivered', NOW()),
-                (3, '919811029381', 'dt_dispatch_tracking_v2', 'template', '{\"awb\":\"DLV-991823\"}', 'delivered', NOW());
+                (2, '917046363528', 'b2b_wholesale_quote', 'document', '{\"quote_id\":\"Q-9921\"}', 'delivered', NOW()),
+                (3, '917046363528', 'dt_dispatch_tracking_v2', 'template', '{\"awb\":\"DLV-991823\"}', 'delivered', NOW());
             ");
         } catch (\Exception $ex) {}
 
@@ -235,7 +235,7 @@ try {
                 [
                     'order_number' => 'DT-ORD-90281',
                     'customer_name' => 'Radhika Sarees Emporium',
-                    'customer_phone' => '+91 98765 43210',
+                    'customer_phone' => '+91 70463 63528',
                     'channel' => 'wholesale',
                     'subtotal' => 42560.00,
                     'discount' => 0.00,
@@ -253,7 +253,7 @@ try {
                 [
                     'order_number' => 'DT-ORD-89412',
                     'customer_name' => 'Pooja Sharma',
-                    'customer_phone' => '+91 98234 56789',
+                    'customer_phone' => '+91 70463 63528',
                     'channel' => 'reseller',
                     'subtotal' => 4899.00,
                     'discount' => 300.00,
@@ -271,7 +271,7 @@ try {
                 [
                     'order_number' => 'DT-ORD-91045',
                     'customer_name' => 'Surat Central Depot Consignee',
-                    'customer_phone' => '+91 99090 12345',
+                    'customer_phone' => '+91 70463 63528',
                     'channel' => 'wholesale',
                     'subtotal' => 64500.00,
                     'discount' => 2000.00,

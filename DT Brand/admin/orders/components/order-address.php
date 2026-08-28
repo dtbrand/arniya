@@ -7,7 +7,7 @@
  */
 $order_id = isset($order['id']) ? $order['id'] : 'DTB-001620';
 $customer_name = isset($order['customer']) ? $order['customer'] : 'Wholesale Consignee (Surat Depot)';
-$phone = isset($order['phone']) ? $order['phone'] : '+91 98220 19283';
+$phone = isset($order['phone']) ? $order['phone'] : '+91 70463 63528';
 $shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : 'Godown 12, Transport Nagar, Surat, Gujarat - 395010';
 $billing_addr = isset($order['address']['billing']) ? $order['address']['billing'] : 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
 $gstin = isset($order['gstin']) ? $order['gstin'] : '24AAECJ1928K1Z5';

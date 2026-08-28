@@ -57,7 +57,7 @@ $active_nav = "whatsapp";
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Rajesh Kumar (+91 98220 19283)</td>
+                            <td>Rajesh Kumar (+91 70463 63528)</td>
                             <td>50 pcs Kanjivaram Silk lot pricing</td>
                             <td><span class="adm-badge gold">Wholesale B2B</span></td>
                             <td><button class="adm-action-btn wa" onclick="window.showToast('Opening Chat...')">💬</button></td>

@@ -256,8 +256,8 @@
             var demoRetailer = {
                 name: 'Rajesh Kumar',
                 companyName: 'Shree Krishna Silks Pvt Ltd',
-                phone: '+91 98765 43210',
-                rawPhone: '9876543210',
+                phone: '+91 70463 63528',
+                rawPhone: '7046363528',
                 email: 'rajesh@shreekrishnasilks.com',
                 role: 'Retailer',
                 gst_type: 'gst',
@@ -382,7 +382,7 @@
 
             var name = user.name || 'Rajesh Kumar';
             var company = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
             var email = user.email || 'rajesh@shreekrishnasilks.com';
             var gstType = user.gst_type || 'gst';
             var gstNum = user.gst_number || '24AABCU9603R1ZM';
@@ -462,7 +462,7 @@
             var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
             var gstNum = user.gst_number || '24AABCU9603R1ZM';
             var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
+            var phone = user.phone || '+91 70463 63528';
             var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
             var billCity = user.city || 'Surat';
             var billState = user.state || 'Gujarat';
@@ -569,7 +569,7 @@
             var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
             var gstNum = user.gst_number || '24AABCU9603R1ZM';
             var name = user.name || 'Rajesh Kumar';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
             var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
             var billCity = user.city || 'Surat';
             var billState = user.state || 'Gujarat';
@@ -2102,8 +2102,8 @@
             var buyerCity = user.city || 'kalaburgi';
             var buyerState = user.state || 'Karnataka';
             var buyerPin = user.pincode || '585325';
-            var buyerPhone = user.phone || '9740455555';
-            var buyerAltPhone = user.alt_phone || '6361616801';
+            var buyerPhone = user.phone || '7046363528';
+            var buyerAltPhone = user.alt_phone || '7046363528';
             var buyerGst = user.gst_number || (user.gst_type === 'gst' ? '29CFZPV1455E1ZO' : '29CFZPV1455E1ZO');
             var stateCode = user.state_code || '29-Karnataka';
 

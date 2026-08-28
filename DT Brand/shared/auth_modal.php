@@ -27,7 +27,7 @@
                 
                 <div class="dt-field-group">
                     <label class="dt-field-label">Mobile Number or Email</label>
-                    <input type="text" class="dt-input-field" id="dtLoginIdentity" placeholder="e.g. 9876543210" required />
+                    <input type="text" class="dt-input-field" id="dtLoginIdentity" placeholder="e.g. 7046363528" required />
                 </div>
                 <div class="dt-field-group">
                     <label class="dt-field-label">Password</label>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="dt-field-group">
                     <label class="dt-field-label">Mobile Number (WhatsApp Enabled) *</label>
-                    <input type="tel" class="dt-input-field" id="dtRegPhone" placeholder="e.g. 9876543210" required />
+                    <input type="tel" class="dt-input-field" id="dtRegPhone" placeholder="e.g. 7046363528" required />
                 </div>
                 <div class="dt-field-group">
                     <label class="dt-field-label">Email Address</label>
@@ -103,7 +103,7 @@
                 
                 <div class="dt-field-group">
                     <label class="dt-field-label">Mobile Number</label>
-                    <input type="tel" class="dt-input-field" id="dtForgotPhone" placeholder="e.g. 9876543210" required />
+                    <input type="tel" class="dt-input-field" id="dtForgotPhone" placeholder="e.g. 7046363528" required />
                 </div>
 
                 <button type="button" class="dt-btn-gold dt-auth-submit-btn" onclick="handleAuthForgot()">

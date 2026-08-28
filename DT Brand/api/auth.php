@@ -135,6 +135,10 @@ try {
     echo json_encode(['success' => false, 'message' => 'Invalid auth action.']);
 
 } catch (\Throwable $e) {
+    // The raw exception text used to be returned as the JSON message, so any
+    // schema or connection fault surfaced in the storefront's alert box as a
+    // PDO string naming tables and columns. Log it, answer plainly.
+    error_log('DT api/auth.php failed: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'message' => 'Something went wrong on our side. Please try again shortly, or message us on WhatsApp.']);
 }

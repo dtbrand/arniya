@@ -338,15 +338,15 @@ INSERT INTO `banners` (`id`, `title`, `subtitle`, `tagline`, `badge`, `cta_text`
 
 -- Seed Customers
 INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `type`, `city`, `state`, `tier`, `credit_limit`, `outstanding_balance`, `total_orders`, `lifetime_spend`, `gstin`) VALUES
-(101, 'Radhika Sarees Emporium', '+91 98765 43210', 'radhika@sarees.com', 'wholesale', 'Surat', 'Gujarat', 'Diamond Elite', 500000.00, 84500.00, 48, 1845000.00, '24AAACH7409R1ZZ'),
-(102, 'Pooja Sharma (Reseller)', '+91 98234 56789', 'pooja.resell@gmail.com', 'reseller', 'Jaipur', 'Rajasthan', 'Gold VIP', 50000.00, 0.00, 32, 342000.00, NULL),
-(103, 'Ananya Verma', '+91 97112 34567', 'ananya.v@outlook.com', 'retail', 'Bengaluru', 'Karnataka', 'Silver Consumer', 0.00, 0.00, 5, 28500.00, NULL);
+(101, 'Radhika Sarees Emporium', '+91 70463 63528', 'radhika@sarees.com', 'wholesale', 'Surat', 'Gujarat', 'Diamond Elite', 500000.00, 84500.00, 48, 1845000.00, '24AAACH7409R1ZZ'),
+(102, 'Pooja Sharma (Reseller)', '+91 70463 63528', 'pooja.resell@gmail.com', 'reseller', 'Jaipur', 'Rajasthan', 'Gold VIP', 50000.00, 0.00, 32, 342000.00, NULL),
+(103, 'Ananya Verma', '+91 70463 63528', 'ananya.v@outlook.com', 'retail', 'Bengaluru', 'Karnataka', 'Silver Consumer', 0.00, 0.00, 5, 28500.00, NULL);
 
 -- Seed Orders
 INSERT INTO `orders` (`id`, `order_number`, `customer_id`, `customer_name`, `customer_phone`, `channel`, `subtotal`, `discount`, `gst_amount`, `shipping_fee`, `total_amount`, `payment_method`, `payment_status`, `fulfillment_status`, `tracking_number`, `courier_name`) VALUES
-(1, 'DT-ORD-90281', 101, 'Radhika Sarees Emporium', '+91 98765 43210', 'wholesale', 44800.00, 2240.00, 2128.00, 0.00, 44688.00, 'bank_wire', 'paid', 'dispatched', 'DEL-94028491', 'Delhivery Express'),
-(2, 'DT-ORD-89412', 102, 'Pooja Sharma', '+91 98234 56789', 'reseller', 8499.00, 500.00, 400.00, 0.00, 8399.00, 'razorpay', 'paid', 'delivered', 'BD-84920194', 'Blue Dart Aviation'),
-(3, 'DT-ORD-78194', 103, 'Ananya Verma', '+91 97112 34567', 'retail', 4899.00, 0.00, 245.00, 0.00, 5144.00, 'razorpay', 'paid', 'delivered', 'DEL-78192041', 'Delhivery Express');
+(1, 'DT-ORD-90281', 101, 'Radhika Sarees Emporium', '+91 70463 63528', 'wholesale', 44800.00, 2240.00, 2128.00, 0.00, 44688.00, 'bank_wire', 'paid', 'dispatched', 'DEL-94028491', 'Delhivery Express'),
+(2, 'DT-ORD-89412', 102, 'Pooja Sharma', '+91 70463 63528', 'reseller', 8499.00, 500.00, 400.00, 0.00, 8399.00, 'razorpay', 'paid', 'delivered', 'BD-84920194', 'Blue Dart Aviation'),
+(3, 'DT-ORD-78194', 103, 'Ananya Verma', '+91 70463 63528', 'retail', 4899.00, 0.00, 245.00, 0.00, 5144.00, 'razorpay', 'paid', 'delivered', 'DEL-78192041', 'Delhivery Express');
 
 -- Seed Order Items
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_title`, `sku`, `unit_price`, `quantity`, `total_price`) VALUES

@@ -151,7 +151,7 @@
             id: 'ORD-9842',
             date: 'Today, 04:30 PM',
             customer: 'Ananya Sharma',
-            phone: '9876543210',
+            phone: '7046363528',
             city: 'Mumbai, MH',
             channel: 'B2C Shop',
             items: 'Nilambari Silk Saree (Qty: 1)',
@@ -164,7 +164,7 @@
             id: 'ORD-9841',
             date: 'Today, 02:15 PM',
             customer: 'Vardhman Textiles (Rajesh K.)',
-            phone: '9822019283',
+            phone: '7046363528',
             city: 'Surat, GJ',
             channel: 'Wholesale B2B',
             items: 'Pure Dola Silk Lot (Qty: 24 pcs)',
@@ -177,7 +177,7 @@
             id: 'ORD-9840',
             date: 'Today, 11:45 AM',
             customer: 'Pooja Varma (Reseller #RS-402)',
-            phone: '9711823901',
+            phone: '7046363528',
             city: 'Jaipur, RJ',
             channel: 'Reseller',
             items: 'Chikan Rayon Kurti (Qty: 3)',
@@ -190,7 +190,7 @@
             id: 'ORD-9839',
             date: 'Yesterday, 06:10 PM',
             customer: 'Meera Boutique',
-            phone: '9920194820',
+            phone: '7046363528',
             city: 'Bengaluru, KA',
             channel: 'Retailer',
             items: 'Bridal Zardosi Lehenga (Qty: 2)',
@@ -203,7 +203,7 @@
             id: 'ORD-9838',
             date: 'Yesterday, 03:20 PM',
             customer: 'Sneha Patel',
-            phone: '9428019283',
+            phone: '7046363528',
             city: 'Ahmedabad, GJ',
             channel: 'B2C Shop',
             items: 'Georgette Bloom Saree (Qty: 1)',
@@ -218,7 +218,7 @@
         {
             id: 'WS-101',
             name: 'Rajesh Kumar (Vardhman Tex)',
-            phone: '9822019283',
+            phone: '7046363528',
             type: 'Wholesaler',
             tier: 'Tier 1 (Diamond)',
             gst: '24AAACR4920M1Z2',
@@ -229,7 +229,7 @@
         {
             id: 'RS-402',
             name: 'Pooja Varma (Pooja Collection)',
-            phone: '9711823901',
+            phone: '7046363528',
             type: 'Reseller',
             tier: 'Gold Reseller',
             gst: 'Unregistered (Individual)',
@@ -240,7 +240,7 @@
         {
             id: 'WS-104',
             name: 'Sunil Aggarwal (Radha Silks)',
-            phone: '9810293847',
+            phone: '7046363528',
             type: 'Wholesaler',
             tier: 'Tier 2 (Gold)',
             gst: '07AAACR1122K1Z9',
@@ -251,7 +251,7 @@
         {
             id: 'RT-209',
             name: 'Meera Singhania (Meera Boutique)',
-            phone: '9920194820',
+            phone: '7046363528',
             type: 'Retailer',
             tier: 'VIP Retailer',
             gst: '29AAACR3920L1Z4',
@@ -264,28 +264,28 @@
     let waLeads = [
         {
             name: 'Kavita Joshi',
-            phone: '9820198273',
+            phone: '7046363528',
             inquiry: 'Interested in Paithani Rich Pallu Saree wholesale batch (20 pcs)',
             time: '5m ago',
             tag: 'Wholesale Lead'
         },
         {
             name: 'Amitabh Textiles',
-            phone: '9930198201',
+            phone: '7046363528',
             inquiry: 'Need GST invoice download for Consignment #ORD-9841',
             time: '24m ago',
             tag: 'Order Support'
         },
         {
             name: 'Simran Sethi (Reseller)',
-            phone: '9711823944',
+            phone: '7046363528',
             inquiry: 'How to calculate 25% margin in smart share catalog links?',
             time: '1h ago',
             tag: 'Reseller Help'
         },
         {
             name: 'Ritu Chawla',
-            phone: '9811029381',
+            phone: '7046363528',
             inquiry: 'Is the Crimson Red Bridal Lehenga available in Free Size?',
             time: '2h ago',
             tag: 'Product Inquiry'

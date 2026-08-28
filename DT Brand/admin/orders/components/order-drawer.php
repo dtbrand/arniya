@@ -79,7 +79,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
                         <div id="drawerCustomerName" style="font-size:13px; font-weight:800; color:#0F172A;">Rajesh Kumar (Vardhman Tex)</div>
-                        <div id="drawerCustomerPhone" style="font-size:11.5px; color:#475569; margin-top:2px; font-weight:600;">+91 98220 19283</div>
+                        <div id="drawerCustomerPhone" style="font-size:11.5px; color:#475569; margin-top:2px; font-weight:600;">+91 70463 63528</div>
                         <div id="drawerCustomerEmail" style="font-size:10.5px; color:#94A3B8; margin-top:1px;">rajesh@vardhmantex.com</div>
                     </div>
                     <button type="button" onclick="if(window.DT_ORDERS)window.DT_ORDERS.copyText(document.getElementById('drawerCustomerPhone').innerText, 'Phone Number')" class="dt-btn dt-btn-pale" style="height:24px; font-size:10px; padding:0 6px;">

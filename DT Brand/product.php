@@ -161,9 +161,9 @@ $pdpSwatch = static function (string $name): string {
     return ProductCatalog::colorHex($name);
 };
 
-// Storefront WhatsApp number. shop/checkout/cart all use this one; the admin
-// default (+91 98220 19283) and api/db_audit.php (+91 93278 12345) disagree,
-// which is flagged for the owner to settle rather than guessed at here.
+// Storefront WhatsApp number. Every surface in this project - storefront,
+// admin, invoices and seed data - now carries this one number, set by the owner.
+// Change it here and the PDP, quick-view and share sheets all follow.
 $pdpWaNumber = '917046363528';
 
 // ── Related products: real catalogue rows, never this product ──
@@ -971,7 +971,7 @@ function pdp_relative_date(string $ts): string
                         <label class="pdp-wa-label" for="pdpWaPhone">WhatsApp Mobile Number <span class="required">*</span></label>
                         <div class="pdp-wa-phone-wrap">
                             <div class="pdp-wa-phone-prefix">🇮🇳 +91</div>
-                            <input type="text" id="pdpWaPhone" required placeholder="98765 43210" class="pdp-wa-input pdp-wa-phone-input" autocomplete="tel" />
+                            <input type="text" id="pdpWaPhone" required placeholder="70463 63528" class="pdp-wa-input pdp-wa-phone-input" autocomplete="tel" />
                         </div>
                     </div>
                 </div>

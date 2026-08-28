@@ -673,7 +673,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="adm-field-label">Admin Email or WhatsApp Number</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 9822019283" required>
+                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 7046363528" required>
                     </div>
                 </div>
 

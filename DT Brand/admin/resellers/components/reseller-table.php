@@ -26,7 +26,7 @@ if (!empty($resellersList)) {
             'avatar_color' => 'gold',
             'contact' => $name,
             'email' => $r['email'] ?? 'partner@reseller.com',
-            'phone' => $r['phone'] ?? '+91 98765 43210',
+            'phone' => $r['phone'] ?? '+91 70463 63528',
             'city' => ($r['city'] ?? 'Surat') . ', ' . ($r['state'] ?? 'GJ'),
             'tier' => $tier,
             'tier_margin' => '25% Margin',

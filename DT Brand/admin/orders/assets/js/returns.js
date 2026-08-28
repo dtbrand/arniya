@@ -14,7 +14,7 @@
             type: 'customer',
             typeLabel: 'Customer RMA Claim',
             customer: 'Shree Saree Niketan',
-            contact: '+91 98221 00192',
+            contact: '+91 70463 63528',
             city: 'Surat Wholesale Lot',
             product: 'Chanderi Zari Tissue Festive Saree (x5)',
             sku: 'SKU-CHN-ZRI-882',
@@ -44,7 +44,7 @@
             type: 'customer',
             typeLabel: 'Customer RMA Claim',
             customer: 'Kavita Agarwal',
-            contact: '+91 98765 43210',
+            contact: '+91 70463 63528',
             city: 'Ahmedabad Retail',
             product: 'Banarasi Katan Silk Handloom (x1)',
             sku: 'SKU-BAN-KTN-104',
@@ -73,7 +73,7 @@
             type: 'rto',
             typeLabel: 'RTO Consignment (Carrier Return)',
             customer: 'Vardhman Tex Godown',
-            contact: '+91 98220 19283',
+            contact: '+91 70463 63528',
             city: 'Surat Central Depot Dock',
             product: 'Pure Kanjivaram Bridal Silk (x2)',
             sku: 'SKU-KNJ-BRD-550',
@@ -102,7 +102,7 @@
             type: 'customer',
             typeLabel: 'Customer RMA Claim',
             customer: 'Ananya Silks Bangalore',
-            contact: '+91 98450 11223',
+            contact: '+91 70463 63528',
             city: 'Bangalore Hub',
             product: 'Organza Digital Floral Saree (x10)',
             sku: 'SKU-ORG-FLR-202',
@@ -469,7 +469,7 @@
             const data = RMA_DATA[returnId] || { customer: 'Valued Consignee', amount: '0', orderId: returnId };
             const msgText = customNote || `Namaste ${data.customer},\n\nRegarding your Return Request *${returnId}* for Order *${data.orderId}* (Amount: ₹${data.amount}):\n\nYour evidence photos and unboxing proof have been audited by DT Brand's & Jai Hanuman Tex Surat Central Depot.\n\nFor questions, reply to this official wholesale support channel.\n\n*DT BRAND'S & JAI HANUMAN TEX*`;
             const cleanPhone = (data.contact || '').replace(/[^0-9]/g, '');
-            const targetUrl = `https://api.whatsapp.com/send?phone=${cleanPhone || '919822100192'}&text=${encodeURIComponent(msgText)}`;
+            const targetUrl = `https://api.whatsapp.com/send?phone=${cleanPhone || '917046363528'}&text=${encodeURIComponent(msgText)}`;
             window.open(targetUrl, '_blank');
         },
 

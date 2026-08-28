@@ -8,7 +8,7 @@
  * The three generators on this page are real: each builds a Blob and clicks a
  * download link, so a file genuinely lands on the admin's disk. What they used
  * to put in that file was a `mockCustomers` array of eight invented people
- * carrying real-format phone numbers -- +91 98251 44321, +44 7911 123456 -- and
+ * carrying real-format phone numbers, Indian and international alike, and
  * invented lifetime spends. The admin downloaded a spreadsheet of strangers,
  * and unlike a toast that lies, that file outlives the session: it gets mailed
  * on, and imported into a WhatsApp broadcast list. Every row now comes from the

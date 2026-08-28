@@ -19,7 +19,7 @@
                 id: orderId,
                 customer: 'Valued Client',
                 customer_type: 'Wholesale B2B',
-                phone: '+91 98000 00000',
+                phone: '+91 70463 63528',
                 email: 'client@dtbrands.in',
                 date: '21 Aug 2026 • 11:20 AM',
                 items: [{ name: 'Surat Handloom Silk Lot', sku: 'LOT-101', variant: 'Standard', qty: 10, price: 3490, img: '' }],
@@ -351,7 +351,7 @@
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId,
                 customer: document.getElementById('shippingRecipientText')?.textContent.trim() || 'Wholesale Consignee (Surat Depot)',
-                phone: document.getElementById('shippingPhoneText')?.textContent.replace('TEL:', '').trim() || '+91 98220 19283',
+                phone: document.getElementById('shippingPhoneText')?.textContent.replace('TEL:', '').trim() || '+91 70463 63528',
                 gstin: document.getElementById('billingGstinText')?.textContent.replace('GSTIN:', '').trim() || '24AAECJ1928K1Z5',
                 address: {
                     shipping: document.getElementById('shippingAddressDisplay')?.textContent.trim() || 'Godown 12, Transport Nagar, Surat, Gujarat - 395010',
@@ -458,7 +458,7 @@
 
             const orderId = document.getElementById('editAddressOrderId')?.value || 'DTB-001620';
             const recipient = document.getElementById('editShippingRecipient')?.value.trim() || 'Wholesale Consignee';
-            const phone = document.getElementById('editShippingPhone')?.value.trim() || '+91 98220 19283';
+            const phone = document.getElementById('editShippingPhone')?.value.trim() || '+91 70463 63528';
             const shipLine1 = document.getElementById('editShippingLine1')?.value.trim() || '';
             const shipCity = document.getElementById('editShippingCity')?.value.trim() || 'Surat';
             const shipState = document.getElementById('editShippingState')?.value.trim() || 'Gujarat';
@@ -559,7 +559,7 @@
         exportLedgerCSV: function() {
             const name = (document.getElementById('ledgerCustomerName') ? document.getElementById('ledgerCustomerName').textContent.trim() : 'Rajesh Kumar (Vardhman Tex)');
             const safeName = name.replace(/[^a-zA-Z0-9]/g, '_');
-            const phone = document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : '+91 98220 19283';
+            const phone = document.getElementById('ledgerPhoneText') ? document.getElementById('ledgerPhoneText').textContent.trim() : '+91 70463 63528';
             const email = document.getElementById('ledgerEmailText') ? document.getElementById('ledgerEmailText').textContent.trim() : 'rajesh@vardhmantex.com';
 
             const excelHtml = `
@@ -599,7 +599,7 @@
 <body>
 <table>
   <tr height="40"><th colspan="7" class="title-header">DT BRAND'S &amp; JAI HANUMAN TEX — B2B FINANCIAL LEDGER STATEMENT</th></tr>
-  <tr height="24"><td colspan="7" class="sub-header">Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002 | GSTIN: 24AAECJ1928K1Z5 | Care: +91 98251 00000</td></tr>
+  <tr height="24"><td colspan="7" class="sub-header">Surat Central Textile Depot, Ring Road, Surat (GJ) - 395002 | GSTIN: 24AAECJ1928K1Z5 | Care: +91 70463 63528</td></tr>
   <tr><td colspan="7"></td></tr>
   
   <tr height="26"><th colspan="7" class="section-title">CUSTOMER ACCOUNT OVERVIEW</th></tr>
@@ -751,7 +751,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 amount: 112250,
                 status: 'shipped',
                 date: '21 Aug 2026, 11:20 AM',
@@ -872,7 +872,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 amount: 112250,
                 status: 'shipped',
                 date: '21 Aug 2026, 11:20 AM',
@@ -966,7 +966,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 amount: 112250,
                 date: '21 Aug 2026',
                 payment: 'Bank Wire / RTGS',
@@ -1018,7 +1018,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 amount: 112250,
                 date: '21 Aug 2026',
                 payment: 'Bank Wire / RTGS',
@@ -1162,7 +1162,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
                 date: '21 Aug 2026'
@@ -1206,7 +1206,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
                 date: '21 Aug 2026'
@@ -1330,7 +1330,7 @@
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId || 'DTB-001624',
                 customer: 'Rajesh Kumar (Vardhman Tex)',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
                 items_count: 25,
@@ -1494,7 +1494,7 @@
             const order = orders.find(o => o.id === orderId) || {
                 id: orderId,
                 customer: 'Rajesh Kumar (Vardhman Tex)',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 shipping: 'Surat Central Depot Express',
                 tracking: 'VRL-99821',
                 items_count: 25,
@@ -1705,7 +1705,7 @@
                 id: orderId,
                 customer: 'Rajesh Kumar',
                 firm: 'Vardhman Tex',
-                phone: '+91 98220 19283',
+                phone: '+91 70463 63528',
                 shipping: 'VRL Logistics Depot',
                 tracking: 'VRL-99821',
                 items_count: '25 pcs',

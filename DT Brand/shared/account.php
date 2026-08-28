@@ -833,26 +833,16 @@
                 </div>
 
                 <!--
-                    Trade credentials. Shown only for Wholesaler/Reseller, because a
-                    trade signup is held for approval and an admin has to verify the
-                    GSTIN before mill-rate pricing is switched on. Without this the
-                    approval queue has nothing to check and approval becomes a guess.
+                    Trade signup notice. Shown only for Wholesaler/Reseller. GSTIN and
+                    PAN are no longer asked for at signup - the trade request is still
+                    held for approval, and the team captures the trade details on
+                    WhatsApp during that review (an admin stores them from the customer
+                    editor). The note remains so a trade applicant knows mill-rate
+                    pricing is not switched on the moment they submit.
                 -->
-                <div class="ac-form-group" id="acTradeKycGroup" style="display:none;">
-                    <label class="ac-label" for="acRegGstin">GSTIN <span style="font-weight:600; color:var(--ac-mid-text);">(speeds up approval)</span></label>
-                    <div class="ac-input-wrap">
-                        <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M20 7h-9m0 0H4m7 0V4m0 3v3"/><rect x="3" y="11" width="18" height="10" rx="2"/></svg>
-                        <input type="text" id="acRegGstin" class="ac-input has-icon" placeholder="e.g. 24ABCDE1234F1Z5" maxlength="15" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
-                    </div>
-                    <div style="margin-top:8px;">
-                        <label class="ac-label" for="acRegPan">PAN <span style="font-weight:600; color:var(--ac-mid-text);">(optional)</span></label>
-                        <div class="ac-input-wrap">
-                            <svg class="ac-input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><line x1="13" y1="9" x2="19" y2="9"/><line x1="13" y1="13" x2="19" y2="13"/></svg>
-                            <input type="text" id="acRegPan" class="ac-input has-icon" placeholder="e.g. ABCDE1234F" maxlength="10" autocomplete="off" oninput="this.value=this.value.toUpperCase().replace(/[^0-9A-Z]/g,'')">
-                        </div>
-                    </div>
-                    <p style="font-size:0.74rem; color:var(--ac-mid-text); margin:8px 0 0 0; line-height:1.45; font-weight:500;">
-                        Trade accounts are reviewed before wholesale pricing is activated. We'll confirm on WhatsApp — you can shop at retail prices meanwhile.
+                <div class="ac-form-group" id="acTradeNoteGroup" style="display:none;">
+                    <p style="font-size:0.74rem; color:var(--ac-mid-text); margin:0; line-height:1.45; font-weight:500;">
+                        Trade accounts are reviewed before wholesale pricing is activated. We'll confirm your trade details on WhatsApp — you can shop at retail prices meanwhile.
                     </p>
                 </div>
 
@@ -891,7 +881,7 @@
                     <label class="ac-label" for="acForgotInput">WhatsApp Number / Email <span class="req">*</span></label>
                     <div class="ac-input-wrap">
                         <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        <input type="text" id="acForgotInput" class="ac-input has-icon" placeholder="e.g. 9876543210 or radhika@example.com" required>
+                        <input type="text" id="acForgotInput" class="ac-input has-icon" placeholder="e.g. 7046363528 or radhika@example.com" required>
                     </div>
                 </div>
 
@@ -1118,10 +1108,10 @@
         document.querySelectorAll('.ac-role-pill-btn').forEach(function(c) {
             c.classList.toggle('selected', c.dataset.role === role);
         });
-        // Only trade roles need GSTIN/PAN, and only trade roles go through approval.
-        var kyc = document.getElementById('acTradeKycGroup');
-        if (kyc) {
-            kyc.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
+        // Only trade roles go through approval, so only they see the review note.
+        var note = document.getElementById('acTradeNoteGroup');
+        if (note) {
+            note.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
         }
     };
 
@@ -1353,22 +1343,16 @@
         params.append('city', city || modalSelectedState);
         params.append('state', modalSelectedState);
 
-        /* Trade credentials, only meaningful for a wholesale/reseller request.
-           Auth::register stores them on the pending row so the approver has
-           something to verify. */
-        if (typeCode !== 'retail') {
-            var gstinEl = document.getElementById('acRegGstin');
-            var panEl = document.getElementById('acRegPan');
-            params.append('gstin', gstinEl ? gstinEl.value.trim() : '');
-            params.append('pan', panEl ? panEl.value.trim() : '');
-        }
+        /* GSTIN/PAN are not collected at signup. The trade request is still recorded
+           as pending; the team captures the trade details on WhatsApp during approval
+           and an admin stores them from the customer editor. */
 
         fetch('/api/auth.php', { method: 'POST', body: params })
             .then(function(res) { return res.json(); })
             .then(function(data) {
                 /* A wholesale/reseller application is accepted but NOT signed in —
-                   trade pricing needs an admin to verify the GSTIN first. Report
-                   that as the success it is, rather than as a failed signup. */
+                   trade pricing needs an admin to verify the trade details first.
+                   Report that as the success it is, rather than as a failed signup. */
                 if (data && data.success && data.pending_approval) {
                     window.closeAccountModal();
                     alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once it is approved.');

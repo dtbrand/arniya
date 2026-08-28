@@ -1122,7 +1122,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                             <tbody>
                                 <tr>
                                     <td><strong>ORD-9842</strong><br><small style="color:#8C8478;">Today, 04:30 PM</small></td>
-                                    <td><strong>Ananya Sharma</strong><br><small style="color:#8A681F;">+91 9876543210 • Mumbai</small></td>
+                                    <td><strong>Ananya Sharma</strong><br><small style="color:#8A681F;">+91 7046363528 • Mumbai</small></td>
                                     <td><span style="font-weight:700; background:#F8F6F0; padding:2px 6px; border-radius:4px;">B2C Shop</span></td>
                                     <td>Nilambari Silk Saree (Qty: 1)</td>
                                     <td><strong>₹4,899</strong><br><small style="color:#15803D;">Prepaid (UPI)</small></td>
@@ -1135,7 +1135,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                                 </tr>
                                 <tr>
                                     <td><strong>ORD-9841</strong><br><small style="color:#8C8478;">Today, 02:15 PM</small></td>
-                                    <td><strong>Vardhman Textiles (Rajesh K.)</strong><br><small style="color:#8A681F;">+91 9822019283 • Surat</small></td>
+                                    <td><strong>Vardhman Textiles (Rajesh K.)</strong><br><small style="color:#8A681F;">+91 7046363528 • Surat</small></td>
                                     <td><span style="font-weight:700; background:#FAF5E8; color:#8A681F; padding:2px 6px; border-radius:4px;">Wholesale B2B</span></td>
                                     <td>Pure Dola Silk Lot (Qty: 24 pcs)</td>
                                     <td><strong>₹33,576</strong><br><small style="color:#15803D;">Bank Wire</small></td>
@@ -1596,26 +1596,26 @@ _Special 15% VIP Discount Applied!_</textarea>
                             <tbody id="admCustomersTableBody">
                                 <tr>
                                     <td><strong>Ananya Sharma</strong></td>
-                                    <td>+91 9876543210<br><small style="color:#7A7266;">ananya@gmail.com</small></td>
+                                    <td>+91 7046363528<br><small style="color:#7A7266;">ananya@gmail.com</small></td>
                                     <td>Mumbai, MH</td>
                                     <td>6 Orders</td>
                                     <td><strong>₹28,450</strong></td>
                                     <td><span class="adm-badge gold">VIP Retail</span></td>
                                     <td>
-                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('9876543210', 'Namaste Ananya ji, regarding your order with DT Brand...')">
+                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('7046363528', 'Namaste Ananya ji, regarding your order with DT Brand...')">
                                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                         </button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Sneha Patel</strong></td>
-                                    <td>+91 9428019283<br><small style="color:#7A7266;">sneha.patel@yahoo.com</small></td>
+                                    <td>+91 7046363528<br><small style="color:#7A7266;">sneha.patel@yahoo.com</small></td>
                                     <td>Ahmedabad, GJ</td>
                                     <td>4 Orders</td>
                                     <td><strong>₹16,900</strong></td>
                                     <td><span class="adm-badge info">Frequent Buyer</span></td>
                                     <td>
-                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('9428019283', 'Namaste Sneha ji, from DT Brand...')">
+                                        <button class="adm-action-btn wa" title="WhatsApp Customer" onclick="window.openDirectWhatsApp('7046363528', 'Namaste Sneha ji, from DT Brand...')">
                                             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                         </button>
                                     </td>
@@ -1745,7 +1745,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                                 </div>
                                 <div class="adm-form-group">
                                     <label class="adm-form-label">Support WhatsApp Number</label>
-                                    <input type="text" class="adm-form-input" value="+91 98220 19283">
+                                    <input type="text" class="adm-form-input" value="+91 70463 63528">
                                 </div>
                                 <div class="adm-form-group">
                                     <label class="adm-form-label">Support Email</label>
@@ -2574,7 +2574,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                 <div>
                     <strong style="color:#8A681F; font-size:0.76rem; text-transform:uppercase;">Billed To:</strong><br>
                     <strong id="invCustomerName">Customer Name</strong><br>
-                    <span id="invCustomerPhone">+91 9876543210</span><br>
+                    <span id="invCustomerPhone">+91 7046363528</span><br>
                     <span id="invCustomerCity">City, State</span>
                 </div>
                 <div style="text-align:right;">

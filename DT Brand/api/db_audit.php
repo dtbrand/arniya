@@ -334,9 +334,9 @@ try {
     $custCount = (int)$pdo->query("SELECT COUNT(*) FROM `customers`")->fetchColumn();
     if ($custCount === 0 || $doSeed) {
         $sample_custs = [
-            ['name' => 'Ananya Deshmukh', 'phone' => '+91 98201 12345', 'email' => 'ananya.sarees@gmail.com', 'type' => 'wholesale', 'city' => 'Mumbai', 'state' => 'Maharashtra', 'tier' => 'Gold', 'credit_limit' => 250000.00, 'outstanding_balance' => 45000.00, 'total_orders' => 14, 'lifetime_spend' => 380000.00, 'gstin' => '27AAACD1234E1Z1'],
-            ['name' => 'Pooja Varma', 'phone' => '+91 98765 23456', 'email' => 'pooja.reseller@gmail.com', 'type' => 'reseller', 'city' => 'Jaipur', 'state' => 'Rajasthan', 'tier' => 'Silver', 'credit_limit' => 100000.00, 'outstanding_balance' => 12000.00, 'total_orders' => 8, 'lifetime_spend' => 145000.00, 'gstin' => '08AAACV5678F1Z2'],
-            ['name' => 'Kavita Singhania', 'phone' => '+91 98111 34567', 'email' => 'kavita.textiles@gmail.com', 'type' => 'wholesale', 'city' => 'Kolkata', 'state' => 'West Bengal', 'tier' => 'Platinum', 'credit_limit' => 500000.00, 'outstanding_balance' => 85000.00, 'total_orders' => 26, 'lifetime_spend' => 920000.00, 'gstin' => '19AAACS9012G1Z3']
+            ['name' => 'Ananya Deshmukh', 'phone' => '+91 70463 63528', 'email' => 'ananya.sarees@gmail.com', 'type' => 'wholesale', 'city' => 'Mumbai', 'state' => 'Maharashtra', 'tier' => 'Gold', 'credit_limit' => 250000.00, 'outstanding_balance' => 45000.00, 'total_orders' => 14, 'lifetime_spend' => 380000.00, 'gstin' => '27AAACD1234E1Z1'],
+            ['name' => 'Pooja Varma', 'phone' => '+91 70463 63528', 'email' => 'pooja.reseller@gmail.com', 'type' => 'reseller', 'city' => 'Jaipur', 'state' => 'Rajasthan', 'tier' => 'Silver', 'credit_limit' => 100000.00, 'outstanding_balance' => 12000.00, 'total_orders' => 8, 'lifetime_spend' => 145000.00, 'gstin' => '08AAACV5678F1Z2'],
+            ['name' => 'Kavita Singhania', 'phone' => '+91 70463 63528', 'email' => 'kavita.textiles@gmail.com', 'type' => 'wholesale', 'city' => 'Kolkata', 'state' => 'West Bengal', 'tier' => 'Platinum', 'credit_limit' => 500000.00, 'outstanding_balance' => 85000.00, 'total_orders' => 26, 'lifetime_spend' => 920000.00, 'gstin' => '19AAACS9012G1Z3']
         ];
 
         foreach ($sample_custs as $sc) {
@@ -389,7 +389,7 @@ try {
     if ($setCount === 0 || $doSeed) {
         $sample_settings = [
             ['key_name' => 'store_name', 'value_text' => "DT Brand's & Jai Hanuman Tex", 'category' => 'general'],
-            ['key_name' => 'whatsapp_number', 'value_text' => '+91 93278 12345', 'category' => 'whatsapp'],
+            ['key_name' => 'whatsapp_number', 'value_text' => '+91 70463 63528', 'category' => 'whatsapp'],
             ['key_name' => 'support_email', 'value_text' => 'contact@jaihanumantex.in', 'category' => 'general'],
             ['key_name' => 'gstin_number', 'value_text' => '24AAACJ1234F1Z5', 'category' => 'tax'],
             ['key_name' => 'currency_symbol', 'value_text' => '₹', 'category' => 'pricing']

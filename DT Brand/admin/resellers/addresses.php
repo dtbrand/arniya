@@ -51,7 +51,7 @@ $active_nav = "resellers";
                             <strong>Shree Krishna Sarees &amp; Boutique</strong><br>
                             Shop #104-106, 1st Floor, Millennium Textile Market-2,<br>
                             Ring Road, Surat, Gujarat - 395002, India<br>
-                            <strong>Phone:</strong> +91 98251 44321
+                            <strong>Phone:</strong> +91 70463 63528
                         </p>
                         <div style="display:flex; gap:6px;">
                             <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" onclick="window.showToast('Address editor opened')">Edit</button>

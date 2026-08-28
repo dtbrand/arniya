@@ -51,7 +51,7 @@ $catalogProducts = ProductCatalog::getAll();
             </div>
             <div>
                 <label class="dt-chk-label">WhatsApp Mobile Number *</label>
-                <input type="tel" class="dt-chk-input" id="chkPhone" placeholder="+91 98765 43210" required>
+                <input type="tel" class="dt-chk-input" id="chkPhone" placeholder="+91 70463 63528" required>
             </div>
             <div style="grid-column: 1 / -1;">
                 <label class="dt-chk-label">Complete Shipping Address *</label>

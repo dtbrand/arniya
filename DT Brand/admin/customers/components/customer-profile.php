@@ -20,7 +20,7 @@ $custData = isset($dossierCustomer)
     : ($customer_id > 0 ? CustomerManager::getById($customer_id) : null);
 
 // When there is no such customer this used to fall back to a sample identity
-// ("Pooja Sharma", +91 98110 29381) complete with working tel:, mailto: and
+// ("Pooja Sharma", with a real-format mobile) complete with tel:, mailto: and
 // wa.me links — so a mistyped id produced a real-looking person an admin could
 // phone. There is no placeholder now; the card says the record is missing.
 $found  = ($custData !== null);

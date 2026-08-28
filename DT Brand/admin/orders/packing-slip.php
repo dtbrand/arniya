@@ -13,7 +13,7 @@ $order = [
     'customer' => 'Rajesh Kumar (Vardhman Tex)',
     'customer_name' => 'Rajesh Kumar',
     'company_name' => 'Vardhman Tex',
-    'phone' => '+91 98220 19283',
+    'phone' => '+91 70463 63528',
     'address' => [
         'shipping' => "Godown 12, Transport Nagar, Surat, Gujarat - 395010"
     ],

@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_settings'])) {
 $dbSettings = [
     'site_name' => "DT Brand's (Jai Hanuman Tex)",
     'support_email' => 'support@jaihanumantex.in',
-    'whatsapp_number' => '+91 98220 19283',
+    'whatsapp_number' => '+91 70463 63528',
     'company_gstin' => '24AAACV1234F1Z5',
     'warehouse_address' => 'Ring Road Textile Market, Surat, Gujarat - 395002'
 ];
@@ -144,7 +144,7 @@ if ($pdo !== null && !Database::isMockMode()) {
                     </div>
                     <div class="adm-kpi-val">Meta Connected</div>
                     <div class="adm-kpi-bottom">
-                        <span class="adm-kpi-delta up"><?= htmlspecialchars($dbSettings['whatsapp_number'] ?? '+91 98220 19283') ?></span>
+                        <span class="adm-kpi-delta up"><?= htmlspecialchars($dbSettings['whatsapp_number'] ?? '+91 70463 63528') ?></span>
                     </div>
                 </div>
             </div>

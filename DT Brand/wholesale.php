@@ -865,7 +865,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 <label class="ws-label" for="wsProfPhone">WhatsApp Mobile Number <span class="req">*</span></label>
                                 <div class="ws-phone-wrap">
                                     <div class="ws-phone-prefix">🇮🇳 +91</div>
-                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="9876543210" maxlength="10" required>
+                                    <input type="tel" id="wsProfPhone" class="ws-input ws-phone-input" placeholder="7046363528" maxlength="10" required>
                                 </div>
                             </div>
 
@@ -1008,7 +1008,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 Surat, Gujarat - 395002 (GSTIN: 24AABCU9603R1ZM)
                             </div>
                             <div style="font-size:0.74rem; font-weight:700; color:var(--ws-gold-primary); margin-top:8px; display:flex; align-items:center; gap:5px;" id="addrPreviewBillingAttn">
-                                Attn: Rajesh Kumar (+91 98765 43210)
+                                Attn: Rajesh Kumar (+91 70463 63528)
                             </div>
                         </div>
 
@@ -1949,7 +1949,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                     Shop No-246<br>
                                     Sankruti AC Market Nearby The Fabrizo,<br>
                                     Surat Gujarat<br>
-                                    Phone: <strong>+91 87990 46736</strong><br>
+                                    Phone: <strong>+91 70463 63528</strong><br>
                                     State: <strong>24-Gujarat</strong>
                                 </p>
                             </div>
@@ -1971,8 +1971,8 @@ $catalogHasProducts = $catalogProducts !== [];
                                 City: <span id="invBuyerCity">kalaburgi</span><br>
                                 States : <span id="invBuyerState">Karnataka</span><br>
                                 PIN code: <span id="invBuyerPin">585325</span><br>
-                                M/n :- <span id="invBuyerAltPhone">6361616801</span><br>
-                                Contact No: <strong id="invBuyerPhone">9740455555</strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst">29CFZPV1455E1ZO</strong><br>
+                                M/n :- <span id="invBuyerAltPhone">7046363528</span><br>
+                                Contact No: <strong id="invBuyerPhone">7046363528</strong> &nbsp;&nbsp;&nbsp; GSTIN Number: <strong id="invBuyerGst">29CFZPV1455E1ZO</strong><br>
                                 State: <strong id="invBuyerStateCode">29-Karnataka</strong>
                             </div>
                         </div>
@@ -1995,7 +1995,7 @@ $catalogHasProducts = $catalogProducts !== [];
                             <strong id="invShipCompany">Patil Cloth Bazar</strong><br>
                             <span id="invShipAddress">Vrl near Delivery Point : Jevargi</span><br>
                             <span id="invShipCityPin">kalaburgi Dist 585310</span><br>
-                            Number : <span id="invShipPhone">9740455555, 6361616801</span>
+                            Number : <span id="invShipPhone">7046363528</span>
                         </div>
                     </div>
 

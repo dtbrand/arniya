@@ -60,7 +60,7 @@ function getRetailCustomers() {
             'id' => 'CUST-' . $c['id'],
             'name' => $c['name'] ?? 'Retail Customer',
             'email' => $c['email'] ?? 'customer@email.com',
-            'phone' => $c['phone'] ?? '+91 98765 43210',
+            'phone' => $c['phone'] ?? '+91 70463 63528',
             'orders' => (int)($c['total_orders'] ?? 0),
             'spent' => (float)($c['lifetime_spend'] ?? 0),
             'aov' => (float)($c['lifetime_spend'] ?? 0),
@@ -125,10 +125,10 @@ function getRetailDiscounts() {
 // ── 6. Retail Abandoned Carts ──
 function getRetailAbandonedCarts() {
     return [
-        ['id' => 'CART-8912', 'customer' => 'Meena Agarwal', 'phone' => '9820145821', 'items' => '1x Kanjeevaram Silk + 1x Organza', 'value' => 6498, 'created' => '22 Aug 2026, 03:10 PM', 'status' => 'High Intent', 'badge' => 'emerald'],
-        ['id' => 'CART-8913', 'customer' => 'Sunita Verma', 'phone' => '9711288410', 'items' => '2x Surat Dola Silk Jacquard', 'value' => 4498, 'created' => '22 Aug 2026, 01:45 PM', 'status' => 'Payment Failed', 'badge' => 'crimson'],
-        ['id' => 'CART-8914', 'customer' => 'Radha Krishnan', 'phone' => '9845033190', 'items' => '1x Banarasi Brocade Saree', 'value' => 4899, 'created' => '21 Aug 2026, 09:20 PM', 'status' => 'Dropped at Shipping', 'badge' => 'amber'],
-        ['id' => 'CART-8915', 'customer' => 'Divya Sharma', 'phone' => '9904211560', 'items' => '1x Chanderi Festive Organza', 'value' => 2599, 'created' => '21 Aug 2026, 06:15 PM', 'status' => 'Active Cart', 'badge' => 'blue']
+        ['id' => 'CART-8912', 'customer' => 'Meena Agarwal', 'phone' => '7046363528', 'items' => '1x Kanjeevaram Silk + 1x Organza', 'value' => 6498, 'created' => '22 Aug 2026, 03:10 PM', 'status' => 'High Intent', 'badge' => 'emerald'],
+        ['id' => 'CART-8913', 'customer' => 'Sunita Verma', 'phone' => '7046363528', 'items' => '2x Surat Dola Silk Jacquard', 'value' => 4498, 'created' => '22 Aug 2026, 01:45 PM', 'status' => 'Payment Failed', 'badge' => 'crimson'],
+        ['id' => 'CART-8914', 'customer' => 'Radha Krishnan', 'phone' => '7046363528', 'items' => '1x Banarasi Brocade Saree', 'value' => 4899, 'created' => '21 Aug 2026, 09:20 PM', 'status' => 'Dropped at Shipping', 'badge' => 'amber'],
+        ['id' => 'CART-8915', 'customer' => 'Divya Sharma', 'phone' => '7046363528', 'items' => '1x Chanderi Festive Organza', 'value' => 2599, 'created' => '21 Aug 2026, 06:15 PM', 'status' => 'Active Cart', 'badge' => 'blue']
     ];
 }
 

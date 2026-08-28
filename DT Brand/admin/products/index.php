@@ -1165,7 +1165,7 @@ function shareProductWhatsApp(productName, sku, wholesaleRate) {
         `🏷️ *SKU:* ${sku}\n` +
         `💰 *Wholesale Rate:* ${wholesaleRate}/pc\n\n` +
         `Please send catalog details and minimum lot MOQ availability.`);
-    window.open(`https://api.whatsapp.com/send?phone=919909000000&text=${message}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${message}`, '_blank');
 }
 </script>
 </body>

@@ -10,7 +10,7 @@ $auto_print = isset($_GET['print']) && $_GET['print'] === '1';
 
 $customer_name = 'Rajesh Kumar (Vardhman Tex)';
 $gstin = '24AAECJ1928K1Z5';
-$phone = '+91 98220 19283';
+$phone = '+91 70463 63528';
 $email = 'rajesh@vardhmantex.com';
 $address = 'Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002';
 $account_tier = 'Verified Wholesale VIP';
@@ -267,7 +267,7 @@ $page_title = "Financial Ledger — " . $customer_name;
     <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid #E2DFD7; padding-top:14px; font-size:10.5px; color:#64748B;">
         <div>
             This is a computer-generated B2B accounting statement from DT Brand's &amp; Jai Hanuman Tex Surat Central Depot.<br>
-            Direct Inquiries: accounts@jaihanumantex.in | Central Helpline: +91 98251 00000
+            Direct Inquiries: accounts@jaihanumantex.in | Central Helpline: +91 70463 63528
         </div>
         <div style="text-align:right; font-weight:700; color:#181512;">
             Authorized Accounting Signatory<br>

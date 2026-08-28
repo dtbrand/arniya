@@ -10,7 +10,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     unset($_SESSION['admin_logged_in']);
     unset($_SESSION['admin_user']);
     session_destroy();
-    header("Location: /admin/login?logged_out=1");
+    // Trailing slash: `admin/login` is a directory, so the slashless form costs an
+    // extra 301 hop on every sign-out. See the note on the login form below.
+    header("Location: /admin/login/?logged_out=1");
     exit;
 }
 
@@ -598,8 +600,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
 
-            <!-- Login Form -->
-            <form action="/admin/login" method="POST" class="adm-login-form">
+            <!--
+                Login Form
+
+                The trailing slash on the action is required, not cosmetic. This page
+                is served at /admin/login/ by admin/login/index.php, and `admin/login`
+                is a REAL DIRECTORY on disk. Posting to /admin/login (no slash) makes
+                Apache's DirectorySlash issue a 301 to /admin/login/ - and a browser
+                following a 301 re-sends the request as GET and throws the body away.
+                The typed email and password were silently discarded before any PHP
+                ran, so REQUEST_METHOD was never POST, adminLogin() was never called,
+                and clicking "Sign In" just re-rendered this empty form with no error
+                to explain it. Nothing about the credentials was ever wrong.
+            -->
+            <form action="/admin/login/" method="POST" class="adm-login-form">
                 
                 <!-- Email Field -->
                 <div class="adm-field-group">
@@ -673,7 +687,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label class="adm-field-label">Admin Email or WhatsApp Number</label>
                     <div class="adm-input-wrapper">
                         <svg class="adm-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 9822019283" required>
+                        <input type="text" id="forgotInput" class="adm-form-input" placeholder="admin@dtbrand.in or +91 7046363528" required>
                     </div>
                 </div>
 

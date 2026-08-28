@@ -7,8 +7,8 @@
  */
 $order_id = isset($order['id']) ? $order['id'] : 'DTB-001624';
 $customer = isset($order['customer']) ? $order['customer'] : 'Rajesh Kumar (Vardhman Tex)';
-$billing_addr = isset($order['address']['billing']) ? $order['address']['billing'] : "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5 | Phone: +91 98220 19283";
-$shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : "Godown 12, Transport Nagar, Surat, Gujarat - 395010\nContact: +91 98220 19283";
+$billing_addr = isset($order['address']['billing']) ? $order['address']['billing'] : "Shop 42, Textile Market, Ring Road, Surat, Gujarat - 395002\nGSTIN: 24AAECJ1928K1Z5 | Phone: +91 70463 63528";
+$shipping_addr = isset($order['address']['shipping']) ? $order['address']['shipping'] : "Godown 12, Transport Nagar, Surat, Gujarat - 395010\nContact: +91 70463 63528";
 $items = isset($order['items']) ? $order['items'] : [
     [
         'name' => 'Kanjivaram Silk Saree Pure Zari Weave', 
@@ -54,7 +54,7 @@ $items = isset($order['items']) ? $order['items'] : [
             <strong style="font-size:14px; color:#181512; display:block;"><?php echo htmlspecialchars($customer); ?></strong>
             <span style="color:#475569; font-size:12px; line-height:1.4; display:block; margin-top:2px;"><?php echo htmlspecialchars($shipping_addr); ?></span>
             <div style="font-size:11.5px; color:#181512; margin-top:4px; font-weight:700;">
-                <span style="color:#8A681F; font-size:10px; font-weight:800; text-transform:uppercase;">Contact No:</span> <?php echo htmlspecialchars($order['phone'] ?? '+91 98220 19283'); ?>
+                <span style="color:#8A681F; font-size:10px; font-weight:800; text-transform:uppercase;">Contact No:</span> <?php echo htmlspecialchars($order['phone'] ?? '+91 70463 63528'); ?>
             </div>
         </div>
     </div>

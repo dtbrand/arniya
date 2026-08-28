@@ -65,12 +65,12 @@ $active_nav = "cms";
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Official WhatsApp Concierge Hotline *</label>
-                            <input type="text" value="+91 98220 19283" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
+                            <input type="text" value="+91 70463 63528" required style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
                         </div>
 
                         <div>
                             <label style="font-size:0.75rem; font-weight:700; color:#181512; display:block; margin-bottom:4px;">B2B Wholesale Dispatch Direct Line</label>
-                            <input type="text" value="+91 94281 77320" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
+                            <input type="text" value="+91 70463 63528" style="width:100%; height:38px; border:1.5px solid #EAE5D9; border-radius:8px; padding:0 12px; font-weight:700; box-sizing:border-box;">
                         </div>
 
                         <div>

@@ -302,8 +302,8 @@ window.animateTargetGauge = animateTargetGauge;
             var demoReseller = {
                 name: 'Pooja Sharma',
                 companyName: 'Pooja Boutique & Ethnic Hub',
-                phone: '+91 98765 12345',
-                rawPhone: '9876512345',
+                phone: '+91 70463 63528',
+                rawPhone: '7046363528',
                 email: 'pooja.reseller@gmail.com',
                 role: 'Reseller',
                 gst_type: 'none',
@@ -396,7 +396,7 @@ window.animateTargetGauge = animateTargetGauge;
 
             var name = user.name || 'Rajesh Kumar';
             var company = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
             var email = user.email || 'rajesh@shreekrishnasilks.com';
             var gstType = user.gst_type || 'gst';
             var gstNum = user.gst_number || '24AABCU9603R1ZM';
@@ -529,7 +529,7 @@ window.animateTargetGauge = animateTargetGauge;
             var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
             var gstNum = user.gst_number || '24AABCU9603R1ZM';
             var name = user.name || 'Rajesh Kumar';
-            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '9876543210');
+            var phone = user.rawPhone || (user.phone ? user.phone.replace(/[^0-9]/g, '').slice(-10) : '7046363528');
             var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
             var billCity = user.city || 'Surat';
             var billState = user.state || 'Gujarat';
@@ -2063,8 +2063,8 @@ window.animateTargetGauge = animateTargetGauge;
             var buyerCity = user.city || 'kalaburgi';
             var buyerState = user.state || 'Karnataka';
             var buyerPin = user.pincode || '585325';
-            var buyerPhone = user.phone || '9740455555';
-            var buyerAltPhone = user.alt_phone || '6361616801';
+            var buyerPhone = user.phone || '7046363528';
+            var buyerAltPhone = user.alt_phone || '7046363528';
             var buyerGst = user.gst_number || (user.gst_type === 'gst' ? '29CFZPV1455E1ZO' : '29CFZPV1455E1ZO');
             var stateCode = user.state_code || '29-Karnataka';
 
@@ -3336,8 +3336,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 1,
                 name: "Ananya Deshmukh",
-                mobile: "9820144521",
-                whatsapp: "9820144521",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "ananya.d@gmail.com",
                 address: "402, Lotus Grandeur, Linking Road, Bandra West",
                 city: "Mumbai",
@@ -3361,8 +3361,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 2,
                 name: "Pooja Varma",
-                mobile: "9876543210",
-                whatsapp: "9876543210",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "pooja.varma@outlook.com",
                 address: "Flat 12B, Regency Heights, Civil Lines",
                 city: "Jaipur",
@@ -3385,8 +3385,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 3,
                 name: "Sneha Patel",
-                mobile: "9426011223",
-                whatsapp: "9426011223",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "sneha.patel@gmail.com",
                 address: "Plot 88, Sunrise Park, Bodakdev",
                 city: "Ahmedabad",
@@ -3407,8 +3407,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 4,
                 name: "Kavita Singhania",
-                mobile: "9831098765",
-                whatsapp: "9831098765",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "kavita.singhania@yahoo.com",
                 address: "Flat 5C, Queens Mansion, Park Street",
                 city: "Kolkata",
@@ -3431,8 +3431,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 5,
                 name: "Ritu Aggarwal",
-                mobile: "9811223344",
-                whatsapp: "9811223344",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "ritu.aggarwal@gmail.com",
                 address: "House 24, Block C, Greater Kailash 1",
                 city: "New Delhi",
@@ -3455,8 +3455,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 6,
                 name: "Meera Nair",
-                mobile: "9745012345",
-                whatsapp: "9745012345",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "meera.nair@gmail.com",
                 address: "Kairali Villa, Panampilly Nagar",
                 city: "Kochi",
@@ -3475,8 +3475,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 7,
                 name: "Priyanka Reddy",
-                mobile: "9849019283",
-                whatsapp: "9849019283",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "priyanka.reddy@gmail.com",
                 address: "Plot 104, Road No. 36, Jubilee Hills",
                 city: "Hyderabad",
@@ -3497,8 +3497,8 @@ window.animateTargetGauge = animateTargetGauge;
             {
                 id: 8,
                 name: "Sunita Mehra",
-                mobile: "9872019284",
-                whatsapp: "9872019284",
+                mobile: "7046363528",
+                whatsapp: "7046363528",
                 email: "sunita.mehra@gmail.com",
                 address: "House 102, Sector 9D",
                 city: "Chandigarh",
@@ -5760,7 +5760,7 @@ Rajesh Kumar (Reseller Partner)`;
 
             // Previously: an unknown product became "Exclusive Pure Silk Saree" at
             // Rs 3,499, and a customer with no number on file was messaged at
-            // 9876543210 - a real stranger's number.
+            // a hardcoded mobile that belongs to a real stranger.
             if (!p) {
                 if (typeof showWsToast === 'function') showWsToast('That product is no longer in the catalogue. Please refresh the page.');
                 return;
