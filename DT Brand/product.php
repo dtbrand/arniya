@@ -245,7 +245,7 @@ function pdp_relative_date(string $ts): string
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="/assets/css/singleproduct.css?v=1787021111">
+<link rel="stylesheet" href="/assets/css/singleproduct.css?v=1787022222">
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
@@ -1106,14 +1106,61 @@ function pdp_relative_date(string $ts): string
 <!-- ════ CHECKOUT MODAL PARTIAL ════ -->
 <?php include_once __DIR__ . '/shared/checkout.php'; ?>
 
-<!-- ════ SCRIPT ENGINE ════ -->
+<!-- ══════════════════════════════════════════════════════════════
+     NEXT-LEVEL LUXURY FULLSCREEN MEDIA VIEWER (LIGHTBOX)
+══════════════════════════════════════════════════════════════ -->
+<div class="pdp-lightbox-overlay" id="pdpLightboxOverlay" aria-hidden="true" role="dialog" aria-label="Fullscreen Product Media Viewer">
+    <!-- Top Header Bar -->
+    <div class="pdp-lightbox-header">
+        <div class="pdp-lightbox-meta">
+            <span class="pdp-lightbox-counter" id="pdpLbCounter">1 / 1</span>
+            <span class="pdp-lightbox-title"><?= htmlspecialchars($pName) ?></span>
+        </div>
+        <div class="pdp-lightbox-actions">
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomOut" onclick="zoomLightbox(-0.25)" title="Zoom Out ( - )" aria-label="Zoom Out">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomIn" onclick="zoomLightbox(0.25)" title="Zoom In ( + )" aria-label="Zoom In">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomReset" onclick="resetLightboxZoom()" title="Reset View" aria-label="Reset View">
+                <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-close-btn" id="pdpLbCloseBtn" onclick="closeFullscreenImage()" title="Close Viewer (Esc)" aria-label="Close">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Stage Track -->
+    <div class="pdp-lightbox-stage" id="pdpLbStage">
+        <button type="button" class="pdp-lb-nav-btn prev" id="pdpLbPrev" onclick="navigateLightbox(-1)" aria-label="Previous Media">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="pdp-lightbox-viewport" id="pdpLbViewport">
+            <div class="pdp-lightbox-slider" id="pdpLbSlider"></div>
+        </div>
+
+        <button type="button" class="pdp-lb-nav-btn next" id="pdpLbNext" onclick="navigateLightbox(1)" aria-label="Next Media">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+    </div>
+
+    <!-- Bottom Thumbnail Strip -->
+    <div class="pdp-lightbox-footer" id="pdpLbFooter">
+        <div class="pdp-lightbox-thumbs-strip" id="pdpLbThumbs"></div>
+    </div>
+</div>
+
+<!-- ════════════ SCRIPT ENGINE ════════════ -->
 <script>
         window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.totalSlidesCount = <?= max(1, count($pdpImages)) ?>;
         window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.pdpWhatsAppNumber = <?= json_encode($pdpWaNumber) ?>;
     </script>
-    <script src="/assets/js/singleproduct.js?v=1787021111"></script>
+    <script src="/assets/js/singleproduct.js?v=1787022222"></script>
 
 <!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
 <?php include_once __DIR__ . '/shared/smartshare.php'; ?>

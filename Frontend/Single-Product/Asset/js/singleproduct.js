@@ -514,15 +514,247 @@
             'ask us on WhatsApp</a> and we will confirm the date and whether COD is available there.';
     };
 
-    // Fullscreen Image Lightbox. Only photograph slides open; on a video or embed
-    // slide this used to find no <img> and do nothing silently, and on a product
-    // with no photograph it would have opened the placeholder SVG.
-    window.openFullscreenImage = function() {
-        var slide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
-        if (!slide || slide.getAttribute('data-media') !== 'image') return;
-        var img = slide.querySelector('img');
-        if (img && img.src) window.open(img.src, '_blank');
+    // ═════════════════════════════════════════════════════════════
+    // NEXT-LEVEL LUXURY FULLSCREEN LIGHTBOX (PHOTOS + VIDEOS)
+    // ═════════════════════════════════════════════════════════════
+    var lbOverlay = null;
+    var lbSlider = null;
+    var lbThumbs = null;
+    var lbCounter = null;
+    var lbCurrentIdx = 0;
+    var lbMediaList = [];
+    var lbZoomScale = 1;
+    var lbEventsBound = false;
+
+    function buildLightboxMedia() {
+        lbMediaList = [];
+        var p = window.currentProductData || currentProduct || {};
+
+        // Collect photos
+        if (Array.isArray(p.images) && p.images.length) {
+            p.images.forEach(function(img) {
+                var s = String(img || '').trim();
+                if (s && s !== '/assets/images/no-image.svg' && !lbMediaList.some(function(x) { return x.src === s; })) {
+                    lbMediaList.push({ kind: 'image', src: s, title: p.name || 'Photo' });
+                }
+            });
+        } else if (p.image && p.image !== '/assets/images/no-image.svg') {
+            lbMediaList.push({ kind: 'image', src: p.image, title: p.name || 'Photo' });
+        }
+
+        // Collect uploaded MP4 videos
+        if (Array.isArray(p.videos)) {
+            p.videos.forEach(function(v) {
+                var sv = String(v || '').trim();
+                if (sv && !lbMediaList.some(function(x) { return x.src === sv; })) {
+                    lbMediaList.push({ kind: 'video', src: sv, poster: (lbMediaList[0] ? lbMediaList[0].src : ''), title: p.name || 'HD Video' });
+                }
+            });
+        }
+        if (p.video) {
+            var sv1 = String(p.video || '').trim();
+            if (sv1 && !lbMediaList.some(function(x) { return x.src === sv1; })) {
+                lbMediaList.push({ kind: 'video', src: sv1, poster: (lbMediaList[0] ? lbMediaList[0].src : ''), title: p.name || 'HD Video' });
+            }
+        }
+
+        // Collect embeds
+        if (Array.isArray(p.embeds)) {
+            p.embeds.forEach(function(em) {
+                var sem = String(em || '').trim();
+                if (sem && !lbMediaList.some(function(x) { return x.src === sem; })) {
+                    lbMediaList.push({ kind: 'embed', src: sem, title: p.name || 'Featured Video' });
+                }
+            });
+        }
+        if (p.embed) {
+            var sem1 = String(p.embed || '').trim();
+            if (sem1 && !lbMediaList.some(function(x) { return x.src === sem1; })) {
+                lbMediaList.push({ kind: 'embed', src: sem1, title: p.name || 'Featured Video' });
+            }
+        }
+    }
+
+    window.openFullscreenImage = function(startIdx) {
+        lbOverlay = document.getElementById('pdpLightboxOverlay');
+        lbSlider = document.getElementById('pdpLbSlider');
+        lbThumbs = document.getElementById('pdpLbThumbs');
+        lbCounter = document.getElementById('pdpLbCounter');
+        if (!lbOverlay || !lbSlider) return;
+
+        buildLightboxMedia();
+        if (lbMediaList.length === 0) return;
+
+        // Build Slides
+        lbSlider.innerHTML = lbMediaList.map(function(item, idx) {
+            if (item.kind === 'video') {
+                return '<div class="pdp-lb-slide" data-idx="' + idx + '" data-kind="video">' +
+                    '<div class="pdp-lb-video-wrap">' +
+                        '<video src="' + item.src + '" ' + (item.poster ? 'poster="' + item.poster + '"' : '') + ' controls autoplay playsinline preload="auto"></video>' +
+                    '</div>' +
+                '</div>';
+            } else if (item.kind === 'embed') {
+                return '<div class="pdp-lb-slide" data-idx="' + idx + '" data-kind="embed">' +
+                    '<div class="pdp-lb-video-wrap">' +
+                        '<iframe src="' + item.src + '" title="' + item.title + '" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+                    '</div>' +
+                '</div>';
+            } else {
+                return '<div class="pdp-lb-slide" data-idx="' + idx + '" data-kind="image">' +
+                    '<img src="' + item.src + '" alt="' + item.title + '" draggable="false" ondblclick="toggleLightboxZoom(this)" />' +
+                '</div>';
+            }
+        }).join('');
+
+        // Build Thumbs
+        if (lbThumbs) {
+            lbThumbs.innerHTML = lbMediaList.map(function(item, idx) {
+                var thumbSrc = item.kind === 'image' ? item.src : (item.poster || (lbMediaList[0] ? lbMediaList[0].src : ''));
+                var isVid = item.kind !== 'image';
+                return '<div class="pdp-lb-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '" onclick="goToLightboxSlide(' + idx + ')">' +
+                    '<img src="' + thumbSrc + '" alt="Thumb ' + (idx + 1) + '" />' +
+                    (isVid ? '<div class="pdp-lb-thumb-video-badge"><svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>' : '') +
+                '</div>';
+            }).join('');
+        }
+
+        var targetIdx = typeof startIdx === 'number' ? startIdx : currentSlideIdx;
+        if (targetIdx < 0 || targetIdx >= lbMediaList.length) targetIdx = 0;
+
+        lbOverlay.classList.add('open');
+        lbOverlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        window.goToLightboxSlide(targetIdx);
+        bindLightboxEvents();
     };
+
+    window.closeFullscreenImage = function() {
+        if (!lbOverlay) lbOverlay = document.getElementById('pdpLightboxOverlay');
+        if (lbOverlay) {
+            lbOverlay.classList.remove('open');
+            lbOverlay.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+
+            // Pause all videos
+            if (lbSlider) {
+                lbSlider.querySelectorAll('video').forEach(function(v) { v.pause(); });
+                lbSlider.querySelectorAll('iframe').forEach(function(f) {
+                    var s = f.src; f.src = s;
+                });
+            }
+            window.resetLightboxZoom();
+        }
+    };
+
+    window.goToLightboxSlide = function(idx) {
+        if (!lbSlider || lbMediaList.length === 0) return;
+        lbCurrentIdx = ((idx % lbMediaList.length) + lbMediaList.length) % lbMediaList.length;
+
+        lbSlider.style.transform = 'translateX(-' + (lbCurrentIdx * 100) + '%)';
+
+        if (lbCounter) {
+            lbCounter.textContent = (lbCurrentIdx + 1) + ' / ' + lbMediaList.length;
+        }
+
+        // Update active thumb
+        if (lbThumbs) {
+            lbThumbs.querySelectorAll('.pdp-lb-thumb').forEach(function(th, i) {
+                var isActive = (i === lbCurrentIdx);
+                th.classList.toggle('active', isActive);
+                if (isActive) {
+                    try { th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } catch(e) {}
+                }
+            });
+        }
+
+        // Manage video play/pause
+        lbSlider.querySelectorAll('.pdp-lb-slide').forEach(function(sl, i) {
+            var vid = sl.querySelector('video');
+            if (vid) {
+                if (i === lbCurrentIdx) {
+                    vid.play().catch(function() {});
+                } else {
+                    vid.pause();
+                }
+            }
+        });
+
+        window.resetLightboxZoom();
+    };
+
+    window.navigateLightbox = function(delta) {
+        window.goToLightboxSlide(lbCurrentIdx + delta);
+    };
+
+    window.resetLightboxZoom = function() {
+        lbZoomScale = 1;
+        if (!lbSlider) return;
+        var activeSlide = lbSlider.querySelector('.pdp-lb-slide[data-idx="' + lbCurrentIdx + '"]');
+        if (activeSlide) {
+            var img = activeSlide.querySelector('img');
+            if (img) {
+                img.style.transform = 'scale(1)';
+                img.classList.remove('zoomed');
+            }
+        }
+    };
+
+    window.zoomLightbox = function(delta) {
+        if (!lbSlider) return;
+        var activeSlide = lbSlider.querySelector('.pdp-lb-slide[data-idx="' + lbCurrentIdx + '"]');
+        if (!activeSlide) return;
+        var img = activeSlide.querySelector('img');
+        if (!img) return;
+
+        lbZoomScale = Math.min(3, Math.max(1, lbZoomScale + delta));
+        img.style.transform = 'scale(' + lbZoomScale + ')';
+        img.classList.toggle('zoomed', lbZoomScale > 1);
+    };
+
+    window.toggleLightboxZoom = function(img) {
+        if (!img) return;
+        if (lbZoomScale > 1) {
+            window.resetLightboxZoom();
+        } else {
+            window.zoomLightbox(1);
+        }
+    };
+
+    function bindLightboxEvents() {
+        if (lbEventsBound) return;
+        lbEventsBound = true;
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!lbOverlay || !lbOverlay.classList.contains('open')) return;
+            if (e.key === 'Escape') {
+                window.closeFullscreenImage();
+            } else if (e.key === 'ArrowRight') {
+                window.navigateLightbox(1);
+            } else if (e.key === 'ArrowLeft') {
+                window.navigateLightbox(-1);
+            }
+        });
+
+        // Touch Swipe
+        var vp = document.getElementById('pdpLbViewport');
+        if (vp) {
+            var touchStartX = 0, touchEndX = 0;
+            vp.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+            vp.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].clientX;
+                var diff = touchEndX - touchStartX;
+                if (diff < -50) {
+                    window.navigateLightbox(1);
+                } else if (diff > 50) {
+                    window.navigateLightbox(-1);
+                }
+            }, { passive: true });
+        }
+    }
 
     function restoreUserSavedAddress() {
         var nameField = document.getElementById('pdpWaName');
