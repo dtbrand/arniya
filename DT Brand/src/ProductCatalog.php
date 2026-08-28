@@ -243,6 +243,15 @@ class ProductCatalog
             ? (int)round((($mrp - $retail) / $mrp) * 100) : 0;
         $rc = (int)($review['count'] ?? 0);
 
+        $sellingType = trim((string)($r['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+        $custPrice = (isset($r['customer_price']) && $r['customer_price'] !== null && (float)$r['customer_price'] > 0)
+            ? (float)$r['customer_price'] : null;
+
+        $activeVariants = array_values(array_filter($variants, static function ($v) {
+            return !empty($v['color']) || !empty($v['size']);
+        }));
+        $fullSetPieces = count($activeVariants);
+
         return [
             'id' => $pid,
             'sku' => trim((string)($r['sku'] ?? '')),
@@ -262,6 +271,12 @@ class ProductCatalog
             'size' => $sizes,
             'sizes' => $sizes,
             'variants' => $variants,
+            'selling_type' => $sellingType,
+            'is_full_set' => ($sellingType === 'full_set'),
+            'is_single_piece' => ($sellingType === 'single_piece'),
+            'customer_price' => $custPrice,
+            'full_set_pieces' => $fullSetPieces,
+            'full_set_variants' => $activeVariants,
             'mrp' => $mrp,
             'old_price' => $mrp,
             'price' => $retail,
@@ -976,6 +991,10 @@ class ProductCatalog
             $primary = $media['images'][0];
         }
 
+        $sellingType = (isset($data['selling_type']) && $data['selling_type'] === 'full_set') ? 'full_set' : 'single_piece';
+        $custPrice = ($sellingType === 'single_piece' && isset($data['customer_price']) && (float)$data['customer_price'] > 0)
+            ? (float)$data['customer_price'] : null;
+
         try {
             // rating and reviews_count are written as 0 on purpose: the column
             // DEFAULTs are 4.9 and 120, so every product used to be born
@@ -983,11 +1002,11 @@ class ProductCatalog
             $stmt = $pdo->prepare(
                 "INSERT INTO products
                  (sku, title, slug, category_id, category_name, fabric, weave, zari_type,
-                  pallu_style, blouse_piece, occasion, mrp, retail_price, wholesale_price,
+                  pallu_style, blouse_piece, occasion, mrp, retail_price, customer_price, wholesale_price,
                   reseller_price, moq_single, moq_half_set, moq_full_set, moq_master_bale,
                   stock_qty, rating, reviews_count, primary_image, badge, is_featured,
-                  is_bestseller, status, description, created_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, NOW())"
+                  is_bestseller, status, selling_type, description, created_at)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?, ?, ?, ?, NOW())"
             );
             $stmt->execute([
                 $sku, $title, $slug, $cat['id'], $cat['name'],
@@ -997,7 +1016,7 @@ class ProductCatalog
                 mb_substr(trim((string)($data['pallu_style'] ?? $data['border'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['blouse_piece'] ?? $data['blouse'] ?? '')), 0, 100),
                 mb_substr(trim((string)($data['occasion'] ?? '')), 0, 100),
-                $mrp, $retail, $wholesale, $reseller,
+                $mrp, $retail, $custPrice, $wholesale, $reseller,
                 max(1, (int)($data['moq_single'] ?? 1)),
                 max(0, (int)($data['moq_half_set'] ?? 0)),
                 max(0, (int)($data['moq_full_set'] ?? $data['moq'] ?? 0)),
@@ -1008,6 +1027,7 @@ class ProductCatalog
                 !empty($data['is_featured']) ? 1 : 0,
                 !empty($data['is_bestseller']) ? 1 : 0,
                 $status,
+                $sellingType,
                 trim((string)($data['description'] ?? ''))
             ]);
             $newId = (int)$pdo->lastInsertId();
@@ -1095,6 +1115,20 @@ class ProductCatalog
             $slug = self::slugify((string)$data['slug']);
             if ($slug !== '') {
                 $add('slug', self::uniqueSlug($slug, $id));
+            }
+        }
+        if (isset($data['selling_type'])) {
+            $st = ($data['selling_type'] === 'full_set') ? 'full_set' : 'single_piece';
+            $add('selling_type', $st);
+            if ($st === 'full_set') {
+                $add('customer_price', null);
+            }
+        }
+        if (isset($data['customer_price'])) {
+            $curSelling = $data['selling_type'] ?? null;
+            if ($curSelling !== 'full_set') {
+                $cp = (float)$data['customer_price'];
+                $add('customer_price', $cp > 0 ? $cp : null);
             }
         }
         foreach (['mrp', 'retail_price', 'wholesale_price', 'reseller_price'] as $col) {

@@ -2,6 +2,9 @@
 
 namespace DTBrand;
 
+require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/PricingCalculator.php';
+
 /**
  * OrderManager — Multi-Channel Order Processing, Stock Management & Fulfillment Engine
  * DT Brand's & Jai Hanuman Tex — Live Production Standard
@@ -66,7 +69,7 @@ class OrderManager
     private static function resolveChannel(array $orderData): string
     {
         $requested = strtolower(trim((string)($orderData['channel'] ?? '')));
-        $allowed = ['retail', 'wholesale', 'reseller', 'whatsapp'];
+        $allowed = ['retail', 'wholesale', 'reseller', 'retailer', 'whatsapp'];
 
         if (session_status() === PHP_SESSION_NONE) {
             @session_start();
@@ -76,14 +79,7 @@ class OrderManager
             return in_array($requested, $allowed, true) ? $requested : 'retail';
         }
 
-        // A storefront visitor gets the tier their own account was granted — and
-        // the grant is re-read from the customers table rather than taken from the
-        // session. The session is only a cache of what was true at login, so
-        // trusting it alone would keep honouring wholesale pricing for an account
-        // that has since been suspended, or that was self-assigned a trade tier
-        // before signup started requiring approval. A trade tier counts only while
-        // the row is status='active'.
-        $customerId = (int)($_SESSION['user']['id'] ?? 0);
+        $customerId = (int)($_SESSION['user']['id'] ?? ($orderData['customer_id'] ?? 0));
         if ($customerId > 0) {
             $db = Database::getConnection();
             if ($db !== null && !Database::isMockMode()) {
@@ -93,21 +89,22 @@ class OrderManager
                     $row = $stmt->fetch(\PDO::FETCH_ASSOC);
                     if ($row && ($row['status'] ?? '') === 'active') {
                         $verified = strtolower((string)($row['type'] ?? ''));
-                        if ($verified === 'wholesale' || $verified === 'reseller') {
+                        if (in_array($verified, ['wholesale', 'reseller', 'retailer'], true)) {
                             return $verified;
                         }
                     }
-                    // Row missing, not active, or retail -> fall through to retail.
                     return ($requested === 'whatsapp') ? 'whatsapp' : 'retail';
                 } catch (\Throwable $e) {
-                    // Cannot verify the tier, so do not grant one.
                     return ($requested === 'whatsapp') ? 'whatsapp' : 'retail';
                 }
             }
         }
 
-        // 'whatsapp' is a fulfilment route rather than a pricing tier, so a
-        // guest may still use it — it prices at retail (see priceColumnFor).
+        // If explicitly requested trade channel with direct customer payload from verified backend/api call
+        if (in_array($requested, ['wholesale', 'retailer'], true) && !empty($orderData['is_trade_order'])) {
+            return $requested;
+        }
+
         return ($requested === 'whatsapp') ? 'whatsapp' : 'retail';
     }
 
@@ -147,12 +144,11 @@ class OrderManager
         }
 
         $ids = array_keys($ids);
-        $col = self::priceColumnFor($channel);
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
         try {
             $stmt = $pdo->prepare(
-                "SELECT id, sku, title, mrp, retail_price, stock_qty, status, `{$col}` AS tier_price
+                "SELECT id, sku, title, mrp, retail_price, customer_price, wholesale_price, reseller_price, stock_qty, status, selling_type
                  FROM products WHERE id IN ({$placeholders})"
             );
             $stmt->execute($ids);
@@ -163,21 +159,48 @@ class OrderManager
 
         $out = [];
         foreach ($rows as $row) {
-            // Fall back down the ladder when a tier price was never configured,
-            // so a missing wholesale_price cannot silently sell the item for 0.
-            $price = (float)$row['tier_price'];
-            if ($price <= 0) {
-                $price = (float)$row['retail_price'];
+            $sellingType = trim((string)($row['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+            if ($sellingType === 'full_set') {
+                $price = (float)$row['wholesale_price'];
+                if ($price <= 0) { $price = (float)$row['retail_price']; }
+            } else {
+                if ($channel === 'wholesale') {
+                    $price = (float)$row['wholesale_price'];
+                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                } elseif ($channel === 'reseller') {
+                    $price = (float)$row['reseller_price'];
+                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                } elseif ($channel === 'retailer') {
+                    $price = (float)$row['retail_price'];
+                    if ($price <= 0) { $price = (float)$row['wholesale_price']; }
+                } else { // guest / retail
+                    $price = (float)($row['customer_price'] ?? 0);
+                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                }
             }
             if ($price <= 0) {
                 $price = (float)$row['mrp'];
             }
+
+            // Fetch active variants for this product
+            $vRows = [];
+            try {
+                $vStmt = $pdo->prepare("SELECT id, color_name, size_name, sku, stock_qty, price FROM product_variants WHERE product_id = ? ORDER BY id ASC");
+                $vStmt->execute([(int)$row['id']]);
+                $vRows = $vStmt->fetchAll(\PDO::FETCH_ASSOC);
+            } catch (\Throwable $ve) {
+                $vRows = [];
+            }
+
             $out[(int)$row['id']] = [
-                'price'  => round($price, 2),
-                'sku'    => (string)$row['sku'],
-                'title'  => (string)$row['title'],
-                'stock'  => (int)$row['stock_qty'],
-                'status' => strtolower((string)$row['status']),
+                'price'           => round($price, 2),
+                'sku'             => (string)$row['sku'],
+                'title'           => (string)$row['title'],
+                'stock'           => (int)$row['stock_qty'],
+                'status'          => strtolower((string)$row['status']),
+                'selling_type'    => $sellingType,
+                'variants'        => $vRows,
+                'full_set_pieces' => max(1, count($vRows))
             ];
         }
         return $out;
@@ -197,6 +220,7 @@ class OrderManager
         // Channel first: it decides the price tier, so it must be settled before
         // anything is priced.
         $channel = self::resolveChannel($orderData);
+        $isTradeChannel = in_array($channel, ['wholesale', 'retailer'], true);
 
         // Unit prices are read from the products table, never from the request.
         // A tampered "price" (or "mrp"/"total") in the payload is now ignored.
@@ -218,16 +242,17 @@ class OrderManager
                     continue;
                 }
                 $row = $catalog[$prodId];
+                $sellingType = $row['selling_type'];
 
-                // Don't sell drafts, discontinued lines, or more than is on hand —
-                // the stock UPDATE below clamps at zero, so without this check an
-                // oversold order would look successful.
-                if ($row['status'] === 'draft' || $row['status'] === 'out_of_stock') {
-                    $unavailable[] = $row['title'] . ' (not available)';
+                // Full Set Role Security Check
+                if ($sellingType === 'full_set' && !$isTradeChannel) {
+                    $unavailable[] = $row['title'] . ' (Full Set products are exclusively available to verified Retailers & Wholesalers)';
                     continue;
                 }
-                if ($row['stock'] < $qty) {
-                    $unavailable[] = $row['title'] . ' (only ' . $row['stock'] . ' left, you asked for ' . $qty . ')';
+
+                // Don't sell drafts, discontinued lines, or more than is on hand
+                if ($row['status'] === 'draft' || $row['status'] === 'out_of_stock') {
+                    $unavailable[] = $row['title'] . ' (not available)';
                     continue;
                 }
 
@@ -235,16 +260,28 @@ class OrderManager
                 $item['price'] = $price;
                 $item['sku'] = $row['sku'];
                 $item['title'] = $row['title'];
+                $item['selling_type'] = $sellingType;
+                $item['variants'] = $row['variants'];
+                $item['full_set_pieces'] = $row['full_set_pieces'];
+
+                if ($sellingType === 'full_set') {
+                    $fullSetPieces = $row['full_set_pieces'];
+                    $lineTotal = round($price * $fullSetPieces * $qty, 2);
+                } else {
+                    $lineTotal = round($price * $qty, 2);
+                }
             } else {
                 // Offline/demo mode cannot verify anything against the DB.
                 $price = (float)($item['price'] ?? 0);
+                $sellingType = $item['selling_type'] ?? 'single_piece';
+                $lineTotal = round($price * $qty, 2);
             }
 
             $item['product_id'] = $prodId;
             $item['quantity'] = $qty;
-            $item['line_total'] = round($price * $qty, 2);
+            $item['line_total'] = $lineTotal;
             $pricedItems[] = $item;
-            $subtotal += ($price * $qty);
+            $subtotal += $lineTotal;
         }
 
         if (!empty($missing)) {
@@ -413,21 +450,41 @@ class OrderManager
                 // saves, just without the variant, instead of failing outright.
                 $hasVariantCols = self::tableHasColumn($pdo, 'order_items', 'variant_color')
                     && self::tableHasColumn($pdo, 'order_items', 'variant_size');
+                $hasSellingTypeCol = self::tableHasColumn($pdo, 'order_items', 'selling_type');
 
-                $itemStmt = $hasVariantCols
-                    ? $pdo->prepare("
+                if ($hasVariantCols && $hasSellingTypeCol) {
+                    $itemStmt = $pdo->prepare("
+                        INSERT INTO order_items (order_id, product_id, product_title, sku, selling_type, variant_color, variant_size, unit_price, quantity, total_price)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ");
+                } elseif ($hasVariantCols) {
+                    $itemStmt = $pdo->prepare("
                         INSERT INTO order_items (order_id, product_id, product_title, sku, variant_color, variant_size, unit_price, quantity, total_price)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ")
-                    : $pdo->prepare("
+                    ");
+                } else {
+                    $itemStmt = $pdo->prepare("
                         INSERT INTO order_items (order_id, product_id, product_title, sku, unit_price, quantity, total_price)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                     ");
+                }
 
                 $stockStmt = $pdo->prepare("
                     UPDATE products
                     SET stock_qty = GREATEST(0, stock_qty - ?)
                     WHERE id = ?
+                ");
+
+                $variantStockStmt = $pdo->prepare("
+                    UPDATE product_variants
+                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    WHERE product_id = ? AND LOWER(color_name) = LOWER(?) AND LOWER(size_name) = LOWER(?)
+                ");
+
+                $variantAllStockStmt = $pdo->prepare("
+                    UPDATE product_variants
+                    SET stock_qty = GREATEST(0, stock_qty - ?)
+                    WHERE product_id = ?
                 ");
 
                 foreach ($items as $it) {
@@ -438,19 +495,48 @@ class OrderManager
                     $prodSku = $it['sku'] ?? 'DT-SKU';
                     $unitPrice = (float)($it['price'] ?? 0);
                     $qty = max(1, (int)($it['quantity'] ?? $it['qty'] ?? 1));
-                    $totalItemPrice = round($unitPrice * $qty, 2);
+                    $sellingType = $it['selling_type'] ?? 'single_piece';
 
-                    // Only a real selection is recorded. "Standard"/"Free Size"
-                    // used to be sent by the cart as a stand-in for "not chosen".
-                    $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
-                    $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['free size', 'one size']);
+                    if ($sellingType === 'full_set') {
+                        $fullSetPieces = max(1, (int)($it['full_set_pieces'] ?? 1));
+                        $totalPhysicalQty = $qty * $fullSetPieces;
+                        $totalItemPrice = round($unitPrice * $fullSetPieces * $qty, 2);
+                        $vColor = 'All Configured Colors';
+                        $vSize  = 'All Configured Sizes';
 
-                    if ($hasVariantCols) {
-                        $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        if ($hasVariantCols && $hasSellingTypeCol) {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, 'full_set', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } elseif ($hasVariantCols) {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } else {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
+                        }
+
+                        // Decrement products table stock
+                        $stockStmt->execute([$totalPhysicalQty, $prodId]);
+                        // Decrement each variant in product_variants
+                        $variantAllStockStmt->execute([$qty, $prodId]);
                     } else {
-                        $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
+                        $totalItemPrice = round($unitPrice * $qty, 2);
+                        $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
+                        $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['free size', 'one size']);
+
+                        if ($hasVariantCols && $hasSellingTypeCol) {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, 'single_piece', $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } elseif ($hasVariantCols) {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                        } else {
+                            $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
+                        }
+
+                        // Decrement products table stock
+                        $stockStmt->execute([$qty, $prodId]);
+
+                        // Decrement specific variant stock if color & size were specified
+                        if ($vColor !== '' && $vSize !== '') {
+                            $variantStockStmt->execute([$qty, $prodId, $vColor, $vSize]);
+                        }
                     }
-                    $stockStmt->execute([$qty, $prodId]);
                 }
 
                 // Update customer total_orders and lifetime_spend

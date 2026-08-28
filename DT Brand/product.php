@@ -47,16 +47,40 @@ if (!$product) {
 }
 // ── Normalised scalars. mapRow() returns '' / [] for anything the mill has not
 // filled in, never a missing key, so `?? 'Pure Silk'`-style defaults could not
-// fire: they were dead code hiding behind values this page then printed as if
-// they were the product's real fabric, colour and weave.
+require_once __DIR__ . '/src/Auth.php';
+$pdpUser = \DTBrand\Auth::getCurrentUser();
+$pdpUserRole = strtolower(trim((string)($pdpUser['type'] ?? 'guest')));
+if ($pdpUserRole === '' || $pdpUserRole === 'customer') { $pdpUserRole = 'retail'; }
+if (!in_array($pdpUserRole, ['retail', 'wholesale', 'reseller', 'retailer'], true)) {
+    $pdpUserRole = 'retail';
+}
+$isTradeRole = in_array($pdpUserRole, ['wholesale', 'retailer'], true);
+
+$pSellingType = $product['selling_type'] ?? 'single_piece';
+$isFullSetProduct = ($pSellingType === 'full_set');
+
+// Role-based price resolution
+if ($pSellingType === 'single_piece') {
+    if ($pdpUserRole === 'reseller') {
+        $pPrice = (float)($product['reseller_price'] ?? $product['retail_price']);
+    } elseif ($pdpUserRole === 'wholesale') {
+        $pPrice = (float)($product['wholesale_price'] ?? $product['retail_price']);
+    } elseif ($pdpUserRole === 'retailer') {
+        $pPrice = (float)($product['retail_price'] ?? $product['price']);
+    } else { // Guest or Retail Customer
+        $pPrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price']);
+    }
+} else { // Full Set
+    $pPrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? $product['price']);
+}
+
 $pName        = $product['name'] !== '' ? $product['name'] : ($product['sku'] !== '' ? $product['sku'] : 'Untitled product');
 $pSku         = (string)$product['sku'];
 $pCategory    = (string)$product['category'];
 $pFabric      = (string)$product['fabric'];
 $pDescription = (string)$product['description'];
-$pPrice       = (float)$product['price'];
 $pMrp         = (float)$product['old_price'];
-$pDiscount    = (int)$product['discount'];
+$pDiscount    = ($pMrp > $pPrice && $pPrice > 0) ? (int)round((($pMrp - $pPrice) / $pMrp) * 100) : 0;
 $pRating      = (float)$product['rating'];
 $pReviewCount = (int)$product['reviews_count'];
 $pStockQty    = (int)$product['stock_qty'];
@@ -64,6 +88,9 @@ $pInStock     = !empty($product['in_stock']);
 $pColors      = array_values(array_filter(array_map('strval', (array)$product['colors']), static fn($c) => trim($c) !== ''));
 $pSizes       = array_values(array_filter(array_map('strval', (array)$product['size']), static fn($s) => trim($s) !== ''));
 $pdpNoImage   = ProductCatalog::NO_IMAGE;
+
+$fullSetPieces = max(1, (int)($product['full_set_pieces'] ?? count($product['variants'] ?? [])));
+$fullSetTotalRate = round($pPrice * $fullSetPieces, 2);
 
 // ── Gallery media: only this product's own uploads ──
 // The gallery was padded to four slides with /assets/images/product<N>.png
@@ -335,22 +362,24 @@ function pdp_relative_date(string $ts): string
                 <div class="pdp-price-main-row">
                     <?php if ($pPrice > 0): ?>
                     <span class="pdp-price-val">₹<?= number_format($pPrice) ?></span>
+                    <?php if ($isFullSetProduct): ?>
+                    <span style="font-size:0.85rem; font-weight:700; color:#8A681F; margin-left:4px;">/ pc</span>
+                    <span style="font-size:0.92rem; font-weight:800; color:#181512; background:#FAF5E8; border:1px solid #D4AF37; padding:2px 8px; border-radius:4px; margin-left:8px;">₹<?= number_format($fullSetTotalRate) ?> / Set (<?= $fullSetPieces ?> pcs)</span>
+                    <?php endif; ?>
                     <?php else: ?>
                     <span class="pdp-price-val">Price on request</span>
                     <?php endif; ?>
-                    <?php if ($pMrp > $pPrice && $pPrice > 0): ?>
+                    <?php if ($pMrp > $pPrice && $pPrice > 0 && !$isFullSetProduct): ?>
                     <span class="pdp-mrp-val">MRP ₹<?= number_format($pMrp) ?></span>
                     <?php endif; ?>
-                    <?php if ($pDiscount > 0 && $pMrp > $pPrice): ?>
+                    <?php if ($pDiscount > 0 && $pMrp > $pPrice && !$isFullSetProduct): ?>
                     <span class="pdp-discount-badge"><?= (int)$pDiscount ?>% OFF</span>
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
                     <span>Inclusive of all taxes</span> • <span class="green">⚡ Fast Delivery in 3–5 Days</span>
                 </div>
-                <!-- Animated Luxury Perks Strip. The first badge claimed "100% Handloom Silk"
-                     for every product; it now echoes the fabric column and is dropped when
-                     the fabric was never filled in. The rest are store-wide policies. -->
+                <!-- Animated Luxury Perks Strip. -->
                 <div class="pdp-animated-perks-strip">
                     <?php if ($pFabric !== ''): ?>
                     <div class="pdp-perk-badge">
@@ -373,50 +402,96 @@ function pdp_relative_date(string $ts): string
                 </div>
             </div>
 
-            <!-- Colour Swatches — hidden entirely when no colour variant was created.
-                 The block used to render with a single "Standard" label and no swatches,
-                 and every swatch outside a 23-name hardcoded map drew the same gold. -->
-            <?php if ($pColors !== []): ?>
-            <div>
-                <div class="pdp-section-header">
-                    <span>SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($pColors[0]) ?></strong></span>
+            <?php if ($isFullSetProduct): ?>
+                <?php if (!$isTradeRole): ?>
+                <!-- B2B Wholesale Exclusive Lock Card for Guest / Customer / Reseller -->
+                <div class="pdp-fullset-lock-card" style="background:#FAF8F2; border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; margin:14px 0;">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                        <span style="font-size:18px;">👑</span>
+                        <strong style="font-size:13px; color:#5A4210; text-transform:uppercase; letter-spacing:0.5px;">B2B Trade Full Set Exclusive</strong>
+                    </div>
+                    <p style="font-size:12px; color:#64748B; margin:0 0 12px; line-height:1.5;">
+                        This product is sold as a Complete Catalog Set (<?= $fullSetPieces ?> pieces) exclusively to verified <strong>Retailers &amp; Wholesalers</strong>. Retail customer purchasing is not available for full sets.
+                    </p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <a href="/account?tab=b2b_apply" class="dt-btn-gold" style="padding:7px 16px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+                            <span>Apply for Wholesale Account</span> &rarr;
+                        </a>
+                        <a href="/account" class="dt-btn-pale" style="padding:7px 16px; font-size:12px; text-decoration:none;">Sign In as Trade Partner</a>
+                    </div>
                 </div>
-                <div class="pdp-color-swatches" id="pdpColorSwatches">
-                    <?php foreach ($pColors as $idx => $c): ?>
-                    <button
-                        class="pdp-color-btn <?= $idx === 0 ? 'active' : '' ?>"
-                        data-color="<?= htmlspecialchars($c) ?>"
-                        style="background-color: <?= htmlspecialchars($pdpSwatch($c)) ?>;"
-                        title="<?= htmlspecialchars($c) ?>"
-                        onclick="selectPdpColor(this)"
-                    ></button>
-                    <?php endforeach; ?>
+                <?php else: ?>
+                <!-- Full Set Trade Breakdown Card for Retailer / Wholesaler -->
+                <div class="pdp-fullset-trade-card" style="background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #D4AF37; border-radius:10px; padding:16px 18px; color:#FAF5E8; margin:14px 0; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.35); padding-bottom:10px; margin-bottom:10px;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            <strong style="font-size:13px; color:#FFE57F; letter-spacing:0.5px;">FULL SET INCLUSIONS (<?= $fullSetPieces ?> PIECES)</strong>
+                        </div>
+                        <span class="adm-badge gold" style="font-size:11px; padding:3px 10px;"><?= count($pColors) ?> Colors &bull; <?= $fullSetPieces ?> Pieces Total</span>
+                    </div>
+                    <div style="font-size:11px; color:#D6D3D1; margin-bottom:10px;">
+                        The Full Set bundle contains all <?= $fullSetPieces ?> configured Color &times; Size combinations. Set rate: <strong>₹<?= number_format($fullSetTotalRate) ?></strong> (₹<?= number_format($pPrice) ?> / piece):
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:6px; max-height:140px; overflow-y:auto; padding-right:4px;">
+                        <?php foreach ($product['full_set_variants'] ?? $product['variants'] as $fsv): ?>
+                        <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:4px; padding:4px 8px; font-size:11px;">
+                            <span style="color:#22C55E; font-weight:800;">✓</span>
+                            <span style="width:8px; height:8px; border-radius:50%; background:<?= htmlspecialchars($pdpSwatch($fsv['color'] ?? '')) ?>; display:inline-block; border:1px solid #fff;"></span>
+                            <strong style="color:#FAF5E8;"><?= htmlspecialchars($fsv['color'] ?? 'Standard') ?></strong>
+                            <span style="color:#D4AF37;">/</span>
+                            <span style="color:#D6D3D1;"><?= htmlspecialchars($fsv['size'] ?? 'Standard') ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <!-- Single Piece Mode: Colour Swatches -->
+                <?php if ($pColors !== []): ?>
+                <div>
+                    <div class="pdp-section-header">
+                        <span>SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($pColors[0]) ?></strong></span>
+                    </div>
+                    <div class="pdp-color-swatches" id="pdpColorSwatches">
+                        <?php foreach ($pColors as $idx => $c): ?>
+                        <button
+                            class="pdp-color-btn <?= $idx === 0 ? 'active' : '' ?>"
+                            data-color="<?= htmlspecialchars($c) ?>"
+                            style="background-color: <?= htmlspecialchars($pdpSwatch($c)) ?>;"
+                            title="<?= htmlspecialchars($c) ?>"
+                            onclick="selectPdpColor(this)"
+                        ></button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <!-- Single Piece Mode: Size Selector -->
+                <?php if ($pSizes !== []): ?>
+                <div>
+                    <div class="pdp-section-header">
+                        <span>SELECT SIZE</span>
+                        <span class="pdp-size-guide-link" onclick="openSizeGuideModal()">📏 View Size Chart</span>
+                    </div>
+                    <div class="pdp-size-grid" id="pdpSizeGrid">
+                        <?php foreach ($pSizes as $idx => $s): ?>
+                        <button class="pdp-size-btn <?= $idx === 0 ? 'active' : '' ?>" data-size="<?= htmlspecialchars($s) ?>" onclick="selectPdpSize(this)">
+                            <?= htmlspecialchars($s) ?>
+                        </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
             <?php endif; ?>
 
-            <!-- Size Selector — hidden when the product has no size variants. -->
-            <?php if ($pSizes !== []): ?>
-            <div>
-                <div class="pdp-section-header">
-                    <span>SELECT SIZE</span>
-                    <span class="pdp-size-guide-link" onclick="openSizeGuideModal()">📏 View Size Chart</span>
-                </div>
-                <div class="pdp-size-grid" id="pdpSizeGrid">
-                    <?php foreach ($pSizes as $idx => $s): ?>
-                    <button class="pdp-size-btn <?= $idx === 0 ? 'active' : '' ?>" data-size="<?= htmlspecialchars($s) ?>" onclick="selectPdpSize(this)">
-                        <?= htmlspecialchars($s) ?>
-                    </button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- Actions (Quantity, Add to Bag, Buy Now).
-                 An out-of-stock product could previously be added to the bag and
-                 checked out exactly like an in-stock one. -->
+            <!-- Actions (Quantity, Add to Bag, Buy Now) -->
             <div class="pdp-actions-container">
-                <?php if (!$pInStock): ?>
+                <?php if ($isFullSetProduct && !$isTradeRole): ?>
+                <div style="font-size:11.5px; color:#64748B; font-weight:600; text-align:center; padding:6px 0;">
+                    To order this Full Set catalog, please sign in with an approved trade account.
+                </div>
+                <?php elseif (!$pInStock): ?>
                 <div class="pdp-oos-note" style="background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; border-radius:10px; padding:12px 14px; font-size:0.82rem; font-weight:600; line-height:1.5;">
                     This product is out of stock. Message us on WhatsApp and we will tell you when it is back, or suggest the closest piece we have.
                 </div>
@@ -427,13 +502,17 @@ function pdp_relative_date(string $ts): string
                 </a>
                 <?php else: ?>
                 <div class="pdp-qty-row">
-                    <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em;">Quantity:</span>
+                    <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em;">
+                        <?= $isFullSetProduct ? 'Quantity (Sets):' : 'Quantity:' ?>
+                    </span>
                     <div class="pdp-qty-box">
                         <button class="pdp-qty-btn" onclick="updatePdpQty(-1)">−</button>
                         <span class="pdp-qty-num" id="pdpQtyVal">1</span>
                         <button class="pdp-qty-btn" onclick="updatePdpQty(1)">+</button>
                     </div>
-                    <?php if ($pStockQty > 0): ?>
+                    <?php if ($isFullSetProduct): ?>
+                    <span style="font-size:0.72rem; font-weight:700; color:#8A681F;" id="pdpTotalPiecesBadge"><?= $fullSetPieces ?> physical pieces</span>
+                    <?php elseif ($pStockQty > 0): ?>
                     <span style="font-size:0.72rem; font-weight:700; color:#15803D;"><?= (int)$pStockQty ?> in stock</span>
                     <?php endif; ?>
                 </div>
@@ -441,12 +520,12 @@ function pdp_relative_date(string $ts): string
                 <div class="pdp-btn-row">
                     <button class="pdp-atc-btn" onclick="handlePdpAddToCart()">
                         <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                        <span>Add To Bag</span>
+                        <span><?= $isFullSetProduct ? 'Add Full Set To Bag' : 'Add To Bag' ?></span>
                     </button>
 
                     <button class="pdp-buy-btn" onclick="handlePdpBuyNow()">
                         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span>Buy Now</span>
+                        <span><?= $isFullSetProduct ? 'Buy Full Set Now' : 'Buy Now' ?></span>
                     </button>
                 </div>
 

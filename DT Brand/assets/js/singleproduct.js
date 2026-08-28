@@ -303,12 +303,63 @@
         }, { passive: true });
     }
 
-    // Color Selector
+    function syncAvailableSizesForColor(selectedColor) {
+        if (!currentProduct || !Array.isArray(currentProduct.variants) || !currentProduct.variants.length) {
+            return;
+        }
+        var normColor = String(selectedColor || '').toLowerCase().trim();
+        var matchingVariants = currentProduct.variants.filter(function (v) {
+            return String(v.color || '').toLowerCase().trim() === normColor;
+        });
+
+        if (!matchingVariants.length) {
+            document.querySelectorAll('.pdp-size-btn').forEach(function (btn) {
+                btn.style.display = '';
+                btn.style.opacity = '1';
+                btn.removeAttribute('disabled');
+            });
+            return;
+        }
+
+        var availableSizes = {};
+        matchingVariants.forEach(function (v) {
+            if (v.size) {
+                availableSizes[String(v.size).toLowerCase().trim()] = v;
+            }
+        });
+
+        var sizeButtons = document.querySelectorAll('.pdp-size-btn');
+        var firstValidBtn = null;
+        var currentlyActiveValid = false;
+
+        sizeButtons.forEach(function (btn) {
+            var sVal = String(btn.getAttribute('data-size') || '').toLowerCase().trim();
+            if (availableSizes[sVal]) {
+                btn.style.display = '';
+                btn.style.opacity = '1';
+                btn.removeAttribute('disabled');
+                if (!firstValidBtn) firstValidBtn = btn;
+                if (btn.classList.contains('active')) currentlyActiveValid = true;
+            } else {
+                btn.classList.remove('active');
+                btn.style.display = 'none';
+                btn.setAttribute('disabled', 'disabled');
+            }
+        });
+
+        if (!currentlyActiveValid && firstValidBtn) {
+            firstValidBtn.classList.add('active');
+        }
+    }
+
+    // Colour Selector
     window.selectPdpColor = function(btn) {
         document.querySelectorAll('.pdp-color-btn').forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
+        var colorVal = btn.dataset.color || '';
         var nameEl = document.getElementById('pdpSelectedColorName');
-        if (nameEl) nameEl.textContent = btn.dataset.color;
+        if (nameEl) nameEl.textContent = colorVal;
+        syncAvailableSizesForColor(colorVal);
     };
 
     // Size Selector
@@ -322,9 +373,15 @@
     window.updatePdpQty = function(delta) {
         currentQty += delta;
         if (currentQty < 1) currentQty = 1;
-        if (currentQty > 10) currentQty = 10;
+        if (currentQty > 50) currentQty = 50;
         var qEl = document.getElementById('pdpQtyVal');
         if (qEl) qEl.textContent = currentQty;
+
+        var fullSetBadge = document.getElementById('pdpTotalPiecesBadge');
+        if (fullSetBadge && currentProduct && currentProduct.selling_type === 'full_set') {
+            var pieces = currentProduct.full_set_pieces || (currentProduct.variants ? currentProduct.variants.length : 1);
+            fullSetBadge.textContent = (currentQty * pieces) + ' physical pieces';
+        }
     };
 
     // Accordion Toggle

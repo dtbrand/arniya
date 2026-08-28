@@ -483,8 +483,20 @@ $active_subnav = "";
                                         </span>
                                     </td>
                                     <td style="padding:8px 8px;">
-                                        <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹<?= number_format($rp) ?></strong><br>
-                                        <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹<?= number_format($wp) ?></small>
+                                        <?php
+                                        $st = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+                                        $cp = (isset($p['customer_price']) && (float)$p['customer_price'] > 0) ? (float)$p['customer_price'] : null;
+                                        ?>
+                                        <?php if ($st === 'full_set'): ?>
+                                            <span class="adm-badge gold" style="font-size:9.5px; padding:1px 6px; font-weight:800; display:inline-block; margin-bottom:3px;">FULL SET</span><br>
+                                            <strong class="prod-retail-price" style="font-size:12px; color:#181512;">₹<?= number_format($wp) ?> / pc</strong><br>
+                                            <small class="prod-wholesale-price" style="color:#8A681F; font-size:10px; font-weight:700;">Set: ₹<?= number_format($wp * max(1, count($p['variants'] ?? []))) ?></small>
+                                        <?php else: ?>
+                                            <span class="adm-badge" style="background:#F1F5F9; color:#475569; font-size:9.5px; padding:1px 6px; font-weight:700; display:inline-block; margin-bottom:3px;">SINGLE PIECE</span><br>
+                                            <strong class="prod-retail-price" style="font-size:12px; color:#181512;">₹<?= number_format($cp ?? $rp) ?></strong>
+                                            <?php if ($cp): ?><small style="color:#64748B; font-size:10px;"> (Cust)</small><?php endif; ?><br>
+                                            <small class="prod-wholesale-price" style="color:#8A681F; font-size:10px; font-weight:700;">WS: ₹<?= number_format($wp) ?></small>
+                                        <?php endif; ?>
                                     </td>
                                     <td style="padding:8px 8px;"><a href="/admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;"><?= htmlspecialchars($catName) ?></a></td>
                                     <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>

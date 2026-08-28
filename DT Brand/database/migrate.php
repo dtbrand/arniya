@@ -206,6 +206,13 @@ class DatabaseMigrationRunner {
             ['table' => 'customers', 'column' => 'reset_expires', 'definition' => 'TIMESTAMP NULL DEFAULT NULL'],
             ['table' => 'customers', 'column' => 'last_login', 'definition' => 'TIMESTAMP NULL DEFAULT NULL'],
 
+            // ── selling_type and customer_price on products ──
+            ['table' => 'products', 'column' => 'selling_type', 'definition' => "ENUM('single_piece', 'full_set') NOT NULL DEFAULT 'single_piece' AFTER `status`"],
+            ['table' => 'products', 'column' => 'customer_price', 'definition' => "DECIMAL(10,2) DEFAULT NULL AFTER `retail_price`"],
+
+            // ── selling_type on order_items ──
+            ['table' => 'order_items', 'column' => 'selling_type', 'definition' => "VARCHAR(20) DEFAULT 'single_piece' AFTER `quantity`"],
+
             // The colour and size the shopper actually picked. Without these the
             // selection made in the quick view / product page was thrown away at
             // checkout, so an order for "Red, 6.3m" reached the warehouse as a
@@ -241,6 +248,13 @@ class DatabaseMigrationRunner {
             $results[] = ['upgrade' => 'customers.password_hash_nullable', 'status' => 'VERIFIED_OR_MODIFIED'];
         } catch (\PDOException $e) {
             $results[] = ['upgrade' => 'customers.password_hash_nullable', 'status' => 'ERROR', 'error' => $e->getMessage()];
+        }
+
+        try {
+            $pdo->exec("ALTER TABLE `customers` MODIFY COLUMN `type` ENUM('retail', 'customer', 'wholesale', 'reseller', 'retailer') DEFAULT 'retail'");
+            $results[] = ['upgrade' => 'customers.type_enum', 'status' => 'VERIFIED_OR_MODIFIED'];
+        } catch (\PDOException $e) {
+            $results[] = ['upgrade' => 'customers.type_enum', 'status' => 'ERROR', 'error' => $e->getMessage()];
         }
 
         try {

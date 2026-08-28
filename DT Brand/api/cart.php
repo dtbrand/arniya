@@ -28,7 +28,13 @@ try {
     $data = json_decode($rawInput, true) ?: $_POST;
 
     $items = $data['items'] ?? [];
-    $userType = $data['user_type'] ?? 'retail';
+    $rawUserType = strtolower(trim((string)($data['user_type'] ?? 'retail')));
+    if ($rawUserType === 'customer' || $rawUserType === 'guest' || $rawUserType === '') {
+        $userType = 'retail';
+    } else {
+        $userType = $rawUserType;
+    }
+    $isTradeUser = in_array($userType, ['wholesale', 'retailer'], true);
     $couponCode = trim($data['coupon'] ?? '');
 
     $validatedItems = [];
@@ -36,45 +42,85 @@ try {
     $totalQty = 0;
 
     foreach ($items as $item) {
-        $pid = (int)($item['id'] ?? 0);
+        $pid = (int)($item['id'] ?? ($item['product_id'] ?? 0));
         $qty = max(1, (int)($item['qty'] ?? ($item['quantity'] ?? 1)));
         $lotType = $item['lot_type'] ?? 'single';
 
         $p = ProductCatalog::getById($pid);
         if (!$p) continue;
 
-        $unitPrice = (float)$p['price'];
-        if ($userType === 'wholesale') {
-            $unitPrice = (float)$p['wholesale_price'];
-        } elseif ($userType === 'reseller') {
-            $unitPrice = (float)$p['reseller_price'];
+        $pSellingType = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+        $isFullSet = ($pSellingType === 'full_set' || $lotType === 'full_set');
+
+        if ($isFullSet) {
+            // Full Set Role Security: Strictly Wholesaler or Retailer only
+            if (!$isTradeUser) {
+                http_response_code(403);
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Full Set product '{$p['name']}' is exclusively available to verified Retailer and Wholesaler trade accounts."
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+
+            $unitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
+            $variants = $p['full_set_variants'] ?? $p['variants'] ?? [];
+            $fullSetPieces = max(1, count($variants));
+            $itemTotal = round($unitPrice * $fullSetPieces * $qty, 2);
+            $totalPhysicalPieces = $fullSetPieces * $qty;
+
+            $subtotal += $itemTotal;
+            $totalQty += $totalPhysicalPieces;
+
+            $validatedItems[] = [
+                'id' => $p['id'],
+                'product_id' => $p['id'],
+                'name' => $p['name'],
+                'sku' => $p['sku'],
+                'image' => $p['image'],
+                'selling_type' => 'full_set',
+                'lot_type' => 'full_set',
+                'full_set_pieces' => $fullSetPieces,
+                'color' => 'All Configured Colors (' . count($p['colors']) . ')',
+                'size' => 'All Configured Sizes (' . count($p['sizes']) . ')',
+                'qty' => $qty,
+                'pieces_count' => $totalPhysicalPieces,
+                'unit_price' => $unitPrice,
+                'set_price' => round($unitPrice * $fullSetPieces, 2),
+                'total_price' => $itemTotal
+            ];
+        } else {
+            // Single Piece Role Pricing
+            if ($userType === 'reseller') {
+                $unitPrice = (float)($p['reseller_price'] > 0 ? $p['reseller_price'] : $p['retail_price']);
+            } elseif ($userType === 'wholesale') {
+                $unitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
+            } elseif ($userType === 'retailer') {
+                $unitPrice = (float)($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']);
+            } else { // guest / retail customer
+                $unitPrice = (float)($p['customer_price'] > 0 ? $p['customer_price'] : ($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']));
+            }
+
+            $itemTotal = round($unitPrice * $qty, 2);
+            $subtotal += $itemTotal;
+            $totalQty += $qty;
+
+            $validatedItems[] = [
+                'id' => $p['id'],
+                'product_id' => $p['id'],
+                'name' => $p['name'],
+                'sku' => $p['sku'],
+                'image' => $p['image'],
+                'selling_type' => 'single_piece',
+                'color' => $item['color'] ?? ($p['colors'][0] ?? $p['color']),
+                'size' => $item['size'] ?? ($p['size'][0] ?? 'Free Size'),
+                'lot_type' => 'single',
+                'qty' => $qty,
+                'pieces_count' => $qty,
+                'unit_price' => $unitPrice,
+                'total_price' => $itemTotal
+            ];
         }
-
-        // Tier multipliers
-        if ($lotType === 'half_set') {
-            $qty = max($qty, (int)($p['moq_lots']['half_set'] ?? 4));
-        } elseif ($lotType === 'full_set') {
-            $qty = max($qty, (int)($p['moq_lots']['full_set'] ?? 8));
-        } elseif ($lotType === 'master_bale') {
-            $qty = max($qty, (int)($p['moq_lots']['master_bale'] ?? 24));
-        }
-
-        $itemTotal = round($unitPrice * $qty, 2);
-        $subtotal += $itemTotal;
-        $totalQty += $qty;
-
-        $validatedItems[] = [
-            'id' => $p['id'],
-            'name' => $p['name'],
-            'sku' => $p['sku'],
-            'image' => $p['image'],
-            'color' => $item['color'] ?? ($p['colors'][0] ?? $p['color']),
-            'size' => $item['size'] ?? ($p['size'][0] ?? 'Free Size'),
-            'lot_type' => $lotType,
-            'qty' => $qty,
-            'unit_price' => $unitPrice,
-            'total_price' => $itemTotal
-        ];
     }
 
     $discount = 0.0;

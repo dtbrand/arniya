@@ -137,12 +137,15 @@
         // Draft is a real status value in the products ENUM, so "Save Draft"
         // and the Stock Status select write to the same column.
         var status = isDraft ? 'draft' : (val('pFormStockStatus') || 'in_stock');
+        var radSelling = document.querySelector('input[name="pFormSellingType"]:checked');
+        var sellingType = radSelling ? String(radSelling.value).trim() : 'single_piece';
 
         var payload = {
             action: isUpdate ? 'update' : 'create',
             title: title,
             retail_price: retail,
             status: status,
+            selling_type: (sellingType === 'full_set') ? 'full_set' : 'single_piece',
             // stock_qty is sent even when blank: blank means zero units, not
             // "leave whatever was there". It used to be saved as 50.
             stock_qty: Math.max(0, Math.round(num('pFormStock'))),
@@ -166,6 +169,11 @@
         // Everything below is optional. An empty box is left out of the payload
         // entirely rather than sent as a guess, so ProductCatalog keeps the
         // column NULL instead of storing a claim the admin never made.
+        if (payload.selling_type === 'single_piece') {
+            addIf(payload, 'customer_price', 'pFormCustomerPrice');
+        } else {
+            payload.customer_price = null;
+        }
         addIf(payload, 'sku', 'pFormSku');
         addIf(payload, 'category', 'pFormCat');
         addIf(payload, 'fabric', 'pFormFabric');

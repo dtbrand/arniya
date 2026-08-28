@@ -156,6 +156,9 @@
         var note = el('dtVariantEmpty');
         var body = el('dtVariantRows');
         if (note && body) { note.style.display = body.children.length ? 'none' : 'block'; }
+        if (typeof window.dtRecalculateFullSetPreview === 'function') {
+            window.dtRecalculateFullSetPreview();
+        }
     }
     /** Read what is currently on screen, so rebuilding keeps typed values. */
     function currentRows() {
@@ -347,6 +350,94 @@
         }
         return '';
     }
+
+    /** Live calculation of Full Set pieces and included component breakdown */
+    window.dtRecalculateFullSetPreview = function () {
+        var rows = document.querySelectorAll('#dtVariantRows tr[data-vrow]');
+        var colorsSet = {};
+        var validVariants = [];
+
+        for (var i = 0; i < rows.length; i++) {
+            var r = rows[i];
+            var colour = r.getAttribute('data-vcolour') || '';
+            var size = r.getAttribute('data-vsize') || '';
+            if (colour === '' && size === '') { continue; }
+            if (colour) { colorsSet[colour.toLowerCase()] = colour; }
+            var stock = parseInt(fieldVal(r, 'stock'), 10);
+            if (isNaN(stock) || stock < 0) { stock = 0; }
+            var hex = r.getAttribute('data-vhex') || closestHexFor(colour) || '#8A681F';
+
+            validVariants.push({
+                colour: colour || 'Standard',
+                size: size || 'Standard',
+                stock: stock,
+                hex: hex
+            });
+        }
+
+        var colCount = Object.keys(colorsSet).length;
+        var varCount = validVariants.length;
+        var pieceCount = varCount; // 1 full set = count of active distinct color-size variants
+
+        var elCol = el('dtFsPreviewColorsCount');
+        var elVar = el('dtFsPreviewVariantsCount');
+        var elBadge = el('dtFsPreviewPieceBadge');
+        var elList = el('dtFsPreviewItemsList');
+
+        if (elCol) { elCol.textContent = colCount; }
+        if (elVar) { elVar.textContent = varCount; }
+        if (elBadge) { elBadge.textContent = pieceCount + ' Piece' + (pieceCount === 1 ? '' : 's') + ' / Set'; }
+
+        if (elList) {
+            if (!validVariants.length) {
+                elList.innerHTML = '<span style="font-size:11px; color:#A8A29E;">No active variants created yet.</span>';
+            } else {
+                elList.innerHTML = validVariants.map(function (v) {
+                    return '<div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(212,175,55,0.3); border-radius:4px; padding:4px 8px; font-size:11px;">'
+                        + '<span style="color:#22C55E; font-weight:800;">&#10003;</span>'
+                        + '<span style="width:8px; height:8px; border-radius:50%; background:' + esc(v.hex) + '; display:inline-block; border:1px solid #fff;"></span>'
+                        + '<strong style="color:#FAF5E8;">' + esc(v.colour) + '</strong>'
+                        + '<span style="color:#D4AF37;">/</span>'
+                        + '<span style="color:#D6D3D1;">' + esc(v.size) + '</span>'
+                        + '<span style="margin-left:auto; font-size:9.5px; color:' + (v.stock > 0 ? '#86EFAC' : '#F87171') + '; font-weight:700;">'
+                        + (v.stock > 0 ? ('Stock: ' + v.stock) : 'Out of stock') + '</span>'
+                        + '</div>';
+                }).join('');
+            }
+        }
+    };
+
+    /** Selling type change switcher */
+    window.dtOnSellingTypeChange = function (type) {
+        var isFullSet = (type === 'full_set');
+        var cardSingle = el('dtCardSinglePiece');
+        var cardFull = el('dtCardFullSet');
+        var radSingle = el('pFormSellingTypeSingle');
+        var radFull = el('pFormSellingTypeFull');
+
+        if (radSingle) { radSingle.checked = !isFullSet; }
+        if (radFull) { radFull.checked = isFullSet; }
+
+        if (cardSingle) {
+            cardSingle.style.borderColor = !isFullSet ? '#8A681F' : '#E2E8F0';
+            cardSingle.style.boxShadow = !isFullSet ? '0 2px 8px rgba(138,104,31,0.15)' : 'none';
+        }
+        if (cardFull) {
+            cardFull.style.borderColor = isFullSet ? '#8A681F' : '#E2E8F0';
+            cardFull.style.boxShadow = isFullSet ? '0 2px 8px rgba(138,104,31,0.15)' : 'none';
+        }
+
+        var grpCustPrice = el('pGroupCustomerPrice');
+        var inpCustPrice = el('pFormCustomerPrice');
+        var noteFullSet = el('pGroupFullSetPriceNote');
+
+        if (grpCustPrice) { grpCustPrice.style.display = isFullSet ? 'none' : ''; }
+        if (inpCustPrice) { inpCustPrice.disabled = isFullSet; }
+        if (noteFullSet) { noteFullSet.style.display = isFullSet ? '' : 'none'; }
+
+        window.dtRecalculateFullSetPreview();
+    };
+
     // The old name is kept because the toolbar still calls it, but it now
     // builds the rows instead of toasting a count of variants it never made.
     window.generateVariantMatrix = buildMatrix;
@@ -440,6 +531,16 @@
                 var r2 = up.closest('tr[data-vrow]');
                 var f = r2 ? r2.querySelector('[data-vfile]') : null;
                 if (f) { f.click(); }
+            }
+        });
+
+        document.addEventListener('input', function (e) {
+            var t = e.target;
+            if (!t || !t.hasAttribute || !t.hasAttribute('data-vfield')) { return; }
+            if (t.getAttribute('data-vfield') === 'stock') {
+                if (typeof window.dtRecalculateFullSetPreview === 'function') {
+                    window.dtRecalculateFullSetPreview();
+                }
             }
         });
 

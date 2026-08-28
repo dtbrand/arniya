@@ -43,6 +43,7 @@ $pfOccasion = trim((string)($prod['occasion'] ?? ''));
 $pfDesc = (string)($prod['description'] ?? '');
 $pfCat = trim((string)($prod['category'] ?? ($prod['category_name'] ?? '')));
 $pfCats = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::getCategories() : [];
+$pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'single_piece';
 ?>
 <div class="dt-form-section">
     <div class="dt-form-sec-head" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
@@ -60,6 +61,30 @@ $pfCats = class_exists('\DTBrand\ProductCatalog') ? \DTBrand\ProductCatalog::get
         </button>
     </div>
     <div class="dt-form-sec-body">
+        <!-- PRODUCT SELLING TYPE SELECTION -->
+        <div class="adm-form-group full" style="background:#FAF8F2; border:1.5px solid rgba(212,175,55,0.5); border-radius:8px; padding:12px 16px; margin-bottom:14px;">
+            <label class="adm-form-label" style="font-size:12.5px; font-weight:800; color:#5A4210; display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="color:#8A681F;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                <span>PRODUCT SELLING TYPE</span>
+            </label>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                <label id="dtCardSinglePiece" style="display:flex; align-items:flex-start; gap:10px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'single_piece' ? '#8A681F' : '#E2E8F0'; ?>; padding:12px 14px; border-radius:6px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'single_piece' ? '0 2px 8px rgba(138,104,31,0.15)' : 'none'; ?>;">
+                    <input type="radio" name="pFormSellingType" value="single_piece" id="pFormSellingTypeSingle" <?php echo $pfSellingType === 'single_piece' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('single_piece')" style="margin-top:3px; accent-color:#8A681F;">
+                    <div>
+                        <strong style="display:block; font-size:12.5px; color:#181512;">SINGLE PIECE</strong>
+                        <small style="font-size:11px; color:#646970; line-height:1.4; display:block; margin-top:2px;">Individual piece purchasing. Available to all 5 user roles with Customer Price support and Color &rarr; Size variant selection.</small>
+                    </div>
+                </label>
+                <label id="dtCardFullSet" style="display:flex; align-items:flex-start; gap:10px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'full_set' ? '#8A681F' : '#E2E8F0'; ?>; padding:12px 14px; border-radius:6px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'full_set' ? '0 2px 8px rgba(138,104,31,0.15)' : 'none'; ?>;">
+                    <input type="radio" name="pFormSellingType" value="full_set" id="pFormSellingTypeFull" <?php echo $pfSellingType === 'full_set' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('full_set')" style="margin-top:3px; accent-color:#8A681F;">
+                    <div>
+                        <strong style="display:block; font-size:12.5px; color:#181512;">FULL SET</strong>
+                        <small style="font-size:11px; color:#646970; line-height:1.4; display:block; margin-top:2px;">Complete catalog set of 100% active Color &times; Size variants. Available exclusively to Retailer &amp; Wholesaler trade accounts.</small>
+                    </div>
+                </label>
+            </div>
+        </div>
+
         <div class="adm-form-grid">
             <div class="adm-form-group full">
                 <label class="adm-form-label" for="pFormName">Product Name / Title <span style="color:#b32d2e;">*</span></label>
