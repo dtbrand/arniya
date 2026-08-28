@@ -4,8 +4,10 @@
 /**
  * product-gallery.php — Comprehensive Product Media Studio
  * Dedicated Main Photo (Cover), Product Video Studio (Upload & URL Embed), & Multi-Angle Gallery
- * DT Brand's & Jai Hanuman Tex
+ * DT Brand's & Jai Hanuman Tex — 100% Clean Zero-Demo Standard
  */
+$hasMainPhoto = !empty($prod['primary_image']) || !empty($prod['image']);
+$mainPhotoUrl = $prod['primary_image'] ?? ($prod['image'] ?? '');
 ?>
 <div class="dt-form-section dt-media-studio-section">
     <div class="dt-form-sec-head" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
@@ -16,14 +18,14 @@
         <div style="display:flex; align-items:center; gap:8px;">
             <span class="dt-media-status-pill" id="dtMediaCountBadge">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span id="dtMediaCountText">3 Photos • 1 Video Ready</span>
+                <span id="dtMediaCountText">0 Photos &bull; No Video</span>
             </span>
         </div>
     </div>
 
     <div class="dt-form-sec-body">
         
-        <!-- Top Row: Main Photo Uploader + Product Video Studio (Side-by-Side on Desktop, Auto-Stacked on Mobile) -->
+        <!-- Top Row: Main Photo Uploader + Product Video Studio -->
         <div class="dt-media-top-grid">
             
             <!-- ════════════ 1. MAIN / PRIMARY PHOTO (COVER IMAGE) ════════════ -->
@@ -40,10 +42,10 @@
                 </div>
 
                 <div class="dt-media-card-body">
-                    <!-- Main Photo Preview Container -->
-                    <div class="dt-main-photo-preview-wrap" id="mainPhotoPreviewWrap">
+                    <!-- Main Photo Preview Container (Shown when photo exists) -->
+                    <div class="dt-main-photo-preview-wrap" id="mainPhotoPreviewWrap" style="<?php echo $hasMainPhoto ? '' : 'display:none;'; ?>">
                         <div class="dt-main-photo-img-holder">
-                            <img id="mainPhotoImg" src="<?php echo isset($prod['primary_image']) ? htmlspecialchars($prod['primary_image']) : '/assets/images/product1.png'; ?>" onerror="this.src='/assets/images/product1.png';" alt="Main Product Photo">
+                            <img id="mainPhotoImg" src="<?php echo htmlspecialchars($mainPhotoUrl); ?>" alt="Main Product Photo">
                             
                             <!-- Overlay on Hover -->
                             <div class="dt-main-photo-overlay">
@@ -81,8 +83,8 @@
                         </div>
                     </div>
 
-                    <!-- Hidden Empty State Dropzone for Main Photo (Shows if removed) -->
-                    <div class="dt-main-photo-dropzone" id="mainPhotoDropzone" style="display:none;" onclick="document.getElementById('mainPhotoFileInput').click();">
+                    <!-- Clean Empty State Dropzone for Main Photo (Shown when no photo uploaded) -->
+                    <div class="dt-main-photo-dropzone" id="mainPhotoDropzone" style="<?php echo $hasMainPhoto ? 'display:none;' : 'display:flex;'; ?>" onclick="document.getElementById('mainPhotoFileInput').click();">
                         <div class="dt-drop-icon">
                             <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#8A681F" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                         </div>
@@ -95,7 +97,7 @@
                 </div>
             </div>
 
-            <!-- ════════════ 2. MULTI-VIDEO PRODUCT STUDIO (MULTIPLE MP4 & REELS) ════════════ -->
+            <!-- ════════════ 2. MULTI-VIDEO PRODUCT STUDIO ════════════ -->
             <div class="dt-media-card dt-video-studio-box">
                 <div class="dt-media-card-header">
                     <div style="display:flex; align-items:center; gap:6px;">
@@ -121,44 +123,18 @@
                     <!-- TAB 1: Direct MP4 Multi-Video Upload View -->
                     <div id="videoUploadTabPane" class="dt-vtab-pane active">
                         
-                        <!-- Dynamic List of Uploaded Videos -->
-                        <div class="dt-video-items-list" id="dtVideoItemsContainer">
-                            
-                            <!-- Video Item 1 (Primary Model Draping Walkthrough) -->
-                            <div class="dt-video-item-card" data-video-id="1">
-                                <div class="dt-video-card-thumb">
-                                    <video controls playsinline preload="metadata" poster="/assets/images/product1.png">
-                                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
-                                    </video>
-                                    <span class="dt-video-hd-badge">
-                                        <svg viewBox="0 0 24 24" width="8" height="8" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        HD 1080P
-                                    </span>
-                                </div>
+                        <!-- Dynamic List of Uploaded Videos (Starts Clean & Empty) -->
+                        <div class="dt-video-items-list" id="dtVideoItemsContainer"></div>
 
-                                <div class="dt-video-card-meta">
-                                    <div class="dt-v-title">Video 1: Saree Draping Walkthrough</div>
-                                    <div class="dt-v-sub">1080p HD • Ready for WhatsApp &amp; PDP</div>
-                                    <div style="display:flex; gap:6px; margin-top:3px;">
-                                        <button type="button" class="dt-btn-action-sm danger" onclick="removeVideoItem(this);" style="padding:2px 8px; font-size:10.5px;">
-                                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                                            <span>Remove</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Dropzone to Add More Videos -->
+                        <!-- Dropzone to Upload Videos -->
                         <div class="dt-video-dropzone" id="videoDropzone" onclick="document.getElementById('productVideoFileInput').click();">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
-                            <span style="font-size:11.5px; font-weight:700; color:#181512;">+ Upload Another Video</span>
-                            <span style="font-size:10px; color:#646970;">(MP4 / WebM up to 50MB)</span>
+                            <span style="font-size:11.5px; font-weight:700; color:#181512;">+ Upload Product Video</span>
+                            <span style="font-size:10px; color:#646970;">(MP4 up to 25MB)</span>
                         </div>
 
                         <!-- Hidden Multi-Video File Input -->
-                        <input type="file" id="productVideoFileInput" accept="video/mp4,video/webm,video/quicktime" multiple style="display:none;" onchange="handleProductVideoUpload(this.files)">
+                        <input type="file" id="productVideoFileInput" accept="video/mp4" multiple style="display:none;" onchange="handleProductVideoUpload(this.files)">
                     </div>
 
                     <!-- TAB 2: Video / Instagram Reels / YouTube URL Embed -->
@@ -172,7 +148,7 @@
                                     <span>Add Link</span>
                                 </button>
                             </div>
-                            <span style="font-size:10px; color:#646970; display:block; margin-top:4px;">Add multiple video links (Reels, Shorts, Draping walkthroughs).</span>
+                            <span style="font-size:10px; color:#646970; display:block; margin-top:4px;">Add video links for live model draping walkthroughs &amp; reels.</span>
                         </div>
                     </div>
 
@@ -196,45 +172,11 @@
                 <input type="file" id="dtGalleryFileInput" style="display:none;" multiple accept="image/*" onchange="handleGalleryUpload(this.files)">
             </div>
 
-            <!-- Dynamic Gallery Thumbnails Grid -->
+            <!-- Dynamic Gallery Thumbnails Grid (Starts Clean & Empty) -->
             <div class="dt-gallery-preview-grid" id="dtGalleryPreviewGrid" style="margin-top:10px;">
                 
-                <!-- Gallery Item 1 (Angle 2) -->
-                <div class="dt-gallery-card" data-src="/assets/images/product2.png">
-                    <div class="dt-gallery-img-wrap">
-                        <img src="/assets/images/product2.png" onerror="this.src='/assets/images/product2.png';" alt="Angle 2">
-                        <div class="dt-gallery-card-actions">
-                            <button type="button" class="dt-gaction-btn make-main" title="Set as Main Photo" onclick="setAsMainPhoto(this);">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                <span>Set Main</span>
-                            </button>
-                            <button type="button" class="dt-gaction-btn remove" title="Delete Photo" onclick="removeGalleryPhoto(this);">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dt-gallery-card-caption">Angle 2 (Pallu)</div>
-                </div>
-
-                <!-- Gallery Item 2 (Angle 3) -->
-                <div class="dt-gallery-card" data-src="/assets/images/product3.png">
-                    <div class="dt-gallery-img-wrap">
-                        <img src="/assets/images/product3.png" onerror="this.src='/assets/images/product3.png';" alt="Angle 3">
-                        <div class="dt-gallery-card-actions">
-                            <button type="button" class="dt-gaction-btn make-main" title="Set as Main Photo" onclick="setAsMainPhoto(this);">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                <span>Set Main</span>
-                            </button>
-                            <button type="button" class="dt-gaction-btn remove" title="Delete Photo" onclick="removeGalleryPhoto(this);">
-                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dt-gallery-card-caption">Angle 3 (Detail)</div>
-                </div>
-
                 <!-- Quick "Add Photo" Drop Slot -->
-                <div class="dt-gallery-add-slot" onclick="document.getElementById('dtGalleryFileInput').click();" title="Click to upload more photos">
+                <div class="dt-gallery-add-slot" id="dtGalleryAddSlot" onclick="document.getElementById('dtGalleryFileInput').click();" title="Click to upload more photos">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A681F" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                     <span>Add Photo</span>
                 </div>
@@ -244,4 +186,3 @@
 
     </div>
 </div>
-
