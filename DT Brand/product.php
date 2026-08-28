@@ -96,32 +96,42 @@ $pdpNoImage   = ProductCatalog::NO_IMAGE;
 $fullSetPieces = max(1, (int)($product['full_set_pieces'] ?? count($product['variants'] ?? [])));
 $fullSetTotalRate = round($pPrice * $fullSetPieces, 2);
 
-// ── Gallery media: only this product's own uploads ──
-// The gallery was padded to four slides with /assets/images/product<N>.png
-// chosen by (id % 8) + 1, so a saree with a single photo appeared to have four
-// and three of them were photographs of other products. Uploaded videos and
-// pasted YouTube / Instagram links were never rendered at all.
-$pdpMedia = [];
+// ── Gallery media: pure high-res photos for slider & thumbnails ──
+$pdpImages = [];
 foreach ((array)$product['images'] as $mImg) {
     $mImg = trim((string)$mImg);
     if ($mImg !== '' && $mImg !== $pdpNoImage) {
-        $pdpMedia[] = ['kind' => 'image', 'src' => $mImg];
+        $pdpImages[] = $mImg;
     }
 }
-$pdpPoster = $pdpMedia !== [] ? $pdpMedia[0]['src'] : $pdpNoImage;
+if ($pdpImages === [] && !empty($product['image']) && $product['image'] !== $pdpNoImage) {
+    $pdpImages[] = $product['image'];
+}
+$pdpPoster = $pdpImages !== [] ? $pdpImages[0] : $pdpNoImage;
+
+// ── Product Videos & Embeds for 3D HD Video Reel Trigger ──
+$pdpVideos = [];
 foreach ((array)$product['videos'] as $mVid) {
     $mVid = trim((string)$mVid);
     if ($mVid !== '') {
-        $pdpMedia[] = ['kind' => 'video', 'src' => $mVid];
+        $pdpVideos[] = ['kind' => 'video', 'src' => $mVid];
     }
+}
+if ($pdpVideos === [] && !empty($product['video'])) {
+    $pdpVideos[] = ['kind' => 'video', 'src' => trim((string)$product['video'])];
 }
 foreach ((array)$product['embeds'] as $mEmb) {
     $mEmb = trim((string)$mEmb);
     if ($mEmb !== '') {
-        $pdpMedia[] = ['kind' => 'embed', 'src' => $mEmb];
+        $pdpVideos[] = ['kind' => 'embed', 'src' => $mEmb];
     }
 }
-$pdpHasMedia = $pdpMedia !== [];
+if ($pdpVideos === [] && !empty($product['embed'])) {
+    $pdpVideos[] = ['kind' => 'embed', 'src' => trim((string)$product['embed'])];
+}
+$pdpHasVideos = $pdpVideos !== [];
+$pdpVideoCount = count($pdpVideos);
+$pdpHasMedia = $pdpImages !== [];
 // ── Specifications: every row comes from a column the mill filled in ──
 // This block used to assert 'Matching Silk Blouse Piece Included', 'Pure Tested
 // Gold Zari Jacquard', 'Dry Clean Only' and '1 Piece (With Silk Mark
@@ -274,79 +284,54 @@ function pdp_relative_date(string $ts): string
                     <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
                 </button>
 
-                <!-- Swipeable Track -->
+                <!-- Swipeable Track (Pure Photos Only) -->
                 <div class="pdp-slider-track" id="pdpSliderTrack">
                     <?php if (!$pdpHasMedia): ?>
-                    <div class="pdp-slide pdp-slide-empty" data-idx="0" data-media="none">
+                    <div class="pdp-slide pdp-slide-empty" data-idx="0">
                         <img src="<?= htmlspecialchars($pdpNoImage) ?>" alt="" style="opacity:.45;" />
                         <span class="pdp-empty-media-note">No photo has been uploaded for this product yet.</span>
                     </div>
                     <?php else: ?>
-                    <?php foreach ($pdpMedia as $index => $mItem): ?>
-                    <div class="pdp-slide" data-idx="<?= $index ?>" data-media="<?= htmlspecialchars($mItem['kind']) ?>">
-                        <?php if ($mItem['kind'] === 'video'): ?>
-                        <div class="pdp-slide-video-wrap">
-                            <video
-                                class="pdp-slide-video"
-                                src="<?= htmlspecialchars($mItem['src']) ?>"
-                                poster="<?= htmlspecialchars($pdpPoster) ?>"
-                                controls
-                                playsinline
-                                preload="metadata"
-                            ></video>
-                            <div class="pdp-video-tag-pill">
-                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                                <span>360° Fabric &amp; Drape Video</span>
-                            </div>
-                        </div>
-                        <?php elseif ($mItem['kind'] === 'embed'): ?>
-                        <div class="pdp-slide-video-wrap">
-                            <iframe
-                                class="pdp-slide-embed"
-                                src="<?= htmlspecialchars($mItem['src']) ?>"
-                                title="<?= htmlspecialchars($pName) ?> video"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen
-                                loading="lazy"
-                            ></iframe>
-                            <div class="pdp-video-tag-pill">
-                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                                <span>Featured Video</span>
-                            </div>
-                        </div>
-                        <?php else: ?>
+                    <?php foreach ($pdpImages as $index => $imgSrc): ?>
+                    <div class="pdp-slide" data-idx="<?= $index ?>">
                         <img
-                            src="<?= htmlspecialchars($mItem['src']) ?>"
+                            src="<?= htmlspecialchars($imgSrc) ?>"
                             alt="<?= htmlspecialchars($pName) ?> - View <?= $index + 1 ?>"
                         />
-                        <?php endif; ?>
                     </div>
                     <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
 
+                <!-- 3D Luxury HD Video Reel Floating Button (Bottom-Left Corner) -->
+                <?php if ($pdpHasVideos): ?>
+                <button type="button" class="pdp-3d-video-btn" id="pdp3dVideoBtn" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" aria-label="Watch HD Video Reel">
+                    <div class="pdp-3d-btn-pulse"></div>
+                    <div class="pdp-3d-btn-inner">
+                        <div class="pdp-3d-btn-icon">
+                            <svg viewBox="0 0 24 24" class="pdp-3d-play-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                        </div>
+                        <div class="pdp-3d-btn-text">
+                            <span class="pdp-3d-title">WATCH HD VIDEO</span>
+                            <span class="pdp-3d-sub"><?= $pdpVideoCount > 1 ? $pdpVideoCount . ' HD Videos • 360° Drape' : '360° Real Fabric Drape' ?></span>
+                        </div>
+                    </div>
+                </button>
+                <?php endif; ?>
+
                 <!-- Slide Index Counter -->
-                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= max(1, count($pdpMedia)) ?></div>
+                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= max(1, count($pdpImages)) ?></div>
             </div>
 
             <!-- Mobile & Desktop Pagination Dots -->
             <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
 
-            <!-- Multi-Photo & Video Thumbnails (Myntra-Style) -->
-            <?php if (count($pdpMedia) > 1): ?>
+            <!-- Multi-Photo Thumbnails (Photos Only) -->
+            <?php if (count($pdpImages) > 1): ?>
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
-                <?php foreach ($pdpMedia as $index => $mItem): ?>
-                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" data-kind="<?= htmlspecialchars($mItem['kind']) ?>" onclick="goToSlide(<?= $index ?>)">
-                    <img src="<?= htmlspecialchars($mItem['kind'] === 'image' ? $mItem['src'] : $pdpPoster) ?>" alt="Thumb <?= $index + 1 ?>" />
-                    <?php if ($mItem['kind'] !== 'image'): ?>
-                    <div class="pdp-thumb-play-overlay">
-                        <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                    </div>
-                    <div class="pdp-thumb-video-badge">
-                        <svg viewBox="0 0 24 24" class="pdp-thumb-video-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                        <span>VIDEO</span>
-                    </div>
-                    <?php endif; ?>
+                <?php foreach ($pdpImages as $index => $imgSrc): ?>
+                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
+                    <img src="<?= htmlspecialchars($imgSrc) ?>" alt="Thumb <?= $index + 1 ?>" />
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -1126,10 +1111,8 @@ function pdp_relative_date(string $ts): string
 <!-- ════ SCRIPT ENGINE ════ -->
 <script>
         window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
-        // The slide count is the real number of gallery items (photos + uploaded
-        // videos + pasted embeds). It used to fall back to a literal 4 because the
-        // gallery was padded to four slides with other products' photographs.
-        window.totalSlidesCount = <?= max(1, count($pdpMedia)) ?>;
+        window.totalSlidesCount = <?= max(1, count($pdpImages)) ?>;
+        window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
         window.pdpWhatsAppNumber = <?= json_encode($pdpWaNumber) ?>;
     </script>
     <script src="/assets/js/singleproduct.js?v=1787019062"></script>

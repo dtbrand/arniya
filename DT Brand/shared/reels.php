@@ -482,23 +482,91 @@
         return '';
     }
 
+    function extractProductVideos(p) {
+        if (!p) return [];
+        var list = [];
+        if (Array.isArray(p.videos)) {
+            p.videos.forEach(function(v) {
+                var s = String(v || '').trim();
+                if (s !== '' && !list.some(function(x) { return x.src === s; })) list.push({ kind: 'video', src: s });
+            });
+        }
+        if (p.video) {
+            var sv = String(p.video || '').trim();
+            if (sv !== '' && !list.some(function(x) { return x.src === sv; })) list.push({ kind: 'video', src: sv });
+        }
+        if (Array.isArray(p.embeds)) {
+            p.embeds.forEach(function(e) {
+                var se = String(e || '').trim();
+                if (se !== '' && !list.some(function(x) { return x.src === se; })) list.push({ kind: 'embed', src: se });
+            });
+        }
+        if (p.embed) {
+            var sem = String(p.embed || '').trim();
+            if (sem !== '' && !list.some(function(x) { return x.src === sem; })) list.push({ kind: 'embed', src: sem });
+        }
+        return list;
+    }
+
     // Only products whose own video was uploaded or whose embed link was pasted
     // in the admin product form appear in the reels.
     function reelProducts() {
         return (window.allProducts || []).filter(function(p) {
             if (!p) return false;
-            return reFirst(p.videos, p.video) !== '' || reFirst(p.embeds, p.embed) !== '';
+            return extractProductVideos(p).length > 0;
         });
     }
-    window.dtReelsAvailable = function() { return reelProducts().length > 0; };
+    window.dtReelsAvailable = function() { return reelProducts().length > 0 || (window.currentProductData && extractProductVideos(window.currentProductData).length > 0); };
 
-    window.openReelsModal = function(startIndex) {
+    window.openProductVideosReel = function(targetProduct) {
+        return window.openReelsModal(targetProduct || window.currentProductData, 0);
+    };
+
+    window.openReelsModal = function(targetOrIndex, startIndex) {
         var overlay = document.getElementById('reelsModalOverlay');
         var track = document.getElementById('reelsTrack');
         if (!overlay || !track) return false;
 
-        var products = reelProducts();
-        if (products.length === 0) {
+        var targetProduct = null;
+        var startIdx = 0;
+        if (typeof targetOrIndex === 'object' && targetOrIndex !== null) {
+            targetProduct = targetOrIndex;
+            startIdx = typeof startIndex === 'number' ? startIndex : 0;
+        } else if (typeof targetOrIndex === 'number') {
+            startIdx = targetOrIndex;
+        }
+
+        var allReelEntries = [];
+
+        // If a target product is specified (e.g. from single product page), put all its videos first!
+        if (targetProduct) {
+            var targetVids = extractProductVideos(targetProduct);
+            targetVids.forEach(function(vItem, vIdx) {
+                allReelEntries.push({
+                    product: targetProduct,
+                    media: vItem,
+                    videoIndex: vIdx,
+                    totalProductVideos: targetVids.length
+                });
+            });
+        }
+
+        // Add other catalog products' videos
+        var catalog = window.allProducts || [];
+        catalog.forEach(function(p) {
+            if (targetProduct && String(p.id) === String(targetProduct.id)) return;
+            var pVids = extractProductVideos(p);
+            pVids.forEach(function(vItem, vIdx) {
+                allReelEntries.push({
+                    product: p,
+                    media: vItem,
+                    videoIndex: vIdx,
+                    totalProductVideos: pVids.length
+                });
+            });
+        });
+
+        if (allReelEntries.length === 0) {
             if (typeof window.showToast === 'function') {
                 window.showToast('No product videos have been uploaded yet.');
             }
@@ -506,25 +574,29 @@
         }
 
         /* Build Slides */
-        track.innerHTML = products.map(function(p, idx) {
-            var vidSrc = reFirst(p.videos, p.video);
-            var embedSrc = vidSrc === '' ? reFirst(p.embeds, p.embed) : '';
+        track.innerHTML = allReelEntries.map(function(entry, idx) {
+            var p = entry.product;
+            var media = entry.media;
+            var vidSrc = media.kind === 'video' ? media.src : '';
+            var embedSrc = media.kind === 'embed' ? media.src : '';
             var poster = (p.image && p.image !== '/assets/images/no-image.svg' && p.has_photo !== false) ? p.image : '';
             var isWish = Array.isArray(window.wishlistState) && window.wishlistState.some(function(item) { return item.id == p.id; });
             var pName = reEsc(p.name || p.title || 'Product');
-            var priceNum = Number(p.price) || 0;
-            var oldNum = Number(p.old_price) || 0;
+            var priceNum = Number(p.effective_customer_price || p.price || p.customer_price) || 0;
+            var oldNum = Number(p.mrp || p.old_price) || 0;
             var discNum = Number(p.discount) || 0;
 
+            var videoCounterBadge = entry.totalProductVideos > 1 ? '<span class="reel-part-badge" style="display:inline-block; background:rgba(212,175,55,0.25); border:1px solid #D4AF37; color:#D4AF37; font-size:0.62rem; font-weight:800; padding:2px 7px; border-radius:12px; text-transform:uppercase;">Video ' + (entry.videoIndex + 1) + '/' + entry.totalProductVideos + '</span>' : '';
+
             var mediaHtml = vidSrc !== ''
-                ? '<video class="reel-video" loop playsinline preload="metadata"' + (poster ? ' poster="' + reEsc(poster) + '"' : '') + ' muted>' +
+                ? '<video class="reel-video" loop playsinline preload="auto"' + (poster ? ' poster="' + reEsc(poster) + '"' : '') + ' muted>' +
                       '<source src="' + reEsc(vidSrc) + '" type="video/mp4">' +
                   '</video>'
                 : '<iframe class="reel-video reel-embed" src="' + reEsc(embedSrc) + '" title="' + pName + '" ' +
                       'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ' +
                       'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>';
 
-            return '<div class="reel-slide" data-index="' + idx + '" data-product-id="' + reEsc(p.id) + '" data-media="' + (vidSrc !== '' ? 'video' : 'embed') + '">' +
+            return '<div class="reel-slide" data-index="' + idx + '" data-product-id="' + reEsc(p.id) + '" data-media="' + media.kind + '">' +
                 mediaHtml +
 
                 '<!-- Heart Pop Animation -->' +
@@ -541,8 +613,6 @@
                         '<div class="reel-action-btn-circle ' + (isWish ? 'liked' : '') + '">' +
                             '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
                         '</div>' +
-                        // The like count used to be invented as (1.2 + id * 0.3) + 'k',
-                        // so product 7 permanently showed "3.3k" likes it never had.
                         '<span class="reel-action-label">' + (isWish ? 'Saved' : 'Save') + '</span>' +
                     '</button>' +
 
@@ -563,6 +633,10 @@
 
                 '<!-- Bottom Info Overlay -->' +
                 '<div class="reel-bottom-info">' +
+                    '<div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">' +
+                        videoCounterBadge +
+                        '<span style="font-size:0.68rem; color:#D4AF37; font-weight:800; text-transform:uppercase; letter-spacing:0.08em;">DT Brand\'s 360° Video</span>' +
+                    '</div>' +
                     '<h3 class="reel-product-title">' + pName + '</h3>' +
 
                     '<div class="reel-price-row">' +
@@ -594,12 +668,14 @@
         bindReelsEvents();
 
         /* Scroll to target slide */
-        var targetIndex = typeof startIndex === 'number' ? startIndex : 0;
+        var targetIndex = typeof startIdx === 'number' ? startIdx : 0;
         var slides = track.querySelectorAll('.reel-slide');
         if (targetIndex < 0 || targetIndex >= slides.length) targetIndex = 0;
         if (slides[targetIndex]) {
             slides[targetIndex].scrollIntoView();
-            playSlide(slides[targetIndex]);
+            setTimeout(function() {
+                playSlide(slides[targetIndex]);
+            }, 100);
         }
         return true;
     };

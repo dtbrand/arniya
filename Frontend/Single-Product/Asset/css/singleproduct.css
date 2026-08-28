@@ -177,6 +177,141 @@ cursor: zoom-in;
     transition: transform 0.4s ease;
 }
 
+/* Uploaded MP4 and pasted YouTube / Instagram embeds share the slide track with
+   the photographs, so a product's video is reachable from the main gallery. */
+.pdp-slide-video-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0B0907;
+}
+.pdp-slide-video,
+.pdp-slide-embed {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    background: #0B0907;
+}
+.pdp-slide-video { object-fit: cover; cursor: default; }
+
+/* Myntra-style Video Floating Pill on Main Slide */
+.pdp-video-tag-pill {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(17, 24, 39, 0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1.2px solid #D4AF37;
+    color: #FAF5E8;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 11px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 5;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+}
+.pdp-video-tag-pill svg {
+    width: 11px;
+    height: 11px;
+    fill: #D4AF37;
+}
+
+/* Shown when a product has no uploaded photo at all, in place of borrowing
+   another product's photograph. */
+.pdp-slide-empty { flex-direction: column; gap: 12px; background: #F5F1EA; }
+.pdp-slide-empty img { width: 84px; height: 84px; object-fit: contain; cursor: default; }
+.pdp-empty-media-note {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6B6355;
+    text-align: center;
+    padding: 0 18px;
+    line-height: 1.5;
+}
+
+/* Myntra-style Video Thumbnail Badges & Play Icon Overlay */
+.pdp-thumb-item[data-kind="video"],
+.pdp-thumb-item[data-kind="embed"] {
+    border-color: rgba(212, 175, 55, 0.6);
+}
+.pdp-thumb-play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(17, 24, 39, 0.78);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1.5px solid #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    pointer-events: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.pdp-thumb-play-overlay svg {
+    width: 10px;
+    height: 10px;
+    fill: #D4AF37;
+    margin-left: 1.5px;
+}
+.pdp-thumb-item:hover .pdp-thumb-play-overlay {
+    transform: translate(-50%, -50%) scale(1.15);
+    background: #B8860B;
+}
+.pdp-thumb-item:hover .pdp-thumb-play-overlay svg {
+    fill: #FFFFFF;
+}
+.pdp-thumb-video-badge {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 24, 39, 0.92);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid #D4AF37;
+    border-radius: 10px;
+    padding: 1.5px 5px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #D4AF37;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    pointer-events: none;
+    white-space: nowrap;
+}
+.pdp-thumb-video-svg {
+    width: 7px;
+    height: 7px;
+    fill: #D4AF37;
+}
+.pdp-thumb-item.active .pdp-thumb-video-badge {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    border-color: #FFFFFF;
+    color: #111827;
+}
+.pdp-thumb-item.active .pdp-thumb-video-svg {
+    fill: #111827;
+}
+
 /* Slide Counter Badge (Mobile) */
 .pdp-slide-counter {
     position: absolute;
@@ -225,6 +360,129 @@ cursor: zoom-in;
 
 @media (max-width: 767px) {
     .pdp-slider-arrow { display: none; }
+}
+
+/* ════════════════════════════════════════════════════
+   3D LUXURY HD VIDEO TRIGGER BUTTON (BOTTOM-LEFT CORNER)
+════════════════════════════════════════════════════ */
+.pdp-3d-video-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 8;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.pdp-3d-video-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+}
+.pdp-3d-video-btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+.pdp-3d-btn-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 10px;
+    background: linear-gradient(135deg, rgba(24, 21, 18, 0.94) 0%, rgba(42, 36, 30, 0.94) 50%, rgba(18, 15, 12, 0.98) 100%);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid #D4AF37;
+    border-radius: 30px;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        0 2px 6px rgba(212, 175, 55, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+}
+.pdp-3d-btn-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
+    border: 1.5px solid #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+.pdp-3d-video-btn:hover .pdp-3d-btn-icon {
+    transform: scale(1.12);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 1);
+}
+.pdp-3d-play-svg {
+    width: 13px;
+    height: 13px;
+    fill: #111827;
+    margin-left: 2px;
+}
+.pdp-3d-btn-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.pdp-3d-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #FAF5E8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.15;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+.pdp-3d-sub {
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #D4AF37;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    margin-top: 2px;
+}
+.pdp-3d-btn-pulse {
+    position: absolute;
+    inset: -3px;
+    border-radius: 34px;
+    border: 1.5px solid rgba(212, 175, 55, 0.6);
+    animation: pdp3dPulse 2.2s infinite;
+    pointer-events: none;
+}
+@keyframes pdp3dPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 0.2; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+@media (max-width: 600px) {
+    .pdp-3d-video-btn {
+        bottom: 12px;
+        left: 12px;
+    }
+    .pdp-3d-btn-inner {
+        padding: 6px 12px 6px 8px;
+        gap: 8px;
+    }
+    .pdp-3d-btn-icon {
+        width: 28px;
+        height: 28px;
+    }
+    .pdp-3d-play-svg {
+        width: 11px;
+        height: 11px;
+    }
+    .pdp-3d-title {
+        font-size: 0.65rem;
+    }
+    .pdp-3d-sub {
+        font-size: 0.52rem;
+    }
 }
 
 /* Badge Tag */
@@ -294,6 +552,7 @@ cursor: zoom-in;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 .pdp-thumb-item:hover {
     opacity: 0.95;
@@ -1311,6 +1570,21 @@ padding: 6px 2px 14px;
     color: var(--mid-text);
     line-height: 1.45;
     flex: 1;
+}
+
+/* review_title from the reviews table, when the shopper gave one. */
+.pdp-rc-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark-text);
+    line-height: 1.35;
+}
+
+/* Card shown when a product has no approved reviews yet. */
+.pdp-review-empty {
+    justify-content: center;
+    background: #FBF9F5;
+    border-style: dashed;
 }
 
 .pdp-rc-bottom {

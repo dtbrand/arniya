@@ -88,18 +88,16 @@
     var galleryAutoTimer = null;
     var galleryResumeTimeout = null;
 
-    // Generate Gallery Dots
+    // Generate Gallery Dots (Pure Photos)
     function buildGalleryDots() {
         if (!dotsWrap) return;
         dotsWrap.innerHTML = '';
         var slides = document.querySelectorAll('#pdpSliderTrack .pdp-slide');
         var count = slides.length || totalSlides;
         for (var i = 0; i < count; i++) {
-            var isVideo = slides[i] && (slides[i].getAttribute('data-media') === 'video' || slides[i].getAttribute('data-media') === 'embed');
             var dot = document.createElement('div');
-            dot.className = 'pdp-gallery-dot' + (i === 0 ? ' active' : '') + (isVideo ? ' is-video' : '');
+            dot.className = 'pdp-gallery-dot' + (i === 0 ? ' active' : '');
             dot.setAttribute('data-idx', i);
-            if (isVideo) dot.setAttribute('title', 'Video');
             dot.onclick = (function(idx) {
                 return function() {
                     window.goToSlide(idx);
@@ -118,32 +116,14 @@
         updateActiveThumbnail(currentSlideIdx);
         updateActiveDots(currentSlideIdx);
         if (counter) counter.textContent = (currentSlideIdx + 1) + ' / ' + totalSlides;
-
-        // Stop any clip on a slide we just left, so its sound does not carry on
-        // over a different photograph.
-        track.querySelectorAll('.pdp-slide video').forEach(function(vid) {
-            var host = vid.closest('.pdp-slide');
-            if (host && host.getAttribute('data-idx') !== String(currentSlideIdx) && !vid.paused) {
-                vid.pause();
-            }
-        });
-
-        // Smart play active video slide (Myntra style)
-        var activeSlide = track.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
-        if (activeSlide && activeSlide.getAttribute('data-media') === 'video') {
-            var activeVid = activeSlide.querySelector('video');
-            if (activeVid) {
-                var p = activeVid.play();
-                if (p !== undefined) {
-                    p.catch(function() {
-                        activeVid.muted = true;
-                        activeVid.play().catch(function() {});
-                    });
-                }
-            }
-        }
-
         restartGalleryAutoTimer();
+    };
+
+    window.openProductVideosReel = function(productData) {
+        var p = productData || window.currentProductData;
+        if (typeof window.openReelsModal === 'function') {
+            window.openReelsModal(p, 0);
+        }
     };
 
     window.slidePdpGallery = function(delta) {
@@ -172,23 +152,12 @@
     function startGalleryAutoTimer() {
         if (galleryAutoTimer) clearInterval(galleryAutoTimer);
         galleryAutoTimer = setInterval(function() {
-            // The gallery now carries uploaded videos and pasted embeds alongside
-            // the photographs. Sliding off a clip every 3.6 seconds would make a
-            // product video unwatchable, so the carousel holds on non-image
-            // slides and on any slide whose video is playing.
-            if (isHoldingSlide()) return;
             window.slidePdpGallery(1);
-        }, 3600);
+        }, 3800);
     }
 
     function isHoldingSlide() {
-        var slide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
-        if (!slide) return false;
-        var kind = slide.getAttribute('data-media');
-        if (kind === 'embed' || kind === 'none') return true;
-        var vid = slide.querySelector('video');
-        if (!vid) return kind === 'video';
-        return !vid.paused || vid.currentTime > 0;
+        return false;
     }
 
     function pauseGalleryAutoTimer() {
