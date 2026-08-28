@@ -1746,6 +1746,51 @@ class ProductCatalog
         }
     }
 
+    /**
+     * Batch reorder categories with atomic transaction in MySQL
+     */
+    public static function reorderCategories(array $items): array
+    {
+        if (empty($items)) {
+            return ['success' => false, 'message' => 'No items provided for reordering.'];
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return ['success' => false, 'message' => 'The database is not reachable.'];
+        }
+
+        try {
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare("UPDATE categories SET display_order = ? WHERE id = ?");
+            $updated = 0;
+
+            foreach ($items as $idx => $item) {
+                if (!is_array($item)) continue;
+                $id = (int)($item['id'] ?? 0);
+                $order = isset($item['display_order']) ? (int)$item['display_order'] : (isset($item['order']) ? (int)$item['order'] : ($idx + 1));
+                if ($id > 0) {
+                    $stmt->execute([$order, $id]);
+                    $updated++;
+                }
+            }
+
+            $pdo->commit();
+            self::invalidateCache();
+
+            return [
+                'success' => true,
+                'updated_count' => $updated,
+                'message' => "Successfully updated display order for {$updated} categories."
+            ];
+        } catch (\Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
+        }
+    }
+
 
     /**
      * Category CRUD: Bulk Delete. Categories that still hold products are left

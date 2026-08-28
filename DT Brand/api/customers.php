@@ -101,6 +101,23 @@ try {
             exit;
         }
 
+        if ($action === 'update_type') {
+            if ($targetId <= 0 || empty($data['type'])) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Customer ID and customer type required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $newType = strtolower(trim($data['type']));
+            if (!in_array($newType, ['wholesale', 'reseller', 'retail', 'retailer'], true)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Type must be wholesale, reseller, retail, or retailer.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = CustomerManager::updateType($targetId, $newType);
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'type' => $newType], JSON_PRETTY_PRINT);
+            exit;
+        }
+
         if ($action === 'update_credit') {
             if ($targetId <= 0 || !isset($data['credit_limit'])) {
                 http_response_code(400);

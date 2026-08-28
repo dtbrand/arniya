@@ -830,7 +830,7 @@
 
     window.selectSearchOrder = function(orderId) {
         hideAllLiveSearchResults();
-        window.location.href = `/DT%20Brand/admin/orders/view.php?id=${encodeURIComponent(orderId)}`;
+        window.location.href = `/admin/orders/view.php?id=${encodeURIComponent(orderId)}`;
     };
 
     window.selectSearchPartner = function(partnerName) {
@@ -854,7 +854,7 @@
         // Check matching order first
         const foundOrder = (orders || []).find(o => o.id.toLowerCase().includes(q) || o.customer.toLowerCase().includes(q));
         if (foundOrder) {
-            window.location.href = `/DT%20Brand/admin/orders/view.php?id=${encodeURIComponent(foundOrder.id)}`;
+            window.location.href = `/admin/orders/view.php?id=${encodeURIComponent(foundOrder.id)}`;
             return;
         }
 
@@ -1224,7 +1224,7 @@
                         <div class="adm-table-prod-cell">
                             <img src="${p.image}" onerror="this.src='/assets/images/product1.png';" alt="${p.name}" class="adm-prod-thumb">
                             <div class="adm-prod-meta">
-                                <a href="/DT%20Brand/admin/products/view.php?id=${p.id}" class="adm-prod-title" style="color:#181512; text-decoration:none; font-weight:700;">${p.name}</a>
+                                <a href="/admin/products/view.php?id=${p.id}" class="adm-prod-title" style="color:#181512; text-decoration:none; font-weight:700;">${p.name}</a>
                                 <span class="adm-prod-sub">SKU: ${p.sku} | HSN: ${p.hsn} | Fabric: ${p.fabric}</span>
                             </div>
                         </div>
@@ -1245,9 +1245,9 @@
                     <td><span class="adm-badge ${badgeClass}">${p.status}</span></td>
                     <td>
                         <div class="adm-action-btn-group">
-                            <a href="/DT%20Brand/admin/products/view.php?id=${p.id}" class="adm-action-btn" title="View Details">👁️</a>
-                            <a href="/DT%20Brand/admin/products/edit.php?id=${p.id}" class="adm-action-btn" title="Edit">✏️</a>
-                            <a href="/DT%20Brand/admin/products/duplicate.php?id=${p.id}" class="adm-action-btn" title="Duplicate">📋</a>
+                            <a href="/admin/products/view.php?id=${p.id}" class="adm-action-btn" title="View Details">👁️</a>
+                            <a href="/admin/products/edit.php?id=${p.id}" class="adm-action-btn" title="Edit">✏️</a>
+                            <a href="/admin/products/duplicate.php?id=${p.id}" class="adm-action-btn" title="Duplicate">📋</a>
                             <button type="button" class="adm-action-btn wa" title="Share via WhatsApp" onclick="window.shareProductWhatsApp(${p.id})">💬</button>
                             <button type="button" class="adm-action-btn danger" title="Delete Product" onclick="window.deleteProduct(${p.id})">🗑️</button>
                         </div>

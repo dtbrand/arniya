@@ -174,7 +174,7 @@
                     <div style="text-align:right;">
                         <span style="font-size:10px; font-weight:800; color:#8A681F; text-transform:uppercase; letter-spacing:0.04em;">Order &amp; Valuation</span>
                         <div style="font-weight:800; font-size:14px; color:#DC2626; margin-top:2px;">₹${data.amount}</div>
-                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Order Ref: <a href="/DT%20Brand/admin/orders/view.php?id=${data.orderId}" style="color:#1D4ED8; font-weight:700; text-decoration:none;">${data.orderId}</a></div>
+                        <div style="font-size:11px; color:#64748B; margin-top:2px;">Order Ref: <a href="/admin/orders/view.php?id=${data.orderId}" style="color:#1D4ED8; font-weight:700; text-decoration:none;">${data.orderId}</a></div>
                     </div>
                 </div>
 

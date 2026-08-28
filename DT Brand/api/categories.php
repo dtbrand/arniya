@@ -55,6 +55,16 @@ try {
             exit;
         }
 
+        if ($action === 'reorder') {
+            $items = $data['items'] ?? ($data['categories'] ?? $data['order'] ?? []);
+            if (is_string($items)) {
+                $items = json_decode($items, true) ?: [];
+            }
+            $res = ProductCatalog::reorderCategories((array)$items);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
         if ($action === 'delete') {
             if ($targetId <= 0) {
                 http_response_code(400);

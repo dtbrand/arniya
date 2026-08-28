@@ -76,10 +76,10 @@
 
             // Links
             const invLink = document.getElementById('drawerInvoiceLink');
-            if (invLink) invLink.href = '/DT%20Brand/admin/orders/invoice.php?id=' + encodeURIComponent(order.id);
+            if (invLink) invLink.href = '/admin/orders/invoice.php?id=' + encodeURIComponent(order.id);
 
             const viewLink = document.getElementById('drawerViewFullLink');
-            if (viewLink) viewLink.href = '/DT%20Brand/admin/orders/view.php?id=' + encodeURIComponent(order.id);
+            if (viewLink) viewLink.href = '/admin/orders/view.php?id=' + encodeURIComponent(order.id);
 
             const waLink = document.getElementById('drawerWhatsAppLink');
             if (waLink) {
@@ -553,7 +553,7 @@
         printLedger: function() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id') || 'DTB-001624';
-            window.open('/DT%20Brand/admin/orders/ledger.php?id=' + encodeURIComponent(orderId) + '&print=1', '_blank');
+            window.open('/admin/orders/ledger.php?id=' + encodeURIComponent(orderId) + '&print=1', '_blank');
         },
 
         exportLedgerCSV: function() {
@@ -761,7 +761,7 @@
             };
 
             const fullPageLink = document.getElementById('invoiceModalFullPageLink');
-            if (fullPageLink) fullPageLink.href = '/DT%20Brand/admin/orders/invoice.php?id=' + encodeURIComponent(order.id);
+            if (fullPageLink) fullPageLink.href = '/admin/orders/invoice.php?id=' + encodeURIComponent(order.id);
 
             const orderIdTitle = document.getElementById('invoiceModalOrderId');
             if (orderIdTitle) orderIdTitle.textContent = order.id;
@@ -881,7 +881,7 @@
             };
 
             const fullPageLink = document.getElementById('packingModalFullPageLink');
-            if (fullPageLink) fullPageLink.href = '/DT%20Brand/admin/orders/packing-slip.php?id=' + encodeURIComponent(order.id);
+            if (fullPageLink) fullPageLink.href = '/admin/orders/packing-slip.php?id=' + encodeURIComponent(order.id);
 
             const orderIdTitle = document.getElementById('packingModalOrderId');
             if (orderIdTitle) orderIdTitle.textContent = order.id;
@@ -1343,7 +1343,7 @@
             };
 
             const fullPageLink = document.getElementById('shippingLabelModalFullPageLink');
-            if (fullPageLink) fullPageLink.href = '/DT%20Brand/admin/orders/shipping-label.php?id=' + encodeURIComponent(order.id);
+            if (fullPageLink) fullPageLink.href = '/admin/orders/shipping-label.php?id=' + encodeURIComponent(order.id);
 
             const orderIdTitle = document.getElementById('shippingLabelOrderIdTitle');
             if (orderIdTitle) orderIdTitle.textContent = order.id;

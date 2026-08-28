@@ -156,7 +156,7 @@
                     <div style="background:#FFFFFF; border:1.5px solid #E2DFD7; border-radius:8px; padding:14px;">
                         <div style="font-size:11px; font-weight:800; color:#181512; text-transform:uppercase; border-bottom:1px solid #E2DFD7; padding-bottom:6px; margin-bottom:10px; display:flex; justify-content:space-between;">
                             <span>Financial Valuation Breakdown</span>
-                            <span>Order Ref: <a href="/DT%20Brand/admin/orders/view.php?id=${data.orderId}" style="color:#8A681F; font-weight:800; text-decoration:underline;">${data.orderId}</a></span>
+                            <span>Order Ref: <a href="/admin/orders/view.php?id=${data.orderId}" style="color:#8A681F; font-weight:800; text-decoration:underline;">${data.orderId}</a></span>
                         </div>
                         <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
                             <div style="display:flex; justify-content:space-between; color:#475569;">

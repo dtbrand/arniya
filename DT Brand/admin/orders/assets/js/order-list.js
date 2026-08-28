@@ -37,7 +37,7 @@
             // Update visible counts
             const countDisplay = document.getElementById('ordersCountDisplay');
             if (countDisplay) {
-                countDisplay.textContent = 'Showing ' + visibleCount + ' of 1,624 Orders';
+                countDisplay.textContent = 'Showing ' + visibleCount + ' of ' + rows.length + ' Orders';
             }
 
             // Show empty state if 0 rows visible
@@ -71,7 +71,7 @@
             this.filterTable();
 
             // Update URL in browser history silently
-            const targetUrl = element ? element.getAttribute('href') : '/DT%20Brand/admin/orders/index.php';
+            const targetUrl = element ? element.getAttribute('href') : '/admin/orders/index.php';
             if (window.history && window.history.pushState) {
                 window.history.pushState({ status: statusKey }, '', targetUrl);
             }

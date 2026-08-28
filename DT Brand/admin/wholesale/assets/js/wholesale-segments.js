@@ -126,7 +126,7 @@
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span class="dt-status-pill-clean gold">${acc.tier}</span>
-                        <a href="/DT%20Brand/admin/wholesale/view.php?id=${acc.id}" class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none;">View Dossier</a>
+                        <a href="/admin/wholesale/view.php?id=${acc.id}" class="dt-btn dt-btn-pale dt-btn-sm" style="text-decoration:none;">View Dossier</a>
                     </div>
                 </div>
             `).join('');

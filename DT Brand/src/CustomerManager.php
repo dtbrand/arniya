@@ -340,6 +340,34 @@ class CustomerManager
         }
     }
 
+    public static function updateType(int $id, string $type): bool
+    {
+        if ($id <= 0) return false;
+
+        $type = strtolower(trim($type));
+        if (!in_array($type, ['retail', 'wholesale', 'reseller', 'retailer'], true)) {
+            return false;
+        }
+
+        $pdo = Database::getConnection();
+        if ($pdo === null || Database::isMockMode()) {
+            return false;
+        }
+
+        try {
+            $stmt = $pdo->prepare("UPDATE customers SET type = ? WHERE id = ?");
+            $stmt->execute([$type, $id]);
+            if ($stmt->rowCount() > 0) return true;
+
+            $chk = $pdo->prepare("SELECT type FROM customers WHERE id = ? LIMIT 1");
+            $chk->execute([$id]);
+            $current = $chk->fetchColumn();
+            return $current !== false && strtolower((string)$current) === $type;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     public static function updateCreditLimit(int $id, float $creditLimit): bool
     {
         if ($id <= 0) return false;

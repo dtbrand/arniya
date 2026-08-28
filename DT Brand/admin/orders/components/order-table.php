@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -94,7 +94,7 @@ $orders_list = OrderManager::getAll();
                     </td>
                     <td class="col-items">
                         <span class="dt-items-pill" title="<?php echo htmlspecialchars($o['items_summary']); ?>">
-                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>
+                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#8A681F" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                             <span><?php echo $o['items_count']; ?></span>
                         </span>
                     </td>
@@ -194,15 +194,13 @@ $orders_list = OrderManager::getAll();
 
     <!-- Pagination Bar -->
     <div class="dt-pagination-bar">
-        <div class="dt-pagination-info" id="ordersCountDisplay">Showing 1–6 of 1,624 Orders</div>
+        <div class="dt-pagination-info" id="ordersCountDisplay">Showing <?php $cnt = count($orders_list); echo $cnt > 0 ? ("1–{$cnt} of {$cnt}") : '0'; ?> Orders</div>
         <div class="dt-pagination-controls">
-            <button type="button" class="dt-page-btn" disabled>«</button>
-            <button type="button" class="dt-page-btn" disabled>‹ Prev</button>
+            <button type="button" class="dt-page-btn" disabled>&laquo;</button>
+            <button type="button" class="dt-page-btn" disabled>&lsaquo; Prev</button>
             <button type="button" class="dt-page-btn active">1</button>
-            <button type="button" class="dt-page-btn" onclick="if(window.DT_ORDERS) window.DT_ORDERS.showToast('📄 Loaded Page 2');">2</button>
-            <button type="button" class="dt-page-btn" onclick="if(window.DT_ORDERS) window.DT_ORDERS.showToast('📄 Loaded Page 3');">3</button>
-            <button type="button" class="dt-page-btn" onclick="if(window.DT_ORDERS) window.DT_ORDERS.showToast('📄 Loaded Next Page');">Next ›</button>
-            <button type="button" class="dt-page-btn" onclick="if(window.DT_ORDERS) window.DT_ORDERS.showToast('📄 Loaded Last Page');">»</button>
+            <button type="button" class="dt-page-btn" disabled>Next &rsaquo;</button>
+            <button type="button" class="dt-page-btn" disabled>&raquo;</button>
         </div>
     </div>
 </div>

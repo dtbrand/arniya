@@ -71,22 +71,25 @@
         });
     };
 
-    window.toggleProductStatus = function(id, newStatus) {
+    window.duplicateProduct = function(id) {
         if (!id) return;
         fetch('/api/products.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'toggle_status', id: parseInt(id), status: newStatus })
+            body: JSON.stringify({ action: 'duplicate', id: parseInt(id) })
         })
         .then(r => r.json())
         .then(res => {
             if (res.success) {
                 if (typeof window.showToast === 'function') {
-                    window.showToast(`✨ Product status updated to ${newStatus}!`);
+                    window.showToast('Product duplicated successfully!');
                 }
+                setTimeout(() => window.location.reload(), 600);
+            } else {
+                alert('Duplicate failed: ' + (res.message || 'Server error'));
             }
         })
-        .catch(_err => {});
+        .catch(err => alert('Network error duplicating product.'));
     };
 })();
 
