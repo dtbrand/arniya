@@ -96,17 +96,7 @@ if ($cloned_id > 0) {
 
                 <!-- Right Sidebar Column -->
                 <div>
-                    <!-- Visibility & Publishing -->
-                    <?php include_once __DIR__ . '/components/product-status.php'; ?>
-
-                    <!-- Inventory Section -->
                     <?php include_once __DIR__ . '/components/product-inventory.php'; ?>
-
-                    <!-- Shipping Section -->
-                    <?php include_once __DIR__ . '/components/product-shipping.php'; ?>
-
-                    <!-- Permissions Section -->
-                    <?php include_once __DIR__ . '/components/product-permissions.php'; ?>
                 </div>
             </div>
 

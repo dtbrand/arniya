@@ -98,12 +98,9 @@ $edit_sku = $prod['sku'] ?? '';
                     <?php include_once __DIR__ . '/components/product-seo.php'; ?>
                 </div>
 
-                <!-- Right Column -->
+                <!-- Right Sidebar Column -->
                 <div>
-                    <?php include_once __DIR__ . '/components/product-status.php'; ?>
                     <?php include_once __DIR__ . '/components/product-inventory.php'; ?>
-                    <?php include_once __DIR__ . '/components/product-shipping.php'; ?>
-                    <?php include_once __DIR__ . '/components/product-permissions.php'; ?>
                 </div>
             </div>
 
