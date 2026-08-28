@@ -33,18 +33,13 @@
     }
 
     window.calcPricePreview = function () {
-        var mrp = num('pFormMrp');
         var trade = num('pFormRetail');
         var cust = num('pFormCustomerPrice');
         var saleDisc = num('pFormSalePrice');
-        var wholesale = num('pFormWholesale');
-        var reseller = num('pFormReseller');
 
         var effTrade = Math.max(0, trade - saleDisc);
         var baseCust = cust > 0 ? cust : trade;
         var effCust = Math.max(0, baseCust - saleDisc);
-        var effWholesale = wholesale > 0 ? Math.max(0, wholesale - saleDisc) : effTrade;
-        var effReseller = reseller > 0 ? Math.max(0, reseller - saleDisc) : effTrade;
         var boutiqueMargin = Math.max(0, effCust - effTrade);
         var marginPct = effCust > 0 ? Math.round((boutiqueMargin / effCust) * 100) : 0;
 
@@ -52,38 +47,24 @@
         var elCustSub = document.getElementById('dispCustSub');
         var elRetPrice = document.getElementById('dispRetailerPrice');
         var elRetSub = document.getElementById('dispRetailerSub');
-        var elResPrice = document.getElementById('dispResellerPrice');
-        var elResSub = document.getElementById('dispResellerSub');
-        var elWhsPrice = document.getElementById('dispWholesalePrice');
-        var elWhsSub = document.getElementById('dispWholesaleSub');
         var elBoutiqueMargin = document.getElementById('dispBoutiqueMargin');
         var elMarginPercent = document.getElementById('dispMarginPercent');
         var elBadge = document.getElementById('pPrevDiscountBadge');
 
         if (elCustPrice) elCustPrice.textContent = '₹' + effCust.toLocaleString('en-IN');
-        if (elCustSub) elCustSub.textContent = saleDisc > 0 ? ('Save ₹' + saleDisc + ' Sale') : (mrp > effCust ? ('MRP ₹' + mrp.toLocaleString('en-IN')) : 'Standard Consumer Rate');
+        if (elCustSub) elCustSub.textContent = saleDisc > 0 ? ('Save ₹' + saleDisc + ' Sale Discount') : 'End Consumer Rate';
 
         if (elRetPrice) elRetPrice.textContent = '₹' + effTrade.toLocaleString('en-IN');
         if (elRetSub) elRetSub.textContent = saleDisc > 0 ? ('Base ₹' + trade + ' − ₹' + saleDisc) : 'B2B Trade Rate';
 
-        if (elResPrice) elResPrice.textContent = '₹' + effReseller.toLocaleString('en-IN');
-        if (elResSub) elResSub.textContent = reseller > 0 ? 'Custom Reseller Rate' : 'B2B Trade Rate';
-
-        if (elWhsPrice) elWhsPrice.textContent = '₹' + effWholesale.toLocaleString('en-IN');
-        if (elWhsSub) elWhsSub.textContent = wholesale > 0 ? 'Custom Bulk Rate' : 'B2B Trade Rate';
-
         if (elBoutiqueMargin) elBoutiqueMargin.textContent = '₹' + boutiqueMargin.toLocaleString('en-IN') + '/pc';
-        if (elMarginPercent) elMarginPercent.textContent = marginPct + '% Profit Margin';
+        if (elMarginPercent) elMarginPercent.textContent = marginPct + '% Profit Spread';
 
         if (elBadge) {
             if (saleDisc > 0) {
                 elBadge.textContent = '₹' + saleDisc + ' Flat Discount Active';
                 elBadge.style.background = '#FCD34D';
                 elBadge.style.color = '#78350F';
-            } else if (mrp > effCust && mrp > 0) {
-                elBadge.textContent = Math.round(((mrp - effCust) / mrp) * 100) + '% Off MRP';
-                elBadge.style.background = '#E6CA65';
-                elBadge.style.color = '#181512';
             } else {
                 elBadge.textContent = 'Standard Rate';
                 elBadge.style.background = '#E2E8F0';
