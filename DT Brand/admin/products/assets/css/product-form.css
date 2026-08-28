@@ -2,14 +2,15 @@
  * product-form.css — Add / Edit Product Studio Multi-Section Form
  * Precision Compact WordPress / WooCommerce Ergonomics
  */
-.dt-form-single-layout,
 .dt-form-grid-layout {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 2.3fr 1fr;
     gap: 10px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .dt-form-grid-layout { grid-template-columns: 1fr; }
 }
 
 .dt-form-section {

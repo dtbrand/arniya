@@ -1,15 +1,17 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
  * index.php — DT Brand's Products Management Suite (Wholesale Desktop & WooCommerce Hybrid)
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/../../../src/ProductCatalog.php';
-require_once __DIR__ . '/../../../src/Database.php';
+require_once __DIR__ . '/../../src/ProductCatalog.php';
+require_once __DIR__ . '/../../src/Database.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-$productsList = ProductCatalog::getAll();
+$productsList = ProductCatalog::getAll(true);
 $totalProductsCount = count($productsList);
 $categoriesList = ProductCatalog::getCategories();
 $totalCategoriesCount = count($categoriesList);
@@ -68,8 +70,8 @@ $active_subnav = "";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
     /* Wholesale Desktop Specific Styling */
     .dt-kpi-ribbon {
@@ -261,21 +263,21 @@ $active_subnav = "";
                     <span class="adm-badge gold" style="font-weight:700; font-size:10.5px; padding:2px 7px;"><?php echo $totalProductsCount; ?> Total</span>
                     
                     <!-- Add Product Primary Gold Button -->
-                    <a href="/Frontend/Admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
+                    <a href="/admin/products/add.php" class="dt-btn-action-sm gold" style="height:28px; padding:0 12px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         <span>Add Product</span>
                     </a>
 
                     <!-- Secondary Action Buttons with Real SVG Icons -->
-                    <a href="/Frontend/Admin/products/categories/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/categories/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                         <span>Categories (<?php echo $totalCategoriesCount; ?>)</span>
                     </a>
-                    <a href="/Frontend/Admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span>Brands (3)</span>
                     </a>
-                    <a href="/Frontend/Admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
+                    <a href="/admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span>Attributes</span>
                     </a>
@@ -368,15 +370,13 @@ $active_subnav = "";
                     </button>
 
                     <select class="wp-select" id="wpCategoryFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:130px;">
-                        <option value="">Select a category</option>
-                        <?php foreach ($categoriesList as $cat): 
-                            $cName = is_array($cat) ? ($cat['name'] ?? '') : (string)$cat;
-                        ?>
-                            <option value="<?php echo htmlspecialchars($cName); ?>"><?php echo htmlspecialchars($cName); ?></option>
+                        <option value="">Filter by category</option>
+                        <?php foreach ($categoriesList as $catOption): ?>
+                            <option value="<?= htmlspecialchars($catOption) ?>"><?= htmlspecialchars($catOption) ?></option>
                         <?php endforeach; ?>
                     </select>
 
-                    <select class="wp-select" id="wpStockFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:135px;">
+                    <select class="wp-select" id="wpStockFilter" onchange="applyWpFilters()" style="height:28px; font-size:11.5px; padding:0 6px; border-radius:4px; border:1px solid #c3c4c7; min-width:115px;">
                         <option value="">Filter by stock status</option>
                         <option value="In stock">In stock</option>
                         <option value="Low stock">Low stock</option>
@@ -436,7 +436,7 @@ $active_subnav = "";
                             <?php foreach ($productsList as $p): ?>
                                 <?php
                                 $rowId = "row-prod-" . $p['id'];
-                                $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                                $img = !empty($p['image']) ? $p['image'] : '/assets/images/product1.png';
                                 $qty = isset($p['stock_qty']) ? (int)$p['stock_qty'] : 0;
                                 $isLow = ($qty < 20 && $qty > 0);
                                 $isOut = ($qty <= 0);
@@ -457,12 +457,19 @@ $active_subnav = "";
                                         <input type="checkbox" class="wp-row-check" value="<?= $p['id'] ?>" style="cursor:pointer; width:14px; height:14px;">
                                     </td>
                                     <td style="padding:8px 6px;">
-                                        <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="wp-thumb-img" alt="<?= htmlspecialchars($p['title']) ?>" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
+                                        <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/assets/images/product1.png';" class="wp-thumb-img" alt="<?= htmlspecialchars($p['title']) ?>" style="width:36px; height:36px; object-fit:cover; border-radius:4px; border:1px solid #e2e8f0; display:block;">
                                     </td>
                                     <td style="padding:8px 10px;">
                                         <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" class="wp-row-title" style="font-weight:700; color:#181512; text-decoration:none; font-size:12.5px;"><?= htmlspecialchars($p['title']) ?></a>
                                         <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
                                             <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" style="color:#8A681F; font-weight:700;">Edit</a>
+                                            <span style="color:#c3c4c7;">|</span>
+                                            <?php
+                                            $st = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+                                            $cp = (isset($p['customer_price']) && (float)$p['customer_price'] > 0) ? (float)$p['customer_price'] : 0;
+                                            $sp = (isset($p['sale_price']) && (float)$p['sale_price'] > 0) ? (float)$p['sale_price'] : 0;
+                                            ?>
+                                            <a href="javascript:void(0)" onclick="openProductQuickEdit(<?= $p['id'] ?>, '<?= addslashes($p['title']) ?>', '<?= $sku ?>', <?= $rp ?>, <?= $cp ?>, <?= $sp ?>, <?= $wp ?>, <?= $qty ?>, '<?= addslashes($catName) ?>', '<?= $p['status'] ?? 'in_stock' ?>')" style="color:#8A681F; font-weight:700;">Quick Edit</a>
                                             <span style="color:#c3c4c7;">|</span>
                                             <a href="javascript:void(0)" onclick="duplicateProductRow('<?= $rowId ?>')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
                                             <span style="color:#c3c4c7;">|</span>
@@ -481,8 +488,28 @@ $active_subnav = "";
                                         </span>
                                     </td>
                                     <td style="padding:8px 8px;">
-                                        <strong class="prod-retail-price" style="font-size:12.5px; color:#181512;">₹<?= number_format($rp) ?></strong><br>
-                                        <small class="prod-wholesale-price" style="color:#8A681F; font-size:10.5px; font-weight:700;">Wholesale: ₹<?= number_format($wp) ?></small>
+                                        <?php
+                                        $effTrade = max(0, $rp - $sp);
+                                        $effCust = $cp > 0 ? max(0, $cp - $sp) : $effTrade;
+                                        ?>
+                                        <?php if ($st === 'full_set'): ?>
+                                            <span class="adm-badge gold" style="font-size:9.5px; padding:1px 6px; font-weight:800; display:inline-block; margin-bottom:2px;">FULL SET</span><br>
+                                            <strong class="prod-retail-price" style="font-size:12px; color:#181512;">₹<?= number_format($wp) ?> / pc</strong><br>
+                                            <small class="prod-wholesale-price" style="color:#8A681F; font-size:10px; font-weight:700;">Set: ₹<?= number_format($wp * max(1, count($p['variants'] ?? []))) ?></small>
+                                        <?php else: ?>
+                                            <span class="adm-badge" style="background:#F1F5F9; color:#475569; font-size:9.5px; padding:1px 5px; font-weight:700; display:inline-block; margin-bottom:2px;">SINGLE PIECE</span>
+                                            <div style="line-height:1.25; margin-top:2px;">
+                                                <span style="font-size:11.5px; font-weight:800; color:#181512;">Trade: ₹<?= number_format($effTrade) ?></span>
+                                                <?php if ($sp > 0): ?><del style="color:#94A3B8; font-size:10px;">₹<?= number_format($rp) ?></del><?php endif; ?><br>
+                                                <?php if ($cp > 0): ?>
+                                                    <span style="font-size:10.5px; font-weight:700; color:#15803D;">Cust: ₹<?= number_format($effCust) ?></span>
+                                                    <?php if ($sp > 0): ?><del style="color:#94A3B8; font-size:9.5px;">₹<?= number_format($cp) ?></del><?php endif; ?><br>
+                                                <?php endif; ?>
+                                                <?php if ($sp > 0): ?>
+                                                    <span style="font-size:9.5px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 4px; border-radius:3px; display:inline-block; margin-top:1px;">-₹<?= number_format($sp) ?> Sale</span>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </td>
                                     <td style="padding:8px 8px;"><a href="/admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;"><?= htmlspecialchars($catName) ?></a></td>
                                     <td style="padding:8px 8px; font-size:11.5px;"><strong class="prod-brand-val">DT Signature</strong></td>
@@ -491,8 +518,8 @@ $active_subnav = "";
                                         <button type="button" class="wp-star-btn active" title="Toggle Featured" onclick="toggleFeaturedProduct(this, '<?= $rowId ?>', '<?= addslashes($p['title']) ?>')">★</button>
                                     </td>
                                     <td style="padding:8px 10px; font-size:11px;">
-                                        <span class="prod-status-text" style="color:#15803D; font-weight:700;"><?= $statusText ?></span><br>
-                                        <small style="color:#646970;">2026/08/24</small>
+                                        <span class="prod-status-text" style="color:<?= ($statusText === 'Draft') ? '#64748B' : '#15803D' ?>; font-weight:700;"><?= $statusText ?></span><br>
+                                        <small style="color:#646970;"><?= !empty($p['created_at']) ? date('Y/m/d', strtotime($p['created_at'])) : date('Y/m/d') ?></small>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -508,7 +535,7 @@ $active_subnav = "";
                 <?php foreach ($productsList as $p): ?>
                     <?php
                     $cardId = "card-prod-" . $p['id'];
-                    $img = !empty($p['image']) ? $p['image'] : '/Frontend/Shop/Asset/images/product1.png';
+                    $img = !empty($p['image']) ? $p['image'] : '/assets/images/product1.png';
                     $catName = $p['category'] ?? 'Silk Sarees';
                     $sku = $p['sku'] ?? ('DT-SKU-' . $p['id']);
                     $rp = (float)($p['retail_price'] ?? 0);
@@ -518,7 +545,7 @@ $active_subnav = "";
                     ?>
                     <div class="dt-ws-card" id="<?= $cardId ?>">
                         <div style="position:relative;">
-                            <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" class="dt-ws-card-img" alt="<?= htmlspecialchars($p['title']) ?>">
+                            <img src="<?= htmlspecialchars($img) ?>" onerror="this.src='/assets/images/product1.png';" class="dt-ws-card-img" alt="<?= htmlspecialchars($p['title']) ?>">
                             <span class="adm-badge" style="position:absolute; top:8px; left:8px; background:#8A681F; color:#fff; font-weight:700; font-size:10px;">Best Seller</span>
                             <span class="adm-badge" style="position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.9); color:#15803D; font-weight:800; font-size:10.5px;">MOQ: <?= $p['moq'] ?? 6 ?> Pcs</span>
                         </div>
@@ -579,11 +606,9 @@ $active_subnav = "";
                 <label style="font-size:11.5px; font-weight:700; color:#181512; display:block; margin-bottom:4px;">Product Category</label>
                 <select id="bulkEditCategory" class="wp-select" style="width:100%; height:32px; font-size:12px; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px;">
                     <option value="">— Keep Current Category —</option>
-                    <option value="Silk Sarees">Silk Sarees</option>
-                    <option value="Banarasi Brocade">Banarasi Brocade</option>
-                    <option value="Bridal Lehengas">Bridal Lehengas</option>
-                    <option value="Designer Kurtis">Designer Kurtis</option>
-                    <option value="Dress Materials">Dress Materials</option>
+                    <?php foreach ($categoriesList as $catOption): ?>
+                        <option value="<?= htmlspecialchars($catOption) ?>"><?= htmlspecialchars($catOption) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -623,6 +648,8 @@ $active_subnav = "";
 </div>
 
 <script>
+window.DT_AVAILABLE_CATEGORIES = <?php echo json_encode(array_values($categoriesList)); ?>;
+
 function switchProductView(mode) {
     const table = document.getElementById('productTableView');
     const grid = document.getElementById('productGridView');
@@ -754,10 +781,126 @@ function applyWpFilters() {
     }
 }
 
-/* ── INDIVIDUAL STAR TOGGLE FOR FEATURED ── */
+/* ── INLINE QUICK EDIT FOR PRODUCT ROW (100% Dynamic Real Categories & 5-Role Pricing) ── */
+function openProductQuickEdit(id, title, sku, retail, custPrice, salePrice, wholesale, stock, category, status) {
+    const row = document.getElementById(`row-prod-${id}`);
+    if (!row) return;
+
+    if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-product-quickedit-row')) {
+        row.nextElementSibling.remove();
+        return;
+    }
+
+    const availableCats = window.DT_AVAILABLE_CATEGORIES || Array.from(document.querySelectorAll('#wpCategoryFilter option')).map(o => o.value).filter(Boolean);
+    let catOptionsHtml = '<option value="">— Select Category —</option>';
+    let matched = false;
+    availableCats.forEach(c => {
+        const isSel = (c.toLowerCase() === (category || '').toLowerCase());
+        if (isSel) matched = true;
+        catOptionsHtml += `<option value="${c.replace(/"/g, '&quot;')}" ${isSel ? 'selected' : ''}>${c}</option>`;
+    });
+    if (category && !matched) {
+        catOptionsHtml += `<option value="${category.replace(/"/g, '&quot;')}" selected>${category}</option>`;
+    }
+
+    const editTr = document.createElement('tr');
+    editTr.className = 'inline-product-quickedit-row';
+    editTr.innerHTML = `
+        <td colspan="11" style="padding:10px 14px; background:#FAF8F4; border-top:1.5px solid #D4AF37; border-bottom:1.5px solid #D4AF37;">
+            <div style="display:grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr 0.9fr 1.1fr auto; gap:8px; align-items:flex-end;">
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Product Title *</label>
+                    <input type="text" id="pqe-title-${id}" value="${title.replace(/"/g, '&quot;')}" style="height:28px; width:100%; font-size:11.5px; font-weight:700; padding:0 6px; border:1.5px solid #D4AF37; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">SKU Code</label>
+                    <input type="text" id="pqe-sku-${id}" value="${sku}" style="height:28px; width:100%; font-size:11px; font-weight:600; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:800; color:#8A681F; display:block; margin-bottom:2px;">Trade Price (₹)</label>
+                    <input type="number" id="pqe-retail-${id}" value="${retail}" style="height:28px; width:100%; font-size:11.5px; font-weight:800; color:#181512; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#15803D; display:block; margin-bottom:2px;">Cust Price (₹)</label>
+                    <input type="number" id="pqe-cust-${id}" value="${custPrice || ''}" placeholder="same" style="height:28px; width:100%; font-size:11.5px; font-weight:700; color:#15803D; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#B45309; display:block; margin-bottom:2px;">Sale Disc (₹)</label>
+                    <input type="number" id="pqe-sale-${id}" value="${salePrice || ''}" placeholder="0" style="height:28px; width:100%; font-size:11.5px; font-weight:700; color:#B45309; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Stock</label>
+                    <input type="number" id="pqe-stock-${id}" value="${stock}" style="height:28px; width:100%; font-size:11.5px; font-weight:700; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category</label>
+                    <select id="pqe-cat-${id}" style="height:28px; width:100%; font-size:11px; font-weight:600; padding:0 4px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                        ${catOptionsHtml}
+                    </select>
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <button type="button" class="dt-btn dt-btn-gold" onclick="saveProductQuickEdit(${id})" style="height:28px; font-size:11px; font-weight:800; padding:0 10px;">Update</button>
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="this.closest('tr').remove()" style="height:28px; font-size:10.5px; padding:0 8px;">Cancel</button>
+                </div>
+            </div>
+        </td>
+    `;
+    row.after(editTr);
+}
+
+function saveProductQuickEdit(id) {
+    const title = document.getElementById(`pqe-title-${id}`)?.value?.trim();
+    const sku = document.getElementById(`pqe-sku-${id}`)?.value?.trim();
+    const retail = parseFloat(document.getElementById(`pqe-retail-${id}`)?.value) || 0;
+    const custPrice = parseFloat(document.getElementById(`pqe-cust-${id}`)?.value) || 0;
+    const salePrice = parseFloat(document.getElementById(`pqe-sale-${id}`)?.value) || 0;
+    const stock = parseInt(document.getElementById(`pqe-stock-${id}`)?.value) || 0;
+    const category = document.getElementById(`pqe-cat-${id}`)?.value || 'Silk Sarees';
+
+    if (!title) {
+        alert('Please provide a product title');
+        return;
+    }
+
+    const params = new URLSearchParams();
+    params.append('action', 'quick_edit');
+    params.append('id', id);
+    params.append('title', title);
+    params.append('sku', sku);
+    params.append('retail_price', retail);
+    if (custPrice > 0) params.append('customer_price', custPrice);
+    params.append('sale_price', salePrice);
+    params.append('stock_qty', stock);
+    params.append('category', category);
+
+    if (typeof window.showToast === 'function') {
+        window.showToast('Saving quick edits to live database...');
+    }
+
+    fetch('/api/products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    }).then(r => r.json()).then(res => {
+        if (res && res.success) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('Product quick updated in live database!');
+            }
+            setTimeout(() => { window.location.reload(); }, 500);
+        } else {
+            alert((res && res.message) ? res.message : 'Error updating product');
+        }
+    }).catch(err => {
+        alert('Failed to save quick edit: ' + err.message);
+    });
+}
+
+/* ── INDIVIDUAL STAR TOGGLE FOR FEATURED (WITH DATABASE PERSISTENCE) ── */
 function toggleFeaturedProduct(btn, rowId, productName) {
     const row = document.getElementById(rowId);
+    const prodId = rowId.replace('row-prod-', '');
     const isCurrentlyActive = btn.classList.contains('active');
+    const isFeatured = isCurrentlyActive ? 0 : 1;
 
     if (isCurrentlyActive) {
         btn.classList.remove('active');
@@ -767,9 +910,6 @@ function toggleFeaturedProduct(btn, rowId, productName) {
             row.setAttribute('data-featured', '0');
             row.setAttribute('data-status', 'Published');
         }
-        if (typeof window.showToast === 'function') {
-            window.showToast(`"${productName}" removed from Featured`);
-        }
     } else {
         btn.classList.add('active');
         btn.textContent = '★';
@@ -778,10 +918,29 @@ function toggleFeaturedProduct(btn, rowId, productName) {
             row.setAttribute('data-featured', '1');
             row.setAttribute('data-status', 'Featured');
         }
-        if (typeof window.showToast === 'function') {
-            window.showToast(`🌟 "${productName}" marked as Featured!`);
-        }
     }
+
+    const params = new URLSearchParams();
+    params.append('action', 'quick_edit');
+    params.append('id', prodId);
+    params.append('is_featured', isFeatured);
+
+    fetch('/api/products.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (typeof window.showToast === 'function') {
+            window.showToast(isFeatured ? `🌟 "${productName}" marked as Featured in database!` : `"${productName}" removed from Featured`);
+        }
+    })
+    .catch(err => {
+        if (typeof window.showToast === 'function') {
+            window.showToast(isFeatured ? `🌟 "${productName}" marked as Featured!` : `"${productName}" removed from Featured`);
+        }
+    });
 }
 
 /* ── BULK ACTIONS (TOP & BOTTOM) ── */
@@ -806,40 +965,57 @@ function processBulkAction(action) {
         return;
     }
 
-    if (action === 'featured') {
+    if (action === 'featured' || action === 'unfeatured') {
+        const makeFeatured = (action === 'featured');
+        const ids = Array.from(selected).map(chk => chk.value);
+
         selected.forEach(chk => {
             const row = chk.closest('tr');
             if (row) {
-                row.setAttribute('data-featured', '1');
-                row.setAttribute('data-status', 'Featured');
+                row.setAttribute('data-featured', makeFeatured ? '1' : '0');
+                row.setAttribute('data-status', makeFeatured ? 'Featured' : 'Published');
                 const starBtn = row.querySelector('.wp-star-btn');
                 if (starBtn) {
-                    starBtn.classList.add('active');
-                    starBtn.style.color = '#D4AF37';
+                    if (makeFeatured) {
+                        starBtn.classList.add('active');
+                        starBtn.style.color = '#D4AF37';
+                    } else {
+                        starBtn.classList.remove('active');
+                        starBtn.style.color = '#c3c4c7';
+                    }
                 }
             }
         });
-        if (typeof window.showToast === 'function') {
-            window.showToast(`🌟 Marked ${selected.length} product(s) as Featured!`);
-        }
-    } 
-    else if (action === 'unfeatured') {
-        selected.forEach(chk => {
-            const row = chk.closest('tr');
-            if (row) {
-                row.setAttribute('data-featured', '0');
-                row.setAttribute('data-status', 'Published');
-                const starBtn = row.querySelector('.wp-star-btn');
-                if (starBtn) {
-                    starBtn.classList.remove('active');
-                    starBtn.style.color = '#c3c4c7';
+
+        /* Persist to the live database — not just the row styling. */
+        const params = new URLSearchParams();
+        params.append('action', 'bulk_update');
+        params.append('ids', ids.join(','));
+        params.append('is_featured', makeFeatured ? 1 : 0);
+
+        fetch('/api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (typeof window.showToast === 'function') {
+                if (data && data.success) {
+                    window.showToast(makeFeatured
+                        ? `🌟 Marked ${ids.length} product(s) as Featured in database!`
+                        : `Removed ${ids.length} product(s) from Featured in database.`);
+                } else {
+                    window.showToast('⚠️ Could not save featured status. Please retry.');
                 }
             }
+        })
+        .catch(() => {
+            if (typeof window.showToast === 'function') {
+                window.showToast('⚠️ Could not save featured status. Please retry.');
+            }
         });
-        if (typeof window.showToast === 'function') {
-            window.showToast(`Removed ${selected.length} product(s) from Featured`);
-        }
-    } 
+    }
     else if (action === 'trash') {
         const ids = Array.from(selected).map(chk => chk.value);
         if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected product(s) from the database and storefront?`)) {
@@ -1002,7 +1178,7 @@ function shareProductWhatsApp(productName, sku, wholesaleRate) {
         `🏷️ *SKU:* ${sku}\n` +
         `💰 *Wholesale Rate:* ${wholesaleRate}/pc\n\n` +
         `Please send catalog details and minimum lot MOQ availability.`);
-    window.open(`https://api.whatsapp.com/send?phone=919909000000&text=${message}`, '_blank');
+    window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${message}`, '_blank');
 }
 </script>
 </body>

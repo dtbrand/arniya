@@ -98,6 +98,11 @@ Frontend/Admin/products/
 ## 💎 Features Included
 - **9 KPI Summary Cards** with real-time percentages and trend indicators.
 - **16-Column Desktop Data Table** with responsive overflow, sticky headers, and action menus.
-- **Multi-Tier Pricing Calculator** for live MRP discount and gross margin preview.
+- **5-Role B2B & Consumer Pricing Studio**:
+  - **`Price ₹` (Trade Price)**: Base B2B rate for Retailers (Boutique Owners / Small Shops), Resellers, and Wholesalers.
+  - **`Customer Price ₹`**: End Consumer rate for Retail shoppers & Guests.
+  - **`Sale Price Discount ₹`**: Flat less-amount deduction (e.g. ₹50) applied directly to Trade and Customer rates.
+  - **Live 5-Role Valuation Ribbon**: Real-time margin calculator displaying rates for Customer, Boutique Retailer, Reseller, Wholesaler, and Boutique Profit Spread.
+- **Variant Price Auto-Inheritance**: Eliminates redundant price inputs on color/size matrices; variants automatically inherit rule-based rates.
 - **Google SEO SERP Preview** updating live on title/slug input.
 - **7-Step Import Wizard** with column mapping and validation breakdown.

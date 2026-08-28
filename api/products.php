@@ -1,394 +1,244 @@
 <?php
 /**
- * api/products.php — Complete REST & AJAX Product CRUD, Search & Catalog Feed
+ * api/products.php — High-Performance Product Catalog REST API & Real Database CRUD Engine
  * DT Brand's & Jai Hanuman Tex
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
-require_once __DIR__ . '/../src/ProductCatalog.php';
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 require_once __DIR__ . '/../src/Database.php';
+require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/_guard.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-$action = $_POST['action'] ?? $_GET['action'] ?? 'list';
+try {
+    $method = $_SERVER['REQUEST_METHOD'];
 
-// Handle CREATE Product
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
-    $title = trim($_POST['title'] ?? '');
-    if (empty($title)) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Product title is required']);
-        exit;
-    }
+    // ── 1. WRITE ACTIONS (POST / PUT / DELETE) ──
+    if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+        // Admin-only. GET reads stay public because the storefront quickview and
+        // smart-share modals fetch /api/products.php?id=… (assets/js/modals.js),
+        // but every write caller lives under /admin/ — the product form, the
+        // product list, bulk actions and the five inventory screens.
+        //
+        // This block had no authentication, so any visitor could create, edit,
+        // duplicate, bulk-delete or re-price the entire catalogue, and
+        // action=adjust_stock let them rewrite stock levels at will.
+        dt_api_require_admin('change the product catalogue');
 
-    $slug = trim($_POST['slug'] ?? '') ?: strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $title));
-    $sku = trim($_POST['sku'] ?? '') ?: ('DT-' . strtoupper(substr(uniqid(), -6)));
-    $category_id = (int)($_POST['category_id'] ?? 1);
-    $category_name = trim($_POST['category'] ?? $_POST['category_name'] ?? 'Silk Sarees');
-    $fabric = trim($_POST['fabric'] ?? 'Pure Mulberry Silk');
-    $description = trim($_POST['description'] ?? '');
-    $retail_price = (float)($_POST['retail_price'] ?? 0);
-    $mrp = (float)($_POST['mrp'] ?? ($retail_price > 0 ? $retail_price * 1.35 : 4999.00));
-    $wholesale_price = (float)($_POST['wholesale_price'] ?? ($retail_price * 0.45));
-    $reseller_price = (float)($_POST['reseller_price'] ?? ($retail_price * 0.70));
-    $stock_qty = (int)($_POST['stock_qty'] ?? 50);
-    $image = trim($_POST['image'] ?? $_POST['primary_image'] ?? '/Frontend/Shop/Asset/images/product1.png');
-    $status = trim($_POST['status'] ?? 'in_stock');
+        $rawInput = file_get_contents('php://input');
+        $jsonData = json_decode($rawInput, true) ?: [];
+        $data = array_merge($_POST, $jsonData);
 
-    $db = Database::getConnection();
-    if ($db !== null && !Database::isMockMode()) {
-        try {
-            $stmt = $db->prepare("
-                INSERT INTO products (category_id, category_name, sku, title, slug, description, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
-            ");
-            $stmt->execute([$category_id, $category_name, $sku, $title, $slug, $description, $fabric, $mrp, $retail_price, $wholesale_price, $reseller_price, $stock_qty, $image, $status]);
-            $newId = (int)$db->lastInsertId();
+        $action = trim($data['action'] ?? ($method === 'DELETE' ? 'delete' : 'create'));
+        $targetId = (int)($data['id'] ?? ($_GET['id'] ?? 0));
 
-            if (!empty($image)) {
-                $mStmt = $db->prepare("INSERT INTO product_media (product_id, image_url, is_primary) VALUES (?, ?, 1)");
-                $mStmt->execute([$newId, $image]);
+        // Create Product
+        if ($action === 'create') {
+            $res = ProductCatalog::create($data);
+            if ($res['success']) {
+                http_response_code(201);
+                echo json_encode($res, JSON_PRETTY_PRINT);
+            } else {
+                http_response_code(400);
+                echo json_encode($res, JSON_PRETTY_PRINT);
             }
-
-            echo json_encode(['success' => true, 'message' => 'Product added successfully', 'id' => $newId]);
-            exit;
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
             exit;
         }
-    }
 
-    echo json_encode(['success' => true, 'message' => 'Product created', 'id' => rand(100, 999)]);
-    exit;
-}
-
-// Handle UPDATE Product
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'update') {
-    $id = (int)($_POST['id'] ?? $_GET['id'] ?? 0);
-    if ($id <= 0) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Valid Product ID is required']);
-        exit;
-    }
-
-    $title = trim($_POST['title'] ?? '');
-    $sku = trim($_POST['sku'] ?? '');
-    $category = trim($_POST['category'] ?? $_POST['category_name'] ?? '');
-    $fabric = trim($_POST['fabric'] ?? '');
-    $description = trim($_POST['description'] ?? '');
-    $mrp = (float)($_POST['mrp'] ?? 0);
-    $retail_price = (float)($_POST['retail_price'] ?? 0);
-    $wholesale_price = (float)($_POST['wholesale_price'] ?? 0);
-    $reseller_price = (float)($_POST['reseller_price'] ?? 0);
-    $stock_qty = (int)($_POST['stock_qty'] ?? 0);
-    $status = trim($_POST['status'] ?? 'in_stock');
-    $image = trim($_POST['image'] ?? $_POST['primary_image'] ?? '');
-
-    $db = Database::getConnection();
-    if ($db !== null && !Database::isMockMode()) {
-        try {
-            $stmt = $db->prepare("
-                UPDATE products 
-                SET title = COALESCE(NULLIF(?, ''), title),
-                    sku = COALESCE(NULLIF(?, ''), sku),
-                    category_name = COALESCE(NULLIF(?, ''), category_name),
-                    fabric = COALESCE(NULLIF(?, ''), fabric),
-                    description = COALESCE(NULLIF(?, ''), description),
-                    mrp = COALESCE(NULLIF(?, 0), mrp),
-                    retail_price = COALESCE(NULLIF(?, 0), retail_price),
-                    wholesale_price = COALESCE(NULLIF(?, 0), wholesale_price),
-                    reseller_price = COALESCE(NULLIF(?, 0), reseller_price),
-                    stock_qty = ?,
-                    status = ?,
-                    primary_image = COALESCE(NULLIF(?, ''), primary_image),
-                    updated_at = NOW()
-                WHERE id = ?
-            ");
-            $stmt->execute([
-                $title, $sku, $category, $fabric, $description,
-                $mrp, $retail_price, $wholesale_price, $reseller_price,
-                $stock_qty, $status, $image, $id
-            ]);
-            echo json_encode(['success' => true, 'message' => 'Product updated successfully in live database', 'id' => $id]);
-            exit;
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-            exit;
-        }
-    }
-
-    echo json_encode(['success' => true, 'message' => 'Product updated', 'id' => $id]);
-    exit;
-}
-
-// Handle DUPLICATE Product
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'duplicate') {
-    $id = (int)($_POST['id'] ?? 0);
-    if ($id <= 0) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Valid Product ID is required']);
-        exit;
-    }
-
-    $db = Database::getConnection();
-    if ($db !== null && !Database::isMockMode()) {
-        try {
-            $stmt = $db->prepare("SELECT * FROM products WHERE id = ?");
-            $stmt->execute([$id]);
-            $prod = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if (!$prod) {
-                http_response_code(404);
-                echo json_encode(['success' => false, 'message' => 'Source product not found in database']);
+        // Update / Quick Edit Product
+        if ($action === 'update' || $action === 'quick_edit') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for update.'], JSON_PRETTY_PRINT);
                 exit;
             }
+            $res = ProductCatalog::update($targetId, $data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
 
-            $randSuffix = rand(10, 99);
-            $newTitle = $prod['title'] . ' (Copy)';
-            $newSku = $prod['sku'] . '-COPY-' . $randSuffix;
-            $newSlug = ($prod['slug'] ?? 'product') . '-copy-' . $randSuffix;
-
-            $ins = $db->prepare("
-                INSERT INTO products (category_id, category_name, sku, title, slug, description, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
-            ");
-            $ins->execute([
-                $prod['category_id'] ?? 1,
-                $prod['category_name'] ?? 'Silk Sarees',
-                $newSku,
-                $newTitle,
-                $newSlug,
-                $prod['description'] ?? '',
-                $prod['fabric'] ?? 'Pure Mulberry Silk',
-                $prod['mrp'] ?? 4999.00,
-                $prod['retail_price'] ?? 3999.00,
-                $prod['wholesale_price'] ?? 1499.00,
-                $prod['reseller_price'] ?? 2199.00,
-                $prod['stock_qty'] ?? 50,
-                $prod['primary_image'] ?? '/Frontend/Shop/Asset/images/product1.png',
-                $prod['status'] ?? 'in_stock'
-            ]);
-            $newId = (int)$db->lastInsertId();
-
-            // Also copy media
-            $mStmt = $db->prepare("SELECT image_url, is_primary FROM product_media WHERE product_id = ?");
-            $mStmt->execute([$id]);
-            $mediaList = $mStmt->fetchAll(\PDO::FETCH_ASSOC);
-            if (!empty($mediaList)) {
-                $insM = $db->prepare("INSERT INTO product_media (product_id, image_url, is_primary) VALUES (?, ?, ?)");
-                foreach ($mediaList as $m) {
-                    $insM->execute([$newId, $m['image_url'], $m['is_primary']]);
-                }
+        // Adjust Stock (Increment / Decrement Delta)
+        if ($action === 'adjust_stock') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for stock adjustment.'], JSON_PRETTY_PRINT);
+                exit;
             }
+            $delta = (int)($data['adjustment'] ?? $data['delta'] ?? 0);
+            $res = ProductCatalog::adjustStock($targetId, $delta);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
 
+        // Duplicate Product
+        if ($action === 'duplicate') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for duplication.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $res = ProductCatalog::duplicate($targetId);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Delete / Trash Product
+        if ($action === 'delete' || $action === 'trash') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID is required for deletion.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = ProductCatalog::delete($targetId, true);
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Product permanently removed from database.' : 'Failed to remove product.'], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Bulk Delete Products
+        if ($action === 'bulk_delete') {
+            $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
+            if (!is_array($ids) || empty($ids)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'List of product IDs required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $count = ProductCatalog::bulkDelete($ids, true);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Permanently deleted {$count} products from database."], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Bulk Update Products
+        if ($action === 'bulk_update') {
+            $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = array_filter(array_map('trim', explode(',', $ids)));
+            }
+            if (!is_array($ids) || empty($ids)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'List of product IDs required for bulk update.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $count = ProductCatalog::bulkUpdate($ids, $data);
+            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully updated {$count} products in database."], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        // Toggle Status
+        if ($action === 'toggle_status') {
+            if ($targetId <= 0 || empty($data['status'])) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Product ID and new status required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = ProductCatalog::updateStatus($targetId, trim($data['status']));
+            echo json_encode(['success' => $ok, 'id' => $targetId, 'status' => $data['status']], JSON_PRETTY_PRINT);
+            exit;
+        }
+    }
+
+    // ── 2. READ ACTIONS (GET) ──
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    $sku = isset($_GET['sku']) ? trim($_GET['sku']) : '';
+    $category = isset($_GET['category']) ? trim($_GET['category']) : '';
+    $fabric = isset($_GET['fabric']) ? trim($_GET['fabric']) : '';
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $minPrice = isset($_GET['min_price']) ? (float)$_GET['min_price'] : 0;
+    $maxPrice = isset($_GET['max_price']) ? (float)$_GET['max_price'] : 0;
+    $sort = isset($_GET['sort']) ? trim($_GET['sort']) : 'recommended';
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 50;
+
+    // Single product by ID
+    if ($id > 0) {
+        $product = ProductCatalog::getById($id);
+        if ($product) {
+            $recommendations = ProductCatalog::getRecommendations($id, 4);
             echo json_encode([
                 'success' => true,
-                'message' => 'Product duplicated in live database successfully',
-                'id' => $newId,
-                'title' => $newTitle,
-                'sku' => $newSku,
-                'data' => [
-                    'id' => $newId,
-                    'title' => $newTitle,
-                    'sku' => $newSku,
-                    'category' => $prod['category_name'] ?? 'Silk Sarees',
-                    'retail_price' => (float)($prod['retail_price'] ?? 3999.00),
-                    'wholesale_price' => (float)($prod['wholesale_price'] ?? 1499.00),
-                    'stock_qty' => (int)($prod['stock_qty'] ?? 50),
-                    'primary_image' => $prod['primary_image'] ?? '/Frontend/Shop/Asset/images/product1.png'
-                ]
-            ]);
+                'product' => $product,
+                'recommendations' => $recommendations
+            ], JSON_PRETTY_PRINT);
             exit;
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+        } else {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Product not found.'], JSON_PRETTY_PRINT);
             exit;
         }
     }
 
-    echo json_encode(['success' => true, 'message' => 'Product duplicated', 'id' => rand(100, 999)]);
-    exit;
-}
-
-// Handle MOVE / Reassign Category
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'move') {
-    $id = (int)($_POST['id'] ?? 0);
-    $category_name = trim($_POST['category'] ?? $_POST['category_name'] ?? '');
-    if ($id > 0 && !empty($category_name)) {
-        $db = Database::getConnection();
-        if ($db !== null && !Database::isMockMode()) {
-            try {
-                $stmt = $db->prepare("UPDATE products SET category_name = ?, updated_at = NOW() WHERE id = ?");
-                $stmt->execute([$category_name, $id]);
-                echo json_encode(['success' => true, 'message' => "Product #{$id} moved to {$category_name}"]);
-                exit;
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-                exit;
-            }
+    // Single product by SKU
+    if (!empty($sku)) {
+        $product = ProductCatalog::getBySku($sku);
+        if ($product) {
+            echo json_encode(['success' => true, 'product' => $product], JSON_PRETTY_PRINT);
+            exit;
+        } else {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Product SKU not found.'], JSON_PRETTY_PRINT);
+            exit;
         }
     }
-    echo json_encode(['success' => true, 'message' => 'Product moved']);
-    exit;
+
+    // Query list
+    $criteria = [];
+    if (!empty($category) && strtolower($category) !== 'all') {
+        $criteria['category'] = $category;
+    }
+    if (!empty($fabric)) {
+        $criteria['fabric'] = $fabric;
+    }
+    if (!empty($search)) {
+        $criteria['search'] = $search;
+    }
+    if ($minPrice > 0) {
+        $criteria['min_price'] = $minPrice;
+    }
+    if ($maxPrice > 0) {
+        $criteria['max_price'] = $maxPrice;
+    }
+
+    $products = ProductCatalog::filter($criteria);
+
+    // Apply sorting
+    if ($sort === 'price_asc') {
+        usort($products, fn($a, $b) => $a['retail_price'] <=> $b['retail_price']);
+    } elseif ($sort === 'price_desc') {
+        usort($products, fn($a, $b) => $b['retail_price'] <=> $a['retail_price']);
+    } elseif ($sort === 'discount') {
+        usort($products, fn($a, $b) => ($b['discount'] ?? 0) <=> ($a['discount'] ?? 0));
+    } elseif ($sort === 'newest') {
+        usort($products, fn($a, $b) => $b['id'] <=> $a['id']);
+    }
+
+    if ($limit > 0) {
+        $products = array_slice($products, 0, $limit);
+    }
+
+    echo json_encode([
+        'success' => true,
+        'count' => count($products),
+        'categories' => ProductCatalog::getCategoriesWithDetails(),
+        'products' => $products
+    ], JSON_PRETTY_PRINT);
+
+} catch (\Throwable $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Server Error: ' . $e->getMessage()
+    ], JSON_PRETTY_PRINT);
 }
 
-// Handle BULK MOVE Category
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'bulk_move') {
-    $ids = $_POST['ids'] ?? [];
-    $category_name = trim($_POST['category'] ?? $_POST['category_name'] ?? '');
-    if (is_string($ids)) {
-        $ids = array_filter(array_map('intval', explode(',', $ids)));
-    }
-    if (!empty($ids) && !empty($category_name)) {
-        $db = Database::getConnection();
-        if ($db !== null && !Database::isMockMode()) {
-            try {
-                $placeholders = implode(',', array_fill(0, count($ids), '?'));
-                $params = array_merge([$category_name], $ids);
-                $db->prepare("UPDATE products SET category_name = ?, updated_at = NOW() WHERE id IN ($placeholders)")->execute($params);
-                echo json_encode(['success' => true, 'message' => count($ids) . " products moved to category '{$category_name}'"]);
-                exit;
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-                exit;
-            }
-        }
-    }
-    echo json_encode(['success' => true, 'message' => 'Bulk move executed']);
-    exit;
-}
-
-// Handle BULK UPDATE (stock, category, wholesale_price)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'bulk_update') {
-    $ids = $_POST['ids'] ?? [];
-    if (is_string($ids)) {
-        $ids = array_filter(array_map('intval', explode(',', $ids)));
-    }
-    $stock = trim($_POST['stock_status'] ?? '');
-    $category = trim($_POST['category'] ?? '');
-    $wholesale = (float)($_POST['wholesale_price'] ?? 0);
-
-    if (!empty($ids)) {
-        $db = Database::getConnection();
-        if ($db !== null && !Database::isMockMode()) {
-            try {
-                $placeholders = implode(',', array_fill(0, count($ids), '?'));
-                $updates = [];
-                $params = [];
-
-                if (!empty($stock)) {
-                    $updates[] = "status = ?";
-                    $params[] = ($stock === 'In stock') ? 'in_stock' : (($stock === 'Low stock') ? 'low_stock' : 'out_of_stock');
-                }
-                if (!empty($category)) {
-                    $updates[] = "category_name = ?";
-                    $params[] = $category;
-                }
-                if ($wholesale > 0) {
-                    $updates[] = "wholesale_price = ?";
-                    $params[] = $wholesale;
-                }
-                if (!empty($updates)) {
-                    $updates[] = "updated_at = NOW()";
-                    $sql = "UPDATE products SET " . implode(', ', $updates) . " WHERE id IN ($placeholders)";
-                    $finalParams = array_merge($params, $ids);
-                    $db->prepare($sql)->execute($finalParams);
-                }
-                echo json_encode(['success' => true, 'message' => count($ids) . ' products updated in live database']);
-                exit;
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-                exit;
-            }
-        }
-    }
-    echo json_encode(['success' => true, 'message' => 'Bulk update executed']);
-    exit;
-}
-
-// Handle BULK DELETE
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'bulk_delete') {
-    $ids = $_POST['ids'] ?? [];
-    if (is_string($ids)) {
-        $ids = array_filter(array_map('intval', explode(',', $ids)));
-    }
-    if (!empty($ids)) {
-        $db = Database::getConnection();
-        if ($db !== null && !Database::isMockMode()) {
-            try {
-                $placeholders = implode(',', array_fill(0, count($ids), '?'));
-                $db->prepare("DELETE FROM product_media WHERE product_id IN ($placeholders)")->execute($ids);
-                $db->prepare("DELETE FROM products WHERE id IN ($placeholders)")->execute($ids);
-                echo json_encode(['success' => true, 'message' => count($ids) . ' products permanently deleted from database']);
-                exit;
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-                exit;
-            }
-        }
-    }
-    echo json_encode(['success' => true, 'message' => 'Bulk delete executed']);
-    exit;
-}
-
-// Handle DELETE Product
-if ($action === 'delete' || $_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $id = (int)($_POST['id'] ?? $_GET['id'] ?? 0);
-    if ($id > 0) {
-        $db = Database::getConnection();
-        if ($db !== null && !Database::isMockMode()) {
-            try {
-                $db->prepare("DELETE FROM product_media WHERE product_id = ?")->execute([$id]);
-                $db->prepare("DELETE FROM products WHERE id = ?")->execute([$id]);
-                echo json_encode(['success' => true, 'message' => 'Product deleted successfully', 'id' => $id]);
-                exit;
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-                exit;
-            }
-        }
-    }
-    echo json_encode(['success' => true, 'message' => 'Product deleted', 'id' => $id]);
-    exit;
-}
-
-// Handle SINGLE PRODUCT GET
-if (isset($_GET['id'])) {
-    $product = ProductCatalog::getById((int)$_GET['id']);
-    if ($product) {
-        echo json_encode(['success' => true, 'data' => $product], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-    } else {
-        http_response_code(404);
-        echo json_encode(['success' => false, 'message' => 'Product not found']);
-    }
-    exit;
-}
-
-// Handle LIST / FILTER
-$filters = [
-    'category' => $_GET['category'] ?? '',
-    'search' => $_GET['search'] ?? '',
-    'max_price' => $_GET['max_price'] ?? ''
-];
-
-$products = ProductCatalog::filter($filters);
-
-echo json_encode([
-    'success' => true,
-    'count' => count($products),
-    'total' => count($products),
-    'categories' => ProductCatalog::getCategories(),
-    'products' => $products,
-    'data' => $products
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-exit;

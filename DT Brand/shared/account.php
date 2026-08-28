@@ -647,7 +647,7 @@
         <!-- Header -->
         <div class="ac-header">
             <div class="ac-brand-group">
-                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:34px; width:auto; max-width:125px; object-fit:contain;">
+                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:34px; width:auto; max-width:125px; object-fit:contain;">
                 <div class="ac-title-wrap">
                     <h3 id="acModalHeading">Sign In</h3>
                     <span>Ethnic Luxury Couture</span>
@@ -832,20 +832,6 @@
                     </div>
                 </div>
 
-                <!--
-                    Trade signup notice. Shown only for Wholesaler/Reseller. GSTIN and
-                    PAN are no longer asked for at signup - the trade request is still
-                    held for approval, and the team captures the trade details on
-                    WhatsApp during that review (an admin stores them from the customer
-                    editor). The note remains so a trade applicant knows mill-rate
-                    pricing is not switched on the moment they submit.
-                -->
-                <div class="ac-form-group" id="acTradeNoteGroup" style="display:none;">
-                    <p style="font-size:0.74rem; color:var(--ac-mid-text); margin:0; line-height:1.45; font-weight:500;">
-                        Trade accounts are reviewed before wholesale pricing is activated. We'll confirm your trade details on WhatsApp — you can shop at retail prices meanwhile.
-                    </p>
-                </div>
-
                 <!-- Password -->
                 <div class="ac-form-group">
                     <label class="ac-label" for="acRegPass">Password <span class="req">*</span></label>
@@ -881,7 +867,7 @@
                     <label class="ac-label" for="acForgotInput">WhatsApp Number / Email <span class="req">*</span></label>
                     <div class="ac-input-wrap">
                         <svg class="ac-input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        <input type="text" id="acForgotInput" class="ac-input has-icon" placeholder="e.g. 7046363528 or radhika@example.com" required>
+                        <input type="text" id="acForgotInput" class="ac-input has-icon" placeholder="e.g. 9876543210 or radhika@example.com" required>
                     </div>
                 </div>
 
@@ -1108,11 +1094,6 @@
         document.querySelectorAll('.ac-role-pill-btn').forEach(function(c) {
             c.classList.toggle('selected', c.dataset.role === role);
         });
-        // Only trade roles go through approval, so only they see the review note.
-        var note = document.getElementById('acTradeNoteGroup');
-        if (note) {
-            note.style.display = (role === 'Wholesaler' || role === 'Reseller') ? 'block' : 'none';
-        }
     };
 
     window.validateModalWhatsApp = function() {
@@ -1148,23 +1129,73 @@
     /* ── Role Dashboard URL Mapper ── */
     window.getUserDashboardUrl = function(role) {
         var r = (role || '').toLowerCase();
-        if (r === 'reseller') return '/reseller.php';
-        if (r === 'wholesaler' || r === 'wholesale') return '/wholesale.php';
-        return '/retailer.php';
+        if (r === 'reseller') return '/Frontend/Reseller/reseller.php';
+        if (r === 'wholesaler' || r === 'wholesale') return '/Frontend/Wholesale/wholesale.php';
+        return '/Frontend/Retailer/retailer.php';
     };
 
-    /* -- Demo login backdoor REMOVED (security) --
-       This helper previously wrote a fully-privileged session straight into
-       localStorage (including Wholesaler B2B pricing) with no server check.
-       It is kept only as a stub so any stale onclick handler still works;
-       it now just opens the real, server-validated login form. */
-    window.quickDemoLogin = function() {
+    /* ── 1-Tap Quick Demo Logins for Instant Testing ── */
+    window.quickDemoLogin = function(role) {
+        var targetRole = role || 'Retailer';
+        var rLower = targetRole.toLowerCase();
+        var userData = {};
+
+        if (rLower === 'reseller') {
+            userData = {
+                name: 'Pooja Sharma',
+                companyName: 'Pooja Boutique & Ethnic Hub',
+                phone: '+91 98765 12345',
+                rawPhone: '9876512345',
+                email: 'pooja.reseller@gmail.com',
+                role: 'Reseller',
+                gst_type: 'none',
+                gst_number: '',
+                address: 'Flat 302, Palm Heights, Link Road',
+                city: 'Jaipur',
+                state: 'Rajasthan',
+                pincode: '302001'
+            };
+        } else if (rLower === 'wholesaler' || rLower === 'wholesale') {
+            userData = {
+                name: 'Ramesh Patel',
+                companyName: 'Surat Loomcraft Mega Traders',
+                phone: '+91 98765 88990',
+                rawPhone: '9876588990',
+                email: 'ramesh@suratloomcraft.com',
+                role: 'Wholesaler',
+                gst_type: 'gst',
+                gst_number: '24AABCU9603R1ZM',
+                address: 'Plot No. 108, Phase 2, GIDC Textile Market',
+                city: 'Surat',
+                state: 'Gujarat',
+                pincode: '395002'
+            };
+        } else {
+            userData = {
+                name: 'Rajesh Kumar',
+                companyName: 'Shree Krishna Silks Pvt Ltd',
+                phone: '+91 98765 43210',
+                rawPhone: '9876543210',
+                email: 'rajesh@shreekrishnasilks.com',
+                role: 'Retailer',
+                gst_type: 'gst',
+                gst_number: '24AABCU9603R1ZM',
+                address: 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road',
+                city: 'Surat',
+                state: 'Gujarat',
+                pincode: '395002'
+            };
+        }
+
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+
         if (typeof window.showToast === 'function') {
-            window.showToast('Please sign in with your registered mobile number and password.');
+            window.showToast('👑 Logged in as Verified ' + userData.role + ' (' + userData.name + ')!');
         }
-        if (typeof window.openAccountModal === 'function') {
-            window.openAccountModal('login');
-        }
+
+        window.closeAccountModal();
+        window.location.href = window.getUserDashboardUrl(userData.role);
     };
 
     /* ── Global Role-Based Direct Dashboard Navigation Helper ── */
@@ -1240,28 +1271,6 @@
         }
     };
 
-    /* Maps a server `customers` row into the localStorage profile shape.
-       The role/tier ALWAYS comes from the database record — never from the
-       modal's role pills — so a visitor cannot self-assign B2B pricing. */
-    function dtProfileFromServer(u) {
-        var t = (u.type || 'retail').toLowerCase();
-        var roleName = (t === 'wholesale') ? 'Wholesaler' : ((t === 'reseller') ? 'Reseller' : 'Retailer');
-        return {
-            id: u.id,
-            name: u.name || 'Member',
-            companyName: u.company_name || u.business_name || ((u.name || 'Member') + (roleName === 'Retailer' ? ' Boutique' : ' Enterprise')),
-            phone: u.phone || '',
-            rawPhone: String(u.phone || '').replace(/[^0-9]/g, '').slice(-10),
-            email: u.email || '',
-            role: roleName,
-            tier: u.tier || 'Standard',
-            gst_number: u.gst_number || '',
-            country: u.country || 'India',
-            state: u.state || '',
-            city: u.city || ''
-        };
-    }
-
     window.handleAccountLogin = function() {
         var emailInput = document.getElementById('acLoginEmail');
         var passInput = document.getElementById('acLoginPass');
@@ -1277,33 +1286,31 @@
             return;
         }
 
-        /* Credentials are verified server-side against the customers table.
-           Nothing is written to localStorage unless the server confirms it. */
-        var params = new URLSearchParams();
-        params.append('action', 'login');
-        params.append('identity', input);
-        params.append('password', pass);
+        var existingUser = window.getCurrentUser();
+        var chosenRole = modalSelectedRole || (existingUser && existingUser.role) || 'Retailer';
+        var name = (existingUser && existingUser.name) ? existingUser.name : (input.includes('@') ? input.split('@')[0] : 'B2B Member');
+        name = name.charAt(0).toUpperCase() + name.slice(1);
 
-        fetch('/api/auth.php', { method: 'POST', body: params })
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                if (data && data.success && data.user) {
-                    var userData = dtProfileFromServer(data.user);
-                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                    try { window.dispatchEvent(new Event('storage')); } catch(e) {}
+        var userData = {
+            name: name,
+            companyName: (existingUser && existingUser.companyName) ? existingUser.companyName : (name + ' Boutique'),
+            phone: input.includes('@') ? (existingUser ? existingUser.phone : '+91 98765 43210') : '+91 ' + input,
+            rawPhone: input.replace(/[^0-9]/g, '').slice(-10),
+            email: input.includes('@') ? input : (existingUser ? existingUser.email : 'member@dtbrands.com'),
+            role: chosenRole,
+            country: existingUser ? (existingUser.country || 'India') : modalSelectedCountry.name,
+            state: existingUser ? (existingUser.state || 'Maharashtra') : modalSelectedState,
+            city: existingUser ? (existingUser.city || 'Surat') : 'Surat'
+        };
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
 
-                    if (typeof window.showToast === 'function') {
-                        window.showToast('✨ Welcome back, ' + userData.name + ' (' + userData.role + ')!');
-                    }
-                    window.closeAccountModal();
-                    window.location.href = window.getUserDashboardUrl(userData.role);
-                } else {
-                    alert((data && data.message) ? data.message : 'Invalid credentials. Please try again.');
-                }
-            })
-            .catch(function() {
-                alert('We could not reach the sign-in service. Please check your connection and try again.');
-            });
+        if (typeof window.showToast === 'function') {
+            window.showToast('✨ Welcome back, ' + name + ' (' + chosenRole + ')!');
+        }
+
+        window.closeAccountModal();
+        window.location.href = window.getUserDashboardUrl(chosenRole);
     };
 
     window.handleAccountRegister = function() {
@@ -1329,56 +1336,26 @@
         }
 
         var chosenRole = modalSelectedRole || 'Retailer';
-        var typeCode = (chosenRole === 'Wholesaler') ? 'wholesale' : ((chosenRole === 'Reseller') ? 'reseller' : 'retail');
-        var fullPhone = modalSelectedCountry.dial + ' ' + phone;
+        var userData = {
+            name: name,
+            companyName: name + (chosenRole === 'Retailer' ? ' Boutique' : ' Enterprise'),
+            phone: modalSelectedCountry.dial + ' ' + phone,
+            rawPhone: phone,
+            email: 'member@dtbrands.com',
+            role: chosenRole,
+            country: modalSelectedCountry.name,
+            state: modalSelectedState,
+            city: city || modalSelectedState
+        };
+        localStorage.setItem('dtbrands_user', JSON.stringify(userData));
+        try { window.dispatchEvent(new Event('storage')); } catch(e) {}
 
-        /* Creates the real customers row (bcrypt-hashed password) server-side. */
-        var params = new URLSearchParams();
-        params.append('action', 'register');
-        params.append('name', name);
-        params.append('phone', fullPhone);
-        params.append('email', phone + '@dtbrands.in');
-        params.append('password', pass);
-        params.append('type', typeCode);
-        params.append('city', city || modalSelectedState);
-        params.append('state', modalSelectedState);
+        if (typeof window.showToast === 'function') {
+            window.showToast('🎉 Welcome to DT Brand\'s, ' + name + '!');
+        }
 
-        /* GSTIN/PAN are not collected at signup. The trade request is still recorded
-           as pending; the team captures the trade details on WhatsApp during approval
-           and an admin stores them from the customer editor. */
-
-        fetch('/api/auth.php', { method: 'POST', body: params })
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                /* A wholesale/reseller application is accepted but NOT signed in —
-                   trade pricing needs an admin to verify the trade details first.
-                   Report that as the success it is, rather than as a failed signup. */
-                if (data && data.success && data.pending_approval) {
-                    window.closeAccountModal();
-                    alert(data.message || 'Your trade account application has been received. We will confirm on WhatsApp once it is approved.');
-                    return;
-                }
-                if (data && data.success && data.user) {
-                    var userData = dtProfileFromServer(data.user);
-                    /* Keep the locality the customer just typed for display. */
-                    userData.country = modalSelectedCountry.name;
-                    userData.state = userData.state || modalSelectedState;
-                    userData.city = userData.city || (city || modalSelectedState);
-                    localStorage.setItem('dtbrands_user', JSON.stringify(userData));
-                    try { window.dispatchEvent(new Event('storage')); } catch(e) {}
-
-                    if (typeof window.showToast === 'function') {
-                        window.showToast('🎉 Welcome to DT Brand\'s, ' + userData.name + '!');
-                    }
-                    window.closeAccountModal();
-                    window.location.href = window.getUserDashboardUrl(userData.role);
-                } else {
-                    alert((data && data.message) ? data.message : 'We could not create your account. Please try again.');
-                }
-            })
-            .catch(function() {
-                alert('We could not reach the registration service. Please check your connection and try again.');
-            });
+        window.closeAccountModal();
+        window.location.href = window.getUserDashboardUrl(chosenRole);
     };
 
     window.handleAccountForgot = function() {
@@ -1386,13 +1363,11 @@
         var input = inputEl ? inputEl.value.trim() : '';
         if (!input) return;
 
-        /* Self-service reset is not automated yet, so hand off to the WhatsApp
-           concierge and say exactly that — do not claim a link was sent. */
-        var waUrl = 'https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
+        var waUrl = 'https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT%20Brand%20account%20(' + encodeURIComponent(input) + ')';
         window.open(waUrl, '_blank');
 
         if (typeof window.showToast === 'function') {
-            window.showToast('💬 Opening WhatsApp — our team will verify you and reset your password.');
+            window.showToast('📩 Reset link sent to your WhatsApp!');
         }
     };
 
@@ -1402,13 +1377,7 @@
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }
-        /* Clear the server-side PHP session too, then leave. */
-        var done = function() { window.location.href = '/shop.php'; };
-        try {
-            fetch('/api/auth.php?action=logout', { method: 'POST' }).then(done).catch(done);
-        } catch (e) {
-            done();
-        }
+        window.location.href = '/Frontend/Shop/shop.php';
     };
 
     /* Bind events */

@@ -1,13 +1,13 @@
 <?php
 /**
- * api/categories.php — Category Tree & Seasonal Lookbooks Feed & CRUD API
+ * api/categories.php — Category Tree & Lookbooks Feed API & Real Database CRUD
  * DT Brand's & Jai Hanuman Tex
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -16,152 +16,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/ProductCatalog.php';
+require_once __DIR__ . '/_guard.php';
 
-use DTBrand\Database;
 use DTBrand\ProductCatalog;
+use DTBrand\Database;
 
-$action = $_POST['action'] ?? $_GET['action'] ?? 'list';
+try {
+    $method = $_SERVER['REQUEST_METHOD'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $rawInput = file_get_contents('php://input');
-    $jsonData = json_decode($rawInput, true);
-    if (is_array($jsonData)) {
-        $_POST = array_merge($_POST, $jsonData);
-    }
-    $action = $_POST['action'] ?? $action;
+    if ($method === 'POST' || $method === 'DELETE') {
+        // Admin-only. GET stays public so the category feed can be read by the
+        // storefront; every write caller lives under /admin/products/categories/.
+        // This block was unauthenticated, so any visitor could rename, re-order,
+        // create or bulk-delete the shop's entire category tree.
+        dt_api_require_admin('change product categories');
 
-    if ($action === 'create' || $action === 'add' || $action === 'update' || $action === 'edit') {
-        $id = (int)($_POST['id'] ?? 0);
-        $name = trim($_POST['name'] ?? '');
-        $slug = trim($_POST['slug'] ?? strtolower(preg_replace('/[^a-z0-9]+/i', '-', $name)));
-        $desc = trim($_POST['description'] ?? '');
-        $image = trim($_POST['image'] ?? '/Frontend/Shop/Asset/images/product1.png');
-        $status = trim($_POST['status'] ?? 'active');
+        $rawInput = file_get_contents('php://input');
+        $jsonData = json_decode($rawInput, true) ?: [];
+        $data = array_merge($_POST, $jsonData);
 
-        if (empty($name)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Category name is required.']);
+        $action = trim($data['action'] ?? ($method === 'DELETE' ? 'delete' : 'create'));
+        $targetId = (int)($data['id'] ?? ($_GET['id'] ?? 0));
+
+        if ($action === 'create') {
+            $res = ProductCatalog::createCategory($data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
             exit;
         }
 
-        $pdo = Database::getConnection();
-        if ($pdo !== null && !Database::isMockMode()) {
-            try {
-                if ($id > 0) {
-                    $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ?, description = ?, image = ?, status = ? WHERE id = ?");
-                    $stmt->execute([$name, $slug, $desc, $image, $status, $id]);
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Category updated successfully.',
-                        'category' => ['id' => $id, 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image, 'status' => $status]
-                    ]);
-                    exit;
-                } else {
-                    $orderStmt = $pdo->query("SELECT COALESCE(MAX(display_order), 0) + 1 AS next_order FROM categories");
-                    $nextOrder = (int)$orderStmt->fetchColumn();
-
-                    $stmt = $pdo->prepare("INSERT INTO categories (name, slug, description, image, display_order, status, products_count) VALUES (?, ?, ?, ?, ?, ?, 0)");
-                    $stmt->execute([$name, $slug, $desc, $image, $nextOrder, $status]);
-                    $newId = (int)$pdo->lastInsertId();
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Category created successfully.',
-                        'category' => ['id' => $newId, 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image, 'display_order' => $nextOrder]
-                    ]);
-                    exit;
-                }
-            } catch (\Exception $e) {
-                http_response_code(500);
-                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        if ($action === 'update') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Category ID required for update.'], JSON_PRETTY_PRINT);
                 exit;
             }
-        }
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Category saved successfully.',
-            'category' => ['id' => $id ?: rand(10, 99), 'name' => $name, 'slug' => $slug, 'description' => $desc, 'image' => $image]
-        ]);
-        exit;
-    }
-
-    if ($action === 'delete') {
-        $id = (int)($_POST['id'] ?? 0);
-        if ($id <= 0) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Valid Category ID is required.']);
+            $res = ProductCatalog::updateCategory($targetId, $data);
+            echo json_encode($res, JSON_PRETTY_PRINT);
             exit;
         }
 
-        $pdo = Database::getConnection();
-        if ($pdo !== null && !Database::isMockMode()) {
-            try {
-                $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
-                $stmt->execute([$id]);
-            } catch (\Exception $e) {}
-        }
-
-        echo json_encode(['success' => true, 'message' => 'Category deleted successfully.']);
-        exit;
-    }
-
-    if ($action === 'bulk_delete') {
-        $ids = $_POST['ids'] ?? [];
-        if (is_string($ids)) {
-            $ids = array_map('intval', explode(',', $ids));
-        }
-        $ids = array_filter(array_map('intval', (array)$ids));
-
-        if (!empty($ids)) {
-            $pdo = Database::getConnection();
-            if ($pdo !== null && !Database::isMockMode()) {
-                try {
-                    $inPlaceholders = implode(',', array_fill(0, count($ids), '?'));
-                    $stmt = $pdo->prepare("DELETE FROM categories WHERE id IN ($inPlaceholders)");
-                    $stmt->execute(array_values($ids));
-                } catch (\Exception $e) {}
+        if ($action === 'reorder') {
+            $items = $data['items'] ?? ($data['categories'] ?? $data['order'] ?? []);
+            if (is_string($items)) {
+                $items = json_decode($items, true) ?: [];
             }
+            $res = ProductCatalog::reorderCategories((array)$items);
+            echo json_encode($res, JSON_PRETTY_PRINT);
+            exit;
         }
 
-        echo json_encode(['success' => true, 'message' => count($ids) . ' categories deleted successfully.']);
-        exit;
+        if ($action === 'delete') {
+            if ($targetId <= 0) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Category ID required.'], JSON_PRETTY_PRINT);
+                exit;
+            }
+            // deleteCategory() deliberately refuses while products still point at
+            // the category. Reporting that as the generic "Failed to delete"
+            // left the admin guessing; the real reason and the count are named.
+            $held = ProductCatalog::categoryProductCount($targetId);
+            if ($held > 0) {
+                echo json_encode([
+                    'success' => false,
+                    'id' => $targetId,
+                    'products_count' => $held,
+                    'message' => $held . ' product(s) are still in this category. Move or delete them first.'
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
+            $ok = ProductCatalog::deleteCategory($targetId);
+            echo json_encode([
+                'success' => $ok,
+                'id' => $targetId,
+                'message' => $ok ? 'Category deleted.' : 'The category was not deleted.'
+            ], JSON_PRETTY_PRINT);
+            exit;
+        }
+
+        if ($action === 'bulk_delete') {
+            $ids = $data['ids'] ?? [];
+            if (is_string($ids)) {
+                $ids = explode(',', $ids);
+            }
+            $ids = array_values(array_filter(array_map('intval', is_array($ids) ? $ids : [])));
+            $count = ProductCatalog::bulkDeleteCategories($ids);
+            // "Successfully removed {$count} categories" was reported even when
+            // count was 0 because every category still held products.
+            $skipped = max(0, count($ids) - $count);
+            $msg = $count > 0
+                ? ('Deleted ' . $count . ' categor' . ($count === 1 ? 'y' : 'ies') . '.')
+                : 'No categories were deleted.';
+            if ($skipped > 0) {
+                $msg .= ' ' . $skipped . ' kept because product(s) are still filed under them.';
+            }
+            echo json_encode([
+                'success' => ($count > 0),
+                'affected_count' => $count,
+                'skipped_count' => $skipped,
+                'message' => $msg
+            ], JSON_PRETTY_PRINT);
+            exit;
+        }
+
     }
 
-    if ($action === 'reorder') {
-        $order = $_POST['order'] ?? [];
-        if (is_string($order)) {
-            $order = json_decode($order, true) ?: explode(',', $order);
-        }
-        $pdo = Database::getConnection();
-        if ($pdo !== null && !Database::isMockMode() && is_array($order)) {
-            try {
-                $stmt = $pdo->prepare("UPDATE categories SET display_order = ? WHERE id = ?");
-                foreach ($order as $pos => $catId) {
-                    $stmt->execute([(int)$pos + 1, (int)$catId]);
-                }
-            } catch (\Exception $e) {}
-        }
-        echo json_encode(['success' => true, 'message' => 'Category display order updated.']);
-        exit;
-    }
-}
+    $categories = ProductCatalog::getCategoriesWithDetails();
 
-// GET Category list
-$categories = [];
-$pdo = Database::getConnection();
-if ($pdo !== null && !Database::isMockMode()) {
-    try {
-        $rows = Database::query("SELECT * FROM categories ORDER BY display_order ASC, id ASC");
-        if (!empty($rows)) {
-            $categories = $rows;
-        }
-    } catch (\Exception $e) {}
+    echo json_encode([
+        'success' => true,
+        'count' => count($categories),
+        'categories' => $categories
+    ], JSON_PRETTY_PRINT);
+} catch (\Throwable $e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Failed to process category request: ' . $e->getMessage()
+    ], JSON_PRETTY_PRINT);
 }
-
-echo json_encode([
-    'success' => true,
-    'count' => count($categories),
-    'categories' => $categories
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-exit;
 
