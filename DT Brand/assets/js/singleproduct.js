@@ -92,10 +92,14 @@
     function buildGalleryDots() {
         if (!dotsWrap) return;
         dotsWrap.innerHTML = '';
-        for (var i = 0; i < totalSlides; i++) {
+        var slides = document.querySelectorAll('#pdpSliderTrack .pdp-slide');
+        var count = slides.length || totalSlides;
+        for (var i = 0; i < count; i++) {
+            var isVideo = slides[i] && (slides[i].getAttribute('data-media') === 'video' || slides[i].getAttribute('data-media') === 'embed');
             var dot = document.createElement('div');
-            dot.className = 'pdp-gallery-dot' + (i === 0 ? ' active' : '');
+            dot.className = 'pdp-gallery-dot' + (i === 0 ? ' active' : '') + (isVideo ? ' is-video' : '');
             dot.setAttribute('data-idx', i);
+            if (isVideo) dot.setAttribute('title', 'Video');
             dot.onclick = (function(idx) {
                 return function() {
                     window.goToSlide(idx);
@@ -114,6 +118,7 @@
         updateActiveThumbnail(currentSlideIdx);
         updateActiveDots(currentSlideIdx);
         if (counter) counter.textContent = (currentSlideIdx + 1) + ' / ' + totalSlides;
+
         // Stop any clip on a slide we just left, so its sound does not carry on
         // over a different photograph.
         track.querySelectorAll('.pdp-slide video').forEach(function(vid) {
@@ -122,6 +127,22 @@
                 vid.pause();
             }
         });
+
+        // Smart play active video slide (Myntra style)
+        var activeSlide = track.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
+        if (activeSlide && activeSlide.getAttribute('data-media') === 'video') {
+            var activeVid = activeSlide.querySelector('video');
+            if (activeVid) {
+                var p = activeVid.play();
+                if (p !== undefined) {
+                    p.catch(function() {
+                        activeVid.muted = true;
+                        activeVid.play().catch(function() {});
+                    });
+                }
+            }
+        }
+
         restartGalleryAutoTimer();
     };
 
@@ -131,7 +152,13 @@
 
     function updateActiveThumbnail(idx) {
         document.querySelectorAll('.pdp-thumb-item').forEach(function(item, i) {
-            item.classList.toggle('active', i === idx);
+            var isActive = (i === idx);
+            item.classList.toggle('active', isActive);
+            if (isActive) {
+                try {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } catch (e) {}
+            }
         });
     }
 

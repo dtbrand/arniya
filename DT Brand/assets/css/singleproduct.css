@@ -179,6 +179,15 @@ cursor: zoom-in;
 
 /* Uploaded MP4 and pasted YouTube / Instagram embeds share the slide track with
    the photographs, so a product's video is reachable from the main gallery. */
+.pdp-slide-video-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0B0907;
+}
 .pdp-slide-video,
 .pdp-slide-embed {
     width: 100%;
@@ -188,6 +197,34 @@ cursor: zoom-in;
     background: #0B0907;
 }
 .pdp-slide-video { object-fit: cover; cursor: default; }
+
+/* Myntra-style Video Floating Pill on Main Slide */
+.pdp-video-tag-pill {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(17, 24, 39, 0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1.2px solid #D4AF37;
+    color: #FAF5E8;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 4px 11px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 5;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+}
+.pdp-video-tag-pill svg {
+    width: 11px;
+    height: 11px;
+    fill: #D4AF37;
+}
 
 /* Shown when a product has no uploaded photo at all, in place of borrowing
    another product's photograph. */
@@ -202,17 +239,77 @@ cursor: zoom-in;
     line-height: 1.5;
 }
 
-/* Play marker on a thumbnail whose slide is a video or an embed. */
-.pdp-thumb-play {
+/* Myntra-style Video Thumbnail Badges & Play Icon Overlay */
+.pdp-thumb-item[data-kind="video"],
+.pdp-thumb-item[data-kind="embed"] {
+    border-color: rgba(212, 175, 55, 0.6);
+}
+.pdp-thumb-play-overlay {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(17, 24, 39, 0.78);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1.5px solid #D4AF37;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
-    color: #FFFFFF;
-    background: rgba(11, 9, 7, 0.42);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     pointer-events: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.pdp-thumb-play-overlay svg {
+    width: 10px;
+    height: 10px;
+    fill: #D4AF37;
+    margin-left: 1.5px;
+}
+.pdp-thumb-item:hover .pdp-thumb-play-overlay {
+    transform: translate(-50%, -50%) scale(1.15);
+    background: #B8860B;
+}
+.pdp-thumb-item:hover .pdp-thumb-play-overlay svg {
+    fill: #FFFFFF;
+}
+.pdp-thumb-video-badge {
+    position: absolute;
+    bottom: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17, 24, 39, 0.92);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid #D4AF37;
+    border-radius: 10px;
+    padding: 1.5px 5px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #D4AF37;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    pointer-events: none;
+    white-space: nowrap;
+}
+.pdp-thumb-video-svg {
+    width: 7px;
+    height: 7px;
+    fill: #D4AF37;
+}
+.pdp-thumb-item.active .pdp-thumb-video-badge {
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    border-color: #FFFFFF;
+    color: #111827;
+}
+.pdp-thumb-item.active .pdp-thumb-video-svg {
+    fill: #111827;
 }
 
 /* Slide Counter Badge (Mobile) */

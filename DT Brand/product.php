@@ -285,25 +285,35 @@ function pdp_relative_date(string $ts): string
                     <?php foreach ($pdpMedia as $index => $mItem): ?>
                     <div class="pdp-slide" data-idx="<?= $index ?>" data-media="<?= htmlspecialchars($mItem['kind']) ?>">
                         <?php if ($mItem['kind'] === 'video'): ?>
-                        <!-- An uploaded MP4. <img src="clip.mp4"> is a broken image, which is
-                             what this page produced before videos were separated out. -->
-                        <video
-                            class="pdp-slide-video"
-                            src="<?= htmlspecialchars($mItem['src']) ?>"
-                            poster="<?= htmlspecialchars($pdpPoster) ?>"
-                            controls
-                            playsinline
-                            preload="metadata"
-                        ></video>
+                        <div class="pdp-slide-video-wrap">
+                            <video
+                                class="pdp-slide-video"
+                                src="<?= htmlspecialchars($mItem['src']) ?>"
+                                poster="<?= htmlspecialchars($pdpPoster) ?>"
+                                controls
+                                playsinline
+                                preload="metadata"
+                            ></video>
+                            <div class="pdp-video-tag-pill">
+                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                                <span>360° Fabric &amp; Drape Video</span>
+                            </div>
+                        </div>
                         <?php elseif ($mItem['kind'] === 'embed'): ?>
-                        <iframe
-                            class="pdp-slide-embed"
-                            src="<?= htmlspecialchars($mItem['src']) ?>"
-                            title="<?= htmlspecialchars($pName) ?> video"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                            loading="lazy"
-                        ></iframe>
+                        <div class="pdp-slide-video-wrap">
+                            <iframe
+                                class="pdp-slide-embed"
+                                src="<?= htmlspecialchars($mItem['src']) ?>"
+                                title="<?= htmlspecialchars($pName) ?> video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                            <div class="pdp-video-tag-pill">
+                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                                <span>Featured Video</span>
+                            </div>
+                        </div>
                         <?php else: ?>
                         <img
                             src="<?= htmlspecialchars($mItem['src']) ?>"
@@ -322,14 +332,20 @@ function pdp_relative_date(string $ts): string
             <!-- Mobile & Desktop Pagination Dots -->
             <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
 
-            <!-- Multi-Photo Thumbnails -->
+            <!-- Multi-Photo & Video Thumbnails (Myntra-Style) -->
             <?php if (count($pdpMedia) > 1): ?>
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
                 <?php foreach ($pdpMedia as $index => $mItem): ?>
-                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
+                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" data-kind="<?= htmlspecialchars($mItem['kind']) ?>" onclick="goToSlide(<?= $index ?>)">
                     <img src="<?= htmlspecialchars($mItem['kind'] === 'image' ? $mItem['src'] : $pdpPoster) ?>" alt="Thumb <?= $index + 1 ?>" />
                     <?php if ($mItem['kind'] !== 'image'): ?>
-                    <span class="pdp-thumb-play">&#9658;</span>
+                    <div class="pdp-thumb-play-overlay">
+                        <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    </div>
+                    <div class="pdp-thumb-video-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-thumb-video-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                        <span>VIDEO</span>
+                    </div>
                     <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
