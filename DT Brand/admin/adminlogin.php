@@ -18,7 +18,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 // If already logged in, redirect to Admin Dashboard
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
-    header("Location: /admin");
+    header("Location: /admin/");
     exit;
 }
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $authRes = \DTBrand\Auth::adminLogin($email, $password);
 
     if ($authRes['success']) {
-        header("Location: /admin");
+        header("Location: /admin/");
         exit;
     } else {
         $error = $authRes['message'] ?? 'Invalid credentials. Please verify your admin email and password.';
