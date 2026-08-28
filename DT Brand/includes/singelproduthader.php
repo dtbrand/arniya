@@ -542,33 +542,6 @@
             </a>
         </div>
     </div>
-
-    <!-- ═══ Amazon-Style Attached Sub-Navigation Bar ═══ -->
-    <?php 
-    require_once __DIR__ . '/../src/ProductCatalog.php';
-    $pdpCategories = \DTBrand\ProductCatalog::getCategories();
-    ?>
-    <nav class="header-attached-subnav" id="headerAttachedSubnav" aria-label="Attached categories navigation" style="background: linear-gradient(90deg, #181512 0%, #2A241E 50%, #181512 100%); border-top: 1px solid rgba(212,175,55,0.25); border-bottom: 1px solid rgba(212,175,55,0.35); padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; display: flex; align-items: center;">
-        <div class="subnav-scroll-track" id="mainCatSliderTrack" style="display: flex; align-items: center; gap: 8px; white-space: nowrap; padding: 5px 0;">
-            <a href="/" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; gap: 5px; color:#FDFBF7; font-size:12px; font-weight:700; padding:4px 10px; border-radius:4px;">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                <span>Home</span>
-            </a>
-            <a href="/shop" class="subnav-item" style="text-decoration:none; display:inline-flex; align-items:center; gap: 5px; color:#FDFBF7; font-size:12px; font-weight:700; padding:4px 10px; border-radius:4px;">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                <span>Shop All</span>
-            </a>
-            <a href="/shop?category=all" class="subnav-item main-cat-tab" style="text-decoration:none; display:inline-flex; align-items:center; gap: 5px; color:#FDFBF7; font-size:12px; font-weight:700; padding:4px 10px; border-radius:4px;">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                <span>All Categories</span>
-            </a>
-            <?php foreach ($pdpCategories as $pCat): 
-                $isCatActive = isset($product['category']) && (strtolower($product['category']) === strtolower($pCat) || strtolower(str_replace('-', ' ', $product['category'])) === strtolower($pCat));
-            ?>
-            <a href="/shop?category=<?= urlencode($pCat) ?>" class="subnav-item main-cat-tab <?= $isCatActive ? 'active' : '' ?>" style="text-decoration:none; display:inline-flex; align-items:center; color:<?= $isCatActive ? '#D4AF37' : '#E2E8F0' ?>; font-size:12px; font-weight:<?= $isCatActive ? '800' : '600' ?>; padding:4px 10px; border-radius:4px; border:1px solid <?= $isCatActive ? '#D4AF37' : 'transparent' ?>; background:<?= $isCatActive ? 'rgba(212,175,55,0.15)' : 'transparent' ?>;"><?= htmlspecialchars($pCat) ?></a>
-            <?php endforeach; ?>
-        </div>
-    </nav>
 </header>
 
 <?php
