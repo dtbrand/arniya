@@ -128,24 +128,24 @@ $vZari   = trim((string)($prod['zari_type'] ?? ''));
                 stock quantity. Each active row represents one purchasable Color &times; Size variant.
             </div>
 
-            <!-- 3B. FULL SET DYNAMIC PREVIEW BOX -->
-            <div id="dtFullSetPreviewCard" style="margin-top:14px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.5px solid #D4AF37; border-radius:8px; padding:14px 18px; color:#FAF5E8; box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid rgba(212,175,55,0.3); padding-bottom:10px; margin-bottom:10px;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        <strong style="font-size:13px; letter-spacing:0.5px; color:#FFE57F;">FULL SET DYNAMIC PREVIEW</strong>
+            <!-- 3B. FULL SET DYNAMIC PREVIEW BOX (Compact Luxury) -->
+            <div id="dtFullSetPreviewCard" style="margin-top:10px; background:linear-gradient(135deg, #181512 0%, #2A241E 100%); border:1.2px solid #D4AF37; border-radius:6px; padding:8px 12px; color:#FAF5E8; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-bottom:1px solid rgba(212,175,55,0.25); padding-bottom:6px; margin-bottom:6px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D4AF37" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <strong style="font-size:11.5px; letter-spacing:0.3px; color:#FFE57F;">FULL SET DYNAMIC PREVIEW</strong>
                     </div>
-                    <div style="display:flex; align-items:center; gap:12px; font-size:11.5px;">
+                    <div style="display:flex; align-items:center; gap:10px; font-size:11px;">
                         <span>Colors: <strong id="dtFsPreviewColorsCount" style="color:#D4AF37;">0</strong></span>
-                        <span>Available Variants: <strong id="dtFsPreviewVariantsCount" style="color:#D4AF37;">0</strong></span>
-                        <span class="adm-badge gold" style="font-size:11px; padding:3px 10px; font-weight:800;" id="dtFsPreviewPieceBadge">0 Pieces / Set</span>
+                        <span>Variants: <strong id="dtFsPreviewVariantsCount" style="color:#D4AF37;">0</strong></span>
+                        <span class="adm-badge gold" style="font-size:10px; padding:2px 8px; font-weight:800;" id="dtFsPreviewPieceBadge">0 Pieces / Set</span>
                     </div>
                 </div>
-                <div style="font-size:11px; color:#D6D3D1; margin-bottom:8px;">
-                    The Full Set bundle is automatically composed of 100% of the active, in-stock Color &times; Size variant combinations below. Retailers/Wholesalers buy all included variants together:
+                <div style="font-size:10px; color:#D6D3D1; margin-bottom:6px; line-height:1.3;">
+                    100% active Color &times; Size variant combinations included in this wholesale trade catalog bundle:
                 </div>
-                <div id="dtFsPreviewItemsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:6px; max-height:160px; overflow-y:auto; padding-right:4px;">
-                    <span style="font-size:11px; color:#A8A29E;">No active variants created yet.</span>
+                <div id="dtFsPreviewItemsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:4px; max-height:120px; overflow-y:auto; padding-right:4px;">
+                    <span style="font-size:10.5px; color:#A8A29E;">No active variants created yet.</span>
                 </div>
             </div>
         </div>

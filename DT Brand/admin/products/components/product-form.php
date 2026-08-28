@@ -61,25 +61,34 @@ $pfSellingType = trim((string)($prod['selling_type'] ?? 'single_piece')) ?: 'sin
         </button>
     </div>
     <div class="dt-form-sec-body">
-        <!-- PRODUCT SELLING TYPE SELECTION -->
-        <div class="adm-form-group full" style="background:#FAF8F2; border:1.5px solid rgba(212,175,55,0.5); border-radius:8px; padding:12px 16px; margin-bottom:14px;">
-            <label class="adm-form-label" style="font-size:12.5px; font-weight:800; color:#5A4210; display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="color:#8A681F;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                <span>PRODUCT SELLING TYPE</span>
-            </label>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
-                <label id="dtCardSinglePiece" style="display:flex; align-items:flex-start; gap:10px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'single_piece' ? '#8A681F' : '#E2E8F0'; ?>; padding:12px 14px; border-radius:6px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'single_piece' ? '0 2px 8px rgba(138,104,31,0.15)' : 'none'; ?>;">
-                    <input type="radio" name="pFormSellingType" value="single_piece" id="pFormSellingTypeSingle" <?php echo $pfSellingType === 'single_piece' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('single_piece')" style="margin-top:3px; accent-color:#8A681F;">
-                    <div>
-                        <strong style="display:block; font-size:12.5px; color:#181512;">SINGLE PIECE</strong>
-                        <small style="font-size:11px; color:#646970; line-height:1.4; display:block; margin-top:2px;">Individual piece purchasing. Available to all 5 user roles with Customer Price support and Color &rarr; Size variant selection.</small>
+        <!-- PRODUCT SELLING TYPE SELECTION (Compact Luxury Bar) -->
+        <div class="adm-form-group full" style="background:#FAF8F2; border:1px solid #D4AF37; border-radius:6px; padding:8px 10px; margin-bottom:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+                <label class="adm-form-label" style="font-size:11px; font-weight:800; color:#5A4210; display:inline-flex; align-items:center; gap:5px; margin:0;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#8A681F;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span>PRODUCT SELLING TYPE</span>
+                </label>
+                <span style="font-size:10px; color:#8A681F; font-weight:600;">Choose single piece or full catalog bundle</span>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+                <label id="dtCardSinglePiece" style="display:flex; align-items:center; gap:8px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'single_piece' ? '#8A681F' : '#E2E8F0'; ?>; padding:6px 10px; border-radius:5px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'single_piece' ? '0 1px 4px rgba(138,104,31,0.12)' : 'none'; ?>; transition:all 0.15s ease;">
+                    <input type="radio" name="pFormSellingType" value="single_piece" id="pFormSellingTypeSingle" <?php echo $pfSellingType === 'single_piece' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('single_piece')" style="accent-color:#8A681F; width:13px; height:13px; margin:0; cursor:pointer;">
+                    <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <strong style="font-size:11.5px; color:#181512; font-weight:800;">SINGLE PIECE</strong>
+                            <span class="adm-badge" style="background:#EFF6FF; color:#1D4ED8; font-size:9px; padding:1px 5px; font-weight:700; border-radius:3px;">All 5 Roles</span>
+                        </div>
+                        <small style="font-size:10px; color:#64748B; line-height:1.2;">Customer Price + Color &rarr; Size selection</small>
                     </div>
                 </label>
-                <label id="dtCardFullSet" style="display:flex; align-items:flex-start; gap:10px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'full_set' ? '#8A681F' : '#E2E8F0'; ?>; padding:12px 14px; border-radius:6px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'full_set' ? '0 2px 8px rgba(138,104,31,0.15)' : 'none'; ?>;">
-                    <input type="radio" name="pFormSellingType" value="full_set" id="pFormSellingTypeFull" <?php echo $pfSellingType === 'full_set' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('full_set')" style="margin-top:3px; accent-color:#8A681F;">
-                    <div>
-                        <strong style="display:block; font-size:12.5px; color:#181512;">FULL SET</strong>
-                        <small style="font-size:11px; color:#646970; line-height:1.4; display:block; margin-top:2px;">Complete catalog set of 100% active Color &times; Size variants. Available exclusively to Retailer &amp; Wholesaler trade accounts.</small>
+                <label id="dtCardFullSet" style="display:flex; align-items:center; gap:8px; background:#FFFFFF; border:1.5px solid <?php echo $pfSellingType === 'full_set' ? '#8A681F' : '#E2E8F0'; ?>; padding:6px 10px; border-radius:5px; cursor:pointer; box-shadow:<?php echo $pfSellingType === 'full_set' ? '0 1px 4px rgba(138,104,31,0.12)' : 'none'; ?>; transition:all 0.15s ease;">
+                    <input type="radio" name="pFormSellingType" value="full_set" id="pFormSellingTypeFull" <?php echo $pfSellingType === 'full_set' ? 'checked' : ''; ?> onchange="window.dtOnSellingTypeChange('full_set')" style="accent-color:#8A681F; width:13px; height:13px; margin:0; cursor:pointer;">
+                    <div style="display:flex; flex-direction:column; gap:1px; min-width:0;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <strong style="font-size:11.5px; color:#181512; font-weight:800;">FULL SET</strong>
+                            <span class="adm-badge" style="background:#FEF3C7; color:#B45309; font-size:9px; padding:1px 5px; font-weight:700; border-radius:3px;">B2B Trade Only</span>
+                        </div>
+                        <small style="font-size:10px; color:#64748B; line-height:1.2;">100% active variants set (Wholesale &amp; Retailer)</small>
                     </div>
                 </label>
             </div>

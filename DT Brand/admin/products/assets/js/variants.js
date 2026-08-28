@@ -420,11 +420,11 @@
 
         if (cardSingle) {
             cardSingle.style.borderColor = !isFullSet ? '#8A681F' : '#E2E8F0';
-            cardSingle.style.boxShadow = !isFullSet ? '0 2px 8px rgba(138,104,31,0.15)' : 'none';
+            cardSingle.style.boxShadow = !isFullSet ? '0 1px 4px rgba(138,104,31,0.12)' : 'none';
         }
         if (cardFull) {
             cardFull.style.borderColor = isFullSet ? '#8A681F' : '#E2E8F0';
-            cardFull.style.boxShadow = isFullSet ? '0 2px 8px rgba(138,104,31,0.15)' : 'none';
+            cardFull.style.boxShadow = isFullSet ? '0 1px 4px rgba(138,104,31,0.12)' : 'none';
         }
 
         var grpCustPrice = el('pGroupCustomerPrice');
