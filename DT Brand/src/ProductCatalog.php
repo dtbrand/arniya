@@ -252,6 +252,13 @@ class ProductCatalog
         }));
         $fullSetPieces = count($activeVariants);
 
+        $saleDisc = (float)($r['sale_price'] ?? 0);
+        $effTrade = max(0, $retail - $saleDisc);
+        $effCust = ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - $saleDisc) : $effTrade;
+        $effWholesale = $wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effTrade;
+        $effReseller = $reseller > 0 ? max(0, $reseller - $saleDisc) : $effTrade;
+        $boutiqueMargin = max(0, $effCust - $effTrade);
+
         return [
             'id' => $pid,
             'sku' => trim((string)($r['sku'] ?? '')),
@@ -279,12 +286,16 @@ class ProductCatalog
             'full_set_variants' => $activeVariants,
             'mrp' => $mrp,
             'old_price' => $mrp,
-            'price' => $retail,
+            'price' => $effCust,
+            'trade_price' => $effTrade,
             'retail_price' => $retail,
-            'sale_price' => (float)($r['sale_price'] ?? 0),
-            'sale_discount' => (float)($r['sale_price'] ?? 0),
-            'effective_price' => max(0, $retail - (float)($r['sale_price'] ?? 0)),
-            'effective_customer_price' => ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - (float)($r['sale_price'] ?? 0)) : max(0, $retail - (float)($r['sale_price'] ?? 0)),
+            'sale_price' => $saleDisc,
+            'sale_discount' => $saleDisc,
+            'effective_price' => $effTrade,
+            'effective_customer_price' => $effCust,
+            'effective_wholesale_price' => $effWholesale,
+            'effective_reseller_price' => $effReseller,
+            'boutique_margin' => $boutiqueMargin,
             'wholesale_price' => $wholesale,
             'reseller_price' => $reseller,
             'reseller_profit' => ($reseller - $wholesale),

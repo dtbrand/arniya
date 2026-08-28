@@ -230,21 +230,20 @@ $total_products = count($products);
             <?php
                 $badge_class = !empty($p['badge']) ? 'badge-'.strtolower(preg_replace('/[^a-z0-9]/', '', $p['badge'])) : '';
                 // Colours and sizes come from product_variants and are empty when the
-                // product has none. The old code counted [$p['color']] - so a product
-                // with no colour still advertised "1 Colours" - and printed
-                // "Free Size" for products with no size rows at all.
+                // product has none.
                 $pCols  = array_values(array_filter(array_map('strval', (array)($p['colors'] ?? [])), static fn($v) => trim($v) !== ''));
                 $pSizes = array_values(array_filter(array_map('strval', (array)($p['size'] ?? [])), static fn($v) => trim($v) !== ''));
                 $pHasPhoto = !empty($p['has_photo']);
-                $pPrice = (float)($p['price'] ?? 0);
-                $pOldPrice = (float)($p['old_price'] ?? 0);
-                $pReviews = (int)($p['reviews_count'] ?? 0);
+                $pSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
+                $pCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
+                $pPrice      = max(0, $pCustBase - $pSaleDisc);
+                $pOldPrice   = ($pSaleDisc > 0) ? $pCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
+                $pDiscount   = ($pOldPrice > $pPrice && $pOldPrice > 0) ? (int)round((($pOldPrice - $pPrice) / $pOldPrice) * 100) : 0;
+                $pReviews    = (int)($p['reviews_count'] ?? 0);
             ?>
-            <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $p['price'] ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $p['discount'] ?>">
+            <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $pPrice ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $pDiscount ?>">
                 <div class="card-image-wrap">
                     <a href="/product.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <!-- The onerror swap put product1.png - another saree - in place of
-                             a photo this product does not have. -->
                         <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy"<?= $pHasPhoto ? '' : ' style="object-fit:contain;padding:18%;opacity:.6;"' ?> />
                     </a>
 
@@ -278,7 +277,6 @@ $total_products = count($products);
                     <div class="card-sku-rating-row">
                         <span class="card-sku-text"><?= htmlspecialchars((string)($p['sku'] ?? '')) ?></span>
                         <?php if ($pReviews > 0): ?>
-                        <!-- A product with no reviews used to show "0.0 (0)" as a rating. -->
                         <span class="card-rating-badge">★ <?= number_format((float)$p['rating'], 1) ?> (<?= $pReviews ?>)</span>
                         <?php endif; ?>
                     </div>
@@ -304,14 +302,15 @@ $total_products = count($products);
                         <?php if ($pPrice > 0): ?>
                         <span class="card-price">₹<?= number_format($pPrice) ?></span>
                         <?php else: ?>
-                        <!-- Rs 0 used to be printed as the price. -->
                         <span class="card-price" style="font-size:.82em;">Price on request</span>
                         <?php endif; ?>
                         <?php if ($pPrice > 0 && $pOldPrice > $pPrice): ?>
                         <span class="card-old-price">₹<?= number_format($pOldPrice) ?></span>
                         <?php endif; ?>
-                        <?php if ($pPrice > 0 && $pOldPrice > $pPrice && !empty($p['discount'])): ?>
-                        <span class="card-price-discount"><?= (int)$p['discount'] ?>% OFF</span>
+                        <?php if ($pSaleDisc > 0): ?>
+                        <span class="card-price-discount" style="background:#FEF3C7; color:#B45309; font-weight:800; font-size:10px; padding:2px 6px; border-radius:3px;">SAVE ₹<?= (int)$pSaleDisc ?></span>
+                        <?php elseif ($pPrice > 0 && $pOldPrice > $pPrice && !empty($pDiscount)): ?>
+                        <span class="card-price-discount"><?= (int)$pDiscount ?>% OFF</span>
                         <?php endif; ?>
                     </div>
 
@@ -482,9 +481,16 @@ $total_products = count($products);
             <!-- 1 Line Continuous Scroll on Desktop / 2 Lines Synchronized Scroll on Mobile -->
             <div class="home-deals-grid" id="homeDealsGrid">
                 <?php foreach (array_slice($products, 0, 10) as $p): ?>
+                <?php
+                    $dSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
+                    $dCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
+                    $dPrice      = max(0, $dCustBase - $dSaleDisc);
+                    $dOldPrice   = ($dSaleDisc > 0) ? $dCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
+                    $dDiscount   = ($dOldPrice > $dPrice && $dOldPrice > 0) ? (int)round((($dOldPrice - $dPrice) / $dOldPrice) * 100) : 0;
+                ?>
                 <div class="home-deal-card">
                     <div class="deal-card-img-wrap">
-                        <span class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</span>
+                        <span class="deal-card-badge-top"><?= $dSaleDisc > 0 ? ('SAVE ₹' . (int)$dSaleDisc) : ('SAVE ' . $dDiscount . '%') ?></span>
                         <a href="/product.php?id=<?= $p['id'] ?>">
                             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" loading="lazy" />
                         </a>
@@ -501,8 +507,10 @@ $total_products = count($products);
                             <a href="/product.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
                         </h4>
                         <div class="deal-card-prices">
-                            <span class="deal-sale-price">₹<?= number_format($p['price']) ?></span>
-                            <span class="deal-mrp">₹<?= number_format($p['old_price']) ?></span>
+                            <span class="deal-sale-price">₹<?= number_format($dPrice) ?></span>
+                            <?php if ($dOldPrice > $dPrice): ?>
+                            <span class="deal-mrp">₹<?= number_format($dOldPrice) ?></span>
+                            <?php endif; ?>
                         </div>
                         <div class="deal-stock-bar-wrap">
                             <div class="deal-stock-bar" style="width: <?= min(90, max(30, ($p['in_stock'] % 70) + 25)) ?>%;"></div>

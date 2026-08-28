@@ -446,7 +446,7 @@
 .qv-qty-stepper { display: inline-flex; align-items: center; border: 1.5px solid rgba(138,104,31,0.4); border-radius: 8px; overflow: hidden; background: #FFFFFF; }
 .qv-qty-stepper button { width: 32px; height: 34px; border: 0; background: rgba(138,104,31,0.08); color: var(--dark-gold, #8A681F); font-size: 1rem; font-weight: 800; cursor: pointer; line-height: 1; }
 .qv-qty-stepper button:hover { background: rgba(138,104,31,0.18); }
-.qv-qty-stepper input { width: 52px; height: 34px; border: 0; text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--dark-text, #24211C); background: #FFFFFF; -moz-appearance: textfield; }
+.qv-qty-stepper input { width: 52px; height: 34px; border: 0; text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--dark-text, #24211C); background: #FFFFFF; appearance: textfield; -moz-appearance: textfield; }
 .qv-qty-stepper input::-webkit-outer-spin-button, .qv-qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .qv-qty-note { font-size: 0.68rem; color: #7A7266; font-weight: 700; }
 .pd-assurance-box { display: flex; flex-direction: column; gap: 9px; background: rgba(138,104,31,0.06); border: 1.5px solid rgba(138,104,31,0.25); border-radius: 12px; padding: 14px 16px; }
@@ -732,9 +732,11 @@
                 '</div>';
         }
 
-        var priceNum = Number(p.price) || 0;
-        var oldNum = Number(p.old_price) || 0;
-        var discNum = Number(p.discount) || 0;
+        var saleDisc = Number(p.sale_discount || p.sale_price) || 0;
+        var custBase = Number(p.customer_price) || Number(p.retail_price) || Number(p.price) || 0;
+        var priceNum = Number(p.effective_customer_price || p.price) || (custBase > 0 ? Math.max(0, custBase - saleDisc) : 0);
+        var oldNum = saleDisc > 0 ? custBase : (Number(p.old_price || p.mrp) || 0);
+        var discNum = (oldNum > priceNum && oldNum > 0) ? Math.round(((oldNum - priceNum) / oldNum) * 100) : 0;
         var inStock = (p.in_stock !== false) && (typeof p.stock_qty === 'undefined' || Number(p.stock_qty) > 0 || p.in_stock === true);
         var stockQty = (typeof p.stock_qty === 'undefined' || p.stock_qty === null || p.stock_qty === '') ? null : Number(p.stock_qty);
         var priceHtml = priceNum > 0
@@ -768,7 +770,7 @@
                     '<div class="modal-price-row">' +
                         priceHtml +
                         (oldNum > priceNum ? '<span class="modal-mrp">MRP <span class="modal-old-price">&#8377;' + oldNum.toLocaleString('en-IN') + '</span></span>' : '') +
-                        (discNum > 0 ? '<span class="modal-discount-tag">(' + discNum + '% OFF)</span>' : '') +
+                        (saleDisc > 0 ? '<span class="modal-discount-tag" style="background:#FEF3C7; color:#B45309; font-weight:800;">(SAVE &#8377;' + saleDisc + ')</span>' : (discNum > 0 ? '<span class="modal-discount-tag">(' + discNum + '% OFF)</span>' : '')) +
                     '</div>' +
                     '<span class="modal-tax-note">' + (priceNum > 0 ? 'Exclusive of all taxes' : 'Contact us on WhatsApp for this product&#39;s rate') + '</span>' +
                 '</div>' +
@@ -1112,10 +1114,14 @@
             pdImgEl.style.opacity = hero ? '' : '.45';
         }
 
-        var pdPriceNum = Number(p.price) || 0;
+        var pdSaleDisc = Number(p.sale_discount || p.sale_price) || 0;
+        var pdCustBase = Number(p.customer_price) || Number(p.retail_price) || Number(p.price) || 0;
+        var pdPriceNum = Number(p.effective_customer_price || p.price) || (pdCustBase > 0 ? Math.max(0, pdCustBase - pdSaleDisc) : 0);
+        var pdOldNum = pdSaleDisc > 0 ? pdCustBase : (Number(p.old_price || p.mrp) || 0);
+        var pdDiscNum = (pdOldNum > pdPriceNum && pdOldNum > 0) ? Math.round(((pdOldNum - pdPriceNum) / pdOldNum) * 100) : 0;
+
         qvSet('pdPrice', pdPriceNum > 0 ? '₹' + pdPriceNum.toLocaleString('en-IN') : 'Price on request');
 
-        var pdOldNum = Number(p.old_price) || 0;
         var oldPriceEl = document.getElementById('pdOldPrice');
         if (oldPriceEl) {
             if (pdOldNum > pdPriceNum) {
@@ -1127,13 +1133,19 @@
             }
         }
 
-        // Hidden with no discount. It used to fall back to the slogan
-        // 'Best Luxury Price', which read like a saving that did not exist.
-        var pdDiscNum = Number(p.discount) || 0;
+        // Hidden with no discount.
         var discountEl = document.getElementById('pdDiscountVal');
         if (discountEl) {
-            discountEl.textContent = pdDiscNum > 0 ? pdDiscNum + '% OFF' : '';
-            discountEl.style.display = pdDiscNum > 0 ? 'inline-block' : 'none';
+            if (pdSaleDisc > 0) {
+                discountEl.textContent = 'SAVE ₹' + pdSaleDisc;
+                discountEl.style.display = 'inline-block';
+            } else if (pdDiscNum > 0) {
+                discountEl.textContent = pdDiscNum + '% OFF';
+                discountEl.style.display = 'inline-block';
+            } else {
+                discountEl.textContent = '';
+                discountEl.style.display = 'none';
+            }
         }
 
         /* Sizes — the row disappears when the product has none. */

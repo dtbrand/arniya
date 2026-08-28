@@ -47,10 +47,6 @@ $ptNoImage = \DTBrand\ProductCatalog::NO_IMAGE;
                 $badgeClass = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'success' : ($pStatus === 'draft' ? 'warning' : 'danger');
                 $statusLabel = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'Active' : ucfirst(str_replace('_', ' ', (string)$pStatus));
                 $pRetail = (float)($p['retail_price'] ?? ($p['price'] ?? 0));
-                $pCust = (isset($p['customer_price']) && (float)$p['customer_price'] > 0) ? (float)$p['customer_price'] : 0;
-                $pSale = (isset($p['sale_price']) && (float)$p['sale_price'] > 0) ? (float)$p['sale_price'] : 0;
-                $effTrade = max(0, $pRetail - $pSale);
-                $effCust = $pCust > 0 ? max(0, $pCust - $pSale) : $effTrade;
                 $pMrp = (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
                 $pWholesale = (float)($p['wholesale_price'] ?? 0);
                 $pMoq = (int)($p['moq'] ?? 0);
@@ -74,18 +70,9 @@ $ptNoImage = \DTBrand\ProductCatalog::NO_IMAGE;
                 <td style="padding: 6px 6px; white-space:nowrap;"><strong><?= htmlspecialchars((string)($p['category'] ?? '')) ?: '<span style="color:#a7aaad;font-weight:600;">Uncategorised</span>' ?></strong></td>
                 <td style="padding: 6px 6px; white-space:nowrap;">
                     <?php if ($pRetail > 0): ?>
-                        <div>
-                            <strong style="color:#181512; font-size:12px;">Trade: &#8377;<?= number_format($effTrade) ?></strong>
-                            <?php if ($pSale > 0): ?><del style="color:#94A3B8; font-size:10px;">&#8377;<?= number_format($pRetail) ?></del><?php endif; ?>
-                        </div>
-                        <?php if ($pCust > 0): ?>
-                        <div style="font-size:11px; color:#15803D; font-weight:700;">
-                            Cust: &#8377;<?= number_format($effCust) ?>
-                            <?php if ($pSale > 0): ?><del style="color:#94A3B8; font-size:9.5px;">&#8377;<?= number_format($pCust) ?></del><?php endif; ?>
-                        </div>
-                        <?php endif; ?>
-                        <?php if ($pSale > 0): ?>
-                        <span style="font-size:9.5px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 4px; border-radius:3px; display:inline-block; margin-top:1px;">-&#8377;<?= number_format($pSale) ?> Sale</span>
+                        <strong style="color:#181512;">&#8377;<?= number_format($pRetail) ?></strong>
+                        <?php if ($pMrp > $pRetail): ?>
+                        <del style="color:#7A7266; font-size:11px; margin-left:2px;">&#8377;<?= number_format($pMrp) ?></del>
                         <?php endif; ?>
                     <?php else: ?>
                         <span style="color:#DC2626; font-size:11px; font-weight:700;">No price</span>

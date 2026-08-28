@@ -59,27 +59,31 @@ $isTradeRole = in_array($pdpUserRole, ['wholesale', 'retailer'], true);
 $pSellingType = $product['selling_type'] ?? 'single_piece';
 $isFullSetProduct = ($pSellingType === 'full_set');
 
+$pSaleDisc = (float)($product['sale_discount'] ?? ($product['sale_price'] ?? 0));
+
 // Role-based price resolution
 if ($pSellingType === 'single_piece') {
     if ($pdpUserRole === 'reseller') {
-        $pPrice = (float)($product['reseller_price'] ?? $product['retail_price']);
+        $pBasePrice = (float)($product['reseller_price'] ?? $product['retail_price']);
     } elseif ($pdpUserRole === 'wholesale') {
-        $pPrice = (float)($product['wholesale_price'] ?? $product['retail_price']);
+        $pBasePrice = (float)($product['wholesale_price'] ?? $product['retail_price']);
     } elseif ($pdpUserRole === 'retailer') {
-        $pPrice = (float)($product['retail_price'] ?? $product['price']);
+        $pBasePrice = (float)($product['retail_price'] ?? $product['price']);
     } else { // Guest or Retail Customer
-        $pPrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price']);
+        $pBasePrice = (float)($product['customer_price'] ?? $product['retail_price'] ?? $product['price']);
     }
 } else { // Full Set
-    $pPrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? $product['price']);
+    $pBasePrice = (float)($product['wholesale_price'] ?? $product['retail_price'] ?? $product['price']);
 }
+
+$pPrice = max(0, $pBasePrice - $pSaleDisc);
 
 $pName        = $product['name'] !== '' ? $product['name'] : ($product['sku'] !== '' ? $product['sku'] : 'Untitled product');
 $pSku         = (string)$product['sku'];
 $pCategory    = (string)$product['category'];
 $pFabric      = (string)$product['fabric'];
 $pDescription = (string)$product['description'];
-$pMrp         = (float)$product['old_price'];
+$pMrp         = ($pSaleDisc > 0) ? $pBasePrice : (float)$product['old_price'];
 $pDiscount    = ($pMrp > $pPrice && $pPrice > 0) ? (int)round((($pMrp - $pPrice) / $pMrp) * 100) : 0;
 $pRating      = (float)$product['rating'];
 $pReviewCount = (int)$product['reviews_count'];
@@ -372,7 +376,9 @@ function pdp_relative_date(string $ts): string
                     <?php if ($pMrp > $pPrice && $pPrice > 0 && !$isFullSetProduct): ?>
                     <span class="pdp-mrp-val">MRP ₹<?= number_format($pMrp) ?></span>
                     <?php endif; ?>
-                    <?php if ($pDiscount > 0 && $pMrp > $pPrice && !$isFullSetProduct): ?>
+                    <?php if ($pSaleDisc > 0 && !$isFullSetProduct): ?>
+                    <span class="pdp-discount-badge" style="background:#FEF3C7; color:#B45309; font-weight:800;">SAVE ₹<?= (int)$pSaleDisc ?></span>
+                    <?php elseif ($pDiscount > 0 && $pMrp > $pPrice && !$isFullSetProduct): ?>
                     <span class="pdp-discount-badge"><?= (int)$pDiscount ?>% OFF</span>
                     <?php endif; ?>
                 </div>

@@ -148,7 +148,7 @@ class OrderManager
 
         try {
             $stmt = $pdo->prepare(
-                "SELECT id, sku, title, mrp, retail_price, customer_price, wholesale_price, reseller_price, stock_qty, status, selling_type
+                "SELECT id, sku, title, mrp, retail_price, customer_price, sale_price, wholesale_price, reseller_price, stock_qty, status, selling_type
                  FROM products WHERE id IN ({$placeholders})"
             );
             $stmt->execute($ids);
@@ -160,27 +160,30 @@ class OrderManager
         $out = [];
         foreach ($rows as $row) {
             $sellingType = trim((string)($row['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+            $saleDisc = (float)($row['sale_price'] ?? 0);
+
             if ($sellingType === 'full_set') {
-                $price = (float)$row['wholesale_price'];
-                if ($price <= 0) { $price = (float)$row['retail_price']; }
+                $basePrice = (float)$row['wholesale_price'];
+                if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
             } else {
                 if ($channel === 'wholesale') {
-                    $price = (float)$row['wholesale_price'];
-                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                    $basePrice = (float)$row['wholesale_price'];
+                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
                 } elseif ($channel === 'reseller') {
-                    $price = (float)$row['reseller_price'];
-                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                    $basePrice = (float)$row['reseller_price'];
+                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
                 } elseif ($channel === 'retailer') {
-                    $price = (float)$row['retail_price'];
-                    if ($price <= 0) { $price = (float)$row['wholesale_price']; }
+                    $basePrice = (float)$row['retail_price'];
+                    if ($basePrice <= 0) { $basePrice = (float)$row['wholesale_price']; }
                 } else { // guest / retail
-                    $price = (float)($row['customer_price'] ?? 0);
-                    if ($price <= 0) { $price = (float)$row['retail_price']; }
+                    $basePrice = (float)($row['customer_price'] ?? 0);
+                    if ($basePrice <= 0) { $basePrice = (float)$row['retail_price']; }
                 }
             }
-            if ($price <= 0) {
-                $price = (float)$row['mrp'];
+            if ($basePrice <= 0) {
+                $basePrice = (float)$row['mrp'];
             }
+            $price = max(0, $basePrice - $saleDisc);
 
             // Fetch active variants for this product
             $vRows = [];

@@ -283,7 +283,9 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
             var fullList = products.length ? products.concat(products) : [];
 
             var sliderCardsHtml = fullList.map(function(p) {
-                var recPrice = Number(p.price) || 0;
+                var saleDisc = Number(p.sale_discount || p.sale_price) || 0;
+                var custBase = Number(p.customer_price) || Number(p.retail_price) || Number(p.price) || 0;
+                var recPrice = Number(p.effective_customer_price || p.price) || (custBase > 0 ? Math.max(0, custBase - saleDisc) : 0);
                 return '<div class="wd-rec-card">' +
                     '<div class="wd-rec-img-wrap">' +
                         '<img src="' + (p.image || '/assets/images/no-image.svg') + '" alt="' + (p.name || '') + '" class="wd-rec-img" />' +
@@ -334,8 +336,10 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
                 // and the photo fell back to another product's saree.
                 var imgUrl = item.image || '/assets/images/no-image.svg';
                 var metaBits = [item.category, item.fabric, item.color].filter(function(v) { return String(v || '').trim() !== ''; });
-                var wPrice = Number(item.price) || 0;
-                var wOld = Number(item.old_price) || 0;
+                var saleDisc = Number(item.sale_discount || item.sale_price) || 0;
+                var custBase = Number(item.customer_price) || Number(item.retail_price) || Number(item.price) || 0;
+                var wPrice = Number(item.effective_customer_price || item.price) || (custBase > 0 ? Math.max(0, custBase - saleDisc) : 0);
+                var wOld = saleDisc > 0 ? custBase : (Number(item.old_price || item.mrp) || 0);
 
                 html += '<div class="wd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" />' +

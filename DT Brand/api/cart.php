@@ -52,6 +52,8 @@ try {
         $pSellingType = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
         $isFullSet = ($pSellingType === 'full_set' || $lotType === 'full_set');
 
+        $saleDisc = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
+
         if ($isFullSet) {
             // Full Set Role Security: Strictly Wholesaler or Retailer only
             if (!$isTradeUser) {
@@ -63,7 +65,8 @@ try {
                 exit;
             }
 
-            $unitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
+            $baseUnitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
+            $unitPrice = max(0, $baseUnitPrice - $saleDisc);
             $variants = $p['full_set_variants'] ?? $p['variants'] ?? [];
             $fullSetPieces = max(1, count($variants));
             $itemTotal = round($unitPrice * $fullSetPieces * $qty, 2);
@@ -92,14 +95,15 @@ try {
         } else {
             // Single Piece Role Pricing
             if ($userType === 'reseller') {
-                $unitPrice = (float)($p['reseller_price'] > 0 ? $p['reseller_price'] : $p['retail_price']);
+                $basePrice = (float)($p['reseller_price'] > 0 ? $p['reseller_price'] : $p['retail_price']);
             } elseif ($userType === 'wholesale') {
-                $unitPrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
+                $basePrice = (float)($p['wholesale_price'] > 0 ? $p['wholesale_price'] : $p['retail_price']);
             } elseif ($userType === 'retailer') {
-                $unitPrice = (float)($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']);
+                $basePrice = (float)($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']);
             } else { // guest / retail customer
-                $unitPrice = (float)($p['customer_price'] > 0 ? $p['customer_price'] : ($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']));
+                $basePrice = (float)($p['customer_price'] > 0 ? $p['customer_price'] : ($p['retail_price'] > 0 ? $p['retail_price'] : $p['price']));
             }
+            $unitPrice = max(0, $basePrice - $saleDisc);
 
             $itemTotal = round($unitPrice * $qty, 2);
             $subtotal += $itemTotal;

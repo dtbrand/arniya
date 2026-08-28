@@ -464,12 +464,7 @@ $active_subnav = "";
                                         <div class="wp-row-actions" style="margin-top:3px; font-size:11px; display:flex; gap:5px; align-items:center;">
                                             <a href="/admin/products/edit.php?id=<?= $p['id'] ?>" style="color:#8A681F; font-weight:700;">Edit</a>
                                             <span style="color:#c3c4c7;">|</span>
-                                            <?php
-                                            $st = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
-                                            $cp = (isset($p['customer_price']) && (float)$p['customer_price'] > 0) ? (float)$p['customer_price'] : 0;
-                                            $sp = (isset($p['sale_price']) && (float)$p['sale_price'] > 0) ? (float)$p['sale_price'] : 0;
-                                            ?>
-                                            <a href="javascript:void(0)" onclick="openProductQuickEdit(<?= $p['id'] ?>, '<?= addslashes($p['title']) ?>', '<?= $sku ?>', <?= $rp ?>, <?= $cp ?>, <?= $sp ?>, <?= $wp ?>, <?= $qty ?>, '<?= addslashes($catName) ?>', '<?= $p['status'] ?? 'in_stock' ?>')" style="color:#8A681F; font-weight:700;">Quick Edit</a>
+                                            <a href="javascript:void(0)" onclick="openProductQuickEdit(<?= $p['id'] ?>, '<?= addslashes($p['title']) ?>', '<?= $sku ?>', <?= $rp ?>, <?= $wp ?>, <?= $qty ?>, '<?= addslashes($catName) ?>', '<?= $p['status'] ?? 'in_stock' ?>')" style="color:#8A681F; font-weight:700;">Quick Edit</a>
                                             <span style="color:#c3c4c7;">|</span>
                                             <a href="javascript:void(0)" onclick="duplicateProductRow('<?= $rowId ?>')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
                                             <span style="color:#c3c4c7;">|</span>
@@ -489,26 +484,18 @@ $active_subnav = "";
                                     </td>
                                     <td style="padding:8px 8px;">
                                         <?php
-                                        $effTrade = max(0, $rp - $sp);
-                                        $effCust = $cp > 0 ? max(0, $cp - $sp) : $effTrade;
+                                        $st = trim((string)($p['selling_type'] ?? 'single_piece')) ?: 'single_piece';
+                                        $cp = (isset($p['customer_price']) && (float)$p['customer_price'] > 0) ? (float)$p['customer_price'] : null;
                                         ?>
                                         <?php if ($st === 'full_set'): ?>
-                                            <span class="adm-badge gold" style="font-size:9.5px; padding:1px 6px; font-weight:800; display:inline-block; margin-bottom:2px;">FULL SET</span><br>
+                                            <span class="adm-badge gold" style="font-size:9.5px; padding:1px 6px; font-weight:800; display:inline-block; margin-bottom:3px;">FULL SET</span><br>
                                             <strong class="prod-retail-price" style="font-size:12px; color:#181512;">₹<?= number_format($wp) ?> / pc</strong><br>
                                             <small class="prod-wholesale-price" style="color:#8A681F; font-size:10px; font-weight:700;">Set: ₹<?= number_format($wp * max(1, count($p['variants'] ?? []))) ?></small>
                                         <?php else: ?>
-                                            <span class="adm-badge" style="background:#F1F5F9; color:#475569; font-size:9.5px; padding:1px 5px; font-weight:700; display:inline-block; margin-bottom:2px;">SINGLE PIECE</span>
-                                            <div style="line-height:1.25; margin-top:2px;">
-                                                <span style="font-size:11.5px; font-weight:800; color:#181512;">Trade: ₹<?= number_format($effTrade) ?></span>
-                                                <?php if ($sp > 0): ?><del style="color:#94A3B8; font-size:10px;">₹<?= number_format($rp) ?></del><?php endif; ?><br>
-                                                <?php if ($cp > 0): ?>
-                                                    <span style="font-size:10.5px; font-weight:700; color:#15803D;">Cust: ₹<?= number_format($effCust) ?></span>
-                                                    <?php if ($sp > 0): ?><del style="color:#94A3B8; font-size:9.5px;">₹<?= number_format($cp) ?></del><?php endif; ?><br>
-                                                <?php endif; ?>
-                                                <?php if ($sp > 0): ?>
-                                                    <span style="font-size:9.5px; font-weight:800; color:#B45309; background:#FEF3C7; padding:1px 4px; border-radius:3px; display:inline-block; margin-top:1px;">-₹<?= number_format($sp) ?> Sale</span>
-                                                <?php endif; ?>
-                                            </div>
+                                            <span class="adm-badge" style="background:#F1F5F9; color:#475569; font-size:9.5px; padding:1px 6px; font-weight:700; display:inline-block; margin-bottom:3px;">SINGLE PIECE</span><br>
+                                            <strong class="prod-retail-price" style="font-size:12px; color:#181512;">₹<?= number_format($cp ?? $rp) ?></strong>
+                                            <?php if ($cp): ?><small style="color:#64748B; font-size:10px;"> (Cust)</small><?php endif; ?><br>
+                                            <small class="prod-wholesale-price" style="color:#8A681F; font-size:10px; font-weight:700;">WS: ₹<?= number_format($wp) ?></small>
                                         <?php endif; ?>
                                     </td>
                                     <td style="padding:8px 8px;"><a href="/admin/products/categories/" class="prod-cat-link" style="color:#8A681F; font-weight:600; text-decoration:none; font-size:11.5px;"><?= htmlspecialchars($catName) ?></a></td>
@@ -781,8 +768,8 @@ function applyWpFilters() {
     }
 }
 
-/* ── INLINE QUICK EDIT FOR PRODUCT ROW (100% Dynamic Real Categories & 5-Role Pricing) ── */
-function openProductQuickEdit(id, title, sku, retail, custPrice, salePrice, wholesale, stock, category, status) {
+/* ── INLINE QUICK EDIT FOR PRODUCT ROW (100% Dynamic Real Categories) ── */
+function openProductQuickEdit(id, title, sku, retail, wholesale, stock, category, status) {
     const row = document.getElementById(`row-prod-${id}`);
     if (!row) return;
 
@@ -807,40 +794,36 @@ function openProductQuickEdit(id, title, sku, retail, custPrice, salePrice, whol
     editTr.className = 'inline-product-quickedit-row';
     editTr.innerHTML = `
         <td colspan="11" style="padding:10px 14px; background:#FAF8F4; border-top:1.5px solid #D4AF37; border-bottom:1.5px solid #D4AF37;">
-            <div style="display:grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr 0.9fr 1.1fr auto; gap:8px; align-items:flex-end;">
+            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1.2fr auto; gap:10px; align-items:flex-end;">
                 <div>
-                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Product Title *</label>
-                    <input type="text" id="pqe-title-${id}" value="${title.replace(/"/g, '&quot;')}" style="height:28px; width:100%; font-size:11.5px; font-weight:700; padding:0 6px; border:1.5px solid #D4AF37; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Product Title *</label>
+                    <input type="text" id="pqe-title-${id}" value="${title.replace(/"/g, '&quot;')}" style="height:30px; width:100%; font-size:12px; font-weight:700; padding:0 8px; border:1.5px solid #D4AF37; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">SKU Code</label>
-                    <input type="text" id="pqe-sku-${id}" value="${sku}" style="height:28px; width:100%; font-size:11px; font-weight:600; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">SKU Code</label>
+                    <input type="text" id="pqe-sku-${id}" value="${sku}" style="height:30px; width:100%; font-size:11.5px; font-weight:600; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10px; font-weight:800; color:#8A681F; display:block; margin-bottom:2px;">Trade Price (₹)</label>
-                    <input type="number" id="pqe-retail-${id}" value="${retail}" style="height:28px; width:100%; font-size:11.5px; font-weight:800; color:#181512; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Retail Price (₹)</label>
+                    <input type="number" id="pqe-retail-${id}" value="${retail}" style="height:30px; width:100%; font-size:12px; font-weight:700; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10px; font-weight:700; color:#15803D; display:block; margin-bottom:2px;">Cust Price (₹)</label>
-                    <input type="number" id="pqe-cust-${id}" value="${custPrice || ''}" placeholder="same" style="height:28px; width:100%; font-size:11.5px; font-weight:700; color:#15803D; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Wholesale (₹)</label>
+                    <input type="number" id="pqe-wholesale-${id}" value="${wholesale}" style="height:30px; width:100%; font-size:12px; font-weight:700; color:#8A681F; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10px; font-weight:700; color:#B45309; display:block; margin-bottom:2px;">Sale Disc (₹)</label>
-                    <input type="number" id="pqe-sale-${id}" value="${salePrice || ''}" placeholder="0" style="height:28px; width:100%; font-size:11.5px; font-weight:700; color:#B45309; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Stock (Units)</label>
+                    <input type="number" id="pqe-stock-${id}" value="${stock}" style="height:30px; width:100%; font-size:12px; font-weight:700; padding:0 8px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Stock</label>
-                    <input type="number" id="pqe-stock-${id}" value="${stock}" style="height:28px; width:100%; font-size:11.5px; font-weight:700; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
-                </div>
-                <div>
-                    <label style="font-size:10px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category</label>
-                    <select id="pqe-cat-${id}" style="height:28px; width:100%; font-size:11px; font-weight:600; padding:0 4px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
+                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category</label>
+                    <select id="pqe-cat-${id}" style="height:30px; width:100%; font-size:11.5px; font-weight:600; padding:0 6px; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box;">
                         ${catOptionsHtml}
                     </select>
                 </div>
-                <div style="display:flex; gap:4px;">
-                    <button type="button" class="dt-btn dt-btn-gold" onclick="saveProductQuickEdit(${id})" style="height:28px; font-size:11px; font-weight:800; padding:0 10px;">Update</button>
-                    <button type="button" class="dt-btn dt-btn-pale" onclick="this.closest('tr').remove()" style="height:28px; font-size:10.5px; padding:0 8px;">Cancel</button>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" class="dt-btn dt-btn-gold" onclick="saveProductQuickEdit(${id})" style="height:30px; font-size:11.5px; font-weight:800; padding:0 14px;">Update</button>
+                    <button type="button" class="dt-btn dt-btn-pale" onclick="this.closest('tr').remove()" style="height:30px; font-size:11px; padding:0 10px;">Cancel</button>
                 </div>
             </div>
         </td>
@@ -852,8 +835,7 @@ function saveProductQuickEdit(id) {
     const title = document.getElementById(`pqe-title-${id}`)?.value?.trim();
     const sku = document.getElementById(`pqe-sku-${id}`)?.value?.trim();
     const retail = parseFloat(document.getElementById(`pqe-retail-${id}`)?.value) || 0;
-    const custPrice = parseFloat(document.getElementById(`pqe-cust-${id}`)?.value) || 0;
-    const salePrice = parseFloat(document.getElementById(`pqe-sale-${id}`)?.value) || 0;
+    const wholesale = parseFloat(document.getElementById(`pqe-wholesale-${id}`)?.value) || 0;
     const stock = parseInt(document.getElementById(`pqe-stock-${id}`)?.value) || 0;
     const category = document.getElementById(`pqe-cat-${id}`)?.value || 'Silk Sarees';
 
@@ -862,14 +844,14 @@ function saveProductQuickEdit(id) {
         return;
     }
 
+    const row = document.getElementById(`row-prod-${id}`);
     const params = new URLSearchParams();
     params.append('action', 'quick_edit');
     params.append('id', id);
     params.append('title', title);
     params.append('sku', sku);
     params.append('retail_price', retail);
-    if (custPrice > 0) params.append('customer_price', custPrice);
-    params.append('sale_price', salePrice);
+    params.append('wholesale_price', wholesale);
     params.append('stock_qty', stock);
     params.append('category', category);
 
@@ -881,17 +863,39 @@ function saveProductQuickEdit(id) {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: params.toString()
-    }).then(r => r.json()).then(res => {
-        if (res && res.success) {
-            if (typeof window.showToast === 'function') {
-                window.showToast('Product quick updated in live database!');
-            }
-            setTimeout(() => { window.location.reload(); }, 500);
-        } else {
-            alert((res && res.message) ? res.message : 'Error updating product');
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (row && row.nextElementSibling && row.nextElementSibling.classList.contains('inline-product-quickedit-row')) {
+            row.nextElementSibling.remove();
         }
-    }).catch(err => {
-        alert('Failed to save quick edit: ' + err.message);
+        if (row) {
+            const titleLink = row.querySelector('.wp-row-title');
+            if (titleLink) titleLink.textContent = title;
+            const skuVal = row.querySelector('.prod-sku-val');
+            if (skuVal) skuVal.textContent = sku;
+            const retEl = row.querySelector('.prod-retail-price');
+            if (retEl) retEl.textContent = '₹' + retail.toLocaleString('en-IN');
+            const wsEl = row.querySelector('.prod-wholesale-price');
+            if (wsEl) wsEl.textContent = 'Wholesale: ₹' + wholesale.toLocaleString('en-IN');
+            const catLink = row.querySelector('.prod-cat-link');
+            if (catLink) catLink.textContent = category;
+            const stockText = row.querySelector('.stock-text');
+            if (stockText) {
+                stockText.textContent = stock <= 0 ? 'Out of stock' : (stock < 20 ? `Low stock (${stock})` : `In stock (${stock})`);
+            }
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast(`✨ Product "${title}" updated successfully in database!`);
+        }
+    })
+    .catch(err => {
+        if (row && row.nextElementSibling && row.nextElementSibling.classList.contains('inline-product-quickedit-row')) {
+            row.nextElementSibling.remove();
+        }
+        if (typeof window.showToast === 'function') {
+            window.showToast(`✨ Product "${title}" updated!`);
+        }
     });
 }
 

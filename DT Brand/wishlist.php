@@ -81,7 +81,10 @@ $catalogProducts = ProductCatalog::getAll();
             var name = p.name || p.title || 'Saved product';
             var img = p.image || '/assets/images/no-image.svg';
             var cat = p.category || '';
-            var price = Number(p.price) || 0;
+            var saleDisc = Number(p.sale_discount || p.sale_price) || 0;
+            var custBase = Number(p.customer_price) || Number(p.retail_price) || Number(p.price) || 0;
+            var price = Number(p.effective_customer_price || p.price) || (custBase > 0 ? Math.max(0, custBase - saleDisc) : 0);
+            var oldPrice = saleDisc > 0 ? custBase : (Number(p.old_price || p.mrp) || 0);
             // "In Stock" was printed for every saved item regardless of the real
             // stock level, which is not stored in the wishlist snapshot.
             var stockNote = (p.in_stock === true) ? '🟢 In Stock' : (p.in_stock === false ? 'Out of stock' : '');
@@ -95,7 +98,11 @@ $catalogProducts = ProductCatalog::getAll();
                   (cat ? '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' : '') +
                   '<h3 style="font-size:1rem; font-weight:800; color:#181512; margin:4px 0 8px 0;">' + name + '</h3>' +
                   '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">' +
-                    '<strong style="font-size:1.15rem; color:#8A681F;">' + (price > 0 ? money(price) : 'Price on request') + '</strong>' +
+                    '<div>' +
+                      '<strong style="font-size:1.15rem; color:#8A681F;">' + (price > 0 ? money(price) : 'Price on request') + '</strong>' +
+                      (oldPrice > price && price > 0 ? ' <span style="font-size:0.85rem; color:#94A3B8; text-decoration:line-through; margin-left:4px;">' + money(oldPrice) + '</span>' : '') +
+                      (saleDisc > 0 ? ' <span style="font-size:0.75rem; background:#FEF3C7; color:#B45309; font-weight:800; padding:1px 5px; border-radius:3px; margin-left:4px;">SAVE ₹' + saleDisc + '</span>' : '') +
+                    '</div>' +
                     (stockNote ? '<span style="font-size:0.78rem; color:#15803D; font-weight:700;">' + stockNote + '</span>' : '') +
                   '</div>' +
                   '<div style="display:flex; gap:8px;">' +

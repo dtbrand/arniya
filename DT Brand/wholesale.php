@@ -33,8 +33,10 @@ use DTBrand\CustomerManager;
  */
 $catalogProducts = [];
 foreach (ProductCatalog::getAll() as $dp) {
-    $wsPrice = (float)($dp['wholesale_price'] ?? 0);
-    $rtPrice = (float)($dp['retail_price'] ?? 0);
+    $saleDisc = (float)($dp['sale_discount'] ?? ($dp['sale_price'] ?? 0));
+    $tradePrice = (float)($dp['effective_price'] ?? max(0, (float)($dp['retail_price'] ?? 0) - $saleDisc));
+    $custPrice = (float)($dp['effective_customer_price'] ?? ($dp['customer_price'] ?? $tradePrice));
+    $wsPrice = (float)($dp['effective_wholesale_price'] ?? $tradePrice);
     $colors  = array_values(array_filter(array_map('strval', (array)($dp['colors'] ?? [])), static fn($c) => trim($c) !== ''));
     $sizes   = array_values(array_filter(array_map('strval', (array)($dp['size'] ?? [])), static fn($s) => trim($s) !== ''));
 
@@ -55,10 +57,13 @@ foreach (ProductCatalog::getAll() as $dp) {
         'name'            => (string)($dp['name'] ?? ''),
         'slug'            => (string)($dp['slug'] ?? ''),
         'category'        => (string)($dp['category'] ?? ''),
-        'retail_price'    => $rtPrice,
+        'retail_price'    => $tradePrice,
+        'trade_price'     => $tradePrice,
+        'customer_price'  => $custPrice,
         'wholesale_price' => $wsPrice,
-        'reseller_price'  => (float)($dp['reseller_price'] ?? 0),
-        'price'           => $wsPrice > 0 ? $wsPrice : $rtPrice,
+        'reseller_price'  => (float)($dp['effective_reseller_price'] ?? $tradePrice),
+        'price'           => $wsPrice,
+        'sale_discount'   => $saleDisc,
         'moq'             => (int)($dp['moq'] ?? 0),
         'moq_lots'        => (array)($dp['moq_lots'] ?? []),
         'image'           => (string)($dp['image'] ?? ProductCatalog::NO_IMAGE),

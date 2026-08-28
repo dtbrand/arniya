@@ -379,17 +379,22 @@ $total_products = count($products);
                 $pSizes      = array_values(array_filter((array)($p['size'] ?? []), static fn($s) => trim((string)$s) !== ''));
                 $size_str    = implode(',', $pSizes);
                 $pHasVideo   = !empty($p['has_video']);
+                $pSaleDisc   = (float)($p['sale_discount'] ?? ($p['sale_price'] ?? 0));
+                $pCustBase   = !empty($p['customer_price']) ? (float)$p['customer_price'] : (float)($p['retail_price'] ?? ($p['price'] ?? 0));
+                $pDispPrice  = max(0, $pCustBase - $pSaleDisc);
+                $pStrikePrice = ($pSaleDisc > 0) ? $pCustBase : (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
+                $pDiscountPct = ($pStrikePrice > $pDispPrice && $pStrikePrice > 0) ? (int)round((($pStrikePrice - $pDispPrice) / $pStrikePrice) * 100) : 0;
             ?>
             <article
                 class="product-card"
                 role="listitem"
                 data-product-id="<?= (int)$p['id'] ?>"
                 data-category="<?= htmlspecialchars((string)($p['category'] ?? '')) ?>"
-                data-price="<?= (float)($p['price'] ?? 0) ?>"
+                data-price="<?= (float)$pDispPrice ?>"
                 data-color="<?= htmlspecialchars((string)($p['color'] ?? '')) ?>"
                 data-size="<?= htmlspecialchars($size_str) ?>"
                 data-fabric="<?= htmlspecialchars((string)($p['fabric'] ?? '')) ?>"
-                data-discount="<?= (int)($p['discount'] ?? 0) ?>"
+                data-discount="<?= (int)$pDiscountPct ?>"
                 data-has-video="<?= $pHasVideo ? '1' : '0' ?>"
                 data-stock="<?= !empty($p['in_stock']) ? 'In Stock' : 'Pre-Order' ?>"
                 aria-label="<?= htmlspecialchars($pName) ?>"
@@ -453,16 +458,18 @@ $total_products = count($products);
                     <?php endif; ?>
 
                     <div class="card-price-row">
-                        <?php if ((float)($p['price'] ?? 0) > 0): ?>
-                        <span class="card-price">&#8377;<?= number_format((float)$p['price']) ?></span>
+                        <?php if ($pDispPrice > 0): ?>
+                        <span class="card-price">&#8377;<?= number_format($pDispPrice) ?></span>
                         <?php else: ?>
                         <span class="card-price" style="font-size:.82em;">Price on request</span>
                         <?php endif; ?>
-                        <?php if (!empty($p['old_price']) && (float)$p['old_price'] > (float)($p['price'] ?? 0)): ?>
-                        <span class="card-old-price">&#8377;<?= number_format((float)$p['old_price']) ?></span>
+                        <?php if ($pStrikePrice > $pDispPrice && $pDispPrice > 0): ?>
+                        <span class="card-old-price">&#8377;<?= number_format($pStrikePrice) ?></span>
                         <?php endif; ?>
-                        <?php if (!empty($p['discount'])): ?>
-                        <span class="card-price-discount"><?= (int)$p['discount'] ?>% OFF</span>
+                        <?php if ($pSaleDisc > 0): ?>
+                        <span class="card-price-discount" style="background:#FEF3C7; color:#B45309; font-weight:800; font-size:10px; padding:2px 6px; border-radius:3px;">SAVE &#8377;<?= (int)$pSaleDisc ?></span>
+                        <?php elseif ($pDiscountPct > 0): ?>
+                        <span class="card-price-discount"><?= $pDiscountPct ?>% OFF</span>
                         <?php endif; ?>
                     </div>
                 </div>
