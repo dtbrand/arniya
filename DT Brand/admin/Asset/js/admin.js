@@ -304,7 +304,6 @@
         initSearchInputs();
         initBroadcaster();
         renderKPISparklines();
-        initLiveTickers();
         renderRefSalesChart();
 
         window.addEventListener('resize', function() {
@@ -312,156 +311,210 @@
         });
     });
 
+    // ════════════════════════════════════════════════════════════════
+    //  REAL DASHBOARD SERIES (window.DT_DASH, emitted by admin/index.php)
+    //  Every chart below used to draw from hardcoded arrays baked into this
+    //  file, so the graphs never matched the KPI numbers above them.
+    // ════════════════════════════════════════════════════════════════
+    function dtDash() {
+        return (window.DT_DASH && typeof window.DT_DASH === 'object') ? window.DT_DASH : null;
+    }
+
+    function dtInr(n) {
+        return '₹' + Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+    }
+
+    /** Short axis label: 12,50,000 -> ₹12.5L. */
+    function dtAxisLabel(v) {
+        v = Number(v) || 0;
+        if (v >= 10000000) return '₹' + (v / 10000000).toFixed(1) + 'Cr';
+        if (v >= 100000) return '₹' + (v / 100000).toFixed(1) + 'L';
+        if (v >= 1000) return '₹' + Math.round(v / 1000) + 'k';
+        return '₹' + Math.round(v);
+    }
+
+    /** Round a peak up to a clean axis ceiling so bars never touch the top. */
+    function dtNiceMax(v) {
+        v = Number(v) || 0;
+        if (v <= 0) return 1000;
+        const mag = Math.pow(10, Math.floor(Math.log10(v)));
+        return Math.max(mag, Math.ceil((v * 1.1) / mag) * mag);
+    }
+
+    /** Size a canvas for the device pixel ratio and clear it. */
+    function dtPrepCanvas(canvas, height) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return null;
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        const width = rect.width || (canvas.parentElement ? canvas.parentElement.clientWidth : 0) || 500;
+        canvas.width = Math.max(1, Math.round(width * dpr));
+        canvas.height = Math.max(1, Math.round(height * dpr));
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, width, height);
+        return { ctx: ctx, width: width, height: height };
+    }
+
+    /** Honest empty state instead of inventing a shape. */
+    function dtEmptyCanvas(ctx, width, height, msg) {
+        ctx.clearRect(0, 0, width, height);
+        ctx.font = '600 12px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = '#A8A29E';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(msg, width / 2, height / 2);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+    }
+
+    // Which range pill is active. The old switchAdmRefTimeRange() re-rendered the
+    // very same hardcoded bars for every range, so 1W, 1M and 1Y were identical.
+    var admRefRange = '1M';
+
     function renderRefSalesChart() {
         const canvas = document.getElementById('admRefSalesChart');
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        const c = dtPrepCanvas(canvas, 180);
+        if (!c) return;
+        const ctx = c.ctx, width = c.width, height = c.height;
 
-        const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
-        const width = rect.width || canvas.parentElement.clientWidth || 500;
-        const height = 180;
+        const dash = dtDash();
+        const series = (dash && dash.sales) ? dash.sales[admRefRange] : null;
+        if (!series) { dtEmptyCanvas(ctx, width, height, 'Sales data unavailable'); return; }
+        if (!series.hasData) { dtEmptyCanvas(ctx, width, height, 'No sales recorded in this period yet'); return; }
 
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
-        ctx.scale(dpr, dpr);
-
-        ctx.clearRect(0, 0, width, height);
-
-        const padLeft = 45;
+        const padLeft = 52;
         const padRight = 20;
         const padTop = 15;
         const padBottom = 25;
         const chartW = width - padLeft - padRight;
         const chartH = height - padTop - padBottom;
 
-        // Y-axis grid & labels
-        const ySteps = ['₹200k', '₹150k', '₹100k', '₹50k', '₹0k'];
+        const cur = series.current || [];
+        const prev = series.previous || [];
+        let peakVal = 0;
+        cur.forEach(function(v) { if (Number(v) > peakVal) peakVal = Number(v); });
+        prev.forEach(function(v) { if (Number(v) > peakVal) peakVal = Number(v); });
+        const axisMax = dtNiceMax(peakVal);
+
+        // Y-axis grid & labels scaled to the real peak. The old fixed
+        // ₹0k-₹200k ladder flattened any real turnover below ₹200k to nothing.
         ctx.font = '10px "Plus Jakarta Sans", sans-serif';
         ctx.fillStyle = '#8A681F';
         ctx.textAlign = 'right';
-
-        ySteps.forEach((label, i) => {
-            const y = padTop + (chartH / (ySteps.length - 1)) * i;
-            ctx.fillText(label, padLeft - 8, y + 3);
-
-            // Dashed grid line
+        for (let gi = 0; gi < 5; gi++) {
+            const gy = padTop + (chartH / 4) * gi;
+            ctx.fillText(dtAxisLabel(axisMax * (1 - gi / 4)), padLeft - 8, gy + 3);
             ctx.beginPath();
             ctx.setLineDash([3, 3]);
             ctx.strokeStyle = '#F0EBE0';
             ctx.lineWidth = 1;
-            ctx.moveTo(padLeft, y);
-            ctx.lineTo(width - padRight, y);
+            ctx.moveTo(padLeft, gy);
+            ctx.lineTo(width - padRight, gy);
             ctx.stroke();
-        });
+        }
         ctx.setLineDash([]);
 
-        // Data for bars (Running month & last month)
-        const barData = [
-            { lm: 0.3, rm: 0.4 }, { lm: 0.25, rm: 0.35 }, { lm: 0.45, rm: 0.5 }, { lm: 0.35, rm: 0.6 },
-            { lm: 0.5, rm: 0.4 }, { lm: 0.4, rm: 0.7 }, { lm: 0.3, rm: 0.55 }, { lm: 0.6, rm: 0.9 },
-            { lm: 0.55, rm: 0.8 }, { lm: 0.7, rm: 0.65 }, { lm: 0.45, rm: 0.5 }, { lm: 0.35, rm: 0.45 },
-            { lm: 0.5, rm: 0.6 }, { lm: 0.6, rm: 0.75 }, { lm: 0.4, rm: 0.5 }, { lm: 0.3, rm: 0.4 }
-        ];
+        const slots = cur.length || 1;
+        const slotW = chartW / slots;
+        const barW = Math.max(2.5, Math.min(12, slotW * 0.34));
+        const labels = series.labels || [];
+        const labelEvery = Math.max(1, Math.ceil(slots / 12));
 
-        const barSpacing = chartW / barData.length;
-        const barW = Math.max(5, Math.min(12, barSpacing * 0.42));
+        for (let i = 0; i < slots; i++) {
+            const x = padLeft + i * slotW + (slotW - (barW * 2 + 2)) / 2;
+            const pv = Number(prev[i] || 0);
+            const cv = Number(cur[i] || 0);
 
-        barData.forEach((d, idx) => {
-            const x = padLeft + idx * barSpacing + (barSpacing - barW * 2) / 2;
-
-            // Last Month bar (Light slate/cream)
-            const lmH = d.lm * chartH;
-            ctx.fillStyle = '#E2E8F0';
-            ctx.beginPath();
-            if (ctx.roundRect) {
-                ctx.roundRect(x, padTop + chartH - lmH, barW, lmH, [3, 3, 0, 0]);
-            } else {
-                ctx.rect(x, padTop + chartH - lmH, barW, lmH);
+            // Previous-period bar (slate).
+            const pH = axisMax > 0 ? (pv / axisMax) * chartH : 0;
+            if (pH > 0.4) {
+                ctx.fillStyle = '#E2E8F0';
+                ctx.beginPath();
+                if (ctx.roundRect) { ctx.roundRect(x, padTop + chartH - pH, barW, pH, [3, 3, 0, 0]); }
+                else { ctx.rect(x, padTop + chartH - pH, barW, pH); }
+                ctx.fill();
             }
-            ctx.fill();
 
-            // Running Month bar (Signature Radiant Gold Gradient & Emerald Peak)
-            const rmH = d.rm * chartH;
-            if (idx === 7) {
-                ctx.fillStyle = '#16A34A'; // Peak sale day in emerald
-            } else {
-                const goldGrad = ctx.createLinearGradient(0, padTop + chartH - rmH, 0, padTop + chartH);
-                goldGrad.addColorStop(0, '#D4AF37');
-                goldGrad.addColorStop(1, '#8A681F');
-                ctx.fillStyle = goldGrad;
+            // Current-period bar. Emerald marks the genuine best bucket, which
+            // used to be pinned to index 7 no matter what the data said.
+            const cH = axisMax > 0 ? (cv / axisMax) * chartH : 0;
+            if (cH > 0.4) {
+                if (i === series.peak) {
+                    ctx.fillStyle = '#16A34A';
+                } else {
+                    const goldGrad = ctx.createLinearGradient(0, padTop + chartH - cH, 0, padTop + chartH);
+                    goldGrad.addColorStop(0, '#D4AF37');
+                    goldGrad.addColorStop(1, '#8A681F');
+                    ctx.fillStyle = goldGrad;
+                }
+                ctx.beginPath();
+                if (ctx.roundRect) { ctx.roundRect(x + barW + 2, padTop + chartH - cH, barW, cH, [3, 3, 0, 0]); }
+                else { ctx.rect(x + barW + 2, padTop + chartH - cH, barW, cH); }
+                ctx.fill();
             }
-            ctx.beginPath();
-            if (ctx.roundRect) {
-                ctx.roundRect(x + barW + 2, padTop + chartH - rmH, barW, rmH, [3, 3, 0, 0]);
-            } else {
-                ctx.rect(x + barW + 2, padTop + chartH - rmH, barW, rmH);
+
+            if (labels[i] !== undefined && i % labelEvery === 0) {
+                ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                ctx.fillStyle = '#A8A29E';
+                ctx.textAlign = 'center';
+                ctx.fillText(String(labels[i]), x + barW + 1, height - 8);
             }
-            ctx.fill();
-        });
-
-        // Spline curve line overlay
-        const linePoints = [
-            { x: padLeft, y: padTop + chartH * 0.65 },
-            { x: padLeft + chartW * 0.18, y: padTop + chartH * 0.45 },
-            { x: padLeft + chartW * 0.35, y: padTop + chartH * 0.6 },
-            { x: padLeft + chartW * 0.55, y: padTop + chartH * 0.15 },
-            { x: padLeft + chartW * 0.75, y: padTop + chartH * 0.4 },
-            { x: padLeft + chartW * 0.95, y: padTop + chartH * 0.3 }
-        ];
-
-        ctx.beginPath();
-        ctx.strokeStyle = '#181512';
-        ctx.lineWidth = 2.4;
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
-
-        ctx.moveTo(linePoints[0].x, linePoints[0].y);
-        for (let i = 0; i < linePoints.length - 1; i++) {
-            const xc = (linePoints[i].x + linePoints[i + 1].x) / 2;
-            const yc = (linePoints[i].y + linePoints[i + 1].y) / 2;
-            ctx.quadraticCurveTo(linePoints[i].x, linePoints[i].y, xc, yc);
         }
-        ctx.lineTo(linePoints[linePoints.length - 1].x, linePoints[linePoints.length - 1].y);
-        ctx.stroke();
-
-        // Prominent node points with gold ring
-        [linePoints[1], linePoints[3], linePoints[4]].forEach(pt => {
-            ctx.beginPath();
-            ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
-            ctx.fillStyle = '#8A681F';
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#D4AF37';
-            ctx.stroke();
-        });
+        ctx.textAlign = 'left';
     }
 
+    // All three ranges are served inline in window.DT_DASH, so the pills work
+    // with no network round trip. The old version fetched
+    // /api/orders.php?action=analytics&range=... which ignored `range` and
+    // returned lifetime totals, then re-drew the same fake chart regardless.
     window.switchAdmRefTimeRange = function(range, btn) {
+        const dash = dtDash();
+        if (!dash || !dash.sales || !dash.sales[range]) {
+            if (window.showToast) { window.showToast('Sales data is not available on this page', 'error'); }
+            return;
+        }
+
         document.querySelectorAll('.adm-ref-time-pill').forEach(p => p.classList.remove('active'));
         if (btn) btn.classList.add('active');
 
-        fetch('/api/orders.php?action=analytics&range=' + encodeURIComponent(range))
-            .then(res => res.json())
-            .then(data => {
-                const amtEl = document.querySelector('.adm-ref-sales-amt');
-                const growthEl = document.querySelector('.adm-ref-sales-growth');
-                const total = data.total_sales || 0;
-                const count = data.order_count || 0;
-                if (amtEl) amtEl.textContent = '₹' + Number(total).toLocaleString('en-IN');
-                if (growthEl) {
-                    growthEl.textContent = (count > 0 ? (count + ' verified orders in ' + range) : '0 live orders recorded • Database live & ready');
-                }
-            })
-            .catch(() => {});
+        admRefRange = range;
+        const s = dash.sales[range];
+        const words = { '1W': '7 days', '1M': '30 days', '1Y': '12 months' }[range] || range;
+
+        const amtEl = document.querySelector('.adm-ref-sales-amt');
+        if (amtEl) amtEl.textContent = dtInr(s.total);
+
+        const growthEl = document.querySelector('.adm-ref-sales-growth');
+        if (growthEl) {
+            if (!s.hasData) {
+                growthEl.textContent = 'No sales recorded in the last ' + words + ' yet';
+            } else {
+                const g = Number(s.growth) || 0;
+                growthEl.textContent = (g >= 0 ? '↗ +' : '↘ ') + g.toFixed(1)
+                    + '% vs the previous ' + words + ' · ' + s.count
+                    + ' order' + (s.count === 1 ? '' : 's');
+            }
+        }
+
+        const capEl = document.getElementById('admRefRangeCaption');
+        if (capEl) {
+            capEl.textContent = 'Last ' + words + ' · ' + s.count + ' order' + (s.count === 1 ? '' : 's');
+        }
+
+        const periodEl = document.getElementById('admRefPeriodLabel');
+        if (periodEl && s.labels && s.labels.length) {
+            periodEl.textContent = s.labels[0] + ' – ' + s.labels[s.labels.length - 1];
+        }
+
+        const legPrev = document.getElementById('admRefLegPrev');
+        if (legPrev) legPrev.textContent = 'Previous ' + words;
+        const legCur = document.getElementById('admRefLegCur');
+        if (legCur) legCur.textContent = 'Last ' + words;
 
         renderRefSalesChart();
-        if (window.showToast) {
-            window.showToast('Sales analytics updated: ' + range + ' view', 'success');
-        }
     };
 
 
@@ -512,17 +565,11 @@
         });
     }
 
-    function initLiveTickers() {
-        const liveUsersEl = document.getElementById('liveUsersCount');
-        if (liveUsersEl) {
-            setInterval(function() {
-                const current = parseInt(liveUsersEl.innerText.replace(/,/g, ''), 10) || 142;
-                const change = Math.floor(Math.random() * 5) - 2;
-                const updated = Math.max(90, current + change);
-                liveUsersEl.innerText = updated.toLocaleString();
-            }, 4000);
-        }
-    }
+    // initLiveTickers() stood here. It bound to #liveUsersCount and every 4
+    // seconds random-walked the number with a floor of 90 and a fallback of 142,
+    // so "Live Users Online" was an animated invention with no data behind it.
+    // The tile now prints the real count of orders awaiting action, and the id
+    // is gone from the markup so nothing can drive it from JavaScript.
 
     // ════ SIDEBAR CONTROLS (DELEGATES TO adminsidebar.php) ════
     function initSidebar() {
@@ -922,7 +969,7 @@
         canvas.height = size * dpr;
         canvas.style.width = size + 'px';
         canvas.style.height = size + 'px';
-        ctx.scale(dpr, dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         const cx = size / 2, cy = size / 2, r = (size / 2) - 10;
         ctx.clearRect(0, 0, size, size);
@@ -935,8 +982,13 @@
         ctx.lineCap = 'round';
         ctx.stroke();
 
-        // Active progress arc (84.5% complete)
-        const progress = 0.845;
+        // Was a fixed `const progress = 0.845`, so the ring claimed 84.5% while
+        // the figure printed inside it came from the real stock count.
+        const dash = dtDash();
+        const gauge = dash ? dash.gauge : null;
+        const target = gauge && Number(gauge.target) > 0 ? Number(gauge.target) : 0;
+        const progress = target > 0 ? Math.max(0, Math.min(1, Number(gauge.value) / target)) : 0;
+        if (progress <= 0) return;
         const totalAngle = Math.PI * 1.6;
         const endAngle = (-Math.PI * 0.8) + (totalAngle * progress);
 
@@ -969,26 +1021,28 @@
     function renderRevenueChart() {
         const canvas = document.getElementById('admRevenueChart');
         if (!canvas) return;
-        const parent = canvas.parentElement;
-        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 320;
-        const ctx = canvas.getContext('2d');
-        
-        // Crisp Retina scaling
-        const dpr = window.devicePixelRatio || 1;
-        const w = containerWidth;
-        const h = 150;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        canvas.style.width = w + 'px';
-        canvas.style.height = h + 'px';
-        ctx.scale(dpr, dpr);
+        const c = dtPrepCanvas(canvas, 150);
+        if (!c) return;
+        const ctx = c.ctx, w = c.width, h = c.height;
 
-        ctx.clearRect(0, 0, w, h);
+        // Was labels ['01'..'07'] with b2bBars [65,80,50,95,70,110,85],
+        // b2cBars [40,55,35,60,45,75,55] and maxVal 120 - a fixed picture that
+        // contradicted the B2B/B2C totals printed directly beneath it.
+        const dash = dtDash();
+        const rev = dash ? dash.revenue : null;
+        if (!rev) { dtEmptyCanvas(ctx, w, h, 'Revenue data unavailable'); return; }
 
-        const labels = ['01', '02', '03', '04', '05', '06', '07'];
-        const b2bBars = [65, 80, 50, 95, 70, 110, 85];
-        const b2cBars = [40, 55, 35, 60, 45, 75, 55];
-        const maxVal = 120;
+        const labels = rev.labels || [];
+        const b2bBars = rev.b2b || [];
+        const b2cBars = rev.b2c || [];
+        let peak = 0;
+        b2bBars.forEach(function(v) { if (Number(v) > peak) peak = Number(v); });
+        b2cBars.forEach(function(v) { if (Number(v) > peak) peak = Number(v); });
+        if (!labels.length || peak <= 0) {
+            dtEmptyCanvas(ctx, w, h, 'No sales in the last 7 days');
+            return;
+        }
+        const maxVal = dtNiceMax(peak);
 
         const padL = 20, padR = 20, padT = 15, padB = 25;
         const chartW = w - padL - padR;
@@ -1048,19 +1102,27 @@
         const canvas = document.getElementById('admCategoryChart');
         if (!canvas) return;
         const parent = canvas.parentElement;
-        const containerWidth = parent.clientWidth || parent.getBoundingClientRect().width || 280;
+        const containerWidth = parent ? (parent.clientWidth || parent.getBoundingClientRect().width || 280) : 280;
         const ctx = canvas.getContext('2d');
+        if (!ctx) return;
         const dpr = window.devicePixelRatio || 1;
 
         const w = Math.min(340, containerWidth);
         const h = 180;
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
+        canvas.width = Math.max(1, Math.round(w * dpr));
+        canvas.height = Math.max(1, Math.round(h * dpr));
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
-        ctx.scale(dpr, dpr);
-
+        // setTransform, not scale(): scale() compounds on every resize re-render.
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, w, h);
+
+        const dash = dtDash();
+        const cats = (dash && dash.categories && dash.categories.items) ? dash.categories.items : [];
+        if (!cats.length) {
+            dtEmptyCanvas(ctx, w, h, 'No categories to chart yet');
+            return;
+        }
 
         const cx = w / 2;
         const cy = h / 2;
@@ -1106,33 +1168,33 @@
             }
         }
 
-        // Bubble 1: Sarees (48%) - Luxury Master Gold Glass Bubble
-        const grad1 = ctx.createRadialGradient(cx - 56, cy - 16, 4, cx - 44, cy - 4, 52);
-        grad1.addColorStop(0, '#FFFFFF');
-        grad1.addColorStop(0.35, '#FAF5E8');
-        grad1.addColorStop(1, '#EBD8A5');
-        drawLuxuryGlassBubble(cx - 44, cy - 4, 52, grad1, '#8A681F', 'rgba(138, 104, 31, 0.25)', '48%', 'Sarees', '#5A4210', '#8A681F');
+        // The four bubbles were hardcoded at 48% Sarees, 32% Kurtis, 13%
+        // Lehengas and 7% Dress Materials. They now come from real sold value,
+        // or from real catalogue counts when nothing has sold yet.
+        const bubbleSlots = [
+            { x: cx - 44, y: cy - 4,  r: 52, tint: ['#FAF5E8', '#EBD8A5'], stroke: '#8A681F', shadow: 'rgba(138, 104, 31, 0.25)', pct: '#5A4210', lbl: '#8A681F' },
+            { x: cx + 42, y: cy - 24, r: 38, tint: ['#DCFCE7', '#A7F3D0'], stroke: '#15803D', shadow: 'rgba(22, 163, 74, 0.25)',  pct: '#15803D', lbl: '#16A34A' },
+            { x: cx + 32, y: cy + 38, r: 27, tint: ['#FEF3C7', '#FDE68A'], stroke: '#D97706', shadow: 'rgba(217, 119, 6, 0.25)',  pct: '#B45309', lbl: '#D97706' },
+            { x: cx + 74, y: cy + 24, r: 19, tint: ['#F3E8FF', '#DDD6FE'], stroke: '#7E22CE', shadow: 'rgba(126, 34, 206, 0.25)', pct: '#6B21A8', lbl: '#7E22CE' }
+        ];
+        const topPct = Math.max(1, Number(cats[0].pct) || 1);
 
-        // Bubble 2: Kurtis (32%) - Fresh Emerald Glass Bubble
-        const grad2 = ctx.createRadialGradient(cx + 34, cy - 32, 3, cx + 42, cy - 24, 38);
-        grad2.addColorStop(0, '#FFFFFF');
-        grad2.addColorStop(0.35, '#DCFCE7');
-        grad2.addColorStop(1, '#A7F3D0');
-        drawLuxuryGlassBubble(cx + 42, cy - 24, 38, grad2, '#15803D', 'rgba(22, 163, 74, 0.25)', '32%', 'Kurtis', '#15803D', '#16A34A');
-
-        // Bubble 3: Lehengas (13%) - Radiant Amber Glass Bubble
-        const grad3 = ctx.createRadialGradient(cx + 26, cy + 32, 2, cx + 32, cy + 38, 27);
-        grad3.addColorStop(0, '#FFFFFF');
-        grad3.addColorStop(0.35, '#FEF3C7');
-        grad3.addColorStop(1, '#FDE68A');
-        drawLuxuryGlassBubble(cx + 32, cy + 38, 27, grad3, '#D97706', 'rgba(217, 119, 6, 0.25)', '13%', 'Lehengas', '#B45309', '#D97706');
-
-        // Bubble 4: Dress Materials (7%) - Royal Amethyst Glass Bubble
-        const grad4 = ctx.createRadialGradient(cx + 70, cy + 20, 2, cx + 74, cy + 24, 19);
-        grad4.addColorStop(0, '#FFFFFF');
-        grad4.addColorStop(0.35, '#F3E8FF');
-        grad4.addColorStop(1, '#DDD6FE');
-        drawLuxuryGlassBubble(cx + 74, cy + 24, 19, grad4, '#7E22CE', 'rgba(126, 34, 206, 0.25)', '7%', '', '#6B21A8', '#7E22CE');
+        cats.slice(0, 4).forEach(function(cat, i) {
+            const s = bubbleSlots[i];
+            // Rank picks the slot; the real share scales the radius within it.
+            const share = Math.max(0, Number(cat.pct) || 0) / topPct;
+            const r = Math.max(14, s.r * (0.6 + 0.4 * share));
+            const grad = ctx.createRadialGradient(s.x - r * 0.25, s.y - r * 0.3, 2, s.x, s.y, r);
+            grad.addColorStop(0, '#FFFFFF');
+            grad.addColorStop(0.35, s.tint[0]);
+            grad.addColorStop(1, s.tint[1]);
+            const rawName = String(cat.name || '');
+            const label = rawName.length > 12 ? rawName.slice(0, 11) + '…' : rawName;
+            drawLuxuryGlassBubble(
+                s.x, s.y, r, grad, s.stroke, s.shadow,
+                (Number(cat.pct) || 0).toFixed(1) + '%', label, s.pct, s.lbl
+            );
+        });
     }
 
     // ════ PRODUCT CATALOG RENDERING & CRUD ════

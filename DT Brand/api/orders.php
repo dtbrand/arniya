@@ -33,21 +33,64 @@ try {
             // dashboard chart (admin/Asset/js/admin.js).
             dt_api_require_admin('view order analytics');
 
-            $range = $_GET['range'] ?? '1M';
+            // `range` used to be read and then ignored: both queries below
+            // summed the whole order book, so 1W, 1M and 1Y all returned the
+            // same lifetime figure. Each range now maps to a real window, and
+            // the previous window of equal length comes back with it so the
+            // caller can show a genuine growth number.
+            $range = strtoupper(trim((string)($_GET['range'] ?? '1M')));
+            $windows = ['1W' => 7, '1M' => 30, '1Y' => 365, 'ALL' => 0];
+            if (!array_key_exists($range, $windows)) { $range = '1M'; }
+            $days = $windows[$range];
+
             $pdo = Database::getConnection();
             $totalSales = 0.0;
             $orderCount = 0;
+            $prevSales  = 0.0;
+            $prevCount  = 0;
+            // fulfillment_status != 'cancelled' evaluates to NULL, not TRUE, for
+            // a NULL row, so NULL-status orders were silently dropped from both
+            // aggregates. COALESCE keeps them counted.
+            $notCancelled = "COALESCE(`fulfillment_status`, 'unfulfilled') <> 'cancelled'";
             if ($pdo !== null && !Database::isMockMode()) {
                 try {
-                    $totalSales = (float)$pdo->query("SELECT COALESCE(SUM(total_amount), 0) FROM `orders` WHERE fulfillment_status != 'cancelled'")->fetchColumn();
-                    $orderCount = (int)$pdo->query("SELECT COUNT(*) FROM `orders` WHERE fulfillment_status != 'cancelled'")->fetchColumn();
-                } catch (\Exception $e) {}
+                    $curWhere  = $notCancelled;
+                    $prevWhere = null;
+                    if ($days > 0) {
+                        $curWhere  .= " AND `created_at` >= (CURDATE() - INTERVAL " . ($days - 1) . " DAY)";
+                        $prevWhere  = $notCancelled
+                            . " AND `created_at` >= (CURDATE() - INTERVAL " . (($days * 2) - 1) . " DAY)"
+                            . " AND `created_at` <  (CURDATE() - INTERVAL " . ($days - 1) . " DAY)";
+                    }
+                    $row = $pdo->query(
+                        "SELECT COALESCE(SUM(`total_amount`), 0) AS s, COUNT(*) AS c FROM `orders` WHERE {$curWhere}"
+                    )->fetch(\PDO::FETCH_ASSOC) ?: [];
+                    $totalSales = (float)($row['s'] ?? 0);
+                    $orderCount = (int)($row['c'] ?? 0);
+
+                    if ($prevWhere !== null) {
+                        $pRow = $pdo->query(
+                            "SELECT COALESCE(SUM(`total_amount`), 0) AS s, COUNT(*) AS c FROM `orders` WHERE {$prevWhere}"
+                        )->fetch(\PDO::FETCH_ASSOC) ?: [];
+                        $prevSales = (float)($pRow['s'] ?? 0);
+                        $prevCount = (int)($pRow['c'] ?? 0);
+                    }
+                } catch (\Throwable $e) {
+                    error_log('Order analytics query failed: ' . $e->getMessage());
+                }
             }
+            $growth = $prevSales > 0
+                ? round((($totalSales - $prevSales) / $prevSales) * 100, 1)
+                : ($totalSales > 0 ? 100.0 : 0.0);
             echo json_encode([
-                'success' => true,
-                'range' => $range,
-                'total_sales' => $totalSales,
-                'order_count' => $orderCount
+                'success'          => true,
+                'range'            => $range,
+                'days'             => $days,
+                'total_sales'      => round($totalSales, 2),
+                'order_count'      => $orderCount,
+                'prev_total_sales' => round($prevSales, 2),
+                'prev_order_count' => $prevCount,
+                'growth_pct'       => $growth,
             ]);
             exit;
         }
