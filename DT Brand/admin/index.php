@@ -24,7 +24,7 @@ use DTBrand\OrderManager;
 $db = Database::getConnection();
 
 // Real Dynamic Database Metrics
-$allProducts = ProductCatalog::getAll();
+$allProducts = ProductCatalog::getAll(true);
 $totalProductsCount = count($allProducts);
 $categoriesList = ProductCatalog::getCategories();
 $totalCategoriesCount = count($categoriesList);
@@ -659,7 +659,7 @@ if ($db !== null && !Database::isMockMode() && $totalOrdersCount > 0) {
                                             <?php foreach (array_slice($recentOrdersList, 0, 6) as $ord): 
                                                 $ordNum = $ord['order_number'] ?? ('ORD-' . $ord['id']);
                                                 $custName = $ord['customer_name'] ?? 'B2B Partner';
-                                                $custPhone = preg_replace('/[^0-9]/', '', $ord['customer_phone'] ?? '919876543210');
+                                                $custPhone = preg_replace('/[^0-9]/', '', $ord['customer_phone'] ?? '917046363528');
                                                 $channel = ucfirst($ord['channel'] ?? 'wholesale');
                                                 $totalAmt = (float)($ord['total_amount'] ?? 0);
                                                 $payStatus = strtolower($ord['payment_status'] ?? 'paid');

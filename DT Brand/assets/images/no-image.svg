@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  no-image.svg - neutral placeholder for a product that has no photo yet.
+
+  Before this file existed, a product with an empty primary_image fell back to
+  /assets/images/product1.png - i.e. a different product's saree photo - so the
+  storefront showed merchandise the customer would not receive. This is shown
+  instead: it is obviously not a product photo, so nobody can mistake it for one.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" role="img" aria-label="No photo has been uploaded for this product yet">
+  <rect width="600" height="800" fill="#F7F4ED"/>
+  <rect x="8" y="8" width="584" height="784" fill="none" stroke="#E4DCCB" stroke-width="2" stroke-dasharray="10 8"/>
+  <g stroke="#C9BFA8" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="200" y="316" width="200" height="160" rx="10"/>
+    <circle cx="252" cy="366" r="18"/>
+    <path d="M212 462l58-62 44 46 30-28 44 44"/>
+  </g>
+  <text x="300" y="546" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="bold" fill="#8A8272">No photo uploaded</text>
+  <text x="300" y="586" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#A8A08E">This product has no image on file yet</text>
+</svg>

@@ -68,7 +68,7 @@ $active_subnav = "overview";
             <?php
             $allCats = \DTBrand\ProductCatalog::getCategories();
             $totalCats = count($allCats);
-            $allProducts = \DTBrand\ProductCatalog::getAll();
+            $allProducts = \DTBrand\ProductCatalog::getAll(true);
             $totalProducts = count($allProducts);
             ?>
             <div class="dt-cat-flow-card">

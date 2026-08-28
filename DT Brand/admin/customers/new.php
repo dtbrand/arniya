@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
@@ -163,7 +163,13 @@ $active_subnav = "new";
 
                 <!-- Add Customer Form Card -->
                 <div class="dt-edit-card">
-                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Account Created Successfully!'); setTimeout(() => window.location.href = '/admin/customers/index.php', 1000);">
+                    <?php /* This form used to carry an inline onsubmit that toasted
+                             "Customer Account Created Successfully!" and redirected to the
+                             customer list after one second without contacting the server at
+                             all. No row was ever inserted, so an admin who registered a
+                             walk-in buyer was told the account existed and then could not
+                             find it. It now posts to /api/customers.php. */ ?>
+                    <form id="dtCustNewForm">
                         
                         <!-- ══ SECTION 1: PERSONAL & CONTACT INFORMATION ══ -->
                         <div class="dt-edit-section">
@@ -177,7 +183,7 @@ $active_subnav = "new";
                                     <label class="dt-form-label">First Name <span style="color:#DC2626;">*</span></label>
                                     <div class="dt-input-icon-wrap">
                                         <svg class="dt-input-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        <input type="text" class="dt-input-field" placeholder="e.g. Radhika" required>
+                                        <input type="text" id="custNewFirstName" name="first_name" class="dt-input-field" placeholder="e.g. Radhika" required>
                                     </div>
                                 </div>
 
@@ -185,7 +191,7 @@ $active_subnav = "new";
                                     <label class="dt-form-label">Last Name</label>
                                     <div class="dt-input-icon-wrap">
                                         <svg class="dt-input-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        <input type="text" class="dt-input-field" placeholder="e.g. Verma">
+                                        <input type="text" id="custNewLastName" name="last_name" class="dt-input-field" placeholder="e.g. Verma">
                                     </div>
                                 </div>
                             </div>
@@ -199,44 +205,14 @@ $active_subnav = "new";
                                     </div>
                                 </div>
 
+                                <?php /* Was a 40-option "Preferred Communication Language" select.
+                                         The customers table has no language column and nothing in
+                                         the project reads a preferred language, so every choice was
+                                         discarded on submit. Replaced with GSTIN, which is stored
+                                         and is what a trade account actually needs. */ ?>
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Preferred Communication Language</label>
-                                    <select id="custNewLanguage" name="language" class="dt-cust-select" style="width:100%; height:38px;">
-                                        <optgroup label="── Primary Commercial Languages ──">
-                                            <option value="Hindi" selected>Hindi (हिंदी)</option>
-                                            <option value="Gujarati">Gujarati (ગુજરાતી)</option>
-                                            <option value="English">English (International / India)</option>
-                                            <option value="Hinglish">Hinglish (Hindi / English)</option>
-                                            <option value="Marathi">Marathi (मराठी)</option>
-                                            <option value="Marwari">Marwari / Rajasthani (मारवाड़ी)</option>
-                                        </optgroup>
-                                        <optgroup label="── South Indian Languages ──">
-                                            <option value="Tamil">Tamil (தமிழ்)</option>
-                                            <option value="Telugu">Telugu (తెలుగు)</option>
-                                            <option value="Kannada">Kannada (ಕನ್ನಡ)</option>
-                                            <option value="Malayalam">Malayalam (മലയാളം)</option>
-                                        </optgroup>
-                                        <optgroup label="── East &amp; North-East Languages ──">
-                                            <option value="Bengali">Bengali / Bangla (বাংলা)</option>
-                                            <option value="Odia">Odia / Oriya (ଓଡ଼ିଆ)</option>
-                                            <option value="Assamese">Assamese (অসমীয়া)</option>
-                                            <option value="Manipuri">Manipuri (মৈতৈলোন্)</option>
-                                            <option value="Bodo">Bodo (बोडो)</option>
-                                            <option value="Santali">Santali (संथाली)</option>
-                                        </optgroup>
-                                        <optgroup label="── North &amp; West Indian Languages ──">
-                                            <option value="Punjabi">Punjabi (ਪੰਜਾਬੀ)</option>
-                                            <option value="Bhojpuri">Bhojpuri (भोजपुरी)</option>
-                                            <option value="Maithili">Maithili (मैथिली)</option>
-                                            <option value="Urdu">Urdu (اردو)</option>
-                                            <option value="Sindhi">Sindhi (सिंधी / سنڌي)</option>
-                                            <option value="Konkani">Konkani (कोंकणी)</option>
-                                            <option value="Dogri">Dogri (डोगरी)</option>
-                                            <option value="Kashmiri">Kashmiri (कश्मीरी / کٲشُر)</option>
-                                            <option value="Nepali">Nepali (नेपाली)</option>
-                                            <option value="Sanskrit">Sanskrit (संस्कृतम्)</option>
-                                        </optgroup>
-                                    </select>
+                                    <label class="dt-form-label">GSTIN (Wholesale / Reseller only)</label>
+                                    <input type="text" id="custNewGstin" name="gstin" class="dt-input-field no-icon" placeholder="15-character GSTIN" maxlength="15" style="text-transform:uppercase;">
                                 </div>
                             </div>
 
@@ -261,29 +237,10 @@ $active_subnav = "new";
                                 <span>Default Shipping Address</span>
                             </h3>
 
+                            <?php /* The country picker wrote a country_code field that no table
+                                     holds; every account is shipped domestically. Removed so the
+                                     form only asks for what it can store. */ ?>
                             <div class="dt-form-grid-2">
-                                <div class="dt-form-group">
-                                    <label class="dt-form-label">Country / Destination (195+ World Markets) <span style="color:#DC2626;">*</span></label>
-                                    <div class="dt-country-picker-wrap" id="dtNewCountryPicker" data-selected-code="IN">
-                                        <input type="hidden" name="country_code" class="dt-country-hidden-val" value="IN">
-                                        <div class="dt-country-trigger">
-                                            <div class="dt-country-trigger-left">
-                                                <span class="dt-selected-flag">🇮🇳</span>
-                                                <span class="dt-selected-name">India (Bharat)</span>
-                                            </div>
-                                            <svg class="dt-country-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                        </div>
-                                        <div class="dt-country-dropdown">
-                                            <div class="dt-country-search-box">
-                                                <input type="text" class="dt-country-search-input" placeholder="Search 195+ countries (e.g. India, USA, UAE, UK)..." autocomplete="off" style="padding-left:10px;">
-                                            </div>
-                                            <div class="dt-country-list">
-                                                <!-- Dynamically populated & filtered by country-picker.js -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Nearby Landmark</label>
                                     <input type="text" id="custNewLandmark" name="landmark" class="dt-input-field no-icon" placeholder="e.g. Near City Bus Stand / Textile Market Gate / Ring Road">
@@ -304,7 +261,9 @@ $active_subnav = "new";
                                 <div class="dt-form-group">
                                     <label id="custNewStateLabel" class="dt-form-label dt-state-label">State / Union Territory</label>
                                     <select id="custNewState" name="state" class="dt-cust-select dt-state-select" style="width:100%; height:38px;">
-                                        <!-- Dynamically auto-populated by country-picker.js -->
+                                        <!-- A fixed list. country-picker.js used to rewrite this
+                                             select, but it is no longer loaded on this page, so
+                                             these nine options are the whole list. -->
                                         <option value="GJ" selected>Gujarat</option>
                                         <option value="MH">Maharashtra</option>
                                         <option value="DL">Delhi NCR</option>
@@ -313,7 +272,7 @@ $active_subnav = "new";
                                         <option value="KA">Karnataka</option>
                                         <option value="TS">Telangana</option>
                                         <option value="UP">Uttar Pradesh</option>
-                                        <option value="OTHER">Other State / UT</option>
+                                        <option value="">Other / Not listed</option>
                                     </select>
                                 </div>
 
@@ -332,22 +291,54 @@ $active_subnav = "new";
                             </h3>
 
                             <div class="dt-form-grid-2">
+                                <?php /* Neither select had a name attribute, so nothing could read
+                                         them, and Status offered "Inactive" -- a value the ENUM
+                                         (active|pending|suspended) cannot hold and which MySQL would
+                                         silently coerce to an empty string. Account Type was missing
+                                         altogether, so every customer an admin created was retail
+                                         and a wholesale buyer got MRP pricing. */ ?>
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Account Status</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="active" selected>Active Verified</option>
-                                        <option value="inactive">Inactive</option>
+                                    <label class="dt-form-label">Account Type / Pricing Group</label>
+                                    <select id="custNewType" name="type" class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="retail" selected>Retail Shopper (MRP Pricing)</option>
+                                        <option value="wholesale">Wholesale Buyer (Trade Pricing)</option>
+                                        <option value="reseller">Reseller (Commission Pricing)</option>
                                     </select>
                                 </div>
 
                                 <div class="dt-form-group">
+                                    <label class="dt-form-label">Account Status</label>
+                                    <select id="custNewStatus" name="status" class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="active" selected>Active (Can Sign In &amp; Order)</option>
+                                        <option value="pending">Pending Approval (Cannot Sign In Yet)</option>
+                                        <option value="suspended">Suspended (Blocked)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="dt-form-grid-2" style="margin-top:14px;">
+                                <div class="dt-form-group">
                                     <label class="dt-form-label">Customer Tier</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="regular" selected>Regular Direct Retail Shopper</option>
+                                    <select id="custNewTier" name="tier" class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="" selected>No tier assigned</option>
+                                        <option value="regular">Regular Direct Retail Shopper</option>
                                         <option value="vip">VIP High-Value Spender</option>
                                         <option value="new">New Registration</option>
                                     </select>
                                 </div>
+
+                                <div class="dt-form-group">
+                                    <label class="dt-form-label">Credit Limit (Trade Accounts)</label>
+                                    <input type="number" id="custNewCreditLimit" name="credit_limit" class="dt-input-field no-icon" value="0" min="0" step="100">
+                                    <p style="font-size:0.68rem; color:#78716C; margin:5px 0 0 0;">Stock value this buyer may take before paying. Leave 0 for prepaid.</p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top:14px; background:#FAF8F4; border:1px solid #EAE5D9; border-radius:10px; padding:11px 14px;">
+                                <p style="font-size:0.7rem; color:#645D54; margin:0; line-height:1.55;">
+                                    No password is set here. A random secret is stored, so the customer
+                                    signs in only after a reset you send them over WhatsApp from their profile.
+                                </p>
                             </div>
                         </div>
 
@@ -365,7 +356,75 @@ $active_subnav = "new";
     </div>
 </div>
 
+<script>
+function dtNewCustToast(message) {
+    if (typeof window.showToast === 'function') { window.showToast(message); }
+    else { alert(message); }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('dtCustNewForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        function val(sel) {
+            var el = form.querySelector(sel);
+            return el ? String(el.value).trim() : '';
+        }
+
+        var name = (val('input[name="first_name"]') + ' ' + val('input[name="last_name"]')).trim();
+        var phone = val('input[name="phone"]');
+        if (!name) { dtNewCustToast('\u26a0 A customer name is required.'); return; }
+        if (!phone) { dtNewCustToast('\u26a0 A phone number is required \u2014 it is the login identity.'); return; }
+
+        var params = new URLSearchParams();
+        params.append('action', 'create');
+        params.append('name', name);
+        params.append('phone', phone);
+        params.append('email', val('input[name="email"]'));
+        params.append('gstin', val('input[name="gstin"]').toUpperCase());
+        params.append('type', val('select[name="type"]'));
+        params.append('status', val('select[name="status"]'));
+        params.append('tier', val('select[name="tier"]'));
+        params.append('city', val('input[name="city"]'));
+        params.append('state', val('select[name="state"]'));
+        params.append('credit_limit', val('input[name="credit_limit"]') || '0');
+        params.append('address', val('input[name="address"]'));
+        params.append('landmark', val('input[name="landmark"]'));
+        params.append('postal_code', val('input[name="postal_code"]'));
+
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+
+        /* Only navigate away on a confirmed insert. The duplicate-phone case
+           matters here: customers.phone is UNIQUE and is the login identity, so
+           a second account on the same number is rejected by the server and the
+           admin needs to see that message rather than a success toast. */
+        fetch('/api/customers.php', { method: 'POST', body: params, credentials: 'same-origin' })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data && data.success) {
+                    dtNewCustToast('\u2728 ' + (data.message || 'Customer created.'));
+                    setTimeout(function () {
+                        window.location.href = '/admin/customers/view.php?id=' + encodeURIComponent(data.id);
+                    }, 700);
+                } else {
+                    if (btn) btn.disabled = false;
+                    dtNewCustToast('\u26a0 ' + ((data && data.message) || 'The customer was NOT created.'));
+                }
+            })
+            .catch(function () {
+                if (btn) btn.disabled = false;
+                dtNewCustToast('\u26a0 Network error \u2014 the customer was NOT created.');
+            });
+    });
+});
+</script>
 <script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
+<?php /* country-picker.js is no longer loaded here — see the note in the address
+        section. There is no .dt-country-picker-wrap left on this form for it to
+        bind to, and no country column for it to write into. */ ?>
 </body>
 </html>

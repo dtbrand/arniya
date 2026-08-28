@@ -169,7 +169,7 @@
         text += '\nTotal Order Value: ₹' + grand.toLocaleString('en-IN');
         text += '\nPlease share payment QR and dispatch details.';
 
-        window.open('https://wa.me/919876543210?text=' + encodeURIComponent(text), '_blank');
+        window.open('https://wa.me/917046363528?text=' + encodeURIComponent(text), '_blank');
     };
 
     // ════════════ 2. WISHLIST DRAWER ════════════
@@ -495,40 +495,219 @@
     };
 
     // ════════════ 5. QUICKVIEW MODAL ════════════
+    /* Rewritten to fill every slot in shared/quickview_modal.php from the row.
+       Before this, the modal set only image/category/title/sku/price and printed
+       `p.rating || '4.9'` and `(p.discount || 25) + '% OFF'`, while the reviews
+       count, thumbnails, badge, colours, sizes, stock and video were left at the
+       markup's hardcoded placeholders — so every product quick-viewed as
+       "★ 4.9 (142 reviews)" with a fixed 4-piece / 8-piece lot ladder. */
+    function qvShow(el, on) { if (el) { el.style.display = on ? '' : 'none'; } }
+    var DT_QV_NO_IMAGE = '/assets/images/no-image.svg';
+
+    /** Swap the big frame between a photo, an uploaded video and an embed. */
+    function qvSetMain(kind, src) {
+        var img = document.getElementById('dtQvMainImg');
+        var vid = document.getElementById('dtQvMainVideo');
+        var emb = document.getElementById('dtQvMainEmbed');
+        if (vid) { try { vid.pause(); } catch (e) {} }
+        if (emb) { emb.src = 'about:blank'; }
+        qvShow(img, kind === 'image');
+        qvShow(vid, kind === 'video');
+        qvShow(emb, kind === 'embed');
+        if (kind === 'image' && img) { img.src = src || DT_QV_NO_IMAGE; }
+        if (kind === 'video' && vid) { vid.src = src; }
+        if (kind === 'embed' && emb) { emb.src = src; }
+    }
+
+    function qvBuildThumbs(p) {
+        var wrap = document.getElementById('dtQvThumbs');
+        if (!wrap) { return; }
+        wrap.innerHTML = '';
+        var items = [];
+        (p.images || []).forEach(function (u) { if (u) { items.push({ kind: 'image', src: u }); } });
+        (p.videos || []).forEach(function (u) { if (u) { items.push({ kind: 'video', src: u }); } });
+        (p.embeds || []).forEach(function (u) { if (u) { items.push({ kind: 'embed', src: u }); } });
+        if (items.length < 2) { return; }   // nothing to switch between
+        items.forEach(function (it, i) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'dt-qv-thumb' + (i === 0 ? ' active' : '');
+            b.setAttribute('aria-label', it.kind === 'image' ? 'Photo ' + (i + 1) : 'Video');
+            if (it.kind === 'image') {
+                var im = document.createElement('img');
+                im.src = it.src;
+                im.alt = '';
+                im.loading = 'lazy';
+                b.appendChild(im);
+            } else {
+                b.textContent = '▶';
+                b.style.fontSize = '14px';
+            }
+            b.addEventListener('click', function () {
+                wrap.querySelectorAll('.dt-qv-thumb').forEach(function (x) { x.classList.remove('active'); });
+                b.classList.add('active');
+                qvSetMain(it.kind, it.src);
+            });
+            wrap.appendChild(b);
+        });
+    }
+
+    /** Chips for the MOQ tiers this product really has. */
+    function qvBuildLots(p) {
+        var wrap = document.getElementById('dtQvLots');
+        var tier = document.getElementById('dtQvLotWrap');
+        if (!wrap) { return 1; }
+        wrap.innerHTML = '';
+        var lots = p.moq_lots || {};
+        var defs = [
+            { key: 'single', qty: Number(lots.single || 1) || 1, label: 'Single Piece', note: 'Retail' },
+            { key: 'half_set', qty: Number(lots.half_set || 0), note: 'Wholesale MOQ' },
+            { key: 'full_set', qty: Number(lots.full_set || 0), note: 'Catalogue box' },
+            { key: 'master_bale', qty: Number(lots.master_bale || 0), note: 'Master bale' }
+        ];
+        var made = 0;
+        var firstQty = 1;
+        defs.forEach(function (d) {
+            if (d.qty <= 0) { return; }
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'dt-lot-chip' + (made === 0 ? ' active' : '');
+            b.dataset.lot = d.key;
+            b.dataset.moq = String(d.qty);
+            var strong = document.createElement('strong');
+            strong.textContent = d.label || (d.qty + ' Pcs');
+            var span = document.createElement('span');
+            span.textContent = d.note;
+            b.appendChild(strong);
+            b.appendChild(span);
+            b.addEventListener('click', function () { window.selectQvLot(b); });
+            wrap.appendChild(b);
+            if (made === 0) { firstQty = d.qty; }
+            made++;
+        });
+        qvShow(tier, made > 1);
+        return firstQty;
+    }
+
+    function qvChips(containerId, wrapId, values) {
+        var box = document.getElementById(containerId);
+        var wrap = document.getElementById(wrapId);
+        if (!box) { return; }
+        box.innerHTML = '';
+        var list = (values || []).filter(function (v) { return String(v || '').trim() !== ''; });
+        list.forEach(function (v) {
+            var s = document.createElement('span');
+            s.className = 'dt-attr-chip';
+            s.textContent = String(v);
+            box.appendChild(s);
+        });
+        qvShow(wrap, list.length > 0);
+    }
+
     window.openQuickView = function (productId) {
-        fetch('/api/products.php?id=' + productId)
+        fetch('/api/products.php?id=' + encodeURIComponent(productId))
             .then(function (r) { return r.json(); })
             .then(function (res) {
-                if (!res.success || !res.product) return;
+                if (!res.success || !res.product) {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('That product is no longer available.', 'error');
+                    }
+                    return;
+                }
                 var p = res.product;
                 currentQvProduct = p;
                 currentQvLot = 'single';
-                currentQvMoq = 1;
 
                 var modal = document.getElementById('dtQuickViewModalOverlay');
-                var img = document.getElementById('dtQvMainImg');
                 var cat = document.getElementById('dtQvCategory');
                 var title = document.getElementById('dtQvTitle');
                 var sku = document.getElementById('dtQvSku');
-                var rating = document.getElementById('dtQvRating');
                 var price = document.getElementById('dtQvPrice');
                 var oldPrice = document.getElementById('dtQvOldPrice');
                 var disc = document.getElementById('dtQvDiscount');
+                var badge = document.getElementById('dtQvBadge');
+                var specs = document.getElementById('dtQvSpecs');
+                var stockEl = document.getElementById('dtQvStock');
                 var fullLink = document.getElementById('dtQvFullPageLink');
 
-                if (img) img.src = p.image;
-                if (cat) cat.textContent = p.category;
-                if (title) title.textContent = p.name || p.title;
-                if (sku) sku.textContent = p.sku;
-                if (rating) rating.textContent = p.rating || '4.9';
-                if (price) price.textContent = '₹' + Number(p.price || p.retail_price).toLocaleString('en-IN');
-                if (oldPrice) oldPrice.textContent = p.old_price ? ('₹' + Number(p.old_price).toLocaleString('en-IN')) : '';
-                if (disc) disc.textContent = (p.discount || 25) + '% OFF';
-                if (fullLink) fullLink.href = '/product.php?id=' + p.id;
+                qvSetMain('image', p.has_photo ? p.image : DT_QV_NO_IMAGE);
+                var mainImg = document.getElementById('dtQvMainImg');
+                if (mainImg) {
+                    mainImg.alt = p.name || '';
+                    mainImg.style.opacity = p.has_photo ? '' : '.55';
+                }
+                qvBuildThumbs(p);
+
+                if (cat) { cat.textContent = p.category || ''; qvShow(cat, !!p.category); }
+                if (title) { title.textContent = p.name || p.title || ''; }
+                if (sku) { sku.textContent = p.sku || ''; }
+                qvShow(document.getElementById('dtQvSkuWrap'), !!p.sku);
+                qvShow(document.getElementById('dtQvSkuDot'), !!p.sku);
+
+                var rc = Number(p.reviews_count || 0);
+                var rEl = document.getElementById('dtQvRating');
+                var rvEl = document.getElementById('dtQvReviews');
+                if (rc > 0) {
+                    if (rEl) { rEl.textContent = Number(p.rating || 0).toFixed(1); }
+                    if (rvEl) { rvEl.textContent = String(rc); }
+                }
+                qvShow(document.getElementById('dtQvRatingWrap'), rc > 0);
+                qvShow(document.getElementById('dtQvNoReviews'), rc === 0);
+
+                var retail = Number(p.price || p.retail_price || 0);
+                if (price) {
+                    price.textContent = retail > 0 ? ('₹' + retail.toLocaleString('en-IN')) : 'Price on request';
+                }
+                var mrp = Number(p.old_price || 0);
+                if (oldPrice) { oldPrice.textContent = mrp > retail ? ('₹' + mrp.toLocaleString('en-IN')) : ''; }
+                qvShow(oldPrice, mrp > retail);
+                if (disc) { disc.textContent = Number(p.discount || 0) > 0 ? (Number(p.discount) + '% OFF') : ''; }
+                qvShow(disc, Number(p.discount || 0) > 0);
+
+                if (badge) { badge.textContent = p.badge || ''; }
+                qvShow(badge, !!p.badge);
+
+                if (specs) {
+                    var bits = [p.fabric, p.weave, p.zari_type, p.pallu_style, p.occasion]
+                        .map(function (x) { return String(x || '').trim(); })
+                        .filter(function (x) { return x !== ''; });
+                    specs.textContent = bits.join(' • ');
+                    qvShow(specs, bits.length > 0);
+                }
+
+                qvChips('dtQvColors', 'dtQvColorsWrap', p.colors);
+                qvChips('dtQvSizes', 'dtQvSizesWrap', p.sizes || p.size);
+
+                currentQvMoq = qvBuildLots(p);
+                var firstChip = document.querySelector('#dtQvLots .dt-lot-chip.active');
+                currentQvLot = firstChip ? firstChip.dataset.lot : 'single';
+                var qtyInput = document.getElementById('dtQvQtyInput');
+                if (qtyInput) { qtyInput.value = currentQvMoq; }
+
+                if (stockEl) {
+                    var q = Number(p.stock_qty || 0);
+                    if (p.in_stock && q > 0) {
+                        stockEl.textContent = q + ' in stock';
+                        stockEl.style.color = '#15803D';
+                    } else {
+                        stockEl.textContent = 'Out of stock — enquire on WhatsApp';
+                        stockEl.style.color = '#DC2626';
+                    }
+                }
+                var addBtn = document.getElementById('dtQvAddCartBtn');
+                if (addBtn) { addBtn.disabled = !(p.in_stock && Number(p.stock_qty || 0) > 0); }
+
+                if (fullLink) { fullLink.href = '/product.php?id=' + Number(p.id); }
 
                 if (modal) {
                     modal.classList.add('active');
+                    modal.setAttribute('aria-hidden', 'false');
                     document.body.style.overflow = 'hidden';
+                }
+            })
+            .catch(function () {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Could not load that product. Please try again.', 'error');
                 }
             });
     };
@@ -537,8 +716,10 @@
         var modal = document.getElementById('dtQuickViewModalOverlay');
         if (modal) {
             modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
         }
+        qvSetMain('image', DT_QV_NO_IMAGE);   // stop any playing video
     };
 
     window.selectQvLot = function (btn) {
@@ -567,11 +748,51 @@
     };
 
     // ════════════ 6. SMART SHARE MODAL ════════════
+    /* Free delivery is order-level, not per product: config/shipping.php sets
+       free_shipping_threshold = 1999 and api/cart.php charges 150 below it. The
+       generated pitch used to promise "All India Free Delivery" on every item,
+       and priced the reseller's cost at p.price * 0.65 whenever reseller_price
+       was not set, inventing a margin the shop had never agreed to. */
+    var DT_FREE_SHIP_OVER = 1999;
+
+    /** Reseller cost really stored for this product, else 0. */
+    function shareCost(p) {
+        if (!p) { return 0; }
+        var r = Number(p.reseller_price || 0);
+        if (r > 0) { return r; }
+        var w = Number(p.wholesale_price || 0);
+        return w > 0 ? w : 0;
+    }
+
+    function sharePitch(p, sellPrice) {
+        var lines = [];
+        lines.push(String(p.name || ''));
+        if (p.category) { lines.push('Category: ' + p.category); }
+        var spec = [p.fabric, p.weave, p.zari_type].map(function (x) { return String(x || '').trim(); })
+            .filter(function (x) { return x !== ''; });
+        if (spec.length) { lines.push('Fabric: ' + spec.join(' / ')); }
+        if (Array.isArray(p.colors) && p.colors.length) { lines.push('Colours: ' + p.colors.join(', ')); }
+        if (Array.isArray(p.sizes) && p.sizes.length) { lines.push('Sizes: ' + p.sizes.join(', ')); }
+        if (Number(sellPrice) > 0) {
+            lines.push('Price: ₹' + Number(sellPrice).toLocaleString('en-IN'));
+            lines.push(Number(sellPrice) >= DT_FREE_SHIP_OVER
+                ? 'Free delivery on this order.'
+                : 'Delivery ₹150, free above ₹' + DT_FREE_SHIP_OVER.toLocaleString('en-IN') + '.');
+        }
+        lines.push(window.location.origin + '/product.php?id=' + Number(p.id));
+        return lines.join('\n');
+    }
+
     window.openSmartShare = function (productId) {
-        fetch('/api/products.php?id=' + productId)
+        fetch('/api/products.php?id=' + encodeURIComponent(productId))
             .then(function (r) { return r.json(); })
             .then(function (res) {
-                if (!res.success || !res.product) return;
+                if (!res.success || !res.product) {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('That product is no longer available.', 'error');
+                    }
+                    return;
+                }
                 var p = res.product;
                 currentShareProduct = p;
 
@@ -582,24 +803,28 @@
                 var custPrice = document.getElementById('dtShareCustomerPrice');
                 var textPreview = document.getElementById('dtShareTextPreview');
 
-                if (img) img.src = p.image;
-                if (title) title.textContent = p.name;
-                var rPrice = Number(p.reseller_price || (p.price * 0.65));
-                if (facPrice) facPrice.textContent = '₹' + rPrice.toLocaleString('en-IN');
-                var defaultSell = Math.round(rPrice * 1.35);
-                if (custPrice) custPrice.value = defaultSell;
+                if (img) { img.src = p.has_photo ? p.image : '/assets/images/no-image.svg'; img.alt = p.name || ''; }
+                if (title) title.textContent = p.name || '';
 
-                var msg = '👑 Luxury Handloom Silk Collection\n' +
-                    'Title: ' + p.name + '\n' +
-                    'Fabric: ' + (p.fabric || 'Pure Silk') + '\n' +
-                    'Price: ₹' + defaultSell.toLocaleString('en-IN') + ' (All India Free Delivery)\n' +
-                    'Reply YES to order or view more color designs!';
-                if (textPreview) textPreview.value = msg;
+                var rPrice = shareCost(p);
+                if (facPrice) {
+                    facPrice.textContent = rPrice > 0 ? ('₹' + rPrice.toLocaleString('en-IN')) : 'Not set';
+                }
+                // Suggest the shop's own retail price, not cost x 1.35.
+                var defaultSell = Number(p.price || p.retail_price || 0) || rPrice;
+                if (custPrice) custPrice.value = defaultSell > 0 ? defaultSell : '';
+
+                if (textPreview) textPreview.value = sharePitch(p, defaultSell);
 
                 if (overlay) {
                     overlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     window.calculateShareMargin();
+                }
+            })
+            .catch(function () {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Could not load that product. Please try again.', 'error');
                 }
             });
     };
@@ -614,23 +839,24 @@
 
     window.calculateShareMargin = function () {
         if (!currentShareProduct) return;
-        var facPrice = Number(currentShareProduct.reseller_price || (currentShareProduct.price * 0.65));
+        var facPrice = shareCost(currentShareProduct);
         var custInput = document.getElementById('dtShareCustomerPrice');
         var custVal = custInput ? Number(custInput.value) : facPrice;
-        var profit = Math.max(0, custVal - facPrice);
-        var pct = facPrice > 0 ? Math.round((profit / facPrice) * 100) : 0;
-
         var badge = document.getElementById('dtShareNetProfit');
-        if (badge) badge.textContent = '+ ₹' + profit.toLocaleString('en-IN') + ' (' + pct + '%)';
+        if (badge) {
+            if (facPrice > 0) {
+                var profit = Math.max(0, custVal - facPrice);
+                var pct = Math.round((profit / facPrice) * 100);
+                badge.textContent = '+ ₹' + profit.toLocaleString('en-IN') + ' (' + pct + '%)';
+            } else {
+                // No reseller or wholesale price on the row: there is no margin
+                // to compute, and guessing one told resellers a false profit.
+                badge.textContent = 'No trade price set for this product';
+            }
+        }
 
         var textPreview = document.getElementById('dtShareTextPreview');
-        if (textPreview) {
-            textPreview.value = '👑 Luxury Handloom Silk Collection\n' +
-                'Title: ' + currentShareProduct.name + '\n' +
-                'Fabric: ' + (currentShareProduct.fabric || 'Pure Silk') + '\n' +
-                'Price: ₹' + custVal.toLocaleString('en-IN') + ' (All India Free Delivery)\n' +
-                'Reply YES to order or view more color designs!';
-        }
+        if (textPreview) { textPreview.value = sharePitch(currentShareProduct, custVal); }
     };
 
     window.copyShareDescription = function () {

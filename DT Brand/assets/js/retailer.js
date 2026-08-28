@@ -785,7 +785,7 @@
                     <td style="color:#6B6358; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main); font-family:var(--ws-font-serif);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -817,7 +817,7 @@
                         ${badgeHtml}
                     </div>
                     <div class="ws-mob-order-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/assets/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
                             <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -856,7 +856,7 @@
                             ${badgeHtml}
                         </div>
                         <div class="ws-mob-order-body">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div class="ws-mob-order-info">
                                 <h4 class="ws-mob-order-title">${o.productName}</h4>
                                 <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -1640,7 +1640,7 @@
                     <td><span style="font-family:monospace; background:var(--ws-gold-light); color:var(--ws-gold-primary); padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -1678,7 +1678,7 @@
                     </div>
 
                     <div class="ws-mob-rep-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.src='/assets/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                         <div class="ws-mob-rep-info">
                             <h4 style="font-size:0.88rem; font-weight:700; color:var(--ws-text-main); line-height:1.25; margin-bottom:2px;">${o.productName}</h4>
                             <div style="font-size:0.74rem; color:var(--ws-text-muted);">
@@ -1874,7 +1874,7 @@
                     <p style="font-size:0.78rem; color:var(--ws-text-sub); margin:0; line-height:1.4; background:#FAF8F4; padding:8px 10px; border-radius:6px; border:1px solid var(--ws-border);">"${t.message}"</p>
                     <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
                         <span>📅 ${t.date}</span>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
                             <span>WhatsApp Followup →</span>
                         </a>
@@ -1932,7 +1932,7 @@
 
                 <!-- Product Details Box -->
                 <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
                         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
@@ -2012,7 +2012,7 @@
                         price: o.unitPrice || 3199,
                         wholesale_price: o.unitPrice || 3199,
                         qty: Number(o.qty) || 12,
-                        image: o.image || '/assets/images/product1.png',
+                        image: o.image || '/assets/images/no-image.svg',
                         color: o.color || 'Standard',
                         moq: 12
                     });
@@ -2697,27 +2697,35 @@
         /* ── Direct Add Retail Lot to Cart with Smart Button Feedback ── */
         window.directAddWholesaleToCart = function(prodOrId, btn) {
             try {
-                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', price: 2199, moq: 12 });
+                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+                // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+                // so an id that is no longer in the catalogue still produced a priced line.
+                if (!prod || !prod.id) {
+                    if (typeof window.showWsToast === 'function') {
+                        window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+                    }
+                    return;
+                }
                 var raw = localStorage.getItem('dtbrands_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
                 var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
-                var addQty = Number(prod.moq) || 12;
+                var addQty = Number(prod.moq) > 0 ? Number(prod.moq) : 1;
                 if (exists) {
                     exists.qty = (Number(exists.qty) || addQty) + addQty;
                 } else {
                     cart.push({
                         id: prod.id,
                         name: prod.name,
-                        price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
+                        price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 0,
                         qty: addQty,
-                        image: prod.image || '/assets/images/product1.png',
-                        color: prod.color || 'Standard',
+                        image: prod.image || '/assets/images/no-image.svg',
+                        color: prod.color || '',
                         moq: addQty,
-                        category: prod.category || 'Retail'
+                        category: prod.category || ''
                     });
                 }
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
@@ -2741,25 +2749,34 @@
             }
         };
         window.openQuickOrderModal = function(prodOrId) {
-            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Retail Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
+            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+            // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+            // so an id that is no longer in the catalogue still produced a priced line.
+            if (!prod || !prod.id) {
+                if (typeof window.showWsToast === 'function') {
+                    window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+                }
+                return;
+            }
             var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
             var company = user.companyName || 'Retail Buyer';
             var gst = user.gst_number || 'Non-GST';
 
             var text = `👑 *RETAIL BULK LOT INQUIRY — DT BRAND'S B2B*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
-                       `*HSN Code:* ${prod.hsn || '5007'}\n` +
-                       `*Retail B2B Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
-                       `*Minimum Order Qty (MOQ):* ${prod.moq || 12} Pcs\n` +
-                       `*Lot Tier Pricing:* ${prod.tier_prices || 'Volume Tier'}\n\n` +
+                       `*Product:* ${prod.name}${prod.sku ? ` (SKU: ${prod.sku})` : ''}\n` +
+                       (prod.hsn ? `*HSN Code:* ${prod.hsn}\n` : '') +
+                       `*Retail B2B Price:* ${Number(prod.wholesale_price || prod.price) > 0 ? '₹' + Number(prod.wholesale_price || prod.price) + ' / Pc' : 'to be confirmed'}\n` +
+                       (Number(prod.moq) > 0 ? `*Minimum Order Qty (MOQ):* ${Number(prod.moq)} Pcs\n` : '') +
+                       (prod.tier_prices ? `*Lot Pricing:* ${prod.tier_prices}\n` : '') +
+                       `\n` +
                        `*Buyer Business:* ${company}\n` +
                        `*GSTIN:* ${gst}\n` +
                        `*Representative:* ${user.name || 'Member'} (${user.phone || ''})\n\n` +
                        `Please confirm lot availability, dispatch turnaround and proforma payment details.`;
 
-            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=${encodeURIComponent(text)}`;
+            var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
         };
 
@@ -2802,11 +2819,12 @@
                 return;
             }
             var text = `*DT BRAND'S B2B RETAIL LOT*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*Retail B2B Price:* ₹${prod.wholesale_price} / Pc (Retail MRP: ₹${prod.retail_price})\n` +
-                       `*MOQ:* ${prod.moq} Pcs Pack\n` +
-                       `*Fabric:* ${prod.fabric || 'Pure Silk'} • HSN: ${prod.hsn}\n` +
-                       `*Tier Rates:* ${prod.tier_prices || 'Volume Discounts Available'}\n\n` +
+                       `*Product:* ${prod.name}${prod.sku ? ` (SKU: ${prod.sku})` : ''}\n` +
+                       `*Retail B2B Price:* ${Number(prod.wholesale_price) > 0 ? '₹' + Number(prod.wholesale_price) + ' / Pc' : 'to be confirmed'}${Number(prod.retail_price) > Number(prod.wholesale_price) ? ` (Retail MRP: ₹${Number(prod.retail_price)})` : ''}\n` +
+                       (Number(prod.moq) > 0 ? `*MOQ:* ${Number(prod.moq)} Pcs Pack\n` : '') +
+                       (prod.fabric ? `*Fabric:* ${prod.fabric}\n` : '') +
+                       (prod.tier_prices ? `*Lot Rates:* ${prod.tier_prices}\n` : '') +
+                       `\n` +
                        `Explore live retail portal: ${window.location.origin}/retailer.php`;
             var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
@@ -2824,14 +2842,14 @@
                     old_price: p.old_price,
                     discount: p.discount,
                     image: p.image,
-                    fabric: p.fabric || 'Pure Silk',
+                    fabric: p.fabric || '',
                     colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
-                    sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                    url: '../Single-Product/singleproduct.php?id=' + p.id
+                    sizes: Array.isArray(p.size) ? p.size.join(', ') : (p.size || ''),
+                    url: '/product.php?id=' + p.id
                 };
                 window.openSmartShareModal(itemData);
             } else if (p) {
-                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at DT Brand\'s: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
+                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' Wholesale at DT Brand\'s: ' + window.location.origin + '/product.php?id=' + p.id);
                 window.open(waUrl, '_blank');
             }
         };
@@ -2989,7 +3007,7 @@
 
                 <!-- Product & Courier Info Strip -->
                 <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
-                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px;">${currentOrder.productName}</h4>
                         <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:4px;">
@@ -3058,7 +3076,7 @@
                     selectTrackingOrder(o.id);
                 };
                 card.innerHTML = `
-                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div class="ws-track-order-info">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
                             <strong class="ws-order-id-cell" style="font-size:0.86rem;">${o.id}</strong>
@@ -3362,27 +3380,35 @@
 // ── Direct Wholesale / Retailer Cart & Wishlist Helper Functions ──
 function directAddWholesaleToCart(prodOrId, btn) {
     try {
-        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199, moq: 12 });
+        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+        // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+        // so an id that is no longer in the catalogue still produced a priced line.
+        if (!prod || !prod.id) {
+            if (typeof window.showWsToast === 'function') {
+                window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+            }
+            return;
+        }
         var raw = localStorage.getItem('dtbrands_cart');
         var cart = raw ? JSON.parse(raw) : [];
         var prodId = prod.id;
         var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
-        var addQty = Number(prod.moq) || 12;
+        var addQty = Number(prod.moq) > 0 ? Number(prod.moq) : 1;
         if (exists) {
             exists.qty = (Number(exists.qty) || addQty) + addQty;
         } else {
             cart.push({
                 id: prod.id,
                 name: prod.name,
-                price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
+                price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                retail_price: Number(prod.retail_price) || Number(prod.old_price) || 0,
                 qty: addQty,
-                image: prod.image || '/assets/images/product1.png',
-                color: prod.color || 'Standard',
+                image: prod.image || '/assets/images/no-image.svg',
+                color: prod.color || '',
                 moq: addQty,
-                category: prod.category || 'Catalog'
+                category: prod.category || ''
             });
         }
         localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
@@ -3397,8 +3423,16 @@ window.directAddWholesaleToCart = directAddWholesaleToCart;
 
 function toggleWholesaleWishlist(prodOrId, btn) {
     try {
-        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Catalog Item', price: 2199 });
+        var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+            ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+        // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+        // so an id that is no longer in the catalogue still produced a priced line.
+        if (!prod || !prod.id) {
+            if (typeof window.showWsToast === 'function') {
+                window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+            }
+            return;
+        }
         var raw = localStorage.getItem('dtbrands_wishlist');
         var list = raw ? JSON.parse(raw) : [];
         var prodId = prod.id;
@@ -3411,10 +3445,10 @@ function toggleWholesaleWishlist(prodOrId, btn) {
             list.push({
                 id: prod.id,
                 name: prod.name,
-                price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                old_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
-                image: prod.image || '/assets/images/product1.png',
-                category: prod.category || 'Catalog'
+                price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                old_price: Number(prod.retail_price) || Number(prod.old_price) || 0,
+                image: prod.image || '/assets/images/no-image.svg',
+                category: prod.category || ''
             });
             isAdded = true;
         }

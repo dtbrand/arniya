@@ -177,6 +177,44 @@ cursor: zoom-in;
     transition: transform 0.4s ease;
 }
 
+/* Uploaded MP4 and pasted YouTube / Instagram embeds share the slide track with
+   the photographs, so a product's video is reachable from the main gallery. */
+.pdp-slide-video,
+.pdp-slide-embed {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    background: #0B0907;
+}
+.pdp-slide-video { object-fit: cover; cursor: default; }
+
+/* Shown when a product has no uploaded photo at all, in place of borrowing
+   another product's photograph. */
+.pdp-slide-empty { flex-direction: column; gap: 12px; background: #F5F1EA; }
+.pdp-slide-empty img { width: 84px; height: 84px; object-fit: contain; cursor: default; }
+.pdp-empty-media-note {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6B6355;
+    text-align: center;
+    padding: 0 18px;
+    line-height: 1.5;
+}
+
+/* Play marker on a thumbnail whose slide is a video or an embed. */
+.pdp-thumb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #FFFFFF;
+    background: rgba(11, 9, 7, 0.42);
+    pointer-events: none;
+}
+
 /* Slide Counter Badge (Mobile) */
 .pdp-slide-counter {
     position: absolute;
@@ -294,6 +332,7 @@ cursor: zoom-in;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 .pdp-thumb-item:hover {
     opacity: 0.95;
@@ -1311,6 +1350,21 @@ padding: 6px 2px 14px;
     color: var(--mid-text);
     line-height: 1.45;
     flex: 1;
+}
+
+/* review_title from the reviews table, when the shopper gave one. */
+.pdp-rc-title {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--dark-text);
+    line-height: 1.35;
+}
+
+/* Card shown when a product has no approved reviews yet. */
+.pdp-review-empty {
+    justify-content: center;
+    background: #FBF9F5;
+    border-style: dashed;
 }
 
 .pdp-rc-bottom {

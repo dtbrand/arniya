@@ -229,13 +229,23 @@ $total_products = count($products);
             <?php foreach ($products as $p): ?>
             <?php
                 $badge_class = !empty($p['badge']) ? 'badge-'.strtolower(preg_replace('/[^a-z0-9]/', '', $p['badge'])) : '';
-                $pCols = !empty($p['colors']) ? $p['colors'] : [$p['color']];
-                $pSizes = !empty($p['size']) ? $p['size'] : ['Free Size'];
+                // Colours and sizes come from product_variants and are empty when the
+                // product has none. The old code counted [$p['color']] - so a product
+                // with no colour still advertised "1 Colours" - and printed
+                // "Free Size" for products with no size rows at all.
+                $pCols  = array_values(array_filter(array_map('strval', (array)($p['colors'] ?? [])), static fn($v) => trim($v) !== ''));
+                $pSizes = array_values(array_filter(array_map('strval', (array)($p['size'] ?? [])), static fn($v) => trim($v) !== ''));
+                $pHasPhoto = !empty($p['has_photo']);
+                $pPrice = (float)($p['price'] ?? 0);
+                $pOldPrice = (float)($p['old_price'] ?? 0);
+                $pReviews = (int)($p['reviews_count'] ?? 0);
             ?>
             <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $p['price'] ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $p['discount'] ?>">
                 <div class="card-image-wrap">
                     <a href="/product.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/assets/images/product1.png';" />
+                        <!-- The onerror swap put product1.png - another saree - in place of
+                             a photo this product does not have. -->
+                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy"<?= $pHasPhoto ? '' : ' style="object-fit:contain;padding:18%;opacity:.6;"' ?> />
                     </a>
 
                     <?php if (!empty($p['badge'])): ?>
@@ -259,13 +269,18 @@ $total_products = count($products);
                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                     </button>
 
+                    <?php if (trim((string)($p['category'] ?? '')) !== ''): ?>
                     <span class="card-cat-photo-tag"><?= htmlspecialchars($p['category']) ?></span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="card-body">
                     <div class="card-sku-rating-row">
-                        <span class="card-sku-text"><?= $p['sku'] ?></span>
-                        <span class="card-rating-badge">★ <?= number_format($p['rating'], 1) ?> (<?= $p['reviews_count'] ?>)</span>
+                        <span class="card-sku-text"><?= htmlspecialchars((string)($p['sku'] ?? '')) ?></span>
+                        <?php if ($pReviews > 0): ?>
+                        <!-- A product with no reviews used to show "0.0 (0)" as a rating. -->
+                        <span class="card-rating-badge">★ <?= number_format((float)$p['rating'], 1) ?> (<?= $pReviews ?>)</span>
+                        <?php endif; ?>
                     </div>
 
                     <h3 class="card-name">
@@ -274,18 +289,29 @@ $total_products = count($products);
                         </a>
                     </h3>
 
+                    <?php if ($pCols !== [] || $pSizes !== []): ?>
                     <div class="card-info-text-row">
-                        <span class="card-colors-text"><?= count($pCols) ?> Colours</span>
+                        <?php if ($pCols !== []): ?>
+                        <span class="card-colors-text" title="<?= htmlspecialchars(implode(', ', $pCols)) ?>"><?= count($pCols) ?> Colour<?= count($pCols) === 1 ? '' : 's' ?></span>
+                        <?php endif; ?>
+                        <?php if ($pSizes !== []): ?>
                         <span class="card-sizes-text"><?= htmlspecialchars(implode(', ', $pSizes)) ?></span>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
 
                     <div class="card-price-row">
-                        <span class="card-price">₹<?= number_format($p['price']) ?></span>
-                        <?php if (!empty($p['old_price'])): ?>
-                        <span class="card-old-price">₹<?= number_format($p['old_price']) ?></span>
+                        <?php if ($pPrice > 0): ?>
+                        <span class="card-price">₹<?= number_format($pPrice) ?></span>
+                        <?php else: ?>
+                        <!-- Rs 0 used to be printed as the price. -->
+                        <span class="card-price" style="font-size:.82em;">Price on request</span>
                         <?php endif; ?>
-                        <?php if (!empty($p['discount'])): ?>
-                        <span class="card-price-discount"><?= $p['discount'] ?>% OFF</span>
+                        <?php if ($pPrice > 0 && $pOldPrice > $pPrice): ?>
+                        <span class="card-old-price">₹<?= number_format($pOldPrice) ?></span>
+                        <?php endif; ?>
+                        <?php if ($pPrice > 0 && $pOldPrice > $pPrice && !empty($p['discount'])): ?>
+                        <span class="card-price-discount"><?= (int)$p['discount'] ?>% OFF</span>
                         <?php endif; ?>
                     </div>
 
@@ -608,7 +634,7 @@ $total_products = count($products);
                                 <span>Open Retailer Hub</span>
                                 <svg viewBox="0 0 24 24" class="ret-btn-arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                             </a>
-                            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20have%20a%20Boutique%20%2F%20Retail%20Shop.%20I%20want%20to%20buy%20small%20batch%20catalogs." target="_blank" class="ret-btn-secondary">
+                            <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20have%20a%20Boutique%20%2F%20Retail%20Shop.%20I%20want%20to%20buy%20small%20batch%20catalogs." target="_blank" class="ret-btn-secondary">
                                 <svg viewBox="0 0 24 24" class="ret-chat-icon"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                                 <span>WhatsApp Boutique Desk</span>
                             </a>
@@ -695,7 +721,7 @@ $total_products = count($products);
                             <span>Explore Wholesale Catalog</span>
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </a>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT%20Brand%27s%2C%20I%20want%20to%20source%20wholesale%20sarees%2C%20lehengas%20and%20kurtis%20at%20direct%20Surat%20manufacturer%20pricing." target="_blank" class="wpb-btn-secondary">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT%20Brand%27s%2C%20I%20want%20to%20source%20wholesale%20sarees%2C%20lehengas%20and%20kurtis%20at%20direct%20Surat%20manufacturer%20pricing." target="_blank" class="wpb-btn-secondary">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
                             <span>Chat With B2B Manager</span>
                         </a>
@@ -1886,7 +1912,18 @@ $total_products = count($products);
         </div>
     </section>
 
-    <!-- ════════════ SECTION 29: INSTAGRAM REELS & VIDEO FEED (6 DESKTOP • 3 MOBILE) ════════════ -->
+    <!-- ════════════ SECTION 29: PRODUCT VIDEO REELS ════════════ -->
+    <?php
+    // Only products whose own video was uploaded, or whose YouTube / Instagram
+    // link was pasted, in the admin product form. This rail used to be eight
+    // hardcoded cards - Pure Kanjivaram Zari Draping at Rs.2,450 with "24.5k"
+    // views, Banarasi Meenakari at Rs.1,850 with "18.2k", and so on - none of
+    // which existed in the catalogue, and none of which had a video.
+    $homeReelProducts = array_values(array_filter($products, static function ($rp) {
+        return !empty($rp['has_video']);
+    }));
+    ?>
+    <?php if (!empty($homeReelProducts)): ?>
     <section class="home-section section-reels-luxury" id="section-reels">
         <div class="home-section-container">
             <div class="home-section-header reels-header-flex">
@@ -1915,16 +1952,27 @@ $total_products = count($products);
             <!-- 1-Line Reels Scrolling Rail Wrapper -->
             <div class="reels-track-wrap">
                 <div class="home-reels-strip" id="homeReelsTrack">
-                    <!-- Reel 1 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" role="button" tabindex="0">
+                    <?php foreach ($homeReelProducts as $rIdx => $rp):
+                        $rImg = (!empty($rp['image']) && $rp['image'] !== '/assets/images/no-image.svg')
+                            ? $rp['image'] : '/assets/images/no-image.svg';
+                        $rName = trim((string)($rp['name'] ?? ''));
+                        $rFabric = trim((string)($rp['fabric'] ?? ''));
+                        $rCat = trim((string)($rp['category'] ?? ''));
+                        $rPrice = (float)($rp['price'] ?? 0);
+                        $rReviews = (int)($rp['reviews_count'] ?? 0);
+                    ?>
+                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(<?php echo (int)$rIdx; ?>);" role="button" tabindex="0">
                         <div class="reel-media-box">
-                            <img src="/assets/images/product1.png" alt="Pure Kanjivaram Zari Draping" class="reel-img" loading="lazy" />
+                            <img src="<?php echo htmlspecialchars($rImg); ?>" alt="<?php echo htmlspecialchars($rName); ?>" class="reel-img" loading="lazy"<?php echo $rImg === '/assets/images/no-image.svg' ? ' style="opacity:.45;"' : ''; ?> />
                             <div class="reel-top-bar">
-                                <span class="reel-live-tag"><span class="reel-pulse-dot"></span> LIVE</span>
+                                <span class="reel-live-tag"><span class="reel-pulse-dot"></span> VIDEO</span>
+                                <?php if ($rReviews > 0): ?>
+                                <!-- Real review count. The old "views" pills were invented figures. -->
                                 <span class="reel-views-pill">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    24.5k
+                                    <?php echo number_format($rReviews); ?>
                                 </span>
+                                <?php endif; ?>
                             </div>
                             <div class="reel-center-play">
                                 <div class="reel-play-btn">
@@ -1932,196 +1980,18 @@ $total_products = count($products);
                                 </div>
                             </div>
                             <div class="reel-info-overlay">
-                                <h4 class="reel-title">Pure Kanjivaram Zari Draping</h4>
+                                <h4 class="reel-title"><?php echo htmlspecialchars($rName !== '' ? $rName : 'Untitled product'); ?></h4>
                                 <div class="reel-meta-row">
-                                    <span class="reel-fabric">Pure Silk</span>
-                                    <span class="reel-price">₹2,450</span>
+                                    <?php $rMeta = $rFabric !== '' ? $rFabric : $rCat; ?>
+                                    <?php if ($rMeta !== ''): ?>
+                                    <span class="reel-fabric"><?php echo htmlspecialchars($rMeta); ?></span>
+                                    <?php endif; ?>
+                                    <span class="reel-price"><?php echo $rPrice > 0 ? '₹' . number_format($rPrice) : 'Price on request'; ?></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Reel 2 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(1);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product2.png" alt="Banarasi Meenakari Saree Close-up" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag reel-tag-loom"><span class="reel-pulse-dot gold"></span> LOOM</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    18.2k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Banarasi Meenakari Weave</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Georgette</span>
-                                    <span class="reel-price">₹1,850</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 3 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(2);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product6.png" alt="Royal Bridal Velvet Lehenga Flare" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag reel-tag-trend"><span class="reel-pulse-dot fire"></span> HOT</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    31.0k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Bridal Velvet Lehenga Flare</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Velvet</span>
-                                    <span class="reel-price">₹6,999</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 4 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(3);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product5.png" alt="Festive Sharara Anarkali Set" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag"><span class="reel-pulse-dot"></span> LIVE</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    15.8k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Festive Gotapatti Anarkali</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Cotton Silk</span>
-                                    <span class="reel-price">₹1,499</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 5 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product3.png" alt="Handcrafted Zardozi Craftsmanship" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag reel-tag-loom"><span class="reel-pulse-dot gold"></span> CRAFT</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    28.7k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Zardozi Artisan Craft</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Silk Blend</span>
-                                    <span class="reel-price">₹2,150</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 6 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(1);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product4.png" alt="Lucknowi Chikankari Mirror Flare" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag reel-tag-trend"><span class="reel-pulse-dot fire"></span> BEST</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    39.4k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Lucknowi Mirror Saree</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Georgette</span>
-                                    <span class="reel-price">₹1,799</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 7 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(2);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product7.png" alt="Surat Jacquard Loom Weaving" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag reel-tag-loom"><span class="reel-pulse-dot gold"></span> MILL</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    52.1k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Surat Jacquard Loom Live</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Surat Net</span>
-                                    <span class="reel-price">₹890</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Reel 8 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(3);" role="button" tabindex="0">
-                        <div class="reel-media-box">
-                            <img src="/assets/images/product8.png" alt="Paithani Peacock Border Draping" class="reel-img" loading="lazy" />
-                            <div class="reel-top-bar">
-                                <span class="reel-live-tag"><span class="reel-pulse-dot"></span> LIVE</span>
-                                <span class="reel-views-pill">
-                                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    22.6k
-                                </span>
-                            </div>
-                            <div class="reel-center-play">
-                                <div class="reel-play-btn">
-                                    <svg viewBox="0 0 24 24" class="reel-play-svg"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-                                </div>
-                            </div>
-                            <div class="reel-info-overlay">
-                                <h4 class="reel-title">Paithani Peacock Silk Saree</h4>
-                                <div class="reel-meta-row">
-                                    <span class="reel-fabric">Pure Silk</span>
-                                    <span class="reel-price">₹3,200</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
@@ -2131,6 +2001,7 @@ $total_products = count($products);
             </div>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- ════════════ SECTION 30: WHATSAPP CONCIERGE CTA ════════════ -->
     <section class="home-wa-concierge-section">
@@ -2146,7 +2017,7 @@ $total_products = count($products);
                     </div>
                 </div>
                 <div class="home-wa-right">
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20DT%20Brand%20products%2C%20reselling%20and%20wholesale." target="_blank" class="home-wa-btn">
+                    <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20DT%20Brand%20products%2C%20reselling%20and%20wholesale." target="_blank" class="home-wa-btn">
                         <span>Chat on WhatsApp</span>
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>

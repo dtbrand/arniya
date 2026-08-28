@@ -61,8 +61,25 @@ try {
                 echo json_encode(['success' => false, 'message' => 'Category ID required.'], JSON_PRETTY_PRINT);
                 exit;
             }
+            // deleteCategory() deliberately refuses while products still point at
+            // the category. Reporting that as the generic "Failed to delete"
+            // left the admin guessing; the real reason and the count are named.
+            $held = ProductCatalog::categoryProductCount($targetId);
+            if ($held > 0) {
+                echo json_encode([
+                    'success' => false,
+                    'id' => $targetId,
+                    'products_count' => $held,
+                    'message' => $held . ' product(s) are still in this category. Move or delete them first.'
+                ], JSON_PRETTY_PRINT);
+                exit;
+            }
             $ok = ProductCatalog::deleteCategory($targetId);
-            echo json_encode(['success' => $ok, 'id' => $targetId, 'message' => $ok ? 'Category deleted.' : 'Failed to delete category.'], JSON_PRETTY_PRINT);
+            echo json_encode([
+                'success' => $ok,
+                'id' => $targetId,
+                'message' => $ok ? 'Category deleted.' : 'The category was not deleted.'
+            ], JSON_PRETTY_PRINT);
             exit;
         }
 
@@ -71,8 +88,23 @@ try {
             if (is_string($ids)) {
                 $ids = explode(',', $ids);
             }
+            $ids = array_values(array_filter(array_map('intval', is_array($ids) ? $ids : [])));
             $count = ProductCatalog::bulkDeleteCategories($ids);
-            echo json_encode(['success' => true, 'affected_count' => $count, 'message' => "Successfully removed {$count} categories."], JSON_PRETTY_PRINT);
+            // "Successfully removed {$count} categories" was reported even when
+            // count was 0 because every category still held products.
+            $skipped = max(0, count($ids) - $count);
+            $msg = $count > 0
+                ? ('Deleted ' . $count . ' categor' . ($count === 1 ? 'y' : 'ies') . '.')
+                : 'No categories were deleted.';
+            if ($skipped > 0) {
+                $msg .= ' ' . $skipped . ' kept because product(s) are still filed under them.';
+            }
+            echo json_encode([
+                'success' => ($count > 0),
+                'affected_count' => $count,
+                'skipped_count' => $skipped,
+                'message' => $msg
+            ], JSON_PRETTY_PRINT);
             exit;
         }
 

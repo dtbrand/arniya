@@ -88,9 +88,9 @@
                 old_price: p.old_price,
                 discount: p.discount,
                 image: p.image,
-                fabric: p.fabric || 'Pure Silk',
+                fabric: p.fabric || '',
                 colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
-                sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
+                sizes: Array.isArray(p.size) ? p.size.join(', ') : (p.size || ''),
                 url: '/product.php?id=' + p.id
             };
             window.openSmartShareModal(itemData);
@@ -125,29 +125,62 @@
     };
 
     var catSource = (Array.isArray(window.allCategories) && window.allCategories.length > 0)
-        ? window.allCategories 
-        : (Array.isArray(window.allProducts) ? window.allProducts.map(function(p){ return { name: p.category, image: p.image }; }) : []);
+        ? window.allCategories
+        : (Array.isArray(window.allProducts) ? window.allProducts.map(function (p) {
+            return { name: p.category, image: (p.has_photo ? p.image : ''), has_image: !!p.has_photo };
+        }) : []);
+
+    var DT_NO_IMAGE = '/assets/images/no-image.svg';
+
+    function dtEsc(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    /** Real photo for a category, or '' so the circle falls back to an icon. */
+    function catCircleImage(c) {
+        var img = String((c && c.image) || '');
+        if (!img || img === DT_NO_IMAGE || c.has_image === false) { img = ''; }
+        if (!img) {
+            // Borrow the first product photo really filed under this category
+            // instead of cycling /assets/images/product1..6.png by index.
+            var cn = String((c && c.name) || '').toLowerCase();
+            var hit = (window.allProducts || []).find(function (p) {
+                return p && p.has_photo && String(p.category || '').toLowerCase() === cn;
+            });
+            img = hit ? hit.image : '';
+        }
+        return img;
+    }
+
+    /** Distinct fabrics really recorded against the products in one category. */
+    function fabricsIn(catName) {
+        var cn = String(catName || '').toLowerCase();
+        var seen = {};
+        var out = [];
+        (window.allProducts || []).forEach(function (p) {
+            if (!p || String(p.category || '').toLowerCase() !== cn) { return; }
+            var f = String(p.fabric || '').trim();
+            if (!f || seen[f.toLowerCase()]) { return; }
+            seen[f.toLowerCase()] = true;
+            out.push({ label: f, img: (p.has_photo ? p.image : ''), type: 'fabric', val: f });
+        });
+        return out;
+    }
 
     var uniqueCatMap = {};
-    catSource.forEach(function(c, i) {
-        if (!c || !c.name || uniqueCatMap[c.name]) return;
+    catSource.forEach(function (c) {
+        if (!c || !c.name || uniqueCatMap[c.name]) { return; }
         uniqueCatMap[c.name] = true;
-        var cImg = c.image || ('/assets/images/product' + ((i % 6) + 1) + '.png');
+        var cImg = catCircleImage(c);
 
-        subCategoryData['All'].push({
-            label: c.name,
-            img: cImg,
-            type: 'category',
-            val: c.name
-        });
+        subCategoryData['All'].push({ label: c.name, img: cImg, type: 'category', val: c.name });
 
-        subCategoryData[c.name] = [
-            { label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name },
-            { label: 'Pure Silk', img: cImg, type: 'fabric', val: 'Pure Silk' },
-            { label: 'Handloom', img: '/assets/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
-            { label: 'Zari Weaves', img: '/assets/images/product3.png', type: 'fabric', val: 'Zari' },
-            { label: 'Festive Drop', img: '/assets/images/product4.png', type: 'fabric', val: 'Festive' }
-        ];
+        // Only fabrics that exist. This used to be a fixed
+        // Pure Silk / Handloom Korvai / Zari / Festive strip appended to every
+        // category, so tapping one filtered the grid down to nothing.
+        subCategoryData[c.name] = [{ label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name }]
+            .concat(fabricsIn(c.name));
     });
 
     window.renderSubCategories = function(mainCat) {
@@ -159,16 +192,16 @@
             var isAct = idx === 0;
             var circleContent = '';
             if (item.img) {
-                circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\'" />';
+                circleContent = '<img src="' + dtEsc(item.img) + '" alt="' + dtEsc(item.label) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + DT_NO_IMAGE + '\';this.style.opacity=\'.5\';" />';
             } else {
-                circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
+                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '●') + '</span>';
             }
 
-            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + (item.type || '') + '" data-val="' + (item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + item.label + '">' +
+            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
                 '<div class="cat-ring">' +
-                    '<div class="cat-circle ' + (item.gradient || '') + '">' + circleContent + '</div>' +
+                    '<div class="cat-circle ' + dtEsc(item.gradient || '') + '">' + circleContent + '</div>' +
                 '</div>' +
-                '<span class="cat-label">' + item.label + '</span>' +
+                '<span class="cat-label">' + dtEsc(item.label) + '</span>' +
             '</button>';
         }).join('');
 
@@ -832,36 +865,33 @@
     }
     startDealCountdown();
 
-    /* 5. Recently Viewed Tracking System */
-    var DEFAULT_RECENT_PRODUCTS = [
-        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/assets/images/product1.png', category: 'PAITHANI SAREE' },
-        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/assets/images/product2.png', category: 'BANARASI SILK' },
-        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/assets/images/product3.png', category: 'KURTIS & SUITS' },
-        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/assets/images/product4.png', category: 'BRIDAL LEHENGA' },
-        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/assets/images/product5.png', category: 'KANJEEVARAM' },
-        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/assets/images/product6.png', category: 'CHANDERI SILK' },
-        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/assets/images/product7.png', category: 'ORGANZA SILK' },
-        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/assets/images/product8.png', category: 'GEORGETTE' }
-    ];
+    /* 5. Recently Viewed Tracking System
+       There is no DEFAULT_RECENT_PRODUCTS list any more. This section used to
+       seed localStorage with eight invented sarees (Nilambari / Banarasi /
+       Anarkali … at /assets/images/product1..8.png) the moment the page loaded,
+       so a first-time visitor was shown six products they had never viewed and
+       which may not exist in the catalogue. It now shows only real products the
+       visitor really opened, and stays hidden until then. */
 
     window.trackRecentlyViewed = function(productId) {
         var p = (window.allProducts || []).find(function(x) { return Number(x.id) === Number(productId); });
-        if (!p) {
-            p = DEFAULT_RECENT_PRODUCTS.find(function(x) { return Number(x.id) === Number(productId); });
-        }
-        if (!p) return;
+        if (!p) { return; }   // unknown id: record nothing rather than invent a row
 
         try {
             var stored = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
-            stored = stored.filter(function(x) { return Number(x.id) !== Number(p.id); });
+            if (!Array.isArray(stored)) { stored = []; }
+            stored = stored.filter(function(x) { return x && Number(x.id) !== Number(p.id); });
             stored.unshift({
                 id: p.id,
                 name: p.name,
                 price: p.price,
-                old_price: p.old_price || Math.round(Number(p.price) * 1.5),
-                discount: p.discount || '40% OFF',
-                image: p.image,
-                category: (p.category || 'ETHNIC WEAR').toUpperCase()
+                // Only the stored MRP and the computed discount — the old code
+                // fell back to price * 1.5 and a flat "40% OFF".
+                old_price: (Number(p.old_price) > Number(p.price)) ? Number(p.old_price) : 0,
+                discount: Number(p.discount) > 0 ? Number(p.discount) : 0,
+                image: (p.has_photo ? p.image : '/assets/images/no-image.svg'),
+                has_photo: !!p.has_photo,
+                category: String(p.category || '')
             });
             if (stored.length > 12) stored = stored.slice(0, 12);
             localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
@@ -876,30 +906,43 @@
 
         try {
             var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || 'null');
-            // If empty, seed with curated 6 default trending products for immediate rich view
-            if (!items || items.length === 0) {
-                items = DEFAULT_RECENT_PRODUCTS.slice(0, 6);
-                localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(items));
+            if (!Array.isArray(items) || items.length === 0) {
+                sec.style.display = 'none';
+                track.innerHTML = '';
+                return;
+            }
+            // Drop anything that is no longer in the live catalogue, so a
+            // deleted or drafted product cannot linger as a dead card.
+            if (Array.isArray(window.allProducts) && window.allProducts.length > 0) {
+                items = items.filter(function (it) {
+                    return window.allProducts.some(function (p) { return Number(p.id) === Number(it.id); });
+                });
+                if (items.length === 0) {
+                    localStorage.removeItem('dtbrands_recently_viewed');
+                    sec.style.display = 'none';
+                    track.innerHTML = '';
+                    return;
+                }
             }
 
             sec.style.display = 'block';
             track.innerHTML = items.map(function(item) {
-                var disc = item.discount || '40% OFF';
-                var oldP = item.old_price ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
-                return '<div class="recently-viewed-card" data-product-id="' + item.id + '">' +
+                var oldP = (Number(item.old_price) > Number(item.price)) ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
+                var disc = Number(item.discount) > 0 ? (Number(item.discount) + '% OFF') : '';
+                return '<div class="recently-viewed-card" data-product-id="' + Number(item.id) + '">' +
                     '<div class="rv-img-box">' +
-                        '<a href="/product.php?id=' + item.id + '" class="rv-img-link">' +
-                            '<img src="' + item.image + '" alt="' + item.name + '" class="rv-card-img" loading="lazy" />' +
+                        '<a href="/product.php?id=' + Number(item.id) + '" class="rv-img-link">' +
+                            '<img src="' + dtEsc(item.image || '/assets/images/no-image.svg') + '" alt="' + dtEsc(item.name) + '" class="rv-card-img" loading="lazy" />' +
                         '</a>' +
-                        '<span class="rv-discount-badge">' + disc + '</span>' +
-                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + item.id + ');}else{window.location.href=\'/product.php?id=' + item.id + '\';}" aria-label="Quick View">' +
+                        (disc ? '<span class="rv-discount-badge">' + disc + '</span>' : '') +
+                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + Number(item.id) + ');}else{window.location.href=\'/product.php?id=' + Number(item.id) + '\';}" aria-label="Quick View">' +
                             '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
                         '</button>' +
                     '</div>' +
                     '<div class="rv-card-body">' +
-                        '<span class="rv-card-cat">' + (item.category || 'SAREES') + '</span>' +
+                        (item.category ? '<span class="rv-card-cat">' + dtEsc(item.category) + '</span>' : '') +
                         '<h4 class="rv-card-title">' +
-                            '<a href="/product.php?id=' + item.id + '">' + item.name + '</a>' +
+                            '<a href="/product.php?id=' + Number(item.id) + '">' + dtEsc(item.name) + '</a>' +
                         '</h4>' +
                         '<div class="rv-price-wrap">' +
                             '<span class="rv-price-curr">₹' + Number(item.price).toLocaleString('en-IN') + '</span>' +

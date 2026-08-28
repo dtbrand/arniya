@@ -45,7 +45,9 @@ $active_subnav = "notes";
                 </div>
 
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-notes.php'; ?>
+                    <?php if (include __DIR__ . '/_require-customer.php'): ?>
+                        <?php include __DIR__ . '/components/customer-notes.php'; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 

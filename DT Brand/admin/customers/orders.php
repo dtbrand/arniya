@@ -45,7 +45,9 @@ $active_subnav = "orders";
 
                 <!-- Sub Table Component -->
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-orders.php'; ?>
+                    <?php if (include __DIR__ . '/_require-customer.php'): ?>
+                        <?php include __DIR__ . '/components/customer-orders.php'; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 

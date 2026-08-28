@@ -12,7 +12,7 @@ use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
 $categoriesList = ProductCatalog::getCategoriesWithDetails();
-$allProducts = ProductCatalog::getAll();
+$allProducts = ProductCatalog::getAll(true);
 $totalCatCount = count($categoriesList);
 ?>
 <div class="dt-cat-card">

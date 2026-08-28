@@ -66,7 +66,7 @@
             `Thank you for shopping with DT Brand's!`
         );
 
-        window.open(`https://api.whatsapp.com/send?phone=919876543210&text=${msg}`, '_blank');
+        window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${msg}`, '_blank');
     };
 
 })();

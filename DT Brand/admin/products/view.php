@@ -14,90 +14,164 @@ use DTBrand\Database;
 $page_title = "Product Overview";
 $active_nav = "products";
 
-$product_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
-$p = ProductCatalog::getById($product_id);
+$product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$p = $product_id > 0 ? ProductCatalog::getById($product_id) : null;
+
+/*
+ * A missing id used to default to 1, and an id that is not in the table fell
+ * back to the first product in the catalogue - so this page showed one
+ * product's photo, stock, prices, ratings and analytics under a different
+ * product's id. Nothing is substituted now.
+ */
 if (!$p) {
-    $all = ProductCatalog::getAll();
-    $p = !empty($all) ? $all[0] : null;
+    http_response_code(404);
+    $askedFor = $product_id > 0 ? ('#' . $product_id) : '(none supplied)';
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+       . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+       . '<title>Product not found</title></head>'
+       . '<body style="font-family:sans-serif; background:#f0f0f1; padding:40px; color:#1d2327;">'
+       . '<div style="max-width:560px; margin:0 auto; background:#fff; border:1px solid #c3c4c7;'
+       . ' border-left:4px solid #d63638; border-radius:4px; padding:24px;">'
+       . '<h1 style="font-size:18px; margin:0 0 8px 0;">Product not found</h1>'
+       . '<p style="font-size:13px; color:#646970; margin:0 0 16px 0;">No product with id '
+       . htmlspecialchars($askedFor) . ' exists in the catalogue. It may have been deleted,'
+       . ' or the link may be out of date.</p>'
+       . '<a href="/admin/products/" style="display:inline-block; background:#2271b1; color:#fff;'
+       . ' padding:8px 16px; border-radius:3px; text-decoration:none; font-size:13px; font-weight:600;">'
+       . 'Back to catalog</a></div></body></html>';
+    exit;
 }
 
-if ($p) {
-    $sold_qty = 0;
-    $total_rev = 0;
-    $db = Database::getConnection();
-    if ($db !== null && !Database::isMockMode()) {
-        try {
-            $stmt = $db->prepare("SELECT COALESCE(SUM(quantity), 0) as total_sold, COALESCE(SUM(total_price), 0) as total_revenue FROM order_items WHERE product_id = ?");
-            $stmt->execute([$p['id']]);
-            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($res) {
-                $sold_qty = intval($res['total_sold']);
-                $total_rev = floatval($res['total_revenue']);
-            }
-        } catch (\Exception $e) {}
-    }
-
-    $ret_price = floatval($p['retail_price'] ?? ($p['price'] ?? 0));
-    $ws_price = floatval($p['wholesale_price'] ?? 0);
-    $est_profit = max(0, $total_rev - ($sold_qty * $ws_price));
-
-    $prod = [
-        'id' => $p['id'],
-        'name' => $p['title'] ?? $p['name'],
-        'sku' => $p['sku'],
-        'barcode' => '8901234500' . $p['id'],
-        'category' => $p['category'] ?? 'Silk Sarees',
-        'brand' => 'DT Signature (Arniya Heritage)',
-        'fabric' => $p['fabric'] ?? '100% Pure Mulberry Silk with 24K Gold Zari Weave',
-        'length' => '6.3 Meters (Includes 0.8m Running Blouse Piece)',
-        'hsn' => '5007 (5% GST Rate)',
-        'retail_price' => '₹' . number_format($ret_price),
-        'mrp' => '₹' . number_format($p['old_price'] ?? ($p['mrp'] ?? $ret_price * 1.5)),
-        'reseller_price' => '₹' . number_format($p['reseller_price'] ?? ($ret_price * 0.7)),
-        'wholesale_price' => '₹' . number_format($ws_price) . '/pc (MOQ: ' . ($p['moq'] ?? 8) . ')',
-        'stock' => ($p['stock_qty'] ?? 0) . ' units',
-        'stock_pct' => min(100, max(5, intval(($p['stock_qty'] ?? 0) / 100 * 100))) . '%',
-        'stock_color' => (($p['stock_qty'] ?? 0) > 10) ? '#15803D' : '#DC2626',
-        'image' => $p['image'] ?? ($p['primary_image'] ?? '/assets/images/product1.png'),
-        'views' => number_format(max(1, $sold_qty * 12 + 1)),
-        'cart_adds' => number_format(max(0, $sold_qty * 3)),
-        'sold' => number_format($sold_qty) . ' pcs',
-        'revenue' => '₹' . number_format($total_rev),
-        'profit' => '₹' . number_format($est_profit),
-        'rating' => number_format($p['rating'] ?? 5.0, 1) . ' ★',
-        'reviews' => ($p['reviews_count'] ?? 0) . ' Reviews',
-        'status' => ($p['status'] ?? 'active') === 'active' ? 'Active in Catalog' : 'Draft'
-    ];
-} else {
-
-    $prod = [
-        'id' => 0,
-        'name' => 'Product Not Found',
-        'sku' => 'N/A',
-        'barcode' => 'N/A',
-        'category' => 'General',
-        'brand' => 'DT Signature',
-        'fabric' => 'Silk',
-        'length' => '6.3 Meters',
-        'hsn' => '5007',
-        'retail_price' => '₹0',
-        'mrp' => '₹0',
-        'reseller_price' => '₹0',
-        'wholesale_price' => '₹0',
-        'stock' => '0 units',
-        'stock_pct' => '0%',
-        'stock_color' => '#DC2626',
-        'image' => '/assets/images/product1.png',
-        'views' => '0',
-        'cart_adds' => '0',
-        'sold' => '0 pcs',
-        'revenue' => '₹0',
-        'profit' => '₹0',
-        'rating' => '0.0 ★',
-        'reviews' => '0 Reviews',
-        'status' => 'Not Found'
-    ];
+/*
+ * Real counters only. The schema has no page-view or add-to-cart event log, so
+ * "Total Views" (which was units sold x 12 + 1, under a "+18.4%" trend) and the
+ * "17.4% Rate" line are gone. The cart figure counts live cart_items rows for
+ * this product and saves come from wishlist_items.
+ */
+$sold_qty  = 0;
+$total_rev = 0.0;
+$inCarts   = 0;
+$wishSaves = 0;
+$createdAt = '';
+$updatedAt = '';
+$db = Database::getConnection();
+if ($db !== null && !Database::isMockMode()) {
+    try {
+        $stmt = $db->prepare("SELECT COALESCE(SUM(quantity), 0) AS total_sold, COALESCE(SUM(total_price), 0) AS total_revenue FROM order_items WHERE product_id = ?");
+        $stmt->execute([$p['id']]);
+        $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($res) {
+            $sold_qty  = (int)$res['total_sold'];
+            $total_rev = (float)$res['total_revenue'];
+        }
+    } catch (\Exception $e) {}
+    try {
+        $stmt = $db->prepare("SELECT COALESCE(SUM(quantity), 0) FROM cart_items WHERE product_id = ?");
+        $stmt->execute([$p['id']]);
+        $inCarts = (int)$stmt->fetchColumn();
+    } catch (\Exception $e) {}
+    try {
+        $stmt = $db->prepare("SELECT COUNT(*) FROM wishlist_items WHERE product_id = ?");
+        $stmt->execute([$p['id']]);
+        $wishSaves = (int)$stmt->fetchColumn();
+    } catch (\Exception $e) {}
+    try {
+        $stmt = $db->prepare("SELECT created_at, updated_at FROM products WHERE id = ?");
+        $stmt->execute([$p['id']]);
+        $ts = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($ts) {
+            $createdAt = (string)($ts['created_at'] ?? '');
+            $updatedAt = (string)($ts['updated_at'] ?? '');
+        }
+    } catch (\Exception $e) {}
 }
+
+$ret_price = (float)($p['retail_price'] ?? 0);
+$ws_price  = (float)($p['wholesale_price'] ?? 0);
+$rs_price  = (float)($p['reseller_price'] ?? 0);
+$mrp_price = (float)($p['mrp'] ?? 0);
+$stockQty  = (int)($p['stock_qty'] ?? 0);
+$reviewsN  = (int)($p['reviews_count'] ?? 0);
+$ratingV   = (float)($p['rating'] ?? 0);
+
+/*
+ * Gross profit on what actually sold. The MRP used to be invented as retail x
+ * 1.5 and the reseller price as retail x 0.7 whenever either was 0, and a flat
+ * "35.1% Margin" was printed under the figure whatever the numbers were.
+ */
+$est_profit = ($sold_qty > 0 && $ws_price > 0) ? max(0.0, $total_rev - ($sold_qty * $ws_price)) : 0.0;
+
+$dtMoney = static function (float $v): string {
+    return $v > 0 ? '&#8377;' . number_format($v) : 'not set';
+};
+
+$statusKey    = (string)($p['status'] ?? '');
+$statusLabels = [
+    'in_stock'     => 'In stock',
+    'low_stock'    => 'Low stock',
+    'out_of_stock' => 'Out of stock',
+    'draft'        => 'Draft - not on the storefront'
+];
+
+$prodColors = array_values(array_filter(array_map('strval', (array)($p['colors'] ?? [])), static fn($v) => trim($v) !== ''));
+$prodSizes  = array_values(array_filter(array_map('strval', (array)($p['size'] ?? [])), static fn($v) => trim($v) !== ''));
+$lotBits = [];
+foreach (['single' => 'Single', 'half_set' => 'Half set', 'full_set' => 'Full set', 'master_bale' => 'Master bale'] as $lk => $ll) {
+    $lq = (int)($p['moq_lots'][$lk] ?? 0);
+    if ($lq > 0) { $lotBits[] = $ll . ': ' . $lq . ' pcs'; }
+}
+
+/*
+ * Specification rows. Barcode ("8901234500<id>"), Brand ("DT Signature (Arniya
+ * Heritage)"), saree length ("6.3 Meters (Includes 0.8m Running Blouse Piece)")
+ * and HSN ("5007 (5% GST Rate)") were printed for every product, and the
+ * products table has no barcode, brand, length or hsn column - all four were
+ * invented. Fabric fell back to "100% Pure Mulberry Silk with 24K Gold Zari
+ * Weave" and category to "Silk Sarees". Empty rows are left out below.
+ */
+$specRows = [
+    'Product name' => (string)($p['name'] ?? ($p['title'] ?? '')),
+    'SKU code'     => (string)($p['sku'] ?? ''),
+    'Slug'         => (string)($p['slug'] ?? ''),
+    'Category'     => (string)($p['category'] ?? ''),
+    'Fabric'       => (string)($p['fabric'] ?? ''),
+    'Weave'        => (string)($p['weave'] ?? ''),
+    'Zari'         => (string)($p['zari_type'] ?? ''),
+    'Pallu'        => (string)($p['pallu_style'] ?? ''),
+    'Blouse piece' => (string)($p['blouse_piece'] ?? ''),
+    'Occasion'     => (string)($p['occasion'] ?? ''),
+    'Colours'      => implode(', ', $prodColors),
+    'Sizes'        => implode(', ', $prodSizes),
+    'Lot sizes'    => implode('  |  ', $lotBits),
+    'Created'      => $createdAt,
+    'Last updated' => $updatedAt
+];
+
+$prod = [
+    'id'              => (int)$p['id'],
+    'name'            => (string)($p['name'] ?? ($p['title'] ?? '')),
+    'sku'             => (string)($p['sku'] ?? ''),
+    'status'          => $statusLabels[$statusKey] ?? ($statusKey !== '' ? $statusKey : 'Unknown'),
+    'status_is_live'  => in_array($statusKey, ['in_stock', 'low_stock'], true),
+    'image'           => (string)($p['image'] ?? ProductCatalog::NO_IMAGE),
+    'has_photo'       => !empty($p['has_photo']),
+    'retail_price'    => $dtMoney($ret_price),
+    'reseller_price'  => $dtMoney($rs_price),
+    'wholesale_price' => $ws_price > 0
+        ? $dtMoney($ws_price) . '/pc' . ((int)($p['moq'] ?? 0) > 0 ? ' (MOQ: ' . (int)$p['moq'] . ')' : '')
+        : 'not set',
+    'mrp'             => $dtMoney($mrp_price),
+    'stock'           => number_format($stockQty) . ' units',
+    'stock_color'     => $stockQty > 0 ? '#15803D' : '#DC2626',
+    'sold'            => number_format($sold_qty) . ' pcs',
+    'revenue'         => '&#8377;' . number_format($total_rev),
+    'profit'          => '&#8377;' . number_format($est_profit),
+    'in_carts'        => number_format($inCarts),
+    'wish_saves'      => number_format($wishSaves),
+    'rating'          => $reviewsN > 0 ? number_format($ratingV, 1) . ' &#9733;' : 'No reviews yet',
+    'reviews'         => $reviewsN > 0 ? $reviewsN . ($reviewsN === 1 ? ' review' : ' reviews') : 'Nothing submitted yet'
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,7 +197,10 @@ if ($p) {
             <div class="wp-heading-wrap" style="justify-content: space-between; border-bottom: 1px solid #c3c4c7; padding-bottom: 10px; margin-bottom: 14px;">
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline"><?php echo htmlspecialchars($prod['name']); ?></h1>
-                    <span class="adm-badge success"><?php echo htmlspecialchars($prod['status']); ?></span>
+                    <!-- The badge was always green ("adm-badge success") and always read
+                         "Active in Catalog", because it compared the status against
+                         'active' - a value the products.status ENUM does not have. -->
+                    <span class="adm-badge <?php echo $prod['status_is_live'] ? 'success' : 'warning'; ?>"><?php echo htmlspecialchars($prod['status']); ?></span>
                     <a href="/admin/products/" class="wp-page-title-action secondary">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         <span>Back to Catalog</span>
@@ -150,36 +227,41 @@ if ($p) {
             </div>
 
             <!-- Analytics KPIs Grid -->
+            <!-- Every trend line here was a constant: "+18.4%" under views,
+                 "17.4% Rate" under cart adds, "High Volume" under units sold and
+                 "35.1% Margin" under profit, printed even for a product that has
+                 never sold. Views are not reported at all any more - nothing in
+                 the schema records them. -->
             <div class="dt-analytics-kpi-grid">
                 <div class="dt-ana-card">
-                    <div class="dt-ana-lbl">Total Views</div>
-                    <div class="dt-ana-val"><?php echo $prod['views']; ?></div>
-                    <small style="color:#15803D; font-weight:700;">↑ +18.4%</small>
+                    <div class="dt-ana-lbl">In Carts Now</div>
+                    <div class="dt-ana-val"><?php echo $prod['in_carts']; ?></div>
+                    <small style="color:#7A7266; font-weight:700;">pcs in live carts</small>
                 </div>
                 <div class="dt-ana-card">
-                    <div class="dt-ana-lbl">Cart Additions</div>
-                    <div class="dt-ana-val"><?php echo $prod['cart_adds']; ?></div>
-                    <small style="color:#15803D; font-weight:700;">17.4% Rate</small>
+                    <div class="dt-ana-lbl">Wishlist Saves</div>
+                    <div class="dt-ana-val"><?php echo $prod['wish_saves']; ?></div>
+                    <small style="color:#7A7266; font-weight:700;">customers</small>
                 </div>
                 <div class="dt-ana-card">
                     <div class="dt-ana-lbl">Units Sold</div>
                     <div class="dt-ana-val"><?php echo $prod['sold']; ?></div>
-                    <small style="color:#15803D; font-weight:700;">High Volume</small>
+                    <small style="color:#7A7266; font-weight:700;">all paid &amp; pending orders</small>
                 </div>
                 <div class="dt-ana-card">
                     <div class="dt-ana-lbl">Total Revenue</div>
                     <div class="dt-ana-val"><?php echo $prod['revenue']; ?></div>
-                    <small style="color:#8A681F; font-weight:700;">B2B + B2C</small>
+                    <small style="color:#7A7266; font-weight:700;">from order items</small>
                 </div>
                 <div class="dt-ana-card">
                     <div class="dt-ana-lbl">Gross Profit</div>
                     <div class="dt-ana-val"><?php echo $prod['profit']; ?></div>
-                    <small style="color:#15803D; font-weight:700;">35.1% Margin</small>
+                    <small style="color:#7A7266; font-weight:700;"><?php echo $est_profit > 0 ? 'revenue less wholesale cost' : 'needs sales and a wholesale rate'; ?></small>
                 </div>
                 <div class="dt-ana-card">
                     <div class="dt-ana-lbl">Customer Rating</div>
-                    <div class="dt-ana-val" style="color:#DBA617;"><?php echo $prod['rating']; ?></div>
-                    <small style="color:#7A7266; font-weight:700;"><?php echo $prod['reviews']; ?></small>
+                    <div class="dt-ana-val" style="color:<?php echo $reviewsN > 0 ? '#DBA617' : '#7A7266'; ?>; <?php echo $reviewsN > 0 ? '' : 'font-size:15px;'; ?>"><?php echo $prod['rating']; ?></div>
+                    <small style="color:#7A7266; font-weight:700;"><?php echo htmlspecialchars($prod['reviews']); ?></small>
                 </div>
             </div>
 
@@ -187,11 +269,20 @@ if ($p) {
             <div class="dt-view-grid">
                 <!-- Left Sticky Preview Card -->
                 <div class="dt-view-sticky-card">
-                    <img src="<?php echo $prod['image']; ?>" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:260px; object-fit:cover; border-radius:4px; border:1px solid #c3c4c7;" alt="<?php echo htmlspecialchars($prod['name']); ?>">
-                    
+                    <!-- The onerror swap sent a photoless product to product1.png, so
+                         the admin saw another product's saree on this page. -->
+                    <img src="<?php echo htmlspecialchars($prod['image']); ?>" style="width:100%; height:260px; object-fit:<?php echo $prod['has_photo'] ? 'cover' : 'contain'; ?>; <?php echo $prod['has_photo'] ? '' : 'padding:40px; opacity:0.55;'; ?> border-radius:4px; border:1px solid #c3c4c7; background:#f6f7f7;" alt="<?php echo htmlspecialchars($prod['name']); ?>">
+                    <?php if (!$prod['has_photo']): ?>
+                        <div style="font-size:12px; color:#B32D2E; font-weight:600; margin-top:6px;">No photo has been uploaded for this product.</div>
+                    <?php endif; ?>
+
                     <div style="margin-top:14px;">
                         <h4 style="font-size:13.5px; font-weight:700; color:#1d2327; margin:0 0 6px 0;">Multi-Tier Pricing</h4>
                         <div style="background:#FAF5E8; border:1px solid rgba(212,175,55,0.4); border-radius:4px; padding:10px;">
+                            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color:#646970;">
+                                <span>MRP:</span>
+                                <strong><?php echo $prod['mrp']; ?></strong>
+                            </div>
                             <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
                                 <span>Retail Price:</span>
                                 <strong><?php echo $prod['retail_price']; ?></strong>
@@ -214,8 +305,14 @@ if ($p) {
                                 <span>Current Available:</span>
                                 <strong style="color:<?php echo $prod['stock_color']; ?>;"><?php echo $prod['stock']; ?></strong>
                             </div>
-                            <div style="height:6px; background:#e0e0e0; border-radius:3px; margin-top:6px; overflow:hidden;">
-                                <div style="width:<?php echo $prod['stock_pct']; ?>; height:100%; background:<?php echo $prod['stock_color']; ?>;"></div>
+                            <!-- The bar below used to be stock/100 with a 5% floor, so an
+                                 out-of-stock product still showed a filled sliver and 250
+                                 units looked identical to 100. There is no reorder level in
+                                 the schema to scale against, so the bar is gone and the
+                                 catalogue status is shown instead. -->
+                            <div style="display:flex; justify-content:space-between; font-size:12px; margin-top:6px; color:#646970;">
+                                <span>Catalogue status:</span>
+                                <strong><?php echo htmlspecialchars($prod['status']); ?></strong>
                             </div>
                         </div>
                     </div>
@@ -227,15 +324,25 @@ if ($p) {
                     <div style="background:#fff; border:1px solid #c3c4c7; border-radius:4px; padding:16px;">
                         <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 10px 0; border-bottom:1px solid #f0f0f1; padding-bottom:6px;">Specifications &amp; Details</h3>
                         <table style="width:100%; border-collapse:collapse; font-size:12.5px; color:#2c3338;">
-                            <tr><td style="width:140px; padding:6px 0; color:#646970; font-weight:600;">Product Name:</td><td><strong><?php echo htmlspecialchars($prod['name']); ?></strong></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">SKU Code:</td><td><code><?php echo htmlspecialchars($prod['sku']); ?></code></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Barcode:</td><td><code><?php echo htmlspecialchars($prod['barcode']); ?></code></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Category:</td><td><a href="/admin/products/categories/" style="color:#2271b1; text-decoration:none;"><?php echo htmlspecialchars($prod['category']); ?></a></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Brand / Collection:</td><td><strong><?php echo htmlspecialchars($prod['brand']); ?></strong></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Fabric Material:</td><td><?php echo htmlspecialchars($prod['fabric']); ?></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">Saree / Dress Length:</td><td><?php echo htmlspecialchars($prod['length']); ?></td></tr>
-                            <tr><td style="padding:6px 0; color:#646970; font-weight:600;">HSN Code &amp; GST:</td><td><code><?php echo htmlspecialchars($prod['hsn']); ?></code></td></tr>
+                            <?php $specShown = 0; foreach ($specRows as $specLabel => $specValue): if (trim((string)$specValue) === '') { continue; } $specShown++; ?>
+                            <tr>
+                                <td style="width:140px; padding:6px 0; color:#646970; font-weight:600; vertical-align:top;"><?php echo htmlspecialchars($specLabel); ?>:</td>
+                                <td>
+                                    <?php if ($specLabel === 'Category'): ?>
+                                        <a href="/admin/products/categories/" style="color:#2271b1; text-decoration:none;"><?php echo htmlspecialchars($specValue); ?></a>
+                                    <?php elseif ($specLabel === 'SKU code' || $specLabel === 'Slug'): ?>
+                                        <code><?php echo htmlspecialchars($specValue); ?></code>
+                                    <?php else: ?>
+                                        <?php echo htmlspecialchars($specValue); ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <?php if ($specShown === 0): ?>
+                            <tr><td colspan="2" style="padding:8px 0; color:#646970;">No details have been filled in for this product yet.</td></tr>
+                            <?php endif; ?>
                         </table>
+                        <p style="font-size:11.5px; color:#7A7266; margin:10px 0 0 0;">Only the fields stored for this product are listed. Add or change them in <a href="/admin/products/edit.php?id=<?php echo $prod['id']; ?>" style="color:#2271b1;">Edit Product</a>.</p>
                     </div>
 
                     <!-- Audit Timeline Card -->
@@ -244,23 +351,32 @@ if ($p) {
                             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" style="color:#8A681F;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                             <span>Product Activity &amp; Audit Trail</span>
                         </h3>
+                        <!-- Three entries were hardcoded here for every product: a
+                             "Stock Dispatched (-25 pcs) for Wholesale Consignment
+                             #ORD-9842" line, a price-update line and a "Product Created
+                             & Published" line, all attributed to named staff on made-up
+                             dates. There is no product audit table in the schema, so the
+                             only history available is the row's own timestamps. -->
                         <div class="dt-timeline">
+                            <?php if ($updatedAt !== '' && $updatedAt !== $createdAt): ?>
                             <div class="dt-timeline-item">
                                 <div class="dt-timeline-dot"></div>
-                                <div style="font-size:12.5px; font-weight:600; color:#1d2327;">Stock Dispatched (-25 pcs) for Wholesale Consignment #ORD-9842</div>
-                                <div class="dt-timeline-meta">By Gautam Sethi (Super Admin) • Today, 11:20 AM</div>
+                                <div style="font-size:12.5px; font-weight:600; color:#1d2327;">Product record last updated</div>
+                                <div class="dt-timeline-meta"><?php echo htmlspecialchars($updatedAt); ?></div>
                             </div>
+                            <?php endif; ?>
+                            <?php if ($createdAt !== ''): ?>
                             <div class="dt-timeline-item">
                                 <div class="dt-timeline-dot"></div>
-                                <div style="font-size:12.5px; font-weight:600; color:#1d2327;">Wholesale MOQ Price Updated to <?php echo $prod['wholesale_price']; ?></div>
-                                <div class="dt-timeline-meta">By Gautam Sethi (Super Admin) • Yesterday, 04:15 PM</div>
+                                <div style="font-size:12.5px; font-weight:600; color:#1d2327;">Product created</div>
+                                <div class="dt-timeline-meta"><?php echo htmlspecialchars($createdAt); ?></div>
                             </div>
-                            <div class="dt-timeline-item">
-                                <div class="dt-timeline-dot"></div>
-                                <div style="font-size:12.5px; font-weight:600; color:#1d2327;">Product Created &amp; Published to Online Catalog</div>
-                                <div class="dt-timeline-meta">By Surat Catalog Team • 10 Aug 2026</div>
-                            </div>
+                            <?php endif; ?>
+                            <?php if ($createdAt === '' && $updatedAt === ''): ?>
+                            <div style="font-size:12.5px; color:#646970;">No timestamps are recorded for this product.</div>
+                            <?php endif; ?>
                         </div>
+                        <p style="font-size:11.5px; color:#7A7266; margin:10px 0 0 0;">Per-field edit history (who changed a price or adjusted stock, and when) is not recorded anywhere yet, so it cannot be shown.</p>
                     </div>
                 </div>
             </div>

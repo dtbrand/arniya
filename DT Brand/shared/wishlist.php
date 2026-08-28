@@ -274,23 +274,23 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 
         if (items.length === 0) {
             /* Render Animated Floating Heart SVG Empty Wishlist + Recommended Product Slider */
-            var products = window.allProducts || [
-                { id: 2, name: 'Banarasi Zari Saree', price: 8499, image: '/assets/images/product2.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/assets/images/product4.png' },
-                { id: 6, name: 'Bridal Zardosi Lehenga', price: 24999, image: '/assets/images/product6.png' },
-                { id: 7, name: 'Mustard Block Print', price: 1899, image: '/assets/images/product7.png' }
-            ];
+            // The recommendation strip used to fall back to four hardcoded products
+            // (Banarasi Zari Saree Rs 8,499, Georgette Bloom Rs 3,299, Bridal Zardosi
+            // Lehenga Rs 24,999, Mustard Block Print Rs 1,899) that a shopper could
+            // save and open, so it advertised products that may not exist.
+            var products = (window.allProducts || []).slice(0, 8);
 
-            var fullList = products.concat(products);
+            var fullList = products.length ? products.concat(products) : [];
 
             var sliderCardsHtml = fullList.map(function(p) {
+                var recPrice = Number(p.price) || 0;
                 return '<div class="wd-rec-card">' +
                     '<div class="wd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="wd-rec-img" />' +
+                        '<img src="' + (p.image || '/assets/images/no-image.svg') + '" alt="' + (p.name || '') + '" class="wd-rec-img" />' +
                     '</div>' +
-                    '<h5 class="wd-rec-title">' + p.name + '</h5>' +
+                    '<h5 class="wd-rec-title">' + (p.name || '') + '</h5>' +
                     '<div class="wd-rec-price-row">' +
-                        '<span class="wd-rec-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
+                        '<span class="wd-rec-price">' + (recPrice > 0 ? '₹' + recPrice.toLocaleString('en-IN') : 'Price on request') + '</span>' +
                         '<button class="wd-rec-add-btn" onclick="window.addRecToWishlist(' + p.id + ')">♡ SAVE</button>' +
                     '</div>' +
                 '</div>';
@@ -329,14 +329,20 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         } else {
             var html = '';
             items.forEach(function(item, idx) {
-                var imgUrl = item.image || '/assets/images/product1.png';
+                // The meta line used to read "Ethnic Wear • Pure Silk • Standard"
+                // for a saved product with no category, fabric or colour recorded,
+                // and the photo fell back to another product's saree.
+                var imgUrl = item.image || '/assets/images/no-image.svg';
+                var metaBits = [item.category, item.fabric, item.color].filter(function(v) { return String(v || '').trim() !== ''; });
+                var wPrice = Number(item.price) || 0;
+                var wOld = Number(item.old_price) || 0;
 
                 html += '<div class="wd-item" data-index="' + idx + '">' +
                     '<img src="' + imgUrl + '" alt="' + item.name + '" class="wd-item-img" />' +
                     '<div class="wd-item-info">' +
                         '<h4 class="wd-item-title">' + item.name + '</h4>' +
-                        '<span class="wd-item-meta">' + (item.category || 'Ethnic Wear') + ' &bull; ' + (item.fabric || 'Pure Silk') + ' &bull; ' + (item.color || 'Standard') + '</span>' +
-                        '<span class="wd-item-price">₹' + Number(item.price).toLocaleString('en-IN') + (item.old_price ? ' <span class="wd-item-old">₹' + Number(item.old_price).toLocaleString('en-IN') + '</span>' : '') + '</span>' +
+                        (metaBits.length ? '<span class="wd-item-meta">' + metaBits.join(' &bull; ') + '</span>' : '') +
+                        '<span class="wd-item-price">' + (wPrice > 0 ? '₹' + wPrice.toLocaleString('en-IN') : 'Price on request') + (wPrice > 0 && wOld > wPrice ? ' <span class="wd-item-old">₹' + wOld.toLocaleString('en-IN') + '</span>' : '') + '</span>' +
                         '<div class="wd-actions">' +
                             '<button class="wd-move-bag-btn" onclick="window.moveToBag(' + idx + ')">MOVE TO BAG</button>' +
                             '<button class="wd-remove-btn" onclick="window.removeFromWishlist(' + idx + ')">&times; Remove</button>' +
@@ -384,8 +390,18 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
         window.toggleWishlistProduct = function(productOrId) {
         if (!productOrId) return false;
         var p = (typeof productOrId === 'object' && productOrId !== null) ? productOrId :
-            ((window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return x.id == productOrId || String(x.id) === String(productOrId); }) || { id: productOrId, name: 'Saved Item', price: 2999, image: '/assets/images/product1.png' });
-        
+            ((window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return x.id == productOrId || String(x.id) === String(productOrId); }) || null);
+
+        // An id that is not in the catalogue used to be saved as "Saved Item" at
+        // Rs 2,999 with product1.png as its photo - a wishlist entry for a product
+        // that does not exist, at a price nobody set.
+        if (!p || !p.id) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('That product is not in the catalogue any more.');
+            }
+            return false;
+        }
+
         var idx = (window.wishlistState || []).findIndex(function(item) { return item && (item.id == p.id || String(item.id) === String(p.id)); });
         var added = false;
         if (!Array.isArray(window.wishlistState)) window.wishlistState = [];

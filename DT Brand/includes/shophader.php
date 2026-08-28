@@ -925,7 +925,7 @@ $isHomePage = ($currentPage === 'index.php' || $currentPage === 'home.php' || $c
                         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span style="color:var(--dark-gold, #8A681F); font-weight:700;">My Account & Orders</span>
                     </a>
-                    <a href="../Wholesale/wholesale.php" class="ac-drop-item" id="acDropWholesaler" style="display:none; color:#8A681F; font-weight:800;">
+                    <a href="/wholesale.php" class="ac-drop-item" id="acDropWholesaler" style="display:none; color:#8A681F; font-weight:800;">
                         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         <span>📦 Wholesaler B2B Hub</span>
                     </a>
@@ -1224,17 +1224,17 @@ window.closeWishlistDrawer = function() {
             if (dropWholesaler) {
                 if (role === 'wholesaler') {
                     dropWholesaler.style.display = 'flex';
-                    dropWholesaler.href = '../Wholesale/wholesale.php';
+                    dropWholesaler.href = '/wholesale.php';
                     var span = dropWholesaler.querySelector('span');
                     if (span) span.textContent = '📦 Wholesaler B2B Hub';
                 } else if (role === 'retailer') {
                     dropWholesaler.style.display = 'flex';
-                    dropWholesaler.href = '../Retailer/retailer.php';
+                    dropWholesaler.href = '/retailer.php';
                     var span = dropWholesaler.querySelector('span');
                     if (span) span.textContent = '🛍️ Retailer B2B Hub';
                 } else if (role === 'reseller') {
                     dropWholesaler.style.display = 'flex';
-                    dropWholesaler.href = '../Reseller/reseller.php';
+                    dropWholesaler.href = '/reseller.php';
                     var span = dropWholesaler.querySelector('span');
                     if (span) span.textContent = '💼 Reseller B2B Hub';
                 } else {

@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../src/Database.php';
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-$productsList = ProductCatalog::getAll();
+$productsList = ProductCatalog::getAll(true);
 $totalProductsCount = count($productsList);
 $categoriesList = ProductCatalog::getCategories();
 $totalCategoriesCount = count($categoriesList);

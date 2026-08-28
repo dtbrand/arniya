@@ -158,7 +158,7 @@ $subcategories_list = [
                     </div>
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">ASSIGNED CATALOG SKUS</div>
-                        <div style="font-size:17px; font-weight:800; color:#15803D;"><?= count(\DTBrand\ProductCatalog::getAll()) ?> Products</div>
+                        <div style="font-size:17px; font-weight:800; color:#15803D;"><?= count(\DTBrand\ProductCatalog::getAll(true)) ?> Products</div>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@ $subcategories_list = [
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">B2B CATALOG VALUATION</div>
                         <?php
-                        $subAllProds = \DTBrand\ProductCatalog::getAll();
+                        $subAllProds = \DTBrand\ProductCatalog::getAll(true);
                         $subVal = 0;
                         foreach ($subAllProds as $p) { $subVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }
                         $subValTxt = $subVal >= 100000 ? ('₹' . number_format($subVal / 100000, 2) . ' Lakhs') : ('₹' . number_format($subVal));

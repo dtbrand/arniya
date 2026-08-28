@@ -43,7 +43,7 @@
                     <li><a href="/retailer.php">Retailer Ordering Desk</a></li>
                     <li><a href="/account.php">Partner Login & Portal</a></li>
                     <li><a href="/wholesale.php#bale-pricing">Bale Lot Discounts</a></li>
-                    <li><a href="https://wa.me/919876543210?text=Hi%20DT%20Brands,%20I%20want%20wholesale%20dealership" target="_blank" rel="noopener">Wholesale Dealership</a></li>
+                    <li><a href="https://wa.me/917046363528?text=Hi%20DT%20Brands,%20I%20want%20wholesale%20dealership" target="_blank" rel="noopener">Wholesale Dealership</a></li>
                 </ul>
             </div>
 
@@ -54,9 +54,9 @@
                     <strong>Direct Factory:</strong> Ring Road, Surat Textile Market, Gujarat 395002
                 </p>
                 <p class="dt-footer-contact-item">
-                    <strong>Support Helpline:</strong> +91 98765 43210 / +91 98980 12345
+                    <strong>Support Helpline:</strong> +91 70463 63528 / +91 98980 12345
                 </p>
-                <a href="https://wa.me/919876543210?text=Hi%20DT%20Brands,%20I%20need%20assistance" target="_blank" rel="noopener" class="dt-footer-wa-btn">
+                <a href="https://wa.me/917046363528?text=Hi%20DT%20Brands,%20I%20need%20assistance" target="_blank" rel="noopener" class="dt-footer-wa-btn">
                     <svg viewBox="0 0 24 24"><path fill="#FFF" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
                     <span>Instant WhatsApp Concierge</span>
                 </a>

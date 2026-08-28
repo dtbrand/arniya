@@ -142,7 +142,7 @@ $active_subnav = "brands";
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">CATALOG ASSIGNED SKUS</div>
                         <?php
-                        $brAllProds = \DTBrand\ProductCatalog::getAll();
+                        $brAllProds = \DTBrand\ProductCatalog::getAll(true);
                         $brStock = array_sum(array_column($brAllProds, 'stock_qty'));
                         $brVal = 0;
                         foreach ($brAllProds as $p) { $brVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }

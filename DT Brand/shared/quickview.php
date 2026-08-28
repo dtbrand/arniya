@@ -114,6 +114,44 @@
     object-position: top;
     display: block;
 }
+/* Uploaded MP4s and pasted embed links play in the same slider as the photos. */
+.qv-slide-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+.qv-slide-embed {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #000;
+}
+.qv-thumb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.42);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+}
+.qv-empty-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9A9490;
+    background: #F6F2EA;
+}
 
 /* Navigation Arrows */
 .qv-arrow {
@@ -400,6 +438,17 @@
 .pd-spec-item { display: flex; flex-direction: column; gap: 2px; }
 .pd-spec-label { font-size: 0.65rem; color: var(--dark-gold, #8A681F); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
 .pd-spec-val { font-size: 0.8rem; color: var(--dark-text, #24211C); font-weight: 600; }
+
+/* SKU line and the quantity stepper the quick view never had. */
+.qv-sku-line { font-size: 0.7rem; letter-spacing: 0.06em; color: #7A7266; font-weight: 700; margin: -4px 0 6px; }
+.qv-qty-section { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 4px 0 14px; }
+.qv-qty-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; color: var(--dark-text, #24211C); }
+.qv-qty-stepper { display: inline-flex; align-items: center; border: 1.5px solid rgba(138,104,31,0.4); border-radius: 8px; overflow: hidden; background: #FFFFFF; }
+.qv-qty-stepper button { width: 32px; height: 34px; border: 0; background: rgba(138,104,31,0.08); color: var(--dark-gold, #8A681F); font-size: 1rem; font-weight: 800; cursor: pointer; line-height: 1; }
+.qv-qty-stepper button:hover { background: rgba(138,104,31,0.18); }
+.qv-qty-stepper input { width: 52px; height: 34px; border: 0; text-align: center; font-size: 0.85rem; font-weight: 800; color: var(--dark-text, #24211C); background: #FFFFFF; -moz-appearance: textfield; }
+.qv-qty-stepper input::-webkit-outer-spin-button, .qv-qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qv-qty-note { font-size: 0.68rem; color: #7A7266; font-weight: 700; }
 .pd-assurance-box { display: flex; flex-direction: column; gap: 9px; background: rgba(138,104,31,0.06); border: 1.5px solid rgba(138,104,31,0.25); border-radius: 12px; padding: 14px 16px; }
 .pd-assure-item { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; color: var(--dark-text, #24211C); font-weight: 700; }
 .pd-assure-item svg { width: 15px; height: 15px; stroke: var(--dark-gold, #8A681F); fill: none; stroke-width: 2; flex-shrink: 0; }
@@ -421,8 +470,8 @@
     <div class="product-details-content">
         <div class="pd-header">
             <div class="pd-title-wrap">
-                <h3 class="pd-title" id="pdTitle">Product Details</h3>
-                <span class="pd-subtitle" id="pdCategory">Ethnic Wear Collection</span>
+                <h3 class="pd-title" id="pdTitle"></h3>
+                <span class="pd-subtitle" id="pdCategory"></span>
             </div>
             <button class="pd-close-btn" id="closeProductDetailsBtn" aria-label="Close Product Details">&times;</button>
         </div>
@@ -430,84 +479,44 @@
         <div class="pd-body">
             <!-- Hero Box -->
             <div class="pd-hero-box">
-                <img id="pdImg" src="" alt="Product Image" class="pd-hero-img" />
+                <img id="pdImg" src="/assets/images/no-image.svg" alt="" class="pd-hero-img" />
                 <div class="pd-hero-info">
                     <div class="pd-price-row">
-                        <span class="pd-price" id="pdPrice">₹0</span>
-                        <span class="pd-old-price" id="pdOldPrice"></span>
-                        <span class="pd-tag" id="pdDiscountVal">Best Price</span>
+                        <span class="pd-price" id="pdPrice"></span>
+                        <span class="pd-old-price" id="pdOldPrice" style="display:none;"></span>
+                        <span class="pd-tag" id="pdDiscountVal" style="display:none;"></span>
                     </div>
 
-                    <div class="pd-meta-row">
+                    <div class="pd-meta-row" id="pdSizesRow" style="display:none;">
                         <span class="pd-meta-label">Available Sizes:</span>
-                        <div class="pd-size-pills" id="pdSizesWrap">
-                            <span class="pd-size-pill">Free Size</span>
-                        </div>
+                        <div class="pd-size-pills" id="pdSizesWrap"></div>
                     </div>
 
-                    <div class="pd-meta-row">
+                    <div class="pd-meta-row" id="pdColorsRow" style="display:none;">
                         <span class="pd-meta-label">Available Colours:</span>
-                        <div class="pd-size-pills" id="pdColorsWrap">
-                            <span class="pd-size-pill">Maroon</span>
-                        </div>
+                        <div class="pd-size-pills" id="pdColorsWrap"></div>
                     </div>
 
-                    <div class="pd-meta-row">
+                    <div class="pd-meta-row" id="pdFabricRow" style="display:none;">
                         <span class="pd-meta-label">Fabric:</span>
-                        <span id="pdFabricVal" style="font-weight:700; color:var(--dark-text);">Pure Silk</span>
+                        <span id="pdFabricVal" style="font-weight:700; color:var(--dark-text);"></span>
                     </div>
                 </div>
             </div>
 
-            <!-- Full Product Description -->
-            <div class="pd-desc-box">
-                <h4 class="pd-section-title">✨ Full Product Description</h4>
-                <p class="pd-full-desc" id="pdFullDesc">
-                    Handcrafted luxury ethnic wear from DT Brand's Heritage Collection. Features premium fabric draping, authentic hand-finished weave, and timeless royal elegance.
-                </p>
+            <!-- Full Product Description (hidden when the row has none) -->
+            <div class="pd-desc-box" id="pdDescBox" style="display:none;">
+                <h4 class="pd-section-title">Full Product Description</h4>
+                <p class="pd-full-desc" id="pdFullDesc"></p>
             </div>
 
             <!-- Garment Specifications Grid -->
             <div class="pd-specs-section">
                 <h4 class="pd-section-title">Garment Specifications</h4>
-                <div class="pd-specs-grid">
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Fabric</span>
-                        <span class="pd-spec-val" id="pdSpecFabric">Pure Silk</span>
-                    </div>
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Available Colours</span>
-                        <span class="pd-spec-val" id="pdSpecColor">Maroon</span>
-                    </div>
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Category</span>
-                        <span class="pd-spec-val" id="pdSpecCategory">Sarees</span>
-                    </div>
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Stock Status</span>
-                        <span class="pd-spec-val" id="pdStockVal">In Stock</span>
-                    </div>
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Care Instructions</span>
-                        <span class="pd-spec-val">Dry Clean Only</span>
-                    </div>
-                    <div class="pd-spec-item">
-                        <span class="pd-spec-label">Delivery</span>
-                        <span class="pd-spec-val">⚡ Fast Express Delivery Across India</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Assurance Perks -->
-            <div class="pd-assurance-box">
-                <div class="pd-assure-item">
-                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    <span>✨ 100% Original Product</span>
-                </div>
-                <div class="pd-assure-item">
-                    <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-                    <span>⚡ Fast Express Delivery & 7-Day Fast Exchange</span>
-                </div>
+                <div class="pd-specs-grid" id="pdSpecsGrid"></div>
+                <p id="pdNoSpecs" style="display:none; margin:0; font-size:.78rem; color:#7A7266;">
+                    No specifications have been recorded for this product yet.
+                </p>
             </div>
         </div>
     </div>
@@ -542,26 +551,64 @@
         'Pearl Cream': '#EFEBD9'
     };
 
-    // Helper to generate photo variations for catalog items
-    function getProductImages(p) {
-        if (p.gallery && Array.isArray(p.gallery) && p.gallery.length > 0) {
-            return p.gallery;
+    var QV_NO_IMAGE = '/assets/images/no-image.svg';
+    var QV_FREE_SHIP_OVER = 1999;
+
+    // Everything below is written into innerHTML, so stored values are escaped.
+    function qvEsc(v) {
+        return String(v === null || typeof v === 'undefined' ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function qvClean(list) {
+        return (Array.isArray(list) ? list : []).filter(function(v) {
+            return String(v === null || typeof v === 'undefined' ? '' : v).trim() !== '';
+        });
+    }
+
+    // The slider shows this product's OWN media: uploaded photos, uploaded MP4s
+    // and pasted embed links (YouTube / Instagram), in that order.
+    //
+    // It used to pad every gallery with three unrelated stock files —
+    // '/assets/images/product' + ((id + n) % 8 + 1) + '.png' — so a saree with a
+    // single photo quick-viewed as a four-photo product showing other people's
+    // sarees, and uploaded video was unreachable from here entirely.
+    function qvMediaList(p) {
+        var media = [];
+        var photos = qvClean(p.images && p.images.length ? p.images : p.gallery);
+        if (!photos.length && p.image && p.image !== QV_NO_IMAGE && p.has_photo !== false) {
+            photos = [p.image];
         }
-        var baseImg = p.image || '/assets/images/product1.png';
-        var list = [baseImg];
-        var pid = parseInt(String(p.id).replace(/[^0-9]/g, ''), 10) || 1;
-        var p1 = ((pid) % 8) + 1;
-        var p2 = ((pid + 1) % 8) + 1;
-        var p3 = ((pid + 2) % 8) + 1;
-        list.push('/assets/images/product' + p1 + '.png');
-        list.push('/assets/images/product' + p2 + '.png');
-        list.push('/assets/images/product' + p3 + '.png');
-        return Array.from(new Set(list));
+        photos.forEach(function(src) {
+            if (src !== QV_NO_IMAGE) media.push({ kind: 'image', src: src });
+        });
+
+        qvClean(p.videos && p.videos.length ? p.videos : (p.video ? [p.video] : []))
+            .forEach(function(src) { media.push({ kind: 'video', src: src }); });
+
+        qvClean(p.embeds && p.embeds.length ? p.embeds : (p.embed ? [p.embed] : []))
+            .forEach(function(src) { media.push({ kind: 'embed', src: src }); });
+
+        return media;
+    }
+
+    function qvStopMedia(root) {
+        if (!root) return;
+        root.querySelectorAll('video').forEach(function(v) {
+            try { v.pause(); } catch (e) {}
+        });
+        // Reloading an embed src is the only reliable way to stop a third-party
+        // player once the modal closes.
+        root.querySelectorAll('iframe').forEach(function(f) {
+            var s = f.getAttribute('src');
+            if (s) { f.setAttribute('src', s); }
+        });
     }
 
     window.qvSliderInterval = null;
 
-        window.openQV = function(id) {
+    window.openQV = function(id) {
         var overlay = document.getElementById('quickViewOverlay');
         var content = document.getElementById('quickModalContent');
         if (!overlay || !content) return;
@@ -571,39 +618,57 @@
         if (typeof id === 'object' && id !== null) {
             p = id;
         } else {
-            p = products.find(function(x) { 
-                return x && (x.id == id || String(x.id) === String(id) || String(x.sku) === String(id) || (x.name && x.name == id)); 
+            p = products.find(function(x) {
+                return x && (x.id == id || String(x.id) === String(id) || String(x.sku) === String(id) || (x.name && x.name == id));
             });
         }
+
+        // A product this page does not hold is fetched from the catalogue API. It
+        // used to be replaced by an invented "DT Brand's Ethnic Saree" at ₹4,999
+        // (MRP ₹6,999), so a stale link opened a saree that does not exist and
+        // could be added to the bag.
         if (!p) {
-            // Fallback product if not in array
-            p = {
-                id: id,
-                name: "DT Brand's Ethnic Saree",
-                price: 4999,
-                old_price: 6999,
-                image: '/assets/images/product1.png',
-                category: 'Sarees',
-                fabric: 'Pure Silk',
-                color: 'Gold'
-            };
+            var wanted = String(id === null || typeof id === 'undefined' ? '' : id).trim();
+            if (wanted === '') { return; }
+            // Numeric ids go to ?id=, anything else to ?sku= — api/products.php
+            // casts ?id= to int, so a SKU sent there returns the whole catalogue.
+            var lookupQs = /^[0-9]+$/.test(wanted)
+                ? 'id=' + encodeURIComponent(wanted)
+                : 'sku=' + encodeURIComponent(wanted);
+            fetch('/api/products.php?' + lookupQs)
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d && d.success && d.product) {
+                        window.openQV(d.product);
+                    } else if (typeof window.showToast === 'function') {
+                        window.showToast('Sorry, this product is no longer available.');
+                    }
+                })
+                .catch(function() {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Could not load this product. Please try again.');
+                    }
+                });
+            return;
         }
 
         window.currentQVProduct = p;
 
-        /* Sizes list */
-        var sizeArr = Array.isArray(p.size) ? p.size : ['Free Size'];
+        // Sizes and colours come from product_variants only. Both lists used to be
+        // defaulted - to ['Free Size'] and ['Standard'] - so every saree offered a
+        // size and a colour that the mill had never entered, and that choice was
+        // then written onto the order.
+        var sizeArr = qvClean(Array.isArray(p.size) ? p.size : (Array.isArray(p.sizes) ? p.sizes : (p.size ? [p.size] : [])));
         var sizeBtnsHtml = sizeArr.map(function(s, idx) {
-            return '<button class="m-size-btn ' + (idx === 0 ? 'active' : '') + '" data-sz="' + s + '">' + s + '</button>';
+            return '<button class="m-size-btn ' + (idx === 0 ? 'active' : '') + '" data-sz="' + qvEsc(s) + '">' + qvEsc(s) + '</button>';
         }).join('');
 
-        /* Colours list */
-        var colorArr = Array.isArray(p.colors) ? p.colors : (p.color ? [p.color] : ['Standard']);
-        var defaultColor = colorArr[0];
+        var colorArr = qvClean(Array.isArray(p.colors) ? p.colors : (p.color ? [p.color] : []));
+        var defaultColor = colorArr.length ? colorArr[0] : '';
 
         var colorSwatchesHtml = colorArr.map(function(c, idx) {
             var hex = colorHexMap[c] || '#8A681F';
-            return '<button class="m-color-btn ' + (idx === 0 ? 'active' : '') + '" data-color="' + c + '" style="background-color: ' + hex + ';" title="' + c + '" aria-label="' + c + '"></button>';
+            return '<button class="m-color-btn ' + (idx === 0 ? 'active' : '') + '" data-color="' + qvEsc(c) + '" style="background-color: ' + hex + ';" title="' + qvEsc(c) + '" aria-label="' + qvEsc(c) + '"></button>';
         }).join('');
 
         var isWish = false;
@@ -611,84 +676,138 @@
             isWish = window.wishlistState.some(function(item) { return item.id == p.id; });
         }
 
-        // Get multiple photos for this product
-        var imagesList = getProductImages(p);
-        var maxSlides = imagesList.length;
+        var mediaList = qvMediaList(p);
+        var maxSlides = mediaList.length;
         var currentSlideIndex = 0;
 
-        // Build Slider HTML
         var slidesHtml = '';
         var dotsHtml = '';
         var thumbsHtml = '';
+        var pName = qvEsc(p.name || p.title || 'Product');
+        var posterImg = '';
+        mediaList.some(function(m) { if (m.kind === 'image') { posterImg = m.src; return true; } return false; });
 
-        imagesList.forEach(function(imgUrl, idx) {
-            slidesHtml += 
-                '<div class="qv-slide-img-wrap">' +
-                    '<img class="qv-slide-img" src="' + imgUrl + '" alt="' + p.name + ' - View ' + (idx+1) + '" />' +
-                '</div>';
+        mediaList.forEach(function(m, idx) {
+            var thumbInner;
+            if (m.kind === 'video') {
+                // An uploaded MP4 plays here instead of being unreachable.
+                slidesHtml +=
+                    '<div class="qv-slide-img-wrap">' +
+                        '<video class="qv-slide-video" src="' + qvEsc(m.src) + '" controls playsinline preload="metadata"' +
+                            (posterImg ? ' poster="' + qvEsc(posterImg) + '"' : '') + '></video>' +
+                    '</div>';
+                thumbInner = posterImg
+                    ? '<img src="' + qvEsc(posterImg) + '" alt="' + pName + ' video" /><span class="qv-thumb-play">&#9658;</span>'
+                    : '<span class="qv-thumb-play">&#9658;</span>';
+            } else if (m.kind === 'embed') {
+                slidesHtml +=
+                    '<div class="qv-slide-img-wrap">' +
+                        '<iframe class="qv-slide-embed" src="' + qvEsc(m.src) + '" title="' + pName + ' video" ' +
+                            'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ' +
+                            'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>' +
+                    '</div>';
+                thumbInner = posterImg
+                    ? '<img src="' + qvEsc(posterImg) + '" alt="' + pName + ' video" /><span class="qv-thumb-play">&#9658;</span>'
+                    : '<span class="qv-thumb-play">&#9658;</span>';
+            } else {
+                slidesHtml +=
+                    '<div class="qv-slide-img-wrap">' +
+                        '<img class="qv-slide-img" src="' + qvEsc(m.src) + '" alt="' + pName + ' - View ' + (idx + 1) + '" />' +
+                    '</div>';
+                thumbInner = '<img src="' + qvEsc(m.src) + '" alt="' + pName + ' thumbnail ' + (idx + 1) + '" />';
+            }
             dotsHtml += '<div class="qv-dot ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '"></div>';
-            thumbsHtml += 
-                '<div class="qv-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="Thumb ' + (idx+1) + '" />' +
-                '</div>';
+            thumbsHtml += '<div class="qv-thumb ' + (idx === 0 ? 'active' : '') + '" data-idx="' + idx + '">' + thumbInner + '</div>';
         });
+
+        // No photo and no video says so, rather than borrowing another saree's
+        // picture from /assets/images/.
+        if (maxSlides === 0) {
+            slidesHtml =
+                '<div class="qv-slide-img-wrap">' +
+                    '<div class="qv-empty-media">' +
+                        '<img src="' + QV_NO_IMAGE + '" alt="" />' +
+                        '<span>No photo has been uploaded for this product yet.</span>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        var priceNum = Number(p.price) || 0;
+        var oldNum = Number(p.old_price) || 0;
+        var discNum = Number(p.discount) || 0;
+        var inStock = (p.in_stock !== false) && (typeof p.stock_qty === 'undefined' || Number(p.stock_qty) > 0 || p.in_stock === true);
+        var stockQty = (typeof p.stock_qty === 'undefined' || p.stock_qty === null || p.stock_qty === '') ? null : Number(p.stock_qty);
+        var priceHtml = priceNum > 0
+            ? '<span class="modal-price">&#8377;' + priceNum.toLocaleString('en-IN') + '</span>'
+            : '<span class="modal-price">Price on request</span>';
 
         content.innerHTML =
             // Left Column: Interactive Slider + Thumbnails
             '<div class="modal-image-area-wrap">' +
                 '<div class="qv-slider-container" id="qvSliderContainer">' +
-                    (p.badge ? '<span class="modal-badge-tag">' + p.badge + '</span>' : '') +
+                    (p.badge ? '<span class="modal-badge-tag">' + qvEsc(p.badge) + '</span>' : '') +
                     '<div class="qv-slider-track" id="qvSliderTrack">' +
                         slidesHtml +
                     '</div>' +
-                    '<button class="qv-arrow qv-prev-arrow" id="qvPrevArrow" aria-label="Previous image"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' +
-                    '<button class="qv-arrow qv-next-arrow" id="qvNextArrow" aria-label="Next image"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' +
-                    '<div class="qv-slider-dots" id="qvSliderDots">' + dotsHtml + '</div>' +
+                    (maxSlides > 1 ? '<button class="qv-arrow qv-prev-arrow" id="qvPrevArrow" aria-label="Previous media"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>' : '') +
+                    (maxSlides > 1 ? '<button class="qv-arrow qv-next-arrow" id="qvNextArrow" aria-label="Next media"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>' : '') +
+                    '<div class="qv-slider-dots" id="qvSliderDots">' + (maxSlides > 1 ? dotsHtml : '') + '</div>' +
                 '</div>' +
                 '<div class="qv-thumbnails-wrap" id="qvThumbnailsWrap">' +
-                    thumbsHtml +
+                    (maxSlides > 1 ? thumbsHtml : '') +
                 '</div>' +
             '</div>' +
 
             // Right Column: Details & Actions
             '<div class="modal-details">' +
                 '<div class="modal-brand-name">DT BRAND\'S ETHNIC LUXURY</div>' +
-                '<h2 class="modal-name">' + p.name + '</h2>' +
+                '<h2 class="modal-name">' + pName + '</h2>' +
+                (p.sku ? '<div class="qv-sku-line">SKU: ' + qvEsc(p.sku) + '</div>' : '') +
 
                 '<div class="modal-price-block">' +
                     '<div class="modal-price-row">' +
-                        '<span class="modal-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
-                        (p.old_price ? '<span class="modal-mrp">MRP <span class="modal-old-price">₹' + Number(p.old_price).toLocaleString('en-IN') + '</span></span>' : '') +
-                        (p.discount ? '<span class="modal-discount-tag">(' + p.discount + '% OFF)</span>' : '') +
+                        priceHtml +
+                        (oldNum > priceNum ? '<span class="modal-mrp">MRP <span class="modal-old-price">&#8377;' + oldNum.toLocaleString('en-IN') + '</span></span>' : '') +
+                        (discNum > 0 ? '<span class="modal-discount-tag">(' + discNum + '% OFF)</span>' : '') +
                     '</div>' +
-                    '<span class="modal-tax-note">Exclusive of all taxes</span>' +
+                    '<span class="modal-tax-note">' + (priceNum > 0 ? 'Exclusive of all taxes' : 'Contact us on WhatsApp for this product&#39;s rate') + '</span>' +
                 '</div>' +
 
-                '<!-- Colour Option Swatches -->' +
-                '<div class="modal-color-section">' +
-                    '<div class="modal-color-header">' +
-                        '<span>SELECT COLOUR: <strong id="qvSelectedColorName" class="qv-color-name-text">' + defaultColor + '</strong></span>' +
-                    '</div>' +
-                    '<div class="modal-color-swatches" id="qvColorWrap">' +
-                        colorSwatchesHtml +
-                    '</div>' +
-                '</div>' +
+                // Colours only when the product actually has variant colours.
+                (colorArr.length
+                    ? '<div class="modal-color-section">' +
+                        '<div class="modal-color-header">' +
+                            '<span>SELECT COLOUR: <strong id="qvSelectedColorName" class="qv-color-name-text">' + qvEsc(defaultColor) + '</strong></span>' +
+                        '</div>' +
+                        '<div class="modal-color-swatches" id="qvColorWrap">' + colorSwatchesHtml + '</div>' +
+                      '</div>'
+                    : '') +
 
-                '<!-- Size Selection -->' +
                 '<div class="modal-size-section">' +
                     '<div class="modal-size-header">' +
-                        '<span>SELECT SIZE</span>' +
-                        '<span class="modal-product-details-btn" id="qvPdBtn">PRODUCT DETAILS ›</span>' +
+                        '<span>' + (sizeArr.length ? 'SELECT SIZE' : 'PRODUCT INFORMATION') + '</span>' +
+                        '<span class="modal-product-details-btn" id="qvPdBtn">PRODUCT DETAILS &rsaquo;</span>' +
                     '</div>' +
-                    '<div class="modal-size-pills" id="qvSizeWrap">' +
-                        sizeBtnsHtml +
+                    (sizeArr.length ? '<div class="modal-size-pills" id="qvSizeWrap">' + sizeBtnsHtml + '</div>' : '') +
+                '</div>' +
+
+                // A real quantity stepper. Quick view had none, so a wholesale
+                // buyer could only ever add a single piece from here.
+                '<div class="qv-qty-section">' +
+                    '<span class="qv-qty-label">QUANTITY</span>' +
+                    '<div class="qv-qty-stepper">' +
+                        '<button type="button" id="qvQtyMinus" aria-label="Decrease quantity">&minus;</button>' +
+                        '<input type="number" id="qvQtyInput" value="' + (Number(p.moq) > 1 ? Number(p.moq) : 1) + '" min="1"' + (stockQty !== null && stockQty > 0 ? ' max="' + stockQty + '"' : '') + ' />' +
+                        '<button type="button" id="qvQtyPlus" aria-label="Increase quantity">+</button>' +
                     '</div>' +
+                    (Number(p.moq) > 1 ? '<span class="qv-qty-note">MOQ ' + Number(p.moq) + ' pcs</span>' : '') +
+                    (stockQty !== null ? '<span class="qv-qty-note">' + (stockQty > 0 ? stockQty + ' pcs in stock' : 'Out of stock') + '</span>' : '') +
                 '</div>' +
 
                 '<div class="modal-actions-myntra">' +
-                    '<button class="modal-add-bag-btn" id="qvAtc">' +
+                    '<button class="modal-add-bag-btn" id="qvAtc"' + (inStock ? '' : ' disabled style="opacity:.5; cursor:not-allowed;"') + '>' +
                         '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
-                        'ADD TO BAG' +
+                        (inStock ? 'ADD TO BAG' : 'OUT OF STOCK') +
                     '</button>' +
                     '<button class="modal-wishlist-btn ' + (isWish ? 'active' : '') + '" id="qvWishlist">' +
                         '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
@@ -699,11 +818,11 @@
                 '<div class="modal-perks">' +
                     '<div class="m-perk-item">' +
                         '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>' +
-                        '<span>100% Original Authentic Product</span>' +
+                        '<span>Direct from our Surat handloom mill</span>' +
                     '</div>' +
                     '<div class="m-perk-item">' +
                         '<svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>' +
-                        '<span>⚡ Fast Express Delivery & Fast Exchange</span>' +
+                        '<span>Free shipping on orders over &#8377;' + QV_FREE_SHIP_OVER.toLocaleString('en-IN') + '</span>' +
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -721,6 +840,7 @@
         var nextBtn = document.getElementById('qvNextArrow');
 
         function gotoSlide(idx) {
+            if (maxSlides < 1 || !sliderTrack) return;
             if (idx < 0) idx = maxSlides - 1;
             if (idx >= maxSlides) idx = 0;
             currentSlideIndex = idx;
@@ -749,7 +869,7 @@
         }
 
         // Swipe Scroll Sync
-        sliderTrack.addEventListener('scroll', function() {
+        if (sliderTrack) sliderTrack.addEventListener('scroll', function() {
             var w = sliderTrack.clientWidth;
             if (w > 0) {
                 var idx = Math.round(sliderTrack.scrollLeft / w);
@@ -824,17 +944,27 @@
         }
         function restartAutoSlide() {
             stopAutoSlide();
-            startAutoSlide();
+            if (maxSlides > 1 && !mediaList.some(function(m) { return m.kind !== 'image'; })) {
+                startAutoSlide();
+            }
         }
 
         // Hover triggers play/pause
         if (sliderContainer) {
             sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-            sliderContainer.addEventListener('mouseleave', startAutoSlide);
+            sliderContainer.addEventListener('mouseleave', function() {
+                if (maxSlides > 1 && !mediaList.some(function(m) { return m.kind !== 'image'; })) {
+                    startAutoSlide();
+                }
+            });
         }
 
-        // Start auto slide
-        startAutoSlide();
+        // Auto-advance only for a pure photo gallery. It used to run always, so a
+        // slider carrying a video snatched the slide away mid-playback.
+        var hasPlayableMedia = mediaList.some(function(m) { return m.kind !== 'image'; });
+        if (maxSlides > 1 && !hasPlayableMedia) {
+            startAutoSlide();
+        }
 
         /* Colour Swatches Binding */
         content.querySelectorAll('.m-color-btn').forEach(function(btn) {
@@ -858,18 +988,43 @@
         var qvClose = document.getElementById('qvClose');
         if (qvClose) qvClose.addEventListener('click', window.closeQV);
 
-        /* Add To Bag with selected size and color */
+        /* Quantity stepper */
+        var qtyInput = document.getElementById('qvQtyInput');
+        var qvMinQty = Number(p.moq) > 1 ? Number(p.moq) : 1;
+        function qvReadQty() {
+            if (!qtyInput) return qvMinQty;
+            var n = parseInt(qtyInput.value, 10);
+            if (!(n > 0)) n = qvMinQty;
+            if (n < qvMinQty) n = qvMinQty;
+            if (stockQty !== null && stockQty > 0 && n > stockQty) n = stockQty;
+            qtyInput.value = n;
+            return n;
+        }
+        var qtyMinus = document.getElementById('qvQtyMinus');
+        var qtyPlus = document.getElementById('qvQtyPlus');
+        if (qtyMinus) qtyMinus.addEventListener('click', function() {
+            if (qtyInput) { qtyInput.value = Math.max(qvMinQty, (parseInt(qtyInput.value, 10) || qvMinQty) - 1); qvReadQty(); }
+        });
+        if (qtyPlus) qtyPlus.addEventListener('click', function() {
+            if (qtyInput) { qtyInput.value = (parseInt(qtyInput.value, 10) || qvMinQty) + 1; qvReadQty(); }
+        });
+        if (qtyInput) qtyInput.addEventListener('change', qvReadQty);
+
+        /* Add To Bag with the selected size, colour AND quantity */
         var qvAtc = document.getElementById('qvAtc');
-        if (qvAtc) {
+        if (qvAtc && inStock) {
             qvAtc.addEventListener('click', function() {
+                // Blank when the mill entered no variants, instead of the old
+                // invented 'Free Size' / 'Standard' that then travelled onto the
+                // order and the warehouse slip.
                 var activeSizeBtn = content.querySelector('.m-size-btn.active');
-                var selSize = activeSizeBtn ? activeSizeBtn.dataset.sz : 'Free Size';
+                var selSize = activeSizeBtn ? (activeSizeBtn.dataset.sz || '') : '';
 
                 var activeColorBtn = content.querySelector('.m-color-btn.active');
-                var selColor = activeColorBtn ? activeColorBtn.dataset.color : (p.color || 'Standard');
+                var selColor = activeColorBtn ? (activeColorBtn.dataset.color || '') : '';
 
                 if (typeof window.addToCart === 'function') {
-                    window.addToCart(p, selSize, selColor);
+                    window.addToCart(p, { qty: qvReadQty(), size: selSize, color: selColor });
                 }
                 window.closeQV();
             });
@@ -894,7 +1049,10 @@
         if (qvPdBtn) {
             qvPdBtn.addEventListener('click', function() {
                 window.closeQV();
-                window.openProductDetails(p.id);
+                // The product object, not its id: a product fetched from the API is
+                // not in window.allProducts, so an id lookup found nothing and the
+                // details modal silently refused to open.
+                window.openProductDetails(p);
             });
         }
     };
@@ -904,6 +1062,8 @@
 
     window.closeQV = function() {
         var overlay = document.getElementById('quickViewOverlay');
+        // Video kept playing behind the closed overlay before this.
+        qvStopMedia(document.getElementById('quickModalContent'));
         if (overlay) {
             overlay.classList.remove('open');
             overlay.setAttribute('aria-hidden', 'true');
@@ -917,59 +1077,133 @@
     window.closeQuickView = window.closeQV;
     window.closeQuickViewModal = window.closeQV;
 
-    /* Full Product Details Modal Controller */
+    /* Full Product Details Modal Controller — every field is stored or hidden. */
     window.openProductDetails = function(id) {
         var modal = document.getElementById('productDetailsModal');
         if (!modal) return;
 
         var products = window.allProducts || window.catalogProducts || window.products || [];
-        var p = products.find(function(x) { return x.id == id || String(x.id) === String(id) || String(x.sku) === String(id); });
-        if (!p && typeof id === 'object' && id !== null) p = id;
+        var p = (typeof id === 'object' && id !== null)
+            ? id
+            : products.find(function(x) { return x && (x.id == id || String(x.id) === String(id) || String(x.sku) === String(id)); });
         if (!p) return;
 
-        document.getElementById('pdTitle').textContent = p.name;
-        document.getElementById('pdCategory').textContent = (p.category || 'Ethnic Wear') + ' &bull; DT Brand\'s Luxury';
-        document.getElementById('pdImg').src = p.image || '/assets/images/product1.png';
-        document.getElementById('pdPrice').textContent = '₹' + Number(p.price).toLocaleString('en-IN');
-        
+        var qvSet = function(elId, text) {
+            var el = document.getElementById(elId);
+            if (el) el.textContent = text;
+        };
+        var qvShow = function(elId, on, mode) {
+            var el = document.getElementById(elId);
+            if (el) el.style.display = on ? (mode || 'flex') : 'none';
+        };
+
+        qvSet('pdTitle', p.name || p.title || 'Product');
+        // The subtitle used to read 'Ethnic Wear Collection' for uncategorised
+        // products, so a product with no category still claimed one.
+        var catLine = String(p.category || '').trim();
+        qvSet('pdCategory', catLine !== '' ? catLine : (p.sku ? 'SKU ' + p.sku : ''));
+
+        var pdImgEl = document.getElementById('pdImg');
+        if (pdImgEl) {
+            var heroPhotos = qvClean(p.images && p.images.length ? p.images : p.gallery);
+            var hero = heroPhotos.length ? heroPhotos[0] : ((p.image && p.image !== QV_NO_IMAGE && p.has_photo !== false) ? p.image : '');
+            pdImgEl.src = hero || QV_NO_IMAGE;
+            pdImgEl.alt = String(p.name || p.title || '');
+            pdImgEl.style.opacity = hero ? '' : '.45';
+        }
+
+        var pdPriceNum = Number(p.price) || 0;
+        qvSet('pdPrice', pdPriceNum > 0 ? '₹' + pdPriceNum.toLocaleString('en-IN') : 'Price on request');
+
+        var pdOldNum = Number(p.old_price) || 0;
         var oldPriceEl = document.getElementById('pdOldPrice');
-        if (p.old_price) {
-            oldPriceEl.textContent = '₹' + Number(p.old_price).toLocaleString('en-IN');
-            oldPriceEl.style.display = 'inline';
-        } else {
-            oldPriceEl.style.display = 'none';
+        if (oldPriceEl) {
+            if (pdOldNum > pdPriceNum) {
+                oldPriceEl.textContent = '₹' + pdOldNum.toLocaleString('en-IN');
+                oldPriceEl.style.display = 'inline';
+            } else {
+                oldPriceEl.textContent = '';
+                oldPriceEl.style.display = 'none';
+            }
         }
 
+        // Hidden with no discount. It used to fall back to the slogan
+        // 'Best Luxury Price', which read like a saving that did not exist.
+        var pdDiscNum = Number(p.discount) || 0;
         var discountEl = document.getElementById('pdDiscountVal');
-        if (p.discount) {
-            discountEl.textContent = p.discount + '% OFF';
-            discountEl.style.display = 'inline-block';
-        } else {
-            discountEl.textContent = 'Best Luxury Price';
+        if (discountEl) {
+            discountEl.textContent = pdDiscNum > 0 ? pdDiscNum + '% OFF' : '';
+            discountEl.style.display = pdDiscNum > 0 ? 'inline-block' : 'none';
         }
 
-        /* Sizes */
+        /* Sizes — the row disappears when the product has none. */
+        var pdSizes = qvClean(Array.isArray(p.size) ? p.size : (Array.isArray(p.sizes) ? p.sizes : (p.size ? [p.size] : [])));
         var sizesWrap = document.getElementById('pdSizesWrap');
         if (sizesWrap) {
-            var szs = Array.isArray(p.size) ? p.size : ['Free Size'];
-            sizesWrap.innerHTML = szs.map(function(s) { return '<span class="pd-size-pill">' + s + '</span>'; }).join('');
-        }
-
-        /* Colours */
-        var colorsWrap = document.getElementById('pdColorsWrap');
-        if (colorsWrap) {
-            var cols = Array.isArray(p.colors) ? p.colors : (p.color ? [p.color] : ['Standard']);
-            colorsWrap.innerHTML = cols.map(function(c) {
-                var hex = colorHexMap[c] || '#8A681F';
-                return '<span class="pd-size-pill" style="display:inline-flex; align-items:center; gap:5px;"><span style="width:8px; height:8px; border-radius:50%; background:' + hex + '; display:inline-block; border:1px solid rgba(0,0,0,0.2);"></span>' + c + '</span>';
+            sizesWrap.innerHTML = pdSizes.map(function(s) {
+                return '<span class="pd-size-pill">' + qvEsc(s) + '</span>';
             }).join('');
         }
+        qvShow('pdSizesRow', pdSizes.length > 0);
 
-        document.getElementById('pdFabricVal').textContent = p.fabric || 'Pure Silk';
-        document.getElementById('pdSpecFabric').textContent = p.fabric || 'Pure Silk';
-        document.getElementById('pdSpecColor').textContent = (Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || 'Standard'));
-        document.getElementById('pdSpecCategory').textContent = p.category || 'Ethnic Wear';
-        document.getElementById('pdStockVal').textContent = (p.in_stock !== false ? 'In Stock (Ready to Ship)' : 'Made to Order');
+        /* Colours */
+        var pdColors = qvClean(Array.isArray(p.colors) ? p.colors : (p.color ? [p.color] : []));
+        var colorsWrap = document.getElementById('pdColorsWrap');
+        if (colorsWrap) {
+            colorsWrap.innerHTML = pdColors.map(function(c) {
+                var hex = colorHexMap[c] || '#8A681F';
+                return '<span class="pd-size-pill" style="display:inline-flex; align-items:center; gap:5px;">' +
+                       '<span style="width:8px; height:8px; border-radius:50%; background:' + hex + '; display:inline-block; border:1px solid rgba(0,0,0,0.2);"></span>' +
+                       qvEsc(c) + '</span>';
+            }).join('');
+        }
+        qvShow('pdColorsRow', pdColors.length > 0);
+
+        /* Fabric */
+        var pdFabric = String(p.fabric || '').trim();
+        qvSet('pdFabricVal', pdFabric);
+        qvShow('pdFabricRow', pdFabric !== '');
+
+        /* Description — hidden when the mill wrote none, instead of the invented
+           "Handcrafted luxury ethnic wear from DT Brand's Heritage Collection"
+           paragraph that every single product used to display. */
+        var pdDesc = String(p.description || '').trim();
+        qvSet('pdFullDesc', pdDesc);
+        qvShow('pdDescBox', pdDesc !== '', 'block');
+
+        /* Specifications, built only from columns that hold a value. */
+        var specPairs = [
+            ['Fabric', pdFabric],
+            ['Weave', String(p.weave || '').trim()],
+            ['Zari', String(p.zari_type || '').trim()],
+            ['Pallu', String(p.pallu_style || '').trim()],
+            ['Blouse piece', String(p.blouse_piece || '').trim()],
+            ['Occasion', String(p.occasion || '').trim()],
+            ['Category', catLine],
+            ['Colours', pdColors.join(', ')],
+            ['SKU', String(p.sku || '').trim()]
+        ];
+        if (p.in_stock === false) {
+            specPairs.push(['Availability', 'Out of stock']);
+        } else if (typeof p.stock_qty !== 'undefined' && p.stock_qty !== null && p.stock_qty !== '' && Number(p.stock_qty) > 0) {
+            specPairs.push(['Availability', Number(p.stock_qty).toLocaleString('en-IN') + ' pcs in stock']);
+        }
+        var moqLots = p.moq_lots || {};
+        [['Single', moqLots.single], ['Half set', moqLots.half_set], ['Full set', moqLots.full_set], ['Master bale', moqLots.master_bale]]
+            .forEach(function(pair) {
+                if (Number(pair[1]) > 0) specPairs.push(['MOQ ' + pair[0], Number(pair[1]) + ' pcs']);
+            });
+
+        var filledSpecs = specPairs.filter(function(pair) { return pair[1] !== '' && pair[1] !== null && typeof pair[1] !== 'undefined'; });
+        var specsGrid = document.getElementById('pdSpecsGrid');
+        if (specsGrid) {
+            specsGrid.innerHTML = filledSpecs.map(function(pair) {
+                return '<div class="pd-spec-item"><span class="pd-spec-label">' + qvEsc(pair[0]) + '</span>' +
+                       '<span class="pd-spec-val">' + qvEsc(pair[1]) + '</span></div>';
+            }).join('');
+            specsGrid.style.display = filledSpecs.length ? '' : 'none';
+        }
+        qvShow('pdNoSpecs', filledSpecs.length === 0, 'block');
 
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');

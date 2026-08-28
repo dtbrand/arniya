@@ -2,8 +2,17 @@
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * export.php — Customer Export Studio (CSV / Excel / PDF)
- * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
+ * export.php - Customer Export Studio (CSV / Excel / Print)
+ * DT Brand's & Jai Hanuman Tex - Live Production Standard
+ *
+ * The three generators on this page are real: each builds a Blob and clicks a
+ * download link, so a file genuinely lands on the admin's disk. What they used
+ * to put in that file was a `mockCustomers` array of eight invented people
+ * carrying real-format phone numbers -- +91 98251 44321, +44 7911 123456 -- and
+ * invented lifetime spends. The admin downloaded a spreadsheet of strangers,
+ * and unlike a toast that lies, that file outlives the session: it gets mailed
+ * on, and imported into a WhatsApp broadcast list. Every row now comes from the
+ * customers table, and a field with no column behind it is no longer offered.
  */
 require_once __DIR__ . '/../../src/Database.php';
 require_once __DIR__ . '/../../src/CustomerManager.php';
@@ -11,32 +20,114 @@ require_once __DIR__ . '/../../src/CustomerManager.php';
 use DTBrand\Database;
 use DTBrand\CustomerManager;
 
+$customers = CustomerManager::getAll();
+
+// Last purchase date and postal code are not columns on `customers`: one is the
+// newest order for that customer, the other belongs to their default address.
+// Two grouped queries, so this stays flat rather than one lookup per row.
+$lastOrders = [];
+$pincodes   = [];
+$pdo = Database::getConnection();
+if ($pdo !== null && !Database::isMockMode()) {
+    try {
+        $q = $pdo->query("SELECT `customer_id`, MAX(`created_at`) AS `last_order` FROM `orders` GROUP BY `customer_id`");
+        foreach (($q ? $q->fetchAll(\PDO::FETCH_ASSOC) : []) as $r) {
+            $lastOrders[(int)$r['customer_id']] = (string)$r['last_order'];
+        }
+    } catch (\Exception $e) {
+        // No order history readable. The column exports blank rather than a guess.
+    }
+    try {
+        // is_default ASC means the default address is written last and wins.
+        $q = $pdo->query("SELECT `customer_id`, `pincode` FROM `addresses` ORDER BY `is_default` ASC, `id` ASC");
+        foreach (($q ? $q->fetchAll(\PDO::FETCH_ASSOC) : []) as $r) {
+            $pincodes[(int)$r['customer_id']] = (string)$r['pincode'];
+        }
+    } catch (\Exception $e) {
+        // Same: blank, not invented.
+    }
+}
+
+$exportRows = [];
+foreach ($customers as $c) {
+    $orders = (int)$c['total_orders'];
+    $spend  = (float)$c['lifetime_spend'];
+    $exportRows[] = [
+        'id'         => (int)$c['id'],
+        'name'       => (string)$c['name'],
+        'phone'      => (string)$c['phone'],
+        'email'      => (string)$c['email'],
+        'type'       => (string)$c['type'],
+        'tier'       => (string)$c['tier'],
+        'gstin'      => (string)$c['gstin'],
+        'spend'      => $spend,
+        'orders'     => $orders,
+        // AOV is derived, never stored. With no orders there is no average, and
+        // exporting 0 would read as "spends nothing per order".
+        'aov'        => $orders > 0 ? round($spend / $orders, 2) : '',
+        'last_order' => $lastOrders[(int)$c['id']] ?? '',
+        'joined'     => (string)$c['created_at'],
+        'city'       => (string)$c['city'],
+        'state'      => (string)$c['state'],
+        'pincode'    => $pincodes[(int)$c['id']] ?? '',
+        'credit'     => (float)$c['credit_limit'],
+        'balance'    => (float)$c['outstanding_balance'],
+        'status'     => (string)$c['status'],
+    ];
+}
+
+// Direct CSV stream for ?download=1. This path did read the real table, but it
+// fabricated whatever it could not find: `total_spent` is not a key getAll()
+// returns, so `?? 4899` stamped every single row with a lifetime spend of
+// Rs 4,899, and `?? 1` gave every customer one order.
 if (isset($_GET['download']) && $_GET['download'] == '1') {
-    $custs = CustomerManager::getAll();
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename=dt_customers_export_' . date('Y_m_d_His') . '.csv');
     $output = fopen('php://output', 'w');
-    fputcsv($output, ['Customer ID', 'Full Name', 'Phone', 'Email', 'Type', 'Status', 'Total Orders', 'Total Spend (INR)', 'Registered Date']);
-    foreach ($custs as $c) {
+    fputcsv($output, ['Customer ID', 'Full Name', 'Phone', 'Email', 'Account Type', 'Tier',
+                      'GSTIN', 'Total Orders', 'Lifetime Spend (INR)', 'Avg Order Value (INR)',
+                      'Last Order', 'City', 'State', 'Pincode', 'Credit Limit (INR)',
+                      'Outstanding (INR)', 'Status', 'Registered']);
+    foreach ($exportRows as $r) {
         fputcsv($output, [
-            $c['id'],
-            $c['name'],
-            $c['phone'],
-            $c['email'] ?? '',
-            $c['type'] ?? 'Retail',
-            $c['status'] ?? 'active',
-            $c['total_orders'] ?? ($c['orders_count'] ?? 1),
-            $c['total_spent'] ?? 4899,
-            $c['created_at'] ?? date('Y-m-d')
+            $r['id'], $r['name'], $r['phone'], $r['email'], $r['type'], $r['tier'],
+            $r['gstin'], $r['orders'], $r['spend'], $r['aov'], $r['last_order'],
+            $r['city'], $r['state'], $r['pincode'], $r['credit'], $r['balance'],
+            $r['status'], $r['joined'],
         ]);
     }
     fclose($output);
     exit;
 }
 
+// Real cohort sizes for the scope dropdown. Every option used to carry a
+// hardcoded figure -- "4,820 Shoppers", "312 Shoppers", "1,240 Shoppers" -- so
+// an admin chose a cohort believing it held over a thousand buyers.
+$cutoff60 = strtotime('-60 days');
+$scopeCounts = ['all' => count($exportRows), 'vip' => 0, 'frequent' => 0, 'gujarat' => 0,
+                'wholesale' => 0, 'reseller' => 0, 'retail' => 0, 'pending' => 0, 'dormant' => 0];
+foreach ($exportRows as $r) {
+    if (stripos($r['tier'], 'vip') !== false || $r['spend'] >= 25000) $scopeCounts['vip']++;
+    if ($r['orders'] >= 3) $scopeCounts['frequent']++;
+    $st = strtoupper(trim($r['state']));
+    if ($st === 'GJ' || $st === 'GUJARAT') $scopeCounts['gujarat']++;
+    if ($r['type'] === 'wholesale') $scopeCounts['wholesale']++;
+    if ($r['type'] === 'reseller')  $scopeCounts['reseller']++;
+    if ($r['type'] === 'retail')    $scopeCounts['retail']++;
+    if ($r['status'] === 'pending') $scopeCounts['pending']++;
+    $lo = $r['last_order'] !== '' ? strtotime($r['last_order']) : false;
+    if ($lo === false || $lo < $cutoff60) $scopeCounts['dormant']++;
+}
+
 $page_title = "Customer Export Studio";
 $active_nav = "customers";
 $active_subnav = "export";
+
+// The Labels & Cohorts page links here as export.php?scope=wholesale. Validated
+// against the computed keys, so an unknown or hand-edited scope falls back to
+// "all" rather than preselecting an option the generators cannot honour.
+$preScope = isset($_GET['scope']) ? strtolower(trim((string)$_GET['scope'])) : 'all';
+if (!array_key_exists($preScope, $scopeCounts)) { $preScope = 'all'; }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,10 +238,10 @@ $active_subnav = "export";
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             </div>
                         </div>
-                        <div class="dt-cust-kpi-val" style="color:#8A681F;">4,820</div>
+                        <div class="dt-cust-kpi-val" style="color:#8A681F;"><?php echo number_format(count($exportRows)); ?></div>
                         <div class="dt-cust-kpi-bot">
-                            <span class="dt-cust-kpi-delta">100% CRM Verified</span>
-                            <span style="color:#78716C;">Active Database</span>
+                            <span class="dt-cust-kpi-delta"><?php echo number_format($scopeCounts['wholesale'] + $scopeCounts['reseller']); ?> trade &middot; <?php echo number_format($scopeCounts['retail']); ?> retail</span>
+                            <span style="color:#78716C;">customers table</span>
                         </div>
                     </div>
 
@@ -165,7 +256,7 @@ $active_subnav = "export";
                         <div class="dt-cust-kpi-val" style="color:#15803D;">18 Fields</div>
                         <div class="dt-cust-kpi-bot">
                             <span class="dt-cust-kpi-delta">Demographics &amp; Orders</span>
-                            <span style="color:#15803D; font-weight:800;">Full Audit</span>
+                            <span style="color:#15803D; font-weight:800;">Real columns</span>
                         </div>
                     </div>
 
@@ -179,23 +270,23 @@ $active_subnav = "export";
                         </div>
                         <div class="dt-cust-kpi-val">3 Formats</div>
                         <div class="dt-cust-kpi-bot">
-                            <span class="dt-cust-kpi-delta">CSV • XLSX • PDF</span>
-                            <span style="color:#78716C;">Instant Stream</span>
+                            <span class="dt-cust-kpi-delta">CSV • XLS • Print</span>
+                            <span style="color:#78716C;">Built in browser</span>
                         </div>
                     </div>
 
                     <!-- Card 4: Security -->
                     <div class="dt-cust-kpi-card">
                         <div class="dt-cust-kpi-top">
-                            <span class="dt-cust-kpi-label">DATA SECURITY</span>
+                            <span class="dt-cust-kpi-label">FILE CONTENTS</span>
                             <div class="dt-cust-kpi-icon gold">
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </div>
                         </div>
-                        <div class="dt-cust-kpi-val" style="color:#181512; font-size:1.2rem;">Encrypted</div>
+                        <div class="dt-cust-kpi-val" style="color:#181512; font-size:1.2rem;">Handle With Care</div>
                         <div class="dt-cust-kpi-bot">
-                            <span class="dt-cust-kpi-delta">Audit Logged</span>
-                            <span style="color:#78716C;">Staff Protected</span>
+                            <span class="dt-cust-kpi-delta">Names, phones &amp; spend</span>
+                            <span style="color:#78716C;">Nothing is logged</span>
                         </div>
                     </div>
                 </div>
@@ -237,7 +328,7 @@ $active_subnav = "export";
                                     </div>
                                     <div>
                                         <strong style="font-size:0.85rem; color:#181512; display:block;">Excel Workbook</strong>
-                                        <small style="font-size:0.68rem; color:#78716C;">Microsoft .xlsx spreadsheet</small>
+                                        <small style="font-size:0.68rem; color:#78716C;">.xls table, opens in Excel</small>
                                     </div>
                                 </div>
 
@@ -249,7 +340,7 @@ $active_subnav = "export";
                                     </div>
                                     <div>
                                         <strong style="font-size:0.85rem; color:#181512; display:block;">Printable PDF</strong>
-                                        <small style="font-size:0.68rem; color:#78716C;">Formatted executive dossier</small>
+                                        <small style="font-size:0.68rem; color:#78716C;">Print preview &rarr; Save as PDF</small>
                                     </div>
                                 </div>
                             </div>
@@ -258,14 +349,22 @@ $active_subnav = "export";
                         <!-- 2. Audience Scope -->
                         <div>
                             <label style="font-size:0.78rem; font-weight:800; color:#181512; display:block; text-transform:uppercase; letter-spacing:0.03em; margin-bottom:8px;">2. Audience Scope &amp; Target Cohort</label>
-                            <select id="dtExportAudienceScope" class="dt-cust-select" style="width:100%; height:40px; font-size:0.82rem; font-weight:700; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px;">
-                                <option value="all" selected>All Registered Customers (4,820 Shoppers)</option>
-                                <option value="vip">VIP High-Value Spenders (312 Shoppers • LTV ≥ ₹25,000)</option>
-                                <option value="frequent">Frequent Repeat Buyers (1,850 Shoppers • Orders ≥ 3)</option>
-                                <option value="gujarat">Gujarat &amp; Surat Hub Shoppers (1,240 Shoppers)</option>
-                                <option value="nri">International &amp; NRI Global Buyers (486 Shoppers)</option>
-                                <option value="wholesale">B2B Wholesale Lot Orderers (748 Shoppers)</option>
-                                <option value="dormant">Dormant Shoppers &gt; 60 Days (640 Shoppers)</option>
+                            <select id="dtExportAudienceScope" class="dt-cust-select" onchange="updateExportEstimate()" style="width:100%; height:40px; font-size:0.82rem; font-weight:700; background:#FFFFFF; border:1.2px solid #EAE5D9; border-radius:8px;">
+                                <?php
+                                $scopeLabels = [
+                                    'all'       => 'All Registered Customers',
+                                    'vip'       => 'VIP / High-Value (VIP tier or LTV ≥ ₹25,000)',
+                                    'frequent'  => 'Repeat Buyers (3+ orders)',
+                                    'gujarat'   => 'Gujarat Buyers',
+                                    'wholesale' => 'Wholesale Accounts',
+                                    'reseller'  => 'Reseller Accounts',
+                                    'retail'    => 'Retail Shoppers',
+                                    'pending'   => 'Awaiting Approval',
+                                    'dormant'   => 'No Order in 60+ Days (includes never ordered)',
+                                ];
+                                foreach ($scopeLabels as $k => $label): ?>
+                                    <option value="<?php echo $k; ?>"<?php echo $preScope === $k ? ' selected' : ''; ?>><?php echo $label; ?> (<?php echo number_format($scopeCounts[$k]); ?>)</option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
@@ -279,45 +378,56 @@ $active_subnav = "export";
                                 </div>
                             </div>
 
-                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px;">
-                                <!-- Group A: Identity & Contact -->
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
+                                <!-- Contact & identity -->
                                 <div class="dt-export-group-box">
-                                    <strong style="font-size:0.75rem; color:#8A681F; text-transform:uppercase; display:block; margin-bottom:8px;">👤 Contact &amp; Identity</strong>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="id" checked> Customer ID (CUST-XXXX)</label>
+                                    <strong style="font-size:0.75rem; color:#8A681F; text-transform:uppercase; display:block; margin-bottom:8px;">Contact &amp; Identity</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="id" checked> Customer ID</label>
                                     <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="name" checked> Full Name</label>
                                     <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="phone" checked> WhatsApp / Phone Number</label>
                                     <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="email" checked> Email Address</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="tier" checked> Standing Tier (VIP / Regular)</label>
                                 </div>
 
-                                <!-- Group B: Commerce & Financials -->
+                                <!-- Account & classification -->
                                 <div class="dt-export-group-box">
-                                    <strong style="font-size:0.75rem; color:#15803D; text-transform:uppercase; display:block; margin-bottom:8px;">💰 Orders &amp; Financials</strong>
+                                    <strong style="font-size:0.75rem; color:#8A681F; text-transform:uppercase; display:block; margin-bottom:8px;">Account &amp; Classification</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="type" checked> Account Type (Retail / Wholesale / Reseller)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="tier" checked> Tier</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="gstin" checked> GSTIN</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="status" checked> Status (Active / Pending / Suspended)</label>
+                                </div>
+
+                                <!-- Orders & financials -->
+                                <div class="dt-export-group-box">
+                                    <strong style="font-size:0.75rem; color:#15803D; text-transform:uppercase; display:block; margin-bottom:8px;">Orders &amp; Financials</strong>
                                     <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="spend" checked> Lifetime Spend (₹)</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="orders" checked> Total Completed Orders</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="aov" checked> Average Order Value (AOV)</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="last_order" checked> Last Purchase Date</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="joined" checked> Registration Date</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="orders" checked> Total Orders</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="aov" checked> Average Order Value</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="last_order" checked> Last Order Date</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="credit"> Credit Limit (₹)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="balance"> Outstanding Balance (₹)</label>
                                 </div>
 
-                                <!-- Group C: Location & CRM -->
+                                <!-- Location & registration -->
                                 <div class="dt-export-group-box">
-                                    <strong style="font-size:0.75rem; color:#1D4ED8; text-transform:uppercase; display:block; margin-bottom:8px;">📍 Location &amp; CRM Flags</strong>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="city" checked> City &amp; State</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="country" checked> Country &amp; Dial Code</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="pincode" checked> Postal Pincode</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="tags" checked> Assigned Tags</label>
-                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="status" checked> Account Status (Active / VIP)</label>
+                                    <strong style="font-size:0.75rem; color:#1D4ED8; text-transform:uppercase; display:block; margin-bottom:8px;">Location &amp; Registration</strong>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="city" checked> City</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="state" checked> State</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="pincode"> Pincode (default address)</label>
+                                    <label class="dt-field-check-label"><input type="checkbox" name="fields[]" value="joined" checked> Registered On</label>
                                 </div>
                             </div>
-                        </div>
 
+                            <p style="font-size:0.7rem; color:#78716C; margin:10px 0 0 0;">
+                                Country and free-form tags are not offered: neither is stored anywhere in this
+                                database, so both columns would export blank for every customer.
+                            </p>
                         <!-- 4. Export Summary Bar -->
                         <div style="background:#FAF8F4; border:1.2px solid #EAE5D9; border-radius:10px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
                             <div style="font-size:0.75rem; color:#181512;">
-                                <strong>Estimated Output:</strong> <span id="dtExportEstimate">CSV File (~340 KB) • 4,820 Records</span>
+                                <strong>This export:</strong> <span id="dtExportEstimate">-</span>
                             </div>
-                            <span class="dt-cust-badge emerald" style="font-size:0.65rem;">● Server Memory Stream Ready</span>
+                            <span class="dt-cust-badge emerald" style="font-size:0.65rem;">Built from the live customers table</span>
                         </div>
 
                         <!-- 5. Form Actions -->
@@ -341,70 +451,129 @@ $active_subnav = "export";
 <script>
 let currentFormat = 'csv';
 
-// Mock Customer Master Database
-const mockCustomers = [
-    { id: "CUST-1042", name: "Ramesh Patel", phone: "+91 98251 44321", email: "ramesh.patel@gmail.com", tier: "VIP Champion", spend: 48500, orders: 6, aov: 8083, last_order: "2026-08-20", joined: "2025-11-12", city: "Surat", state: "Gujarat", country: "India (+91)", pincode: "395002", tags: "Frequent Buyer; Surat Hub", status: "Active" },
-    { id: "CUST-1041", name: "Priya Sharma", phone: "+91 98765 43210", email: "priya.s@yahoo.com", tier: "Active Shopper", spend: 32400, orders: 4, aov: 8100, last_order: "2026-08-18", joined: "2025-12-05", city: "Ahmedabad", state: "Gujarat", country: "India (+91)", pincode: "380001", tags: "Saree Enthusiast", status: "Active" },
-    { id: "CUST-1040", name: "Ananya Verma", phone: "+91 91234 56789", email: "ananya.v@outlook.com", tier: "Active Shopper", spend: 24800, orders: 3, aov: 8266, last_order: "2026-08-15", joined: "2026-01-10", city: "Mumbai", state: "Maharashtra", country: "India (+91)", pincode: "400001", tags: "Bridal Lehenga", status: "Active" },
-    { id: "CUST-1039", name: "Suresh Mehta", phone: "+91 94280 11223", email: "suresh.m@gmail.com", tier: "VIP Champion", spend: 64200, orders: 8, aov: 8025, last_order: "2026-08-14", joined: "2025-11-20", city: "Rajkot", state: "Gujarat", country: "India (+91)", pincode: "360001", tags: "B2B Wholesale Buyer", status: "Active" },
-    { id: "CUST-1038", name: "Meera Joshi", phone: "+91 98980 99887", email: "meera.j@gmail.com", tier: "Active Shopper", spend: 12600, orders: 2, aov: 6300, last_order: "2026-08-10", joined: "2026-02-14", city: "Vadodara", state: "Gujarat", country: "India (+91)", pincode: "390001", tags: "Festive Silk Seeker", status: "Active" },
-    { id: "CUST-1037", name: "Rajesh Gupta", phone: "+91 98111 22334", email: "rajesh.g@rediffmail.com", tier: "Active Shopper", spend: 18900, orders: 3, aov: 6300, last_order: "2026-08-05", joined: "2026-02-28", city: "Delhi", state: "Delhi", country: "India (+91)", pincode: "110001", tags: "COD Verified", status: "Active" },
-    { id: "CUST-1036", name: "Kavita Singhania", phone: "+91 98200 44556", email: "kavita.s@gmail.com", tier: "VIP Champion", spend: 85000, orders: 12, aov: 7083, last_order: "2026-08-01", joined: "2025-11-01", city: "Jaipur", state: "Rajasthan", country: "India (+91)", pincode: "302001", tags: "High-Value VIP; Saree Enthusiast", status: "Active" },
-    { id: "CUST-1035", name: "Vikram Malhotra", phone: "+44 7911 123456", email: "vikram.m@ukexport.com", tier: "VIP Champion", spend: 96000, orders: 5, aov: 19200, last_order: "2026-07-28", joined: "2025-12-18", city: "London", state: "Greater London", country: "United Kingdom (+44)", pincode: "SW1A 1AA", tags: "NRI Global Exporter", status: "Active" }
-];
+/*
+ * Every row below is a real customer. This used to be a `mockCustomers` array
+ * of eight invented people, and the CSV / XLS / print generators are genuinely
+ * functional -- so the admin ended up with a real file full of strangers.
+ *
+ * JSON_HEX_TAG matters: a customer registers their own name, and without it a
+ * name containing </script> would break out of this block.
+ */
+const exportRows = <?php echo json_encode($exportRows, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE); ?>;
+
+// Labels shared by all three generators, so a column cannot be titled one thing
+// in the CSV and another in the workbook.
+const EXPORT_FIELD_LABELS = {
+    id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email Address",
+    type: "Account Type", tier: "Tier", gstin: "GSTIN", status: "Status",
+    spend: "Lifetime Spend (INR)", orders: "Total Orders", aov: "Avg Order Value (INR)",
+    last_order: "Last Order Date", credit: "Credit Limit (INR)", balance: "Outstanding (INR)",
+    city: "City", state: "State", pincode: "Pincode", joined: "Registered On"
+};
+
+const CURRENCY_FIELDS = ['spend', 'aov', 'credit', 'balance'];
+
+function escHtml(v) {
+    return String(v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// A blank cell must stay blank. Number('') is 0, so formatting unconditionally
+// would turn "this customer has never ordered" into a confident Rs 0.00 AOV.
+function fmtCell(field, raw) {
+    const val = (raw === undefined || raw === null) ? '' : raw;
+    if (val === '') return '';
+    if (CURRENCY_FIELDS.indexOf(field) !== -1) {
+        const n = Number(val);
+        return isNaN(n) ? String(val) : n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    }
+    return String(val);
+}
 
 function selectExportFormat(fmt, el) {
     currentFormat = fmt;
     document.querySelectorAll('.dt-export-format-card').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    const radio = el.querySelector('input[type="radio"]');
+    if (el) el.classList.add('active');
+    const radio = el ? el.querySelector('input[type="radio"]') : null;
     if (radio) radio.checked = true;
-
-    const est = document.getElementById('dtExportEstimate');
-    if (est) {
-        if (fmt === 'csv') est.innerText = 'CSV Spreadsheet (~340 KB) • 4,820 Records';
-        else if (fmt === 'excel') est.innerText = 'Excel XLSX Workbook (~820 KB) • 4,820 Records';
-        else if (fmt === 'pdf') est.innerText = 'Printable PDF Dossier (~2.4 MB) • 4,820 Records';
-    }
+    updateExportEstimate();
 }
 
 function toggleAllFields(check) {
     document.querySelectorAll('input[name="fields[]"]').forEach(cb => cb.checked = check);
+    updateExportEstimate();
 }
 
 function getSelectedFields() {
     const checked = [];
     document.querySelectorAll('input[name="fields[]"]:checked').forEach(cb => checked.push(cb.value));
-    return checked.length ? checked : ['id', 'name', 'phone', 'email', 'spend', 'orders', 'city', 'tags'];
+    return checked.length ? checked : ['id', 'name', 'phone', 'email', 'type', 'spend', 'orders', 'city'];
 }
 
+function parseTs(v) {
+    return v ? Date.parse(String(v).replace(' ', 'T')) : NaN;
+}
+
+/*
+ * The old cohorts filtered on `country`, `tags` and `aov` -- none of which is a
+ * column -- and "dormant" tested status === 'Inactive', a value the status ENUM
+ * cannot hold, so it matched nothing however long a buyer had been away.
+ */
 function filterCustomersByScope(scope) {
-    if (scope === 'vip') return mockCustomers.filter(c => c.tier === 'VIP Champion' || c.spend >= 25000);
-    if (scope === 'frequent') return mockCustomers.filter(c => c.orders >= 3);
-    if (scope === 'gujarat') return mockCustomers.filter(c => c.state === 'Gujarat');
-    if (scope === 'nri') return mockCustomers.filter(c => c.country !== 'India (+91)');
-    if (scope === 'wholesale') return mockCustomers.filter(c => c.tags.includes('Wholesale') || c.spend >= 50000);
-    if (scope === 'dormant') return mockCustomers.filter(c => c.status === 'Inactive');
-    return mockCustomers;
+    const cutoff60 = Date.now() - 60 * 86400000;
+    if (scope === 'vip')       return exportRows.filter(c => /vip/i.test(String(c.tier)) || Number(c.spend) >= 25000);
+    if (scope === 'frequent')  return exportRows.filter(c => Number(c.orders) >= 3);
+    if (scope === 'gujarat')   return exportRows.filter(c => ['GJ', 'GUJARAT'].indexOf(String(c.state).trim().toUpperCase()) !== -1);
+    if (scope === 'wholesale') return exportRows.filter(c => c.type === 'wholesale');
+    if (scope === 'reseller')  return exportRows.filter(c => c.type === 'reseller');
+    if (scope === 'retail')    return exportRows.filter(c => c.type === 'retail');
+    if (scope === 'pending')   return exportRows.filter(c => c.status === 'pending');
+    if (scope === 'dormant')   return exportRows.filter(c => {
+        const t = parseTs(c.last_order);
+        return isNaN(t) || t < cutoff60;
+    });
+    return exportRows.slice();
+}
+
+// The summary bar read "CSV File (~340 KB) - 4,820 Records" whatever was
+// selected, in a database that has nothing like 4,820 customers.
+function updateExportEstimate() {
+    const est = document.getElementById('dtExportEstimate');
+    if (!est) return;
+    const scopeEl = document.getElementById('dtExportAudienceScope');
+    const n = filterCustomersByScope(scopeEl ? scopeEl.value : 'all').length;
+    const cols = getSelectedFields().length;
+    const label = currentFormat === 'csv' ? 'CSV file'
+                : currentFormat === 'excel' ? 'Excel (.xls) table'
+                : 'Print preview';
+    est.innerText = label + ' \u2014 ' + n + ' record' + (n === 1 ? '' : 's')
+                  + ' \u00d7 ' + cols + ' field' + (cols === 1 ? '' : 's');
 }
 
 function handleCustomerExport(e) {
     if (e) e.preventDefault();
-    const scope = document.getElementById('dtExportAudienceScope').value;
+    const scopeEl = document.getElementById('dtExportAudienceScope');
+    const scope = scopeEl ? scopeEl.value : 'all';
     const selectedFields = getSelectedFields();
     const records = filterCustomersByScope(scope);
 
-    window.showToast(`⏳ Generating ${currentFormat.toUpperCase()} file for "${scope}" cohort...`);
+    // Writing a headers-only file and reporting "export complete" would read as
+    // "these customers were exported" when there were none.
+    if (!records.length) {
+        window.showToast(exportRows.length === 0
+            ? '\u26a0 There are no customers in the database yet, so nothing was exported.'
+            : '\u26a0 No customer matches that cohort \u2014 nothing was exported.');
+        return;
+    }
 
-    setTimeout(() => {
-        if (currentFormat === 'csv') {
-            downloadCsvFile(records, selectedFields);
-        } else if (currentFormat === 'excel') {
-            downloadExcelFile(records, selectedFields);
-        } else if (currentFormat === 'pdf') {
-            generatePdfDossier(records, selectedFields);
-        }
-    }, 600);
+    if (currentFormat === 'csv') {
+        downloadCsvFile(records, selectedFields);
+    } else if (currentFormat === 'excel') {
+        downloadExcelFile(records, selectedFields);
+    } else if (currentFormat === 'pdf') {
+        generatePdfDossier(records, selectedFields);
+    }
 }
 
 function triggerQuickCsvDownload() {
@@ -412,43 +581,41 @@ function triggerQuickCsvDownload() {
     handleCustomerExport();
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('input[name="fields[]"]').forEach(function (cb) {
+        cb.addEventListener('change', updateExportEstimate);
+    });
+    updateExportEstimate();
+});
+
 // ── 1. CSV Generator ──
 function downloadCsvFile(records, fields) {
-    const fieldMap = {
-        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email Address",
-        tier: "Standing Tier", spend: "Lifetime Spend (INR)", orders: "Total Orders",
-        aov: "Average Order Value (INR)", last_order: "Last Purchase Date", joined: "Joined Date",
-        city: "City", state: "State", country: "Country", pincode: "Postal Code",
-        tags: "Assigned Tags", status: "Account Status"
-    };
-
-    const headers = fields.map(f => `"${fieldMap[f] || f}"`).join(",");
+    const headers = fields.map(f => `"${EXPORT_FIELD_LABELS[f] || f}"`).join(",");
     const rows = records.map(r => {
-        return fields.map(f => `"${(r[f] !== undefined ? r[f] : '').toString().replace(/"/g, '""')}"`).join(",");
+        // Raw values, not the display-formatted ones: a spreadsheet needs 48500,
+        // not "48,500", or the column will not add up.
+        return fields.map(f => {
+            const v = (r[f] === undefined || r[f] === null) ? '' : r[f];
+            return `"${String(v).replace(/"/g, '""')}"`;
+        }).join(",");
     });
 
     const csvData = "\uFEFF" + headers + "\n" + rows.join("\n");
     const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `DT_Brands_Customers_Export_${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 
-    window.showToast("✓ CSV Export complete! File downloaded successfully.");
+    window.showToast(`✓ CSV saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}.`);
 }
 
 // ── 2. Excel Workbook (.xls XML/HTML) Generator ──
 function downloadExcelFile(records, fields) {
-    const fieldMap = {
-        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email Address",
-        tier: "Standing Tier", spend: "Lifetime Spend (₹)", orders: "Total Orders",
-        aov: "AOV (₹)", last_order: "Last Purchase Date", joined: "Joined Date",
-        city: "City", state: "State", country: "Country", pincode: "Postal Code",
-        tags: "Assigned Tags", status: "Account Status"
-    };
-
     let tableHtml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
     <head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Customers</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
     <style>
@@ -462,20 +629,22 @@ function downloadExcelFile(records, fields) {
     <table><thead><tr>`;
 
     fields.forEach(f => {
-        tableHtml += `<th>${fieldMap[f] || f}</th>`;
+        tableHtml += `<th>${escHtml(EXPORT_FIELD_LABELS[f] || f)}</th>`;
     });
     tableHtml += `</tr></thead><tbody>`;
 
+    // Customers type their own names, so every cell is escaped. Unescaped, a
+    // name containing a tag broke the table apart for every row after it.
     records.forEach(r => {
         tableHtml += `<tr>`;
         fields.forEach(f => {
-            let val = r[f] !== undefined ? r[f] : '';
-            if (f === 'spend' || f === 'aov') {
-                tableHtml += `<td class="currency">₹${Number(val).toLocaleString()}</td>`;
-            } else if (f === 'tier' && val.includes('VIP')) {
-                tableHtml += `<td class="vip">${val}</td>`;
+            const shown = fmtCell(f, r[f]);
+            if (CURRENCY_FIELDS.indexOf(f) !== -1) {
+                tableHtml += `<td class="currency">${shown === '' ? '' : '₹' + escHtml(shown)}</td>`;
+            } else if (f === 'tier' && /vip/i.test(shown)) {
+                tableHtml += `<td class="vip">${escHtml(shown)}</td>`;
             } else {
-                tableHtml += `<td>${val}</td>`;
+                tableHtml += `<td>${escHtml(shown)}</td>`;
             }
         });
         tableHtml += `</tr>`;
@@ -485,23 +654,22 @@ function downloadExcelFile(records, fields) {
 
     const blob = new Blob([tableHtml], { type: "application/vnd.ms-excel;charset=utf-8" });
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `DT_Brands_Customers_Report_${new Date().toISOString().slice(0, 10)}.xls`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 
-    window.showToast("✓ Excel Workbook downloaded successfully!");
+    // An HTML table with an .xls extension, which Excel opens after warning that
+    // the format and the extension do not match. Saying so beats the admin
+    // thinking the file is corrupt.
+    window.showToast(`✓ Excel file saved \u2014 ${records.length} customer${records.length === 1 ? '' : 's'}. Excel may warn about the file format; opening it is safe.`);
 }
 
 // ── 3. Printable PDF Dossier Generator ──
 function generatePdfDossier(records, fields) {
-    const fieldMap = {
-        id: "Customer ID", name: "Full Name", phone: "Phone Number", email: "Email",
-        tier: "Tier", spend: "LTV (₹)", orders: "Orders", aov: "AOV",
-        city: "City", state: "State", tags: "Tags", status: "Status"
-    };
-
     const printWin = window.open('', '_blank', 'width=900,height=700');
     if (!printWin) {
         window.showToast('⚠️ Popups blocked. Please allow popups for PDF printing.');
@@ -549,16 +717,16 @@ function generatePdfDossier(records, fields) {
                 <div class="kpi-lbl">Target Shoppers</div>
             </div>
             <div class="kpi-box">
-                <div class="kpi-val">₹${records.reduce((acc, r) => acc + (r.spend || 0), 0).toLocaleString()}</div>
+                <div class="kpi-val">₹${records.reduce((acc, r) => acc + Number(r.spend || 0), 0).toLocaleString('en-IN')}</div>
                 <div class="kpi-lbl">Aggregate LTV</div>
             </div>
             <div class="kpi-box">
-                <div class="kpi-val">${records.reduce((acc, r) => acc + (r.orders || 0), 0)}</div>
-                <div class="kpi-lbl">Total Completed Orders</div>
+                <div class="kpi-val">${records.reduce((acc, r) => acc + Number(r.orders || 0), 0)}</div>
+                <div class="kpi-lbl">Total Orders</div>
             </div>
             <div class="kpi-box">
-                <div class="kpi-val">100%</div>
-                <div class="kpi-lbl">CRM Verified</div>
+                <div class="kpi-val">${escHtml(document.getElementById('dtExportAudienceScope') ? document.getElementById('dtExportAudienceScope').selectedOptions[0].text.replace(/\s*\(.*$/, '') : 'All')}</div>
+                <div class="kpi-lbl">Cohort</div>
             </div>
         </div>
 
@@ -567,20 +735,22 @@ function generatePdfDossier(records, fields) {
                 <tr>`;
 
     fields.forEach(f => {
-        printHtml += `<th>${fieldMap[f] || f}</th>`;
+        printHtml += `<th>${escHtml(EXPORT_FIELD_LABELS[f] || f)}</th>`;
     });
     printHtml += `</tr></thead><tbody>`;
 
+    // document.write into a same-origin window runs whatever it is given, so an
+    // unescaped customer name here was script execution, not just broken layout.
     records.forEach(r => {
         printHtml += `<tr>`;
         fields.forEach(f => {
-            let val = r[f] !== undefined ? r[f] : '';
-            if (f === 'spend' || f === 'aov') {
-                printHtml += `<td style="font-weight:bold; color:#8A681F;">₹${Number(val).toLocaleString()}</td>`;
-            } else if (f === 'tier' && val.includes('VIP')) {
-                printHtml += `<td><span class="vip-pill">${val}</span></td>`;
+            const shown = fmtCell(f, r[f]);
+            if (CURRENCY_FIELDS.indexOf(f) !== -1) {
+                printHtml += `<td style="font-weight:bold; color:#8A681F;">${shown === '' ? '\u2014' : '₹' + escHtml(shown)}</td>`;
+            } else if (f === 'tier' && /vip/i.test(shown)) {
+                printHtml += `<td><span class="vip-pill">${escHtml(shown)}</span></td>`;
             } else {
-                printHtml += `<td>${val}</td>`;
+                printHtml += `<td>${shown === '' ? '\u2014' : escHtml(shown)}</td>`;
             }
         });
         printHtml += `</tr>`;
@@ -602,7 +772,10 @@ function generatePdfDossier(records, fields) {
     printWin.document.write(printHtml);
     printWin.document.close();
 
-    window.showToast("✓ Printable PDF Dossier generated and print preview opened!");
+    // No PDF is produced here: this opens the browser print dialog, where the
+    // admin chooses "Save as PDF". Claiming a PDF had been generated sent people
+    // looking in their downloads folder for a file that was never written.
+    window.showToast(`✓ Print preview opened for ${records.length} customer${records.length === 1 ? '' : 's'} \u2014 choose "Save as PDF" to keep a copy.`);
 }
 </script>
 </body>

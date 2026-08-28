@@ -93,9 +93,53 @@ class DatabaseMigrationRunner {
         }
 
         $this->applyColumnUpgrades($pdo, $results);
+        $this->repairLegacyData($pdo, $results);
         $this->ensureAdminUser($pdo, $results);
 
         return ['status' => 'success', 'executed' => $results];
+    }
+
+    /**
+     * Idempotent data repairs for databases seeded before the asset paths were
+     * corrected. Every seeded image pointed into /Frontend/Shop/Asset/images/, a
+     * directory that does not exist in this docroot, so every product card, category
+     * tile and banner on a live install rendered a broken image. A prefix REPLACE is
+     * safe to re-run: once the prefix is gone the statement matches nothing.
+     *
+     * The two phantom filenames (category-sarees.png, hero-banner.png) were column
+     * DEFAULTs rather than uploads, so they are cleared to NULL - "no image yet" -
+     * instead of being pointed at some other product's photo.
+     */
+    private function repairLegacyData(\PDO $pdo, array &$results): void {
+        $repairs = [
+            'products.primary_image' =>
+                "UPDATE `products` SET `primary_image` = REPLACE(`primary_image`, '/Frontend/Shop/Asset/images/', '/assets/images/')
+                 WHERE `primary_image` LIKE '/Frontend/Shop/Asset/images/%'",
+            'product_media.image_url' =>
+                "UPDATE `product_media` SET `image_url` = REPLACE(`image_url`, '/Frontend/Shop/Asset/images/', '/assets/images/')
+                 WHERE `image_url` LIKE '/Frontend/Shop/Asset/images/%'",
+            'product_variants.image' =>
+                "UPDATE `product_variants` SET `image` = REPLACE(`image`, '/Frontend/Shop/Asset/images/', '/assets/images/')
+                 WHERE `image` LIKE '/Frontend/Shop/Asset/images/%'",
+            'categories.image' =>
+                "UPDATE `categories` SET `image` = NULL
+                 WHERE `image` LIKE '%/category-sarees.png' OR `image` LIKE '/Frontend/Shop/Asset/images/%'",
+            'categories.banner_image' =>
+                "UPDATE `categories` SET `banner_image` = NULL
+                 WHERE `banner_image` LIKE '%/hero-banner.png' OR `banner_image` LIKE '/Frontend/Shop/Asset/images/%'",
+            'banners.image_url' =>
+                "UPDATE `banners` SET `image_url` = REPLACE(`image_url`, '/Frontend/Shop/Asset/images/', '/assets/images/')
+                 WHERE `image_url` LIKE '/Frontend/Shop/Asset/images/%'",
+        ];
+
+        foreach ($repairs as $label => $sql) {
+            try {
+                $n = $pdo->exec($sql);
+                $results[] = ['repair' => $label, 'status' => $n > 0 ? 'ROWS_FIXED' : 'NOTHING_TO_FIX', 'rows' => (int)$n];
+            } catch (\PDOException $e) {
+                $results[] = ['repair' => $label, 'status' => 'ERROR', 'error' => $e->getMessage()];
+            }
+        }
     }
 
     /**
@@ -139,6 +183,12 @@ class DatabaseMigrationRunner {
             ['table' => 'products', 'column' => 'is_featured', 'definition' => 'TINYINT(1) DEFAULT 0 AFTER `status`'],
             ['table' => 'customers', 'column' => 'gstin', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `lifetime_spend`'],
             ['table' => 'customers', 'column' => 'pan', 'definition' => 'VARCHAR(20) DEFAULT NULL AFTER `gstin`'],
+            // The colour and size the shopper actually picked. Without these the
+            // selection made in the quick view / product page was thrown away at
+            // checkout, so an order for "Red, 6.3m" reached the warehouse as a
+            // bare product title and had to be guessed.
+            ['table' => 'order_items', 'column' => 'variant_color', 'definition' => 'VARCHAR(60) DEFAULT NULL AFTER `sku`'],
+            ['table' => 'order_items', 'column' => 'variant_size', 'definition' => 'VARCHAR(60) DEFAULT NULL AFTER `variant_color`'],
         ];
 
         foreach ($upgrades as $up) {
@@ -220,22 +270,50 @@ if (!$isCli) {
 }
 
 if ($isCli || $webAllowed) {
+    // On the command line, running the file runs the migrations. It used to only
+    // print the file list unless ?action=run was set - which cannot be passed on the
+    // CLI - so the instruction "run this file from the command line" did nothing.
+    // Pass `status` to list the migration files without touching the database.
+    if ($isCli) {
+        $cliArgs = $_SERVER['argv'] ?? [];
+        $argAction = strtolower(trim((string)($cliArgs[1] ?? 'run')));
+
+        echo "=== DT Brand's Database Migration Runner ===\n";
+        $status = $runner->status();
+        foreach ($status as $s) {
+            echo " - [{$s['status']}] {$s['migration']}\n";
+        }
+        echo "Total migration files detected: " . count($status) . "\n\n";
+
+        if ($argAction === 'status') {
+            echo "Status only (pass no argument to apply the schema).\n";
+            exit(0);
+        }
+
+        $result = $runner->runMigrations();
+        if (($result['status'] ?? '') !== 'success') {
+            echo "FAILED: " . ($result['message'] ?? 'unknown error') . "\n";
+            exit(1);
+        }
+        foreach ($result['executed'] as $step) {
+            $label = $step['file'] ?? $step['upgrade'] ?? $step['repair'] ?? $step['seed'] ?? 'step';
+            $extra = isset($step['rows']) ? " ({$step['rows']} rows)" : '';
+            echo " * {$label}: {$step['status']}{$extra}\n";
+            if (!empty($step['error'])) {
+                echo "     error: {$step['error']}\n";
+            }
+        }
+        echo "\nDone.\n";
+        exit(0);
+    }
+
     if (isset($_GET['action']) && $_GET['action'] === 'run') {
         header('Content-Type: application/json');
         echo json_encode($runner->runMigrations(), JSON_PRETTY_PRINT);
         exit;
     }
 
-    if ($isCli) {
-        echo "=== DT Brand's Database Migration Runner ===\n";
-        $status = $runner->status();
-        foreach ($status as $s) {
-            echo " - [{$s['status']}] {$s['migration']}\n";
-        }
-        echo "Total migrations detected: " . count($status) . "\n";
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['status' => 'ready', 'migrations' => $runner->status()], JSON_PRETTY_PRINT);
-        exit;
-    }
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'ready', 'migrations' => $runner->status()], JSON_PRETTY_PRINT);
+    exit;
 }

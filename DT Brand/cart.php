@@ -134,15 +134,22 @@ $catalogProducts = ProductCatalog::getAll();
             var qty = item.qty || item.quantity || 1;
             var lineTotal = unit * qty;
             subtotal += lineTotal;
+            // The photo used to fall back to product1.png (another product's
+            // saree), and the variant line printed "Free Size" / "Standard" for
+            // items added without a size or colour.
+            var itemImg = item.image || '/assets/images/no-image.svg';
+            var variantBits = [];
+            if (item.size) variantBits.push('Size: <strong>' + item.size + '</strong>');
+            if (item.color) variantBits.push('Color: <strong>' + item.color + '</strong>');
             html +=
               '<div style="display:flex; gap:14px; border:1px solid #EAE5D9; border-radius:10px; padding:12px;">' +
-                '<img src="' + (item.image || '/assets/images/product1.png') + '" alt="' + (item.name || 'Product') + '" style="width:84px; height:100px; object-fit:cover; border-radius:8px;" onerror="this.src=\'/assets/images/product1.png\';">' +
+                '<img src="' + itemImg + '" alt="' + (item.name || '') + '" style="width:84px; height:100px; object-fit:cover; border-radius:8px;">' +
                 '<div style="flex:1; display:flex; flex-direction:column;">' +
                   '<div style="display:flex; justify-content:space-between; gap:10px;">' +
-                    '<strong style="font-size:0.95rem;">' + (item.name || 'Ethnic Attire') + '</strong>' +
+                    '<strong style="font-size:0.95rem;">' + (item.name || 'Product') + '</strong>' +
                     '<button data-remove="' + idx + '" aria-label="Remove item" style="background:none; border:none; color:#B91C1C; cursor:pointer; font-weight:800; font-size:1.1rem; line-height:1;">×</button>' +
                   '</div>' +
-                  '<div style="font-size:0.78rem; color:#78716C; margin:4px 0 auto;">Size: <strong>' + (item.size || 'Free Size') + '</strong> &nbsp;|&nbsp; Color: <strong>' + (item.color || 'Standard') + '</strong></div>' +
+                  '<div style="font-size:0.78rem; color:#78716C; margin:4px 0 auto;">' + variantBits.join(' &nbsp;|&nbsp; ') + '</div>' +
                   '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">' +
                     '<div style="display:flex; align-items:center; gap:10px; border:1px solid #CBD5E1; border-radius:8px; padding:2px 8px;">' +
                       '<button data-dec="' + idx + '" aria-label="Decrease quantity" style="background:none; border:none; font-size:1.1rem; cursor:pointer; color:#181512;">−</button>' +

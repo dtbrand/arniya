@@ -1277,7 +1277,7 @@
                             <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                             <span>Recent Orders</span>
                         </h3>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT Brand's%2C%20I%20would%20like%20to%20inquire%20about%20my%20recent%20orders" target="_blank" class="track-wa-btn">
                             WhatsApp Support
                         </a>
                     </div>
@@ -1298,7 +1298,7 @@
                             </div>
                             <div class="order-actions-bar">
                                 <div>Total: <span class="order-total-txt">₹24,999</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn">
+                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20please%20share%20tracking%20status%20for%20Order%20%23KLN-847291" target="_blank" class="track-wa-btn">
                                     Track on WhatsApp →
                                 </a>
                             </div>
@@ -1319,7 +1319,7 @@
                             </div>
                             <div class="order-actions-bar">
                                 <div>Total: <span class="order-total-txt">₹12,499</span></div>
-                                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn">
+                                <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20received%20Order%20%23KLN-312984%20and%20loved%20it!" target="_blank" class="track-wa-btn">
                                     Re-Order on WhatsApp →
                                 </a>
                             </div>
@@ -1345,7 +1345,7 @@
                     <div class="concierge-card">
                         <h4>Royal Concierge Desk</h4>
                         <p>Need custom blouse stitching, bulk wholesale pricing, or reseller catalog? Our fashion stylists are available.</p>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT Brand's%2C%20I%20would%20like%20personalized%20styling%20and%20catalog%20support" target="_blank" class="concierge-btn">
                             <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
                             <span>WhatsApp Stylist</span>
                         </a>
@@ -1887,7 +1887,7 @@
             var input = document.getElementById('forgotInput').value.trim();
             if (!input) return;
 
-            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
+            var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20need%20a%20password%20reset%20link%20for%20my%20DT Brand's%20account%20(${encodeURIComponent(input)})`;
             window.open(waUrl, '_blank');
             alert('📩 Password reset request sent to WhatsApp Concierge!');
         };

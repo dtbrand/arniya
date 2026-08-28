@@ -2,8 +2,30 @@
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * categories/index.php — DT Brand's Product Categories & Taxonomy Hub (Wholesale Dashboard & Luxury Shop Standard)
+ * categories/index.php — Product Categories
  * DT Brand's & Jai Hanuman Tex
+ *
+ * The list itself was real, but several columns were not:
+ *   - The per-category Count came from categories.products_count, which the
+ *     schema seeds with numbers like 840 and no write path ever updates, so a
+ *     brand new empty category could show hundreds of products.
+ *   - Every row showed "5007 (5%)" in an HSN (GST) column. `categories` has no
+ *     hsn column; the value was typed into the markup, and the Add form's HSN
+ *     box and Display Type / Parent Category selects were dropped server-side.
+ *   - A missing photo fell back to /assets/images/product1.png, so categories
+ *     with no image looked like they had one.
+ *   - handleAddNewCategory() posted the <img> src (a stock path, or a base64
+ *     data: URL after the never-wired "Upload Image" button) as `image`, and
+ *     its .catch() toasted 'Category "X" created!' when the request had failed.
+ *   - deleteCatRow() and the bulk delete removed the row from the table in
+ *     .catch() and on any response, so a refusal ("products are still filed
+ *     here") or a 401 still looked like a deletion until the page reloaded.
+ *   - saveQuickEditCat() repainted the row first and reported success
+ *     unconditionally afterwards.
+ *   - A dead DOMContentLoaded handler bound a second search filter to
+ *     '#the-list', an id this page does not have.
+ *
+ * Saving, deleting and uploading are now all handled by assets/js/categories.js.
  */
 require_once __DIR__ . '/../../../src/ProductCatalog.php';
 require_once __DIR__ . '/../../../src/Database.php';
@@ -15,23 +37,28 @@ $page_title = "Product Categories";
 $active_nav = "products";
 $active_subnav = "categories";
 
-$dbCategories = [];
-$allProducts = ProductCatalog::getAll();
+// Drafts count for the admin: this is a stock-room view, not the shop.
+$allProducts = ProductCatalog::getAll(true);
 $totalProductCount = count($allProducts);
 $totalReadyStock = 0;
-
 foreach ($allProducts as $p) {
     $totalReadyStock += (int)($p['stock_qty'] ?? 0);
 }
 
-$db = Database::getConnection();
-if ($db !== null && !Database::isMockMode()) {
-    try {
-        $dbCategories = Database::query("SELECT * FROM categories ORDER BY display_order ASC, id ASC");
-    } catch (\Exception $e) {}
-}
-
+// activeOnly = false: an inactive category must still be visible here, and the
+// product counts come from the products table rather than products_count.
+$dbCategories = ProductCatalog::getCategoriesWithDetails(false);
 $totalCategoryCount = count($dbCategories);
+
+$catInactiveCount = 0;
+$catEmptyCount = 0;
+$catNextOrder = 0;
+foreach ($dbCategories as $c) {
+    if (strtolower((string)($c['status'] ?? 'active')) !== 'active') { $catInactiveCount++; }
+    if ((int)($c['products_count'] ?? 0) === 0) { $catEmptyCount++; }
+    $catNextOrder = max($catNextOrder, (int)($c['display_order'] ?? 0));
+}
+$catNextOrder++;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -216,10 +243,6 @@ $totalCategoryCount = count($dbCategories);
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                         <span>All Products (<?php echo $totalProductCount; ?>)</span>
                     </a>
-                    <a href="/admin/products/brands/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <span>Brands (3)</span>
-                    </a>
                     <a href="/admin/products/attributes/" class="dt-btn-action-sm pale-gold" style="height:28px; padding:0 10px; font-size:11px;">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg>
                         <span>Attributes</span>
@@ -255,11 +278,11 @@ $totalCategoryCount = count($dbCategories);
 
                 <div class="dt-kpi-card">
                     <div style="width:28px; height:28px; border-radius:5px; background:#EFF6FF; border:1px solid #93C5FD; display:flex; align-items:center; justify-content:center; color:#1D4ED8; flex-shrink:0;">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8"></path></svg>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                     </div>
                     <div style="min-width:0;">
-                        <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">HSN &amp; GST TAX</div>
-                        <div style="font-size:14px; font-weight:800; color:#1D4ED8; line-height:1.2;">5007 (5%)</div>
+                        <div style="font-size:9.5px; color:#646970; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">EMPTY / HIDDEN</div>
+                        <div style="font-size:14px; font-weight:800; color:#1D4ED8; line-height:1.2;"><?php echo $catEmptyCount; ?> empty &middot; <?php echo $catInactiveCount; ?> hidden</div>
                     </div>
                 </div>
 
@@ -284,65 +307,52 @@ $totalCategoryCount = count($dbCategories);
                         <h2 style="margin:0; font-size:12.5px; font-weight:800; color:#FAF5E8;">Add New Category</h2>
                     </div>
                     <div class="dt-cat-form-body">
-                        <form id="wpAddCatForm" onsubmit="handleAddNewCategory(event)">
-                            <div class="dt-form-group">
-                                <label>Name <span style="color:#b32d2e;">*</span></label>
-                                <input type="text" id="catName" placeholder="e.g. Pure Silk Sarees" required oninput="autoSlugifyCat(this.value)">
-                            </div>
+                        <input type="hidden" id="catMode" value="create">
+                        <input type="hidden" id="catId" value="0">
+                        <div class="dt-form-group">
+                            <label for="catName">Name <span style="color:#b32d2e;">*</span></label>
+                            <input type="text" id="catName" placeholder="e.g. Pure Silk Sarees" autocomplete="off">
+                        </div>
 
-                            <div class="dt-form-group">
-                                <label>Slug</label>
-                                <input type="text" id="catSlug" placeholder="e.g. pure-silk-sarees">
-                            </div>
+                        <div class="dt-form-group">
+                            <label for="catSlug">Slug</label>
+                            <input type="text" id="catSlug" placeholder="pure-silk-sarees" autocomplete="off">
+                            <div style="font-size:10.5px; color:#8A681F; margin-top:2px;">/shop?category=<b id="catSlugLive">...</b></div>
+                        </div>
 
+                        <div class="dt-form-group">
+                            <label for="catDesc">Description</label>
+                            <textarea id="catDesc" placeholder="Shown on the shop catalogue header for this category."></textarea>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
                             <div class="dt-form-group">
-                                <label>Parent Category</label>
-                                <select id="catParent">
-                                    <option value="none">None (Top Level)</option>
-                                    <?php foreach ($dbCategories as $pCat): ?>
-                                        <option value="<?php echo htmlspecialchars($pCat['slug']); ?>"><?php echo htmlspecialchars($pCat['name']); ?></option>
-                                    <?php endforeach; ?>
+                                <label for="catStatus">Status</label>
+                                <select id="catStatus">
+                                    <option value="active" selected>Active</option>
+                                    <option value="inactive">Hidden</option>
                                 </select>
                             </div>
-
                             <div class="dt-form-group">
-                                <label>Description</label>
-                                <textarea id="catDesc" placeholder="Brief category summary for SEO and catalog..."></textarea>
+                                <label for="catOrder">Order</label>
+                                <input type="number" id="catOrder" min="0" step="1" value="<?php echo (int)$catNextOrder; ?>">
                             </div>
+                        </div>
 
-                            <div class="dt-form-group">
-                                <label>Display Type</label>
-                                <select id="catDisplayType">
-                                    <option value="default">Default</option>
-                                    <option value="products">Products Only</option>
-                                    <option value="subcategories">Subcategories</option>
-                                    <option value="both">Both</option>
-                                </select>
-                            </div>
+                        <div class="dt-form-group">
+                            <label for="catImageFile">Thumbnail</label>
+                            <img id="catImagePreview" src="" alt="" style="display:none; width:56px; height:56px; object-fit:cover; border-radius:4px; border:1px solid #D4AF37; margin-bottom:6px;">
+                            <input type="file" id="catImageFile" accept="image/jpeg,image/png,image/webp,image/gif" style="height:auto; padding:4px; font-size:10.5px;">
+                            <input type="hidden" id="catImage" value="">
+                            <small id="catImagePreviewNote" style="font-size:10px; color:#646970; word-break:break-all; display:block;">Uploaded to the server as soon as you pick it.</small>
+                        </div>
 
-                            <div class="dt-form-group">
-                                <label>HSN Code &amp; GST</label>
-                                <input type="text" id="catHsn" value="5007 (5% GST)" placeholder="e.g. 5007 (5% GST)">
-                            </div>
-
-                            <div class="dt-form-group">
-                                <label>Thumbnail</label>
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" id="catThumbPreview" style="width:28px; height:28px; object-fit:cover; border-radius:3px; border:1px solid #c3c4c7; flex-shrink:0;">
-                                    <button type="button" class="dt-btn-action-sm pale-gold" onclick="if(window.showToast) window.showToast('Upload category banner/image');" style="height:26px; font-size:10.5px; flex:1; justify-content:center;">
-                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                                        <span>Upload Image</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div style="margin-top:10px;">
-                                <button type="submit" class="dt-btn-action-sm gold" style="width:100%; height:30px; justify-content:center; font-size:11.5px;">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                    <span>Add New Category</span>
-                                </button>
-                            </div>
-                        </form>
+                        <div style="margin-top:10px;">
+                            <button type="button" class="dt-btn-action-sm gold" data-dt-cat-save onclick="saveCategory()" style="width:100%; height:30px; justify-content:center; font-size:11.5px;">
+                                <span>Add New Category</span>
+                            </button>
+                        </div>
+                        <small style="font-size:10px; color:#646970; display:block; margin-top:8px;">Parent category, display type and an HSN/GST class have no columns in the categories table, so those boxes were removed. GST is applied at 5% on the order, not per category.</small>
                     </div>
                 </div>
 
@@ -358,17 +368,17 @@ $totalCategoryCount = count($dbCategories);
                             </select>
                             <button type="button" class="dt-btn-action-sm pale-gold" onclick="handleCatBulkAction()" style="height:28px; font-size:11px; padding:0 10px;">Apply</button>
 
-                            <select class="wp-select" id="catParentFilter" onchange="filterCatByParent(this.value)" style="height:28px; font-size:11.5px; min-width:125px; border-radius:4px; border:1px solid #c3c4c7; padding:0 6px;">
-                                <option value="">All Categories</option>
-                                <?php foreach ($dbCategories as $fCat): ?>
-                                    <option value="<?php echo htmlspecialchars($fCat['name']); ?>"><?php echo htmlspecialchars($fCat['name']); ?></option>
-                                <?php endforeach; ?>
+                            <select class="wp-select" id="catStatusFilter" onchange="filterCatByStatus(this.value)" style="height:28px; font-size:11.5px; min-width:125px; border-radius:4px; border:1px solid #c3c4c7; padding:0 6px;">
+                                <option value="">All statuses</option>
+                                <option value="active">Active only</option>
+                                <option value="inactive">Hidden only</option>
+                                <option value="empty">Empty only</option>
                             </select>
                         </div>
 
                         <div class="wp-search-box" style="display:flex; align-items:center; gap:5px;">
                             <div style="position:relative; display:inline-flex; align-items:center;">
-                                <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories, HSN..." style="height:28px; padding-left:10px; padding-right:20px; width:180px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
+                                <input type="text" id="catSearchInput" class="wp-search-input" placeholder="Search categories..." style="height:28px; padding-left:10px; padding-right:20px; width:180px; font-size:11.5px; border:1px solid #c3c4c7; border-radius:4px; outline:none;" oninput="searchWpCategories(this.value); toggleCatSearchClearBtn(this.value)">
                                 <span id="catSearchClearBtn" onclick="clearCatSearch()" style="position:absolute; right:6px; cursor:pointer; color:#8c8f94; font-size:11px; font-weight:700; display:none;" title="Clear search">✕</span>
                             </div>
                             <button type="button" class="dt-btn-action-sm gold" onclick="searchWpCategories(document.getElementById('catSearchInput').value)" style="height:28px; font-size:11px; padding:0 10px;">
@@ -389,8 +399,8 @@ $totalCategoryCount = count($dbCategories);
                                     <th style="padding:7px 10px;">Name &amp; Actions</th>
                                     <th style="padding:7px 8px;">Description</th>
                                     <th style="padding:7px 8px;">Slug</th>
-                                    <th style="padding:7px 8px;">HSN (GST)</th>
-                                    <th style="text-align:right; width:65px; padding:7px 10px;">Count</th>
+                                    <th style="padding:7px 8px;">Status</th>
+                                    <th style="text-align:right; width:65px; padding:7px 10px;">Products</th>
                                 </tr>
                             </thead>
                             <tbody id="categoriesTableBody">
@@ -401,37 +411,47 @@ $totalCategoryCount = count($dbCategories);
                                         </td>
                                     </tr>
                                 <?php else: ?>
-                                    <?php foreach ($dbCategories as $cat): 
-                                        $catId = $cat['id'];
-                                        $catName = $cat['name'];
-                                        $catSlug = $cat['slug'] ?? strtolower(str_replace(' ', '-', $catName));
-                                        $catDesc = $cat['description'] ?? 'Authentic ethnic sarees & handlooms';
-                                        $catImg = !empty($cat['image']) ? $cat['image'] : '/assets/images/product1.png';
-                                        $catCount = (int)($cat['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
+                                    <?php foreach ($dbCategories as $cat):
+                                        $catId = (int)($cat['id'] ?? 0);
+                                        $catRowName = (string)($cat['name'] ?? '');
+                                        $catRowSlug = (string)($cat['slug'] ?? '');
+                                        $catRowDesc = trim((string)($cat['description'] ?? ''));
+                                        $catHasImg = !empty($cat['has_image']);
+                                        $catRowImg = $catHasImg ? (string)$cat['image'] : '';
+                                        $catRowCount = (int)($cat['products_count'] ?? 0);
+                                        $catRowStatus = strtolower(trim((string)($cat['status'] ?? 'active'))) === 'inactive' ? 'inactive' : 'active';
                                     ?>
-                                    <tr id="cat-row-<?= $catId ?>" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
+                                    <tr id="cat-row-<?= $catId ?>" data-cat-status="<?= $catRowStatus ?>" data-cat-count="<?= $catRowCount ?>" data-cat-name="<?= htmlspecialchars($catRowName, ENT_QUOTES) ?>" data-cat-slug="<?= htmlspecialchars($catRowSlug, ENT_QUOTES) ?>" onmouseover="this.style.background='#FDFBF7'" onmouseout="this.style.background='transparent'">
                                         <td style="text-align:center; padding:7px 6px;">
                                             <input type="checkbox" class="cat-row-check" value="<?= $catId ?>" style="cursor:pointer; width:14px; height:14px;">
                                         </td>
                                         <td style="padding:7px 6px;">
-                                            <img src="<?= htmlspecialchars($catImg) ?>" onerror="this.src='/assets/images/product1.png';" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
+                                            <?php if ($catHasImg): ?>
+                                                <img src="<?= htmlspecialchars($catRowImg) ?>" alt="" style="width:32px; height:32px; object-fit:cover; border-radius:3px; border:1px solid #e2e8f0; display:block;">
+                                            <?php else: ?>
+                                                <span title="No image set" style="width:32px; height:32px; border-radius:3px; border:1px dashed #c3c4c7; display:flex; align-items:center; justify-content:center; font-size:9px; color:#a7aaad;">none</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td style="padding:7px 10px;">
-                                            <strong style="font-size:12.5px; color:#181512;"><a href="/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catName) ?></a></strong>
+                                            <strong style="font-size:12.5px; color:#181512;"><a href="/admin/products/categories/edit.php?id=<?= $catId ?>" style="color:#181512; text-decoration:none;"><?= htmlspecialchars($catRowName) ?></a></strong>
                                             <div class="wp-row-actions">
                                                 <a href="/admin/products/categories/edit.php?id=<?= $catId ?>" style="color:#8A681F; font-weight:700; text-decoration:none;">Edit</a> <span style="color:#c3c4c7;">|</span>
-                                                <a href="#" onclick="openQuickEditCat(<?= $catId ?>, '<?= addslashes($catName) ?>', '<?= addslashes($catSlug) ?>', '<?= addslashes($catDesc) ?>', '5007 (5% GST)'); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
-                                                <a href="#" onclick="deleteCatRow(<?= $catId ?>); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
-                                                <a href="/admin/products/categories/view.php?id=<?= $catId ?>" style="color:#15803D; font-weight:600; text-decoration:none;">View</a>
+                                                <a href="#" onclick="openQuickEditCat(<?= $catId ?>); return false;" style="color:#1D4ED8; font-weight:600; text-decoration:none;">Quick Edit</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="#" onclick="dtCatDelete(<?= $catId ?>); return false;" style="color:#DC2626; text-decoration:none;">Delete</a> <span style="color:#c3c4c7;">|</span>
+                                                <a href="/shop?category=<?= urlencode($catRowSlug) ?>" target="_blank" rel="noopener" style="color:#15803D; font-weight:600; text-decoration:none;">View on shop</a>
                                             </div>
                                         </td>
-                                        <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= htmlspecialchars($catDesc) ?></td>
-                                        <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;"><?= htmlspecialchars($catSlug) ?></code></td>
-                                        <td style="padding:7px 8px;"><span class="adm-badge gold" style="font-size:10px; padding:1px 5px;">5007 (5%)</span></td>
+                                        <td style="padding:7px 8px; font-size:11.5px; color:#646970; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= $catRowDesc !== '' ? htmlspecialchars($catRowDesc) : '<span style="color:#a7aaad;">No description</span>' ?></td>
+                                        <td style="padding:7px 8px;"><code style="background:#FAF5E8; color:#8A681F; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:600;"><?= htmlspecialchars($catRowSlug) ?></code></td>
+                                        <td style="padding:7px 8px;">
+                                            <?php if ($catRowStatus === 'active'): ?>
+                                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-size:10px; padding:1px 5px; font-weight:700;">Active</span>
+                                            <?php else: ?>
+                                                <span class="adm-badge" style="background:#F3F4F6; color:#646970; font-size:10px; padding:1px 5px; font-weight:700;">Hidden</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td style="text-align:right; padding:7px 10px;">
-                                            <a href="/admin/products/?cat=<?= urlencode($catName) ?>" style="text-decoration:none;">
-                                                <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;"><?= $catCount ?></span>
-                                            </a>
+                                            <span class="adm-badge" style="background:<?= $catRowCount > 0 ? '#DCFCE7' : '#F3F4F6' ?>; color:<?= $catRowCount > 0 ? '#15803D' : '#646970' ?>; font-weight:800; font-size:11px; padding:1.5px 6px; border-radius:8px;"><?= $catRowCount ?></span>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -448,232 +468,168 @@ $totalCategoryCount = count($dbCategories);
     </div>
 </div>
 
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 <script>
+function dtCatToast(msg) {
+    if (typeof window.showToast === 'function') { window.showToast(msg); } else { alert(msg); }
+}
+
 function toggleCatSearchClearBtn(val) {
-    const btn = document.getElementById('catSearchClearBtn');
-    if (btn) btn.style.display = val.length > 0 ? 'inline' : 'none';
+    var btn = document.getElementById('catSearchClearBtn');
+    if (btn) { btn.style.display = (val && val.length > 0) ? 'inline' : 'none'; }
 }
 
 function clearCatSearch() {
-    const input = document.getElementById('catSearchInput');
-    if (input) {
-        input.value = '';
-        toggleCatSearchClearBtn('');
-        searchWpCategories('');
-        input.focus();
-    }
+    var input = document.getElementById('catSearchInput');
+    if (!input) { return; }
+    input.value = '';
+    toggleCatSearchClearBtn('');
+    searchWpCategories('');
+    input.focus();
 }
 
 function toggleSelectAllCats(master) {
-    const checks = document.querySelectorAll('.cat-row-check');
-    checks.forEach(c => c.checked = master.checked);
+    var checks = document.querySelectorAll('.cat-row-check');
+    for (var i = 0; i < checks.length; i++) { checks[i].checked = master.checked; }
+}
+
+function dtCatRows() {
+    return document.querySelectorAll('#categoriesTableBody tr[id^="cat-row-"]');
 }
 
 function searchWpCategories(q) {
-    const rows = document.querySelectorAll('#categoriesTableBody tr:not(.inline-edit-row)');
-    const term = (q || '').toLowerCase().trim();
-    rows.forEach(r => {
-        const txt = r.textContent.toLowerCase();
-        r.style.display = txt.includes(term) ? '' : 'none';
-    });
+    var term = String(q || '').toLowerCase().trim();
+    var rows = dtCatRows();
+    for (var i = 0; i < rows.length; i++) {
+        rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(term) !== -1 ? '' : 'none';
+    }
 }
 
-function filterCatByParent(parent) {
-    const rows = document.querySelectorAll('#categoriesTableBody tr:not(.inline-edit-row)');
-    rows.forEach(r => {
-        if (!parent) {
-            r.style.display = '';
-        } else {
-            const txt = r.textContent.toLowerCase();
-            r.style.display = txt.includes(parent.toLowerCase()) ? '' : 'none';
+/** Status filter on real row data, not on a text match against the whole row. */
+function filterCatByStatus(mode) {
+    var rows = dtCatRows();
+    for (var i = 0; i < rows.length; i++) {
+        var r = rows[i];
+        var show = true;
+        if (mode === 'active' || mode === 'inactive') {
+            show = (r.getAttribute('data-cat-status') === mode);
+        } else if (mode === 'empty') {
+            show = (parseInt(r.getAttribute('data-cat-count'), 10) || 0) === 0;
         }
-    });
-}
-
-function autoSlugifyCat(val) {
-    const slugInput = document.getElementById('catSlug');
-    if (slugInput) {
-        slugInput.value = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        r.style.display = show ? '' : 'none';
     }
 }
 
-function handleAddNewCategory(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    const name = document.getElementById('catName')?.value?.trim();
-    const slug = document.getElementById('catSlug')?.value?.trim() || autoSlugifyCat(name);
-    const desc = document.getElementById('catDesc')?.value?.trim();
-    const thumbImg = document.getElementById('catThumbPreview')?.src || '/assets/images/product1.png';
+/**
+ * Quick edit: name, slug and status only, because those are the columns this
+ * row shows. The row is repainted from the server's response, after it confirms
+ * the update — it used to be repainted first and reported saved regardless.
+ */
+function openQuickEditCat(id) {
+    var row = document.getElementById('cat-row-' + id);
+    if (!row) { return; }
+    var next = row.nextElementSibling;
+    if (next && next.classList.contains('inline-edit-row')) { next.remove(); return; }
 
-    if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Please enter a category name');
-        return;
-    }
+    var name = row.getAttribute('data-cat-name') || '';
+    var slug = row.getAttribute('data-cat-slug') || '';
+    var status = row.getAttribute('data-cat-status') || 'active';
 
-    const params = new URLSearchParams();
-    params.append('action', 'create');
-    params.append('name', name);
-    params.append('slug', slug);
-    params.append('description', desc);
-    params.append('image', thumbImg);
+    var tr = document.createElement('tr');
+    tr.className = 'inline-edit-row';
+    var td = document.createElement('td');
+    td.colSpan = 7;
+    td.innerHTML =
+        '<div style="display:grid; grid-template-columns:1fr 1fr 120px auto; gap:8px; align-items:flex-end; padding:10px 14px;">'
+        + '<div><label style="font-size:10.5px; font-weight:700; display:block; margin-bottom:2px;">Category Name</label>'
+        + '<input type="text" id="qe-name-' + id + '" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;"></div>'
+        + '<div><label style="font-size:10.5px; font-weight:700; display:block; margin-bottom:2px;">URL Slug</label>'
+        + '<input type="text" id="qe-slug-' + id + '" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;"></div>'
+        + '<div><label style="font-size:10.5px; font-weight:700; display:block; margin-bottom:2px;">Status</label>'
+        + '<select id="qe-status-' + id + '" style="height:28px; width:100%; font-size:11.5px; border:1px solid #8A681F; border-radius:4px;">'
+        + '<option value="active">Active</option><option value="inactive">Hidden</option></select></div>'
+        + '<div style="display:flex; gap:5px;">'
+        + '<button type="button" class="dt-btn-action-sm gold" id="qe-save-' + id + '" style="height:28px; font-size:11px; padding:0 12px; font-weight:700;">Update</button>'
+        + '<button type="button" class="dt-btn-action-sm" id="qe-cancel-' + id + '" style="height:28px; font-size:11px; padding:0 10px; background:#f6f7f7; border:1px solid #c3c4c7; color:#3B352E;">Cancel</button>'
+        + '</div></div>';
+    tr.appendChild(td);
+    row.after(tr);
 
-    fetch('/api/categories.php', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" saved to database!`);
-                setTimeout(() => window.location.reload(), 500);
-            } else {
-                if (typeof window.showToast === 'function') window.showToast(`❌ Error: ${data.message || 'Could not save'}`);
-            }
-        })
-        .catch(err => {
-            if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" created!`);
-            setTimeout(() => window.location.reload(), 500);
-        });
-
-    document.getElementById('wpAddCatForm')?.reset();
-}
-
-function deleteCatRow(id) {
-    if (!confirm('Are you sure you want to delete this category from database?')) return;
-    const row = document.getElementById(`cat-row-${id}`);
-    
-    const params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-    fetch('/api/categories.php', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (row) row.remove();
-                if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
-            }
-        })
-        .catch(() => {
-            if (row) row.remove();
-            if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted');
-        });
-}
-
-function handleCatBulkAction() {
-    const action = document.getElementById('catBulkActionSelect')?.value;
-    if (!action) return;
-    const selected = document.querySelectorAll('.cat-row-check:checked');
-    if (selected.length === 0) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Select at least one category');
-        return;
-    }
-
-    const ids = Array.from(selected).map(c => c.value);
-
-    if (action === 'delete') {
-        if (confirm(`Delete ${selected.length} categories permanently from database?`)) {
-            const params = new URLSearchParams();
-            params.append('action', 'bulk_delete');
-            params.append('ids', ids.join(','));
-            fetch('/api/categories.php', { method: 'POST', body: params })
-                .then(res => res.json())
-                .then(data => {
-                    selected.forEach(c => {
-                        const row = c.closest('tr');
-                        if (row) row.remove();
-                    });
-                    if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories deleted from database!`);
-                })
-                .catch(() => {
-                    selected.forEach(c => {
-                        const row = c.closest('tr');
-                        if (row) row.remove();
-                    });
-                    if (typeof window.showToast === 'function') window.showToast(`🗑️ ${selected.length} categories removed`);
-                });
-        }
-    } else {
-        if (typeof window.showToast === 'function') window.showToast(`Bulk action "${action}" applied to ${selected.length} categories!`);
-    }
-}
-
-function openQuickEditCat(id, name, slug, desc, hsn) {
-    const row = document.getElementById(`cat-row-${id}`);
-    if (!row) return;
-
-    if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
-        row.nextElementSibling.remove();
-        return;
-    }
-
-    const editTr = document.createElement('tr');
-    editTr.className = 'inline-edit-row';
-    editTr.innerHTML = `
-        <td colspan="7">
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:8px; align-items:flex-end; padding:10px 14px; background:#FAF5E8; border:1px solid #D4AF37; border-radius:6px; margin:4px 0;">
-                <div>
-                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">Category Name</label>
-                    <input type="text" id="qe-name-${id}" value="${name}" style="height:28px; width:100%; font-size:11.5px; font-weight:600; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
-                </div>
-                <div>
-                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">URL Slug</label>
-                    <input type="text" id="qe-slug-${id}" value="${slug}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
-                </div>
-                <div>
-                    <label style="font-size:10.5px; font-weight:700; color:#181512; display:block; margin-bottom:2px;">HSN / GST</label>
-                    <input type="text" id="qe-hsn-${id}" value="${hsn}" style="height:28px; width:100%; font-size:11.5px; padding:0 8px; border:1px solid #8A681F; border-radius:4px; box-sizing:border-box;">
-                </div>
-                <div style="display:flex; gap:5px;">
-                    <button type="button" class="dt-btn-action-sm gold" onclick="saveQuickEditCat(${id})" style="height:28px; font-size:11px; padding:0 12px; font-weight:700;">Update</button>
-                    <button type="button" class="dt-btn-action-sm" onclick="this.closest('tr').remove()" style="height:28px; font-size:11px; padding:0 10px; background:#f6f7f7; border:1px solid #c3c4c7; color:#3B352E;">Cancel</button>
-                </div>
-            </div>
-        </td>
-    `;
-    row.after(editTr);
+    // Values are set as properties, never interpolated into HTML, so a quote or
+    // an angle bracket in a category name cannot break out of the markup.
+    document.getElementById('qe-name-' + id).value = name;
+    document.getElementById('qe-slug-' + id).value = slug;
+    document.getElementById('qe-status-' + id).value = (status === 'inactive') ? 'inactive' : 'active';
+    document.getElementById('qe-cancel-' + id).addEventListener('click', function () { tr.remove(); });
+    document.getElementById('qe-save-' + id).addEventListener('click', function () { saveQuickEditCat(id); });
 }
 
 function saveQuickEditCat(id) {
-    const name = document.getElementById(`qe-name-${id}`)?.value?.trim();
-    const slug = document.getElementById(`qe-slug-${id}`)?.value?.trim();
-    const row = document.getElementById(`cat-row-${id}`);
-    if (row && name) {
-        const link = row.querySelector('td:nth-child(3) strong a');
-        if (link) link.textContent = name;
-        const slugCell = row.querySelector('td:nth-child(5) code');
-        if (slugCell) slugCell.textContent = slug;
+    var nameEl = document.getElementById('qe-name-' + id);
+    var slugEl = document.getElementById('qe-slug-' + id);
+    var statusEl = document.getElementById('qe-status-' + id);
+    var saveBtn = document.getElementById('qe-save-' + id);
+    var row = document.getElementById('cat-row-' + id);
+    if (!nameEl || !row) { return; }
 
-        if (row.nextElementSibling && row.nextElementSibling.classList.contains('inline-edit-row')) {
-            row.nextElementSibling.remove();
-        }
-
-        const params = new URLSearchParams();
-        params.append('action', 'update');
-        params.append('id', id);
-        params.append('name', name);
-        params.append('slug', slug);
-        fetch('/api/categories.php', { method: 'POST', body: params })
-            .then(res => res.json())
-            .then(data => {
-                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated in database!`);
-            })
-            .catch(() => {
-                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated!`);
-            });
+    var name = String(nameEl.value || '').trim();
+    if (!name) { dtCatToast('Enter the category name.'); nameEl.focus(); return; }
+    if (typeof window.dtCatPost !== 'function') {
+        dtCatToast('The category script did not load, so nothing was saved. Reload the page.');
+        return;
     }
+
+    var status = statusEl ? statusEl.value : 'active';
+    if (saveBtn) { saveBtn.disabled = true; }
+
+    window.dtCatPost({
+        action: 'update',
+        id: id,
+        name: name,
+        slug: String(slugEl ? slugEl.value : '').trim(),
+        status: status
+    }).then(function (res) {
+        dtCatToast(res.message || 'Category updated.');
+        // Renaming re-labels products and can change counts, so the list is
+        // reloaded from the database rather than patched in place.
+        setTimeout(function () { window.location.reload(); }, 700);
+    }).catch(function (err) {
+        if (saveBtn) { saveBtn.disabled = false; }
+        dtCatToast(err && err.message ? err.message : 'The category was not updated.');
+    });
 }
 
-// Live search filter in categories table
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.querySelector('input[placeholder*="Search categories"]');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            const rows = document.querySelectorAll('#the-list tr[id^="cat-row-"]');
-            rows.forEach(r => {
-                const text = r.textContent.toLowerCase();
-                r.style.display = (text.indexOf(query) !== -1) ? '' : 'none';
-            });
-        });
+/**
+ * Bulk delete. The API keeps any category that still holds products and returns
+ * both counts, so the page reloads from the database instead of removing the
+ * checked rows optimistically — the old version removed them even from .catch().
+ */
+function handleCatBulkAction() {
+    var sel = document.getElementById('catBulkActionSelect');
+    var action = sel ? sel.value : '';
+    if (!action) { dtCatToast('Choose a bulk action first.'); return; }
+
+    var checked = document.querySelectorAll('.cat-row-check:checked');
+    if (checked.length === 0) { dtCatToast('Select at least one category.'); return; }
+
+    var ids = [];
+    for (var i = 0; i < checked.length; i++) { ids.push(parseInt(checked[i].value, 10) || 0); }
+
+    if (action !== 'delete') { dtCatToast('"' + action + '" is not a bulk action this page supports.'); return; }
+    if (!window.confirm('Delete ' + ids.length + ' categor' + (ids.length === 1 ? 'y' : 'ies') + '? Any that still hold products will be kept.')) { return; }
+    if (typeof window.dtCatPost !== 'function') {
+        dtCatToast('The category script did not load, so nothing was deleted. Reload the page.');
+        return;
     }
-});
+
+    window.dtCatPost({ action: 'bulk_delete', ids: ids }).then(function (res) {
+        dtCatToast(res.message || 'Done.');
+        setTimeout(function () { window.location.reload(); }, 900);
+    }).catch(function (err) {
+        dtCatToast(err && err.message ? err.message : 'No categories were deleted.');
+    });
+}
 </script>
-<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

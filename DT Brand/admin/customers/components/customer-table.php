@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody id="dtCustomersTableBody">
-            <!-- Dynamically populated by customer-list.js -->
+            <!-- Populated by customer-list.js from window.dbCustomersData -->
             <tr>
                 <td colspan="10" style="text-align:center; padding:40px; color:#8C8478;">
                     <div style="display:inline-flex; align-items:center; gap:8px; font-weight:700;">
@@ -45,15 +45,12 @@
     </table>
 
     <!-- ══ PAGINATION CONTROLS ══ -->
+    <!-- Both the count and the page buttons are written by customer-list.js from
+         the real row count. They used to be hardcoded to "1-10 of 4,820" with
+         buttons for pages 1 and 2 only, so every page past the second was
+         unreachable and the total was fiction until the script overwrote it. -->
     <div class="dt-cust-pagination">
-        <div id="dtCustPaginationInfo">
-            Showing <strong>1–10</strong> of <strong>4,820</strong> Customers
-        </div>
-        <div class="dt-cust-pages-wrap">
-            <button type="button" class="dt-cust-page-btn" onclick="renderCustomersTable(1)" title="First Page">«</button>
-            <button type="button" class="dt-cust-page-btn active" onclick="renderCustomersTable(1)">1</button>
-            <button type="button" class="dt-cust-page-btn" onclick="renderCustomersTable(2)">2</button>
-            <button type="button" class="dt-cust-page-btn" onclick="renderCustomersTable(1)" title="Next Page">»</button>
-        </div>
+        <div id="dtCustPaginationInfo">&nbsp;</div>
+        <div class="dt-cust-pages-wrap" id="dtCustPagesWrap"></div>
     </div>
 </div>

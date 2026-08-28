@@ -11,87 +11,80 @@ require_once __DIR__ . '/../../src/CustomerManager.php';
 use DTBrand\Database;
 use DTBrand\CustomerManager;
 
-$customer_id = isset($_GET['id']) ? htmlspecialchars(trim($_GET['id'])) : '1';
+$customer_id_raw = isset($_GET['id']) ? trim((string)$_GET['id']) : '';
+$customer_id = (int)preg_replace('/[^0-9]/', '', $customer_id_raw);
+
+$dbCust = $customer_id > 0 ? CustomerManager::getById($customer_id) : null;
+
+// A missing customer used to fall through to a complete sample profile
+// ("Pooja Sharma", a Rohini address, a date of birth) in an editable form. Hand
+// the error to view.php, which states plainly that nothing matches the link.
+if ($dbCust === null) {
+    header('Location: /admin/customers/view.php?id=' . urlencode($customer_id_raw));
+    exit;
+}
+
 $page_title = "Edit Customer #" . $customer_id;
 $active_nav = "customers";
 $active_subnav = "edit";
 
-$cust = null;
+// Built only from columns that exist on the customers table. Every field below
+// used to be overwritten with a literal even when the row was found: a real
+// customer's edit form showed 'gender' => 'Female', a 1992 date of birth,
+// 'city' => 'Surat', pincode 395002, 'tier' => 'vip', "6 orders" and
+// "Rs 28,450" spent, plus a staff memo reading "Customer profile synchronized
+// with live MySQL database."
+$fullName = trim((string)($dbCust['name'] ?? ''));
+$parts  = preg_split('/\s+/', $fullName, 2, PREG_SPLIT_NO_EMPTY) ?: [];
+$fName  = $parts[0] ?? '';
+$lName  = $parts[1] ?? '';
+
+// The customers table has no address columns -- a shopper's street address
+// lives in the `addresses` table, keyed by customer_id. Read the default one so
+// the address block can show the real thing instead of a placeholder.
+$defaultAddress = null;
 $pdo = Database::getConnection();
 if ($pdo !== null && !Database::isMockMode()) {
     try {
-        $numId = (int)preg_replace('/[^0-9]/', '', $customer_id);
-        $stmt = $pdo->prepare("SELECT * FROM customers WHERE id = ? OR phone = ? LIMIT 1");
-        $stmt->execute([$numId, $customer_id]);
-        $dbCust = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($dbCust) {
-            $fullName = trim($dbCust['name'] ?? 'Pooja Sharma');
-            $parts = explode(' ', $fullName, 2);
-            $fName = $parts[0] ?? 'Pooja';
-            $lName = $parts[1] ?? 'Sharma';
-
-            $cust = [
-                'first_name' => $fName,
-                'last_name' => $lName,
-                'initial' => strtoupper(substr($fName, 0, 1) . substr($lName, 0, 1)),
-                'avatarColor' => 'gold',
-                'email' => $dbCust['email'] ?? 'customer@dtbrands.in',
-                'email_verified' => true,
-                'phone' => $dbCust['phone'] ?? '+91 98110 29381',
-                'gender' => 'Female',
-                'dob' => '1992-08-14',
-                'anniversary' => '',
-                'language' => 'Hindi',
-                'type' => ucfirst($dbCust['type'] ?? 'Retail Verified'),
-                'status' => strtolower($dbCust['status'] ?? 'active'),
-                'tier' => 'vip',
-                'address' => 'Plot No. 42, Pocket B-4, Sector 11',
-                'landmark' => 'Near Central Handloom Depot',
-                'city' => 'Surat',
-                'state' => 'GJ',
-                'pincode' => '395002',
-                'orders' => 6,
-                'spent' => '₹28,450',
-                'tags' => ['VIP Customer', 'Pure Silk Verified'],
-                'notes' => 'Customer profile synchronized with live MySQL database.',
-                'opt_wa' => true,
-                'opt_sms' => true,
-                'opt_email' => true
-            ];
-        }
+        $stmt = $pdo->prepare("
+            SELECT `recipient_name`, `phone`, `address_line1`, `address_line2`,
+                   `city`, `state`, `pincode`, `address_type`
+            FROM `addresses`
+            WHERE `customer_id` = ?
+            ORDER BY `is_default` DESC, `id` ASC
+            LIMIT 1
+        ");
+        $stmt->execute([$customer_id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($row) $defaultAddress = $row;
     } catch (\Exception $e) {}
 }
 
-if (!$cust) {
-    $cust = [
-        'first_name' => 'Pooja',
-        'last_name' => 'Sharma',
-        'initial' => 'PS',
-        'avatarColor' => 'gold',
-        'email' => 'pooja.sharma92@gmail.com',
-        'email_verified' => true,
-        'phone' => '+91 98110 29381',
-        'gender' => 'Female',
-        'dob' => '1992-08-14',
-        'anniversary' => '2018-11-25',
-        'language' => 'Hindi',
-        'type' => 'Retail Verified',
-        'status' => 'active',
-        'tier' => 'vip',
-        'address' => 'Plot No. 42, Pocket B-4, Sector 11',
-        'landmark' => 'Opposite Rohini West Metro Station',
-        'city' => 'Delhi',
-        'state' => 'DL',
-        'pincode' => '110085',
-        'orders' => 6,
-        'spent' => '₹28,450',
-        'tags' => ['VIP High-Value', 'Saree Lover', 'Frequent Buyer'],
-        'notes' => 'Customer prefers premium gold gift packaging for all wedding sari orders. Always dispatch with DT Brand\'s silk mark certificate.',
-        'opt_wa' => true,
-        'opt_sms' => true,
-        'opt_email' => true
-    ];
-}
+$cust = [
+    'first_name'  => $fName,
+    'last_name'   => $lName,
+    'initial'     => strtoupper(substr($fName, 0, 1) . substr($lName, 0, 1)) ?: '?',
+    'avatarColor' => 'gold',
+    'email'       => (string)($dbCust['email'] ?? ''),
+    'phone'       => (string)($dbCust['phone'] ?? ''),
+    'type'        => (string)($dbCust['type'] ?? 'retail'),
+    'status'      => strtolower((string)($dbCust['status'] ?? 'active')),
+    'tier'        => (string)($dbCust['tier'] ?? ''),
+    'city'        => (string)($dbCust['city'] ?? ''),
+    'state'       => (string)($dbCust['state'] ?? ''),
+    'gstin'       => (string)($dbCust['gstin'] ?? ''),
+    'pan'         => (string)($dbCust['pan'] ?? ''),
+    'credit_limit'=> (float)($dbCust['credit_limit'] ?? 0),
+    'orders'      => (int)($dbCust['total_orders'] ?? 0),
+    'spent'       => '₹' . number_format((float)($dbCust['lifetime_spend'] ?? 0)),
+    // The customers table has no address columns; these come from `addresses`
+    // and are displayed read-only because no admin endpoint writes them.
+    'address'     => $defaultAddress['address_line1'] ?? '',
+    'landmark'    => $defaultAddress['address_line2'] ?? '',
+    'pincode'     => $defaultAddress['pincode'] ?? '',
+    // tier is the only classification with real storage; there is no tags table.
+    'tags'        => trim((string)($dbCust['tier'] ?? '')) !== '' ? [trim((string)$dbCust['tier'])] : [],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -360,13 +353,14 @@ if (!$cust) {
                         <h1 class="dt-cust-title">
                             <span>Edit Customer Profile</span>
                             <span class="dt-cust-badge gold">#<?php echo $customer_id; ?></span>
-                            <?php if (!empty($cust['email'])): ?>
-                                <span class="dt-status-pill active" style="font-size:0.65rem;">● Email Verified</span>
-                            <?php else: ?>
+                            <?php /* Was a green "● Email Verified" pill shown whenever an email
+                                     existed. Nothing verifies an address, so a value typed in by
+                                     staff was presented as confirmed by the customer. */ ?>
+                            <?php if (empty($cust['email'])): ?>
                                 <span class="dt-status-pill inactive" style="font-size:0.65rem; background:#FEF3C7; color:#B45309; border-color:#FCD34D;">⚠️ Missing Email</span>
                             <?php endif; ?>
                         </h1>
-                        <p class="dt-cust-subtitle">Update contact details, verified email credentials, shipping address, customer tier, and staff memos.</p>
+                        <p class="dt-cust-subtitle">Update contact details, account type, tier and standing. Addresses are managed on the dossier.</p>
                     </div>
                     <div class="dt-cust-actions">
                         <a href="/admin/customers/index.php" class="dt-btn dt-btn-pale">← Customer List</a>
@@ -382,13 +376,21 @@ if (!$cust) {
                         </div>
                         <div>
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <strong class="dt-hero-title"><?php echo $cust['first_name'] . ' ' . $cust['last_name']; ?></strong>
-                                <span class="dt-status-pill vip" style="font-size:0.62rem; padding:2px 7px; background:linear-gradient(135deg, #B8860B 0%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F;">★ VIP</span>
+                                <strong class="dt-hero-title"><?php echo htmlspecialchars(trim($cust['first_name'] . ' ' . $cust['last_name'])); ?></strong>
+                                <?php /* A hardcoded "★ VIP" pill used to sit here on every customer,
+                                         next to an "Registered Member" line, regardless of tier or
+                                         standing. Show the real tier and the real status instead. */ ?>
+                                <?php if (trim($cust['tier']) !== ''): ?>
+                                    <span class="dt-status-pill vip" style="font-size:0.62rem; padding:2px 7px; background:linear-gradient(135deg, #B8860B 0%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F;"><?php echo htmlspecialchars(strtoupper($cust['tier'])); ?></span>
+                                <?php endif; ?>
                             </div>
                             <div class="dt-hero-subtitle">
                                 <span>Customer Account #<?php echo $customer_id; ?></span>
                                 <span style="color:#D4AF37; margin:0 4px;">•</span>
-                                <span style="color:#CBD5E1;">Registered Member</span>
+                                <span style="color:#CBD5E1;"><?php echo htmlspecialchars(ucfirst($cust['type'])); ?> · <?php
+                                    echo $cust['status'] === 'active' ? 'Active'
+                                       : ($cust['status'] === 'pending' ? 'Awaiting Approval' : 'Suspended');
+                                ?></span>
                             </div>
                         </div>
                     </div>
@@ -402,7 +404,7 @@ if (!$cust) {
                             <span class="dt-hero-metric-label">Total Orders</span>
                             <strong class="dt-hero-metric-white"><?php echo $cust['orders']; ?> Placed</strong>
                         </div>
-                        <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $cust['phone']); ?>?text=Hello%20<?php echo urlencode($cust['first_name']); ?>" target="_blank" class="dt-btn dt-btn-emerald dt-btn-sm" style="padding:6px 12px; font-size:0.75rem;">
+                        <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $cust['phone']); ?>?text=<?php echo rawurlencode('Namaste ' . $cust['first_name']); ?>" target="_blank" class="dt-btn dt-btn-emerald dt-btn-sm" style="padding:6px 12px; font-size:0.75rem;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#FFFFFF" stroke-width="2.3"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             <span>WhatsApp</span>
                         </a>
@@ -411,7 +413,15 @@ if (!$cust) {
 
                 <!-- Main Form Card -->
                 <div class="dt-edit-card">
-                    <form onsubmit="event.preventDefault(); window.showToast('✓ Customer Profile Saved Successfully!'); setTimeout(() => window.location.href = '/admin/customers/view.php?id=<?php echo $customer_id; ?>', 1000);">
+                    <?php /* This form used to carry an inline onsubmit that toasted
+                             "Customer Profile Saved Successfully!" and navigated to the
+                             dossier after one second without contacting the server at
+                             all. Because an inline handler runs alongside (and before)
+                             the addEventListener one further down, it also defeated the
+                             real save: the redirect fired whether or not the write had
+                             been accepted, so a rejected update looked exactly like a
+                             stored one. The single save path is now the submit listener. */ ?>
+                    <form id="dtCustEditForm" data-customer-id="<?php echo (int)$customer_id; ?>">
                         
                         <!-- ══ SECTION 1: PERSONAL & CONTACT INFORMATION ══ -->
                         <div class="dt-edit-section">
@@ -448,45 +458,17 @@ if (!$cust) {
                                     </div>
                                 </div>
 
-                                <!-- Preferred Language (All Official Indian Languages) -->
+                                <!-- Preferred Language -->
+                                <?php /* This was a 40-option select covering every scheduled Indian
+                                         language, bound to a 'language' key the loader invented. The
+                                         customers table has no language column and nothing in the
+                                         project reads a preferred language, so every choice an admin
+                                         made here was discarded on save. Replaced with the account
+                                         type's real GST identifiers, which are stored. */ ?>
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Preferred Communication Language</label>
-                                    <select id="custEditLanguage" name="language" class="dt-cust-select" style="width:100%; height:38px;">
-                                        <optgroup label="── Primary Commercial Languages ──">
-                                            <option value="Hindi" <?php echo ($cust['language'] === 'Hindi') ? 'selected' : ''; ?>>Hindi (हिंदी)</option>
-                                            <option value="Gujarati" <?php echo ($cust['language'] === 'Gujarati') ? 'selected' : ''; ?>>Gujarati (ગુજરાતી)</option>
-                                            <option value="English" <?php echo ($cust['language'] === 'English') ? 'selected' : ''; ?>>English (International / India)</option>
-                                            <option value="Hinglish" <?php echo ($cust['language'] === 'Hinglish') ? 'selected' : ''; ?>>Hinglish (Hindi / English)</option>
-                                            <option value="Marathi" <?php echo ($cust['language'] === 'Marathi') ? 'selected' : ''; ?>>Marathi (मराठी)</option>
-                                            <option value="Marwari" <?php echo ($cust['language'] === 'Marwari') ? 'selected' : ''; ?>>Marwari / Rajasthani (मारवाड़ी)</option>
-                                        </optgroup>
-                                        <optgroup label="── South Indian Languages ──">
-                                            <option value="Tamil" <?php echo ($cust['language'] === 'Tamil') ? 'selected' : ''; ?>>Tamil (தமிழ்)</option>
-                                            <option value="Telugu" <?php echo ($cust['language'] === 'Telugu') ? 'selected' : ''; ?>>Telugu (తెలుగు)</option>
-                                            <option value="Kannada" <?php echo ($cust['language'] === 'Kannada') ? 'selected' : ''; ?>>Kannada (ಕನ್ನಡ)</option>
-                                            <option value="Malayalam" <?php echo ($cust['language'] === 'Malayalam') ? 'selected' : ''; ?>>Malayalam (മലയാളം)</option>
-                                        </optgroup>
-                                        <optgroup label="── East &amp; North-East Languages ──">
-                                            <option value="Bengali" <?php echo ($cust['language'] === 'Bengali') ? 'selected' : ''; ?>>Bengali / Bangla (বাংলা)</option>
-                                            <option value="Odia" <?php echo ($cust['language'] === 'Odia') ? 'selected' : ''; ?>>Odia / Oriya (ଓଡ଼ିଆ)</option>
-                                            <option value="Assamese" <?php echo ($cust['language'] === 'Assamese') ? 'selected' : ''; ?>>Assamese (অসমীয়া)</option>
-                                            <option value="Manipuri" <?php echo ($cust['language'] === 'Manipuri') ? 'selected' : ''; ?>>Manipuri (মৈতৈলোন্)</option>
-                                            <option value="Bodo" <?php echo ($cust['language'] === 'Bodo') ? 'selected' : ''; ?>>Bodo (बोडो)</option>
-                                            <option value="Santali" <?php echo ($cust['language'] === 'Santali') ? 'selected' : ''; ?>>Santali (संथाली)</option>
-                                        </optgroup>
-                                        <optgroup label="── North &amp; West Indian Languages ──">
-                                            <option value="Punjabi" <?php echo ($cust['language'] === 'Punjabi') ? 'selected' : ''; ?>>Punjabi (ਪੰਜਾਬੀ)</option>
-                                            <option value="Bhojpuri" <?php echo ($cust['language'] === 'Bhojpuri') ? 'selected' : ''; ?>>Bhojpuri (भोजपुरी)</option>
-                                            <option value="Maithili" <?php echo ($cust['language'] === 'Maithili') ? 'selected' : ''; ?>>Maithili (मैथिली)</option>
-                                            <option value="Urdu" <?php echo ($cust['language'] === 'Urdu') ? 'selected' : ''; ?>>Urdu (اردو)</option>
-                                            <option value="Sindhi" <?php echo ($cust['language'] === 'Sindhi') ? 'selected' : ''; ?>>Sindhi (सिंधी / سنڌي)</option>
-                                            <option value="Konkani" <?php echo ($cust['language'] === 'Konkani') ? 'selected' : ''; ?>>Konkani (कोंकणी)</option>
-                                            <option value="Dogri" <?php echo ($cust['language'] === 'Dogri') ? 'selected' : ''; ?>>Dogri (डोगरी)</option>
-                                            <option value="Kashmiri" <?php echo ($cust['language'] === 'Kashmiri') ? 'selected' : ''; ?>>Kashmiri (कश्मीरी / کٲશُر)</option>
-                                            <option value="Nepali" <?php echo ($cust['language'] === 'Nepali') ? 'selected' : ''; ?>>Nepali (नेपाली)</option>
-                                            <option value="Sanskrit" <?php echo ($cust['language'] === 'Sanskrit') ? 'selected' : ''; ?>>Sanskrit (संस्कृतम्)</option>
-                                        </optgroup>
-                                    </select>
+                                    <label class="dt-form-label">GSTIN (Trade Accounts)</label>
+                                    <input type="text" id="custEditGstin" name="gstin" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['gstin']); ?>" placeholder="15-character GSTIN" maxlength="15" style="text-transform:uppercase;">
+                                    <p style="font-size:0.68rem; color:#78716C; margin:5px 0 0 0;">Required for wholesale and reseller invoicing.</p>
                                 </div>
                             </div>
 
@@ -495,9 +477,11 @@ if (!$cust) {
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">
                                         <span>Customer Email Address</span>
-                                        <?php if (!empty($cust['email'])): ?>
-                                            <span style="color:#15803D; font-size:0.65rem; font-weight:800;">✓ Verified</span>
-                                        <?php else: ?>
+                                        <?php /* This said "✓ Verified" whenever an email was present.
+                                                 Nothing verifies it: there is no email_verified column
+                                                 and no mailer in the project, so an address typed in by
+                                                 staff was labelled confirmed by the customer. */ ?>
+                                        <?php if (empty($cust['email'])): ?>
                                             <span style="color:#B45309; font-size:0.65rem; font-weight:800;">⚠️ Missing / Unlinked</span>
                                         <?php endif; ?>
                                     </label>
@@ -509,8 +493,11 @@ if (!$cust) {
                                     <!-- Email Action / Missing State Box -->
                                     <?php if (!empty($cust['email'])): ?>
                                         <div class="dt-email-status-box verified">
-                                            <span>✓ Invoices and tracking links are dispatched to this email.</span>
-                                            <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="padding:2px 8px; font-size:0.68rem;" onclick="window.showToast('✓ Verification link sent to <?php echo htmlspecialchars($cust['email']); ?>!')">Resend Verification</button>
+                                            <?php /* Was "Invoices and tracking links are dispatched to this
+                                                     email", next to a Resend Verification button that only
+                                                     raised a toast. No outbound mail is configured anywhere
+                                                     in the project, so nothing was ever dispatched. */ ?>
+                                            <span>On file for records. Order updates go out over WhatsApp — no email is sent from this site.</span>
                                         </div>
                                     <?php else: ?>
                                         <div class="dt-email-status-box missing">
@@ -522,72 +509,80 @@ if (!$cust) {
                             </div>
                         </div>
 
-                        <!-- ══ SECTION 2: SHIPPING & BILLING ADDRESS ══ -->
+                        <!-- ══ SECTION 2: LOCATION & DEFAULT SHIPPING ADDRESS ══ -->
+                        <?php
+                        /*
+                         * This section used to present a country picker, a landmark, a street
+                         * address and a pincode as editable inputs. None of them can be saved:
+                         * the customers table has no address columns, a shopper address lives in
+                         * the `addresses` table, and /api/customers.php writes neither. So an
+                         * admin correcting a delivery address was told the profile had saved
+                         * while the courier kept the old one. Worse, the loader filled them with
+                         * an invented Rohini address for every customer.
+                         *
+                         * The real default address is now shown read-only. City and State stay
+                         * editable because those two ARE columns on customers (GST place of
+                         * supply and shipping zone) and are included in the save.
+                         */
+                        $addrLine = trim((string)$cust['address']);
+                        $addrMark = trim((string)$cust['landmark']);
+                        $addrPin  = trim((string)$cust['pincode']);
+                        $hasAddr  = ($addrLine !== '' || $addrMark !== '' || $addrPin !== '');
+                        ?>
                         <div class="dt-edit-section">
                             <h3 class="dt-edit-section-title">
                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span>Default Shipping &amp; Courier Address</span>
+                                <span>Location &amp; Default Shipping Address</span>
                             </h3>
 
                             <div class="dt-form-grid-2">
                                 <div class="dt-form-group">
-                                    <label class="dt-form-label">Country / Destination (195+ World Markets) <span style="color:#DC2626;">*</span></label>
-                                    <div class="dt-country-picker-wrap" id="dtEditCountryPicker" data-selected-code="<?php echo !empty($cust['country_code']) ? htmlspecialchars($cust['country_code']) : 'IN'; ?>">
-                                        <input type="hidden" name="country_code" class="dt-country-hidden-val" value="<?php echo !empty($cust['country_code']) ? htmlspecialchars($cust['country_code']) : 'IN'; ?>">
-                                        <div class="dt-country-trigger">
-                                            <div class="dt-country-trigger-left">
-                                                <span class="dt-selected-flag">🇮🇳</span>
-                                                <span class="dt-selected-name">India (Bharat)</span>
-                                            </div>
-                                            <svg class="dt-country-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                        </div>
-                                        <div class="dt-country-dropdown">
-                                            <div class="dt-country-search-box">
-                                                <input type="text" class="dt-country-search-input" placeholder="Search 195+ countries (e.g. India, USA, UAE, UK)..." autocomplete="off" style="padding-left:10px;">
-                                            </div>
-                                            <div class="dt-country-list">
-                                                <!-- Dynamically populated & filtered by country-picker.js -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="dt-form-group">
-                                    <label class="dt-form-label">Nearby Landmark</label>
-                                    <input type="text" id="custEditLandmark" name="landmark" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['landmark']); ?>" placeholder="e.g. Opposite Metro Station, Near City Mall">
-                                </div>
-                            </div>
-
-                            <div class="dt-form-group" style="margin-top:14px;">
-                                <label class="dt-form-label">Street Address / House No.</label>
-                                <input type="text" id="custEditAddress" name="address" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['address']); ?>" placeholder="House/Flat No., Building Name, Street">
-                            </div>
-
-                            <div class="dt-form-grid-3" style="margin-top:14px;">
-                                <div class="dt-form-group">
                                     <label class="dt-form-label">City</label>
-                                    <input type="text" id="custEditCity" name="city" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['city']); ?>" placeholder="e.g. Delhi">
+                                    <input type="text" id="custEditCity" name="city" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['city']); ?>" placeholder="e.g. Surat">
                                 </div>
 
                                 <div class="dt-form-group">
                                     <label id="custEditStateLabel" class="dt-form-label dt-state-label">State / Province</label>
-                                    <select id="custEditState" name="state" class="dt-cust-select dt-state-select" data-initial-state="<?php echo htmlspecialchars($cust['state']); ?>" style="width:100%; height:38px;">
-                                        <!-- Dynamically populated by country-picker.js -->
-                                        <option value="DL" <?php echo $cust['state'] === 'DL' ? 'selected' : ''; ?>>Delhi NCR</option>
-                                        <option value="GJ" <?php echo $cust['state'] === 'GJ' ? 'selected' : ''; ?>>Gujarat</option>
-                                        <option value="MH" <?php echo $cust['state'] === 'MH' ? 'selected' : ''; ?>>Maharashtra</option>
-                                        <option value="WB" <?php echo $cust['state'] === 'WB' ? 'selected' : ''; ?>>West Bengal</option>
-                                        <option value="RJ" <?php echo $cust['state'] === 'RJ' ? 'selected' : ''; ?>>Rajasthan</option>
-                                        <option value="KA" <?php echo $cust['state'] === 'KA' ? 'selected' : ''; ?>>Karnataka</option>
-                                        <option value="TS" <?php echo $cust['state'] === 'TS' ? 'selected' : ''; ?>>Telangana</option>
-                                        <option value="UP" <?php echo $cust['state'] === 'UP' ? 'selected' : ''; ?>>Uttar Pradesh</option>
-                                        <option value="OTHER">Other / International State</option>
+                                    <?php
+                                    // The eight options below are a static fallback; country-picker.js
+                                    // replaces them when the country changes. A customer whose stored
+                                    // state is not among them would have been silently rewritten to
+                                    // whichever option came first, so carry the real value through.
+                                    $stCur   = trim((string)$cust['state']);
+                                    $stCodes = ['DL', 'GJ', 'MH', 'WB', 'RJ', 'KA', 'TS', 'UP'];
+                                    $stKnown = in_array(strtoupper($stCur), $stCodes, true);
+                                    ?>
+                                    <select id="custEditState" name="state" class="dt-cust-select dt-state-select" data-initial-state="<?php echo htmlspecialchars($stCur); ?>" style="width:100%; height:38px;">
+                                        <?php if (!$stKnown): ?>
+                                            <option value="<?php echo htmlspecialchars($stCur); ?>" selected><?php echo $stCur === '' ? 'Not set' : htmlspecialchars($stCur) . ' (current)'; ?></option>
+                                        <?php endif; ?>
+                                        <option value="DL" <?php echo strtoupper($stCur) === 'DL' ? 'selected' : ''; ?>>Delhi NCR</option>
+                                        <option value="GJ" <?php echo strtoupper($stCur) === 'GJ' ? 'selected' : ''; ?>>Gujarat</option>
+                                        <option value="MH" <?php echo strtoupper($stCur) === 'MH' ? 'selected' : ''; ?>>Maharashtra</option>
+                                        <option value="WB" <?php echo strtoupper($stCur) === 'WB' ? 'selected' : ''; ?>>West Bengal</option>
+                                        <option value="RJ" <?php echo strtoupper($stCur) === 'RJ' ? 'selected' : ''; ?>>Rajasthan</option>
+                                        <option value="KA" <?php echo strtoupper($stCur) === 'KA' ? 'selected' : ''; ?>>Karnataka</option>
+                                        <option value="TS" <?php echo strtoupper($stCur) === 'TS' ? 'selected' : ''; ?>>Telangana</option>
+                                        <option value="UP" <?php echo strtoupper($stCur) === 'UP' ? 'selected' : ''; ?>>Uttar Pradesh</option>
                                     </select>
                                 </div>
+                            </div>
 
-                                <div class="dt-form-group">
-                                    <label id="custEditPostalLabel" class="dt-form-label dt-postal-label">Postal Code / PIN Code</label>
-                                    <input type="text" id="custEditPostalCode" name="postal_code" class="dt-input-field no-icon" value="<?php echo htmlspecialchars($cust['pincode']); ?>" placeholder="6-digit Pincode / Zip">
+                            <!-- Default shipping address: read-only, managed on the Addresses tab -->
+                            <div style="margin-top:14px; background:#FAF8F4; border:1px solid #EAE5D9; border-radius:10px; padding:12px 16px;">
+                                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                                    <div>
+                                        <strong style="font-size:0.78rem; color:#181512; display:block; margin-bottom:4px;">Default Shipping Address</strong>
+                                        <?php if ($hasAddr): ?>
+                                            <span style="font-size:0.76rem; color:#44403C; line-height:1.6; display:block;"><?php echo htmlspecialchars($addrLine); ?><?php if ($addrMark !== ''): ?><br><?php echo htmlspecialchars($addrMark); ?><?php endif; ?><?php if ($addrPin !== ''): ?><br>PIN <?php echo htmlspecialchars($addrPin); ?><?php endif; ?></span>
+                                        <?php else: ?>
+                                            <span style="font-size:0.76rem; color:#8C8478;">No saved address. The customer adds one at checkout.</span>
+                                        <?php endif; ?>
+                                        <span style="font-size:0.68rem; color:#78716C; display:block; margin-top:6px;">
+                                            Street addresses are stored per address, not on the profile, so they are not editable here.
+                                        </span>
+                                    </div>
+                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" class="dt-btn dt-btn-pale dt-btn-sm" style="white-space:nowrap;">Addresses Tab &rarr;</a>
                                 </div>
                             </div>
                         </div>
@@ -602,51 +597,70 @@ if (!$cust) {
                             <div class="dt-form-grid-2">
                                 <div class="dt-form-group">
                                     <label class="dt-form-label">Account Standing / Status</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
+                                    <select id="custEditStatus" name="status" class="dt-cust-select" style="width:100%; height:38px;">
                                         <option value="active" <?php echo $cust['status'] === 'active' ? 'selected' : ''; ?>>Active Verified (Full Ordering Access)</option>
-                                        <option value="inactive" <?php echo $cust['status'] === 'inactive' ? 'selected' : ''; ?>>Inactive / Dormant Account</option>
+                                        <option value="pending" <?php echo $cust['status'] === 'pending' ? 'selected' : ''; ?>>Pending Approval (Cannot Sign In Yet)</option>
                                         <option value="suspended" <?php echo $cust['status'] === 'suspended' ? 'selected' : ''; ?>>Suspended (COD Protection &amp; Blocked)</option>
                                     </select>
                                 </div>
 
                                 <div class="dt-form-group">
+                                    <label class="dt-form-label">Account Type / Pricing Group</label>
+                                    <?php /* The form had no account-type control at all, so an approved
+                                             trade buyer could not be moved onto wholesale pricing from
+                                             here even though the column and the API accept it. */ ?>
+                                    <select id="custEditType" name="type" class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="retail" <?php echo $cust['type'] === 'retail' ? 'selected' : ''; ?>>Retail Shopper (MRP Pricing)</option>
+                                        <option value="wholesale" <?php echo $cust['type'] === 'wholesale' ? 'selected' : ''; ?>>Wholesale Buyer (Trade Pricing)</option>
+                                        <option value="reseller" <?php echo $cust['type'] === 'reseller' ? 'selected' : ''; ?>>Reseller (Commission Pricing)</option>
+                                    </select>
+                                    <p style="font-size:0.68rem; color:#78716C; margin:5px 0 0 0;">Controls which price list this customer sees on the storefront.</p>
+                                </div>
+
+                                <div class="dt-form-group">
                                     <label class="dt-form-label">Customer Tier Category</label>
-                                    <select class="dt-cust-select" style="width:100%; height:38px;">
-                                        <option value="vip" <?php echo $cust['tier'] === 'vip' ? 'selected' : ''; ?>>VIP High-Value Spender (> ₹25k LTV)</option>
-                                        <option value="regular" <?php echo $cust['tier'] === 'regular' ? 'selected' : ''; ?>>Regular Direct Retail Shopper</option>
-                                        <option value="new" <?php echo $cust['tier'] === 'new' ? 'selected' : ''; ?>>New Account Registration</option>
+                                    <?php
+                                    // tier is a free-text VARCHAR(50), so an existing value need not be
+                                    // one of the three below. Carry it through rather than silently
+                                    // rewriting it to whichever option happens to be first.
+                                    $tierKnown = ['', 'vip', 'regular', 'new'];
+                                    $tierCur   = strtolower(trim($cust['tier']));
+                                    ?>
+                                    <select id="custEditTier" name="tier" class="dt-cust-select" style="width:100%; height:38px;">
+                                        <option value="" <?php echo $tierCur === '' ? 'selected' : ''; ?>>No tier assigned</option>
+                                        <option value="vip" <?php echo $tierCur === 'vip' ? 'selected' : ''; ?>>VIP High-Value Spender</option>
+                                        <option value="regular" <?php echo $tierCur === 'regular' ? 'selected' : ''; ?>>Regular Direct Retail Shopper</option>
+                                        <option value="new" <?php echo $tierCur === 'new' ? 'selected' : ''; ?>>New Account Registration</option>
+                                        <?php if (!in_array($tierCur, $tierKnown, true)): ?>
+                                            <option value="<?php echo htmlspecialchars($cust['tier']); ?>" selected><?php echo htmlspecialchars($cust['tier']); ?> (current)</option>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Assigned Tags -->
+                            <?php /* There is no tags table anywhere in the schema, and no column on
+                                     customers holds them. The "Add Tag" button built a chip in the DOM
+                                     and toasted "Tag added!", so every tag an admin created vanished on
+                                     the next page load while they had been told it was assigned. Until
+                                     tag storage exists this shows the one classification that is really
+                                     stored -- the tier -- and says plainly that nothing else is. */ ?>
                             <div class="dt-form-group" style="margin-top:14px;">
                                 <label class="dt-form-label">Assigned Customer Tags</label>
-                                <div class="dt-cust-tags-wrap" id="dtEditTagsContainer" style="gap:8px; margin-bottom:8px;">
-                                    <?php foreach ($cust['tags'] as $tag): ?>
-                                        <span class="dt-cust-tag-chip gold">
-                                            <span><?php echo htmlspecialchars($tag); ?></span>
-                                            <button type="button" class="dt-cust-tag-remove" onclick="this.parentElement.remove(); window.showToast('Tag removed');">✕</button>
-                                        </span>
-                                    <?php endforeach; ?>
+                                <div class="dt-cust-tags-wrap" style="gap:8px; margin-bottom:6px;">
+                                    <?php if (count($cust['tags']) === 0): ?>
+                                        <span style="font-size:0.74rem; color:#8C8478;">No tier assigned.</span>
+                                    <?php else: ?>
+                                        <?php foreach ($cust['tags'] as $tag): ?>
+                                            <span class="dt-cust-tag-chip gold"><span><?php echo htmlspecialchars($tag); ?></span></span>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
-                                <div style="display:flex; gap:8px;">
-                                    <input type="text" id="dtNewTagInput" class="dt-input-field no-icon" style="max-width:280px;" placeholder="Add custom tag (e.g. Saree Lover)...">
-                                    <button type="button" class="dt-btn dt-btn-pale dt-btn-sm" style="display:inline-flex; align-items:center; gap:5px;" onclick="
-                                        const val = document.getElementById('dtNewTagInput').value.trim();
-                                        if(val) {
-                                            const chip = document.createElement('span');
-                                            chip.className = 'dt-cust-tag-chip gold';
-                                            chip.innerHTML = `<span>${val}</span><button type='button' class='dt-cust-tag-remove' onclick='this.parentElement.remove()'>✕</button>`;
-                                            document.getElementById('dtEditTagsContainer').appendChild(chip);
-                                            document.getElementById('dtNewTagInput').value = '';
-                                            window.showToast('✓ Tag added!');
-                                        }
-                                    ">
-                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                                        <span>Add Tag</span>
-                                    </button>
-                                </div>
+                                <p style="font-size:0.68rem; color:#78716C; margin:0; line-height:1.5;">
+                                    Free-form tags are not stored yet — the database has no tags table, so
+                                    anything added here could not be kept. Use <strong>Customer Tier Category</strong>
+                                    above, which is saved, or leave an <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>#notes" style="color:#8A681F; font-weight:700;">internal note</a>.
+                                </p>
                             </div>
                         </div>
 
@@ -670,7 +684,16 @@ if (!$cust) {
 
                             <div class="dt-form-group">
                                 <label class="dt-form-label">Internal Staff Confidential Memo (Admin Only)</label>
-                                <textarea class="dt-input-field no-icon" style="height:70px; resize:none; padding-top:8px;" placeholder="Add internal customer remarks, preferred courier, packaging notes..."><?php echo htmlspecialchars($cust['notes']); ?></textarea>
+                                <?php /* This textarea was prefilled with the literal "Customer profile
+                                         synchronized with live MySQL database." for every customer and
+                                         had nowhere to save to. It now writes a real row to
+                                         customer_notes when Save is pressed, alongside the profile
+                                         update, and appears on the dossier's Notes tab. */ ?>
+                                <textarea id="custEditMemo" name="staff_memo" class="dt-input-field no-icon" style="height:70px; resize:none; padding-top:8px;" placeholder="Add an internal note — preferred courier, packaging remarks, call outcome..."></textarea>
+                                <p style="font-size:0.68rem; color:#78716C; margin:5px 0 0 0;">
+                                    Saved as a new dated note on this customer.
+                                    <a href="/admin/customers/view.php?id=<?php echo (int)$customer_id; ?>" style="color:#8A681F; font-weight:700;">View all notes →</a>
+                                </p>
                             </div>
                         </div>
 
@@ -748,42 +771,96 @@ function dtSendResetLink(phone, name) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const editForm = document.querySelector('form');
+    /* Was document.querySelector('form') -- the first form in the document, which
+       is only this one by luck; a search box added to the header would have stolen
+       the handler and left Save doing nothing. */
+    const editForm = document.getElementById('dtCustEditForm');
     if (editForm) {
         editForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const id = <?= json_encode($customer_id) ?>;
-            const fName = document.querySelector('input[placeholder*="Pooja"], input[name="first_name"]')?.value || '';
-            const lName = document.querySelector('input[placeholder*="Sharma"], input[name="last_name"]')?.value || '';
-            const name = (fName + ' ' + lName).trim() || 'Valued Customer';
-            const email = document.querySelector('input[type="email"]')?.value || '';
-            const phone = document.querySelector('input[type="tel"]')?.value || '';
-            const status = document.querySelector('select[name="status"]')?.value || 'active';
+
+            /* Fields are read by name. The previous version matched on the mock
+               placeholders ("Pooja", "Sharma"), and read status with
+               select[name="status"] when that select had no name attribute at all
+               -- so it always fell back to 'active' and every save silently
+               reactivated a suspended customer. */
+            const val = (sel) => {
+                const el = editForm.querySelector(sel);
+                return el ? String(el.value).trim() : '';
+            };
+
+            const fName = val('input[name="first_name"]');
+            const lName = val('input[name="last_name"]');
+            const name  = (fName + ' ' + lName).trim();
+            if (!name) {
+                dtCustomerToast('⚠ A customer name is required.');
+                return;
+            }
 
             const params = new URLSearchParams();
             params.append('action', 'update');
             params.append('id', id);
             params.append('name', name);
-            params.append('email', email);
-            params.append('phone', phone);
-            params.append('status', status);
+            params.append('email', val('input[name="email"]'));
+            params.append('phone', val('input[name="phone"]'));
+            params.append('status', val('select[name="status"]'));
+            /* city, state, tier and type are real columns that /api/customers.php
+               accepts, but they were left out of the payload -- the form offered
+               them as editable and then dropped every change. */
+            params.append('type',  val('select[name="type"]'));
+            params.append('tier',  val('select[name="tier"]'));
+            params.append('city',  val('input[name="city"]'));
+            params.append('state', val('select[name="state"]'));
+            params.append('gstin', val('input[name="gstin"]').toUpperCase());
+
+            const memo = val('textarea[name="staff_memo"]');
+            const saveBtn = editForm.querySelector('button[type="submit"]');
+            if (saveBtn) saveBtn.disabled = true;
 
             /* Only navigate away on a confirmed save. Previously both .then and
                .catch reported success and redirected, so a rejected write looked
                identical to a stored one and the edits were silently lost. */
-            fetch('/api/customers.php', { method: 'POST', body: params })
+            fetch('/api/customers.php', { method: 'POST', body: params, credentials: 'same-origin' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data && data.success) {
-                        dtCustomerToast(`✨ Customer "${name}" saved to database!`);
-                        setTimeout(() => {
-                            window.location.href = `/admin/customers/view.php?id=${id}`;
-                        }, 500);
-                    } else {
+                    if (!data || !data.success) {
+                        if (saveBtn) saveBtn.disabled = false;
                         dtCustomerToast('⚠ ' + ((data && data.message) || `"${name}" was NOT saved. Your changes are still on screen.`));
+                        return;
                     }
+
+                    /* The memo is a separate row in customer_notes, so it is a
+                       second request. The profile is already saved at this point;
+                       if the note fails, say so instead of implying both stored. */
+                    if (!memo) {
+                        dtCustomerToast(`✨ Customer "${name}" saved to database!`);
+                        setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 500);
+                        return;
+                    }
+
+                    fetch('/api/customer_notes.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({ customer_id: id, note_text: memo, is_important: 0 })
+                    })
+                        .then(r => r.json().catch(() => ({ success: false })))
+                        .then(nd => {
+                            if (nd && nd.success) {
+                                dtCustomerToast(`✨ Customer "${name}" and the staff note were saved!`);
+                            } else {
+                                dtCustomerToast('✓ Profile saved, but the staff note was not: ' + ((nd && nd.message) || 'notes storage is unavailable.'));
+                            }
+                            setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 900);
+                        })
+                        .catch(() => {
+                            dtCustomerToast('✓ Profile saved, but the staff note could not be sent.');
+                            setTimeout(() => { window.location.href = `/admin/customers/view.php?id=${id}`; }, 900);
+                        });
                 })
                 .catch(() => {
+                    if (saveBtn) saveBtn.disabled = false;
                     dtCustomerToast(`⚠ Network error — "${name}" was NOT saved. Your changes are still on screen.`);
                 });
         });
@@ -791,6 +868,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
-<script src="/admin/customers/assets/js/country-picker.js?v=<?php echo time(); ?>"></script>
+<?php /* country-picker.js is no longer loaded here. It drives .dt-country-picker-wrap,
+        and this form no longer has one: `customers` has no country column, so the
+        picker collected a country that was discarded on save. Its only remaining
+        effect would be applyCountryAutoFields() rewriting the State select. */ ?>
 </body>
 </html>

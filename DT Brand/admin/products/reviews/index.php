@@ -615,11 +615,10 @@ function submitReply() {
     if (typeof window.showToast === 'function') window.showToast('✨ Store official response published live!');
 }
 
-window.shareProductWhatsApp = function(id) {
-    if (typeof window.showToast === 'function') {
-        window.showToast('💬 Opening WhatsApp Customer Connect for product #' + id);
-    }
-};
+/* A local window.shareProductWhatsApp stub stood here. It only raised a toast
+   claiming a WhatsApp link had been generated and shared nothing; the real one
+   in /admin/Asset/js/admin.js (loaded just below) fetches the product and
+   opens WhatsApp. */
 </script>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

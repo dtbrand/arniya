@@ -41,7 +41,7 @@ $page_title = "About Us ‹ Royal Surat Silk Handloom Heritage";
                 <strong style="font-size:1.05rem; color:#181512; display:block;">Have a Custom Bulk Requirement?</strong>
                 <span style="font-size:0.85rem; color:#78716C;">Connect directly with our Surat factory desk on WhatsApp.</span>
             </div>
-            <a href="https://wa.me/919876543210?text=Namaste%20DT%20Brand%27s!%20I%20am%20interested%20in%20your%20pure%20silk%20wholesale%20collection." target="_blank" style="background:#15803D; color:#FFFFFF; padding:10px 20px; border-radius:8px; font-weight:800; text-decoration:none; font-size:13px; display:inline-flex; align-items:center; gap:6px;">
+            <a href="https://wa.me/917046363528?text=Namaste%20DT%20Brand%27s!%20I%20am%20interested%20in%20your%20pure%20silk%20wholesale%20collection." target="_blank" style="background:#15803D; color:#FFFFFF; padding:10px 20px; border-radius:8px; font-weight:800; text-decoration:none; font-size:13px; display:inline-flex; align-items:center; gap:6px;">
                 <span>💬 WhatsApp Factory Desk</span>
             </a>
         </div>

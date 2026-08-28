@@ -472,63 +472,9 @@ window.animateTargetGauge = animateTargetGauge;
             }
         };
 
-        function renderAddressBookData(user) {
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
-            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var billCity = user.city || 'Surat';
-            var billState = user.state || 'Gujarat';
-            var billPin = user.pincode || '395002';
-
-            var bCompEl = document.getElementById('addrPreviewBillingComp');
-            var bFullEl = document.getElementById('addrPreviewBillingFull');
-            var bAttnEl = document.getElementById('addrPreviewBillingAttn');
-            if (bCompEl) bCompEl.textContent = comp;
-            if (bFullEl) bFullEl.innerHTML = `${billAddr}<br>${billCity}, ${billState} - ${billPin} (GSTIN: <strong>${gstNum}</strong>)`;
-            if (bAttnEl) bAttnEl.textContent = `Attn: ${name} (${phone})`;
-
-            var isSame = user.shipping_same_as_billing !== false;
-            var chk = document.getElementById('wsSameAsBillingCheckbox');
-            if (chk) chk.checked = isSame;
-            toggleSameAsBillingAddress(isSame);
-
-            var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
-            var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
-            var dispatchFull = document.getElementById('addrPreviewDispatchFull');
-            var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
-
-            var ship = user.custom_shipping || {};
-            if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
-                if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
-                if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
-
-                var shipWarehouse = document.getElementById('wsShipWarehouseName');
-                var shipPhone = document.getElementById('wsShipReceiverPhone');
-                var shipAddr = document.getElementById('wsShipAddress');
-                var shipCity = document.getElementById('wsShipCity');
-                var shipState = document.getElementById('wsShipStateSelect');
-                var shipPin = document.getElementById('wsShipPincode');
-                var shipTransporter = document.getElementById('wsShipTransporter');
-
-                if (shipWarehouse) shipWarehouse.value = ship.warehouse_name || '';
-                if (shipPhone) shipPhone.value = ship.receiver_phone || '';
-                if (shipAddr) shipAddr.value = ship.address || '';
-                if (shipCity) shipCity.value = ship.city || '';
-                if (shipState && ship.state) shipState.value = ship.state;
-                if (shipPin) shipPin.value = ship.pincode || '';
-                if (shipTransporter) shipTransporter.value = ship.transporter || '';
-            } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
-                if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
-                if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
-            }
-        }
-
+        // A first, shorter renderAddressBookData() stood here. It was shadowed by
+        // the fuller definition further down (a later declaration of the same name
+        // wins), so it never ran; the one kept below also fills the form inputs.
         function toggleEditAddressSection(sectionType) {
             var drawer = document.getElementById('wsAddressEditDrawer');
             var mainWrap = document.getElementById('wsMainAddressSectionWrap');
@@ -799,7 +745,7 @@ window.animateTargetGauge = animateTargetGauge;
                     <td style="color:#6B6358; font-weight:600; font-size:0.78rem;">${o.date}</td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main); font-family:var(--ws-font-serif);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -831,7 +777,7 @@ window.animateTargetGauge = animateTargetGauge;
                         ${badgeHtml}
                     </div>
                     <div class="ws-mob-order-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/assets/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                         <div class="ws-mob-order-info">
                             <h4 class="ws-mob-order-title">${o.productName}</h4>
                             <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -870,7 +816,7 @@ window.animateTargetGauge = animateTargetGauge;
                             ${badgeHtml}
                         </div>
                         <div class="ws-mob-order-body">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-mob-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div class="ws-mob-order-info">
                                 <h4 class="ws-mob-order-title">${o.productName}</h4>
                                 <div class="ws-mob-order-meta"><span style="color:#B45309; font-weight:700;">${o.date}</span> • Lot: <strong>${o.qty} Pcs</strong></div>
@@ -1655,7 +1601,7 @@ window.animateTargetGauge = animateTargetGauge;
                     <td><span style="font-family:monospace; background:var(--ws-gold-light); color:var(--ws-gold-primary); padding:2px 6px; border-radius:4px; font-weight:700;">${o.hsn}</span></td>
                     <td>
                         <div class="ws-prod-mini-cell">
-                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.src='/assets/images/product1.png';">
+                            <img src="${o.image}" alt="${o.productName}" class="ws-prod-mini-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                             <div>
                                 <strong style="font-size:0.84rem; color:var(--ws-text-main);">${o.productName}</strong>
                                 <div style="font-size:0.72rem; color:var(--ws-text-muted);">SKU: ${o.sku} • ${o.courier}</div>
@@ -1693,7 +1639,7 @@ window.animateTargetGauge = animateTargetGauge;
                     </div>
 
                     <div class="ws-mob-rep-body">
-                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.src='/assets/images/product1.png';">
+                        <img src="${o.image}" alt="${o.productName}" class="ws-mob-rep-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                         <div class="ws-mob-rep-info">
                             <h4 style="font-size:0.88rem; font-weight:700; color:var(--ws-text-main); line-height:1.25; margin-bottom:2px;">${o.productName}</h4>
                             <div style="font-size:0.74rem; color:var(--ws-text-muted);">
@@ -1889,7 +1835,7 @@ window.animateTargetGauge = animateTargetGauge;
                     <p style="font-size:0.78rem; color:var(--ws-text-sub); margin:0; line-height:1.4; background:#FAF8F4; padding:8px 10px; border-radius:6px; border:1px solid var(--ws-border);">"${t.message}"</p>
                     <div style="font-size:0.72rem; color:var(--ws-text-muted); margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
                         <span>📅 ${t.date}</span>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20following%20up%20on%20Wholesaler%20Ticket%20%23${t.id}" target="_blank" style="color:#25D366; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
                             <span>WhatsApp Followup →</span>
                         </a>
@@ -1947,7 +1893,7 @@ window.animateTargetGauge = animateTargetGauge;
 
                 <!-- Product Details Box -->
                 <div style="display:flex; gap:14px; align-items:center; background:#FFFFFF; border:1.5px solid var(--ws-border); border-radius:10px; padding:14px; margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,0.03);">
-                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" style="width:72px; height:90px; border-radius:8px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.96rem; font-weight:800; color:var(--ws-text-main); margin-bottom:4px; line-height:1.3;">${o.productName}</h4>
                         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
@@ -2027,7 +1973,7 @@ window.animateTargetGauge = animateTargetGauge;
                         price: o.unitPrice || 3199,
                         wholesale_price: o.unitPrice || 3199,
                         qty: Number(o.qty) || 12,
-                        image: o.image || '/assets/images/product1.png',
+                        image: o.image || '/assets/images/no-image.svg',
                         color: o.color || 'Standard',
                         moq: 12
                     });
@@ -2712,27 +2658,35 @@ window.animateTargetGauge = animateTargetGauge;
         /* ── Direct Add Reseller Lot to Cart with Smart Button Feedback ── */
         function directAddWholesaleToCart(prodOrId, btn) {
             try {
-                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Reseller Item', price: 2199, moq: 12 });
+                var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+                    ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+                // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+                // so an id that is no longer in the catalogue still produced a priced line.
+                if (!prod || !prod.id) {
+                    if (typeof window.showWsToast === 'function') {
+                        window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+                    }
+                    return;
+                }
                 var raw = localStorage.getItem('dtbrands_cart');
                 var cart = raw ? JSON.parse(raw) : [];
                 var prodId = prod.id;
                 var exists = cart.find(function(item) { return Number(item.id) === Number(prodId); });
-                var addQty = Number(prod.moq) || 12;
+                var addQty = Number(prod.moq) > 0 ? Number(prod.moq) : 1;
                 if (exists) {
                     exists.qty = (Number(exists.qty) || addQty) + addQty;
                 } else {
                     cart.push({
                         id: prod.id,
                         name: prod.name,
-                        price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 2199,
-                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 3299,
+                        price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                        wholesale_price: Number(prod.wholesale_price) || Number(prod.price) || 0,
+                        retail_price: Number(prod.retail_price) || Number(prod.old_price) || 0,
                         qty: addQty,
-                        image: prod.image || '/assets/images/product1.png',
-                        color: prod.color || 'Standard',
+                        image: prod.image || '/assets/images/no-image.svg',
+                        color: prod.color || '',
                         moq: addQty,
-                        category: prod.category || 'Reseller'
+                        category: prod.category || ''
                     });
                 }
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
@@ -2756,25 +2710,34 @@ window.animateTargetGauge = animateTargetGauge;
             }
         };
         function openQuickOrderModal(prodOrId) {
-            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId : 
-                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || { id: prodOrId, name: 'Reseller Item', sku: 'SKU-' + prodOrId, hsn: '5007', wholesale_price: 2199, moq: 12 });
+            var prod = (typeof prodOrId === 'object' && prodOrId !== null) ? prodOrId :
+                ((window.allProducts || []).find(function(p) { return Number(p.id) === Number(prodOrId); }) || null);
+            // The fallback here used to invent a product at Rs 2,199 with an MOQ of 12,
+            // so an id that is no longer in the catalogue still produced a priced line.
+            if (!prod || !prod.id) {
+                if (typeof window.showWsToast === 'function') {
+                    window.showWsToast('That product is not in the catalogue any more. Please refresh the page.');
+                }
+                return;
+            }
             var userRaw = localStorage.getItem('dtbrands_user');
             var user = userRaw ? JSON.parse(userRaw) : {};
             var company = user.companyName || 'Reseller Buyer';
             var gst = user.gst_number || 'Non-GST';
 
             var text = `👑 *RESELLER BULK LOT INQUIRY — DT BRAND'S B2B*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku || 'SKU-' + prod.id})\n` +
-                       `*HSN Code:* ${prod.hsn || '5007'}\n` +
-                       `*Reseller B2B Price:* ₹${prod.wholesale_price || prod.price || 2199} / Pc\n` +
-                       `*Minimum Order Qty (MOQ):* ${prod.moq || 12} Pcs\n` +
-                       `*Lot Tier Pricing:* ${prod.tier_prices || 'Volume Tier'}\n\n` +
+                       `*Product:* ${prod.name}${prod.sku ? ` (SKU: ${prod.sku})` : ''}\n` +
+                       (prod.hsn ? `*HSN Code:* ${prod.hsn}\n` : '') +
+                       `*Reseller B2B Price:* ${Number(prod.wholesale_price || prod.price) > 0 ? '₹' + Number(prod.wholesale_price || prod.price) + ' / Pc' : 'to be confirmed'}\n` +
+                       (Number(prod.moq) > 0 ? `*Minimum Order Qty (MOQ):* ${Number(prod.moq)} Pcs\n` : '') +
+                       (prod.tier_prices ? `*Lot Pricing:* ${prod.tier_prices}\n` : '') +
+                       `\n` +
                        `*Buyer Business:* ${company}\n` +
                        `*GSTIN:* ${gst}\n` +
                        `*Representative:* ${user.name || 'Member'} (${user.phone || ''})\n\n` +
                        `Please confirm lot availability, dispatch turnaround and proforma payment details.`;
 
-            var waUrl = `https://api.whatsapp.com/send?phone=919876543210&text=${encodeURIComponent(text)}`;
+            var waUrl = `https://api.whatsapp.com/send?phone=917046363528&text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
         };
 
@@ -2817,11 +2780,12 @@ window.animateTargetGauge = animateTargetGauge;
                 return;
             }
             var text = `*DT BRAND'S B2B RESELLER LOT*\n\n` +
-                       `*Product:* ${prod.name} (SKU: ${prod.sku})\n` +
-                       `*Reseller B2B Price:* ₹${prod.wholesale_price} / Pc (Catalogue MRP: ₹${prod.retail_price})\n` +
-                       `*MOQ:* ${prod.moq} Pcs Pack\n` +
-                       `*Fabric:* ${prod.fabric || 'Pure Silk'} • HSN: ${prod.hsn}\n` +
-                       `*Tier Rates:* ${prod.tier_prices || 'Volume Discounts Available'}\n\n` +
+                       `*Product:* ${prod.name}${prod.sku ? ` (SKU: ${prod.sku})` : ''}\n` +
+                       `*Reseller B2B Price:* ${Number(prod.wholesale_price) > 0 ? '₹' + Number(prod.wholesale_price) + ' / Pc' : 'to be confirmed'}${Number(prod.retail_price) > Number(prod.wholesale_price) ? ` (Catalogue MRP: ₹${Number(prod.retail_price)})` : ''}\n` +
+                       (Number(prod.moq) > 0 ? `*MOQ:* ${Number(prod.moq)} Pcs Pack\n` : '') +
+                       (prod.fabric ? `*Fabric:* ${prod.fabric}\n` : '') +
+                       (prod.tier_prices ? `*Lot Rates:* ${prod.tier_prices}\n` : '') +
+                       `\n` +
                        `Explore live reseller portal: ${window.location.origin}/reseller.php`;
             var waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
             window.open(waUrl, '_blank');
@@ -2839,14 +2803,14 @@ window.animateTargetGauge = animateTargetGauge;
                     old_price: p.old_price,
                     discount: p.discount,
                     image: p.image,
-                    fabric: p.fabric || 'Pure Silk',
+                    fabric: p.fabric || '',
                     colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
-                    sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
-                    url: '../Single-Product/singleproduct.php?id=' + p.id
+                    sizes: Array.isArray(p.size) ? p.size.join(', ') : (p.size || ''),
+                    url: '/product.php?id=' + p.id
                 };
                 window.openSmartShareModal(itemData);
             } else if (p) {
-                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' on DT Brand\'s Reseller Hub: ' + window.location.origin + '/../Single-Product/singleproduct.php?id=' + p.id);
+                var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent('Check out ' + p.name + ' on DT Brand\'s Reseller Hub: ' + window.location.origin + '/product.php?id=' + p.id);
                 window.open(waUrl, '_blank');
             }
         };
@@ -2995,7 +2959,7 @@ window.animateTargetGauge = animateTargetGauge;
 
                 <!-- Product & Courier Info Strip -->
                 <div style="display:flex; gap:12px; align-items:center; margin-bottom:14px; background:#FFFFFF; border:1px solid var(--ws-border); border-radius:8px; padding:10px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
-                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${currentOrder.image}" alt="${currentOrder.productName}" style="width:54px; height:68px; border-radius:6px; object-fit:cover; border:1px solid var(--ws-border); flex-shrink:0; background:#FAF8F4;" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div style="flex:1; min-width:0;">
                         <h4 style="font-size:0.92rem; font-weight:800; color:var(--ws-text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:2px;">${currentOrder.productName}</h4>
                         <div style="font-size:0.74rem; color:var(--ws-text-muted); margin-bottom:4px;">
@@ -3064,7 +3028,7 @@ window.animateTargetGauge = animateTargetGauge;
                     selectTrackingOrder(o.id);
                 };
                 card.innerHTML = `
-                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${o.image}" alt="${o.productName}" class="ws-track-order-img" onerror="this.onerror=null;this.src='/assets/images/no-image.svg';">
                     <div class="ws-track-order-info">
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
                             <strong class="ws-order-id-cell" style="font-size:0.86rem;">${o.id}</strong>
@@ -3932,31 +3896,43 @@ window.animateTargetGauge = animateTargetGauge;
             }).join('');
         };
 
+        /* This tab is labelled "Purchased Products", but nothing here knows what
+           any customer bought: it used to take the first four products in the
+           catalogue and print "Purchased 2 Times" under each one, for every
+           customer. Per-customer reseller purchase history is not stored
+           anywhere yet, so the tab says so instead of inventing four sarees. */
         function renderProfileProductsTab(c) {
             var container = document.getElementById('profProductsList');
             if (!container) return;
-            var prods = (window.allProducts || []).slice(0, 4);
-            container.innerHTML = prods.map(function(p) {
-                return `
-                    <div class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
-                        <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</div>
-                        <div style="font-size:0.70rem; color:var(--ws-gold-primary); font-weight:700; margin-top:2px;">Purchased 2 Times</div>
-                    </div>
-                `;
-            }).join('');
+            container.innerHTML =
+                '<div style="grid-column:1 / -1; padding:22px; text-align:center; border:1px dashed var(--ws-border);' +
+                ' border-radius:8px; background:#FAF8F4; color:var(--ws-text-muted); font-size:0.8rem;">' +
+                'Purchase history for this customer is not recorded in the database yet, so there is nothing to list here.' +
+                '</div>';
         };
 
         function renderProfileRecommendedTab(c) {
             var container = document.getElementById('profRecommendedList');
             if (!container) return;
-            var prods = (window.allProducts || []).slice(2, 6);
+            var prods = (window.allProducts || []).slice(0, 4);
+            if (!prods.length) {
+                container.innerHTML =
+                    '<div style="grid-column:1 / -1; padding:22px; text-align:center; border:1px dashed var(--ws-border);' +
+                    ' border-radius:8px; background:#FAF8F4; color:var(--ws-text-muted); font-size:0.8rem;">' +
+                    'No products are in the catalogue yet.</div>';
+                return;
+            }
             container.innerHTML = prods.map(function(p) {
+                /* The price fell back to 2199 whenever a product had no trade
+                   price set, so an unpriced saree was quoted at a figure the
+                   firm never entered. */
+                var rCost = Number(p.wholesale_price) || Number(p.price) || 0;
+                var rImg = p.image || '/assets/images/no-image.svg';
                 return `
                     <div class="ws-product-card" style="padding:10px;">
-                        <img src="${p.image}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
-                        <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</div>
-                        <div style="font-size:0.78rem; font-weight:900; color:var(--ws-gold-primary); margin-top:2px;">₹${Number(p.wholesale_price || p.price || 2199).toLocaleString('en-IN')}</div>
+                        <img src="${rImg}" alt="${p.name || ''}" style="width:100%; height:130px; object-fit:cover; border-radius:6px; margin-bottom:6px;">
+                        <div style="font-weight:800; font-size:0.76rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name || ''}</div>
+                        <div style="font-size:0.78rem; font-weight:900; color:var(--ws-gold-primary); margin-top:2px;">${rCost > 0 ? '₹' + rCost.toLocaleString('en-IN') : 'Price on request'}</div>
                         <button class="ws-btn ws-btn-primary ws-btn-sm" style="width:100%; margin-top:6px; font-size:0.68rem; padding:4px;" onclick="closeCustomerProfileModal(); openResellerQuickOrderDrawer(${c.id});">⚡ Create Order</button>
                     </div>
                 `;
@@ -4322,6 +4298,13 @@ window.animateTargetGauge = animateTargetGauge;
         };
 
         // 10. Quick Order Flow
+        /* The reseller's landed cost for one piece, straight from the products
+           table. 0 means no trade price is set for that product yet. */
+        function qoProductCost(p) {
+            if (!p) return 0;
+            return Number(p.wholesale_price) || Number(p.price) || 0;
+        }
+
         function openResellerQuickOrderDrawer(prefillCustId, prefillProdId) {
             var modal = document.getElementById('resellerQuickOrderDrawer');
             var custSelect = document.getElementById('qoCustomerSelect');
@@ -4336,8 +4319,17 @@ window.animateTargetGauge = animateTargetGauge;
 
             var prods = window.allProducts || [];
             if (prodSelect) {
+                // Every option used to carry data-cost="2199" data-mrp="3299" for any
+                // product whose prices were not set, so the order form opened with an
+                // invented cost and MRP and the profit line was fiction. Missing
+                // prices now come through as 0 and the form leaves those fields blank.
                 prodSelect.innerHTML = '<option value="">-- Choose Product --</option>' + prods.map(function(p) {
-                    return '<option value="' + p.id + '" data-cost="' + (p.wholesale_price || p.price || 2199) + '" data-mrp="' + (p.retail_price || 3299) + '" ' + (Number(p.id) === Number(prefillProdId) ? 'selected' : '') + '>' + p.name + ' (Cost: ₹' + (p.wholesale_price || p.price || 2199) + ')</option>';
+                    var oCost = qoProductCost(p);
+                    var oMrp = Number(p.retail_price) || 0;
+                    return '<option value="' + p.id + '" data-cost="' + oCost + '" data-mrp="' + oMrp + '" ' +
+                        (Number(p.id) === Number(prefillProdId) ? 'selected' : '') + '>' +
+                        p.name + (oCost > 0 ? ' (Cost: ₹' + oCost.toLocaleString('en-IN') + ')' : ' (Cost: on request)') +
+                        '</option>';
                 }).join('');
             }
 
@@ -4497,7 +4489,10 @@ window.animateTargetGauge = animateTargetGauge;
             var prods = window.allProducts || [];
             var matches = prods.filter(function(p) {
                 var name = (p.name || '').toLowerCase();
-                var sku = (p.sku || 'JHT-' + p.id).toLowerCase();
+                /* Searching used to match against an invented "JHT-<id>" code
+                   for any product with no SKU, so typing JHT-7 found a product
+                   whose real stock code is something else entirely. */
+                var sku = (p.sku || '').toLowerCase();
                 var cat = (p.category || '').toLowerCase();
                 var fabric = (p.fabric || '').toLowerCase();
                 return name.indexOf(q) !== -1 || sku.indexOf(q) !== -1 || cat.indexOf(q) !== -1 || fabric.indexOf(q) !== -1;
@@ -4511,22 +4506,27 @@ window.animateTargetGauge = animateTargetGauge;
                 `;
             } else {
                 resultsBox.innerHTML = matches.map(function(p) {
-                    var cost = p.wholesale_price || p.price || 2199;
-                    var mrp = p.retail_price || Math.round(cost * 1.5);
-                    var img = p.image || '/assets/images/product1.png';
-                    var sku = p.sku || ('JHT-' + p.id);
+                    // Was: cost fell back to Rs 2,199, the MRP was invented as
+                    // cost x 1.5, the thumbnail fell back to product1.png (another
+                    // product's saree), the SKU to "JHT-<id>" and the category to
+                    // "Silk Saree". Nothing here is guessed any more.
+                    var cost = qoProductCost(p);
+                    var mrp = Number(p.retail_price) || 0;
+                    var img = p.image || '/assets/images/no-image.svg';
+                    var sku = p.sku || '';
+                    var cat = p.category || '';
                     return `
                         <div class="ws-qo-prod-item" onclick="selectQoProduct(${p.id})">
                             <div class="ws-qo-prod-item-left">
-                                <img src="${img}" alt="${p.name}" class="ws-qo-prod-item-thumb" onerror="this.src='/assets/images/product1.png'">
+                                <img src="${img}" alt="${p.name || ''}" class="ws-qo-prod-item-thumb">
                                 <div>
-                                    <div class="ws-qo-prod-item-title">${p.name}</div>
-                                    <div class="ws-qo-prod-item-sub"><span class="ws-qo-prod-item-sku">SKU: ${sku}</span> 🏷️ ${p.category || 'Silk Saree'}</div>
+                                    <div class="ws-qo-prod-item-title">${p.name || 'Product'}</div>
+                                    <div class="ws-qo-prod-item-sub">${sku ? `<span class="ws-qo-prod-item-sku">SKU: ${sku}</span>` : ''}${cat ? ` 🏷️ ${cat}` : ''}</div>
                                 </div>
                             </div>
                             <div class="ws-qo-prod-item-price">
-                                <div>₹${cost.toLocaleString('en-IN')}</div>
-                                <div style="font-size:0.62rem; color:var(--ws-text-muted); font-weight:600; text-decoration:line-through;">₹${mrp.toLocaleString('en-IN')}</div>
+                                <div>${cost > 0 ? '₹' + cost.toLocaleString('en-IN') : 'On request'}</div>
+                                ${mrp > cost && cost > 0 ? `<div style="font-size:0.62rem; color:var(--ws-text-muted); font-weight:600; text-decoration:line-through;">₹${mrp.toLocaleString('en-IN')}</div>` : ''}
                             </div>
                         </div>
                     `;
@@ -4574,15 +4574,18 @@ window.animateTargetGauge = animateTargetGauge;
 
             if (resultsBox) resultsBox.style.display = 'none';
 
-            var cost = p.wholesale_price || p.price || 2199;
-            var mrp = p.retail_price || Math.round(cost * 1.5);
-            var skuText = p.sku || ('JHT-' + p.id);
+            var cost = qoProductCost(p);
+            var mrp = Number(p.retail_price) || 0;
+            var skuText = p.sku || '';
 
-            if (img) img.src = p.image || '/assets/images/product1.png';
-            if (name) name.textContent = p.name;
-            if (sku) sku.textContent = 'SKU: ' + skuText;
-            if (costEl) costEl.textContent = '₹' + cost.toLocaleString('en-IN');
-            if (mrpEl) mrpEl.textContent = '₹' + mrp.toLocaleString('en-IN');
+            // Same invented values as the search list (Rs 2,199 cost, cost x 1.5
+            // MRP, product1.png, "JHT-<id>") used to land in the selected-product
+            // card, which is the summary the reseller reads before submitting.
+            if (img) img.src = p.image || '/assets/images/no-image.svg';
+            if (name) name.textContent = p.name || 'Product';
+            if (sku) sku.textContent = skuText ? 'SKU: ' + skuText : '';
+            if (costEl) costEl.textContent = cost > 0 ? '₹' + cost.toLocaleString('en-IN') : 'on request';
+            if (mrpEl) mrpEl.textContent = mrp > 0 ? '₹' + mrp.toLocaleString('en-IN') : 'not set';
 
             if (searchRow) searchRow.style.display = 'none';
             if (card) card.style.display = 'flex';
@@ -4611,15 +4614,26 @@ window.animateTargetGauge = animateTargetGauge;
         }
 
         function handleQoProductChange(prodId) {
-            var select = document.getElementById('qoProductSelect');
-            var opt = select.options[select.selectedIndex];
-            var cost = opt ? Number(opt.getAttribute('data-cost')) || 2199 : 2199;
-            var mrp = opt ? Number(opt.getAttribute('data-mrp')) || 3299 : 3299;
+            // The cost/MRP came from the selected <option>'s data attributes and fell
+            // back to 2199 / 3299, so an unpriced product still filled the form with
+            // a cost and a selling price the firm never quoted. Both now come from
+            // the product row and stay blank when the price is not set.
+            var prods = window.allProducts || [];
+            var p = prods.find(function(x) { return Number(x.id) === Number(prodId); });
+            var cost = qoProductCost(p);
+            var mrp = p ? (Number(p.retail_price) || 0) : 0;
+
+            if (!p) {
+                var select = document.getElementById('qoProductSelect');
+                var opt = (select && select.selectedIndex >= 0) ? select.options[select.selectedIndex] : null;
+                cost = opt ? Number(opt.getAttribute('data-cost')) || 0 : 0;
+                mrp = opt ? Number(opt.getAttribute('data-mrp')) || 0 : 0;
+            }
 
             var costEl = document.getElementById('qoCostPrice');
             var sellEl = document.getElementById('qoSellingPrice');
-            if (costEl) costEl.value = cost;
-            if (sellEl) sellEl.value = mrp;
+            if (costEl) costEl.value = cost > 0 ? cost : '';
+            if (sellEl) sellEl.value = mrp > 0 ? mrp : '';
             calculateQoProfit();
         };
 
@@ -5621,15 +5635,13 @@ Rajesh Kumar (Reseller Partner)`;
             var el = document.getElementById('ws-catalog-data');
             var prods = (window.allProducts && window.allProducts.length > 0) ? window.allProducts : (el ? JSON.parse(el.textContent || '[]') : []);
             
+            // A hardcoded set of six products (ids 101-106, Rs 1,850-4,200 with
+            // invented MRPs) used to load whenever the catalogue was empty, so a
+            // reseller could pitch and order sarees that do not exist.
             if (prods.length === 0) {
-                prods = [
-                    { id: 101, name: "Kanjivaram Pure Zari Bridal Silk Saree", category: "Bridal Silk", wholesale_price: 3499, retail_price: 5999, image: '/assets/images/product1.png' },
-                    { id: 102, name: "Banarasi Tanchoi Brocade Saree", category: "Banarasi", wholesale_price: 2899, retail_price: 4999, image: '/assets/images/product2.png' },
-                    { id: 103, name: "Paithani Handloom Peacock Pallu Saree", category: "Paithani", wholesale_price: 4200, retail_price: 6999, image: '/assets/images/product3.png' },
-                    { id: 104, name: "Chanderi Cotton Silk Floral Saree", category: "Chanderi", wholesale_price: 1850, retail_price: 3200, image: '/assets/images/product4.png' },
-                    { id: 105, name: "Mysore Crepe Silk Festive Saree", category: "Mysore Silk", wholesale_price: 2450, retail_price: 4199, image: '/assets/images/product1.png' },
-                    { id: 106, name: "Tussar Ghicha Embroidered Silk Saree", category: "Tussar Silk", wholesale_price: 3100, retail_price: 5299, image: '/assets/images/product2.png' }
-                ];
+                if (insightBar) insightBar.innerHTML = '';
+                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--ws-text-muted);">No products are published yet, so there is nothing to recommend.</div>';
+                return;
             }
 
             if (!c) {
@@ -5641,24 +5653,36 @@ Rajesh Kumar (Reseller Partner)`;
             // Update Dynamic Customer Persona Bar
             if (insightBar) {
                 var initials = (c.name || 'C').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
-                var tagHtml = (c.tags || ['VIP', 'Repeat']).map(function(t, idx) {
+                // The tags used to default to ['VIP', 'Repeat'], the city/state to
+                // Surat/Gujarat, the order count to 1 and lifetime value to
+                // Rs 4,500 for a customer with none of that recorded, and every
+                // customer was labelled "Prefers: Pure Silk & Sarees".
+                var tagHtml = (Array.isArray(c.tags) ? c.tags : []).filter(function(t) { return String(t).trim() !== ''; }).map(function(t, idx) {
                     var cls = idx === 0 ? 'gold' : (idx === 1 ? 'green' : '');
                     return '<span class="ws-rec-persona-pill ' + cls + '">' + t + '</span>';
                 }).join('');
+                var place = [c.city, c.state].filter(function(v) { return String(v || '').trim() !== ''; }).join(', ');
+                var orderCount = Number(c.totalOrders) || 0;
+                var spend = Number(c.totalPurchase) || 0;
+                var factBits = [];
+                if (place) factBits.push(place);
+                if (orderCount > 0) {
+                    factBits.push(orderCount + ' order' + (orderCount > 1 ? 's' : '')
+                        + (spend > 0 ? ' (₹' + spend.toLocaleString('en-IN') + ')' : ''));
+                }
 
                 insightBar.innerHTML = `
                     <div class="ws-rec-persona-left">
                         <div class="ws-rec-persona-avatar">${initials}</div>
                         <div>
                             <div class="ws-rec-persona-name">${c.name}</div>
-                            <div class="ws-rec-persona-city">
+                            ${factBits.length ? `<div class="ws-rec-persona-city">
                                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                ${c.city || 'Surat'}, ${c.state || 'Gujarat'} &bull; ${c.totalOrders || 1} Orders (₹${Number(c.totalPurchase || 4500).toLocaleString('en-IN')})
-                            </div>
+                                ${factBits.join(' &bull; ')}
+                            </div>` : ''}
                         </div>
                         <div class="ws-rec-persona-pills">
                             ${tagHtml}
-                            <span class="ws-rec-persona-pill gold">Prefers: Pure Silk & Sarees</span>
                         </div>
                     </div>
                     <button class="ws-rec-persona-chat-btn" onclick="sendCustomerWhatsAppMessage(${c.id})" title="Open WhatsApp Chat">
@@ -5668,47 +5692,44 @@ Rajesh Kumar (Reseller Partner)`;
                 `;
             }
 
-            var matchScores = ["99% Match", "97% Match", "95% Match", "93% Match", "91% Match", "89% Match"];
-
             grid.innerHTML = prods.slice(0, 6).map(function(p, idx) {
-                var cost = p.wholesale_price || p.price || 2199;
-                var mrp = p.retail_price || 3499;
-                var estProfit = mrp - cost;
-                var matchTag = matchScores[idx % matchScores.length];
-                var catName = p.category || 'Pure Silk';
-                var imgUrl = p.image || '/assets/images/product1.png';
+                // Cost used to fall back to 2199, MRP to 3499, the category to
+                // 'Pure Silk' and the photo to product1.png, and every card carried
+                // an invented "99% Match" score that nothing computed.
+                var cost = Number(p.wholesale_price || p.price) || 0;
+                var mrp = Number(p.retail_price) || 0;
+                var estProfit = (cost > 0 && mrp > cost) ? mrp - cost : 0;
+                var catName = p.category || '';
+                var imgUrl = p.image || '/assets/images/no-image.svg';
+                var craft = p.fabric || '';
 
                 return `
                     <article class="ws-rec-card">
                         <div class="ws-rec-img-wrap">
                             <img src="${imgUrl}" alt="${p.name}" class="ws-rec-img" loading="lazy">
-                            <span class="ws-rec-badge-match">
-                                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                ${matchTag}
-                            </span>
-                            <span class="ws-rec-badge-cat">${catName}</span>
+                            ${catName ? `<span class="ws-rec-badge-cat">${catName}</span>` : ''}
                         </div>
                         <div class="ws-rec-card-body">
                             <div>
                                 <h3 class="ws-rec-card-title" title="${p.name}">${p.name}</h3>
-                                <div class="ws-rec-card-craft">
+                                ${craft ? `<div class="ws-rec-card-craft">
                                     <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="var(--ws-gold-primary)" stroke-width="2"><path d="M20.38 3.46L16 2 12 5.5 8 2l-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
-                                    <span>Handloom Silk &bull; Mark Assured</span>
-                                </div>
+                                    <span>${craft}</span>
+                                </div>` : ''}
                             </div>
-                            
+
                             <div>
                                 <div class="ws-rec-pricing-box">
                                     <div>
-                                        <div class="ws-rec-cost-label">Cost: ₹${cost.toLocaleString('en-IN')}</div>
-                                        <div class="ws-rec-mrp-val">MRP: ₹${mrp.toLocaleString('en-IN')}</div>
+                                        <div class="ws-rec-cost-label">${cost > 0 ? 'Cost: ₹' + cost.toLocaleString('en-IN') : 'Cost: on request'}</div>
+                                        ${mrp > 0 ? `<div class="ws-rec-mrp-val">MRP: ₹${mrp.toLocaleString('en-IN')}</div>` : ''}
                                     </div>
-                                    <div class="ws-rec-margin-box">
+                                    ${estProfit > 0 ? `<div class="ws-rec-margin-box">
                                         <div class="ws-rec-profit-label">Margin</div>
                                         <span class="ws-rec-margin-pill">
                                             +₹${estProfit.toLocaleString('en-IN')}
                                         </span>
-                                    </div>
+                                    </div>` : ''}
                                 </div>
 
                                 <div class="ws-rec-actions-row">
@@ -5736,14 +5757,46 @@ Rajesh Kumar (Reseller Partner)`;
             var el = document.getElementById('ws-catalog-data');
             var prods = (window.allProducts && window.allProducts.length > 0) ? window.allProducts : (el ? JSON.parse(el.textContent || '[]') : []);
             var p = prods.find(function(x) { return Number(x.id) === Number(prodId); });
-            
-            var pName = p ? p.name : 'Exclusive Pure Silk Saree';
-            var pPrice = p ? (p.retail_price || 3499) : 3499;
-            var phone = c.whatsapp || c.mobile || '9876543210';
-            
-            var text = `Namaste ${c.name} ji 🙏,\n\nI handpicked this exclusive *${pName}* specially for you based on your taste!\n\n✨ *Special Boutique Price*: ₹${Number(pPrice).toLocaleString('en-IN')}\n💎 *Craft*: Handloom Pure Zari & Silk Mark Assured\n🚚 *Dispatch*: Fast 24-hr Doorstep Delivery\n\nWould you like me to reserve this piece or share the full color catalog for you?\n\nWarm regards,\n*Rajesh Kumar* (Reseller Partner)`;
-            
-            var url = 'https://api.whatsapp.com/send?phone=91' + phone + '&text=' + encodeURIComponent(text);
+
+            // Previously: an unknown product became "Exclusive Pure Silk Saree" at
+            // Rs 3,499, and a customer with no number on file was messaged at
+            // 9876543210 - a real stranger's number.
+            if (!p) {
+                if (typeof showWsToast === 'function') showWsToast('That product is no longer in the catalogue. Please refresh the page.');
+                return;
+            }
+            var phone = String(c.whatsapp || c.mobile || '').replace(/[^0-9]/g, '');
+            if (phone.length === 10) phone = '91' + phone;
+            if (phone.length < 10) {
+                if (typeof showWsToast === 'function') showWsToast('No WhatsApp number is saved for ' + c.name + '. Add one first.');
+                return;
+            }
+
+            var pName = p.name || '';
+            var pPrice = Number(p.retail_price || p.price) || 0;
+            // Signed with the logged-in reseller's own name when there is one. The
+            // old message was signed "*Rajesh Kumar* (Reseller Partner)" for
+            // everybody, and claimed Silk Mark certification and 24-hr dispatch
+            // for every product.
+            var senderName = '';
+            try {
+                var meRaw = localStorage.getItem('dtbrands_user');
+                if (meRaw) {
+                    var me = JSON.parse(meRaw) || {};
+                    senderName = String(me.name || me.full_name || me.business_name || '').trim();
+                }
+            } catch (e) { senderName = ''; }
+
+
+            var text = 'Namaste ' + c.name + ' ji 🙏,\n\nI handpicked this piece specially for you:\n\n*' + pName + '*\n';
+            if (pPrice > 0) text += '✨ *Price*: ₹' + pPrice.toLocaleString('en-IN') + '\n';
+            if (p.fabric) text += '💎 *Fabric*: ' + p.fabric + '\n';
+            if (p.color) text += '🎨 *Colour*: ' + p.color + '\n';
+            text += '\n' + window.location.origin + '/product.php?id=' + p.id + '\n';
+            text += '\nWould you like me to reserve this piece or share the full catalogue?';
+            text += '\n\nWarm regards' + (senderName ? ',\n*' + senderName + '*' : '');
+
+            var url = 'https://api.whatsapp.com/send?phone=' + phone + '&text=' + encodeURIComponent(text);
             window.open(url, '_blank');
             if (typeof showWsToast === 'function') {
                 showWsToast('📲 Opening WhatsApp pitch for ' + c.name + '...');

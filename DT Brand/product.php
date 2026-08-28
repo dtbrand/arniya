@@ -17,317 +17,180 @@ $products = [];
 foreach ($catalogProducts as $cp) {
     $products[$cp['id']] = $cp;
 }
-if (empty($products)) {
-$products = [
-    1 => [
-        'id'       => 1,
-        'name'     => 'Nilambari Silk Saree',
-        'category' => 'Sarees',
-        'price'    => 4899,
-        'old_price'=> 6500,
-        'discount' => 25,
-        'image'    => '/assets/images/product1.png',
-        'badge'    => 'New',
-        'rating'   => 4.8,
-        'reviews'  => 142,
-        'color'    => 'Navy',
-        'colors'   => ['Navy', 'Royal Blue', 'Midnight Black'],
-        'size'     => ['Free Size', 'M', 'L'],
-        'fabric'   => 'Pure Kanchipuram Silk',
-        'in_stock' => true,
-        'sku'      => 'KN-SAR-001',
-        'desc'     => 'An exquisite masterpiece from our Royal Heritage edit. The Nilambari Silk Saree features pure gold zari brocade work along the pallu, finished with artisanal floral buttas and rich temple borders.'
-    ],
-    2 => [
-        'id'       => 2,
-        'name'     => 'Banarasi Zari Saree',
-        'category' => 'Sarees',
-        'price'    => 8499,
-        'old_price'=> 11000,
-        'discount' => 23,
-        'image'    => '/assets/images/product2.png',
-        'badge'    => 'Bestseller',
-        'rating'   => 4.9,
-        'reviews'  => 218,
-        'color'    => 'Maroon',
-        'colors'   => ['Maroon', 'Deep Wine', 'Ruby Red'],
-        'size'     => ['Free Size', 'S', 'M'],
-        'fabric'   => 'Pure Banarasi Katan Silk',
-        'in_stock' => true,
-        'sku'      => 'KN-SAR-002',
-        'desc'     => 'Handwoven in Varanasi using centuries-old kadhwa weaving techniques. Adorned with delicate antique gold floral jaal, this saree exudes regal Indian heritage.'
-    ],
-    3 => [
-        'id'       => 3,
-        'name'     => 'Kanjivaram Temple Silk',
-        'category' => 'Sarees',
-        'price'    => 12999,
-        'old_price'=> 16500,
-        'discount' => 21,
-        'image'    => '/assets/images/product3.png',
-        'badge'    => 'Heritage',
-        'rating'   => 5.0,
-        'reviews'  => 96,
-        'color'    => 'Yellow',
-        'colors'   => ['Yellow', 'Golden Ochre', 'Emerald Green'],
-        'size'     => ['Free Size', 'L', 'XL'],
-        'fabric'   => 'Pure Mulberry Silk (3-Ply)',
-        'in_stock' => true,
-        'sku'      => 'KN-SAR-003',
-        'desc'     => 'Woven with three-ply twisted silk yarn and dipped in pure metallic gold zari. Features monumental temple gopuram motifs along the double-wide contrast border.'
-    ],
-    4 => [
-        'id'       => 4,
-        'name'     => 'Georgette Bloom Saree',
-        'category' => 'Sarees',
-        'price'    => 3299,
-        'old_price'=> 4200,
-        'discount' => 21,
-        'image'    => '/assets/images/product4.png',
-        'badge'    => null,
-        'rating'   => 4.6,
-        'reviews'  => 74,
-        'color'    => 'Pink',
-        'colors'   => ['Pink', 'Blush Peach', 'Rose'],
-        'size'     => ['Free Size', 'S', 'M', 'L'],
-        'fabric'   => 'Viscose Georgette',
-        'in_stock' => true,
-        'sku'      => 'KN-SAR-004',
-        'desc'     => 'Lightweight, fluid, and romantic. Decorated with hand-embroidered resham florals and delicate scalloped borders for celebratory evening soirees.'
-    ],
-    5 => [
-        'id'       => 5,
-        'name'     => 'Royal Anarkali Kurti',
-        'category' => 'Kurtis',
-        'price'    => 2799,
-        'old_price'=> 3900,
-        'discount' => 28,
-        'image'    => '/assets/images/product5.png',
-        'badge'    => 'New',
-        'rating'   => 4.7,
-        'reviews'  => 89,
-        'color'    => 'Green',
-        'colors'   => ['Green', 'Teal', 'Mint'],
-        'size'     => ['XS', 'S', 'M', 'L', 'XL'],
-        'fabric'   => 'Chanderi Silk Cotton',
-        'in_stock' => true,
-        'sku'      => 'KN-KUR-005',
-        'desc'     => 'Flared 32-kali royal floor-length anarkali silhouette with intricate gota patti handwork on the yoke and bell sleeves.'
-    ],
-    6 => [
-        'id'       => 6,
-        'name'     => 'Bridal Zardosi Lehenga',
-        'category' => 'Lehengas',
-        'price'    => 24999,
-        'old_price'=> 32000,
-        'discount' => 22,
-        'image'    => '/assets/images/product6.png',
-        'badge'    => 'Bridal',
-        'rating'   => 5.0,
-        'reviews'  => 310,
-        'color'    => 'Red',
-        'colors'   => ['Red', 'Crimson', 'Maroon'],
-        'size'     => ['S', 'M', 'L', 'XL'],
-        'fabric'   => 'Raw Silk & Velvet Dupatta',
-        'in_stock' => true,
-        'sku'      => 'KN-LEH-006',
-        'desc'     => 'A couture bridal creation featuring 180 hours of meticulous dabka, nakshi, and zardozi bullion embroidery over deep crimson silk, complete with dual dupattas.'
-    ],
-    7 => [
-        'id'       => 7,
-        'name'     => 'Mustard Block Print Saree',
-        'category' => 'Sarees',
-        'price'    => 1899,
-        'old_price'=> 2600,
-        'discount' => 27,
-        'image'    => '/assets/images/product7.png',
-        'badge'    => null,
-        'rating'   => 4.5,
-        'reviews'  => 56,
-        'color'    => 'Orange',
-        'colors'   => ['Orange', 'Mustard', 'Rust Gold'],
-        'size'     => ['Free Size', 'M'],
-        'fabric'   => 'Mulmul Cotton',
-        'in_stock' => true,
-        'sku'      => 'KN-SAR-007',
-        'desc'     => 'Authentic Bagru hand block printed natural vegetable dyes on airy mulmul cotton. Perfect for daytime cultural gatherings and warm weather celebrations.'
-    ],
-    8 => [
-        'id'       => 8,
-        'name'     => 'Ivory Designer Gown',
-        'category' => 'Gowns',
-        'price'    => 7499,
-        'old_price'=> 9500,
-        'discount' => 21,
-        'image'    => '/assets/images/product8.png',
-        'badge'    => 'Trending',
-        'rating'   => 4.8,
-        'reviews'  => 115,
-        'color'    => 'White',
-        'colors'   => ['White', 'Ivory', 'Pearl Cream'],
-        'size'     => ['S', 'M', 'L', 'XXL'],
-        'fabric'   => 'Organza & Silk Crepe',
-        'in_stock' => true,
-        'sku'      => 'KN-GWN-008',
-        'desc'     => 'Dramatic cape-sleeved indo-western evening gown embellished with swarovski crystals and tone-on-tone pearl embroidery.'
-    ],
-];
-}
+// DT_MARK_PDP_HEAD
 
-// Resolve requested product ID, SKU, or Slug
-$pid = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
-$sku = isset($_GET['sku']) ? trim($_GET['sku']) : '';
+// ── Resolve the requested product: SKU, slug or numeric id ──
+$pidParam  = isset($_GET['id']) ? trim((string)$_GET['id']) : '';
+$slugParam = isset($_GET['slug']) ? trim((string)$_GET['slug']) : '';
+$skuParam  = isset($_GET['sku']) ? trim((string)$_GET['sku']) : '';
 
 $product = null;
-if (!empty($sku)) {
-    $product = ProductCatalog::getBySku($sku);
+if ($skuParam !== '') {
+    $product = ProductCatalog::getBySku($skuParam);
 }
-if (!$product && !empty($slug)) {
-    foreach ($catalogProducts as $cp) {
-        if (($cp['slug'] ?? '') === $slug) {
-            $product = $cp;
-            break;
+if (!$product && $slugParam !== '') {
+    $product = ProductCatalog::getBySlug($slugParam);
+}
+if (!$product && ctype_digit($pidParam)) {
+    $product = ProductCatalog::getById((int)$pidParam);
+}
+
+// An unknown id used to fall through to `reset($products)`, so /product.php?id=9999
+// rendered the first product's photos, price and SKU under the requested URL,
+// and a request that reached an empty catalogue rendered one of eight sarees
+// hardcoded in this file that no order could ever be fulfilled from.
+if (!$product) {
+    http_response_code(404);
+    $pdpAlternatives = array_slice(array_values($catalogProducts), 0, 4);
+    require __DIR__ . '/includes/product-not-found.php';
+    exit;
+}
+// ── Normalised scalars. mapRow() returns '' / [] for anything the mill has not
+// filled in, never a missing key, so `?? 'Pure Silk'`-style defaults could not
+// fire: they were dead code hiding behind values this page then printed as if
+// they were the product's real fabric, colour and weave.
+$pName        = $product['name'] !== '' ? $product['name'] : ($product['sku'] !== '' ? $product['sku'] : 'Untitled product');
+$pSku         = (string)$product['sku'];
+$pCategory    = (string)$product['category'];
+$pFabric      = (string)$product['fabric'];
+$pDescription = (string)$product['description'];
+$pPrice       = (float)$product['price'];
+$pMrp         = (float)$product['old_price'];
+$pDiscount    = (int)$product['discount'];
+$pRating      = (float)$product['rating'];
+$pReviewCount = (int)$product['reviews_count'];
+$pStockQty    = (int)$product['stock_qty'];
+$pInStock     = !empty($product['in_stock']);
+$pColors      = array_values(array_filter(array_map('strval', (array)$product['colors']), static fn($c) => trim($c) !== ''));
+$pSizes       = array_values(array_filter(array_map('strval', (array)$product['size']), static fn($s) => trim($s) !== ''));
+$pdpNoImage   = ProductCatalog::NO_IMAGE;
+
+// ── Gallery media: only this product's own uploads ──
+// The gallery was padded to four slides with /assets/images/product<N>.png
+// chosen by (id % 8) + 1, so a saree with a single photo appeared to have four
+// and three of them were photographs of other products. Uploaded videos and
+// pasted YouTube / Instagram links were never rendered at all.
+$pdpMedia = [];
+foreach ((array)$product['images'] as $mImg) {
+    $mImg = trim((string)$mImg);
+    if ($mImg !== '' && $mImg !== $pdpNoImage) {
+        $pdpMedia[] = ['kind' => 'image', 'src' => $mImg];
+    }
+}
+$pdpPoster = $pdpMedia !== [] ? $pdpMedia[0]['src'] : $pdpNoImage;
+foreach ((array)$product['videos'] as $mVid) {
+    $mVid = trim((string)$mVid);
+    if ($mVid !== '') {
+        $pdpMedia[] = ['kind' => 'video', 'src' => $mVid];
+    }
+}
+foreach ((array)$product['embeds'] as $mEmb) {
+    $mEmb = trim((string)$mEmb);
+    if ($mEmb !== '') {
+        $pdpMedia[] = ['kind' => 'embed', 'src' => $mEmb];
+    }
+}
+$pdpHasMedia = $pdpMedia !== [];
+// ── Specifications: every row comes from a column the mill filled in ──
+// This block used to assert 'Matching Silk Blouse Piece Included', 'Pure Tested
+// Gold Zari Jacquard', 'Dry Clean Only' and '1 Piece (With Silk Mark
+// Certification)' for every product in the catalogue, including cotton ones.
+$currentSpecs = [];
+$specCandidates = [
+    'Category'      => $pCategory,
+    'Fabric'        => $pFabric,
+    'Weave / Craft' => (string)$product['weave'],
+    'Zari'          => (string)$product['zari_type'],
+    'Pallu'         => (string)$product['pallu_style'],
+    'Blouse Piece'  => (string)$product['blouse_piece'],
+    'Occasion'      => (string)$product['occasion'],
+    'Colours'       => implode(', ', $pColors),
+    'Sizes'         => implode(', ', $pSizes),
+    'SKU'           => $pSku
+];
+foreach ($specCandidates as $specTitle => $specVal) {
+    $specVal = trim((string)$specVal);
+    if ($specVal !== '') {
+        $currentSpecs[] = ['title' => $specTitle, 'val' => $specVal];
+    }
+}
+$currentSpecs[] = [
+    'title' => 'Availability',
+    'val'   => $pInStock ? ($pStockQty > 0 ? $pStockQty . ' in stock' : 'In stock') : 'Out of stock'
+];
+
+// ── Accordion detail lists, built from the same real values ──
+$currentDetails = ['design_lines' => [], 'size_fit' => [], 'material_care' => []];
+if ($pDescription !== '') {
+    $currentDetails['design_lines'][] = $pDescription;
+}
+foreach ([
+    'Fabric'       => $pFabric,
+    'Weave'        => (string)$product['weave'],
+    'Zari'         => (string)$product['zari_type'],
+    'Pallu'        => (string)$product['pallu_style'],
+    'Blouse piece' => (string)$product['blouse_piece'],
+    'Occasion'     => (string)$product['occasion']
+] as $dLabel => $dVal) {
+    $dVal = trim((string)$dVal);
+    if ($dVal !== '') {
+        $currentDetails['design_lines'][] = $dLabel . ': ' . $dVal;
+        if ($dLabel === 'Fabric') {
+            $currentDetails['material_care'][] = 'Fabric: ' . $dVal;
         }
     }
 }
-if (!$product) {
-    $product = ProductCatalog::getById($pid) ?? ($products[$pid] ?? reset($products));
+if ($pSizes !== []) {
+    $currentDetails['size_fit'][] = 'Available sizes: ' . implode(', ', $pSizes);
 }
+if ($pColors !== []) {
+    $currentDetails['size_fit'][] = 'Available colours: ' . implode(', ', $pColors);
+}
+$currentDetails = array_filter($currentDetails, static fn($lines) => $lines !== []);
+// ── Reviews: the approved rows this product actually has ──
+// Seven reviews used to be hardcoded above -- named shoppers, named cities,
+// "2 days ago", helpful counts -- and were printed on every product page in the
+// catalogue, including products nobody had bought. The reviews table is the
+// only source, and it holds no city, occasion, photo or helpful count.
+$customerReviews  = ProductCatalog::getReviews((int)$product['id'], 24);
+$reviewBreakdown  = ProductCatalog::reviewBreakdown((int)$product['id']);
+$reviewTotal      = array_sum($reviewBreakdown);
 
-// Generate variation gallery images
-$prodNum = (int)($product['id'] ?? 1);
-$baseMainImg = $product['image'] ?? '/assets/images/product1.png';
-$pImg2 = !empty($product['gallery'][1]) ? $product['gallery'][1] : ('/assets/images/product' . ((($prodNum) % 8) + 1) . '.png');
-$pImg3 = !empty($product['gallery'][2]) ? $product['gallery'][2] : ('/assets/images/product' . ((($prodNum + 1) % 8) + 1) . '.png');
-$pImg4 = !empty($product['gallery'][3]) ? $product['gallery'][3] : ('/assets/images/product' . ((($prodNum + 2) % 8) + 1) . '.png');
+// ── Colour swatches come from the palette the admin picked hexes in ──
+$pdpSwatch = static function (string $name): string {
+    return ProductCatalog::colorHex($name);
+};
 
-$galleryImages = array_values(array_unique([$baseMainImg, $pImg2, $pImg3, $pImg4]));
+// Storefront WhatsApp number. shop/checkout/cart all use this one; the admin
+// default (+91 98220 19283) and api/db_audit.php (+91 93278 12345) disagree,
+// which is flagged for the owner to settle rather than guessed at here.
+$pdpWaNumber = '917046363528';
 
-// Dynamic Product Specifications from Database
-$currentSpecs = [
-    ['title' => 'Category', 'val' => $product['category'] ?? 'Silk Sarees'],
-    ['title' => 'Fabric', 'val' => $product['fabric'] ?? 'Pure Silk'],
-    ['title' => 'Weave / Craft', 'val' => $product['weave'] ?? 'Handloom Korvai'],
-    ['title' => 'Primary Color', 'val' => $product['color'] ?? 'Royal Silk'],
-    ['title' => 'Blouse Fabric', 'val' => 'Matching Silk Blouse Piece Included'],
-    ['title' => 'Border Style', 'val' => 'Pure Tested Gold Zari Jacquard'],
-    ['title' => 'Wash Care', 'val' => 'Dry Clean Only'],
-    ['title' => 'Net Quantity', 'val' => '1 Piece (With Silk Mark Certification)'],
-];
+// ── Related products: real catalogue rows, never this product ──
+$relatedItems = array_values(array_filter(
+    $catalogProducts,
+    static fn($it) => (int)($it['id'] ?? 0) !== (int)$product['id']
+));
+$relatedItems = array_slice($relatedItems, 0, 12);
 
-// Dynamic Product Details (Design Details, Size & Fit, Material & Care) from Database
-$currentDetails = [
-    'design_lines' => [
-        htmlspecialchars($product['title'] ?? ($product['name'] ?? 'Royal Ethnic Saree')),
-        !empty($product['description']) ? htmlspecialchars($product['description']) : 'Authentic Surat handloom creation woven with pure tested zari and contrast border.',
-        'Fabric: ' . htmlspecialchars($product['fabric'] ?? 'Pure Silk'),
-        'Weave: ' . htmlspecialchars($product['weave'] ?? 'Handloom Korvai'),
-        'Includes unstitched blouse piece with matching border',
-        'Direct Surat Factory Wholesale Authenticity Guaranteed'
-    ],
-    'size_fit' => [
-        'Saree Length: 5.5 metres plus 0.8 metre blouse piece',
-        'Width: 1.06 metres (approx.)',
-        'Available sizes: ' . implode(', ', (array)($product['size'] ?? ['Free Size (6.3m)', 'M', 'L']))
-    ],
-    'material_care' => [
-        'Fabric: ' . htmlspecialchars($product['fabric'] ?? 'Pure Silk'),
-        'Wash Care: Dry Clean Only',
-        'Origin: Surat Mill Handcrafted'
-    ]
-];
-
-$customerReviews = [
-    [
-        'id' => 1,
-        'name' => 'Priya Sharma',
-        'city' => 'Mumbai, MH',
-        'rating' => 5,
-        'date' => '2 days ago',
-        'occasion' => 'Wedding Sangeet',
-        'text' => 'The fabric quality and real zari weave is breathtaking! Arrived in luxury royal gift packaging within 3 days to Mumbai. Wore it for my cousin’s sangeet and received endless compliments.',
-        'photo' => '/assets/images/product1.png',
-        'helpful' => 38
-    ],
-    [
-        'id' => 2,
-        'name' => 'Ananya Mehta',
-        'city' => 'Surat, Gujarat',
-        'rating' => 5,
-        'date' => '4 days ago',
-        'occasion' => 'Diwali Festive Puja',
-        'text' => 'Exactly as depicted in the photos. The silk drape feels extremely luxurious, pure, and lightweight. The WhatsApp styling concierge was very helpful with size selection.',
-        'photo' => '/assets/images/product1.png',
-        'helpful' => 29
-    ],
-    [
-        'id' => 3,
-        'name' => 'Dr. Radhika Iyer',
-        'city' => 'Bengaluru, KA',
-        'rating' => 5,
-        'date' => '1 week ago',
-        'occasion' => 'Temple Inauguration',
-        'text' => 'Authentic handloom craftsmanship. You can tell the zari is high standard and pure. Stitching of the blouse piece was flawless. Highly recommend DT Brand\'s!',
-        'photo' => null,
-        'helpful' => 21
-    ],
-    [
-        'id' => 4,
-        'name' => 'Sneha Singhania',
-        'city' => 'Delhi NCR',
-        'rating' => 5,
-        'date' => '1 week ago',
-        'occasion' => 'Reception Night',
-        'text' => 'The color is deep, royal, and rich under evening chandelier lighting. Everyone asked where I purchased it from. Fast express delivery with zero hassle.',
-        'photo' => '/assets/images/product1.png',
-        'helpful' => 44
-    ],
-    [
-        'id' => 5,
-        'name' => 'Kavita Patel',
-        'city' => 'London, UK',
-        'rating' => 5,
-        'date' => '2 weeks ago',
-        'occasion' => 'International Wedding',
-        'text' => 'Ordered from London with international DHL shipping. Reached in 5 business days in pristine condition! Truly magnificent quality and authentic silk sheen.',
-        'photo' => '/assets/images/product1.png',
-        'helpful' => 52
-    ],
-    [
-        'id' => 6,
-        'name' => 'Meera Deshmukh',
-        'city' => 'Pune, MH',
-        'rating' => 4,
-        'date' => '3 weeks ago',
-        'occasion' => 'Engagement Ceremony',
-        'text' => 'Beautiful attire! Heavy royal border and very comfortable to wear all night. Delivery was smooth and packaging was top notch.',
-        'photo' => null,
-        'helpful' => 17
-    ],
-    [
-        'id' => 7,
-        'name' => 'Ritu Kothari',
-        'city' => 'Jaipur, RJ',
-        'rating' => 5,
-        'date' => '1 month ago',
-        'occasion' => 'Sister’s Haldi',
-        'text' => 'Outstanding royal craftsmanship! The zari sheen is so authentic and looks 10x better in person than online. Everyone at the event kept asking about DT Brand\'s.',
-        'photo' => '/assets/images/product1.png',
-        'helpful' => 31
-    ]
-];
-
-$colorHex = [
-    'Navy' => '#1B2A4A', 'Royal Blue' => '#204B8C', 'Midnight Black' => '#1A1A1A',
-    'Maroon' => '#6D1A24', 'Deep Wine' => '#4A1521', 'Ruby Red' => '#9E1B32',
-    'Yellow' => '#E5A93B', 'Golden Ochre' => '#C68B29', 'Emerald Green' => '#1E5E3A',
-    'Pink' => '#E88B9E', 'Blush Peach' => '#F4B2A0', 'Rose' => '#D46A84',
-    'Green' => '#2D6A4F', 'Teal' => '#1D6870', 'Mint' => '#74B39B',
-    'Red' => '#B22222', 'Crimson' => '#DC143C', 'Orange' => '#D96B27',
-    'Mustard' => '#C88A24', 'Rust Gold' => '#A85A1D', 'White' => '#FAF8F5',
-    'Ivory' => '#FFFFF0', 'Pearl Cream' => '#EFEBD9'
-];
+/** "3 days ago" for a reviews.created_at timestamp. */
+function pdp_relative_date(string $ts): string
+{
+    $when = strtotime($ts);
+    if ($when === false || $when <= 0) {
+        return '';
+    }
+    $mins = max(1, (int)floor((time() - $when) / 60));
+    if ($mins < 60)          { return $mins . ($mins === 1 ? ' minute ago' : ' minutes ago'); }
+    $hours = (int)floor($mins / 60);
+    if ($hours < 24)         { return $hours . ($hours === 1 ? ' hour ago' : ' hours ago'); }
+    $days = (int)floor($hours / 24);
+    if ($days < 7)           { return $days . ($days === 1 ? ' day ago' : ' days ago'); }
+    if ($days < 31)          { $w = (int)floor($days / 7); return $w . ($w === 1 ? ' week ago' : ' weeks ago'); }
+    if ($days < 365)         { $m = (int)floor($days / 30); return $m . ($m === 1 ? ' month ago' : ' months ago'); }
+    $y = (int)floor($days / 365);
+    return $y . ($y === 1 ? ' year ago' : ' years ago');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -335,8 +198,8 @@ $colorHex = [
     
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title><?= htmlspecialchars($product['name']) ?> — DT Brand's | Ethnic Luxury</title>
-<meta name="description" content="<?= htmlspecialchars(substr($product['desc'], 0, 160)) ?>" />
+<title><?= htmlspecialchars($pName) ?> — DT Brand's | Ethnic Luxury</title>
+<meta name="description" content="<?= htmlspecialchars($pDescription !== '' ? mb_substr($pDescription, 0, 160) : trim($pName . ' — ' . $pCategory, ' —')) ?>" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -345,7 +208,7 @@ $colorHex = [
 
     <!-- ════════════ GLOBAL PRODUCTS & MODAL ENGINE BOOTSTRAP ════════════ -->
     <script>
-        window.allProducts = <?php echo json_encode(isset($catalogProducts) ? $catalogProducts : (isset($products) ? $products : [])); ?>;
+        window.allProducts = <?php echo json_encode($catalogProducts, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
         window.catalogProducts = window.allProducts;
         window.products = window.allProducts;
         window.openQuickView = function(id) { if(typeof window.openQV === 'function') window.openQV(id); };
@@ -382,70 +245,119 @@ $colorHex = [
 
                 <!-- Swipeable Track -->
                 <div class="pdp-slider-track" id="pdpSliderTrack">
-                    <?php foreach ($galleryImages as $index => $img): ?>
-                    <div class="pdp-slide" data-idx="<?= $index ?>">
+                    <?php if (!$pdpHasMedia): ?>
+                    <div class="pdp-slide pdp-slide-empty" data-idx="0" data-media="none">
+                        <img src="<?= htmlspecialchars($pdpNoImage) ?>" alt="" style="opacity:.45;" />
+                        <span class="pdp-empty-media-note">No photo has been uploaded for this product yet.</span>
+                    </div>
+                    <?php else: ?>
+                    <?php foreach ($pdpMedia as $index => $mItem): ?>
+                    <div class="pdp-slide" data-idx="<?= $index ?>" data-media="<?= htmlspecialchars($mItem['kind']) ?>">
+                        <?php if ($mItem['kind'] === 'video'): ?>
+                        <!-- An uploaded MP4. <img src="clip.mp4"> is a broken image, which is
+                             what this page produced before videos were separated out. -->
+                        <video
+                            class="pdp-slide-video"
+                            src="<?= htmlspecialchars($mItem['src']) ?>"
+                            poster="<?= htmlspecialchars($pdpPoster) ?>"
+                            controls
+                            playsinline
+                            preload="metadata"
+                        ></video>
+                        <?php elseif ($mItem['kind'] === 'embed'): ?>
+                        <iframe
+                            class="pdp-slide-embed"
+                            src="<?= htmlspecialchars($mItem['src']) ?>"
+                            title="<?= htmlspecialchars($pName) ?> video"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy"
+                        ></iframe>
+                        <?php else: ?>
                         <img
-                            src="<?= htmlspecialchars($img) ?>"
-                            alt="<?= htmlspecialchars($product['name']) ?> - View <?= $index + 1 ?>"
-                            onError="this.src='/assets/images/product1.png'"
+                            src="<?= htmlspecialchars($mItem['src']) ?>"
+                            alt="<?= htmlspecialchars($pName) ?> - View <?= $index + 1 ?>"
                         />
+                        <?php endif; ?>
                     </div>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Slide Index Counter -->
-                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= count($galleryImages) ?></div>
+                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= max(1, count($pdpMedia)) ?></div>
             </div>
 
             <!-- Mobile & Desktop Pagination Dots -->
             <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
 
             <!-- Multi-Photo Thumbnails -->
+            <?php if (count($pdpMedia) > 1): ?>
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
-                <?php foreach ($galleryImages as $index => $img): ?>
+                <?php foreach ($pdpMedia as $index => $mItem): ?>
                 <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
-                    <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='/assets/images/product1.png'" />
+                    <img src="<?= htmlspecialchars($mItem['kind'] === 'image' ? $mItem['src'] : $pdpPoster) ?>" alt="Thumb <?= $index + 1 ?>" />
+                    <?php if ($mItem['kind'] !== 'image'): ?>
+                    <span class="pdp-thumb-play">&#9658;</span>
+                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
 
         <!-- ── Right: Product Details & Conversion Actions ── -->
         <div class="pdp-details-column">
             <div>
                 <span class="pdp-brand-tag">DT BRAND'S ETHNIC LUXURY</span>
-                <h1 class="pdp-title"><?= htmlspecialchars($product['name']) ?></h1>
+                <h1 class="pdp-title"><?= htmlspecialchars($pName) ?></h1>
             </div>
 
-            <!-- Rating Row -->
+            <!-- Rating Row — the pill and the count only appear when approved reviews exist.
+                 This row used to print a star score and "N Verified Reviews" for every
+                 product, including ones nobody has reviewed. -->
             <div class="pdp-rating-row">
+                <?php if ($pReviewCount > 0 && $pRating > 0): ?>
                 <div class="pdp-rating-pill">
-                    <span>★ <?= number_format($product['rating'], 1) ?></span>
+                    <span>★ <?= number_format($pRating, 1) ?></span>
                 </div>
-                <span class="pdp-review-count"><?= $product['reviews'] ?> Verified Reviews</span>
-                <span class="pdp-sku-badge">SKU: <?= htmlspecialchars($product['sku']) ?></span>
+                <span class="pdp-review-count"><?= (int)$pReviewCount ?> Verified Review<?= $pReviewCount === 1 ? '' : 's' ?></span>
+                <?php else: ?>
+                <span class="pdp-review-count">No reviews yet</span>
+                <?php endif; ?>
+                <?php if ($pSku !== ''): ?>
+                <span class="pdp-sku-badge">SKU: <?= htmlspecialchars($pSku) ?></span>
+                <?php endif; ?>
             </div>
 
             <!-- Price Card (Next-Level Luxury & Clear Visibility) -->
             <div class="pdp-price-card">
                 <div class="pdp-price-main-row">
-                    <span class="pdp-price-val">₹<?= number_format($product['price']) ?></span>
-                    <?php if (!empty($product['old_price'])): ?>
-                    <span class="pdp-mrp-val">MRP ₹<?= number_format($product['old_price']) ?></span>
+                    <?php if ($pPrice > 0): ?>
+                    <span class="pdp-price-val">₹<?= number_format($pPrice) ?></span>
+                    <?php else: ?>
+                    <span class="pdp-price-val">Price on request</span>
                     <?php endif; ?>
-                    <?php if (!empty($product['discount'])): ?>
-                    <span class="pdp-discount-badge"><?= $product['discount'] ?>% OFF</span>
+                    <?php if ($pMrp > $pPrice && $pPrice > 0): ?>
+                    <span class="pdp-mrp-val">MRP ₹<?= number_format($pMrp) ?></span>
+                    <?php endif; ?>
+                    <?php if ($pDiscount > 0 && $pMrp > $pPrice): ?>
+                    <span class="pdp-discount-badge"><?= (int)$pDiscount ?>% OFF</span>
                     <?php endif; ?>
                 </div>
                 <div class="pdp-tax-line">
                     <span>Inclusive of all taxes</span> • <span class="green">⚡ Fast Delivery in 3–5 Days</span>
                 </div>
-                <!-- Animated Luxury Perks Strip -->
+                <!-- Animated Luxury Perks Strip. The first badge claimed "100% Handloom Silk"
+                     for every product; it now echoes the fabric column and is dropped when
+                     the fabric was never filled in. The rest are store-wide policies. -->
                 <div class="pdp-animated-perks-strip">
+                    <?php if ($pFabric !== ''): ?>
                     <div class="pdp-perk-badge">
                         <svg viewBox="0 0 24 24" class="pdp-perk-svg pulse" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>
-                        <span class="pdp-perk-text">100% Handloom Silk</span>
+                        <span class="pdp-perk-text"><?= htmlspecialchars($pFabric) ?></span>
                     </div>
+                    <?php endif; ?>
                     <div class="pdp-perk-badge">
                         <svg viewBox="0 0 24 24" class="pdp-perk-svg flash" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                         <span class="pdp-perk-text">Fast 24-48h Dispatch</span>
@@ -461,42 +373,59 @@ $colorHex = [
                 </div>
             </div>
 
-            <!-- Colour Swatches -->
+            <!-- Colour Swatches — hidden entirely when no colour variant was created.
+                 The block used to render with a single "Standard" label and no swatches,
+                 and every swatch outside a 23-name hardcoded map drew the same gold. -->
+            <?php if ($pColors !== []): ?>
             <div>
                 <div class="pdp-section-header">
-                    <span>SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
+                    <span>SELECT COLOUR: <strong class="pdp-selected-txt" id="pdpSelectedColorName"><?= htmlspecialchars($pColors[0]) ?></strong></span>
                 </div>
                 <div class="pdp-color-swatches" id="pdpColorSwatches">
-                    <?php foreach ($product['colors'] as $idx => $c): ?>
-                    <?php $hex = $colorHex[$c] ?? '#8A681F'; ?>
+                    <?php foreach ($pColors as $idx => $c): ?>
                     <button
                         class="pdp-color-btn <?= $idx === 0 ? 'active' : '' ?>"
                         data-color="<?= htmlspecialchars($c) ?>"
-                        style="background-color: <?= $hex ?>;"
+                        style="background-color: <?= htmlspecialchars($pdpSwatch($c)) ?>;"
                         title="<?= htmlspecialchars($c) ?>"
                         onclick="selectPdpColor(this)"
                     ></button>
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <!-- Size Selector -->
+            <!-- Size Selector — hidden when the product has no size variants. -->
+            <?php if ($pSizes !== []): ?>
             <div>
                 <div class="pdp-section-header">
                     <span>SELECT SIZE</span>
                     <span class="pdp-size-guide-link" onclick="openSizeGuideModal()">📏 View Size Chart</span>
                 </div>
                 <div class="pdp-size-grid" id="pdpSizeGrid">
-                    <?php foreach ($product['size'] as $idx => $s): ?>
+                    <?php foreach ($pSizes as $idx => $s): ?>
                     <button class="pdp-size-btn <?= $idx === 0 ? 'active' : '' ?>" data-size="<?= htmlspecialchars($s) ?>" onclick="selectPdpSize(this)">
                         <?= htmlspecialchars($s) ?>
                     </button>
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <!-- Actions (Quantity, Add to Bag, Buy Now) -->
+            <!-- Actions (Quantity, Add to Bag, Buy Now).
+                 An out-of-stock product could previously be added to the bag and
+                 checked out exactly like an in-stock one. -->
             <div class="pdp-actions-container">
+                <?php if (!$pInStock): ?>
+                <div class="pdp-oos-note" style="background:#FEF2F2; border:1px solid #FECACA; color:#991B1B; border-radius:10px; padding:12px 14px; font-size:0.82rem; font-weight:600; line-height:1.5;">
+                    This product is out of stock. Message us on WhatsApp and we will tell you when it is back, or suggest the closest piece we have.
+                </div>
+                <a class="pdp-wa-order-btn" style="text-decoration:none;" target="_blank" rel="noopener"
+                   href="https://api.whatsapp.com/send?phone=<?= rawurlencode($pdpWaNumber) ?>&amp;text=<?= rawurlencode('Hi, is ' . $pName . ($pSku !== '' ? ' (SKU: ' . $pSku . ')' : '') . ' coming back in stock?') ?>">
+                    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    <span>Ask about restock on WhatsApp</span>
+                </a>
+                <?php else: ?>
                 <div class="pdp-qty-row">
                     <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.06em;">Quantity:</span>
                     <div class="pdp-qty-box">
@@ -504,6 +433,9 @@ $colorHex = [
                         <span class="pdp-qty-num" id="pdpQtyVal">1</span>
                         <button class="pdp-qty-btn" onclick="updatePdpQty(1)">+</button>
                     </div>
+                    <?php if ($pStockQty > 0): ?>
+                    <span style="font-size:0.72rem; font-weight:700; color:#15803D;"><?= (int)$pStockQty ?> in stock</span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="pdp-btn-row">
@@ -528,6 +460,7 @@ $colorHex = [
                     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     <span>Instant Order via WhatsApp</span>
                 </button>
+                <?php endif; ?>
             </div>
 
             <!-- Pincode Delivery Estimator -->
@@ -560,35 +493,38 @@ $colorHex = [
                     </button>
                     <div class="pdp-acc-body">
                         <div class="pdp-myntra-details-wrap">
-                            <!-- Design Details -->
+                            <?php
+                            // Only sections the catalogue actually filled in. $currentDetails is
+                            // array_filter'd in the controller, so a product with no fabric or
+                            // no size variants simply has no Material & Care / Size & Fit block
+                            // instead of the old "Dry Clean Only" / "Free Size" boilerplate.
+                            $pdpDetailHeadings = [
+                                'design_lines'  => 'Design Details',
+                                'size_fit'      => 'Size & Fit',
+                                'material_care' => 'Material & Care'
+                            ];
+                            $pdpHasDetails = false;
+                            foreach ($pdpDetailHeadings as $dKey => $dHeading):
+                                $dLines = isset($currentDetails[$dKey]) ? (array)$currentDetails[$dKey] : [];
+                                if ($dLines === []) { continue; }
+                                $pdpHasDetails = true;
+                            ?>
                             <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Design Details</h4>
+                                <h4 class="pdp-myntra-heading"><?= htmlspecialchars($dHeading) ?></h4>
                                 <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['design_lines'] as $line): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($line) ?></div>
+                                    <?php foreach ($dLines as $line): ?>
+                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars((string)$line) ?></div>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-
-                            <!-- Size & Fit -->
+                            <?php endforeach; ?>
+                            <?php if (!$pdpHasDetails): ?>
                             <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Size & Fit</h4>
                                 <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['size_fit'] as $sf): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($sf) ?></div>
-                                    <?php endforeach; ?>
+                                    <div class="pdp-myntra-list-item">Detailed specifications have not been published for this product yet. Message us on WhatsApp and we will confirm them for you.</div>
                                 </div>
                             </div>
-
-                            <!-- Material & Care -->
-                            <div class="pdp-myntra-section-block">
-                                <h4 class="pdp-myntra-heading">Material & Care</h4>
-                                <div class="pdp-myntra-list">
-                                    <?php foreach ($currentDetails['material_care'] as $mc): ?>
-                                    <div class="pdp-myntra-list-item"><?= htmlspecialchars($mc) ?></div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -668,49 +604,66 @@ $colorHex = [
         </div>
     </div>
 
-    <!-- ════ LUXURY 360° VIDEO & FABRIC DRAPE SHOWCASE ════ -->
+    <!-- ════ VIDEO SHOWCASE — only when this product actually has a video ════
+         This section used to render for every product: a still photograph at 85%
+         opacity behind a gold play button labelled "Click to Watch Full HD Video"
+         that opened the reels feed or alerted "Playing HD Fabric Video...", beside
+         three fixed claims (electroplated zari, "holds crisp pleats for 12+ hours",
+         "unstitched 80cm coordinated designer blouse fabric"). It now plays the
+         uploaded file or the pasted embed, and disappears when there is none. -->
+    <?php
+    $pdpVideoMedia = array_values(array_filter($pdpMedia, static fn($m) => $m['kind'] !== 'image'));
+    ?>
+    <?php if ($pdpVideoMedia !== []): ?>
     <section class="pdp-video-showcase-section" style="margin-top: 36px; padding: 24px; background: linear-gradient(135deg, #181512 0%, #2A241E 100%); border-radius: 16px; border: 1.5px solid #8A681F; color: #FAF5E8; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px;">
             <div>
                 <span style="font-size:0.7rem; font-weight:800; color:#D4AF37; text-transform:uppercase; letter-spacing:0.12em; display:flex; align-items:center; gap:6px;">
                     <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:none; stroke:#D4AF37; stroke-width:2;"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-                    Live Fabric & Zari Video Drape
+                    Fabric &amp; Zari Video
                 </span>
-                <h2 style="font-family:'Cinzel', serif; font-size:1.25rem; font-weight:700; color:#FFFFFF; margin:4px 0 0;"><?= htmlspecialchars($product['name']) ?> — 360° Video Preview</h2>
+                <h2 style="font-family:'Cinzel', serif; font-size:1.25rem; font-weight:700; color:#FFFFFF; margin:4px 0 0;"><?= htmlspecialchars($pName) ?> — Video</h2>
             </div>
-            <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20please%20send%20live%20video%20for%20<?= urlencode($product['name']) ?>%20(SKU%3A%20<?= urlencode($product['sku'] ?? 'SAR-001') ?>)" target="_blank" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); color:#FFFFFF; padding:9px 18px; border-radius:30px; font-size:0.78rem; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(22,163,74,0.35);">
+            <a href="https://api.whatsapp.com/send?phone=<?= rawurlencode($pdpWaNumber) ?>&amp;text=<?= rawurlencode('Hi, please send a live video for ' . $pName . ($pSku !== '' ? ' (SKU: ' . $pSku . ')' : '')) ?>" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #15803D 0%, #16A34A 100%); color:#FFFFFF; padding:9px 18px; border-radius:30px; font-size:0.78rem; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(22,163,74,0.35);">
                 <svg viewBox="0 0 24 24" style="width:15px; height:15px; fill:none; stroke:#FFF; stroke-width:2.2;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 Request Custom Live Video on WhatsApp
             </a>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:center;">
-            <div style="position:relative; aspect-ratio:16/9; background:#0B0907; border-radius:12px; overflow:hidden; border:1px solid rgba(212,175,55,0.4); display:flex; align-items:center; justify-content:center;">
-                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" style="width:100%; height:100%; object-fit:cover; opacity:0.85;" />
-                <div style="position:absolute; inset:0; background:rgba(0,0,0,0.35); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;" onclick="if(typeof window.openReelsFeed==='function'){window.openReelsFeed();}else{alert('Playing HD Fabric Video...');}">
-                    <div style="width:58px; height:58px; border-radius:50%; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 100%); display:flex; align-items:center; justify-content:center; box-shadow:0 0 24px rgba(212,175,55,0.8); border:2px solid #FFFFFF;">
-                        <svg viewBox="0 0 24 24" style="width:24px; height:24px; fill:#111827; margin-left:3px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    </div>
-                    <span style="margin-top:10px; font-size:0.75rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#FAF5E8; text-shadow:0 2px 4px rgba(0,0,0,0.8);">Click to Watch Full HD Video</span>
-                </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; align-items:start;">
+            <?php foreach ($pdpVideoMedia as $vIdx => $vItem): ?>
+            <div style="position:relative; aspect-ratio:16/9; background:#0B0907; border-radius:12px; overflow:hidden; border:1px solid rgba(212,175,55,0.4);">
+                <?php if ($vItem['kind'] === 'video'): ?>
+                <video
+                    src="<?= htmlspecialchars($vItem['src']) ?>"
+                    poster="<?= htmlspecialchars($pdpPoster) ?>"
+                    controls
+                    playsinline
+                    preload="metadata"
+                    style="width:100%; height:100%; object-fit:cover; display:block;"
+                ></video>
+                <?php else: ?>
+                <iframe
+                    src="<?= htmlspecialchars($vItem['src']) ?>"
+                    title="<?= htmlspecialchars($pName) ?> video <?= (int)$vIdx + 1 ?>"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                    style="width:100%; height:100%; border:0; display:block;"
+                ></iframe>
+                <?php endif; ?>
             </div>
-
-            <div style="display:flex; flex-direction:column; gap:12px;">
-                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #D4AF37;">
-                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#D4AF37; font-weight:700;">Pure Metallic Zari & Weft Inspection</h4>
-                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Video shows pure gold/silver electroplated zari woven seamlessly into <?= htmlspecialchars($product['fabric'] ?? 'Pure Silk') ?> warp under studio lighting.</p>
-                </div>
-                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #2E7D32;">
-                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#86EFAC; font-weight:700;">Fall & Drape Flow</h4>
-                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Ultra-lightweight yet monumental regal pleating. Does not crumple, holding crisp pleats for 12+ hours.</p>
-                </div>
-                <div style="background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #60A5FA;">
-                    <h4 style="margin:0 0 4px; font-size:0.85rem; color:#93C5FD; font-weight:700;">Includes Running Blouse Piece</h4>
-                    <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.4;">Comes with unstitched 80cm coordinated designer blouse fabric matching the rich pallu pattern.</p>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
+
+        <?php if ($pDescription !== '' || $pFabric !== ''): ?>
+        <div style="margin-top:16px; background:rgba(255,255,255,0.06); padding:12px 16px; border-radius:8px; border-left:3px solid #D4AF37;">
+            <h4 style="margin:0 0 4px; font-size:0.85rem; color:#D4AF37; font-weight:700;"><?= htmlspecialchars($pFabric !== '' ? $pFabric : 'About this piece') ?></h4>
+            <p style="margin:0; font-size:0.74rem; color:#DDD7CB; line-height:1.5;"><?= htmlspecialchars($pDescription !== '' ? $pDescription : $pName) ?></p>
+        </div>
+        <?php endif; ?>
     </section>
+    <?php endif; ?>
 
     <!-- ════ CUSTOMER REVIEWS & RATINGS BREAKDOWN ════ -->
     <section class="pdp-reviews-section" id="pdpReviewsSection">
@@ -718,17 +671,25 @@ $colorHex = [
         
         <div class="pdp-rev-header-grid">
             <div class="pdp-overall-score">
-                <div class="pdp-big-rating"><?= number_format($product['rating'], 1) ?></div>
-                <div class="pdp-big-stars">★★★★★</div>
-                <div class="pdp-score-sub">Based on <?= $product['reviews'] ?> verified buyer reviews</div>
+                <?php if ($reviewTotal > 0): ?>
+                <div class="pdp-big-rating"><?= number_format($pRating, 1) ?></div>
+                <div class="pdp-big-stars"><?= str_repeat('★', max(1, min(5, (int)round($pRating)))) ?></div>
+                <div class="pdp-score-sub">Based on <?= (int)$reviewTotal ?> published review<?= $reviewTotal === 1 ? '' : 's' ?></div>
+                <?php else: ?>
+                <div class="pdp-big-rating">—</div>
+                <div class="pdp-score-sub">No reviews published yet</div>
+                <?php endif; ?>
             </div>
 
+            <!-- Star histogram. This was a fixed 88 / 9 / 2 / 1 / 0 split printed on
+                 every product; it is now GROUP BY rating over approved reviews. -->
             <div class="pdp-bars-wrap">
-                <div class="pdp-bar-row"><span>5 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 88%;"></div></div><span>88%</span></div>
-                <div class="pdp-bar-row"><span>4 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 9%;"></div></div><span>9%</span></div>
-                <div class="pdp-bar-row"><span>3 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 2%;"></div></div><span>2%</span></div>
-                <div class="pdp-bar-row"><span>2 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 1%;"></div></div><span>1%</span></div>
-                <div class="pdp-bar-row"><span>1 Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: 0%;"></div></div><span>0%</span></div>
+                <?php for ($star = 5; $star >= 1; $star--):
+                    $starCount = (int)($reviewBreakdown[$star] ?? 0);
+                    $starPct = $reviewTotal > 0 ? (int)round(($starCount / $reviewTotal) * 100) : 0;
+                ?>
+                <div class="pdp-bar-row"><span><?= $star ?> Star</span><div class="pdp-bar-track"><div class="pdp-bar-fill" style="width: <?= $starPct ?>%;"></div></div><span><?= $starPct ?>%</span></div>
+                <?php endfor; ?>
             </div>
 
             <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
@@ -748,42 +709,52 @@ $colorHex = [
             </button>
 
             <div class="pdp-reviews-track" id="pdpReviewsTrack">
-                <?php foreach ($customerReviews as $idx => $rev): ?>
-                <?php 
-                $initial = strtoupper(substr($rev['name'], 0, 1));
+                <?php if ($customerReviews === []): ?>
+                <article class="pdp-review-card pdp-review-empty">
+                    <p class="pdp-rc-text">No reviews have been published for this product yet. If you have bought it, yours would be the first — use “Write a Review” above and it will appear here once our team has checked it.</p>
+                </article>
+                <?php else: ?>
+                <?php foreach ($customerReviews as $rev):
+                    $revName    = trim((string)$rev['name']) !== '' ? trim((string)$rev['name']) : 'Verified shopper';
+                    $initial    = strtoupper(mb_substr($revName, 0, 1));
+                    $revRating  = max(1, min(5, (int)$rev['rating']));
+                    $revWhen    = pdp_relative_date((string)$rev['created_at']);
                 ?>
-                <article class="pdp-review-card" data-rating="<?= $rev['rating'] ?>">
+                <article class="pdp-review-card" data-rating="<?= $revRating ?>">
                     <div class="pdp-rc-top">
-                        <div class="pdp-rc-avatar"><?= $initial ?></div>
+                        <div class="pdp-rc-avatar"><?= htmlspecialchars($initial) ?></div>
                         <div class="pdp-rc-meta">
                             <div class="pdp-rc-name">
-                                <span><?= htmlspecialchars($rev['name']) ?></span>
+                                <span><?= htmlspecialchars($revName) ?></span>
                             </div>
-                            <span class="pdp-rc-loc-date"><?= htmlspecialchars($rev['city']) ?> • <?= htmlspecialchars($rev['date']) ?></span>
+                            <?php if ($revWhen !== ''): ?>
+                            <!-- The reviews table has no city column; this used to print
+                                 an invented city beside every name. -->
+                            <span class="pdp-rc-loc-date"><?= htmlspecialchars($revWhen) ?></span>
+                            <?php endif; ?>
                         </div>
                         <div class="pdp-rc-rating-right">
+                            <?php if (!empty($rev['verified'])): ?>
                             <span class="pdp-verified-badge">✓ Verified</span>
-                            <div class="pdp-rc-stars"><?= str_repeat('★', $rev['rating']) ?></div>
+                            <?php endif; ?>
+                            <div class="pdp-rc-stars"><?= str_repeat('★', $revRating) ?></div>
                         </div>
                     </div>
 
-                    <?php if (!empty($rev['occasion'])): ?>
-                    <span class="pdp-rc-occasion">✨ <?= htmlspecialchars($rev['occasion']) ?></span>
+                    <?php if (trim((string)$rev['title']) !== ''): ?>
+                    <strong class="pdp-rc-title"><?= htmlspecialchars((string)$rev['title']) ?></strong>
                     <?php endif; ?>
 
+                    <?php if (trim((string)$rev['text']) !== ''): ?>
                     <p class="pdp-rc-text">
-                        "<?= htmlspecialchars($rev['text']) ?>"
+                        “<?= htmlspecialchars((string)$rev['text']) ?>”
                     </p>
-
-                    <div class="pdp-rc-bottom">
-                        <span>Helpful?</span>
-                        <button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, <?= (int)$rev['helpful'] ?>)">
-                            <span>👍</span>
-                            <span>(<?= (int)$rev['helpful'] ?>)</span>
-                        </button>
-                    </div>
+                    <?php endif; ?>
+                    <!-- The "Helpful? 👍 (N)" button counted nothing: there is no helpful
+                         column and the click only incremented a number in the DOM. -->
                 </article>
                 <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <!-- Dots -->
@@ -804,34 +775,45 @@ $colorHex = [
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            <!-- Scrollable Track (2-show on mobile) -->
+            <!-- Scrollable Track (2-show on mobile). $relatedItems is built in the
+                 controller from the live catalogue; this used to re-filter $products,
+                 which no longer exists here, with a loose !== on mixed-type ids. -->
             <div class="pdp-rel-track" id="pdpRelTrack">
-                <?php 
-                $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
-                foreach ($relatedItems as $rel):
+                <?php foreach ($relatedItems as $rel):
+                    $relName  = trim((string)($rel['name'] ?? ''));
+                    $relName  = $relName !== '' ? $relName : 'Untitled product';
+                    $relImg   = trim((string)($rel['image'] ?? ''));
+                    $relPrice = (float)($rel['price'] ?? 0);
+                    $relMrp   = (float)($rel['old_price'] ?? 0);
+                    $relDisc  = (int)($rel['discount'] ?? 0);
                 ?>
-                <a href="/product/<?= $rel['id'] ?>" class="pdp-rel-card">
+                <a href="/product/<?= (int)($rel['id'] ?? 0) ?>" class="pdp-rel-card">
                     <div class="pdp-rel-img-wrap">
                         <?php if (!empty($rel['badge'])): ?>
-                        <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>
+                        <span class="pdp-rel-badge"><?= htmlspecialchars((string)$rel['badge']) ?></span>
                         <?php endif; ?>
-                        <img src="<?= htmlspecialchars($rel['image']) ?>" alt="<?= htmlspecialchars($rel['name']) ?>" onError="this.src='/assets/images/product1.png'" loading="lazy" />
+                        <img src="<?= htmlspecialchars($relImg !== '' ? $relImg : $pdpNoImage) ?>" alt="<?= htmlspecialchars($relName) ?>" loading="lazy" />
                     </div>
                     <div class="pdp-rel-body">
-                        <span class="pdp-rel-cat"><?= htmlspecialchars($rel['category']) ?></span>
-                        <h3 class="pdp-rel-title"><?= htmlspecialchars($rel['name']) ?></h3>
+                        <?php if (trim((string)($rel['category'] ?? '')) !== ''): ?>
+                        <span class="pdp-rel-cat"><?= htmlspecialchars((string)$rel['category']) ?></span>
+                        <?php endif; ?>
+                        <h3 class="pdp-rel-title"><?= htmlspecialchars($relName) ?></h3>
                         <div class="pdp-rel-price-row">
-                            <span class="pdp-rel-price">₹<?= number_format($rel['price']) ?></span>
-                            <?php if (!empty($rel['old_price'])): ?>
-                            <span class="pdp-rel-mrp">₹<?= number_format($rel['old_price']) ?></span>
+                            <span class="pdp-rel-price"><?= $relPrice > 0 ? '₹' . number_format($relPrice) : 'Price on request' ?></span>
+                            <?php if ($relMrp > $relPrice && $relPrice > 0): ?>
+                            <span class="pdp-rel-mrp">₹<?= number_format($relMrp) ?></span>
                             <?php endif; ?>
-                            <?php if (!empty($rel['discount'])): ?>
-                            <span class="pdp-rel-disc"><?= $rel['discount'] ?>% OFF</span>
+                            <?php if ($relDisc > 0 && $relMrp > $relPrice): ?>
+                            <span class="pdp-rel-disc"><?= $relDisc ?>% OFF</span>
                             <?php endif; ?>
                         </div>
                     </div>
                 </a>
                 <?php endforeach; ?>
+                <?php if ($relatedItems === []): ?>
+                <p style="font-size:0.82rem; color:var(--mid-text); margin:0; padding:8px 2px;">No other products are published yet.</p>
+                <?php endif; ?>
             </div>
 
             <!-- Dots -->
@@ -895,27 +877,30 @@ $colorHex = [
                 </div>
 
                 <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Full Name *</label>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revName">Full Name *</label>
                     <input type="text" id="revName" required placeholder="e.g. Radhika Sharma" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                    <div>
-                        <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">City / State</label>
-                        <input type="text" id="revCity" placeholder="e.g. Mumbai, MH" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
-                    </div>
-                    <div>
-                        <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Occasion Worn</label>
-                        <input type="text" id="revOccasion" placeholder="e.g. Wedding Sangeet" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
-                    </div>
+                <?php /* The City / State and "Occasion Worn" inputs were removed: the
+                         reviews table has no column for either, so whatever the shopper
+                         typed was thrown away after being painted into a DOM card. The
+                         review_title column, which the admin moderation screens do show,
+                         had no input at all. */ ?>
+                <div>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revTitle">Review Headline</label>
+                    <input type="text" id="revTitle" maxlength="150" placeholder="e.g. Beautiful zari work, true to the photos" style="width:100%; height:40px; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:0 12px; font-family:var(--font-sans); font-size:0.85rem;" />
                 </div>
 
                 <div>
-                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;">Your Review Narrative *</label>
-                    <textarea id="revText" required rows="3" placeholder="Describe the silk fabric texture, zari brilliance, fitting, and packaging..." style="width:100%; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:10px 12px; font-family:var(--font-sans); font-size:0.85rem; resize:vertical;"></textarea>
+                    <label style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--dark-text); display:block; margin-bottom:4px;" for="revText">Your Review Narrative *</label>
+                    <textarea id="revText" required rows="3" placeholder="Describe the fabric, the zari, the fit and the packaging..." style="width:100%; border:1.5px solid var(--soft-platinum); border-radius:8px; padding:10px 12px; font-family:var(--font-sans); font-size:0.85rem; resize:vertical;"></textarea>
                 </div>
 
-                <button type="submit" class="pdp-buy-btn" style="width:100%; padding:12px; border-radius:8px; font-size:0.82rem;">Submit Verified Review</button>
+                <p style="margin:0; font-size:0.72rem; color:var(--mid-text); line-height:1.5;">
+                    Reviews are checked by our team before they appear on the page.
+                </p>
+
+                <button type="submit" id="revSubmitBtn" class="pdp-buy-btn" style="width:100%; padding:12px; border-radius:8px; font-size:0.82rem;">Submit Review</button>
             </form>
         </div>
     </div>
@@ -942,16 +927,23 @@ $colorHex = [
             <!-- Order Item Summary Card (Matching checkout.php) -->
             <div class="pdp-wa-sec-card">
                 <div class="pdp-wa-modal-product">
-                    <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
+                    <img src="<?= htmlspecialchars($pdpPoster) ?>" alt="<?= htmlspecialchars($pName) ?>" class="pdp-wa-modal-img" id="pdpWaModalImg" />
                     <div class="pdp-wa-modal-info">
-                        <div class="pdp-wa-modal-name"><?= htmlspecialchars($product['name']) ?></div>
+                        <div class="pdp-wa-modal-name"><?= htmlspecialchars($pName) ?></div>
                         <div class="pdp-wa-modal-meta">
-                            <span>Color: <strong id="pdpWaModalColor" style="color:var(--dark-text);"><?= htmlspecialchars($product['colors'][0] ?? 'Standard') ?></strong></span>
-                            <span>Size: <strong id="pdpWaModalSize" style="color:var(--dark-text);"><?= htmlspecialchars($product['size'][0] ?? 'Free Size') ?></strong></span>
+                            <?php /* Colour and size only appear when the product has variants;
+                                     they used to default to the invented 'Standard' / 'Free Size',
+                                     which then travelled into the WhatsApp order message. */ ?>
+                            <?php if ($pColors !== []): ?>
+                            <span>Color: <strong id="pdpWaModalColor" style="color:var(--dark-text);"><?= htmlspecialchars($pColors[0]) ?></strong></span>
+                            <?php endif; ?>
+                            <?php if ($pSizes !== []): ?>
+                            <span>Size: <strong id="pdpWaModalSize" style="color:var(--dark-text);"><?= htmlspecialchars($pSizes[0]) ?></strong></span>
+                            <?php endif; ?>
                             <span>Qty: <strong id="pdpWaModalQty" style="color:var(--dark-text);">1</strong></span>
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">
-                            <span class="pdp-wa-modal-price" id="pdpWaModalPrice">₹<?= number_format($product['price']) ?></span>
+                            <span class="pdp-wa-modal-price" id="pdpWaModalPrice"><?= $pPrice > 0 ? '₹' . number_format($pPrice) : 'Price on request' ?></span>
                             <span style="font-size:0.65rem; color:#2E7D32; font-weight:800; background:#E8F5E9; padding:2px 7px; border-radius:4px;">⚡ Free Delivery (3–5 Days)</span>
                         </div>
                     </div>
@@ -1093,8 +1085,12 @@ $colorHex = [
 
 <!-- ════ SCRIPT ENGINE ════ -->
 <script>
-        window.currentProductData = <?= json_encode($product) ?>;
-        window.totalSlidesCount = <?= isset($galleryImages) ? count($galleryImages) : 4 ?>;
+        window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+        // The slide count is the real number of gallery items (photos + uploaded
+        // videos + pasted embeds). It used to fall back to a literal 4 because the
+        // gallery was padded to four slides with other products' photographs.
+        window.totalSlidesCount = <?= max(1, count($pdpMedia)) ?>;
+        window.pdpWhatsAppNumber = <?= json_encode($pdpWaNumber) ?>;
     </script>
     <script src="/assets/js/singleproduct.js?v=1787019062"></script>
 

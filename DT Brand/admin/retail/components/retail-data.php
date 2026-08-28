@@ -18,7 +18,7 @@ use DTBrand\ProductCatalog;
 function getRetailKpiMetrics() {
     $orders = OrderManager::getAll();
     $customers = CustomerManager::getByType('retail');
-    $products = ProductCatalog::getAll();
+    $products = ProductCatalog::getAll(true);
 
     $totalRevenue = 0;
     $totalUnits = 0;
@@ -95,7 +95,7 @@ function getRetailOrders() {
 
 // ── 4. Retail Pricing SKUs ──
 function getRetailPricingSkus() {
-    $prods = ProductCatalog::getAll();
+    $prods = ProductCatalog::getAll(true);
     $res = [];
     foreach ($prods as $p) {
         $res[] = [

@@ -12,26 +12,53 @@ use DTBrand\CustomerManager;
 use DTBrand\Database;
 
 $active_filter = isset($active_filter) ? $active_filter : 'all';
-$cust_list = CustomerManager::getAll();
+// Reuse the list the including page already read rather than reading the whole
+// customers table a second time on every page load.
+$cust_list = (isset($customersList) && is_array($customersList)) ? $customersList : CustomerManager::getAll();
 $totalCust = count($cust_list);
-$activeCust = $totalCust;
-$dormantCust = 0;
+
+// Counted from the real status column. This used to read
+// "$activeCust = $totalCust; $dormantCust = 0;", which asserted that every
+// customer was active and none dormant -- so a suspended account or a trade
+// application still awaiting approval was reported as a healthy live shopper.
+$activeCust = 0;
+$pendingCust = 0;
+$suspendedCust = 0;
 $wholesaleCust = 0;
 $resellerCust = 0;
+$retailCust = 0;
 $totalLifetimeSpend = 0;
 
 foreach ($cust_list as $c) {
-    $type = $c['type'] ?? 'retail';
-    if ($type === 'wholesale') $wholesaleCust++;
-    if ($type === 'reseller') $resellerCust++;
+    switch ($c['status'] ?? 'active') {
+        case 'active':    $activeCust++;    break;
+        case 'pending':   $pendingCust++;   break;
+        case 'suspended': $suspendedCust++; break;
+    }
+    switch ($c['type'] ?? 'retail') {
+        case 'wholesale': $wholesaleCust++; break;
+        case 'reseller':  $resellerCust++;  break;
+        default:          $retailCust++;    break;
+    }
     $totalLifetimeSpend += (float)($c['lifetime_spend'] ?? 0);
 }
+
+$activePct = $totalCust > 0 ? round(($activeCust / $totalCust) * 100) : 0;
+$tradeCust = $wholesaleCust + $resellerCust;
 ?>
 
 <!-- ══ 8-CARD EXECUTIVE KPI RIBBON ══ -->
-<div class="dt-cust-kpi-grid">
+<!--
+  data-filter marks the cards that act as filter tabs, and data-default-filter
+  records which one this page opens on. Clicking a card filtered the table but
+  the gold highlight never moved -- it was fixed at page load by PHP -- so an
+  admin on index.php who clicked "Wholesale B2B" saw a wholesale-only list with
+  "Total Shoppers" still highlighted, and no way to tell which cohort was on
+  screen. customer-list.js now moves the highlight with the list.
+-->
+<div class="dt-cust-kpi-grid" data-default-filter="<?php echo htmlspecialchars($active_filter); ?>">
     <!-- Card 1: Total Customers -->
-    <div class="dt-cust-kpi-card <?php echo $active_filter === 'all' ? 'active' : ''; ?>" onclick="filterCustomersByStatus('all')">
+    <div class="dt-cust-kpi-card <?php echo $active_filter === 'all' ? 'active' : ''; ?>" data-filter="all" onclick="filterCustomersByStatus('all')">
         <div class="dt-cust-kpi-top">
             <span class="dt-cust-kpi-label">TOTAL SHOPPERS</span>
             <div class="dt-cust-kpi-icon gold">
@@ -45,13 +72,13 @@ foreach ($cust_list as $c) {
         </div>
         <div class="dt-cust-kpi-val"><?php echo number_format($totalCust); ?></div>
         <div class="dt-cust-kpi-bot">
-            <span class="dt-cust-kpi-delta">Verified</span>
-            <span style="color:#78716C;">100% Direct</span>
+            <span class="dt-cust-kpi-delta"><?php echo number_format($retailCust); ?> retail</span>
+            <span style="color:#78716C;"><?php echo number_format($tradeCust); ?> trade</span>
         </div>
     </div>
 
     <!-- Card 2: Active Verified -->
-    <div class="dt-cust-kpi-card <?php echo $active_filter === 'active' ? 'active' : ''; ?>" onclick="filterCustomersByStatus('active')">
+    <div class="dt-cust-kpi-card <?php echo $active_filter === 'active' ? 'active' : ''; ?>" data-filter="active" onclick="filterCustomersByStatus('active')">
         <div class="dt-cust-kpi-top">
             <span class="dt-cust-kpi-label">ACTIVE ACCOUNTS</span>
             <div class="dt-cust-kpi-icon emerald">
@@ -63,15 +90,15 @@ foreach ($cust_list as $c) {
         </div>
         <div class="dt-cust-kpi-val" style="color:#15803D;"><?php echo number_format($activeCust); ?></div>
         <div class="dt-cust-kpi-bot">
-            <span class="dt-cust-kpi-delta">100% Healthy</span>
-            <span style="color:#15803D; font-weight:800;">● Live</span>
+            <span class="dt-cust-kpi-delta"><?php echo $activePct; ?>% of shoppers</span>
+            <span style="color:#15803D; font-weight:800;">● Can sign in</span>
         </div>
     </div>
 
-    <!-- Card 3: Inactive / Dormant -->
-    <div class="dt-cust-kpi-card <?php echo $active_filter === 'inactive' ? 'active' : ''; ?>" onclick="filterCustomersByStatus('inactive')">
+    <!-- Card 3: Suspended, with the pending-approval backlog beside it -->
+    <div class="dt-cust-kpi-card <?php echo $active_filter === 'inactive' ? 'active' : ''; ?>" data-filter="suspended" onclick="filterCustomersByStatus('suspended')">
         <div class="dt-cust-kpi-top">
-            <span class="dt-cust-kpi-label">INACTIVE / DORMANT</span>
+            <span class="dt-cust-kpi-label">SUSPENDED</span>
             <div class="dt-cust-kpi-icon amber">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -79,15 +106,21 @@ foreach ($cust_list as $c) {
                 </svg>
             </div>
         </div>
-        <div class="dt-cust-kpi-val" style="color:#B45309;"><?php echo number_format($dormantCust); ?></div>
+        <div class="dt-cust-kpi-val" style="color:#B45309;"><?php echo number_format($suspendedCust); ?></div>
         <div class="dt-cust-kpi-bot">
-            <span class="dt-cust-kpi-delta">0% Churn</span>
-            <span style="color:#78716C;">Dormant</span>
+            <span class="dt-cust-kpi-delta">Cannot sign in</span>
+            <?php if ($pendingCust > 0): ?>
+                <a href="/admin/customers/pending.php" onclick="event.stopPropagation();" style="color:#8A681F; font-weight:800; text-decoration:none;">
+                    <?php echo number_format($pendingCust); ?> awaiting approval →
+                </a>
+            <?php else: ?>
+                <span style="color:#78716C;">No pending applications</span>
+            <?php endif; ?>
         </div>
     </div>
 
     <!-- Card 4: Wholesale Partners -->
-    <div class="dt-cust-kpi-card <?php echo $active_filter === 'wholesale' ? 'active' : ''; ?>" onclick="filterCustomersByStatus('wholesale')">
+    <div class="dt-cust-kpi-card <?php echo $active_filter === 'wholesale' ? 'active' : ''; ?>" data-filter="wholesale" onclick="filterCustomersByStatus('wholesale')">
         <div class="dt-cust-kpi-top">
             <span class="dt-cust-kpi-label">WHOLESALE B2B</span>
             <div class="dt-cust-kpi-icon gold">
@@ -104,7 +137,7 @@ foreach ($cust_list as $c) {
     </div>
 
     <!-- Card 5: Resellers -->
-    <div class="dt-cust-kpi-card <?php echo $active_filter === 'reseller' ? 'active' : ''; ?>" onclick="filterCustomersByStatus('reseller')">
+    <div class="dt-cust-kpi-card <?php echo $active_filter === 'reseller' ? 'active' : ''; ?>" data-filter="reseller" onclick="filterCustomersByStatus('reseller')">
         <div class="dt-cust-kpi-top">
             <span class="dt-cust-kpi-label">VIP RESELLERS</span>
             <div class="dt-cust-kpi-icon purple">
@@ -132,8 +165,8 @@ foreach ($cust_list as $c) {
         </div>
         <div class="dt-cust-kpi-val" style="color:#15803D;">₹<?php echo number_format($totalLifetimeSpend); ?></div>
         <div class="dt-cust-kpi-bot">
-            <span class="dt-cust-kpi-delta">Verified GMV</span>
-            <span style="color:#15803D;">100% Settled</span>
+            <span class="dt-cust-kpi-delta">Sum of lifetime_spend</span>
+            <span style="color:#78716C;">Across <?php echo number_format($totalCust); ?> accounts</span>
         </div>
     </div>
 </div>

@@ -2,8 +2,30 @@
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * edit.php — DT Brand's Edit Category Suite (Wholesale & Luxury Shop Standard)
+ * edit.php — Edit Category
  * DT Brand's & Jai Hanuman Tex
+ *
+ * What this page used to do:
+ *   - $cat_id defaulted to 1, so /categories/edit.php with no id silently opened
+ *     and offered to overwrite whichever category happened to be first.
+ *   - The description textarea hardcoded "Pure Mulberry & Kanjivaram Bridal
+ *     Silks with 24K Gold Zari Weaves direct from Surat factory central looms."
+ *     for every category, and saving pushed that sentence into the database.
+ *   - The thumbnail was always /assets/images/product1.png, and picking a file
+ *     only set a FileReader data: URL on the <img>, which handleSaveCategory()
+ *     then posted as `image` — categories.image is VARCHAR(255), so the value
+ *     was truncated and the photo silently disappeared.
+ *   - "+ Choose Banner" only toasted 'Banner upload modal opened'.
+ *   - Parent Category, Display Type, HSN Code and the two SEO boxes have no
+ *     columns in `categories`; they were dropped server-side while the page
+ *     reported everything saved. autoGenerateCatSeo() invented the copy.
+ *   - The B2B panel read "420 SKUs / Rs 18.40 Lakhs / 3,200 Units Ready / +36%
+ *     Profit" for every category, and "View Products in Category (420)" linked
+ *     to a hardcoded ?cat=silk-sarees.
+ *   - A stray </div> after the Parent Category group broke the two-column grid.
+ *
+ * Everything below is either a real column or a real count. Saving and deleting
+ * are handled by assets/js/categories.js, which posts to /api/categories.php.
  */
 require_once __DIR__ . '/../../../src/Database.php';
 require_once __DIR__ . '/../../../src/ProductCatalog.php';
@@ -13,113 +35,91 @@ use DTBrand\ProductCatalog;
 $page_title = "Edit Category";
 $active_nav = "products";
 $active_subnav = "categories";
-$cat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 
+$cat_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $category = null;
-$db = Database::getConnection();
-if ($db !== null && !Database::isMockMode()) {
-    try {
-        $stmt = $db->prepare("SELECT * FROM categories WHERE id = ?");
-        $stmt->execute([$cat_id]);
-        $category = $stmt->fetch(\PDO::FETCH_ASSOC);
-    } catch (\Exception $e) {}
+$dbDown = false;
+
+if ($cat_id > 0) {
+    $db = Database::getConnection();
+    if ($db === null || Database::isMockMode()) {
+        $dbDown = true;
+    } else {
+        try {
+            $stmt = $db->prepare("SELECT * FROM categories WHERE id = ? LIMIT 1");
+            $stmt->execute([$cat_id]);
+            $category = $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+        } catch (\Exception $e) {
+            $dbDown = true;
+        }
+    }
 }
 
+// No silent fallback to category #1: a bad or missing id is reported as such.
 if (!$category) {
-    header('Location: /admin/products/categories/');
+    http_response_code($dbDown ? 503 : 404);
+    $ceMsg = $dbDown
+        ? 'The database is not reachable, so this category could not be loaded.'
+        : ($cat_id > 0
+            ? 'Category #' . $cat_id . ' does not exist. It may already have been deleted.'
+            : 'No category id was given, so there is nothing to edit.');
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Category not found</title>';
+    echo '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>';
+    echo '<div style="max-width:560px;margin:80px auto;padding:28px;border:1.5px solid #D4AF37;border-radius:10px;font-family:system-ui,sans-serif;">';
+    echo '<h1 style="font-size:20px;margin:0 0 10px;">Category not found</h1>';
+    echo '<p style="color:#646970;">' . htmlspecialchars($ceMsg) . '</p>';
+    echo '<p><a href="/admin/products/categories/">Back to product categories</a></p>';
+    echo '</div></body></html>';
     exit;
 }
 
-$catName = $category['name'];
-$catSlug = $category['slug'];
-$catDesc = $category['description'] ?? '';
-$catImg = !empty($category['image']) ? $category['image'] : '/assets/images/product1.png';
-$catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['category' => $catName])));
+$catName   = (string)($category['name'] ?? '');
+$catSlug   = (string)($category['slug'] ?? '');
+$catDesc   = (string)($category['description'] ?? '');
+$catStatus = strtolower(trim((string)($category['status'] ?? 'active')));
+if (!in_array($catStatus, ['active', 'inactive'], true)) { $catStatus = 'active'; }
+$catOrder  = (int)($category['display_order'] ?? 0);
+$catCreated = (string)($category['created_at'] ?? '');
+
+// The seeded categories.image / banner_image DEFAULTs point at files that do not
+// exist in this docroot, so they are treated as "no image set" rather than shown
+// as a broken thumbnail.
+$ceClean = static function ($v): string {
+    $v = trim((string)$v);
+    if ($v === '' || preg_match('#(category-sarees|hero-banner|product1)\.png$#i', $v)) { return ''; }
+    if (stripos($v, 'data:') === 0) { return ''; }
+    return $v;
+};
+$catImg = $ceClean($category['image'] ?? '');
+$catBanner = $ceClean($category['banner_image'] ?? '');
+
+// The real number, counted from products. categories.products_count is seeded
+// with numbers like 840 and no write path maintains it.
+$catCount = ProductCatalog::categoryProductCount($cat_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category ‹ <?php echo htmlspecialchars($catName); ?> ‹ DT Brand's Admin</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Edit Category &lsaquo; <?php echo htmlspecialchars($catName); ?> &lsaquo; DT Brand's Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
     <style>
-    .dt-edit-grid {
-        display: grid;
-        grid-template-columns: 1fr 340px;
-        gap: 18px;
-        align-items: start;
-    }
-    @media (max-width: 1024px) {
-        .dt-edit-grid { grid-template-columns: 1fr; }
-    }
-    .dt-card {
-        background: #ffffff;
-        border: 1.5px solid rgba(212,175,55,0.4);
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 18px;
-    }
-    .dt-card-header {
-        background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.35) 0%, transparent 60%), linear-gradient(135deg, #261C0E 0%, #3A2C12 40%, #2A2010 75%, #18120A 100%);
-        padding: 12px 16px;
-        color: #FFFFFF;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 2px solid #D4AF37;
-    }
-    .dt-card-body {
-        padding: 16px;
-    }
-    .dt-form-group {
-        margin-bottom: 14px;
-    }
-    .dt-form-group label {
-        display: block;
-        font-size: 12px;
-        font-weight: 700;
-        color: #181512;
-        margin-bottom: 4px;
-    }
-    .dt-form-input, .dt-form-select, .dt-form-textarea {
-        width: 100%;
-        height: 34px;
-        padding: 0 10px;
-        font-size: 12.5px;
-        color: #181512;
-        background: #ffffff;
-        border: 1px solid #c3c4c7;
-        border-radius: 4px;
-        box-sizing: border-box;
-        outline: none;
-        transition: all 0.15s ease;
-    }
-    .dt-form-textarea {
-        height: 70px;
-        padding: 8px 10px;
-        resize: vertical;
-    }
-    .dt-form-input:focus, .dt-form-select:focus, .dt-form-textarea:focus {
-        border-color: #8A681F;
-        box-shadow: 0 0 0 1px #8A681F, 0 0 8px rgba(212,175,55,0.25);
-    }
-    .dt-kpi-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px solid #f1f5f9;
-        font-size: 12px;
-    }
-    .dt-kpi-item:last-child {
-        border-bottom: none;
-    }
+    .dt-edit-grid { display:grid; grid-template-columns:1fr 340px; gap:18px; align-items:start; }
+    @media (max-width:1024px) { .dt-edit-grid { grid-template-columns:1fr; } }
+    .dt-card { background:#fff; border:1.5px solid rgba(212,175,55,0.4); border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05); margin-bottom:18px; }
+    .dt-card-header { background:radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.35) 0%, transparent 60%), linear-gradient(135deg,#261C0E 0%,#3A2C12 40%,#2A2010 75%,#18120A 100%); padding:12px 16px; color:#fff; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #D4AF37; }
+    .dt-card-body { padding:16px; }
+    .dt-form-group { margin-bottom:14px; }
+    .dt-form-group label { display:block; font-size:12px; font-weight:700; color:#181512; margin-bottom:4px; }
+    .dt-form-input, .dt-form-select, .dt-form-textarea { width:100%; height:34px; padding:0 10px; font-size:12.5px; color:#181512; background:#fff; border:1px solid #c3c4c7; border-radius:4px; box-sizing:border-box; outline:none; transition:all .15s ease; }
+    .dt-form-textarea { height:80px; padding:8px 10px; resize:vertical; }
+    .dt-form-input:focus, .dt-form-select:focus, .dt-form-textarea:focus { border-color:#8A681F; box-shadow:0 0 0 1px #8A681F, 0 0 8px rgba(212,175,55,0.25); }
+    .dt-kpi-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #f1f5f9; font-size:12px; }
+    .dt-kpi-item:last-child { border-bottom:none; }
+    .dt-hint { color:#646970; font-size:11px; margin-top:3px; display:block; }
     </style>
 </head>
 <body>
@@ -127,283 +127,150 @@ $catCount = (int)($category['products_count'] ?? count(ProductCatalog::filter(['
     <?php include_once __DIR__ . '/../../Includes/adminsidebar.php'; ?>
     <div class="adm-main">
         <?php include_once __DIR__ . '/../../Includes/adminheader.php'; ?>
-        <main class="adm-content" style="padding: 16px 20px;">
-
-            <!-- 1. Header Toolbar -->
+        <main class="adm-content" style="padding:16px 20px;">
             <div class="wp-heading-wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                     <h1 class="wp-heading-inline" style="font-size:22px; font-weight:800; color:#181512; margin:0;">Edit Category</h1>
-                    <span class="adm-badge gold" style="font-weight:700; font-size:11px;">ID: #<?php echo $cat_id; ?></span>
+                    <span class="adm-badge gold" style="font-weight:700; font-size:11px;">ID: #<?php echo (int)$cat_id; ?></span>
                     <span class="adm-badge" style="background:#FAF5E8; border:1px solid #D4AF37; color:#8A681F; font-weight:700; font-size:11px;"><?php echo htmlspecialchars($catName); ?></span>
-                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;"><?php echo $catCount; ?> Active SKUs</span>
+                    <span class="adm-badge" style="background:<?php echo $catCount > 0 ? '#DCFCE7' : '#F3F4F6'; ?>; color:<?php echo $catCount > 0 ? '#15803D' : '#646970'; ?>; font-weight:700; font-size:11px;"><?php echo $catCount . ' product' . ($catCount === 1 ? '' : 's'); ?></span>
                 </div>
-
                 <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <a href="/admin/products/categories/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        <span>Product Categories</span>
-                    </a>
-                    <a href="/shop?category=<?php echo urlencode($catSlug); ?>" target="_blank" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; text-decoration:none;">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        <span>View on Shop</span>
-                    </a>
-                    <button type="button" class="wp-button primary" onclick="handleSaveCategory()" style="background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(212,175,55,0.35);">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#181512" stroke-width="2.8"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Save &amp; Update Category</span>
-                    </button>
+                    <a href="/admin/products/categories/" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; font-size:12px; font-weight:600; text-decoration:none;">Product Categories</a>
+                    <a href="/shop?category=<?php echo urlencode($catSlug); ?>" target="_blank" rel="noopener" class="wp-button" style="height:32px; padding:0 12px; display:inline-flex; align-items:center; font-size:12px; font-weight:600; text-decoration:none;">View on Shop</a>
+                    <button type="button" class="wp-button primary" data-dt-cat-save onclick="saveCategory()" style="background:linear-gradient(135deg,#B8860B 0%,#D4AF37 50%,#E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; padding:0 14px; height:32px; display:inline-flex; align-items:center; box-shadow:0 2px 8px rgba(212,175,55,0.35);">Save &amp; Update Category</button>
                 </div>
             </div>
 
-            <!-- 2. Dual Column Master Edit Layout -->
-            <form id="editCategoryForm" onsubmit="event.preventDefault(); handleSaveCategory();">
-                <div class="dt-edit-grid">
-                    
-                    <!-- LEFT / MAIN COLUMN -->
-                    <div>
-                        
-                        <!-- Core Details Card -->
-                        <div class="dt-card">
-                            <div class="dt-card-header">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Category Taxonomy &amp; Specifications</h3>
-                                </div>
-                                <span style="font-size:11px; color:#D4AF37; font-weight:700;">Silk Mark Certified</span>
+            <input type="hidden" id="catMode" value="update">
+            <input type="hidden" id="catId" value="<?php echo (int)$cat_id; ?>">
+
+            <div class="dt-edit-grid">
+                <div>
+                    <div class="dt-card">
+                        <div class="dt-card-header">
+                            <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Category Details</h3>
+                        </div>
+                        <div class="dt-card-body">
+                            <div class="dt-form-group">
+                                <label for="catName">Category Name <span style="color:#b32d2e;">*</span></label>
+                                <input type="text" id="catName" class="dt-form-input" value="<?php echo htmlspecialchars($catName); ?>" autocomplete="off">
+                                <small class="dt-hint">Renaming also re-labels the <?php echo $catCount; ?> product(s) filed under this category.</small>
                             </div>
-                            <div class="dt-card-body">
+                            <div class="dt-form-group">
+                                <label for="catSlug">URL Slug</label>
+                                <input type="text" id="catSlug" class="dt-form-input" value="<?php echo htmlspecialchars($catSlug); ?>" autocomplete="off">
+                                <div style="margin-top:4px; font-size:11px; color:#8A681F;">
+                                    <strong>Shop URL:</strong> <code>https://jaihanumantex.in/shop?category=<span id="catSlugLive"><?php echo htmlspecialchars($catSlug); ?></span></code>
+                                </div>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                                 <div class="dt-form-group">
-                                    <label>Category Name <span style="color:#b32d2e;">*</span></label>
-                                    <input type="text" id="editName" class="dt-form-input" value="<?php echo htmlspecialchars($catName); ?>" required oninput="updateSlugPreview(this.value)">
-                                    <small style="color:#646970; font-size:11px; margin-top:3px; display:block;">Public title displayed on wholesale catalog &amp; retail shop.</small>
+                                    <label for="catStatus">Status</label>
+                                    <select id="catStatus" class="dt-form-select">
+                                        <option value="active" <?php echo $catStatus === 'active' ? 'selected' : ''; ?>>Active &mdash; shown in the shop</option>
+                                        <option value="inactive" <?php echo $catStatus === 'inactive' ? 'selected' : ''; ?>>Inactive &mdash; hidden from the shop</option>
+                                    </select>
                                 </div>
-
                                 <div class="dt-form-group">
-                                    <label>URL Slug</label>
-                                    <input type="text" id="editSlug" class="dt-form-input" value="<?php echo htmlspecialchars($catSlug); ?>">
-                                    <div style="margin-top:4px; font-size:11px; color:#8A681F;">
-                                        <strong>Live URL:</strong> <code>https://jaihanumantex.in/category/<span id="slugLiveText"><?php echo htmlspecialchars($catSlug); ?></span></code>
-                                    </div>
+                                    <label for="catOrder">Display Order</label>
+                                    <input type="number" id="catOrder" class="dt-form-input" min="0" step="1" value="<?php echo (int)$catOrder; ?>">
+                                    <small class="dt-hint">Lower numbers come first.</small>
                                 </div>
-
-                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                                    <div class="dt-form-group">
-                                        <label>Parent Category</label>
-                                        <select id="editParent" class="dt-form-select">
-                                            <option value="none" selected>None (Top Level Root Category)</option>
-                                            <option value="silk-sarees">Silk Sarees</option>
-                                            <option value="banarasi-brocade">Banarasi Brocade</option>
-                                            <option value="bridal-lehengas">Bridal Lehengas</option>
-                                            <option value="designer-kurtis">Designer Kurtis</option>
-                                        </select>
-                                    </div></div>
-
-                                    <div class="dt-form-group">
-                                        <label>Display Type</label>
-                                        <select id="editDisplay" class="dt-form-select">
-                                            <option value="default" selected>Default</option>
-                                            <option value="products">Products Only</option>
-                                            <option value="subcategories">Subcategories</option>
-                                            <option value="both">Both (Products &amp; Subcategories)</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="dt-form-group">
-                                    <label>HSN Code &amp; GST Tax Class</label>
-                                    <input type="text" id="editHsn" class="dt-form-input" value="5007 (5% Silk GST)">
-                                    <small style="color:#646970; font-size:11px; margin-top:3px; display:block;">HSN 5007 for Silk Fabric with 5% GST rate.</small>
-                                </div>
-
-                                <div class="dt-form-group">
-                                    <label>Category Description</label>
-                                    <textarea id="editDesc" class="dt-form-textarea" rows="3">Pure Mulberry &amp; Kanjivaram Bridal Silks with 24K Gold Zari Weaves direct from Surat factory central looms.</textarea>
-                                </div>
+                            </div>
+                            <div class="dt-form-group" style="margin-bottom:0;">
+                                <label for="catDesc">Category Description</label>
+                                <textarea id="catDesc" class="dt-form-textarea" rows="4" placeholder="Shown on the shop catalogue header for this category."><?php echo htmlspecialchars($catDesc); ?></textarea>
                             </div>
                         </div>
-
-                        <!-- SEO & Metadata Card -->
-                        <div class="dt-card">
-                            <div class="dt-card-header">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D4AF37" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                    <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Search Engine Optimization (SEO)</h3>
-                                </div>
-                                <button type="button" class="wp-button" onclick="autoGenerateCatSeo()" style="height:26px; font-size:11px; padding:0 8px; background:#FAF5E8; border-color:#D4AF37; color:#8A681F; font-weight:700;">⚡ Auto SEO</button>
-                            </div>
-                            <div class="dt-card-body">
-                                <div class="dt-form-group">
-                                    <label>SEO Meta Title</label>
-                                    <input type="text" id="seoTitle" class="dt-form-input" value="Pure Silk Sarees Online — Wholesale &amp; Bridal Collection | DT Brand's">
-                                </div>
-                                <div class="dt-form-group">
-                                    <label>Meta Description</label>
-                                    <textarea id="seoDesc" class="dt-form-textarea" rows="2">Buy authentic Kanjivaram and pure silk sarees at wholesale factory prices from DT Brand's &amp; Jai Hanuman Tex. Express dispatch across India.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <!-- RIGHT COLUMN: Media & Wholesale Insights -->
-                    <div>
-                        
-                        <!-- Media Card -->
-                        <div class="dt-card">
-                            <div class="dt-card-header">
-                                <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Category Media</h3>
-                            </div>
-                            <div class="dt-card-body">
-                                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:6px;">Thumbnail Icon</label>
-                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-                                    <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" id="editThumbPreview" style="width:70px; height:70px; object-fit:cover; border-radius:6px; border:1.5px solid #D4AF37;">
-                                    <input type="file" id="editFileInput" style="display:none;" accept="image/*" onchange="if(this.files&&this.files[0]){const r=new FileReader(); r.onload=e=>document.getElementById('editThumbPreview').src=e.target.result; r.readAsDataURL(this.files[0]); if(window.showToast) window.showToast('Thumbnail updated!');}">
-                                    <button type="button" class="wp-button" onclick="document.getElementById('editFileInput').click()" style="height:32px; font-size:11.5px; font-weight:600;">
-                                        Upload Image
-                                    </button>
+                    <div class="dt-card">
+                        <div class="dt-card-header">
+                            <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Category Photos</h3>
+                        </div>
+                        <div class="dt-card-body">
+                            <p style="color:#646970; font-size:12px; margin:0 0 14px;">Each file is uploaded to the server the moment you pick it, and the stored path is what gets saved. The preview only changes once the upload succeeds.</p>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                                <div>
+                                    <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;" for="catImageFile">Thumbnail</label>
+                                    <img id="catImagePreview" src="<?php echo htmlspecialchars($catImg); ?>" alt="" style="<?php echo $catImg === '' ? 'display:none;' : ''; ?>width:100px; height:100px; object-fit:cover; border-radius:6px; border:1.5px solid #D4AF37; margin-bottom:8px;">
+                                    <input type="file" id="catImageFile" accept="image/jpeg,image/png,image/webp,image/gif" style="font-size:12px;">
+                                    <input type="hidden" id="catImage" value="<?php echo htmlspecialchars($catImg); ?>">
+                                    <small id="catImagePreviewNote" class="dt-hint" style="word-break:break-all;"><?php echo $catImg !== '' ? htmlspecialchars($catImg) : 'No thumbnail set.'; ?></small>
                                 </div>
-
-                                <label style="font-size:12px; font-weight:700; color:#181512; display:block; margin-bottom:6px;">Category Hero Banner (16:9)</label>
-                                <div style="border:1px dashed #c3c4c7; border-radius:6px; padding:12px; text-align:center; background:#FAF5E8;">
-                                    <small style="color:#8A681F; font-weight:600; display:block; margin-bottom:6px;">Recommended: 1200 x 400 px</small>
-                                    <button type="button" class="wp-button primary" onclick="if(window.showToast) window.showToast('Banner upload modal opened');" style="height:28px; font-size:11px; background:linear-gradient(135deg, #8A681F, #D4AF37); color:#181512; font-weight:700;">+ Choose Banner</button>
+                                <div>
+                                    <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;" for="catBannerFile">Hero Banner</label>
+                                    <img id="catBannerPreview" src="<?php echo htmlspecialchars($catBanner); ?>" alt="" style="<?php echo $catBanner === '' ? 'display:none;' : ''; ?>width:100%; max-width:240px; border-radius:6px; border:1.5px solid #D4AF37; margin-bottom:8px;">
+                                    <input type="file" id="catBannerFile" accept="image/jpeg,image/png,image/webp,image/gif" style="font-size:12px;">
+                                    <input type="hidden" id="catBanner" value="<?php echo htmlspecialchars($catBanner); ?>">
+                                    <small id="catBannerPreviewNote" class="dt-hint" style="word-break:break-all;"><?php echo $catBanner !== '' ? htmlspecialchars($catBanner) : 'No banner set. Recommended 1200 x 400 px.'; ?></small>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Wholesale KPI Insights -->
-                        <div class="dt-card">
-                            <div class="dt-card-header">
-                                <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Wholesale B2B Insights</h3>
-                            </div>
-                            <div class="dt-card-body" style="padding:12px 16px;">
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">Assigned Designs</span>
-                                    <strong style="color:#181512; font-size:13px;">420 SKUs</strong>
-                                </div>
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">B2B Valuation</span>
-                                    <strong style="color:#15803D; font-size:13px;">₹18.40 Lakhs</strong>
-                                </div>
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">Surat Mill Stock</span>
-                                    <strong style="color:#1D4ED8; font-size:13px;">3,200 Units Ready</strong>
-                                </div>
-                                <div class="dt-kpi-item">
-                                    <span style="color:#646970;">Average Resale Margin</span>
-                                    <strong style="color:#8A681F; font-size:13px;">+36% Profit</strong>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Publishing & Actions -->
-                        <div class="dt-card">
-                            <div class="dt-card-header">
-                                <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Publishing Actions</h3>
-                            </div>
-                            <div class="dt-card-body">
-                                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
-                                    <span style="font-size:12px; color:#646970;">Status:</span>
-                                    <span class="adm-badge" style="background:#DCFCE7; color:#15803D; font-weight:700; font-size:11px;">🟢 Published &amp; Active</span>
-                                </div>
-                                <button type="submit" class="wp-button primary" style="width:100%; height:36px; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; margin-bottom:8px;">
-                                    Save Changes
-                                </button>
-                                <a href="/admin/products/?cat=silk-sarees" class="wp-button" style="width:100%; height:32px; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">
-                                    📦 View Products in Category (420)
-                                </a>
-                                <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="dtDeleteCategory(<?php echo (int)$cat_id; ?>)">
-                                    🗑️ Move Category to Trash
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
-
                 </div>
-            </form>
+
+                <div>
+                    <div class="dt-card">
+                        <div class="dt-card-header">
+                            <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">This Category</h3>
+                        </div>
+                        <div class="dt-card-body" style="padding:12px 16px;">
+                            <div class="dt-kpi-item">
+                                <span style="color:#646970;">Products filed here</span>
+                                <strong style="color:#181512; font-size:13px;"><?php echo $catCount; ?></strong>
+                            </div>
+                            <div class="dt-kpi-item">
+                                <span style="color:#646970;">Status</span>
+                                <strong style="color:<?php echo $catStatus === 'active' ? '#15803D' : '#646970'; ?>; font-size:13px;"><?php echo ucfirst($catStatus); ?></strong>
+                            </div>
+                            <div class="dt-kpi-item">
+                                <span style="color:#646970;">Display order</span>
+                                <strong style="color:#181512; font-size:13px;"><?php echo (int)$catOrder; ?></strong>
+                            </div>
+                            <div class="dt-kpi-item">
+                                <span style="color:#646970;">Created</span>
+                                <strong style="color:#181512; font-size:13px;"><?php echo $catCreated !== '' ? htmlspecialchars(date('d M Y', strtotime($catCreated))) : 'Not recorded'; ?></strong>
+                            </div>
+                            <p style="color:#646970; font-size:11px; margin:10px 0 0;">Stock value and resale margin are not stored per category, so they are not shown here. This panel used to read 420 SKUs / &#8377;18.40 Lakhs / 3,200 Units / +36% for every category.</p>
+                        </div>
+                    </div>
+
+                    <div class="dt-card">
+                        <div class="dt-card-header">
+                            <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Actions</h3>
+                        </div>
+                        <div class="dt-card-body">
+                            <button type="button" class="wp-button primary" data-dt-cat-save onclick="saveCategory()" style="width:100%; height:36px; background:linear-gradient(135deg,#B8860B 0%,#D4AF37 50%,#E6CA65 100%); color:#111827; font-weight:800; border:1px solid #8A681F; margin-bottom:8px;">Save Changes</button>
+                            <a href="/admin/products/" class="wp-button" style="width:100%; height:32px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; margin-bottom:8px; font-size:12px;">Open the product list</a>
+                            <button type="button" class="wp-button" style="width:100%; height:30px; justify-content:center; color:#b32d2e; border-color:#fca5a5; font-size:11.5px;" onclick="dtCatDelete(<?php echo (int)$cat_id; ?>)">Delete Category</button>
+                            <?php if ($catCount > 0): ?>
+                                <small class="dt-hint">Deletion is refused while <?php echo $catCount; ?> product(s) are still filed here. Move them to another category first.</small>
+                            <?php else: ?>
+                                <small class="dt-hint">No products are filed here, so this category can be deleted.</small>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <div class="dt-card">
+                        <div class="dt-card-header">
+                            <h3 style="margin:0; font-size:14px; font-weight:800; color:#FAF5E8;">Not Stored</h3>
+                        </div>
+                        <div class="dt-card-body" style="font-size:12px; color:#646970;">
+                            <p style="margin:0 0 8px;">A category row holds only its name, URL, description, two photos, its order and its status.</p>
+                            <p style="margin:0;">Parent category, display type, an HSN/GST class and separate SEO meta text have no columns, so those boxes were removed rather than left looking saved. HSN and GST are handled at order level (5% GST), and the shop page title is built from the category name.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
         <?php include_once __DIR__ . '/../../Includes/adminfooter.php'; ?>
     </div>
 </div>
-
-<script>
-function updateSlugPreview(name) {
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    document.getElementById('editSlug').value = slug;
-    document.getElementById('slugLiveText').textContent = slug;
-}
-
-function autoGenerateCatSeo() {
-    const name = document.getElementById('editName')?.value || 'Category';
-    document.getElementById('seoTitle').value = `${name} Online — Wholesale & Bridal Collection | DT Brand's`;
-    document.getElementById('seoDesc').value = `Explore authentic ${name} at factory wholesale prices from DT Brand's & Jai Hanuman Tex Surat. High quality craftsmanship with fast dispatch.`;
-    if (typeof window.showToast === 'function') window.showToast('✨ Auto SEO tags generated!');
-}
-
-function handleSaveCategory() {
-    const id = <?php echo (int)$cat_id; ?>;
-    const name = document.getElementById('editName')?.value?.trim();
-    const slug = document.getElementById('editSlug')?.value?.trim();
-    const desc = document.getElementById('editDesc')?.value?.trim();
-    const thumbImg = document.getElementById('editThumbPreview')?.src || '/assets/images/product1.png';
-
-    if (!name) {
-        if (typeof window.showToast === 'function') window.showToast('⚠️ Category name is required');
-        return;
-    }
-
-    const params = new URLSearchParams();
-    params.append('action', 'update');
-    params.append('id', id);
-    params.append('name', name);
-    params.append('slug', slug);
-    params.append('description', desc);
-    params.append('image', thumbImg);
-    params.append('status', 'active');
-
-    fetch('/api/categories.php', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof window.showToast === 'function') window.showToast(`✨ Category "${name}" updated and saved to database!`);
-                setTimeout(() => {
-                    window.location.href = '/admin/products/categories/';
-                }, 600);
-            } else {
-                if (typeof window.showToast === 'function') window.showToast(`❌ Error: ${data.message || 'Could not update'}`);
-            }
-        })
-        .catch(err => {
-            if (typeof window.showToast === 'function') window.showToast(`⚠️ Network error — category "${name}" was NOT saved. Please try again.`);
-        });
-}
-
-/* Delete is only reported as done, and only navigates away, once the server
-   confirms it. This used to be an inline onclick using .then(() => ...) on the
-   raw Response, which resolves for ANY HTTP status — so a 401 or a 500 still
-   toasted "Category deleted from database" and redirected to the list. */
-function dtDeleteCategory(id) {
-    if (!confirm('Are you sure you want to delete this category from database?')) return;
-
-    const params = new URLSearchParams();
-    params.append('action', 'delete');
-    params.append('id', id);
-
-    fetch('/api/categories.php', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(data => {
-            if (data && data.success) {
-                if (typeof window.showToast === 'function') window.showToast('🗑️ Category deleted from database');
-                setTimeout(() => { window.location.href = '/admin/products/categories/'; }, 400);
-            } else {
-                if (typeof window.showToast === 'function') window.showToast('⚠️ ' + ((data && data.message) || 'Could not delete this category.'));
-            }
-        })
-        .catch(() => {
-            if (typeof window.showToast === 'function') window.showToast('⚠️ Network error — the category was NOT deleted.');
-        });
-}
-</script>
+<script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/assets/js/categories.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
+

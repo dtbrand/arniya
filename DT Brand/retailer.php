@@ -20,408 +20,65 @@ use DTBrand\ProductCatalog;
 use DTBrand\OrderManager;
 use DTBrand\CustomerManager;
 
-$dbProducts = ProductCatalog::getAll();
+/*
+ * B2B catalogue, read straight from the products table.
+ *
+ * What stood here before: this same map (with 'Royal Silk' / 'Pure Silk' /
+ * 'New Catalogue' placeholders and a fabricated HSN code and tier ladder of
+ * wholesale x 0.95 / x 0.90), followed by a 380-line hardcoded catalogue that
+ * loaded whenever the query returned nothing. An empty - or unreachable -
+ * database therefore presented a full, orderable catalogue of products that do
+ * not exist (ids 101-112). Missing values are now passed through empty and the
+ * cards below leave those lines out.
+ */
 $catalogProducts = [];
-foreach ($dbProducts as $dp) {
+foreach (ProductCatalog::getAll() as $dp) {
+    $wsPrice = (float)($dp['wholesale_price'] ?? 0);
+    $rtPrice = (float)($dp['retail_price'] ?? 0);
+    $colors  = array_values(array_filter(array_map('strval', (array)($dp['colors'] ?? [])), static fn($c) => trim($c) !== ''));
+    $sizes   = array_values(array_filter(array_map('strval', (array)($dp['size'] ?? [])), static fn($s) => trim($s) !== ''));
+
+    // Real lot sizes from the moq_* columns. No invented per-tier discount: the
+    // table stores one wholesale rate per product, so that is the rate quoted.
+    $lotParts = [];
+    foreach (['single' => 'Single', 'half_set' => 'Half set', 'full_set' => 'Full set', 'master_bale' => 'Master bale'] as $lotKey => $lotLabel) {
+        $lotQty = (int)($dp['moq_lots'][$lotKey] ?? 0);
+        if ($lotQty > 0) {
+            $lotParts[] = $lotLabel . ': ' . $lotQty . ' pcs' . ($wsPrice > 0 ? ' @ Rs ' . number_format($wsPrice) . '/pc' : '');
+        }
+    }
+
     $catalogProducts[] = [
-        'id'              => $dp['id'],
-        'sku'             => $dp['sku'],
-        'hsn'             => '5007',
-        'name'            => $dp['title'],
-        'category'        => $dp['category'],
-        'retail_price'    => $dp['retail_price'],
-        'wholesale_price' => $dp['wholesale_price'],
-        'moq'             => $dp['moq'] ?? 8,
-        'image'           => $dp['image'],
-        'badge'           => $dp['badge'] ?? 'New Catalogue',
-        'badge_icon'      => '✨',
-        'color'           => $dp['color'] ?? 'Royal Silk',
-        'fabric'          => $dp['fabric'] ?? 'Pure Silk',
-        'in_stock'        => $dp['stock_qty'] ?? 50,
-        'tier_prices'     => '8-15 pcs: ₹' . number_format($dp['wholesale_price']) . ' | 16-31 pcs: ₹' . number_format($dp['wholesale_price'] * 0.95) . ' | 32+ pcs: ₹' . number_format($dp['wholesale_price'] * 0.90)
+        'id'              => (int)($dp['id'] ?? 0),
+        'sku'             => (string)($dp['sku'] ?? ''),
+        'hsn'             => '',
+        'name'            => (string)($dp['name'] ?? ''),
+        'slug'            => (string)($dp['slug'] ?? ''),
+        'category'        => (string)($dp['category'] ?? ''),
+        'retail_price'    => $rtPrice,
+        'wholesale_price' => $wsPrice,
+        'reseller_price'  => (float)($dp['reseller_price'] ?? 0),
+        'price'           => $wsPrice > 0 ? $wsPrice : $rtPrice,
+        'moq'             => (int)($dp['moq'] ?? 0),
+        'moq_lots'        => (array)($dp['moq_lots'] ?? []),
+        'image'           => (string)($dp['image'] ?? ProductCatalog::NO_IMAGE),
+        'has_photo'       => !empty($dp['has_photo']),
+        'gallery'         => (array)($dp['gallery'] ?? []),
+        'videos'          => (array)($dp['videos'] ?? []),
+        'has_video'       => !empty($dp['has_video']),
+        'badge'           => (string)($dp['badge'] ?? ''),
+        'color'           => $colors !== [] ? implode(', ', $colors) : '',
+        'colors'          => $colors,
+        'size'            => $sizes,
+        'fabric'          => (string)($dp['fabric'] ?? ''),
+        'description'     => (string)($dp['description'] ?? ''),
+        'stock_qty'       => (int)($dp['stock_qty'] ?? 0),
+        'in_stock'        => !empty($dp['in_stock']),
+        'status'          => (string)($dp['status'] ?? ''),
+        'tier_prices'     => implode(' | ', $lotParts)
     ];
 }
-if (empty($catalogProducts)) {
-$catalogProducts = [
-    // ── NEW CATALOGUE / FRESH ARRIVALS (Shown First Always) ──
-    [
-        'id'              => 111,
-        'sku'             => 'KLN-SR-111',
-        'hsn'             => '5007',
-        'name'            => 'Pure Dola Silk Meenakari Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3499,
-        'wholesale_price' => 1399,
-        'moq'             => 8,
-        'image'           => '/assets/images/product2.png',
-        'badge'           => 'New Catalogue',
-        'badge_icon'      => '✨',
-        'color'           => 'Crimson Rani',
-        'fabric'          => 'Dola Silk with Meena Border',
-        'in_stock'        => 95,
-        'tier_prices'     => '8-15 pcs: ₹1,399 | 16-31 pcs: ₹1,299 | 32+ pcs: ₹1,219'
-    ],
-    [
-        'id'              => 109,
-        'sku'             => 'KLN-KT-109',
-        'hsn'             => '6204',
-        'name'            => 'Party Festive Sharara Suit Set',
-        'category'        => 'Kurtis',
-        'retail_price'    => 2699,
-        'wholesale_price' => 989,
-        'moq'             => 8,
-        'image'           => '/assets/images/product5.png',
-        'badge'           => 'New Arrival',
-        'badge_icon'      => '🔥',
-        'color'           => 'Teal Blue',
-        'fabric'          => 'Chanderi Gotapatti Work',
-        'in_stock'        => 125,
-        'tier_prices'     => '8-15 pcs: ₹989 | 16-31 pcs: ₹929 | 32+ pcs: ₹869'
-    ],
-    [
-        'id'              => 110,
-        'sku'             => 'KLN-SR-110',
-        'hsn'             => '5007',
-        'name'            => 'Paithani Rich Pallu Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3199,
-        'wholesale_price' => 1249,
-        'moq'             => 8,
-        'image'           => '/assets/images/product1.png',
-        'badge'           => 'New Catalogue',
-        'badge_icon'      => '💎',
-        'color'           => 'Bottle Green',
-        'fabric'          => 'Art Silk Peacock Pallu',
-        'in_stock'        => 110,
-        'tier_prices'     => '8-15 pcs: ₹1,249 | 16-31 pcs: ₹1,169 | 32+ pcs: ₹1,099'
-    ],
-    [
-        'id'              => 112,
-        'sku'             => 'KLN-SR-112',
-        'hsn'             => '5007',
-        'name'            => 'Pure Kanjivaram Bridal Art Silk',
-        'category'        => 'Sarees',
-        'retail_price'    => 4499,
-        'wholesale_price' => 1899,
-        'moq'             => 6,
-        'image'           => '/assets/images/product3.png',
-        'badge'           => 'New Arrival',
-        'badge_icon'      => '👑',
-        'color'           => 'Copper Gold',
-        'fabric'          => 'Heavy Bridal Zari Silk',
-        'in_stock'        => 85,
-        'tier_prices'     => '6-11 pcs: ₹1,899 | 12-23 pcs: ₹1,779 | 24+ pcs: ₹1,659'
-    ],
-
-    // ── SUPER VALUE & BEST MARGIN LOTS ──
-    [
-        'id'              => 101,
-        'sku'             => 'KLN-KT-101',
-        'hsn'             => '6204',
-        'name'            => 'Jaipuri Printed Cotton Kurti',
-        'category'        => 'Kurtis',
-        'retail_price'    => 599,
-        'wholesale_price' => 249,
-        'moq'             => 24,
-        'image'           => '/assets/images/product7.png',
-        'badge'           => 'Super Value',
-        'badge_icon'      => '🚀',
-        'color'           => 'Indigo Blue',
-        'fabric'          => '100% Pure Cotton',
-        'in_stock'        => 320,
-        'tier_prices'     => '24-49 pcs: ₹249 | 50-99 pcs: ₹229 | 100+ pcs: ₹199'
-    ],
-    [
-        'id'              => 102,
-        'sku'             => 'KLN-DP-102',
-        'hsn'             => '5208',
-        'name'            => 'Bandhani Silk Touch Dupatta',
-        'category'        => 'Dupattas',
-        'retail_price'    => 449,
-        'wholesale_price' => 189,
-        'moq'             => 30,
-        'image'           => '/assets/images/product8.png',
-        'badge'           => 'Fast Selling',
-        'badge_icon'      => '⚡',
-        'color'           => 'Ruby Red',
-        'fabric'          => 'Art Silk Bandhani',
-        'in_stock'        => 450,
-        'tier_prices'     => '30-59 pcs: ₹189 | 60-119 pcs: ₹169 | 120+ pcs: ₹149'
-    ],
-    [
-        'id'              => 103,
-        'sku'             => 'KLN-KT-103',
-        'hsn'             => '6204',
-        'name'            => 'Rayon Floral Straight Kurti',
-        'category'        => 'Kurtis',
-        'retail_price'    => 699,
-        'wholesale_price' => 289,
-        'moq'             => 20,
-        'image'           => '/assets/images/product5.png',
-        'badge'           => 'Bestseller',
-        'badge_icon'      => '🔥',
-        'color'           => 'Mustard Yellow',
-        'fabric'          => '14kg Heavy Rayon',
-        'in_stock'        => 280,
-        'tier_prices'     => '20-39 pcs: ₹289 | 40-79 pcs: ₹269 | 80+ pcs: ₹245'
-    ],
-    [
-        'id'              => 104,
-        'sku'             => 'KLN-KT-104',
-        'hsn'             => '6204',
-        'name'            => 'Chikan Embroidered Rayon Kurti',
-        'category'        => 'Kurtis',
-        'retail_price'    => 999,
-        'wholesale_price' => 399,
-        'moq'             => 18,
-        'image'           => '/assets/images/product6.png',
-        'badge'           => 'Best Margin',
-        'badge_icon'      => '⚡',
-        'color'           => 'Pastel Mint',
-        'fabric'          => 'Lakhnavi Handwork Rayon',
-        'in_stock'        => 220,
-        'tier_prices'     => '18-35 pcs: ₹399 | 36-71 pcs: ₹369 | 72+ pcs: ₹339'
-    ],
-    [
-        'id'              => 105,
-        'sku'             => 'KLN-SR-105',
-        'hsn'             => '5407',
-        'name'            => 'Digital Floral Georgette Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 1299,
-        'wholesale_price' => 489,
-        'moq'             => 16,
-        'image'           => '/assets/images/product4.png',
-        'badge'           => 'Trending',
-        'badge_icon'      => '🔥',
-        'color'           => 'Lavender Rose',
-        'fabric'          => '60gm Pure Georgette',
-        'in_stock'        => 260,
-        'tier_prices'     => '16-31 pcs: ₹489 | 32-63 pcs: ₹449 | 64+ pcs: ₹419'
-    ],
-    [
-        'id'              => 106,
-        'sku'             => 'KLN-SR-106',
-        'hsn'             => '5007',
-        'name'            => 'Chanderi Silk Festive Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 1599,
-        'wholesale_price' => 649,
-        'moq'             => 12,
-        'image'           => '/assets/images/product1.png',
-        'badge'           => 'Festive Hot',
-        'badge_icon'      => '✨',
-        'color'           => 'Peacock Green',
-        'fabric'          => 'Chanderi Zari Weave',
-        'in_stock'        => 190,
-        'tier_prices'     => '12-23 pcs: ₹649 | 24-47 pcs: ₹599 | 48+ pcs: ₹559'
-    ],
-    [
-        'id'              => 107,
-        'sku'             => 'KLN-SR-107',
-        'hsn'             => '5407',
-        'name'            => 'Organza Mirror Work Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 1899,
-        'wholesale_price' => 749,
-        'moq'             => 12,
-        'image'           => '/assets/images/product2.png',
-        'badge'           => 'Party Wear',
-        'badge_icon'      => '💎',
-        'color'           => 'Blush Pink',
-        'fabric'          => 'Glass Organza Silk',
-        'in_stock'        => 170,
-        'tier_prices'     => '12-23 pcs: ₹749 | 24-47 pcs: ₹699 | 48+ pcs: ₹649'
-    ],
-    [
-        'id'              => 108,
-        'sku'             => 'KLN-SR-108',
-        'hsn'             => '5007',
-        'name'            => 'Banarasi Brocade Semi-Silk',
-        'category'        => 'Sarees',
-        'retail_price'    => 2499,
-        'wholesale_price' => 949,
-        'moq'             => 10,
-        'image'           => '/assets/images/product3.png',
-        'badge'           => 'Bestseller',
-        'badge_icon'      => '⭐',
-        'color'           => 'Royal Maroon',
-        'fabric'          => 'Katan Art Silk',
-        'in_stock'        => 140,
-        'tier_prices'     => '10-19 pcs: ₹949 | 20-39 pcs: ₹889 | 40+ pcs: ₹829'
-    ],
-    [
-        'id'              => 5,
-        'sku'             => 'KLN-KT-005',
-        'hsn'             => '6204',
-        'name'            => 'Royal Anarkali Kurti Set',
-        'category'        => 'Kurtis',
-        'retail_price'    => 2799,
-        'wholesale_price' => 1799,
-        'moq'             => 10,
-        'image'           => '/assets/images/product5.png',
-        'badge'           => 'Party Wear',
-        'badge_icon'      => '💎',
-        'color'           => 'Emerald Teal',
-        'fabric'          => 'Chanderi Cotton',
-        'in_stock'        => 180,
-        'tier_prices'     => '10-19 pcs: ₹1,799 | 20-39 pcs: ₹1,599 | 40+ pcs: ₹1,449'
-    ],
-    [
-        'id'              => 4,
-        'sku'             => 'KLN-SR-004',
-        'hsn'             => '5407',
-        'name'            => 'Georgette Bloom Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 3299,
-        'wholesale_price' => 2199,
-        'moq'             => 8,
-        'image'           => '/assets/images/product4.png',
-        'badge'           => 'Fast Selling',
-        'badge_icon'      => '⚡',
-        'color'           => 'Blush Peach',
-        'fabric'          => 'Pure Georgette',
-        'in_stock'        => 210,
-        'tier_prices'     => '8-15 pcs: ₹2,199 | 16-30 pcs: ₹1,999 | 31+ pcs: ₹1,799'
-    ],
-    [
-        'id'              => 1,
-        'sku'             => 'KLN-SR-001',
-        'hsn'             => '5007',
-        'name'            => 'Nilambari Silk Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 4899,
-        'wholesale_price' => 3199,
-        'moq'             => 6,
-        'image'           => '/assets/images/product1.png',
-        'badge'           => 'Bestseller',
-        'badge_icon'      => '🔥',
-        'color'           => 'Navy Blue',
-        'fabric'          => 'Pure Silk Handloom',
-        'in_stock'        => 140,
-        'tier_prices'     => '6-11 pcs: ₹3,199 | 12-24 pcs: ₹2,999 | 25+ pcs: ₹2,799'
-    ],
-    [
-        'id'              => 2,
-        'sku'             => 'KLN-SR-002',
-        'hsn'             => '5007',
-        'name'            => 'Banarasi Zari Saree',
-        'category'        => 'Sarees',
-        'retail_price'    => 8499,
-        'wholesale_price' => 5499,
-        'moq'             => 4,
-        'image'           => '/assets/images/product2.png',
-        'badge'           => 'Heritage',
-        'badge_icon'      => '✨',
-        'color'           => 'Maroon Wine',
-        'fabric'          => 'Pure Katan Silk',
-        'in_stock'        => 95,
-        'tier_prices'     => '4-7 pcs: ₹5,499 | 8-15 pcs: ₹5,199 | 16+ pcs: ₹4,899'
-    ],
-    [
-        'id'              => 3,
-        'sku'             => 'KLN-SR-003',
-        'hsn'             => '5007',
-        'name'            => 'Kanjivaram Temple Silk',
-        'category'        => 'Sarees',
-        'retail_price'    => 12999,
-        'wholesale_price' => 8499,
-        'moq'             => 3,
-        'image'           => '/assets/images/product3.png',
-        'badge'           => 'Royal VIP',
-        'badge_icon'      => '👑',
-        'color'           => 'Golden Yellow',
-        'fabric'          => 'Pure Mulberry Silk',
-        'in_stock'        => 60,
-        'tier_prices'     => '3-5 pcs: ₹8,499 | 6-11 pcs: ₹7,999 | 12+ pcs: ₹7,499'
-    ],
-    [
-        'id'              => 6,
-        'sku'             => 'KLN-LH-006',
-        'hsn'             => '6204',
-        'name'            => 'Bridal Zardosi Lehenga',
-        'category'        => 'Lehengas',
-        'retail_price'    => 24999,
-        'wholesale_price' => 16499,
-        'moq'             => 2,
-        'image'           => '/assets/images/product6.png',
-        'badge'           => 'Bridal Couture',
-        'badge_icon'      => '💍',
-        'color'           => 'Crimson Red',
-        'fabric'          => 'Micro Velvet & Zari',
-        'in_stock'        => 35,
-        'tier_prices'     => '2-3 pcs: ₹16,499 | 4-7 pcs: ₹15,499 | 8+ pcs: ₹14,299'
-    ],
-    [
-        'id'              => 113,
-        'sku'             => 'KLN-GW-113',
-        'hsn'             => '6204',
-        'name'            => 'Party Wear Flared Designer Gown',
-        'category'        => 'Gowns',
-        'retail_price'    => 3999,
-        'wholesale_price' => 1699,
-        'moq'             => 6,
-        'image'           => '/assets/images/product5.png',
-        'badge'           => 'New Arrival',
-        'badge_icon'      => '🔥',
-        'color'           => 'Royal Emerald',
-        'fabric'          => 'Heavy Georgette Sequins',
-        'in_stock'        => 75,
-        'tier_prices'     => '6-11 pcs: ₹1,699 | 12-23 pcs: ₹1,599 | 24+ pcs: ₹1,489'
-    ],
-    [
-        'id'              => 114,
-        'sku'             => 'KLN-GW-114',
-        'hsn'             => '6204',
-        'name'            => 'Indo-Western Embroidered Gown',
-        'category'        => 'Gowns',
-        'retail_price'    => 4599,
-        'wholesale_price' => 1999,
-        'moq'             => 6,
-        'image'           => '/assets/images/product6.png',
-        'badge'           => 'New Catalogue',
-        'badge_icon'      => '✨',
-        'color'           => 'Wine Burgundy',
-        'fabric'          => 'Silk Velvet Zari Handwork',
-        'in_stock'        => 65,
-        'tier_prices'     => '6-11 pcs: ₹1,999 | 12-23 pcs: ₹1,879 | 24+ pcs: ₹1,749'
-    ],
-    [
-        'id'              => 115,
-        'sku'             => 'KLN-DM-115',
-        'hsn'             => '5208',
-        'name'            => 'Chanderi Jacquard Dress Material',
-        'category'        => 'Dress Materials',
-        'retail_price'    => 1999,
-        'wholesale_price' => 849,
-        'moq'             => 10,
-        'image'           => '/assets/images/product7.png',
-        'badge'           => 'New Catalogue',
-        'badge_icon'      => '✨',
-        'color'           => 'Mustard Ochre',
-        'fabric'          => 'Pure Chanderi with Silk Dupatta',
-        'in_stock'        => 140,
-        'tier_prices'     => '10-19 pcs: ₹849 | 20-39 pcs: ₹799 | 40+ pcs: ₹749'
-    ],
-    [
-        'id'              => 116,
-        'sku'             => 'KLN-DM-116',
-        'hsn'             => '5208',
-        'name'            => 'Pure Cotton Unstitched Suit Lot',
-        'category'        => 'Dress Materials',
-        'retail_price'    => 1499,
-        'wholesale_price' => 599,
-        'moq'             => 12,
-        'image'           => '/assets/images/product8.png',
-        'badge'           => 'New Arrival',
-        'badge_icon'      => '⚡',
-        'color'           => 'Pastel Sky',
-        'fabric'          => '60x60 Cambric Cotton with Malmal Dupatta',
-        'in_stock'        => 180,
-        'tier_prices'     => '12-23 pcs: ₹599 | 24-47 pcs: ₹549 | 48+ pcs: ₹499'
-    ]
-];
-}
+$catalogHasProducts = $catalogProducts !== [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -496,7 +153,7 @@ $catalogProducts = [
 
                 <!-- User Profile Pill -->
                 <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Retailer Profile">
-                    <img src="/assets/images/profile.png" onerror="this.src='/assets/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
+                    <img src="/assets/images/profile.png" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
                     <div class="ws-user-name-text">
                         <span id="headerUserName">Rajesh Kumar</span>
                         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -551,7 +208,7 @@ $catalogProducts = [
             <div class="ws-sidebar-scroll">
                 <!-- VIP Retailer User Card in Sidebar -->
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
-                    <img src="/assets/images/profile.png" onerror="this.src='/assets/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
+                    <img src="/assets/images/profile.png" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
                     <div style="flex: 1; min-width: 0;">
                         <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
@@ -1117,12 +774,18 @@ $catalogProducts = [
                             <?php foreach ($catalogProducts as $prod): 
                                 $badge_raw = $prod['badge'] ?? 'Bestseller';
                                 $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
-                                $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                                // Guarded: retail_price is 0 for a product still awaiting pricing, and
+                                // dividing by it threw DivisionByZeroError and blanked the dashboard.
+                                $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
+                                    ? (int)round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100)
+                                    : 0;
                             ?>
                             <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                                 <div class="card-image-wrap">
                                     <a href="/product.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='/assets/images/product1.png';" loading="lazy">
+                                        <!-- The onerror swap to product1.png is gone: a product with no photo
+                                             used to display another product's saree as if it were its own. -->
+                                        <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img<?= empty($prod['has_photo']) ? ' card-img-empty' : '' ?>" loading="lazy">
                                     </a>
                                     <?php if (!empty($prod['badge'])): ?>
                                     <span class="card-badge badge-<?= $badge_slug ?>"><?= htmlspecialchars($prod['badge']) ?></span>
@@ -1146,7 +809,9 @@ $catalogProducts = [
                                     <button type="button" class="card-share-btn" data-id="<?= $prod['id'] ?>" aria-label="Share <?= htmlspecialchars($prod['name']) ?>" title="Share <?= htmlspecialchars($prod['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $prod['id'] ?>);}else{shareWholesaleProduct(<?= htmlspecialchars(json_encode($prod)) ?>);}">
                                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                                     </button>
+                                    <?php if ($prod['category'] !== ''): ?>
                                     <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-name">
@@ -1155,13 +820,24 @@ $catalogProducts = [
                                         </a>
                                     </h2>
                                     <div class="card-info-text-row">
+                                        <?php if ($prod['color'] !== ''): ?>
                                         <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
-                                        <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
+                                        <?php endif; ?>
+                                        <?php if (!empty($prod['moq'])): ?>
+                                        <span class="card-sizes-text">MOQ: <?= (int)$prod['moq'] ?> Pcs</span>
+                                        <?php elseif ($prod['size'] !== []): ?>
+                                        <span class="card-sizes-text"><?= htmlspecialchars(implode(', ', $prod['size'])) ?></span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="card-price-row">
                                         <div class="card-price-stack">
+                                            <?php if ($prod['wholesale_price'] > 0): ?>
                                             <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                            <?php if (!empty($prod['retail_price'])): ?>
+                                            <?php else: ?>
+                                            <!-- Rs 0 used to be printed as a real price. -->
+                                            <span class="card-price card-price-ask">Price on request</span>
+                                            <?php endif; ?>
+                                            <?php if ($prod['wholesale_price'] > 0 && $prod['retail_price'] > $prod['wholesale_price']): ?>
                                             <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
                                             <?php endif; ?>
                                         </div>
@@ -1173,6 +849,10 @@ $catalogProducts = [
                                 </div>
                             </article>
                             <?php endforeach; ?>
+                            <?php if (!$catalogHasProducts): ?>
+                            <!-- Nothing is invented here any more, so an empty catalogue has to say so. -->
+                            <div class="ws-empty-catalogue">No products are published yet. Add the catalogue in the admin panel and it appears here automatically.</div>
+                            <?php endif; ?>
                         </div>
                         <button class="ws-slider-nav-btn next" onclick="slideTrendingProducts(1)" aria-label="Next"><svg style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                     </div>
@@ -1776,7 +1456,7 @@ $catalogProducts = [
                         <div class="ws-card-title-group">
                             <h3 style="margin:0; font-size:1.05rem;">Retailer Concierge & Support</h3>
                         </div>
-                        <a href="https://api.whatsapp.com/send?phone=919876543210&text=Hi%20DT Brand's%2C%20I%20am%20a%20registered%20Retailer%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm" style="display:inline-flex; align-items:center; gap:6px; font-weight:700;">
+                        <a href="https://api.whatsapp.com/send?phone=917046363528&text=Hi%20DT Brand's%2C%20I%20am%20a%20registered%20Retailer%20and%20require%20urgent%20support" target="_blank" class="ws-btn ws-btn-wa ws-btn-sm" style="display:inline-flex; align-items:center; gap:6px; font-weight:700;">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.301-.15-1.78-.879-2.056-.979-.275-.1-.475-.15-.675.15-.2.3-.775.979-.95 1.179-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.414-1.49-1.049-.935-1.758-2.09-1.963-2.44-.205-.35-.022-.54.128-.69.135-.135.301-.35.451-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.628-.925-2.228-.244-.585-.492-.505-.675-.515-.175-.01-.375-.01-.575-.01-.2 0-.525.075-.8.375s-1.05 1.028-1.05 2.505 1.075 2.905 1.225 3.105c.15.2 2.115 3.23 5.125 4.53 3.01 1.3 3.01.867 3.56.817.55-.05 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.128-.275-.203-.575-.353z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.307C8.423 21.536 10.155 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.14-.492-4.407-1.336l-.316-.209-2.955.775.789-2.88-.228-.363C3.965 14.675 3.5 13.385 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/></svg>
                             <span>WhatsApp Concierge</span>
                         </a>
@@ -1995,12 +1675,18 @@ $catalogProducts = [
                         <?php foreach ($catalogProducts as $prod): 
                             $badge_raw = $prod['badge'] ?? 'Bestseller';
                             $badge_slug = strtolower(str_replace([' ', '★'], ['-', ''], $badge_raw));
-                            $margin_pct = round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100);
+                            // Guarded: retail_price is 0 for a product still awaiting pricing, and
+                            // dividing by it threw DivisionByZeroError and blanked the dashboard.
+                            $margin_pct = ($prod['retail_price'] > 0 && $prod['wholesale_price'] > 0)
+                                ? (int)round((($prod['retail_price'] - $prod['wholesale_price']) / $prod['retail_price']) * 100)
+                                : 0;
                         ?>
                         <article class="product-card" data-product-id="<?= $prod['id'] ?>" role="listitem">
                             <div class="card-image-wrap">
                                 <a href="/product.php?id=<?= $prod['id'] ?>" style="display:block;width:100%;height:100%;">
-                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img" onerror="this.src='/assets/images/product1.png';" loading="lazy">
+                                    <!-- The onerror swap to product1.png is gone: a product with no photo
+                                         used to display another product's saree as if it were its own. -->
+                                    <img src="<?= htmlspecialchars($prod['image']) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" class="card-img<?= empty($prod['has_photo']) ? ' card-img-empty' : '' ?>" loading="lazy">
                                 </a>
 
                                 <!-- Status Badge -->
@@ -2029,7 +1715,9 @@ $catalogProducts = [
                                 </button>
 
                                 <!-- Category Box on Photo Bottom-Right Corner -->
+                                <?php if ($prod['category'] !== ''): ?>
                                 <span class="card-cat-photo-tag"><?= htmlspecialchars($prod['category']) ?></span>
+                                <?php endif; ?>
                             </div>
 
                             <div class="card-body">
@@ -2042,14 +1730,25 @@ $catalogProducts = [
 
                                 <!-- Clean Text Info Row: Available Colors & Sizes -->
                                 <div class="card-info-text-row">
+                                    <?php if ($prod['color'] !== ''): ?>
                                     <span class="card-colors-text"><?= htmlspecialchars($prod['color']) ?></span>
-                                    <span class="card-sizes-text"><?= !empty($prod['moq']) ? 'MOQ: '.$prod['moq'].' Pcs' : 'Free Size' ?></span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($prod['moq'])): ?>
+                                    <span class="card-sizes-text">MOQ: <?= (int)$prod['moq'] ?> Pcs</span>
+                                    <?php elseif ($prod['size'] !== []): ?>
+                                    <span class="card-sizes-text"><?= htmlspecialchars(implode(', ', $prod['size'])) ?></span>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div class="card-price-row">
                                     <div class="card-price-stack">
+                                        <?php if ($prod['wholesale_price'] > 0): ?>
                                         <span class="card-price">₹<?= number_format($prod['wholesale_price']) ?></span>
-                                        <?php if (!empty($prod['retail_price'])): ?>
+                                        <?php else: ?>
+                                        <!-- Rs 0 used to be printed as a real price. -->
+                                        <span class="card-price card-price-ask">Price on request</span>
+                                        <?php endif; ?>
+                                        <?php if ($prod['wholesale_price'] > 0 && $prod['retail_price'] > $prod['wholesale_price']): ?>
                                         <span class="card-old-price">₹<?= number_format($prod['retail_price']) ?></span>
                                         <?php endif; ?>
                                     </div>
@@ -2061,6 +1760,10 @@ $catalogProducts = [
                             </div>
                         </article>
                         <?php endforeach; ?>
+                        <?php if (!$catalogHasProducts): ?>
+                        <!-- Nothing is invented here any more, so an empty catalogue has to say so. -->
+                        <div class="ws-empty-catalogue">No products are published yet. Add the catalogue in the admin panel and it appears here automatically.</div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -2856,7 +2559,7 @@ $catalogProducts = [
                     <button class="ws-btn ws-btn-primary" onclick="loginAsDemoRetailer()">
                         👑 Continue as Verified Retailer
                     </button>
-                    <a href="../../account.php?tab=login" class="ws-btn ws-btn-secondary">
+                    <a href="/account.php?tab=login" class="ws-btn ws-btn-secondary">
                         Sign In with Other Account
                     </a>
                     <a href="../Shop/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
@@ -2938,33 +2641,33 @@ $catalogProducts = [
     <div class="ws-toast-container" id="wsToastContainer"></div>
 
 
-    <!-- ── Catalog Products Data (PHP-injected, safe fallback for static servers) ── -->
+    <!-- Catalog Products Data (PHP-injected; initWholesalerApp reads this into window.allProducts) -->
     <script type="application/json" id="ws-catalog-data"><?php
-        if (isset($catalogProducts) && is_array($catalogProducts)) {
-            $mapped = array_map(function($p) {
-                return [
-                    'id'       => $p['id'],
-                    'name'     => $p['name'],
-                    'category' => $p['category'],
-                    'price'    => $p['wholesale_price'],
-                    'old_price'=> $p['retail_price'],
-                    'discount' => round((($p['retail_price'] - $p['wholesale_price']) / max(1, $p['retail_price'])) * 100),
-                    'image'    => $p['image'],
-                    'badge'    => isset($p['badge']) ? $p['badge'] : null,
-                    'rating'   => 4.9,
-                    'color'    => isset($p['color']) ? $p['color'] : 'Standard',
-                    'colors'   => [isset($p['color']) ? $p['color'] : 'Standard'],
-                    'size'     => ['MOQ: '.$p['moq'].' Pcs Lot','2x Lot ('.($p['moq']*2).' Pcs)','5x Lot ('.($p['moq']*5).' Pcs)'],
-                    'fabric'   => isset($p['fabric']) ? $p['fabric'] : 'Pure Silk',
-                    'in_stock' => true,
-                    'sku'      => isset($p['sku']) ? $p['sku'] : 'SKU-'.$p['id'],
-                    'hsn'      => isset($p['hsn']) ? $p['hsn'] : '5007'
-                ];
-            }, $catalogProducts);
-            echo json_encode($mapped);
-        } else {
-            echo '[]';
+        /*
+         * This payload overwrites window.allProducts, so it has to carry the same
+         * honest rows the cards above render. It used to rewrite every product on
+         * the way out: rating 4.9 for products with no reviews at all, colour
+         * "Standard", fabric "Pure Silk", in_stock always true, an invented
+         * "SKU-<id>", HSN 5007 (the products table has no hsn column) and a
+         * fabricated lot ladder ("MOQ: n Pcs Lot", "2x Lot", "5x Lot") that the
+         * firm does not quote. It also dropped wholesale_price, retail_price,
+         * moq_lots and tier_prices, which the quick-order, cart and share paths
+         * read - so those printed "undefined" or fell back to their own guesses.
+         * Only old_price and discount are derived here; every other key is the
+         * row built at the top of this file straight from the products table.
+         */
+        $wsPayload = [];
+        $wsRows = (isset($catalogProducts) && is_array($catalogProducts)) ? $catalogProducts : [];
+        foreach ($wsRows as $wsRow) {
+            $wsRt = (float)($wsRow['retail_price'] ?? 0);
+            $wsWs = (float)($wsRow['wholesale_price'] ?? 0);
+            $wsRow['old_price'] = $wsRt;
+            $wsRow['discount']  = ($wsRt > 0 && $wsWs > 0 && $wsRt > $wsWs)
+                ? (int)round((($wsRt - $wsWs) / $wsRt) * 100)
+                : 0;
+            $wsPayload[] = $wsRow;
         }
+        echo json_encode($wsPayload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     ?></script>
 
     <!-- ═══════════════════════════════════════════

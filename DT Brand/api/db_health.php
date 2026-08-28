@@ -199,7 +199,7 @@ try {
         try {
             $pdo->exec("
                 INSERT IGNORE INTO `whatsapp_logs` (`id`, `recipient_phone`, `template_name`, `message_type`, `payload`, `status`, `created_at`) VALUES
-                (1, '919876543210', 'dt_order_placed_v1', 'template', '{\"order_id\":\"DTB-001623\"}', 'delivered', NOW()),
+                (1, '917046363528', 'dt_order_placed_v1', 'template', '{\"order_id\":\"DTB-001623\"}', 'delivered', NOW()),
                 (2, '919822019283', 'b2b_wholesale_quote', 'document', '{\"quote_id\":\"Q-9921\"}', 'delivered', NOW()),
                 (3, '919811029381', 'dt_dispatch_tracking_v2', 'template', '{\"awb\":\"DLV-991823\"}', 'delivered', NOW());
             ");

@@ -114,6 +114,14 @@
         updateActiveThumbnail(currentSlideIdx);
         updateActiveDots(currentSlideIdx);
         if (counter) counter.textContent = (currentSlideIdx + 1) + ' / ' + totalSlides;
+        // Stop any clip on a slide we just left, so its sound does not carry on
+        // over a different photograph.
+        track.querySelectorAll('.pdp-slide video').forEach(function(vid) {
+            var host = vid.closest('.pdp-slide');
+            if (host && host.getAttribute('data-idx') !== String(currentSlideIdx) && !vid.paused) {
+                vid.pause();
+            }
+        });
         restartGalleryAutoTimer();
     };
 
@@ -137,8 +145,23 @@
     function startGalleryAutoTimer() {
         if (galleryAutoTimer) clearInterval(galleryAutoTimer);
         galleryAutoTimer = setInterval(function() {
+            // The gallery now carries uploaded videos and pasted embeds alongside
+            // the photographs. Sliding off a clip every 3.6 seconds would make a
+            // product video unwatchable, so the carousel holds on non-image
+            // slides and on any slide whose video is playing.
+            if (isHoldingSlide()) return;
             window.slidePdpGallery(1);
         }, 3600);
+    }
+
+    function isHoldingSlide() {
+        var slide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
+        if (!slide) return false;
+        var kind = slide.getAttribute('data-media');
+        if (kind === 'embed' || kind === 'none') return true;
+        var vid = slide.querySelector('video');
+        if (!vid) return kind === 'video';
+        return !vid.paused || vid.currentTime > 0;
     }
 
     function pauseGalleryAutoTimer() {
@@ -159,6 +182,12 @@
 
     if (track) {
         startGalleryAutoTimer();
+
+        // A video that is left playing while the shopper scrolls to another slide
+        // keeps its audio going, so each clip pauses when it leaves the viewport.
+        track.querySelectorAll('video').forEach(function(vid) {
+            vid.addEventListener('play', pauseGalleryAutoTimer);
+        });
 
         // Pause on hover
         var sliderBox = document.getElementById('pdpGallerySlider');
@@ -307,24 +336,33 @@
         }
     };
 
-    // Add To Bag Function (Integrates directly with Cart Drawer)
-    window.handlePdpAddToCart = function() {
+    // Reads the shopper's actual choice. Returns '' when the product has no size
+    // or colour variants at all -- the page then shows no selector, and the old
+    // 'Free Size' / 'Standard' placeholders travelled all the way into the cart
+    // line, the WhatsApp message and order_items for products that never had
+    // either attribute.
+    function pdpSelection() {
         var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
         var sizeList = Array.isArray(currentProduct.size) ? currentProduct.size : [];
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (sizeList[0] || 'Free Size');
-
         var activeColorBtn = document.querySelector('.pdp-color-btn.active');
         var colorList = Array.isArray(currentProduct.colors) ? currentProduct.colors : [];
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (colorList[0] || 'Standard');
+        return {
+            size: activeSizeBtn ? (activeSizeBtn.dataset.size || '') : (sizeList[0] || ''),
+            color: activeColorBtn ? (activeColorBtn.dataset.color || '') : (colorList[0] || '')
+        };
+    }
+    window.pdpSelection = pdpSelection;
+
+    // Add To Bag Function (Integrates directly with Cart Drawer)
+    window.handlePdpAddToCart = function() {
+        var sel = pdpSelection();
 
         if (typeof window.addToCart === 'function') {
-            // addToCart(product, qty, lotType, selectedColor, selectedSize).
-            // This used to be called as (product, selSize, selColor) inside a
-            // loop, so the size string landed in the qty slot (Number('M') ->
-            // NaN, giving the line a NaN quantity), the colour landed in
-            // lot_type, and the shopper's actual size/colour choice was dropped
-            // in favour of the first option.
-            window.addToCart(currentProduct, currentQty, 'single', selColor, selSize);
+            // addToCart(product, { qty, size, color }). This used to be called as
+            // (product, selSize, selColor) inside a loop, so the size string landed
+            // in the qty slot (Number('M') -> NaN, giving the line a NaN quantity)
+            // and the colour landed in lot_type.
+            window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
         } else {
             // Local fallback
             try {
@@ -334,15 +372,15 @@
                     name: currentProduct.name,
                     price: currentProduct.price,
                     image: currentProduct.image,
-                    size: selSize,
-                    color: selColor,
+                    size: sel.size,
+                    color: sel.color,
                     qty: currentQty
                 });
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
             } catch(e) {}
         }
 
-        window.showToast('🛍️ Added ' + currentProduct.name + ' to Bag!');
+        window.showToast('🛍️ Added ' + (currentProduct.name || 'item') + ' to Bag!');
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
         if (typeof window.openCartDrawer === 'function') {
             window.openCartDrawer();
@@ -351,16 +389,12 @@
 
     // Buy Now (Instant Checkout Flow)
     window.handlePdpBuyNow = function() {
-        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
-
-        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
+        var sel = pdpSelection();
 
         if (typeof window.addToCart === 'function') {
-            for (var i = 0; i < currentQty; i++) {
-                window.addToCart(currentProduct, selSize, selColor);
-            }
+            // One call carrying the quantity, instead of currentQty separate calls
+            // that each passed the size where the quantity belonged.
+            window.addToCart(currentProduct, { qty: currentQty, size: sel.size, color: sel.color });
         }
 
         if (typeof window.syncPdpHeaderState === 'function') window.syncPdpHeaderState();
@@ -391,37 +425,50 @@
         }
     };
 
-    // Pincode Delivery Estimator
+    // Pincode Delivery Estimator.
+    //
+    // There is no serviceability data anywhere in the project -- no courier API,
+    // no pincode table -- so this cannot promise a delivery date or COD. It used
+    // to answer any six digits with "Fast Delivery by <today + 3 days>" and
+    // "Cash on Delivery Available for <pin>", which is a delivery promise and a
+    // payment-method promise the shop had not actually checked. It now states the
+    // usual dispatch window as an estimate and sends the shopper to WhatsApp for
+    // a confirmed date and COD availability.
     window.checkPincodeDelivery = function() {
         var input = document.getElementById('pdpPincodeInput');
         var res = document.getElementById('pdpPincodeResult');
         if (!input || !res) return;
 
         var pin = input.value.trim();
-        if (pin.length !== 6 || isNaN(pin)) {
+        if (!/^[1-9][0-9]{5}$/.test(pin)) {
             res.style.display = 'block';
             res.style.color = '#D32F2F';
             res.textContent = '⚠️ Please enter a valid 6-digit Indian pincode.';
             return;
         }
 
-        var d = new Date();
-        d.setDate(d.getDate() + 3);
-        var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var dateString = dayNames[d.getDay()] + ', ' + d.getDate() + ' ' + monthNames[d.getMonth()];
+        var waNumber = window.pdpWhatsAppNumber || '917046363528';
+        var askText = 'Hi, can you confirm delivery and COD for pincode ' + pin +
+            (currentProduct && currentProduct.name ? ' for ' + currentProduct.name : '') + '?';
+        var waHref = 'https://api.whatsapp.com/send?phone=' + encodeURIComponent(waNumber) +
+            '&text=' + encodeURIComponent(askText);
 
         res.style.display = 'block';
-        res.style.color = '#2E7D32';
-        res.innerHTML = '✅ <strong>Fast Delivery by ' + dateString + '</strong><br />⚡ Fast Express Delivery • 💎 7-Day Fast Exchange • Cash on Delivery Available for ' + pin;
+        res.style.color = '#5A5348';
+        res.innerHTML = 'Orders usually dispatch in 24–48 hours and reach most Indian pincodes in 3–5 working days. ' +
+            'We have not checked courier serviceability for <strong>' + pin + '</strong> yet — ' +
+            '<a href="' + waHref + '" target="_blank" rel="noopener" style="color:#15803D; font-weight:800;">' +
+            'ask us on WhatsApp</a> and we will confirm the date and whether COD is available there.';
     };
 
-    // Fullscreen Image Lightbox
+    // Fullscreen Image Lightbox. Only photograph slides open; on a video or embed
+    // slide this used to find no <img> and do nothing silently, and on a product
+    // with no photograph it would have opened the placeholder SVG.
     window.openFullscreenImage = function() {
-        var activeSlide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"] img');
-        if (activeSlide) {
-            window.open(activeSlide.src, '_blank');
-        }
+        var slide = document.querySelector('.pdp-slide[data-idx="' + currentSlideIdx + '"]');
+        if (!slide || slide.getAttribute('data-media') !== 'image') return;
+        var img = slide.querySelector('img');
+        if (img && img.src) window.open(img.src, '_blank');
     };
 
     function restoreUserSavedAddress() {
@@ -480,21 +527,22 @@
         var modal = document.getElementById('pdpWhatsAppOrderModal');
         if (!modal) return;
 
-        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+        var sel = pdpSelection();
 
-        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
-
-        // Populate Modal Preview Fields
+        // Populate Modal Preview Fields. The colour and size rows are only in the
+        // markup when the product has variants, so a missing element here means
+        // "this product has no such attribute", not "hide the value".
         var colEl = document.getElementById('pdpWaModalColor');
-        if (colEl) colEl.textContent = selColor;
+        if (colEl) colEl.textContent = sel.color;
         var sizeEl = document.getElementById('pdpWaModalSize');
-        if (sizeEl) sizeEl.textContent = selSize;
+        if (sizeEl) sizeEl.textContent = sel.size;
         var qtyEl = document.getElementById('pdpWaModalQty');
         if (qtyEl) qtyEl.textContent = currentQty;
         var prEl = document.getElementById('pdpWaModalPrice');
-        if (prEl) prEl.textContent = '₹' + Number(currentProduct.price * currentQty).toLocaleString('en-IN');
+        var unitPrice = Number(currentProduct.price) || 0;
+        if (prEl) prEl.textContent = unitPrice > 0
+            ? '₹' + (unitPrice * currentQty).toLocaleString('en-IN')
+            : 'Price on request';
 
         // Hide collapsible address section by default to keep form compact and clean
         var addrBody = document.getElementById('pdpWaAddrBody');
@@ -587,25 +635,33 @@
             } catch(err) {}
         }
 
-        var activeSizeBtn = document.querySelector('.pdp-size-btn.active');
-        var selSize = activeSizeBtn ? activeSizeBtn.dataset.size : (currentProduct.size[0] || 'Free Size');
+        var sel = pdpSelection();
 
-        var activeColorBtn = document.querySelector('.pdp-color-btn.active');
-        var selColor = activeColorBtn ? activeColorBtn.dataset.color : (currentProduct.colors[0] || 'Standard');
-
-        var totalPrice = Number(currentProduct.price * currentQty).toLocaleString('en-IN');
+        var unitPrice = Number(currentProduct.price) || 0;
+        var totalPrice = (unitPrice * currentQty).toLocaleString('en-IN');
         var productUrl = window.location.href;
         var fullLoc = city ? (city + (state ? (", " + state) : "") + (pincode ? (" - " + pincode) : "")) : '';
 
-        // Build WhatsApp Message
+        // Build WhatsApp Message. The SKU line used to fall back to the literal
+        // 'KLN-ETH-01', and Color / Size printed 'Standard' / 'Free Size' for
+        // products with no such variant -- the shop then had to guess what the
+        // customer had actually ordered.
         var waMessage = "🛍️ *NEW INSTANT ORDER — DT BRAND'S LUXURY ETHNIC*\n" +
             "━━━━━━━━━━━━━━━━━━━━\n" +
-            "👗 *Product:* " + currentProduct.name + "\n" +
-            "🏷️ *SKU:* " + (currentProduct.sku || 'KLN-ETH-01') + "\n" +
-            "🎨 *Color:* " + selColor + "\n" +
-            "📏 *Size:* " + selSize + "\n" +
-            "🔢 *Quantity:* " + currentQty + "\n" +
-            "💰 *Total Amount:* ₹" + totalPrice + " (Free Fast Delivery 3–5 Days)\n" +
+            "👗 *Product:* " + (currentProduct.name || 'Product') + "\n";
+        if (currentProduct.sku) {
+            waMessage += "🏷️ *SKU:* " + currentProduct.sku + "\n";
+        }
+        if (sel.color) {
+            waMessage += "🎨 *Color:* " + sel.color + "\n";
+        }
+        if (sel.size) {
+            waMessage += "📏 *Size:* " + sel.size + "\n";
+        }
+        waMessage += "🔢 *Quantity:* " + currentQty + "\n" +
+            (unitPrice > 0
+                ? "💰 *Total Amount:* ₹" + totalPrice + "\n"
+                : "💰 *Total Amount:* to be confirmed\n") +
             "━━━━━━━━━━━━━━━━━━━━\n" +
             "👤 *Customer:* " + name + "\n" +
             "📱 *WhatsApp Phone:* +91 " + cleanPhone + "\n";
@@ -625,7 +681,8 @@
             "🔗 *Item Link:* " + productUrl + "\n\n" +
             "Please confirm my order and share estimated dispatch details. Thank you! 🙏✨";
 
-        var waUrl = "https://api.whatsapp.com/send?phone=919876543210&text=" + encodeURIComponent(waMessage);
+        var waNumber = window.pdpWhatsAppNumber || '917046363528';
+        var waUrl = "https://api.whatsapp.com/send?phone=" + encodeURIComponent(waNumber) + "&text=" + encodeURIComponent(waMessage);
 
         window.closePdpWhatsAppOrderModal();
         window.showToast('🚀 Opening WhatsApp to confirm your order...');
@@ -670,57 +727,73 @@
         });
     };
 
+    // Submit a review to api/reviews.php.
+    //
+    // This function used to store nothing at all: it built a review card in the
+    // DOM -- stamped "Verified", dated "Just now", with an invented city, an
+    // invented occasion ("Festive Celebration") and a helpful count of 1 -- then
+    // toasted "Thank you! Your review is now live." The review was never sent
+    // anywhere, so it vanished on reload, never reached admin/reviews/pending.php,
+    // and the shopper was told their review was published when it was not.
     window.submitCustomerReview = function(e) {
         e.preventDefault();
-        var name = document.getElementById('revName').value.trim();
-        var city = document.getElementById('revCity').value.trim() || 'India';
-        var occasion = document.getElementById('revOccasion').value.trim() || 'Festive Celebration';
-        var text = document.getElementById('revText').value.trim();
 
-        if (!name || !text) return;
+        var nameEl = document.getElementById('revName');
+        var titleEl = document.getElementById('revTitle');
+        var textEl = document.getElementById('revText');
+        var name = nameEl ? nameEl.value.trim() : '';
+        var title = titleEl ? titleEl.value.trim() : '';
+        var text = textEl ? textEl.value.trim() : '';
 
-        var track = document.getElementById('pdpReviewsTrack');
-        if (track) {
-            var card = document.createElement('article');
-            card.className = 'pdp-review-card';
-            card.dataset.rating = currentSelectedRating;
-            card.dataset.hasphoto = '0';
-            card.innerHTML = 
-                '<div class="pdp-rc-top">' +
-                    '<div class="pdp-rc-avatar">' + name.charAt(0).toUpperCase() + '</div>' +
-                    '<div class="pdp-rc-meta">' +
-                        '<div class="pdp-rc-name">' +
-                            '<span>' + name + '</span>' +
-                        '</div>' +
-                        '<span class="pdp-rc-loc-date">' + city + ' • Just now</span>' +
-                    '</div>' +
-                    '<div class="pdp-rc-rating-right">' +
-                        '<span class="pdp-verified-badge">✓ Verified</span>' +
-                        '<div class="pdp-rc-stars">' + '★'.repeat(currentSelectedRating) + '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<span class="pdp-rc-occasion">✨ ' + occasion + '</span>' +
-                '<p class="pdp-rc-text">"' + text + '"</p>' +
-                '<div class="pdp-rc-bottom">' +
-                    '<span>Helpful?</span>' +
-                    '<button class="pdp-rc-helpful-btn" onclick="toggleHelpful(this, 1)"><span>👍</span><span>(1)</span></button>' +
-                '</div>';
-            track.insertBefore(card, track.firstChild);
-            track.scrollTo({ left: 0, behavior: 'smooth' });
+        if (!name || !text) {
+            window.showToast('Please add your name and your review.');
+            return;
         }
 
-        window.closeWriteReviewModal();
-        window.showToast('✨ Thank you! Your review is now live.');
-        document.getElementById('pdpReviewForm').reset();
-        window.rebuildReviewDots();
-    };
+        var productId = Number(currentProduct.id) || 0;
+        if (!productId) {
+            window.showToast('Could not tell which product this review is for.');
+            return;
+        }
 
-    // Helpful upvote button
-    window.toggleHelpful = function(btn, currentCount) {
-        if (btn.classList.contains('voted')) return;
-        btn.classList.add('voted');
-        btn.innerHTML = '<span>👍</span><span>(' + (currentCount + 1) + ')</span>';
-        window.showToast('❤️ Thank you for your feedback!');
+        var btn = document.getElementById('revSubmitBtn');
+        if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+        fetch('/api/reviews.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                product_id: productId,
+                name: name,
+                rating: currentSelectedRating,
+                review_title: title,
+                review_text: text
+            })
+        })
+        .then(function(res) { return res.json().catch(function() { return {}; }); })
+        .then(function(payload) {
+            if (btn) { btn.disabled = false; btn.textContent = 'Submit Review'; }
+            if (!payload || payload.success !== true) {
+                window.showToast((payload && payload.message) || 'Could not save your review. Please try again.');
+                return;
+            }
+            window.closeWriteReviewModal();
+            var form = document.getElementById('pdpReviewForm');
+            if (form) form.reset();
+            window.setReviewRating(5);
+            // The server decides whether the review is published or queued; report
+            // whichever actually happened rather than claiming it is live.
+            window.showToast(payload.message || (payload.status === 'approved'
+                ? 'Thank you! Your review is now published.'
+                : 'Thank you! Your review will appear once our team has checked it.'));
+            if (payload.status === 'approved') {
+                setTimeout(function() { window.location.reload(); }, 1200);
+            }
+        })
+        .catch(function() {
+            if (btn) { btn.disabled = false; btn.textContent = 'Submit Review'; }
+            window.showToast('Network problem — your review was not saved. Please try again.');
+        });
     };
 
     // Review Filter Pills
@@ -728,14 +801,15 @@
         document.querySelectorAll('.pdp-rev-filter-pill').forEach(function(p) { p.classList.remove('active'); });
         btn.classList.add('active');
 
+        // The "With photos" filter was dropped: the reviews table has no photo
+        // column, so it matched data-hasphoto="1", which nothing ever sets, and
+        // hid every review on the page.
         var cards = document.querySelectorAll('.pdp-review-card');
         cards.forEach(function(card) {
             if (type === 'all') {
                 card.style.display = 'flex';
-            } else if (type === '5') {
-                card.style.display = (card.dataset.rating === '5') ? 'flex' : 'none';
-            } else if (type === 'photo') {
-                card.style.display = (card.dataset.hasphoto === '1') ? 'flex' : 'none';
+            } else {
+                card.style.display = (card.dataset.rating === String(type)) ? 'flex' : 'none';
             }
         });
         window.rebuildReviewDots();

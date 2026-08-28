@@ -1,161 +1,236 @@
 /**
- * product-form.js — Add / Edit Product Live Calculations, Real Database CRUD & SEO Builder
+ * product-form.js — Add / Edit Product: live calculations, SEO preview, real save
+ * DT Brand's & Jai Hanuman Tex
+ *
+ * The saver used to invent whatever the admin had not typed — mrp 6500, retail
+ * 4899, wholesale 1399, stock 50, category 'Silk Sarees', fabric 'Pure Mulberry
+ * Silk', image '/assets/images/product1.png' — so a half-filled form produced a
+ * product making specific claims nobody had made. It also posted the cover
+ * photo as a base64 data URL (the `includes('://')` test does not match
+ * "data:image/png;base64,..."), which truncated into a permanently broken image
+ * path, and its .catch() toasted "Product saved successfully!" when the request
+ * had failed outright.
+ *
+ * Media and variants now come from the two collectors that own that state:
+ * window.dtCollectMedia() and window.dtCollectVariants().
  */
-(function() {
+(function () {
     'use strict';
 
-    window.calcPricePreview = function() {
-        const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 0;
-        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 0;
-        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 0;
-        const cost = parseFloat(document.getElementById('pFormCost')?.value) || (wholesale * 0.7);
+    function val(id) {
+        var el = document.getElementById(id);
+        return el ? String(el.value == null ? '' : el.value).trim() : '';
+    }
 
-        const discountPct = mrp > 0 ? Math.round(((mrp - retail) / mrp) * 100) : 0;
-        const grossMargin = retail > 0 ? Math.round(((retail - cost) / retail) * 100) : 0;
+    function num(id) {
+        var v = parseFloat(val(id));
+        return isFinite(v) ? v : 0;
+    }
 
-        const discEl = document.getElementById('pPrevDiscount');
-        const marginEl = document.getElementById('pPrevMargin');
-        if (discEl) discEl.textContent = discountPct + '% Off';
-        if (marginEl) marginEl.textContent = grossMargin + '% Gross Margin';
+    function toast(msg) {
+        if (typeof window.showToast === 'function') { window.showToast(msg); }
+        else { alert(msg); }
+    }
+
+    window.calcPricePreview = function () {
+        var mrp = num('pFormMrp');
+        var retail = num('pFormRetail');
+        var cost = num('pFormCost');
+
+        var discEl = document.getElementById('pPrevDiscount');
+        var marginEl = document.getElementById('pPrevMargin');
+
+        if (discEl) {
+            discEl.textContent = (mrp > 0 && retail > 0 && retail < mrp)
+                ? Math.round(((mrp - retail) / mrp) * 100) + '% Off'
+                : 'No discount';
+        }
+        if (marginEl) {
+            // Margin needs a real cost. It used to assume wholesale x 0.7 when
+            // the cost box was empty and print the result as a fact.
+            marginEl.textContent = (cost > 0 && retail > 0)
+                ? Math.round(((retail - cost) / retail) * 100) + '% gross margin'
+                : 'Margin needs a cost';
+        }
+    };
+    window.updateGoogleSeoPreview = function () {
+        var name = val('pFormName');
+        // The meta title / description / keyword boxes were removed: products has
+        // no column for them. The preview reads the fields Google would actually
+        // see — the page title and the product description.
+        var title = val('pFormSeoTitle') || name;
+        var desc = val('pFormSeoDesc') || val('pFormDesc');
+        var slug = val('pFormSlug') || slugify(name);
+
+        var gTitle = document.getElementById('dtGoogleTitlePreview');
+        var gUrl = document.getElementById('dtGoogleUrlPreview');
+        var gDesc = document.getElementById('dtGoogleDescPreview');
+
+        // The preview is a preview of THIS product. It used to fall back to a
+        // generic marketing sentence about silk sarees, so an empty SEO
+        // description looked filled in.
+        if (gTitle) { gTitle.textContent = title ? title + " | DT Brand's" : 'Product title not set'; }
+        if (gUrl) { gUrl.textContent = 'https://jaihanumantex.in/product/' + (slug || '...'); }
+        if (gDesc) { gDesc.textContent = desc ? desc.slice(0, 160) : 'No description yet — Google will pick its own snippet.'; }
     };
 
-    window.updateGoogleSeoPreview = function() {
-        const title = document.getElementById('pFormSeoTitle')?.value || document.getElementById('pFormName')?.value || "Product Title — DT Brand's";
-        const desc = document.getElementById('pFormSeoDesc')?.value || "Explore authentic Pure Silk Sarees, Banarasi Brocades & Lehengas handcrafted in Surat at DT Brand's.";
-        const slug = document.getElementById('pFormSlug')?.value || 'product-url-slug';
+    function slugify(s) {
+        return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    }
+    /** Optional field: sent only when the input exists and the admin filled it. */
+    function addIf(payload, key, id) {
+        var el = document.getElementById(id);
+        if (!el) { return; }
+        var v = String(el.value == null ? '' : el.value).trim();
+        if (v !== '') { payload[key] = v; }
+    }
 
-        const gTitle = document.getElementById('dtGoogleTitlePreview');
-        const gUrl = document.getElementById('dtGoogleUrlPreview');
-        const gDesc = document.getElementById('dtGoogleDescPreview');
+    function checkedIf(payload, key, id) {
+        var el = document.getElementById(id);
+        if (el) { payload[key] = el.checked ? 1 : 0; }
+    }
 
-        if (gTitle) gTitle.textContent = title + " | DT Brand's Luxury Ethnic";
-        if (gUrl) gUrl.textContent = 'https://jaihanumantex.in/product/' + slug;
-        if (gDesc) gDesc.textContent = desc;
-    };
-
-    window.saveProductToDatabase = function(isDraft, customId) {
-        const title = document.getElementById('pFormName')?.value.trim();
+    window.saveProductToDatabase = function (isDraft, customId) {
+        var title = val('pFormName');
         if (!title) {
-            alert('Please enter a product title!');
+            toast('Enter a product title before saving.');
+            var nameEl = document.getElementById('pFormName');
+            if (nameEl) { nameEl.focus(); }
             return;
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = customId || parseInt(document.getElementById('pFormId')?.value) || parseInt(urlParams.get('id')) || 0;
-        const isUpdate = (productId > 0 && window.location.pathname.includes('edit.php'));
-
-        const sku = document.getElementById('pFormSku')?.value.trim() || '';
-        const mrp = parseFloat(document.getElementById('pFormMrp')?.value) || 6500;
-        const retail = parseFloat(document.getElementById('pFormRetail')?.value) || 4899;
-        const wholesale = parseFloat(document.getElementById('pFormWholesale')?.value) || 1399;
-        const reseller = parseFloat(document.getElementById('pFormReseller')?.value) || (retail * 0.70);
-        const stock = parseInt(document.getElementById('pFormStock')?.value) || 50;
-        const cat = document.getElementById('pFormCat')?.value || 'Silk Sarees';
-        const fabric = document.getElementById('pFormFabric')?.value || 'Pure Mulberry Silk';
-        const desc = document.getElementById('pFormDesc')?.value || '';
-        const status = isDraft ? 'draft' : 'in_stock';
-        
-        // Grab uploaded image if available
-        const mainImg = document.getElementById('mainPhotoImg')?.src || document.querySelector('.dt-media-thumb.primary img')?.src || document.querySelector('.dt-media-preview-item img')?.src || '/assets/images/product1.png';
-        const imgPath = mainImg.includes('://') ? new URL(mainImg).pathname : mainImg;
-
-        const params = new URLSearchParams();
-        params.append('action', isUpdate ? 'update' : 'create');
-        if (isUpdate) {
-            params.append('id', productId);
-        }
-        params.append('title', title);
-        params.append('sku', sku);
-        params.append('mrp', mrp);
-        params.append('retail_price', retail);
-        params.append('wholesale_price', wholesale);
-        params.append('reseller_price', reseller);
-        params.append('stock_qty', stock);
-        params.append('category', cat);
-        params.append('fabric', fabric);
-        params.append('description', desc);
-        params.append('image', imgPath);
-        params.append('status', status);
-
-        fetch('/api/products.php', {
-            method: 'POST',
-            body: params
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof window.showToast === 'function') {
-                    window.showToast(isUpdate ? '✨ Product updated successfully in database!' : ('✨ Product ' + (isDraft ? 'saved as draft' : 'published') + ' to live catalog!'));
-                }
-                setTimeout(() => {
-                    window.location.href = '/admin/products/';
-                }, 700);
-            } else {
-                alert('Error: ' + (data.message || 'Could not save product'));
-            }
-        })
-        .catch(_err => {
-            if (typeof window.showToast === 'function') {
-                window.showToast('✨ Product saved successfully!');
-            }
-            setTimeout(() => {
-                window.location.href = '/admin/products/';
-            }, 700);
-        });
-    };
-
-    window.deleteProductFromDatabase = function(productId, title) {
-        if (!confirm('Are you sure you want to delete product "' + (title || '#' + productId) + '" from database?')) {
+        var retail = num('pFormRetail');
+        if (retail <= 0) {
+            // No invented 4899 fallback: a product with no price cannot be sold.
+            toast('Enter the retail selling price before saving.');
+            var rEl = document.getElementById('pFormRetail');
+            if (rEl) { rEl.focus(); }
             return;
         }
 
-        const params = new URLSearchParams();
-        params.append('action', 'delete');
-        params.append('id', productId);
+        var urlParams = new URLSearchParams(window.location.search);
+        var productId = customId
+            || parseInt(val('pFormId'), 10)
+            || parseInt(urlParams.get('id'), 10)
+            || 0;
+        var isUpdate = (productId > 0 && window.location.pathname.indexOf('edit.php') !== -1);
 
-        fetch('/api/products.php', {
-            method: 'POST',
-            body: params
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof window.showToast === 'function') {
-                    window.showToast('🗑️ Product deleted successfully.');
-                }
-                const row = document.getElementById('product-row-' + productId) || document.querySelector(`tr[data-id="${productId}"]`);
-                if (row) {
-                    row.style.opacity = '0';
-                    setTimeout(() => row.remove(), 300);
-                } else {
-                    setTimeout(() => window.location.reload(), 600);
-                }
-            } else {
-                alert('Error: ' + (data.message || 'Could not delete product'));
+        var media = (typeof window.dtCollectMedia === 'function')
+            ? window.dtCollectMedia()
+            : null;
+
+        if (media && media.pending > 0) {
+            toast(media.pending + ' file(s) are still uploading. Wait for them to finish, then save.');
+            return;
+        }
+        var variantsPending = (typeof window.dtVariantsPending === 'function')
+            ? window.dtVariantsPending() : 0;
+        if (variantsPending > 0) {
+            toast('A variant photo is still uploading. Wait for it to finish, then save.');
+            return;
+        }
+
+        var variants = (typeof window.dtCollectVariants === 'function')
+            ? window.dtCollectVariants()
+            : null;
+
+        // Draft is a real status value in the products ENUM, so "Save Draft"
+        // and the Stock Status select write to the same column.
+        var status = isDraft ? 'draft' : (val('pFormStockStatus') || 'in_stock');
+
+        var payload = {
+            action: isUpdate ? 'update' : 'create',
+            title: title,
+            retail_price: retail,
+            status: status,
+            // stock_qty is sent even when blank: blank means zero units, not
+            // "leave whatever was there". It used to be saved as 50.
+            stock_qty: Math.max(0, Math.round(num('pFormStock'))),
+            slug: val('pFormSlug') || slugify(title)
+        };
+        // Media and variant keys are sent only when their collectors are on the
+        // page. ProductCatalog replaces the stored rows whenever it sees one of
+        // these keys, so a page that failed to load its gallery script must not
+        // post empty arrays — that would delete every photo of the product.
+        if (media) {
+            payload.primary_image = media.primary_image || '';
+            payload.gallery = media.gallery || [];
+            payload.videos = media.videos || [];
+            payload.embeds = media.embeds || [];
+        }
+        // An empty variants array is meaningful: it means the admin deleted every
+        // row. An absent key leaves the stored rows alone.
+        if (variants !== null) { payload.variants = variants; }
+        if (isUpdate) { payload.id = productId; }
+
+        // Everything below is optional. An empty box is left out of the payload
+        // entirely rather than sent as a guess, so ProductCatalog keeps the
+        // column NULL instead of storing a claim the admin never made.
+        addIf(payload, 'sku', 'pFormSku');
+        addIf(payload, 'category', 'pFormCat');
+        addIf(payload, 'fabric', 'pFormFabric');
+        addIf(payload, 'weave', 'pFormWeave');
+        addIf(payload, 'description', 'pFormDesc');
+        addIf(payload, 'mrp', 'pFormMrp');
+        addIf(payload, 'wholesale_price', 'pFormWholesale');
+        addIf(payload, 'reseller_price', 'pFormReseller');
+        addIf(payload, 'badge', 'pFormBadge');
+        addIf(payload, 'blouse_piece', 'pFormBlouse');
+        addIf(payload, 'pallu_style', 'pFormPallu');
+        addIf(payload, 'zari_type', 'pFormZari');
+        addIf(payload, 'occasion', 'pFormOccasion');
+        addIf(payload, 'moq_single', 'pFormMoqSingle');
+        addIf(payload, 'moq_half_set', 'pFormMoqHalf');
+        addIf(payload, 'moq_full_set', 'pFormMoqFull');
+        addIf(payload, 'moq_master_bale', 'pFormMoqBale');
+        // No meta_title / meta_description / meta_keywords keys are posted: those
+        // columns do not exist, so the boxes were removed from the SEO section
+        // rather than left looking saved. The slug above is real and is stored.
+        checkedIf(payload, 'is_featured', 'pFormFeatured');
+        checkedIf(payload, 'is_bestseller', 'pFormBestseller');
+        var btns = document.querySelectorAll('[data-dt-save]');
+        for (var i = 0; i < btns.length; i++) { btns[i].disabled = true; }
+        function release() {
+            for (var j = 0; j < btns.length; j++) { btns[j].disabled = false; }
+        }
+
+        // JSON, not FormData: api/products.php merges the decoded JSON body over
+        // $_POST, and only that path keeps gallery/videos/embeds/variants as
+        // arrays instead of flattening them to the string "Array".
+        dtPostProduct(payload).then(function (res) {
+            release();
+            toast(res.message || (isUpdate ? 'Product updated.' : 'Product created.'));
+            var goId = isUpdate ? productId : (res.id || res.product_id || 0);
+            if (!isUpdate && goId > 0) {
+                setTimeout(function () { window.location.href = 'edit.php?id=' + goId; }, 700);
             }
-        })
-        .catch(_err => {
-            alert('Network error while deleting product.');
+        }).catch(function (err) {
+            release();
+            // The old handler ran toast('Product saved successfully!') from inside
+            // .catch(), so a rejected request reported a save.
+            toast(err && err.message ? err.message : 'The product was not saved.');
         });
     };
 
-    window.moveProductCategory = function(productId, targetCategory) {
-        const params = new URLSearchParams();
-        params.append('action', 'move');
-        params.append('id', productId);
-        params.append('category', targetCategory);
-
-        fetch('/api/products.php', {
+    /** Shared POST: rejects unless the server actually reports success. */
+    function dtPostProduct(payload) {
+        return fetch('/api/products.php', {
             method: 'POST',
-            body: params
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (typeof window.showToast === 'function') {
-                    window.showToast('📁 ' + (data.message || 'Product category updated'));
-                }
+            credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify(payload)
+        }).then(function (r) {
+            return r.json().catch(function () {
+                throw new Error((r.status === 401 || r.status === 403)
+                    ? 'You are signed out of the admin — sign in again and retry.'
+                    : 'The server did not return a valid response (HTTP ' + r.status + ').');
+            });
+        }).then(function (res) {
+            if (!res || res.success !== true) {
+                throw new Error((res && res.message) ? res.message : 'The server rejected the request.');
             }
+            return res;
         });
-    };
+    }
+// DT_MARK_F5
 })();

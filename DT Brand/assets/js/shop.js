@@ -88,9 +88,9 @@
                 old_price: p.old_price,
                 discount: p.discount,
                 image: p.image,
-                fabric: p.fabric || 'Pure Silk',
+                fabric: p.fabric || '',
                 colors: Array.isArray(p.colors) ? p.colors.join(', ') : (p.color || ''),
-                sizes: Array.isArray(p.size) ? p.size.join(', ') : 'Free Size',
+                sizes: Array.isArray(p.size) ? p.size.join(', ') : (p.size || ''),
                 url: '/product.php?id=' + p.id
             };
             window.openSmartShareModal(itemData);
@@ -126,39 +126,66 @@
     if (Array.isArray(window.allCategories) && window.allCategories.length > 0) {
         catSource = window.allCategories;
     } else if (Array.isArray(window.allProducts) && window.allProducts.length > 0) {
-        catSource = window.allProducts.map(function(p){ return { name: p.category, image: p.image }; });
+        catSource = window.allProducts.map(function (p) {
+            return { name: p.category, image: (p.has_photo ? p.image : ''), has_image: !!p.has_photo };
+        });
+    }
+
+    var DT_NO_IMAGE = '/assets/images/no-image.svg';
+
+    /** Real photo for a category, or '' so the circle falls back to an icon. */
+    function catCircleImage(c) {
+        var img = (c && typeof c === 'object') ? String(c.image || '') : '';
+        if (!img || img === DT_NO_IMAGE || c.has_image === false) { img = ''; }
+        if (!img) {
+            // Borrow the first product photo actually filed under this category
+            // instead of cycling /assets/images/product1..6.png by index, which
+            // gave every unphotographed category someone else's saree.
+            var cn = String((c && (c.name || c.title)) || '').toLowerCase();
+            var hit = (window.allProducts || []).find(function (p) {
+                return p && p.has_photo && String(p.category || '').toLowerCase() === cn;
+            });
+            img = hit ? hit.image : '';
+        }
+        return img;
+    }
+
+    /** Distinct fabrics really recorded against the products in one category. */
+    function fabricsIn(catName) {
+        var cn = String(catName || '').toLowerCase();
+        var seen = {};
+        var out = [];
+        (window.allProducts || []).forEach(function (p) {
+            if (!p || String(p.category || '').toLowerCase() !== cn) { return; }
+            var f = String(p.fabric || '').trim();
+            if (!f || seen[f.toLowerCase()]) { return; }
+            seen[f.toLowerCase()] = true;
+            out.push({ label: f, img: (p.has_photo ? p.image : ''), type: 'fabric', val: f });
+        });
+        return out;
     }
 
     var uniqueCatMap = {};
-    catSource.forEach(function(c, i) {
-        var cName = '';
-        var cImg = '';
-        if (typeof c === 'string') {
-            cName = c.trim();
-            cImg = '/assets/images/product' + ((i % 6) + 1) + '.png';
-        } else if (c && typeof c === 'object') {
-            cName = (c.name || c.title || '').trim();
-            cImg = c.image || ('/assets/images/product' + ((i % 6) + 1) + '.png');
-        }
-
-        if (!cName || cName.toLowerCase() === 'all' || uniqueCatMap[cName.toLowerCase()]) return;
+    catSource.forEach(function (c) {
+        var cName = (typeof c === 'string') ? c.trim() : String((c && (c.name || c.title)) || '').trim();
+        if (!cName || cName.toLowerCase() === 'all' || uniqueCatMap[cName.toLowerCase()]) { return; }
         uniqueCatMap[cName.toLowerCase()] = true;
 
-        subCategoryData['All'].push({
-            label: cName,
-            img: cImg,
-            type: 'category',
-            val: cName
-        });
+        var cImg = (typeof c === 'string') ? catCircleImage({ name: cName }) : catCircleImage(c);
 
-        subCategoryData[cName] = [
-            { label: 'All ' + cName, img: cImg, type: 'category', val: cName },
-            { label: 'Pure Silk', img: cImg, type: 'fabric', val: 'Pure Silk' },
-            { label: 'Handloom', img: '/assets/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
-            { label: 'Zari Weaves', img: '/assets/images/product3.png', type: 'fabric', val: 'Zari' },
-            { label: 'Festive Drop', img: '/assets/images/product4.png', type: 'fabric', val: 'Festive' }
-        ];
+        subCategoryData['All'].push({ label: cName, img: cImg, type: 'category', val: cName });
+
+        // Only fabrics that exist. This list used to be a fixed
+        // Pure Silk / Handloom Korvai / Zari / Festive strip appended to every
+        // category, so tapping one filtered the grid down to nothing.
+        subCategoryData[cName] = [{ label: 'All ' + cName, img: cImg, type: 'category', val: cName }]
+            .concat(fabricsIn(cName));
     });
+
+    function dtEsc(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
 
     window.renderSubCategories = function(mainCat) {
         var track = document.getElementById('catSliderTrack');
@@ -173,16 +200,18 @@
                         (idx === 0 && currentSelected === 'all');
             var circleContent = '';
             if (item.img) {
-                circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\'" />';
+                // No stock-photo onerror: a broken path shows the shared
+                // no-image placeholder rather than an unrelated product.
+                circleContent = '<img src="' + dtEsc(item.img) + '" alt="' + dtEsc(item.label) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + DT_NO_IMAGE + '\';this.style.opacity=\'.5\';" />';
             } else {
-                circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
+                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '●') + '</span>';
             }
 
-            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + (item.type || '') + '" data-val="' + (item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + item.label + '">' +
+            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
                 '<div class="cat-ring">' +
-                    '<div class="cat-circle ' + (item.gradient || '') + '">' + circleContent + '</div>' +
+                    '<div class="cat-circle ' + dtEsc(item.gradient || '') + '">' + circleContent + '</div>' +
                 '</div>' +
-                '<span class="cat-label">' + item.label + '</span>' +
+                '<span class="cat-label">' + dtEsc(item.label) + '</span>' +
             '</button>';
         }).join('');
 

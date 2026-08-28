@@ -17,7 +17,7 @@ $page_title = "Multi-Tier Price & Margin Matrix";
 $active_nav = "pricing";
 
 $categories = ProductCatalog::getCategoriesWithDetails();
-$allProducts = ProductCatalog::getAll();
+$allProducts = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

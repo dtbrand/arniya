@@ -13,7 +13,7 @@ use DTBrand\ProductCatalog;
 $page_title = "Low Stock & Critical Restock Alarms";
 $active_nav = "inventory";
 
-$allProducts = ProductCatalog::getAll();
+$allProducts = ProductCatalog::getAll(true);
 $lowStockItems = [];
 foreach ($allProducts as $p) {
     if ((int)($p['stock_qty'] ?? 0) <= 25) {

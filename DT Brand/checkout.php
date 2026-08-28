@@ -100,7 +100,7 @@ $catalogProducts = ProductCatalog::getAll();
 
 <script>
 /* Same storefront number used by the cart drawer, footer and about page. */
-var BRAND_WHATSAPP_NUMBER = '919876543210';
+var BRAND_WHATSAPP_NUMBER = '917046363528';
 
 /* Build the concierge confirmation from the order the SERVER saved. Prices are
    re-derived server-side from the live catalogue, so the local cart figures are
@@ -116,7 +116,13 @@ function buildCheckoutWaUrl(srvOrder, form) {
         var lineTotal = Number(item.line_total);
         if (!(lineTotal > 0)) { lineTotal = (Number(item.price) || 0) * qty; }
         var label = item.title || item.name || 'Ethnic Product';
+        // The chosen colour/size travels to the mill, otherwise the dispatch team
+        // has to guess which variant of the saree was actually bought.
+        var variant = [item.variant_color || item.color, item.variant_size || item.size]
+            .map(function(v) { return String(v || '').trim(); })
+            .filter(Boolean).join(' / ');
         lines += (i + 1) + '. *' + label + '*' + (item.sku ? ' (' + item.sku + ')' : '') +
+                 (variant ? '\n   Variant: ' + variant : '') +
                  '\n   Qty: ' + qty + ' | ₹' + money(lineTotal) + '\n';
     });
 
@@ -163,6 +169,11 @@ function handleDirectCheckout(e) {
             name: it.name,
             price: Number(it.price) || 0,
             quantity: Number(it.qty || it.quantity) || 1,
+            // Carried through to order_items.variant_color / variant_size. These
+            // were dropped here, so the colour and size the shopper picked never
+            // reached the order at all.
+            color: String(it.color || '').trim(),
+            size: String(it.size || '').trim(),
             image: it.image || ''
         };
     });

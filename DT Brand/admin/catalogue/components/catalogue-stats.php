@@ -13,7 +13,7 @@ use DTBrand\Database;
 
 $allCats = ProductCatalog::getCategories();
 $totalCats = count($allCats);
-$allProducts = ProductCatalog::getAll();
+$allProducts = ProductCatalog::getAll(true);
 $totalProducts = count($allProducts);
 
 $catalogVal = 0;

@@ -1311,7 +1311,7 @@ input[type=range].mf-range::-moz-range-thumb {
         document.body.style.overflow='hidden'; 
     }
 
-    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); if (typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='../../account.php';} });
+    if (accountItem) accountItem.addEventListener('click', function(){ closeMore(); if (typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('profile');}else{window.location.href='/account.php';} });
     if (logoutItem) logoutItem.addEventListener('click', function(){ 
         closeMore(); 
         localStorage.removeItem('dtbrands_user');
@@ -1319,13 +1319,13 @@ input[type=range].mf-range::-moz-range-thumb {
         syncMobileMoreAccountState();
         if (typeof window.syncHeaderAccountState === 'function') window.syncHeaderAccountState();
     });
-    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='../../account.php?tab=login';} });
-    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('register');}else{window.location.href='../../account.php?tab=register';} });
+    if (loginItem) loginItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/account.php?tab=login';} });
+    if (registerItem) registerItem.addEventListener('click', function(){ closeMore(); if (typeof window.openAccountModal==='function'){window.openAccountModal('register');}else{window.location.href='/account.php?tab=register';} });
 
     if (cartItem) cartItem.addEventListener('click', function(){ closeMore(); if (typeof window.openCartDrawer==='function') window.openCartDrawer(); });
     if (wishItem) wishItem.addEventListener('click', function(){ closeMore(); if (typeof window.openWishlistDrawer==='function') window.openWishlistDrawer(); });
     if (shareItem) shareItem.addEventListener('click', function(){ closeMore(); if (typeof window.showToast==='function') window.showToast('🔗 Page link copied to clipboard'); });
-    if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=919876543210&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
+    if (adviceItem) adviceItem.addEventListener('click', function(){ closeMore(); window.open('https://api.whatsapp.com/send?phone=917046363528&text=Hi%2C%20I%20would%20like%20styling%20advice%20for%20ethnic%20wear', '_blank'); });
 
     function syncShopBottomFooterBadges() {
         try {

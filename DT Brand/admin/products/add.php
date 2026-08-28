@@ -63,11 +63,11 @@ if ($cloned_id > 0) {
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         <span>Cancel</span>
                     </a>
-                    <button type="button" class="wp-button" onclick="if(window.saveProductToDatabase){ window.saveProductToDatabase(true); } else { window.showToast('Draft saved successfully!'); }">
+                    <button type="button" class="wp-button" data-dt-save onclick="window.saveProductToDatabase && window.saveProductToDatabase(true);">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                         <span>Save Draft</span>
                     </button>
-                    <button type="button" class="wp-button primary" onclick="if(window.saveProductToDatabase){ window.saveProductToDatabase(false); } else { window.showToast('✨ Product published to live catalog!'); }">
+                    <button type="button" class="wp-button primary" data-dt-save onclick="window.saveProductToDatabase && window.saveProductToDatabase(false);">
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         <span>Save &amp; Publish</span>
                     </button>
@@ -116,6 +116,7 @@ if ($cloned_id > 0) {
 </div>
 <script src="/admin/Asset/js/admin.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/product-gallery.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/products/assets/js/variants.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/products/assets/js/product-form.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

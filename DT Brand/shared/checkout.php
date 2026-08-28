@@ -1027,7 +1027,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
     var appliedCouponCode = '';
 
     /* WhatsApp Business Number for Order Routing */
-    var BRAND_WHATSAPP_NUMBER = '919876543210'; 
+    var BRAND_WHATSAPP_NUMBER = '917046363528'; 
 
     /* Expose Global Controller */
     window.openCheckout = function() {
@@ -1106,12 +1106,20 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             var itemTotal = priceNum * (item.qty || 1);
             subtotal += itemTotal;
 
+            // The photo used to fall back to product1.png (another product's saree)
+            // and the size line printed "M" for items added without a size.
+            var coImg = item.image || item.img || '/assets/images/no-image.svg';
+            var coMeta = [];
+            if (item.size) coMeta.push('Size: <strong>' + item.size + '</strong>');
+            if (item.color) coMeta.push('Colour: <strong>' + item.color + '</strong>');
+            coMeta.push('Qty: <strong>' + (item.qty || 1) + '</strong>');
+
             html += `
                 <div class="co-item-row">
-                    <img src="${item.image || item.img || '/assets/images/product1.png'}" alt="${item.name || item.title || 'Ethnic Product'}" class="co-item-img" onerror="this.src='/assets/images/product1.png';">
+                    <img src="${coImg}" alt="${item.name || item.title || ''}" class="co-item-img">
                     <div class="co-item-info">
-                        <div class="co-item-name">${item.name || item.title || 'Ethnic Attire'}</div>
-                        <div class="co-item-meta">Size: <strong>${item.size || 'M'}</strong> | Qty: <strong>${item.qty || 1}</strong></div>
+                        <div class="co-item-name">${item.name || item.title || 'Product'}</div>
+                        <div class="co-item-meta">${coMeta.join(' | ')}</div>
                         <div class="co-item-price-row">
                             <span class="co-item-price">₹${itemTotal.toLocaleString('en-IN')}</span>
                         </div>

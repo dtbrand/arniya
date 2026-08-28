@@ -12,38 +12,30 @@ require_once __DIR__ . '/../src/ProductCatalog.php';
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-// Handle CRUD operations
+// Handle CRUD operations.
+// This page used to run its own INSERT with invented defaults ('New Ethnic Saree',
+// retail 4899, stock 50, product1.png) and then print 'Product created
+// successfully!' whether or not the statement ran. It now delegates to
+// ProductCatalog so there is exactly one write path, and reports what it returned.
 $msg = '';
+$msgOk = true;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
-    $pdo = Database::getConnection();
 
-    if ($action === 'create' && $pdo) {
-        $sku = trim($_POST['sku'] ?? 'SKU-' . time());
-        $title = trim($_POST['title'] ?? 'New Ethnic Saree');
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
-        $cat = trim($_POST['category_name'] ?? 'Kanjivaram Silk');
-        $fabric = trim($_POST['fabric'] ?? 'Pure Silk');
-        $retail = (float)($_POST['retail_price'] ?? 4899);
-        $wholesale = (float)($_POST['wholesale_price'] ?? 1399);
-        $reseller = (float)($_POST['reseller_price'] ?? 2100);
-        $mrp = (float)($_POST['mrp'] ?? ($retail * 1.3));
-        $stock = (int)($_POST['stock_qty'] ?? 50);
-        $img = trim($_POST['primary_image'] ?? '/assets/images/product1.png');
-
-        Database::execute("
-            INSERT INTO products (sku, title, slug, category_name, fabric, mrp, retail_price, wholesale_price, reseller_price, stock_qty, primary_image, status, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'in_stock', NOW())
-        ", [$sku, $title, $slug, $cat, $fabric, $mrp, $retail, $wholesale, $reseller, $stock, $img]);
-        $msg = 'Product created successfully!';
-    } elseif ($action === 'delete' && $pdo && isset($_POST['id'])) {
+    if ($action === 'create') {
+        $res = ProductCatalog::create($_POST);
+        $msgOk = !empty($res['success']);
+        $msg = (string)($res['message'] ?? 'Product was not saved.');
+    } elseif ($action === 'delete' && isset($_POST['id'])) {
         $delId = (int)$_POST['id'];
-        Database::execute("DELETE FROM products WHERE id = ?", [$delId]);
-        $msg = 'Product deleted successfully!';
+        $msgOk = ProductCatalog::delete($delId);
+        $msg = $msgOk
+            ? 'Product #' . $delId . ' deleted.'
+            : 'Product #' . $delId . ' could not be deleted - it may already be gone, or the database is unreachable.';
     }
 }
 
-$products = ProductCatalog::getAll();
+$products = ProductCatalog::getAll(true); // admin list: drafts must be visible
 $categories = ProductCatalog::getCategories();
 ?>
 <!DOCTYPE html>
@@ -98,7 +90,7 @@ $categories = ProductCatalog::getCategories();
     <main class="dt-adm-container">
         
         <?php if (!empty($msg)): ?>
-        <div style="background:#DCFCE7; border:1px solid #86EFAC; color:#15803D; padding:10px 16px; border-radius:6px; margin-bottom:16px; font-weight:700;">
+        <div style="background:<?= $msgOk ? '#DCFCE7' : '#FEE2E2' ?>; border:1px solid <?= $msgOk ? '#86EFAC' : '#FCA5A5' ?>; color:<?= $msgOk ? '#15803D' : '#B91C1C' ?>; padding:10px 16px; border-radius:6px; margin-bottom:16px; font-weight:700;">
             <?= htmlspecialchars($msg) ?>
         </div>
         <?php endif; ?>

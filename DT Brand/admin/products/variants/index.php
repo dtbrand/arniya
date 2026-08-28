@@ -16,7 +16,7 @@ $page_title = "Variants Matrix";
 $active_nav = "products";
 $active_subnav = "variants";
 
-$allCatalog = ProductCatalog::getAll();
+$allCatalog = ProductCatalog::getAll(true);
 $variants_matrix = [];
 
 foreach ($allCatalog as $prod) {
@@ -148,7 +148,7 @@ if (empty($variants_matrix)) {
                     <div>
                         <div style="font-size:11px; color:#646970; font-weight:600;">SURAT READY STOCK</div>
                         <?php
-                        $varAllProds = \DTBrand\ProductCatalog::getAll();
+                        $varAllProds = \DTBrand\ProductCatalog::getAll(true);
                         $varStock = array_sum(array_column($varAllProds, 'stock_qty'));
                         $varVal = 0;
                         foreach ($varAllProds as $p) { $varVal += ((int)($p['stock_qty'] ?? 0) * (float)($p['wholesale_price'] ?? 0)); }

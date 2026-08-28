@@ -5873,3 +5873,37 @@ padding-bottom: 4px !important;
         transform: rotate(6deg) scale(1.05);
     }
 }
+
+/* ==========================================================================
+   Honest-empty states for catalogue cards.
+   .card-img-empty  - the placeholder SVG shown when a product has no photo;
+                      the card used to fall back to another product's picture.
+   .card-price-ask  - shown instead of formatting an unset price as Rs 0.
+   .ws-empty-catalogue - shown when the products table has no published rows,
+                      which previously rendered a hardcoded demo catalogue.
+   ========================================================================== */
+.card-img.card-img-empty,
+.ws-prod-img.card-img-empty {
+    opacity: 0.4;
+    object-fit: contain;
+    padding: 14%;
+    background: #F6F1E7;
+}
+.card-price.card-price-ask {
+    font-size: 0.9em;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+.ws-empty-catalogue {
+    flex: 1 1 100%;
+    width: 100%;
+    padding: 26px 18px;
+    border: 1px dashed rgba(138, 104, 31, 0.4);
+    border-radius: 12px;
+    background: #FDFBF7;
+    color: #5A4210;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.55;
+}

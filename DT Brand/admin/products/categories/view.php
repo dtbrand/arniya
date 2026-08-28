@@ -4,6 +4,13 @@
 /**
  * view.php — Category Details & Filtered Products Catalogue
  * DT Brand's & Jai Hanuman Tex
+ *
+ * $catId used to default to 1, so opening this page without an id showed
+ * whichever category came first as though it had been asked for. The meta card
+ * always showed /assets/images/product1.png regardless of the stored image, put
+ * the description in an <h3> even when there was none, and printed
+ * "HSN Code: 5007 (5% GST) - Display Type: Default" for every category —
+ * `categories` has neither column.
  */
 require_once __DIR__ . '/../../../src/ProductCatalog.php';
 require_once __DIR__ . '/../../../src/Database.php';
@@ -15,28 +22,58 @@ $page_title = "Category Overview";
 $active_nav = "products";
 $active_subnav = "categories";
 
-$catId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+$catId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $category = null;
+$dbDown = false;
 
-$db = Database::getConnection();
-if ($db !== null && !Database::isMockMode()) {
-    try {
-        $stmt = $db->prepare("SELECT * FROM categories WHERE id = ?");
-        $stmt->execute([$catId]);
-        $category = $stmt->fetch(\PDO::FETCH_ASSOC);
-    } catch (\Exception $e) {}
+if ($catId > 0) {
+    $db = Database::getConnection();
+    if ($db === null || Database::isMockMode()) {
+        $dbDown = true;
+    } else {
+        try {
+            $stmt = $db->prepare("SELECT * FROM categories WHERE id = ? LIMIT 1");
+            $stmt->execute([$catId]);
+            $category = $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+        } catch (\Exception $e) {
+            $dbDown = true;
+        }
+    }
 }
 
 if (!$category) {
-    header('Location: /admin/products/categories/');
+    http_response_code($dbDown ? 503 : 404);
+    $cvMsg = $dbDown
+        ? 'The database is not reachable, so this category could not be loaded.'
+        : ($catId > 0
+            ? 'Category #' . $catId . ' does not exist.'
+            : 'No category id was given.');
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Category not found</title>';
+    echo '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>';
+    echo '<div style="max-width:560px;margin:80px auto;padding:28px;border:1.5px solid #D4AF37;border-radius:10px;font-family:system-ui,sans-serif;">';
+    echo '<h1 style="font-size:20px;margin:0 0 10px;">Category not found</h1>';
+    echo '<p style="color:#646970;">' . htmlspecialchars($cvMsg) . '</p>';
+    echo '<p><a href="/admin/products/categories/">Back to product categories</a></p>';
+    echo '</div></body></html>';
     exit;
 }
 
-$catName = $category['name'];
-$catSlug = $category['slug'] ?? strtolower(str_replace(' ', '-', $catName));
-$catDesc = $category['description'] ?? '';
+$catName = (string)($category['name'] ?? '');
+$catSlug = (string)($category['slug'] ?? '');
+$catDesc = trim((string)($category['description'] ?? ''));
+$catStatus = strtolower(trim((string)($category['status'] ?? 'active'))) === 'inactive' ? 'inactive' : 'active';
 
-$productsList = ProductCatalog::filter(['category' => $catName]);
+$catImg = trim((string)($category['image'] ?? ''));
+if ($catImg !== '' && (stripos($catImg, 'data:') === 0 || preg_match('#(category-sarees|hero-banner|product1)\.png$#i', $catImg))) {
+    $catImg = '';
+}
+
+// Drafts belong in an admin listing, and a product can be attached by id or by
+// the denormalised name, so both are accepted.
+$productsList = array_values(array_filter(ProductCatalog::getAll(true), static function ($p) use ($catId, $catName) {
+    if ((int)($p['category_id'] ?? 0) === $catId && $catId > 0) { return true; }
+    return $catName !== '' && strcasecmp((string)($p['category'] ?? ''), $catName) === 0;
+}));
 $prodCount = count($productsList);
 ?>
 <!DOCTYPE html>
@@ -79,10 +116,20 @@ $prodCount = count($productsList);
 
             <!-- Meta Card -->
             <div style="background:#fff; border:1px solid #c3c4c7; padding:12px 16px; border-radius:3px; margin-bottom:14px; display:flex; align-items:center; gap:16px;">
-                <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:54px; height:54px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" alt="<?php echo htmlspecialchars($catName); ?>">
+                <?php if ($catImg !== ''): ?>
+                    <img src="<?php echo htmlspecialchars($catImg); ?>" style="width:54px; height:54px; object-fit:cover; border:1px solid #c3c4c7; border-radius:3px;" alt="<?php echo htmlspecialchars($catName); ?>">
+                <?php else: ?>
+                    <span title="No image set" style="width:54px; height:54px; border:1px dashed #c3c4c7; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#a7aaad; flex-shrink:0;">no image</span>
+                <?php endif; ?>
                 <div>
-                    <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 2px 0;"><?php echo htmlspecialchars($catDesc); ?></h3>
-                    <p style="font-size:12px; color:#646970; margin:0;">Slug: <code><?php echo htmlspecialchars($catSlug); ?></code> • HSN Code: <strong>5007 (5% GST)</strong> • Display Type: <strong>Default</strong></p>
+                    <h3 style="font-size:14px; font-weight:700; color:#1d2327; margin:0 0 2px 0;">
+                        <?php echo $catDesc !== '' ? htmlspecialchars($catDesc) : '<span style="color:#a7aaad; font-weight:600;">No description saved for this category.</span>'; ?>
+                    </h3>
+                    <p style="font-size:12px; color:#646970; margin:0;">
+                        Slug: <code><?php echo htmlspecialchars($catSlug); ?></code>
+                        &bull; Status: <strong style="color:<?php echo $catStatus === 'active' ? '#15803D' : '#646970'; ?>;"><?php echo $catStatus === 'active' ? 'Active' : 'Hidden from the shop'; ?></strong>
+                        &bull; <a href="/shop?category=<?php echo urlencode($catSlug); ?>" target="_blank" rel="noopener">View on shop</a>
+                    </p>
                 </div>
             </div>
 

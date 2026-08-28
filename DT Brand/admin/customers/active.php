@@ -5,6 +5,19 @@
  * active.php — Active Verified Customers Hub
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
+require_once __DIR__ . '/../../src/CustomerManager.php';
+
+use DTBrand\CustomerManager;
+
+// This page includes customer-table.php and customer-list.js but never used to
+// serialise any rows for them, so the only thing it ever displayed was the
+// sample roster that customer-list.js carried as a fallback.
+$customersList = CustomerManager::getAll();
+$activeCount = 0;
+foreach ($customersList as $c) {
+    if (($c['status'] ?? '') === 'active') $activeCount++;
+}
+
 $page_title = "Active Verified Customers";
 $active_nav = "customers";
 $active_subnav = "active";
@@ -35,7 +48,7 @@ $active_filter = "active";
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
                             <span>Active Verified Customers</span>
-                            <span class="dt-cust-badge green">4,180 Active</span>
+                            <span class="dt-cust-badge green"><?php echo number_format($activeCount); ?> Active</span>
                         </h1>
                         <p class="dt-cust-subtitle">Shoppers with active accounts, verified mobile numbers, and recent purchase activity.</p>
                     </div>
@@ -59,6 +72,9 @@ $active_filter = "active";
     </div>
 </div>
 
+<script>
+    window.dbCustomersData = <?= json_encode($customersList) ?>;
+</script>
 <script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/customer-list.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>

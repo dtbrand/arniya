@@ -12,7 +12,7 @@ use DTBrand\ProductCatalog;
 
 $page_title = "Inventory Stock Reconciliation";
 $active_nav = "inventory";
-$products = ProductCatalog::getAll();
+$products = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

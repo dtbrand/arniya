@@ -485,13 +485,29 @@
             </a>
         </div>
 
-        <!-- Center: Breadcrumbs -->
+        <!-- Center: Breadcrumbs.
+             The category link fell back to "Sarees" and the trail to "Luxury
+             Outfit", so a product in another category was filed under Sarees and
+             a nameless row was announced as a "Luxury Outfit". Each crumb is now
+             only drawn when the catalogue actually has the value. -->
+        <?php
+        $bcCategory = trim((string)($product['category'] ?? ''));
+        $bcName     = trim((string)($product['name'] ?? ''));
+        if ($bcName === '') { $bcName = trim((string)($product['sku'] ?? '')); }
+        ?>
         <nav class="pdp-breadcrumbs" aria-label="Breadcrumb">
             <a href="/">Home</a>
             <span class="sep">›</span>
-            <a href="/shop?cat=<?= urlencode($product['category'] ?? 'Sarees') ?>"><?= htmlspecialchars($product['category'] ?? 'Sarees') ?></a>
+            <?php if ($bcCategory !== ''): ?>
+            <a href="/shop?category=<?= urlencode($bcCategory) ?>"><?= htmlspecialchars($bcCategory) ?></a>
             <span class="sep">›</span>
-            <span class="current"><?= htmlspecialchars($product['name'] ?? 'Luxury Outfit') ?></span>
+            <?php else: ?>
+            <a href="/shop">Shop</a>
+            <span class="sep">›</span>
+            <?php endif; ?>
+            <?php if ($bcName !== ''): ?>
+            <span class="current"><?= htmlspecialchars($bcName) ?></span>
+            <?php endif; ?>
         </nav>
 
         <!-- Right Share Button (Mobile Only) -->
@@ -520,7 +536,7 @@
             </button>
 
             <!-- Member Account Button -->
-            <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='../../account.php?tab=login';}" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
+            <a href="javascript:void(0)" onclick="if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/account.php?tab=login';}" class="pdp-account-btn" id="pdpAccountBtn" aria-label="My Account">
                 <div class="pdp-account-avatar" id="pdpUserAvatar">👤</div>
                 <span id="pdpUserLabel">Account</span>
             </a>
@@ -555,6 +571,14 @@
     </nav>
 </header>
 
+<?php
+// Share payload, built from what the row actually holds. The old version sent
+// id 1 when the id was missing (so a share link pointed at a different saree)
+// and advertised "Free Size" for products with no size rows at all.
+$shId     = (int)($product['id'] ?? 0);
+$shColors = array_values(array_filter(array_map('strval', (array)($product['colors'] ?? [])), static fn($v) => trim($v) !== ''));
+$shSizes  = array_values(array_filter(array_map('strval', (array)($product['size'] ?? [])), static fn($v) => trim($v) !== ''));
+?>
 <script>
 /* ── Single Product Header Sync Engine ── */
 (function() {
@@ -562,24 +586,47 @@
 
     /* Product Smart Share Handler (Meesho Flow) */
     window.shareCurrentProduct = function() {
+        var prodData = {
+            id: <?= json_encode($shId) ?>,
+            name: <?= json_encode((string)($product['name'] ?? '')) ?>,
+            sku: <?= json_encode((string)($product['sku'] ?? '')) ?>,
+            category: <?= json_encode((string)($product['category'] ?? '')) ?>,
+            price: <?= json_encode((float)($product['price'] ?? 0)) ?>,
+            old_price: <?= json_encode((float)($product['old_price'] ?? 0)) ?>,
+            discount: <?= json_encode((int)($product['discount'] ?? 0)) ?>,
+            image: <?= json_encode((string)($product['image'] ?? '')) ?>,
+            fabric: <?= json_encode((string)($product['fabric'] ?? '')) ?>,
+            colors: <?= json_encode(implode(', ', $shColors)) ?>,
+            sizes: <?= json_encode(implode(', ', $shSizes)) ?>,
+            url: window.location.href
+        };
+
         if (typeof window.openSmartShareModal === 'function') {
-            var prodData = {
-                id: <?= json_encode($product['id'] ?? 1) ?>,
-                name: <?= json_encode($product['name'] ?? '') ?>,
-                category: <?= json_encode($product['category'] ?? '') ?>,
-                price: <?= json_encode($product['price'] ?? 0) ?>,
-                old_price: <?= json_encode($product['old_price'] ?? 0) ?>,
-                discount: <?= json_encode($product['discount'] ?? 0) ?>,
-                image: <?= json_encode($product['image'] ?? '') ?>,
-                fabric: <?= json_encode($product['fabric'] ?? '') ?>,
-                colors: <?= json_encode(implode(', ', $product['colors'] ?? [$product['color'] ?? ''])) ?>,
-                sizes: <?= json_encode(implode(', ', $product['size'] ?? ['Free Size'])) ?>,
-                url: window.location.href
-            };
             window.openSmartShareModal(prodData);
-        } else {
-            alert('Opening Smart Share...');
+            return;
         }
+
+        // No share modal on this page. Use the real device share sheet, and fall
+        // back to copying the link. The old fallback only said "Opening Smart
+        // Share..." and then did nothing at all.
+        var shareTitle = prodData.name || "DT Brand's";
+        if (navigator.share) {
+            navigator.share({ title: shareTitle, url: prodData.url }).catch(function() {});
+            return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(prodData.url).then(function() {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('Product link copied');
+                } else {
+                    alert('Product link copied:\n' + prodData.url);
+                }
+            }).catch(function() {
+                alert(prodData.url);
+            });
+            return;
+        }
+        alert(prodData.url);
     };
 
     /* ── Top Announcement Slider Engine ── */
@@ -675,19 +722,22 @@
                 userAvatar.textContent = firstName.charAt(0).toUpperCase();
                 if (acBtn) {
                     if (role === 'wholesaler') {
-                        acBtn.href = '../Wholesale/wholesale.php';
+                        // These used to point at ../Wholesale/wholesale.php etc.
+                        // Those directories do not exist; the pages live at the
+                        // web root, so every logged-in B2B user got a 404.
+                        acBtn.href = '/wholesale.php';
                     } else if (role === 'retailer') {
-                        acBtn.href = '../Retailer/retailer.php';
+                        acBtn.href = '/retailer.php';
                     } else if (role === 'reseller') {
-                        acBtn.href = '../Reseller/reseller.php';
+                        acBtn.href = '/reseller.php';
                     } else {
-                        acBtn.href = '../../account.php';
+                        acBtn.href = '/account.php';
                     }
                 }
             } else if (userLabel && userAvatar) {
                 userLabel.textContent = 'Account';
                 userAvatar.textContent = '👤';
-                if (acBtn) acBtn.href = '../../account.php';
+                if (acBtn) acBtn.href = '/account.php';
             }
         } catch(e) {}
     };

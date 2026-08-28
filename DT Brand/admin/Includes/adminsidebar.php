@@ -13,7 +13,7 @@ use DTBrand\Database;
 use DTBrand\ProductCatalog;
 use DTBrand\CustomerManager;
 
-$sb_products_count = isset($totalProductsCount) ? (int)$totalProductsCount : count(ProductCatalog::getAll());
+$sb_products_count = isset($totalProductsCount) ? (int)$totalProductsCount : count(ProductCatalog::getAll(true));
 $sb_categories_count = isset($totalCategoriesCount) ? (int)$totalCategoriesCount : count(ProductCatalog::getCategoriesWithDetails());
 
 $pdo_sb = Database::getConnection();
@@ -751,19 +751,19 @@ if (isset($active_subnav) && !empty($active_subnav)) {
                         <li>
                             <a href="/admin/customers/segments.php" class="adm-nav-subitem <?php echo $current_subnav === 'segments' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                <span>Segments &amp; Cohorts</span>
+                                <span>Cohort Builder</span>
                             </a>
                         </li>
                         <li>
                             <a href="/admin/customers/tags.php" class="adm-nav-subitem <?php echo $current_subnav === 'tags' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                                <span>Tags Studio</span>
+                                <span>Labels &amp; Cohorts</span>
                             </a>
                         </li>
                         <li>
                             <a href="/admin/customers/analytics.php" class="adm-nav-subitem <?php echo $current_subnav === 'analytics' ? 'active' : ''; ?>">
                                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                                <span>Analytics &amp; Growth</span>
+                                <span>Customer Analytics</span>
                             </a>
                         </li>
                         <li>

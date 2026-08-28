@@ -379,15 +379,26 @@ class OrderManager
                 $stmt->execute($orderParams);
                 $dbOrderId = (int)$pdo->lastInsertId();
 
-                // Insert order items & update product stock
-                $itemStmt = $pdo->prepare("
-                    INSERT INTO order_items (order_id, product_id, product_title, sku, unit_price, quantity, total_price)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                ");
+                // Insert order items & update product stock. The chosen colour and
+                // size are stored when the live table has the columns (added by
+                // database/migrate.php); on an older database the order still
+                // saves, just without the variant, instead of failing outright.
+                $hasVariantCols = self::tableHasColumn($pdo, 'order_items', 'variant_color')
+                    && self::tableHasColumn($pdo, 'order_items', 'variant_size');
+
+                $itemStmt = $hasVariantCols
+                    ? $pdo->prepare("
+                        INSERT INTO order_items (order_id, product_id, product_title, sku, variant_color, variant_size, unit_price, quantity, total_price)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ")
+                    : $pdo->prepare("
+                        INSERT INTO order_items (order_id, product_id, product_title, sku, unit_price, quantity, total_price)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ");
 
                 $stockStmt = $pdo->prepare("
-                    UPDATE products 
-                    SET stock_qty = GREATEST(0, stock_qty - ?) 
+                    UPDATE products
+                    SET stock_qty = GREATEST(0, stock_qty - ?)
                     WHERE id = ?
                 ");
 
@@ -401,7 +412,16 @@ class OrderManager
                     $qty = max(1, (int)($it['quantity'] ?? $it['qty'] ?? 1));
                     $totalItemPrice = round($unitPrice * $qty, 2);
 
-                    $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
+                    // Only a real selection is recorded. "Standard"/"Free Size"
+                    // used to be sent by the cart as a stand-in for "not chosen".
+                    $vColor = self::variantValue($it['color'] ?? $it['variant_color'] ?? '', ['standard']);
+                    $vSize  = self::variantValue($it['size'] ?? $it['variant_size'] ?? '', ['free size', 'one size']);
+
+                    if ($hasVariantCols) {
+                        $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $vColor, $vSize, $unitPrice, $qty, $totalItemPrice]);
+                    } else {
+                        $itemStmt->execute([$dbOrderId, $prodId, $prodTitle, $prodSku, $unitPrice, $qty, $totalItemPrice]);
+                    }
                     $stockStmt->execute([$qty, $prodId]);
                 }
 
@@ -466,6 +486,44 @@ class OrderManager
             $cache[$column] = false;
         }
         return $cache[$column];
+    }
+
+    /**
+     * Same probe for any table, so item writes can adapt to a database that
+     * predates the order_items variant columns.
+     */
+    private static function tableHasColumn(\PDO $pdo, string $table, string $column): bool
+    {
+        static $cache = [];
+        $key = $table . '.' . $column;
+        if (array_key_exists($key, $cache)) {
+            return $cache[$key];
+        }
+        if (!preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+            return $cache[$key] = false;
+        }
+        try {
+            $stmt = $pdo->prepare("SHOW COLUMNS FROM `{$table}` LIKE ?");
+            $stmt->execute([$column]);
+            $cache[$key] = (bool)$stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            $cache[$key] = false;
+        }
+        return $cache[$key];
+    }
+
+    /**
+     * Normalise a chosen variant. Returns null for an empty value or for one of
+     * the placeholder labels the storefront used when nothing was selected, so a
+     * blank column means "shopper did not choose" rather than "chose Standard".
+     */
+    private static function variantValue($raw, array $placeholders = []): ?string
+    {
+        $val = trim((string)$raw);
+        if ($val === '' || in_array(strtolower($val), $placeholders, true)) {
+            return null;
+        }
+        return mb_substr($val, 0, 60);
     }
 
     /**

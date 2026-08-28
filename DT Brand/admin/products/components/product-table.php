@@ -4,8 +4,20 @@
 /**
  * product-table.php — High-Density Desktop Data Table with Real Database Data
  * DT Brand's & Jai Hanuman Tex
+ *
+ * Removed from every row:
+ *   - a Brand column that always printed "DT Signature" (products has no brand
+ *     column, and there is no brands table);
+ *   - an image fallback that cycled /assets/images/product1..8.png by product
+ *     id, so a product with no photo borrowed a stock saree photo;
+ *   - "MOQ: 8 pcs", "50 in stock", "4.9 ★" and "(85)" defaults, which showed
+ *     stock and ratings for products that had none.
+ *
+ * getAll(true) is used for the default list because this is an admin table and
+ * drafts must be visible here.
  */
-$productsList = isset($productsList) && is_array($productsList) ? $productsList : \DTBrand\ProductCatalog::getAll();
+$productsList = isset($productsList) && is_array($productsList) ? $productsList : \DTBrand\ProductCatalog::getAll(true);
+$ptNoImage = \DTBrand\ProductCatalog::NO_IMAGE;
 ?>
 <div class="dt-table-wrap" style="overflow-x: auto; width: 100%; box-sizing: border-box;">
     <table class="dt-data-table" id="dtProductMasterTable" style="width: 100%; border-collapse: collapse; font-size: 12px;">
@@ -17,7 +29,6 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
                 <th style="width:38px; padding: 6px 4px;">Image</th>
                 <th style="padding: 6px 6px; white-space: nowrap;">Product Name &amp; SKU</th>
                 <th style="padding: 6px 6px; white-space: nowrap;">Category</th>
-                <th style="padding: 6px 6px; white-space: nowrap;">Brand</th>
                 <th style="padding: 6px 6px; white-space: nowrap;">Price</th>
                 <th style="padding: 6px 6px; white-space: nowrap;">Wholesale</th>
                 <th style="padding: 6px 6px; white-space: nowrap;">Stock</th>
@@ -28,37 +39,61 @@ $productsList = isset($productsList) && is_array($productsList) ? $productsList 
         </thead>
         <tbody id="dtProductTableBody">
             <?php foreach ($productsList as $p): ?>
-            <?php 
-                $pImg = !empty($p['image']) ? $p['image'] : ('/assets/images/product' . ((($p['id'] - 1) % 8) + 1) . '.png');
+            <?php
+                $pTitle = (string)($p['title'] ?? ($p['name'] ?? ''));
+                $pHasPhoto = !empty($p['has_photo']) || (!empty($p['image']) && $p['image'] !== $ptNoImage);
+                $pImg = $pHasPhoto ? (string)$p['image'] : $ptNoImage;
                 $pStatus = $p['status'] ?? 'in_stock';
                 $badgeClass = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'success' : ($pStatus === 'draft' ? 'warning' : 'danger');
-                $statusLabel = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'Active' : ucfirst($pStatus);
+                $statusLabel = ($pStatus === 'in_stock' || $pStatus === 'active') ? 'Active' : ucfirst(str_replace('_', ' ', (string)$pStatus));
+                $pRetail = (float)($p['retail_price'] ?? ($p['price'] ?? 0));
+                $pMrp = (float)($p['mrp'] ?? ($p['old_price'] ?? 0));
+                $pWholesale = (float)($p['wholesale_price'] ?? 0);
+                $pMoq = (int)($p['moq'] ?? 0);
+                $pStock = (int)($p['stock_qty'] ?? 0);
+                $pRating = (float)($p['rating'] ?? 0);
+                $pReviews = (int)($p['reviews_count'] ?? 0);
+                $pVideoCount = count((array)($p['videos'] ?? [])) + count((array)($p['embeds'] ?? []));
+                $pGalleryCount = count((array)($p['images'] ?? []));
             ?>
-            <tr data-product-id="<?= $p['id'] ?>">
+            <tr data-product-id="<?= (int)$p['id'] ?>">
                 <td style="text-align:center; padding: 6px 4px;">
-                    <input type="checkbox" class="dt-prod-row-check" value="<?= $p['id'] ?>" onchange="window.handleRowSelect()" style="cursor:pointer;">
+                    <input type="checkbox" class="dt-prod-row-check" value="<?= (int)$p['id'] ?>" onchange="window.handleRowSelect()" style="cursor:pointer;">
                 </td>
                 <td style="padding: 6px 4px;">
-                    <img src="<?= htmlspecialchars($pImg) ?>" onerror="this.onerror=null; this.src='/assets/images/product1.png';" class="dt-prod-img" alt="<?= htmlspecialchars($p['title'] ?? $p['name']) ?>" style="width:36px; height:48px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
+                    <img src="<?= htmlspecialchars($pImg) ?>" class="dt-prod-img" alt="<?= htmlspecialchars($pTitle) ?>" title="<?= $pHasPhoto ? (int)$pGalleryCount . ' photo(s)' : 'No photo uploaded' ?><?= $pVideoCount > 0 ? ', ' . (int)$pVideoCount . ' video(s)' : '' ?>" style="width:36px; height:48px; object-fit:cover; border-radius:4px; border:1px solid #ddd; <?= $pHasPhoto ? '' : 'opacity:.55;' ?>">
                 </td>
                 <td style="padding: 6px 6px;">
-                    <a href="/admin/products/view.php?id=<?= $p['id'] ?>" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;"><?= htmlspecialchars($p['title'] ?? $p['name']) ?></a>
-                    <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: <?= htmlspecialchars($p['sku']) ?></span>
+                    <a href="/admin/products/view.php?id=<?= (int)$p['id'] ?>" class="dt-prod-info-name" style="font-weight:600; color:#2271b1; text-decoration:none; display:block; max-width:200px; font-size:12.5px; line-height:1.25;"><?= htmlspecialchars($pTitle) ?></a>
+                    <span class="dt-prod-info-sku" style="font-size:11px; color:#646970; display:block;">SKU: <?= htmlspecialchars((string)($p['sku'] ?? '')) ?: '<em>none</em>' ?><?= $pVideoCount > 0 ? ' &bull; <span title="Has video" style="color:#8A681F;">video</span>' : '' ?></span>
                 </td>
-                <td style="padding: 6px 6px; white-space:nowrap;"><strong><?= htmlspecialchars($p['category']) ?></strong></td>
-                <td style="padding: 6px 6px; white-space:nowrap;"><span style="font-size:11.5px; color:#8A681F; font-weight:700;">DT Signature</span></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong><?= htmlspecialchars((string)($p['category'] ?? '')) ?: '<span style="color:#a7aaad;font-weight:600;">Uncategorised</span>' ?></strong></td>
                 <td style="padding: 6px 6px; white-space:nowrap;">
-                    <strong style="color:#181512;">₹<?= number_format($p['retail_price'] ?? $p['price']) ?></strong>
-                    <?php if (!empty($p['old_price']) || !empty($p['mrp'])): ?>
-                    <del style="color:#7A7266; font-size:11px; margin-left:2px;">₹<?= number_format($p['old_price'] ?? $p['mrp']) ?></del>
+                    <?php if ($pRetail > 0): ?>
+                        <strong style="color:#181512;">&#8377;<?= number_format($pRetail) ?></strong>
+                        <?php if ($pMrp > $pRetail): ?>
+                        <del style="color:#7A7266; font-size:11px; margin-left:2px;">&#8377;<?= number_format($pMrp) ?></del>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <span style="color:#DC2626; font-size:11px; font-weight:700;">No price</span>
                     <?php endif; ?>
                 </td>
                 <td style="padding: 6px 6px; white-space:nowrap;">
-                    <strong style="color:#8A681F;">₹<?= number_format($p['wholesale_price']) ?>/pc</strong><br>
-                    <small style="color:#7A7266; font-size:10.5px;">MOQ: <?= $p['moq'] ?? 8 ?> pcs</small>
+                    <?php if ($pWholesale > 0): ?>
+                        <strong style="color:#8A681F;">&#8377;<?= number_format($pWholesale) ?>/pc</strong><br>
+                        <small style="color:#7A7266; font-size:10.5px;"><?= $pMoq > 0 ? 'MOQ: ' . $pMoq . ' pcs' : 'MOQ not set' ?></small>
+                    <?php else: ?>
+                        <span style="color:#a7aaad; font-size:11px;">Not set</span>
+                    <?php endif; ?>
                 </td>
-                <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:#15803D;"><?= $p['stock_qty'] ?? 50 ?> in stock</strong></td>
-                <td style="padding: 6px 6px; white-space:nowrap;"><span style="color:#F59E0B; font-weight:800;"><?= number_format($p['rating'] ?? 4.9, 1) ?> ★</span> <small style="color:#7A7266;">(<?= $p['reviews_count'] ?? 85 ?>)</small></td>
+                <td style="padding: 6px 6px; white-space:nowrap;"><strong style="color:<?= $pStock > 0 ? '#15803D' : '#DC2626' ?>;"><?= $pStock ?> in stock</strong></td>
+                <td style="padding: 6px 6px; white-space:nowrap;">
+                    <?php if ($pReviews > 0): ?>
+                        <span style="color:#F59E0B; font-weight:800;"><?= number_format($pRating, 1) ?> &#9733;</span> <small style="color:#7A7266;">(<?= $pReviews ?>)</small>
+                    <?php else: ?>
+                        <small style="color:#a7aaad;">No reviews</small>
+                    <?php endif; ?>
+                </td>
                 <td style="padding: 6px 6px; white-space:nowrap;"><span class="adm-badge <?= $badgeClass ?>"><?= $statusLabel ?></span></td>
                 <td style="text-align:right; padding: 6px 6px; white-space:nowrap;">
                     <div class="adm-action-btn-group" style="display:inline-flex; align-items:center; gap:3px;">

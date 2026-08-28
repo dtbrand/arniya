@@ -11,104 +11,146 @@ require_once __DIR__ . '/../../src/OrderManager.php';
 use DTBrand\Database;
 use DTBrand\OrderManager;
 
-$order_id = isset($_GET['id']) ? trim($_GET['id']) : 'DTB-001624';
+$order_id = isset($_GET['id']) ? trim($_GET['id']) : '';
 $order = null;
+$dt_order_error = '';
+
+if ($order_id === '') {
+    $dt_order_error = 'No order was requested. Open an order from the list.';
+}
 
 $pdo = Database::getConnection();
-if ($pdo !== null && !Database::isMockMode()) {
+if ($order_id !== '' && ($pdo === null || Database::isMockMode())) {
+    $dt_order_error = 'The database is not reachable, so this order cannot be loaded.';
+}
+
+if ($order_id !== '' && $dt_order_error === '') {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM orders WHERE id = ? OR order_number = ? LIMIT 1");
-        $stmt->execute([$order_id, $order_id]);
+        $stmt = $pdo->prepare("SELECT * FROM orders WHERE order_number = ? OR id = ? LIMIT 1");
+        $stmt->execute([$order_id, (int)$order_id]);
         $dbOrder = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($dbOrder) {
-            $parsedItems = [];
-            if (!empty($dbOrder['items_json'])) {
-                $decoded = json_decode($dbOrder['items_json'], true);
-                if (is_array($decoded)) {
-                    foreach ($decoded as $it) {
-                        $parsedItems[] = [
-                            'name' => $it['name'] ?? 'Handloom Textile Saree',
-                            'sku' => $it['sku'] ?? ('SKU-' . ($it['id'] ?? 1)),
-                            'variant' => $it['variant'] ?? 'Standard 5.5m + Blouse',
-                            'qty' => (int)($it['quantity'] ?? ($it['qty'] ?? 1)),
-                            'price' => (float)($it['price'] ?? 4490),
-                            'img' => $it['image'] ?? '/assets/images/product1.png'
-                        ];
-                    }
-                }
+
+        if (!$dbOrder) {
+            $dt_order_error = 'Order "' . $order_id . '" does not exist.';
+        } else {
+            // Real line items. This page used to read a non-existent
+            // orders.items_json column, so $parsedItems was always empty and every
+            // order — however large — displayed one invented line,
+            // "Royal Heritage Silk Saree / DT-SR-001", priced at the order total.
+            $itemRows = [];
+            try {
+                $iStmt = $pdo->prepare("SELECT * FROM order_items WHERE order_id = ? ORDER BY id ASC");
+                $iStmt->execute([(int)$dbOrder['id']]);
+                $itemRows = $iStmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+            } catch (\Exception $ie) {
+                $itemRows = [];
             }
-            if (empty($parsedItems)) {
+
+            // DT_MARK_ORDER_ITEMS
+            $parsedItems = [];
+            foreach ($itemRows as $ir) {
+                $variantBits = array_filter([
+                    trim((string)($ir['variant_color'] ?? '')),
+                    trim((string)($ir['variant_size'] ?? '')),
+                ], static fn($v) => $v !== '');
+
                 $parsedItems[] = [
-                    'name' => 'Royal Heritage Silk Saree',
-                    'sku' => 'DT-SR-001',
-                    'variant' => 'Standard / 5.5m',
-                    'qty' => 1,
-                    'price' => (float)($dbOrder['total_amount'] ?? 4899),
-                    'img' => '/assets/images/product1.png'
+                    'name'    => (string)($ir['product_title'] ?? ''),
+                    'sku'     => (string)($ir['sku'] ?? ''),
+                    // Blank when the shopper chose nothing, instead of the old
+                    // invented "Standard 5.5m + Blouse".
+                    'variant' => implode(' / ', $variantBits),
+                    'qty'     => (int)($ir['quantity'] ?? 0),
+                    'price'   => (float)($ir['unit_price'] ?? 0),
+                    'total'   => (float)($ir['total_price'] ?? 0),
+                    'product_id' => (int)($ir['product_id'] ?? 0),
+                    'img'     => '',
                 ];
             }
 
+            // Product photos come from the catalogue, so a line shows the real
+            // saree or the placeholder - never another product's picture.
+            $prodIds = array_values(array_filter(array_map(static fn($i) => $i['product_id'], $parsedItems)));
+            if (!empty($prodIds)) {
+                try {
+                    $ph = implode(',', array_fill(0, count($prodIds), '?'));
+                    $pStmt = $pdo->prepare("SELECT id, primary_image FROM products WHERE id IN ({$ph})");
+                    $pStmt->execute($prodIds);
+                    $imgMap = [];
+                    foreach ($pStmt->fetchAll(\PDO::FETCH_ASSOC) as $pr) {
+                        $imgMap[(int)$pr['id']] = (string)($pr['primary_image'] ?? '');
+                    }
+                    foreach ($parsedItems as $k => $pi) {
+                        $found = $imgMap[$pi['product_id']] ?? '';
+                        $parsedItems[$k]['img'] = $found !== '' ? $found : '/assets/images/no-image.svg';
+                    }
+                } catch (\Exception $pe) {}
+            }
+
+            // DT_MARK_ORDER_ARRAY
+            // Every value below is either stored on the row or left empty. The
+            // page used to manufacture a phone number, an email, a payment
+            // reference (TXN-<md5>), a tracking id (DLV-<md5>), a shipping method
+            // and a Surat address for orders that had none of those.
+            $custEmail = '';
+            if (!empty($dbOrder['customer_id'])) {
+                try {
+                    $eStmt = $pdo->prepare("SELECT email FROM customers WHERE id = ? LIMIT 1");
+                    $eStmt->execute([(int)$dbOrder['customer_id']]);
+                    $custEmail = (string)($eStmt->fetchColumn() ?: '');
+                } catch (\Exception $ee) {}
+            }
+
             $order = [
-                'id' => $dbOrder['order_number'] ?? ('DTB-' . str_pad($dbOrder['id'], 6, '0', STR_PAD_LEFT)),
-                'date' => date('d M Y, h:i A', strtotime($dbOrder['created_at'] ?? 'now')),
-                'customer' => $dbOrder['customer_name'] ?? 'Valued Customer',
-                'customer_type' => ucfirst($dbOrder['channel'] ?? 'Retail') . ' Order',
-                'phone' => $dbOrder['customer_phone'] ?? '+91 98765 43210',
-                'email' => $dbOrder['customer_email'] ?? 'customer@dtbrands.in',
-                'status' => strtolower($dbOrder['fulfillment_status'] ?? 'processing'),
+                'id' => (string)($dbOrder['order_number'] ?: ('DTB-' . str_pad((string)$dbOrder['id'], 6, '0', STR_PAD_LEFT))),
+                'db_id' => (int)$dbOrder['id'],
+                'date' => !empty($dbOrder['created_at']) ? date('d M Y, h:i A', strtotime($dbOrder['created_at'])) : '',
+                'customer' => (string)($dbOrder['customer_name'] ?? ''),
+                'customer_type' => ucfirst((string)($dbOrder['channel'] ?? 'retail')) . ' order',
+                'channel' => (string)($dbOrder['channel'] ?? ''),
+                'phone' => (string)($dbOrder['customer_phone'] ?? ''),
+                'email' => $custEmail,
+                'status' => strtolower((string)($dbOrder['fulfillment_status'] ?? 'processing')),
                 'amount' => (float)($dbOrder['total_amount'] ?? 0),
-                'discount' => (float)($dbOrder['discount_amount'] ?? 0),
-                'payment_method' => strtoupper($dbOrder['payment_method'] ?? 'UPI / COD'),
-                'payment_status' => strtolower($dbOrder['payment_status'] ?? 'paid'),
-                'payment_ref' => $dbOrder['payment_ref'] ?? ('TXN-' . substr(md5($order_id), 0, 10)),
-                'shipping_method' => 'Surat Express Priority Cargo',
-                'carrier' => $dbOrder['courier_name'] ?? 'Delhivery Express',
-                'tracking_id' => $dbOrder['tracking_number'] ?? ('DLV-' . substr(md5($order_id), 0, 8)),
-                'notes' => $dbOrder['notes'] ?? 'Order verified and processed via DT Brand\'s automated pipeline.',
+                'subtotal' => (float)($dbOrder['subtotal'] ?? 0),
+                'discount' => (float)($dbOrder['discount'] ?? 0),
+                'gst_rate' => (float)($dbOrder['gst_rate'] ?? 0),
+                'gst_amount' => (float)($dbOrder['gst_amount'] ?? 0),
+                'shipping_fee' => (float)($dbOrder['shipping_fee'] ?? 0),
+                'payment_method' => strtoupper((string)($dbOrder['payment_method'] ?? '')),
+                'payment_status' => strtolower((string)($dbOrder['payment_status'] ?? '')),
+                'payment_ref' => '',
+                'shipping_method' => '',
+                'carrier' => (string)($dbOrder['courier_name'] ?? ''),
+                'tracking_id' => (string)($dbOrder['tracking_number'] ?? ''),
+                'notes' => '',
+                'items_count' => count($parsedItems),
                 'address' => [
-                    'billing' => $dbOrder['shipping_address'] ?? "Surat Textile Market\nRing Road, Surat, Gujarat - 395002",
-                    'shipping' => $dbOrder['shipping_address'] ?? "Surat Textile Market\nRing Road, Surat, Gujarat - 395002"
+                    'billing' => (string)($dbOrder['shipping_address'] ?? ''),
+                    'shipping' => (string)($dbOrder['shipping_address'] ?? ''),
                 ],
-                'items' => $parsedItems
+                'items' => $parsedItems,
             ];
         }
-    } catch (\Exception $e) {}
+    } catch (\Exception $e) {
+        $dt_order_error = 'This order could not be read: ' . $e->getMessage();
+    }
 }
 
+// A missing order says so. It used to fall through to a fabricated 15-piece
+// Rs.54,900 "Wholesale Consignee (Surat Depot)" order, so a mistyped id looked
+// like a real consignment.
 if (!$order) {
-    // Master fallback if not found in database
-    $order = [
-        'id' => $order_id,
-        'date' => '21 Aug 2026, 11:20 AM',
-        'customer' => 'Wholesale Consignee (Surat Depot)',
-        'customer_type' => 'Wholesale B2B Reseller',
-        'phone' => '+91 98220 19283',
-        'email' => 'orders@dtbrands.in',
-        'status' => 'processing',
-        'amount' => 54900,
-        'discount' => 0,
-        'payment_method' => 'Bank Wire / RTGS',
-        'payment_status' => 'paid',
-        'payment_ref' => 'UTR-' . substr(md5($order_id), 0, 10),
-        'shipping_method' => 'Surat Central Depot Cargo Express',
-        'carrier' => 'VRL Logistics Depot',
-        'tracking_id' => 'VRL-' . substr($order_id, -5),
-        'notes' => 'Verified order manifest. Ready for Surat central dispatch.',
-        'address' => [
-            'billing' => "Shop 42, Textile Market\nRing Road, Surat, Gujarat - 395002",
-            'shipping' => "Godown 12, Transport Nagar\nSurat, Gujarat - 395010"
-        ],
-        'items' => [
-            [
-                'name' => 'Surat Pure Silk Festive Collection Lot',
-                'sku' => 'SRT-099',
-                'variant' => 'Assorted Handloom / 5.5m',
-                'qty' => 15,
-                'price' => 3660,
-                'img' => '/assets/images/product1.png'
-            ]
-        ]
-    ];
+    $dbDown = ($pdo === null || Database::isMockMode());
+    http_response_code($dbDown ? 503 : 404);
+    echo '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Order not found</title>';
+    echo '<link rel="stylesheet" href="/admin/Asset/css/admin.css"></head><body>';
+    echo '<div style="max-width:560px;margin:80px auto;padding:28px;border:1.5px solid #D4AF37;border-radius:10px;font-family:system-ui,sans-serif;">';
+    echo '<h1 style="font-size:20px;margin:0 0 10px;">Order not found</h1>';
+    echo '<p style="color:#646970;">' . htmlspecialchars($dt_order_error ?: 'This order could not be loaded.') . '</p>';
+    echo '<p><a href="/admin/orders/index.php">Back to orders</a></p>';
+    echo '</div></body></html>';
+    exit;
 }
 
 $page_title = "Order " . $order['id'];

@@ -11,7 +11,7 @@ require_once __DIR__ . '/../../src/Database.php';
 use DTBrand\ProductCatalog;
 use DTBrand\Database;
 
-$allProds = ProductCatalog::getAll();
+$allProds = ProductCatalog::getAll(true);
 $totalSkus = count($allProds);
 
 $totalStockUnits = 0;

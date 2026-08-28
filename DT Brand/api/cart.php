@@ -86,7 +86,18 @@ try {
         }
     }
 
-    $shipping = ($subtotal > 999 || $subtotal === 0.0) ? 0.0 : 150.0;
+    // Freight came from two different hardcoded thresholds: the charge was
+    // waived above 999 while the free_shipping flag reported above 2999, and
+    // config/shipping.php — the file that actually documents the rule — was
+    // read by nobody. One source now, so the cart, the checkout summary and the
+    // "free shipping" notice cannot disagree.
+    $shipCfgFile = __DIR__ . '/../config/shipping.php';
+    $shipCfg = is_file($shipCfgFile) ? require $shipCfgFile : [];
+    if (!is_array($shipCfg)) { $shipCfg = []; }
+    $shipRate = max(0.0, (float)($shipCfg['standard_rate'] ?? 150.0));
+    $shipFreeAt = max(0.0, (float)($shipCfg['free_shipping_threshold'] ?? 0.0));
+    $qualifiesFree = ($shipFreeAt > 0 && $subtotal >= $shipFreeAt);
+    $shipping = ($subtotal <= 0.0 || $qualifiesFree) ? 0.0 : $shipRate;
     $calc = PricingCalculator::calculateOrderTotal($subtotal, $discount, $shipping, 5.0);
 
 
@@ -97,7 +108,9 @@ try {
         'total_qty' => $totalQty,
         'items' => $validatedItems,
         'pricing' => $calc,
-        'free_shipping' => ($subtotal > 2999)
+        'free_shipping' => $qualifiesFree,
+        'free_shipping_threshold' => $shipFreeAt,
+        'shipping_rate' => $shipRate
     ], JSON_PRETTY_PRINT);
 
 } catch (\Throwable $e) {

@@ -13,8 +13,11 @@ CREATE TABLE IF NOT EXISTS `categories` (
     `name` VARCHAR(100) NOT NULL,
     `slug` VARCHAR(100) NOT NULL UNIQUE,
     `description` TEXT,
-    `image` VARCHAR(255) DEFAULT '/Frontend/Shop/Asset/images/category-sarees.png',
-    `banner_image` VARCHAR(255) DEFAULT '/Frontend/Shop/Asset/images/hero-banner.png',
+    -- These two used to default to /Frontend/Shop/Asset/images/{category-sarees,hero-banner}.png.
+    -- That directory does not exist in this docroot, so every category was born
+    -- pointing at a 404. NULL means "no image yet" and the UI shows a placeholder.
+    `image` VARCHAR(255) DEFAULT NULL,
+    `banner_image` VARCHAR(255) DEFAULT NULL,
     `products_count` INT DEFAULT 0,
     `display_order` INT DEFAULT 1,
     `status` ENUM('active', 'inactive') DEFAULT 'active',
@@ -39,14 +42,18 @@ CREATE TABLE IF NOT EXISTS `products` (
     `sku` VARCHAR(50) NOT NULL UNIQUE,
     `title` VARCHAR(255) NOT NULL,
     `slug` VARCHAR(255) NOT NULL UNIQUE,
-    `category_id` INT DEFAULT 1,
+    `category_id` INT DEFAULT 0,
     `category_name` VARCHAR(100) NOT NULL,
-    `fabric` VARCHAR(100) DEFAULT 'Pure Silk',
-    `weave` VARCHAR(100) DEFAULT 'Handloom Brocade',
-    `zari_type` VARCHAR(100) DEFAULT 'Tested Gold Zari',
-    `pallu_style` VARCHAR(100) DEFAULT 'Heavy Rich Zari Pallu',
-    `blouse_piece` VARCHAR(100) DEFAULT 'Running Blouse Included (0.8m)',
-    `occasion` VARCHAR(100) DEFAULT 'Bridal & Festive',
+    -- These six used to carry descriptive DEFAULTs ('Pure Silk',
+    -- 'Handloom Brocade', 'Tested Gold Zari', 'Heavy Rich Zari Pallu',
+    -- 'Running Blouse Included (0.8m)', 'Bridal & Festive'), so any product
+    -- inserted without them made specific claims about its own cloth.
+    `fabric` VARCHAR(100) DEFAULT NULL,
+    `weave` VARCHAR(100) DEFAULT NULL,
+    `zari_type` VARCHAR(100) DEFAULT NULL,
+    `pallu_style` VARCHAR(100) DEFAULT NULL,
+    `blouse_piece` VARCHAR(100) DEFAULT NULL,
+    `occasion` VARCHAR(100) DEFAULT NULL,
     `mrp` DECIMAL(10,2) NOT NULL,
     `retail_price` DECIMAL(10,2) NOT NULL,
     `wholesale_price` DECIMAL(10,2) NOT NULL,
@@ -55,13 +62,16 @@ CREATE TABLE IF NOT EXISTS `products` (
     `moq_half_set` INT DEFAULT 4,
     `moq_full_set` INT DEFAULT 8,
     `moq_master_bale` INT DEFAULT 24,
-    `stock_qty` INT DEFAULT 50,
-    `rating` DECIMAL(2,1) DEFAULT 4.9,
-    `reviews_count` INT DEFAULT 120,
+    -- stock 50 / rating 4.9 / 120 reviews / 'Bestseller' / featured / bestseller
+    -- were the old DEFAULTs: a brand-new product claimed stock it did not have and
+    -- a rating from reviews nobody had left. Ratings are read from the reviews table.
+    `stock_qty` INT DEFAULT 0,
+    `rating` DECIMAL(2,1) DEFAULT 0.0,
+    `reviews_count` INT DEFAULT 0,
     `primary_image` VARCHAR(255) NOT NULL,
-    `badge` VARCHAR(50) DEFAULT 'Bestseller',
-    `is_featured` TINYINT(1) DEFAULT 1,
-    `is_bestseller` TINYINT(1) DEFAULT 1,
+    `badge` VARCHAR(50) DEFAULT NULL,
+    `is_featured` TINYINT(1) DEFAULT 0,
+    `is_bestseller` TINYINT(1) DEFAULT 0,
     `status` ENUM('in_stock', 'low_stock', 'out_of_stock', 'draft') DEFAULT 'in_stock',
     `description` TEXT,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -237,6 +247,8 @@ CREATE TABLE IF NOT EXISTS `order_items` (
     `product_id` INT NOT NULL,
     `product_title` VARCHAR(255) NOT NULL,
     `sku` VARCHAR(50) NOT NULL,
+    `variant_color` VARCHAR(60) DEFAULT NULL,
+    `variant_size` VARCHAR(60) DEFAULT NULL,
     `unit_price` DECIMAL(10,2) NOT NULL,
     `quantity` INT NOT NULL DEFAULT 1,
     `total_price` DECIMAL(12,2) NOT NULL,
@@ -267,34 +279,62 @@ CREATE TABLE IF NOT EXISTS `reviews` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- ── 11. CUSTOMER NOTES TABLE ──
+-- Internal staff memos attached to a customer. The admin dossier has had a
+-- "Staff Notes" tab since the first build, but there was no table behind it:
+-- the pane printed two sample notes attributed to a named colleague and the
+-- save button only raised a "Note Saved!" toast, so anything typed was lost on
+-- reload. author_name is denormalised on purpose -- a note must still read
+-- correctly after the staff account that wrote it is removed.
+CREATE TABLE IF NOT EXISTS `customer_notes` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT NOT NULL,
+    `author_id` INT DEFAULT NULL,
+    `author_name` VARCHAR(150) NOT NULL DEFAULT 'Admin',
+    `note_text` TEXT NOT NULL,
+    `is_important` TINYINT(1) NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_note_customer` (`customer_id`),
+    FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ==============================================================================
 -- MASTER SEED DATA INSERTS
 -- ==============================================================================
 
 -- Seed Categories
+-- Seed Categories. products_count seeds are 0 on purpose: the storefront and the
+-- admin count products live. The old seeds claimed 840/620/410/350/290/180/420/210
+-- items across a catalogue that holds six.
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `products_count`, `display_order`) VALUES
-(1, 'Kanjivaram Silk', 'kanjivaram-silk', 'Pure Mulberry Silk with Tested Gold Zari Korvai Weaves', 840, 1),
-(2, 'Banarasi Silk', 'banarasi-silk', 'Handcrafted Katan Silk Floral Jaal & Royal Meenakari', 620, 2),
-(3, 'Paithani Handloom', 'paithani', 'Maharashtra Heritage Silk with Asawali Peacock Border', 410, 3),
-(4, 'Chanderi Silk', 'chanderi', 'Lightweight Tissue Silk with Gold Foil Zari Butta', 350, 4),
-(5, 'Organza Tissue', 'organza', 'Translucent Glass Organza with Handcrafted Embroidery', 290, 5),
-(6, 'Bridal Lehengas', 'bridal-lehengas', 'Heavy Handcrafted Zardosi & Raw Silk Designer Ensembles', 180, 6),
-(7, 'Designer Kurtis', 'designer-kurtis', 'Festive Chanderi Foil Printed Kurti Sets with Dupatta', 420, 7),
-(8, 'Patola Heritage', 'patola', 'Double Ikat Rajkot & Patan Geometric Weaves', 210, 8);
+(1, 'Kanjivaram Silk', 'kanjivaram-silk', 'Pure Mulberry Silk with Tested Gold Zari Korvai Weaves', 0, 1),
+(2, 'Banarasi Silk', 'banarasi-silk', 'Handcrafted Katan Silk Floral Jaal & Royal Meenakari', 0, 2),
+(3, 'Paithani Handloom', 'paithani', 'Maharashtra Heritage Silk with Asawali Peacock Border', 0, 3),
+(4, 'Chanderi Silk', 'chanderi', 'Lightweight Tissue Silk with Gold Foil Zari Butta', 0, 4),
+(5, 'Organza Tissue', 'organza', 'Translucent Glass Organza with Handcrafted Embroidery', 0, 5),
+(6, 'Bridal Lehengas', 'bridal-lehengas', 'Heavy Handcrafted Zardosi & Raw Silk Designer Ensembles', 0, 6),
+(7, 'Designer Kurtis', 'designer-kurtis', 'Festive Chanderi Foil Printed Kurti Sets with Dupatta', 0, 7),
+(8, 'Patola Heritage', 'patola', 'Double Ikat Rajkot & Patan Geometric Weaves', 0, 8);
 
--- Seed Products (24 Real High-Fidelity Textile Products)
+-- Seed Products (6 demo products so a fresh install is not an empty shop)
+-- The image paths were /Frontend/Shop/Asset/images/productN.png - a directory that
+-- does not exist in this docroot - so every seeded card was a broken image.
+-- rating and reviews_count are seeded 0: ratings are read from the reviews table.
 INSERT INTO `products` (`id`, `sku`, `title`, `slug`, `category_id`, `category_name`, `fabric`, `mrp`, `retail_price`, `wholesale_price`, `reseller_price`, `stock_qty`, `rating`, `reviews_count`, `primary_image`, `badge`, `status`, `description`) VALUES
-(1, 'KLN-SR-111', 'Nilambari Silk Saree with Rich Zari Pallu', 'nilambari-silk-saree-rich-zari-pallu', 1, 'Kanjivaram Silk', 'Pure Mulberry Silk', 6500.00, 4899.00, 1399.00, 2100.00, 95, 4.9, 142, '/Frontend/Shop/Asset/images/product1.png', 'Bestseller', 'in_stock', 'Authentic handwoven Kanjivaram pure silk saree featuring pure tested gold zari pallu.'),
-(2, 'BNR-SR-204', 'Royal Banarasi Meenakari Silk Saree', 'royal-banarasi-meenakari-silk-saree', 2, 'Banarasi Silk', 'Katan Brocade Silk', 11000.00, 8499.00, 2499.00, 3500.00, 68, 4.9, 98, '/Frontend/Shop/Asset/images/product2.png', 'Heritage', 'in_stock', 'Intricate floral jaal Banarasi katan silk saree crafted with rich gold tested zari weaves.'),
-(3, 'PTH-MH-305', 'Maharani Paithani Handloom Silk Saree', 'maharani-paithani-handloom-silk-saree', 3, 'Paithani Handloom', 'Handloom Pure Silk', 12500.00, 9499.00, 3199.00, 4200.00, 42, 5.0, 86, '/Frontend/Shop/Asset/images/product3.png', 'Royal VIP', 'in_stock', 'Traditional hand-woven Paithani silk saree featuring authentic Asawali motif and kaleidoscopic pallu.'),
-(4, 'CHN-FO-401', 'Chanderi Foil Printed Festive Kurti Set', 'chanderi-foil-printed-festive-kurti-set', 7, 'Designer Kurtis', 'Chanderi Silk Blend', 3499.00, 2290.00, 850.00, 1450.00, 62, 4.8, 68, '/Frontend/Shop/Asset/images/product4.png', 'Hot Deal', 'in_stock', 'Festive designer kurti set with matching pants and gold foil printed pure dupatta.'),
-(5, 'BRD-LH-902', 'Crimson Bridal Handcrafted Zardosi Lehenga', 'crimson-bridal-handcrafted-zardosi-lehenga', 6, 'Bridal Lehengas', 'Velvet & Raw Silk', 24990.00, 16490.00, 11500.00, 13800.00, 18, 5.0, 42, '/Frontend/Shop/Asset/images/product5.png', 'Luxury Bride', 'in_stock', 'Grand royal bridal lehenga with comprehensive hand zardosi, pearl, and dabka needlework.'),
-(6, 'ORG-TS-508', 'Organza Glass Tissue Floral Zari Saree', 'organza-glass-tissue-floral-zari-saree', 5, 'Organza Tissue', 'Glass Tissue Organza', 4999.00, 3499.00, 1150.00, 1750.00, 54, 4.7, 56, '/Frontend/Shop/Asset/images/product6.png', 'Trending', 'in_stock', 'Ultra-lightweight modern pastel organza saree with delicate scalloped gold borders.');
+(1, 'KLN-SR-111', 'Nilambari Silk Saree with Rich Zari Pallu', 'nilambari-silk-saree-rich-zari-pallu', 1, 'Kanjivaram Silk', 'Pure Mulberry Silk', 6500.00, 4899.00, 1399.00, 2100.00, 95, 0, 0, '/assets/images/product1.png', 'Bestseller', 'in_stock', 'Authentic handwoven Kanjivaram pure silk saree featuring pure tested gold zari pallu.'),
+(2, 'BNR-SR-204', 'Royal Banarasi Meenakari Silk Saree', 'royal-banarasi-meenakari-silk-saree', 2, 'Banarasi Silk', 'Katan Brocade Silk', 11000.00, 8499.00, 2499.00, 3500.00, 68, 0, 0, '/assets/images/product2.png', 'Heritage', 'in_stock', 'Intricate floral jaal Banarasi katan silk saree crafted with rich gold tested zari weaves.'),
+(3, 'PTH-MH-305', 'Maharani Paithani Handloom Silk Saree', 'maharani-paithani-handloom-silk-saree', 3, 'Paithani Handloom', 'Handloom Pure Silk', 12500.00, 9499.00, 3199.00, 4200.00, 42, 0, 0, '/assets/images/product3.png', 'Royal VIP', 'in_stock', 'Traditional hand-woven Paithani silk saree featuring authentic Asawali motif and kaleidoscopic pallu.'),
+(4, 'CHN-FO-401', 'Chanderi Foil Printed Festive Kurti Set', 'chanderi-foil-printed-festive-kurti-set', 7, 'Designer Kurtis', 'Chanderi Silk Blend', 3499.00, 2290.00, 850.00, 1450.00, 62, 0, 0, '/assets/images/product4.png', 'Hot Deal', 'in_stock', 'Festive designer kurti set with matching pants and gold foil printed pure dupatta.'),
+(5, 'BRD-LH-902', 'Crimson Bridal Handcrafted Zardosi Lehenga', 'crimson-bridal-handcrafted-zardosi-lehenga', 6, 'Bridal Lehengas', 'Velvet & Raw Silk', 24990.00, 16490.00, 11500.00, 13800.00, 18, 0, 0, '/assets/images/product5.png', 'Luxury Bride', 'in_stock', 'Grand royal bridal lehenga with comprehensive hand zardosi, pearl, and dabka needlework.'),
+(6, 'ORG-TS-508', 'Organza Glass Tissue Floral Zari Saree', 'organza-glass-tissue-floral-zari-saree', 5, 'Organza Tissue', 'Glass Tissue Organza', 4999.00, 3499.00, 1150.00, 1750.00, 54, 0, 0, '/assets/images/product6.png', 'Trending', 'in_stock', 'Ultra-lightweight modern pastel organza saree with delicate scalloped gold borders.');
 
 -- Seed Banners
+-- Seed Banners. Artwork points at files that exist in /assets/images/; the old
+-- /Frontend/Shop/Asset/images/{hero-banner,category-sarees}.png paths resolved to
+-- nothing. Replace these with real hero artwork from the admin banner screen.
 INSERT INTO `banners` (`id`, `title`, `subtitle`, `tagline`, `badge`, `cta_text`, `cta_link`, `image_url`) VALUES
-(1, 'Festive Diwali Dhamaka 2026', 'Direct Surat Manufacturer Wholesale Rates — Pure Silk Sarees from ₹1,399/pc', 'Surat Wholesale Hub', 'Up to 55% Off', 'Explore Wholesale Lots', '/wholesale', '/Frontend/Shop/Asset/images/hero-banner.png'),
-(2, 'Royal Bridal & Wedding Trousseau', 'Handcrafted Kanjivaram & Banarasi Silk Masterpieces with Pure Zari', 'Heritage Silk', 'Exclusive 2026', 'View Wedding Sarees', '/shop', '/Frontend/Shop/Asset/images/category-sarees.png');
+(1, 'Festive Diwali Dhamaka 2026', 'Direct Surat Manufacturer Wholesale Rates — Pure Silk Sarees from ₹1,399/pc', 'Surat Wholesale Hub', 'Up to 55% Off', 'Explore Wholesale Lots', '/wholesale', '/assets/images/product1.png'),
+(2, 'Royal Bridal & Wedding Trousseau', 'Handcrafted Kanjivaram & Banarasi Silk Masterpieces with Pure Zari', 'Heritage Silk', 'Exclusive 2026', 'View Wedding Sarees', '/shop', '/assets/images/product3.png');
 
 -- Seed Customers
 INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `type`, `city`, `state`, `tier`, `credit_limit`, `outstanding_balance`, `total_orders`, `lifetime_spend`, `gstin`) VALUES

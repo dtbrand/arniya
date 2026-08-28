@@ -22,69 +22,84 @@
             <button type="button" onclick="closeCustomerFiltersModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:#78716C;">✕</button>
         </div>
 
+        <?php /*
+         * Every control in this modal was unnamed and unread. Apply closed the
+         * modal and toasted "Advanced Filters Applied (12 Matches)" -- a constant,
+         * with no filtering done -- so the table still listed every customer while
+         * the admin believed they were looking at twelve matches. The controls now
+         * carry ids and customer-filters.js narrows the real list and reports the
+         * real count.
+         *
+         * Status offered "Inactive / Dormant", which the ENUM (active | pending |
+         * suspended) cannot hold, and had no option for pending -- the state every
+         * unapproved trade application sits in.
+         */ ?>
         <form onsubmit="applyCustomerAdvancedFilters(event)" style="display:flex; flex-direction:column; gap:14px;">
-            <!-- Status & Verification -->
+            <!-- Status & Tier -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                 <div>
                     <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Account Status</label>
-                    <select class="dt-cust-select" style="width:100%;">
+                    <select id="dtFilterStatus" class="dt-cust-select" style="width:100%;">
                         <option value="all">All Statuses</option>
-                        <option value="active">Active Verified</option>
-                        <option value="inactive">Inactive / Dormant</option>
+                        <option value="active">Active</option>
+                        <option value="pending">Pending Approval</option>
                         <option value="suspended">Suspended</option>
                     </select>
                 </div>
                 <div>
-                    <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Customer Tier</label>
-                    <select class="dt-cust-select" style="width:100%;">
-                        <option value="all">All Tiers</option>
-                        <option value="vip">VIP High-Value</option>
-                        <option value="regular">Regular Shopper</option>
-                        <option value="new">New Registration</option>
+                    <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Account Type</label>
+                    <select id="dtFilterType" class="dt-cust-select" style="width:100%;">
+                        <option value="all">All Types</option>
+                        <option value="retail">Retail</option>
+                        <option value="wholesale">Wholesale</option>
+                        <option value="reseller">Reseller</option>
                     </select>
                 </div>
+            </div>
+
+            <div>
+                <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Customer Tier</label>
+                <input type="text" id="dtFilterTier" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. VIP, Diamond Elite &mdash; blank for all">
             </div>
 
             <!-- Orders Count & Spend Range -->
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                 <div>
                     <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Minimum Orders</label>
-                    <input type="number" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. 3" min="0">
+                    <input type="number" id="dtFilterMinOrders" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. 3" min="0">
                 </div>
                 <div>
-                    <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Min Spent (₹)</label>
-                    <input type="number" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. 10000" min="0">
+                    <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Min Spent (&#8377;)</label>
+                    <input type="number" id="dtFilterMinSpent" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. 10000" min="0">
                 </div>
             </div>
 
             <!-- Location State -->
             <div>
-                <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Customer Location (State)</label>
-                <select class="dt-cust-select" style="width:100%;">
-                    <option value="all">All Locations (Pan India)</option>
-                    <option value="GJ">Gujarat (Surat / Ahmedabad)</option>
-                    <option value="MH">Maharashtra (Mumbai / Pune)</option>
-                    <option value="DL">Delhi NCR</option>
-                    <option value="WB">West Bengal (Kolkata)</option>
-                    <option value="RJ">Rajasthan (Jaipur)</option>
-                    <option value="KA">Karnataka (Bengaluru)</option>
-                    <option value="TS">Telangana (Hyderabad)</option>
-                </select>
+                <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Customer Location (City or State)</label>
+                <?php /* Was a fixed list of eight state codes. customers.state is a
+                         free-text VARCHAR that may hold "Gujarat" or "GJ" or nothing,
+                         so a match on either field is the only reliable filter. */ ?>
+                <input type="text" id="dtFilterPlace" class="dt-cust-search-input" style="padding-left:12px;" placeholder="e.g. Surat, GJ, Maharashtra &mdash; blank for all">
             </div>
 
             <!-- Date Presets -->
             <div>
                 <label style="font-size:0.74rem; font-weight:800; color:#181512; display:block; margin-bottom:4px;">Registered In</label>
-                <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;">Last 7 Days</button>
-                    <button type="button" class="dt-cust-pill-btn active" style="font-size:0.7rem; padding:4px 8px;">Last 30 Days</button>
-                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;">This Year</button>
-                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;">All Time</button>
+                <?php /* These four buttons had no onclick at all, and "Last 30 Days"
+                         was pre-marked active -- implying the directory was already
+                         date-filtered when it never was. */ ?>
+                <div style="display:flex; flex-wrap:wrap; gap:6px;" id="dtFilterDatePills">
+                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;" data-days="7" onclick="setCustomerFilterDays(this)">Last 7 Days</button>
+                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;" data-days="30" onclick="setCustomerFilterDays(this)">Last 30 Days</button>
+                    <button type="button" class="dt-cust-pill-btn" style="font-size:0.7rem; padding:4px 8px;" data-days="365" onclick="setCustomerFilterDays(this)">Last 12 Months</button>
+                    <button type="button" class="dt-cust-pill-btn active" style="font-size:0.7rem; padding:4px 8px;" data-days="0" onclick="setCustomerFilterDays(this)">All Time</button>
                 </div>
             </div>
 
             <!-- Modal Action Buttons -->
             <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; border-top:1.5px solid #F1ECE1; padding-top:12px; margin-top:6px;">
+                <button type="button" class="dt-btn dt-btn-pale" onclick="resetCustomerAdvancedFilters()">Reset</button>
                 <button type="button" class="dt-btn dt-btn-pale" onclick="closeCustomerFiltersModal()">Cancel</button>
                 <button type="submit" class="dt-btn dt-btn-gold">Apply Filters</button>
             </div>

@@ -12,7 +12,7 @@ use DTBrand\ProductCatalog;
 
 $page_title = "Stock Outward & Dispatch Log";
 $active_nav = "inventory";
-$products = ProductCatalog::getAll();
+$products = ProductCatalog::getAll(true);
 ?>
 <!DOCTYPE html>
 <html lang="en">

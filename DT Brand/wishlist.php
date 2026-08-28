@@ -76,21 +76,27 @@ $catalogProducts = ProductCatalog::getAll();
         if (empty) empty.style.display = 'none';
 
         grid.innerHTML = items.map(function(p) {
-            var name = p.name || p.title || 'Saved Weave';
-            var img = p.image || '/assets/images/product1.png';
-            var cat = p.category || 'Handloom';
+            // Fallbacks removed: 'Saved Weave' as a name, 'Handloom' as a category
+            // and product1.png (a different product's photo) as the image.
+            var name = p.name || p.title || 'Saved product';
+            var img = p.image || '/assets/images/no-image.svg';
+            var cat = p.category || '';
+            var price = Number(p.price) || 0;
+            // "In Stock" was printed for every saved item regardless of the real
+            // stock level, which is not stored in the wishlist snapshot.
+            var stockNote = (p.in_stock === true) ? '🟢 In Stock' : (p.in_stock === false ? 'Out of stock' : '');
             return '' +
               '<div class="dt-wsh-card" data-wid="' + p.id + '">' +
                 '<div style="position:relative;">' +
-                  '<img src="' + img + '" alt="' + name + '" onerror="this.src=\'/assets/images/product1.png\';" style="width:100%; height:280px; object-fit:cover;">' +
+                  '<img src="' + img + '" alt="' + name + '" style="width:100%; height:280px; object-fit:cover;">' +
                   '<button data-remove-wish="' + p.id + '" title="Remove from wishlist" aria-label="Remove from wishlist" style="position:absolute; top:10px; right:10px; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:#B91C1C; font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15);">×</button>' +
                 '</div>' +
                 '<div style="padding:14px;">' +
-                  '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' +
+                  (cat ? '<div style="font-size:0.75rem; font-weight:700; color:#8A681F; text-transform:uppercase;">' + cat + '</div>' : '') +
                   '<h3 style="font-size:1rem; font-weight:800; color:#181512; margin:4px 0 8px 0;">' + name + '</h3>' +
                   '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">' +
-                    '<strong style="font-size:1.15rem; color:#8A681F;">' + money(p.price) + '</strong>' +
-                    '<span style="font-size:0.78rem; color:#15803D; font-weight:700;">🟢 In Stock</span>' +
+                    '<strong style="font-size:1.15rem; color:#8A681F;">' + (price > 0 ? money(price) : 'Price on request') + '</strong>' +
+                    (stockNote ? '<span style="font-size:0.78rem; color:#15803D; font-weight:700;">' + stockNote + '</span>' : '') +
                   '</div>' +
                   '<div style="display:flex; gap:8px;">' +
                     '<button data-add-wish="' + p.id + '" style="flex:1; background:linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%); color:#111827; padding:8px 0; border-radius:6px; font-weight:800; font-size:13px; border:1px solid #8A681F; cursor:pointer;">Add to Bag</button>' +

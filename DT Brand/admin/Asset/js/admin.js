@@ -1519,14 +1519,11 @@
         window.openDirectWhatsApp(order.phone, msg);
     };
 
-    window.shareProductWhatsApp = function(id) {
-        const prod = products.find(p => p.id === id);
-        if (!prod) return;
-
-        const msg = `*DT BRAND'S ETHNIC COLLECTION*\n\n*${prod.name}* (SKU: ${prod.sku})\n💎 Category: ${prod.category} | Fabric: ${prod.fabric}\n💰 Retail: ₹${prod.retail_price} | Wholesale MOQ (${prod.moq} pcs): ₹${prod.wholesale_price}/pc\n\n👉 View Online: https://jaihanumantex.in/shop`;
-        const encoded = encodeURIComponent(msg);
-        window.open(`https://wa.me/?text=${encoded}`, '_blank');
-    };
+    // An earlier window.shareProductWhatsApp stood here. It read the demo
+    // `products` array at the top of this file, so it shared invented prices and
+    // MOQs for any id that happened to match a sample row and did nothing for a
+    // real product id. It was shadowed by the definition further down anyway.
+    // The surviving one fetches the product from /api/products.php.
 
     window.launchBroadcast = function() {
         const template = document.getElementById('admBroadcastTemplate').value;
@@ -1689,23 +1686,82 @@
     };
 
     // ════ PRODUCT ACTIONS ════
+    // These three used to be demo stubs. shareProductWhatsApp sent one hardcoded
+    // title ("Kanjivaram Pure Silk Gold Zari Saree") for every product, pointing
+    // at /Frontend/Single-Product/singleproduct.php - a path that does not exist -
+    // and fell back to product id 101 when no id was passed. duplicateProduct
+    // only navigated to add.php?duplicated_from=... (nothing reads that) and
+    // archiveProduct said "archived successfully" without touching the database.
     window.shareProductWhatsApp = function(id) {
-        const text = encodeURIComponent('Check out Kanjivaram Pure Silk Gold Zari Saree on DT Brand\'s: https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php?id=' + (id || '101'));
-        window.open('https://api.whatsapp.com/send?text=' + text, '_blank');
-        if (typeof window.showToast === 'function') window.showToast('📲 Opening WhatsApp share link...');
+        var pid = Number(id) || 0;
+        if (pid <= 0) return;
+        fetch('/api/products.php?id=' + encodeURIComponent(pid))
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (!data || !data.success || !data.product) {
+                    if (typeof window.showToast === 'function') window.showToast('⚠️ That product could not be loaded, so nothing was shared.');
+                    return;
+                }
+                var p = data.product;
+                var lines = ["*DT BRAND'S — " + (p.name || p.title || 'Product') + '*'];
+                if (p.sku) lines.push('SKU: ' + p.sku);
+                if (p.category) lines.push('Category: ' + p.category);
+                if (p.fabric) lines.push('Fabric: ' + p.fabric);
+                if (Number(p.retail_price) > 0) lines.push('Retail: ₹' + Number(p.retail_price).toLocaleString('en-IN'));
+                if (Number(p.wholesale_price) > 0) {
+                    lines.push('Wholesale: ₹' + Number(p.wholesale_price).toLocaleString('en-IN') + '/pc'
+                        + (Number(p.moq) > 0 ? ' (MOQ ' + Number(p.moq) + ' pcs)' : ''));
+                }
+                lines.push('', window.location.origin + '/product.php?id=' + pid);
+                window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+            })
+            .catch(function() {
+                if (typeof window.showToast === 'function') window.showToast('⚠️ Network error - nothing was shared.');
+            });
     };
 
     window.duplicateProduct = function(id) {
-        if (typeof window.showToast === 'function') window.showToast('📋 Duplicating product SKU...');
-        setTimeout(() => {
-            window.location.href = '/admin/products/add.php?duplicated_from=' + (id || '101');
-        }, 600);
+        var pid = Number(id) || 0;
+        if (pid <= 0) return;
+        if (typeof window.showToast === 'function') window.showToast('📋 Duplicating product in the database...');
+        fetch('/api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=duplicate&id=' + encodeURIComponent(pid)
+        })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data && data.success) {
+                    if (typeof window.showToast === 'function') window.showToast('✨ Duplicated. Reloading...');
+                    setTimeout(function() { window.location.reload(); }, 500);
+                } else {
+                    alert('Could not duplicate: ' + ((data && data.message) || 'unknown error'));
+                }
+            })
+            .catch(function() { alert('Network error while duplicating the product.'); });
     };
 
     window.archiveProduct = function(id) {
-        if (confirm('Archive this product SKU from active catalog?')) {
-            if (typeof window.showToast === 'function') window.showToast('📦 Product archived successfully');
-        }
+        var pid = Number(id) || 0;
+        if (pid <= 0) return;
+        // The products table has no "archived" state; draft is the one that
+        // takes a product off the storefront while keeping the row.
+        if (!confirm('Move this product to draft so it no longer appears on the storefront?')) return;
+        fetch('/api/products.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=toggle_status&id=' + encodeURIComponent(pid) + '&status=draft'
+        })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data && data.success) {
+                    if (typeof window.showToast === 'function') window.showToast('📦 Product moved to draft.');
+                    setTimeout(function() { window.location.reload(); }, 500);
+                } else {
+                    alert('Could not archive: ' + ((data && data.message) || 'unknown error'));
+                }
+            })
+            .catch(function() { alert('Network error while archiving the product.'); });
     };
 
 })();

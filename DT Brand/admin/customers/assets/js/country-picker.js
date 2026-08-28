@@ -757,11 +757,26 @@
         if (stateSelect) {
             const prevState = stateSelect.getAttribute('data-initial-state') || stateSelect.value;
             let optionsHtml = '';
-            
+
+            /* Was `(idx === 0) || ...`, which marked the first state selected even
+               when the customer already had a different one stored. With state now
+               included in the save payload, that silently rewrote a customer's
+               state to whichever province happened to be first for the country.
+               Only fall back to the first entry when nothing is set. */
+            const hasMatch = richData.states.some(st => st.code === prevState || st.name === prevState);
+
             richData.states.forEach((st, idx) => {
-                const isSelected = (idx === 0) || (st.code === prevState) || (st.name === prevState);
+                const isSelected = hasMatch
+                    ? (st.code === prevState || st.name === prevState)
+                    : (!prevState && idx === 0);
                 optionsHtml += `<option value="${st.code}" ${isSelected ? 'selected' : ''}>${st.name}</option>`;
             });
+
+            /* A stored value the new country does not list would otherwise be
+               dropped from the select and lost on the next save. */
+            if (!hasMatch && prevState) {
+                optionsHtml = `<option value="${prevState}" selected>${prevState} (current)</option>` + optionsHtml;
+            }
 
             stateSelect.innerHTML = optionsHtml;
             flashHighlight(stateSelect);

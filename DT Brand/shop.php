@@ -15,19 +15,21 @@ use DTBrand\Database;
 $products = ProductCatalog::getAll();
 
 $selectedCategory = isset($_GET['category']) ? trim($_GET['category']) : '';
-if (!empty($selectedCategory) && strtolower($selectedCategory) !== 'all') {
+$shopNoImage = ProductCatalog::NO_IMAGE;
+if ($selectedCategory !== '' && strtolower($selectedCategory) !== 'all') {
     $filtered = [];
     foreach ($products as $p) {
         $catName = strtolower($p['category'] ?? ($p['category_name'] ?? ''));
         $catSlug = strtolower(str_replace(' ', '-', $catName));
         $targetSlug = strtolower(str_replace(' ', '-', $selectedCategory));
-        if ($catName === strtolower($selectedCategory) || $catSlug === $targetSlug || strpos($catSlug, $targetSlug) !== false || strpos($targetSlug, $catSlug) !== false) {
+        if ($catName !== '' && ($catName === strtolower($selectedCategory) || $catSlug === $targetSlug || strpos($catSlug, $targetSlug) !== false || strpos($targetSlug, $catSlug) !== false)) {
             $filtered[] = $p;
         }
     }
-    if (!empty($filtered)) {
-        $products = $filtered;
-    }
+    // The filter is applied even when it matches nothing. This used to keep the
+    // unfiltered list whenever $filtered was empty, so asking for a category
+    // with no products showed the whole catalogue as if it belonged to it.
+    $products = $filtered;
 }
 
 $categories = array_unique(array_merge(['All'], ProductCatalog::getCategories()));
@@ -364,79 +366,103 @@ $total_products = count($products);
             <div class="products-grid" id="productsGrid" role="list">
             <?php foreach ($products as $p): ?>
             <?php
-                $badge_class = !empty($p['badge']) ? 'badge-'.strtolower($p['badge']) : '';
-                $stars_full  = floor($p['rating']);
-                $stars_empty = 5 - $stars_full;
-                $size_str    = implode(',', $p['size']);
+                // Everything below comes from the row. Where a value is genuinely
+                // missing the card says so instead of inventing one: the image
+                // used to fall back to /assets/images/product1.png, a product
+                // with no variants was printed as "1 Colours", and a product
+                // with no size rows was printed as "Free Size".
+                $pName       = (string)($p['name'] ?? '');
+                $badge_class = !empty($p['badge']) ? 'badge-' . strtolower(preg_replace('/[^a-z0-9]+/i', '-', (string)$p['badge'])) : '';
+                $pHasPhoto   = !empty($p['has_photo']);
+                $pImg        = $pHasPhoto ? (string)$p['image'] : $shopNoImage;
+                $pCols       = array_values(array_filter((array)($p['colors'] ?? []), static fn($c) => trim((string)$c) !== ''));
+                $pSizes      = array_values(array_filter((array)($p['size'] ?? []), static fn($s) => trim((string)$s) !== ''));
+                $size_str    = implode(',', $pSizes);
+                $pHasVideo   = !empty($p['has_video']);
             ?>
             <article
                 class="product-card"
                 role="listitem"
-                data-product-id="<?= $p['id'] ?>"
-                data-category="<?= htmlspecialchars($p['category']) ?>"
-                data-price="<?= $p['price'] ?>"
-                data-color="<?= htmlspecialchars($p['color']) ?>"
+                data-product-id="<?= (int)$p['id'] ?>"
+                data-category="<?= htmlspecialchars((string)($p['category'] ?? '')) ?>"
+                data-price="<?= (float)($p['price'] ?? 0) ?>"
+                data-color="<?= htmlspecialchars((string)($p['color'] ?? '')) ?>"
                 data-size="<?= htmlspecialchars($size_str) ?>"
-                data-fabric="<?= htmlspecialchars($p['fabric']) ?>"
-                data-discount="<?= $p['discount'] ?>"
-                data-stock="<?= $p['in_stock'] ? 'In Stock' : 'Pre-Order' ?>"
-                aria-label="<?= htmlspecialchars($p['name']) ?>"
+                data-fabric="<?= htmlspecialchars((string)($p['fabric'] ?? '')) ?>"
+                data-discount="<?= (int)($p['discount'] ?? 0) ?>"
+                data-has-video="<?= $pHasVideo ? '1' : '0' ?>"
+                data-stock="<?= !empty($p['in_stock']) ? 'In Stock' : 'Pre-Order' ?>"
+                aria-label="<?= htmlspecialchars($pName) ?>"
             >
                 <div class="card-image-wrap">
-                    <a href="/product.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/assets/images/product1.png';" />
+                    <a href="/product.php?id=<?= (int)$p['id'] ?>" style="display:block;width:100%;height:100%;">
+                        <img src="<?= htmlspecialchars($pImg) ?>" alt="<?= htmlspecialchars($pName) ?>" class="card-img" loading="lazy"<?= $pHasPhoto ? '' : ' style="object-fit:contain;padding:18%;opacity:.6;"' ?> />
                     </a>
 
                     <?php if (!empty($p['badge'])): ?>
-                    <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars($p['badge']) ?></span>
+                    <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars((string)$p['badge']) ?></span>
                     <?php endif; ?>
 
-                    <button class="card-wishlist-btn" data-id="<?= $p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($p['name']) ?>" aria-pressed="false">
+                    <?php if ($pHasVideo): ?>
+                    <span class="card-video-tag" title="This product has a video" style="position:absolute;top:10px;right:52px;z-index:3;display:inline-flex;align-items:center;gap:3px;background:rgba(24,21,18,.82);color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 7px;border-radius:20px;">
+                        <svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>VIDEO
+                    </span>
+                    <?php endif; ?>
+
+                    <button class="card-wishlist-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($pName) ?>" aria-pressed="false">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
 
-                    <button class="card-mobile-qv-btn quick-view-btn" data-id="<?= $p['id'] ?>" aria-label="Quick View <?= htmlspecialchars($p['name']) ?>">
+                    <button class="card-mobile-qv-btn quick-view-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Quick View <?= htmlspecialchars($pName) ?>">
                         <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     </button>
 
                     <div class="card-quick-view" aria-hidden="true">
-                        <button class="quick-view-btn" data-id="<?= $p['id'] ?>">Quick View</button>
+                        <button class="quick-view-btn" data-id="<?= (int)$p['id'] ?>">Quick View</button>
                     </div>
 
                     <!-- Share Button on Photo (Directly Above Category Tag) -->
-                    <button type="button" class="card-share-btn" data-id="<?= $p['id'] ?>" aria-label="Share <?= htmlspecialchars($p['name']) ?>" title="Share <?= htmlspecialchars($p['name']) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= $p['id'] ?>);}">
+                    <button type="button" class="card-share-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Share <?= htmlspecialchars($pName) ?>" title="Share <?= htmlspecialchars($pName) ?>" onclick="event.stopPropagation();event.preventDefault();if(typeof window.shareProductCard==='function'){window.shareProductCard(<?= (int)$p['id'] ?>);}">
                         <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                     </button>
 
                     <!-- Category Box on Photo Bottom-Right Corner -->
-                    <span class="card-cat-photo-tag"><?= htmlspecialchars($p['category']) ?></span>
+                    <?php if (trim((string)($p['category'] ?? '')) !== ''): ?>
+                    <span class="card-cat-photo-tag"><?= htmlspecialchars((string)$p['category']) ?></span>
+                    <?php endif; ?>
                 </div>
 
                 <div class="card-body">
                     <!-- Product Title -->
                     <h2 class="card-name">
-                        <a href="/product.php?id=<?= $p['id'] ?>" style="color:inherit;text-decoration:none;">
-                            <?= htmlspecialchars($p['name']) ?>
+                        <a href="/product.php?id=<?= (int)$p['id'] ?>" style="color:inherit;text-decoration:none;">
+                            <?= htmlspecialchars($pName) ?>
                         </a>
                     </h2>
 
-                    <!-- Clean Text Info Row: Available Colours & Sizes -->
-                    <?php 
-                    $pCols = !empty($p['colors']) ? $p['colors'] : [$p['color']];
-                    $pSizes = !empty($p['size']) ? $p['size'] : ['Free Size'];
-                    ?>
+                    <!-- Colours and sizes, from product_variants only -->
+                    <?php if (!empty($pCols) || !empty($pSizes)): ?>
                     <div class="card-info-text-row">
-                        <span class="card-colors-text"><?= count($pCols) ?> Colours</span>
+                        <?php if (!empty($pCols)): ?>
+                        <span class="card-colors-text" title="<?= htmlspecialchars(implode(', ', $pCols)) ?>"><?= count($pCols) ?> Colour<?= count($pCols) === 1 ? '' : 's' ?></span>
+                        <?php endif; ?>
+                        <?php if (!empty($pSizes)): ?>
                         <span class="card-sizes-text"><?= htmlspecialchars(implode(', ', $pSizes)) ?></span>
+                        <?php endif; ?>
                     </div>
+                    <?php endif; ?>
 
                     <div class="card-price-row">
-                        <span class="card-price">₹<?= number_format($p['price']) ?></span>
-                        <?php if (!empty($p['old_price'])): ?>
-                        <span class="card-old-price">₹<?= number_format($p['old_price']) ?></span>
+                        <?php if ((float)($p['price'] ?? 0) > 0): ?>
+                        <span class="card-price">&#8377;<?= number_format((float)$p['price']) ?></span>
+                        <?php else: ?>
+                        <span class="card-price" style="font-size:.82em;">Price on request</span>
+                        <?php endif; ?>
+                        <?php if (!empty($p['old_price']) && (float)$p['old_price'] > (float)($p['price'] ?? 0)): ?>
+                        <span class="card-old-price">&#8377;<?= number_format((float)$p['old_price']) ?></span>
                         <?php endif; ?>
                         <?php if (!empty($p['discount'])): ?>
-                        <span class="card-price-discount"><?= $p['discount'] ?>% OFF</span>
+                        <span class="card-price-discount"><?= (int)$p['discount'] ?>% OFF</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -444,10 +470,12 @@ $total_products = count($products);
             <?php endforeach; ?>
             </div>
 
-            <!-- No Products Found Message (Hidden by default) -->
-            <div class="no-products-found" id="noProductsMsg" style="display:none;">
+            <!-- No Products Found Message -->
+            <div class="no-products-found" id="noProductsMsg" style="<?= $total_products === 0 ? '' : 'display:none;' ?>">
                 <h3 class="np-title">No Matching Products</h3>
-                <p class="np-desc">We couldn't find any items matching your selected filter criteria.</p>
+                <p class="np-desc"><?= $total_products === 0 && $selectedCategory !== '' && strtolower($selectedCategory) !== 'all'
+                    ? 'Nothing is listed under &ldquo;' . htmlspecialchars($selectedCategory) . '&rdquo; yet.'
+                    : "We couldn't find any items matching your selected filter criteria." ?></p>
                 <button class="np-reset-btn" id="npResetBtn">Clear All Filters</button>
             </div>
         </main>

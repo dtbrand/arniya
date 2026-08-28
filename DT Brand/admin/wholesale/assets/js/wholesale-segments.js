@@ -158,7 +158,7 @@
         const msg = document.getElementById('broadcastMessageTextarea')?.value || activeBroadcastTemplate;
         const encoded = encodeURIComponent(msg);
 
-        window.open(`https://api.whatsapp.com/send?phone=919876543210&text=${encoded}`, '_blank');
+        window.open(`https://api.whatsapp.com/send?phone=917046363528&text=${encoded}`, '_blank');
         window.closeWholesaleModal('dtCohortBroadcastModal');
         window.showToast('🚀 WhatsApp Broadcast Campaign Dispatched to Cohort!');
     };

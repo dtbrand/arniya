@@ -315,14 +315,18 @@
             </button>
         </div>
         <div class="smart-share-product-card">
-            <img src="/assets/images/product1.png" alt="Product" class="smart-share-thumb" id="smartShareThumb" />
+            <!-- These fields start empty. They used to be filled with a real-looking
+                 sample (Nilambari Silk Saree, Rs 4,899 was Rs 6,500, 25% OFF), which
+                 is what a reseller saw - and could share - if the modal was ever
+                 opened without product data. -->
+            <img src="/assets/images/no-image.svg" alt="" class="smart-share-thumb" id="smartShareThumb" />
             <div class="smart-share-product-info">
-                <div class="smart-share-prod-name" id="smartShareName">Nilambari Silk Saree</div>
-                <div class="smart-share-prod-meta" id="smartShareMeta">Fabric: Pure Silk • Free Size</div>
+                <div class="smart-share-prod-name" id="smartShareName"></div>
+                <div class="smart-share-prod-meta" id="smartShareMeta"></div>
                 <div class="smart-share-prod-price">
-                    <span class="smart-share-price-curr" id="smartSharePrice">₹4,899</span>
-                    <span class="smart-share-price-old" id="smartShareOldPrice">₹6,500</span>
-                    <span class="smart-share-price-off" id="smartShareDiscount">25% OFF</span>
+                    <span class="smart-share-price-curr" id="smartSharePrice"></span>
+                    <span class="smart-share-price-old" id="smartShareOldPrice" style="display:none;"></span>
+                    <span class="smart-share-price-off" id="smartShareDiscount" style="display:none;"></span>
                 </div>
             </div>
         </div>
@@ -350,35 +354,49 @@
 (function() {
     'use strict';
 
+    // Seeded empty. This object used to hold a complete fake product (id 1,
+    // "Nilambari Silk Saree", Rs 4,899 down from Rs 6,500, 25% OFF, Pure Silk,
+    // "Free Size, M, L"), and Object.assign merged real product data over it -
+    // so any field the real product did not have kept the fake value and went
+    // out in the reseller's WhatsApp message as if it were true.
     var currentShareItem = {
-        id: 1,
-        name: 'Nilambari Silk Saree',
-        category: 'Sarees',
-        price: 4899,
-        old_price: 6500,
-        discount: 25,
-        image: '/assets/images/product1.png',
-        fabric: 'Pure Silk',
-        colors: 'Navy, Royal Blue',
-        sizes: 'Free Size, M, L',
+        id: 0,
+        name: '',
+        category: '',
+        price: 0,
+        old_price: 0,
+        discount: 0,
+        image: '',
+        fabric: '',
+        colors: '',
+        sizes: '',
         url: window.location.href
     };
 
-    /* Build Rich Meesho-Style Formatted WhatsApp Message */
+    /* Build the WhatsApp message from the fields the product actually has. */
     function buildFormattedWhatsAppMessage(item) {
+        var price = Number(item.price) || 0;
+        var oldPrice = Number(item.old_price) || 0;
+        var discount = Number(item.discount) || 0;
+
         var msg = '👑 *DT BRAND\'S — ETHNIC LUXURY COUTURE*\n';
-        msg += '✨ *' + (item.name || 'Luxury Saree') + '*\n\n';
-        msg += '🏷️ *Deal Price:* ₹' + Number(item.price || 0).toLocaleString('en-IN');
-        if (item.old_price) {
-            msg += ' ~₹' + Number(item.old_price).toLocaleString('en-IN') + '~';
-        }
-        if (item.discount) {
-            msg += ' (' + item.discount + '% OFF)';
-        }
+        if (item.name) msg += '✨ *' + item.name + '*\n';
         msg += '\n';
+        if (price > 0) {
+            msg += '🏷️ *Deal Price:* ₹' + price.toLocaleString('en-IN');
+            if (oldPrice > price) {
+                msg += ' ~₹' + oldPrice.toLocaleString('en-IN') + '~';
+                if (discount > 0) msg += ' (' + discount + '% OFF)';
+            }
+            msg += '\n';
+        } else {
+            // Rs 0 was previously sent as the deal price.
+            msg += '🏷️ *Price:* on request\n';
+        }
         if (item.fabric) msg += '🧵 *Fabric:* ' + item.fabric + '\n';
         if (item.colors) msg += '🎨 *Colours:* ' + item.colors + '\n';
-        if (item.sizes) msg += '📏 *Sizes:* ' + item.sizes + '\n\n';
+        if (item.sizes) msg += '📏 *Sizes:* ' + item.sizes + '\n';
+        msg += '\n';
 
         msg += '🌟 *Product Highlights:*\n';
         msg += '• 100% Original Certified Handloom Heritage\n';
@@ -420,29 +438,53 @@
             });
     }
 
-    /* Batch Download All HD Photos of Product */
+    /* Batch Download All HD Photos of Product. Returns how many were queued. */
+    var NO_IMAGE = '/assets/images/no-image.svg';
+
+    function isRealPhoto(src) {
+        if (!src) return false;
+        if (src.indexOf('data:image') !== -1) return false;
+        // The placeholder is not one of the product's photos.
+        return src.indexOf('no-image.svg') === -1;
+    }
+
+    function photoExtension(src) {
+        var clean = String(src).split('?')[0].split('#')[0];
+        var dot = clean.lastIndexOf('.');
+        var ext = dot > -1 ? clean.substring(dot + 1).toLowerCase() : '';
+        return /^(jpe?g|png|webp|gif|avif)$/.test(ext) ? ext : 'jpg';
+    }
+
     function downloadAllProductPhotos(item) {
         var sanitizedName = (item.name || 'product').toLowerCase().replace(/[^a-z0-9]/g, '-');
-        var imagesToDownload = [
-            item.image || '/assets/images/product1.png'
-        ];
+        var imagesToDownload = [];
+        // item.image used to fall back to product1.png, so a product with no
+        // photo of its own downloaded a different saree under its name.
+        if (isRealPhoto(item.image)) imagesToDownload.push(item.image);
 
-        // If on PDP with gallery, include all gallery angles
-        var galleryDoms = document.querySelectorAll('.pdp-gallery-slide img, .pdp-thumb-img');
-        if (galleryDoms && galleryDoms.length > 0) {
-            galleryDoms.forEach(function(img) {
-                if (img.src && imagesToDownload.indexOf(img.src) === -1 && !img.src.includes('data:image')) {
-                    imagesToDownload.push(img.src);
-                }
-            });
+        // On the PDP, add every gallery angle. The old selectors
+        // ('.pdp-gallery-slide img, .pdp-thumb-img') no longer exist on the
+        // rebuilt PDP, so this silently found nothing; video and embed slides
+        // are skipped because their <img> is a poster, not a product photo.
+        var galleryDoms = document.querySelectorAll('.pdp-slide[data-media="image"] img, .pdp-thumb-item[data-media="image"] img');
+        if (!galleryDoms.length) {
+            galleryDoms = document.querySelectorAll('.pdp-slide img, .pdp-thumb-item img');
         }
+        Array.prototype.forEach.call(galleryDoms, function(img) {
+            var src = img.currentSrc || img.src;
+            if (isRealPhoto(src) && imagesToDownload.indexOf(src) === -1) {
+                imagesToDownload.push(src);
+            }
+        });
 
-        // Trigger downloads with 150ms delay between files
+        // Trigger downloads with a small delay between files, keeping each
+        // file's real extension instead of naming a JPEG '.png'.
         imagesToDownload.forEach(function(imgUrl, idx) {
             setTimeout(function() {
-                triggerDownload(imgUrl, sanitizedName + '-hd-angle-' + (idx + 1) + '.png');
+                triggerDownload(imgUrl, sanitizedName + '-' + (idx + 1) + '.' + photoExtension(imgUrl));
             }, idx * 180);
         });
+        return imagesToDownload.length;
     }
 
     /* Show floating banner toast */
@@ -462,7 +504,7 @@
         currentShareItem = item;
 
         // 1. Auto-Download All HD Photos & Video
-        downloadAllProductPhotos(item);
+        var photoCount = downloadAllProductPhotos(item);
 
         // 2. Auto-Copy Formatted Details to Clipboard
         var formattedText = buildFormattedWhatsAppMessage(item);
@@ -475,7 +517,11 @@
         }
 
         // 3. Show Toast & Launch WhatsApp in 1 Click!
-        showShareToast('⚡ 1-Click Share: HD Photos Downloaded! Details Copied! Opening WhatsApp...');
+        // The toast always claimed photos had been downloaded, even for a
+        // product that has none.
+        showShareToast(photoCount > 0
+            ? '⚡ 1-Click Share: ' + photoCount + ' photo' + (photoCount > 1 ? 's' : '') + ' downloading, details copied. Opening WhatsApp...'
+            : '⚡ 1-Click Share: details copied (no photos uploaded for this product). Opening WhatsApp...');
 
         setTimeout(function() {
             var waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(formattedText);
@@ -505,21 +551,38 @@
         var oldPrice = document.getElementById('smartShareOldPrice');
         var disc = document.getElementById('smartShareDiscount');
 
-        if (thumb) thumb.src = currentShareItem.image || '/assets/images/product1.png';
-        if (name) name.textContent = currentShareItem.name || 'Luxury Outfit';
-        if (meta) meta.textContent = (currentShareItem.fabric ? 'Fabric: ' + currentShareItem.fabric : 'Ethnic Luxury') + ' • ' + (currentShareItem.sizes || 'Free Size');
-        if (price) price.textContent = '₹' + Number(currentShareItem.price || 0).toLocaleString('en-IN');
+        // Only what the product really has. The old version showed
+        // product1.png for a photoless product, called an unnamed product
+        // "Luxury Outfit", printed "Ethnic Luxury" where the fabric was
+        // unknown and "Free Size" where no sizes were recorded.
+        if (thumb) {
+            thumb.src = isRealPhoto(currentShareItem.image) ? currentShareItem.image : NO_IMAGE;
+            thumb.alt = currentShareItem.name || '';
+        }
+        if (name) name.textContent = currentShareItem.name || '';
+        if (meta) {
+            var metaBits = [];
+            if (currentShareItem.fabric) metaBits.push('Fabric: ' + currentShareItem.fabric);
+            if (currentShareItem.sizes) metaBits.push(currentShareItem.sizes);
+            if (!metaBits.length && currentShareItem.category) metaBits.push(currentShareItem.category);
+            meta.textContent = metaBits.join(' • ');
+            meta.style.display = metaBits.length ? '' : 'none';
+        }
+        var shPrice = Number(currentShareItem.price) || 0;
+        var shOld = Number(currentShareItem.old_price) || 0;
+        var shDisc = Number(currentShareItem.discount) || 0;
+        if (price) price.textContent = shPrice > 0 ? '₹' + shPrice.toLocaleString('en-IN') : 'Price on request';
         if (oldPrice) {
-            if (currentShareItem.old_price) {
-                oldPrice.textContent = '₹' + Number(currentShareItem.old_price).toLocaleString('en-IN');
+            if (shPrice > 0 && shOld > shPrice) {
+                oldPrice.textContent = '₹' + shOld.toLocaleString('en-IN');
                 oldPrice.style.display = 'inline';
             } else {
                 oldPrice.style.display = 'none';
             }
         }
         if (disc) {
-            if (currentShareItem.discount) {
-                disc.textContent = currentShareItem.discount + '% OFF';
+            if (shPrice > 0 && shOld > shPrice && shDisc > 0) {
+                disc.textContent = shDisc + '% OFF';
                 disc.style.display = 'inline';
             } else {
                 disc.style.display = 'none';
@@ -549,8 +612,10 @@
     };
 
     window.downloadSmartProductMedia = function() {
-        downloadAllProductPhotos(currentShareItem);
-        showShareToast('📸 Downloading All HD Photos...');
+        var n = downloadAllProductPhotos(currentShareItem);
+        showShareToast(n > 0
+            ? '📸 Downloading ' + n + ' photo' + (n > 1 ? 's' : '') + '...'
+            : '📸 This product has no photos uploaded yet.');
     };
 
     window.copySmartProductText = function() {

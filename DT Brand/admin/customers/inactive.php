@@ -5,6 +5,18 @@
  * inactive.php — Inactive & Dormant Customer Accounts Hub
  * DT Brand's & Jai Hanuman Tex — Luxury Master Design System
  */
+require_once __DIR__ . '/../../src/CustomerManager.php';
+
+use DTBrand\CustomerManager;
+
+// customers.status has no 'inactive' value -- the ENUM is active|pending|suspended
+// -- so "dormant" here means suspended.
+$customersList = CustomerManager::getAll();
+$suspendedCount = 0;
+foreach ($customersList as $c) {
+    if (($c['status'] ?? '') === 'suspended') $suspendedCount++;
+}
+
 $page_title = "Inactive & Dormant Customers";
 $active_nav = "customers";
 $active_subnav = "inactive";
@@ -35,7 +47,7 @@ $active_filter = "inactive";
                     <div class="dt-cust-title-group">
                         <h1 class="dt-cust-title">
                             <span>Inactive &amp; Dormant Customers</span>
-                            <span class="dt-cust-badge" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;">640 Dormant</span>
+                            <span class="dt-cust-badge" style="background:#FEF3C7; color:#B45309; border:1px solid #FCD34D;"><?php echo number_format($suspendedCount); ?> Suspended</span>
                         </h1>
                         <p class="dt-cust-subtitle">Shoppers with no purchases in the last 60+ days or accounts pending re-engagement campaigns.</p>
                     </div>
@@ -59,6 +71,9 @@ $active_filter = "inactive";
     </div>
 </div>
 
+<script>
+    window.dbCustomersData = <?= json_encode($customersList) ?>;
+</script>
 <script src="/admin/customers/assets/js/customers.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/customer-list.js?v=<?php echo time(); ?>"></script>
 <script src="/admin/customers/assets/js/customer-filters.js?v=<?php echo time(); ?>"></script>

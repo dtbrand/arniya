@@ -45,7 +45,9 @@ $active_subnav = "addresses";
                 </div>
 
                 <div class="dt-card">
-                    <?php include __DIR__ . '/components/customer-addresses.php'; ?>
+                    <?php if (include __DIR__ . '/_require-customer.php'): ?>
+                        <?php include __DIR__ . '/components/customer-addresses.php'; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 

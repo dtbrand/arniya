@@ -146,6 +146,13 @@
     cursor: pointer;
 }
 
+/* A pasted YouTube / Instagram link renders in an iframe. */
+.reel-embed {
+    border: 0;
+    display: block;
+    background: #000000;
+}
+
 /* Double-Tap Heart Explosion */
 .reel-heart-pop {
     position: absolute;
@@ -452,41 +459,73 @@
 </div>
 
 <script>
-/* ── DT Brand's Instagram Reels Controller Engine ── */
+/* ── DT Brand's Reels Controller Engine ── */
 (function() {
-    var reelsVideos = [
-        'https://assets.mixkit.co/videos/preview/mixkit-woman-modeling-a-traditional-indian-dress-41312-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-beautiful-woman-wearing-a-sari-and-jewelry-41315-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-in-an-ethnic-sari-41317-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-bride-wearing-a-traditional-indian-dress-41319-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-young-woman-in-a-traditional-sari-41314-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-model-posing-in-traditional-dress-41316-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-indian-bride-posing-in-traditional-outfit-41318-large.mp4',
-        'https://assets.mixkit.co/videos/preview/mixkit-traditional-indian-garment-fabric-close-up-41313-large.mp4'
-    ];
-
+    // There is no stock-footage pool any more. This used to hold eight
+    // assets.mixkit.co clips of other people's sarees and hand one to every
+    // product in turn - reelsVideos[idx % reelsVideos.length] - so the reel a
+    // shopper watched had nothing to do with the saree named underneath it.
     var isMuted = true;
+
+    function reEsc(v) {
+        return String(v === null || typeof v === 'undefined' ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function reFirst(list, single) {
+        var arr = Array.isArray(list) ? list : (single ? [single] : []);
+        for (var i = 0; i < arr.length; i++) {
+            var v = String(arr[i] === null || typeof arr[i] === 'undefined' ? '' : arr[i]).trim();
+            if (v !== '') return v;
+        }
+        return '';
+    }
+
+    // Only products whose own video was uploaded or whose embed link was pasted
+    // in the admin product form appear in the reels.
+    function reelProducts() {
+        return (window.allProducts || []).filter(function(p) {
+            if (!p) return false;
+            return reFirst(p.videos, p.video) !== '' || reFirst(p.embeds, p.embed) !== '';
+        });
+    }
+    window.dtReelsAvailable = function() { return reelProducts().length > 0; };
 
     window.openReelsModal = function(startIndex) {
         var overlay = document.getElementById('reelsModalOverlay');
         var track = document.getElementById('reelsTrack');
-        if (!overlay || !track) return;
+        if (!overlay || !track) return false;
 
-        var products = window.allProducts || [];
-        if (products.length === 0) return;
+        var products = reelProducts();
+        if (products.length === 0) {
+            if (typeof window.showToast === 'function') {
+                window.showToast('No product videos have been uploaded yet.');
+            }
+            return false;
+        }
 
         /* Build Slides */
         track.innerHTML = products.map(function(p, idx) {
-            var videoSrc = reelsVideos[idx % reelsVideos.length];
-            var sizeArr = Array.isArray(p.size) ? p.size : ['Free Size'];
+            var vidSrc = reFirst(p.videos, p.video);
+            var embedSrc = vidSrc === '' ? reFirst(p.embeds, p.embed) : '';
+            var poster = (p.image && p.image !== '/assets/images/no-image.svg' && p.has_photo !== false) ? p.image : '';
             var isWish = Array.isArray(window.wishlistState) && window.wishlistState.some(function(item) { return item.id == p.id; });
-            var likesCount = (1.2 + (p.id * 0.3)).toFixed(1) + 'k';
+            var pName = reEsc(p.name || p.title || 'Product');
+            var priceNum = Number(p.price) || 0;
+            var oldNum = Number(p.old_price) || 0;
+            var discNum = Number(p.discount) || 0;
 
-            return '<div class="reel-slide" data-index="' + idx + '" data-product-id="' + p.id + '">' +
-                '<!-- Background Video -->' +
-                '<video class="reel-video" loop playsinline preload="auto" poster="' + p.image + '" muted>' +
-                    '<source src="' + videoSrc + '" type="video/mp4">' +
-                '</video>' +
+            var mediaHtml = vidSrc !== ''
+                ? '<video class="reel-video" loop playsinline preload="metadata"' + (poster ? ' poster="' + reEsc(poster) + '"' : '') + ' muted>' +
+                      '<source src="' + reEsc(vidSrc) + '" type="video/mp4">' +
+                  '</video>'
+                : '<iframe class="reel-video reel-embed" src="' + reEsc(embedSrc) + '" title="' + pName + '" ' +
+                      'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ' +
+                      'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>';
+
+            return '<div class="reel-slide" data-index="' + idx + '" data-product-id="' + reEsc(p.id) + '" data-media="' + (vidSrc !== '' ? 'video' : 'embed') + '">' +
+                mediaHtml +
 
                 '<!-- Heart Pop Animation -->' +
                 '<svg class="reel-heart-pop" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>' +
@@ -496,23 +535,25 @@
                     '<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>' +
                 '</div>' +
 
-                '<!-- Right-Side Instagram Action Bar -->' +
+                '<!-- Right-Side Action Bar -->' +
                 '<div class="reel-actions-bar">' +
-                    '<button class="reel-action-item reel-wishlist-action" data-id="' + p.id + '" aria-label="Wishlist">' +
+                    '<button class="reel-action-item reel-wishlist-action" data-id="' + reEsc(p.id) + '" aria-label="Wishlist">' +
                         '<div class="reel-action-btn-circle ' + (isWish ? 'liked' : '') + '">' +
                             '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
                         '</div>' +
-                        '<span class="reel-action-label reel-likes-count">' + likesCount + '</span>' +
+                        // The like count used to be invented as (1.2 + id * 0.3) + 'k',
+                        // so product 7 permanently showed "3.3k" likes it never had.
+                        '<span class="reel-action-label">' + (isWish ? 'Saved' : 'Save') + '</span>' +
                     '</button>' +
 
-                    '<button class="reel-action-item reel-cart-action" data-id="' + p.id + '" aria-label="Add to Bag">' +
+                    '<button class="reel-action-item reel-cart-action" data-id="' + reEsc(p.id) + '" aria-label="Add to Bag">' +
                         '<div class="reel-action-btn-circle">' +
                             '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
                         '</div>' +
                         '<span class="reel-action-label">Add Bag</span>' +
                     '</button>' +
 
-                    '<button class="reel-action-item reel-share-action" data-name="' + p.name + '" data-price="' + p.price + '" aria-label="Share">' +
+                    '<button class="reel-action-item reel-share-action" data-name="' + pName + '" data-price="' + priceNum + '" data-id="' + reEsc(p.id) + '" aria-label="Share">' +
                         '<div class="reel-action-btn-circle">' +
                             '<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>' +
                         '</div>' +
@@ -522,16 +563,16 @@
 
                 '<!-- Bottom Info Overlay -->' +
                 '<div class="reel-bottom-info">' +
-                    '<h3 class="reel-product-title">' + p.name + '</h3>' +
+                    '<h3 class="reel-product-title">' + pName + '</h3>' +
 
                     '<div class="reel-price-row">' +
-                        '<span class="reel-price-val">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
-                        (p.old_price ? '<span class="reel-old-price">₹' + Number(p.old_price).toLocaleString('en-IN') + '</span>' : '') +
-                        (p.discount ? '<span class="reel-discount-badge">' + p.discount + '% OFF</span>' : '') +
+                        '<span class="reel-price-val">' + (priceNum > 0 ? '₹' + priceNum.toLocaleString('en-IN') : 'Price on request') + '</span>' +
+                        (oldNum > priceNum ? '<span class="reel-old-price">₹' + oldNum.toLocaleString('en-IN') + '</span>' : '') +
+                        (discNum > 0 ? '<span class="reel-discount-badge">' + discNum + '% OFF</span>' : '') +
                     '</div>' +
 
                     '<div class="reel-bottom-cta-row">' +
-                        '<button class="reel-atc-cta-btn reel-buy-btn" data-id="' + p.id + '">' +
+                        '<button class="reel-atc-cta-btn reel-buy-btn" data-id="' + reEsc(p.id) + '">' +
                             '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
                             'ADD TO BAG' +
                         '</button>' +
@@ -555,10 +596,12 @@
         /* Scroll to target slide */
         var targetIndex = typeof startIndex === 'number' ? startIndex : 0;
         var slides = track.querySelectorAll('.reel-slide');
+        if (targetIndex < 0 || targetIndex >= slides.length) targetIndex = 0;
         if (slides[targetIndex]) {
             slides[targetIndex].scrollIntoView();
             playSlide(slides[targetIndex]);
         }
+        return true;
     };
 
     window.closeReelsModal = function() {
@@ -568,11 +611,15 @@
             overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
 
-            /* Pause all videos */
+            /* Pause all videos, and reset embeds so a third-party player stops. */
             var track = document.getElementById('reelsTrack');
             if (track) {
                 track.querySelectorAll('video').forEach(function(v) {
                     v.pause();
+                });
+                track.querySelectorAll('iframe').forEach(function(f) {
+                    var s = f.getAttribute('src');
+                    if (s) f.setAttribute('src', s);
                 });
             }
         }
@@ -675,6 +722,8 @@
                         var added = window.toggleWishlistProduct(p);
                         var btnCircle = wishAction.querySelector('.reel-action-btn-circle');
                         if (btnCircle) btnCircle.classList.toggle('liked', added);
+                        var lbl = wishAction.querySelector('.reel-action-label');
+                        if (lbl) lbl.textContent = added ? 'Saved' : 'Save';
                         if (typeof window.showToast === 'function') window.showToast(added ? '♡ Saved to wishlist' : 'Removed from wishlist');
                     }
                 });
@@ -686,11 +735,21 @@
                 atcBtn.addEventListener('click', function() {
                     var pId = slide.dataset.productId;
                     var p = (window.allProducts || []).find(function(x) { return x.id == pId; });
-                    var defaultSize = p && Array.isArray(p.size) && p.size.length > 0 ? p.size[0] : 'Free Size';
+                    if (!p || typeof window.addToCart !== 'function') return;
 
-                    if (p && typeof window.addToCart === 'function') {
-                        window.addToCart(p, defaultSize);
-                    }
+                    // The reel used to pass 'Free Size' when the product had no
+                    // size variants, so a made-up size reached the order. Blank
+                    // now means blank, and the product's own MOQ is honoured.
+                    var sizes = (Array.isArray(p.size) ? p.size : (Array.isArray(p.sizes) ? p.sizes : []))
+                        .filter(function(s) { return String(s || '').trim() !== ''; });
+                    var colors = (Array.isArray(p.colors) ? p.colors : (p.color ? [p.color] : []))
+                        .filter(function(c) { return String(c || '').trim() !== ''; });
+
+                    window.addToCart(p, {
+                        qty: Number(p.moq) > 1 ? Number(p.moq) : 1,
+                        size: sizes.length ? sizes[0] : '',
+                        color: colors.length ? colors[0] : ''
+                    });
                 });
             });
 
@@ -698,15 +757,19 @@
             var shareBtn = slide.querySelector('.reel-share-action');
             if (shareBtn) {
                 shareBtn.addEventListener('click', function() {
-                    var pName = shareBtn.dataset.name;
-                    var pPrice = shareBtn.dataset.price;
-                    var shareText = '✨ Check out ' + pName + ' at ₹' + Number(pPrice).toLocaleString('en-IN') + ' on DT Brand\'s Ethnic Luxury!\n' + window.location.href;
+                    var pName = shareBtn.dataset.name || '';
+                    var pPrice = Number(shareBtn.dataset.price) || 0;
+                    // Shared link points at the product, not at whichever page the
+                    // reel happened to be opened from.
+                    var pUrl = window.location.origin + '/product.php?id=' + encodeURIComponent(shareBtn.dataset.id || '');
+                    var shareText = 'Check out ' + pName + (pPrice > 0 ? ' at ₹' + pPrice.toLocaleString('en-IN') : '') +
+                                    ' on DT Brand\'s Ethnic Luxury!\n' + pUrl;
 
                     if (navigator.share) {
                         navigator.share({
                             title: pName + ' - DT Brand\'s',
                             text: shareText,
-                            url: window.location.href
+                            url: pUrl
                         }).catch(function() {});
                     } else {
                         if (navigator.clipboard) {

@@ -213,6 +213,16 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 <script>
 /* ── Cart Drawer Controller with Smooth Auto-Slide & Touch/Mouse Drag ── */
 (function() {
+    var CD_NO_IMAGE = '/assets/images/no-image.svg';
+
+    // Cart lines are built as HTML strings, so every stored value (product name,
+    // colour, size) is escaped before it is interpolated.
+    function cdEsc(v) {
+        return String(v === null || typeof v === 'undefined' ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     function loadCart() {
         try {
             var raw = localStorage.getItem('dtbrands_cart');
@@ -305,27 +315,28 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         if (items.length === 0) {
             if (footer) footer.style.display = 'none';
 
-            /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider */
-            var products = window.allProducts || [
-                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/assets/images/product1.png' },
-                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/assets/images/product3.png' },
-                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/assets/images/product5.png' },
-                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/assets/images/product8.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/assets/images/product4.png' }
-            ];
+            /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider.
+               The picks are real catalogue rows only. This used to fall back to
+               five invented sarees ("Nilambari Silk Saree ₹4,899" and friends)
+               whose ids did not have to match anything in the database, so
+               "+ ADD" on them silently did nothing. */
+            var products = (window.allProducts || []).filter(function(p) {
+                return p && p.id && Number(p.price) > 0;
+            }).slice(0, 10);
 
             // Render loop duplicates for seamless long scrolling
-            var fullList = products.concat(products);
+            var fullList = products.length ? products.concat(products) : [];
 
             var sliderCardsHtml = fullList.map(function(p) {
+                var hasImg = p.has_photo !== false && p.image && p.image !== CD_NO_IMAGE;
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + p.image + '" alt="' + p.name + '" class="cd-rec-img" />' +
+                        '<img src="' + cdEsc(hasImg ? p.image : CD_NO_IMAGE) + '" alt="' + cdEsc(p.name) + '" class="cd-rec-img"' + (hasImg ? '' : ' style="opacity:.45;"') + ' />' +
                     '</div>' +
-                    '<h5 class="cd-rec-title">' + p.name + '</h5>' +
+                    '<h5 class="cd-rec-title">' + cdEsc(p.name) + '</h5>' +
                     '<div class="cd-price-row">' +
                         '<span class="cd-rec-price">₹' + Number(p.price).toLocaleString('en-IN') + '</span>' +
-                        '<button class="cd-rec-add-btn" onclick="window.addRecToCart(' + p.id + ')">+ ADD</button>' +
+                        '<button class="cd-rec-add-btn" onclick="window.addRecToCart(' + (parseInt(p.id, 10) || 0) + ')">+ ADD</button>' +
                     '</div>' +
                 '</div>';
             }).join('');
@@ -342,10 +353,13 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                     '</div>' +
                     '<h4 class="cd-empty-title">YOUR BAG IS EMPTY</h4>' +
                     '<p class="cd-empty-desc">Discover our handcrafted ethnic luxury collection & elevate your wardrobe.</p>' +
-                    '<button class="cd-explore-btn" onclick="window.closeCartDrawer(); window.scrollTo({top: 500, behavior: \'smooth\'});">' +
+                    '<button class="cd-explore-btn" onclick="window.closeCartDrawer(); window.location.href=\'/shop\';">' +
                         'EXPLORE COLLECTION &rarr;' +
                     '</button>' +
 
+                    // Hidden outright when the catalogue has nothing to suggest,
+                    // rather than showing an empty "TRENDING LUXURY PICKS" strip.
+                    (sliderCardsHtml ?
                     '<div class="cd-recommend-section">' +
                         '<div class="cd-rec-head">' +
                             '<span>✨ TRENDING LUXURY PICKS</span>' +
@@ -354,7 +368,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                         '<div class="cd-rec-track" id="cdRecTrack">' +
                             sliderCardsHtml +
                         '</div>' +
-                    '</div>' +
+                    '</div>' : '') +
                 '</div>';
 
             /* Initialize Auto Slider with Mouse and Touch Support */
@@ -369,13 +383,19 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             var totalPrice = 0;
             items.forEach(function(item, idx) {
                 totalPrice += item.price * item.qty;
-                var imgUrl = item.image || '/assets/images/product1.png';
+                // A missing photo shows the placeholder, not another product's
+                // picture (this used to fall back to product1.png).
+                var hasImg = item.image && item.image !== CD_NO_IMAGE;
+                var imgUrl = hasImg ? item.image : CD_NO_IMAGE;
+                var metaBits = [];
+                if (item.color) metaBits.push('Colour: ' + cdEsc(item.color));
+                if (item.size) metaBits.push('Size: ' + cdEsc(item.size));
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + item.name + '" class="cd-item-img" />' +
+                    '<img src="' + cdEsc(imgUrl) + '" alt="' + cdEsc(item.name) + '" class="cd-item-img"' + (hasImg ? '' : ' style="opacity:.45;"') + ' />' +
                     '<div class="cd-item-info">' +
-                        '<h4 class="cd-item-title">' + item.name + '</h4>' +
-                        '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +
+                        '<h4 class="cd-item-title">' + cdEsc(item.name) + '</h4>' +
+                        (metaBits.length ? '<span class="cd-item-meta">' + metaBits.join(' &bull; ') + '</span>' : '') +
                         '<div class="cd-price-row">' +
                             '<span class="cd-item-price">₹' + Number(item.price * item.qty).toLocaleString('en-IN') + '</span>' +
                             (item.old_price ? '<span class="cd-item-old">₹' + Number(item.old_price * item.qty).toLocaleString('en-IN') + '</span>' : '') +
@@ -431,7 +451,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         if (typeof window.showToast === 'function') window.showToast('Item removed from bag');
     };
 
-    window.addToCart = function(product, size, color) {
+    window.addToCart = function(product, sizeOrOpts, color, qtyArg) {
         // Accept a product OBJECT or a product id (resolve via the live catalog).
         if (product === null || typeof product === 'undefined') return;
         if (typeof product !== 'object') {
@@ -444,18 +464,44 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 return;
             }
         }
-        // Guard against legacy callers that passed a quantity as the 2nd arg.
-        if (typeof size === 'number') size = undefined;
 
-        var chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || 'Free Size';
-        var chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
+        // Callers reach this from several places, so the arguments are sniffed
+        // rather than fixed. Quantity used to be ignored entirely: a shopper who
+        // stepped the quick view up to 6 pieces got a bag with 1.
+        //   addToCart(p, { qty: 6, size: 'M', color: 'Red' })
+        //   addToCart(p, 'M', 'Red')       - size + colour
+        //   addToCart(p, 6)                - quantity only
+        //   addToCart(p, 6, 'single', ...) - legacy lot-type call
+        var size, chosenQty = 1;
+        if (sizeOrOpts && typeof sizeOrOpts === 'object') {
+            size = sizeOrOpts.size;
+            color = sizeOrOpts.color || color;
+            chosenQty = parseInt(sizeOrOpts.qty, 10) || 1;
+        } else if (typeof sizeOrOpts === 'number') {
+            chosenQty = parseInt(sizeOrOpts, 10) || 1;
+            // A legacy third argument was a lot type ('single'/'half_set'), not a
+            // colour, so it must not be recorded as one.
+            if (typeof color === 'string' && /^(single|half_set|full_set|master_bale)$/i.test(color)) color = undefined;
+        } else {
+            size = sizeOrOpts;
+            if (typeof qtyArg !== 'undefined') chosenQty = parseInt(qtyArg, 10) || 1;
+        }
+        if (!(chosenQty > 0)) chosenQty = 1;
+        if (chosenQty > 999) chosenQty = 999;
+
+        // Only a real selection is stored. 'Free Size'/'Standard' used to be
+        // invented here for products that have no variants recorded at all.
+        var chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || '';
+        var chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || '';
+        chosenSize = String(chosenSize || '').trim();
+        chosenColor = String(chosenColor || '').trim();
 
         var existing = window.cartState.find(function(item) {
-            return item.id == product.id && item.size == chosenSize && item.color == chosenColor;
+            return item.id == product.id && (item.size || '') == chosenSize && (item.color || '') == chosenColor;
         });
 
         if (existing) {
-            existing.qty += 1;
+            existing.qty += chosenQty;
         } else {
             window.cartState.push({
                 id: product.id,
@@ -465,13 +511,14 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 image: product.image,
                 size: chosenSize,
                 color: chosenColor,
-                qty: 1
+                qty: chosenQty
             });
         }
         saveCart(window.cartState);
         window.renderCart();
         if (typeof window.showToast === 'function') {
-            window.showToast('Added ' + product.name + ' (' + chosenColor + ') to bag ✓');
+            var what = [chosenColor, chosenSize].filter(Boolean).join(' / ');
+            window.showToast('Added ' + product.name + (what ? ' (' + what + ')' : '') + (chosenQty > 1 ? ' x' + chosenQty : '') + ' to bag');
         }
         window.openCartDrawer();
     };
@@ -493,7 +540,6 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     };
 
     window.openCart = window.openCartDrawer;
-    window.closeCart = window.closeCartDrawer;
 
     window.closeCartDrawer = function() {
         var modal = document.getElementById('cartDrawerModal');
@@ -507,6 +553,11 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             document.body.style.overflow = '';
         }
     };
+
+    // Aliased AFTER the function exists. The alias used to be assigned on the
+    // line above the definition, so window.closeCart was permanently undefined
+    // and every caller of it threw.
+    window.closeCart = window.closeCartDrawer;
 
     /* Global Badge Sync Helper */
     window.updateGlobalBadges = function() {

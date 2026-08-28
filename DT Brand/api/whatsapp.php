@@ -69,7 +69,7 @@ try {
                     if ($audience !== 'all' && ($c['type'] ?? '') !== $audience) {
                         continue;
                     }
-                    $phone = $c['phone'] ?? '+919876543210';
+                    $phone = $c['phone'] ?? '+917046363528';
                     $stmt->execute([$phone, $message]);
                     $inserted++;
                 }
