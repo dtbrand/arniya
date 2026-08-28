@@ -16,7 +16,7 @@
         }
 
         var raw = String(msg || '').trim();
-        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        var cleanText = raw.replace(/^[\s\u2713\u2661\u2728\p{Extended_Pictographic}]+/u, '').trim();
         if (!cleanText) cleanText = raw;
 
         var lower = raw.toLowerCase();
@@ -137,7 +137,9 @@
             if (isActive) {
                 try {
                     item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                } catch (e) {}
+                } catch {
+                    // Ignore scroll errors on detached elements
+                }
             }
         });
     }
@@ -154,10 +156,6 @@
         galleryAutoTimer = setInterval(function() {
             window.slidePdpGallery(1);
         }, 3800);
-    }
-
-    function isHoldingSlide() {
-        return false;
     }
 
     function pauseGalleryAutoTimer() {
@@ -234,7 +232,7 @@
             }
         }, { passive: false });
 
-        track.addEventListener('touchend', function(e) {
+        track.addEventListener('touchend', function() {
             if (isTouchDrag && isHorizontalSwipe) {
                 var diffX = touchCurrentX - touchStartX;
                 if (diffX < -40) {
@@ -430,7 +428,9 @@
                     qty: currentQty
                 });
                 localStorage.setItem('dtbrands_cart', JSON.stringify(cart));
-            } catch(e) {}
+            } catch {
+                // Storage quota exceeded or disabled
+            }
         }
 
         window.showToast('🛍️ Added ' + (currentProduct.name || 'item') + ' to Bag!');
@@ -663,7 +663,9 @@
                 var isActive = (i === lbCurrentIdx);
                 th.classList.toggle('active', isActive);
                 if (isActive) {
-                    try { th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } catch(e) {}
+                    try { th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); } catch {
+                        // Ignore scroll errors on detached elements
+                    }
                 }
             });
         }
@@ -770,8 +772,12 @@
         var savedAddr = null;
         var user = null;
 
-        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch(e) {}
-        try { if (userRaw) user = JSON.parse(userRaw); } catch(e) {}
+        try { if (savedAddrRaw) savedAddr = JSON.parse(savedAddrRaw); } catch {
+            // Ignore invalid JSON in localStorage
+        }
+        try { if (userRaw) user = JSON.parse(userRaw); } catch {
+            // Ignore invalid JSON in localStorage
+        }
 
         var nameVal = (savedAddr && savedAddr.name) ? savedAddr.name : (user && user.name ? user.name : '');
         var phoneVal = (savedAddr && savedAddr.phone) ? savedAddr.phone : (user && user.phone ? user.phone : '');
@@ -917,7 +923,9 @@
                     state: state,
                     pincode: pincode
                 }));
-            } catch(err) {}
+            } catch {
+                // Storage quota exceeded or disabled
+            }
         }
 
         var sel = pdpSelection();

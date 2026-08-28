@@ -28,6 +28,8 @@ class ProductCatalog
     /**
      * Turn whatever is stored in a media column into a URL a browser can load,
      * or '' when the stored value cannot be one.
+     *
+     * @param mixed $raw
      */
     private static function mediaPath($raw): string
     {
@@ -252,6 +254,13 @@ class ProductCatalog
         }));
         $fullSetPieces = count($activeVariants);
 
+        $saleDisc = (float)($r['sale_price'] ?? 0);
+        $effTrade = max(0, $retail - $saleDisc);
+        $effCust = ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - $saleDisc) : $effTrade;
+        $effWholesale = $wholesale > 0 ? max(0, $wholesale - $saleDisc) : $effTrade;
+        $effReseller = $reseller > 0 ? max(0, $reseller - $saleDisc) : $effTrade;
+        $boutiqueMargin = max(0, $effCust - $effTrade);
+
         return [
             'id' => $pid,
             'sku' => trim((string)($r['sku'] ?? '')),
@@ -279,12 +288,16 @@ class ProductCatalog
             'full_set_variants' => $activeVariants,
             'mrp' => $mrp,
             'old_price' => $mrp,
-            'price' => $retail,
+            'price' => $effCust,
+            'trade_price' => $effTrade,
             'retail_price' => $retail,
-            'sale_price' => (float)($r['sale_price'] ?? 0),
-            'sale_discount' => (float)($r['sale_price'] ?? 0),
-            'effective_price' => max(0, $retail - (float)($r['sale_price'] ?? 0)),
-            'effective_customer_price' => ($custPrice !== null && $custPrice > 0) ? max(0, $custPrice - (float)($r['sale_price'] ?? 0)) : max(0, $retail - (float)($r['sale_price'] ?? 0)),
+            'sale_price' => $saleDisc,
+            'sale_discount' => $saleDisc,
+            'effective_price' => $effTrade,
+            'effective_customer_price' => $effCust,
+            'effective_wholesale_price' => $effWholesale,
+            'effective_reseller_price' => $effReseller,
+            'boutique_margin' => $boutiqueMargin,
             'wholesale_price' => $wholesale,
             'reseller_price' => $reseller,
             'reseller_profit' => ($reseller - $wholesale),
@@ -649,7 +662,10 @@ class ProductCatalog
     /** The four values products.status may hold. */
     private const VALID_STATUSES = ['in_stock', 'low_stock', 'out_of_stock', 'draft'];
 
-    /** Normalise a submitted status to the ENUM, or '' when unrecognised. */
+    /** 
+     * Normalise a submitted status to the ENUM, or '' when unrecognised.
+     * @param mixed $raw
+     */
     private static function normaliseStatus($raw): string
     {
         $st = str_replace([' ', '-'], '_', strtolower(trim((string)$raw)));
@@ -663,6 +679,7 @@ class ProductCatalog
      * Accept a media URL for storage, or '' when it is not storable.
      * A base64 data URL is rejected outright: primary_image is VARCHAR(255),
      * so storing one truncates it into a permanently broken image.
+     * @param mixed $raw
      */
     private static function storableMedia($raw): string
     {
@@ -677,7 +694,11 @@ class ProductCatalog
         return strlen($p) > 255 ? '' : $p;
     }
 
-    /** Resolve a submitted category to a real categories row where one exists. */
+    /** 
+     * Resolve a submitted category to a real categories row where one exists.
+     * @param mixed $idRaw
+     * @param mixed $nameRaw
+     */
     private static function resolveCategory($idRaw, $nameRaw): array
     {
         $id = (int)$idRaw;

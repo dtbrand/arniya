@@ -28,6 +28,8 @@ class ProductCatalog
     /**
      * Turn whatever is stored in a media column into a URL a browser can load,
      * or '' when the stored value cannot be one.
+     *
+     * @param mixed $raw
      */
     private static function mediaPath($raw): string
     {
@@ -660,7 +662,10 @@ class ProductCatalog
     /** The four values products.status may hold. */
     private const VALID_STATUSES = ['in_stock', 'low_stock', 'out_of_stock', 'draft'];
 
-    /** Normalise a submitted status to the ENUM, or '' when unrecognised. */
+    /** 
+     * Normalise a submitted status to the ENUM, or '' when unrecognised.
+     * @param mixed $raw
+     */
     private static function normaliseStatus($raw): string
     {
         $st = str_replace([' ', '-'], '_', strtolower(trim((string)$raw)));
@@ -674,6 +679,7 @@ class ProductCatalog
      * Accept a media URL for storage, or '' when it is not storable.
      * A base64 data URL is rejected outright: primary_image is VARCHAR(255),
      * so storing one truncates it into a permanently broken image.
+     * @param mixed $raw
      */
     private static function storableMedia($raw): string
     {
@@ -688,7 +694,11 @@ class ProductCatalog
         return strlen($p) > 255 ? '' : $p;
     }
 
-    /** Resolve a submitted category to a real categories row where one exists. */
+    /** 
+     * Resolve a submitted category to a real categories row where one exists.
+     * @param mixed $idRaw
+     * @param mixed $nameRaw
+     */
     private static function resolveCategory($idRaw, $nameRaw): array
     {
         $id = (int)$idRaw;

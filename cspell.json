@@ -127,7 +127,19 @@
         "ERRMODE",
         "docroot",
         "TINYINT",
-        "Normalise"
+        "Normalise",
+        "playsinline",
+        "Normalised",
+        "normalised",
+        "fullset",
+        "Priya",
+        "Paytm",
+        "youtu",
+        "dailymotion",
+        "unreviewed",
+        "unrecognised",
+        "denormalised",
+        "ondblclick"
     ],
     "ignorePaths": [
         ".gemini/**",
