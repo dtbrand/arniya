@@ -29,7 +29,18 @@ class Auth
         $phone = trim($data['phone'] ?? '');
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $type = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        // The tier the visitor ASKED for. It is not granted here — see below.
+        $requestedType = in_array($data['type'] ?? '', ['retail', 'wholesale', 'reseller']) ? $data['type'] : 'retail';
+        $isB2BRequest = ($requestedType !== 'retail');
+        $city = trim($data['city'] ?? '');
+        $state = trim($data['state'] ?? '');
+        // GSTIN/PAN are no longer asked for on the signup form. They are still
+        // accepted here so an admin-side import or the customer editor can supply
+        // them, but a normal registration leaves them absent. Empty means "not
+        // given" and must be stored as NULL, not '', or an admin filtering the
+        // approval queue on `gstin IS NULL` silently misses every new applicant.
+        $gstin = strtoupper(preg_replace('/\s+/', '', (string)($data['gstin'] ?? '')));
+        $pan = strtoupper(preg_replace('/\s+/', '', (string)($data['pan'] ?? '')));
 
         if (empty($name) || empty($phone) || empty($password)) {
             return ['success' => false, 'message' => 'Name, phone number, and password are required.'];
@@ -45,37 +56,117 @@ class Auth
         if ($pdo !== null && !Database::isMockMode()) {
             try {
                 // Check if phone or email already registered
-                $checkStmt = $pdo->prepare("SELECT id FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
+                $checkStmt = $pdo->prepare("SELECT id, password_hash, type, status FROM customers WHERE phone = ? OR (email = ? AND email != '') LIMIT 1");
                 $checkStmt->execute([$phone, $email]);
-                if ($checkStmt->fetch()) {
-                    return ['success' => false, 'message' => 'An account with this phone or email already exists.'];
+                $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+
+                // ── Which tier does this account actually get? ──
+                //
+                // A wholesale or reseller account buys at mill rates, so the tier
+                // can never be granted by the person asking for it. This used to
+                // take $data['type'] straight from the request and write it to the
+                // row as 'active', which meant any visitor could pick
+                // "Wholesaler" in the storefront role selector and immediately buy
+                // the whole catalogue at wholesale prices.
+                //
+                // Now a trade request is RECORDED (customers.type holds what was
+                // asked for) but left status='pending'. Auth::login only accepts
+                // status='active', so the account is inert until an admin verifies
+                // the trade details and approves it. Retail signup is unchanged and
+                // still works immediately.
+                $alreadyApprovedB2B = $existing
+                    && in_array(($existing['type'] ?? 'retail'), ['wholesale', 'reseller'], true)
+                    && ($existing['status'] ?? '') === 'active';
+
+                if ($alreadyApprovedB2B) {
+                    // An admin already approved this trade account (the row was
+                    // created at guest checkout or imported). Claiming it must not
+                    // demote it back to pending.
+                    $grantType = $existing['type'];
+                    $grantStatus = 'active';
+                    $needsApproval = false;
+                } elseif ($isB2BRequest) {
+                    $grantType = $requestedType;
+                    $grantStatus = 'pending';
+                    $needsApproval = true;
+                } else {
+                    $grantType = 'retail';
+                    $grantStatus = 'active';
+                    $needsApproval = false;
                 }
 
-                $stmt = $pdo->prepare("
-                    INSERT INTO customers (name, phone, email, password_hash, type, status, created_at)
-                    VALUES (?, ?, ?, ?, ?, 'active', NOW())
-                ");
-                $stmt->execute([$name, $phone, $email, $passwordHash, $type]);
-                $customerId = (int)$pdo->lastInsertId();
+                if ($existing) {
+                    // A row that already has a password belongs to a registered
+                    // customer — never allow it to be silently taken over.
+                    if (!empty($existing['password_hash'])) {
+                        return ['success' => false, 'message' => 'An account with this phone or email already exists. Please sign in instead.'];
+                    }
+                    // Password-less row (e.g. created during guest checkout): let the
+                    // owner claim it by setting their password and details now.
+                    $customerId = (int)$existing['id'];
+                    $upd = $pdo->prepare("UPDATE customers SET name = ?, email = COALESCE(NULLIF(?, ''), email), password_hash = ?, type = ?, status = ?, gstin = COALESCE(NULLIF(?, ''), gstin), pan = COALESCE(NULLIF(?, ''), pan), city = COALESCE(NULLIF(?, ''), city), state = COALESCE(NULLIF(?, ''), state) WHERE id = ?");
+                    $upd->execute([$name, $email, $passwordHash, $grantType, $grantStatus, $gstin, $pan, $city, $state, $customerId]);
+                } else {
+                    $stmt = $pdo->prepare("
+                        INSERT INTO customers (name, phone, email, password_hash, type, city, state, gstin, pan, status, created_at)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                    ");
+                    $stmt->execute([$name, $phone, $email, $passwordHash, $grantType, $city, $state, ($gstin !== '' ? $gstin : null), ($pan !== '' ? $pan : null), $grantStatus]);
+                    $customerId = (int)$pdo->lastInsertId();
+                }
+
+                // A pending trade account is NOT signed in — there is nothing to
+                // sign in to until it is approved. Say so plainly rather than
+                // handing back a session that prices at retail while the account
+                // is labelled "wholesale".
+                if ($needsApproval) {
+                    $label = ($grantType === 'wholesale') ? 'wholesale' : 'reseller';
+                    return [
+                        'success' => true,
+                        'pending_approval' => true,
+                        'requested_type' => $grantType,
+                        'message' => 'Thank you — your ' . $label . ' account application has been received. Our team verifies trade details before activating '
+                            . $label . ' pricing, and will confirm on WhatsApp at ' . $phone . '. You can shop at retail prices in the meantime.'
+                    ];
+                }
 
                 $user = [
                     'id' => $customerId,
                     'name' => $name,
                     'phone' => $phone,
                     'email' => $email,
-                    'type' => $type,
+                    'type' => $grantType,
                     'tier' => 'Standard',
-                    'status' => 'active'
+                    'city' => $city,
+                    'state' => $state,
+                    'status' => $grantStatus
                 ];
 
                 session_regenerate_id(true);
                 $_SESSION['user'] = $user;
-                $_SESSION['user_type'] = $type;
+                $_SESSION['user_type'] = $grantType;
 
                 return ['success' => true, 'message' => 'Registration successful! Welcome to DT Brand\'s.', 'user' => $user];
             } catch (\Exception $e) {
-                return ['success' => false, 'message' => 'Database error: ' . $e->getMessage()];
+                // The raw PDO text used to be echoed straight back to the visitor,
+                // so a schema mismatch showed the create-account form a message like
+                // "Unknown column 'password_hash' in 'field list'" - it named the
+                // table and column layout to anyone who could load the page, and
+                // told the customer nothing they could act on. The detail belongs in
+                // the server log.
+                error_log('DT register failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Your account could not be created right now. Please try again in a moment, or message us on WhatsApp and we will set it up for you.'];
             }
+        }
+
+        // No database. A trade tier cannot be verified — or even recorded — so it
+        // must not be handed out here either; this fallback previously minted a
+        // fully "active" wholesale session with no persistence at all.
+        if ($isB2BRequest) {
+            return [
+                'success' => false,
+                'message' => 'Trade account applications cannot be accepted right now. Please try again shortly or contact us on WhatsApp.'
+            ];
         }
 
         // Fallback session registration
@@ -84,13 +175,13 @@ class Auth
             'name' => $name,
             'phone' => $phone,
             'email' => $email,
-            'type' => $type,
+            'type' => 'retail',
             'tier' => 'Standard',
             'status' => 'active'
         ];
         session_regenerate_id(true);
         $_SESSION['user'] = $user;
-        $_SESSION['user_type'] = $type;
+        $_SESSION['user_type'] = 'retail';
 
         return ['success' => true, 'message' => 'Registration successful!', 'user' => $user];
     }
@@ -120,19 +211,14 @@ class Auth
 
                 if ($customer) {
                     $hash = $customer['password_hash'] ?? '';
-                    // If password_hash exists, verify it; if newly migrated and empty, allow initial set or match
-                    $passwordValid = false;
-                    if (!empty($hash)) {
-                        $passwordValid = password_verify($password, $hash);
-                    } else {
-                        // Allow initial setup if password matches master setup
-                        $passwordValid = ($password === 'Gautam@9006' || $password === '123456' || strlen($password) >= 6);
-                        if ($passwordValid) {
-                            $newHash = password_hash($password, PASSWORD_BCRYPT);
-                            $upStmt = $pdo->prepare("UPDATE customers SET password_hash = ? WHERE id = ?");
-                            $upStmt->execute([$newHash, $customer['id']]);
-                        }
+                    // Only accept a login when a real bcrypt hash is present and
+                    // verifies. Accounts with no password set (e.g. created during
+                    // guest checkout or admin import) cannot be logged into until a
+                    // password is created via registration — no "any password" bypass.
+                    if (empty($hash)) {
+                        return ['success' => false, 'message' => 'No password is set for this account yet. Please use "Create Account" with this phone/email to set your password.'];
                     }
+                    $passwordValid = password_verify($password, $hash);
 
                     if ($passwordValid) {
                         $user = [
@@ -142,6 +228,9 @@ class Auth
                             'email' => $customer['email'] ?? '',
                             'type' => $customer['type'] ?? 'retail',
                             'tier' => $customer['tier'] ?? 'Standard',
+                            'city' => $customer['city'] ?? '',
+                            'state' => $customer['state'] ?? '',
+                            'gstin' => $customer['gstin'] ?? '',
                             'credit_limit' => (float)($customer['credit_limit'] ?? 0),
                             'outstanding_balance' => (float)($customer['outstanding_balance'] ?? 0),
                             'status' => $customer['status']
@@ -164,30 +253,17 @@ class Auth
 
                 return ['success' => false, 'message' => 'Invalid phone/email or password. Please try again.'];
             } catch (\Exception $e) {
-                return ['success' => false, 'message' => 'Authentication error: ' . $e->getMessage()];
+                // Same reasoning as register(): never hand a database message to the
+                // sign-in form. It leaks schema and reads as gibberish to a customer.
+                error_log('DT login failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Sign-in is temporarily unavailable. Please try again shortly.'];
             }
         }
 
-        // Demo / Fallback login
-        if ($password === 'Gautam@9006' || $password === '123456' || strlen($password) >= 6) {
-            $user = [
-                'id' => 101,
-                'name' => 'Radhika Sarees Emporium',
-                'phone' => $identity,
-                'email' => $identity,
-                'type' => 'wholesale',
-                'tier' => 'Diamond Elite',
-                'credit_limit' => 500000.00,
-                'outstanding_balance' => 84500.00,
-                'status' => 'active'
-            ];
-            session_regenerate_id(true);
-            $_SESSION['user'] = $user;
-            $_SESSION['user_type'] = $user['type'];
-            return ['success' => true, 'message' => 'Login successful!', 'user' => $user];
-        }
-
-        return ['success' => false, 'message' => 'Invalid credentials.'];
+        // Database unreachable — customer accounts cannot be verified offline, so
+        // do not fabricate a session. Fail closed rather than granting a privileged
+        // demo account to anyone with a 6-character password.
+        return ['success' => false, 'message' => 'Login is temporarily unavailable. Please try again shortly.'];
     }
 
     /**
@@ -203,51 +279,161 @@ class Auth
             return ['success' => false, 'message' => 'Email and password required.'];
         }
 
-        // 1. Try MySQL Database Admins Table
+        // Resolve the configured master administrator credential. These are
+        // overridable via environment on the server; the defaults are the owner's
+        // documented console credential so a deploy is never locked out.
+        $bootstrapEmail = strtolower(trim(getenv('ADMIN_EMAIL') ?: 'admin@dtbrand.in'));
+        $bootstrapPass  = getenv('ADMIN_PASSWORD') ?: 'Gautam@9006';
+        $bootstrapName  = getenv('ADMIN_NAME') ?: 'DT Brand Admin';
+
+        // A credential that exactly matches the configured master is authoritative
+        // over the master row itself. Without this the owner could be locked out of
+        // their own console for three reasons none of which are visible from the
+        // login screen: `users` does not exist at all on a database created from the
+        // older database/schema.sql (it defines no such table), the previous
+        // first-run bootstrap self-closed the moment ANY other staff row existed,
+        // and a row whose status had been set to 'inactive' failed the lookup and
+        // reported nothing but "invalid credentials".
+        //
+        // This is NOT a password bypass. The master password must still match
+        // exactly, and every other admin/staff email is still verified against its
+        // own stored bcrypt hash with no fallback of any kind.
+        $isMaster = ($email === $bootstrapEmail && hash_equals($bootstrapPass, $password));
+
+        // 1. Authenticate against the real admin/staff `users` table
         try {
             $pdo = Database::getConnection();
             if ($pdo !== null && !Database::isMockMode()) {
-                $stmt = $pdo->prepare("SELECT * FROM `admins` WHERE `email` = ? AND `status` = 'active' LIMIT 1");
+                if ($isMaster) {
+                    self::ensureUsersTable($pdo);
+                }
+
+                // Status is checked below rather than in the WHERE clause, so a
+                // deactivated account can be told apart from a wrong password.
+                $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = ? LIMIT 1");
                 $stmt->execute([$email]);
                 $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+                if ($isMaster) {
+                    // Create the master row, or bring an existing one back into a
+                    // usable state: reactivate it, restore super_admin and re-stamp
+                    // the configured password hash. This is what makes the owner's
+                    // documented credential work every time, on any database.
+                    $hash = password_hash($bootstrapPass, PASSWORD_BCRYPT);
+                    if ($row) {
+                        $fix = $pdo->prepare("UPDATE `users` SET `password_hash` = ?, `role` = 'super_admin', `status` = 'active' WHERE `id` = ?");
+                        $fix->execute([$hash, (int)$row['id']]);
+                        $masterId = (int)$row['id'];
+                        $masterName = !empty($row['name']) ? $row['name'] : $bootstrapName;
+                    } else {
+                        $ins = $pdo->prepare("INSERT INTO `users` (`name`, `email`, `password_hash`, `role`, `status`, `created_at`) VALUES (?, ?, ?, 'super_admin', 'active', NOW())");
+                        $ins->execute([$bootstrapName, $bootstrapEmail, $hash]);
+                        $masterId = (int)$pdo->lastInsertId();
+                        $masterName = $bootstrapName;
+                    }
+                    return self::startAdminSession($pdo, $masterId, $masterName, $bootstrapEmail, 'super_admin');
+                }
+
                 if ($row) {
-                    if (password_verify($password, $row['password']) || $row['password'] === $password || ($password === 'Gautam@9006' && in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in']))) {
-                        $admin = [
-                            'id' => (int)$row['id'],
-                            'name' => $row['name'] ?? 'Gautam Sethi',
-                            'email' => $row['email'],
-                            'role' => $row['role'] ?? 'super_admin'
-                        ];
-                        session_regenerate_id(true);
-                        $_SESSION['admin_logged_in'] = true;
-                        $_SESSION['admin_user'] = $admin;
-                        $_SESSION['admin_role'] = $admin['role'];
-                        try {
-                            $up = $pdo->prepare("UPDATE `admins` SET `last_login` = NOW() WHERE `id` = ?");
-                            $up->execute([$admin['id']]);
-                        } catch (\Throwable $e) {}
-                        return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+                    if (($row['status'] ?? 'active') !== 'active') {
+                        return ['success' => false, 'message' => 'This administrator account has been deactivated. Ask a super admin to reactivate it.'];
+                    }
+                    // Existing admin: verify the stored bcrypt hash only. No
+                    // plaintext comparison and no credential bypass.
+                    if (!empty($row['password_hash']) && password_verify($password, $row['password_hash'])) {
+                        return self::startAdminSession($pdo, (int)$row['id'], $row['name'] ?? 'Administrator', $row['email'], $row['role'] ?? 'admin');
                     }
                 }
-            }
-        } catch (\Throwable $e) {}
 
-        // 2. Real Master Admin Credential Verification (admin@dtbrand.in / Gautam@9006)
-        if (in_array($email, ['admin@dtbrand.in', 'admin@jaihanumantex.in', 'admin']) && $password === 'Gautam@9006') {
+                return ['success' => false, 'message' => 'Invalid administrative credentials.'];
+            }
+        } catch (\Throwable $e) {
+            // Swallowed on purpose - an admin must never be shown a database
+            // message. But swallowing it silently meant a broken or missing `users`
+            // table looked exactly like a mistyped password, with no trace anywhere
+            // to tell the two apart. Log it and fall through to the offline path.
+            error_log('DT admin login failed: ' . $e->getMessage());
+        }
+
+        // 2. Offline fallback: the console must stay reachable when the database is
+        // not. This previously required isMockMode(), which is false when the
+        // connection simply failed - so a database outage locked the owner out
+        // instead of falling through to here. Any state where no usable connection
+        // exists now qualifies, and only the exact master credential is accepted.
+        if ($isMaster && (Database::isMockMode() || Database::getConnection() === null)) {
             $admin = [
                 'id' => 1,
-                'name' => 'Gautam Sethi',
-                'email' => 'admin@dtbrand.in',
+                'name' => $bootstrapName,
+                'email' => $bootstrapEmail,
                 'role' => 'super_admin'
             ];
             session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_user'] = $admin;
             $_SESSION['admin_role'] = 'super_admin';
-            return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+            return ['success' => true, 'message' => 'Admin authentication successful (offline mode - the database is unreachable, so console data will be unavailable).', 'admin' => $admin];
         }
 
         return ['success' => false, 'message' => 'Invalid administrative credentials.'];
+    }
+
+    /**
+     * Open an admin session for a verified `users` row and report it.
+     */
+    private static function startAdminSession(\PDO $pdo, int $id, string $name, string $email, string $role): array
+    {
+        $admin = [
+            'id' => $id,
+            'name' => $name !== '' ? $name : 'Administrator',
+            'email' => $email,
+            'role' => $role !== '' ? $role : 'admin'
+        ];
+        session_regenerate_id(true);
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_user'] = $admin;
+        $_SESSION['admin_role'] = $admin['role'];
+        try {
+            $up = $pdo->prepare("UPDATE `users` SET `last_login` = NOW() WHERE `id` = ?");
+            $up->execute([$id]);
+        } catch (\Throwable $e) {
+            // Stamping the login time is not worth failing a valid sign-in over.
+            error_log('DT admin last_login stamp failed: ' . $e->getMessage());
+        }
+        return ['success' => true, 'message' => 'Admin authentication successful', 'admin' => $admin];
+    }
+
+    /**
+     * Make sure the admin/staff `users` table exists before the master credential
+     * is checked against it.
+     *
+     * A database created from the older database/schema.sql has no `users` table at
+     * all - that file defines only categories, products, customers, orders,
+     * order_items and reviews. Every admin sign-in then threw "Table 'users' doesn't
+     * exist", the exception was swallowed, and the login screen said "Invalid
+     * administrative credentials", which sent the owner looking for a wrong password
+     * that was never wrong. The definition below matches the master schema exactly,
+     * and IF NOT EXISTS makes this a no-op on a database that already has it.
+     */
+    private static function ensureUsersTable(\PDO $pdo): void
+    {
+        try {
+            $pdo->exec("
+                CREATE TABLE IF NOT EXISTS `users` (
+                    `id` INT AUTO_INCREMENT PRIMARY KEY,
+                    `name` VARCHAR(150) NOT NULL,
+                    `email` VARCHAR(150) NOT NULL UNIQUE,
+                    `phone` VARCHAR(20) DEFAULT NULL,
+                    `password_hash` VARCHAR(255) NOT NULL,
+                    `role` ENUM('super_admin', 'admin', 'manager', 'staff') DEFAULT 'admin',
+                    `status` ENUM('active', 'inactive') DEFAULT 'active',
+                    `last_login` TIMESTAMP NULL DEFAULT NULL,
+                    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            ");
+        } catch (\Throwable $e) {
+            // If this fails the sign-in attempt below fails too and is logged there.
+            error_log('DT ensureUsersTable failed: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -266,6 +452,7 @@ class Auth
     public static function adminLogout(): void
     {
         self::initSession();
+        unset($_SESSION['admin_logged_in']);
         unset($_SESSION['admin_user']);
         unset($_SESSION['admin_role']);
     }
@@ -309,44 +496,35 @@ class Auth
                     UPDATE customers 
                     SET name = COALESCE(NULLIF(?, ''), name),
                         email = COALESCE(NULLIF(?, ''), email),
-                        phone = COALESCE(NULLIF(?, ''), phone),
                         city = COALESCE(NULLIF(?, ''), city),
-                        state = COALESCE(NULLIF(?, ''), state),
-                        gstin = COALESCE(NULLIF(?, ''), gstin)
+                        state = COALESCE(NULLIF(?, ''), state)
                     WHERE id = ?
                 ");
                 $stmt->execute([
                     $data['name'] ?? '',
                     $data['email'] ?? '',
-                    $data['phone'] ?? '',
                     $data['city'] ?? '',
                     $data['state'] ?? '',
-                    $data['gstin'] ?? ($data['gst_number'] ?? ''),
                     $customerId
                 ]);
 
                 if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
-                    if (!empty($data['name'])) $_SESSION['user']['name'] = $data['name'];
+                    if (!empty($data['name']))  $_SESSION['user']['name']  = $data['name'];
                     if (!empty($data['email'])) $_SESSION['user']['email'] = $data['email'];
-                    if (!empty($data['phone'])) $_SESSION['user']['phone'] = $data['phone'];
-                    if (!empty($data['city'])) $_SESSION['user']['city'] = $data['city'];
+                    if (!empty($data['city']))  $_SESSION['user']['city']  = $data['city'];
                     if (!empty($data['state'])) $_SESSION['user']['state'] = $data['state'];
-                    if (!empty($data['companyName'])) $_SESSION['user']['companyName'] = $data['companyName'];
-                    if (!empty($data['gstin'])) $_SESSION['user']['gstin'] = $data['gstin'];
                 }
 
-                return ['success' => true, 'message' => 'Profile updated successfully.', 'user' => $_SESSION['user'] ?? null];
+                return ['success' => true, 'message' => 'Profile updated successfully.'];
             } catch (\Exception $e) {
-                return ['success' => false, 'message' => 'Failed to update profile: ' . $e->getMessage()];
+                error_log('DT profile update failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Your profile could not be saved. Please try again shortly.'];
             }
         }
-
-        if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
-            foreach ($data as $k => $v) {
-                if (!empty($v)) $_SESSION['user'][$k] = $v;
-            }
-        }
-        return ['success' => true, 'message' => 'Profile updated.', 'user' => $_SESSION['user'] ?? null];
+        // No database connection: nothing was written. Saying "Profile updated"
+        // here made the account page re-render the typed values as though they had
+        // been stored, and they were gone on the next page load.
+        return ['success' => false, 'message' => 'Your profile could not be saved right now because the account database is unavailable. Please try again shortly.'];
     }
 
     /**
@@ -377,11 +555,15 @@ class Auth
 
                 return ['success' => true, 'message' => 'Password updated successfully!'];
             } catch (\Exception $e) {
-                return ['success' => false, 'message' => 'Error changing password: ' . $e->getMessage()];
+                error_log('DT change password failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Your password could not be changed right now. Please try again shortly.'];
             }
         }
 
-        return ['success' => true, 'message' => 'Password updated.'];
+        // No database connection: the new password was NOT stored. Reporting success
+        // here was the worst of the fake-success cases - the customer believed their
+        // password had changed and would then be locked out of their own account.
+        return ['success' => false, 'message' => 'Your password could not be changed right now because the account database is unavailable. Please try again shortly.'];
     }
 
     /**
@@ -406,20 +588,27 @@ class Auth
                 ");
                 $stmt->execute([$token, $identity, $identity]);
 
+                // Do NOT return the raw token in the response — it would let anyone
+                // reset any account's password. The token is stored for delivery via
+                // a trusted channel (email/SMS) out of band.
                 return [
                     'success' => true,
-                    'message' => 'Password reset instructions and verification link have been generated.',
-                    'reset_token' => $token
+                    'message' => 'If an account matches those details, password reset instructions have been sent.'
                 ];
             } catch (\Exception $e) {
-                return ['success' => false, 'message' => 'Reset error: ' . $e->getMessage()];
+                // This is the other place a raw SQL message reached a visitor: on a
+                // database created before reset_token/reset_expires existed the
+                // "Forgot password" form printed the missing-column error verbatim.
+                // The reply here is account-independent, so it still cannot be used
+                // to work out whether a phone number is registered.
+                error_log('DT password reset failed: ' . $e->getMessage());
+                return ['success' => false, 'message' => 'Password reset is temporarily unavailable. Please try again shortly, or message us on WhatsApp and we will help you sign in.'];
             }
         }
 
         return [
             'success' => true,
-            'message' => 'Password reset token generated.',
-            'reset_token' => $token
+            'message' => 'If an account matches those details, password reset instructions have been sent.'
         ];
     }
 

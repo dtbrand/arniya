@@ -1,6 +1,5 @@
 <?php
 /**
- * admin/includes/header.php
- * DT Brand's & Jai Hanuman Tex
+ * admin/includes/header.php — Admin Header Wrapper
  */
-include_once __DIR__ . '/../../Frontend/Admin/Includes/adminheader.php';
+include_once __DIR__ . '/adminheader.php';

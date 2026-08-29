@@ -1,7 +1,8 @@
 <?php
+/* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
+
 /**
- * admin/dashboard/index.php — Admin Dashboard Console Entry
+ * index.php — Admin Dashboard Direct Loader
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/../../bootstrap/app.php';
-require_once __DIR__ . '/../../Frontend/Admin/admin.php';
+require_once __DIR__ . '/../admin.php';

@@ -1,7 +1,6 @@
 <?php
 /**
- * api/retailer/index.php — REST API Endpoint
+ * api/retailer/index.php — REST API Proxy
  * DT Brand's & Jai Hanuman Tex
  */
-require_once __DIR__ . '/../../bootstrap/app.php';
-header('Content-Type: application/json'); echo json_encode(['success' => true, 'data' => \DTBrand\CustomerManager::getByType('retail')]);
+require_once __DIR__ . '/../retailer.php';

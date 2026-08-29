@@ -1,44 +1,76 @@
+# ==============================================================================
+# DT BRAND'S & JAI HANUMAN TEX — ENTERPRISE ROOT APACHE .HTACCESS
+# Version: 3.1 Unified Single-Tree Production Hardened
+# ==============================================================================
+
+Options -Indexes -MultiViews
+
+# ── 1. SECURITY: BLOCK SENSITIVE FILE EXTENSIONS & DOTFILES ──
+<FilesMatch "(?i)\.(env.*|git.*|json|lock|neon|xml|sql|md|yml|yaml|log|bak|swp|dist|phar|cache)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ── 2. SECURITY: BLOCK DIRECT ACCESS TO INTERNAL INFRASTRUCTURE FOLDERS ──
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # 1. Canonical Redirects: /home, /home.php, /index.php to clean root domain https://jaihanumantex.in/
+    # Block access to internal protected directories
+    RewriteRule ^(config|database|src|app|storage|tests|scripts|vendor|bootstrap|docs|backups|\.git|\.agents|\.uix|\.vscode)/ - [F,L,NC]
+
+    # 3. Canonical Redirects: /home, /home.php, /index.php to clean root domain
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(home|home\.php|index\.php)\ HTTP/ [NC]
     RewriteRule ^(home|home\.php|index\.php)$ / [R=301,L]
 
-    # 2. Allow direct access to DT Brand
-    RewriteCond %{REQUEST_URI} ^/DT\ Brand/ [NC]
-    RewriteRule ^ - [L]
+    # 4. Clean Product Routes: /product/3 or /product/slug
+    RewriteRule ^product/([0-9]+)/?$ product.php?id=$1 [QSA,L]
+    RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [QSA,L]
 
-    # 3. Clean Product Routes: /product/3 or /product/slug
-    RewriteRule ^product/([0-9]+)/?$ DT\ Brand/product.php?id=$1 [QSA,L]
-    RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ DT\ Brand/product.php?slug=$1 [QSA,L]
+    # 5. Main Storefront Clean Routes
+    RewriteRule ^shop/?$ shop.php [QSA,L]
+    RewriteRule ^wholesale/?$ wholesale.php [QSA,L]
+    RewriteRule ^reseller/?$ reseller.php [QSA,L]
+    RewriteRule ^retailer/?$ retailer.php [QSA,L]
+    RewriteRule ^account/?$ account.php [QSA,L]
+    RewriteRule ^cart/?$ cart.php [QSA,L]
+    RewriteRule ^checkout/?$ checkout.php [QSA,L]
+    RewriteRule ^wishlist/?$ wishlist.php [QSA,L]
+    RewriteRule ^about-us/?$ about-us.php [QSA,L]
+    RewriteRule ^privacy/?$ privacy.php [QSA,L]
+    RewriteRule ^shipping/?$ shipping.php [QSA,L]
+    RewriteRule ^terms/?$ terms.php [QSA,L]
 
-    # 4. Main Storefront Clean Routes
-    RewriteRule ^shop/?$ DT\ Brand/shop.php [QSA,L]
-    RewriteRule ^wholesale/?$ DT\ Brand/wholesale.php [QSA,L]
-    RewriteRule ^reseller/?$ DT\ Brand/reseller.php [QSA,L]
-    RewriteRule ^retailer/?$ DT\ Brand/retailer.php [QSA,L]
-    RewriteRule ^account/?$ DT\ Brand/account.php [QSA,L]
+    # 6. Clean API Routes: /api/products -> /api/products.php
+    RewriteRule ^api/([a-zA-Z0-9_-]+)/?$ api/$1.php [QSA,L]
 
-    # 5. Clean Admin & Auth Routes
-    RewriteRule ^admin/login/?$ DT\ Brand/admin/login.php [QSA,L]
-    RewriteRule ^adminlogin/?$ DT\ Brand/admin/login.php [QSA,L]
-    RewriteRule ^login/?$ DT\ Brand/admin/login.php [QSA,L]
-    RewriteRule ^admin/?$ DT\ Brand/admin/index.php [QSA,L]
+    # 7. Clean Admin & Auth Routes
+    RewriteRule ^admin/login/?$ admin/login.php [QSA,L]
+    RewriteRule ^adminlogin/?$ admin/login.php [QSA,L]
+    RewriteRule ^login/?$ admin/login.php [QSA,L]
+    RewriteRule ^admin/?$ admin/index.php [QSA,L]
 
     # Admin Subroutes
-    RewriteRule ^admin/products/?$ DT\ Brand/admin/products/index.php [QSA,L]
-    RewriteRule ^admin/products/([^/]+\.php)$ DT\ Brand/admin/products/$1 [QSA,L]
-    RewriteRule ^admin/products/([^/]+)/?$ DT\ Brand/admin/products/$1/index.php [QSA,L]
-    RewriteRule ^admin/products/([^/]+)/([^/]+\.php)$ DT\ Brand/admin/products/$1/$2 [QSA,L]
+    RewriteRule ^admin/products/?$ admin/products/index.php [QSA,L]
+    RewriteRule ^admin/products/([^/]+\.php)$ admin/products/$1 [QSA,L]
+    RewriteRule ^admin/products/([^/]+)/?$ admin/products/$1/index.php [QSA,L]
+    RewriteRule ^admin/products/([^/]+)/([^/]+\.php)$ admin/products/$1/$2 [QSA,L]
 
-    RewriteRule ^admin/([^/]+)/?$ DT\ Brand/admin/$1/index.php [QSA,L]
-    RewriteRule ^admin/([^/]+)/([^/]+\.php)$ DT\ Brand/admin/$1/$2 [QSA,L]
+    RewriteRule ^admin/([^/]+)/?$ admin/$1/index.php [QSA,L]
+    RewriteRule ^admin/([^/]+)/([^/]+\.php)$ admin/$1/$2 [QSA,L]
+</IfModule>
 
-    # 6. Route all other root requests to DT Brand subfolder seamlessly
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !^/DT\ Brand/ [NC]
-    RewriteRule ^(.*)$ DT\ Brand/$1 [L,QSA]
+# ── 8. ENTERPRISE SECURITY HEADERS ──
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>

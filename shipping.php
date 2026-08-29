@@ -1,10 +1,9 @@
 <?php
 /**
  * shipping.php — DT Brand's & Jai Hanuman Tex
- * Shipping, Logistics & Express Dispatch Policy
  */
 $pageTitle = "Shipping & Dispatch Policy — DT Brand's";
-include_once __DIR__ . '/Frontend/Shop/Includes/shophader.php';
+include_once __DIR__ . '/includes/shophader.php';
 ?>
 <main style="max-width:960px; margin:40px auto; padding:0 20px; font-family:'Inter', sans-serif; color:#1F2937;">
     <div style="background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:36px 32px; box-shadow:0 4px 20px rgba(0,0,0,0.04);">
@@ -33,10 +32,4 @@ include_once __DIR__ . '/Frontend/Shop/Includes/shophader.php';
         </section>
     </div>
 </main>
-<?php 
-if (file_exists(__DIR__ . '/Frontend/Shop/Includes/shopfooter.php')) {
-    include_once __DIR__ . '/Frontend/Shop/Includes/shopfooter.php';
-} elseif (file_exists(__DIR__ . '/DT Brand/includes/footer.php')) {
-    include_once __DIR__ . '/DT Brand/includes/footer.php';
-}
-?>
+<?php include_once __DIR__ . '/includes/footer.php'; ?>

@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = strtolower(trim($_POST['email'] ?? ''));
     $password = trim($_POST['password'] ?? '');
 
-    require_once __DIR__ . '/../src/Database.php';
-    require_once __DIR__ . '/../src/Auth.php';
+    require_once __DIR__ . '/src/Database.php';
+    require_once __DIR__ . '/src/Auth.php';
 
     $authRes = \DTBrand\Auth::adminLogin($email, $password);
 

@@ -44,6 +44,7 @@ class PricingCalculator
             'discount' => round($discount, 2),
             'taxable' => round($taxable, 2),
             'gst' => $gst,
+            'gst_amount' => $gst,
             'shipping' => round($shipping, 2),
             'grand_total' => $grandTotal
         ];

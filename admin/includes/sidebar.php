@@ -1,6 +1,5 @@
 <?php
 /**
- * admin/includes/sidebar.php
- * DT Brand's & Jai Hanuman Tex
+ * admin/includes/sidebar.php — Admin Sidebar Wrapper
  */
-include_once __DIR__ . '/../../Frontend/Admin/Includes/adminsidebar.php';
+include_once __DIR__ . '/adminsidebar.php';
