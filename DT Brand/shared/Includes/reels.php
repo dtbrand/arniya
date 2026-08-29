@@ -462,7 +462,7 @@ body.reels-open #dtMobileBottomNav {
             </div>
             <div class="reels-top-actions">
                 <button class="reels-icon-btn" id="reelsMuteBtn" aria-label="Toggle sound">
-                    <svg id="reelsMuteIcon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                    <svg id="reelsMuteIcon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                 </button>
                 <button class="reels-icon-btn" id="closeReelsBtn" aria-label="Close reels">
                     <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -481,11 +481,16 @@ body.reels-open #dtMobileBottomNav {
 <script>
 /* ── DT Brand's Reels Controller Engine ── */
 (function() {
-    // There is no stock-footage pool any more. This used to hold eight
-    // assets.mixkit.co clips of other people's sarees and hand one to every
-    // product in turn - reelsVideos[idx % reelsVideos.length] - so the reel a
-    // shopper watched had nothing to do with the saree named underneath it.
-    var isMuted = true;
+    var isMuted = false;
+
+    function updateMuteIcon() {
+        var muteIcon = document.getElementById('reelsMuteIcon');
+        if (muteIcon) {
+            muteIcon.innerHTML = isMuted ?
+                '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>' :
+                '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>';
+        }
+    }
 
     function reEsc(v) {
         return String(v === null || typeof v === 'undefined' ? '' : v)
@@ -623,7 +628,7 @@ body.reels-open #dtMobileBottomNav {
 
             var mediaHtml = '';
             if (vidSrc !== '') {
-                mediaHtml = '<video class="reel-video" loop playsinline preload="auto"' + (poster ? ' poster="' + reEsc(poster) + '"' : '') + ' muted>' +
+                mediaHtml = '<video class="reel-video" loop playsinline preload="auto"' + (poster ? ' poster="' + reEsc(poster) + '"' : '') + (isMuted ? ' muted' : '') + '>' +
                               '<source src="' + reEsc(vidSrc) + '" type="video/mp4">' +
                           '</video>';
             } else if (embedSrc !== '') {
@@ -710,6 +715,7 @@ body.reels-open #dtMobileBottomNav {
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         document.body.classList.add('reels-open', 'reels-modal-open');
+        updateMuteIcon();
 
         // Explicitly hide any mobile floating bottom navigation bar
         var bottomNavs = document.querySelectorAll('.home-smart-bottom-footer, .shop-smart-bottom-footer, .dt-mobile-bottom-nav, #homeSmartBottomFooter, #shopSmartBottomFooter, #dtMobileBottomNav');
@@ -773,7 +779,18 @@ body.reels-open #dtMobileBottomNav {
         var video = slide.querySelector('video');
         if (video) {
             video.muted = isMuted;
-            video.play().catch(function() {});
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(err) {
+                    // If browser policy blocks unmuted audio on rare instances without prior interaction, fallback to muted
+                    if (!video.muted) {
+                        video.muted = true;
+                        isMuted = true;
+                        updateMuteIcon();
+                        video.play().catch(function() {});
+                    }
+                });
+            }
         }
 
         /* Update progress bar */
