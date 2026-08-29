@@ -810,7 +810,7 @@ function pdp_relative_date(string $ts): string
                     $relMrp   = (float)($rel['old_price'] ?? 0);
                     $relDisc  = (int)($rel['discount'] ?? 0);
                 ?>
-                <a href="/product/<?= (int)($rel['id'] ?? 0) ?>" class="pdp-rel-card">
+                <a href="/product.php?id=<?= (int)($rel['id'] ?? 0) ?>" class="pdp-rel-card">
                     <div class="pdp-rel-img-wrap">
                         <?php if (!empty($rel['badge'])): ?>
                         <span class="pdp-rel-badge"><?= htmlspecialchars((string)$rel['badge']) ?></span>

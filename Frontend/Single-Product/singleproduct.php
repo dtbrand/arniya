@@ -766,7 +766,7 @@ $colorHex = [
                 $relatedItems = array_filter($products, function($it) use ($product) { return $it['id'] !== $product['id']; });
                 foreach ($relatedItems as $rel):
                 ?>
-                <a href="/product/<?= $rel['id'] ?>" class="pdp-rel-card">
+                <a href="/product.php?id=<?= $rel['id'] ?>" class="pdp-rel-card">
                     <div class="pdp-rel-img-wrap">
                         <?php if (!empty($rel['badge'])): ?>
                         <span class="pdp-rel-badge"><?= htmlspecialchars($rel['badge']) ?></span>

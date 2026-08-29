@@ -1003,11 +1003,11 @@
 
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
-        <a href="../../shop" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
+        <a href="/" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
             <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
-        <a href="../../shop" class="return-shop-btn">
+        <a href="/shop.php" class="return-shop-btn">
             <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>Back to Shop</span>
         </a>
@@ -1243,7 +1243,7 @@
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="../../Frontend/Retailer/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
+                    <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
                         <span>🛍️ Open Retailer Dashboard</span>
                         <span>→</span>
                     </a>
@@ -1263,7 +1263,7 @@
                         Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
                     </div>
                 </div>
-                <a href="../../Frontend/Retailer/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
+                <a href="/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
                     Open Retailer Portal →
                 </a>
             </div>
@@ -1332,11 +1332,11 @@
                 <div style="display:flex; flex-direction:column; gap:16px;">
                     
                     <div class="stat-tiles">
-                        <a href="../../shop" class="stat-tile">
+                        <a href="/cart.php" class="stat-tile" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
                             <div class="stat-tile-num" id="dashCartCount">0</div>
                             <div class="stat-tile-lbl">Bag Items</div>
                         </a>
-                        <a href="../../shop" class="stat-tile">
+                        <a href="/wishlist.php" class="stat-tile" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
                             <div class="stat-tile-num" id="dashWishCount">0</div>
                             <div class="stat-tile-lbl">Saved Items</div>
                         </a>
@@ -1352,7 +1352,7 @@
                         </a>
                     </div>
 
-                    <a href="../../shop" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
+                    <a href="/shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
                         Browse Luxury Catalog
                     </a>
 
@@ -1663,12 +1663,12 @@
                     if (titleEl) titleEl.textContent = '👑 Wholesaler B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access bulk tier pricing, live courier dispatch tracking, GST billing, and procurement reports.';
                     if (linkEl) {
-                        linkEl.href = '../../Frontend/Wholesale/wholesale.php';
+                        linkEl.href = '/wholesale.php';
                         linkEl.textContent = 'Open Wholesaler Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../Frontend/Wholesale/wholesale.php';
+                        heroBtn.href = '/wholesale.php';
                         heroBtn.innerHTML = '<span>📦 Open Wholesaler Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'retailer') {
@@ -1676,12 +1676,12 @@
                     if (titleEl) titleEl.textContent = '🛍️ Retailer B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = '../../Frontend/Retailer/retailer.php';
+                        linkEl.href = '/retailer.php';
                         linkEl.textContent = 'Open Retailer Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../Frontend/Retailer/retailer.php';
+                        heroBtn.href = '/retailer.php';
                         heroBtn.innerHTML = '<span>🛍️ Open Retailer Dashboard</span><span>→</span>';
                     }
                 } else if (role === 'reseller') {
@@ -1689,12 +1689,12 @@
                     if (titleEl) titleEl.textContent = '💼 Reseller B2B VIP Hub Ready';
                     if (subEl) subEl.textContent = 'Access reseller catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.';
                     if (linkEl) {
-                        linkEl.href = '../../Frontend/Reseller/reseller.php';
+                        linkEl.href = '/reseller.php';
                         linkEl.textContent = 'Open Reseller Portal →';
                     }
                     if (heroBtn) {
                         heroBtn.style.display = 'inline-flex';
-                        heroBtn.href = '../../Frontend/Reseller/reseller.php';
+                        heroBtn.href = '/reseller.php';
                         heroBtn.innerHTML = '<span>💼 Open Reseller Dashboard</span><span>→</span>';
                     }
                 } else {
@@ -1897,7 +1897,7 @@
 
         window.handleLogoutClick = function() {
             localStorage.removeItem('dtbrands_user');
-            window.location.href = '../../shop';
+            window.location.href = '/shop.php';
         };
 
         /* Run on Page Load */

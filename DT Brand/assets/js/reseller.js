@@ -2889,7 +2889,7 @@ window.animateTargetGauge = animateTargetGauge;
         function handleWholesalerLogout() {
             if (confirm('Are you sure you want to log out of the Reseller Portal?')) {
                 localStorage.removeItem('dtbrands_user');
-                window.location.href = '../Shop/shop.php';
+                window.location.href = '/shop.php';
             }
         };
 

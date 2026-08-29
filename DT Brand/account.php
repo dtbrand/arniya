@@ -1003,11 +1003,11 @@
 
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
-        <a href="../../shop.php" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
+        <a href="/" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
+            <img src="/assets/images/logo.png" onerror="this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
-        <a href="../../shop.php" class="return-shop-btn">
+        <a href="/shop.php" class="return-shop-btn">
             <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
             <span>Back to Shop</span>
         </a>
@@ -1257,7 +1257,7 @@
                 </div>
 
                 <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                    <a href="../../retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
+                    <a href="/retailer.php" id="dashHeroPortalBtn" style="display:none; text-decoration:none; padding:10px 20px; font-size:0.84rem; font-weight:800; border-radius:8px; background:linear-gradient(135deg, #D4AF37 0%, #8A681F 100%); color:#FFFFFF; box-shadow:0 4px 14px rgba(138,104,31,0.35); align-items:center; gap:6px;">
                         <span>🛍️ Open Retailer Dashboard</span>
                         <span>→</span>
                     </a>
@@ -1277,7 +1277,7 @@
                         Access retail catalog, GST billing invoices, margin discounts, live dispatch tracking, and wallet.
                     </div>
                 </div>
-                <a href="../../retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
+                <a href="/retailer.php" id="wsVipBannerLink" class="auth-btn-submit" style="padding:10px 22px; font-size:0.85rem; font-weight:800; text-decoration:none; display:inline-flex; width:auto; border-radius:8px; background:linear-gradient(135deg, #8A681F 0%, #5E4613 100%); color:#FFFFFF;">
                     Open Retailer Portal →
                 </a>
             </div>
@@ -1346,11 +1346,11 @@
                 <div style="display:flex; flex-direction:column; gap:16px;">
                     
                     <div class="stat-tiles">
-                        <a href="../../shop.php" class="stat-tile">
+                        <a href="/cart.php" class="stat-tile" onclick="if(typeof window.openCartDrawer==='function'){window.openCartDrawer();return false;}">
                             <div class="stat-tile-num" id="dashCartCount">0</div>
                             <div class="stat-tile-lbl">Bag Items</div>
                         </a>
-                        <a href="../../shop.php" class="stat-tile">
+                        <a href="/wishlist.php" class="stat-tile" onclick="if(typeof window.openWishlistDrawer==='function'){window.openWishlistDrawer();return false;}">
                             <div class="stat-tile-num" id="dashWishCount">0</div>
                             <div class="stat-tile-lbl">Saved Items</div>
                         </a>
@@ -1366,7 +1366,7 @@
                         </a>
                     </div>
 
-                    <a href="../../shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
+                    <a href="/shop.php" class="auth-btn-submit" style="text-align:center; text-decoration:none; display:flex;">
                         Browse Luxury Catalog
                     </a>
 
@@ -1978,5 +1978,13 @@
         });
     })();
     </script>
+
+    <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
+    <?php include_once __DIR__ . '/shared/quickview.php'; ?>
+    <?php include_once __DIR__ . '/shared/smartshare.php'; ?>
+    <?php include_once __DIR__ . '/shared/reels.php'; ?>
+    <?php include_once __DIR__ . '/shared/cart.php'; ?>
+    <?php include_once __DIR__ . '/shared/wishlist.php'; ?>
+    <?php include_once __DIR__ . '/shared/checkout.php'; ?>
 </body>
 </html>

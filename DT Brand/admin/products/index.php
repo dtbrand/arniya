@@ -468,7 +468,7 @@ $active_subnav = "";
                                             <span style="color:#c3c4c7;">|</span>
                                             <a href="javascript:void(0)" onclick="duplicateProductRow('<?= $rowId ?>')" style="color:#1D4ED8; font-weight:600;">Duplicate</a>
                                             <span style="color:#c3c4c7;">|</span>
-                                            <a href="/product/<?= $p['id'] ?>" target="_blank" style="color:#1D4ED8; font-weight:600;">View</a>
+                                            <a href="/product.php?id=<?= $p['id'] ?>" target="_blank" style="color:#1D4ED8; font-weight:600;">View</a>
                                             <span style="color:#c3c4c7;">|</span>
                                             <a href="javascript:void(0)" onclick="shareProductWhatsApp('<?= addslashes($p['title']) ?>', '<?= $sku ?>', '₹<?= number_format($wp) ?>')" style="color:#15803D; font-weight:700;">WhatsApp</a>
                                             <span style="color:#c3c4c7;">|</span>

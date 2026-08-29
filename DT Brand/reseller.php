@@ -1372,7 +1372,7 @@ $catalogHasProducts = $catalogProducts !== [];
                                 Reseller Orders
                             </h3>
                         </div>
-                        <a href="../Shop/shop.php" class="ws-btn-new-order">
+                        <a href="/shop.php" class="ws-btn-new-order">
                             <span class="ws-new-order-icon-badge">
                                 <svg class="ws-anim-plus-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -3106,7 +3106,7 @@ $catalogHasProducts = $catalogProducts !== [];
                     <a href="/account.php?tab=login" class="ws-btn ws-btn-secondary">
                         Sign In with Other Account
                     </a>
-                    <a href="../Shop/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
+                    <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
                         ← Return to Store
                     </a>
                 </div>
