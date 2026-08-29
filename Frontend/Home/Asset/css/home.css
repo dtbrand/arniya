@@ -7848,48 +7848,51 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 /* ════════════════════════════════════════════════════
-   COYU-STYLE HERO VIDEO BANNER SLIDER & CIRCULAR STORIES
-   Desktop & Mobile Fluid Architecture (Ultra-Refined)
+   COYU-STYLE HERO VIDEO BANNER SLIDER
+   Flush Header Architecture & 2-Slide Real Video Engine
 ════════════════════════════════════════════════════ */
 
-/* ── 1. Hero Video Banner Slider ── */
+/* ── 1. Hero Video Banner Slider (Zero Gap with Header) ── */
 .coyu-hero-video-section {
     position: relative;
     width: 100%;
-    padding: 0;
-    background: transparent;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #181512;
 }
 
 .coyu-hero-video-container {
     position: relative;
     width: 100%;
-    max-width: 1400px;
-    margin: 8px auto 0;
-    border-radius: 16px;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
     overflow: hidden;
-    height: 480px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+    height: 520px;
+    box-shadow: none;
     background: #181512;
 }
 
 @media (max-width: 1024px) {
     .coyu-hero-video-container {
-        height: 390px;
-        margin: 4px auto 0;
-        border-radius: 12px;
+        height: 420px;
+        margin: 0 !important;
+        border-radius: 0 !important;
     }
 }
 
 @media (max-width: 768px) {
     .coyu-hero-video-section {
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     .coyu-hero-video-container {
-        margin: 0;
-        border-radius: 0;
-        height: 340px; /* Normal compact mobile height */
-        min-height: 310px;
-        max-height: 360px;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        height: 360px; /* Normal compact mobile height */
+        min-height: 320px;
+        max-height: 380px;
         box-shadow: none;
     }
 }
@@ -7971,11 +7974,11 @@ input[type=range].sf-range::-moz-range-thumb {
 /* Slide Typography & Content (Bottom-Left) */
 .coyu-slide-content {
     position: absolute;
-    bottom: clamp(24px, 4vw, 36px);
-    left: clamp(14px, 3.5vw, 42px);
-    right: clamp(14px, 3.5vw, 42px);
+    bottom: clamp(24px, 4.5vw, 42px);
+    left: clamp(14px, 4vw, 48px);
+    right: clamp(14px, 4vw, 48px);
     z-index: 3;
-    max-width: min(94%, 680px);
+    max-width: min(94%, 720px);
     color: #FFFFFF;
     pointer-events: auto;
 }
@@ -7990,77 +7993,77 @@ input[type=range].sf-range::-moz-range-thumb {
     text-transform: uppercase;
     color: #F8D67A;
     background: rgba(24, 21, 18, 0.65);
-    padding: 2.5px 8px;
+    padding: 3px 10px;
     border-radius: 16px;
     border: 1px solid rgba(212, 175, 55, 0.35);
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 
 .coyu-slide-slogan {
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
-    font-size: clamp(1.22rem, 3.8vw, 2.5rem);
+    font-size: clamp(1.35rem, 4.2vw, 2.75rem);
     font-weight: 800;
-    line-height: 1.14;
+    line-height: 1.12;
     letter-spacing: -0.02em;
     color: #FFFFFF;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
-    margin: 0 0 4px 0;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+    margin: 0 0 6px 0;
 }
 
 .coyu-slide-sub {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.72rem, 1.6vw, 0.92rem);
+    font-size: clamp(0.74rem, 1.8vw, 0.96rem);
     font-weight: 500;
     color: rgba(255, 255, 255, 0.92);
-    margin: 0 0 10px 0;
-    line-height: 1.28;
+    margin: 0 0 14px 0;
+    line-height: 1.32;
     text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
 
 .coyu-slide-cta-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .coyu-slide-cta-primary {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #E6CA65 100%);
     color: #111827 !important;
     font-weight: 800;
-    font-size: clamp(0.72rem, 1.4vw, 0.84rem);
+    font-size: clamp(0.76rem, 1.5vw, 0.88rem);
     letter-spacing: -0.01em;
-    padding: clamp(5px, 1.1vw, 8px) clamp(13px, 2vw, 20px);
-    border-radius: 24px;
+    padding: clamp(6px, 1.2vw, 9px) clamp(15px, 2.2vw, 22px);
+    border-radius: 26px;
     border: 1px solid #8A681F;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     transition: all 0.25s ease;
     text-decoration: none;
 }
 
 .coyu-slide-cta-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
 }
 
 .coyu-slide-cta-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     background: rgba(255, 255, 255, 0.16);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.38);
     color: #FFFFFF !important;
     font-weight: 700;
-    font-size: clamp(0.70rem, 1.3vw, 0.80rem);
-    padding: clamp(5px, 1.1vw, 8px) clamp(11px, 1.8vw, 16px);
-    border-radius: 24px;
+    font-size: clamp(0.72rem, 1.4vw, 0.82rem);
+    padding: clamp(6px, 1.2vw, 9px) clamp(13px, 1.8vw, 18px);
+    border-radius: 26px;
     transition: all 0.25s ease;
     text-decoration: none;
 }
@@ -8074,11 +8077,11 @@ input[type=range].sf-range::-moz-range-thumb {
 /* Sound Mute/Unmute Toggle */
 .coyu-sound-toggle {
     position: absolute;
-    bottom: clamp(24px, 4vw, 36px);
-    right: clamp(14px, 3.5vw, 36px);
+    bottom: clamp(24px, 4.5vw, 42px);
+    right: clamp(14px, 4vw, 42px);
     z-index: 4;
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: rgba(24, 21, 18, 0.72);
     -webkit-backdrop-filter: blur(10px);
@@ -8100,8 +8103,8 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .coyu-sound-toggle svg {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.2;
@@ -8113,8 +8116,8 @@ input[type=range].sf-range::-moz-range-thumb {
     top: 50%;
     transform: translateY(-50%);
     z-index: 4;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: rgba(24, 21, 18, 0.65);
     -webkit-backdrop-filter: blur(10px);
@@ -8155,14 +8158,14 @@ input[type=range].sf-range::-moz-range-thumb {
 /* Slide Progress Bars */
 .coyu-slider-indicators {
     position: absolute;
-    bottom: 24px;
+    bottom: 14px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 4;
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 6px;
+    gap: 6px;
+    padding: 3px 8px;
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.35);
     -webkit-backdrop-filter: blur(6px);
@@ -8170,8 +8173,8 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .coyu-indicator-bar {
-    width: 24px;
-    height: 3px;
+    width: 28px;
+    height: 3.5px;
     border-radius: 3px;
     background: rgba(255, 255, 255, 0.35);
     overflow: hidden;
@@ -8181,7 +8184,7 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 .coyu-indicator-bar.active {
-    width: 36px;
+    width: 42px;
 }
 
 .coyu-indicator-fill {
@@ -8197,161 +8200,6 @@ input[type=range].sf-range::-moz-range-thumb {
 .coyu-indicator-bar.active .coyu-indicator-fill {
     width: 100%;
     transition: width linear;
-}
-
-/* ── 2. Circular Category Stories Discovery Rail (Upper Overlap Card Effect) ── */
-.coyu-stories-rail-section {
-    width: 100%;
-    background: #FFFFFF;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    padding: 12px 0 10px;
-    position: relative;
-    z-index: 6;
-}
-
-/* Mobile Upper Overlap Effect (Rounded Top Sheet floating over video) */
-@media (max-width: 768px) {
-    .coyu-stories-rail-section {
-        margin-top: -20px; /* Upper scrolling overlap effect */
-        border-radius: 20px 20px 0 0;
-        background: #FFFFFF;
-        box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
-        padding: 14px 0 8px;
-    }
-}
-
-.coyu-stories-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 clamp(10px, 2vw, 20px);
-    position: relative;
-}
-
-.coyu-stories-track {
-    display: flex;
-    align-items: flex-start;
-    gap: clamp(12px, 1.8vw, 22px);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 2px 2px 4px;
-    scroll-behavior: smooth;
-}
-
-.coyu-stories-track::-webkit-scrollbar {
-    display: none;
-}
-
-.coyu-story-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    cursor: pointer;
-    flex-shrink: 0;
-    width: clamp(56px, 6.8vw, 76px);
-    text-align: center;
-    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.coyu-story-item:hover {
-    transform: translateY(-2px);
-}
-
-.coyu-story-avatar-wrap {
-    width: clamp(52px, 6.4vw, 70px);
-    height: clamp(52px, 6.4vw, 70px);
-    border-radius: 50%;
-    position: relative;
-    padding: 2px;
-    background: #FFFFFF;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border: 1.5px solid #E2E8F0;
-    transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.coyu-story-item:hover .coyu-story-avatar-wrap,
-.coyu-story-item.active .coyu-story-avatar-wrap {
-    border-color: #D4AF37;
-    box-shadow: 0 4px 14px rgba(184, 134, 11, 0.24), 0 0 0 2px rgba(212, 175, 55, 0.2);
-    transform: scale(1.03);
-}
-
-.coyu-story-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.coyu-story-item:hover .coyu-story-img {
-    transform: scale(1.06);
-}
-
-/* Feature Dash Circle (1st special circle) */
-.coyu-story-dash-avatar {
-    background: linear-gradient(135deg, #2E0854 0%, #6D28D9 50%, #A855F7 100%) !important;
-    border-color: #D4AF37 !important;
-    box-shadow: 0 3px 12px rgba(109, 40, 217, 0.3) !important;
-}
-
-.coyu-story-dash-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    color: #FFFFFF;
-    text-align: center;
-    position: relative;
-}
-
-.coyu-story-dash-logo {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    font-size: clamp(0.68rem, 1.4vw, 0.85rem);
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.coyu-story-dash-logo svg {
-    width: clamp(10px, 1.3vw, 13px);
-    height: clamp(10px, 1.3vw, 13px);
-    fill: #FDE047;
-}
-
-.coyu-story-label {
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-size: clamp(0.66rem, 1.15vw, 0.74rem);
-    font-weight: 600;
-    color: #1F2937;
-    margin-top: 4px;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 100%;
-    transition: color 0.2s ease;
-    letter-spacing: -0.01em;
-}
-
-.coyu-story-item:hover .coyu-story-label,
-.coyu-story-item.active .coyu-story-label {
-    color: #8A681F;
-    font-weight: 700;
 }
 
 
