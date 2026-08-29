@@ -7904,10 +7904,111 @@ input[type=range].sf-range::-moz-range-thumb {
     .coyu-hero-video-container {
         margin: 0 !important;
         border-radius: 0 !important;
-        height: 360px; /* Normal compact mobile height */
-        min-height: 320px;
-        max-height: 380px;
+        height: clamp(430px, 66vh, 520px) !important; /* Fuller & immersive Coyu video height on mobile */
+        min-height: 420px !important;
+        max-height: 540px !important;
         box-shadow: none;
+    }
+
+    .coyu-slide-content {
+        bottom: 24px !important;
+        left: 12px !important;
+        right: 48px !important;
+        max-width: calc(100% - 56px) !important;
+        padding: 0 !important;
+    }
+
+    .coyu-slide-badge {
+        font-size: 0.58rem !important;
+        font-weight: 800 !important;
+        padding: 2px 7px !important;
+        margin-bottom: 3px !important;
+        border-radius: 12px !important;
+        letter-spacing: 0.04em !important;
+        gap: 3px !important;
+    }
+
+    .coyu-slide-slogan {
+        font-size: 1.08rem !important;
+        line-height: 1.15 !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.015em !important;
+        margin: 0 0 2px 0 !important;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
+    }
+
+    .coyu-slide-sub {
+        font-size: 0.67rem !important;
+        line-height: 1.25 !important;
+        font-weight: 500 !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+        margin: 0 0 7px 0 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85) !important;
+    }
+
+    .coyu-slide-cta-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .coyu-slide-cta-primary {
+        font-size: 0.70rem !important;
+        font-weight: 800 !important;
+        padding: 4px 11px !important;
+        height: 28px !important;
+        border-radius: 18px !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+    }
+    .coyu-slide-cta-primary svg {
+        width: 12px !important;
+        height: 12px !important;
+    }
+
+    .coyu-slide-cta-secondary {
+        font-size: 0.66rem !important;
+        font-weight: 700 !important;
+        padding: 4px 9px !important;
+        height: 28px !important;
+        border-radius: 18px !important;
+        gap: 4px !important;
+        white-space: nowrap !important;
+    }
+    .coyu-slide-cta-secondary svg {
+        width: 11px !important;
+        height: 11px !important;
+    }
+
+    .coyu-sound-toggle {
+        width: 28px !important;
+        height: 28px !important;
+        bottom: 24px !important;
+        right: 12px !important;
+    }
+    .coyu-sound-toggle svg {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .coyu-slider-indicators {
+        bottom: 7px !important;
+        padding: 2px 5px !important;
+        gap: 4px !important;
+        border-radius: 8px !important;
+    }
+    .coyu-indicator-bar {
+        width: 18px !important;
+        height: 2.5px !important;
+    }
+    .coyu-indicator-bar.active {
+        width: 28px !important;
     }
 }
 

@@ -1367,11 +1367,35 @@
 
         var currentIndex = 0;
         var totalSlides = slides.length;
-        var slideDuration = 6000;
+        var defaultDuration = 14000; // Relaxed 14s duration so video plays fully
+        var currentDuration = defaultDuration;
         var slideTimer = null;
         var isMuted = true;
         var touchStartX = 0;
         var touchEndX = 0;
+
+        function syncIndicatorBar(activeIdx, durationMs) {
+            indicators.forEach(function(bar, idx) {
+                var fill = bar.querySelector('.coyu-indicator-fill');
+                if (idx === activeIdx) {
+                    bar.classList.add('active');
+                    if (fill) {
+                        fill.style.transition = 'none';
+                        fill.style.width = '0%';
+                        setTimeout(function() {
+                            fill.style.transition = 'width ' + (durationMs / 1000) + 's linear';
+                            fill.style.width = '100%';
+                        }, 50);
+                    }
+                } else {
+                    bar.classList.remove('active');
+                    if (fill) {
+                        fill.style.transition = 'none';
+                        fill.style.width = (idx < activeIdx) ? '100%' : '0%';
+                    }
+                }
+            });
+        }
 
         function updateSlide(newIndex) {
             if (newIndex < 0) newIndex = totalSlides - 1;
@@ -1382,6 +1406,7 @@
                 var prevVid = prevSlide.querySelector('video');
                 if (prevVid) {
                     prevVid.pause();
+                    prevVid.onended = null;
                     prevSlide.classList.remove('playing');
                 }
             }
@@ -1390,48 +1415,50 @@
             track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
 
             var curSlide = slides[currentIndex];
+            currentDuration = defaultDuration;
+
             if (curSlide) {
                 var curVid = curSlide.querySelector('video');
                 if (curVid) {
                     curVid.muted = isMuted;
+                    curVid.currentTime = 0;
                     var playPromise = curVid.play();
                     if (playPromise !== undefined) {
                         playPromise.then(function() {
                             curSlide.classList.add('playing');
-                        }).catch(function() {});
+                            if (curVid.duration && !isNaN(curVid.duration) && curVid.duration > 3) {
+                                currentDuration = Math.max(Math.round(curVid.duration * 1000), 10000);
+                            }
+                            syncIndicatorBar(currentIndex, currentDuration);
+                            startAutoSlideTimer(currentDuration);
+                        }).catch(function() {
+                            syncIndicatorBar(currentIndex, currentDuration);
+                            startAutoSlideTimer(currentDuration);
+                        });
+                    } else {
+                        syncIndicatorBar(currentIndex, currentDuration);
+                        startAutoSlideTimer(currentDuration);
                     }
-                }
-            }
 
-            indicators.forEach(function(bar, idx) {
-                var fill = bar.querySelector('.coyu-indicator-fill');
-                if (idx === currentIndex) {
-                    bar.classList.add('active');
-                    if (fill) {
-                        fill.style.transition = 'none';
-                        fill.style.width = '0%';
-                        setTimeout(function() {
-                            fill.style.transition = 'width ' + (slideDuration / 1000) + 's linear';
-                            fill.style.width = '100%';
-                        }, 50);
-                    }
+                    // Smooth transition when video finishes
+                    curVid.onended = function() {
+                        updateSlide(currentIndex + 1);
+                    };
                 } else {
-                    bar.classList.remove('active');
-                    if (fill) {
-                        fill.style.transition = 'none';
-                        fill.style.width = (idx < currentIndex) ? '100%' : '0%';
-                    }
+                    syncIndicatorBar(currentIndex, currentDuration);
+                    startAutoSlideTimer(currentDuration);
                 }
-            });
-
-            startAutoSlideTimer();
+            } else {
+                syncIndicatorBar(currentIndex, currentDuration);
+                startAutoSlideTimer(currentDuration);
+            }
         }
 
-        function startAutoSlideTimer() {
+        function startAutoSlideTimer(durationMs) {
             clearTimeout(slideTimer);
             slideTimer = setTimeout(function() {
                 updateSlide(currentIndex + 1);
-            }, slideDuration);
+            }, durationMs || defaultDuration);
         }
 
         if (prevBtn) {
