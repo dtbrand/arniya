@@ -129,62 +129,29 @@
     };
 
     var catSource = (Array.isArray(window.allCategories) && window.allCategories.length > 0)
-        ? window.allCategories
-        : (Array.isArray(window.allProducts) ? window.allProducts.map(function (p) {
-            return { name: p.category, image: (p.has_photo ? p.image : ''), has_image: !!p.has_photo };
-        }) : []);
-
-    var DT_NO_IMAGE = '/assets/images/no-image.svg';
-
-    function dtEsc(s) {
-        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    /** Real photo for a category, or '' so the circle falls back to an icon. */
-    function catCircleImage(c) {
-        var img = String((c && c.image) || '');
-        if (!img || img === DT_NO_IMAGE || c.has_image === false) { img = ''; }
-        if (!img) {
-            // Borrow the first product photo really filed under this category
-            // instead of cycling /assets/images/product1..6.png by index.
-            var cn = String((c && c.name) || '').toLowerCase();
-            var hit = (window.allProducts || []).find(function (p) {
-                return p && p.has_photo && String(p.category || '').toLowerCase() === cn;
-            });
-            img = hit ? hit.image : '';
-        }
-        return img;
-    }
-
-    /** Distinct fabrics really recorded against the products in one category. */
-    function fabricsIn(catName) {
-        var cn = String(catName || '').toLowerCase();
-        var seen = {};
-        var out = [];
-        (window.allProducts || []).forEach(function (p) {
-            if (!p || String(p.category || '').toLowerCase() !== cn) { return; }
-            var f = String(p.fabric || '').trim();
-            if (!f || seen[f.toLowerCase()]) { return; }
-            seen[f.toLowerCase()] = true;
-            out.push({ label: f, img: (p.has_photo ? p.image : ''), type: 'fabric', val: f });
-        });
-        return out;
-    }
+        ? window.allCategories 
+        : (Array.isArray(window.allProducts) ? window.allProducts.map(function(p){ return { name: p.category, image: p.image }; }) : []);
 
     var uniqueCatMap = {};
-    catSource.forEach(function (c) {
-        if (!c || !c.name || uniqueCatMap[c.name]) { return; }
+    catSource.forEach(function(c, i) {
+        if (!c || !c.name || uniqueCatMap[c.name]) return;
         uniqueCatMap[c.name] = true;
-        var cImg = catCircleImage(c);
+        var cImg = c.image || ('/Frontend/Shop/Asset/images/product' + ((i % 6) + 1) + '.png');
 
-        subCategoryData['All'].push({ label: c.name, img: cImg, type: 'category', val: c.name });
+        subCategoryData['All'].push({
+            label: c.name,
+            img: cImg,
+            type: 'category',
+            val: c.name
+        });
 
-        // Only fabrics that exist. This used to be a fixed
-        // Pure Silk / Handloom Korvai / Zari / Festive strip appended to every
-        // category, so tapping one filtered the grid down to nothing.
-        subCategoryData[c.name] = [{ label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name }]
-            .concat(fabricsIn(c.name));
+        subCategoryData[c.name] = [
+            { label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name },
+            { label: 'Pure Silk', img: cImg, type: 'fabric', val: 'Pure Silk' },
+            { label: 'Handloom', img: '/Frontend/Shop/Asset/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
+            { label: 'Zari Weaves', img: '/Frontend/Shop/Asset/images/product3.png', type: 'fabric', val: 'Zari' },
+            { label: 'Festive Drop', img: '/Frontend/Shop/Asset/images/product4.png', type: 'fabric', val: 'Festive' }
+        ];
     });
 
     window.renderSubCategories = function(mainCat) {
@@ -196,16 +163,16 @@
             var isAct = idx === 0;
             var circleContent = '';
             if (item.img) {
-                circleContent = '<img src="' + dtEsc(item.img) + '" alt="' + dtEsc(item.label) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + DT_NO_IMAGE + '\';this.style.opacity=\'.5\';" />';
+                circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\'" />';
             } else {
-                circleContent = '<span class="cat-icon" aria-hidden="true">' + dtEsc(item.icon || '●') + '</span>';
+                circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
             }
 
-            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + dtEsc(item.type || '') + '" data-val="' + dtEsc(item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + dtEsc(item.label) + '">' +
+            return '<button class="cat-item ' + (isAct ? 'active' : '') + '" role="listitem" data-type="' + (item.type || '') + '" data-val="' + (item.val || '') + '" aria-pressed="' + (isAct ? 'true' : 'false') + '" aria-label="' + item.label + '">' +
                 '<div class="cat-ring">' +
-                    '<div class="cat-circle ' + dtEsc(item.gradient || '') + '">' + circleContent + '</div>' +
+                    '<div class="cat-circle ' + (item.gradient || '') + '">' + circleContent + '</div>' +
                 '</div>' +
-                '<span class="cat-label">' + dtEsc(item.label) + '</span>' +
+                '<span class="cat-label">' + item.label + '</span>' +
             '</button>';
         }).join('');
 
@@ -261,6 +228,15 @@
     }
     enableDragScroll('.cat-slider-track');
     enableDragScroll('.main-cat-slider-track');
+    enableDragScroll('.coyu-stories-track');
+
+    window.filterHomeCategory = function(catName) {
+        if (!catName) return;
+        if (window.masterFilterState) {
+            window.masterFilterState.category = catName;
+            if (typeof window.applyMasterFilters === 'function') window.applyMasterFilters();
+        }
+    };
 
     window.applyMasterFilters = function() {
         var st = window.masterFilterState;
@@ -388,8 +364,8 @@
         var st = window.masterFilterState;
         if (type === 'category') {
             st.category = 'All';
-            var catItems = document.querySelectorAll('.cat-item, .home-cat-pill, .main-cat-tab');
-            catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All' || ci.dataset.cat === 'All'); });
+            var catItems = document.querySelectorAll('.cat-nav-item, .sf-category-item');
+            catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All'); });
         } else if (type === 'price') {
             st.minPrice = 500; st.maxPrice = 30000;
             var sfMin = document.getElementById('sfPriceMin'), sfMax = document.getElementById('sfPriceMax');
@@ -491,26 +467,32 @@
             var type = chip.dataset.sfType;
             var val  = chip.dataset.sfVal;
             var st   = window.masterFilterState;
+            var idx;
 
             if (type === 'category') {
                 st.category = val;
-                st.fabrics = [];
+                document.querySelectorAll('.cat-nav-item').forEach(function(item){
+                    item.classList.toggle('active', item.dataset.category === val);
+                });
+                document.querySelectorAll('.sf-category-item').forEach(function(item){
+                    item.classList.toggle('active', item.dataset.category === val);
+                });
                 document.querySelectorAll('.main-cat-tab').forEach(function(t){
                     t.classList.toggle('active', t.dataset.cat === val);
                 });
                 window.renderSubCategories(val);
             } else if (type === 'size') {
-                var sIdx = st.sizes.indexOf(val);
-                if (sIdx === -1) st.sizes.push(val); else st.sizes.splice(sIdx, 1);
+                idx = st.sizes.indexOf(val);
+                if (idx === -1) st.sizes.push(val); else st.sizes.splice(idx, 1);
             } else if (type === 'fabric') {
-                var fIdx = st.fabrics.indexOf(val);
-                if (fIdx === -1) st.fabrics.push(val); else st.fabrics.splice(fIdx, 1);
+                idx = st.fabrics.indexOf(val);
+                if (idx === -1) st.fabrics.push(val); else st.fabrics.splice(idx, 1);
             } else if (type === 'discount') {
                 var dVal = parseInt(val);
                 st.minDiscount = (st.minDiscount === dVal) ? 0 : dVal;
             } else if (type === 'availability') {
-                var aIdx = st.availability.indexOf(val);
-                if (aIdx === -1) st.availability.push(val); else st.availability.splice(aIdx, 1);
+                idx = st.availability.indexOf(val);
+                if (idx === -1) st.availability.push(val); else st.availability.splice(idx, 1);
             }
 
             window.applyMasterFilters();
@@ -633,11 +615,12 @@
     var pGrid = document.getElementById('productsGrid');
     if (pGrid) {
         pGrid.addEventListener('click', function (e) {
+            var id;
             var wishBtn = e.target.closest('.card-wishlist-btn');
             if (wishBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var id = wishBtn.dataset.id;
+                id = wishBtn.dataset.id;
                 var p = products.find(function(x){ return x.id == id; });
                 if (p && typeof window.toggleWishlistProduct === 'function') {
                     var added = window.toggleWishlistProduct(p);
@@ -652,9 +635,9 @@
             if (qvBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var qvId = qvBtn.dataset.id;
+                id = qvBtn.dataset.id;
                 if (typeof window.openQV === 'function') {
-                    window.openQV(qvId);
+                    window.openQV(id);
                 }
                 return;
             }
@@ -871,15 +854,21 @@
     startDealCountdown();
 
     /* 5. Recently Viewed Tracking System */
+    function dtEsc(v) {
+        return String(v === null || typeof v === 'undefined' ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     var DEFAULT_RECENT_PRODUCTS = [
-        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/assets/images/product1.png', category: 'PAITHANI SAREE' },
-        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/assets/images/product2.png', category: 'BANARASI SILK' },
-        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/assets/images/product3.png', category: 'KURTIS & SUITS' },
-        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/assets/images/product4.png', category: 'BRIDAL LEHENGA' },
-        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/assets/images/product5.png', category: 'KANJEEVARAM' },
-        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/assets/images/product6.png', category: 'CHANDERI SILK' },
-        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/assets/images/product7.png', category: 'ORGANZA SILK' },
-        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/assets/images/product8.png', category: 'GEORGETTE' }
+        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product1.png', category: 'PAITHANI SAREE' },
+        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/Frontend/Shop/Asset/images/product2.png', category: 'BANARASI SILK' },
+        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product3.png', category: 'KURTIS & SUITS' },
+        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product4.png', category: 'BRIDAL LEHENGA' },
+        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product5.png', category: 'KANJEEVARAM' },
+        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product6.png', category: 'CHANDERI SILK' },
+        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product7.png', category: 'ORGANZA SILK' },
+        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product8.png', category: 'GEORGETTE' }
     ];
 
     window.trackRecentlyViewed = function(productId) {
@@ -891,7 +880,7 @@
 
         try {
             var stored = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
-            if (!Array.isArray(stored)) { stored = []; }
+            if (!Array.isArray(stored)) stored = [];
             stored = stored.filter(function(x) { return x && Number(x.id) !== Number(p.id); });
             var pImg = p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg';
             var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
@@ -905,7 +894,6 @@
                 old_price: pOldPrice,
                 discount: pDiscount,
                 image: pImg,
-                has_photo: !!p.has_photo,
                 category: String(p.category || 'ETHNIC WEAR').toUpperCase(),
                 fabric: p.fabric || '',
                 in_stock: p.in_stock !== false
@@ -1030,7 +1018,9 @@
     window.clearRecentlyViewed = function() {
         localStorage.removeItem('dtbrands_recently_viewed');
         renderRecentlyViewed();
-        if (typeof showToast === 'function') showToast('Browsing history cleared');
+        if (typeof window.showToast === 'function') {
+            window.showToast('Browsing history cleared');
+        }
     };
 
     renderRecentlyViewed();

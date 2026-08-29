@@ -228,6 +228,15 @@
     }
     enableDragScroll('.cat-slider-track');
     enableDragScroll('.main-cat-slider-track');
+    enableDragScroll('.coyu-stories-track');
+
+    window.filterHomeCategory = function(catName) {
+        if (!catName) return;
+        if (window.masterFilterState) {
+            window.masterFilterState.category = catName;
+            if (typeof window.applyMasterFilters === 'function') window.applyMasterFilters();
+        }
+    };
 
     window.applyMasterFilters = function() {
         var st = window.masterFilterState;
