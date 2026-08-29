@@ -74,7 +74,7 @@ foreach ($all as $p) {
         'price' => (float)$p['price'],
         'old_price' => (float)($p['old_price'] ?? ($p['mrp'] ?? $p['price'] * 1.3)),
         'wholesale_price' => (float)($p['wholesale_price'] ?? round($p['price'] * 0.45)),
-        'image' => $p['image'] ?? '/Frontend/Shop/Asset/images/product1.png',
+        'image' => $p['image'] ?? '/assets/images/product1.png',
         'rating' => (float)($p['rating'] ?? 4.8),
         'in_stock' => (bool)($p['in_stock'] ?? true),
         'stock_qty' => (int)($p['stock_qty'] ?? 50),

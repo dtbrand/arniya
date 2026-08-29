@@ -1132,9 +1132,9 @@
     /* ── Role Dashboard URL Mapper ── */
     window.getUserDashboardUrl = function(role) {
         var r = (role || '').toLowerCase();
-        if (r === 'reseller') return '/Frontend/Reseller/reseller.php';
-        if (r === 'wholesaler' || r === 'wholesale') return '/Frontend/Wholesale/wholesale.php';
-        return '/Frontend/Retailer/retailer.php';
+        if (r === 'reseller') return '/reseller.php';
+        if (r === 'wholesaler' || r === 'wholesale') return '/wholesale.php';
+        return '/retailer.php';
     };
 
     /* ── 1-Tap Quick Demo Logins for Instant Testing ── */
@@ -1389,7 +1389,7 @@
         if (typeof window.showToast === 'function') {
             window.showToast('You have been logged out.');
         }
-        window.location.href = '/Frontend/Shop/shop.php';
+        window.location.href = '/shop.php';
     };
 
     /* Bind events */

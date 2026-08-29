@@ -565,7 +565,7 @@ body.sort-open .home-smart-bottom-footer {
         <div class="home-menu-scroll">
             <!-- VIP User Card (Reseller Desktop Menu Inspired) -->
             <div class="home-menu-user-card" onclick="toggleHomeMobileMenu(false); if(typeof window.handleUserWiseAccountNavigation==='function'){window.handleUserWiseAccountNavigation();}else if(typeof window.openAccountModal==='function'){window.openAccountModal('login');}else{window.location.href='/Shared/Auth/myaccount.php?tab=login';}">
-                <img src="/Frontend/Shop/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product2.png';" alt="Member" class="home-menu-user-avatar">
+                <img src="/assets/images/product1.png" onerror="this.src='/assets/images/product2.png';" alt="Member" class="home-menu-user-avatar">
                 <div class="home-menu-user-info">
                     <div class="home-menu-user-name" id="homeMenuUserName">VIP Member / Reseller</div>
                     <div class="home-menu-user-tier">
@@ -595,20 +595,20 @@ body.sort-open .home-smart-bottom-footer {
                     </a>
                 </li>
                 <li>
-                    <a href="/Frontend/Shop/shop.php?cat=Sarees" class="home-menu-link">
+                    <a href="/shop.php?cat=Sarees" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         <span>Silk Sarees</span>
                         <span class="home-menu-link-badge hot">450+</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/Frontend/Shop/shop.php?cat=Kurtis" class="home-menu-link">
+                    <a href="/shop.php?cat=Kurtis" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path></svg>
                         <span>Designer Kurtis</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/Frontend/Shop/shop.php?cat=Lehengas" class="home-menu-link">
+                    <a href="/shop.php?cat=Lehengas" class="home-menu-link">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
                         <span>Bridal Lehengas & Gowns</span>
                     </a>
@@ -691,7 +691,7 @@ body.sort-open .home-smart-bottom-footer {
         </a>
 
         <!-- 2: SHOP / BOUTIQUE STORE (Real Storefront Canopy SVG) -->
-        <a href="/shop" class="smart-nav-item" id="smartNavShop" data-tab="shop" onclick="handleSmartFooterAction(event, '/Frontend/Shop/shop.php', 'shop')">
+        <a href="/shop" class="smart-nav-item" id="smartNavShop" data-tab="shop" onclick="handleSmartFooterAction(event, '/shop.php', 'shop')">
             <div class="smart-nav-icon-box">
                 <svg viewBox="0 0 24 24" class="smart-nav-svg">
                     <path d="M3 9l1-5h16l1 5"></path>

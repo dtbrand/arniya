@@ -28,10 +28,10 @@ function measureEndpoint(string $url): array {
 }
 
 $endpoints = [
-    'https://jaihanumantex.in/Frontend/Home/home.php',
-    'https://jaihanumantex.in/Frontend/Shop/shop.php',
-    'https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php',
-    'https://jaihanumantex.in/Frontend/Admin/adminlogin.php',
+    'https://jaihanumantex.in/index.php',
+    'https://jaihanumantex.in/shop.php',
+    'https://jaihanumantex.in/product.php',
+    'https://jaihanumantex.in/adminlogin.php',
     'https://jaihanumantex.in/health.php',
 ];
 

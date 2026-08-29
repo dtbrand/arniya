@@ -1,5 +1,5 @@
 /**
- * DT Brand/assets/js/modals.js — Master Modal, Drawer & Overlay Interactive Engine
+ * assets/js/modals.js — Master Modal, Drawer & Overlay Interactive Engine
  * DT Brand's & Jai Hanuman Tex
  */
 

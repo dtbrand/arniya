@@ -1750,7 +1750,7 @@
     // ════ PRODUCT ACTIONS ════
     // These three used to be demo stubs. shareProductWhatsApp sent one hardcoded
     // title ("Kanjivaram Pure Silk Gold Zari Saree") for every product, pointing
-    // at /Frontend/Single-Product/singleproduct.php - a path that does not exist -
+    // at /product.php - a path that does not exist -
     // and fell back to product id 101 when no id was passed. duplicateProduct
     // only navigated to add.php?duplicated_from=... (nothing reads that) and
     // archiveProduct said "archived successfully" without touching the database.

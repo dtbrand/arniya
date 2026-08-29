@@ -267,7 +267,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Banarasi Zari Saree',
                 price: 8499,
                 old_price: 11000,
-                image: '/Frontend/Shop/Asset/images/product2.png',
+                image: '/assets/images/product2.png',
                 size: 'Free Size',
                 color: 'Maroon',
                 qty: 1
@@ -277,7 +277,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 name: 'Bridal Zardosi Lehenga',
                 price: 24999,
                 old_price: 32000,
-                image: '/Frontend/Shop/Asset/images/product6.png',
+                image: '/assets/images/product6.png',
                 size: 'S',
                 color: 'Red',
                 qty: 1
@@ -374,21 +374,21 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 
             /* Render Animated SVG Empty Cart + Auto Product Recommendation Slider */
             var products = window.allProducts || window.catalogProducts || window.products || [
-                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/Frontend/Shop/Asset/images/product1.png' },
-                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/Frontend/Shop/Asset/images/product3.png' },
-                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/Frontend/Shop/Asset/images/product5.png' },
-                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/Frontend/Shop/Asset/images/product8.png' },
-                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/Frontend/Shop/Asset/images/product4.png' }
+                { id: 1, name: 'Nilambari Silk Saree', price: 4899, image: '/assets/images/product1.png' },
+                { id: 3, name: 'Kanjivaram Temple Silk', price: 12999, image: '/assets/images/product3.png' },
+                { id: 5, name: 'Royal Anarkali Kurti', price: 2799, image: '/assets/images/product5.png' },
+                { id: 8, name: 'Ivory Designer Gown', price: 7499, image: '/assets/images/product8.png' },
+                { id: 4, name: 'Georgette Bloom Saree', price: 3299, image: '/assets/images/product4.png' }
             ];
 
             // Render loop duplicates for seamless long scrolling
             var fullList = products.concat(products);
 
             var sliderCardsHtml = fullList.map(function(p) {
-                var imgSrc = p.image || p.img || '/Frontend/Shop/Asset/images/product1.png';
+                var imgSrc = p.image || p.img || '/assets/images/product1.png';
                 return '<div class="cd-rec-card">' +
                     '<div class="cd-rec-img-wrap">' +
-                        '<img src="' + imgSrc + '" alt="' + (p.name || 'Ethnic Attire') + '" class="cd-rec-img" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\';" />' +
+                        '<img src="' + imgSrc + '" alt="' + (p.name || 'Ethnic Attire') + '" class="cd-rec-img" onerror="this.src=\'/assets/images/product1.png\';" />' +
                     '</div>' +
                     '<h5 class="cd-rec-title">' + (p.name || 'Ethnic Attire') + '</h5>' +
                     '<div class="cd-price-row">' +
@@ -439,10 +439,10 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
                 var qty = item.qty || 1;
                 var priceNum = parseInt(String(item.price).replace(/[^0-9]/g, ''), 10) || 0;
                 totalPrice += priceNum * qty;
-                var imgUrl = item.image || item.img || '/Frontend/Shop/Asset/images/product1.png';
+                var imgUrl = item.image || item.img || '/assets/images/product1.png';
 
                 html += '<div class="cd-item" data-index="' + idx + '">' +
-                    '<img src="' + imgUrl + '" alt="' + (item.name || 'Product') + '" class="cd-item-img" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\';" />' +
+                    '<img src="' + imgUrl + '" alt="' + (item.name || 'Product') + '" class="cd-item-img" onerror="this.src=\'/assets/images/product1.png\';" />' +
                     '<div class="cd-item-info">' +
                         '<h4 class="cd-item-title">' + (item.name || 'Ethnic Wear') + '</h4>' +
                         '<span class="cd-item-meta">Size: ' + (item.size || 'Free Size') + ' &bull; Color: ' + (item.color || 'Standard') + '</span>' +
@@ -528,7 +528,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
             chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
         }
 
-        var imgPath = product.image || product.img || (Array.isArray(product.images) && product.images[0]) || '/Frontend/Shop/Asset/images/product1.png';
+        var imgPath = product.image || product.img || (Array.isArray(product.images) && product.images[0]) || '/assets/images/product1.png';
 
         var existing = window.cartState.find(function(item) {
             return (String(item.id) === String(product.id)) && item.size == chosenSize && item.color == chosenColor;

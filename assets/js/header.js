@@ -1,5 +1,5 @@
 /**
- * DT Brand/assets/js/header.js — Header Search Autocomplete, Mobile Search & Ticker Logic
+ * assets/js/header.js — Header Search Autocomplete, Mobile Search & Ticker Logic
  * DT Brand's & Jai Hanuman Tex
  */
 

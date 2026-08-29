@@ -1,6 +1,6 @@
 <?php
 /**
- * DT Brand/includes/mobile_bottom_nav.php — Smart Luxury 5-Tab Floating Mobile Navigation Bar
+ * includes/mobile_bottom_nav.php — Smart Luxury 5-Tab Floating Mobile Navigation Bar
  * DT Brand's & Jai Hanuman Tex
  */
 $currentScript = basename($_SERVER['PHP_SELF'] ?? '');

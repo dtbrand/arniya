@@ -2,7 +2,7 @@
 /* DT admin access guard (auto-inserted) */ $__dtg = $_SERVER['DOCUMENT_ROOT'] . '/admin/Includes/adminguard.php'; if (is_file($__dtg)) require_once $__dtg;
 
 /**
- * DT Brand/admin/products.php — Products Inventory Management & CRUD
+ * admin/products.php — Products Inventory Management & CRUD
  * DT Brand's & Jai Hanuman Tex
  */
 

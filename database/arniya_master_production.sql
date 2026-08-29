@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
     `name` VARCHAR(100) NOT NULL,
     `slug` VARCHAR(100) NOT NULL UNIQUE,
     `description` TEXT,
-    `image` VARCHAR(255) DEFAULT '/Frontend/Shop/Asset/images/category-sarees.png',
-    `banner_image` VARCHAR(255) DEFAULT '/Frontend/Shop/Asset/images/hero-banner.png',
+    `image` VARCHAR(255) DEFAULT '/assets/images/category-sarees.png',
+    `banner_image` VARCHAR(255) DEFAULT '/assets/images/hero-banner.png',
     `products_count` INT DEFAULT 0,
     `display_order` INT DEFAULT 1,
     `status` ENUM('active', 'inactive') DEFAULT 'active',
@@ -283,17 +283,17 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `products_count`,
 
 -- Seed Products (24 Real High-Fidelity Textile Products)
 INSERT INTO `products` (`id`, `sku`, `title`, `slug`, `category_id`, `category_name`, `fabric`, `mrp`, `retail_price`, `wholesale_price`, `reseller_price`, `stock_qty`, `rating`, `reviews_count`, `primary_image`, `badge`, `status`, `description`) VALUES
-(1, 'KLN-SR-111', 'Nilambari Silk Saree with Rich Zari Pallu', 'nilambari-silk-saree-rich-zari-pallu', 1, 'Kanjivaram Silk', 'Pure Mulberry Silk', 6500.00, 4899.00, 1399.00, 2100.00, 95, 4.9, 142, '/Frontend/Shop/Asset/images/product1.png', 'Bestseller', 'in_stock', 'Authentic handwoven Kanjivaram pure silk saree featuring pure tested gold zari pallu.'),
-(2, 'BNR-SR-204', 'Royal Banarasi Meenakari Silk Saree', 'royal-banarasi-meenakari-silk-saree', 2, 'Banarasi Silk', 'Katan Brocade Silk', 11000.00, 8499.00, 2499.00, 3500.00, 68, 4.9, 98, '/Frontend/Shop/Asset/images/product2.png', 'Heritage', 'in_stock', 'Intricate floral jaal Banarasi katan silk saree crafted with rich gold tested zari weaves.'),
-(3, 'PTH-MH-305', 'Maharani Paithani Handloom Silk Saree', 'maharani-paithani-handloom-silk-saree', 3, 'Paithani Handloom', 'Handloom Pure Silk', 12500.00, 9499.00, 3199.00, 4200.00, 42, 5.0, 86, '/Frontend/Shop/Asset/images/product3.png', 'Royal VIP', 'in_stock', 'Traditional hand-woven Paithani silk saree featuring authentic Asawali motif and kaleidoscopic pallu.'),
-(4, 'CHN-FO-401', 'Chanderi Foil Printed Festive Kurti Set', 'chanderi-foil-printed-festive-kurti-set', 7, 'Designer Kurtis', 'Chanderi Silk Blend', 3499.00, 2290.00, 850.00, 1450.00, 62, 4.8, 68, '/Frontend/Shop/Asset/images/product4.png', 'Hot Deal', 'in_stock', 'Festive designer kurti set with matching pants and gold foil printed pure dupatta.'),
-(5, 'BRD-LH-902', 'Crimson Bridal Handcrafted Zardosi Lehenga', 'crimson-bridal-handcrafted-zardosi-lehenga', 6, 'Bridal Lehengas', 'Velvet & Raw Silk', 24990.00, 16490.00, 11500.00, 13800.00, 18, 5.0, 42, '/Frontend/Shop/Asset/images/product5.png', 'Luxury Bride', 'in_stock', 'Grand royal bridal lehenga with comprehensive hand zardosi, pearl, and dabka needlework.'),
-(6, 'ORG-TS-508', 'Organza Glass Tissue Floral Zari Saree', 'organza-glass-tissue-floral-zari-saree', 5, 'Organza Tissue', 'Glass Tissue Organza', 4999.00, 3499.00, 1150.00, 1750.00, 54, 4.7, 56, '/Frontend/Shop/Asset/images/product6.png', 'Trending', 'in_stock', 'Ultra-lightweight modern pastel organza saree with delicate scalloped gold borders.');
+(1, 'KLN-SR-111', 'Nilambari Silk Saree with Rich Zari Pallu', 'nilambari-silk-saree-rich-zari-pallu', 1, 'Kanjivaram Silk', 'Pure Mulberry Silk', 6500.00, 4899.00, 1399.00, 2100.00, 95, 4.9, 142, '/assets/images/product1.png', 'Bestseller', 'in_stock', 'Authentic handwoven Kanjivaram pure silk saree featuring pure tested gold zari pallu.'),
+(2, 'BNR-SR-204', 'Royal Banarasi Meenakari Silk Saree', 'royal-banarasi-meenakari-silk-saree', 2, 'Banarasi Silk', 'Katan Brocade Silk', 11000.00, 8499.00, 2499.00, 3500.00, 68, 4.9, 98, '/assets/images/product2.png', 'Heritage', 'in_stock', 'Intricate floral jaal Banarasi katan silk saree crafted with rich gold tested zari weaves.'),
+(3, 'PTH-MH-305', 'Maharani Paithani Handloom Silk Saree', 'maharani-paithani-handloom-silk-saree', 3, 'Paithani Handloom', 'Handloom Pure Silk', 12500.00, 9499.00, 3199.00, 4200.00, 42, 5.0, 86, '/assets/images/product3.png', 'Royal VIP', 'in_stock', 'Traditional hand-woven Paithani silk saree featuring authentic Asawali motif and kaleidoscopic pallu.'),
+(4, 'CHN-FO-401', 'Chanderi Foil Printed Festive Kurti Set', 'chanderi-foil-printed-festive-kurti-set', 7, 'Designer Kurtis', 'Chanderi Silk Blend', 3499.00, 2290.00, 850.00, 1450.00, 62, 4.8, 68, '/assets/images/product4.png', 'Hot Deal', 'in_stock', 'Festive designer kurti set with matching pants and gold foil printed pure dupatta.'),
+(5, 'BRD-LH-902', 'Crimson Bridal Handcrafted Zardosi Lehenga', 'crimson-bridal-handcrafted-zardosi-lehenga', 6, 'Bridal Lehengas', 'Velvet & Raw Silk', 24990.00, 16490.00, 11500.00, 13800.00, 18, 5.0, 42, '/assets/images/product5.png', 'Luxury Bride', 'in_stock', 'Grand royal bridal lehenga with comprehensive hand zardosi, pearl, and dabka needlework.'),
+(6, 'ORG-TS-508', 'Organza Glass Tissue Floral Zari Saree', 'organza-glass-tissue-floral-zari-saree', 5, 'Organza Tissue', 'Glass Tissue Organza', 4999.00, 3499.00, 1150.00, 1750.00, 54, 4.7, 56, '/assets/images/product6.png', 'Trending', 'in_stock', 'Ultra-lightweight modern pastel organza saree with delicate scalloped gold borders.');
 
 -- Seed Banners
 INSERT INTO `banners` (`id`, `title`, `subtitle`, `tagline`, `badge`, `cta_text`, `cta_link`, `image_url`) VALUES
-(1, 'Festive Diwali Dhamaka 2026', 'Direct Surat Manufacturer Wholesale Rates — Pure Silk Sarees from ₹1,399/pc', 'Surat Wholesale Hub', 'Up to 55% Off', 'Explore Wholesale Lots', '/wholesale', '/Frontend/Shop/Asset/images/hero-banner.png'),
-(2, 'Royal Bridal & Wedding Trousseau', 'Handcrafted Kanjivaram & Banarasi Silk Masterpieces with Pure Zari', 'Heritage Silk', 'Exclusive 2026', 'View Wedding Sarees', '/shop', '/Frontend/Shop/Asset/images/category-sarees.png');
+(1, 'Festive Diwali Dhamaka 2026', 'Direct Surat Manufacturer Wholesale Rates — Pure Silk Sarees from ₹1,399/pc', 'Surat Wholesale Hub', 'Up to 55% Off', 'Explore Wholesale Lots', '/wholesale', '/assets/images/hero-banner.png'),
+(2, 'Royal Bridal & Wedding Trousseau', 'Handcrafted Kanjivaram & Banarasi Silk Masterpieces with Pure Zari', 'Heritage Silk', 'Exclusive 2026', 'View Wedding Sarees', '/shop', '/assets/images/category-sarees.png');
 
 -- Seed Customers
 INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `type`, `city`, `state`, `tier`, `credit_limit`, `outstanding_balance`, `total_orders`, `lifetime_spend`, `gstin`) VALUES

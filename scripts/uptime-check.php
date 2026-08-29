@@ -5,10 +5,10 @@
  */
 
 $endpoints = [
-    'Homepage' => 'https://jaihanumantex.in/Frontend/Home/home.php',
-    'Shop Catalog' => 'https://jaihanumantex.in/Frontend/Shop/shop.php',
-    'Single Saree' => 'https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php',
-    'Admin Portal' => 'https://jaihanumantex.in/Frontend/Admin/adminlogin.php',
+    'Homepage' => 'https://jaihanumantex.in/index.php',
+    'Shop Catalog' => 'https://jaihanumantex.in/shop.php',
+    'Single Saree' => 'https://jaihanumantex.in/product.php',
+    'Admin Portal' => 'https://jaihanumantex.in/adminlogin.php',
     'Health Check' => 'https://jaihanumantex.in/health.php',
 ];
 

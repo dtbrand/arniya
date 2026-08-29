@@ -1,5 +1,5 @@
 /**
- * DT Brand/assets/js/core.js — Master Core State Engine & Global Utilities
+ * assets/js/core.js — Master Core State Engine & Global Utilities
  * DT Brand's & Jai Hanuman Tex
  */
 

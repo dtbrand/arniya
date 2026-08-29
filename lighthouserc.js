@@ -2,9 +2,9 @@ module.exports = {
   ci: {
     collect: {
       url: [
-        'https://jaihanumantex.in/Frontend/Home/home.php',
-        'https://jaihanumantex.in/Frontend/Shop/shop.php',
-        'https://jaihanumantex.in/Frontend/Single-Product/singleproduct.php',
+        'https://jaihanumantex.in/index.php',
+        'https://jaihanumantex.in/shop.php',
+        'https://jaihanumantex.in/product.php',
       ],
       numberOfRuns: 1,
       settings: {

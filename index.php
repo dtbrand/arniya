@@ -31,7 +31,7 @@ if (!empty($dbCategories)) {
             'name' => $cName,
             'slug' => $c['slug'] ?? strtolower(str_replace(' ', '-', $cName)),
             'count' => $cCount . ' Designs',
-            'img' => !empty($c['image']) ? $c['image'] : ('/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png'),
+            'img' => !empty($c['image']) ? $c['image'] : ('/assets/images/product' . (($idx % 6) + 1) . '.png'),
             'price_from' => 'Direct Surat Wholesale',
             'badge' => 'Verified Mill',
             'tagline' => !empty($c['description']) ? (strlen($c['description']) > 40 ? substr($c['description'], 0, 40) . '...' : $c['description']) : 'Authentic Collection'
@@ -47,7 +47,7 @@ if (empty($categoriesList)) {
             'name' => $cName,
             'slug' => strtolower(str_replace(' ', '-', $cName)),
             'count' => $cCount . ' Designs',
-            'img' => '/Frontend/Shop/Asset/images/product' . (($idx % 6) + 1) . '.png',
+            'img' => '/assets/images/product' . (($idx % 6) + 1) . '.png',
             'price_from' => 'Direct Surat Wholesale',
             'badge' => 'Verified Mill',
             'tagline' => 'Handcrafted Authentic Weaves'
@@ -316,8 +316,8 @@ $total_products = count($products);
             ?>
             <article class="product-card" role="listitem" data-product-id="<?= $p['id'] ?>" data-category="<?= htmlspecialchars($p['category']) ?>" data-price="<?= $p['price'] ?>" data-color="<?= htmlspecialchars($p['color']) ?>" data-discount="<?= $p['discount'] ?>">
                 <div class="card-image-wrap">
-                    <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/Frontend/Shop/Asset/images/product1.png';" />
+                    <a href="/product.php?id=<?= $p['id'] ?>" style="display:block;width:100%;height:100%;">
+                        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="card-img" loading="lazy" onerror="this.onerror=null; this.src='/assets/images/product1.png';" />
                     </a>
 
                     <?php if (!empty($p['badge'])): ?>
@@ -351,7 +351,7 @@ $total_products = count($products);
                     </div>
 
                     <h3 class="card-name">
-                        <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
+                        <a href="/product.php?id=<?= $p['id'] ?>">
                             <?= htmlspecialchars($p['name']) ?>
                         </a>
                     </h3>
@@ -418,7 +418,7 @@ $total_products = count($products);
                 <div class="home-deal-card">
                     <div class="deal-card-img-wrap">
                         <span class="deal-card-badge-top">SAVE <?= $p['discount'] ?>%</span>
-                        <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>">
+                        <a href="/product.php?id=<?= $p['id'] ?>">
                             <img src="<?= $p['image'] ?>" alt="<?= $p['name'] ?>" class="deal-card-img" loading="lazy" />
                         </a>
                         <button type="button" class="deal-card-wish-btn" onclick="toggleWishlistProduct(<?= $p['id'] ?>)" aria-label="Add to wishlist">
@@ -431,7 +431,7 @@ $total_products = count($products);
                             <span class="deal-rating-badge">★ <?= $p['rating'] ?></span>
                         </div>
                         <h4 class="deal-card-title">
-                            <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
+                            <a href="/product.php?id=<?= $p['id'] ?>"><?= htmlspecialchars($p['name']) ?></a>
                         </h4>
                         <div class="deal-card-prices">
                             <span class="deal-sale-price">₹<?= number_format($p['price']) ?></span>
@@ -541,7 +541,7 @@ $total_products = count($products);
                     <article class="rec-card" data-category="<?= htmlspecialchars($p['category']) ?>" data-product-id="<?= $p['id'] ?>">
                         <!-- Pure Luxury Image Showcase with Badges & Action Overlays -->
                         <div class="rec-img-wrap">
-                            <a href="/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>" class="rec-img-link" title="<?= htmlspecialchars($p['name']) ?>">
+                            <a href="/product.php?id=<?= $p['id'] ?>" class="rec-img-link" title="<?= htmlspecialchars($p['name']) ?>">
                                 <img src="<?= $p['image'] ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="rec-card-img" loading="lazy" />
                             </a>
                             
@@ -556,7 +556,7 @@ $total_products = count($products);
                                 <button type="button" class="rec-action-btn rec-wishlist-btn" onclick="toggleWishlist(<?= $p['id'] ?>); event.stopPropagation();" aria-label="Add to Wishlist" title="Add to Wishlist">
                                     <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                                 </button>
-                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='/Frontend/Single-Product/singleproduct.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
+                                <button type="button" class="rec-action-btn rec-quickview-btn" onclick="if(typeof openQuickView==='function'){openQuickView(<?= $p['id'] ?>);}else{window.location.href='/product.php?id=<?= $p['id'] ?>';} event.stopPropagation();" aria-label="Quick View" title="Quick View">
                                     <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                                 </button>
                             </div>

@@ -594,15 +594,15 @@
         if (p.gallery && Array.isArray(p.gallery) && p.gallery.length > 0) {
             return p.gallery;
         }
-        var baseImg = p.image || '/Frontend/Shop/Asset/images/product1.png';
+        var baseImg = p.image || '/assets/images/product1.png';
         var list = [baseImg];
         var pid = parseInt(String(p.id).replace(/[^0-9]/g, ''), 10) || 1;
         var p1 = ((pid) % 8) + 1;
         var p2 = ((pid + 1) % 8) + 1;
         var p3 = ((pid + 2) % 8) + 1;
-        list.push('/Frontend/Shop/Asset/images/product' + p1 + '.png');
-        list.push('/Frontend/Shop/Asset/images/product' + p2 + '.png');
-        list.push('/Frontend/Shop/Asset/images/product' + p3 + '.png');
+        list.push('/assets/images/product' + p1 + '.png');
+        list.push('/assets/images/product' + p2 + '.png');
+        list.push('/assets/images/product' + p3 + '.png');
         return Array.from(new Set(list));
     }
 

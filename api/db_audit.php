@@ -267,11 +267,11 @@ try {
     }
 
     if (isset($_GET['normalize_images']) && $_GET['normalize_images'] == '1') {
-        try { $pdo->exec("UPDATE `products` SET `primary_image` = REPLACE(`primary_image`, '/Frontend/Shop/Asset/images/', '/assets/images/')"); } catch (\Exception $e) {}
+        try { $pdo->exec("UPDATE `products` SET `primary_image` = REPLACE(`primary_image`, '/assets/images/', '/assets/images/')"); } catch (\Exception $e) {}
         try { $pdo->exec("UPDATE `products` SET `primary_image` = REPLACE(`primary_image`, '/Shared/Asset/images/', '/assets/images/')"); } catch (\Exception $e) {}
-        try { $pdo->exec("UPDATE `categories` SET `image` = REPLACE(`image`, '/Frontend/Shop/Asset/images/', '/assets/images/')"); } catch (\Exception $e) {}
-        try { $pdo->exec("UPDATE `categories` SET `banner_image` = REPLACE(`banner_image`, '/Frontend/Shop/Asset/images/', '/assets/images/')"); } catch (\Exception $e) {}
-        try { $pdo->exec("UPDATE `banners` SET `image_url` = REPLACE(`image_url`, '/Frontend/Shop/Asset/images/', '/assets/images/')"); } catch (\Exception $e) {}
+        try { $pdo->exec("UPDATE `categories` SET `image` = REPLACE(`image`, '/assets/images/', '/assets/images/')"); } catch (\Exception $e) {}
+        try { $pdo->exec("UPDATE `categories` SET `banner_image` = REPLACE(`banner_image`, '/assets/images/', '/assets/images/')"); } catch (\Exception $e) {}
+        try { $pdo->exec("UPDATE `banners` SET `image_url` = REPLACE(`image_url`, '/assets/images/', '/assets/images/')"); } catch (\Exception $e) {}
         echo json_encode(['success' => true, 'message' => 'Image paths normalized in MySQL database.']);
         exit;
     }

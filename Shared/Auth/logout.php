@@ -20,7 +20,7 @@ session_destroy();
 
 $target = isset($_GET['type']) ? $_GET['type'] : '';
 if ($target === 'admin' || (isset($_GET['admin']) && $_GET['admin'] == '1')) {
-    header("Location: /Frontend/Admin/adminlogin.php?logged_out=1");
+    header("Location: /adminlogin.php?logged_out=1");
 } else {
     header("Location: /?logged_out=1");
 }

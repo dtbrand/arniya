@@ -112,11 +112,11 @@ $coll = isset($collections_db[$coll_id]) ? $collections_db[$coll_id] : $collecti
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Frontend/Admin/Asset/css/admin.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/Frontend/Admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="/Frontend/Admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/Asset/css/admin.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/products/assets/css/wordpress-style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/catalogue.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/collections.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/admin/catalogue/assets/css/merchandising.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <div class="adm-layout">
@@ -137,8 +137,8 @@ $coll = isset($collections_db[$coll_id]) ? $collections_db[$coll_id] : $collecti
                     </div>
                 </div>
                 <div style="display:flex; gap:6px;">
-                    <a href="/Frontend/Admin/catalogue/collections/edit.php?id=<?php echo $coll_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Collection</a>
-                    <a href="/Frontend/Admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to Collections</a>
+                    <a href="/admin/catalogue/collections/edit.php?id=<?php echo $coll_id; ?>" class="dt-btn-action-sm gold" style="height:30px; padding:0 12px; font-size:11.5px;">Edit Collection</a>
+                    <a href="/admin/catalogue/collections/" class="dt-btn-action-sm pale-gold" style="height:30px; padding:0 10px; font-size:11.5px;">Back to Collections</a>
                 </div>
             </div>
 
@@ -194,7 +194,7 @@ $coll = isset($collections_db[$coll_id]) ? $collections_db[$coll_id] : $collecti
     </div>
 </div>
 
-<script src="/Frontend/Admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
-<script src="/Frontend/Admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/catalogue.js?v=<?php echo time(); ?>"></script>
+<script src="/admin/catalogue/assets/js/collections.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

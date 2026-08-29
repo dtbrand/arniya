@@ -4266,9 +4266,9 @@ input[type=range].sf-range::-moz-range-thumb {
     transform: translateY(-3px);
 }
 
-.col-bridal { background-image: url('/Frontend/Shop/Asset/images/product6.png'); }
-.col-festive { background-image: url('/Frontend/Shop/Asset/images/product1.png'); }
-.col-party { background-image: url('/Frontend/Shop/Asset/images/product5.png'); }
+.col-bridal { background-image: url('/assets/images/product6.png'); }
+.col-festive { background-image: url('/assets/images/product1.png'); }
+.col-party { background-image: url('/assets/images/product5.png'); }
 
 .col-banner-content {
     position: relative;
@@ -8474,4 +8474,4 @@ input[type=range].sf-range::-moz-range-thumb {
 }
 
 
-
+

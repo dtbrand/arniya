@@ -1119,12 +1119,12 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
             var qty = item.qty || 1;
             var itemTotal = priceNum * qty;
             subtotal += itemTotal;
-            var imgSrc = item.image || item.img || '/Frontend/Shop/Asset/images/product1.png';
+            var imgSrc = item.image || item.img || '/assets/images/product1.png';
             var itemName = item.name || item.title || 'Ethnic Attire';
 
             html += `
                 <div class="co-item-row">
-                    <img src="${imgSrc}" alt="${itemName}" class="co-item-img" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';">
+                    <img src="${imgSrc}" alt="${itemName}" class="co-item-img" onerror="this.src='/assets/images/product1.png';">
                     <div class="co-item-info">
                         <div class="co-item-name">${itemName}</div>
                         <div class="co-item-meta">Size: <strong>${item.size || 'Free Size'}</strong> | Color: <strong>${item.color || 'Standard'}</strong> | Qty: <strong>${qty}</strong></div>

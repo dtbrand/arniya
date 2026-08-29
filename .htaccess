@@ -1,6 +1,6 @@
 # ==============================================================================
 # DT BRAND'S & JAI HANUMAN TEX — ENTERPRISE ROOT APACHE .HTACCESS
-# Version: 3.1 Unified Single-Tree Production Hardened
+# Version: 3.2 Unified Single-Tree Production Hardened & Legacy 301 Auto-Redirects
 # ==============================================================================
 
 Options -Indexes -MultiViews
@@ -16,7 +16,7 @@ Options -Indexes -MultiViews
     </IfModule>
 </FilesMatch>
 
-# ── 2. SECURITY: BLOCK DIRECT ACCESS TO INTERNAL INFRASTRUCTURE FOLDERS ──
+# ── 2. REWRITE ENGINE & URL ROUTING ──
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
@@ -24,15 +24,48 @@ Options -Indexes -MultiViews
     # Block access to internal protected directories
     RewriteRule ^(config|database|src|app|storage|tests|scripts|vendor|bootstrap|docs|backups|\.git|\.agents|\.uix|\.vscode)/ - [F,L,NC]
 
-    # 3. Canonical Redirects: /home, /home.php, /index.php to clean root domain
+    # ── 3. CANONICAL HOMEPAGE REDIRECTS ──
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(home|home\.php|index\.php)\ HTTP/ [NC]
     RewriteRule ^(home|home\.php|index\.php)$ / [R=301,L]
 
-    # 4. Clean Product Routes: /product/3 or /product/slug
+    # ── 4. LEGACY TREE 301 PERMANENT REDIRECTS (Frontend & DT Brand to Root) ──
+    # Legacy Single-Product / Single Product PDP
+    RewriteRule ^Frontend/Single-Product/(?:singleproduct\.php)?$ /product.php [R=301,QSA,L,NC]
+    RewriteRule ^singleproduct(?:\.php)?$ /product.php [R=301,QSA,L,NC]
+
+    # Legacy Shop
+    RewriteRule ^Frontend/Shop/(?:shop\.php)?$ /shop.php [R=301,QSA,L,NC]
+
+    # Legacy Home
+    RewriteRule ^Frontend/Home/(?:home\.php|index\.php)?$ / [R=301,QSA,L,NC]
+
+    # Legacy Wholesale
+    RewriteRule ^Frontend/Wholesale/(?:wholesale\.php)?$ /wholesale.php [R=301,QSA,L,NC]
+
+    # Legacy Reseller
+    RewriteRule ^Frontend/Reseller/(?:reseller\.php)?$ /reseller.php [R=301,QSA,L,NC]
+
+    # Legacy Retailer
+    RewriteRule ^Frontend/Retailer/(?:retailer\.php)?$ /retailer.php [R=301,QSA,L,NC]
+
+    # Legacy Admin Tree
+    RewriteRule ^Frontend/Admin/(.*)$ /admin/$1 [R=301,QSA,L,NC]
+
+    # Legacy DT Brand Tree
+    RewriteRule ^DT(?:\ |%20)?Brand/(.*)$ /$1 [R=301,QSA,L,NC]
+
+    # Legacy Frontend Asset Routes
+    RewriteRule ^Frontend/[^/]+/Asset/images/(.*)$ /assets/images/$1 [R=301,L,NC]
+    RewriteRule ^Frontend/[^/]+/Asset/css/(.*)$ /assets/css/$1 [R=301,L,NC]
+    RewriteRule ^Frontend/[^/]+/Asset/js/(.*)$ /assets/js/$1 [R=301,L,NC]
+
+    # ── 5. STOREFRONT CLEAN URL ROUTING (.php optional / pretty URLs) ──
+    # Product PDP
+    RewriteRule ^product/?$ product.php [QSA,L]
     RewriteRule ^product/([0-9]+)/?$ product.php?id=$1 [QSA,L]
     RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [QSA,L]
 
-    # 5. Main Storefront Clean Routes
+    # Main Portals
     RewriteRule ^shop/?$ shop.php [QSA,L]
     RewriteRule ^wholesale/?$ wholesale.php [QSA,L]
     RewriteRule ^reseller/?$ reseller.php [QSA,L]
@@ -45,14 +78,16 @@ Options -Indexes -MultiViews
     RewriteRule ^privacy/?$ privacy.php [QSA,L]
     RewriteRule ^shipping/?$ shipping.php [QSA,L]
     RewriteRule ^terms/?$ terms.php [QSA,L]
+    RewriteRule ^logout/?$ logout.php [QSA,L]
+    RewriteRule ^health/?$ health.php [QSA,L]
 
-    # 6. Clean API Routes: /api/products -> /api/products.php
+    # ── 6. CLEAN API ROUTES ──
     RewriteRule ^api/([a-zA-Z0-9_-]+)/?$ api/$1.php [QSA,L]
 
-    # 7. Clean Admin & Auth Routes
-    RewriteRule ^admin/login/?$ admin/login.php [QSA,L]
-    RewriteRule ^adminlogin/?$ admin/login.php [QSA,L]
-    RewriteRule ^login/?$ admin/login.php [QSA,L]
+    # ── 7. CLEAN ADMIN & AUTH ROUTES ──
+    RewriteRule ^admin/login/?$ adminlogin.php [QSA,L]
+    RewriteRule ^adminlogin/?$ adminlogin.php [QSA,L]
+    RewriteRule ^login/?$ adminlogin.php [QSA,L]
     RewriteRule ^admin/?$ admin/index.php [QSA,L]
 
     # Admin Subroutes

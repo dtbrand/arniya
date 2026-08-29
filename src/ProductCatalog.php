@@ -44,9 +44,9 @@ class ProductCatalog
         if (stripos($p, 'data:') === 0) {
             return '';
         }
-        // The seed data shipped /Frontend/Shop/Asset/images/, a directory that
+        // The seed data shipped /assets/images/, a directory that
         // does not exist in this docroot, so every seeded row served a 404.
-        $p = str_replace('/Frontend/Shop/Asset/images/', '/assets/images/', $p);
+        $p = str_replace('/assets/images/', '/assets/images/', $p);
         if (stripos($p, 'http://') === 0 || stripos($p, 'https://') === 0) {
             return $p;
         }
@@ -687,7 +687,7 @@ class ProductCatalog
         if ($p === '' || stripos($p, 'data:') === 0 || $p === 'null' || $p === 'undefined') {
             return '';
         }
-        $p = str_replace('/Frontend/Shop/Asset/images/', '/assets/images/', $p);
+        $p = str_replace('/assets/images/', '/assets/images/', $p);
         if (stripos($p, 'http://') !== 0 && stripos($p, 'https://') !== 0 && $p[0] !== '/') {
             $p = '/' . $p;
         }

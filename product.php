@@ -1,6 +1,6 @@
 <?php
 /**
- * singleproduct.php — Dedicated Luxury Single Product Page (PDP)
+ * product.php — Dedicated Luxury Single Product Page (PDP)
  * Fully responsive on Mobile and Desktop with touch-swipe gallery,
  * Size Chart Modal, Pincode Estimator, WhatsApp Order, and Cart Integration.
  */

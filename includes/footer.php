@@ -1,6 +1,6 @@
 <?php
 /**
- * DT Brand/includes/footer.php — Luxury 4-Column Desktop & Tablet Footer
+ * includes/footer.php — Luxury 4-Column Desktop & Tablet Footer
  * DT Brand's & Jai Hanuman Tex
  */
 ?>

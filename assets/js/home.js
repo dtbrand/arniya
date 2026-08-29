@@ -136,7 +136,7 @@
     catSource.forEach(function(c, i) {
         if (!c || !c.name || uniqueCatMap[c.name]) return;
         uniqueCatMap[c.name] = true;
-        var cImg = c.image || ('/Frontend/Shop/Asset/images/product' + ((i % 6) + 1) + '.png');
+        var cImg = c.image || ('/assets/images/product' + ((i % 6) + 1) + '.png');
 
         subCategoryData['All'].push({
             label: c.name,
@@ -148,9 +148,9 @@
         subCategoryData[c.name] = [
             { label: 'All ' + c.name, img: cImg, type: 'all_sub', val: c.name },
             { label: 'Pure Silk', img: cImg, type: 'fabric', val: 'Pure Silk' },
-            { label: 'Handloom', img: '/Frontend/Shop/Asset/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
-            { label: 'Zari Weaves', img: '/Frontend/Shop/Asset/images/product3.png', type: 'fabric', val: 'Zari' },
-            { label: 'Festive Drop', img: '/Frontend/Shop/Asset/images/product4.png', type: 'fabric', val: 'Festive' }
+            { label: 'Handloom', img: '/assets/images/product2.png', type: 'fabric', val: 'Handloom Korvai' },
+            { label: 'Zari Weaves', img: '/assets/images/product3.png', type: 'fabric', val: 'Zari' },
+            { label: 'Festive Drop', img: '/assets/images/product4.png', type: 'fabric', val: 'Festive' }
         ];
     });
 
@@ -163,7 +163,7 @@
             var isAct = idx === 0;
             var circleContent = '';
             if (item.img) {
-                circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/Frontend/Shop/Asset/images/product1.png\'" />';
+                circleContent = '<img src="' + item.img + '" alt="' + item.label + '" loading="lazy" onerror="this.src=\'/assets/images/product1.png\'" />';
             } else {
                 circleContent = '<span class="cat-icon" aria-hidden="true">' + (item.icon || '●') + '</span>';
             }
@@ -861,14 +861,14 @@
     }
 
     var DEFAULT_RECENT_PRODUCTS = [
-        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product1.png', category: 'PAITHANI SAREE' },
-        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/Frontend/Shop/Asset/images/product2.png', category: 'BANARASI SILK' },
-        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product3.png', category: 'KURTIS & SUITS' },
-        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product4.png', category: 'BRIDAL LEHENGA' },
-        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product5.png', category: 'KANJEEVARAM' },
-        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product6.png', category: 'CHANDERI SILK' },
-        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product7.png', category: 'ORGANZA SILK' },
-        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/Frontend/Shop/Asset/images/product8.png', category: 'GEORGETTE' }
+        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/assets/images/product1.png', category: 'PAITHANI SAREE' },
+        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/assets/images/product2.png', category: 'BANARASI SILK' },
+        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/assets/images/product3.png', category: 'KURTIS & SUITS' },
+        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/assets/images/product4.png', category: 'BRIDAL LEHENGA' },
+        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/assets/images/product5.png', category: 'KANJEEVARAM' },
+        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/assets/images/product6.png', category: 'CHANDERI SILK' },
+        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/assets/images/product7.png', category: 'ORGANZA SILK' },
+        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/assets/images/product8.png', category: 'GEORGETTE' }
     ];
 
     window.trackRecentlyViewed = function(productId) {
@@ -942,7 +942,7 @@
 
             track.innerHTML = items.map(function(item) {
                 var pdpUrl = isFrontendPath
-                    ? ('/Frontend/Single-Product/singleproduct.php?id=' + encodeURIComponent(item.id))
+                    ? ('/product.php?id=' + encodeURIComponent(item.id))
                     : ('/product.php?id=' + encodeURIComponent(item.id));
                 var disc = item.discount ? (typeof item.discount === 'number' ? (item.discount + '% OFF') : String(item.discount)) : '';
                 var priceNum = Number(item.price) || 0;

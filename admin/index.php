@@ -2774,7 +2774,7 @@ _Special 15% VIP Discount Applied!_</textarea>
                             <tbody>
                                 <tr>
                                     <td><strong>Homepage &amp; Hero Sliders</strong></td>
-                                    <td><code>/Frontend/Home/home.php</code></td>
+                                    <td><code>/index.php</code></td>
                                     <td>Today, 02:00 PM</td>
                                     <td><span class="adm-badge success">Live</span></td>
                                     <td><a href="/admin/cms/homepage.php" class="adm-btn-secondary adm-btn-sm">Edit</a></td>

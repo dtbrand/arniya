@@ -1,6 +1,6 @@
 <?php
 /**
- * DT Brand/includes/header.php — Universal Master Responsive Header
+ * includes/header.php — Universal Master Responsive Header
  * DT Brand's & Jai Hanuman Tex
  */
 $currentScript = basename($_SERVER['PHP_SELF'] ?? '');

@@ -5,7 +5,7 @@
 ?>
 <div class="adm-card dt-prod-grid-card">
     <div style="position:relative;">
-        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/Frontend/Shop/Asset/images/product1.png';" style="width:100%; height:180px; object-fit:cover; border-radius:8px 8px 0 0;">
+        <img src="/Shared/Asset/images/product1.png" onerror="this.src='/assets/images/product1.png';" style="width:100%; height:180px; object-fit:cover; border-radius:8px 8px 0 0;">
         <span class="adm-badge success" style="position:absolute; top:8px; left:8px;">In Stock (45)</span>
         <span class="adm-badge gold" style="position:absolute; top:8px; right:8px;">★ 5.0</span>
     </div>
@@ -18,8 +18,8 @@
             <div style="color:#8A681F; font-weight:700; font-size:0.85rem;">₹2,850 <small>Wholesale</small></div>
         </div>
         <div style="display:flex; gap:6px;">
-            <a href="/Frontend/Admin/products/view.php?id=101" class="adm-btn-secondary adm-btn-sm" style="flex:1; justify-content:center;">View</a>
-            <a href="/Frontend/Admin/products/edit.php?id=101" class="adm-btn-primary adm-btn-sm" style="flex:1; justify-content:center;">Edit</a>
+            <a href="/admin/products/view.php?id=101" class="adm-btn-secondary adm-btn-sm" style="flex:1; justify-content:center;">View</a>
+            <a href="/admin/products/edit.php?id=101" class="adm-btn-primary adm-btn-sm" style="flex:1; justify-content:center;">Edit</a>
         </div>
     </div>
 </div>
