@@ -167,7 +167,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
 </style>
 
 <!-- ════════════ WISHLIST DRAWER MODAL ════════════ -->
-<div class="wishlist-drawer-backdrop" id="wishlistDrawerModal" aria-hidden="true" role="dialog" aria-label="Wishlist Drawer">
+<div class="wishlist-drawer-backdrop" id="wishlistDrawerModal" aria-hidden="true" role="dialog" aria-label="Wishlist Drawer" inert>
     <div class="wishlist-drawer-content">
         <div class="wd-header">
             <div class="wd-title-wrap">
@@ -426,6 +426,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
     window.openWishlistDrawer = function() {
         var modal = document.getElementById('wishlistDrawerModal');
         if (modal) {
+            modal.removeAttribute('inert');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
@@ -438,8 +439,12 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
     window.closeWishlistDrawer = function() {
         var modal = document.getElementById('wishlistDrawerModal');
         if (modal) {
+            if (document.activeElement && modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
             document.body.style.overflow = '';
         }
     };

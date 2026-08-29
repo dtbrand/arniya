@@ -1067,7 +1067,7 @@
 
                     <!-- Country Option (All World Countries with Search & Real Flags) -->
                     <div class="auth-form-group">
-                        <label class="auth-label">Country <span class="req">*</span></label>
+                        <label class="auth-label" for="countrySearchInput">Country <span class="req">*</span></label>
                         <div class="custom-select-box" id="countrySelectBox">
                             <div class="custom-select-trigger" onclick="toggleDropdown('countrySelectBox')">
                                 <div class="custom-select-val" id="selectedCountryDisplay">
@@ -1124,7 +1124,7 @@
 
                         <!-- State (Custom Scrolling Dropdown) -->
                         <div class="auth-form-group">
-                            <label class="auth-label">State <span class="req">*</span></label>
+                            <label class="auth-label" for="stateSearchInput">State <span class="req">*</span></label>
                             <div class="custom-select-box" id="stateSelectBox">
                                 <div class="custom-select-trigger" onclick="toggleDropdown('stateSelectBox')">
                                     <div class="custom-select-val">
@@ -1146,8 +1146,9 @@
 
                     <!-- Role Option (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
                     <div class="auth-form-group">
-                        <label class="auth-label">Your Role <span class="req">*</span></label>
-                        <div class="role-pill-group">
+                        <label class="auth-label" for="regRole">Your Role <span class="req">*</span></label>
+                        <input type="hidden" id="regRole" name="role" value="Retailer">
+                        <div class="role-pill-group" role="radiogroup" aria-labelledby="regRole">
                             <!-- Retailer -->
                             <div class="role-pill-btn selected" data-role="Retailer" onclick="selectRole('Retailer')">
                                 <div class="role-svg-icon role-svg-retailer">
@@ -1588,6 +1589,8 @@
 
         window.selectRole = function(role) {
             selectedRole = role;
+            var roleInp = document.getElementById('regRole');
+            if (roleInp) roleInp.value = role;
             document.querySelectorAll('.role-pill-btn').forEach(function(c) {
                 c.classList.toggle('selected', c.dataset.role === role);
             });

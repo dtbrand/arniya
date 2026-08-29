@@ -641,7 +641,7 @@
 <!-- ════════════════════════════════════════════════════
      ACCOUNT MODAL POPUP (HTML STRUCTURE)
 ════════════════════════════════════════════════════ -->
-<div class="account-modal-backdrop" id="accountModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="acModalHeading">
+<div class="account-modal-backdrop" id="accountModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="acModalHeading" aria-hidden="true" inert>
     <div class="account-dialog" id="accountDialog">
         
         <!-- Header -->
@@ -723,7 +723,7 @@
 
                 <!-- Country Dropdown (All World Countries with Search & Real Flags) -->
                 <div class="ac-form-group">
-                    <label class="ac-label">Country <span class="req">*</span></label>
+                    <label class="ac-label" for="acCountrySearchInput">Country <span class="req">*</span></label>
                     <div class="ac-custom-select-box" id="acCountrySelectBox">
                         <div class="ac-custom-select-trigger" onclick="window.toggleAcDropdown('acCountrySelectBox')">
                             <div class="ac-custom-select-val" id="acSelectedCountryDisplay">
@@ -769,7 +769,7 @@
 
                     <!-- State Dropdown -->
                     <div class="ac-form-group">
-                        <label class="ac-label">State <span class="req">*</span></label>
+                        <label class="ac-label" for="acStateSearchInput">State <span class="req">*</span></label>
                         <div class="ac-custom-select-box" id="acStateSelectBox">
                             <div class="ac-custom-select-trigger" onclick="window.toggleAcDropdown('acStateSelectBox')">
                                 <div class="ac-custom-select-val">
@@ -791,8 +791,9 @@
 
                 <!-- Role Selection (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
                 <div class="ac-form-group">
-                    <label class="ac-label">Your Role <span class="req">*</span></label>
-                    <div class="ac-role-pill-group">
+                    <label class="ac-label" for="acRegRole">Your Role <span class="req">*</span></label>
+                    <input type="hidden" id="acRegRole" name="role" value="Retailer">
+                    <div class="ac-role-pill-group" role="radiogroup" aria-labelledby="acRegRole">
                         <!-- Retailer -->
                         <div class="ac-role-pill-btn selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
                             <div class="ac-role-svg-icon">
@@ -1091,6 +1092,8 @@
 
     window.selectModalRole = function(role) {
         modalSelectedRole = role;
+        var roleInp = document.getElementById('acRegRole');
+        if (roleInp) roleInp.value = role;
         document.querySelectorAll('.ac-role-pill-btn').forEach(function(c) {
             c.classList.toggle('selected', c.dataset.role === role);
         });
@@ -1230,13 +1233,22 @@
 
         window.switchAccountTab(tab);
         renderCountryDropdown();
+        modal.removeAttribute('inert');
+        modal.setAttribute('aria-hidden', 'false');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
 
     window.closeAccountModal = function() {
         var modal = document.getElementById('accountModalBackdrop');
-        if (modal) modal.classList.remove('active');
+        if (modal) {
+            if (document.activeElement && modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
+        }
         document.body.style.overflow = '';
     };
 

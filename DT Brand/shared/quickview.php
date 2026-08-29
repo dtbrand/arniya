@@ -455,7 +455,7 @@
 </style>
 
 <!-- ════════════ QUICK VIEW MODAL OVERLAY ════════════ -->
-<div class="modal-overlay" id="quickViewOverlay" role="dialog" aria-modal="true" aria-label="Quick view" aria-hidden="true">
+<div class="modal-overlay" id="quickViewOverlay" role="dialog" aria-modal="true" aria-label="Quick view" aria-hidden="true" inert>
     <div class="quick-modal" id="quickModal">
         <div class="modal-handle" aria-hidden="true"></div>
         <button class="modal-close-btn" id="qvClose" aria-label="Close modal">
@@ -466,7 +466,7 @@
 </div>
 
 <!-- ════════════ PRODUCT DETAILS MODAL POPUP ════════════ -->
-<div class="product-details-backdrop" id="productDetailsModal" aria-hidden="true" role="dialog" aria-label="Product Details Modal">
+<div class="product-details-backdrop" id="productDetailsModal" aria-hidden="true" role="dialog" aria-label="Product Details Modal" inert>
     <div class="product-details-content">
         <div class="pd-header">
             <div class="pd-title-wrap">
@@ -829,6 +829,7 @@
                 '</div>' +
             '</div>';
 
+        overlay.removeAttribute('inert');
         overlay.classList.add('open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -1067,8 +1068,12 @@
         // Video kept playing behind the closed overlay before this.
         qvStopMedia(document.getElementById('quickModalContent'));
         if (overlay) {
+            if (document.activeElement && overlay.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             overlay.classList.remove('open');
             overlay.setAttribute('aria-hidden', 'true');
+            overlay.setAttribute('inert', '');
             document.body.style.overflow = '';
         }
         if (window.qvSliderInterval) {
@@ -1217,6 +1222,7 @@
         }
         qvShow('pdNoSpecs', filledSpecs.length === 0, 'block');
 
+        modal.removeAttribute('inert');
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -1225,8 +1231,12 @@
     window.closeProductDetails = function() {
         var modal = document.getElementById('productDetailsModal');
         if (modal) {
+            if (document.activeElement && modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
             document.body.style.overflow = '';
         }
     };

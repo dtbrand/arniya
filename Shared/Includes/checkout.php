@@ -790,7 +790,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 <!-- ════════════════════════════════════════════════════
      CHECKOUT MODAL MARKUP
 ════════════════════════════════════════════════════ -->
-<div class="checkout-backdrop" id="checkoutBackdrop" role="dialog" aria-modal="true" aria-label="Secure Checkout">
+<div class="checkout-backdrop" id="checkoutBackdrop" role="dialog" aria-modal="true" aria-label="Secure Checkout" aria-hidden="true" inert>
     <div class="checkout-wrapper">
         
         <!-- Header -->
@@ -1055,6 +1055,8 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         if (successOverlay) successOverlay.classList.remove('active');
 
         window.renderCheckoutItems();
+        modal.removeAttribute('inert');
+        modal.setAttribute('aria-hidden', 'false');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
@@ -1063,7 +1065,14 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
 
     window.closeCheckout = function() {
         var modal = document.getElementById('checkoutBackdrop');
-        if (modal) modal.classList.remove('active');
+        if (modal) {
+            if (document.activeElement && modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
+        }
         document.body.style.overflow = '';
     };
 

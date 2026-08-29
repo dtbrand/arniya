@@ -431,7 +431,7 @@
 </style>
 
 <!-- ════════════ REELS MODAL OVERLAY ════════════ -->
-<div class="reels-overlay" id="reelsModalOverlay" role="dialog" aria-modal="true" aria-label="DT Brand's Video Reels" aria-hidden="true">
+<div class="reels-overlay" id="reelsModalOverlay" role="dialog" aria-modal="true" aria-label="DT Brand's Video Reels" aria-hidden="true" inert>
     <div class="reels-wrapper" id="reelsWrapper">
         
         <!-- Top Bar Header -->
@@ -660,6 +660,7 @@
             '</div>';
         }).join('');
 
+        overlay.removeAttribute('inert');
         overlay.classList.add('open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -683,8 +684,13 @@
     window.closeReelsModal = function() {
         var overlay = document.getElementById('reelsModalOverlay');
         if (overlay) {
+            // Remove active focus from inside the dialog before setting aria-hidden/inert to prevent a11y focus retention warning
+            if (document.activeElement && overlay.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             overlay.classList.remove('open');
             overlay.setAttribute('aria-hidden', 'true');
+            overlay.setAttribute('inert', '');
             document.body.style.overflow = '';
 
             /* Pause all videos, and reset embeds so a third-party player stops. */

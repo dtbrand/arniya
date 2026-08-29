@@ -177,7 +177,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
 </style>
 
 <!-- ════════════ CART DRAWER MODAL ════════════ -->
-<div class="cart-drawer-backdrop" id="cartDrawerModal" aria-hidden="true" role="dialog" aria-label="Shopping Cart Drawer">
+<div class="cart-drawer-backdrop" id="cartDrawerModal" aria-hidden="true" role="dialog" aria-label="Shopping Cart Drawer" inert>
     <div class="cart-drawer-content">
         <div class="cd-header">
     <div style="display:flex; align-items:center; gap:10px;">
@@ -480,6 +480,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     window.openCartDrawer = function() {
         var modal = document.getElementById('cartDrawerModal');
         if (modal) {
+            modal.removeAttribute('inert');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             modal.style.setProperty('display', 'flex', 'important');
@@ -499,8 +500,12 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     window.closeCartDrawer = function() {
         var modal = document.getElementById('cartDrawerModal');
         if (modal) {
+            if (document.activeElement && modal.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
+            modal.setAttribute('inert', '');
             modal.style.removeProperty('display');
             modal.style.removeProperty('opacity');
             modal.style.removeProperty('visibility');

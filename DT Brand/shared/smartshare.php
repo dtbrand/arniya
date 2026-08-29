@@ -302,7 +302,7 @@
 </div>
 
 <!-- Modal Dialog (Alternative / Detailed View) -->
-<div class="smart-share-overlay" id="smartShareOverlay" onclick="if(event.target===this) window.closeSmartShareModal();" aria-modal="true" role="dialog">
+<div class="smart-share-overlay" id="smartShareOverlay" onclick="if(event.target===this) window.closeSmartShareModal();" aria-modal="true" role="dialog" aria-label="Smart WhatsApp Share" aria-hidden="true" inert>
     <div class="smart-share-sheet">
         <div class="smart-share-handle"></div>
         <div class="smart-share-header">
@@ -597,12 +597,23 @@
 
         // Open the Popup Modal
         var overlay = document.getElementById('smartShareOverlay');
-        if (overlay) overlay.classList.add('active');
+        if (overlay) {
+            overlay.removeAttribute('inert');
+            overlay.setAttribute('aria-hidden', 'false');
+            overlay.classList.add('active');
+        }
     };
 
     window.closeSmartShareModal = function() {
         var overlay = document.getElementById('smartShareOverlay');
-        if (overlay) overlay.classList.remove('active');
+        if (overlay) {
+            if (document.activeElement && overlay.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.setAttribute('inert', '');
+        }
     };
 
     /* 🟢 1-Click Batch Download & WhatsApp Share from Modal */
