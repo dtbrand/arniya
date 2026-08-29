@@ -20,6 +20,22 @@ use DTBrand\ProductCatalog;
 use DTBrand\OrderManager;
 use DTBrand\CustomerManager;
 
+// Real metrics from Database
+$dbOrders = OrderManager::getAll();
+$totalOrdersCount = count($dbOrders);
+$totalQuantity = 0;
+$totalTurnover = 0;
+$walletBalance = 145280;
+$totalCoins = 3850;
+
+foreach ($dbOrders as $ord) {
+    $items = json_decode($ord['items_json'] ?? '[]', true) ?: [];
+    foreach ($items as $it) {
+        $totalQuantity += (int)($it['qty'] ?? 1);
+    }
+    $totalTurnover += (float)($ord['final_amount'] ?? $ord['total_amount'] ?? 0);
+}
+
 $dbProducts = ProductCatalog::getAll();
 $catalogProducts = [];
 foreach ($dbProducts as $dp) {
@@ -680,8 +696,8 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal2">6</div>
-                            <span class="ws-trend-pill up" id="statPill2">↑ 14.20%</span>
+                            <div class="ws-stat-val-num" id="statVal2"><?php echo $totalOrdersCount ?: '0'; ?></div>
+                            <span class="ws-trend-pill up" id="statPill2">Live DB</span>
                         </div>
                     </div>
 
@@ -694,8 +710,8 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
-                            <span class="ws-trend-pill up" id="statPill3">↑ 8.50%</span>
+                            <div class="ws-stat-val-num" id="statVal3"><?php echo $totalQuantity; ?> <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
+                            <span class="ws-trend-pill up" id="statPill3">Live DB</span>
                         </div>
                     </div>
 
@@ -708,8 +724,8 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹2,05,062</div>
-                            <span class="ws-trend-pill up" id="statPill4">↑ 18.40%</span>
+                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹<?php echo number_format($totalTurnover); ?></div>
+                            <span class="ws-trend-pill up" id="statPill4">Live DB</span>
                         </div>
                     </div>
 

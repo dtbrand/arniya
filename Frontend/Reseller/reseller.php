@@ -15,10 +15,41 @@ require_once __DIR__ . '/../../src/ProductCatalog.php';
 require_once __DIR__ . '/../../src/OrderManager.php';
 require_once __DIR__ . '/../../src/CustomerManager.php';
 require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/Auth.php';
 
 use DTBrand\ProductCatalog;
 use DTBrand\OrderManager;
 use DTBrand\CustomerManager;
+use DTBrand\Auth;
+
+Auth::initSession();
+$currentUser = Auth::getCurrentUser();
+$isLoggedIn = ($currentUser !== null && !empty($currentUser['id']));
+$portalRole = 'reseller';
+
+$userName = $isLoggedIn ? htmlspecialchars($currentUser['name']) : 'Partner Member';
+$userCompany = $isLoggedIn ? htmlspecialchars($currentUser['companyName'] ?? ($currentUser['company_name'] ?? $currentUser['name'])) : 'Boutique Partner';
+$userPhone = $isLoggedIn ? htmlspecialchars($currentUser['phone']) : '';
+$userEmail = $isLoggedIn ? htmlspecialchars($currentUser['email'] ?? '') : '';
+$userTier = $isLoggedIn ? htmlspecialchars($currentUser['tier'] ?? 'Tier 1') : 'Tier 1';
+$userBalance = $isLoggedIn ? (float)($currentUser['outstanding_balance'] ?? 0) : 0.0;
+$userCredit = $isLoggedIn ? (float)($currentUser['credit_limit'] ?? 0) : 0.0;
+$userGst = $isLoggedIn ? htmlspecialchars($currentUser['gstin'] ?? '') : '';
+$userCity = $isLoggedIn ? htmlspecialchars($currentUser['city'] ?? '') : '';
+$userState = $isLoggedIn ? htmlspecialchars($currentUser['state'] ?? '') : '';
+
+// Fetch REAL Orders for this user from database
+$userOrders = [];
+if ($isLoggedIn) {
+    $userOrders = OrderManager::getByCustomerId((int)$currentUser['id']);
+}
+$totalOrdersCount = count($userOrders);
+$totalTurnover = 0;
+$totalQuantity = 0;
+foreach ($userOrders as $uo) {
+    $totalTurnover += (float)($uo['total_amount'] ?? 0);
+    $totalQuantity += (int)($uo['items_count'] ?? 1);
+}
 
 $dbProducts = ProductCatalog::getAll();
 $catalogProducts = [];
@@ -572,7 +603,7 @@ $catalogProducts = [
                 <div class="ws-user-profile-btn" onclick="switchWsTab('details')" title="Reseller Profile">
                     <img src="/Frontend/Reseller/Asset/images/profile.png" onerror="this.src='/Frontend/Reseller/Asset/images/product1.png';" alt="User" class="ws-user-avatar-img" id="headerUserAvatar" loading="lazy" decoding="async">
                     <div class="ws-user-name-text">
-                        <span id="headerUserName">Rajesh Kumar</span>
+                        <span id="headerUserName"><?= $userName ?></span>
                         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </div>
                 </div>
@@ -627,12 +658,12 @@ $catalogProducts = [
                 <div class="ws-side-user-card" onclick="switchWsTab('details'); toggleSidebar(false);" style="margin: 8px 8px 4px; padding: 7px 9px; background: linear-gradient(135deg, #FAF5E8 0%, #FFFFFF 100%); border: 1.2px solid rgba(212,175,55,0.35); border-radius: 9px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(138,104,31,0.06);">
                     <img src="/Frontend/Reseller/Asset/images/profile.png" onerror="this.src='/Frontend/Reseller/Asset/images/product1.png';" alt="User" style="width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ws-gold-primary); object-fit: cover; flex-shrink: 0;" loading="lazy" decoding="async">
                     <div style="flex: 1; min-width: 0;">
-                        <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName">Rajesh Kumar</div>
+                        <div style="font-size: 0.76rem; font-weight: 800; color: #1C1917; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sideUserName"><?= $userName ?></div>
                         <div style="font-size: 0.60rem; font-weight: 700; color: #8A681F; display: flex; align-items: center; gap: 2px;">
-                            <span>★ Verified Reseller</span>
+                            <span>★ <?= $isLoggedIn ? 'Verified Reseller' : 'Partner Portal' ?></span>
                         </div>
                     </div>
-                    <span style="font-size: 0.58rem; font-weight: 800; background: #DCFCE7; color: #15803D; padding: 2px 5px; border-radius: 6px; border: 1px solid #BBF7D0; flex-shrink: 0;">Tier 1</span>
+                    <span style="font-size: 0.58rem; font-weight: 800; background: #DCFCE7; color: #15803D; padding: 2px 5px; border-radius: 6px; border: 1px solid #BBF7D0; flex-shrink: 0;"><?= $userTier ?></span>
                 </div>
 
                 <div class="ws-nav-category">MENU</div>
@@ -647,7 +678,7 @@ $catalogProducts = [
                         <a class="ws-nav-item" onclick="switchWsTab('orders')">
                             <svg viewBox="0 0 24 24"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                             <span>Orders</span>
-                            <span class="ws-nav-badge" id="navOrdersCount">6</span>
+                            <span class="ws-nav-badge" id="navOrdersCount"><?= $totalOrdersCount ?></span>
                         </a>
                     </li>
                     <li>
@@ -791,7 +822,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal2">6</div>
+                            <div class="ws-stat-val-num" id="statVal2"><?= $totalOrdersCount ?></div>
                             <span class="ws-trend-pill up" id="statPill2">↑ 14.20%</span>
                         </div>
                     </div>
@@ -805,7 +836,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal3">48 <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
+                            <div class="ws-stat-val-num" id="statVal3"><?= $totalQuantity ?> <span style="font-size:0.85rem; font-weight:700; color:var(--ws-text-muted);">Pcs</span></div>
                             <span class="ws-trend-pill up" id="statPill3">↑ 8.50%</span>
                         </div>
                     </div>
@@ -819,7 +850,7 @@ $catalogProducts = [
                             </div>
                         </div>
                         <div class="ws-stat-val-row">
-                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹2,05,062</div>
+                            <div class="ws-stat-val-num" id="statVal4" style="color:var(--ws-gold-primary);">₹<?= number_format($totalTurnover) ?></div>
                             <span class="ws-trend-pill up" id="statPill4">↑ 18.40%</span>
                         </div>
                     </div>
@@ -866,7 +897,7 @@ $catalogProducts = [
                             </div>
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Balance</span>
-                                <span class="ws-wallet-metric-value" id="walletAvailableBalance">₹1,45,280</span>
+                                <span class="ws-wallet-metric-value" id="walletAvailableBalance">₹<?= number_format($walletBalance) ?></span>
                             </div>
                         </div>
 
@@ -891,7 +922,7 @@ $catalogProducts = [
                             </div>
                             <div class="ws-wallet-metric-content">
                                 <span class="ws-wallet-metric-label">Total Coins</span>
-                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins">3,850</span>
+                                <span class="ws-wallet-metric-value gold" id="walletTotalCoins"><?= number_format($totalCoins) ?></span>
                             </div>
                         </div>
                     </div>
@@ -925,7 +956,7 @@ $catalogProducts = [
                         <!-- Live Tooltip Display -->
                         <div class="ws-chart-tooltip" id="chartLiveTooltip">
                             <span class="ws-chart-tooltip-dot"></span>
-                            <span id="chartTooltipText">Aug (Current): ₹2,05,062 • 48 Pcs (↑18.4%)</span>
+                            <span id="chartTooltipText">Lifetime Sales: ₹<?= number_format($totalTurnover) ?> • <?= $totalQuantity ?> Pcs</span>
                         </div>
 
                         <div class="ws-chart-wrapper" id="salesChartMainWrapper">

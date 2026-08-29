@@ -309,29 +309,44 @@ class Auth
                     UPDATE customers 
                     SET name = COALESCE(NULLIF(?, ''), name),
                         email = COALESCE(NULLIF(?, ''), email),
+                        phone = COALESCE(NULLIF(?, ''), phone),
                         city = COALESCE(NULLIF(?, ''), city),
-                        state = COALESCE(NULLIF(?, ''), state)
+                        state = COALESCE(NULLIF(?, ''), state),
+                        gstin = COALESCE(NULLIF(?, ''), gstin)
                     WHERE id = ?
                 ");
                 $stmt->execute([
                     $data['name'] ?? '',
                     $data['email'] ?? '',
+                    $data['phone'] ?? '',
                     $data['city'] ?? '',
                     $data['state'] ?? '',
+                    $data['gstin'] ?? ($data['gst_number'] ?? ''),
                     $customerId
                 ]);
 
                 if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
                     if (!empty($data['name'])) $_SESSION['user']['name'] = $data['name'];
                     if (!empty($data['email'])) $_SESSION['user']['email'] = $data['email'];
+                    if (!empty($data['phone'])) $_SESSION['user']['phone'] = $data['phone'];
+                    if (!empty($data['city'])) $_SESSION['user']['city'] = $data['city'];
+                    if (!empty($data['state'])) $_SESSION['user']['state'] = $data['state'];
+                    if (!empty($data['companyName'])) $_SESSION['user']['companyName'] = $data['companyName'];
+                    if (!empty($data['gstin'])) $_SESSION['user']['gstin'] = $data['gstin'];
                 }
 
-                return ['success' => true, 'message' => 'Profile updated successfully.'];
+                return ['success' => true, 'message' => 'Profile updated successfully.', 'user' => $_SESSION['user'] ?? null];
             } catch (\Exception $e) {
                 return ['success' => false, 'message' => 'Failed to update profile: ' . $e->getMessage()];
             }
         }
-        return ['success' => true, 'message' => 'Profile updated.'];
+
+        if (isset($_SESSION['user']) && $_SESSION['user']['id'] === $customerId) {
+            foreach ($data as $k => $v) {
+                if (!empty($v)) $_SESSION['user'][$k] = $v;
+            }
+        }
+        return ['success' => true, 'message' => 'Profile updated.', 'user' => $_SESSION['user'] ?? null];
     }
 
     /**

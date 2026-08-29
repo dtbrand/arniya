@@ -44,6 +44,18 @@ try {
         exit;
     }
 
+    if ($action === 'update_profile') {
+        $user = Auth::getCurrentUser();
+        if (!$user || empty($user['id'])) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Please sign in to update profile.']);
+            exit;
+        }
+        $res = Auth::updateProfile((int)$user['id'], $data);
+        echo json_encode($res, JSON_PRETTY_PRINT);
+        exit;
+    }
+
     if ($action === 'admin_login') {
         $email = trim($data['email'] ?? ($data['username'] ?? ''));
         $password = $data['password'] ?? '';
