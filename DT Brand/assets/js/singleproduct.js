@@ -982,29 +982,52 @@
 
     // Size Guide Modal
     window.openSizeGuideModal = function() {
-        var modal = document.getElementById('pdpSizeChartModal');
-        if (modal) modal.classList.add('open');
+        var modal = document.getElementById('pdpSizeChartModal') || document.getElementById('pdpSizeGuideModal');
+        if (modal) {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('pdp-popup-active');
+            if (typeof window.hidePdpMobileBar === 'function') window.hidePdpMobileBar();
+        }
     };
     window.closeSizeGuideModal = function() {
-        var modal = document.getElementById('pdpSizeChartModal');
-        if (modal) modal.classList.remove('open');
+        var modal = document.getElementById('pdpSizeChartModal') || document.getElementById('pdpSizeGuideModal');
+        if (modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+            document.body.classList.remove('pdp-popup-active');
+            if (typeof window.showPdpMobileBar === 'function') window.showPdpMobileBar();
+        }
     };
 
     // Write Review Modal
     var currentSelectedRating = 5;
     window.openWriteReviewModal = function() {
         var modal = document.getElementById('pdpWriteReviewModal');
-        if (modal) modal.classList.add('open');
+        if (modal) {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('pdp-popup-active');
+            if (typeof window.hidePdpMobileBar === 'function') window.hidePdpMobileBar();
+        }
     };
     window.closeWriteReviewModal = function() {
         var modal = document.getElementById('pdpWriteReviewModal');
-        if (modal) modal.classList.remove('open');
+        if (modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+            document.body.classList.remove('pdp-popup-active');
+            if (typeof window.showPdpMobileBar === 'function') window.showPdpMobileBar();
+        }
     };
 
     // Close modals on overlay backdrop click
     document.addEventListener('click', function(e) {
         if (e.target && e.target.classList && e.target.classList.contains('pdp-modal-overlay')) {
             e.target.classList.remove('open');
+            document.body.style.overflow = '';
+            document.body.classList.remove('pdp-popup-active');
+            if (typeof window.showPdpMobileBar === 'function') window.showPdpMobileBar();
         }
     });
     window.setReviewRating = function(val) {
