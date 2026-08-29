@@ -647,7 +647,7 @@
         <!-- Header -->
         <div class="ac-header">
             <div class="ac-brand-group">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:34px; width:auto; max-width:125px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:34px; width:auto; max-width:125px; object-fit:contain;">
                 <div class="ac-title-wrap">
                     <h3 id="acModalHeading">Sign In</h3>
                     <span>Ethnic Luxury Couture</span>

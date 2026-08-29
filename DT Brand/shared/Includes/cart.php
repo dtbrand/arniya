@@ -181,7 +181,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
     <div class="cart-drawer-content">
         <div class="cd-header">
     <div style="display:flex; align-items:center; gap:10px;">
-        <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+        <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
         <div>
             <h3 class="cd-title" style="margin:0; font-size:0.95rem;">Shopping Bag</h3>
             <span class="cd-subtitle" style="font-size:0.56rem;">Ethnic Luxury</span>

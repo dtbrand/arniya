@@ -164,7 +164,7 @@ $catalogHasProducts = $catalogProducts !== [];
         <aside class="ws-sidebar" id="wsSidebar">
             <div class="ws-sidebar-brand-box">
                 <a href="#" style="display:flex; align-items:center; text-decoration:none;">
-                    <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
+                    <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="ws-brand-img-logo" style="height:36px; width:auto; max-width:150px; object-fit:contain;">
                 </a>
                 <button class="ws-sidebar-close-btn" onclick="toggleSidebar(false)" aria-label="Close Menu">✕</button>
             </div>

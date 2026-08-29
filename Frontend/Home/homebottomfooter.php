@@ -529,7 +529,7 @@
         <!-- Header with Brand Logo & Close Button -->
         <div class="home-menu-header">
             <a href="/" style="display:flex; align-items:center;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="home-menu-logo">
             </a>
             <button class="home-menu-close-btn" onclick="toggleHomeMobileMenu(false)" aria-label="Close Menu">✕</button>
         </div>

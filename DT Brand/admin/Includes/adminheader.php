@@ -581,7 +581,7 @@ if (!headers_sent()) {
 
             <!-- Mobile Brand Logo Link -->
             <a href="/admin" class="adm-mobile-brand-link" title="DT Brand's Admin CRM">
-                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="adm-mobile-logo-img">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="adm-mobile-logo-img">
                 <span class="adm-mobile-brand-title">DT Brand's</span>
             </a>
 

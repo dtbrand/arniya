@@ -561,7 +561,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- ══ Header ══ -->
     <header class="adm-login-header">
         <a href="/" class="adm-login-brand">
-            <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="adm-login-logo">
+            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="adm-login-logo">
             <div class="adm-login-brand-text">
                 <span class="adm-login-brand-title">DT Brand's</span>
                 <span class="adm-login-brand-sub">Enterprise CRM</span>

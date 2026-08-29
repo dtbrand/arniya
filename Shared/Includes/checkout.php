@@ -796,7 +796,7 @@ window.allProducts = <?php echo json_encode($dbProductsForCheckout); ?>;
         <!-- Header -->
                 <div class="co-header">
             <div class="co-header-brand" style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:32px; width:auto; max-width:130px; object-fit:contain;">
                 <div class="co-title-group">
                     <h2>Secure Luxury Checkout</h2>
                     <span>DT Brand's Ethnic Couture</span>

@@ -888,7 +888,7 @@ $isHomePage = ($currentPage === 'home.php' || (isset($hideHeaderSubnav) && $hide
             <?php endif; ?>
 
             <a href="/" class="header-brand-link" style="display:inline-flex; align-items:center; text-decoration:none;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's Ethnic Luxury" class="header-brand-real-logo" style="height:34px; width:auto; max-width:160px; object-fit:contain;">
             </a>
         </div>
 

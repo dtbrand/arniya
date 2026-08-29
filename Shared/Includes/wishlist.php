@@ -192,7 +192,7 @@ window.allProducts = <?php echo json_encode($dbProductsForWishlist); ?>;
     <div class="wishlist-drawer-content">
         <div class="wd-header">
             <div style="display:flex; align-items:center; gap:10px;">
-                <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:28px; width:auto; max-width:120px; object-fit:contain;">
                 <div>
                     <h3 class="wd-title" style="margin:0; font-size:0.95rem;">Saved Wishlist</h3>
                     <span class="wd-subtitle" id="wishlistBadgeSub" style="font-size:0.56rem;">0 Saved Items</span>

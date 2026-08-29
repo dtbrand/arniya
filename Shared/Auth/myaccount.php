@@ -1004,7 +1004,7 @@
     <!-- ═══ Navigation Header ═══ -->
     <header class="account-nav-header">
         <a href="../../Frontend/Shop/shop.php" class="account-nav-brand" style="display:inline-flex; align-items:center; text-decoration:none;">
-            <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
+            <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:36px; width:auto; max-width:160px; object-fit:contain;">
         </a>
 
         <a href="../../Frontend/Shop/shop.php" class="return-shop-btn">
@@ -1021,7 +1021,7 @@
             <div class="auth-card-header">
                 <!-- Royal Brand Real Logo -->
                 <div class="auth-brand-seal-wrap" style="display:inline-flex; flex-direction:column; align-items:center; margin-bottom:12px;">
-                    <img src="/Shared/Asset/images/logo.png" onerror="this.src='/Frontend/Shop/Asset/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
+                    <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" style="height:44px; width:auto; max-width:180px; object-fit:contain; margin-bottom:6px;">
                 </div>
 
                 <h2 id="authHeading">Sign In</h2>

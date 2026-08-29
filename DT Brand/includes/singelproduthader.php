@@ -481,7 +481,7 @@
             </a>
 
             <a href="/" class="pdp-brand-seal" title="Return to DT Brand's Home" style="display:inline-flex; align-items:center; text-decoration:none;">
-                <img src="/assets/images/logo.png" onerror="this.src='/assets/images/logo.png';" alt="DT Brand's" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
+                <img src="/assets/images/logo.png" onerror="this.onerror=null; this.src='/Shared/Asset/images/logo.png';" alt="DT Brand's" class="header-brand-real-logo" style="height:34px; width:auto; max-width:150px; object-fit:contain;">
             </a>
         </div>
 
