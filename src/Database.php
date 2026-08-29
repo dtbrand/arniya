@@ -57,7 +57,7 @@ class Database
     }
 
     /**
-     * Execute parameterized query safely
+     * Execute parameterized query safely and return all rows
      */
     public static function query(string $sql, array $params = []): array
     {
@@ -69,10 +69,59 @@ class Database
         try {
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetchAll();
+            return $stmt->fetchAll() ?: [];
         } catch (\PDOException $e) {
             error_log("[DATABASE ERROR] Query Failed: " . $e->getMessage());
             return [];
         }
+    }
+
+    /**
+     * Execute parameterized query and return single row or null
+     */
+    public static function fetchOne(string $sql, array $params = []): ?array
+    {
+        $pdo = self::getConnection();
+        if ($pdo === null) {
+            return null;
+        }
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($params);
+            $row = $stmt->fetch();
+            return is_array($row) ? $row : null;
+        } catch (\PDOException $e) {
+            error_log("[DATABASE ERROR] FetchOne Failed: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Execute insert/update/delete statement safely
+     */
+    public static function execute(string $sql, array $params = []): bool
+    {
+        $pdo = self::getConnection();
+        if ($pdo === null) {
+            return false;
+        }
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            return $stmt->execute($params);
+        } catch (\PDOException $e) {
+            error_log("[DATABASE ERROR] Execute Failed: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Get ID of last inserted record
+     */
+    public static function lastInsertId(): string
+    {
+        $pdo = self::getConnection();
+        return $pdo !== null ? $pdo->lastInsertId() : '0';
     }
 }
