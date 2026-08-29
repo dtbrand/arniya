@@ -970,21 +970,12 @@ $total_products = count($products);
 
     <!-- ════════════ SECTION 29: PRODUCT VIDEO REELS ════════════ -->
     <?php
-    $homeReelProducts = array_values(array_filter($products, static function ($rp) {
-        return !empty($rp['has_video']);
+    $homeReelProducts = array_values(array_filter($products ?? [], static function ($rp) {
+        return !empty($rp['has_video']) || !empty($rp['video']) || !empty($rp['videos']) || !empty($rp['embed']) || !empty($rp['embeds']);
     }));
+    // If no products have explicitly tagged videos, but products exist in catalog, display actual catalog products
     if (empty($homeReelProducts) && !empty($products)) {
-        $homeReelProducts = array_slice($products, 0, 8);
-    }
-    if (empty($homeReelProducts)) {
-        $homeReelProducts = [
-            ['id' => 1, 'name' => 'Pure Kanjivaram Gold Zari Draping', 'price' => 3499, 'fabric' => 'Pure Silk', 'category' => 'KANJEEVARAM SILK', 'image' => '/Frontend/Shop/Asset/images/product1.png', 'reviews_count' => 124],
-            ['id' => 2, 'name' => 'Royal Banarasi Meenakari Weave', 'price' => 4299, 'fabric' => 'Georgette Silk', 'category' => 'BANARASI SILK', 'image' => '/Frontend/Shop/Asset/images/product2.png', 'reviews_count' => 98],
-            ['id' => 4, 'name' => 'Bridal Velvet Heavy Zardozi Flare', 'price' => 7999, 'fabric' => 'Royal Velvet', 'category' => 'BRIDAL LEHENGA', 'image' => '/Frontend/Shop/Asset/images/product4.png', 'reviews_count' => 156],
-            ['id' => 6, 'name' => 'Surat Handloom Loom Live Weaving', 'price' => 2199, 'fabric' => 'Chanderi Handloom', 'category' => 'HANDLOOM SILK', 'image' => '/Frontend/Shop/Asset/images/product6.png', 'reviews_count' => 84],
-            ['id' => 5, 'name' => 'Festive Paithani Peacock Border Draping', 'price' => 4899, 'fabric' => 'Pure Silk Paithani', 'category' => 'PAITHANI SAREE', 'image' => '/Frontend/Shop/Asset/images/product5.png', 'reviews_count' => 112],
-            ['id' => 7, 'name' => 'Lucknowi Chikankari Mirror Work Flare', 'price' => 2599, 'fabric' => 'Pure Georgette', 'category' => 'ORGANZA & GEORGETTE', 'image' => '/Frontend/Shop/Asset/images/product7.png', 'reviews_count' => 76],
-        ];
+        $homeReelProducts = $products;
     }
     ?>
     <?php if (!empty($homeReelProducts)): ?>
