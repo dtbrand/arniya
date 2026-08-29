@@ -472,63 +472,6 @@ window.animateTargetGauge = animateTargetGauge;
             }
         };
 
-        function renderAddressBookData(user) {
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
-            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var billCity = user.city || 'Surat';
-            var billState = user.state || 'Gujarat';
-            var billPin = user.pincode || '395002';
-
-            var bCompEl = document.getElementById('addrPreviewBillingComp');
-            var bFullEl = document.getElementById('addrPreviewBillingFull');
-            var bAttnEl = document.getElementById('addrPreviewBillingAttn');
-            if (bCompEl) bCompEl.textContent = comp;
-            if (bFullEl) bFullEl.innerHTML = `${billAddr}<br>${billCity}, ${billState} - ${billPin} (GSTIN: <strong>${gstNum}</strong>)`;
-            if (bAttnEl) bAttnEl.textContent = `Attn: ${name} (${phone})`;
-
-            var isSame = user.shipping_same_as_billing !== false;
-            var chk = document.getElementById('wsSameAsBillingCheckbox');
-            if (chk) chk.checked = isSame;
-            toggleSameAsBillingAddress(isSame);
-
-            var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
-            var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
-            var dispatchFull = document.getElementById('addrPreviewDispatchFull');
-            var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
-
-            var ship = user.custom_shipping || {};
-            if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
-                if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
-                if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
-
-                var shipWarehouse = document.getElementById('wsShipWarehouseName');
-                var shipPhone = document.getElementById('wsShipReceiverPhone');
-                var shipAddr = document.getElementById('wsShipAddress');
-                var shipCity = document.getElementById('wsShipCity');
-                var shipState = document.getElementById('wsShipStateSelect');
-                var shipPin = document.getElementById('wsShipPincode');
-                var shipTransporter = document.getElementById('wsShipTransporter');
-
-                if (shipWarehouse) shipWarehouse.value = ship.warehouse_name || '';
-                if (shipPhone) shipPhone.value = ship.receiver_phone || '';
-                if (shipAddr) shipAddr.value = ship.address || '';
-                if (shipCity) shipCity.value = ship.city || '';
-                if (shipState && ship.state) shipState.value = ship.state;
-                if (shipPin) shipPin.value = ship.pincode || '';
-                if (shipTransporter) shipTransporter.value = ship.transporter || '';
-            } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
-                if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
-                if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
-            }
-        }
-
         function toggleEditAddressSection(sectionType) {
             var drawer = document.getElementById('wsAddressEditDrawer');
             var mainWrap = document.getElementById('wsMainAddressSectionWrap');
@@ -547,13 +490,14 @@ window.animateTargetGauge = animateTargetGauge;
             }
 
             drawer.style.display = 'block';
+            var firstInp;
 
             if (sectionType === 'main') {
                 if (mainWrap) mainWrap.style.display = 'block';
                 if (dispatchWrap) dispatchWrap.style.display = 'none';
                 if (mainWrap) {
                     mainWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    var firstInp = mainWrap.querySelector('input, textarea');
+                    firstInp = mainWrap.querySelector('input, textarea');
                     if (firstInp) firstInp.focus();
                 }
             } else if (sectionType === 'dispatch') {
@@ -561,14 +505,14 @@ window.animateTargetGauge = animateTargetGauge;
                 if (dispatchWrap) dispatchWrap.style.display = 'block';
                 if (dispatchWrap) {
                     dispatchWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    var firstInp = dispatchWrap.querySelector('input, textarea');
+                    firstInp = dispatchWrap.querySelector('input, textarea');
                     if (firstInp) firstInp.focus();
                 }
             } else {
                 if (mainWrap) mainWrap.style.display = 'block';
                 if (dispatchWrap) dispatchWrap.style.display = 'block';
             }
-        };
+        }
 
         function closeEditAddressDrawer() {
             var drawer = document.getElementById('wsAddressEditDrawer');
@@ -577,7 +521,7 @@ window.animateTargetGauge = animateTargetGauge;
             if (drawer) drawer.style.display = 'none';
             if (mainWrap) mainWrap.style.display = 'none';
             if (dispatchWrap) dispatchWrap.style.display = 'none';
-        };
+        }
 
         function renderAddressBookData(user) {
             var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';

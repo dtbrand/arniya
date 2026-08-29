@@ -16,7 +16,7 @@
         }
 
         var raw = String(msg || '').trim();
-        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        var cleanText = raw.replace(/^[\s\u2713\u2661\u2728\p{Extended_Pictographic}]+/u, '').trim();
         if (!cleanText) cleanText = raw;
 
         var lower = raw.toLowerCase();
@@ -351,6 +351,7 @@
         var st = window.masterFilterState;
         if (type === 'category') {
             st.category = 'All';
+            var catItems = document.querySelectorAll('.cat-nav-item, .sf-category-item');
             catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All'); });
         } else if (type === 'price') {
             st.minPrice = 500; st.maxPrice = 30000;
@@ -453,25 +454,31 @@
             var type = chip.dataset.sfType;
             var val  = chip.dataset.sfVal;
             var st   = window.masterFilterState;
+            var idx;
 
             if (type === 'category') {
                 st.category = val;
-                st.fabrics = [];
+                document.querySelectorAll('.cat-nav-item').forEach(function(item){
+                    item.classList.toggle('active', item.dataset.category === val);
+                });
+                document.querySelectorAll('.sf-category-item').forEach(function(item){
+                    item.classList.toggle('active', item.dataset.category === val);
+                });
                 document.querySelectorAll('.main-cat-tab').forEach(function(t){
                     t.classList.toggle('active', t.dataset.cat === val);
                 });
                 window.renderSubCategories(val);
             } else if (type === 'size') {
-                var idx = st.sizes.indexOf(val);
+                idx = st.sizes.indexOf(val);
                 if (idx === -1) st.sizes.push(val); else st.sizes.splice(idx, 1);
             } else if (type === 'fabric') {
-                var idx = st.fabrics.indexOf(val);
+                idx = st.fabrics.indexOf(val);
                 if (idx === -1) st.fabrics.push(val); else st.fabrics.splice(idx, 1);
             } else if (type === 'discount') {
                 var dVal = parseInt(val);
                 st.minDiscount = (st.minDiscount === dVal) ? 0 : dVal;
             } else if (type === 'availability') {
-                var idx = st.availability.indexOf(val);
+                idx = st.availability.indexOf(val);
                 if (idx === -1) st.availability.push(val); else st.availability.splice(idx, 1);
             }
 
@@ -595,11 +602,12 @@
     var pGrid = document.getElementById('productsGrid');
     if (pGrid) {
         pGrid.addEventListener('click', function (e) {
+            var id;
             var wishBtn = e.target.closest('.card-wishlist-btn');
             if (wishBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var id = wishBtn.dataset.id;
+                id = wishBtn.dataset.id;
                 var p = products.find(function(x){ return x.id == id; });
                 if (p && typeof window.toggleWishlistProduct === 'function') {
                     var added = window.toggleWishlistProduct(p);
@@ -614,7 +622,7 @@
             if (qvBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var id = qvBtn.dataset.id;
+                id = qvBtn.dataset.id;
                 if (typeof window.openQV === 'function') {
                     window.openQV(id);
                 }
@@ -866,7 +874,7 @@
             if (stored.length > 12) stored = stored.slice(0, 12);
             localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
             renderRecentlyViewed();
-        } catch (e) {}
+        } catch { /* ignore */ }
     };
 
     function renderRecentlyViewed() {
@@ -914,7 +922,7 @@
             }).join('');
 
             syncRvScrollbar();
-        } catch (e) {}
+        } catch { /* ignore */ }
     }
 
     window.slideRecentlyViewed = function(dir) {

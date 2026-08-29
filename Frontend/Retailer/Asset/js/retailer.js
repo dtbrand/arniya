@@ -162,7 +162,7 @@
             }
 
             var raw = String(msg || '').trim();
-            var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+            var cleanText = raw.replace(/^[\s\u2713\u2661\u2728\p{Extended_Pictographic}]+/u, '').trim();
             if (!cleanText) cleanText = raw;
 
             var lower = raw.toLowerCase();
@@ -242,15 +242,6 @@
                 return false;
             }
         }
-
-        function initRetailerApp() {
-            var isAuth = checkRetailerSecurity();
-            if (!isAuth) return;
-            if (typeof window.loadSavedRetailerData === 'function') {
-                window.loadSavedRetailerData();
-            }
-        }
-        window.initRetailerApp = initRetailerApp;
 
         window.loginAsDemoRetailer = function() {
             var demoRetailer = {
@@ -458,63 +449,6 @@
             }
         };
 
-        function renderAddressBookData(user) {
-            var comp = user.companyName || 'Shree Krishna Silks Pvt Ltd';
-            var gstNum = user.gst_number || '24AABCU9603R1ZM';
-            var name = user.name || 'Rajesh Kumar';
-            var phone = user.phone || '+91 98765 43210';
-            var billAddr = user.address || 'Shop No. 402, 4th Floor, Millennium Textile Market 2, Ring Road';
-            var billCity = user.city || 'Surat';
-            var billState = user.state || 'Gujarat';
-            var billPin = user.pincode || '395002';
-
-            var bCompEl = document.getElementById('addrPreviewBillingComp');
-            var bFullEl = document.getElementById('addrPreviewBillingFull');
-            var bAttnEl = document.getElementById('addrPreviewBillingAttn');
-            if (bCompEl) bCompEl.textContent = comp;
-            if (bFullEl) bFullEl.innerHTML = `${billAddr}<br>${billCity}, ${billState} - ${billPin} (GSTIN: <strong>${gstNum}</strong>)`;
-            if (bAttnEl) bAttnEl.textContent = `Attn: ${name} (${phone})`;
-
-            var isSame = user.shipping_same_as_billing !== false;
-            var chk = document.getElementById('wsSameAsBillingCheckbox');
-            if (chk) chk.checked = isSame;
-            toggleSameAsBillingAddress(isSame);
-
-            var dispatchBadge = document.getElementById('addrPreviewDispatchBadge');
-            var dispatchTitle = document.getElementById('addrPreviewDispatchTitle');
-            var dispatchFull = document.getElementById('addrPreviewDispatchFull');
-            var dispatchTrans = document.getElementById('addrPreviewDispatchTransporter');
-
-            var ship = user.custom_shipping || {};
-            if (!isSame && ship.address) {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Custom Godown';
-                if (dispatchTitle) dispatchTitle.textContent = ship.warehouse_name || 'Primary Godown Hub';
-                if (dispatchFull) dispatchFull.innerHTML = `${ship.address}<br>${ship.city || billCity}, ${ship.state || billState} - ${ship.pincode || billPin} • Ph: ${ship.receiver_phone || phone}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: ' + (ship.transporter || 'Surat Goods Transporter');
-
-                var shipWarehouse = document.getElementById('wsShipWarehouseName');
-                var shipPhone = document.getElementById('wsShipReceiverPhone');
-                var shipAddr = document.getElementById('wsShipAddress');
-                var shipCity = document.getElementById('wsShipCity');
-                var shipState = document.getElementById('wsShipStateSelect');
-                var shipPin = document.getElementById('wsShipPincode');
-                var shipTransporter = document.getElementById('wsShipTransporter');
-
-                if (shipWarehouse) shipWarehouse.value = ship.warehouse_name || '';
-                if (shipPhone) shipPhone.value = ship.receiver_phone || '';
-                if (shipAddr) shipAddr.value = ship.address || '';
-                if (shipCity) shipCity.value = ship.city || '';
-                if (shipState && ship.state) shipState.value = ship.state;
-                if (shipPin) shipPin.value = ship.pincode || '';
-                if (shipTransporter) shipTransporter.value = ship.transporter || '';
-            } else {
-                if (dispatchBadge) dispatchBadge.textContent = '📦 Dispatch: Same as Billing';
-                if (dispatchTitle) dispatchTitle.textContent = 'Direct Storefront Delivery';
-                if (dispatchFull) dispatchFull.innerHTML = `Dispatched to GST registered address: ${billAddr}, ${billCity} - ${billPin}`;
-                if (dispatchTrans) dispatchTrans.textContent = 'Preferred Hub: BlueDart Express / Surat Goods Transporter';
-            }
-        }
-
         window.toggleEditAddressSection = function(sectionType) {
             var drawer = document.getElementById('wsAddressEditDrawer');
             var mainWrap = document.getElementById('wsMainAddressSectionWrap');
@@ -547,8 +481,8 @@
                 if (dispatchWrap) dispatchWrap.style.display = 'block';
                 if (dispatchWrap) {
                     dispatchWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    var firstInp = dispatchWrap.querySelector('input, textarea');
-                    if (firstInp) firstInp.focus();
+                    var firstDispatchInp = dispatchWrap.querySelector('input, textarea');
+                    if (firstDispatchInp) firstDispatchInp.focus();
                 }
             } else {
                 if (mainWrap) mainWrap.style.display = 'block';
@@ -1839,7 +1773,7 @@
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `DT Brand\'s_Wholesale_Report_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `DT Brand's_Wholesale_Report_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -3010,7 +2944,7 @@
                     <div class="ws-timeline-step completed">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                         <div class="ws-timeline-title">Order Confirmed & Proforma Invoiced</div>
-                        <div class="ws-timeline-date">DT Brand\'s Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
+                        <div class="ws-timeline-date">DT Brand's Head Atelier, Surat • ${currentOrder.date}, 10:30 AM</div>
                     </div>
                     <div class="ws-timeline-step ${isProcessing ? 'active' : 'completed'}">
                         <div class="ws-timeline-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>

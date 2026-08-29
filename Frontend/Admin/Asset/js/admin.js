@@ -1357,7 +1357,6 @@
 
     function initBroadcaster() {
         const templateSelect = document.getElementById('admBroadcastTemplate');
-        const audienceSelect = document.getElementById('admBroadcastAudience');
         const msgTextarea = document.getElementById('admBroadcastMessage');
         const previewBox = document.getElementById('admBroadcastPreview');
 
@@ -1482,7 +1481,7 @@
             window.showToast('New product added to catalog: ' + name);
         }
 
-        closeAdmModal('admProductModal');
+        window.closeAdmModal('admProductModal');
         renderProductsTable();
     };
 
@@ -1528,7 +1527,6 @@
     };
 
     window.launchBroadcast = function() {
-        const template = document.getElementById('admBroadcastTemplate').value;
         const count = document.getElementById('admBroadcastAudience').value === 'all' ? '1,420' : '285';
         window.showToast(`🚀 WhatsApp Broadcast initiated to ${count} recipients!`);
     };
@@ -1576,7 +1574,7 @@
     };
 
     // ════ UNIVERSAL MODULE TABLE FILTER & SEARCH ════
-    window.filterModuleTable = function(query, type) {
+    window.filterModuleTable = function(query, _type) {
         const table = document.querySelector('.adm-table') || document.getElementById('moduleDataTable');
         if (!table) return;
         const rows = table.querySelectorAll('tbody tr');
@@ -1701,7 +1699,7 @@
         }, 600);
     };
 
-    window.archiveProduct = function(id) {
+    window.archiveProduct = function(_id) {
         if (confirm('Archive this product SKU from active catalog?')) {
             if (typeof window.showToast === 'function') window.showToast('📦 Product archived successfully');
         }
