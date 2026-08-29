@@ -3058,5 +3058,7 @@ $catalogProducts = [
         }
     })();
     </script>
+    <!-- Shared Account Modal Component -->
+    <?php @include_once __DIR__ . '/../../Shared/Includes/account.php'; ?>
 </body>
 </html>

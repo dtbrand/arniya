@@ -3408,32 +3408,6 @@ $catalogProducts = [
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         MODAL 3: ROLE GATE ACCESS CONTROL
-    ═══════════════════════════════════════════ -->
-    <div class="ws-modal-overlay" id="wsRoleGateModal" role="dialog" aria-modal="true">
-        <div class="ws-modal-box" style="max-width: 440px;">
-            <div class="ws-gate-box">
-                <div class="ws-gate-icon">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                </div>
-                <h3>Reseller Authentication Gate</h3>
-                <p>This portal is exclusively authorized for verified <strong>Reseller B2B Members</strong>. Please sign in with your registered reseller account to access bulk tier pricing, order tracking, and GST invoicing.</p>
-                
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <button class="ws-btn ws-btn-primary" onclick="loginAsDemoReseller()">
-                        👑 Continue as Verified Reseller
-                    </button>
-                    <a href="../../Shared/Auth/myaccount.php?tab=login" class="ws-btn ws-btn-secondary">
-                        Sign In with Other Account
-                    </a>
-                    <a href="/shop.php" style="font-size:0.78rem; color:var(--ws-text-muted); text-decoration:none; margin-top:4px;">
-                        ← Return to Store
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- ═══════════════════════════════════════════
          MODAL 4: INTERACTIVE DATE RANGE CALENDAR PICKER
@@ -4358,6 +4332,9 @@ $catalogProducts = [
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>
     </button>
+
+    <!-- Shared Account Modal Component -->
+    <?php @include_once __DIR__ . '/../../Shared/Includes/account.php'; ?>
 
     <!-- ═══════════════════════════════════════════
          JAVASCRIPT CONTROLLER & STATE ENGINE (END OF BODY)
