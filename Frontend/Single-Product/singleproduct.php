@@ -195,14 +195,56 @@ if (!$product) {
     $product = ProductCatalog::getById($pid) ?? ($products[$pid] ?? reset($products));
 }
 
-// Generate variation gallery images
-$prodNum = (int)($product['id'] ?? 1);
-$baseMainImg = $product['image'] ?? '/Frontend/Single-Product/Asset/images/product1.png';
-$pImg2 = !empty($product['gallery'][1]) ? $product['gallery'][1] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum) % 8) + 1) . '.png');
-$pImg3 = !empty($product['gallery'][2]) ? $product['gallery'][2] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum + 1) % 8) + 1) . '.png');
-$pImg4 = !empty($product['gallery'][3]) ? $product['gallery'][3] : ('/Frontend/Single-Product/Asset/images/product' . ((($prodNum + 2) % 8) + 1) . '.png');
+// Generate dynamic gallery images and video media from database
+$pName = $product['name'] ?? 'Royal Ethnic Saree';
+$pdpNoImage = '/assets/images/no-image.svg';
 
-$galleryImages = array_values(array_unique([$baseMainImg, $pImg2, $pImg3, $pImg4]));
+$pdpImages = [];
+$rawImgs = array_merge(
+    (array)($product['gallery'] ?? []),
+    (array)($product['images'] ?? []),
+    [!empty($product['image']) ? $product['image'] : '']
+);
+foreach ($rawImgs as $mImg) {
+    $mImg = trim((string)$mImg);
+    if ($mImg !== '' && strpos($mImg, 'no-image.svg') === false && substr($mImg, 0, 5) !== 'data:') {
+        if (!in_array($mImg, $pdpImages, true)) {
+            $pdpImages[] = $mImg;
+        }
+    }
+}
+if ($pdpImages === []) {
+    $pdpImages[] = $product['image'] ?? '/Frontend/Single-Product/Asset/images/product1.png';
+}
+$pdpPoster = $pdpImages[0];
+$galleryImages = $pdpImages;
+
+// Dynamic Product Videos
+$pdpVideos = [];
+$rawVids = array_merge(
+    (array)($product['videos'] ?? []),
+    [!empty($product['video']) ? $product['video'] : '']
+);
+foreach ($rawVids as $mVid) {
+    $mVid = trim((string)$mVid);
+    if ($mVid !== '' && substr($mVid, 0, 5) !== 'data:') {
+        if (!in_array($mVid, $pdpVideos, true)) {
+            $pdpVideos[] = ['kind' => 'video', 'src' => $mVid];
+        }
+    }
+}
+foreach ((array)($product['embeds'] ?? []) as $mEmb) {
+    $mEmb = trim((string)$mEmb);
+    if ($mEmb !== '') {
+        $pdpVideos[] = ['kind' => 'embed', 'src' => $mEmb];
+    }
+}
+if (!empty($product['embed'])) {
+    $pdpVideos[] = ['kind' => 'embed', 'src' => trim((string)$product['embed'])];
+}
+$pdpHasVideos = !empty($pdpVideos);
+$pdpVideoCount = count($pdpVideos);
+$pdpHasMedia = !empty($pdpImages);
 
 // Dynamic Product Specifications from Database
 $currentSpecs = [
@@ -368,7 +410,7 @@ $colorHex = [
                 <span class="pdp-badge-tag"><?= htmlspecialchars($product['badge']) ?></span>
                 <?php endif; ?>
 
-                <button class="pdp-zoom-btn" title="View Fullscreen Image" onclick="openFullscreenImage()">
+                <button class="pdp-zoom-btn" title="View Fullscreen Image" onclick="openFullscreenImage()" aria-label="Zoom Image">
                     <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
                 </button>
 
@@ -382,32 +424,71 @@ $colorHex = [
 
                 <!-- Swipeable Track -->
                 <div class="pdp-slider-track" id="pdpSliderTrack">
-                    <?php foreach ($galleryImages as $index => $img): ?>
+                    <?php if (!$pdpHasMedia): ?>
+                    <div class="pdp-slide pdp-slide-empty" data-idx="0">
+                        <img src="<?= htmlspecialchars($pdpNoImage) ?>" alt="" style="opacity:.45;" />
+                        <span class="pdp-empty-media-note">No photo has been uploaded for this product yet.</span>
+                    </div>
+                    <?php else: ?>
+                    <?php foreach ($pdpImages as $index => $img): ?>
                     <div class="pdp-slide" data-idx="<?= $index ?>">
                         <img
                             src="<?= htmlspecialchars($img) ?>"
                             alt="<?= htmlspecialchars($product['name']) ?> - View <?= $index + 1 ?>"
                             onError="this.src='/Frontend/Single-Product/Asset/images/product1.png'"
+                            onclick="openFullscreenImage(<?= $index ?>)"
+                            style="cursor: zoom-in;"
                         />
                     </div>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
 
+                <!-- 3D Luxury HD Video Pill (Compact & Sleek Sizing) -->
+                <?php if ($pdpHasVideos): ?>
+                <button type="button" class="pdp-3d-reel-btn" id="pdp3dVideoBtn" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" aria-label="Watch HD Video">
+                    <div class="pdp-3d-pulse-glow"></div>
+                    <div class="pdp-3d-btn-capsule">
+                        <div class="pdp-3d-icon-disc">
+                            <svg viewBox="0 0 24 24" class="pdp-3d-play-svg"><polygon points="7 4 19 12 7 20 7 4"/></svg>
+                        </div>
+                        <span class="pdp-3d-btn-text">Watch Video <?= $pdpVideoCount > 1 ? '(' . $pdpVideoCount . ')' : '' ?></span>
+                        <span class="pdp-3d-live-dot" title="Available in HD"></span>
+                    </div>
+                </button>
+                <?php endif; ?>
+
                 <!-- Slide Index Counter -->
-                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= count($galleryImages) ?></div>
+                <div class="pdp-slide-counter" id="pdpSlideCounter">1 / <?= max(1, count($pdpImages)) ?></div>
             </div>
 
             <!-- Mobile & Desktop Pagination Dots -->
             <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
 
-            <!-- Multi-Photo Thumbnails -->
+            <!-- Multi-Photo & Video Thumbnails -->
+            <?php if (count($pdpImages) > 1 || $pdpHasVideos): ?>
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
-                <?php foreach ($galleryImages as $index => $img): ?>
-                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
+                <?php foreach ($pdpImages as $index => $img): ?>
+                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)" title="View Photo <?= $index + 1 ?>">
                     <img src="<?= htmlspecialchars($img) ?>" alt="Thumb <?= $index + 1 ?>" onError="this.src='/Frontend/Single-Product/Asset/images/product1.png'" />
                 </div>
                 <?php endforeach; ?>
+                <?php if ($pdpHasVideos): ?>
+                <?php foreach ($pdpVideos as $vIdx => $vItem): ?>
+                <div class="pdp-thumb-item pdp-thumb-video" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" title="Watch Video <?= $vIdx + 1 ?>" aria-label="Watch Video <?= $vIdx + 1 ?>">
+                    <img src="<?= htmlspecialchars($pdpPoster) ?>" alt="Video <?= $vIdx + 1 ?>" onError="this.src='/Frontend/Single-Product/Asset/images/product1.png'" />
+                    <div class="pdp-thumb-play-overlay">
+                        <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    </div>
+                    <div class="pdp-thumb-video-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-thumb-video-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                        <span>VIDEO</span>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
+            <?php endif; ?>
         </div>
 
         <!-- ── Right: Product Details & Conversion Actions ── -->
@@ -1047,15 +1128,65 @@ $colorHex = [
 <!-- ════ CHECKOUT MODAL PARTIAL ════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/checkout.php'; ?>
 
+<!-- ══════════════════════════════════════════════════════════════
+     NEXT-LEVEL LUXURY FULLSCREEN MEDIA VIEWER (LIGHTBOX)
+══════════════════════════════════════════════════════════════ -->
+<div class="pdp-lightbox-overlay" id="pdpLightboxOverlay" aria-hidden="true" role="dialog" aria-label="Fullscreen Product Media Viewer">
+    <!-- Top Header Bar -->
+    <div class="pdp-lightbox-header">
+        <div class="pdp-lightbox-meta">
+            <span class="pdp-lightbox-counter" id="pdpLbCounter">1 / 1</span>
+            <span class="pdp-lightbox-title"><?= htmlspecialchars($pName ?? ($product['name'] ?? 'Product View')) ?></span>
+        </div>
+        <div class="pdp-lightbox-actions">
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomOut" onclick="zoomLightbox(-0.25)" title="Zoom Out ( - )" aria-label="Zoom Out">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomIn" onclick="zoomLightbox(0.25)" title="Zoom In ( + )" aria-label="Zoom In">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-act-btn" id="pdpLbZoomReset" onclick="resetLightboxZoom()" title="Reset View" aria-label="Reset View">
+                <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </button>
+            <button type="button" class="pdp-lb-close-btn" id="pdpLbCloseBtn" onclick="closeFullscreenImage()" title="Close Viewer (Esc)" aria-label="Close">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Stage Track -->
+    <div class="pdp-lightbox-stage" id="pdpLbStage">
+        <button type="button" class="pdp-lb-nav-btn prev" id="pdpLbPrev" onclick="navigateLightbox(-1)" aria-label="Previous Media">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="pdp-lightbox-viewport" id="pdpLbViewport">
+            <div class="pdp-lightbox-slider" id="pdpLbSlider"></div>
+        </div>
+
+        <button type="button" class="pdp-lb-nav-btn next" id="pdpLbNext" onclick="navigateLightbox(1)" aria-label="Next Media">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+    </div>
+
+    <!-- Bottom Thumbnail Strip -->
+    <div class="pdp-lightbox-footer" id="pdpLbFooter">
+        <div class="pdp-lightbox-thumbs-strip" id="pdpLbThumbs"></div>
+    </div>
+</div>
+
 <!-- ════ SCRIPT ENGINE ════ -->
 <script>
-        window.currentProductData = <?= json_encode($product) ?>;
-        window.totalSlidesCount = <?= isset($galleryImages) ? count($galleryImages) : 4 ?>;
-    </script>
-    <script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=1787019062"></script>
+    window.currentProductData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    window.totalSlidesCount = <?= max(1, count($pdpImages)) ?>;
+    window.pdpVideosData = <?= json_encode($pdpVideos, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+</script>
+<script src="/Frontend/Single-Product/Asset/js/singleproduct.js?v=<?= time() ?>"></script>
 
-<!-- ════════════ SMART WHATSAPP SHARE MODAL (Meesho-Grade Flow) ════════════ -->
+<!-- ════════════ SMART WHATSAPP SHARE & REELS MODALS ════════════ -->
 <?php include_once __DIR__ . '/../../Shared/Includes/smartshare.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/reels.php'; ?>
+<?php include_once __DIR__ . '/../../Shared/Includes/account.php'; ?>
 
 </body>
 </html>

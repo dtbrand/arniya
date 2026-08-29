@@ -324,14 +324,28 @@ function pdp_relative_date(string $ts): string
             <!-- Mobile & Desktop Pagination Dots -->
             <div class="pdp-gallery-dots" id="pdpGalleryDots"></div>
 
-            <!-- Multi-Photo Thumbnails (Photos Only) -->
-            <?php if (count($pdpImages) > 1): ?>
+            <!-- Multi-Photo & Video Thumbnails -->
+            <?php if (count($pdpImages) > 1 || $pdpHasVideos): ?>
             <div class="pdp-thumbnails-strip" id="pdpThumbnailsStrip">
                 <?php foreach ($pdpImages as $index => $imgSrc): ?>
-                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)">
+                <div class="pdp-thumb-item <?= $index === 0 ? 'active' : '' ?>" data-idx="<?= $index ?>" onclick="goToSlide(<?= $index ?>)" title="View Photo <?= $index + 1 ?>">
                     <img src="<?= htmlspecialchars($imgSrc) ?>" alt="Thumb <?= $index + 1 ?>" />
                 </div>
                 <?php endforeach; ?>
+                <?php if ($pdpHasVideos): ?>
+                <?php foreach ($pdpVideos as $vIdx => $vItem): ?>
+                <div class="pdp-thumb-item pdp-thumb-video" onclick="openProductVideosReel(window.currentProductData || <?= htmlspecialchars(json_encode($product, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>)" title="Watch Video <?= $vIdx + 1 ?>" aria-label="Watch Video <?= $vIdx + 1 ?>">
+                    <img src="<?= htmlspecialchars($pdpPoster) ?>" alt="Video <?= $vIdx + 1 ?>" />
+                    <div class="pdp-thumb-play-overlay">
+                        <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    </div>
+                    <div class="pdp-thumb-video-badge">
+                        <svg viewBox="0 0 24 24" class="pdp-thumb-video-svg"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                        <span>VIDEO</span>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
         </div>

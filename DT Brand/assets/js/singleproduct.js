@@ -530,49 +530,44 @@
         lbMediaList = [];
         var p = window.currentProductData || currentProduct || {};
 
-        // Collect photos
-        if (Array.isArray(p.images) && p.images.length) {
-            p.images.forEach(function(img) {
-                var s = String(img || '').trim();
-                if (s && s !== '/assets/images/no-image.svg' && !lbMediaList.some(function(x) { return x.src === s; })) {
+        // Collect photos from all possible sources (gallery, images, image)
+        var rawImgs = [].concat(p.gallery || [], p.images || [], p.image ? [p.image] : []);
+        rawImgs.forEach(function(img) {
+            var s = String(img || '').trim();
+            if (s && s !== '/assets/images/no-image.svg' && s.indexOf('no-image.svg') === -1 && s.indexOf('data:') !== 0 && !lbMediaList.some(function(x) { return x.src === s; })) {
+                lbMediaList.push({ kind: 'image', src: s, title: p.name || 'Photo' });
+            }
+        });
+
+        // DOM Fallback for photos if media array was empty
+        if (lbMediaList.length === 0) {
+            document.querySelectorAll('#pdpSliderTrack .pdp-slide img').forEach(function(img) {
+                var s = img.getAttribute('src') || img.src;
+                if (s && s.indexOf('no-image.svg') === -1 && s.indexOf('data:') !== 0 && !lbMediaList.some(function(x) { return x.src === s; })) {
                     lbMediaList.push({ kind: 'image', src: s, title: p.name || 'Photo' });
                 }
             });
-        } else if (p.image && p.image !== '/assets/images/no-image.svg') {
-            lbMediaList.push({ kind: 'image', src: p.image, title: p.name || 'Photo' });
         }
+
+        var posterImg = lbMediaList[0] ? lbMediaList[0].src : '';
 
         // Collect uploaded MP4 videos
-        if (Array.isArray(p.videos)) {
-            p.videos.forEach(function(v) {
-                var sv = String(v || '').trim();
-                if (sv && !lbMediaList.some(function(x) { return x.src === sv; })) {
-                    lbMediaList.push({ kind: 'video', src: sv, poster: (lbMediaList[0] ? lbMediaList[0].src : ''), title: p.name || 'HD Video' });
-                }
-            });
-        }
-        if (p.video) {
-            var sv1 = String(p.video || '').trim();
-            if (sv1 && !lbMediaList.some(function(x) { return x.src === sv1; })) {
-                lbMediaList.push({ kind: 'video', src: sv1, poster: (lbMediaList[0] ? lbMediaList[0].src : ''), title: p.name || 'HD Video' });
+        var rawVids = [].concat(p.videos || [], window.pdpVideosData || [], p.video ? [p.video] : []);
+        rawVids.forEach(function(v) {
+            var sv = (typeof v === 'object' && v !== null && v.src) ? String(v.src).trim() : String(v || '').trim();
+            if (sv && sv.indexOf('data:') !== 0 && !lbMediaList.some(function(x) { return x.src === sv; })) {
+                lbMediaList.push({ kind: 'video', src: sv, poster: posterImg, title: p.name || 'HD Video' });
             }
-        }
+        });
 
         // Collect embeds
-        if (Array.isArray(p.embeds)) {
-            p.embeds.forEach(function(em) {
-                var sem = String(em || '').trim();
-                if (sem && !lbMediaList.some(function(x) { return x.src === sem; })) {
-                    lbMediaList.push({ kind: 'embed', src: sem, title: p.name || 'Featured Video' });
-                }
-            });
-        }
-        if (p.embed) {
-            var sem1 = String(p.embed || '').trim();
-            if (sem1 && !lbMediaList.some(function(x) { return x.src === sem1; })) {
-                lbMediaList.push({ kind: 'embed', src: sem1, title: p.name || 'Featured Video' });
+        var rawEmbs = [].concat(p.embeds || [], p.embed ? [p.embed] : []);
+        rawEmbs.forEach(function(em) {
+            var sem = (typeof em === 'object' && em !== null && em.src) ? String(em.src).trim() : String(em || '').trim();
+            if (sem && !lbMediaList.some(function(x) { return x.src === sem; })) {
+                lbMediaList.push({ kind: 'embed', src: sem, title: p.name || 'Featured Video' });
             }
-        }
+        });
     }
 
     window.openFullscreenImage = function(startIdx) {
