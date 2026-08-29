@@ -5,6 +5,36 @@
     var currentProduct = window.currentProductData || {};
     window.currentPdpProduct = currentProduct;
 
+    // ── Automatic Recently Viewed Product Recording ──
+    try {
+        var pToTrack = window.currentProductData || window.currentPdpProduct || {};
+        if (pToTrack && pToTrack.id) {
+            var storedList = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
+            if (!Array.isArray(storedList)) storedList = [];
+            storedList = storedList.filter(function(x) { return x && Number(x.id) !== Number(pToTrack.id); });
+            var pImg = pToTrack.image || (Array.isArray(pToTrack.images) && pToTrack.images[0]) || '/assets/images/no-image.svg';
+            var pPrice = Number(pToTrack.price || pToTrack.effective_customer_price || pToTrack.customer_price) || 0;
+            var pOldPrice = Number(pToTrack.old_price || pToTrack.mrp) || 0;
+            var pDiscount = pToTrack.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
+            
+            storedList.unshift({
+                id: pToTrack.id,
+                name: pToTrack.name || pToTrack.title || ('Product #' + pToTrack.id),
+                price: pPrice,
+                old_price: pOldPrice,
+                discount: pDiscount,
+                image: pImg,
+                category: String(pToTrack.category || 'ETHNIC WEAR').toUpperCase(),
+                fabric: pToTrack.fabric || '',
+                in_stock: pToTrack.in_stock !== false
+            });
+            if (storedList.length > 20) storedList = storedList.slice(0, 20);
+            localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(storedList));
+        }
+    } catch {
+        // Ignore localStorage quota errors silently
+    }
+
     // ── Global Luxury Designer Toast Helper ──
     window.showToast = function (msg, explicitType) {
         var container = document.getElementById('toastContainer') || document.getElementById('wsToastContainer');

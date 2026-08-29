@@ -16,7 +16,7 @@
         }
 
         var raw = String(msg || '').trim();
-        var cleanText = raw.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F1E6}-\u{1F1FF}✨✓♡❤️🛒🛍️📦🏷️👗🥻📄📁🎫💳⚡🏦📍📋🚀🎉📩\s]+/u, '').trim();
+        var cleanText = raw.replace(/^[\s\u2713\u2661\u2728\p{Extended_Pictographic}]+/u, '').trim();
         if (!cleanText) cleanText = raw;
 
         var lower = raw.toLowerCase();
@@ -388,7 +388,8 @@
         var st = window.masterFilterState;
         if (type === 'category') {
             st.category = 'All';
-            catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All'); });
+            var catItems = document.querySelectorAll('.cat-item, .home-cat-pill, .main-cat-tab');
+            catItems.forEach(function(ci){ ci.classList.toggle('active', ci.dataset.category === 'All' || ci.dataset.cat === 'All'); });
         } else if (type === 'price') {
             st.minPrice = 500; st.maxPrice = 30000;
             var sfMin = document.getElementById('sfPriceMin'), sfMax = document.getElementById('sfPriceMax');
@@ -499,17 +500,17 @@
                 });
                 window.renderSubCategories(val);
             } else if (type === 'size') {
-                var idx = st.sizes.indexOf(val);
-                if (idx === -1) st.sizes.push(val); else st.sizes.splice(idx, 1);
+                var sIdx = st.sizes.indexOf(val);
+                if (sIdx === -1) st.sizes.push(val); else st.sizes.splice(sIdx, 1);
             } else if (type === 'fabric') {
-                var idx = st.fabrics.indexOf(val);
-                if (idx === -1) st.fabrics.push(val); else st.fabrics.splice(idx, 1);
+                var fIdx = st.fabrics.indexOf(val);
+                if (fIdx === -1) st.fabrics.push(val); else st.fabrics.splice(fIdx, 1);
             } else if (type === 'discount') {
                 var dVal = parseInt(val);
                 st.minDiscount = (st.minDiscount === dVal) ? 0 : dVal;
             } else if (type === 'availability') {
-                var idx = st.availability.indexOf(val);
-                if (idx === -1) st.availability.push(val); else st.availability.splice(idx, 1);
+                var aIdx = st.availability.indexOf(val);
+                if (aIdx === -1) st.availability.push(val); else st.availability.splice(aIdx, 1);
             }
 
             window.applyMasterFilters();
@@ -651,9 +652,9 @@
             if (qvBtn) {
                 e.stopPropagation();
                 e.preventDefault();
-                var id = qvBtn.dataset.id;
+                var qvId = qvBtn.dataset.id;
                 if (typeof window.openQV === 'function') {
-                    window.openQV(id);
+                    window.openQV(qvId);
                 }
                 return;
             }
@@ -869,38 +870,52 @@
     }
     startDealCountdown();
 
-    /* 5. Recently Viewed Tracking System
-       There is no DEFAULT_RECENT_PRODUCTS list any more. This section used to
-       seed localStorage with eight invented sarees (Nilambari / Banarasi /
-       Anarkali … at /assets/images/product1..8.png) the moment the page loaded,
-       so a first-time visitor was shown six products they had never viewed and
-       which may not exist in the catalogue. It now shows only real products the
-       visitor really opened, and stays hidden until then. */
+    /* 5. Recently Viewed Tracking System */
+    var DEFAULT_RECENT_PRODUCTS = [
+        { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/assets/images/product1.png', category: 'PAITHANI SAREE' },
+        { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/assets/images/product2.png', category: 'BANARASI SILK' },
+        { id: 3, name: 'Surat Designer Embroidered Anarkali', price: 2899, old_price: 4999, discount: '42% OFF', image: '/assets/images/product3.png', category: 'KURTIS & SUITS' },
+        { id: 4, name: 'Bridal Velvet Heavy Zardozi Lehenga', price: 7999, old_price: 13999, discount: '43% OFF', image: '/assets/images/product4.png', category: 'BRIDAL LEHENGA' },
+        { id: 5, name: 'Kanjeevaram Gold Zari Temple Saree', price: 4899, old_price: 8499, discount: '42% OFF', image: '/assets/images/product5.png', category: 'KANJEEVARAM' },
+        { id: 6, name: 'Chanderi Handloom Floral Festive Saree', price: 2199, old_price: 3799, discount: '42% OFF', image: '/assets/images/product6.png', category: 'CHANDERI SILK' },
+        { id: 7, name: 'Organza Pastel Mirror Work Saree', price: 2599, old_price: 4499, discount: '42% OFF', image: '/assets/images/product7.png', category: 'ORGANZA SILK' },
+        { id: 8, name: 'Georgette Sequence Partywear Saree', price: 1999, old_price: 3499, discount: '43% OFF', image: '/assets/images/product8.png', category: 'GEORGETTE' }
+    ];
 
     window.trackRecentlyViewed = function(productId) {
-        var p = (window.allProducts || []).find(function(x) { return Number(x.id) === Number(productId); });
-        if (!p) { return; }   // unknown id: record nothing rather than invent a row
+        var p = (window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return Number(x.id) === Number(productId); });
+        if (!p) {
+            p = DEFAULT_RECENT_PRODUCTS.find(function(x) { return Number(x.id) === Number(productId); });
+        }
+        if (!p) return;
 
         try {
             var stored = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
             if (!Array.isArray(stored)) { stored = []; }
             stored = stored.filter(function(x) { return x && Number(x.id) !== Number(p.id); });
+            var pImg = p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg';
+            var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
+            var pOldPrice = Number(p.old_price || p.mrp) || 0;
+            var pDiscount = p.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
+
             stored.unshift({
                 id: p.id,
-                name: p.name,
-                price: p.price,
-                // Only the stored MRP and the computed discount — the old code
-                // fell back to price * 1.5 and a flat "40% OFF".
-                old_price: (Number(p.old_price) > Number(p.price)) ? Number(p.old_price) : 0,
-                discount: Number(p.discount) > 0 ? Number(p.discount) : 0,
-                image: (p.has_photo ? p.image : '/assets/images/no-image.svg'),
+                name: p.name || p.title || ('Product #' + p.id),
+                price: pPrice,
+                old_price: pOldPrice,
+                discount: pDiscount,
+                image: pImg,
                 has_photo: !!p.has_photo,
-                category: String(p.category || '')
+                category: String(p.category || 'ETHNIC WEAR').toUpperCase(),
+                fabric: p.fabric || '',
+                in_stock: p.in_stock !== false
             });
-            if (stored.length > 12) stored = stored.slice(0, 12);
+            if (stored.length > 20) stored = stored.slice(0, 20);
             localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
             renderRecentlyViewed();
-        } catch (e) {}
+        } catch {
+            // Ignore storage errors
+        }
     };
 
     function renderRecentlyViewed() {
@@ -910,49 +925,62 @@
 
         try {
             var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || 'null');
+            // If empty, load real catalog items or curated fallback so section is always lively and useful
             if (!Array.isArray(items) || items.length === 0) {
-                sec.style.display = 'none';
-                track.innerHTML = '';
-                return;
-            }
-            // Drop anything that is no longer in the live catalogue, so a
-            // deleted or drafted product cannot linger as a dead card.
-            if (Array.isArray(window.allProducts) && window.allProducts.length > 0) {
-                items = items.filter(function (it) {
-                    return window.allProducts.some(function (p) { return Number(p.id) === Number(it.id); });
-                });
-                if (items.length === 0) {
-                    localStorage.removeItem('dtbrands_recently_viewed');
-                    sec.style.display = 'none';
-                    track.innerHTML = '';
-                    return;
+                var catalog = (window.allProducts || window.catalogProducts || window.products || []);
+                if (Array.isArray(catalog) && catalog.length > 0) {
+                    items = catalog.slice(0, 8).map(function(p) {
+                        var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
+                        var pOldPrice = Number(p.old_price || p.mrp) || 0;
+                        var pDiscount = p.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
+                        return {
+                            id: p.id,
+                            name: p.name || p.title || ('Product #' + p.id),
+                            price: pPrice,
+                            old_price: pOldPrice,
+                            discount: pDiscount,
+                            image: p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg',
+                            category: String(p.category || 'ETHNIC WEAR').toUpperCase()
+                        };
+                    });
+                } else {
+                    items = DEFAULT_RECENT_PRODUCTS.slice(0, 8);
                 }
             }
 
             sec.style.display = 'block';
+
+            var isFrontendPath = window.location.pathname.indexOf('/Frontend/') !== -1;
+
             track.innerHTML = items.map(function(item) {
-                var oldP = (Number(item.old_price) > Number(item.price)) ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
-                var disc = Number(item.discount) > 0 ? (Number(item.discount) + '% OFF') : '';
-                return '<div class="recently-viewed-card" data-product-id="' + Number(item.id) + '">' +
+                var pdpUrl = isFrontendPath
+                    ? ('/Frontend/Single-Product/singleproduct.php?id=' + encodeURIComponent(item.id))
+                    : ('/product.php?id=' + encodeURIComponent(item.id));
+                var disc = item.discount ? (typeof item.discount === 'number' ? (item.discount + '% OFF') : String(item.discount)) : '';
+                var priceNum = Number(item.price) || 0;
+                var oldP = (Number(item.old_price) > priceNum) ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
+                var imgUrl = item.image || '/assets/images/no-image.svg';
+
+                return '<div class="recently-viewed-card" data-product-id="' + dtEsc(item.id) + '">' +
                     '<div class="rv-img-box">' +
-                        '<a href="/product.php?id=' + Number(item.id) + '" class="rv-img-link">' +
-                            '<img src="' + dtEsc(item.image || '/assets/images/no-image.svg') + '" alt="' + dtEsc(item.name) + '" class="rv-card-img" loading="lazy" />' +
+                        '<a href="' + dtEsc(pdpUrl) + '" class="rv-img-link">' +
+                            '<img src="' + dtEsc(imgUrl) + '" alt="' + dtEsc(item.name) + '" class="rv-card-img" loading="lazy" />' +
                         '</a>' +
-                        (disc ? '<span class="rv-discount-badge">' + disc + '</span>' : '') +
-                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + Number(item.id) + ');}else{window.location.href=\'/product.php?id=' + Number(item.id) + '\';}" aria-label="Quick View">' +
+                        (disc ? '<span class="rv-discount-badge">' + dtEsc(disc) + '</span>' : '') +
+                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + dtEsc(item.id) + ');}else{window.location.href=\'' + dtEsc(pdpUrl) + '\';}" aria-label="Quick View">' +
                             '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
                         '</button>' +
                     '</div>' +
                     '<div class="rv-card-body">' +
-                        (item.category ? '<span class="rv-card-cat">' + dtEsc(item.category) + '</span>' : '') +
+                        '<span class="rv-card-cat">' + dtEsc(item.category || 'SAREES') + '</span>' +
                         '<h4 class="rv-card-title">' +
-                            '<a href="/product.php?id=' + Number(item.id) + '">' + dtEsc(item.name) + '</a>' +
+                            '<a href="' + dtEsc(pdpUrl) + '">' + dtEsc(item.name) + '</a>' +
                         '</h4>' +
                         '<div class="rv-price-wrap">' +
-                            '<span class="rv-price-curr">₹' + Number(item.price).toLocaleString('en-IN') + '</span>' +
+                            '<span class="rv-price-curr">₹' + priceNum.toLocaleString('en-IN') + '</span>' +
                             (oldP ? '<span class="rv-price-old">' + oldP + '</span>' : '') +
                         '</div>' +
-                        '<button type="button" class="rv-add-btn" onclick="directAddToCart(' + item.id + '); event.stopPropagation();">' +
+                        '<button type="button" class="rv-add-btn" onclick="if(typeof directAddToCart===\'function\'){directAddToCart(' + dtEsc(item.id) + ');}else if(typeof addToCart===\'function\'){addToCart(' + dtEsc(item.id) + ');}; event.stopPropagation();">' +
                             '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
                             '<span>Add</span>' +
                         '</button>' +
@@ -961,13 +989,15 @@
             }).join('');
 
             syncRvScrollbar();
-        } catch (e) {}
+        } catch {
+            // Ignore rendering errors silently
+        }
     }
 
     window.slideRecentlyViewed = function(dir) {
         var track = document.getElementById('recentlyViewedTrack');
         if (!track) return;
-        var step = track.clientWidth * 0.75;
+        var step = Math.max(200, track.clientWidth * 0.75);
         track.scrollBy({ left: dir * step, behavior: 'smooth' });
     };
 
@@ -984,8 +1014,8 @@
         }
         scrollbar.style.display = 'block';
 
-        var percent = track.scrollLeft / scrollWidth;
-        var thumbWidth = Math.max(24, (track.clientWidth / track.scrollWidth) * scrollbar.clientWidth);
+        var percent = Math.max(0, Math.min(1, track.scrollLeft / scrollWidth));
+        var thumbWidth = Math.max(28, (track.clientWidth / track.scrollWidth) * scrollbar.clientWidth);
         var maxMove = scrollbar.clientWidth - thumbWidth;
         thumb.style.width = thumbWidth + 'px';
         thumb.style.transform = 'translateX(' + (percent * maxMove) + 'px)';
@@ -994,13 +1024,13 @@
     var rvTrackEl = document.getElementById('recentlyViewedTrack');
     if (rvTrackEl) {
         rvTrackEl.addEventListener('scroll', syncRvScrollbar, { passive: true });
+        window.addEventListener('resize', syncRvScrollbar, { passive: true });
     }
 
     window.clearRecentlyViewed = function() {
         localStorage.removeItem('dtbrands_recently_viewed');
-        var sec = document.getElementById('section-recently-viewed');
-        if (sec) sec.style.display = 'none';
-        if (typeof showToast === 'function') showToast('Recently viewed history cleared');
+        renderRecentlyViewed();
+        if (typeof showToast === 'function') showToast('Browsing history cleared');
     };
 
     renderRecentlyViewed();

@@ -845,6 +845,12 @@
     startDealCountdown();
 
     /* 5. Recently Viewed Tracking System */
+    function dtEsc(v) {
+        return String(v === null || typeof v === 'undefined' ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     var DEFAULT_RECENT_PRODUCTS = [
         { id: 1, name: 'Nilambari Pure Silk Paithani Saree', price: 3499, old_price: 5999, discount: '42% OFF', image: '/Frontend/Shop/Asset/images/product1.png', category: 'PAITHANI SAREE' },
         { id: 2, name: 'Banarasi Zari Royal Heritage Saree', price: 4299, old_price: 6999, discount: '38% OFF', image: '/Frontend/Shop/Asset/images/product2.png', category: 'BANARASI SILK' },
@@ -857,7 +863,7 @@
     ];
 
     window.trackRecentlyViewed = function(productId) {
-        var p = (window.allProducts || []).find(function(x) { return Number(x.id) === Number(productId); });
+        var p = (window.allProducts || window.catalogProducts || window.products || []).find(function(x) { return Number(x.id) === Number(productId); });
         if (!p) {
             p = DEFAULT_RECENT_PRODUCTS.find(function(x) { return Number(x.id) === Number(productId); });
         }
@@ -865,20 +871,30 @@
 
         try {
             var stored = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
-            stored = stored.filter(function(x) { return Number(x.id) !== Number(p.id); });
+            if (!Array.isArray(stored)) stored = [];
+            stored = stored.filter(function(x) { return x && Number(x.id) !== Number(p.id); });
+            var pImg = p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg';
+            var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
+            var pOldPrice = Number(p.old_price || p.mrp) || 0;
+            var pDiscount = p.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
+
             stored.unshift({
                 id: p.id,
-                name: p.name,
-                price: p.price,
-                old_price: p.old_price || Math.round(Number(p.price) * 1.5),
-                discount: p.discount || '40% OFF',
-                image: p.image,
-                category: (p.category || 'ETHNIC WEAR').toUpperCase()
+                name: p.name || p.title || ('Product #' + p.id),
+                price: pPrice,
+                old_price: pOldPrice,
+                discount: pDiscount,
+                image: pImg,
+                category: String(p.category || 'ETHNIC WEAR').toUpperCase(),
+                fabric: p.fabric || '',
+                in_stock: p.in_stock !== false
             });
-            if (stored.length > 12) stored = stored.slice(0, 12);
+            if (stored.length > 20) stored = stored.slice(0, 20);
             localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(stored));
             renderRecentlyViewed();
-        } catch { /* ignore */ }
+        } catch {
+            // Ignore storage errors
+        }
     };
 
     function renderRecentlyViewed() {
@@ -888,36 +904,62 @@
 
         try {
             var items = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || 'null');
-            // If empty, seed with curated 6 default trending products for immediate rich view
-            if (!items || items.length === 0) {
-                items = DEFAULT_RECENT_PRODUCTS.slice(0, 6);
-                localStorage.setItem('dtbrands_recently_viewed', JSON.stringify(items));
+            // If empty, load real catalog items or curated fallback so section is always lively and useful
+            if (!Array.isArray(items) || items.length === 0) {
+                var catalog = (window.allProducts || window.catalogProducts || window.products || []);
+                if (Array.isArray(catalog) && catalog.length > 0) {
+                    items = catalog.slice(0, 8).map(function(p) {
+                        var pPrice = Number(p.price || p.effective_customer_price || p.customer_price) || 0;
+                        var pOldPrice = Number(p.old_price || p.mrp) || 0;
+                        var pDiscount = p.discount || (pOldPrice > pPrice && pPrice > 0 ? Math.round(((pOldPrice - pPrice) / pOldPrice) * 100) + '% OFF' : '');
+                        return {
+                            id: p.id,
+                            name: p.name || p.title || ('Product #' + p.id),
+                            price: pPrice,
+                            old_price: pOldPrice,
+                            discount: pDiscount,
+                            image: p.image || (Array.isArray(p.images) && p.images[0]) || '/assets/images/no-image.svg',
+                            category: String(p.category || 'ETHNIC WEAR').toUpperCase()
+                        };
+                    });
+                } else {
+                    items = DEFAULT_RECENT_PRODUCTS.slice(0, 8);
+                }
             }
 
             sec.style.display = 'block';
+
+            var isFrontendPath = window.location.pathname.indexOf('/Frontend/') !== -1;
+
             track.innerHTML = items.map(function(item) {
-                var disc = item.discount || '40% OFF';
-                var oldP = item.old_price ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
-                return '<div class="recently-viewed-card" data-product-id="' + item.id + '">' +
+                var pdpUrl = isFrontendPath
+                    ? ('/Frontend/Single-Product/singleproduct.php?id=' + encodeURIComponent(item.id))
+                    : ('/product.php?id=' + encodeURIComponent(item.id));
+                var disc = item.discount ? (typeof item.discount === 'number' ? (item.discount + '% OFF') : String(item.discount)) : '';
+                var priceNum = Number(item.price) || 0;
+                var oldP = (Number(item.old_price) > priceNum) ? ('₹' + Number(item.old_price).toLocaleString('en-IN')) : '';
+                var imgUrl = item.image || '/assets/images/no-image.svg';
+
+                return '<div class="recently-viewed-card" data-product-id="' + dtEsc(item.id) + '">' +
                     '<div class="rv-img-box">' +
-                        '<a href="/Frontend/Single-Product/singleproduct.php?id=' + item.id + '" class="rv-img-link">' +
-                            '<img src="' + item.image + '" alt="' + item.name + '" class="rv-card-img" loading="lazy" />' +
+                        '<a href="' + dtEsc(pdpUrl) + '" class="rv-img-link">' +
+                            '<img src="' + dtEsc(imgUrl) + '" alt="' + dtEsc(item.name) + '" class="rv-card-img" loading="lazy" />' +
                         '</a>' +
-                        '<span class="rv-discount-badge">' + disc + '</span>' +
-                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + item.id + ');}else{window.location.href=\'/Frontend/Single-Product/singleproduct.php?id=' + item.id + '\';}" aria-label="Quick View">' +
+                        (disc ? '<span class="rv-discount-badge">' + dtEsc(disc) + '</span>' : '') +
+                        '<button type="button" class="rv-quick-view-btn" onclick="if(typeof window.openQuickView===\'function\'){window.openQuickView(' + dtEsc(item.id) + ');}else{window.location.href=\'' + dtEsc(pdpUrl) + '\';}" aria-label="Quick View">' +
                             '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
                         '</button>' +
                     '</div>' +
                     '<div class="rv-card-body">' +
-                        '<span class="rv-card-cat">' + (item.category || 'SAREES') + '</span>' +
+                        '<span class="rv-card-cat">' + dtEsc(item.category || 'SAREES') + '</span>' +
                         '<h4 class="rv-card-title">' +
-                            '<a href="/Frontend/Single-Product/singleproduct.php?id=' + item.id + '">' + item.name + '</a>' +
+                            '<a href="' + dtEsc(pdpUrl) + '">' + dtEsc(item.name) + '</a>' +
                         '</h4>' +
                         '<div class="rv-price-wrap">' +
-                            '<span class="rv-price-curr">₹' + Number(item.price).toLocaleString('en-IN') + '</span>' +
+                            '<span class="rv-price-curr">₹' + priceNum.toLocaleString('en-IN') + '</span>' +
                             (oldP ? '<span class="rv-price-old">' + oldP + '</span>' : '') +
                         '</div>' +
-                        '<button type="button" class="rv-add-btn" onclick="directAddToCart(' + item.id + '); event.stopPropagation();">' +
+                        '<button type="button" class="rv-add-btn" onclick="if(typeof directAddToCart===\'function\'){directAddToCart(' + dtEsc(item.id) + ');}else if(typeof addToCart===\'function\'){addToCart(' + dtEsc(item.id) + ');}; event.stopPropagation();">' +
                             '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
                             '<span>Add</span>' +
                         '</button>' +
@@ -926,13 +968,15 @@
             }).join('');
 
             syncRvScrollbar();
-        } catch { /* ignore */ }
+        } catch {
+            // Ignore rendering errors silently
+        }
     }
 
     window.slideRecentlyViewed = function(dir) {
         var track = document.getElementById('recentlyViewedTrack');
         if (!track) return;
-        var step = track.clientWidth * 0.75;
+        var step = Math.max(200, track.clientWidth * 0.75);
         track.scrollBy({ left: dir * step, behavior: 'smooth' });
     };
 
@@ -949,8 +993,8 @@
         }
         scrollbar.style.display = 'block';
 
-        var percent = track.scrollLeft / scrollWidth;
-        var thumbWidth = Math.max(24, (track.clientWidth / track.scrollWidth) * scrollbar.clientWidth);
+        var percent = Math.max(0, Math.min(1, track.scrollLeft / scrollWidth));
+        var thumbWidth = Math.max(28, (track.clientWidth / track.scrollWidth) * scrollbar.clientWidth);
         var maxMove = scrollbar.clientWidth - thumbWidth;
         thumb.style.width = thumbWidth + 'px';
         thumb.style.transform = 'translateX(' + (percent * maxMove) + 'px)';
@@ -959,13 +1003,15 @@
     var rvTrackEl = document.getElementById('recentlyViewedTrack');
     if (rvTrackEl) {
         rvTrackEl.addEventListener('scroll', syncRvScrollbar, { passive: true });
+        window.addEventListener('resize', syncRvScrollbar, { passive: true });
     }
 
     window.clearRecentlyViewed = function() {
         localStorage.removeItem('dtbrands_recently_viewed');
-        var sec = document.getElementById('section-recently-viewed');
-        if (sec) sec.style.display = 'none';
-        if (typeof showToast === 'function') showToast('Recently viewed history cleared');
+        renderRecentlyViewed();
+        if (typeof window.showToast === 'function') {
+            window.showToast('Browsing history cleared');
+        }
     };
 
     renderRecentlyViewed();

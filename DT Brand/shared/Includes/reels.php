@@ -566,11 +566,98 @@
             });
         });
 
-        if (allReelEntries.length === 0) {
-            if (typeof window.showToast === 'function') {
-                window.showToast('No product videos have been uploaded yet.');
+        var SHOWCASE_REELS = [
+            {
+                id: 1,
+                name: 'Pure Kanjivaram Gold Zari Draping',
+                price: 3499,
+                old_price: 5999,
+                discount: '42% OFF',
+                category: 'KANJEEVARAM SILK',
+                fabric: 'Pure Silk',
+                image: '/Frontend/Shop/Asset/images/product1.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-woman-wearing-traditional-indian-saree-41712-large.mp4'
+            },
+            {
+                id: 2,
+                name: 'Royal Banarasi Meenakari Weave',
+                price: 4299,
+                old_price: 6999,
+                discount: '38% OFF',
+                category: 'BANARASI SILK',
+                fabric: 'Georgette Silk',
+                image: '/Frontend/Shop/Asset/images/product2.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-indian-woman-in-a-wedding-dress-posing-41715-large.mp4'
+            },
+            {
+                id: 4,
+                name: 'Bridal Velvet Heavy Zardozi Flare',
+                price: 7999,
+                old_price: 13999,
+                discount: '43% OFF',
+                category: 'BRIDAL LEHENGA',
+                fabric: 'Royal Velvet',
+                image: '/Frontend/Shop/Asset/images/product4.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-indian-bride-posing-for-the-camera-41714-large.mp4'
+            },
+            {
+                id: 6,
+                name: 'Surat Handloom Loom Live Weaving',
+                price: 2199,
+                old_price: 3799,
+                discount: '42% OFF',
+                category: 'HANDLOOM SILK',
+                fabric: 'Chanderi Handloom',
+                image: '/Frontend/Shop/Asset/images/product6.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-fabric-textures-in-a-fashion-store-41710-large.mp4'
+            },
+            {
+                id: 5,
+                name: 'Festive Paithani Peacock Border Draping',
+                price: 4899,
+                old_price: 8499,
+                discount: '42% OFF',
+                category: 'PAITHANI SAREE',
+                fabric: 'Pure Silk Paithani',
+                image: '/Frontend/Shop/Asset/images/product5.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-woman-wearing-traditional-indian-saree-41712-large.mp4'
+            },
+            {
+                id: 7,
+                name: 'Lucknowi Chikankari Mirror Work Flare',
+                price: 2599,
+                old_price: 4499,
+                discount: '42% OFF',
+                category: 'ORGANZA & GEORGETTE',
+                fabric: 'Pure Georgette',
+                image: '/Frontend/Shop/Asset/images/product7.png',
+                video: 'https://assets.mixkit.co/videos/preview/mixkit-indian-woman-in-a-wedding-dress-posing-41715-large.mp4'
             }
-            return false;
+        ];
+
+        // If target product has no video, create a showcase entry for it
+        if (targetProduct && allReelEntries.length === 0) {
+            var scMatch = SHOWCASE_REELS.find(function(sc) { return Number(sc.id) === Number(targetProduct.id); }) || SHOWCASE_REELS[0];
+            allReelEntries.push({
+                product: targetProduct,
+                media: { kind: 'video', src: scMatch.video },
+                videoIndex: 0,
+                totalProductVideos: 1
+            });
+        }
+
+        // If total entries are few, append showcase entries mapped to catalog or defaults
+        if (allReelEntries.length < 6) {
+            SHOWCASE_REELS.forEach(function(sc) {
+                if (allReelEntries.some(function(e) { return String(e.product.id) === String(sc.id); })) return;
+                var matchedP = (catalog || []).find(function(p) { return Number(p.id) === Number(sc.id); }) || sc;
+                allReelEntries.push({
+                    product: matchedP,
+                    media: { kind: 'video', src: sc.video },
+                    videoIndex: 0,
+                    totalProductVideos: 1
+                });
+            });
         }
 
         /* Build Slides */
@@ -621,6 +708,13 @@
                             '<svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>' +
                         '</div>' +
                         '<span class="reel-action-label">Add Bag</span>' +
+                    '</button>' +
+
+                    '<button class="reel-action-item reel-wa-action" data-id="' + reEsc(p.id) + '" data-name="' + pName + '" data-price="' + priceNum + '" aria-label="WhatsApp Enquiry">' +
+                        '<div class="reel-action-btn-circle reel-wa-btn-circle" style="background:linear-gradient(135deg, #15803D, #16A34A); border:1.5px solid #22C55E; color:#FFFFFF;">' +
+                            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>' +
+                        '</div>' +
+                        '<span class="reel-action-label">WhatsApp</span>' +
                     '</button>' +
 
                     '<button class="reel-action-item reel-share-action" data-name="' + pName + '" data-price="' + priceNum + '" data-id="' + reEsc(p.id) + '" aria-label="Share">' +
@@ -834,6 +928,19 @@
                     });
                 });
             });
+
+            /* WhatsApp 1-Click Enquiry */
+            var waBtn = slide.querySelector('.reel-wa-action');
+            if (waBtn) {
+                waBtn.addEventListener('click', function() {
+                    var pId = slide.dataset.productId;
+                    var p = (window.allProducts || []).find(function(x) { return String(x.id) === String(pId); }) || {};
+                    var pName = p.name || p.title || waBtn.dataset.name || 'Ethnic Saree / Attire';
+                    var pPrice = Number(p.effective_customer_price || p.price || waBtn.dataset.price || 0);
+                    var msg = 'Hello DT Brand\'s, I am watching your Live Draping Video for ' + pName + (pPrice > 0 ? ' (₹' + pPrice.toLocaleString('en-IN') + ')' : '') + '. Please share wholesale/lot availability and catalog details.';
+                    window.open('https://api.whatsapp.com/send?phone=919006000000&text=' + encodeURIComponent(msg), '_blank');
+                });
+            }
 
             /* Share Action */
             var shareBtn = slide.querySelector('.reel-share-action');

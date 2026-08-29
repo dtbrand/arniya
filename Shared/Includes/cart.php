@@ -496,15 +496,42 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         if (typeof window.showToast === 'function') window.showToast('Item removed from bag');
     };
 
-    window.addToCart = function(product, size, color, qty) {
+    window.addToCart = function(productOrId, size, color, qty) {
+        if (!productOrId) return;
+        var product = productOrId;
+        if (typeof productOrId === 'number' || typeof productOrId === 'string') {
+            var products = window.allProducts || window.catalogProducts || window.products || [];
+            var found = products.find(function(x) { return String(x.id) === String(productOrId); });
+            if (!found) {
+                try {
+                    var rec = JSON.parse(localStorage.getItem('dtbrands_recently_viewed') || '[]');
+                    found = rec.find(function(x) { return String(x.id) === String(productOrId); });
+                } catch {
+                    // Ignore localStorage error
+                }
+            }
+            product = found;
+        }
         if (!product) return;
-        var addQty = parseInt(qty, 10) || 1;
-        var chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || 'Free Size';
-        var chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
-        var imgPath = product.image || product.img || '/Frontend/Shop/Asset/images/product1.png';
+
+        var addQty = 1;
+        var chosenSize = '';
+        var chosenColor = '';
+
+        if (typeof size === 'object' && size !== null) {
+            addQty = parseInt(size.qty, 10) || 1;
+            chosenSize = size.size || (Array.isArray(product.size) ? product.size[0] : product.size) || (Array.isArray(product.sizes) ? product.sizes[0] : '') || 'Free Size';
+            chosenColor = size.color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
+        } else {
+            addQty = parseInt(qty, 10) || 1;
+            chosenSize = size || (Array.isArray(product.size) ? product.size[0] : product.size) || (Array.isArray(product.sizes) ? product.sizes[0] : '') || 'Free Size';
+            chosenColor = color || (Array.isArray(product.colors) ? product.colors[0] : product.color) || 'Standard';
+        }
+
+        var imgPath = product.image || product.img || (Array.isArray(product.images) && product.images[0]) || '/Frontend/Shop/Asset/images/product1.png';
 
         var existing = window.cartState.find(function(item) {
-            return (item.id == product.id || String(item.id) === String(product.id)) && item.size == chosenSize && item.color == chosenColor;
+            return (String(item.id) === String(product.id)) && item.size == chosenSize && item.color == chosenColor;
         });
 
         if (existing) {
@@ -524,9 +551,14 @@ window.allProducts = <?php echo json_encode($dbProductsForCart); ?>;
         saveCart(window.cartState);
         window.renderCart();
         if (typeof window.showToast === 'function') {
-            window.showToast('Added ' + (product.name || 'item') + ' (' + chosenColor + ') to bag ✓', 'cart');
+            window.showToast('Added ' + (product.name || 'item') + ' to bag ✓', 'cart');
         }
         window.openCartDrawer();
+    };
+
+    /* Direct 1-Click Add To Cart Alias */
+    window.directAddToCart = function(productOrId, size, color, qty) {
+        window.addToCart(productOrId, size, color, qty);
     };
 
     window.openCartDrawer = function() {

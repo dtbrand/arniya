@@ -1071,7 +1071,7 @@ $total_products = count($products);
                     </div>
 
                     <!-- Reel 5 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" role="button" tabindex="0">
+                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(4);" role="button" tabindex="0">
                         <div class="reel-media-box">
                             <img src="/Frontend/Shop/Asset/images/product3.png" alt="Handcrafted Zardozi Craftsmanship" class="reel-img" loading="lazy" />
                             <div class="reel-top-bar">
@@ -1097,7 +1097,7 @@ $total_products = count($products);
                     </div>
 
                     <!-- Reel 6 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(1);" role="button" tabindex="0">
+                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(5);" role="button" tabindex="0">
                         <div class="reel-media-box">
                             <img src="/Frontend/Shop/Asset/images/product4.png" alt="Lucknowi Chikankari Mirror Flare" class="reel-img" loading="lazy" />
                             <div class="reel-top-bar">
@@ -1123,7 +1123,7 @@ $total_products = count($products);
                     </div>
 
                     <!-- Reel 7 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(2);" role="button" tabindex="0">
+                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(0);" role="button" tabindex="0">
                         <div class="reel-media-box">
                             <img src="/Frontend/Shop/Asset/images/product7.png" alt="Surat Jacquard Loom Weaving" class="reel-img" loading="lazy" />
                             <div class="reel-top-bar">
@@ -1149,7 +1149,7 @@ $total_products = count($products);
                     </div>
 
                     <!-- Reel 8 -->
-                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(3);" role="button" tabindex="0">
+                    <div class="home-reel-card" onclick="if(typeof window.openReelsModal==='function') window.openReelsModal(1);" role="button" tabindex="0">
                         <div class="reel-media-box">
                             <img src="/Frontend/Shop/Asset/images/product8.png" alt="Paithani Peacock Border Draping" class="reel-img" loading="lazy" />
                             <div class="reel-top-bar">
