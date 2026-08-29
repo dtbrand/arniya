@@ -4,8 +4,19 @@
  * Premium Shop Header component for DT Brand's
  * Features Amazon-Style Always-Open Desktop Search Bar & Clean Full-Width Mobile Search Bar with Right Close Button
  */
+$reqUri = trim(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
 $currentPage = basename($_SERVER['PHP_SELF'] ?? '');
-$isHomePage = ($currentPage === 'index.php' || $currentPage === 'home.php' || $currentPage === '' || (isset($hideHeaderSubnav) && $hideHeaderSubnav === true) || (isset($isHome) && $isHome === true));
+$isHomePage = (
+    $currentPage === 'home.php' || 
+    $currentPage === 'index.php' || 
+    $currentPage === '' || 
+    $reqUri === '' || 
+    $reqUri === 'index.php' || 
+    $reqUri === 'home.php' || 
+    (isset($hideHeaderSubnav) && $hideHeaderSubnav === true) || 
+    (isset($isHome) && $isHome === true) || 
+    (isset($isHomePage) && $isHomePage === true)
+);
 ?>
 <style>
 /* ── Shop Header ─────────────────────────────────────────── */
@@ -793,23 +804,28 @@ $isHomePage = ($currentPage === 'index.php' || $currentPage === 'home.php' || $c
         height: 12px;
     }
 
-    /* Permanently Visible Ultra-Compact 24px Category Subnav */
+    /* Permanently Visible Ultra-Compact Category Subnav (Royal Gold Luxury Gradient) */
     .header-attached-subnav {
-        height: 24px;
-        min-height: 24px;
-        max-height: 24px;
+        height: 28px;
+        min-height: 28px;
+        max-height: 28px;
         padding: 0 8px;
         box-sizing: border-box;
+        background: linear-gradient(90deg, #7A5B18 0%, #9C7724 50%, #7A5B18 100%);
+        border-top: 1px solid rgba(255, 235, 180, 0.35);
+        border-bottom: 1.5px solid #5C4310;
+        box-shadow: 0 2px 8px rgba(122, 91, 24, 0.25);
     }
     .subnav-item {
-        font-size: 0.60rem;
-        padding: 1px 6px;
-        height: 17px;
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        height: 20px;
         gap: 4px;
+        border-radius: 4px;
     }
     .subnav-icon {
-        width: 9px;
-        height: 9px;
+        width: 11px;
+        height: 11px;
     }
 }
 </style>
