@@ -13,7 +13,7 @@
 .reels-overlay {
     position: fixed;
     inset: 0;
-    z-index: 25000;
+    z-index: 999999 !important;
     background: rgba(10, 8, 6, 0.95);
     backdrop-filter: blur(16px);
     display: flex;
@@ -26,6 +26,26 @@
 .reels-overlay.open {
     opacity: 1;
     visibility: visible;
+}
+
+/* Auto-hide mobile bottom navigation when Reels full-screen modal is active */
+body.reels-modal-open .home-smart-bottom-footer,
+body.reels-modal-open .shop-smart-bottom-footer,
+body.reels-modal-open .dt-mobile-bottom-nav,
+body.reels-modal-open #homeSmartBottomFooter,
+body.reels-modal-open #shopSmartBottomFooter,
+body.reels-modal-open #dtMobileBottomNav,
+body.reels-open .home-smart-bottom-footer,
+body.reels-open .shop-smart-bottom-footer,
+body.reels-open .dt-mobile-bottom-nav,
+body.reels-open #homeSmartBottomFooter,
+body.reels-open #shopSmartBottomFooter,
+body.reels-open #dtMobileBottomNav {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(140%) !important;
 }
 
 .reels-wrapper {
@@ -689,6 +709,14 @@
         overlay.classList.add('open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        document.body.classList.add('reels-open', 'reels-modal-open');
+
+        // Explicitly hide any mobile floating bottom navigation bar
+        var bottomNavs = document.querySelectorAll('.home-smart-bottom-footer, .shop-smart-bottom-footer, .dt-mobile-bottom-nav, #homeSmartBottomFooter, #shopSmartBottomFooter, #dtMobileBottomNav');
+        bottomNavs.forEach(function(el) {
+            el.classList.add('is-hidden');
+            el.style.setProperty('display', 'none', 'important');
+        });
 
         /* Bind Interactive Events */
         bindReelsEvents();
@@ -717,6 +745,14 @@
             overlay.setAttribute('aria-hidden', 'true');
             overlay.setAttribute('inert', '');
             document.body.style.overflow = '';
+            document.body.classList.remove('reels-open', 'reels-modal-open');
+
+            // Restore mobile floating bottom navigation bar
+            var bottomNavs = document.querySelectorAll('.home-smart-bottom-footer, .shop-smart-bottom-footer, .dt-mobile-bottom-nav, #homeSmartBottomFooter, #shopSmartBottomFooter, #dtMobileBottomNav');
+            bottomNavs.forEach(function(el) {
+                el.classList.remove('is-hidden');
+                el.style.removeProperty('display');
+            });
 
             /* Pause all videos, and reset embeds so a third-party player stops. */
             var track = document.getElementById('reelsTrack');

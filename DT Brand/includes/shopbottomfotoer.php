@@ -40,6 +40,7 @@ body.cart-open .shop-smart-bottom-footer,
 body.wishlist-open .shop-smart-bottom-footer,
 body.modal-open .shop-smart-bottom-footer,
 body.reels-open .shop-smart-bottom-footer,
+body.reels-modal-open .shop-smart-bottom-footer,
 body.drawer-open .shop-smart-bottom-footer {
     transform: translateY(140%) !important;
     opacity: 0 !important;

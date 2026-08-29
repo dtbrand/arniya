@@ -20,6 +20,33 @@
     padding: 0 12px;
     padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
     pointer-events: auto !important;
+    transition: transform 0.32s cubic-bezier(0.34, 1.25, 0.64, 1), opacity 0.28s ease, visibility 0.28s ease;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.home-smart-bottom-footer.is-hidden {
+    transform: translateY(140%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Auto-hide via body classes when any overlay, drawer, sheet, or modal is active */
+body.reels-open .home-smart-bottom-footer,
+body.reels-modal-open .home-smart-bottom-footer,
+body.modal-open .home-smart-bottom-footer,
+body.cart-open .home-smart-bottom-footer,
+body.wishlist-open .home-smart-bottom-footer,
+body.drawer-open .home-smart-bottom-footer,
+body.menu-open .home-smart-bottom-footer,
+body.mf-open .home-smart-bottom-footer,
+body.sort-open .home-smart-bottom-footer {
+    transform: translateY(140%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 @media (max-width: 1024px) {
