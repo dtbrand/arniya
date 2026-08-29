@@ -1146,9 +1146,9 @@
 
                     <!-- Role Option (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
                     <div class="auth-form-group">
-                        <label class="auth-label" for="regRole">Your Role <span class="req">*</span></label>
+                        <span class="auth-label" id="regRoleLabel">Your Role <span class="req">*</span></span>
                         <input type="hidden" id="regRole" name="role" value="Retailer">
-                        <div class="role-pill-group">
+                        <div class="role-pill-group" role="radiogroup" aria-labelledby="regRoleLabel">
                             <!-- Retailer -->
                             <div class="role-pill-btn selected" data-role="Retailer" onclick="selectRole('Retailer')">
                                 <div class="role-svg-icon role-svg-retailer">

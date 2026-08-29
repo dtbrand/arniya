@@ -791,9 +791,9 @@
 
                 <!-- Role Selection (Pills: Retailer, Wholesaler, Reseller with Real Vector SVG Icons) -->
                 <div class="ac-form-group">
-                    <label class="ac-label" for="acRegRole">Your Role <span class="req">*</span></label>
+                    <span class="ac-label" id="acRegRoleLabel">Your Role <span class="req">*</span></span>
                     <input type="hidden" id="acRegRole" name="role" value="Retailer">
-                    <div class="ac-role-pill-group" role="radiogroup" aria-labelledby="acRegRole">
+                    <div class="ac-role-pill-group" role="radiogroup" aria-labelledby="acRegRoleLabel">
                         <!-- Retailer -->
                         <div class="ac-role-pill-btn selected" data-role="Retailer" onclick="window.selectModalRole('Retailer')">
                             <div class="ac-role-svg-icon">
