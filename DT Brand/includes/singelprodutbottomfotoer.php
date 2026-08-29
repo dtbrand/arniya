@@ -2,7 +2,7 @@
 /**
  * singelprodutbottomfotoer.php — PARTIAL INCLUDE
  * Dedicated Mobile Sticky Action Bar for Single Product Page (PDP)
- * Features High-Converting Mobile Bottom Bar with Add to Bag, Buy Now, and Intelligent Modal Auto-Hide
+ * Features High-Converting Mobile Bottom Bar with Add to Bag, Buy Now, and Modal Auto-Hide
  */
 ?>
 <style>
@@ -25,7 +25,7 @@
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s ease;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease, visibility 0.2s ease;
     will-change: transform, opacity;
 }
 
@@ -49,7 +49,6 @@ body.modal-open .pdp-mobile-bottom-bar,
 body.drawer-open .pdp-mobile-bottom-bar,
 body.cart-open .pdp-mobile-bottom-bar,
 body.qv-open .pdp-mobile-bottom-bar,
-body.pdp-popup-active .pdp-mobile-bottom-bar,
 body:has(.cart-drawer-backdrop.active) .pdp-mobile-bottom-bar,
 body:has(.wishlist-drawer-backdrop.active) .pdp-mobile-bottom-bar,
 body:has(#quickViewModal.active) .pdp-mobile-bottom-bar,
@@ -58,6 +57,7 @@ body:has(#pdpLightboxOverlay.open) .pdp-mobile-bottom-bar,
 body:has(#pdpWaCheckoutModal.open) .pdp-mobile-bottom-bar,
 body:has(#pdpWriteReviewModal.open) .pdp-mobile-bottom-bar,
 body:has(#pdpSizeGuideModal.open) .pdp-mobile-bottom-bar,
+body:has(#pdpSizeChartModal.open) .pdp-mobile-bottom-bar,
 body:has(.pdp-modal-overlay.open) .pdp-mobile-bottom-bar,
 body:has(#smartShareModal.active) .pdp-mobile-bottom-bar,
 body:has(.smart-share-backdrop.active) .pdp-mobile-bottom-bar,
@@ -180,84 +180,12 @@ body:has(.checkout-modal-backdrop.active) .pdp-mobile-bottom-bar,
 </div>
 
 <script>
-(function() {
-    function checkPdpModalsState() {
-        var bar = document.getElementById('pdpMobileBar');
-        if (!bar) return;
-
-        var isAnyOpen = false;
-
-        // Check body style overflow
-        if (document.body.style.overflow === 'hidden' || document.body.classList.contains('modal-open') || document.body.classList.contains('cart-open') || document.body.classList.contains('pdp-popup-active')) {
-            isAnyOpen = true;
-        }
-
-        // Check active / open selectors
-        var modalSelectors = [
-            '.cart-drawer-backdrop.active',
-            '.wishlist-drawer-backdrop.active',
-            '#quickViewModal.active',
-            '.quickview-modal-backdrop.active',
-            '#pdpLightboxOverlay.open',
-            '#pdpWaCheckoutModal.open',
-            '#pdpWriteReviewModal.open',
-            '#pdpSizeGuideModal.open',
-            '.pdp-modal-overlay.open',
-            '#smartShareModal.active',
-            '.smart-share-backdrop.active',
-            '#reelsModal.active',
-            '.reels-modal-overlay.active',
-            '#accountModalBackdrop.open',
-            '.account-modal-backdrop.open',
-            '#checkoutModal.active',
-            '.checkout-modal-backdrop.active'
-        ];
-
-        for (var i = 0; i < modalSelectors.length; i++) {
-            var el = document.querySelector(modalSelectors[i]);
-            if (el && (el.classList.contains('open') || el.classList.contains('active'))) {
-                isAnyOpen = true;
-                break;
-            }
-        }
-
-        if (isAnyOpen) {
-            bar.classList.add('hide-for-modal');
-            document.body.classList.add('pdp-popup-active');
-        } else {
-            bar.classList.remove('hide-for-modal');
-            document.body.classList.remove('pdp-popup-active');
-        }
-    }
-
-    // Set up MutationObserver to auto-detect popup states in real-time
-    if (typeof MutationObserver !== 'undefined') {
-        var observer = new MutationObserver(function() {
-            checkPdpModalsState();
-        });
-        observer.observe(document.body, {
-            attributes: true,
-            attributeFilter: ['class', 'style'],
-            childList: true,
-            subtree: true
-        });
-    }
-
-    // Listen to window & interaction events
-    window.addEventListener('resize', checkPdpModalsState, { passive: true });
-    window.addEventListener('scroll', checkPdpModalsState, { passive: true });
-    document.addEventListener('DOMContentLoaded', checkPdpModalsState);
-    document.addEventListener('click', function() {
-        setTimeout(checkPdpModalsState, 80);
-    });
-
-    window.hidePdpMobileBar = function() {
-        var bar = document.getElementById('pdpMobileBar');
-        if (bar) bar.classList.add('hide-for-modal');
-    };
-    window.showPdpMobileBar = function() {
-        var bar = document.getElementById('pdpMobileBar');
-        if (bar) bar.classList.remove('hide-for-modal');
-    };
-})();
+window.hidePdpMobileBar = function() {
+    var bar = document.getElementById('pdpMobileBar');
+    if (bar) bar.classList.add('hide-for-modal');
+};
+window.showPdpMobileBar = function() {
+    var bar = document.getElementById('pdpMobileBar');
+    if (bar) bar.classList.remove('hide-for-modal');
+};
 </script>
