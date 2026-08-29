@@ -1135,7 +1135,7 @@ $total_products = count($products);
 </div><!-- /.page-wrapper -->
 
 <!-- ════════════ SECTION 31: SMART ANIMATED MOBILE BOTTOM FOOTER ════════════ -->
-<?php include_once __DIR__ . '/includes/shopbottomfotoer.php'; ?>
+<?php include_once __DIR__ . '/includes/homebottomfooter.php'; ?>
 
 <!-- ════════════ MASTER MODAL SYSTEM INTEGRATIONS ════════════ -->
 <?php include_once __DIR__ . '/Shared/Includes/quickview.php'; ?>
