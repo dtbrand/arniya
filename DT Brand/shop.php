@@ -408,12 +408,6 @@ $total_products = count($products);
                     <span class="card-badge <?= $badge_class ?>"><?= htmlspecialchars((string)$p['badge']) ?></span>
                     <?php endif; ?>
 
-                    <?php if ($pHasVideo): ?>
-                    <span class="card-video-tag" title="This product has a video" style="position:absolute;top:10px;right:52px;z-index:3;display:inline-flex;align-items:center;gap:3px;background:rgba(24,21,18,.82);color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 7px;border-radius:20px;">
-                        <svg viewBox="0 0 24 24" width="9" height="9" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>VIDEO
-                    </span>
-                    <?php endif; ?>
-
                     <button class="card-wishlist-btn" data-id="<?= (int)$p['id'] ?>" aria-label="Wishlist <?= htmlspecialchars($pName) ?>" aria-pressed="false">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
